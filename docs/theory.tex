@@ -1,0 +1,191 @@
+%!TEX root = ceres.tex
+\chapter{Theory}
+\label{chapter:theory}
+Effective use of Ceres requires some familiarity with the underlying theory. In this chapter we will provide a brief exposition to Ceres's approach to solving non-linear least squares optimization. Much of the material in this section comes from~\cite{Agarwal10bal,wu2011multicore,kushal2012}.
+
+\section{The Levenberg-Marquardt Algorithm}
+
+The Levenberg-Marquardt algorithm~\cite{levenberg1944method, marquardt1963algorithm} is the most popular algorithm for solving non-linear least squares problems. Ceres implements an exact step~\cite{madsen2004methods} and an inexact step variant of the Levenberg-Marquardt algorithm~\cite{wright1985inexact,nash1990assessing}.  We begin by taking a brief look at how the Levenberg-Marquardt algorithm works.
+
+
+Let $x \in \mathbb{R}^{n}$ be an $n$-dimensional vector of variables, and
+$ F(x) = \left[f_1(x),   \hdots,  f_{m}(x) \right]^{\top}$ be a $m$-dimensional function of $x$.  We are interested in solving the following optimization problem,
+\begin{equation}
+        \arg \min_x \frac{1}{2}\|F(x)\|^2\ .
+        \label{eq:nonlinsq}
+\end{equation}
+The Jacobian $J(x)$ of $F(x)$ is an $m\times n$ matrix, where $J_{ij}(x) = \partial_j f_i(x)$  and the gradient vector $g(x) = \nabla  \frac{1}{2}\|F(x)\|^2 = J(x)^\top F(x)$. Since the efficient global optimization of~\eqref{eq:nonlinsq} for general $F(x)$ is an intractable problem, we will have to settle for finding a local minimum.
+
+The general strategy when solving non-linear optimization problems is to solve a sequence of approximations to the original problem~\cite{nocedal2000numerical}. At each iteration, the approximation is solved to determine a correction $\Delta x$ to the vector $x$. For non-linear least squares, an approximation can be constructed by using the linearization $F(x+\Delta x) \approx F(x) + J(x)\Delta x$, which leads to the following linear least squares  problem:
+\begin{equation}
+         \min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2
+        \label{eq:linearapprox}
+\end{equation}
+Unfortunately, na\"ively solving a sequence of these problems and updating $x \leftarrow x+ \Delta x$ leads to an algorithm that may not converge.  To get a convergent algorithm, we need to control the size of the step $\Delta x$.  One way to do this is to introduce a regularization term:
+\begin{equation}
+         \min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 + \mu \|D(x)\Delta x\|^2\ .
+        \label{eq:lsqr}
+\end{equation}
+Here, $D(x)$ is a non-negative diagonal matrix, typically the square root of the diagonal of the matrix $J(x)^\top J(x)$ and $\mu$ is a non-negative parameter that controls the strength of regularization. It is straightforward to show that the step size $\|\Delta x\|$ is inversely related to $\mu$. Levenberg-Marquardt updates the value of $\mu$ at each step based on how well the Jacobian $J(x)$ approximates $F(x)$. The quality of this fit is measured by the ratio of  the actual decrease in the objective function to the decrease in the value of the linearized model $L(\Delta x) = \frac{1}{2}\|J(x)\Delta x + F(x)\|^2$.
+\begin{equation}
+\rho = \frac{\|F(x + \Delta x)\|^2 - \|F(x)\|^2}{\|J(x)\Delta x + F(x)\|^2 - \|F(x)\|^2}
+\end{equation}
+
+If $\rho$ is large, that means the linear model is a good approximation to the non-linear model and it is worth trusting it more in the computation of $\Delta x$, so we decrease $\mu$. If $\rho$ is small, the linear model is a poor approximation and $\mu$ is increased. This kind of reasoning is the basis of Trust-region methods, of which Levenberg-Marquardt is an early example~\cite{nocedal2000numerical}.
+
+Before going further, let us make some notational simplifications. We will assume that the matrix $\sqrt{\mu} D$ has been concatenated at the bottom of the matrix $J$ and similarly a vector of zeros has been added to the bottom of the vector $f$ and the rest of our discussion will be in terms of $J$ and $f$, \ie the linear least squares problem.
+\begin{align}
+ \min_{\Delta x} \frac{1}{2} \|J(x)\Delta x + f(x)\|^2 .
+ \label{eq:simple}
+\end{align}
+Further, let $H(x)= J(x)^\top J(x)$ and $g(x) = -J(x)^\top  f(x)$. For notational convenience let us also drop the dependence on $x$. Then it is easy to see that solving~\eqref{eq:simple} is equivalent to solving the {\em normal equations}
+\begin{align}
+H \Delta x  &= g \label{eq:normal}
+\end{align}
+
+For all but the smallest problems the solution of~\eqref{eq:normal} in each iteration of the Levenberg-Marquardt algorithm is the dominant computational cost in Ceres. Ceres provides a number of different options for solving~\eqref{eq:normal}.
+
+
+\section{\texttt{DENSE\_QR}}
+For small problems (a couple of hundred parameters and a few thousand residuals) with relatively dense Jacobians, \texttt{DENSE\_QR} is the method of choice~\cite{bjorck1996numerical}. Let $J = QR$ be the QR-decomposition of $J$, where $Q$ is an orthonormal matrix and $R$ is an upper triangular matrix~\cite{trefethen1997numerical}. Then it can be shown that the solution to~\eqref{eq:normal} is given by
+\begin{align}
+	\Delta x^* = -R^{-1}Q^\top f
+\end{align}
+Ceres uses \texttt{Eigen}'s dense QR decomposition routines.
+
+
+\section{\texttt{SPARSE\_NORMAL\_CHOLESKY}}
+Large non-linear least square problems are usually sparse. In such cases, using a dense QR factorization is inefficient. Let $H = R^\top R$ be the Cholesky factorization of the normal equations, where $R$ is an upper triangular matrix, then the  solution to ~\eqref{eq:normal} is given by
+\begin{equation}
+	\Delta x^* = R^{-1} R^{-\top} g.
+\end{equation}
+The observant reader will note that the $R$ in the Cholesky factorization of $H$ is the same upper triangular matrix $R$ in the QR factorization of $J$. Since $Q$ is an orthonormal matrix, $J=QR$ implies that $J^\top J = R^\top Q^\top Q R = R^\top R$.
+
+
+There are two variants of Cholesky factorization -- sparse and dense. \texttt{SPARSE\_NORMAL\_CHOLESKY}, as the name implies performs a sparse Cholesky factorization of the normal equations. This leads to substantial savings in time and memory for large sparse problems. We use the Professor Tim Davis' \texttt{CHOLMOD} library (part of the \texttt{SuiteSparse} package) to perform the sparse cholesky~\cite{chen2006acs}.
+
+\section{\texttt{DENSE\_SCHUR} \& \texttt{SPARSE\_SCHUR}}
+While it is possible to use \texttt{SPARSE\_NORMAL\_CHOLESKY} to solve bundle adjustment problems, bundle adjustment problem have a special structure, and a more efficient scheme for solving~\eqref{eq:normal} can be constructed.
+
+Suppose that the SfM problem consists of $p$ cameras and $q$ points and the variable vector $x$ has the  block structure $x = [y_{1},\hdots,y_{p},z_{1},\hdots,z_{q}]$. Where, $y$ and $z$ correspond to camera and point parameters, respectively.  Further, let the camera blocks be of size $c$ and the point blocks be of size $s$ (for most problems $c$ =  $6$--$9$ and $s = 3$). Ceres does not impose any constancy requirement on these block sizes, but choosing them to be constant simplifies the exposition.
+
+A key characteristic of the bundle adjustment problem is that there is no term $f_{i}$ that includes two or more point blocks.  This in turn implies that the matrix $H$ is of the form
+\begin{equation}
+        H =  \left[
+                \begin{matrix} B & E\\ E^\top & C
+                \end{matrix}
+                \right]\ ,
+\label{eq:hblock}
+\end{equation}
+where, $B \in \reals^{pc\times pc}$ is a block sparse matrix with $p$ blocks of size $c\times c$ and  $C \in \reals^{qs\times qs}$ is a block diagonal matrix with $q$ blocks of size $s\times s$. $E \in \reals^{pc\times qs}$ is a general block sparse matrix, with a block of size $c\times s$ for each observation. Let us now block partition $\Delta x = [\Delta y,\Delta z]$ and $g=[v,w]$ to restate~\eqref{eq:normal} as the block structured linear system
+\begin{equation}
+        \left[
+                \begin{matrix} B & E\\ E^\top & C
+                \end{matrix}
+                \right]\left[
+                        \begin{matrix} \Delta y \\ \Delta z
+                        \end{matrix}
+                        \right]
+                        =
+                        \left[
+                                \begin{matrix} v\\ w
+                                \end{matrix}
+                                \right]\ ,
+\label{eq:linear2}
+\end{equation}
+and apply Gaussian elimination to it. As we noted above, $C$ is a block diagonal matrix, with small diagonal blocks of size $s\times s$.
+Thus, calculating the inverse of $C$ by inverting each of these blocks is  cheap. This allows us to  eliminate $\Delta z$ by observing that $\Delta z = C^{-1}(w - E^\top \Delta y)$, giving us
+\begin{equation}
+        \left[B - EC^{-1}E^\top\right] \Delta y = v - EC^{-1}w\ .  \label{eq:schur}
+\end{equation}
+The matrix
+\begin{equation}
+S = B - EC^{-1}E^\top\ ,
+\end{equation}
+is the Schur complement of $C$ in $H$. It is also known as the {\em reduced camera matrix}, because the only variables participating in~\eqref{eq:schur} are the ones corresponding to the cameras. $S \in \reals^{pc\times pc}$ is a block structured symmetric positive definite matrix, with blocks of size $c\times c$. The block $S_{ij}$ corresponding to the pair of images $i$ and $j$ is non-zero if and only if the two images observe at least one common point.
+
+Now, \eqref{eq:linear2}~can  be solved by first forming $S$, solving for $\Delta y$, and then back-substituting $\Delta y$ to obtain the value of $\Delta z$.
+Thus, the solution of what was an $n\times n$, $n=pc+qs$ linear system is reduced to the inversion of the block diagonal matrix $C$, a few matrix-matrix and matrix-vector multiplies, and the solution of block sparse $pc\times pc$ linear system~\eqref{eq:schur}.  For almost all  problems, the number of cameras is much smaller than the number of points, $p \ll q$, thus solving~\eqref{eq:schur} is significantly cheaper than solving~\eqref{eq:linear2}. This is the {\em Schur complement trick}~\cite{brown-58}.
+
+This still leaves open the question of solving~\eqref{eq:schur}. The
+method of choice for solving symmetric positive definite systems
+exactly is via the Cholesky
+factorization~\cite{trefethen1997numerical} and depending upon the
+structure of the matrix, there are, in general, two options. The first
+is direct factorization, where we store and factor $S$ as a dense
+matrix~\cite{trefethen1997numerical}. This method has $O(p^2)$ space complexity and $O(p^3)$ time
+complexity and is only practical for problems with up to a few hundred
+cameras. Ceres implements this strategy as the \texttt{DENSE\_SCHUR} solver.
+
+
+ But, $S$ is typically a fairly sparse matrix, as most images
+only see a small fraction of the scene. This leads us to the second
+option: sparse direct methods. These methods store $S$ as a sparse
+matrix, use row and column re-ordering algorithms to maximize the
+sparsity of the Cholesky decomposition, and focus their compute effort
+on the non-zero part of the factorization~\cite{chen2006acs}.
+Sparse direct methods, depending on the exact sparsity structure of the Schur complement,
+allow bundle adjustment algorithms to significantly scale up over those based on dense
+factorization. Ceres implements this strategy as the \texttt{SPARSE\_SCHUR} solver.
+
+
+\section{\texttt{ITERATIVE\_SCHUR}}
+
+The factorization methods described above are based on computing an exact solution of~\eqref{eq:lsqr}. But it is not clear if an exact solution of~\eqref{eq:lsqr} is necessary at each step of the LM algorithm to solve~\eqref{eq:nonlinsq}. In fact, we have already seen evidence that this may not be the case, as~\eqref{eq:lsqr} is itself a regularized version of~\eqref{eq:linearapprox}. Indeed, it is possible to construct non-linear optimization algorithms in which the linearized problem is solved approximately. These algorithms are known as inexact Newton or truncated Newton methods~\cite{nocedal2000numerical}.
+
+An inexact Newton method requires two ingredients. First, a cheap method for approximately solving systems of linear equations. Typically an iterative linear solver like the Conjugate Gradients method is used for this purpose~\cite{nocedal2000numerical}. Second, a termination rule for the iterative solver. A typical termination rule is of the form
+\begin{equation}
+        \|H(x) \Delta x + g(x)\| \leq \eta_k \|g(x)\|. \label{eq:inexact}
+\end{equation}
+Here, $k$ indicates the Levenberg-Marquardt iteration number and $0 < \eta_k <1$ is known as the forcing sequence.  Wright \& Holt \cite{wright1985inexact} prove that a truncated Levenberg-Marquardt algorithm that uses an inexact Newton step based on~\eqref{eq:inexact} converges for any sequence $\eta_k \leq \eta_0 < 1$ and the rate of convergence depends on the choice of the forcing sequence $\eta_k$.
+
+
+The convergence rate of Conjugate Gradients  for solving~\eqref{eq:normal} depends on the distribution of eigenvalues of $H$~\cite{saad2003iterative}. A useful upper bound is $\sqrt{\kappa(H)}$, where, $\kappa(H)$f is the condition number of the matrix $H$. For most bundle adjustment problems, $\kappa(H)$ is high and a direct application of Conjugate Gradients to~\eqref{eq:normal} results in extremely poor performance.
+
+The solution to this problem is to replace~\eqref{eq:normal} with a {\em preconditioned} system.  Given a linear system, $Ax =b$ and a preconditioner $M$ the preconditioned system is given by $M^{-1}Ax = M^{-1}b$. The resulting algorithm is known as Preconditioned Conjugate Gradients algorithm (PCG) and its  worst case complexity now depends on the condition number of the {\em preconditioned} matrix $\kappa(M^{-1}A)$.
+
+\subsection{Preconditioning}
+
+The computational cost of using a preconditioner $M$ is the cost of computing $M$ and evaluating the product $M^{-1}y$ for arbitrary vectors $y$. Thus, there are two competing factors to consider: How much of $H$'s structure is captured by $M$ so that the condition number $\kappa(HM^{-1})$ is low, and the computational cost of constructing and using $M$.  The ideal preconditioner would be one for which $\kappa(M^{-1}A) =1$. $M=A$ achieves this, but it is not a practical choice, as applying this preconditioner would require solving a linear system equivalent to the unpreconditioned problem.  It is usually the case that the more information $M$ has about $H$, the more expensive it is use. For example, Incomplete Cholesky factorization based preconditioners  have much better convergence behavior than the Jacobi preconditioner, but are also much more expensive.
+
+The simplest of all preconditioners is the diagonal or Jacobi preconditioner, \ie,  $M=\operatorname{diag}(A)$, which for block structured matrices like $H$ can be generalized to the block Jacobi preconditioner. Another option is to apply PCG to the reduced camera matrix $S$ instead of $H$. One reason to do this is that $S$ is a much smaller matrix than $H$, but more importantly, it can be shown that $\kappa(S)\leq \kappa(H)$.  Ceres implements PCG on $S$ as the \texttt{ITERATIVE\_SCHUR} solver. When the user chooses \texttt{ITERATIVE\_SCHUR} as the linear solver, Ceres automatically switches from the exact step algorithm to an inexact step algorithm.
+
+
+There are two obvious choices for block diagonal preconditioners for $S$. The block diagonal of the matrix $B$~\cite{mandel1990block} and the block diagonal $S$, \ie the block Jacobi preconditioner for $S$. Ceres's implements both of these preconditioners and refers to them as  \texttt{JACOBI} and \texttt{SCHUR\_JACOBI} respectively.
+
+As discussed earlier, the cost of forming and storing the Schur complement $S$ can be prohibitive for large problems. Indeed, for an inexact Newton solver that computes $S$ and runs PCG on it, almost all of its time is spent in constructing $S$; the time spent inside the PCG algorithm is negligible in comparison. Because  PCG only needs access to $S$ via its product with a vector, one way to evaluate $Sx$ is to observe that
+\begin{align}
+  x_1 &= E^\top x \notag \\
+  x_2 &= C^{-1} x_1 \notag\\
+  x_3 &= Ex_2 \notag\\
+  x_4 &= Bx \notag\\
+  Sx &= x_4 - x_3\ .\label{eq:schurtrick1}
+\end{align}
+Thus, we can run PCG on $S$ with the same computational effort per iteration as PCG on $H$, while reaping the benefits of a more powerful preconditioner. In fact, we do not even need to compute $H$, \eqref{eq:schurtrick1} can be implemented using just the columns of $J$.
+
+Equation~\eqref{eq:schurtrick1} is closely related to {\em Domain Decomposition methods} for solving large linear systems that arise in structural engineering and partial differential equations. In the language of Domain Decomposition, each point in a bundle adjustment problem is a domain, and the cameras form the interface between these domains. The iterative solution of the Schur complement then falls within the sub-category of techniques known as Iterative Sub-structuring~\cite{saad2003iterative,mathew2008domain}.
+
+For bundle adjustment problems, particularly those arising in reconstruction from community photo collections, more effective preconditioners can be constructed by analyzing and exploiting the camera-point visibility structure of the scene~\cite{kushal2012}. Ceres implements the two visibility based preconditioners described by Kushal \& Agarwal as \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}. These are fairly new preconditioners and Ceres' implementation of them is in its early stages and is not as mature as the other preconditioners described above.
+
+\section{Ordering}
+All three of the Schur based solvers depend on the user indicating to the solver, which of the parameter blocks correspond to the points and which correspond to the cameras. Ceres refers to them as \texttt{e\_block}s and \texttt{f\_blocks}. The only constraint on \texttt{e\_block}s is that there should be no term in the objective function with two or more \texttt{e\_block}s.
+
+As we saw in Section~\ref{sec:tutorial:bundleadjustment}, there are two ways to indicate \texttt{e\_block}s to Ceres. The first is to explicitly create an ordering vector \texttt{Solver::Options::ordering} containing the parameter blocks such that all the \texttt{e\_block}s/points occur before the \texttt{f\_blocks}, and setting \texttt{Solver::Options::num\_eliminate\_blocks} to the number \texttt{e\_block}s.
+
+For some problems this is an easy thing to do and we recommend its use. In some problems though, this is onerous and it would be better if Ceres could automatically determine \texttt{e\_block}s. Setting \texttt{Solver::Options::ordering\_type} to \texttt{SCHUR} achieves this.
+
+The \texttt{SCHUR} ordering algorithm is based on the observation that
+the constraint that no two \texttt{e\_block} co-occur in a residual
+block means that if we were to treat the sparsity structure of the
+block matrix $H$ as a graph, then the set of \texttt{e\_block}s is an
+independent set in this graph. The larger the number of
+\texttt{e\_block}, the smaller is the size of the Schur complement $S$. Indeed the reason Schur based solvers are so efficient at solving bundle adjustment problems is because the numner of points in a bundle adjustment problem is usually an order of magnitude or two larger than the number of cameras.
+
+Thus, the aim of the \texttt{SCHUR} ordering algorithm is to identify the largest independent set in the graph of $H$. Unfortunately this is an NP-Hard problem. But there is a  greedy approximation algorithm that performs well~\cite{li2007miqr} and we use it to identify \texttt{e\_block}s in Ceres.
+
+\section{Automatic Differentiation}
+TBD
+\section{Loss Function}
+TBD
+\section{Local Parameterizations}
+TBD

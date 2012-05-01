@@ -1,0 +1,117 @@
+%%% Build instructions
+%%% pdflatex -shell-escape ceres && bibtex ceres && pdflatex -shell-escape ceres && pdflatex -shell-escape ceres
+
+\documentclass[11pt,letterpaper,oneside]{memoir}
+\usepackage{fouriernc}
+\usepackage[T1]{fontenc}
+\usepackage{minted,amsmath,amssymb,amsthm,url,booktabs}
+\usepackage[pdftex]{graphicx}
+\usepackage[sort&compress]{natbib}
+\usepackage[breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% page dimensions
+\addtolength{\textwidth}{1in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\spinemargin}{-0.5in}
+\addtolength{\foremargin}{-0.5in}
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.12in}
+
+% Our pagestyle
+\copypagestyle{ceres}{headings}
+\makeevenhead{ceres}{\thepage}{}{\scshape\rightmark}
+\makeoddhead{ceres}{\scshape\rightmark}{}{\thepage}
+
+%% ceres chapter style
+\makechapterstyle{ceres}{%
+\renewcommand{\chapterheadstart}{}%
+\renewcommand{\printchaptername}{}%
+\renewcommand{\chapternamenum}{}%
+\renewcommand{\printchapternum}{}%
+\renewcommand{\afterchapternum}{}%
+\renewcommand{\printchaptertitle}[1]{%
+\raggedright\Large\scshape\MakeLowercase{##1}}%
+\renewcommand{\afterchaptertitle}{%
+\vskip\onelineskip \hrule\vskip\onelineskip}%
+}%
+\renewcommand{\cftchapterfont}{\normalfont}%
+\renewcommand{\cftchapterpagefont}{\normalfont}%
+\renewcommand{\cftchapterpresnum}{\bfseries}%
+\renewcommand{\cftchapterleader}{}%
+\renewcommand{\cftchapterafterpnum}{\cftparfillskip}%
+
+
+%% Section title style
+\setsecheadstyle{\raggedright\scshape\MakeLowercase}%
+\setbeforesecskip{-\onelineskip}%
+\setaftersecskip{\onelineskip}%
+
+%% Subsection title style
+
+\setsubsecheadstyle{\sethangfrom{\noindent ##1}\raggedright\itshape}%
+\setbeforesubsecskip{-\onelineskip}%
+\setaftersubsecskip{\onelineskip}%
+
+\captiontitlefont{\small\sffamily}%
+\let\caption\legend
+
+
+\title{\Huge\scshape
+\MakeLowercase{Ceres Solver 1.0$\alpha$}\\ 
+\MakeLowercase{Tutorial \& Reference}
+}
+\author{
+\scshape\MakeLowercase{Sameer Agarwal} \\  \texttt{sameeragarwal@google.com} 
+\and 
+\scshape\MakeLowercase{Keir Mierle} \\  \texttt{ keir@google.com}
+}
+\checkandfixthelayout
+
+\pagestyle{ceres}
+
+\newcommand{\ceres}{{Ceres }}
+\newcommand{\reals}{\mathbb{R} }
+\def\eg{\emph{e.g. }}
+\def\ie{\emph{i.e. }}
+\newcommand{\glog}{\texttt{google-glog}}
+\newcommand{\gflags}{\texttt{gflags}}
+\newcommand{\eigen}{\texttt{Eigen3}}
+\newcommand{\suitesparse}{\texttt{SuiteSparse}}
+\newcommand{\cholmod}{\texttt{CHOLMOD}}
+\newcommand{\amd}{\texttt{AMD}}
+\newcommand{\colamd}{\texttt{COLAMD}}
+\newcommand{\lapack}{\texttt{LAPACK}}
+\newcommand{\blas}{\texttt{BLAS}}
+\newcommand{\denseschur}{\texttt{DENSE\_SCHUR}}
+\newcommand{\sparseschur}{\texttt{SPARSE\_SCHUR}}
+\newcommand{\iterativeschur}{\texttt{iterative\_SCHUR}}
+\newcommand{\cmake}{\texttt{cmake}}
+\newcommand{\protobuf}{\texttt{protobuf}}
+
+
+\begin{document}
+\chapterstyle{ceres}
+\newcomment{Question}
+\newcomment{Answer}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+\pagestyle{ceres}
+\tableofcontents
+
+\chapter{A Note About This Document}
+This document is a work in progress. The best documentation for Ceres will always be the code. 
+
+Building this pdf from source will require a relatively recent installation of \texttt{LaTeX}~\footnote{\url{http://www.tug.org/texlive/}}, \texttt{minted.sty}\footnote{\url{http://code.google.com/p/minted/}} and \texttt{pygments}\footnote{\url{http://pygments.org/}}.
+\input{introduction}
+\input{build}
+\input{tutorial}
+\input{api}
+\input{theory}
+\input{faq}
+\input{further}
+\bibliographystyle{plain}
+\bibliography{ceres}
+\end{document}
