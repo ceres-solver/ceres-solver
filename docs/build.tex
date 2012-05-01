@@ -10,10 +10,10 @@ Ceres relies on a number of open source libraries, some of which are optional. H
 \begin{enumerate}
 \item{\cmake~\footnote{\url{http://www.cmake.org/}}} is the cross-platform build system used by Ceres.
 \item{\eigen~\footnote{\url{http://eigen.tuxfamily.org}}} is used for doing all the low level matrix and
-  linear algebra operations.
+  linear algebra operations. 
 \item{\glog~\footnote{\url{http://code.google.com/p/google-glog}}} is used for error checking and logging.
 \item{\gflags~\footnote{\url{http://code.google.com/p/gflags}}} is used by the code in
-  \texttt{examples}. It is not a requirement to build the core Ceres library.
+  \texttt{examples}. It is not required to build the core Ceres library.
 \item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/suitesparse/}}} is used for sparse matrix analysis,
   ordering and factorization. In particular Ceres uses the
   \amd, \colamd\ and \cholmod\ libraries. This is an optional
@@ -25,7 +25,7 @@ Ceres relies on a number of open source libraries, some of which are optional. H
   or
   \texttt{ATLAS}~\footnote{\url{http://math-atlas.sourceforge.net/}},
     both of which ship with \blas\ and \lapack\ routines.
-\item{\texttt{protobuf}~\footnote{\url{http://code.google.com/p/protobuf/}}} is an optional dependency that is used for serializing and deserializing linear least squares problems to disk. This is useful for debugging and testing. Without it, some of the tests will not be build.
+\item{\texttt{protobuf}~\footnote{\url{http://code.google.com/p/protobuf/}}} is an optional dependency that is used for serializing and deserializing linear least squares problems to disk. This is useful for debugging and testing. Without it, some of the tests will be disabled.
 \end{enumerate}
 
 Currently we support building on Linux and MacOS X. Support for other
@@ -96,7 +96,7 @@ included problems, which comes from the University of Washington's BAL dataset~\
 examples/simple_bundle_adjuster \
   ../ceres-solver-1.0/data/problem-16-22106-pre.txt \
 \end{minted}
-This runs Ceres for a maximum of 10 iterations using the  \denseschur linear solver. The output should look something like this.
+This runs Ceres for a maximum of 10 iterations using the  \denseschur\ linear solver. The output should look something like this.
 \clearpage
 \begin{minted}{bash}
 0: f: 1.598216e+06 d: 0.00e+00 g: 5.67e+18 h: 0.00e+00 rho: 0.00e+00 mu: 1.00e-04 li:  0
@@ -192,7 +192,7 @@ cmake ../ceres-solver-1.0                                       \
 make -j3
 make test
 \end{minted}
-
+Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
 \section{Customizing the Build Process}
 \label{sec:custom}
 It is possible to reduce the libraries needed to build Ceres and
@@ -201,12 +201,16 @@ doing, we recommend against disabling any of the following flags.
 
 \begin{enumerate}
 \item{\texttt{protobuf}}
+
+
 Protocol Buffers is a big dependency and if you do not care for the tests that depend on it and the logging support it enables, you can turn it off by using
 \begin{minted}{bash}
 -DPROTOBUF=OFF.
 \end{minted}
 
 \item{\suitesparse}
+
+
 It is possible to compile Ceres in without \suitesparse, which
 saves on binary size, but the resulting version of Ceres is not suited
 to large scale problems due to the lack of a sparse Cholesky solver.  This will reduce Ceres' dependencies down to
@@ -215,13 +219,19 @@ to large scale problems due to the lack of a sparse Cholesky solver.  This will 
 -DSUITESPARSE=OFF.
 \end{minted}
  This will also disable dependency checking for \lapack\ and \blas.
+
 \item{\gflags}
+
+
 To build Ceres without \gflags, use
 \begin{minted}{bash}
 -DGFLAGS=OFF.
 \end{minted}
 Disabling this flag will prevent some of the example code from building.
+
 \item{Template Specializations}
+
+
 If you are concerned about binary size/compilation time over some
 small (10-20\%) performance gains in the \sparseschur\ solver, you can disable some of the template
 specializations by using
@@ -230,6 +240,8 @@ specializations by using
 \end{minted}
 
 \item{\texttt{OpenMP}}
+
+
 On certain platforms like Android, multithreading with OpenMP is not supported. OpenMP support can be disabled by using
 \begin{minted}{bash}
 -DOPENMP=OFF.

@@ -85,7 +85,7 @@
 \newcommand{\blas}{\texttt{BLAS}}
 \newcommand{\denseschur}{\texttt{DENSE\_SCHUR}}
 \newcommand{\sparseschur}{\texttt{SPARSE\_SCHUR}}
-\newcommand{\iterativeschur}{\texttt{iterative\_SCHUR}}
+\newcommand{\iterativeschur}{\texttt{ITERATIVE\_SCHUR}}
 \newcommand{\cmake}{\texttt{cmake}}
 \newcommand{\protobuf}{\texttt{protobuf}}
 
@@ -94,17 +94,17 @@
 \chapterstyle{ceres}
 \newcomment{Question}
 \newcomment{Answer}
-
 \maketitle
 \thispagestyle{empty}
 \newpage
 \pagestyle{ceres}
 \tableofcontents
-
+\newpage
 \chapter{A Note About This Document}
-This document is a work in progress. The best documentation for Ceres will always be the code. 
+Building this pdf from source requires a relatively recent installation of \texttt{LaTeX}~\footnote{\url{http://www.tug.org/texlive/}}, \texttt{minted.sty}\footnote{\url{http://code.google.com/p/minted/}} and \texttt{pygments}\footnote{\url{http://pygments.org/}}.
 
-Building this pdf from source will require a relatively recent installation of \texttt{LaTeX}~\footnote{\url{http://www.tug.org/texlive/}}, \texttt{minted.sty}\footnote{\url{http://code.google.com/p/minted/}} and \texttt{pygments}\footnote{\url{http://pygments.org/}}.
+This document is incomplete and we are working to fix this. In the meanwhile please refer to the source code.
+
 \input{introduction}
 \input{build}
 \input{tutorial}
