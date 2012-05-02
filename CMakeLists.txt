@@ -145,6 +145,18 @@ IF (SUITESPARSE)
   ENDIF (NOT EXISTS ${LAPACK_LIB})
   MESSAGE ("-- Found LAPACK library: ${LAPACK_LIB}")
 
+  # On Apple BLAS is linked with vecLib, so don't add it separately.
+  IF (NOT APPLE)
+    MESSAGE("-- Check for BLAS")
+    FIND_LIBRARY(BLAS_LIB NAMES blas)
+    IF (NOT EXISTS ${BLAS_LIB})
+      MESSAGE(FATAL_ERROR
+              "Can't find BLAS (needed for LAPACK and SuiteSparse.)"
+              "Please specify -DBLAS_LIB=...")
+    ENDIF (NOT EXISTS ${BLAS_LIB})
+    MESSAGE ("-- Found BLAS library: ${BLAS_LIB}")
+  ENDIF (NOT APPLE)
+
 ELSE (SUITESPARSE)
   ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
 ENDIF (SUITESPARSE)
