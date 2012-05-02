@@ -103,16 +103,15 @@ ADD_LIBRARY(ceres
             ${CERES_INTERNAL_HDRS}
             ${CERES_INTERNAL_SCHUR_FILES})
 
-# TODO(keir): Make linking gomp optional for e.g. Windows.
 SET(CERES_LIBRARY_DEPENDENCIES
-  ${GLOG_LIB}
-  ${GFLAGS_LIB}
-  ${LAPACK_LIB}
-  ${CAMD_LIB}
-  ${AMD_LIB}
-  ${CCOLAMD_LIB}
-  ${COLAMD_LIB}
-  ${CHOLMOD_LIB})
+    ${GLOG_LIB}
+    ${GFLAGS_LIB}
+    ${CHOLMOD_LIB}
+    ${LAPACK_LIB}
+    ${CAMD_LIB}
+    ${AMD_LIB}
+    ${CCOLAMD_LIB}
+    ${COLAMD_LIB})
 
 IF (EXISTS ${METIS_LIB})
   SET(CERES_LIBRARY_DEPENDENCIES
