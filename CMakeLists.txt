@@ -28,7 +28,6 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-
 CMAKE_MINIMUM_REQUIRED(VERSION 2.2)
 
 IF (COMMAND cmake_policy)
@@ -190,13 +189,11 @@ SET(EIGEN_SEARCH_HEADERS
     /usr/include
     /usr/include/eigen3  # Ubuntu 10.04's default location.
     /usr/local/include
-    /usr/local/include/eigen3,
+    /usr/local/include/eigen3
     /opt/local/var/macports/software/eigen3/opt/local/include/eigen3/)
-FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS
-          /usr/include/eigen2
-          )
+FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS ${EIGEN_SEARCH_HEADERS})
 IF (NOT EXISTS ${EIGEN_INCLUDE})
- MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
+  MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
 MESSAGE("-- Found Eigen 3.0: ${EIGEN_INCLUDE}")
 
@@ -250,7 +247,6 @@ IF (UNIX)
   ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
   ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
 ENDIF (UNIX)
-
 
 # Use the std namespace for the hash<> and related templates. This may vary by
 # system.
