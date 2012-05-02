@@ -148,23 +148,11 @@ On OS X, we recommend using the \texttt{homebrew}~\footnote{\url{http://mxcl.git
 \begin{minted}{bash}
 brew install cmake
 \end{minted}
-\item{\gflags} can be installed from source via the \texttt{autoconf} invocation 
-\begin{minted}{bash}
-tar -xvzf gflags-2.0.tar.gz
-cd gflags-2.0
-./configure --prefix=/usr/local
-make
-sudo make install.
-\end{minted}
+\item{\texttt{glog}\ and \texttt{gflags}}
 
-\item{\glog} must be configured to use the previously installed
-\gflags, rather than the stripped down version that is bundled with \glog. Assuming you have it installed in \texttt{/usr/local} the following \texttt{autoconf} invocation installs it.
+Installing \texttt{\glog} takes also brings in \texttt{gflags} as a dependency.
 \begin{minted}{bash}
-tar -xvzf glog-0.3.2.tar.gz
-cd glog-0.3.2
-./configure --with-gflags=/usr/local/
-make
-sudo make install
+brew install glog
 \end{minted}
 \item{\eigen}
 \begin{minted}{bash}
@@ -185,10 +173,7 @@ We are now ready to build and test Ceres.
 tar zxf ceres-solver-1.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0                                       \
- -DEIGEN_INCLUDE=/usr/local/Cellar/eigen/3.0.5/include/eigen3/  \
- -DSEARCH_HEADERS=/usr/local/Cellar/suite-sparse/3.7.0/include/ \
- -SEARCH_LIBS=/usr/local/Cellar/suite-sparse/3.7.0/lib/         \ 
+cmake ../ceres-solver-1.0              
 make -j3
 make test
 \end{minted}
