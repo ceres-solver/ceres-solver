@@ -168,8 +168,20 @@ OPTION(GFLAGS
 
 IF (GFLAGS)
   MESSAGE("-- Check for Google Flags")
-  FIND_LIBRARY(GFLAGS_LIB NAMES gflags)
-  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h)
+  FIND_LIBRARY(GFLAGS_LIB
+    NAMES
+      gflags
+    PATH
+      /usr/lib
+      /usr/local/lib
+    )
+  FIND_PATH(GFLAGS_INCLUDE
+    NAMES
+      gflags/gflags.h
+    PATH
+      /usr/include
+      /usr/local/include
+    )
   IF (NOT EXISTS ${GFLAGS_LIB} OR NOT EXISTS ${GFLAGS_INCLUDE})
     MESSAGE(FATAL_ERROR
             "Can't find Google Flags. Please specify: "
@@ -184,8 +196,20 @@ ENDIF (GFLAGS)
 
 # Google Logging
 MESSAGE("-- Check for Google Log")
-FIND_LIBRARY(GLOG_LIB NAMES glog)
-FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h)
+FIND_LIBRARY(GLOG_LIB
+  NAMES
+    glog
+  PATH
+    /usr/lib
+    /usr/local/lib
+)
+FIND_PATH(GLOG_INCLUDE
+  NAMES
+    glog/logging.h
+  PATH
+    /usr/include
+    /usr/local/include
+)
 IF (NOT EXISTS ${GLOG_LIB} OR NOT EXISTS ${GLOG_INCLUDE})
   MESSAGE(FATAL_ERROR
           "Can't find Google Log. Please specify: "
