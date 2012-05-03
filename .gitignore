@@ -1,0 +1,14 @@
+*~
+CMakeLists.txt.user*
+*.kdev*
+*.bak
+*.orig
+build/
+*.aux
+*.blg
+*.toc
+*.fdb_latexmk
+*.bbl
+*.log
+*.synctex.gz
+ceres.pdf
