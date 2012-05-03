@@ -37,9 +37,13 @@
 //   - A "JacobianWriter" that is responsible for storing the resulting
 //     jacobian blocks in the passed sparse matrix.
 //
-// This abstraction affords a evaluator implementation while still efficiently
-// supporting multiple sparse matrices in the backend. This evaluator
-// implementation is threaded using OpenMP.
+// This abstraction affords an efficient evaluator implementation while still
+// supporting writing to multiple sparse matrix formats. For example, when the
+// ProgramEvaluator is parameterized for writing to block sparse matrices, the
+// residual jacobians are written directly into their final position in the
+// block sparse matrix by the user's CostFunction; there is no copying.
+//
+// The evaluation is threaded with OpenMP.
 //
 // The EvaluatePreparer and JacobianWriter interfaces are as follows:
 //
