@@ -64,7 +64,7 @@ using ceres::Problem;
 using ceres::Solve;
 using ceres::Solver;
 
-DEFINE_double(robust_threshold, -1.0, "Robust loss parameter. Set to -1 for "
+DEFINE_double(robust_threshold, 0.0, "Robust loss parameter. Set to 0 for "
               "normal squared error (no robustification).");
 
 // The cost for a single sample. The returned residual is related to the
@@ -88,7 +88,7 @@ class DistanceFromCircleCost {
 
     // It is tempting to use the following cost:
     //
-    //   residual[0] = *r - sqrt(xp*xp + yp*yp);
+    //   residual[0] = r - sqrt(xp*xp + yp*yp);
     //
     // which is the distance of the sample from the circle. This works
     // reasonably well, but the sqrt() adds strong nonlinearities to the cost

@@ -88,7 +88,7 @@ enum LinearSolverType {
   // This is not meant for direct client use; it is used under the
   // hood while using ITERATIVE_SCHUR.  Once there is a decent
   // preconditioner, this will make sense for general sparse problems.
-  CONJUGATE_GRADIENTS,
+  CONJUGATE_GRADIENTS
 };
 
 enum PreconditionerType {
@@ -150,11 +150,11 @@ enum OrderingType {
 // The options get progressively noisier.
 enum LoggingType {
   SILENT,
-  PER_MINIMIZER_ITERATION,
+  PER_MINIMIZER_ITERATION
 };
 
 enum MinimizerType {
-  LEVENBERG_MARQUARDT,
+  LEVENBERG_MARQUARDT
 };
 
 enum SolverTerminationType {
@@ -191,7 +191,7 @@ enum SolverTerminationType {
   USER_ABORT,
 
   // User's IterationCallback returned SOLVER_TERMINATE_SUCCESSFULLY
-  USER_SUCCESS,
+  USER_SUCCESS
 };
 
 // Enums used by the IterationCallback instances to indicate to the

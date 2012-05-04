@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 
   ceres::Solver::Summary summary;
   ceres::Solve(options, &problem, &summary);
-  std::cout << summary.BriefSummary() << "\n";
+  std::cout << summary.BriefReport() << "\n";
   std::cout << "x : 5.0 -> " << x << "\n";
   return 0;
 }

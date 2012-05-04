@@ -72,7 +72,7 @@ namespace ceres {
 
 enum NumericDiffMethod {
   CENTRAL,
-  FORWARD,
+  FORWARD
 };
 
 // This is split from the main class because C++ doesn't allow partial template
