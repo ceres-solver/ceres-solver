@@ -242,6 +242,7 @@ IF (NOT SCHUR_SPECIALIZATIONS)
   # Disable fixed-size specializations of the schur complement solver, which
   # requires multiple gigabytes of memory to compile.
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
+  MESSAGE("-- Disabling Schur specializations (faster compiles)")
 ENDIF (NOT SCHUR_SPECIALIZATIONS)
 
 OPTION(OPENMP
