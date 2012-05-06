@@ -198,13 +198,14 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     // from Stephen Nash's work on truncated Newton
     // methods. References:
     //
-    // 1. Stephen G. Nash & Ariela Sofer, Assessing A Search Direction
-    // Within A Truncated Newton Method, Operation Research Letters
-    // 9(1990) 219-221.
+    //   1. Stephen G. Nash & Ariela Sofer, Assessing A Search
+    //   Direction Within A Truncated Newton Method, Operation
+    //   Research Letters 9(1990) 219-221.
+    //   
+    //   2. Stephen G. Nash, A Survey of Truncated Newton Methods,
+    //   Journal of Computational and Applied Mathematics,
+    //   124(1-2), 45-59, 2000.
     //
-    // 2. Stephen G. Nash, A Survey of Truncated Newton Methods,
-    // Journal of Computational and Applied Mathematics, 124(1-2),
-    // 45-59, 2000.
     double zeta = summary.num_iterations * (Q1 - Q0) / Q1;
     VLOG(2) << "Q termination: zeta " << zeta
             << " " << per_solve_options.q_tolerance;
