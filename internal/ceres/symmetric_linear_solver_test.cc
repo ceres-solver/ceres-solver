@@ -36,6 +36,7 @@
 // more badly conditioned problem.
 
 #include "gtest/gtest.h"
+#include "ceres/conjugate_gradients_solver.h"
 #include "ceres/linear_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -63,14 +64,13 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
   LinearSolver::Options options;
   options.max_num_iterations = 10;
   options.constant_sparsity = false;
-  options.type = CONJUGATE_GRADIENTS;
 
   LinearSolver::PerSolveOptions per_solve_options;
   per_solve_options.r_tolerance = 1e-9;
 
-  scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+  ConjugateGradientsSolver solver(options);
   LinearSolver::Summary summary =
-      solver->Solve(A.get(), b.data(), per_solve_options, x.data());
+      solver.Solve(A.get(), b.data(), per_solve_options, x.data());
 
   EXPECT_EQ(summary.termination_type, TOLERANCE);
   ASSERT_EQ(summary.num_iterations, 1);
@@ -121,15 +121,13 @@ TEST(ConjuateGradientTest, Solves3x3SymmetricSystem) {
 
   LinearSolver::Options options;
   options.max_num_iterations = 10;
-  options.constant_sparsity = false;
-  options.type = CONJUGATE_GRADIENTS;
 
   LinearSolver::PerSolveOptions per_solve_options;
   per_solve_options.r_tolerance = 1e-9;
 
-  scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+  ConjugateGradientsSolver solver(options);
   LinearSolver::Summary summary =
-      solver->Solve(A.get(), b.data(), per_solve_options, x.data());
+      solver.Solve(A.get(), b.data(), per_solve_options, x.data());
 
   EXPECT_EQ(summary.termination_type, TOLERANCE);
 

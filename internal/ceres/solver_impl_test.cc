@@ -37,7 +37,6 @@
 #include "ceres/solver_impl.h"
 #include "ceres/sized_cost_function.h"
 
-
 namespace ceres {
 namespace internal {
 
@@ -361,14 +360,6 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
   EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
   EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
-}
-
-
-TEST(SolverImpl, CreateLinearSolverConjugateGradients) {
-  Solver::Options options;
-  options.linear_solver_type = CONJUGATE_GRADIENTS;
-  string error;
-  EXPECT_FALSE(SolverImpl::CreateLinearSolver(&options, &error));
 }
 
 #ifdef CERES_NO_SUITESPARSE
