@@ -154,7 +154,7 @@ class LinearSolver {
     // In either case, x is the vector that solves the following
     // optimization problem.
     //
-    //   arg min_x ||Ax -b||^2 + ||Dx||^2
+    //   arg min_x ||Ax - b||^2 + ||Dx||^2
     //
     // Here A is a matrix of size m x n, with full column rank. If A
     // does not have full column rank, the results returned by the

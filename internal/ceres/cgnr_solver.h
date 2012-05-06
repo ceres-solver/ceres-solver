@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,44 +28,39 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-#include <glog/logging.h>
-#include "ceres/evaluator.h"
-#include "ceres/block_evaluate_preparer.h"
-#include "ceres/block_jacobian_writer.h"
-#include "ceres/compressed_row_jacobian_writer.h"
-#include "ceres/scratch_evaluate_preparer.h"
-#include "ceres/dense_jacobian_writer.h"
-#include "ceres/program_evaluator.h"
+#ifndef CERES_INTERNAL_CGNR_SOLVER_H_
+#define CERES_INTERNAL_CGNR_SOLVER_H_
+
+#include "ceres/internal/scoped_ptr.h"
+#include "ceres/linear_solver.h"
 
 namespace ceres {
 namespace internal {
 
-Evaluator::~Evaluator() {}
+class BlockDiagonalPreconditioner;
 
-Evaluator* Evaluator::Create(const Evaluator::Options& options,
-                             Program* program,
-                             string* error) {
-  switch (options.linear_solver_type) {
-    case DENSE_QR:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  DenseJacobianWriter>(options,
-                                                       program);
-    case DENSE_SCHUR:
-    case SPARSE_SCHUR:
-    case ITERATIVE_SCHUR:
-    case CONJUGATE_GRADIENTS:
-      return new ProgramEvaluator<BlockEvaluatePreparer,
-                                  BlockJacobianWriter>(options,
-                                                       program);
-    case SPARSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  CompressedRowJacobianWriter>(options,
-                                                               program);
-    default:
-      *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
-  }
-}
+// A conjugate gradients on the normal equations solver. This directly solves
+// for the solution to
+//
+//   (A^T A + D^T D)x = A^T b
+//
+// as required for solving for x in the least squares sense. Currently only
+// block diagonal preconditioning is supported.
+class CgnrSolver : public LinearSolver {
+ public:
+  explicit CgnrSolver(const LinearSolver::Options& options);
+  virtual Summary Solve(LinearOperator* A,
+                        const double* b,
+                        const LinearSolver::PerSolveOptions& per_solve_options,
+                        double* x);
+
+ private:
+  const LinearSolver::Options options_;
+  scoped_ptr<BlockDiagonalPreconditioner> jacobi_preconditioner_;
+  DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
+};
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_CGNR_SOLVER_H_

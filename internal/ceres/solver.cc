@@ -155,7 +155,8 @@ string Solver::Summary::FullReport() const {
                           LinearSolverTypeToString(linear_solver_type_given),
                           LinearSolverTypeToString(linear_solver_type_used));
 
-  if (linear_solver_type_given == ITERATIVE_SCHUR) {
+  if (linear_solver_type_given == CONJUGATE_GRADIENTS ||
+      linear_solver_type_given == ITERATIVE_SCHUR) {
     internal::StringAppendF(&report, "Preconditioner      %25s%25s\n",
                             PreconditionerTypeToString(preconditioner_type),
                             PreconditionerTypeToString(preconditioner_type));

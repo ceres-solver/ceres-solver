@@ -66,8 +66,8 @@
 DEFINE_string(input, "", "Input File name");
 
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, cholesky "
-              "and dense_qr");
+              "sparse_schur, dense_schur, iterative_schur, cholesky, "
+              "dense_qr, and conjugate_gradients");
 
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
@@ -75,6 +75,7 @@ DEFINE_string(preconditioner_type, "jacobi", "Options are: "
 
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
+DEFINE_double(eta, 1e-2, "Default value for eta.");
 DEFINE_bool(use_schur_ordering, false, "Use automatic Schur ordering.");
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used");
@@ -94,6 +95,8 @@ void SetLinearSolver(Solver::Options* options) {
     options->linear_solver_type = ceres::ITERATIVE_SCHUR;
   } else if (FLAGS_solver_type == "cholesky") {
     options->linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
+  } else if (FLAGS_solver_type == "conjugate_gradients") {
+    options->linear_solver_type = ceres::CONJUGATE_GRADIENTS;
   } else if (FLAGS_solver_type == "dense_qr") {
     // DENSE_QR is included here for completeness, but actually using
     // this opttion is a bad idea due to the amount of memory needed
@@ -105,7 +108,8 @@ void SetLinearSolver(Solver::Options* options) {
                << FLAGS_solver_type;
   }
 
-  if (options->linear_solver_type == ceres::ITERATIVE_SCHUR) {
+  if (options->linear_solver_type == ceres::ITERATIVE_SCHUR ||
+      options->linear_solver_type == ceres::CONJUGATE_GRADIENTS) {
     options->linear_solver_min_num_iterations = 5;
     if (FLAGS_preconditioner_type == "identity") {
       options->preconditioner_type = ceres::IDENTITY;
@@ -178,6 +182,7 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->max_num_iterations = FLAGS_num_iterations;
   options->minimizer_progress_to_stdout = true;
   options->num_threads = FLAGS_num_threads;
+  options->eta = FLAGS_eta;
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,

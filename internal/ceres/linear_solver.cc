@@ -31,7 +31,7 @@
 #include "ceres/linear_solver.h"
 
 #include <glog/logging.h>
-#include "ceres/conjugate_gradients_solver.h"
+#include "ceres/cgnr_solver.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/iterative_schur_complement_solver.h"
 #include "ceres/schur_complement_solver.h"
@@ -47,7 +47,7 @@ LinearSolver::~LinearSolver() {
 LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
   switch (options.type) {
     case CONJUGATE_GRADIENTS:
-      return new ConjugateGradientsSolver(options);
+      return new CgnrSolver(options);
 
     case SPARSE_NORMAL_CHOLESKY:
 #ifndef CERES_NO_SUITESPARSE

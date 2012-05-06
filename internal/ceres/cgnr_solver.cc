@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,43 +28,51 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-#include <glog/logging.h>
-#include "ceres/evaluator.h"
-#include "ceres/block_evaluate_preparer.h"
-#include "ceres/block_jacobian_writer.h"
-#include "ceres/compressed_row_jacobian_writer.h"
-#include "ceres/scratch_evaluate_preparer.h"
-#include "ceres/dense_jacobian_writer.h"
-#include "ceres/program_evaluator.h"
+#include "ceres/cgnr_solver.h"
+
+#include "ceres/linear_solver.h"
+#include "ceres/cgnr_linear_operator.h"
+#include "ceres/conjugate_gradients_solver.h"
+#include "ceres/block_diagonal_preconditioner.h"
 
 namespace ceres {
 namespace internal {
 
-Evaluator::~Evaluator() {}
+CgnrSolver::CgnrSolver(const LinearSolver::Options& options)
+  : options_(options),
+    jacobi_preconditioner_(NULL) {
+}
 
-Evaluator* Evaluator::Create(const Evaluator::Options& options,
-                             Program* program,
-                             string* error) {
-  switch (options.linear_solver_type) {
-    case DENSE_QR:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  DenseJacobianWriter>(options,
-                                                       program);
-    case DENSE_SCHUR:
-    case SPARSE_SCHUR:
-    case ITERATIVE_SCHUR:
-    case CONJUGATE_GRADIENTS:
-      return new ProgramEvaluator<BlockEvaluatePreparer,
-                                  BlockJacobianWriter>(options,
-                                                       program);
-    case SPARSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  CompressedRowJacobianWriter>(options,
-                                                               program);
-    default:
-      *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
+LinearSolver::Summary CgnrSolver::Solve(
+    LinearOperator* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  // Form z = Atb.
+  scoped_array<double> z(new double[A->num_cols()]);
+  std::fill(z.get(), z.get() + A->num_cols(), 0.0);
+  A->LeftMultiply(b, z.get());
+
+  // Precondition if necessary.
+  LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
+  if (options_.preconditioner_type == JACOBI) {
+    if (jacobi_preconditioner_.get() == NULL) {
+      jacobi_preconditioner_.reset(new BlockDiagonalPreconditioner(*A));
+    }
+    jacobi_preconditioner_->Update(*A);
+    cg_per_solve_options.preconditioner = jacobi_preconditioner_.get();
+  } else if (options_.preconditioner_type != IDENTITY) {
+    // TODO(keir): This should die somehow.
   }
+
+  // Solve (AtA + DtD)x = z (= Atb).
+  std::fill(x, x + A->num_cols(), 0.0);
+  CgnrLinearOperator AtApDtD(A, per_solve_options.D);
+  ConjugateGradientsSolver conjugate_gradient_solver(options_);
+  return conjugate_gradient_solver.Solve(&AtApDtD,
+                                         z.get(),
+                                         cg_per_solve_options,
+                                         x);
 }
 
 }  // namespace internal

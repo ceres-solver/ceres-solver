@@ -431,12 +431,6 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
-  if (options->linear_solver_type ==  CONJUGATE_GRADIENTS) {
-    *error = "CONJUGATE_GRADIENTS is not a valid solver for "
-        "linear least squares problems.";
-    return NULL;
-  }
-
 #ifdef CERES_NO_SUITESPARSE
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
     *error = "Can't use SPARSE_NORMAL_CHOLESKY because SuiteSparse was not "

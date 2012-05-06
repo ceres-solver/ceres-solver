@@ -38,13 +38,14 @@
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/conjugate_gradients_solver.h"
 #include "ceres/implicit_schur_complement.h"
-#include "ceres/linear_solver.h"
-#include "ceres/triplet_sparse_matrix.h"
-#include "ceres/visibility_based_preconditioner.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/linear_solver.h"
+#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "ceres/visibility_based_preconditioner.h"
 
 namespace ceres {
 namespace internal {
@@ -85,7 +86,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   LinearSolver::Options cg_options;
   cg_options.type = CONJUGATE_GRADIENTS;
   cg_options.max_num_iterations = options_.max_num_iterations;
-  scoped_ptr<LinearSolver> cg_solver(LinearSolver::Create(cg_options));
+  ConjugateGradientsSolver cg_solver(cg_options);
   LinearSolver::PerSolveOptions cg_per_solve_options;
 
   cg_per_solve_options.r_tolerance = per_solve_options.r_tolerance;
@@ -129,10 +130,10 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   cg_summary.termination_type = FAILURE;
 
   if (is_preconditioner_good) {
-    cg_summary = cg_solver->Solve(schur_complement_.get(),
-                                  schur_complement_->rhs().data(),
-                                  cg_per_solve_options,
-                                  reduced_linear_system_solution_.data());
+    cg_summary = cg_solver.Solve(schur_complement_.get(),
+                                 schur_complement_->rhs().data(),
+                                 cg_per_solve_options,
+                                 reduced_linear_system_solution_.data());
     if (cg_summary.termination_type != FAILURE) {
       schur_complement_->BackSubstitute(
           reduced_linear_system_solution_.data(), x);

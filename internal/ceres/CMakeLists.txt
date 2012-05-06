@@ -29,6 +29,7 @@
 # Author: keir@google.com (Keir Mierle)
 
 SET(CERES_INTERNAL_SRC
+    block_diagonal_preconditioner.cc
     block_evaluate_preparer.cc
     block_jacobian_writer.cc
     block_random_access_dense_matrix.cc
@@ -37,6 +38,7 @@ SET(CERES_INTERNAL_SRC
     block_sparse_matrix.cc
     block_structure.cc
     canonical_views_clustering.cc
+    cgnr_solver.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc
     conditioned_cost_function.cc

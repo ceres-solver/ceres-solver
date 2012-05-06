@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,44 +28,41 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-#include <glog/logging.h>
-#include "ceres/evaluator.h"
-#include "ceres/block_evaluate_preparer.h"
-#include "ceres/block_jacobian_writer.h"
-#include "ceres/compressed_row_jacobian_writer.h"
-#include "ceres/scratch_evaluate_preparer.h"
-#include "ceres/dense_jacobian_writer.h"
-#include "ceres/program_evaluator.h"
+#ifndef CERES_INTERNAL_BLOCK_DIAGONAL_PRECONDITIONER_H_
+#define CERES_INTERNAL_BLOCK_DIAGONAL_PRECONDITIONER_H_
+
+#include <vector>
+#include "ceres/linear_operator.h"
 
 namespace ceres {
 namespace internal {
 
-Evaluator::~Evaluator() {}
+class CompressedRowBlockStructure;
+class LinearOperator;
+class SparseMatrix;
 
-Evaluator* Evaluator::Create(const Evaluator::Options& options,
-                             Program* program,
-                             string* error) {
-  switch (options.linear_solver_type) {
-    case DENSE_QR:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  DenseJacobianWriter>(options,
-                                                       program);
-    case DENSE_SCHUR:
-    case SPARSE_SCHUR:
-    case ITERATIVE_SCHUR:
-    case CONJUGATE_GRADIENTS:
-      return new ProgramEvaluator<BlockEvaluatePreparer,
-                                  BlockJacobianWriter>(options,
-                                                       program);
-    case SPARSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  CompressedRowJacobianWriter>(options,
-                                                               program);
-    default:
-      *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
-  }
-}
+// A block diagonal preconditioner; also known as block-Jacobi.
+class BlockDiagonalPreconditioner : public LinearOperator {
+ public:
+  BlockDiagonalPreconditioner(const LinearOperator& A);
+  virtual ~BlockDiagonalPreconditioner();
+
+  void Update(const LinearOperator& matrix);
+
+  virtual void RightMultiply(const double* x, double* y) const;
+  virtual void LeftMultiply(const double* x, double* y) const;
+
+  virtual int num_rows() const { return size_; }
+  virtual int num_cols() const { return size_; }
+
+ private:
+  std::vector<double*> blocks_;
+  std::vector<double> block_storage_;
+  int size_;
+  const CompressedRowBlockStructure& block_structure_;
+};
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_LINEAR_OPERATOR_H_
