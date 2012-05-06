@@ -165,5 +165,29 @@ TEST(Degree2MaximumSpanningForest, StarGraph) {
   }
 }
 
+TEST(VertexDegreeLessThan, TotalOrdering) {
+  Graph<int> graph;
+  graph.AddVertex(0);
+  graph.AddVertex(1);
+  graph.AddVertex(2);
+  graph.AddVertex(3);
+
+  // 0-1 2-3
+  // All vertices have degree 1.
+  graph.AddEdge(0, 1, 1.0);
+  graph.AddEdge(2, 3, 1.0);
+  VertexDegreeLessThan<int> less_than(graph);
+
+  for (int i = 0; i < 4; ++i) {
+    EXPECT_FALSE(less_than(i,i))
+        << "Failing vertex: " << i;
+    for (int j = 0; j < 4; ++j) {
+      if (i != j) {
+        EXPECT_TRUE(less_than(i,j) ^ less_than(j,i))
+            << "Failing vertex pair: " << i << " " << j;
+      }
+    }
+  }
+}
 }  // namespace internal
 }  // namespace ceres
