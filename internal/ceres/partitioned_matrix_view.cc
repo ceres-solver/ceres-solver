@@ -283,6 +283,7 @@ void PartitionedMatrixView::UpdateBlockDiagonalEtE(
 // vector multiply its an outer product.
 //
 //   block_diagonal = block_diagonal(F'F)
+//
 void PartitionedMatrixView::UpdateBlockDiagonalFtF(
     BlockSparseMatrix* block_diagonal) const {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
