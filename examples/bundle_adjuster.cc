@@ -75,7 +75,9 @@ DEFINE_string(preconditioner_type, "jacobi", "Options are: "
 
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
-DEFINE_double(eta, 1e-2, "Default value for eta.");
+DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
+             "accuracy of each linear solve of the truncated newton step. "
+             "Changing this parameter can affect solve performance ");
 DEFINE_bool(use_schur_ordering, false, "Use automatic Schur ordering.");
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used");
@@ -99,7 +101,7 @@ void SetLinearSolver(Solver::Options* options) {
     options->linear_solver_type = ceres::CONJUGATE_GRADIENTS;
   } else if (FLAGS_solver_type == "dense_qr") {
     // DENSE_QR is included here for completeness, but actually using
-    // this opttion is a bad idea due to the amount of memory needed
+    // this option is a bad idea due to the amount of memory needed
     // to store even the smallest of the bundle adjustment jacobian
     // arrays
     options->linear_solver_type = ceres::DENSE_QR;
@@ -108,8 +110,20 @@ void SetLinearSolver(Solver::Options* options) {
                << FLAGS_solver_type;
   }
 
-  if (options->linear_solver_type == ceres::ITERATIVE_SCHUR ||
-      options->linear_solver_type == ceres::CONJUGATE_GRADIENTS) {
+  if (options->linear_solver_type == ceres::CONJUGATE_GRADIENTS) {
+    options->linear_solver_min_num_iterations = 5;
+    if (FLAGS_preconditioner_type == "identity") {
+      options->preconditioner_type = ceres::IDENTITY;
+    } else if (FLAGS_preconditioner_type == "jacobi") {
+      options->preconditioner_type = ceres::JACOBI;
+    } else {
+      LOG(FATAL) << "For CONJUGATE_GRADIENTS, only identity and jacobian "
+                 << "preconditioners are supported. Got: "
+                 << FLAGS_preconditioner_type;
+    }
+  }
+
+  if (options->linear_solver_type == ceres::ITERATIVE_SCHUR) {
     options->linear_solver_min_num_iterations = 5;
     if (FLAGS_preconditioner_type == "identity") {
       options->preconditioner_type = ceres::IDENTITY;
@@ -123,7 +137,7 @@ void SetLinearSolver(Solver::Options* options) {
       options->preconditioner_type = ceres::CLUSTER_TRIDIAGONAL;
     } else {
       LOG(FATAL) << "Unknown ceres preconditioner type: "
-               << FLAGS_preconditioner_type;
+                 << FLAGS_preconditioner_type;
     }
   }
 
