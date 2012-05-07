@@ -11,9 +11,13 @@ Ceres relies on a number of open source libraries, some of which are optional. H
 \item{\cmake~\footnote{\url{http://www.cmake.org/}}} is the cross-platform build system used by Ceres.
 \item{\eigen~\footnote{\url{http://eigen.tuxfamily.org}}} is used for doing all the low level matrix and
   linear algebra operations. 
+
 \item{\glog~\footnote{\url{http://code.google.com/p/google-glog}}} is used for error checking and logging.
+
+ Note: Ceres requires \texttt{glog}\ version 0.3.1 or later. Version 0.3 (which ships with Fedora 16) has a namespace bug which prevents Ceres from building.
+
 \item{\gflags~\footnote{\url{http://code.google.com/p/gflags}}} is used by the code in
-  \texttt{examples}. It is not required to build the core Ceres library.
+  \texttt{examples}. It is also used by some of the tests. While technically it is not required to build the core library, we do not recommend building Ceres without it.
 \item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/suitesparse/}}} is used for sparse matrix analysis,
   ordering and factorization. In particular Ceres uses the
   \amd, \colamd\ and \cholmod\ libraries. This is an optional
