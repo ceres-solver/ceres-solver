@@ -46,7 +46,7 @@ LinearSolver::~LinearSolver() {
 
 LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
   switch (options.type) {
-    case CONJUGATE_GRADIENTS:
+    case CGNR:
       return new CgnrSolver(options);
 
     case SPARSE_NORMAL_CHOLESKY:

@@ -29,8 +29,8 @@
 # Author: keir@google.com (Keir Mierle)
 
 SET(CERES_INTERNAL_SRC
-    block_diagonal_preconditioner.cc
     block_evaluate_preparer.cc
+    block_jacobi_preconditioner.cc
     block_jacobian_writer.cc
     block_random_access_dense_matrix.cc
     block_random_access_matrix.cc

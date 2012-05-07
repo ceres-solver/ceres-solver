@@ -42,7 +42,7 @@ const char* LinearSolverTypeToString(LinearSolverType solver_type) {
     CASESTR(DENSE_SCHUR);
     CASESTR(SPARSE_SCHUR);
     CASESTR(ITERATIVE_SCHUR);
-    CASESTR(CONJUGATE_GRADIENTS);
+    CASESTR(CGNR);
     default:
       return "UNKNOWN";
   }

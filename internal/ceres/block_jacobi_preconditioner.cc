@@ -28,22 +28,23 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-#include "ceres/block_diagonal_preconditioner.h"
+#include "ceres/block_jacobi_preconditioner.h"
 
 #include "Eigen/Cholesky"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
+#include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 
 namespace ceres {
 namespace internal {
 
-BlockDiagonalPreconditioner::BlockDiagonalPreconditioner(
+BlockJacobiPreconditioner::BlockJacobiPreconditioner(
     const LinearOperator& A)
     : block_structure_(
-        *(down_cast<const BlockSparseMatrix*>(&A)->block_structure())) {
-
+        *(down_cast<const BlockSparseMatrix*>(&A)->block_structure())),
+      num_rows_(A.num_rows()) {
   // Calculate the amount of storage needed.
   int storage_needed = 0;
   for (int c = 0; c < block_structure_.cols.size(); ++c) {
@@ -56,7 +57,7 @@ BlockDiagonalPreconditioner::BlockDiagonalPreconditioner(
   block_storage_.resize(storage_needed);
 
   // Put pointers to the storage in the offsets.
-  double *block_cursor = &block_storage_[0];
+  double* block_cursor = &block_storage_[0];
   for (int c = 0; c < block_structure_.cols.size(); ++c) {
     int size = block_structure_.cols[c].size;
     blocks_[c] = block_cursor;
@@ -64,10 +65,10 @@ BlockDiagonalPreconditioner::BlockDiagonalPreconditioner(
   }
 }
 
-BlockDiagonalPreconditioner::~BlockDiagonalPreconditioner() {
+BlockJacobiPreconditioner::~BlockJacobiPreconditioner() {
 }
 
-void BlockDiagonalPreconditioner::Update(const LinearOperator& matrix) {
+void BlockJacobiPreconditioner::Update(const LinearOperator& matrix, const double* D) {
   const BlockSparseMatrix& A = *(down_cast<const BlockSparseMatrix*>(&matrix));
   const CompressedRowBlockStructure* bs = A.block_structure();
 
@@ -86,20 +87,35 @@ void BlockDiagonalPreconditioner::Update(const LinearOperator& matrix) {
       MatrixRef(blocks_[cells[c].block_id],
                 col_block_size,
                 col_block_size).noalias() += m.transpose() * m;
+
+      // TODO(keir): Figure out when the below expression is actually faster
+      // than doing the full rank update. The issue is that for smaller sizes,
+      // the rankUpdate() function is slower than the full product done above.
+      //
+      // On the typical bundling problems, the above product is ~5% faster.
+      //
+      //   MatrixRef(blocks_[cells[c].block_id],
+      //             col_block_size,
+      //             col_block_size).selfadjointView<Eigen::Upper>().rankUpdate(m);
+      //
     }
   }
 
-  // Invert each block.
+  // Add the diagonal and invert each block.
   for (int c = 0; c < bs->cols.size(); ++c) {
     const int size = block_structure_.cols[c].size;
-    MatrixRef D(blocks_[c], size, size);
-    D = D.selfadjointView<Eigen::Upper>()
-         .ldlt()
-         .solve(Matrix::Identity(size, size));
+    const int position = block_structure_.cols[c].position;
+    MatrixRef DD(blocks_[c], size, size);
+
+    DD.diagonal() += ConstVectorRef(D + position, size).array().square().matrix();
+
+    DD = DD.selfadjointView<Eigen::Upper>()
+           .ldlt()
+           .solve(Matrix::Identity(size, size));
   }
 }
 
-void BlockDiagonalPreconditioner::RightMultiply(const double* x, double* y) const {
+void BlockJacobiPreconditioner::RightMultiply(const double* x, double* y) const {
   for (int c = 0; c < block_structure_.cols.size(); ++c) {
     const int size = block_structure_.cols[c].size;
     const int position = block_structure_.cols[c].position;
@@ -110,7 +126,7 @@ void BlockDiagonalPreconditioner::RightMultiply(const double* x, double* y) cons
   }
 }
 
-void BlockDiagonalPreconditioner::LeftMultiply(const double* x, double* y) const {
+void BlockJacobiPreconditioner::LeftMultiply(const double* x, double* y) const {
   RightMultiply(x, y);
 }
 

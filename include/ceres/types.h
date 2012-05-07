@@ -83,12 +83,8 @@ enum LinearSolverType {
   // problems.
   ITERATIVE_SCHUR,
 
-  // Symmetric positive definite solvers
-
-  // This is not meant for direct client use; it is used under the
-  // hood while using ITERATIVE_SCHUR.  Once there is a decent
-  // preconditioner, this will make sense for general sparse problems.
-  CONJUGATE_GRADIENTS
+  // Conjugate gradients on the normal equations.
+  CGNR
 };
 
 enum PreconditionerType {

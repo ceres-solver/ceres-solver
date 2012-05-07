@@ -37,7 +37,7 @@
 namespace ceres {
 namespace internal {
 
-class BlockDiagonalPreconditioner;
+class BlockJacobiPreconditioner;
 
 // A conjugate gradients on the normal equations solver. This directly solves
 // for the solution to
@@ -56,7 +56,7 @@ class CgnrSolver : public LinearSolver {
 
  private:
   const LinearSolver::Options options_;
-  scoped_ptr<BlockDiagonalPreconditioner> jacobi_preconditioner_;
+  scoped_ptr<BlockJacobiPreconditioner> jacobi_preconditioner_;
   DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
 };
 

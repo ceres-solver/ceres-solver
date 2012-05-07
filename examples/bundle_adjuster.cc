@@ -97,8 +97,8 @@ void SetLinearSolver(Solver::Options* options) {
     options->linear_solver_type = ceres::ITERATIVE_SCHUR;
   } else if (FLAGS_solver_type == "cholesky") {
     options->linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
-  } else if (FLAGS_solver_type == "conjugate_gradients") {
-    options->linear_solver_type = ceres::CONJUGATE_GRADIENTS;
+  } else if (FLAGS_solver_type == "cgnr") {
+    options->linear_solver_type = ceres::CGNR;
   } else if (FLAGS_solver_type == "dense_qr") {
     // DENSE_QR is included here for completeness, but actually using
     // this option is a bad idea due to the amount of memory needed
@@ -110,14 +110,14 @@ void SetLinearSolver(Solver::Options* options) {
                << FLAGS_solver_type;
   }
 
-  if (options->linear_solver_type == ceres::CONJUGATE_GRADIENTS) {
+  if (options->linear_solver_type == ceres::CGNR) {
     options->linear_solver_min_num_iterations = 5;
     if (FLAGS_preconditioner_type == "identity") {
       options->preconditioner_type = ceres::IDENTITY;
     } else if (FLAGS_preconditioner_type == "jacobi") {
       options->preconditioner_type = ceres::JACOBI;
     } else {
-      LOG(FATAL) << "For CONJUGATE_GRADIENTS, only identity and jacobian "
+      LOG(FATAL) << "For CGNR, only identity and jacobian "
                  << "preconditioners are supported. Got: "
                  << FLAGS_preconditioner_type;
     }

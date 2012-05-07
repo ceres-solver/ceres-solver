@@ -30,10 +30,11 @@
 
 #include "ceres/cgnr_solver.h"
 
+#include "glog/logging.h"
 #include "ceres/linear_solver.h"
 #include "ceres/cgnr_linear_operator.h"
 #include "ceres/conjugate_gradients_solver.h"
-#include "ceres/block_diagonal_preconditioner.h"
+#include "ceres/block_jacobi_preconditioner.h"
 
 namespace ceres {
 namespace internal {
@@ -57,19 +58,19 @@ LinearSolver::Summary CgnrSolver::Solve(
   LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
   if (options_.preconditioner_type == JACOBI) {
     if (jacobi_preconditioner_.get() == NULL) {
-      jacobi_preconditioner_.reset(new BlockDiagonalPreconditioner(*A));
+      jacobi_preconditioner_.reset(new BlockJacobiPreconditioner(*A));
     }
-    jacobi_preconditioner_->Update(*A);
+    jacobi_preconditioner_->Update(*A, per_solve_options.D);
     cg_per_solve_options.preconditioner = jacobi_preconditioner_.get();
   } else if (options_.preconditioner_type != IDENTITY) {
-    // TODO(keir): This should die somehow.
+    LOG(FATAL) << "CGNR only supports IDENTITY and JACOBI preconditioners.";
   }
 
   // Solve (AtA + DtD)x = z (= Atb).
   std::fill(x, x + A->num_cols(), 0.0);
-  CgnrLinearOperator AtApDtD(A, per_solve_options.D);
+  CgnrLinearOperator lhs(*A, per_solve_options.D);
   ConjugateGradientsSolver conjugate_gradient_solver(options_);
-  return conjugate_gradient_solver.Solve(&AtApDtD,
+  return conjugate_gradient_solver.Solve(&lhs,
                                          z.get(),
                                          cg_per_solve_options,
                                          x);

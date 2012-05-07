@@ -476,6 +476,8 @@ TEST(SystemTest, BundleAdjustmentProblem) {
   CONFIGURE(DENSE_SCHUR,            USER,    IDENTITY, 1);
   CONFIGURE(DENSE_SCHUR,            SCHUR,   IDENTITY, 1);
 
+  CONFIGURE(CGNR,                   USER,    JACOBI, 1);
+
   CONFIGURE(ITERATIVE_SCHUR,        USER,    JACOBI, 1);
 
 #ifndef CERES_NO_SUITESPARSE

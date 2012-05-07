@@ -53,7 +53,7 @@ Evaluator* Evaluator::Create(const Evaluator::Options& options,
     case DENSE_SCHUR:
     case SPARSE_SCHUR:
     case ITERATIVE_SCHUR:
-    case CONJUGATE_GRADIENTS:
+    case CGNR:
       return new ProgramEvaluator<BlockEvaluatePreparer,
                                   BlockJacobianWriter>(options,
                                                        program);

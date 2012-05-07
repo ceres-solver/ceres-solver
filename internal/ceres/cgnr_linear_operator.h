@@ -61,12 +61,11 @@ class SparseMatrix;
 //
 // Then multiply out to get:
 //
-//   = xA^TAx - 2xA^T b + b^Tb + xD^TDx
 //   = xA^TAx - 2b^T Ax + b^Tb + xD^TDx
 //
 // Take the derivative:
 //
-//   0 = 2A^TAx - 2b^T A + b^Tb + 2 D^TDx
+//   0 = 2A^TAx - 2A^T b + 2 D^TDx
 //   0 = A^TAx - A^T b + D^TDx
 //   0 = (A^TA + D^TD)x - A^T b
 //
@@ -80,26 +79,25 @@ class SparseMatrix;
 // Note: This class is not thread safe, since it uses some temporary storage.
 class CgnrLinearOperator : public LinearOperator {
  public:
-  CgnrLinearOperator(LinearOperator* A, double *D)
-      : A_(A), D_(D), z_(new double[A->num_rows()]) {
+  CgnrLinearOperator(const LinearOperator& A, const double *D)
+      : A_(A), D_(D), z_(new double[A.num_rows()]) {
   }
   virtual ~CgnrLinearOperator() {}
 
   virtual void RightMultiply(const double* x, double* y) const {
-    std::fill(z_.get(), z_.get() + A_->num_rows(), 0.0);
+    std::fill(z_.get(), z_.get() + A_.num_rows(), 0.0);
 
     // z = Ax
-    A_->RightMultiply(x, z_.get());
+    A_.RightMultiply(x, z_.get());
 
     // y = y + Atz
-    A_->LeftMultiply(z_.get(), y);
+    A_.LeftMultiply(z_.get(), y);
 
     // y = y + DtDx
     if (D_ != NULL) {
-      int n = A_->num_cols();
-      for (int i = 0; i < n; ++i) {
-        y[i] += D_[i] * D_[i] * x[i];
-      }
+      int n = A_.num_cols();
+      VectorRef(y, n).array() += ConstVectorRef(D_, n).array().square() *
+                                 ConstVectorRef(x, n).array();
     }
   }
 
@@ -107,12 +105,12 @@ class CgnrLinearOperator : public LinearOperator {
     RightMultiply(x, y);
   }
 
-  virtual int num_rows() const { return A_->num_cols(); }
-  virtual int num_cols() const { return A_->num_cols(); }
+  virtual int num_rows() const { return A_.num_cols(); }
+  virtual int num_cols() const { return A_.num_cols(); }
 
  private:
-  LinearOperator* A_;
-  double* D_;
+  const LinearOperator& A_;
+  const double* D_;
   scoped_array<double> z_;
 };
 
