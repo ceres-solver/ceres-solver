@@ -179,7 +179,7 @@ the constraint that no two \texttt{e\_block} co-occur in a residual
 block means that if we were to treat the sparsity structure of the
 block matrix $H$ as a graph, then the set of \texttt{e\_block}s is an
 independent set in this graph. The larger the number of
-\texttt{e\_block}, the smaller is the size of the Schur complement $S$. Indeed the reason Schur based solvers are so efficient at solving bundle adjustment problems is because the numner of points in a bundle adjustment problem is usually an order of magnitude or two larger than the number of cameras.
+\texttt{e\_block}, the smaller is the size of the Schur complement $S$. Indeed the reason Schur based solvers are so efficient at solving bundle adjustment problems is because the number of points in a bundle adjustment problem is usually an order of magnitude or two larger than the number of cameras.
 
 Thus, the aim of the \texttt{SCHUR} ordering algorithm is to identify the largest independent set in the graph of $H$. Unfortunately this is an NP-Hard problem. But there is a  greedy approximation algorithm that performs well~\cite{li2007miqr} and we use it to identify \texttt{e\_block}s in Ceres.
 

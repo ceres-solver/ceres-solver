@@ -126,7 +126,7 @@ CostFunction* cost_function
                          Dimension of y -------------------+
 \end{minted}
 
-In this example, there is usually an instance for each measumerent of k.
+In this example, there is usually an instance for each measurement of k.
 
 In the instantiation above, the template parameters following
  \texttt{MyScalarCostFunction}, \texttt{<1, 2, 2>} describe the functor as computing a
@@ -150,7 +150,7 @@ In the instantiation above, the template parameters following
 To get a numerically differentiated cost function, define a subclass of
 \texttt{CostFunction} such that the \texttt{Evaluate} function ignores the jacobian
 parameter. The numeric differentiation wrapper will fill in the jacobians array
- if nececssary by repeatedly calling the \texttt{Evaluate} method with
+ if necessary by repeatedly calling the \texttt{Evaluate} method with
 small changes to the appropriate parameters, and computing the slope. For
 performance, the numeric differentiation wrapper class is templated on the
 concrete cost function, even though it could be implemented only in terms of
@@ -582,7 +582,7 @@ Note that this requires a version of Ceres built with protocol buffers.
 
      The finite differencing is done along each dimension. The
      reason to use a relative (rather than absolute) step size is
-     that this way, numeric differentation works for functions where
+     that this way, numeric differentiation works for functions where
      the arguments are typically large (e.g. 1e9) and when the
      values are small (e.g. 1e-5). It is possible to construct
      "torture cases" which break this finite difference heuristic,
