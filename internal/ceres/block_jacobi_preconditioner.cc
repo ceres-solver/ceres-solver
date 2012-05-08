@@ -105,13 +105,15 @@ void BlockJacobiPreconditioner::Update(const LinearOperator& matrix, const doubl
   for (int c = 0; c < bs->cols.size(); ++c) {
     const int size = block_structure_.cols[c].size;
     const int position = block_structure_.cols[c].position;
-    MatrixRef DD(blocks_[c], size, size);
+    MatrixRef block(blocks_[c], size, size);
 
-    DD.diagonal() += ConstVectorRef(D + position, size).array().square().matrix();
+    if (D != NULL) {
+      block.diagonal() += ConstVectorRef(D + position, size).array().square().matrix();
+    }
 
-    DD = DD.selfadjointView<Eigen::Upper>()
-           .ldlt()
-           .solve(Matrix::Identity(size, size));
+    block = block.selfadjointView<Eigen::Upper>()
+                 .ldlt()
+                 .solve(Matrix::Identity(size, size));
   }
 }
 
