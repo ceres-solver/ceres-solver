@@ -17,11 +17,11 @@ Such optimization problems arise in almost every area of science and engineering
 
 Perhaps the simplest example of such a problem is the problem of Ordinary Linear Regression, where given observations $(x_1,y_1),\hdots, (x_k,y_k)$, we wish to find the line $y = mx + c$, that best explains $y$ as a function of $x$. One way to solve this problem is to find the solution to the following optimization problem
 \begin{equation}
-		\arg\min_{m,c} \sum_{i=1}^k (y_i - m x_i - c)^2
+		\arg\min_{m,c} \sum_{i=1}^k (y_i - m x_i - c)^2.
 \end{equation}
 With a little bit of calculus, this problem can be solved easily by hand. But what if, instead of a line we were interested in a more complicated relationship between $x$ and $y$, say for example $y = e^{mx + c}$. Then the optimization problem becomes
 \begin{equation}
-		\arg\min_{m,c} \sum_{i=1}^k \left(y_i - e^{m x_i + c}\right)^2
+		\arg\min_{m,c} \sum_{i=1}^k \left(y_i - e^{m x_i + c}\right)^2.
 \end{equation}
 This is a  non-linear regression problem and solving it by hand is much more tedious.  Ceres is designed to help you model and solve problems like this easily and efficiently.
 
@@ -236,7 +236,7 @@ numeric errors and leads to slower convergence.
 \label{sec:tutorial:datafitting}
 The examples we have seen until now are simple optimization problems with no data. The original purpose of least squares and non-linear least squares analysis was fitting curves to data. It is only appropriate that we now consider an example of such a problem. Let us fit some data to the curve
 \begin{equation}
-	y = e^{mx + c}
+	y = e^{mx + c}.
 \end{equation}
 
 The full code and data for this example can be found in
