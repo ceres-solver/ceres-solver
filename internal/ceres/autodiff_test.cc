@@ -37,7 +37,7 @@ namespace ceres {
 namespace internal {
 
 template <typename T> inline
-T &RowMajor(T *base, int rows, int cols, int i, int j) {
+T &RowMajorAccess(T *base, int rows, int cols, int i, int j) {
   return base[cols * i + j];
 }
 
@@ -86,7 +86,7 @@ bool SymmetricDiff(const B& b,
     // Symmetric differencing:
     //   f'(a) = (f(a + h) - f(a - h)) / (2 h)
     for (int i = 0; i < M; ++i) {
-      RowMajor(jac, M, N, i, j) =
+      RowMajorAccess(jac, M, N, i, j) =
           (fwd_fun[i] - bwd_fun[i]) / (T(2) * del);
     }
 
@@ -116,7 +116,7 @@ void QuaternionToScaledRotation(A const q[4], A R[3 * 3]) {
   A cc = c*c;
   A cd = c*d;
   A dd = d*d;
-#define R(i, j) RowMajor(R, 3, 3, (i), (j))
+#define R(i, j) RowMajorAccess(R, 3, 3, (i), (j))
   R(0, 0) =  aa+bb-cc-dd; R(0, 1) = A(2)*(bc-ad); R(0, 2) = A(2)*(ac+bd);  // NOLINT
   R(1, 0) = A(2)*(ad+bc); R(1, 1) =  aa-bb+cc-dd; R(1, 2) = A(2)*(cd-ab);  // NOLINT
   R(2, 0) = A(2)*(bd-ac); R(2, 1) = A(2)*(ab+cd); R(2, 2) =  aa-bb-cc+dd;  // NOLINT
@@ -132,10 +132,10 @@ struct Projective {
   bool operator()(A const P[12], A const X[4], A x[2]) const {
     A PX[3];
     for (int i = 0; i < 3; ++i) {
-      PX[i] = RowMajor(P, 3, 4, i, 0) * X[0] +
-              RowMajor(P, 3, 4, i, 1) * X[1] +
-              RowMajor(P, 3, 4, i, 2) * X[2] +
-              RowMajor(P, 3, 4, i, 3) * X[3];
+      PX[i] = RowMajorAccess(P, 3, 4, i, 0) * X[0] +
+              RowMajorAccess(P, 3, 4, i, 1) * X[1] +
+              RowMajorAccess(P, 3, 4, i, 2) * X[2] +
+              RowMajorAccess(P, 3, 4, i, 3) * X[3];
     }
     if (PX[2] != 0.0) {
       x[0] = PX[0] / PX[2];
@@ -194,8 +194,8 @@ TEST(AutoDiff, ProjectiveCameraModel) {
   {
     double *parameters[] = { PX };
     double *jacobians[] = { J_PX };
-    ASSERT_TRUE((AutoDiff<Projective, double, 2, 12 + 4>::Differentiate(
-        b, parameters, ad_x1, jacobians)));
+    ASSERT_TRUE((AutoDiff<Projective, double, 12 + 4>::Differentiate(
+        b, parameters, 2, ad_x1, jacobians)));
 
     for (int i = 0; i < 2; ++i) {
       ASSERT_NEAR(ad_x1[i], b_x[i], tol);
@@ -209,8 +209,8 @@ TEST(AutoDiff, ProjectiveCameraModel) {
     double J_X[2 * 4];
     double *parameters[] = { P, X };
     double *jacobians[] = { J_P, J_X };
-    ASSERT_TRUE((AutoDiff<Projective, double, 2, 12, 4>::Differentiate(
-        b, parameters, ad_x2, jacobians)));
+    ASSERT_TRUE((AutoDiff<Projective, double, 12, 4>::Differentiate(
+        b, parameters, 2, ad_x2, jacobians)));
 
     for (int i = 0; i < 2; ++i) {
       ASSERT_NEAR(ad_x2[i], b_x[i], tol);
@@ -252,16 +252,16 @@ struct Metric {
     // Set P(:, 1:3) = R
     for (int i = 0; i < 3; ++i) {
       for (int j = 0; j < 3; ++j) {
-        RowMajor(P, 3, 4, i, j) = RowMajor(R, 3, 3, i, j);
+        RowMajorAccess(P, 3, 4, i, j) = RowMajorAccess(R, 3, 3, i, j);
       }
     }
 
     // Set P(:, 4) = - R c
     for (int i = 0; i < 3; ++i) {
-      RowMajor(P, 3, 4, i, 3) =
-        - (RowMajor(R, 3, 3, i, 0) * c[0] +
-           RowMajor(R, 3, 3, i, 1) * c[1] +
-           RowMajor(R, 3, 3, i, 2) * c[2]);
+      RowMajorAccess(P, 3, 4, i, 3) =
+        - (RowMajorAccess(R, 3, 3, i, 0) * c[0] +
+           RowMajorAccess(R, 3, 3, i, 1) * c[1] +
+           RowMajorAccess(R, 3, 3, i, 2) * c[2]);
     }
 
     A X1[4] = { X[0], X[1], X[2], A(1) };
@@ -316,8 +316,8 @@ TEST(AutoDiff, Metric) {
   double J_X[2 * 3];
   double *parameters[] = { q, c, X };
   double *jacobians[] = { J_q, J_c, J_X };
-  ASSERT_TRUE((AutoDiff<Metric, double, 2, 4, 3, 3>::Differentiate(
-      b, parameters, ad_x, jacobians)));
+  ASSERT_TRUE((AutoDiff<Metric, double, 4, 3, 3>::Differentiate(
+      b, parameters, 2, ad_x, jacobians)));
 
   for (int i = 0; i < 2; ++i) {
     ASSERT_NEAR(ad_x[i], b_x[i], tol);
@@ -333,6 +333,46 @@ TEST(AutoDiff, Metric) {
     }
     for (int j = 0; j < 3; ++j) {
       ASSERT_NEAR(J_X[3 * i + j], fd_J[(4 + 3 + 3) * i + j + 4 + 3], err);
+    }
+  }
+}
+
+struct VaryingResidualFunctor {
+  template <typename T>
+  bool operator()(const T x[2], T* y) const {
+    for (int i = 0; i < num_residuals; ++i) {
+      y[i] = T(i) * x[0] * x[1] * x[1];
+    }
+    return true;
+  }
+
+  int num_residuals;
+};
+
+TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
+  double x[2] = { 1.0, 5.5 };
+  double *parameters[] = { x };
+  const int kMaxResiduals = 10;
+  double J_x[2 * kMaxResiduals];
+  double residuals[kMaxResiduals];
+  double *jacobians[] = { J_x };
+
+  // Use a single functor, but tweak it to produce different numbers of
+  // residuals.
+  VaryingResidualFunctor functor;
+
+  for (int num_residuals = 0; num_residuals < kMaxResiduals; ++num_residuals) {
+    // Tweak the number of residuals to produce.
+    functor.num_residuals = num_residuals;
+
+    // Run autodiff with the new number of residuals.
+    ASSERT_TRUE((AutoDiff<VaryingResidualFunctor, double, 2>::Differentiate(
+        functor, parameters, num_residuals, residuals, jacobians)));
+
+    const double kTolerance = 1e-14;
+    for (int i = 0; i < num_residuals; ++i) {
+      EXPECT_NEAR(J_x[2 * i + 0], i * x[1] * x[1], kTolerance) << "i: " << i;
+      EXPECT_NEAR(J_x[2 * i + 1], 2 * i * x[0] * x[1], kTolerance) << "i: " << i;
     }
   }
 }

@@ -176,8 +176,8 @@ void QuaternionParameterizationTestHelper(const double* x,
   double* jacobian_array[2] = { NULL, jacobian_ref };
 
   // Autodiff jacobian at delta_x = 0.
-  internal::AutoDiff<QuaternionPlus, double, 4, 4, 3>::Differentiate(
-      QuaternionPlus(), parameters, x_plus_delta, jacobian_array);
+  internal::AutoDiff<QuaternionPlus, double, 4, 3>::Differentiate(
+      QuaternionPlus(), parameters, 4, x_plus_delta, jacobian_array);
 
   double jacobian[12];
   param.ComputeJacobian(x, jacobian);

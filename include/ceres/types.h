@@ -237,6 +237,13 @@ enum DumpFormatType {
   TEXTFILE
 };
 
+// For SizedCostFunction and AutoDiffCostFunction, DYNAMIC can be specified for
+// the number of residuals. If specified, then the number of residuas for that
+// cost function can vary at runtime.
+enum DimensionType {
+  DYNAMIC = -1
+};
+
 const char* LinearSolverTypeToString(LinearSolverType type);
 const char* PreconditionerTypeToString(PreconditionerType type);
 const char* LinearSolverTerminationTypeToString(
