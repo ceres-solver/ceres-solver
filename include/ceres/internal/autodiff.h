@@ -208,7 +208,7 @@ inline void Take1stOrderPart(const JetT *src, T *dst) {
 // Supporting variadic functions is the primary source of complexity in the
 // autodiff implementation.
 
-template<typename Functor, typename T, int kNumOutputs,
+template<typename Functor, typename T,
          int N0, int N1, int N2, int N3, int N4, int N5>
 struct VariadicEvaluate {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
@@ -222,9 +222,9 @@ struct VariadicEvaluate {
   }
 };
 
-template<typename Functor, typename T, int kNumOutputs,
+template<typename Functor, typename T,
          int N0, int N1, int N2, int N3, int N4>
-struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, N3, N4, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -235,9 +235,9 @@ struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, N3, N4, 0> {
   }
 };
 
-template<typename Functor, typename T, int kNumOutputs,
+template<typename Functor, typename T,
          int N0, int N1, int N2, int N3>
-struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, N3, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -247,9 +247,9 @@ struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, N3, 0, 0> {
   }
 };
 
-template<typename Functor, typename T, int kNumOutputs,
+template<typename Functor, typename T,
          int N0, int N1, int N2>
-struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -258,9 +258,9 @@ struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, N2, 0, 0, 0> {
   }
 };
 
-template<typename Functor, typename T, int kNumOutputs,
+template<typename Functor, typename T,
          int N0, int N1>
-struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -268,8 +268,8 @@ struct VariadicEvaluate<Functor, T, kNumOutputs, N0, N1, 0, 0, 0, 0> {
   }
 };
 
-template<typename Functor, typename T, int kNumOutputs, int N0>
-struct VariadicEvaluate<Functor, T, kNumOutputs, N0, 0, 0, 0, 0, 0> {
+template<typename Functor, typename T, int N0>
+struct VariadicEvaluate<Functor, T, N0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    output);
@@ -339,7 +339,7 @@ struct AutoDiff {
     CERES_MAKE_1ST_ORDER_PERTURBATION(5);
 #undef CERES_MAKE_1ST_ORDER_PERTURBATION
 
-    if (!VariadicEvaluate<Functor, JetT, kNumOutputs,
+    if (!VariadicEvaluate<Functor, JetT,
                           N0, N1, N2, N3, N4, N5>::Call(
         functor, unpacked_parameters, output)) {
       return false;
