@@ -38,29 +38,45 @@ PROJECT(CERES C CXX)
 
 ENABLE_TESTING()
 
+OPTION(BUILD_TESTING
+       "Enable tests"
+       ON)
+
+# Default locations to search for on various platforms.
+SET(SEARCH_LIBS
+    ${SEARCH_LIBS}
+    /usr/lib
+    /usr/local/lib
+    /usr/local/homebrew/lib     # Mac OS X
+    /opt/local/lib
+    )
+
+SET(SEARCH_HEADERS
+    ${SEARCH_HEADERS}
+    /usr/include
+    /usr/local/include
+    /usr/local/homebrew/include  # Mac OS X
+    /opt/local/include/
+    )
+
+# To get a more static build, try the following line on Mac and Linux:
+# SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
+
 # SuiteSparse
 OPTION(SUITESPARSE
        "Enable SuiteSparse. Needed for efficient solutions of large problems."
        ON)
 
-# To get a more static build, try the following line on Mac and Linux:
-# SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
-
 IF (SUITESPARSE)
   SET(SUITESPARSE_SEARCH_LIBS
       ${SEARCH_LIBS}
-      /usr/lib
       /usr/lib/suitesparse             # Ubuntu
-      /usr/local/lib/
       /usr/local/lib/suitesparse
       /opt/local/lib/ufsparse          # Mac OS X
       )
-
   SET(SUITESPARSE_SEARCH_HEADERS
       ${SEARCH_HEADERS}
-      /usr/include
       /usr/include/suitesparse         # Ubuntu
-      /usr/local/include
       /usr/local/include/suitesparse,
       /opt/local/include/ufsparse      # Mac os X
       )
@@ -167,28 +183,20 @@ OPTION(GFLAGS
        ON)
 
 IF (GFLAGS)
-  SET(GFLAGS_SEARCH_LIBS
-     ${SEARCH_LIBS}
-     /usr/lib
-     /usr/local/lib
-     )
-     
- SET(GFLAGS_SEARCH_HEADERS
-     ${SEARCH_HEADERS}
-     /usr/include
-     /usr/local/include
-     )
-
   MESSAGE("-- Check for Google Flags")
-  FIND_LIBRARY(GFLAGS_LIB NAMES gflags PATHS ${GFLAGS_SEARCH_LIBS})
-  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h PATHS ${GFLAGS_SEARCH_HEADERS})
-
-  IF (NOT EXISTS ${GFLAGS_LIB} OR NOT EXISTS ${GFLAGS_INCLUDE})
+  FIND_LIBRARY(GFLAGS_LIB NAMES gflags PATHS ${SEARCH_LIBS})
+  IF (NOT EXISTS ${GFLAGS_LIB})
     MESSAGE(FATAL_ERROR
             "Can't find Google Flags. Please specify: "
-            "-DGFLAGS_INCLUDE=... and -DGFLAGS_LIB=...")
-  ENDIF (NOT EXISTS ${GFLAGS_LIB} OR NOT EXISTS ${GFLAGS_INCLUDE})
+            "-DGFLAGS_LIB=...")
+  ENDIF (NOT EXISTS ${GFLAGS_LIB})
   MESSAGE("-- Found Google Flags library: ${GFLAGS_LIB}")
+  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h PATHS ${SEARCH_HEADERS})
+  IF (NOT EXISTS ${GFLAGS_INCLUDE})
+    MESSAGE(FATAL_ERROR
+            "Can't find Google Flags. Please specify: "
+            "-DGFLAGS_INCLUDE=...")
+  ENDIF (NOT EXISTS ${GFLAGS_INCLUDE})
   MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE}")
 ELSE (GFLAGS)
   MESSAGE("-- Google Flags disabled; no tests or tools will be built!")
@@ -196,38 +204,32 @@ ELSE (GFLAGS)
 ENDIF (GFLAGS)
 
 # Google Logging
-SET(GFLOG_SEARCH_LIBS
-    ${SEARCH_LIBS}
-    /usr/lib
-    /usr/local/lib
-    )
-     
-SET(GLOG_SEARCH_HEADERS
-    ${SEARCH_HEADERS}
-    /usr/include
-    /usr/local/include
-    )
-
 MESSAGE("-- Check for Google Log")
-FIND_LIBRARY(GLOG_LIB NAMES glog PATHS GLOG_SEARCH_LIBS)
-FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h GLOG_SEARCH_HEADERS)
-IF (NOT EXISTS ${GLOG_LIB} OR NOT EXISTS ${GLOG_INCLUDE})
+FIND_LIBRARY(GLOG_LIB NAMES glog PATHS ${SEARCH_LIBS})
+IF (NOT EXISTS ${GLOG_LIB})
   MESSAGE(FATAL_ERROR
           "Can't find Google Log. Please specify: "
-          "-DGLOG_INCLUDE=... and -DGLOG_LIB=...")
-ENDIF (NOT EXISTS ${GLOG_LIB} OR NOT EXISTS ${GLOG_INCLUDE})
+          "-DGLOG_LIB=...")
+ENDIF (NOT EXISTS ${GLOG_LIB})
 MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
+
+FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h PATHS ${SEARCH_HEADERS})
+IF (NOT EXISTS ${GLOG_INCLUDE})
+  MESSAGE(FATAL_ERROR
+          "Can't find Google Log. Please specify: "
+          "-DGLOG_INCLUDE=...")
+ENDIF (NOT EXISTS ${GLOG_INCLUDE})
 MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
 
 # Eigen
 MESSAGE("-- Check for Eigen 3.0")
 SET(EIGEN_SEARCH_HEADERS
     ${SEARCH_HEADERS}
-    /usr/include
     /usr/include/eigen3  # Ubuntu 10.04's default location.
-    /usr/local/include
     /usr/local/include/eigen3
-    /opt/local/var/macports/software/eigen3/opt/local/include/eigen3/)
+    /usr/local/homebrew/include/eigen3  # Mac OS X
+    /opt/local/var/macports/software/eigen3/opt/local/include/eigen3/
+    )
 FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS ${EIGEN_SEARCH_HEADERS})
 IF (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
