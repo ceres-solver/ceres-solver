@@ -151,7 +151,7 @@ class AutoDiffCostFunction :
                         double** jacobians) const {
     if (!jacobians) {
       return internal::VariadicEvaluate<
-          CostFunctor, double, M, N0, N1, N2, N3, N4, N5>
+          CostFunctor, double, N0, N1, N2, N3, N4, N5>
           ::Call(*functor_, parameters, residuals);
     }
     return internal::AutoDiff<CostFunctor, double,
