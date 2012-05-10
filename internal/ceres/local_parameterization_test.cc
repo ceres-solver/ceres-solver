@@ -152,6 +152,7 @@ struct QuaternionPlus {
 void QuaternionParameterizationTestHelper(const double* x,
                                           const double* delta,
                                           const double* q_delta) {
+  const double kTolerance = 1e-14;
   double x_plus_delta_ref[4] = {0.0, 0.0, 0.0, 0.0};
   QuaternionProduct(q_delta, x, x_plus_delta_ref);
 
@@ -159,7 +160,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   QuaternionParameterization param;
   param.Plus(x, delta, x_plus_delta);
   for (int i = 0; i < 4; ++i) {
-    EXPECT_EQ(x_plus_delta[i], x_plus_delta_ref[i]);
+    EXPECT_NEAR(x_plus_delta[i], x_plus_delta_ref[i], kTolerance);
   }
 
   const double x_plus_delta_norm =
@@ -168,7 +169,7 @@ void QuaternionParameterizationTestHelper(const double* x,
            x_plus_delta[2] * x_plus_delta[2] +
            x_plus_delta[3] * x_plus_delta[3]);
 
-  EXPECT_NEAR(x_plus_delta_norm, 1.0, 1e-12);
+  EXPECT_NEAR(x_plus_delta_norm, 1.0, kTolerance);
 
   double jacobian_ref[12];
   double zero_delta[3] = {0.0, 0.0, 0.0};
@@ -183,7 +184,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   param.ComputeJacobian(x, jacobian);
   for (int i = 0; i < 12; ++i) {
     EXPECT_TRUE(isfinite(jacobian[i]));
-    EXPECT_NEAR(jacobian[i], jacobian_ref[i], 1e-12)
+    EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
         << "Jacobian mismatch: i = " << i
         << "\n Expected \n" << ConstMatrixRef(jacobian_ref, 4, 3)
         << "\n Actual \n" << ConstMatrixRef(jacobian, 4, 3);
