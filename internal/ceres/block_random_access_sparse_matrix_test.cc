@@ -94,19 +94,27 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
   Matrix dense;
   tsm->ToDenseMatrix(&dense);
 
+  double kTolerance = 1e-14;
+
   // (0,0)
-  EXPECT_EQ((dense.block(0, 0, 3, 3) - Matrix::Ones(3, 3)).norm(), 0);
+  EXPECT_NEAR((dense.block(0, 0, 3, 3) - Matrix::Ones(3, 3)).norm(),
+              0.0,
+              kTolerance);
   // (1,1)
-  EXPECT_EQ((dense.block(3, 3, 4, 4) - 2 * 2 * Matrix::Ones(4, 4)).norm(), 0);
+  EXPECT_NEAR((dense.block(3, 3, 4, 4) - 2 * 2 * Matrix::Ones(4, 4)).norm(),
+              0.0,
+              kTolerance);
   // (1,2)
-  EXPECT_EQ((dense.block(3, 3 + 4, 4, 5) - 2 * 3 * Matrix::Ones(4, 5)).norm(),
-            0);
+  EXPECT_NEAR((dense.block(3, 3 + 4, 4, 5) - 2 * 3 * Matrix::Ones(4, 5)).norm(),
+              0.0,
+              kTolerance);
   // (2,0)
-  EXPECT_EQ((dense.block(3 + 4, 0, 5, 3) - 3 * 1 * Matrix::Ones(5, 3)).norm(),
-            0);
+  EXPECT_NEAR((dense.block(3 + 4, 0, 5, 3) - 3 * 1 * Matrix::Ones(5, 3)).norm(),
+              0.0,
+              kTolerance);
 
   // There is nothing else in the matrix besides these four blocks.
-  EXPECT_EQ(dense.norm(), sqrt(9 + 16 * 16 + 36 * 20 + 9 * 15));
+  EXPECT_NEAR(dense.norm(), sqrt(9 + 16 * 16 + 36 * 20 + 9 * 15), kTolerance);
 }
 
 }  // namespace internal
