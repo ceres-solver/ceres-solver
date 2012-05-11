@@ -136,7 +136,7 @@ string Solver::Summary::FullReport() const {
                             num_parameters);
     internal::StringAppendF(&report, "Residual blocks     % 10d\n",
                             num_residual_blocks);
-    internal::StringAppendF(&report, "Residual            % 10d\n\n",
+    internal::StringAppendF(&report, "Residuals           % 10d\n\n",
                             num_residuals);
   } else {
     internal::StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
