@@ -28,7 +28,7 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.2)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
 
 IF (COMMAND cmake_policy)
   CMAKE_POLICY(SET CMP0003 NEW)
@@ -42,140 +42,192 @@ OPTION(BUILD_TESTING
        "Enable tests"
        ON)
 
-# Default locations to search for on various platforms.
-SET(SEARCH_LIBS
-    ${SEARCH_LIBS}
-    /usr/lib
-    /usr/local/lib
-    /usr/local/homebrew/lib     # Mac OS X
-    /opt/local/lib
-    )
-
-SET(SEARCH_HEADERS
-    ${SEARCH_HEADERS}
-    /usr/include
-    /usr/local/include
-    /usr/local/homebrew/include  # Mac OS X
-    /opt/local/include/
-    )
-
 # To get a more static build, try the following line on Mac and Linux:
 # SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 
-# SuiteSparse
-OPTION(SUITESPARSE
-       "Enable SuiteSparse. Needed for efficient solutions of large problems."
-       ON)
+# Default locations to search for on various platforms.
+LIST(APPEND SEARCH_LIBS /usr/lib)
+LIST(APPEND SEARCH_LIBS /usr/local/lib)
+LIST(APPEND SEARCH_LIBS /usr/local/homebrew/lib) # Mac OS X
+LIST(APPEND SEARCH_LIBS /opt/local/lib)
 
-IF (SUITESPARSE)
-  SET(SUITESPARSE_SEARCH_LIBS
-      ${SEARCH_LIBS}
-      /usr/lib/suitesparse             # Ubuntu
-      /usr/local/lib/suitesparse
-      /opt/local/lib/ufsparse          # Mac OS X
-      )
-  SET(SUITESPARSE_SEARCH_HEADERS
-      ${SEARCH_HEADERS}
-      /usr/include/suitesparse         # Ubuntu
-      /usr/local/include/suitesparse,
-      /opt/local/include/ufsparse      # Mac os X
-      )
+LIST(APPEND SEARCH_HEADERS /usr/include)
+LIST(APPEND SEARCH_HEADERS /usr/local/include)
+LIST(APPEND SEARCH_HEADERS /usr/local/homebrew/include) # Mac OS X
+LIST(APPEND SEARCH_HEADERS /opt/local/include)
 
-  FIND_LIBRARY(AMD_LIB NAMES amd PATHS ${SUITESPARSE_SEARCH_LIBS})
-  FIND_PATH(AMD_INCLUDE NAMES amd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
-  IF (NOT EXISTS ${AMD_LIB} OR NOT EXISTS ${AMD_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find AMD (part of suitesparse.) "
-            "Please specify -DAMD_INCLUDE=... and -DAMD_LIB=...")
-  ENDIF (NOT EXISTS ${AMD_LIB} OR NOT EXISTS ${AMD_INCLUDE})
+# Locations to search for Eigen
+SET(EIGEN_SEARCH_HEADERS ${SEARCH_HEADERS})
+LIST(APPEND EIGEN_SEARCH_HEADERS /usr/include/eigen3) # Ubuntu 10.04's default location.
+LIST(APPEND EIGEN_SEARCH_HEADERS /usr/local/include/eigen3) 
+LIST(APPEND EIGEN_SEARCH_HEADERS /usr/local/homebrew/include/eigen3)  # Mac OS X
+LIST(APPEND EIGEN_SEARCH_HEADERS /opt/local/var/macports/software/eigen3/opt/local/include/eigen3) # Mac OS X
+
+# Locations to search for SuiteSparse
+SET(SUITESPARSE_SEARCH_LIBS ${SEARCH_LIBS})
+LIST(APPEND SUITESPARSE_SEARCH_LIBS /usr/lib/suitesparse) # Ubuntu
+LIST(APPEND SUITESPARSE_SEARCH_LIBS /usr/local/lib/suitesparse) 
+LIST(APPEND SUITESPARSE_SEARCH_LIBS /opt/local/lib/ufsparse) # Mac OS X
+
+SET(SUITESPARSE_SEARCH_HEADERS ${SEARCH_HEADERS})
+LIST(APPEND SUITESPARSE_SEARCH_HEADERS /usr/include/suitesparse) # Ubuntu
+LIST(APPEND SUITESPARSE_SEARCH_HEADERS /usr/local/include/suitesparse) 
+LIST(APPEND SUITESPARSE_SEARCH_HEADERS /opt/local/include/ufsparse) # Mac OS X
+
+# Check for SuiteSparse dependencies
+MESSAGE("-- Check for AMD")
+SET(AMD_FOUND TRUE)
+
+FIND_LIBRARY(AMD_LIB NAMES amd PATHS ${SUITESPARSE_SEARCH_LIBS})
+IF (EXISTS ${AMD_LIB}) 
   MESSAGE("-- Found AMD library: ${AMD_LIB}")
+ELSE (EXISTS ${AMD_LIB})
+  MESSAGE("-- Did not find AMD library")
+  SET(AMD_FOUND FALSE)
+ENDIF (EXISTS ${AMD_LIB})
+
+FIND_PATH(AMD_INCLUDE NAMES amd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+IF (EXISTS ${AMD_INCLUDE}) 
   MESSAGE("-- Found AMD header in: ${AMD_INCLUDE}")
+ELSE (EXISTS ${AMD_INCLUDE})
+  MESSAGE("-- Did not find AMD header")
+  SET(AMD_FOUND FALSE)
+ENDIF (EXISTS ${AMD_INCLUDE})
 
-  MESSAGE("-- Check for CAMD")
-  FIND_LIBRARY(CAMD_LIB NAMES camd PATHS ${SUITESPARSE_SEARCH_LIBS})
-  FIND_PATH(CAMD_INCLUDE NAMES camd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
-  IF (NOT EXISTS ${CAMD_LIB} OR NOT EXISTS ${CAMD_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find CAMD (part of suitesparse.) "
-            "Please specify -DCAMD_INCLUDE=... and -DCAMD_LIB=...")
-  ENDIF (NOT EXISTS ${CAMD_LIB} OR NOT EXISTS ${CAMD_INCLUDE})
+MESSAGE("-- Check for CAMD")
+SET(CAMD_FOUND TRUE)
+
+FIND_LIBRARY(CAMD_LIB NAMES camd PATHS ${SUITESPARSE_SEARCH_LIBS})
+IF (EXISTS ${CAMD_LIB}) 
   MESSAGE("-- Found CAMD library: ${CAMD_LIB}")
+ELSE (EXISTS ${CAMD_LIB})
+  MESSAGE("-- Did not find CAMD library")
+  SET(CAMD_FOUND FALSE)
+ENDIF (EXISTS ${CAMD_LIB})
+
+FIND_PATH(CAMD_INCLUDE NAMES camd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+IF (EXISTS ${CAMD_INCLUDE}) 
   MESSAGE("-- Found CAMD header in: ${CAMD_INCLUDE}")
+ELSE (EXISTS ${CAMD_INCLUDE})
+  MESSAGE("-- Did not find CAMD header")
+  SET(CAMD_FOUND FALSE)
+ENDIF (EXISTS ${CAMD_INCLUDE})
 
-  # Note: Even though Ceres doesn't directly depend on COLAMD,
-  # some symbols from COLAMD that are needed for linking.
-  MESSAGE("-- Check for COLAMD")
-  FIND_LIBRARY(COLAMD_LIB NAMES colamd PATHS ${SUITESPARSE_SEARCH_LIBS})
-  FIND_PATH(COLAMD_INCLUDE NAMES colamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
-  IF (NOT EXISTS ${COLAMD_LIB} OR NOT EXISTS ${COLAMD_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find COLAMD (part of suitesparse.)"
-            "Please specify -DCOLAMD_INCLUDE=... and -DCOLAMD_LIB=...")
-  ENDIF (NOT EXISTS ${COLAMD_LIB} OR NOT EXISTS ${COLAMD_INCLUDE})
+MESSAGE("-- Check for COLAMD")
+SET(COLAMD_FOUND TRUE)
+
+FIND_LIBRARY(COLAMD_LIB NAMES colamd PATHS ${SUITESPARSE_SEARCH_LIBS})
+IF (EXISTS ${COLAMD_LIB}) 
   MESSAGE("-- Found COLAMD library: ${COLAMD_LIB}")
+ELSE (EXISTS ${COLAMD_LIB})
+  MESSAGE("-- Did not find COLAMD library")
+  SET(COLAMD_FOUND FALSE)
+ENDIF (EXISTS ${COLAMD_LIB})
+
+FIND_PATH(COLAMD_INCLUDE NAMES colamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+IF (EXISTS ${COLAMD_INCLUDE}) 
   MESSAGE("-- Found COLAMD header in: ${COLAMD_INCLUDE}")
+ELSE (EXISTS ${COLAMD_INCLUDE})
+  MESSAGE("-- Did not find COLAMD header")
+  SET(COLAMD_FOUND FALSE)
+ENDIF (EXISTS ${COLAMD_INCLUDE})
 
-  MESSAGE("-- Check for CCOLAMD")
-  FIND_LIBRARY(CCOLAMD_LIB NAMES ccolamd PATHS ${SUITESPARSE_SEARCH_LIBS})
-  FIND_PATH(CCOLAMD_INCLUDE NAMES ccolamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
-  IF (NOT EXISTS ${CCOLAMD_LIB} OR NOT EXISTS ${CCOLAMD_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find CCOLAMD (part of suitesparse.)"
-            "Please specify -DCOLAMD_INCLUDE=... and -DCOLAMD_LIB=...")
-  ENDIF (NOT EXISTS ${CCOLAMD_LIB} OR NOT EXISTS ${CCOLAMD_INCLUDE})
+MESSAGE("-- Check for CCOLAMD")
+SET(CCOLAMD_FOUND TRUE)
+
+FIND_LIBRARY(CCOLAMD_LIB NAMES ccolamd PATHS ${SUITESPARSE_SEARCH_LIBS})
+IF (EXISTS ${CCOLAMD_LIB}) 
   MESSAGE("-- Found CCOLAMD library: ${CCOLAMD_LIB}")
+ELSE (EXISTS ${CCOLAMD_LIB})
+  MESSAGE("-- Did not find CCOLAMD library")
+  SET(CCOLAMD_FOUND FALSE)
+ENDIF (EXISTS ${CCOLAMD_LIB})
+
+FIND_PATH(CCOLAMD_INCLUDE NAMES ccolamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+IF (EXISTS ${CCOLAMD_INCLUDE}) 
   MESSAGE("-- Found CCOLAMD header in: ${CCOLAMD_INCLUDE}")
+ELSE (EXISTS ${CCOLAMD_INCLUDE})
+  MESSAGE("-- Did not find CCOLAMD header")
+  SET(CCOLAMD_FOUND FALSE)
+ENDIF (EXISTS ${CCOLAMD_INCLUDE})
 
-  MESSAGE("-- Check for CHOLMOD")
-  FIND_LIBRARY(CHOLMOD_LIB NAMES cholmod PATHS ${SUITESPARSE_SEARCH_LIBS})
-  FIND_PATH(CHOLMOD_INCLUDE NAMES cholmod.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
-  IF (NOT EXISTS ${CHOLMOD_LIB} OR NOT EXISTS ${CHOLMOD_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find CHOLMOD (part of suitesparse.)"
-            "Please specify -DCHOLMOD_INCLUDE=... and -DCHOLMOD_LIB=...")
-  ENDIF (NOT EXISTS ${CHOLMOD_LIB} OR NOT EXISTS ${CHOLMOD_INCLUDE})
+MESSAGE("-- Check for CHOLMOD")
+SET(CHOLMOD_FOUND TRUE)
+
+FIND_LIBRARY(CHOLMOD_LIB NAMES cholmod PATHS ${SUITESPARSE_SEARCH_LIBS})
+IF (EXISTS ${CHOLMOD_LIB}) 
   MESSAGE("-- Found CHOLMOD library: ${CHOLMOD_LIB}")
+ELSE (EXISTS ${CHOLMOD_LIB})
+  MESSAGE("-- Did not find CHOLMOD library")
+  SET(CHOLMOD_FOUND FALSE)
+ENDIF (EXISTS ${CHOLMOD_LIB})
+
+FIND_PATH(CHOLMOD_INCLUDE NAMES cholmod.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+IF (EXISTS ${CHOLMOD_INCLUDE}) 
   MESSAGE("-- Found CHOLMOD header in: ${CHOLMOD_INCLUDE}")
+ELSE (EXISTS ${CHOLMOD_INCLUDE})
+  MESSAGE("-- Did not find CHOLMOD header")
+  SET(CHOLMOD_FOUND FALSE)
+ENDIF (EXISTS ${CHOLMOD_INCLUDE})
 
-  MESSAGE("-- Check for METIS (optional)")
-  FIND_LIBRARY(METIS_LIB NAMES metis PATHS ${SUITESPARSE_SEARCH_LIBS})
-  IF (NOT EXISTS ${METIS_LIB})
-    MESSAGE("   Can't find METIS; disabling. (part of suitesparse.)")
-  ELSE (NOT EXISTS ${METIS_LIB})
-    MESSAGE("-- Found METIS library: ${METIS_LIB}")
-  ENDIF (NOT EXISTS ${METIS_LIB})
+MESSAGE("-- Check for METIS (optional)")
+FIND_LIBRARY(METIS_LIB NAMES metis PATHS ${SUITESPARSE_SEARCH_LIBS})
 
-  MESSAGE("-- Check for LAPACK")
-  IF (APPLE)
-    # Mac OS X has LAPACK/BLAS bundled in a framework called "vecLib". Search for
-    # that instead of for the normal "lapack" library.
-    FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
-  ELSE (APPLE)
-    FIND_LIBRARY(LAPACK_LIB NAMES lapack)
-  ENDIF (APPLE)
+IF (EXISTS ${METIS_LIB}) 
+  MESSAGE("-- Found METIS library: ${METIS_LIB}")
+ELSE (EXISTS ${METIS_LIB})
+  MESSAGE("-- Did not find METIS library")
+ENDIF (EXISTS ${METIS_LIB})
 
-  IF (NOT EXISTS ${LAPACK_LIB})
-    MESSAGE(FATAL_ERROR
-            "Can't find LAPACK "
-            "Please specify -DLAPACK_LIB=...")
-  ENDIF (NOT EXISTS ${LAPACK_LIB})
-  MESSAGE ("-- Found LAPACK library: ${LAPACK_LIB}")
+SET(BLAS_AND_LAPACK_FOUND TRUE)
+IF (APPLE)
+  # Mac OS X has LAPACK/BLAS bundled in a framework called
+  # "vecLib". Search for that instead of for the normal "lapack"
+  # library.
+  FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
+ELSE (APPLE)
+  FIND_LIBRARY(BLAS_LIB NAMES blas)
+  IF (EXISTS ${BLAS_LIB}) 
+    MESSAGE("-- Found BLAS library: ${BLAS_LIB}")
+  ELSE (EXISTS ${BLAS_LIB})
+    MESSAGE("-- Did not find BLAS library")
+    SET(BLAS_AND_LAPACK_FOUND FALSE)
+  ENDIF (EXISTS ${BLAS_LIB})
+  FIND_LIBRARY(LAPACK_LIB NAMES lapack)
+ENDIF (APPLE)
 
-  # On Apple BLAS is linked with vecLib, so don't add it separately.
-  IF (NOT APPLE)
-    MESSAGE("-- Check for BLAS")
-    FIND_LIBRARY(BLAS_LIB NAMES blas)
-    IF (NOT EXISTS ${BLAS_LIB})
-      MESSAGE(FATAL_ERROR
-              "Can't find BLAS (needed for LAPACK and SuiteSparse.)"
-              "Please specify -DBLAS_LIB=...")
-    ENDIF (NOT EXISTS ${BLAS_LIB})
-    MESSAGE ("-- Found BLAS library: ${BLAS_LIB}")
-  ENDIF (NOT APPLE)
+IF (EXISTS ${LAPACK_LIB}) 
+  MESSAGE("-- Found LAPACK library: ${LAPACK_LIB}")
+ELSE (EXISTS ${LAPACK_LIB})
+  SET(BLAS_AND_LAPACK_FOUND FALSE)
+  MESSAGE("-- Did not find LAPACK library")
+ENDIF (EXISTS ${LAPACK_LIB})
 
-ELSE (SUITESPARSE)
-  ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
-ENDIF (SUITESPARSE)
+SET(SUITESPARSE_FOUND 
+    AMD_FOUND AND
+    CAMD_FOUND AND
+    COLAMD_FOUND AND
+    CCOLAMD_FOUND AND
+    CHOLMOD_FOUND AND
+    BLAS_AND_LAPACK_FOUND)
+
+# By default, if all of SuiteSparse's dependencies are found, Ceres is
+# built with SuiteSparse support. -DSUITESPARSE=ON/OFF can be used to
+# enable/disable SuiteSparse explicitly.
+IF (DEFINED SUITESPARSE)
+  IF (SUITESPARSE AND NOT SUITESPARSE_FOUND)
+    MESSAGE(FATAL_ERROR "One or more of SuiteSparse's dependencies was not found")
+  ENDIF (SUITESPARSE AND NOT SUITESPARSE_FOUND)
+ELSE (DEFINED SUITESPARSE)
+  IF (SUITESPARSE_FOUND)
+    MESSAGE("-- Found all SuiteSparse dependencies. Building with SuiteSparse")
+    SET(SUITESPARSE ON)
+  ELSE (SUITESPARSE_FOUND)
+    MESSAGE("-- Did not find all SuiteSparse dependencies. Building without SuiteSparse")	
+    SET(SUITESPARSE OFF)
+    ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
+  ENDIF (SUITESPARSE_FOUND)
+ENDIF (DEFINED SUITESPARSE)
 
 # Google Flags
 OPTION(GFLAGS
@@ -223,30 +275,25 @@ MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
 
 # Eigen
 MESSAGE("-- Check for Eigen 3.0")
-SET(EIGEN_SEARCH_HEADERS
-    ${SEARCH_HEADERS}
-    /usr/include/eigen3  # Ubuntu 10.04's default location.
-    /usr/local/include/eigen3
-    /usr/local/homebrew/include/eigen3  # Mac OS X
-    /opt/local/var/macports/software/eigen3/opt/local/include/eigen3/
-    )
 FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS ${EIGEN_SEARCH_HEADERS})
 IF (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
 MESSAGE("-- Found Eigen 3.0: ${EIGEN_INCLUDE}")
 
+# Template specializations for the Schur complement based solvers. If
+# compile time, binary size or compiler performance is an issue, you
+# may consider disabling this.
 OPTION(SCHUR_SPECIALIZATIONS
        "Enable fixed-size schur specializations."
        ON)
 
 IF (NOT SCHUR_SPECIALIZATIONS)
-  # Disable fixed-size specializations of the schur complement solver, which
-  # requires multiple gigabytes of memory to compile.
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
 ENDIF (NOT SCHUR_SPECIALIZATIONS)
 
+# Multithreading using OpenMP
 OPTION(OPENMP
        "Enable threaded solving in Ceres (requires OpenMP)"
        ON)
@@ -262,11 +309,11 @@ IF (OPENMP)
   ENDIF(OPENMP_FOUND)
 ENDIF (OPENMP)
 
+# Protocol buffers
 OPTION(PROTOBUF
        "Enable protocol buffers support."
        ON)
 
-# Protocol buffers support.
 IF (PROTOBUF)
   FIND_PACKAGE(Protobuf)
   IF (PROTOBUF_FOUND)
@@ -297,13 +344,17 @@ INCLUDE_DIRECTORIES(
   include
   internal
   internal/ceres
-  ${AMD_INCLUDE}
-  ${COLAMD_INCLUDE}
-  ${CHOLMOD_INCLUDE}
   ${GLOG_INCLUDE}
-  ${GFLAGS_INCLUDE}
   ${EIGEN_INCLUDE}
-)
+  )
+
+IF (SUITESPARSE)
+  INCLUDE_DIRECTORIES(${CHOLMOD_INCLUDE})
+ENDIF(SUITESPARSE)
+
+IF (GFLAGS)
+  INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
+ENDIF (GFLAGS)
 
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
