@@ -183,7 +183,7 @@ string Solver::Summary::FullReport() const {
 
   internal::StringAppendF(&report, "Threads:            % 25d% 25d\n",
                           num_threads_given, num_threads_used);
-  internal::StringAppendF(&report, "Linear Solver Threads:% 23d% 25d\n",
+  internal::StringAppendF(&report, "Linear solver threads:% 23d% 25d\n",
                           num_linear_solver_threads_given,
                           num_linear_solver_threads_used);
 
