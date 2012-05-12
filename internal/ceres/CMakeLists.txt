@@ -29,6 +29,7 @@
 # Author: keir@google.com (Keir Mierle)
 
 SET(CERES_INTERNAL_SRC
+    array_utils.cc
     block_evaluate_preparer.cc
     block_jacobi_preconditioner.cc
     block_jacobian_writer.cc
@@ -153,6 +154,7 @@ IF (BUILD_TESTING)
              ${CMAKE_SOURCE_DIR}/data)
   ENDMACRO (CERES_TEST)
 
+  CERES_TEST(array_utils)
   CERES_TEST(autodiff)
   CERES_TEST(autodiff_cost_function)
   CERES_TEST(block_random_access_dense_matrix)

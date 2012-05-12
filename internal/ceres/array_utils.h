@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,53 +28,38 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
-// Utility routines for ResidualBlock evaluation.
+// Utility routines for validating arrays. 
 //
 // These are useful for detecting two common class of errors.
 //
 // 1. Uninitialized memory - where the user for some reason did not
-// compute part of a cost/residual/jacobian.
+// compute part of an array, but the code expects it.
 //
 // 2. Numerical failure while computing the cost/residual/jacobian,
 // e.g. NaN, infinities etc. This is particularly useful since the
 // automatic differentiation code does computations that are not
 // evident to the user and can silently generate hard to debug errors.
 
-#ifndef CERES_INTERNAL_RESIDUAL_BLOCK_UTILS_H_
-#define CERES_INTERNAL_RESIDUAL_BLOCK_UTILS_H_
+#ifndef CERES_INTERNAL_ARRAY_UTILS_H_
+#define CERES_INTERNAL_ARRAY_UTILS_H_
 
-#include <string>
 #include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
 
-class ResidualBlock;
+// Fill the array x with an impossible value that the user code is
+// never expected to compute.
+void InvalidateArray(int size, double* x);
 
-// Invalidate cost, resdual and jacobian arrays (if not NULL).
-void InvalidateEvaluation(const ResidualBlock& block,
-                          double* cost,
-                          double* residuals,
-                          double** jacobians);
+// Check if all the entries of the array x are valid, i.e. all the
+// values in the array should be finite and none of them should be
+// equal to the "impossible" value used by InvalidateArray.
+bool IsArrayValid(int size, const double* x);
 
-// Check if any of the arrays cost, residuals or jacobians contains an
-// NaN, return true if it does.
-bool IsEvaluationValid(const ResidualBlock& block,
-                       double const* const* parameters,
-                       double* cost,
-                       double* residuals,
-                       double** jacobians);
-
-// Create a string representation of the Residual block containing the
-// value of the parameters, residuals and jacobians if present.
-// Useful for debugging output.
-string EvaluationToString(const ResidualBlock& block,
-                          double const* const* parameters,
-                          double* cost,
-                          double* residuals,
-                          double** jacobians);
+extern const double kImpossibleValue;
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_RESIDUAL_BLOCK_UTILS_H_
+#endif  // CERES_INTERNAL_ARRAY_UTILS_H_

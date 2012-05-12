@@ -32,13 +32,13 @@
 #define CERES_INTERNAL_PARAMETER_BLOCK_H_
 
 #include <cstdlib>
-#include "ceres/integral_types.h"
 #include <glog/logging.h>
+#include "ceres/array_utils.h"
+#include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
-#include "ceres/residual_block_utils.h"
 
 namespace ceres {
 namespace internal {

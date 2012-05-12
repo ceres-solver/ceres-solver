@@ -56,6 +56,7 @@
 
 #include <glog/logging.h>
 #include "Eigen/Core"
+#include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
 #include "ceres/file.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -310,6 +311,11 @@ void LevenbergMarquardt::Minimize(const Minimizer::Options& options,
       // Truncated Newton methods.
       solve_options.r_tolerance = -1.0;
 
+      // Invalidate the output array lm_step, so that we can detect if
+      // the linear solver generated numerical garbage.  This is known
+      // to happen for the DENSE_QR and then DENSE_SCHUR solver when
+      // the Jacobin is severly rank deficient mu is too small.
+      InvalidateArray(num_effective_parameters, lm_step.data());
       const time_t linear_solver_start_time = time(NULL);
       LinearSolver::Summary linear_solver_summary =
           linear_solver->Solve(jacobian.get(),
@@ -345,6 +351,14 @@ void LevenbergMarquardt::Minimize(const Minimizer::Options& options,
           (linear_solver_summary.termination_type != MAX_ITERATIONS)) {
         VLOG(1) << "Linear solver failure: retrying with a higher mu";
         break;
+      }
+
+      if (!IsArrayValid(num_effective_parameters, lm_step.data())) {
+        LOG(WARNING) << "Linear solver failure. Failed to compute a finite "
+                     << "step. Terminating. Please report this to the Ceres "
+                     << "Solver developers.";
+        summary->termination_type = NUMERICAL_FAILURE;
+        return;
       }
 
       step_norm = (lm_step.array() * scale.array()).matrix().norm();

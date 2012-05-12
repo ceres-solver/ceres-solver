@@ -29,7 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <cmath>
-
+#include <limits>
 #include "gtest/gtest.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block.h"
@@ -117,7 +117,7 @@ class BadResidualCostFunction: public SizedCostFunction<1, 1> {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
-    residuals[0] = 1.0/0.0;
+    residuals[0] = std::numeric_limits<double>::infinity();
     if (jacobians != NULL && jacobians[0] != NULL) {
       jacobians[0][0] = 0.0;
     }
@@ -132,26 +132,11 @@ class BadJacobianCostFunction: public SizedCostFunction<1, 1> {
                         double** jacobians) const {
     residuals[0] = 1.0;
     if (jacobians != NULL && jacobians[0] != NULL) {
-      jacobians[0][0] = 1.0/0.0;
+      jacobians[0][0] = std::numeric_limits<double>::quiet_NaN();
     }
     return true;
   }
 };
-
-TEST(ResidualBlockUtils, IsArrayValid) {
-  double x[3];
-  x[0] = 0.0;
-  x[1] = 1.0;
-  x[2] = 2.0;
-  EXPECT_TRUE(IsArrayValid(3, x));
-  x[1] = 1.0/0.0;
-  EXPECT_FALSE(IsArrayValid(3, x));
-  x[1] = 0.0/0.0;
-  EXPECT_FALSE(IsArrayValid(3, x));
-  EXPECT_TRUE(IsArrayValid(1, NULL));
-  InvalidateArray(3, x);
-  EXPECT_FALSE(IsArrayValid(3, x));
-}
 
 // Note: It is preferable to write the below test as:
 //
