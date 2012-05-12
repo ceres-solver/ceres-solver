@@ -314,7 +314,7 @@ void LevenbergMarquardt::Minimize(const Minimizer::Options& options,
       // Invalidate the output array lm_step, so that we can detect if
       // the linear solver generated numerical garbage.  This is known
       // to happen for the DENSE_QR and then DENSE_SCHUR solver when
-      // the Jacobin is severly rank deficient mu is too small.
+      // the Jacobin is severly rank deficient and mu is too small.
       InvalidateArray(num_effective_parameters, lm_step.data());
       const time_t linear_solver_start_time = time(NULL);
       LinearSolver::Summary linear_solver_summary =
