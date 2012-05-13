@@ -361,7 +361,7 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
   // residuals.
   VaryingResidualFunctor functor;
 
-  for (int num_residuals = 0; num_residuals < kMaxResiduals; ++num_residuals) {
+  for (int num_residuals = 1; num_residuals < kMaxResiduals; ++num_residuals) {
     // Tweak the number of residuals to produce.
     functor.num_residuals = num_residuals;
 
