@@ -209,6 +209,7 @@ TEST(SolverImpl, ReorderResidualBlockNonSchurSolver) {
   EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
                                                      problem.mutable_program(),
                                                      &error));
+  EXPECT_EQ(current_residual_blocks.size(), residual_blocks.size());
   for (int i = 0; i < current_residual_blocks.size(); ++i) {
     EXPECT_EQ(current_residual_blocks[i], residual_blocks[i]);
   }
@@ -281,8 +282,77 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
                                                      problem.mutable_program(),
                                                      &error));
+  EXPECT_EQ(residual_blocks.size(), expected_residual_blocks.size());
   for (int i = 0; i < expected_residual_blocks.size(); ++i) {
     EXPECT_EQ(residual_blocks[i], expected_residual_blocks[i]);
+  }
+}
+
+TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
+  ProblemImpl problem;
+  double x;
+  double y;
+  double z;
+
+  problem.AddParameterBlock(&x, 1);
+  problem.AddParameterBlock(&y, 1);
+  problem.AddParameterBlock(&z, 1);
+
+  // Set one parameter block constant.
+  problem.SetParameterBlockConstant(&z);
+
+  // Mark residuals for x's row block with "x" for readability.
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);       // 0 x
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);  // 1 x
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);  // 2
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);  // 3
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);  // 4 x
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);  // 5
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);  // 6 x
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);       // 7
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_SCHUR;
+  options.num_eliminate_blocks = 2;
+
+  // Create the reduced program. This should remove the fixed block "z",
+  // marking the index to -1 at the same time. x and y also get indices.
+  string error;
+  scoped_ptr<Program> reduced_program(
+      SolverImpl::CreateReducedProgram(&options, &problem, &error));
+
+  const vector<ResidualBlock*>& residual_blocks =
+      problem.program().residual_blocks();
+
+  // This is a bit fragile, but it serves the purpose. We know the
+  // bucketing algorithm that the reordering function uses, so we
+  // expect the order for residual blocks for each e_block to be
+  // filled in reverse.
+
+  vector<ResidualBlock*> expected_residual_blocks;
+
+  // Row block for residuals involving "x". These are marked "x" in the block
+  // of code calling AddResidual() above.
+  expected_residual_blocks.push_back(residual_blocks[6]);
+  expected_residual_blocks.push_back(residual_blocks[4]);
+  expected_residual_blocks.push_back(residual_blocks[1]);
+  expected_residual_blocks.push_back(residual_blocks[0]);
+
+  // Row block for residuals involving "y".
+  expected_residual_blocks.push_back(residual_blocks[7]);
+  expected_residual_blocks.push_back(residual_blocks[5]);
+  expected_residual_blocks.push_back(residual_blocks[3]);
+  expected_residual_blocks.push_back(residual_blocks[2]);
+
+  EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
+                                                     reduced_program.get(),
+                                                     &error));
+
+  EXPECT_EQ(reduced_program->residual_blocks().size(),
+            expected_residual_blocks.size());
+  for (int i = 0; i < expected_residual_blocks.size(); ++i) {
+    EXPECT_EQ(reduced_program->residual_blocks()[i],
+              expected_residual_blocks[i]);
   }
 }
 

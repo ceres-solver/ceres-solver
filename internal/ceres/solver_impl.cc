@@ -582,10 +582,13 @@ int MinParameterBlock(const ResidualBlock* residual_block,
   int min_parameter_block_position = num_eliminate_blocks;
   for (int i = 0; i < residual_block->NumParameterBlocks(); ++i) {
     ParameterBlock* parameter_block = residual_block->parameter_blocks()[i];
-    DCHECK_NE(parameter_block->index(), -1)
-        << "Did you forget to call Program::SetParameterOffsetsAndIndex()?";
-    min_parameter_block_position = std::min(parameter_block->index(),
-                                            min_parameter_block_position);
+    if (!parameter_block->IsConstant()) {
+      CHECK_NE(parameter_block->index(), -1)
+          << "Did you forget to call Program::SetParameterOffsetsAndIndex()? "
+          << "This is a Ceres bug; please contact the developers!";
+      min_parameter_block_position = std::min(parameter_block->index(),
+                                              min_parameter_block_position);
+    }
   }
   return min_parameter_block_position;
 }
