@@ -541,13 +541,35 @@ is sent to \texttt{STDOUT}.
  List of iterations at which the optimizer should dump the
      linear least squares problem to disk. Useful for testing and
      benchmarking. If empty (default), no problems are dumped.
-Note that this requires a version of Ceres built with protocol buffers.
 
-\item{\texttt{lsqp\_dump\_format}}(\texttt{"lm\_iteration\_\%03d.lsqp"})
- Format string for the file name used for dumping the least
-     squares problem to disk. If the format is \texttt{ascii}, then the
-     problem is logged to the screen; don't try this with large
-     problems or expect a frozen terminal.
+\item{\texttt{lsqp\_dump\_directory}} (\texttt{/tmp})
+ If \texttt{lsqp\_iterations\_to\_dump} is non-empty, then this setting determines the directory to which the files containing the linear least squares problems are written to.
+
+
+\item{\texttt{lsqp\_dump\_format}}{\texttt{TEXTFILE}} The format in which linear least squares problems should be logged
+when \texttt{lsqp\_iterations\_to\_dump} is non-empty.  There are three options
+\begin{itemize}
+\item{\texttt{CONSOLE}} prints the linear least squares problem in a human readable format
+  to \texttt{stderr}. The Jacobian is printed as a dense matrix. The vectors
+   $D$, $x$ and $f$ are printed as dense vectors. This should only be used
+   for small problems.
+\item{\texttt{PROTOBUF}}  
+   Write out the linear least squares problem to the directory
+   pointed to by \texttt{lsqp\_dump\_directory} as a protocol
+   buffer. \texttt{linear\_least\_squares\_problems.h/cc} contains routines for
+   loading these problems. For details on the on disk format used,
+   see \texttt{matrix.proto}. The files are named \texttt{lm\_iteration\_???.lsqp}. This requires that \texttt{protobuf} be linked into Ceres Solver.
+\item{\texttt{TEXTFILE}}
+   Write out the linear least squares problem to the directory
+   pointed to by \texttt{lsqp\_dump\_directory} as text files
+   which can be read into \texttt{MATLAB/Octave}. The Jacobian is dumped as a
+   text file containing $(i,j,s)$ triplets, the vectors $D$, $x$ and $f$ are
+   dumped as text files containing a list of their values.
+  
+   A \texttt{MATLAB/Octave} script called \texttt{lm\_iteration\_???.m} is also output,
+   which can be used to parse and load the problem into memory.
+\end{itemize}
+
 
 \item{\texttt{crash\_and\_dump\_lsqp\_on\_failure}}(\texttt{false})
  Dump the linear least squares problem to disk if the minimizer

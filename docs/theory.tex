@@ -167,6 +167,14 @@ Equation~\eqref{eq:schurtrick1} is closely related to {\em Domain Decomposition 
 
 For bundle adjustment problems, particularly those arising in reconstruction from community photo collections, more effective preconditioners can be constructed by analyzing and exploiting the camera-point visibility structure of the scene~\cite{kushal2012}. Ceres implements the two visibility based preconditioners described by Kushal \& Agarwal as \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}. These are fairly new preconditioners and Ceres' implementation of them is in its early stages and is not as mature as the other preconditioners described above.
 
+
+\section{\texttt{CGNR}}
+For general sparse problems, if the problem is too large for \texttt{CHOLMOD} or \texttt{SuiteSparse} is not linked into Ceres, another option is the \texttt{CGNR} solver. This solver uses the Conjugate Gradients solver on the {\em normal equations}, but without forming the normal equations explicitly. It exploits the relation
+\begin{align}
+	H x = J^\top J x = J^\top(J x)
+\end{align}
+Currently only the \texttt{JACOBI} preconditioner is available for use with this solver. It uses the block diagonal of $H$ as a preconditioner. 
+
 \section{Ordering}
 All three of the Schur based solvers depend on the user indicating to the solver, which of the parameter blocks correspond to the points and which correspond to the cameras. Ceres refers to them as \texttt{e\_block}s and \texttt{f\_blocks}. The only constraint on \texttt{e\_block}s is that there should be no term in the objective function with two or more \texttt{e\_block}s.
 

@@ -17,7 +17,7 @@ Ceres relies on a number of open source libraries, some of which are optional. H
  Note: Ceres requires \texttt{glog}\ version 0.3.1 or later. Version 0.3 (which ships with Fedora 16) has a namespace bug which prevents Ceres from building.
 
 \item{\gflags~\footnote{\url{http://code.google.com/p/gflags}}} is used by the code in
-  \texttt{examples}. It is also used by some of the tests. While technically it is not required to build the core library, we do not recommend building Ceres without it.
+  \texttt{examples}. It is also used by some of the tests. Strictly speaking it is not required to build the core library, we do not recommend building Ceres without it.
 \item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/suitesparse/}}} is used for sparse matrix analysis,
   ordering and factorization. In particular Ceres uses the
   \amd, \colamd\ and \cholmod\ libraries. This is an optional
@@ -88,8 +88,7 @@ We are now ready to build and test Ceres. Note that \texttt{cmake} requires the 
 tar zxf ceres-solver-1.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0              \
- -DEIGEN_INCLUDE=/usr/include/eigen3   \
+cmake ../ceres-solver-1.0     
 make -j3
 make test
 \end{minted}
@@ -199,18 +198,16 @@ Protocol Buffers is a big dependency and if you do not care for the tests that d
 
 \item{\suitesparse}
 
-
-It is possible to compile Ceres in without \suitesparse, which
-saves on binary size, but the resulting version of Ceres is not suited
-to large scale problems due to the lack of a sparse Cholesky solver.  This will reduce Ceres' dependencies down to
-\eigen, \gflags\ and \glog. To build Ceres without \suitesparse\ use
+By default, Ceres will only link to SuiteSparse if all its dependencies are present. 
+To build Ceres without \suitesparse\ use
 \begin{minted}{bash}
 -DSUITESPARSE=OFF.
 \end{minted}
- This will also disable dependency checking for \lapack\ and \blas.
+ This will also disable dependency checking for \lapack\ and \blas. This saves on binary size, but the resulting version of Ceres is not suited
+to large scale problems due to the lack of a sparse Cholesky solver.  This will reduce Ceres' dependencies down to
+\eigen, \gflags\ and \glog.
 
 \item{\gflags}
-
 
 To build Ceres without \gflags, use
 \begin{minted}{bash}
