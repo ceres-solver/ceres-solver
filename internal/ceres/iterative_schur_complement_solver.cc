@@ -66,10 +66,9 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   CHECK_NOTNULL(A->block_structure());
 
   // Initialize a ImplicitSchurComplement object.
-  if ((schur_complement_ == NULL) || (!options_.constant_sparsity)) {
+  if (schur_complement_ == NULL) {
     schur_complement_.reset(
         new ImplicitSchurComplement(options_.num_eliminate_blocks,
-                                    options_.constant_sparsity,
                                     options_.preconditioner_type == JACOBI));
   }
   schur_complement_->Init(*A, per_solve_options.D, b);
@@ -116,7 +115,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
             new VisibilityBasedPreconditioner(*A->block_structure(), options_));
       }
       is_preconditioner_good =
-          visibility_based_preconditioner_->Compute(*A, per_solve_options.D);
+          visibility_based_preconditioner_->Update(*A, per_solve_options.D);
       cg_per_solve_options.preconditioner =
           visibility_based_preconditioner_.get();
       break;

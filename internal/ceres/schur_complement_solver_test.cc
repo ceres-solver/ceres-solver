@@ -65,8 +65,8 @@ class SchurComplementSolverTest : public ::testing::Test {
     sol_d.reset(new double[num_cols]);
 
     LinearSolver::Options options;
-    options.constant_sparsity = false;
     options.type = DENSE_QR;
+
     scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
 
     TripletSparseMatrix triplet_A(A->num_rows(),

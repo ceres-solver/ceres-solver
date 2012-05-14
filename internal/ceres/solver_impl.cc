@@ -455,7 +455,6 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   }
 
   LinearSolver::Options linear_solver_options;
-  linear_solver_options.constant_sparsity = true;
   linear_solver_options.min_num_iterations =
         options->linear_solver_min_num_iterations;
   linear_solver_options.max_num_iterations =

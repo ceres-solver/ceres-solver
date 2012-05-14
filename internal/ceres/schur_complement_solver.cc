@@ -57,7 +57,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
   const time_t start_time = time(NULL);
-  if (!options_.constant_sparsity || (eliminator_.get() == NULL)) {
+  if (eliminator_.get() == NULL) {
     InitStorage(A->block_structure());
     DetectStructure(*A->block_structure(),
                     options_.num_eliminate_blocks,
@@ -261,13 +261,6 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   cholmod_lhs = NULL;
   ss_.Free(cholmod_rhs);
   cholmod_rhs = NULL;
-
-  // If sparsity is not constant across calls, then reset the symbolic
-  // factorization.
-  if (!options().constant_sparsity) {
-    ss_.Free(symbolic_factor_);
-    symbolic_factor_ = NULL;
-  }
 
   if (cholmod_solution == NULL) {
     LOG(ERROR) << "CHOLMOD solve failed.";

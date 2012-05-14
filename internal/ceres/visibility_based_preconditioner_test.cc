@@ -132,7 +132,7 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
   }
 
   AssertionResult PreconditionerValuesMatch() {
-    preconditioner_->Compute(*A_, D_.get());
+    preconditioner_->Update(*A_, D_.get());
     const HashSet<pair<int, int> >& cluster_pairs = get_cluster_pairs();
     const BlockRandomAccessSparseMatrix* m = get_m();
     Matrix preconditioner_matrix;

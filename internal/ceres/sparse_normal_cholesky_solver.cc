@@ -100,11 +100,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     A->DeleteRows(num_cols);
   }
 
-  if (!options_.constant_sparsity) {
-    ss_.Free(symbolic_factor_);
-    symbolic_factor_ = NULL;
-  }
-
   summary.num_iterations = 1;
   if (sol != NULL) {
     memcpy(x, sol->x, num_cols * sizeof(*x));

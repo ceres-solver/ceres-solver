@@ -40,7 +40,13 @@ namespace internal {
 namespace {
 
 // Helper functor used by the constructor for reordering the contents
-// of a TripletSparseMatrix.
+// of a TripletSparseMatrix. This comparator assumes thay there are no
+// duplicates in the pair of arrays rows and cols, i.e., there is no
+// indices i and j (not equal to each other) s.t.
+//
+//  rows[i] == rows[j] && cols[i] == cols[j]
+//
+// If this is the case, this functor will not be a StrictWeakOrdering.
 struct RowColLessThan {
   RowColLessThan(const int* rows, const int* cols)
       : rows(rows), cols(cols) {

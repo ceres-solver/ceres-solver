@@ -133,7 +133,7 @@ class SchurEliminatorBase;
 //   options.num_eliminate_blocks = num_points;
 //   VisibilityBasedPreconditioner preconditioner(
 //      *A.block_structure(), options);
-//   preconditioner.Compute(A, NULL);
+//   preconditioner.Update(A, NULL);
 //   preconditioner.RightMultiply(x, y);
 //
 
@@ -160,7 +160,7 @@ class VisibilityBasedPreconditioner : public LinearOperator {
                                 const LinearSolver::Options& options);
   virtual ~VisibilityBasedPreconditioner();
 
-  // Compute the numerical value of the preconditioner for the linear
+  // Update the numerical value of the preconditioner for the linear
   // system:
   //
   //  |   A   | x = |b|
@@ -171,12 +171,12 @@ class VisibilityBasedPreconditioner : public LinearOperator {
   //
   // D can be NULL, in which case its interpreted as a diagonal matrix
   // of size zero.
-  bool Compute(const BlockSparseMatrixBase& A,
-               const double* D);
+  bool Update(const BlockSparseMatrixBase& A, const double* D);
+
 
   // LinearOperator interface. Since the operator is symmetric,
   // LeftMultiply and num_cols are just calls to RightMultiply and
-  // num_rows respectively. Compute() must be called before
+  // num_rows respectively. Update() must be called before
   // RightMultiply can be called.
   virtual void RightMultiply(const double* x, double* y) const;
   virtual void LeftMultiply(const double* x, double* y) const {

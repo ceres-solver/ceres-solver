@@ -63,7 +63,6 @@ TEST(ConjugateGradientTest, Solves3x3IdentitySystem) {
 
   LinearSolver::Options options;
   options.max_num_iterations = 10;
-  options.constant_sparsity = false;
 
   LinearSolver::PerSolveOptions per_solve_options;
   per_solve_options.r_tolerance = 1e-9;

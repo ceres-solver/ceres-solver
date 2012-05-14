@@ -62,7 +62,7 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   }
 
   // rhs = [b;0] to account for the additional rows in the lhs.
-  Vector rhs(num_rows + ((per_solve_options.D !=NULL) ? num_cols : 0));
+  Vector rhs(num_rows + ((per_solve_options.D != NULL) ? num_cols : 0));
   rhs.setZero();
   rhs.head(num_rows) = ConstVectorRef(b, num_rows);
 

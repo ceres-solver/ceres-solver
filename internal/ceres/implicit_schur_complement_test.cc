@@ -83,7 +83,6 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     const int num_schur_rows = blhs.num_rows();
 
     LinearSolver::Options options;
-    options.constant_sparsity = false;
     options.num_eliminate_blocks = num_eliminate_blocks_;
     options.type = DENSE_SCHUR;
 
@@ -121,7 +120,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     Vector reference_solution;
     ReducedLinearSystemAndSolution(D, &lhs, &rhs, &reference_solution);
 
-    ImplicitSchurComplement isc(num_eliminate_blocks_, false, true);
+    ImplicitSchurComplement isc(num_eliminate_blocks_, true);
     isc.Init(*A_, D, b_.get());
 
     int num_sc_cols = lhs.cols();

@@ -159,7 +159,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
 
   SuiteSparse ss_;
   // Symbolic factorization of the reduced linear system. Precomputed
-  // once and reused if constant_sparsity_ is true.
+  // once and reused in subsequent calls.
   cholmod_factor* symbolic_factor_;
   DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };

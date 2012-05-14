@@ -341,7 +341,6 @@ void VisibilityBasedPreconditioner::InitEliminator(
   LinearSolver::Options eliminator_options;
   eliminator_options.num_eliminate_blocks = options_.num_eliminate_blocks;
   eliminator_options.num_threads = options_.num_threads;
-  eliminator_options.constant_sparsity = true;
 
   DetectStructure(bs, options_.num_eliminate_blocks,
                   &eliminator_options.row_block_size,
@@ -352,9 +351,9 @@ void VisibilityBasedPreconditioner::InitEliminator(
   eliminator_->Init(options_.num_eliminate_blocks, &bs);
 }
 
-// Compute the values of the preconditioner matrix and factorize it.
-bool VisibilityBasedPreconditioner::Compute(const BlockSparseMatrixBase& A,
-                                            const double* D) {
+// Update the values of the preconditioner matrix and factorize it.
+bool VisibilityBasedPreconditioner::Update(const BlockSparseMatrixBase& A,
+                                           const double* D) {
   const time_t start_time = time(NULL);
   const int num_rows = m_->num_rows();
   CHECK_GT(num_rows, 0);
