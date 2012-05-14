@@ -62,6 +62,7 @@ class Solver {
       max_solver_time_sec = 1.0e9;
       num_threads = 1;
       tau = 1e-4;
+      min_mu = 1e-20;
       min_relative_decrease = 1e-3;
       function_tolerance = 1e-6;
       gradient_tolerance = 1e-10;
@@ -110,6 +111,18 @@ class Solver {
     // regularizer. This is the inversely related to the size of the
     // initial trust region.
     double tau;
+
+    // For Levenberg-Marquardt, the minimum value of the
+    // regularizer. For well constrained problems there shold be no
+    // need to modify the default value, but in some cases, going
+    // below a certain minimum reliably triggers rank deficiency in
+    // the normal equations. In such cases, the LM solver can
+    // oscillate between lowering the value of mu, seeing a numerical
+    // failure, and then increasing it making some progress and then
+    // reducing it again.
+    //
+    // In such cases, it is useful to set a higher value for min_mu.
+    double min_mu;
 
     // For trust region methods, this is lower threshold for the
     // relative decrease before a step is accepted.

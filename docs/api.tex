@@ -462,6 +462,16 @@ Number of threads used by Ceres to evaluate the Jacobian.
 
 \item{\texttt{tau}}(\texttt{1e-4}) Initial value of the regularization parameter $\mu$ used by the Levenberg-Marquardt algorithm. The size of this parameter indicate the user's guess of how far the initial solution is from the minimum. Large values indicates that the solution is far away.
 
+\item{\texttt{min\_mu}(\texttt{1e-20})} For Levenberg-Marquardt, the minimum value of the
+     regularizer. For well constrained problems there shold be no
+     need to modify the default value, but in some cases, going
+     below a certain minimum reliably triggers rank deficiency in
+     the normal equations. In such cases, the Levenberg-Marquardt algorithm can
+     oscillate between lowering the value of mu, seeing a numerical
+     failure, and then increasing it making some progress and then
+     reducing it again.
+    
+     In such cases, it is useful to set a higher value for \texttt{min\_mu}.
 \item{\texttt{min\_relative\_decrease}}(\texttt{1e-3}) Lower threshold for relative decrease before a Levenberg-Marquardt step is acceped.
 
 

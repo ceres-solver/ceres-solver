@@ -498,6 +498,7 @@ void LevenbergMarquardt::Minimize(const Minimizer::Options& options,
       }
 
       mu = mu * max(1.0 / 3.0, 1 - pow(2 * relative_decrease - 1, 3));
+      mu = std::max(options.min_mu, mu);
       nu = 2.0;
       step_is_successful = true;
       break;

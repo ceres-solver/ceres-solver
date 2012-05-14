@@ -57,6 +57,7 @@ class Minimizer {
       min_relative_decrease = options.min_relative_decrease;
       eta = options.eta;
       tau = options.tau;
+      min_mu = options.min_mu;
       jacobi_scaling = options.jacobi_scaling;
       crash_and_dump_lsqp_on_failure = options.crash_and_dump_lsqp_on_failure;
       lsqp_dump_directory = options.lsqp_dump_directory;
@@ -74,6 +75,7 @@ class Minimizer {
     double min_relative_decrease;
     double eta;
     double tau;
+    double min_mu;
     bool jacobi_scaling;
     bool crash_and_dump_lsqp_on_failure;
     vector<int> lsqp_iterations_to_dump;
