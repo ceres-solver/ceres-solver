@@ -2,7 +2,7 @@
 \chapter{Building Ceres}
 \label{chapter:build}
 Ceres source code and documentation is hosted at
-\url{http://code.google.com/p/ceres-solver/}. 
+\url{http://code.google.com/p/ceres-solver/}.
 
 \section{Dependencies}
 Ceres relies on a number of open source libraries, some of which are optional. However, we recommend that you start out by building Ceres with all its dependencies. For details on customizing the build process, please see Section~\ref{sec:custom}.
@@ -10,7 +10,7 @@ Ceres relies on a number of open source libraries, some of which are optional. H
 \begin{enumerate}
 \item{\cmake~\footnote{\url{http://www.cmake.org/}}} is the cross-platform build system used by Ceres.
 \item{\eigen~\footnote{\url{http://eigen.tuxfamily.org}}} is used for doing all the low level matrix and
-  linear algebra operations. 
+  linear algebra operations.
 
 \item{\glog~\footnote{\url{http://code.google.com/p/google-glog}}} is used for error checking and logging.
 
@@ -18,7 +18,7 @@ Ceres relies on a number of open source libraries, some of which are optional. H
 
 \item{\gflags~\footnote{\url{http://code.google.com/p/gflags}}} is used by the code in
   \texttt{examples}. It is also used by some of the tests. Strictly speaking it is not required to build the core library, we do not recommend building Ceres without it.
-\item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/suitesparse/}}} is used for sparse matrix analysis,
+\item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/SuiteSparse/}}} is used for sparse matrix analysis,
   ordering and factorization. In particular Ceres uses the
   \amd, \colamd\ and \cholmod\ libraries. This is an optional
   dependency.
@@ -44,7 +44,7 @@ We will use Ubuntu as our example platform.
 sudo apt-get install cmake
 \end{minted}
 
-\item{\gflags} can either be installed from source via the \texttt{autoconf} invocation 
+\item{\gflags} can either be installed from source via the \texttt{autoconf} invocation
 \begin{minted}{bash}
 tar -xvzf gflags-2.0.tar.gz
 cd gflags-2.0
@@ -88,7 +88,7 @@ We are now ready to build and test Ceres. Note that \texttt{cmake} requires the 
 tar zxf ceres-solver-1.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0     
+cmake ../ceres-solver-1.0
 make -j3
 make test
 \end{minted}
@@ -176,7 +176,7 @@ We are now ready to build and test Ceres.
 tar zxf ceres-solver-1.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0              
+cmake ../ceres-solver-1.0
 make -j3
 make test
 \end{minted}
@@ -198,7 +198,7 @@ Protocol Buffers is a big dependency and if you do not care for the tests that d
 
 \item{\suitesparse}
 
-By default, Ceres will only link to SuiteSparse if all its dependencies are present. 
+By default, Ceres will only link to SuiteSparse if all its dependencies are present.
 To build Ceres without \suitesparse\ use
 \begin{minted}{bash}
 -DSUITESPARSE=OFF.
