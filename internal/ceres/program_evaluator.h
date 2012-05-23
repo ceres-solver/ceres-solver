@@ -126,7 +126,11 @@ class ProgramEvaluator : public Evaluator {
       return false;
     }
 
-    if (jacobian) {
+    if (residuals != NULL) {
+      VectorRef(residuals, program_->NumResiduals()).setZero();
+    } 
+
+    if (jacobian != NULL) {
       jacobian->SetZero();
     }
 
