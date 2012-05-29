@@ -62,32 +62,39 @@ namespace internal {
 // Struct used for configuring the solver.
 struct SolverConfig {
   SolverConfig(LinearSolverType linear_solver_type,
+               SparseLinearAlgebraLibraryType sparse_linear_algebra_library,
                OrderingType ordering_type)
       : linear_solver_type(linear_solver_type),
+        sparse_linear_algebra_library(sparse_linear_algebra_library),
         ordering_type(ordering_type),
         preconditioner_type(IDENTITY),
         num_threads(1) {
   }
 
   SolverConfig(LinearSolverType linear_solver_type,
+               SparseLinearAlgebraLibraryType sparse_linear_algebra_library,
                OrderingType ordering_type,
                PreconditionerType preconditioner_type,
                int num_threads)
       : linear_solver_type(linear_solver_type),
+        sparse_linear_algebra_library(sparse_linear_algebra_library),
         ordering_type(ordering_type),
         preconditioner_type(preconditioner_type),
         num_threads(num_threads) {
   }
 
   string ToString() const {
-    return StringPrintf("(%s, %s, %s, %d)",
-                        LinearSolverTypeToString(linear_solver_type),
-                        OrderingTypeToString(ordering_type),
-                        PreconditionerTypeToString(preconditioner_type),
-                        num_threads);
+    return StringPrintf(
+        "(%s, %s, %s, %s, %d)",
+        LinearSolverTypeToString(linear_solver_type),
+        SparseLinearAlgebraLibraryTypeToString(sparse_linear_algebra_library),
+        OrderingTypeToString(ordering_type),
+        PreconditionerTypeToString(preconditioner_type),
+        num_threads);
   }
 
   LinearSolverType linear_solver_type;
+  SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
   OrderingType ordering_type;
   PreconditionerType preconditioner_type;
   int num_threads;
@@ -122,6 +129,8 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
 
     Solver::Options& options = *(system_test_problem->mutable_solver_options());
     options.linear_solver_type = config.linear_solver_type;
+    options.sparse_linear_algebra_library =
+        config.sparse_linear_algebra_library;
     options.ordering_type = config.ordering_type;
     options.preconditioner_type = config.preconditioner_type;
     options.num_threads = config.num_threads;
@@ -266,19 +275,31 @@ class PowellsFunction {
 };
 
 TEST(SystemTest, PowellsFunction) {
-  vector<SolverConfig> configurations;
-  configurations.push_back(SolverConfig(DENSE_QR, NATURAL));
-  configurations.push_back(SolverConfig(DENSE_SCHUR, SCHUR));
+  vector<SolverConfig> configs;
+#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering) \
+  configs.push_back(SolverConfig(linear_solver,                           \
+                                 sparse_linear_algebra_library,           \
+                                 ordering))
+
+  CONFIGURE(DENSE_QR,    SUITE_SPARSE, NATURAL);
+  CONFIGURE(DENSE_SCHUR, SUITE_SPARSE, SCHUR);
 
 #ifndef CERES_NO_SUITESPARSE
-  configurations.push_back(SolverConfig(SPARSE_NORMAL_CHOLESKY, NATURAL));
-  configurations.push_back(SolverConfig(SPARSE_SCHUR, SCHUR));
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, SCHUR);
 #endif  // CERES_NO_SUITESPARSE
 
-  configurations.push_back(SolverConfig(ITERATIVE_SCHUR, SCHUR));
+#ifndef CERES_NO_CXSPARSE
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, NATURAL);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, SCHUR);
+#endif  // CERES_NO_CXSPARSE
+
+  CONFIGURE(ITERATIVE_SCHUR, SUITE_SPARSE, SCHUR);
+
+#undef CONFIGURE
+
   const double kMaxAbsoluteDifference = 1e-8;
-  RunSolversAndCheckTheyMatch<PowellsFunction>(configurations,
-                                               kMaxAbsoluteDifference);
+  RunSolversAndCheckTheyMatch<PowellsFunction>(configs, kMaxAbsoluteDifference);
 }
 
 // This class implements the SystemTestProblem interface and provides
@@ -462,36 +483,50 @@ class BundleAdjustmentProblem {
 TEST(SystemTest, BundleAdjustmentProblem) {
   vector<SolverConfig> configs;
 
-#define CONFIGURE(a, b, c, d) configs.push_back(SolverConfig(a, b, c, d))
+#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering, preconditioner, threads) \
+  configs.push_back(SolverConfig(linear_solver,                         \
+                                 sparse_linear_algebra_library,         \
+                                 ordering,                              \
+                                 preconditioner,                        \
+                                 threads))
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, NATURAL, IDENTITY, 1);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, USER,    IDENTITY, 1);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SCHUR,   IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL, IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, USER,    IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, SCHUR,   IDENTITY, 1);
 
-  CONFIGURE(SPARSE_SCHUR,           USER,    IDENTITY, 1);
-  CONFIGURE(SPARSE_SCHUR,           SCHUR,   IDENTITY, 1);
+  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, USER,    IDENTITY, 1);
+  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, SCHUR,   IDENTITY, 1);
 #endif  // CERES_NO_SUITESPARSE
 
-  CONFIGURE(DENSE_SCHUR,            USER,    IDENTITY, 1);
-  CONFIGURE(DENSE_SCHUR,            SCHUR,   IDENTITY, 1);
+#ifndef CERES_NO_CXSPARSE
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, NATURAL, IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, USER,    IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, SCHUR,   IDENTITY, 1);
 
-  CONFIGURE(CGNR,                   USER,    JACOBI, 1);
+  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE, USER,    IDENTITY, 1);
+  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE, SCHUR,   IDENTITY, 1);
+#endif  // CERES_NO_CXSPARSE
 
-  CONFIGURE(ITERATIVE_SCHUR,        USER,    JACOBI, 1);
+  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, USER,    IDENTITY, 1);
+  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, SCHUR,   IDENTITY, 1);
+
+  CONFIGURE(CGNR,                   SUITE_SPARSE, USER,    JACOBI, 1);
+
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    JACOBI, 1);
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(ITERATIVE_SCHUR,        USER,    SCHUR_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        USER,    CLUSTER_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        USER,    CLUSTER_TRIDIAGONAL, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    SCHUR_JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    CLUSTER_JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    CLUSTER_TRIDIAGONAL, 1);
 #endif  // CERES_NO_SUITESPARSE
 
-  CONFIGURE(ITERATIVE_SCHUR,        SCHUR,   JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   JACOBI, 1);
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(ITERATIVE_SCHUR,        SCHUR,   SCHUR_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SCHUR,   CLUSTER_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SCHUR,   CLUSTER_TRIDIAGONAL, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   SCHUR_JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   CLUSTER_JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   CLUSTER_TRIDIAGONAL, 1);
 #endif  // CERES_NO_SUITESPARSE
 
 #undef CONFIGURE

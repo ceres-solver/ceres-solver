@@ -145,7 +145,7 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
   DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
 };
 
-#ifndef CERES_NO_SUITESPARSE
+
 // Sparse Cholesky factorization based solver.
 class SparseSchurComplementSolver : public SchurComplementSolver {
  public:
@@ -155,26 +155,17 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
  private:
   virtual void InitStorage(const CompressedRowBlockStructure* bs);
   virtual bool SolveReducedLinearSystem(double* solution);
+  bool SolveReducedLinearSystemUsingSuiteSparse(double* solution);
+  bool SolveReducedLinearSystemUsingCXSparse(double* solution);
 
-
+#ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss_;
   // Symbolic factorization of the reduced linear system. Precomputed
   // once and reused in subsequent calls.
   cholmod_factor* symbolic_factor_;
+#endif  // CERES_NO_SUITESPARSE
   DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
-#else  // CERES_NO_SUITESPARSE
-class SparseSchurComplementSolver : public SchurComplementSolver {
- public:
-  explicit SparseSchurComplementSolver(const LinearSolver::Options& options)
-      : SchurComplementSolver(options) {
-    LOG(FATAL) << "SPARSE_SCHUR is not available. Please "
-        "build Ceres with SuiteSparse.";
-  }
-
-  virtual ~SparseSchurComplementSolver() {}
-};
-#endif  // CERES_NO_SUITESPARSE
 
 }  // namespace internal
 }  // namespace ceres

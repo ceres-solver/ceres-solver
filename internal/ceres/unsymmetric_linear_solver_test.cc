@@ -128,9 +128,10 @@ TEST_F(UnsymmetricLinearSolverTest, DenseQR) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholesky) {
+TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparse) {
   LinearSolver::Options options;
   options.type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library = SUITE_SPARSE;
   scoped_ptr<LinearSolver>solver(LinearSolver::Create(options));
 
   LinearSolver::PerSolveOptions per_solve_options;
@@ -155,6 +156,36 @@ TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholesky) {
   }
 }
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparse) {
+  LinearSolver::Options options;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library = CX_SPARSE;
+  scoped_ptr<LinearSolver>solver(LinearSolver::Create(options));
+
+  LinearSolver::PerSolveOptions per_solve_options;
+  CompressedRowSparseMatrix A(*A_);
+
+  // Unregularized
+  LinearSolver::Summary summary =
+      solver->Solve(&A, b_.get(), per_solve_options, x_.get());
+
+  EXPECT_EQ(summary.termination_type, TOLERANCE);
+  for (int i = 0; i < A_->num_cols(); ++i) {
+    EXPECT_NEAR(sol1_[i], x_[i], 1e-8);
+  }
+
+  // Regularized solution
+  per_solve_options.D = D_.get();
+  summary = solver->Solve(&A, b_.get(), per_solve_options, x_.get());
+
+  EXPECT_EQ(summary.termination_type, TOLERANCE);
+  for (int i = 0; i < A_->num_cols(); ++i) {
+    EXPECT_NEAR(sol2_[i], x_[i], 1e-8);
+  }
+}
+#endif  // CERES_NO_CXSPARSE
 
 }  // namespace internal
 }  // namespace ceres
