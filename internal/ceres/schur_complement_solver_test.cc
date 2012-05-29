@@ -92,13 +92,17 @@ class SchurComplementSolverTest : public ::testing::Test {
                   sol_d.get());
   }
 
-  void ComputeAndCompareSolutions(int problem_id,
-                                  bool regularization,
-                                  ceres::LinearSolverType linear_solver_type) {
+  void ComputeAndCompareSolutions(
+      int problem_id,
+      bool regularization,
+      ceres::LinearSolverType linear_solver_type,
+      ceres::SparseLinearAlgebraLibraryType sparse_linear_algebra_library) {
     SetUpFromProblemId(problem_id);
     LinearSolver::Options options;
     options.num_eliminate_blocks = num_eliminate_blocks;
     options.type = linear_solver_type;
+    options.sparse_linear_algebra_library = sparse_linear_algebra_library;
+
     scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
@@ -133,21 +137,30 @@ class SchurComplementSolverTest : public ::testing::Test {
 };
 
 #ifndef CERES_NO_SUITESPARSE
-
-TEST_F(SchurComplementSolverTest, SparseSchur) {
-  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR);
-  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR);
-  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR);
-  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR);
+TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparse) {
+  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITE_SPARSE);
 }
-
 #endif  // CERES_NO_SUITESPARSE
 
+#ifndef CERES_NO_CXSPARSE
+TEST_F(SchurComplementSolverTest, SparseSchurWithCXSparse) {
+  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, CX_SPARSE);
+}
+#endif  // CERES_NO_CXSPARSE
+
 TEST_F(SchurComplementSolverTest, DenseSchur) {
-  ComputeAndCompareSolutions(2, false, DENSE_SCHUR);
-  ComputeAndCompareSolutions(3, false, DENSE_SCHUR);
-  ComputeAndCompareSolutions(2, true, DENSE_SCHUR);
-  ComputeAndCompareSolutions(3, true, DENSE_SCHUR);
+  // The sparse linear algebra library type is ignored for
+  // DENSE_SCHUR.
+  ComputeAndCompareSolutions(2, false, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, false, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(2, true, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, true, DENSE_SCHUR, SUITE_SPARSE);
 }
 
 }  // namespace internal

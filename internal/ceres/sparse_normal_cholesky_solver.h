@@ -35,11 +35,11 @@
 #define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 
 #ifndef CERES_NO_SUITESPARSE
-
 #include "cholmod.h"
-#include "cholmod_core.h"
-#include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
+#endif // CERES_NO_SUITESPARSE
+
+#include "ceres/linear_solver.h"
 #include "ceres/internal/macros.h"
 
 namespace ceres {
@@ -61,17 +61,31 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* x);
 
-  const LinearSolver::Options options_;
-  SuiteSparse ss_;
+  LinearSolver::Summary SolveImplUsingSuiteSparse(
+      CompressedRowSparseMatrix* A,
+      const double* b,
+      const LinearSolver::PerSolveOptions& options,
+      double* x);
 
+  // Crashes if CSparse is not installed.
+  LinearSolver::Summary SolveImplUsingCXSparse(
+      CompressedRowSparseMatrix* A,
+      const double* b,
+      const LinearSolver::PerSolveOptions& options,
+      double* x);
+
+#ifndef CERES_NO_SUITESPARSE
+  SuiteSparse ss_;
   // Cached factorization
   cholmod_factor* symbolic_factor_;
+#endif  // CERES_NO_SUITESPARSE
+
+
+  const LinearSolver::Options options_;
   DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_NO_SUITESPARSE
 
 #endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

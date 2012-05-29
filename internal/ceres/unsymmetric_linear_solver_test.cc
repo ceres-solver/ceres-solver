@@ -52,109 +52,82 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
     A_.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
     b_.reset(problem->b.release());
     D_.reset(problem->D.release());
-    sol1_.reset(problem->x.release());
-    sol2_.reset(problem->x_D.release());
-    x_.reset(new double[A_->num_cols()]);
+    sol_unregularized_.reset(problem->x.release());
+    sol_regularized_.reset(problem->x_D.release());
   }
 
-  void TestSolver(LinearSolverType linear_solver_type) {
+  void TestSolver(
+      LinearSolverType linear_solver_type,
+      SparseLinearAlgebraLibraryType sparse_linear_algebra_library) {
     LinearSolver::Options options;
     options.type = linear_solver_type;
+    options.sparse_linear_algebra_library = sparse_linear_algebra_library;
     scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
+    LinearSolver::Summary unregularized_solve_summary;
+    LinearSolver::Summary regularized_solve_summary;
+    Vector x_unregularized(A_->num_cols());
+    Vector x_regularized(A_->num_cols());
 
-    // Unregularized
-    LinearSolver::Summary summary =
-        solver->Solve(A_.get(), b_.get(), per_solve_options, x_.get());
+    scoped_ptr<SparseMatrix> transformed_A;
 
-    EXPECT_EQ(summary.termination_type, TOLERANCE);
-
-    for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(sol1_[i], x_[i], 1e-8);
+    if (linear_solver_type == DENSE_QR) {
+      transformed_A.reset(new DenseSparseMatrix(*A_));
+    } else if (linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
+      transformed_A.reset(new   CompressedRowSparseMatrix(*A_));
+    } else {
+      LOG(FATAL) << "Unknown linear solver : " << linear_solver_type;
     }
+    // Unregularized
+    unregularized_solve_summary =
+        solver->Solve(transformed_A.get(),
+                      b_.get(),
+                      per_solve_options,
+                      x_unregularized.data());
 
     // Regularized solution
     per_solve_options.D = D_.get();
-    summary = solver->Solve(A_.get(), b_.get(), per_solve_options, x_.get());
+    regularized_solve_summary =
+        solver->Solve(transformed_A.get(),
+                      b_.get(),
+                      per_solve_options,
+                      x_regularized.data());
 
-    EXPECT_EQ(summary.termination_type, TOLERANCE);
+    EXPECT_EQ(unregularized_solve_summary.termination_type, TOLERANCE);
 
     for (int i = 0; i < A_->num_cols(); ++i) {
-      EXPECT_NEAR(sol2_[i], x_[i], 1e-8);
+      EXPECT_NEAR(sol_unregularized_[i], x_unregularized[i], 1e-8);
+    }
+
+    EXPECT_EQ(regularized_solve_summary.termination_type, TOLERANCE);
+    for (int i = 0; i < A_->num_cols(); ++i) {
+      EXPECT_NEAR(sol_regularized_[i], x_regularized[i], 1e-8);
     }
   }
 
   scoped_ptr<TripletSparseMatrix> A_;
   scoped_array<double> b_;
   scoped_array<double> D_;
-  scoped_array<double> sol1_;
-  scoped_array<double> sol2_;
-
-  scoped_array<double> x_;
+  scoped_array<double> sol_unregularized_;
+  scoped_array<double> sol_regularized_;
 };
 
-// TODO(keir): Reduce duplication.
 TEST_F(UnsymmetricLinearSolverTest, DenseQR) {
-  LinearSolver::Options options;
-  options.type = DENSE_QR;
-  scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
-
-  LinearSolver::PerSolveOptions per_solve_options;
-  DenseSparseMatrix A(*A_);
-
-  // Unregularized
-  LinearSolver::Summary summary =
-      solver->Solve(&A, b_.get(), per_solve_options, x_.get());
-
-  EXPECT_EQ(summary.termination_type, TOLERANCE);
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    EXPECT_NEAR(sol1_[i], x_[i], 1e-8);
-  }
-
-  VectorRef x(x_.get(), A_->num_cols());
-  VectorRef b(b_.get(), A_->num_rows());
-  Vector r = A.matrix()*x - b;
-  LOG(INFO) << "r = A*x - b: \n" << r;
-
-  // Regularized solution
-  per_solve_options.D = D_.get();
-  summary = solver->Solve(&A, b_.get(), per_solve_options, x_.get());
-
-  EXPECT_EQ(summary.termination_type, TOLERANCE);
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    EXPECT_NEAR(sol2_[i], x_[i], 1e-8);
-  }
+  TestSolver(DENSE_QR, SUITE_SPARSE);
 }
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholesky) {
-  LinearSolver::Options options;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  scoped_ptr<LinearSolver>solver(LinearSolver::Create(options));
-
-  LinearSolver::PerSolveOptions per_solve_options;
-  CompressedRowSparseMatrix A(*A_);
-
-  // Unregularized
-  LinearSolver::Summary summary =
-      solver->Solve(&A, b_.get(), per_solve_options, x_.get());
-
-  EXPECT_EQ(summary.termination_type, TOLERANCE);
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    EXPECT_NEAR(sol1_[i], x_[i], 1e-8);
-  }
-
-  // Regularized solution
-  per_solve_options.D = D_.get();
-  summary = solver->Solve(&A, b_.get(), per_solve_options, x_.get());
-
-  EXPECT_EQ(summary.termination_type, TOLERANCE);
-  for (int i = 0; i < A_->num_cols(); ++i) {
-    EXPECT_NEAR(sol2_[i], x_[i], 1e-8);
-  }
+TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparse) {
+  TestSolver(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE);
 }
-#endif  // CERES_NO_SUITESPARSE
+#endif
+
+#ifndef CERES_NO_CXSPARSE
+TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparse) {
+  TestSolver(SPARSE_NORMAL_CHOLESKY, CX_SPARSE);
+}
+#endif
 
 }  // namespace internal
 }  // namespace ceres
