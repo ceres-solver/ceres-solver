@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAF53///yM\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///yA\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Don\u0027t repeat the conditions. Consider removing it here and above. Note that the style guide has no such requirement; it\u0027s only for the header guards.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///x4\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Perhaps mention that these must be compiled in.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///x0\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Remove comment.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xw\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Remove comment.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xs\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop condition.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xo\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop condition.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xk\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop condition.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xg\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop condition.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xc\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop condition.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xU\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Drop random blanks.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///xM\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Remove extra blank.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///w8\u003d",
+        "filename": "internal/ceres/unsymmetric_linear_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T17:40:42Z",
+      "side": 1,
+      "message": "Consider using a parameterized type test instead of duplicating this code.",
+      "revId": "21a2cccc15290950ff4c4bb4b0f8f0cbfb1ff5e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
