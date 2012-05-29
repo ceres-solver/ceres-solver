@@ -32,6 +32,11 @@
 #include <ctime>
 #include <set>
 #include <vector>
+
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif  // CERES_NO_CXSPARSE
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
@@ -47,6 +52,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+
 
 namespace ceres {
 namespace internal {
@@ -139,18 +145,22 @@ bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   return true;
 }
 
-#ifndef CERES_NO_SUITESPARSE
+
 SparseSchurComplementSolver::SparseSchurComplementSolver(
     const LinearSolver::Options& options)
-    : SchurComplementSolver(options),
-      symbolic_factor_(NULL) {
+    : SchurComplementSolver(options) {
+#ifndef CERES_NO_SUITESPARSE
+  symbolic_factor_ = NULL;
+#endif  // CERES_NO_SUITESPARSE
 }
 
 SparseSchurComplementSolver::~SparseSchurComplementSolver() {
+#ifndef CERES_NO_SUITESPARSE
   if (symbolic_factor_ != NULL) {
     ss_.Free(symbolic_factor_);
     symbolic_factor_ = NULL;
   }
+#endif  // CERES_NO_SUITESPARSE
 }
 
 // Determine the non-zero blocks in the Schur Complement matrix, and
@@ -224,10 +234,28 @@ void SparseSchurComplementSolver::InitStorage(
   set_rhs(new double[lhs()->num_rows()]);
 }
 
+bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
+  switch (options().sparse_linear_algebra_library) {
+    case SUITE_SPARSE:
+      return SolveReducedLinearSystemUsingSuiteSparse(solution);
+    case CX_SPARSE:
+      return SolveReducedLinearSystemUsingCXSparse(solution);
+    default:
+      LOG(FATAL) << "Unknown sparse linear algebra library : "
+                 << options().sparse_linear_algebra_library;
+  }
+
+  LOG(FATAL) << "Unknown sparse linear algebra library : "
+             << options().sparse_linear_algebra_library;
+  return false;
+}
+
+#ifndef CERES_NO_SUITESPARSE
 // Solve the system Sx = r, assuming that the matrix S is stored in a
 // BlockRandomAccessSparseMatrix.  The linear system is solved using
 // CHOLMOD's sparse cholesky factorization routines.
-bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
+bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
+    double* solution) {
   // Extract the TripletSparseMatrix that is used for actually storing S.
   TripletSparseMatrix* tsm =
       const_cast<TripletSparseMatrix*>(
@@ -272,7 +300,58 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   ss_.Free(cholmod_solution);
   return true;
 }
+#else
+bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
+    double* solution) {
+  LOG(FATAL) << "No SuiteSparse support in Ceres.";
+  return false;
+}
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+// Solve the system Sx = r, assuming that the matrix S is stored in a
+// BlockRandomAccessSparseMatrix.  The linear system is solved using
+// CXSparse's sparse cholesky factorization routines.
+bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
+    double* solution) {
+  // Extract the TripletSparseMatrix that is used for actually storing S.
+  TripletSparseMatrix* tsm =
+      const_cast<TripletSparseMatrix*>(
+          down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());
+
+  const int num_rows = tsm->num_rows();
+
+  // The case where there are no f blocks, and the system is block
+  // diagonal.
+  if (num_rows == 0) {
+    return true;
+  }
+
+  cs_di_sparse tsm_wrapper;
+  tsm_wrapper.nzmax = tsm->num_nonzeros();
+  tsm_wrapper.m = num_rows;
+  tsm_wrapper.n = num_rows;
+  tsm_wrapper.p = tsm->mutable_cols();
+  tsm_wrapper.i = tsm->mutable_rows();
+  tsm_wrapper.x = tsm->mutable_values();
+  tsm_wrapper.nz = tsm->num_nonzeros();
+
+  cs_di_sparse* lhs = cs_compress(&tsm_wrapper);
+  VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
+
+  // It maybe worth caching the ordering here, but for now we are
+  // going to go with the simple cholsol based implementation.
+  int ok = cs_di_cholsol(1, lhs, solution);
+  cs_free(lhs);
+  return ok;
+}
+#else
+bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
+    double* solution) {
+  LOG(FATAL) << "No CXSparse support in Ceres.";
+  return false;
+}
+#endif  // CERES_NO_CXPARSE
 
 }  // namespace internal
 }  // namespace ceres

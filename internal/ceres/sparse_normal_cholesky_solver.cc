@@ -28,13 +28,16 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_NO_SUITESPARSE
-
 #include "ceres/sparse_normal_cholesky_solver.h"
 
 #include <algorithm>
 #include <cstring>
 #include <ctime>
+
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif
+
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
@@ -43,21 +46,117 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
+
+
 namespace ceres {
 namespace internal {
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : options_(options), symbolic_factor_(NULL) {}
+    : options_(options) {
+#ifndef CERES_NO_SUITESPARSE
+  symbolic_factor_ = NULL;
+#endif
+}
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
+#ifndef CERES_NO_SUITESPARSE
   if (symbolic_factor_ != NULL) {
     ss_.Free(symbolic_factor_);
     symbolic_factor_ = NULL;
   }
+#endif
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  switch (options_.sparse_linear_algebra_library) {
+    case SUITE_SPARSE:
+      return SolveImplUsingSuiteSparse(A, b, per_solve_options, x);
+    case CX_SPARSE:
+      return SolveImplUsingCXSparse(A, b, per_solve_options, x);
+    default:
+      LOG(FATAL) << "Unknown sparse linear algebra library : "
+                 << options_.sparse_linear_algebra_library;
+  }
+
+  LOG(FATAL) << "Unknown sparse linear algebra library : "
+             << options_.sparse_linear_algebra_library;
+  return LinearSolver::Summary();
+}
+
+#ifndef CERES_NO_CXSPARSE
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  const int num_cols = A->num_cols();
+  Vector Atb = Vector::Zero(num_cols);
+  A->LeftMultiply(b, Atb.data());
+
+  if (per_solve_options.D != NULL) {
+    // Temporarily append a diagonal block to the A matrix, but undo
+    // it before returning the matrix to the user.
+    CompressedRowSparseMatrix D(per_solve_options.D, num_cols);
+    A->AppendRows(D);
+  }
+
+  VectorRef(x, num_cols).setZero();
+
+  // Wrap the augmented Jacobian in a compressed sparse column matrix.
+  cs_di At;
+  At.m = A->num_cols();
+  At.n = A->num_rows();
+  At.nz = -1;
+  At.nzmax = A->num_nonzeros();
+  At.p = A->mutable_rows();
+  At.i = A->mutable_cols();
+  At.x = A->mutable_values();
+
+  // Compute the normal equations. J'J delta = J'f and solve them
+  // using a sparse Cholesky factorization. Notice that when compared
+  // to SuiteSparse we have to explicitly compute the transpose of Jt,
+  // and then the normal equations before they can be
+  // factorized. CHOLMOD/SuiteSparse on the other hand can just work
+  // off of Jt to compute the Cholesky factorization of the normal
+  // equations.
+  cs_di* A2 = cs_transpose(&At, 1);
+  cs_di* AtA = cs_multiply(&At,A2);
+
+  cs_free(A2);
+  if (per_solve_options.D != NULL) {
+    A->DeleteRows(num_cols);
+  }
+
+  // This recomputes the symbolic factorization every time it is
+  // invoked. It will perhaps be worth it to cache the symbolic
+  // factorization the way we do for SuiteSparse.
+  if (cs_cholsol(1, AtA, Atb.data())) {
+    VectorRef(x, Atb.rows()) = Atb;
+    summary.termination_type = TOLERANCE;
+  }
+
+  cs_free(AtA);
+  return summary;
+}
+#else
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LOG(FATAL) << "No CXSparse support in Ceres.";
+}
+#endif
+
+#ifndef CERES_NO_SUITESPARSE
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     CompressedRowSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
@@ -117,8 +216,15 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
           << " cleanup: " << cleanup_time - solve_time;
   return summary;
 }
+#else
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LOG(FATAL) << "No SuiteSparse support in Ceres.";
+}
+#endif
 
 }   // namespace internal
 }   // namespace ceres
-
-#endif  // CERES_NO_SUITESPARSE
