@@ -113,10 +113,10 @@ enum PreconditionerType {
 enum SparseLinearAlgebraLibraryType {
   // High performance sparse Cholesky factorization and approximate
   // minimum degree ordering.
-  SUITESPARSE,
+  SUITE_SPARSE,
 
   // A lightweight replacment for SuiteSparse.
-  CXSPARSE
+  CX_SPARSE
 };
 
 enum LinearSolverTerminationType {

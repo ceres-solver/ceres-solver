@@ -131,7 +131,7 @@ TEST_F(UnsymmetricLinearSolverTest, DenseQR) {
 TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparse) {
   LinearSolver::Options options;
   options.type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library = SUITESPARSE;
+  options.sparse_linear_algebra_library = SUITE_SPARSE;
   scoped_ptr<LinearSolver>solver(LinearSolver::Create(options));
 
   LinearSolver::PerSolveOptions per_solve_options;
@@ -161,7 +161,7 @@ TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparse) {
 TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparse) {
   LinearSolver::Options options;
   options.type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library = CXSPARSE;
+  options.sparse_linear_algebra_library = CX_SPARSE;
   scoped_ptr<LinearSolver>solver(LinearSolver::Create(options));
 
   LinearSolver::PerSolveOptions per_solve_options;

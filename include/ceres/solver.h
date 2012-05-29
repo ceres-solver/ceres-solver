@@ -70,11 +70,11 @@ class Solver {
 
 #ifndef CERES_NO_SUITESPARSE
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-      sparse_linear_algebra_library = SUITESPARSE;
+      sparse_linear_algebra_library = SUITE_SPARSE;
 #else
 #ifndef CERES_NO_CXSPARSE
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-      sparse_linear_algebra_library = CXSPARSE;
+      sparse_linear_algebra_library = CX_SPARSE;
 #else
       sparse_linear_algebra_library = SUITESPARSE;
       linear_solver_type = DENSE_QR;

@@ -71,7 +71,7 @@ class LinearSolver {
     Options()
         : type(SPARSE_NORMAL_CHOLESKY),
           preconditioner_type(JACOBI),
-          sparse_linear_algebra_library(SUITESPARSE),
+          sparse_linear_algebra_library(SUITE_SPARSE),
           min_num_iterations(1),
           max_num_iterations(1),
           num_threads(1),

@@ -64,8 +64,8 @@ const char* PreconditionerTypeToString(
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
   switch (sparse_linear_algebra_library_type) {
-    CASESTR(SUITESPARSE);
-    CASESTR(CXSPARSE);
+    CASESTR(SUITE_SPARSE);
+    CASESTR(CX_SPARSE);
     default:
       return "UNKNOWN";
   }

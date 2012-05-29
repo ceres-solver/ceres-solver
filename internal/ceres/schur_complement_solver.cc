@@ -234,10 +234,9 @@ void SparseSchurComplementSolver::InitStorage(
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   switch (options().sparse_linear_algebra_library) {
-  case SUITESPARSE:
+  case SUITE_SPARSE:
     return SolveReducedLinearSystemUsingSuiteSparse(solution);
-#undef CXSPARSE;
-  case CXSPARSE:
+  case CX_SPARSE:
     return SolveReducedLinearSystemUsingCXSparse(solution);
   default:
     LOG(FATAL) << "Unknown sparse linear algebra library : "

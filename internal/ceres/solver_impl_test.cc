@@ -514,7 +514,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 
 #ifndef CERES_NO_SUITESPARSE
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library = SUITESPARSE;
+  options.sparse_linear_algebra_library = SUITE_SPARSE;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   EXPECT_TRUE(solver.get() != NULL);
@@ -522,7 +522,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 
 #ifndef CERES_NO_CXSPARSE
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  options.sparse_linear_algebra_library = CXSPARSE;
+  options.sparse_linear_algebra_library = CX_SPARSE;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   EXPECT_TRUE(solver.get() != NULL);

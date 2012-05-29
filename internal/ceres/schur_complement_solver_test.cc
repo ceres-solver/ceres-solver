@@ -138,29 +138,29 @@ class SchurComplementSolverTest : public ::testing::Test {
 
 #ifndef CERES_NO_SUITESPARSE
 TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparse) {
-  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITESPARSE);
+  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITE_SPARSE);
 }
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparse) {
-  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, CXSPARSE);
-  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, CXSPARSE);
-  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, CXSPARSE);
-  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, CXSPARSE);
+TEST_F(SchurComplementSolverTest, SparseSchurWithCXSparse) {
+  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, CX_SPARSE);
+  ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, CX_SPARSE);
 }
 #endif  // CERES_NO_CXSPARSE
 
 TEST_F(SchurComplementSolverTest, DenseSchur) {
   // The sparse linear algebra library type is ignored for
   // DENSE_SCHUR.
-  ComputeAndCompareSolutions(2, false, DENSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(3, false, DENSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(2, true, DENSE_SCHUR, SUITESPARSE);
-  ComputeAndCompareSolutions(3, true, DENSE_SCHUR, SUITESPARSE);
+  ComputeAndCompareSolutions(2, false, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, false, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(2, true, DENSE_SCHUR, SUITE_SPARSE);
+  ComputeAndCompareSolutions(3, true, DENSE_SCHUR, SUITE_SPARSE);
 }
 
 }  // namespace internal

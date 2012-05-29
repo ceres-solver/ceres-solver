@@ -75,10 +75,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     double * x) {
 
   switch (options_.sparse_linear_algebra_library) {
-  case SUITESPARSE:
+  case SUITE_SPARSE:
     return SolveImplUsingSuiteSparse(A, b, per_solve_options, x);
-#undef CXSPARSE;
-  case CXSPARSE:
+  case CX_SPARSE:
     return SolveImplUsingCXSparse(A, b, per_solve_options, x);
   default:
     LOG(FATAL) << "Unknown sparse linear algebra library : "
