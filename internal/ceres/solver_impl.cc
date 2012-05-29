@@ -432,12 +432,23 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
 #ifdef CERES_NO_SUITESPARSE
-  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
-    *error = "Can't use SPARSE_NORMAL_CHOLESKY because SuiteSparse was not "
-        "enabled when Ceres was built.";
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
+      options->sparse_linear_algebra_library == SUITE_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
+             "SuiteSparse was not enabled when Ceres was built.";
     return NULL;
   }
-#endif  // CERES_NO_SUITESPARSE
+#endif
+
+#ifdef CERES_NO_CXSPARSE
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
+      options->sparse_linear_algebra_library == CX_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with CXSPARSE because "
+             "CXSparse was not enabled when Ceres was built.";
+    return NULL;
+  }
+#endif
+
 
   if (options->linear_solver_max_num_iterations <= 0) {
     *error = "Solver::Options::linear_solver_max_num_iterations is 0.";
@@ -461,23 +472,25 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
       options->linear_solver_max_num_iterations;
   linear_solver_options.type = options->linear_solver_type;
   linear_solver_options.preconditioner_type = options->preconditioner_type;
+  linear_solver_options.sparse_linear_algebra_library =
+      options->sparse_linear_algebra_library;
 
 #ifdef CERES_NO_SUITESPARSE
   if (linear_solver_options.preconditioner_type == SCHUR_JACOBI) {
     *error =  "SCHUR_JACOBI preconditioner not suppored. Please build Ceres "
-        "with SuiteSparse support";
+        "with SuiteSparse support.";
     return NULL;
   }
 
   if (linear_solver_options.preconditioner_type == CLUSTER_JACOBI) {
     *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
-        "with SuiteSparse support";
+        "with SuiteSparse support.";
     return NULL;
   }
 
   if (linear_solver_options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
     *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
-        "Ceres with SuiteSparse support";
+        "Ceres with SuiteSparse support.";
     return NULL;
   }
 #endif
@@ -488,23 +501,23 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
   if ((linear_solver_options.num_eliminate_blocks == 0) &&
       IsSchurType(linear_solver_options.type)) {
-#ifndef CERES_NO_SUITESPARSE
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+    LOG(INFO) << "No elimination block remaining switching to DENSE_QR.";
+    linear_solver_options.type = DENSE_QR;
+#else
     LOG(INFO) << "No elimination block remaining "
               << "switching to SPARSE_NORMAL_CHOLESKY.";
     linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
-#else
-    LOG(INFO) << "No elimination block remaining switching to DENSE_QR.";
-    linear_solver_options.type = DENSE_QR;
-#endif  // CERES_NO_SUITESPARSE
+#endif
   }
 
-#ifdef CERES_NO_SUITESPARSE
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
   if (linear_solver_options.type == SPARSE_SCHUR) {
-    *error = "Can't use SPARSE_SCHUR because SuiteSparse was not "
-        "enabled when Ceres was built.";
+    *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
+             "CXSparse was enabled when Ceres was compiled.";
     return NULL;
   }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
   // The matrix used for storing the dense Schur complement has a
   // single lock guarding the whole matrix. Running the

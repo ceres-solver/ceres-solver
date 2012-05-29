@@ -261,7 +261,7 @@ class VisibilityBasedPreconditioner : public LinearOperator {
   virtual void LeftMultiply(const double* x, double* y) const {}
   virtual int num_rows() const { return -1; }
   virtual int num_cols() const { return -1; }
-  bool Compute(const BlockSparseMatrixBase& A, const double* D) {
+  bool Update(const BlockSparseMatrixBase& A, const double* D) {
     return false;
   }
 };
