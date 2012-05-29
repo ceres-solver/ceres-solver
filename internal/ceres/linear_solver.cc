@@ -53,18 +53,28 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
 #ifndef CERES_NO_SUITESPARSE
       return new SparseNormalCholeskySolver(options);
 #else
+#ifndef CERES_NO_CXSPARSE
+      return new SparseNormalCholeskySolver(options);
+#else
       LOG(WARNING) << "SPARSE_NORMAL_CHOLESKY is not available. Please "
-                   << "build Ceres with SuiteSparse. Returning NULL.";
+                   << "build Ceres with SuiteSparse or CXSparse. "
+                   << "Returning NULL.";
       return NULL;
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
 
     case SPARSE_SCHUR:
 #ifndef CERES_NO_SUITESPARSE
       return new SparseSchurComplementSolver(options);
 #else
+#ifndef CERES_NO_CXSPARSE
+      return new SparseSchurComplementSolver(options);
+#else
       LOG(WARNING) << "SPARSE_SCHUR is not available. Please "
-                   << "build Ceres with SuiteSparse. Returning NULL.";
+                   << "build Ceres with SuiteSparse or CXSparse. "
+                   << "Returning NULL.";
       return NULL;
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
 
     case DENSE_SCHUR:

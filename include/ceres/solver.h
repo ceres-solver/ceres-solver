@@ -67,11 +67,20 @@ class Solver {
       function_tolerance = 1e-6;
       gradient_tolerance = 1e-10;
       parameter_tolerance = 1e-8;
+
 #ifndef CERES_NO_SUITESPARSE
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+      sparse_linear_algebra_library = SUITESPARSE;
 #else
+#ifndef CERES_NO_CXSPARSE
+      linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+      sparse_linear_algebra_library = CXSPARSE;
+#else
+      sparse_linear_algebra_library = SUITESPARSE;
       linear_solver_type = DENSE_QR;
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
+
       preconditioner_type = JACOBI;
       num_linear_solver_threads = 1;
       num_eliminate_blocks = 0;
@@ -153,6 +162,8 @@ class Solver {
 
     // Type of preconditioner to use with the iterative linear solvers.
     PreconditionerType preconditioner_type;
+
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
 
     // Number of threads used by Ceres to solve the Newton
     // step. Currently only the SPARSE_SCHUR solver is capable of

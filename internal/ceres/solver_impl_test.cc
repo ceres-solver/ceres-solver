@@ -433,12 +433,14 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
 }
 
 #ifdef CERES_NO_SUITESPARSE
+#ifdef CERES_NO_CXSPARSE
 TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
   Solver::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   string error;
   EXPECT_FALSE(SolverImpl::CreateLinearSolver(&options, &error));
 }
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
 
 TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
@@ -479,8 +481,12 @@ TEST(SolverImpl, CreateLinearSolverZeroNumEliminateBlocks) {
   EXPECT_TRUE(solver != NULL);
 #ifndef CERES_NO_SUITESPARSE
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
-#else
+#else  // CERES_NO_SUITESPARSE
+#ifndef CERES_NO_CXSPARSE
+  EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
+#else  // CERES_NO_CXSPARSE
   EXPECT_EQ(options.linear_solver_type, DENSE_QR);
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
 }
 
@@ -508,10 +514,19 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 
 #ifndef CERES_NO_SUITESPARSE
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library = SUITESPARSE;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   EXPECT_TRUE(solver.get() != NULL);
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  options.sparse_linear_algebra_library = CXSPARSE;
+  solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
+  EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
+  EXPECT_TRUE(solver.get() != NULL);
+#endif  // CERES_NO_CXSPARSE
 
   options.linear_solver_type = DENSE_SCHUR;
   options.num_eliminate_blocks = 2;
@@ -521,12 +536,17 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 
   options.linear_solver_type = SPARSE_SCHUR;
   options.num_eliminate_blocks = 2;
-#ifndef CERES_NO_SUITESPARSE
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
+#ifndef CERES_NO_SUITESPARSE
   EXPECT_TRUE(solver.get() != NULL);
   EXPECT_EQ(options.linear_solver_type, SPARSE_SCHUR);
 #else   // CERES_NO_SUITESPARSE
+#ifndef CERES_NO_CXSPARSE
+  EXPECT_TRUE(solver.get() != NULL);
+  EXPECT_EQ(options.linear_solver_type, SPARSE_SCHUR);
+#else  // CERES_NO_CXSPARSE
   EXPECT_TRUE(SolverImpl::CreateLinearSolver(&options, &error) == NULL);
+#endif  // CERES_NO_CXSPARSE
 #endif  // CERES_NO_SUITESPARSE
 
   options.linear_solver_type = ITERATIVE_SCHUR;

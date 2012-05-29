@@ -28,7 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_NO_SUITESPARSE
+
 
 #include "ceres/sparse_normal_cholesky_solver.h"
 
@@ -43,21 +43,111 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif  // CERES_NO_CXSPARSE
+
+
 namespace ceres {
 namespace internal {
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : options_(options), symbolic_factor_(NULL) {}
+    : options_(options) {
+#ifndef CERES_NO_SUITESPARSE
+  symbolic_factor_ = NULL;
+#endif  // CERES_NO_SUITESPARSE
+}
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
+#ifndef CERES_NO_SUITESPARSE
   if (symbolic_factor_ != NULL) {
     ss_.Free(symbolic_factor_);
     symbolic_factor_ = NULL;
   }
+#endif  // CERES_NO_SUITESPARSE
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+
+  switch (options_.sparse_linear_algebra_library) {
+  case SUITESPARSE:
+    return SolveImplUsingSuiteSparse(A, b, per_solve_options, x);
+#undef CXSPARSE;
+  case CXSPARSE:
+    return SolveImplUsingCXSparse(A, b, per_solve_options, x);
+  default:
+    LOG(FATAL) << "Unknown sparse linear algebra library : "
+	       << options_.sparse_linear_algebra_library;
+  }
+
+  LOG(FATAL) << "Unknown sparse linear algebra library : "
+	     << options_.sparse_linear_algebra_library;
+  return LinearSolver::Summary();
+}
+
+#ifndef CERES_NO_CXSPARSE
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  const int num_cols = A->num_cols();
+  Vector Atb = Vector::Zero(num_cols);
+  A->LeftMultiply(b, Atb.data());
+
+  if (per_solve_options.D != NULL) {
+    // Temporarily append a diagonal block to the A matrix, but undo
+    // it before returning the matrix to the user.
+    CompressedRowSparseMatrix D(per_solve_options.D, num_cols);
+    A->AppendRows(D);
+  }
+
+  VectorRef(x, num_cols).setZero();
+
+  cs_di Jt;
+  Jt.m = A->num_cols();
+  Jt.n = A->num_rows();
+  Jt.nz = -1;
+  Jt.nzmax = A->num_nonzeros();
+  Jt.p = A->mutable_rows();
+  Jt.i = A->mutable_cols();
+  Jt.x = A->mutable_values();
+
+  cs_di* J = cs_transpose(&Jt, 1);
+  cs_di* JtJ = cs_multiply(&Jt,J);
+
+  cs_free(J);
+  if (per_solve_options.D != NULL) {
+    A->DeleteRows(num_cols);
+  }
+
+  if (cs_cholsol(1, JtJ, Atb.data())) {
+    VectorRef(x, Atb.rows()) = Atb;
+    summary.termination_type = TOLERANCE;
+  }
+
+  cs_free(JtJ);
+  return summary;
+}
+#else
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LOG(FATAL) << "No CXSparse support in Ceres.";
+}
+#endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_SUITESPARSE
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     CompressedRowSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
@@ -117,8 +207,15 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
           << " cleanup: " << cleanup_time - solve_time;
   return summary;
 }
+#else
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
+    CompressedRowSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * x) {
+  LOG(FATAL) << "No SuiteSparse support in Ceres.";
+}
+#endif  // CERES_NO_SUITESPARSE
 
 }   // namespace internal
 }   // namespace ceres
-
-#endif  // CERES_NO_SUITESPARSE

@@ -110,6 +110,15 @@ enum PreconditionerType {
   CLUSTER_TRIDIAGONAL
 };
 
+enum SparseLinearAlgebraLibraryType {
+  // High performance sparse Cholesky factorization and approximate
+  // minimum degree ordering.
+  SUITESPARSE,
+
+  // A lightweight replacment for SuiteSparse.
+  CXSPARSE
+};
+
 enum LinearSolverTerminationType {
   // Termination criterion was met. For factorization based solvers
   // the tolerance is assumed to be zero. Any user provided values are
@@ -246,6 +255,8 @@ enum DimensionType {
 
 const char* LinearSolverTypeToString(LinearSolverType type);
 const char* PreconditionerTypeToString(PreconditionerType type);
+const char* SparseLinearAlgebraLibraryTypeToString(
+    SparseLinearAlgebraLibraryType type);
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
 const char* OrderingTypeToString(OrderingType type);
