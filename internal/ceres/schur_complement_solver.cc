@@ -32,6 +32,11 @@
 #include <ctime>
 #include <set>
 #include <vector>
+
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif  // CERES_NO_CXSPARSE
+
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
@@ -48,9 +53,6 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
-#ifndef CERES_NO_CXSPARSE
-#include "cs.h"
-#endif  // CERES_NO_CXSPARSE
 
 namespace ceres {
 namespace internal {
@@ -234,17 +236,17 @@ void SparseSchurComplementSolver::InitStorage(
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   switch (options().sparse_linear_algebra_library) {
-  case SUITE_SPARSE:
-    return SolveReducedLinearSystemUsingSuiteSparse(solution);
-  case CX_SPARSE:
-    return SolveReducedLinearSystemUsingCXSparse(solution);
-  default:
-    LOG(FATAL) << "Unknown sparse linear algebra library : "
-	       << options().sparse_linear_algebra_library;
+    case SUITE_SPARSE:
+      return SolveReducedLinearSystemUsingSuiteSparse(solution);
+    case CX_SPARSE:
+      return SolveReducedLinearSystemUsingCXSparse(solution);
+    default:
+      LOG(FATAL) << "Unknown sparse linear algebra library : "
+                 << options().sparse_linear_algebra_library;
   }
 
   LOG(FATAL) << "Unknown sparse linear algebra library : "
-	     << options().sparse_linear_algebra_library;
+             << options().sparse_linear_algebra_library;
   return false;
 }
 
@@ -312,7 +314,7 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
 // CXSparse's sparse cholesky factorization routines.
 bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
     double* solution) {
-   // Extract the TripletSparseMatrix that is used for actually storing S.
+  // Extract the TripletSparseMatrix that is used for actually storing S.
   TripletSparseMatrix* tsm =
       const_cast<TripletSparseMatrix*>(
           down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());

@@ -236,7 +236,6 @@ ELSE (DEFINED SUITESPARSE)
   ENDIF (SUITESPARSE_FOUND)
 ENDIF (DEFINED SUITESPARSE)
 
-
 # By default, if all of CXSparse's dependencies are found, Ceres is
 # built with CXSparse support. -DCXSPARSE=ON/OFF can be used to
 # enable/disable CXSparse explicitly.
@@ -330,7 +329,6 @@ IF (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
 MESSAGE("-- Found Eigen 3.0: ${EIGEN_INCLUDE}")
-
 
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you

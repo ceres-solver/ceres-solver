@@ -276,7 +276,11 @@ class PowellsFunction {
 
 TEST(SystemTest, PowellsFunction) {
   vector<SolverConfig> configs;
-#define CONFIGURE(a, b, c) configs.push_back(SolverConfig(a, b, c))
+#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering) \
+  configs.push_back(SolverConfig(linear_solver,                           \
+                                 sparse_linear_algebra_library,           \
+                                 ordering))
+
   CONFIGURE(DENSE_QR,    SUITE_SPARSE, NATURAL);
   CONFIGURE(DENSE_SCHUR, SUITE_SPARSE, SCHUR);
 
@@ -476,11 +480,15 @@ class BundleAdjustmentProblem {
   double* parameters_;
 };
 
-
 TEST(SystemTest, BundleAdjustmentProblem) {
   vector<SolverConfig> configs;
 
-#define CONFIGURE(a, b, c, d, e) configs.push_back(SolverConfig(a, b, c, d, e))
+#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering, preconditioner, threads) \
+  configs.push_back(SolverConfig(linear_solver,                         \
+                                 sparse_linear_algebra_library,         \
+                                 ordering,                              \
+                                 preconditioner,                        \
+                                 threads))
 
 #ifndef CERES_NO_SUITESPARSE
   CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL, IDENTITY, 1);

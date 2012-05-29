@@ -50,32 +50,24 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
       return new CgnrSolver(options);
 
     case SPARSE_NORMAL_CHOLESKY:
-#ifndef CERES_NO_SUITESPARSE
-      return new SparseNormalCholeskySolver(options);
-#else
-#ifndef CERES_NO_CXSPARSE
-      return new SparseNormalCholeskySolver(options);
-#else
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
       LOG(WARNING) << "SPARSE_NORMAL_CHOLESKY is not available. Please "
                    << "build Ceres with SuiteSparse or CXSparse. "
                    << "Returning NULL.";
       return NULL;
-#endif  // CERES_NO_CXSPARSE
-#endif  // CERES_NO_SUITESPARSE
+#else
+      return new SparseNormalCholeskySolver(options);
+#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
 
     case SPARSE_SCHUR:
-#ifndef CERES_NO_SUITESPARSE
-      return new SparseSchurComplementSolver(options);
-#else
-#ifndef CERES_NO_CXSPARSE
-      return new SparseSchurComplementSolver(options);
-#else
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
       LOG(WARNING) << "SPARSE_SCHUR is not available. Please "
                    << "build Ceres with SuiteSparse or CXSparse. "
                    << "Returning NULL.";
       return NULL;
-#endif  // CERES_NO_CXSPARSE
-#endif  // CERES_NO_SUITESPARSE
+#else
+      return new SparseSchurComplementSolver(options);
+#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
 
     case DENSE_SCHUR:
       return new DenseSchurComplementSolver(options);

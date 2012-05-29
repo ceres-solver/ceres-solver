@@ -501,31 +501,23 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
   if ((linear_solver_options.num_eliminate_blocks == 0) &&
       IsSchurType(linear_solver_options.type)) {
-#ifndef CERES_NO_SUITESPARSE
-    LOG(INFO) << "No elimination block remaining "
-              << "switching to SPARSE_NORMAL_CHOLESKY.";
-    linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
-#else  // CERES_NO_SUITESPARSE
-#ifndef CERES_NO_CXSPARSE
-    LOG(INFO) << "No elimination block remaining "
-              << "switching to SPARSE_NORMAL_CHOLESKY.";
-    linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
-#else  // CERES_NO_CXSPARSE
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
     LOG(INFO) << "No elimination block remaining switching to DENSE_QR.";
     linear_solver_options.type = DENSE_QR;
-#endif  // CERES_NO_CXSPARSE
-#endif  // CERES_NO_SUITESPARSE
+#else
+    LOG(INFO) << "No elimination block remaining "
+              << "switching to SPARSE_NORMAL_CHOLESKY.";
+    linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
+#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
   }
 
-#ifdef CERES_NO_SUITESPARSE
-#ifdef CERES_NO_CXSPARSE
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
   if (linear_solver_options.type == SPARSE_SCHUR) {
     *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
              "CXSparse was enabled when Ceres was compiled.";
     return NULL;
   }
-#endif  // CERES_NO_CXSPARSE
-#endif  // CERES_NO_SUITESPARSE
+#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
 
   // The matrix used for storing the dense Schur complement has a
   // single lock guarding the whole matrix. Running the

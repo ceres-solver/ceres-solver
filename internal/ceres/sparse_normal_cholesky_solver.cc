@@ -35,6 +35,11 @@
 #include <algorithm>
 #include <cstring>
 #include <ctime>
+
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif  // CERES_NO_CXSPARSE
+
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
@@ -43,9 +48,6 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
-#ifndef CERES_NO_CXSPARSE
-#include "cs.h"
-#endif  // CERES_NO_CXSPARSE
 
 
 namespace ceres {
@@ -73,19 +75,18 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double * x) {
-
   switch (options_.sparse_linear_algebra_library) {
-  case SUITE_SPARSE:
-    return SolveImplUsingSuiteSparse(A, b, per_solve_options, x);
-  case CX_SPARSE:
-    return SolveImplUsingCXSparse(A, b, per_solve_options, x);
-  default:
-    LOG(FATAL) << "Unknown sparse linear algebra library : "
-	       << options_.sparse_linear_algebra_library;
+    case SUITE_SPARSE:
+      return SolveImplUsingSuiteSparse(A, b, per_solve_options, x);
+    case CX_SPARSE:
+      return SolveImplUsingCXSparse(A, b, per_solve_options, x);
+    default:
+      LOG(FATAL) << "Unknown sparse linear algebra library : "
+                 << options_.sparse_linear_algebra_library;
   }
 
   LOG(FATAL) << "Unknown sparse linear algebra library : "
-	     << options_.sparse_linear_algebra_library;
+             << options_.sparse_linear_algebra_library;
   return LinearSolver::Summary();
 }
 
@@ -110,29 +111,40 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
   VectorRef(x, num_cols).setZero();
 
-  cs_di Jt;
-  Jt.m = A->num_cols();
-  Jt.n = A->num_rows();
-  Jt.nz = -1;
-  Jt.nzmax = A->num_nonzeros();
-  Jt.p = A->mutable_rows();
-  Jt.i = A->mutable_cols();
-  Jt.x = A->mutable_values();
+  // Wrap the augmented Jacobian in a compressed sparse column matrix.
+  cs_di At;
+  At.m = A->num_cols();
+  At.n = A->num_rows();
+  At.nz = -1;
+  At.nzmax = A->num_nonzeros();
+  At.p = A->mutable_rows();
+  At.i = A->mutable_cols();
+  At.x = A->mutable_values();
 
-  cs_di* J = cs_transpose(&Jt, 1);
-  cs_di* JtJ = cs_multiply(&Jt,J);
+  // Compute the normal equations. J'J delta = J'f and solve them
+  // using a sparse Cholesky factorization. Notice that when compared
+  // to SuiteSparse we have to explicitly compute the transpose of Jt,
+  // and then the normal equations before they can be
+  // factorized. CHOLMOD/SuiteSparse on the other hand can just work
+  // off of Jt to compute the Cholesky factorization of the normal
+  // equations.
+  cs_di* A2 = cs_transpose(&At, 1);
+  cs_di* AtA = cs_multiply(&At,A2);
 
-  cs_free(J);
+  cs_free(A2);
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
 
-  if (cs_cholsol(1, JtJ, Atb.data())) {
+  // This recomputes the symbolic factorization every time it is
+  // invoked. It will perhaps be worth it to cache the symbolic
+  // factorization the way we do for SuiteSparse.
+  if (cs_cholsol(1, AtA, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
     summary.termination_type = TOLERANCE;
   }
 
-  cs_free(JtJ);
+  cs_free(AtA);
   return summary;
 }
 #else

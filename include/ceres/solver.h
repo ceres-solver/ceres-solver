@@ -68,18 +68,16 @@ class Solver {
       gradient_tolerance = 1e-10;
       parameter_tolerance = 1e-8;
 
-#ifndef CERES_NO_SUITESPARSE
-      linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-      sparse_linear_algebra_library = SUITE_SPARSE;
-#else
-#ifndef CERES_NO_CXSPARSE
-      linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-      sparse_linear_algebra_library = CX_SPARSE;
-#else
-      sparse_linear_algebra_library = SUITESPARSE;
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
       linear_solver_type = DENSE_QR;
-#endif  // CERES_NO_CXSPARSE
-#endif  // CERES_NO_SUITESPARSE
+#else
+      linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+
+      sparse_linear_algebra_library = SUITE_SPARSE;
+#if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
+      sparse_linear_algebra_library = CX_SPARSE;
+#endif  // defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
 
       preconditioner_type = JACOBI;
       num_linear_solver_threads = 1;
@@ -163,6 +161,9 @@ class Solver {
     // Type of preconditioner to use with the iterative linear solvers.
     PreconditionerType preconditioner_type;
 
+    // Ceres supports using multiple sparse linear algebra libraries
+    // for sparse matrix ordering and factorizations. Currently,
+    // SUITE_SPARSE and CX_SPARSE are the valid choices.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
 
     // Number of threads used by Ceres to solve the Newton
