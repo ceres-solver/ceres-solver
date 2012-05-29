@@ -438,7 +438,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
              "SuiteSparse was not enabled when Ceres was built.";
     return NULL;
   }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
 #ifdef CERES_NO_CXSPARSE
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
@@ -447,7 +447,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
              "CXSparse was not enabled when Ceres was built.";
     return NULL;
   }
-#endif  // CERES_NO_CXSPARSE
+#endif
 
 
   if (options->linear_solver_max_num_iterations <= 0) {
@@ -493,7 +493,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
         "Ceres with SuiteSparse support.";
     return NULL;
   }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
   linear_solver_options.num_threads = options->num_linear_solver_threads;
   linear_solver_options.num_eliminate_blocks =
@@ -508,7 +508,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
     LOG(INFO) << "No elimination block remaining "
               << "switching to SPARSE_NORMAL_CHOLESKY.";
     linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
   }
 
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
@@ -517,7 +517,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
              "CXSparse was enabled when Ceres was compiled.";
     return NULL;
   }
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
 
   // The matrix used for storing the dense Schur complement has a
   // single lock guarding the whole matrix. Running the

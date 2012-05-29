@@ -439,7 +439,7 @@ TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
   string error;
   EXPECT_FALSE(SolverImpl::CreateLinearSolver(&options, &error));
 }
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
 
 TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
   Solver::Options options;
@@ -482,7 +482,7 @@ TEST(SolverImpl, CreateLinearSolverZeroNumEliminateBlocks) {
   EXPECT_EQ(options.linear_solver_type, DENSE_QR);
 #else
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
 }
 
 TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
@@ -513,7 +513,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   EXPECT_TRUE(solver.get() != NULL);
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
 #ifndef CERES_NO_CXSPARSE
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -521,7 +521,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
   EXPECT_TRUE(solver.get() != NULL);
-#endif  // CERES_NO_CXSPARSE
+#endif
 
   options.linear_solver_type = DENSE_SCHUR;
   options.num_eliminate_blocks = 2;
@@ -538,7 +538,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 #else
   EXPECT_TRUE(solver.get() != NULL);
   EXPECT_EQ(options.linear_solver_type, SPARSE_SCHUR);
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
 
   options.linear_solver_type = ITERATIVE_SCHUR;
   options.num_eliminate_blocks = 2;

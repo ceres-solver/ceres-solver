@@ -72,12 +72,12 @@ class Solver {
       linear_solver_type = DENSE_QR;
 #else
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-#endif  // defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#endif
 
       sparse_linear_algebra_library = SUITE_SPARSE;
 #if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
       sparse_linear_algebra_library = CX_SPARSE;
-#endif  // defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
+#endif
 
       preconditioner_type = JACOBI;
       num_linear_solver_threads = 1;
@@ -163,7 +163,8 @@ class Solver {
 
     // Ceres supports using multiple sparse linear algebra libraries
     // for sparse matrix ordering and factorizations. Currently,
-    // SUITE_SPARSE and CX_SPARSE are the valid choices.
+    // SUITE_SPARSE and CX_SPARSE are the valid choices, depending on
+    // whether they are linked into Ceres at build time.
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
 
     // Number of threads used by Ceres to solve the Newton

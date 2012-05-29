@@ -88,6 +88,4 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 }  // namespace internal
 }  // namespace ceres
 
-
-
 #endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

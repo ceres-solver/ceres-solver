@@ -28,8 +28,6 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-
-
 #include "ceres/sparse_normal_cholesky_solver.h"
 
 #include <algorithm>
@@ -38,7 +36,7 @@
 
 #ifndef CERES_NO_CXSPARSE
 #include "cs.h"
-#endif  // CERES_NO_CXSPARSE
+#endif
 
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_solver.h"
@@ -58,7 +56,7 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     : options_(options) {
 #ifndef CERES_NO_SUITESPARSE
   symbolic_factor_ = NULL;
-#endif  // CERES_NO_SUITESPARSE
+#endif
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
@@ -67,7 +65,7 @@ SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
     ss_.Free(symbolic_factor_);
     symbolic_factor_ = NULL;
   }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
@@ -155,7 +153,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     double * x) {
   LOG(FATAL) << "No CXSparse support in Ceres.";
 }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
 #ifndef CERES_NO_SUITESPARSE
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
@@ -226,7 +224,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     double * x) {
   LOG(FATAL) << "No SuiteSparse support in Ceres.";
 }
-#endif  // CERES_NO_SUITESPARSE
+#endif
 
 }   // namespace internal
 }   // namespace ceres
