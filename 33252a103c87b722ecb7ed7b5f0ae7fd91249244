@@ -1,0 +1,463 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAF53///40\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Drop extra newline",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///44\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Extra newline",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///48\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Feral newline",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4w\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "The ifdefs are a bit tricky to read. Consider indenting:\n\n#  ifndef\n\n(note spaces after #)",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4s\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Briefly document.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4g\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Since the code is the same on both sides of the branch, consider instead:\n\n#if !defined(CERES_NO_SUITESPARSE) \u0026\u0026 !defined(CERES_NO_CXSPARSE)\n...\n#else\nLOG(WARNING) ...\n#endif",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4o\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Indent ifdefs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4c\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "See above for how to rearrange this #if.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4k\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Indent ifdefs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4Y\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Unless there\u0027s a reason, system and other library includes should go above the ceres ones.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4M\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Gross. Unfortunately, this won\u0027t work because then clients cannot simultaneously use CXSparse and Ceres. I am at a loss for a better name though.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4U\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Remove hard tabs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4Q\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Remove hard tabs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4I\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4E\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Need to indent the preprocessor defines. However, I think this is better written as a single ifdef via\n\n#if !defined(CERES_NO_SUITESPARSE) \u0026\u0026 !defined(CERES_NO_CXSPARSE) \n...",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///4A\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Same as above; try to simplify. The ifs can be collapsed into one.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///38\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Collapse ifdefs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///34\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Collapse ifdefs as suggested earlier.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///30\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Collapse ifs.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3w\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Move non-Ceres includes to the top.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3s\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3o\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Remove tabs",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3k\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Remove tabs",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3c\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be At?",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3g\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Perhaps drop a short comment that this is explicitly forming and solving the normal equations (in particular JtJ). Mention that this is a disadvantage relative to CHOLMOD, since it is able to avoid forming JtJ.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3Y\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAF53///3U\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-29T08:28:07Z",
+      "side": 1,
+      "message": "I see no reason not to name the parameters descriptively.",
+      "revId": "33252a103c87b722ecb7ed7b5f0ae7fd91249244",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
