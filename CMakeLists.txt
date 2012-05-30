@@ -28,7 +28,7 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.0)
 
 IF (COMMAND cmake_policy)
   CMAKE_POLICY(SET CMP0003 NEW)
@@ -184,12 +184,12 @@ ELSE (EXISTS ${METIS_LIB})
 ENDIF (EXISTS ${METIS_LIB})
 
 SET(BLAS_AND_LAPACK_FOUND TRUE)
-IF (APPLE)
+IF (${APPLE})
   # Mac OS X has LAPACK/BLAS bundled in a framework called
   # "vecLib". Search for that instead of for the normal "lapack"
   # library.
   FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
-ELSE (APPLE)
+ELSE (${APPLE})
   FIND_LIBRARY(BLAS_LIB NAMES blas)
   IF (EXISTS ${BLAS_LIB})
     MESSAGE("-- Found BLAS library: ${BLAS_LIB}")
@@ -198,7 +198,7 @@ ELSE (APPLE)
     SET(BLAS_AND_LAPACK_FOUND FALSE)
   ENDIF (EXISTS ${BLAS_LIB})
   FIND_LIBRARY(LAPACK_LIB NAMES lapack)
-ENDIF (APPLE)
+ENDIF (${APPLE})
 
 IF (EXISTS ${LAPACK_LIB})
   MESSAGE("-- Found LAPACK library: ${LAPACK_LIB}")
@@ -208,33 +208,33 @@ ELSE (EXISTS ${LAPACK_LIB})
 ENDIF (EXISTS ${LAPACK_LIB})
 
 SET(SUITESPARSE_FOUND
-    AMD_FOUND AND
-    CAMD_FOUND AND
-    COLAMD_FOUND AND
-    CCOLAMD_FOUND AND
-    CHOLMOD_FOUND AND
-    BLAS_AND_LAPACK_FOUND)
+  ${AMD_FOUND} AND
+  ${CAMD_FOUND} AND
+  ${COLAMD_FOUND} AND
+  ${CCOLAMD_FOUND} AND
+  ${CHOLMOD_FOUND} AND
+  ${BLAS_AND_LAPACK_FOUND})
 
 # By default, if all of SuiteSparse's dependencies are found, Ceres is
 # built with SuiteSparse support. -DSUITESPARSE=ON/OFF can be used to
 # enable/disable SuiteSparse explicitly.
 IF (DEFINED SUITESPARSE)
-  IF (SUITESPARSE)
-    IF (NOT SUITESPARSE_FOUND)
+  IF (${SUITESPARSE})
+    IF (NOT ${SUITESPARSE_FOUND})
       MESSAGE(FATAL_ERROR "One or more of SuiteSparse's dependencies was not found")
-    ENDIF (NOT SUITESPARSE_FOUND)
-  ELSE (SUITESPARSE)
+    ENDIF (NOT ${SUITESPARSE_FOUND})
+  ELSE (${SUITESPARSE})
     ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
-  ENDIF (SUITESPARSE)
+  ENDIF (${SUITESPARSE})
 ELSE (DEFINED SUITESPARSE)
-  IF (SUITESPARSE_FOUND)
+  IF (${SUITESPARSE_FOUND})
     MESSAGE("-- Found all SuiteSparse dependencies. Building with SuiteSparse")
     SET(SUITESPARSE ON)
-  ELSE (SUITESPARSE_FOUND)
+  ELSE (${SUITESPARSE_FOUND})
     MESSAGE("-- Did not find all SuiteSparse dependencies. Building without SuiteSparse")
     SET(SUITESPARSE OFF)
     ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
-  ENDIF (SUITESPARSE_FOUND)
+  ENDIF (${SUITESPARSE_FOUND})
 ENDIF (DEFINED SUITESPARSE)
 
 # By default, if all of CXSparse's dependencies are found, Ceres is
@@ -260,22 +260,22 @@ ELSE (EXISTS ${CXSPARSE_INCLUDE})
 ENDIF (EXISTS ${CXSPARSE_INCLUDE})
 
 IF (DEFINED CXSPARSE)
-  IF (CXSPARSE)
-    IF (NOT CXSPARSE_FOUND)
+  IF (${CXSPARSE})
+    IF (NOT ${CXSPARSE_FOUND})
       MESSAGE(FATAL_ERROR "-- CXSparse not found.")
-    ENDIF (NOT CXSPARSE_FOUND)
-  ELSE (CXSPARSE)
+    ENDIF (NOT ${CXSPARSE_FOUND})
+  ELSE (${CXSPARSE})
     ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
-  ENDIF (CXSPARSE)
+  ENDIF (${CXSPARSE})
 ELSE (DEFINED CXSPARSE)
-  IF (CXSPARSE_FOUND)
+  IF (${CXSPARSE_FOUND})
     MESSAGE("-- Building with CXSparse support.")
     SET(CXSPARSE ON)
-  ELSE (CXSPARSE_FOUND)
+  ELSE (${CXSPARSE_FOUND})
     MESSAGE("-- Building without CXSparse.")
     SET(CXSPARSE OFF)
     ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
-  ENDIF (CXSPARSE_FOUND)
+  ENDIF (${CXSPARSE_FOUND})
 ENDIF (DEFINED CXSPARSE)
 
 # Google Flags
@@ -283,7 +283,7 @@ OPTION(GFLAGS
        "Enable Google Flags."
        ON)
 
-IF (GFLAGS)
+IF (${GFLAGS})
   MESSAGE("-- Check for Google Flags")
   FIND_LIBRARY(GFLAGS_LIB NAMES gflags PATHS ${SEARCH_LIBS})
   IF (NOT EXISTS ${GFLAGS_LIB})
@@ -299,10 +299,10 @@ IF (GFLAGS)
             "-DGFLAGS_INCLUDE=...")
   ENDIF (NOT EXISTS ${GFLAGS_INCLUDE})
   MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE}")
-ELSE (GFLAGS)
+ELSE (${GFLAGS})
   MESSAGE("-- Google Flags disabled; no tests or tools will be built!")
   ADD_DEFINITIONS(-DCERES_NO_GFLAGS)
-ENDIF (GFLAGS)
+ENDIF (${GFLAGS})
 
 # Google Logging
 MESSAGE("-- Check for Google Log")
@@ -337,52 +337,52 @@ OPTION(SCHUR_SPECIALIZATIONS
        "Enable fixed-size schur specializations."
        ON)
 
-IF (NOT SCHUR_SPECIALIZATIONS)
+IF (NOT ${SCHUR_SPECIALIZATIONS})
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
-ENDIF (NOT SCHUR_SPECIALIZATIONS)
+ENDIF (NOT ${SCHUR_SPECIALIZATIONS})
 
 # Multithreading using OpenMP
 OPTION(OPENMP
        "Enable threaded solving in Ceres (requires OpenMP)"
        ON)
 
-IF (OPENMP)
+IF (${OPENMP})
   FIND_PACKAGE(OpenMP)
-  IF(OPENMP_FOUND)
+  IF(${OPENMP_FOUND})
     MESSAGE("-- Found OpenMP.")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     ADD_DEFINITIONS(-DCERES_USE_OPENMP)
-  ELSE(OPENMP_FOUND)
+  ELSE(${OPENMP_FOUND})
     MESSAGE("-- Can't find OpenMP. Continuing without it.")
-  ENDIF(OPENMP_FOUND)
-ENDIF (OPENMP)
+  ENDIF(${OPENMP_FOUND})
+ENDIF (${OPENMP})
 
 # Protocol buffers
 OPTION(PROTOBUF
        "Enable protocol buffers support."
        ON)
 
-IF (PROTOBUF)
+IF (${PROTOBUF})
   FIND_PACKAGE(Protobuf)
-  IF (PROTOBUF_FOUND)
+  IF (${PROTOBUF_FOUND})
     INCLUDE_DIRECTORIES(${PROTOBUF_INCLUDE_DIRS})
     INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/internal)
-  ELSE (PROTOBUF_FOUND)
+  ELSE (${PROTOBUF_FOUND})
     ADD_DEFINITIONS(-DCERES_DONT_HAVE_PROTOCOL_BUFFERS)
-  ENDIF (PROTOBUF_FOUND)
-ELSE (PROTOBUF)
+  ENDIF (${PROTOBUF_FOUND})
+ELSE (${PROTOBUF})
   ADD_DEFINITIONS(-DCERES_DONT_HAVE_PROTOCOL_BUFFERS)
-ENDIF (PROTOBUF)
+ENDIF (${PROTOBUF})
 
-IF (UNIX)
-  # Atleast on linux, we need pthreads to be enabled for mutex to
+IF (${UNIX})
+  # At least on linux, we need pthreads to be enabled for mutex to
   # compile. This may not work on windows or android.
   FIND_PACKAGE(Threads REQUIRED)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
   ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
   ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-ENDIF (UNIX)
+ENDIF (${UNIX})
 
 # Use the std namespace for the hash<> and related templates. This may vary by
 # system.
@@ -397,23 +397,23 @@ INCLUDE_DIRECTORIES(
   ${EIGEN_INCLUDE}
   )
 
-IF (SUITESPARSE)
+IF (${SUITESPARSE})
   INCLUDE_DIRECTORIES(${CHOLMOD_INCLUDE})
-ENDIF(SUITESPARSE)
+ENDIF(${SUITESPARSE})
 
-IF (CXSPARSE)
+IF (${CXSPARSE})
   INCLUDE_DIRECTORIES(${CXSPARSE_INCLUDE})
-ENDIF(CXSPARSE)
+ENDIF(${CXSPARSE})
 
-IF (GFLAGS)
+IF (${GFLAGS})
   INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
-ENDIF (GFLAGS)
+ENDIF (${GFLAGS})
 
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
-IF (NOT CMAKE_BUILD_TYPE)
+IF (NOT ${CMAKE_BUILD_TYPE})
   SET(CMAKE_BUILD_TYPE Release)
-ENDIF (NOT CMAKE_BUILD_TYPE)
+ENDIF (NOT ${CMAKE_BUILD_TYPE})
 
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)

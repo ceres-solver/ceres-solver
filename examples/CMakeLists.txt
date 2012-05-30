@@ -40,7 +40,7 @@ TARGET_LINK_LIBRARIES(quadratic_numeric_diff ceres)
 ADD_EXECUTABLE(powell powell.cc)
 TARGET_LINK_LIBRARIES(powell ceres)
 
-IF (GFLAGS)
+IF (${GFLAGS})
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
   TARGET_LINK_LIBRARIES(circle_fit ceres)
 
@@ -48,7 +48,7 @@ IF (GFLAGS)
                  bundle_adjuster.cc
                  bal_problem.cc)
   TARGET_LINK_LIBRARIES(bundle_adjuster ceres)
-ENDIF (GFLAGS)
+ENDIF (${GFLAGS})
 
 ADD_EXECUTABLE(simple_bundle_adjuster
                simple_bundle_adjuster.cc)
