@@ -57,13 +57,17 @@ class Solver {
   struct Options {
     // Default constructor that sets up a generic sparse problem.
     Options() {
-      minimizer_type = LEVENBERG_MARQUARDT;
+      trust_region_strategy_type = LEVENBERG_MARQUARDT;
       max_num_iterations = 50;
-      max_solver_time_sec = 1.0e9;
+      max_solver_time_sec = 1e9;
       num_threads = 1;
-      tau = 1e-4;
-      min_mu = 1e-20;
+      initial_trust_region_radius = 1e4;
+      max_trust_region_radius = 1e16;
+      min_trust_region_radius = 1e-32;
       min_relative_decrease = 1e-3;
+      lm_min_diagonal = 1e-6;
+      lm_max_diagonal = 1e32;
+      max_num_consecutive_invalid_steps = 5;
       function_tolerance = 1e-6;
       gradient_tolerance = 1e-10;
       parameter_tolerance = 1e-8;
@@ -93,7 +97,6 @@ class Solver {
       return_final_residuals = false;
       lsqp_dump_directory = "/tmp";
       lsqp_dump_format_type = TEXTFILE;
-      crash_and_dump_lsqp_on_failure = false;
       check_gradients = false;
       gradient_check_relative_precision = 1e-8;
       numeric_derivative_relative_step_size = 1e-6;
@@ -102,7 +105,7 @@ class Solver {
 
     // Minimizer options ----------------------------------------
 
-    MinimizerType minimizer_type;
+    TrustRegionStrategyType trust_region_strategy_type;
 
     // Maximum number of iterations for the minimizer to run for.
     int max_num_iterations;
@@ -114,26 +117,34 @@ class Solver {
     // jacobians.
     int num_threads;
 
-    // For Levenberg-Marquardt, the initial value for the
-    // regularizer. This is the inversely related to the size of the
-    // initial trust region.
-    double tau;
+    // Trust region minimizer settings.
+    double initial_trust_region_radius;
+    double max_trust_region_radius;
 
-    // For Levenberg-Marquardt, the minimum value of the
-    // regularizer. For well constrained problems there shold be no
-    // need to modify the default value, but in some cases, going
-    // below a certain minimum reliably triggers rank deficiency in
-    // the normal equations. In such cases, the LM solver can
-    // oscillate between lowering the value of mu, seeing a numerical
-    // failure, and then increasing it making some progress and then
-    // reducing it again.
-    //
-    // In such cases, it is useful to set a higher value for min_mu.
-    double min_mu;
+    // Minimizer terminates when the trust region radius becomes
+    // smaller than this value.
+    double min_trust_region_radius;
 
-    // For trust region methods, this is lower threshold for the
-    // relative decrease before a step is accepted.
+    // Lower bound for the relative decrease before a step is
+    // accepted.
     double min_relative_decrease;
+
+    // For the Levenberg-Marquadt algorithm, the scaled diagonal of
+    // the normal equations J'J is used to control the size of the
+    // trust region. Extremely small and large values along the
+    // diagonal can make this regularization scheme
+    // fail. lm_max_diagonal and lm_min_diagonal, clamp the values of
+    // diag(J'J) from above and below. In the normal course of
+    // operation, the user should not have to modify these parameters.
+    double lm_min_diagonal;
+    double lm_max_diagonal;
+
+    // Sometimes due to numerical conditioning problems or linear
+    // solver flakiness, the trust region strategy may return a
+    // numerically invalid step that can be fixed by reducing the
+    // trust region size. So the TrustRegionMinimizer allows for a few
+    // successive invalid steps before it declares NUMERICAL_FAILURE.
+    int max_num_consecutive_invalid_steps;
 
     // Minimizer terminates when
     //
@@ -243,15 +254,6 @@ class Solver {
     string lsqp_dump_directory;
     DumpFormatType lsqp_dump_format_type;
 
-    // Dump the linear least squares problem to disk if the minimizer
-    // fails due to NUMERICAL_FAILURE and crash the process. This flag
-    // is useful for generating debugging information. The problem is
-    // dumped in a file whose name is determined by
-    // Solver::Options::lsqp_dump_format.
-    //
-    // Note: This requires a version of Ceres built with protocol buffers.
-    bool crash_and_dump_lsqp_on_failure;
-
     // Finite differences options ----------------------------------------------
 
     // Check all jacobians computed by each residual block with finite
@@ -299,10 +301,15 @@ class Solver {
     bool update_state_every_iteration;
 
     // Callbacks that are executed at the end of each iteration of the
-    // Minimizer. They are executed in the order that they are
-    // specified in this vector. By default, parameter blocks are
-    // updated only at the end of the optimization, i.e when the
-    // Minimizer terminates. This behaviour is controlled by
+    // Minimizer. An iteration may terminate midway, either due to
+    // numerical failures or because one of the convergence tests has
+    // been satisfied. In this case none of the callbacks are
+    // executed.
+
+    // Callbacks are executed in the order that they are specified in
+    // this vector. By default, parameter blocks are updated only at
+    // the end of the optimization, i.e when the Minimizer
+    // terminates. This behaviour is controlled by
     // update_state_every_variable. If the user wishes to have access
     // to the update parameter blocks when his/her callbacks are
     // executed, then set update_state_every_iteration to true.

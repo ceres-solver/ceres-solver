@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,39 +27,52 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Implmentation of Levenberg Marquardt algorithm based on "Methods for
-// Nonlinear Least Squares" by K. Madsen, H.B. Nielsen and
-// O. Tingleff. Available to download from
-//
-// http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
-//
 
-#ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
-#define CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
+#ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
+#define CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 
-#include "ceres/minimizer.h"
-#include "ceres/solver.h"
+#include "ceres/linear_solver.h"
+#include "ceres/trust_region_strategy.h"
 
 namespace ceres {
 namespace internal {
 
-class Evaluator;
-class LinearSolver;
+// Levenberg-Marquardt step computation and trust region sizing
+// strategy based on on "Methods for Nonlinear Least Squares" by
+// K. Madsen, H.B. Nielsen and O. Tingleff. Available to download from
+//
+// http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
+class LevenbergMarquardtStrategy : public TrustRegionStrategy {
+public:
+  LevenbergMarquardtStrategy(const TrustRegionStrategy::Options& options);
+  virtual ~LevenbergMarquardtStrategy();
 
-class LevenbergMarquardt : public Minimizer {
- public:
-  virtual ~LevenbergMarquardt();
+  // TrustRegionStrategy interface
+  virtual LinearSolver::Summary ComputeStep(
+      const TrustRegionStrategy::PerSolveOptions& per_solve_options,
+      SparseMatrix* jacobian,
+      const double* residuals,
+      double* step);
+  virtual void StepAccepted(double step_quality);
+  virtual void StepRejected(double step_quality);
+  virtual double Radius() const;
 
-  virtual void Minimize(const Minimizer::Options& options,
-                        Evaluator* evaluator,
-                        LinearSolver* linear_solver,
-                        const double* initial_parameters,
-                        double* final_parameters,
-                        Solver::Summary* summary);
+ private:
+  LinearSolver* linear_solver_;
+  double radius_;
+  double max_radius_;
+  const double min_diagonal_;
+  const double max_diagonal_;
+  double decrease_factor_;
+  bool reuse_diagonal_;
+  Vector diagonal_;   // diagonal_ =  diag(J'J)
+  // Scaled copy of diagonal_. Stored here as optimization to prevent
+  // allocations in every iteration and reuse when a step fails and
+  // ComputeStep is called again.
+  Vector lm_diagonal_;  // lm_diagonal_ = diagonal_ / radius_;
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
+#endif  // CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
