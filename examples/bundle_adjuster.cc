@@ -72,7 +72,6 @@ DEFINE_string(solver_type, "sparse_schur", "Options are: "
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal");
-
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
@@ -197,13 +196,14 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->minimizer_progress_to_stdout = true;
   options->num_threads = FLAGS_num_threads;
   options->eta = FLAGS_eta;
+  options->trust_region_strategy_type = LEVENBERG_MARQUARDT;
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
                                Solver::Options* options) {
+  SetMinimizerOptions(options);
   SetLinearSolver(options);
   SetOrdering(bal_problem, options);
-  SetMinimizerOptions(options);
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {

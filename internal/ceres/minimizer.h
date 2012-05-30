@@ -40,6 +40,8 @@ namespace internal {
 
 class Evaluator;
 class LinearSolver;
+class SparseMatrix;
+class TrustRegionStrategy;
 
 // Interface for non-linear least squares solvers.
 class Minimizer {
@@ -48,55 +50,72 @@ class Minimizer {
   // see solver.h for detailed information about the meaning and
   // default values of each of these parameters.
   struct Options {
+    Options() {
+      Init(Solver::Options());
+    }
+
     explicit Options(const Solver::Options& options) {
+      Init(options);
+    }
+
+    void Init(const Solver::Options& options) {
       max_num_iterations = options.max_num_iterations;
       max_solver_time_sec = options.max_solver_time_sec;
+      max_step_solver_retries = 5;
       gradient_tolerance = options.gradient_tolerance;
       parameter_tolerance = options.parameter_tolerance;
       function_tolerance = options.function_tolerance;
       min_relative_decrease = options.min_relative_decrease;
       eta = options.eta;
-      tau = options.tau;
-      min_mu = options.min_mu;
       jacobi_scaling = options.jacobi_scaling;
-      crash_and_dump_lsqp_on_failure = options.crash_and_dump_lsqp_on_failure;
       lsqp_dump_directory = options.lsqp_dump_directory;
       lsqp_iterations_to_dump = options.lsqp_iterations_to_dump;
       lsqp_dump_format_type = options.lsqp_dump_format_type;
       num_eliminate_blocks = options.num_eliminate_blocks;
-      logging_type = options.logging_type;
+      max_num_consecutive_invalid_steps =
+          options.max_num_consecutive_invalid_steps;
+      min_trust_region_radius = options.min_trust_region_radius;
+      evaluator = NULL;
+      trust_region_strategy = NULL;
+      jacobian = NULL;
     }
 
     int max_num_iterations;
     int max_solver_time_sec;
+
+    // Number of times the linear solver should be retried in case of
+    // numerical failure. The retries are done by exponentially scaling up
+    // mu at each retry. This leads to stronger and stronger
+    // regularization making the linear least squares problem better
+    // conditioned at each retry.
+    int max_step_solver_retries;
     double gradient_tolerance;
     double parameter_tolerance;
     double function_tolerance;
     double min_relative_decrease;
     double eta;
-    double tau;
-    double min_mu;
     bool jacobi_scaling;
-    bool crash_and_dump_lsqp_on_failure;
     vector<int> lsqp_iterations_to_dump;
     DumpFormatType lsqp_dump_format_type;
     string lsqp_dump_directory;
     int num_eliminate_blocks;
-    LoggingType logging_type;
+    int max_num_consecutive_invalid_steps;
+    int min_trust_region_radius;
 
     // List of callbacks that are executed by the Minimizer at the end
     // of each iteration.
     //
     // Client owns these pointers.
     vector<IterationCallback*> callbacks;
+
+    Evaluator* evaluator;
+    TrustRegionStrategy* trust_region_strategy;
+    SparseMatrix* jacobian;
   };
 
   virtual ~Minimizer() {}
   virtual void Minimize(const Options& options,
-                        Evaluator* evaluator,
-                        LinearSolver* linear_solver,
-                        const double* initial_parameters,
-                        double* final_parameters,
+                        double* parameters,
                         Solver::Summary* summary) = 0;
 };
 

@@ -32,7 +32,6 @@
 #include "ceres/solver.h"
 
 #include <vector>
-#include "ceres/levenberg_marquardt.h"
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"

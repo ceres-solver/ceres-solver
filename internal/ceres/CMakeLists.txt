@@ -53,7 +53,7 @@ SET(CERES_INTERNAL_SRC
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
-    levenberg_marquardt.cc
+    levenberg_marquardt_strategy.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
@@ -78,6 +78,8 @@ SET(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    trust_region_minimizer.cc
+    trust_region_strategy.cc
     triplet_sparse_matrix.cc
     types.cc
     visibility_based_preconditioner.cc
@@ -176,7 +178,7 @@ IF (${BUILD_TESTING})
   CERES_TEST(implicit_schur_complement)
   CERES_TEST(iterative_schur_complement_solver)
   CERES_TEST(jet)
-  CERES_TEST(levenberg_marquardt)
+  CERES_TEST(levenberg_marquardt_strategy)
   CERES_TEST(local_parameterization)
   CERES_TEST(loss_function)
   CERES_TEST(normal_prior)
@@ -196,6 +198,7 @@ IF (${BUILD_TESTING})
   CERES_TEST(solver_impl)
   CERES_TEST(symmetric_linear_solver)
   CERES_TEST(triplet_sparse_matrix)
+  CERES_TEST(trust_region_minimizer)
   CERES_TEST(unsymmetric_linear_solver)
   CERES_TEST(visibility)
   IF (GFLAGS)

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,39 +27,42 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Implmentation of Levenberg Marquardt algorithm based on "Methods for
-// Nonlinear Least Squares" by K. Madsen, H.B. Nielsen and
-// O. Tingleff. Available to download from
-//
-// http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
-//
 
-#ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
-#define CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
+#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-class Evaluator;
-class LinearSolver;
-
-class LevenbergMarquardt : public Minimizer {
+// Generic trust region minimization algorithm. The heavy lifting is
+// done by a TrustRegionStrategy object passed in as one of the
+// arguments to the Minimize method.
+//
+// For example usage, see SolverImpl::Minimize.
+class TrustRegionMinimizer : public Minimizer {
  public:
-  virtual ~LevenbergMarquardt();
-
+  ~TrustRegionMinimizer() {}
   virtual void Minimize(const Minimizer::Options& options,
-                        Evaluator* evaluator,
-                        LinearSolver* linear_solver,
-                        const double* initial_parameters,
-                        double* final_parameters,
+                        double* parameters,
                         Solver::Summary* summary);
+
+ private:
+  void Init(const Minimizer::Options& options);
+  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
+  CallbackReturnType RunCallbacks(const Minimizer::Options& options,
+                                  const IterationSummary& iteration_summary);
+  bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
+                                           const SparseMatrix* jacobian,
+                                           const double* residuals,
+                                           const double* step) const;
+
+  Minimizer::Options options_;
 };
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_LEVENBERG_MARQUARDT_H_
+#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_

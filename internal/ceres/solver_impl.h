@@ -92,8 +92,7 @@ class SolverImpl {
                        Program* program,
                        Evaluator* evaluator,
                        LinearSolver* linear_solver,
-                       double* initial_parameters,
-                       double* final_parameters,
+                       double* parameters,
                        Solver::Summary* summary);
 
   // Remove the fixed or unused parameter blocks and residuals

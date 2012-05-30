@@ -158,8 +158,8 @@ enum LoggingType {
   PER_MINIMIZER_ITERATION
 };
 
-enum MinimizerType {
-  LEVENBERG_MARQUARDT
+enum TrustRegionStrategyType {
+  LEVENBERG_MARQUARDT,
 };
 
 enum SolverTerminationType {
