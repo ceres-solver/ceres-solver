@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGC3////s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-30T16:25:34Z",
+      "side": 1,
+      "message": "Is this really true? I am unconvinced.",
+      "revId": "f2e990819f61fa8ff0adf4decc4a8dfd1d533da4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGC3////o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-30T16:25:34Z",
+      "side": 1,
+      "message": "What confuses me is that this seemed to work before. How did you test the new version of the CMake? Which combinations did you try?",
+      "revId": "f2e990819f61fa8ff0adf4decc4a8dfd1d533da4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGC3////k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-30T16:25:34Z",
+      "side": 1,
+      "message": "At least",
+      "revId": "f2e990819f61fa8ff0adf4decc4a8dfd1d533da4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGC3////Y\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-30T16:25:34Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct. This should be a conjunction of SUITESPARSE and SUITESPARSE_FOUND.\n\nUpon further inspection, I see that this is correct. Maybe in another CL, this should get reversed such that SUITESPARSE_FOUND is only an intermediate used to toggle SUITESPARSE to true/false.",
+      "revId": "f2e990819f61fa8ff0adf4decc4a8dfd1d533da4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGC3////U\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-30T16:25:34Z",
+      "side": 1,
+      "message": "Same as above; should be CXSPARSE \u0026\u0026 CXSPASRE_FOUND",
+      "revId": "f2e990819f61fa8ff0adf4decc4a8dfd1d533da4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
