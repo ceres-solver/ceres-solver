@@ -40,6 +40,9 @@ TARGET_LINK_LIBRARIES(quadratic_numeric_diff ceres)
 ADD_EXECUTABLE(powell powell.cc)
 TARGET_LINK_LIBRARIES(powell ceres)
 
+ADD_EXECUTABLE(data_fitting data_fitting.cc)
+TARGET_LINK_LIBRARIES(data_fitting ceres)
+
 IF (GFLAGS)
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
   TARGET_LINK_LIBRARIES(circle_fit ceres)
