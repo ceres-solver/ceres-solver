@@ -1,14 +1,14 @@
 %!TEX root = ceres.tex
 \chapter{Building Ceres}
 \label{chapter:build}
-Ceres source code and documentation is hosted at
+Ceres source code and documentation are hosted at
 \url{http://code.google.com/p/ceres-solver/}.
 
 \section{Dependencies}
-Ceres relies on a number of open source libraries, some of which are optional. However, we recommend that you start out by building Ceres with all its dependencies. For details on customizing the build process, please see Section~\ref{sec:custom}.
+Ceres relies on a number of open source libraries, some of which are optional. For details on customizing the build process, please see Section~\ref{sec:custom}.
 
 \begin{enumerate}
-\item{\cmake~\footnote{\url{http://www.cmake.org/}}} is the cross-platform build system used by Ceres.
+\item{\cmake~\footnote{\url{http://www.cmake.org/}}} is the cross-platform build system used by Ceres. We require that you have a relative recent install of \texttt{cmake} (version 2.8.0 or better).
 \item{\eigen~\footnote{\url{http://eigen.tuxfamily.org}}} is used for doing all the low level matrix and
   linear algebra operations.
 
@@ -17,11 +17,15 @@ Ceres relies on a number of open source libraries, some of which are optional. H
  Note: Ceres requires \texttt{glog}\ version 0.3.1 or later. Version 0.3 (which ships with Fedora 16) has a namespace bug which prevents Ceres from building.
 
 \item{\gflags~\footnote{\url{http://code.google.com/p/gflags}}} is used by the code in
-  \texttt{examples}. It is also used by some of the tests. Strictly speaking it is not required to build the core library, we do not recommend building Ceres without it.
+  \texttt{examples}. It is also used by some of the tests. Strictly speaking it is not required to build the core library, \textbf{ we do not recommend building Ceres without \texttt{gflags}}.
+
 \item{\suitesparse~\footnote{\url{http://www.cise.ufl.edu/research/sparse/SuiteSparse/}}} is used for sparse matrix analysis,
   ordering and factorization. In particular Ceres uses the
   \amd, \colamd\ and \cholmod\ libraries. This is an optional
   dependency.
+
+\item{\texttt{CXSparse}~\footnote{\url{http://www.cise.ufl.edu/research/sparse/CXSparse/}}} is used for sparse matrix analysis, ordering and factorization. While it is similar to \texttt{SuiteSparse} in scope, its performance is a bit worse but is a much simpler library to build and does not have any other dependencies. This is an optional dependency.
+
 \item{\blas\ and \lapack} are needed by
   \suitesparse.  We
   recommend either
@@ -29,6 +33,7 @@ Ceres relies on a number of open source libraries, some of which are optional. H
   or
   \texttt{ATLAS}~\footnote{\url{http://math-atlas.sourceforge.net/}},
     both of which ship with \blas\ and \lapack\ routines.
+
 \item{\texttt{protobuf}~\footnote{\url{http://code.google.com/p/protobuf/}}} is an optional dependency that is used for serializing and deserializing linear least squares problems to disk. This is useful for debugging and testing. Without it, some of the tests will be disabled.
 \end{enumerate}
 
@@ -69,11 +74,11 @@ sudo make install
 sudo apt-get install libeigen3-dev
 \end{minted}
 
-\item{\suitesparse}
+\item{\suitesparse\ and \texttt{CXSparse}}
 \begin{minted}{bash}
 sudo apt-get install libsuitesparse-dev
 \end{minted}
-This should automatically bring in the necessary \blas\ and \lapack\ dependencies.
+This should automatically bring in the necessary \blas\ and \lapack\ dependencies. By co-incidence on Ubuntu, this also installs \texttt{CXSparse}.
 
 \item{\texttt{protobuf}}
 \begin{minted}{bash}
@@ -161,7 +166,7 @@ brew install glog
 \begin{minted}{bash}
 brew install eigen
 \end{minted}
-\item{\suitesparse}
+\item{\suitesparse\ and \texttt{CXSparse}}
 \begin{minted}{bash}
 brew install suite-sparse
 \end{minted}
@@ -198,7 +203,7 @@ Protocol Buffers is a big dependency and if you do not care for the tests that d
 
 \item{\suitesparse}
 
-By default, Ceres will only link to SuiteSparse if all its dependencies are present.
+By default, Ceres will only link to \texttt{SuiteSparse}\  if all its dependencies are present.
 To build Ceres without \suitesparse\ use
 \begin{minted}{bash}
 -DSUITESPARSE=OFF.
@@ -207,8 +212,18 @@ To build Ceres without \suitesparse\ use
 to large scale problems due to the lack of a sparse Cholesky solver.  This will reduce Ceres' dependencies down to
 \eigen, \gflags\ and \glog.
 
-\item{\gflags}
+\item{\texttt{CXSparse}}
 
+By default, Ceres will only link to \texttt{CXSparse} if all its dependencies are present.
+To build Ceres without \suitesparse\ use
+\begin{minted}{bash}
+-DCXSPARSE=OFF.
+\end{minted}
+
+This saves on binary size, but the resulting version of Ceres is not suited to large scale problems due to the lack of a sparse Cholesky solver.  This will reduce Ceres' dependencies down to
+\eigen, \gflags\ and \glog.
+
+\item{\gflags}
 To build Ceres without \gflags, use
 \begin{minted}{bash}
 -DGFLAGS=OFF.

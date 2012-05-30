@@ -1,22 +1,12 @@
 %!TEX root = ceres.tex
-\chapter{API Reference}
+\chapter{Modeling}
 \label{chapter:api}
-Ceres solves robustified non-linear least squares problems of the form 
-\begin{equation}
-	\frac{1}{2}\sum_{i=1}^{k} \rho_i\left(\left\|f_i\left(x_{i_1},\hdots,x_{k_i}\right)\right\|^2\right).
-	\label{eq:ceresproblem}
-\end{equation}
-Where $f_i()$ is a  cost function that depends on the parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$ and  $\rho_i$ is a loss function. In most optimization problems small groups of scalars occur together. For example the three components of a translation vector and the four components of the quaternion that define the pose of a camera. We refer to such a group of small scalars as a {\em Parameter Block}. Of course a parameter block can just have a single parameter. 
-The term $ \rho_i\left(\left\|f_i\left(x_{i_1},\hdots,x_{k_i}\right)\right\|^2\right)$ is known as a residual block. A Ceres problem is a collection of residual blocks, each of which depends on a subset of the parameter blocks.
-
-
 \section{\texttt{CostFunction}}
 Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a \texttt{CostFunction} is responsible for computing 
-a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{k_i}\right)$ and the matrices 
+a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{k_i}\right)$ and the matrices 
 \begin{equation}
 J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},\hdots,x_{k_i}\right),\quad \forall j = i_1,\hdots, i_k
 \end{equation}
-
 \begin{minted}{c++}
 class CostFunction {
  public:
@@ -46,10 +36,12 @@ The most important method here is \texttt{Evaluate}. It implements the residual 
 \texttt{residuals} is an array of size \texttt{num\_residuals\_}. 
 
 
-\texttt{jacobians} is an array of size \texttt{parameter\_block\_sizes\_} containing pointers to storage for Jacobian matrices corresponding to each parameter block. Jacobian matrices are in the same order as \texttt{parameter\_block\_sizes\_}, i.e., \texttt{jacobians[i]}, is an array that contains \texttt{num\_residuals\_} * \texttt{parameter\_block\_sizes\_[i]} elements. Each Jacobian matrix is stored in row-major order, i.e.,
+\texttt{jacobians} is an array of size \texttt{parameter\_block\_sizes\_} containing pointers to storage for Jacobian matrices corresponding to each parameter block. The Jacobian matrices are in the same order as \texttt{parameter\_block\_sizes\_}. \texttt{jacobians[i]} is an array that contains \texttt{num\_residuals\_} $\times$ \texttt{parameter\_block\_sizes\_[i]} elements. Each Jacobian matrix is stored in row-major order, i.e., 
  
 \begin{equation}
-\texttt{jacobians[i][r*parameter\_block\_size\_[i] + c]} = \frac{\partial \texttt{residual[r]}}{\partial \texttt{parameters[i][c]}}
+\texttt{jacobians[i][r * parameter\_block\_size\_[i] + c]} =
+%\frac{\partial}{\partial x_{ic}}  f_{r}\left(x_{1},\hdots, x_{k}\right)
+\frac{\partial \texttt{residual[r]}}{\partial \texttt{parameters[i][c]}}
 \end{equation}
 
 If \texttt{jacobians} is \texttt{NULL}, then no derivatives are returned; this is the case when computing cost only. If \texttt{jacobians[i]} is \texttt{NULL}, then the Jacobian matrix corresponding to the $i^{\textrm{th}}$ parameter block must not be returned, this is the case when the a parameter block is marked constant.
@@ -145,6 +137,9 @@ In the instantiation above, the template parameters following
  instead of passing a dimension parameter for {\em every parameter block}. In the
  example above, that would be \texttt{<MyScalarCostFunction, 1, 2>}, which is missing
  the 2 as the last template argument. 
+
+\subsection{Theory \& Implementation}
+TBD
 
 \section{\texttt{NumericDiffCostFunction}}
 To get a numerically differentiated cost function, define a subclass of
@@ -257,6 +252,9 @@ Here are some common loss functions implemented in Ceres. For simplicity we desc
 		\rho(s) &= \log(1 + s) \tag{\texttt{CauchyLoss}}
 \end{align}
 
+\subsection{Theory \& Implementation}
+TBD
+
 \section{\texttt{LocalParameterization}}
 Sometimes the parameters $x$ can overparameterize a problem. In
 that case it is desirable to choose a parameterization to remove
@@ -344,6 +342,8 @@ dimensional vector and define $\boxplus$ to be
 \end{equation}
 The multiplication between the two 4-vectors on the right hand
 side is the standard quaternion product. \texttt{QuaternionParameterization} is an implementation of~\eqref{eq:quaternion}.
+
+\clearpage
 
 \section{\texttt{Problem}}
 \begin{minted}{c++}
@@ -446,195 +446,3 @@ In fact you can set any number of parameter blocks to be constant, and Ceres is 
   keep control over the destruction of these objects, then they can
   do this by setting the corresponding enums in the \texttt{Options} struct. Even though \texttt{Problem} takes ownership of these pointers,  it does not preclude the user from re-using them in another residual or parameter block. The destructor takes care to call
   delete on each  pointer only once.
-
-\section{\texttt{Solver::Options}}
-\texttt{Solver::Options} controls the overall behavior of the solver. We list the various settings and their default values below.
-
-\begin{enumerate}
-\item{\texttt{minimizer\_type}}(\texttt{LEVENBERG\_MARQUARDT}) The  minimization algorithm used by Ceres. \texttt{LEVENBERG\_MARQUARDT} is currently the only valid value.
-
-\item{\texttt{max\_num\_iterations}}(\texttt{50}) Maximum number of iterations for Levenberg-Marquardt.
-
-\item{\texttt{max\_solver\_time\_sec}}(\texttt{1e9}) Maximum amount of time (in seconds) for which the solver should run.
-
-\item{\texttt{num\_threads}}(\texttt{1})
-Number of threads used by Ceres to evaluate the Jacobian.
-
-\item{\texttt{tau}}(\texttt{1e-4}) Initial value of the regularization parameter $\mu$ used by the Levenberg-Marquardt algorithm. The size of this parameter indicate the user's guess of how far the initial solution is from the minimum. Large values indicates that the solution is far away.
-
-\item{\texttt{min\_mu}(\texttt{1e-20})} For Levenberg-Marquardt, the minimum value of the
-     regularizer. For well constrained problems there shold be no
-     need to modify the default value, but in some cases, going
-     below a certain minimum reliably triggers rank deficiency in
-     the normal equations. In such cases, the Levenberg-Marquardt algorithm can
-     oscillate between lowering the value of mu, seeing a numerical
-     failure, and then increasing it making some progress and then
-     reducing it again.
-    
-     In such cases, it is useful to set a higher value for \texttt{min\_mu}.
-\item{\texttt{min\_relative\_decrease}}(\texttt{1e-3}) Lower threshold for relative decrease before a Levenberg-Marquardt step is acceped.
-
-
-\item{\texttt{function\_tolerance}}(\texttt{1e-6}) Solver terminates if
-\begin{align}
-\frac{|\Delta \text{cost}|}{\text{cost}} < \texttt{function\_tolerance}
-\end{align}
-where, $\Delta \text{cost}$ is the change in objective function value (up or down) in the current iteration of Levenberg-Marquardt.
-
-\item \texttt{Solver::Options::gradient\_tolerance} Solver terminates if 
-\begin{equation}
-    \frac{\|g(x)\|_\infty}{\|g(x_0)\|_\infty} < \texttt{gradient\_tolerance}
-\end{equation}
-where $\|\cdot\|_\infty$ refers to the max norm, and $x_0$ is the vector of initial parameter values.
-
-\item{\texttt{parameter\_tolerance}}(\texttt{1e-8}) Solver terminates if 
-\begin{equation}
-	\frac{\|\Delta x\|}{\|x\| + \texttt{parameter\_tolerance}} < \texttt{parameter\_tolerance}
-\end{equation}
-where $\Delta x$ is the step computed by the linear solver in the current iteration of Levenberg-Marquardt.
-
-\item{\texttt{linear\_solver\_type}}(\texttt{SPARSE\_NORMAL\_CHOLESKY}/\texttt{DENSE\_QR}) Type of linear solver used to compute the solution to the linear least squares problem in each iteration of the Levenberg-Marquardt algorithm. If Ceres is build with \suitesparse linked in  then the default is \texttt{SPARSE\_NORMAL\_CHOLESKY}, it is \texttt{DENSE\_QR} otherwise.
-
-\item{\texttt{preconditioner\_type}}(\texttt{JACOBI}) The preconditioner used by the iterative linear solver. The default is the block Jacobi preconditioner. Valid values are (in increasing order of complexity) \texttt{IDENTITY},\texttt{JACOBI}, \texttt{SCHUR\_JACOBI}, \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}.
-
-\item{\texttt{num\_linear\_solver\_threads}}(\texttt{1}) Number of threads used by the linear solver. 
-
-\item{\texttt{num\_eliminate\_blocks}}(\texttt{0}) 
-For Schur reduction based methods, the first 0 to num blocks are
-    eliminated using the Schur reduction. For example, when solving
-     traditional structure from motion problems where the parameters are in
-     two classes (cameras and points) then \texttt{num\_eliminate\_blocks} would be the
-     number of points.
-
-\item{\texttt{ordering\_type}}(\texttt{NATURAL})
- Internally Ceres reorders the parameter blocks to help the
- various linear solvers. This parameter allows the user to
-     influence the re-ordering strategy used. For structure from
-     motion problems use \texttt{SCHUR}, for other problems \texttt{NATURAL} (default)
-     is a good choice. In case you wish to specify your own ordering
-     scheme, for example in conjunction with \texttt{num\_eliminate\_blocks},
-     use \texttt{USER}.
-
-\item{\texttt{ordering}} The ordering of the parameter blocks. The solver pays attention
-    to it if the \texttt{ordering\_type} is set to \texttt{USER} and the ordering vector is
-    non-empty.
-
-
-\item{\texttt{linear\_solver\_min\_num\_iterations}}(\texttt{1}) Minimum number of iterations used by the linear solver. This only makes sense when the linear solver is an iterative solver, e.g., \texttt{ITERATIVE\_SCHUR}.
-
-\item{\texttt{linear\_solver\_max\_num\_iterations}}(\texttt{500}) Minimum number of iterations used by the linear solver. This only makes sense when the linear solver is an iterative solver, e.g., \texttt{ITERATIVE\_SCHUR}.
-
-\item{\texttt{eta}}(\texttt{1e-1})
- Forcing sequence parameter. The truncated Newton solver uses
-    this number to control the relative accuracy with which the
-     Newton step is computed. This constant is passed to ConjugateGradientsSolver which uses
-     it to terminate the iterations when
-\begin{equation}    
-      \frac{Q_i - Q_{i-1}}{Q_i} < \frac{\eta}{i}
-\end{equation}
-
-\item{\texttt{jacobi\_scaling}}(\texttt{true}) \texttt{true} means that the Jacobian is scaled by the norm of its columns before being passed to the linear solver. This improves the numerical conditioning of the normal equations.
-
-\item{\texttt{logging\_type}}(\texttt{PER\_MINIMIZER\_ITERATION})
-
-
-\item{\texttt{minimizer\_progress\_to\_stdout}}(\texttt{false})
-By default the Minimizer progress is logged to \texttt{STDERR} depending on the \texttt{vlog} level. If this flag is
-set to true, and \texttt{logging\_type} is not \texttt{SILENT}, the logging output
-is sent to \texttt{STDOUT}.
-
-\item{\texttt{return\_initial\_residuals}}(\texttt{false})
-\item{\texttt{return\_final\_residuals}}(\texttt{false})
-
-
-\item{\texttt{lsqp\_iterations\_to\_dump}}
- List of iterations at which the optimizer should dump the
-     linear least squares problem to disk. Useful for testing and
-     benchmarking. If empty (default), no problems are dumped.
-
-\item{\texttt{lsqp\_dump\_directory}} (\texttt{/tmp})
- If \texttt{lsqp\_iterations\_to\_dump} is non-empty, then this setting determines the directory to which the files containing the linear least squares problems are written to.
-
-
-\item{\texttt{lsqp\_dump\_format}}{\texttt{TEXTFILE}} The format in which linear least squares problems should be logged
-when \texttt{lsqp\_iterations\_to\_dump} is non-empty.  There are three options
-\begin{itemize}
-\item{\texttt{CONSOLE}} prints the linear least squares problem in a human readable format
-  to \texttt{stderr}. The Jacobian is printed as a dense matrix. The vectors
-   $D$, $x$ and $f$ are printed as dense vectors. This should only be used
-   for small problems.
-\item{\texttt{PROTOBUF}}  
-   Write out the linear least squares problem to the directory
-   pointed to by \texttt{lsqp\_dump\_directory} as a protocol
-   buffer. \texttt{linear\_least\_squares\_problems.h/cc} contains routines for
-   loading these problems. For details on the on disk format used,
-   see \texttt{matrix.proto}. The files are named \texttt{lm\_iteration\_???.lsqp}. This requires that \texttt{protobuf} be linked into Ceres Solver.
-\item{\texttt{TEXTFILE}}
-   Write out the linear least squares problem to the directory
-   pointed to by \texttt{lsqp\_dump\_directory} as text files
-   which can be read into \texttt{MATLAB/Octave}. The Jacobian is dumped as a
-   text file containing $(i,j,s)$ triplets, the vectors $D$, $x$ and $f$ are
-   dumped as text files containing a list of their values.
-  
-   A \texttt{MATLAB/Octave} script called \texttt{lm\_iteration\_???.m} is also output,
-   which can be used to parse and load the problem into memory.
-\end{itemize}
-
-
-\item{\texttt{crash\_and\_dump\_lsqp\_on\_failure}}(\texttt{false})
- Dump the linear least squares problem to disk if the minimizer
-     fails due to \texttt{NUMERICAL\_FAILURE} and crash the process. This flag
-     is useful for generating debugging information. The problem is
-     dumped in a file whose name is determined by
-   \texttt{lsqp\_dump\_format}. Note that this requires a version of Ceres built with protocol buffers.
-
-\item{\texttt{check\_gradients}}(\texttt{false})
- Check all Jacobians computed by each residual block with finite
-     differences. This is expensive since it involves computing the
-     derivative by normal means (e.g. user specified, autodiff,
-     etc), then also computing it using finite differences. The
-     results are compared, and if they differ substantially, details
-     are printed to the log.
-
-\item{\texttt{gradient\_check\_relative\_precision}}(\texttt{1e-8})
-  Relative precision to check for in the gradient checker. If the
-  relative difference between an element in a Jacobian exceeds
-  this number, then the Jacobian for that cost term is dumped.
-
-\item{\texttt{numeric\_derivative\_relative\_step\_size}}(\texttt{1e-6})
- Relative shift used for taking numeric derivatives. For finite
-     differencing, each dimension is evaluated at slightly shifted
-     values, \eg for forward differences, the numerical derivative is
-  
-\begin{align}
-       \delta &= \texttt{numeric\_derivative\_relative\_step\_size}\\
-       \Delta f &= \frac{f((1 + \delta)  x) - f(x)}{\delta x}
-\end{align} 
-
-
-     The finite differencing is done along each dimension. The
-     reason to use a relative (rather than absolute) step size is
-     that this way, numeric differentiation works for functions where
-     the arguments are typically large (e.g. 1e9) and when the
-     values are small (e.g. 1e-5). It is possible to construct
-     "torture cases" which break this finite difference heuristic,
-     but they do not come up often in practice.
-
-\item{\texttt{callbacks}} 
-  Callbacks that are executed at the end of each iteration of the
-     \texttt{Minimizer}. They are executed in the order that they are
-     specified in this vector. By default, parameter blocks are
-     updated only at the end of the optimization, i.e when the
-     \texttt{Minimizer} terminates. This behavior is controlled by
-     \texttt{update\_state\_every\_variable}. If the user wishes to have access
-     to the update parameter blocks when his/her callbacks are
-     executed, then set \texttt{update\_state\_every\_iteration} to true.
-    
-     The solver does NOT take ownership of these pointers.
-
-\item{\texttt{update\_state\_every\_iteration}}(\texttt{false})
-Normally the parameter blocks are only updated when the solver terminates. Setting this to true update them in every iteration. This setting is useful when building an interactive application using Ceres and using an \texttt{IterationCallback}.
-\end{enumerate}
-
-\section{\texttt{Solver::Summary}}
-TBD
