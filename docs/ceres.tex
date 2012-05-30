@@ -10,11 +10,11 @@
 \usepackage[breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
 % page dimensions
-\addtolength{\textwidth}{1in}
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\spinemargin}{-0.5in}
-\addtolength{\foremargin}{-0.5in}
+\addtolength{\textwidth}{1.5in}
+\addtolength{\oddsidemargin}{-0.75in}
+\addtolength{\evensidemargin}{-0.75in}
+\addtolength{\spinemargin}{-0.75in}
+\addtolength{\foremargin}{-0.75in}
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{0.12in}
 
@@ -61,7 +61,7 @@
 \MakeLowercase{Ceres Solver:  Tutorial \& Reference}
 }
 \author{
-\scshape\MakeLowercase{Sameer Agarwal} \\  \texttt{sameeragarwal@google.com} 
+\scshape\MakeLowercase{Sameer Agarwal} \\ \texttt{sameeragarwal@google.com} 
 \and 
 \scshape\MakeLowercase{Keir Mierle} \\  \texttt{ keir@google.com}
 }
@@ -87,28 +87,41 @@
 \newcommand{\iterativeschur}{\texttt{ITERATIVE\_SCHUR}}
 \newcommand{\cmake}{\texttt{cmake}}
 \newcommand{\protobuf}{\texttt{protobuf}}
-
+\settocdepth{chapter}
 
 \begin{document}
 \chapterstyle{ceres}
-\newcomment{Question}
-\newcomment{Answer}
 \maketitle
 \thispagestyle{empty}
 \newpage
 \pagestyle{ceres}
 \tableofcontents
 \newpage
-\chapter{A Note About This Document}
+
+\chapter{A Note to the Reader}
 Building this pdf from source requires a relatively recent installation of \texttt{LaTeX}~\footnote{\url{http://www.tug.org/texlive/}}, \texttt{minted.sty}\footnote{\url{http://code.google.com/p/minted/}} and \texttt{pygments}\footnote{\url{http://pygments.org/}}.
 
-This document is incomplete and we are working to fix this. In the meanwhile please refer to the source code.
+Despite our best efforts, this manual remains a work in progress and the source code for Ceres Solver remains the ultimate reference.
 
 \input{introduction}
 \input{build}
-\input{tutorial}
-\input{api}
-\input{theory}
+
+%% Tutorial
+\part{Tutorial}
+\label{part:tutorial}
+\input{nnlsq}
+\input{helloworld}
+\input{powell}
+\input{curvefitting}
+\input{bundleadjustment}
+
+%% Reference
+\part{Reference}
+\label{part:reference}
+\input{reference-overview}
+\input{modeling}
+\input{solving}
+
 \input{faq}
 \input{further}
 \bibliographystyle{plain}
