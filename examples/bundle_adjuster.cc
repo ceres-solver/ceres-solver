@@ -64,15 +64,12 @@
 #include "ceres/ceres.h"
 
 DEFINE_string(input, "", "Input File name");
-
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, cholesky, "
               "dense_qr, and conjugate_gradients");
-
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal");
-
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
@@ -201,9 +198,9 @@ void SetMinimizerOptions(Solver::Options* options) {
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
                                Solver::Options* options) {
+  SetMinimizerOptions(options);
   SetLinearSolver(options);
   SetOrdering(bal_problem, options);
-  SetMinimizerOptions(options);
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {

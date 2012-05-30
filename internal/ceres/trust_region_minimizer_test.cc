@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,19 +27,21 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: keir@google.com (Keir Mierle)
+//         sameeragarwal@google.com (Sameer Agarwal)
 //
-// This tests the Levenberg-Marquardt loop using a direct Evaluator
-// implementation, rather than having a test that goes through all the Program
-// and Problem machinery.
+// This tests the TrustRegionMinimizer loop using a direct Evaluator
+// implementation, rather than having a test that goes through all the
+// Program and Problem machinery.
 
 #include <cmath>
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/evaluator.h"
-#include "ceres/levenberg_marquardt.h"
+#include "ceres/internal/port.h"
+#include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
-#include "ceres/internal/port.h"
+#include "ceres/trust_region_minimizer.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -181,67 +183,74 @@ class PowellEvaluator2 : public Evaluator {
 // Templated function to hold a subset of the columns fixed and check
 // if the solver converges to the optimal values or not.
 template<bool col1, bool col2, bool col3, bool col4>
-void IsSolveSuccessful() {
-  LevenbergMarquardt lm;
+void IsLevenbergMarquardtSolveSuccessful() {
   Solver::Options solver_options;
+  LinearSolver::Options linear_solver_options;
+  DenseQRSolver linear_solver(linear_solver_options);
+
+  double parameters[4] = { 3, -1, 0, 1.0 };
+
+  // If the column is inactive, then set its value to the optimal
+  // value.
+  parameters[0] = (col1 ? parameters[0] : 0.0);
+  parameters[1] = (col2 ? parameters[1] : 0.0);
+  parameters[2] = (col3 ? parameters[2] : 0.0);
+  parameters[3] = (col4 ? parameters[3] : 0.0);
+
+  PowellEvaluator2<col1, col2, col3, col4> powell_evaluator;
+  scoped_ptr<SparseMatrix> jacobian(powell_evaluator.CreateJacobian());
+
   Minimizer::Options minimizer_options(solver_options);
   minimizer_options.gradient_tolerance = 1e-26;
   minimizer_options.function_tolerance = 1e-26;
   minimizer_options.parameter_tolerance = 1e-26;
-  LinearSolver::Options linear_solver_options;
-  DenseQRSolver linear_solver(linear_solver_options);
+  minimizer_options.evaluator = &powell_evaluator;
+  minimizer_options.jacobian = jacobian.get();
 
-  double initial_parameters[4] = { 3, -1, 0, 1.0 };
-  double final_parameters[4] = { -1.0, -1.0, -1.0, -1.0 };
+  TrustRegionStrategy::Options trust_region_strategy_options;
+  trust_region_strategy_options.linear_solver = &linear_solver;
+  trust_region_strategy_options.initial_radius = 1e4;
+  trust_region_strategy_options.max_radius = 1e20;
+  trust_region_strategy_options.lm_min_diagonal = 1e-6;
+  trust_region_strategy_options.lm_max_diagonal = 1e32;
+  scoped_ptr<TrustRegionStrategy> strategy(
+      TrustRegionStrategy::Create(trust_region_strategy_options));
+  minimizer_options.trust_region_strategy = strategy.get();
 
-  // If the column is inactive, then set its value to the optimal
-  // value.
-  initial_parameters[0] = (col1 ? initial_parameters[0] : 0.0);
-  initial_parameters[1] = (col2 ? initial_parameters[1] : 0.0);
-  initial_parameters[2] = (col3 ? initial_parameters[2] : 0.0);
-  initial_parameters[3] = (col4 ? initial_parameters[3] : 0.0);
-
-  PowellEvaluator2<col1, col2, col3, col4> powell_evaluator;
-
+  TrustRegionMinimizer minimizer;
   Solver::Summary summary;
-  lm.Minimize(minimizer_options,
-              &powell_evaluator,
-              &linear_solver,
-              initial_parameters,
-              final_parameters,
-              &summary);
+  minimizer.Minimize(minimizer_options, parameters, &summary);
 
   // The minimum is at x1 = x2 = x3 = x4 = 0.
-  EXPECT_NEAR(0.0, final_parameters[0], 0.001);
-  EXPECT_NEAR(0.0, final_parameters[1], 0.001);
-  EXPECT_NEAR(0.0, final_parameters[2], 0.001);
-  EXPECT_NEAR(0.0, final_parameters[3], 0.001);
+  EXPECT_NEAR(0.0, parameters[0], 0.001);
+  EXPECT_NEAR(0.0, parameters[1], 0.001);
+  EXPECT_NEAR(0.0, parameters[2], 0.001);
+  EXPECT_NEAR(0.0, parameters[3], 0.001);
 };
 
-TEST(LevenbergMarquardt, PowellsSingularFunction) {
+TEST(TrustRegionMinimizer, PowellsSingularFunction) {
   // This case is excluded because this has a local minimum and does
   // not find the optimum. This should not affect the correctness of
   // this test since we are testing all the other 14 combinations of
   // column activations.
+  //
+  //   IsSolveSuccessful<true, true, false, true>();
 
-  // IsSolveSuccessful<true, true, false, true>();
-
-  IsSolveSuccessful<true,  true,  true,  true>();
-  IsSolveSuccessful<true,  true,  true,  false>();
-  IsSolveSuccessful<true,  false, true,  true>();
-  IsSolveSuccessful<false, true,  true,  true>();
-  IsSolveSuccessful<true,  true,  false, false>();
-  IsSolveSuccessful<true,  false, true,  false>();
-  IsSolveSuccessful<false, true,  true,  false>();
-  IsSolveSuccessful<true,  false, false, true>();
-  IsSolveSuccessful<false, true,  false, true>();
-  IsSolveSuccessful<false, false, true,  true>();
-  IsSolveSuccessful<true,  false, false, false>();
-  IsSolveSuccessful<false, true,  false, false>();
-  IsSolveSuccessful<false, false, true,  false>();
-  IsSolveSuccessful<false, false, false, true>();
+  IsLevenbergMarquardtSolveSuccessful<true,  true,  true,  true>();
+  IsLevenbergMarquardtSolveSuccessful<true,  true,  true,  false>();
+  IsLevenbergMarquardtSolveSuccessful<true,  false, true,  true>();
+  IsLevenbergMarquardtSolveSuccessful<false, true,  true,  true>();
+  IsLevenbergMarquardtSolveSuccessful<true,  true,  false, false>();
+  IsLevenbergMarquardtSolveSuccessful<true,  false, true,  false>();
+  IsLevenbergMarquardtSolveSuccessful<false, true,  true,  false>();
+  IsLevenbergMarquardtSolveSuccessful<true,  false, false, true>();
+  IsLevenbergMarquardtSolveSuccessful<false, true,  false, true>();
+  IsLevenbergMarquardtSolveSuccessful<false, false, true,  true>();
+  IsLevenbergMarquardtSolveSuccessful<true,  false, false, false>();
+  IsLevenbergMarquardtSolveSuccessful<false, true,  false, false>();
+  IsLevenbergMarquardtSolveSuccessful<false, false, true,  false>();
+  IsLevenbergMarquardtSolveSuccessful<false, false, false, true>();
 }
-
 
 }  // namespace internal
 }  // namespace ceres

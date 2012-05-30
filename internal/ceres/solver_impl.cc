@@ -34,18 +34,19 @@
 #include <numeric>
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
-#include "ceres/levenberg_marquardt.h"
+#include "ceres/iteration_callback.h"
+#include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
 #include "ceres/parameter_block.h"
+#include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/schur_ordering.h"
 #include "ceres/stringprintf.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/problem.h"
+#include "ceres/trust_region_minimizer.h"
 
 namespace ceres {
 namespace internal {
@@ -104,7 +105,7 @@ class LoggingCallback : public IterationCallback {
                                  summary.gradient_max_norm,
                                  summary.step_norm,
                                  summary.relative_decrease,
-                                 summary.mu,
+                                 summary.trust_region_radius,
                                  summary.linear_solver_iterations);
     if (log_to_stdout_) {
       cout << output << endl;
@@ -124,32 +125,40 @@ void SolverImpl::Minimize(const Solver::Options& options,
                           Program* program,
                           Evaluator* evaluator,
                           LinearSolver* linear_solver,
-                          double* initial_parameters,
-                          double* final_parameters,
+                          double* parameters,
                           Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
-
   LoggingCallback logging_callback(options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.push_back(&logging_callback);
   }
 
-  StateUpdatingCallback updating_callback(program, final_parameters);
+  StateUpdatingCallback updating_callback(program, parameters);
   if (options.update_state_every_iteration) {
     minimizer_options.callbacks.push_back(&updating_callback);
   }
 
-  LevenbergMarquardt levenberg_marquardt;
+  minimizer_options.evaluator = evaluator;
+  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+  minimizer_options.jacobian = jacobian.get();
 
-  time_t start_minimizer_time_seconds = time(NULL);
-  levenberg_marquardt.Minimize(minimizer_options,
-                               evaluator,
-                               linear_solver,
-                               initial_parameters,
-                               final_parameters,
-                               summary);
-  summary->minimizer_time_in_seconds =
-      time(NULL) - start_minimizer_time_seconds;
+  TrustRegionStrategy::Options trust_region_strategy_options;
+  trust_region_strategy_options.linear_solver = linear_solver;
+  trust_region_strategy_options.initial_radius =
+      options.initial_trust_region_radius;
+  trust_region_strategy_options.max_radius = options.max_trust_region_radius;
+  trust_region_strategy_options.lm_min_diagonal = options.lm_min_diagonal;
+  trust_region_strategy_options.lm_max_diagonal = options.lm_max_diagonal;
+  trust_region_strategy_options.trust_region_strategy_type =
+      options.trust_region_strategy_type;
+  scoped_ptr<TrustRegionStrategy> strategy(
+      TrustRegionStrategy::Create(trust_region_strategy_options));
+  minimizer_options.trust_region_strategy = strategy.get();
+
+  TrustRegionMinimizer minimizer;
+  time_t minimizer_start_time = time(NULL);
+  minimizer.Minimize(minimizer_options, parameters, summary);
+  summary->minimizer_time_in_seconds = time(NULL) - minimizer_start_time;
 }
 
 void SolverImpl::Solve(const Solver::Options& original_options,
@@ -259,19 +268,17 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 
   // The optimizer works on contiguous parameter vectors; allocate some.
-  Vector initial_parameters(reduced_program->NumParameters());
-  Vector optimized_parameters(reduced_program->NumParameters());
+  Vector parameters(reduced_program->NumParameters());
 
   // Collect the discontiguous parameters into a contiguous state vector.
-  reduced_program->ParameterBlocksToStateVector(&initial_parameters[0]);
+  reduced_program->ParameterBlocksToStateVector(parameters.data());
 
   // Run the optimization.
   Minimize(options,
            reduced_program.get(),
            evaluator.get(),
            linear_solver.get(),
-           initial_parameters.data(),
-           optimized_parameters.data(),
+           parameters.data(),
            summary);
 
   // If the user aborted mid-optimization or the optimization
@@ -283,7 +290,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 
   // Push the contiguous optimized parameters back to the user's parameters.
-  reduced_program->StateVectorToParameterBlocks(&optimized_parameters[0]);
+  reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
 
   // Return the final cost and residuals for the original problem.
