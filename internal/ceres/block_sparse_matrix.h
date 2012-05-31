@@ -74,7 +74,7 @@ class BlockSparseMatrixBase : public SparseMatrix {
   virtual const double* RowBlockValues(int row_block_index) const = 0;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrixBase);
+  CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrixBase);
 };
 
 // This class implements the SparseMatrix interface for storing and
@@ -135,7 +135,7 @@ class BlockSparseMatrix : public BlockSparseMatrixBase {
   int num_nonzeros_;
   scoped_array<double> values_;
   scoped_ptr<CompressedRowBlockStructure> block_structure_;
-  DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
+  CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
 };
 
 }  // namespace internal

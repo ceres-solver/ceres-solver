@@ -90,7 +90,7 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
       double* x);
 
   const LinearSolver::Options options_;
-  DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
 };
 
 }  // namespace internal

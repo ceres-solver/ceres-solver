@@ -128,7 +128,7 @@ class SchurComplementSolver : public BlockSparseMatrixBaseSolver {
   scoped_ptr<BlockRandomAccessMatrix> lhs_;
   scoped_array<double> rhs_;
 
-  DISALLOW_COPY_AND_ASSIGN(SchurComplementSolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(SchurComplementSolver);
 };
 
 // Dense Cholesky factorization based solver.
@@ -142,7 +142,7 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
   virtual void InitStorage(const CompressedRowBlockStructure* bs);
   virtual bool SolveReducedLinearSystem(double* solution);
 
-  DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
 };
 
 
@@ -164,7 +164,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   // once and reused in subsequent calls.
   cholmod_factor* symbolic_factor_;
 #endif  // CERES_NO_SUITESPARSE
-  DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
 
 }  // namespace internal

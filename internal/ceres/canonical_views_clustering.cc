@@ -75,7 +75,7 @@ class CanonicalViewsClustering {
   IntMap view_to_canonical_view_;
   // Maps a view to its similarity to its current cluster center.
   HashMap<int, double> view_to_canonical_view_similarity_;
-  DISALLOW_COPY_AND_ASSIGN(CanonicalViewsClustering);
+  CERES_DISALLOW_COPY_AND_ASSIGN(CanonicalViewsClustering);
 };
 
 void ComputeCanonicalViewsClustering(
