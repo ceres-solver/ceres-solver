@@ -257,7 +257,7 @@ class Problem {
  private:
   friend class internal::SolverImpl;
   internal::scoped_ptr<internal::ProblemImpl> problem_impl_;
-  DISALLOW_COPY_AND_ASSIGN(Problem);
+  CERES_DISALLOW_COPY_AND_ASSIGN(Problem);
 };
 
 }  // namespace ceres

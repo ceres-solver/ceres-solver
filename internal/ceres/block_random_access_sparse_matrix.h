@@ -100,7 +100,7 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   // The underlying matrix object which actually stores the cells.
   scoped_ptr<TripletSparseMatrix> tsm_;
 
-  DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessSparseMatrix);
+  CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessSparseMatrix);
 };
 
 }  // namespace internal

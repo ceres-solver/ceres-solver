@@ -120,7 +120,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   int max_num_nonzeros_;
 
-  DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
+  CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };
 
 }  // namespace internal

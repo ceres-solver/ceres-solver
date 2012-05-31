@@ -244,7 +244,7 @@ class VisibilityBasedPreconditioner : public LinearOperator {
 
   // Temporary vector used by RightMultiply.
   cholmod_dense* tmp_rhs_;
-  DISALLOW_COPY_AND_ASSIGN(VisibilityBasedPreconditioner);
+  CERES_DISALLOW_COPY_AND_ASSIGN(VisibilityBasedPreconditioner);
 };
 #else  // SuiteSparse
 // If SuiteSparse is not compiled in, the preconditioner is not

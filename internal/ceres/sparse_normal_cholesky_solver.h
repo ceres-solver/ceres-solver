@@ -82,7 +82,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
 
   const LinearSolver::Options options_;
-  DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 
 }  // namespace internal

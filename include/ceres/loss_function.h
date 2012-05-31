@@ -249,7 +249,7 @@ class ScaledLoss : public LossFunction {
   internal::scoped_ptr<const LossFunction> rho_;
   const double a_;
   const Ownership ownership_;
-  DISALLOW_COPY_AND_ASSIGN(ScaledLoss);
+  CERES_DISALLOW_COPY_AND_ASSIGN(ScaledLoss);
 };
 
 // Sometimes after the optimization problem has been constructed, we
@@ -314,7 +314,7 @@ class LossFunctionWrapper : public LossFunction {
  private:
   internal::scoped_ptr<const LossFunction> rho_;
   Ownership ownership_;
-  DISALLOW_COPY_AND_ASSIGN(LossFunctionWrapper);
+  CERES_DISALLOW_COPY_AND_ASSIGN(LossFunctionWrapper);
 };
 
 }  // namespace ceres
