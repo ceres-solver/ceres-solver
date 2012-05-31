@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGHX///30\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:31:15Z",
+      "side": 1,
+      "message": "Also mention that this is just an optimization (reusing the scaling).",
+      "revId": "60d0259e44f9d1b21e973b7e917995bbf943cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///3w\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:31:15Z",
+      "side": 1,
+      "message": "Client doesn\u0027t make any sense. Should be \"The options struct does not own the pointer.\" or similar",
+      "revId": "60d0259e44f9d1b21e973b7e917995bbf943cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///3s\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:31:15Z",
+      "side": 1,
+      "message": "See above about \"Client\"",
+      "revId": "60d0259e44f9d1b21e973b7e917995bbf943cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///3o\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:31:15Z",
+      "side": 1,
+      "message": "See above about \"Client\"",
+      "revId": "60d0259e44f9d1b21e973b7e917995bbf943cf49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
