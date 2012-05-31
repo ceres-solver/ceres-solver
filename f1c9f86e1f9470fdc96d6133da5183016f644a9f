@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGHX///+k\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+g\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+c\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+Y\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "passes",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+U\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop \"that it\"; replace with \"the step\"\n\nFix wrapping.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+Q\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Fix wrapping.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+M\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "It would be nice to try to document the units. Is this in L2 norm of the parameters?",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+I\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Be consistent in use of \"1.0\" vs \"1\".",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+E\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "algorithm\n\nComment needs clarification. Is this the max of the scaling parameter applied to the GN diagonal?",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///+A\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "which -\u003e that",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///90\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Rename \"nu_\" (and elsewhere) to something more meaningful, like \"ratio_to_decrease_radius_on_failure\"\n\nI know it\u0027s long, but it is meaningful, unlike \"nu\".",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9w\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9s\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Don\u0027t use \"n\". Use \"num_parameters\" or something more useful.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9o\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9k\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Rename.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9g\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Comment on the difference between these.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9c\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9Y\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Use \"\"",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///88\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9U\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "The test name is uninformative.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9A\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9M\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9Q\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Extra blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9I\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///9E\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///8w\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///8s\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///8o\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "Document; explain perhaps why it\u0027s here.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///8c\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T03:34:52Z",
+      "side": 1,
+      "message": "The interface needs documenting.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
