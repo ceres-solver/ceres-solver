@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGHX///4o\u003d",
+        "filename": "include/ceres/internal/macros.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:14:13Z",
+      "side": 1,
+      "message": "Fix wrapping.",
+      "revId": "414f23e270b42e66a3988234c8f25cbbc4f42aac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
