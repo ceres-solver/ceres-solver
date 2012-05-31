@@ -64,7 +64,6 @@
 #include "ceres/ceres.h"
 
 DEFINE_string(input, "", "Input File name");
-
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, cholesky, "
               "dense_qr, and conjugate_gradients");
@@ -196,7 +195,6 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->minimizer_progress_to_stdout = true;
   options->num_threads = FLAGS_num_threads;
   options->eta = FLAGS_eta;
-  options->trust_region_strategy_type = LEVENBERG_MARQUARDT;
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
