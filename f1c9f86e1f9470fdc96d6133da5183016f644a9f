@@ -492,6 +492,159 @@
       "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///8M\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///7Y\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Eta should get renamed to \"solver_accuracy\" or something more meaningful.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///7U\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Comment above:\n\n// Looks good; apply the step to the trial parameters.\n\nor something similar.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///7I\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "This log statement needs some work. Fix or remove.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///6g\u003d",
+        "filename": "internal/ceres/trust_region_minimizer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///6Y\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Don\u0027t Capitalize Trust.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///58\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Rename.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///50\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Consider \"objective_to_model_decrease_ratio\"\n\nWell, it\u0027s a mouthful, so maybe not.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGHX///5w\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-05-31T04:02:17Z",
+      "side": 1,
+      "message": "Consider expanding the explanation here; especially that the meaning is somewhat strategy-dependent.",
+      "revId": "f1c9f86e1f9470fdc96d6133da5183016f644a9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
