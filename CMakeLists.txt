@@ -409,16 +409,33 @@ IF (${GFLAGS})
   INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
 ENDIF (${GFLAGS})
 
-# Change the default build type from Debug to Release, while still
-# supporting overriding the build type.
-IF (NOT ${CMAKE_BUILD_TYPE})
-  SET(CMAKE_BUILD_TYPE Release)
-ENDIF (NOT ${CMAKE_BUILD_TYPE})
-
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
 
-# TODO(sameeragarwal): The following flags break the old gcc that
-# ships on Mac OS X. Make this conditional on operating system and
-# compiler.
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -march=native")
+# The following flags break the old gcc that ships on Mac OS X, so we
+# only do it for linux right now.
+IF (${UNIX})
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -march=native")
+ENDIF (${UNIX})
+
+# Change the default build type from Debug to Release, while still
+# supporting overriding the build type.
+
+IF (DEFINED CMAKE_BUILD_TYPE)
+  IF (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    MESSAGE("\n=================================================================================")
+    MESSAGE("\n-- Build type: Debug. Performance will be terrible!")
+    MESSAGE("-- Add -DCMAKE_BUILD_TYPE=Release to the CMake command line to get an optimized build.")
+    MESSAGE("\n=================================================================================")
+  ELSE (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    IF (CMAKE_BUILD_TYPE STREQUAL "")
+      MESSAGE("-- No build type specified; defaulting to CMAKE_BUILD_TYPE=Release.")
+      SET(CMAKE_BUILD_TYPE Release)
+    ELSE (CMAKE_BUILD_TYPE STREQUAL "")
+      MESSAGE ("-- Build type: ${CMAKE_BUILD_TYPE}.")
+    ENDIF (CMAKE_BUILD_TYPE STREQUAL "")
+  ENDIF (CMAKE_BUILD_TYPE STREQUAL "Debug")
+ELSE (DEFINED CMAKE_BUILD_TYPE)
+  MESSAGE("-- No build type specified; defaulting to CMAKE_BUILD_TYPE=Release.")
+  SET(CMAKE_BUILD_TYPE Release)
+ENDIF (DEFINED CMAKE_BUILD_TYPE)
