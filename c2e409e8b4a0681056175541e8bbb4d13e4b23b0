@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGM3///+0\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "Mac is a unix; did you check on the mac?",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "\"DEBUG\" shouldn\u0027t be capitalized, since the user might try to use that for the CMAKE_BUILD_TYPE.",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+w\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "So in this case ${}\u0027s are not needed? I do not understand the conditions around when ${}\u0027s are needed. I wish there was a document that explained this clearly.",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "Why are the \\n\u0027s needed? We only want the scare message for Debug.",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "Why the extra \\n\u0027s?",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+g\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "How about\n\n-- No build type specified; defaulting to CMAKE_BUILD_TYPE\u003dRelease",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGM3///+c\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-01T01:22:49Z",
+      "side": 1,
+      "message": "Was this not working before?",
+      "revId": "c2e409e8b4a0681056175541e8bbb4d13e4b23b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
