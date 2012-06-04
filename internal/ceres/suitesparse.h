@@ -36,7 +36,9 @@
 #ifndef CERES_NO_SUITESPARSE
 
 #include <cstring>
+#include <set>
 #include <string>
+#include <vector>
 
 #include <glog/logging.h>
 #include "cholmod.h"
@@ -110,6 +112,8 @@ class SuiteSparse {
   // of non-zeros of A is used, the actual numerical values in A are
   // of no consequence. Caller owns the result.
   cholmod_factor* AnalyzeCholesky(cholmod_sparse* A);
+  cholmod_factor* AnalyzeCholeskyWithUserOrdering(cholmod_sparse* A,
+                                                  int* ordering);
 
   // Use the symbolic factorization in L, to find the numerical
   // factorization for the matrix A or AA^T. Return true if
@@ -128,6 +132,10 @@ class SuiteSparse {
   cholmod_dense* SolveCholesky(cholmod_sparse* A,
                                cholmod_factor* L,
                                cholmod_dense* b);
+
+  bool BlockAMDOrdering(const vector<int>& blocks,
+                        const set<pair<int, int> >& block_pairs,
+                        vector<int>* ordering);
 
   void Free(cholmod_sparse* m) { cholmod_free_sparse(&m, &cc_); }
   void Free(cholmod_dense* m)  { cholmod_free_dense(&m, &cc_);  }

@@ -70,6 +70,8 @@ DEFINE_string(solver_type, "sparse_schur", "Options are: "
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal");
+DEFINE_string(sparse_linear_algebra_library, "suitesparse",
+              "Options are: suitesparse and cxsparse");
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
@@ -136,6 +138,14 @@ void SetLinearSolver(Solver::Options* options) {
       LOG(FATAL) << "Unknown ceres preconditioner type: "
                  << FLAGS_preconditioner_type;
     }
+  }
+
+  if (FLAGS_sparse_linear_algebra_library == "suitesparse") {
+    options->sparse_linear_algebra_library = SUITE_SPARSE;
+  } else if (FLAGS_sparse_linear_algebra_library == "cxsparse") {
+    options->sparse_linear_algebra_library = CX_SPARSE;
+  } else {
+    LOG(FATAL) << "Unknown sparse linear algebra library type.";
   }
 
   options->num_linear_solver_threads = FLAGS_num_threads;
@@ -272,7 +282,6 @@ void SolveProblem(const char* filename) {
   BuildProblem(&bal_problem, &problem);
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
-
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

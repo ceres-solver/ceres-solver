@@ -72,6 +72,7 @@ class LinearSolver {
         : type(SPARSE_NORMAL_CHOLESKY),
           preconditioner_type(JACOBI),
           sparse_linear_algebra_library(SUITE_SPARSE),
+          use_block_ordering(true),
           min_num_iterations(1),
           max_num_iterations(1),
           num_threads(1),
@@ -87,6 +88,18 @@ class LinearSolver {
     PreconditionerType preconditioner_type;
 
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+
+    // By virtue of the modeling layer in Ceres being block oriented,
+    // all the matrices used by Ceres are also block oriented. When
+    // doing sparse direct factorization of these matrices, the
+    // fill-reducing ordering algorithms can either be run on the
+    // block or the scalar form of these matrices. Running it on the
+    // block form exposes more of the super-nodal structure of the
+    // matrix to the Cholesky factorization routines. Setting this
+    // parmeter to true runs the ordering algorithms in block
+    // form. Currently this option only makes sense with
+    // sparse_linear_algebra_library = SUITE_SPARSE.
+    bool use_block_ordering;
 
     // Number of internal iterations that the solver uses. This
     // parameter only makes sense for iterative solvers like CG.

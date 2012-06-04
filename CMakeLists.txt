@@ -412,30 +412,34 @@ ENDIF (${GFLAGS})
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
 
-# The following flags break the old gcc that ships on Mac OS X, so we
-# only do it for linux right now.
-IF (${UNIX})
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -march=native")
-ENDIF (${UNIX})
-
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
-
-IF (DEFINED CMAKE_BUILD_TYPE)
+IF (NOT CMAKE_BUILD_TYPE)
+  MESSAGE("-- No build type specified; defaulting to CMAKE_BUILD_TYPE=Release.")
+  SET(CMAKE_BUILD_TYPE Release CACHE STRING
+    "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+    FORCE)
+ELSE (NOT CMAKE_BUILD_TYPE)
   IF (CMAKE_BUILD_TYPE STREQUAL "Debug")
     MESSAGE("\n=================================================================================")
     MESSAGE("\n-- Build type: Debug. Performance will be terrible!")
     MESSAGE("-- Add -DCMAKE_BUILD_TYPE=Release to the CMake command line to get an optimized build.")
     MESSAGE("\n=================================================================================")
-  ELSE (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    IF (CMAKE_BUILD_TYPE STREQUAL "")
-      MESSAGE("-- No build type specified; defaulting to CMAKE_BUILD_TYPE=Release.")
-      SET(CMAKE_BUILD_TYPE Release)
-    ELSE (CMAKE_BUILD_TYPE STREQUAL "")
-      MESSAGE ("-- Build type: ${CMAKE_BUILD_TYPE}.")
-    ENDIF (CMAKE_BUILD_TYPE STREQUAL "")
   ENDIF (CMAKE_BUILD_TYPE STREQUAL "Debug")
-ELSE (DEFINED CMAKE_BUILD_TYPE)
-  MESSAGE("-- No build type specified; defaulting to CMAKE_BUILD_TYPE=Release.")
-  SET(CMAKE_BUILD_TYPE Release)
-ENDIF (DEFINED CMAKE_BUILD_TYPE)
+ENDIF (NOT CMAKE_BUILD_TYPE)
+
+SET(CERES_CXX_FLAGS)
+IF (CMAKE_BUILD_TYPE STREQUAL "Release")
+  IF (CMAKE_COMPILER_IS_GNUCXX)
+    SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse4")
+    # Linux
+    IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+       SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
+     ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
+    IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+      SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
+    ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  ENDIF (CMAKE_COMPILER_IS_GNUCXX)
+  SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}" CACHE STRING "Release mode flags to the C++ Compiler" FORCE)
+ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")

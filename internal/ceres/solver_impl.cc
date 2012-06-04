@@ -481,6 +481,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.preconditioner_type = options->preconditioner_type;
   linear_solver_options.sparse_linear_algebra_library =
       options->sparse_linear_algebra_library;
+  linear_solver_options.use_block_ordering = options->use_block_ordering;
 
 #ifdef CERES_NO_SUITESPARSE
   if (linear_solver_options.preconditioner_type == SCHUR_JACOBI) {

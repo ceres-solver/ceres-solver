@@ -359,7 +359,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
-      VLOG(2) << "old cost: " << cost << "new cost: " << new_cost;
+      VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;
       iteration_summary.cost_change =  cost - new_cost;
       const double absolute_function_tolerance =
           options_.function_tolerance * cost;

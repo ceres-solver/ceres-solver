@@ -30,8 +30,10 @@
 
 #ifndef CERES_NO_SUITESPARSE
 
+
 #include "ceres/suitesparse.h"
 
+#include <numeric>
 #include "cholmod.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -111,7 +113,24 @@ cholmod_dense* SuiteSparse::CreateDenseVector(const double* x,
 }
 
 cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A) {
+  cc_.nmethods = 1 ;
+  cc_.method[0].ordering = CHOLMOD_AMD;
+  cc_.supernodal = CHOLMOD_AUTO;
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
+  CHECK_EQ(cc_.status, CHOLMOD_OK)
+      << "Cholmod symbolic analysis failed " << cc_.status;
+  CHECK_NOTNULL(factor);
+  return factor;
+}
+
+
+cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(cholmod_sparse* A,
+                                                             int* ordering) {
+  CHECK_NOTNULL(ordering);
+  cc_.nmethods = 1 ;
+  cc_.method[0].ordering = CHOLMOD_GIVEN;
+  cholmod_factor* factor  =
+      cholmod_analyze_p(A, ordering, NULL, 0, &cc_);
   CHECK_EQ(cc_.status, CHOLMOD_OK)
       << "Cholmod symbolic analysis failed " << cc_.status;
   CHECK_NOTNULL(factor);
@@ -186,6 +205,62 @@ cholmod_dense* SuiteSparse::SolveCholesky(cholmod_sparse* A,
 
   return NULL;
 }
+
+bool SuiteSparse::BlockAMDOrdering(const vector<int>& blocks,
+                                   const set<pair<int, int> >& block_pairs,
+                                   vector<int>* ordering) {
+  VLOG(2) << "num_blocks " << blocks.size();
+  VLOG(2) << "block pairs: " << block_pairs.size();
+
+  const int num_blocks = blocks.size();
+  TripletSparseMatrix block_sparsity(num_blocks,
+                                     num_blocks,
+                                     block_pairs.size());
+  int* rows = block_sparsity.mutable_rows();
+  int* cols = block_sparsity.mutable_cols();
+  double* values = block_sparsity.mutable_values();
+  int i = 0;
+  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+       it != block_pairs.end();
+       ++it, ++i) {
+    rows[i] = it->first;
+    cols[i] = it->second;
+    values[i] = 1.0;
+  }
+  block_sparsity.set_num_nonzeros(block_pairs.size());
+
+  cholmod_sparse* ccs_block_sparsity = CreateSparseMatrix(&block_sparsity);
+  // The matrix is symmetric, and the upper triangular part of the
+  // matrix contains the values.
+  ccs_block_sparsity->stype = 1;
+
+  vector<int> block_permutation(num_blocks);
+  const int status = cholmod_amd(ccs_block_sparsity,
+                                 NULL,
+                                 0,
+                                 &block_permutation[0],
+                                 &cc_);
+  Free(ccs_block_sparsity);
+  if (!status) {
+    return false;
+  }
+
+  // Lift the permutation to the full scalar permutation
+  vector<int> block_positions(num_blocks);
+  std::partial_sum(blocks.begin(), blocks.end(), block_positions.begin());
+  ordering->resize(block_positions.back());
+  int cursor = 0;
+  for (int i = 0; i < num_blocks; ++i) {
+    const int block_id = block_permutation[i];
+    const int block_size = blocks[block_id];
+    int block_position = block_positions[block_id] - blocks[0];
+    for ( int j = 0; j < block_size; ++j) {
+      (*ordering)[cursor++] = block_position++;
+    }
+  }
+  return true;
+}
+
 
 }  // namespace internal
 }  // namespace ceres
