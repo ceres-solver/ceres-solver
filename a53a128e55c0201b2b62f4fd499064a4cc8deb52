@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGP3///3g\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "I\u0027m worried about this string. Where does it come from? Are we duplicating stuff that should be in CMake proper?",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Set the flags to nothing? Needs comment.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3w\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "It\u0027s not clear this is a good idea. Do you have evidence -march\u003dnative/-mtune\u003dnative and -fast does not do the right thing?",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Needs line breaking and comment.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3c\u003d",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Don\u0027t duplicate comment; refer to solver.h or just remove.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3Q\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Don\u0027t tempt fate: use ()\u0027s around the subtractions in this block.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3M\u003d",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3I\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Delete.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///28\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Were we not using AMD before?",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///20\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3A\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Keep consistent formatting for logs. IMO logs should have the same rules as comments: full sentences with periods, but that\u0027s another discussion...",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2w\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Needs a comment to  the effect of \"Create one TSM non-zero for each block in the matrix to factor.\"",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2s\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Does  cholmod care about these values? If not, we shouldn\u0027t bother with this.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2o\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Hmm, so there\u0027s no way to express the costs about each \"entry\" to COLAMD? This seems surprising, given that internally COLAMD is supposed to collapse identical columns into single-columns with a hash or something similar.\n\nAt the very least, please add some discussion in the form of a comment here.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2k\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Remove space after (.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3E\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Delete errant blank line.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2c\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Document ordering.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///24\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Needs a big fat comment block.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///2Y\u003d",
+        "filename": "internal/ceres/visibility_based_preconditioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "a53a128e55c0201b2b62f4fd499064a4cc8deb52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

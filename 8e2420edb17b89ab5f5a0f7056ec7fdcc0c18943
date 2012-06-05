@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGP3///3Y\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 0,
+      "message": "Why remove this?",
+      "revId": "8e2420edb17b89ab5f5a0f7056ec7fdcc0c18943",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGP3///3U\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-05T06:10:06Z",
+      "side": 0,
+      "message": "Why remove this?",
+      "revId": "8e2420edb17b89ab5f5a0f7056ec7fdcc0c18943",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
