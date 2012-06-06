@@ -409,6 +409,12 @@ IF (${GFLAGS})
   INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
 ENDIF (${GFLAGS})
 
+# Change the default build type from Debug to Release, while still
+# supporting overriding the build type.
+IF (NOT ${CMAKE_BUILD_TYPE})
+  SET(CMAKE_BUILD_TYPE Release)
+ENDIF (NOT ${CMAKE_BUILD_TYPE})
+
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
 

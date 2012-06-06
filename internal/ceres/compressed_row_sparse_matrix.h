@@ -31,12 +31,15 @@
 #ifndef CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 
+#include <vector>
 #include <glog/logging.h>
 #include "ceres/sparse_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/macros.h"
+#include "ceres/internal/port.h"
 #include "ceres/types.h"
+
 
 namespace ceres {
 namespace internal {
@@ -110,6 +113,12 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const int* rows() const { return rows_.get(); }
   int* mutable_rows() { return rows_.get(); }
 
+  const vector<int>& row_blocks() const { return row_blocks_; };
+  vector<int>* mutable_row_blocks() { return &row_blocks_; };
+
+  const vector<int>& col_blocks() const { return col_blocks_; };
+  vector<int>* mutable_col_blocks() { return &col_blocks_; };
+
  private:
   scoped_array<int> cols_;
   scoped_array<int> rows_;
@@ -117,8 +126,15 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   int num_rows_;
   int num_cols_;
-
   int max_num_nonzeros_;
+
+  // If the matrix has an underlying block structure, then it can also
+  // carry with it row and column block sizes. This is auxilliary and
+  // optional information for use by algorithms operating on the
+  // matrix. The class itself does not make use of this information in
+  // any way.
+  vector<int> row_blocks_;
+  vector<int> col_blocks_;
 
   CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };
