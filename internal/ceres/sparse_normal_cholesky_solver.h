@@ -77,7 +77,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 #ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss_;
   // Cached factorization
-  cholmod_factor* symbolic_factor_;
+  cholmod_factor* factor_;
 #endif  // CERES_NO_SUITESPARSE
 
 

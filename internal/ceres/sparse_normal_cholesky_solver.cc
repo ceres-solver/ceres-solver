@@ -46,8 +46,6 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
-
-
 namespace ceres {
 namespace internal {
 
@@ -55,15 +53,15 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
     : options_(options) {
 #ifndef CERES_NO_SUITESPARSE
-  symbolic_factor_ = NULL;
+  factor_ = NULL;
 #endif
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
 #ifndef CERES_NO_SUITESPARSE
-  if (symbolic_factor_ != NULL) {
-    ss_.Free(symbolic_factor_);
-    symbolic_factor_ = NULL;
+  if (factor_ != NULL) {
+    ss_.Free(factor_);
+    factor_ = NULL;
   }
 #endif
 }
@@ -183,13 +181,25 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
   const time_t init_time = time(NULL);
 
-  if (symbolic_factor_ == NULL) {
-    symbolic_factor_ = CHECK_NOTNULL(ss_.AnalyzeCholesky(lhs.get()));
+  if (factor_ == NULL) {
+    if (options_.use_block_amd) {
+      factor_ = ss_.BlockAnalyzeCholesky(lhs.get(),
+                                         A->col_blocks(),
+                                         A->row_blocks());
+    } else {
+      factor_ = ss_.AnalyzeCholesky(lhs.get());
+    }
   }
+
+  if (VLOG_IS_ON(2)) {
+    cholmod_print_common("Symbolic Analysis", ss_.mutable_cc());
+  }
+
+  CHECK_NOTNULL(factor_);
 
   const time_t symbolic_time = time(NULL);
 
-  cholmod_dense* sol = ss_.SolveCholesky(lhs.get(), symbolic_factor_, rhs);
+  cholmod_dense* sol = ss_.SolveCholesky(lhs.get(), factor_, rhs);
   const time_t solve_time = time(NULL);
 
   ss_.Free(rhs);
@@ -209,11 +219,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   }
 
   const time_t cleanup_time = time(NULL);
-  VLOG(2) << "time (sec) total: " << cleanup_time - start_time
-          << " init: " << init_time - start_time
-          << " symbolic: " << symbolic_time - init_time
-          << " solve: " << solve_time - symbolic_time
-          << " cleanup: " << cleanup_time - solve_time;
+  VLOG(2) << "time (sec) total: " << (cleanup_time - start_time)
+          << " init: " << (init_time - start_time)
+          << " symbolic: " << (symbolic_time - init_time)
+          << " solve: " << (solve_time - symbolic_time)
+          << " cleanup: " << (cleanup_time - solve_time);
   return summary;
 }
 #else
