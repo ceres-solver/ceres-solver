@@ -28,6 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <limits>
 #include <vector>
 #include <glog/logging.h>
 #include "gtest/gtest.h"
@@ -115,6 +116,33 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
 
   // There is nothing else in the matrix besides these four blocks.
   EXPECT_NEAR(dense.norm(), sqrt(9 + 16 * 16 + 36 * 20 + 9 * 15), kTolerance);
+}
+
+// IntPairToLong is private, thus this fixture is needed to access and
+// test it.
+class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
+ public:
+  virtual void SetUp() {
+    vector<int> blocks;
+    blocks.push_back(1);
+    set< pair<int, int> > block_pairs;
+    block_pairs.insert(make_pair(0, 0));
+    m_.reset(new BlockRandomAccessSparseMatrix(blocks, block_pairs));
+  }
+
+  void CheckIntPair(int a, int b) {
+    int64 value = m_->IntPairToLong(a, b);
+    EXPECT_GT(value, 0) << "Overflow a = " << a << " b = " << b;
+    EXPECT_GT(value, a) << "Overflow a = " << a << " b = " << b;
+    EXPECT_GT(value, b) << "Overflow a = " << a << " b = " << b;
+  }
+
+ private:
+  scoped_ptr<BlockRandomAccessSparseMatrix> m_;
+};
+
+TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {
+  CheckIntPair(numeric_limits<int>::max(), numeric_limits<int>::max());
 }
 
 }  // namespace internal
