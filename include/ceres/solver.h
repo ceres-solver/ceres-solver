@@ -83,6 +83,12 @@ class Solver {
       sparse_linear_algebra_library = CX_SPARSE;
 #endif
 
+#if defined(CERES_NO_SUITESPARSE)
+      use_block_amd = false;
+#else
+      use_block_amd = true;
+#endif
+
       preconditioner_type = JACOBI;
       num_linear_solver_threads = 1;
       num_eliminate_blocks = 0;
@@ -207,6 +213,19 @@ class Solver {
     // non-empty.
     vector<double*> ordering;
 
+    // By virtue of the modeling layer in Ceres being block oriented,
+    // all the matrices used by Ceres are also block oriented. When
+    // doing sparse direct factorization of these matrices (for
+    // SPARSE_NORMAL_CHOLESKY, SPARSE_SCHUR and ITERATIVE in
+    // conjunction with CLUSTER_TRIDIAGONAL AND CLUSTER_JACOBI
+    // preconditioners), the fill-reducing ordering algorithms can
+    // either be run on the block or the scalar form of these matrices.
+    // Running it on the block form exposes more of the super-nodal
+    // structure of the matrix to the factorization routines. Setting
+    // this parameter to true runs the ordering algorithms in block
+    // form. Currently this option only makes sense with
+    // sparse_linear_algebra_library = SUITE_SPARSE.
+    bool use_block_amd;
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.

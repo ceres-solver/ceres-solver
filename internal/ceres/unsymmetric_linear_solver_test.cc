@@ -62,6 +62,7 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
     LinearSolver::Options options;
     options.type = linear_solver_type;
     options.sparse_linear_algebra_library = sparse_linear_algebra_library;
+    options.use_block_amd = false;
     scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
 
     LinearSolver::PerSolveOptions per_solve_options;
