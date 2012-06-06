@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGT3///30\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-06T01:02:52Z",
+      "side": 1,
+      "message": "Return should be int64.",
+      "revId": "0c59501390b989ddcb386b84e00017c3d2588d9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///38\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-06T01:02:52Z",
+      "side": 1,
+      "message": "\"int his\"",
+      "revId": "0c59501390b989ddcb386b84e00017c3d2588d9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///34\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-06T01:02:52Z",
+      "side": 1,
+      "message": "\"long int\" is wrong.",
+      "revId": "0c59501390b989ddcb386b84e00017c3d2588d9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///3s\u003d",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-06T01:02:52Z",
+      "side": 1,
+      "message": "These all fit on one line, and nicely column-align.",
+      "revId": "0c59501390b989ddcb386b84e00017c3d2588d9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
