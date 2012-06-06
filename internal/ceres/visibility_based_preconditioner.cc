@@ -33,7 +33,6 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
-#include <numeric>
 #include <set>
 #include <utility>
 #include <vector>
@@ -450,8 +449,15 @@ bool VisibilityBasedPreconditioner::Factorize() {
   // Symbolic factorization is computed if we don't already have one
   // handy.
   if (factor_ == NULL) {
-    factor_ = ss_.AnalyzeCholesky(lhs);
+    if (options_.use_block_amd) {
+      vector<int> ordering;
+      ss_.BlockAMDOrdering(block_size_, block_pairs_,  &ordering);
+      factor_ = ss_.AnalyzeCholeskyWithUserOrdering(lhs, &ordering[0]);
+    } else {
+      factor_ = ss_.AnalyzeCholesky(lhs);
+    }
   }
+  CHECK_NOTNULL(factor_);
 
   bool status = ss_.Cholesky(lhs, factor_);
   ss_.Free(lhs);

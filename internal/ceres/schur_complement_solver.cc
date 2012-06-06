@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <algorithm>
+#include <numeric>
 #include <ctime>
 #include <set>
 #include <vector>
@@ -94,11 +95,11 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   const time_t backsubstitute_time = time(NULL);
   summary.termination_type = TOLERANCE;
 
-  VLOG(2) << "time (sec) total: " << backsubstitute_time - start_time
-          << " init: " << init_time - start_time
-          << " eliminate: " << eliminate_time - init_time
-          << " solve: " << solve_time - eliminate_time
-          << " backsubstitute: " << backsubstitute_time - solve_time;
+  VLOG(2) << "time (sec) total: " << (backsubstitute_time - start_time)
+          << " init: " << (init_time - start_time)
+          << " eliminate: " << (eliminate_time - init_time)
+          << " solve: " << (solve_time - eliminate_time)
+          << " backsubstitute: " << (backsubstitute_time - solve_time);
   return summary;
 }
 
@@ -150,15 +151,15 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
     const LinearSolver::Options& options)
     : SchurComplementSolver(options) {
 #ifndef CERES_NO_SUITESPARSE
-  symbolic_factor_ = NULL;
+  factor_ = NULL;
 #endif  // CERES_NO_SUITESPARSE
 }
 
 SparseSchurComplementSolver::~SparseSchurComplementSolver() {
 #ifndef CERES_NO_SUITESPARSE
-  if (symbolic_factor_ != NULL) {
-    ss_.Free(symbolic_factor_);
-    symbolic_factor_ = NULL;
+  if (factor_ != NULL) {
+    ss_.Free(factor_);
+    factor_ = NULL;
   }
 #endif  // CERES_NO_SUITESPARSE
 }
@@ -232,6 +233,15 @@ void SparseSchurComplementSolver::InitStorage(
 
   set_lhs(new BlockRandomAccessSparseMatrix(blocks, block_pairs));
   set_rhs(new double[lhs()->num_rows()]);
+
+#ifndef CERES_NO_SUITESPARSE
+  if (options().sparse_linear_algebra_library == SUITE_SPARSE &&
+      options().use_block_amd && blocks.size() > 0) {
+    CHECK(ss_.BlockAMDOrdering(blocks, block_pairs, &ordering_))
+        << "BlockAMDOrdering failed. "
+        << "Congratulations, you found a bug in Ceres. Please report it.";
+  }
+#endif  // CERES_NO_SUITESPARSE
 }
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
@@ -256,7 +266,8 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
 // CHOLMOD's sparse cholesky factorization routines.
 bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
     double* solution) {
-  // Extract the TripletSparseMatrix that is used for actually storing S.
+  const time_t start_time = time(NULL);
+
   TripletSparseMatrix* tsm =
       const_cast<TripletSparseMatrix*>(
           down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());
@@ -273,17 +284,31 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   // The matrix is symmetric, and the upper triangular part of the
   // matrix contains the values.
   cholmod_lhs->stype = 1;
+  const time_t lhs_time = time(NULL);
 
   cholmod_dense*  cholmod_rhs =
       ss_.CreateDenseVector(const_cast<double*>(rhs()), num_rows, num_rows);
+  const time_t rhs_time = time(NULL);
 
-  // Symbolic factorization is computed if we don't already have one handy.
-  if (symbolic_factor_ == NULL) {
-    symbolic_factor_ = ss_.AnalyzeCholesky(cholmod_lhs);
+  // Symbolic factorization is computed if we don't already have one
+  // handy.
+  if (factor_ == NULL) {
+    if (options().use_block_amd) {
+      // InitStorage should have already computed the ordering.
+      CHECK_EQ(ordering_.size(), cholmod_lhs->nrow)
+          << "Congratulations, you found a Ceres bug! Please report this error "
+          << "to the developers.";
+      factor_ = ss_.AnalyzeCholeskyWithUserOrdering(cholmod_lhs, &ordering_[0]);
+    } else {
+      factor_ = ss_.AnalyzeCholesky(cholmod_lhs);
+    }
   }
 
+  const time_t symbolic_time = time(NULL);
   cholmod_dense* cholmod_solution =
-      ss_.SolveCholesky(cholmod_lhs, symbolic_factor_, cholmod_rhs);
+      ss_.SolveCholesky(cholmod_lhs, factor_, cholmod_rhs);
+
+  const time_t solve_time = time(NULL);
 
   ss_.Free(cholmod_lhs);
   cholmod_lhs = NULL;
@@ -298,6 +323,13 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   VectorRef(solution, num_rows)
       = VectorRef(static_cast<double*>(cholmod_solution->x), num_rows);
   ss_.Free(cholmod_solution);
+  const time_t final_time = time(NULL);
+  VLOG(2) << "time: " << (final_time - start_time)
+          << " lhs : " << (lhs_time - start_time)
+          << " rhs:  " << (rhs_time - lhs_time)
+          << " analyze: " <<  (symbolic_time - rhs_time)
+          << " factor_and_solve: " << (solve_time - symbolic_time)
+          << " cleanup: " << (final_time - solve_time);
   return true;
 }
 #else

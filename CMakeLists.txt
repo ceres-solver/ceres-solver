@@ -409,9 +409,16 @@ IF (${GFLAGS})
   INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
 ENDIF (${GFLAGS})
 
+# Change the default build type from Debug to Release, while still
+# supporting overriding the build type.
+IF (NOT ${CMAKE_BUILD_TYPE})
+  SET(CMAKE_BUILD_TYPE Release)
+ENDIF (NOT ${CMAKE_BUILD_TYPE})
+
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
 
+<<<<<<< HEAD
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
 #
@@ -449,3 +456,9 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
   SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}"
        CACHE STRING "Release mode flags to the C++ Compiler" FORCE)
 ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
+=======
+# TODO(sameeragarwal): The following flags break the old gcc that
+# ships on Mac OS X. Make this conditional on operating system and
+# compiler.
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native -march=native")
+>>>>>>> 82ec6db... Support for sparse normal cholesky
