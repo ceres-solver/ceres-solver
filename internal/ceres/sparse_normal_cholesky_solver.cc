@@ -46,8 +46,6 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
 
-
-
 namespace ceres {
 namespace internal {
 
@@ -184,7 +182,22 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   const time_t init_time = time(NULL);
 
   if (symbolic_factor_ == NULL) {
-    symbolic_factor_ = CHECK_NOTNULL(ss_.AnalyzeCholesky(lhs.get()));
+    if (options_.use_block_amd) {
+      vector<int> ordering;
+      CHECK(ss_.BlockAMDOrdering(lhs.get(),
+				 A->col_blocks(),
+				 A->row_blocks(),
+				 &ordering))
+        << "Congratulations, you found a Ceres bug! Please report this error "
+        << "to the developers.";
+      symbolic_factor_ =
+          ss_.AnalyzeCholeskyWithUserOrdering(lhs.get(), &ordering[0]);
+
+    } else {
+      symbolic_factor_ = ss_.AnalyzeCholesky(lhs.get());
+    }
+
+    CHECK_NOTNULL(symbolic_factor_);
   }
 
   const time_t symbolic_time = time(NULL);
@@ -209,11 +222,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   }
 
   const time_t cleanup_time = time(NULL);
-  VLOG(2) << "time (sec) total: " << cleanup_time - start_time
-          << " init: " << init_time - start_time
-          << " symbolic: " << symbolic_time - init_time
-          << " solve: " << solve_time - symbolic_time
-          << " cleanup: " << cleanup_time - solve_time;
+  VLOG(2) << "time (sec) total: " << (cleanup_time - start_time)
+          << " init: " << (init_time - start_time)
+          << " symbolic: " << (symbolic_time - init_time)
+          << " solve: " << (solve_time - symbolic_time)
+          << " cleanup: " << (cleanup_time - solve_time);
   return summary;
 }
 #else

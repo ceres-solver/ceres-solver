@@ -31,6 +31,8 @@
 #ifndef CERES_INTERNAL_SCHUR_COMPLEMENT_SOLVER_H_
 #define CERES_INTERNAL_SCHUR_COMPLEMENT_SOLVER_H_
 
+#include <set>
+#include <utility>
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -162,7 +164,11 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   SuiteSparse ss_;
   // Symbolic factorization of the reduced linear system. Precomputed
   // once and reused in subsequent calls.
-  cholmod_factor* symbolic_factor_;
+  cholmod_factor* factor_;
+
+  // Row ordering for the Schur complement matrix, computed using
+  // block AMD, when LinearSolver::use_block_amd = true.
+  vector<int> ordering_;
 #endif  // CERES_NO_SUITESPARSE
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };

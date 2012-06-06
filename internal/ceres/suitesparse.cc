@@ -30,14 +30,15 @@
 
 #ifndef CERES_NO_SUITESPARSE
 
+
 #include "ceres/suitesparse.h"
 
+#include <numeric>
 #include "cholmod.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/triplet_sparse_matrix.h"
 namespace ceres {
 namespace internal {
-
 cholmod_sparse* SuiteSparse::CreateSparseMatrix(TripletSparseMatrix* A) {
   cholmod_triplet triplet;
 
@@ -111,11 +112,159 @@ cholmod_dense* SuiteSparse::CreateDenseVector(const double* x,
 }
 
 cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A) {
+  cc_.nmethods = 1 ;
+  cc_.method[0].ordering = CHOLMOD_AMD;
+  cc_.supernodal = CHOLMOD_AUTO;
   cholmod_factor* factor = cholmod_analyze(A, &cc_);
   CHECK_EQ(cc_.status, CHOLMOD_OK)
       << "Cholmod symbolic analysis failed " << cc_.status;
   CHECK_NOTNULL(factor);
   return factor;
+}
+
+cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(cholmod_sparse* A,
+                                                             int* ordering) {
+  CHECK_NOTNULL(ordering);
+  cc_.nmethods = 1 ;
+  cc_.method[0].ordering = CHOLMOD_GIVEN;
+  cholmod_factor* factor  =
+      cholmod_analyze_p(A, ordering, NULL, 0, &cc_);
+  CHECK_EQ(cc_.status, CHOLMOD_OK)
+      << "Cholmod symbolic analysis failed " << cc_.status;
+  CHECK_NOTNULL(factor);
+  return factor;
+}
+
+bool SuiteSparse::BlockAMDOrdering(const vector<int>& blocks,
+                                   const set<pair<int, int> >& block_pairs,
+                                   vector<int>* ordering) {
+  VLOG(2) << "num_blocks " << blocks.size();
+  VLOG(2) << "block pairs: " << block_pairs.size();
+
+  // Build a TripletSparseMatrix, and then use it to build a
+  // compressed column matrix for passing to AMD.
+  const int num_blocks = blocks.size();
+  TripletSparseMatrix tsm_block_sparsity(num_blocks,
+                                     num_blocks,
+                                     block_pairs.size());
+  int* rows = tsm_block_sparsity.mutable_rows();
+  int* cols = tsm_block_sparsity.mutable_cols();
+  double* values = tsm_block_sparsity.mutable_values();
+  int i = 0;
+  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+       it != block_pairs.end();
+       ++it, ++i) {
+    rows[i] = it->first;
+    cols[i] = it->second;
+    values[i] = 1.0;
+  }
+  tsm_block_sparsity.set_num_nonzeros(block_pairs.size());
+
+  // Convert the TripletSparseMatrix into a compressed sparse column
+  // matrix.
+  cholmod_sparse* block_sparsity = CreateSparseMatrix(&tsm_block_sparsity);
+  // The matrix is symmetric, and the upper triangular part of the
+  // matrix contains the values.
+  block_sparsity->stype = 1;
+
+  vector<int> block_ordering(num_blocks);
+  const int status =
+      cholmod_amd(block_sparsity, NULL, 0, &block_ordering[0], &cc_);
+  Free(block_sparsity);
+  if (!status) {
+    return false;
+  }
+
+  BlockOrderingToScalarOrdering(blocks, block_ordering, ordering);
+  return true;
+}
+
+bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
+                                   const vector<int>& row_blocks,
+                                   const vector<int>& col_blocks,
+                                   vector<int>* ordering) {
+  const int num_row_blocks = row_blocks.size();
+  const int num_col_blocks = col_blocks.size();
+  vector<int> row_block_starts(num_row_blocks);
+  row_block_starts[0] = 0;
+  for (int i = 1; i < num_row_blocks ; ++i) {
+    row_block_starts[i] = row_block_starts[i -1] + row_blocks[i - 1];
+  }
+
+  // Arrays storing the compressed column structure of the matrix
+  // incoding the block sparsity of A.
+  vector<int> Bp;  // columns
+  vector<int> Bi;  // rows
+
+  const int* Ap =  reinterpret_cast<const int*>(A->p);
+  const int* Ai =  reinterpret_cast<const int*>(A->i);
+  Bp.push_back(0);
+  int c = 0;
+  // Only consider the first column in each column block.
+  for (int col_block = 0; col_block < num_col_blocks; ++col_block) {
+    int column_size = 0;
+    for (int idx = Ap[c]; idx < Ap[c + 1]; ++idx) {
+      vector<int>::const_iterator it =
+          lower_bound(row_block_starts.begin(), row_block_starts.end(), Ai[idx]);
+      // Only consider the first row of each row block.
+      if (*it != Ai[idx]) {
+        continue;
+      }
+
+      Bi.push_back(it - row_block_starts.begin());
+      ++column_size;
+    }
+    Bp.push_back(Bp.back() + column_size);
+    c += col_blocks[col_block];
+  }
+
+  cholmod_sparse_struct block_sparsity;
+  block_sparsity.nrow = num_row_blocks;
+  block_sparsity.ncol = num_col_blocks;
+  block_sparsity.nzmax = Bi.size();
+  block_sparsity.p = reinterpret_cast<void*>(&Bp[0]);
+  block_sparsity.i = reinterpret_cast<void*>(&Bi[0]);
+  block_sparsity.x = NULL;
+  block_sparsity.stype = A->stype;
+  block_sparsity.itype = CHOLMOD_INT;
+  block_sparsity.xtype = CHOLMOD_PATTERN;
+  block_sparsity.dtype = CHOLMOD_DOUBLE;
+  block_sparsity.sorted = 1;
+  block_sparsity.packed = 1;
+
+  vector<int> block_ordering(num_row_blocks);
+  if (!cholmod_amd(&block_sparsity, NULL, 0, &block_ordering[0], &cc_)) {
+    return false;
+  }
+
+  BlockOrderingToScalarOrdering(row_blocks, block_ordering, ordering);
+  return true;
+}
+
+void SuiteSparse::BlockOrderingToScalarOrdering(
+    const vector<int>& blocks,
+    const vector<int>& block_ordering,
+    vector<int>* scalar_ordering) {
+  CHECK_EQ(blocks.size(), block_ordering.size());
+  const int num_blocks = blocks.size();
+
+  // block_starts = [0, block1, block1 + block2 ..]
+  vector<int> block_start(num_blocks);
+  block_start[0] = 0;
+  for (int i = 1; i < num_blocks ; ++i) {
+    block_start[i] = block_start[i -1] + blocks[i - 1];
+  }
+
+  scalar_ordering->resize(block_start.back() + blocks.back());
+  int cursor = 0;
+  for (int i = 0; i < num_blocks; ++i) {
+    const int block_id = block_ordering[i];
+    const int block_size = blocks[block_id];
+    int block_position = block_start[block_id];
+    for ( int j = 0; j < block_size; ++j) {
+      (*scalar_ordering)[cursor++] = block_position++;
+    }
+  }
 }
 
 bool SuiteSparse::Cholesky(cholmod_sparse* A, cholmod_factor* L) {
