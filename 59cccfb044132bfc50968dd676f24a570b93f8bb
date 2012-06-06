@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGT3///yA\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Sneaky raw tabs (here and below).",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///x8\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///x4\u003d",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "We should not do this if use_block_amd \u003d\u003d false.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///x0\u003d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xw\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Combine next line with this one; the one-word wrap is gross.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xs\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Raw tabs",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xo\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Raw tabs",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xk\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Raw tabs.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xg\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Delete.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xc\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Add a bit of documentation to what we\u0027re telling CHOLMOD to do. I know it\u0027s in the CHOLMOD docs, but let\u0027s comment anyway.\n\nAlso, remove space before ;.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xY\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Keep consistent logging: use \":\" or don\u0027t in both logs.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xE\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Is setting this necessary?",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xM\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Remove space before ;.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xQ\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Space after \"-\"\n\nAlso, consider writing this with a cursor instead of the back-reference cleverness. The issue with the backreference is that you\u0027re introducing false sharing that makes it hard for the compiler to do alias analysis.\n\nvector\u003cint\u003e row_block_starts(num_row_blocks);\nfor (int i \u003d 0, j \u003d 0;\n     i \u003c num_row_blocks;\n     ++i, j +\u003d row_blocks[i]) {\n  row_block_starts[i] \u003d j;\n}",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xU\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Comment about reinterpret cast.\n\nLet\u0027s not propagate the CHOLMOD naming. The terseness adds nothing. What are \"p\" and \"i\"?\n\nThroughout.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xI\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Loop needs a header. What\u0027s the nest doing?",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///xA\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Any reason not to use \"i\"?",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///w8\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Does cholmod offer any error reporting?",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///w4\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Same comment about this  loop as above (use a cursor). Consider making it a function.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///w0\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Remove space after (.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///ww\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Raw tabs.",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///wo\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "lifting",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///wk\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "of permuted -\u003e of the permuted",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGT3///ws\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-06T07:09:32Z",
+      "side": 1,
+      "message": "Raw tabs (and next 3 lines)",
+      "revId": "59cccfb044132bfc50968dd676f24a570b93f8bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
