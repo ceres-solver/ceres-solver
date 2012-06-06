@@ -70,17 +70,20 @@ DEFINE_string(solver_type, "sparse_schur", "Options are: "
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal");
+DEFINE_string(sparse_linear_algebra_library, "suitesparse",
+              "Options are: suitesparse and cxsparse");
 DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_int32(num_threads, 1, "Number of threads");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
              "accuracy of each linear solve of the truncated newton step. "
              "Changing this parameter can affect solve performance ");
-DEFINE_bool(use_schur_ordering, false, "Use automatic Schur ordering.");
+DEFINE_string(ordering_type, "schur", "Options are: schur, user, natural");
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used");
 DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
             "parameterization.");
 DEFINE_bool(robustify, false, "Use a robust loss function");
+DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
 
 namespace ceres {
 namespace examples {
@@ -138,10 +141,31 @@ void SetLinearSolver(Solver::Options* options) {
     }
   }
 
+  if (FLAGS_sparse_linear_algebra_library == "suitesparse") {
+    options->sparse_linear_algebra_library = SUITE_SPARSE;
+  } else if (FLAGS_sparse_linear_algebra_library == "cxsparse") {
+    options->sparse_linear_algebra_library = CX_SPARSE;
+  } else {
+    LOG(FATAL) << "Unknown sparse linear algebra library type.";
+  }
+
   options->num_linear_solver_threads = FLAGS_num_threads;
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
+  options->use_block_amd = FLAGS_use_block_amd;
+
+  // Only non-Schur solvers support the natural ordering for this
+  // problem.
+  if (FLAGS_ordering_type == "natural") {
+    if (options->linear_solver_type == SPARSE_SCHUR ||
+        options->linear_solver_type == DENSE_SCHUR ||
+        options->linear_solver_type == ITERATIVE_SCHUR) {
+      LOG(FATAL) << "Natural ordering with Schur type solver does not work.";
+    }
+    return;
+  }
+
   // Bundle adjustment problems have a sparsity structure that makes
   // them amenable to more specialized and much more efficient
   // solution strategies. The SPARSE_SCHUR, DENSE_SCHUR and
@@ -156,7 +180,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  if (FLAGS_use_schur_ordering) {
+  if (FLAGS_ordering_type == "schur") {
     options->ordering_type = ceres::SCHUR;
     return;
   }
@@ -272,7 +296,6 @@ void SolveProblem(const char* filename) {
   BuildProblem(&bal_problem, &problem);
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
-
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
