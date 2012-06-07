@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///90\u003d",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn////U\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn////M\u003d",
         "filename": "internal/ceres/suitesparse.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "Sneaky hard tabs!",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9w\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn////M\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///9s\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+k\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn///+0\u003d",
         "filename": "internal/ceres/suitesparse.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "Missed this from my previous comments. Use a cursor. Look at my previous comments for more details.",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9o\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+0\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///9k\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn////A\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn///+Y\u003d",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "at least",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9g\u003d",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+Y\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///9c\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///98\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn///+U\u003d",
         "filename": "internal/ceres/suitesparse_test.cc",
         "patchSetId": 10
@@ -132,6 +258,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9Y\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+U\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///9U\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+Q\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn///+M\u003d",
         "filename": "internal/ceres/suitesparse_test.cc",
         "patchSetId": 10
@@ -166,6 +328,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "Space after ,.",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9Q\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+M\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGXn///9M\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+E\u003d",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGXn///+A\u003d",
         "filename": "internal/ceres/suitesparse_test.cc",
         "patchSetId": 10
@@ -200,6 +398,24 @@
       "writtenOn": "2012-06-07T04:57:48Z",
       "side": 1,
       "message": "Drop this and next line.",
+      "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///9I\u003d",
+        "filename": "internal/ceres/suitesparse_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-07T05:02:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGXn///+A\u003d",
       "revId": "968e18f223c5cc7d51910695dc630a53232bcf4d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
