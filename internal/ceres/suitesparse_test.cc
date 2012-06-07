@@ -135,7 +135,7 @@ TEST(SuiteSparse, ScalarMatrixToBlockMatrix) {
   fill(tsm.mutable_values(), tsm.mutable_values() + 15, 1.0);
   int offset = 0;
 
-#define CERES_TEST_FILL_BLOCK(r, c) \
+#define CERES_TEST_FILL_BLOCK(row_block_id, col_block_id) \
   offset += FillBlock(row_blocks, col_blocks, \
                       row_block_id, col_block_id, \
                       rows + offset, cols + offset);
