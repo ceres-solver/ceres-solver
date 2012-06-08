@@ -1,0 +1,52 @@
+%!TEX root = ceres-solver.tex
+
+\chapter{Version History}
+\section*{1.2.0}
+\subsection{New Features}
+\begin{itemize}
+\item \texttt{CXSparse} support.
+\item Block oriented fill reducing orderings. This 
+reduces the factorization time for sparse 
+\texttt{CHOLMOD} significantly.
+\item New Trust region loop with support for multiple
+trust region step strategies.
+\item \texttt{Cmake} file restructuring.  Builds in \texttt{Release} mode by default, and now has platform specific tuning flags.
+\item Re-organized documentation. No new content, but better organization.
+\end{itemize}
+
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Fixed integer overflow bug in \texttt{block\_random\_access\_sparse\_matrix.cc}.
+\item Renamed some macros to prevent name conflicts.
+\item Fixed incorrent input to \texttt{StateUpdatingCallback}.
+\item Fixes to AutoDiff tests.
+\item Various internal cleanups.
+\end{itemize}
+
+\section*{1.1.1}
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Fix a bug in the handling of constant blocks. Thanks to Louis Simard for reporting this.
+\item Add an optional lower bound to the Levenberg-Marquardt regularizer to prevent oscillating between well and ill posed linear problems.
+\item Some internal refactoring and test fixes.
+\end{itemize}
+\section{1.1.0}
+\subsection{New Features}
+\begin{itemize}
+\item New iterative linear solver for general sparse problems - \texttt{CGNR} and a block Jacobi preconditioner for it.
+\item Changed the semantics of how \texttt{SuiteSparse} dependencies are checked and used. Now \texttt{SuiteSparse} is built by default, only if all of its dependencies are present.
+\item Automatic differentiation now supports dynamic number of residuals.
+\item Support for writing the linear least squares problems to disk in text format so that they can loaded into \texttt{MATLAB}.
+\item Linear solver results are now checked for nan and infinities.
+\item Added \texttt{.gitignore} file.
+\item A better more robust build system.
+\end{itemize}
+
+\subsection{Bug Fixes}
+\begin{itemize}
+	\item Fixed a strict weak ordering bug in the schur ordering. 
+	\item Grammar and typos in the documents and code comments.
+	\item Fixed tests which depended on exact equality between floating point values.
+\end{itemize}
+\section*{1.0.0}
+Initial Release.
