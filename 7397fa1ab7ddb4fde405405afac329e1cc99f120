@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGXn///u4\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Trailing spaces",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///u0\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Trailing spaces",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///us\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Note that none are around yet.",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///u8\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Hard tabs",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///uc\u003d",
+        "filename": "docs/reference-overview.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Raw tab",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGXn///uY\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-08T00:52:38Z",
+      "side": 1,
+      "message": "Raw tab",
+      "revId": "7397fa1ab7ddb4fde405405afac329e1cc99f120",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
