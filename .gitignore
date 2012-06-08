@@ -13,3 +13,4 @@ build/
 *.log
 *.synctex.gz
 ceres.pdf
+ceres-solver.pdf
