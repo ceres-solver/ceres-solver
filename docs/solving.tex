@@ -198,21 +198,30 @@ Thus, the aim of the \texttt{SCHUR} ordering algorithm is to identify the larges
 \texttt{Solver::Options} controls the overall behavior of the solver. We list the various settings and their default values below.
 
 \begin{enumerate}
-\item{\texttt{minimizer\_type}}(\texttt{LEVENBERG\_MARQUARDT}) The  minimization algorithm used by Ceres. \texttt{LEVENBERG\_MARQUARDT} is currently the only valid value.
+	
+\item{\texttt{trust\_region\_strategy\_type}}(\texttt{LEVENBERG\_MARQUARDT}) The  trust region step computation algorithm used by Ceres. \texttt{LEVENBERG\_MARQUARDT} is currently the only valid value.
 
 \item{\texttt{max\_num\_iterations}}(\texttt{50}) Maximum number of iterations for Levenberg-Marquardt.
 
-\item{\texttt{max\_solver\_time\_sec}}(\texttt{1e9}) Maximum amount of time (in seconds) for which the solver should run.
+\item{\texttt{max\_solver\_time\_sec}} ($10^9$) Maximum amount of time (in seconds) for which the solver should run.
 
 \item{\texttt{num\_threads}}(\texttt{1})
 Number of threads used by Ceres to evaluate the Jacobian.
 
-\item{\texttt{tau}}(\texttt{1e-4}) Initial value of the regularization parameter $\mu$ used by the Levenberg-Marquardt algorithm. The size of this parameter indicate the user's guess of how far the initial solution is from the minimum. Large values indicates that the solution is far away.
+\item{\texttt{initial\_trust\_region\_radius} ($10^4$)} The size of the initial trust region. When the \texttt{LEVENBERG\_MARQUARDT} strategy is used, the reciprocal of this number is the initial regularization parameter.
 
-\item{\texttt{min\_relative\_decrease}}(\texttt{1e-3}) Lower threshold for relative decrease before a Levenberg-Marquardt step is acceped.
+\item{\texttt{max\_trust\_region\_radius} ($10^{16}$)} The trust region radius is not allowed to grow beyond this value.
+\item{\texttt{max\_trust\_region\_radius} ($10^{-32}$)} The solver terminates, when the trust region becomes smaller than this value.
 
+\item{\texttt{min\_relative\_decrease}}($10^{-3}$) Lower threshold for relative decrease before a Levenberg-Marquardt step is acceped.
 
-\item{\texttt{function\_tolerance}}(\texttt{1e-6}) Solver terminates if
+\item{\texttt{lm\_min\_diagonal} ($10^6$)} The \texttt{LEVENBERG\_MARQUARDT} strategy, uses a diagonal matrix to regularize the the trust region step. This is the lower bound on the values of this diagonal matrix.
+
+\item{\texttt{lm\_max\_diagonal} ($10^{32}$)}  The \texttt{LEVENBERG\_MARQUARDT} strategy, uses a diagonal matrix to regularize the the trust region step. This is the upper bound on the values of this diagonal matrix.
+
+\item{\texttt{max\_num\_consecutive\_invalid\_steps} (5)} The step returned by a trust region strategy can sometimes be numerically invalid, usually because of conditioning issues. Instead of crashing or stopping the optimization, the optimizer can go ahead and try solving with a smaller trust region/better conditioned problem. This parameter sets the number of consecutive retries before the minimizer gives up.
+
+\item{\texttt{function\_tolerance}}($10^{-6}$) Solver terminates if
 \begin{align}
 \frac{|\Delta \text{cost}|}{\text{cost}} < \texttt{function\_tolerance}
 \end{align}
@@ -224,7 +233,7 @@ where, $\Delta \text{cost}$ is the change in objective function value (up or dow
 \end{equation}
 where $\|\cdot\|_\infty$ refers to the max norm, and $x_0$ is the vector of initial parameter values.
 
-\item{\texttt{parameter\_tolerance}}(\texttt{1e-8}) Solver terminates if 
+\item{\texttt{parameter\_tolerance}}($10^{-8}$) Solver terminates if 
 \begin{equation}
 	\frac{\|\Delta x\|}{\|x\| + \texttt{parameter\_tolerance}} < \texttt{parameter\_tolerance}
 \end{equation}
@@ -235,6 +244,8 @@ where $\Delta x$ is the step computed by the linear solver in the current iterat
 \item{\texttt{linear\_solver\_type}}(\texttt{SPARSE\_NORMAL\_CHOLESKY}/\texttt{DENSE\_QR}) Type of linear solver used to compute the solution to the linear least squares problem in each iteration of the Levenberg-Marquardt algorithm. If Ceres is build with \suitesparse linked in  then the default is \texttt{SPARSE\_NORMAL\_CHOLESKY}, it is \texttt{DENSE\_QR} otherwise.
 
 \item{\texttt{preconditioner\_type}}(\texttt{JACOBI}) The preconditioner used by the iterative linear solver. The default is the block Jacobi preconditioner. Valid values are (in increasing order of complexity) \texttt{IDENTITY},\texttt{JACOBI}, \texttt{SCHUR\_JACOBI}, \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}.
+
+\item{\texttt{sparse\_linear\_algebra\_library} (\texttt{SUITE\_SPARSE})} Ceres supports the use of two sparse linear algebra libraries, \texttt{SuiteSparse}, which is enabled by setting this parameter to \texttt{SUITE\_SPARSE} and \texttt{CXSparse}, which can be selected by setting this parameter to $\texttt{CX\_SPARSE}$. \texttt{SuiteSparse} is a sophisticated and complex sparse linear algebra library and should be used in general. If your needs/platforms prevent you from using \texttt{SuiteSparse}, consider using \texttt{CXSparse}, which is a much smaller, easier to build library. As can be expected, its performance on large problems is not comparable to that of \texttt{SuiteSparse}.
 
 \item{\texttt{num\_linear\_solver\_threads}}(\texttt{1}) Number of threads used by the linear solver. 
 
@@ -258,12 +269,20 @@ For Schur reduction based methods, the first 0 to num blocks are
     to it if the \texttt{ordering\_type} is set to \texttt{USER} and the ordering vector is
     non-empty.
 
+\item{\texttt{use\_block\_amd} (\texttt{true})} By virtue of the modeling layer in Ceres being block oriented,
+all the matrices used by Ceres are also block oriented.
+When doing sparse direct factorization of these matrices, the
+fill-reducing ordering algorithms can either be run on the
+block or the scalar form of these matrices. Running it on the
+block form exposes more of the super-nodal structure of the
+matrix to the Cholesky factorization routines. This leads to
+substantial gains in factorization performance. Setting this parameter to true, enables the use of a block oriented Approximate Minimum Degree ordering algorithm. Settings it to \texttt{false}, uses a scalar AMD algorithm. This option only makes sense when using \texttt{sparse\_linear\_algebra\_library = SUITE\_SPARSE} as it uses the \texttt{AMD} package that is part of \texttt{SuiteSparse}.
 
 \item{\texttt{linear\_solver\_min\_num\_iterations}}(\texttt{1}) Minimum number of iterations used by the linear solver. This only makes sense when the linear solver is an iterative solver, e.g., \texttt{ITERATIVE\_SCHUR}.
 
 \item{\texttt{linear\_solver\_max\_num\_iterations}}(\texttt{500}) Minimum number of iterations used by the linear solver. This only makes sense when the linear solver is an iterative solver, e.g., \texttt{ITERATIVE\_SCHUR}.
 
-\item{\texttt{eta}}(\texttt{1e-1})
+\item{\texttt{eta}} ($10^{-1}$)
  Forcing sequence parameter. The truncated Newton solver uses
     this number to control the relative accuracy with which the
      Newton step is computed. This constant is passed to ConjugateGradientsSolver which uses
@@ -329,12 +348,12 @@ when \texttt{lsqp\_iterations\_to\_dump} is non-empty.  There are three options
      results are compared, and if they differ substantially, details
      are printed to the log.
 
-\item{\texttt{gradient\_check\_relative\_precision}}(\texttt{1e-8})
+\item{\texttt{gradient\_check\_relative\_precision}} ($10^{-8}$)
   Relative precision to check for in the gradient checker. If the
   relative difference between an element in a Jacobian exceeds
   this number, then the Jacobian for that cost term is dumped.
 
-\item{\texttt{numeric\_derivative\_relative\_step\_size}}(\texttt{1e-6})
+\item{\texttt{numeric\_derivative\_relative\_step\_size}} ($10^{-6}$)
  Relative shift used for taking numeric derivatives. For finite
      differencing, each dimension is evaluated at slightly shifted
      values, \eg for forward differences, the numerical derivative is
@@ -348,8 +367,8 @@ when \texttt{lsqp\_iterations\_to\_dump} is non-empty.  There are three options
      The finite differencing is done along each dimension. The
      reason to use a relative (rather than absolute) step size is
      that this way, numeric differentiation works for functions where
-     the arguments are typically large (e.g. 1e9) and when the
-     values are small (e.g. 1e-5). It is possible to construct
+     the arguments are typically large (e.g. $10^9$) and when the
+     values are small (e.g. $10^{-5}$). It is possible to construct
      "torture cases" which break this finite difference heuristic,
      but they do not come up often in practice.
 
