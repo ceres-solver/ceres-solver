@@ -252,7 +252,6 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
   }
 
   int r = 0;
-  set<pair<int, int> > skipped_pairs;
   const int num_row_blocks = bs.rows.size();
   const int num_eliminate_blocks = options_.num_eliminate_blocks;
 
@@ -303,8 +302,6 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
       for (; block2 != f_blocks.end(); ++block2) {
         if (IsBlockPairInPreconditioner(*block1, *block2)) {
           block_pairs_.insert(make_pair(*block1, *block2));
-        } else {
-          skipped_pairs.insert(make_pair(*block1, *block2));
         }
       }
     }
@@ -321,17 +318,13 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
         if (block1 <= block2) {
           if (IsBlockPairInPreconditioner(block1, block2)) {
             block_pairs_.insert(make_pair(block1, block2));
-          } else {
-            skipped_pairs.insert(make_pair(block1, block2));
           }
         }
       }
     }
   }
 
-  VLOG(1) << "Block pair stats: "
-          << block_pairs_.size() << " included "
-          << skipped_pairs.size() << " excluded";
+  VLOG(1) << "Block pair stats: " << block_pairs_.size();
 }
 
 // Initialize the SchurEliminator.
