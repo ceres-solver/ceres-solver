@@ -97,7 +97,7 @@ class LoggingCallback : public IterationCallback {
   CallbackReturnType operator()(const IterationSummary& summary) {
     const char* kReportRowFormat =
         "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
-        "rho:% 3.2e mu:% 3.2e li:% 3d";
+        "rho:% 3.2e mu:% 3.2e li:% 3d it:% 3.2e tt:% 3.2e";
     string output = StringPrintf(kReportRowFormat,
                                  summary.iteration,
                                  summary.cost,
@@ -106,7 +106,9 @@ class LoggingCallback : public IterationCallback {
                                  summary.step_norm,
                                  summary.relative_decrease,
                                  summary.trust_region_radius,
-                                 summary.linear_solver_iterations);
+                                 summary.linear_solver_iterations,
+                                 summary.iteration_time_in_seconds,
+                                 summary.cumulative_time_in_seconds);
     if (log_to_stdout_) {
       cout << output << endl;
     } else {
@@ -164,6 +166,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
 void SolverImpl::Solve(const Solver::Options& original_options,
                        Problem* problem,
                        Solver::Summary* summary) {
+  time_t solver_start_time = time(NULL);
   Solver::Options options(original_options);
 
 #ifndef CERES_USE_OPENMP
@@ -273,6 +276,10 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Collect the discontiguous parameters into a contiguous state vector.
   reduced_program->ParameterBlocksToStateVector(parameters.data());
 
+  time_t minimizer_start_time = time(NULL);
+  summary->preprocessor_time_in_seconds =
+      minimizer_start_time - solver_start_time;
+
   // Run the optimization.
   Minimize(options,
            reduced_program.get(),
@@ -289,6 +296,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
     return;
   }
 
+  time_t post_process_start_time = time(NULL);
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
@@ -301,6 +309,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                            : NULL);
 
   // Stick a fork in it, we're done.
+  time_t post_process_end_time = time(NULL);
+  summary->postprocessor_time_in_seconds =
+      post_process_end_time - post_process_start_time;
   return;
 }
 

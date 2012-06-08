@@ -66,7 +66,9 @@ public:
     double max_radius;
 
     // Minimum and maximum values of the diagonal damping matrix used
-    // by LevenbergMarquardtStrategy.
+    // by LevenbergMarquardtStrategy. The DoglegStrategy also uses
+    // these bounds to construct a regularizing diagonal to ensure
+    // that the Gauss-Newton step computation is of full rank.
     double lm_min_diagonal;
     double lm_max_diagonal;
   };
@@ -95,6 +97,13 @@ public:
   // that the ratio of the decrease in the non-linear objective to the
   // decrease in the trust region model is step_quality.
   virtual void StepRejected(double step_quality) = 0;
+
+  // Inform the strategy that the current step has been rejected
+  // because it was found to be numerically
+  // invalid. StepRejected/StepAccepted will not be called for this
+  // step, and the strategy is free to do what it wants with this
+  // information.
+  virtual void StepIsInvalid() = 0;
 
   // Current trust region radius.
   virtual double Radius() const = 0;

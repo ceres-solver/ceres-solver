@@ -28,8 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
-#define CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
+#ifndef CERES_INTERNAL_DOGLEG_STRATEGY_H_
+#define CERES_INTERNAL_DOGLEG_STRATEGY_H_
 
 #include "ceres/linear_solver.h"
 #include "ceres/trust_region_strategy.h"
@@ -42,10 +42,15 @@ namespace internal {
 // K. Madsen, H.B. Nielsen and O. Tingleff. Available to download from
 //
 // http://www2.imm.dtu.dk/pubdb/views/edoc_download.php/3215/pdf/imm3215.pdf
-class LevenbergMarquardtStrategy : public TrustRegionStrategy {
+//
+// One minor modification is that instead of computing the pure
+// Gauss-Newton step, we compute a regularized version of it. This is
+// because the Jacobian is often rank-deficient and in such cases
+// using a direct solver leads to numerical failure.
+class DoglegStrategy : public TrustRegionStrategy {
 public:
-  LevenbergMarquardtStrategy(const TrustRegionStrategy::Options& options);
-  virtual ~LevenbergMarquardtStrategy();
+  DoglegStrategy(const TrustRegionStrategy::Options& options);
+  virtual ~DoglegStrategy() {}
 
   // TrustRegionStrategy interface
   virtual LinearSolver::Summary ComputeStep(
@@ -55,32 +60,41 @@ public:
       double* step);
   virtual void StepAccepted(double step_quality);
   virtual void StepRejected(double step_quality);
-  virtual void StepIsInvalid() {
-    // Treat it as a bad step with no increase in solution
-    // quality. Since rejected steps lead to decrease in the size of
-    // the trust region, the next time ComputeStep is called, this
-    // will lead to a better conditioned system.
-    StepRejected(0.0);
-  }
+  virtual void StepIsInvalid();
 
   virtual double Radius() const;
 
  private:
+  void ComputeCauchyStep();
+  LinearSolver::Summary ComputeGaussNewtonStep(SparseMatrix* jacobian,
+                                               const double* residuals);
+  void ComputeDogleg(double* step);
+
   LinearSolver* linear_solver_;
   double radius_;
-  double max_radius_;
+  const double max_radius_;
+
   const double min_diagonal_;
   const double max_diagonal_;
-  double decrease_factor_;
-  bool reuse_diagonal_;
-  Vector diagonal_;   // diagonal_ =  diag(J'J)
-  // Scaled copy of diagonal_. Stored here as optimization to prevent
-  // allocations in every iteration and reuse when a step fails and
-  // ComputeStep is called again.
-  Vector lm_diagonal_;  // lm_diagonal_ = diagonal_ / radius_;
+  double min_mu_;
+  const double max_mu_;
+  const double mu_increase_factor_;
+  const double increase_threshold_;
+  const double decrease_threshold_;
+
+  Vector diagonal_;
+  Vector lm_diagonal_;
+
+  Vector gradient_;
+  Vector gauss_newton_step_;
+
+  double alpha_;
+  double dogleg_step_norm_;
+
+  bool reuse_;
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
+#endif  // CERES_INTERNAL_DOGLEG_STRATEGY_H_

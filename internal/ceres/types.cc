@@ -97,6 +97,26 @@ const char* SolverTerminationTypeToString(
   }
 }
 
+const char* SparseLinearAlgebraTypeToString(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
+  switch (sparse_linear_algebra_library_type) {
+    CASESTR(CX_SPARSE);
+    CASESTR(SUITE_SPARSE);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+const char* TrustRegionStrategyTypeToString(
+    TrustRegionStrategyType trust_region_strategy_type) {
+  switch (trust_region_strategy_type) {
+    CASESTR(LEVENBERG_MARQUARDT);
+    CASESTR(DOGLEG);
+    default:
+      return "UNKNOWN";
+  }
+}
+
 #undef CASESTR
 
 bool IsSchurType(LinearSolverType type) {
