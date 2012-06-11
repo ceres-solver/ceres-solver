@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///2g\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:15:10Z",
+      "side": 1,
+      "message": "\"it\" -\u003e \"the previous step\"",
+      "revId": "1337b2d9a0adb6a307d0a873ed7949de8dbe814d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///2c\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:15:10Z",
+      "side": 1,
+      "message": "This hung needs to get pushed to the dogleg CL.",
+      "revId": "1337b2d9a0adb6a307d0a873ed7949de8dbe814d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///2Y\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:15:10Z",
+      "side": 1,
+      "message": "Fix wrapping.",
+      "revId": "1337b2d9a0adb6a307d0a873ed7949de8dbe814d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
