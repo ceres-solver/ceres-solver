@@ -55,6 +55,14 @@ public:
       double* step);
   virtual void StepAccepted(double step_quality);
   virtual void StepRejected(double step_quality);
+  virtual void StepIsInvalid() {
+    // Treat the current step as a rejected step with no increase in
+    // solution quality. Since rejected steps lead to decrease in the
+    // size of the trust region, the next time ComputeStep is called,
+    // this will lead to a better conditioned system.
+    StepRejected(0.0);
+  }
+
   virtual double Radius() const;
 
  private:
