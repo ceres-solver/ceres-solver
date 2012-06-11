@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGe3///2M\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "We should probably document this as well.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///2Q\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "Needs explanation.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///2I\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "drop \"multiple\"",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///2A\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "Missing file header.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///18\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "Non-ceres headers above ceres headers.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///14\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///10\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "Describe what mu is.",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGe3///1w\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 1,
+      "message": "How did you test this?",
+      "revId": "ff24c246b0e8412d63c817aabedacae2b78cb06d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

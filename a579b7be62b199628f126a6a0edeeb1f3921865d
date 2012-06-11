@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGe3///1s\u003d",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-11T08:54:42Z",
+      "side": 0,
+      "message": "Is this file meant to be in here?",
+      "revId": "a579b7be62b199628f126a6a0edeeb1f3921865d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
