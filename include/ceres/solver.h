@@ -59,7 +59,7 @@ class Solver {
     Options() {
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       max_num_iterations = 50;
-      max_solver_time_sec = 1e9;
+      max_solver_time_in_seconds = 1e9;
       num_threads = 1;
       initial_trust_region_radius = 1e4;
       max_trust_region_radius = 1e16;
@@ -117,7 +117,7 @@ class Solver {
     int max_num_iterations;
 
     // Maximum time for which the minimizer should run for.
-    double max_solver_time_sec;
+    double max_solver_time_in_seconds;
 
     // Number of threads used by Ceres for evaluating the cost and
     // jacobians.
@@ -377,8 +377,21 @@ class Solver {
     int num_successful_steps;
     int num_unsuccessful_steps;
 
+    // When the user calls Solve, before the actual optimization
+    // occurs, Ceres performs a number of preprocessing steps. These
+    // include error checks, memory allocations, and reorderings. This
+    // time is accounted for as preprocessing time.
     double preprocessor_time_in_seconds;
+
+    // Time spent in the TrustRegionMinimizer.
     double minimizer_time_in_seconds;
+
+    // After the Minimizer is finished, some time is spent in
+    // re-evaluating residuals etc. This time is accounted for in the
+    // postprocessor time.
+    double postprocessor_time_in_seconds;
+
+    // Some total of all time spent inside Ceres when Solve is called.
     double total_time_in_seconds;
 
     // Preprocessor summary.

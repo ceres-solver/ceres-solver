@@ -60,7 +60,7 @@ class Minimizer {
 
     void Init(const Solver::Options& options) {
       max_num_iterations = options.max_num_iterations;
-      max_solver_time_sec = options.max_solver_time_sec;
+      max_solver_time_in_seconds = options.max_solver_time_in_seconds;
       max_step_solver_retries = 5;
       gradient_tolerance = options.gradient_tolerance;
       parameter_tolerance = options.parameter_tolerance;
@@ -81,7 +81,7 @@ class Minimizer {
     }
 
     int max_num_iterations;
-    int max_solver_time_sec;
+    double max_solver_time_in_seconds;
 
     // Number of times the linear solver should be retried in case of
     // numerical failure. The retries are done by exponentially scaling up
