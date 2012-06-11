@@ -158,8 +158,23 @@ enum LoggingType {
   PER_MINIMIZER_ITERATION
 };
 
+// Ceres supports different strategies for computing the trust region
+// step.
 enum TrustRegionStrategyType {
+  // The default trust region strategy is to use the step computation
+  // used in the Levenberg-Marquardt algorithm. For more details see
+  // levenberg_marquardt_strategy.h
   LEVENBERG_MARQUARDT,
+
+  // Powell's dogleg algorithm interpolates between the Cauchy point
+  // and the Gauss-Newton step. It is particularly useful if the
+  // LEVENBERG_MARQUARDT algorithm is making a large number of
+  // unsuccessful steps. For more details see dogleg_strategy.h.
+  //
+  // Note: This strategy should has not been experimented with or
+  // tested as extensively as LEVENBERG_MARQUARDT, and therefore it
+  // should be considered EXPERIMENTAL for now.
+  DOGLEG
 };
 
 enum SolverTerminationType {
@@ -261,7 +276,9 @@ const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
 const char* OrderingTypeToString(OrderingType type);
 const char* SolverTerminationTypeToString(SolverTerminationType type);
-
+const char* SparseLinearAlgebraLibraryTypeToString(
+    SparseLinearAlgebraLibraryType type);
+const char* TrustRegionStrategyTypeToString( TrustRegionStrategyType type);
 bool IsSchurType(LinearSolverType type);
 
 }  // namespace ceres
