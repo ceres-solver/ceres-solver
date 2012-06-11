@@ -66,7 +66,9 @@ public:
     double max_radius;
 
     // Minimum and maximum values of the diagonal damping matrix used
-    // by LevenbergMarquardtStrategy.
+    // by LevenbergMarquardtStrategy. The DoglegStrategy also uses
+    // these bounds to construct a regularizing diagonal to ensure
+    // that the Gauss-Newton step computation is of full rank.
     double lm_min_diagonal;
     double lm_max_diagonal;
   };

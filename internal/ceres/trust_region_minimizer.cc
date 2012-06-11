@@ -158,7 +158,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   // something similar across the board.
   iteration_summary.eta = options_.eta;
   iteration_summary.linear_solver_iterations = 0;
-  iteration_summary.step_solver_time_sec = 0;
+  iteration_summary.step_solver_time_in_seconds = 0;
 
   // Do initial cost and Jacobian evaluation.
   double cost = 0.0;
@@ -209,9 +209,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
-  // Call the various callbacks.
-  iteration_summary.iteration_time_sec = time(NULL) - iteration_start_time;
+  iteration_summary.iteration_time_in_seconds =
+      time(NULL) - iteration_start_time;
+  iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
+        summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
+
+  // Call the various callbacks.
   switch (RunCallbacks(options_, iteration_summary)) {
     case SOLVER_TERMINATE_SUCCESSFULLY:
       summary->termination_type = USER_SUCCESS;
@@ -236,7 +240,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    if ((start_time - iteration_start_time) >= options_.max_solver_time_sec) {
+    const double total_solver_time = iteration_start_time - start_time +
+        summary->preprocessor_time_in_seconds;
+    if (total_solver_time >= options_.max_solver_time_in_seconds) {
       summary->termination_type = NO_CONVERGENCE;
       VLOG(1) << "Terminating: Maximum solver time reached.";
       break;
@@ -257,7 +263,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                               residuals.data(),
                               trust_region_step.data());
 
-    iteration_summary.step_solver_time_sec = time(NULL) - strategy_start_time;
+    iteration_summary.step_solver_time_in_seconds =
+        time(NULL) - strategy_start_time;
     iteration_summary.linear_solver_iterations =
         strategy_summary.num_iterations;
 
@@ -365,7 +372,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           options_.function_tolerance * cost;
       if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
         VLOG(1) << "Terminating. Function tolerance reached. "
-                << "|cost_change|/cost: " << fabs(iteration_summary.cost_change) / cost
+                << "|cost_change|/cost: "
+                << fabs(iteration_summary.cost_change) / cost
                 << " <= " << options_.function_tolerance;
         summary->termination_type = FUNCTION_TOLERANCE;
         return;
@@ -409,7 +417,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
     } else {
       ++summary->num_unsuccessful_steps;
-      strategy->StepRejected(iteration_summary.relative_decrease);
+      if (iteration_summary.step_is_valid) {
+        strategy->StepRejected(iteration_summary.relative_decrease);
+      } else {
+        strategy->StepIsInvalid();
+      }
     }
 
     iteration_summary.cost = cost + summary->fixed_cost;
@@ -421,8 +433,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       return;
     }
 
-    iteration_summary.iteration_time_sec = time(NULL) - iteration_start_time;
+    iteration_summary.iteration_time_in_seconds =
+        time(NULL) - iteration_start_time;
+    iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
+        summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
+
     switch (RunCallbacks(options_, iteration_summary)) {
       case SOLVER_TERMINATE_SUCCESSFULLY:
         summary->termination_type = USER_SUCCESS;

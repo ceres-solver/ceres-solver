@@ -84,6 +84,8 @@ DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
             "parameterization.");
 DEFINE_bool(robustify, false, "Use a robust loss function");
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
+DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 
 namespace ceres {
 namespace examples {
@@ -218,6 +220,15 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->minimizer_progress_to_stdout = true;
   options->num_threads = FLAGS_num_threads;
   options->eta = FLAGS_eta;
+  options->max_solver_time_in_seconds = FLAGS_max_solver_time;
+  if (FLAGS_trust_region_strategy == "lm") {
+    options->trust_region_strategy_type = LEVENBERG_MARQUARDT;
+  } else if (FLAGS_trust_region_strategy == "dogleg") {
+    options->trust_region_strategy_type = DOGLEG;
+  } else {
+    LOG(FATAL) << "Unknown trust region strategy: "
+               << FLAGS_trust_region_strategy;
+  }
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
