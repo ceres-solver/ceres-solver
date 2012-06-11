@@ -114,7 +114,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   for (summary.num_iterations = 1;
        summary.num_iterations < options_.max_num_iterations;
        ++summary.num_iterations) {
-    VLOG(2) << "cg iteration " << summary.num_iterations;
+    VLOG(3) << "cg iteration " << summary.num_iterations;
 
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {
@@ -201,13 +201,13 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     //   1. Stephen G. Nash & Ariela Sofer, Assessing A Search
     //   Direction Within A Truncated Newton Method, Operation
     //   Research Letters 9(1990) 219-221.
-    //   
+    //
     //   2. Stephen G. Nash, A Survey of Truncated Newton Methods,
     //   Journal of Computational and Applied Mathematics,
     //   124(1-2), 45-59, 2000.
     //
     double zeta = summary.num_iterations * (Q1 - Q0) / Q1;
-    VLOG(2) << "Q termination: zeta " << zeta
+    VLOG(3) << "Q termination: zeta " << zeta
             << " " << per_solve_options.q_tolerance;
     if (zeta < per_solve_options.q_tolerance) {
       summary.termination_type = TOLERANCE;
@@ -217,7 +217,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
 
     // Residual based termination.
     norm_r = r. norm();
-    VLOG(2) << "R termination: norm_r " << norm_r
+    VLOG(3) << "R termination: norm_r " << norm_r
             << " " << tol_r;
     if (norm_r <= tol_r) {
       summary.termination_type = TOLERANCE;
