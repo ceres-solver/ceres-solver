@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///18\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-11T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///3Q\u003d",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///3M\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-11T20:09:57Z",
       "side": 1,
       "message": "Why int?",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///14\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-11T20:45:02Z",
+      "side": 1,
+      "message": "well because we are subtracting time_t.. but yes thats bogus. changing to double.",
+      "parentUuid": "AAAGfX///3M\u003d",
       "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///10\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-11T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///3I\u003d",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///3A\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///1o\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-11T20:45:02Z",
+      "side": 1,
+      "message": "no, this is correct. for levenberg marquardt the semantics remain sane, its only for dogleg that things are different. so at this point this is a no-op.",
+      "parentUuid": "AAAGfX///3A\u003d",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///3E\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2012-06-11T20:09:57Z",
       "side": 1,
       "message": "80 cols.",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///1k\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-11T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///3E\u003d",
       "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
