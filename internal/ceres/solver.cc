@@ -49,8 +49,6 @@ void Solver::Solve(const Solver::Options& options,
   time_t start_time_seconds = time(NULL);
   internal::SolverImpl::Solve(options, problem, summary);
   summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
-  summary->preprocessor_time_in_seconds =
-      summary->total_time_in_seconds - summary->minimizer_time_in_seconds;
 }
 
 void Solve(const Solver::Options& options,
@@ -59,8 +57,6 @@ void Solve(const Solver::Options& options,
   time_t start_time_seconds = time(NULL);
   internal::SolverImpl::Solve(options, problem, summary);
   summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
-  summary->preprocessor_time_in_seconds =
-      summary->total_time_in_seconds - summary->minimizer_time_in_seconds;
 }
 
 Solver::Summary::Summary()
@@ -74,6 +70,7 @@ Solver::Summary::Summary()
       num_unsuccessful_steps(-1),
       preprocessor_time_in_seconds(-1.0),
       minimizer_time_in_seconds(-1.0),
+      postprocessor_time_in_seconds(-1.0),
       total_time_in_seconds(-1.0),
       num_parameter_blocks(-1),
       num_parameters(-1),
