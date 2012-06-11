@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///3Q\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:09:57Z",
+      "side": 1,
+      "message": "80 cols",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///3M\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:09:57Z",
+      "side": 1,
+      "message": "Why int?",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///3I\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:09:57Z",
+      "side": 1,
+      "message": "80 cols.",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///3A\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:09:57Z",
+      "side": 1,
+      "message": "Hmm, is this hunk supposed to be here? I think this is for a different patch.",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///3E\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-11T20:09:57Z",
+      "side": 1,
+      "message": "80 cols.",
+      "revId": "66aa168894e221ef0698a97c14ca61ea52baac91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
