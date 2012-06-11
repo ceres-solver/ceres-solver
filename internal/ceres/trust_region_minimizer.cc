@@ -209,7 +209,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
-  iteration_summary.iteration_time_in_seconds = time(NULL) - iteration_start_time;
+  iteration_summary.iteration_time_in_seconds =
+      time(NULL) - iteration_start_time;
   iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
         summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
@@ -239,7 +240,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    const int total_solver_time = iteration_start_time - start_time +
+    const double total_solver_time = iteration_start_time - start_time +
         summary->preprocessor_time_in_seconds;
     if (total_solver_time >= options_.max_solver_time_in_seconds) {
       summary->termination_type = NO_CONVERGENCE;
@@ -262,7 +263,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                               residuals.data(),
                               trust_region_step.data());
 
-    iteration_summary.step_solver_time_in_seconds = time(NULL) - strategy_start_time;
+    iteration_summary.step_solver_time_in_seconds =
+        time(NULL) - strategy_start_time;
     iteration_summary.linear_solver_iterations =
         strategy_summary.num_iterations;
 
@@ -430,7 +432,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       return;
     }
 
-    iteration_summary.iteration_time_in_seconds = time(NULL) - iteration_start_time;
+    iteration_summary.iteration_time_in_seconds =
+        time(NULL) - iteration_start_time;
     iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
         summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
