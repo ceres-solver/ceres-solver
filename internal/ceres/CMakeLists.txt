@@ -48,6 +48,7 @@ SET(CERES_INTERNAL_SRC
     dense_qr_solver.cc
     dense_sparse_matrix.cc
     detect_structure.cc
+    dogleg_strategy.cc
     evaluator.cc
     file.cc
     gradient_checking_cost_function.cc
