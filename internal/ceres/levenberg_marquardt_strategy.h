@@ -56,10 +56,10 @@ public:
   virtual void StepAccepted(double step_quality);
   virtual void StepRejected(double step_quality);
   virtual void StepIsInvalid() {
-    // Treat it as a bad step with no increase in solution
-    // quality. Since rejected steps lead to decrease in the size of
-    // the trust region, the next time ComputeStep is called, this
-    // will lead to a better conditioned system.
+    // Treat the current step as a rejected step with no increase in
+    // solution quality. Since rejected steps lead to decrease in the
+    // size of the trust region, the next time ComputeStep is called,
+    // this will lead to a better conditioned system.
     StepRejected(0.0);
   }
 

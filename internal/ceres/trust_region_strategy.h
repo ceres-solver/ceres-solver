@@ -99,10 +99,9 @@ public:
   virtual void StepRejected(double step_quality) = 0;
 
   // Inform the strategy that the current step has been rejected
-  // because it was found to be numerically
-  // invalid. StepRejected/StepAccepted will not be called for this
-  // step, and the strategy is free to do what it wants with this
-  // information.
+  // because it was found to be numerically invalid.
+  // StepRejected/StepAccepted will not be called for this step, and
+  // the strategy is free to do what it wants with this information.
   virtual void StepIsInvalid() = 0;
 
   // Current trust region radius.
