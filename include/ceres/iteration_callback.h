@@ -91,15 +91,15 @@ struct IterationSummary {
   // Newton step.
   int linear_solver_iterations;
 
-  // TODO(sameeragarwal): Change the following two to use a higher
-  // precision timer using clock_gettime.
-  //
   // Time (in seconds) spent inside the minimizer loop in the current
   // iteration.
-  int iteration_time_sec;
+  double iteration_time_in_seconds;
 
   // Time (in seconds) spent inside the trust region step solver.
-  int step_solver_time_sec;
+  double step_solver_time_in_seconds;
+
+  // Time (in seconds) since the user called Solve().
+  double cumulative_time_in_seconds;
 };
 
 // Interface for specifying callbacks that are executed at the end of

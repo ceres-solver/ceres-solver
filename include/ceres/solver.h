@@ -59,7 +59,7 @@ class Solver {
     Options() {
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       max_num_iterations = 50;
-      max_solver_time_sec = 1e9;
+      max_solver_time_in_seconds = 1e9;
       num_threads = 1;
       initial_trust_region_radius = 1e4;
       max_trust_region_radius = 1e16;
@@ -117,7 +117,7 @@ class Solver {
     int max_num_iterations;
 
     // Maximum time for which the minimizer should run for.
-    double max_solver_time_sec;
+    double max_solver_time_in_seconds;
 
     // Number of threads used by Ceres for evaluating the cost and
     // jacobians.
@@ -379,6 +379,7 @@ class Solver {
 
     double preprocessor_time_in_seconds;
     double minimizer_time_in_seconds;
+    double postprocessor_time_in_seconds;
     double total_time_in_seconds;
 
     // Preprocessor summary.
