@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///tE\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-12T05:09:42Z",
+      "side": 1,
+      "message": "We should CHECK() fail in that case then.",
+      "revId": "3cf002b2e6f1da5b57feb02743a78d1164408ac6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///s8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-12T05:09:42Z",
+      "side": 1,
+      "message": "wants",
+      "revId": "3cf002b2e6f1da5b57feb02743a78d1164408ac6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
