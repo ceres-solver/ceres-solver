@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///vE\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wY\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///wU\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Missing file header.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///u8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "ohh you mean copyright.",
+      "parentUuid": "AAAGfX///wU\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///u0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wA\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///v8\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Any reason not to push these into options?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///uw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "because these are essentially hard coded. I fore see no circumstance in which these are going to change, and it will just make Solver::Options even more complicated than it is already.",
+      "parentUuid": "AAAGfX///v8\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///uo\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///v0\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///vk\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Do we need to count the number of linear solves as a separate quantity?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///us\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "probably. I will add a todo for now. We also need other changes to the summary reporting doc, so this will have to be part of a larger change.",
+      "parentUuid": "AAAGfX///vk\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///uk\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///v4\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///vo\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Two space indent.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///ug\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///vo\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///uc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///vs\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///vw\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "ComputeDoglegStep",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///uQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///vw\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///uY\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wI\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///wM\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Line length.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///uM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wM\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///uI\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "No, just the gauss-newton solve is very mildly regularized. There is no step size control, only to ensure that it is not rank deficient.",
+      "parentUuid": "AAAGfX///vg\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///wQ\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 3
@@ -234,6 +468,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Needs explanation.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///tc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wQ\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///tg\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///wE\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///vY\u003d",
         "filename": "internal/ceres/dogleg_strategy.h",
         "patchSetId": 3
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///tY\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///vY\u003d",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///vU\u003d",
         "filename": "internal/ceres/dogleg_strategy.h",
         "patchSetId": 3
@@ -285,6 +573,24 @@
       "writtenOn": "2012-06-12T04:14:07Z",
       "side": 1,
       "message": "Consider optionalifying these constants.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///tU\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T04:56:19Z",
+      "side": 1,
+      "message": "I thought about it, for now I am not inclined to, because it would be optioning these for the heck of it and propagating them all the way through.. more documentation for no really good reason.",
+      "parentUuid": "AAAGfX///vU\u003d",
       "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
