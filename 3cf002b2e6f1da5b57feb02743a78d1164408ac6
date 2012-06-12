@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGfX///sk\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T05:15:59Z",
+      "side": 1,
+      "message": "I will, there is a larger change that needs to be made to solver_impl.h which is about policy and has nothing to do with getting dogleg in. Which is why I have not included it here.\n\nThis will go in along with the summary reporting changes which actually report on what trust region strategy was used to do the solve.",
+      "parentUuid": "AAAGfX///tE\u003d",
+      "revId": "3cf002b2e6f1da5b57feb02743a78d1164408ac6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGfX///s8\u003d",
         "filename": "internal/ceres/dogleg_strategy.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-12T05:09:42Z",
       "side": 1,
       "message": "wants",
+      "revId": "3cf002b2e6f1da5b57feb02743a78d1164408ac6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///ss\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-12T05:15:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGfX///s8\u003d",
       "revId": "3cf002b2e6f1da5b57feb02743a78d1164408ac6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
