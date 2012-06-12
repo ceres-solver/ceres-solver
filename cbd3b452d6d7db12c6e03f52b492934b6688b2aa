@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///wY\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Should has not!",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wU\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Missing file header.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Does this not fit on the previous line?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///v8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Any reason not to push these into options?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///v0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "This needs a few short, high level comments in the body to facilitate understanding the flow without rederiving all the math.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vk\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Do we need to count the number of linear solves as a separate quantity?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///v4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vo\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Two space indent.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vs\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Four space indent.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "ComputeDoglegStep",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wI\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "It\u0027d be nice to have obvious block comments about the 3 cases that arise in Dogleg; something along the lines of\n\n// Case 1. The GN step is best ...\n\n...\n\n// Case 2. The Cauchy step is best ...\n\n...\n\n// Case 3. The interesting case: interpolate...\n\n...",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Line length.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vg\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Oh, so this dogleg variant *is* regularized.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Needs explanation.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///wE\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "It might be nice to include some commentary on these magical update formulas.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vY\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "starts higher -\u003e starts with stronger regularization.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vU\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Consider optionalifying these constants.",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "What\u0027s alpha?",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///vM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-12T04:14:07Z",
+      "side": 1,
+      "message": "Please explain the object state space; especially as it relates to \"reuse\"",
+      "revId": "cbd3b452d6d7db12c6e03f52b492934b6688b2aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
