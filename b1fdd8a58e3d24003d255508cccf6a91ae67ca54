@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGfX///g0\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-13T04:57:07Z",
+      "side": 1,
+      "message": "Store in a variable; reuse.",
+      "revId": "b1fdd8a58e3d24003d255508cccf6a91ae67ca54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///gw\u003d",
+        "filename": "internal/ceres/trust_region_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-13T04:57:07Z",
+      "side": 1,
+      "message": "Keep the column alignment by inserting a space before \u003e for the true cases (and below).",
+      "revId": "b1fdd8a58e3d24003d255508cccf6a91ae67ca54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGfX///gs\u003d",
+        "filename": "internal/ceres/trust_region_minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-13T04:57:07Z",
+      "side": 1,
+      "message": "Odd, but this one works with LM?",
+      "revId": "b1fdd8a58e3d24003d255508cccf6a91ae67ca54",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
