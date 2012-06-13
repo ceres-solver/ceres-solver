@@ -204,7 +204,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     VLOG(1) << "Terminating: Gradient tolerance reached."
             << "Relative gradient max norm: "
             << iteration_summary.gradient_max_norm /
-        summary->iterations[0].gradient_max_norm
+        max(iteration_summary.gradient_max_norm, kEpsilon)
             << " <= " << options_.gradient_tolerance;
     return;
   }

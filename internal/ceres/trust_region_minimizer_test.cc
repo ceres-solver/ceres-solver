@@ -38,10 +38,10 @@
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/port.h"
-#include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
 #include "ceres/trust_region_minimizer.h"
+#include "ceres/trust_region_strategy.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -52,7 +52,7 @@ namespace internal {
 // active. This is equivalent to constructing a problem and using the
 // SubsetLocalParameterization. This allows us to test the support for
 // the Evaluator::Plus operation besides checking for the basic
-// performance of the LevenbergMarquardt algorithm.
+// performance of the trust region algorithm.
 template <bool col1, bool col2, bool col3, bool col4>
 class PowellEvaluator2 : public Evaluator {
  public:
@@ -183,7 +183,7 @@ class PowellEvaluator2 : public Evaluator {
 // Templated function to hold a subset of the columns fixed and check
 // if the solver converges to the optimal values or not.
 template<bool col1, bool col2, bool col3, bool col4>
-void IsLevenbergMarquardtSolveSuccessful() {
+void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   Solver::Options solver_options;
   LinearSolver::Options linear_solver_options;
   DenseQRSolver linear_solver(linear_solver_options);
@@ -208,6 +208,7 @@ void IsLevenbergMarquardtSolveSuccessful() {
   minimizer_options.jacobian = jacobian.get();
 
   TrustRegionStrategy::Options trust_region_strategy_options;
+  trust_region_strategy_options.trust_region_strategy_type = strategy_type;
   trust_region_strategy_options.linear_solver = &linear_solver;
   trust_region_strategy_options.initial_radius = 1e4;
   trust_region_strategy_options.max_radius = 1e20;
@@ -228,7 +229,7 @@ void IsLevenbergMarquardtSolveSuccessful() {
   EXPECT_NEAR(0.0, parameters[3], 0.001);
 };
 
-TEST(TrustRegionMinimizer, PowellsSingularFunction) {
+TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
   // This case is excluded because this has a local minimum and does
   // not find the optimum. This should not affect the correctness of
   // this test since we are testing all the other 14 combinations of
@@ -236,20 +237,43 @@ TEST(TrustRegionMinimizer, PowellsSingularFunction) {
   //
   //   IsSolveSuccessful<true, true, false, true>();
 
-  IsLevenbergMarquardtSolveSuccessful<true,  true,  true,  true>();
-  IsLevenbergMarquardtSolveSuccessful<true,  true,  true,  false>();
-  IsLevenbergMarquardtSolveSuccessful<true,  false, true,  true>();
-  IsLevenbergMarquardtSolveSuccessful<false, true,  true,  true>();
-  IsLevenbergMarquardtSolveSuccessful<true,  true,  false, false>();
-  IsLevenbergMarquardtSolveSuccessful<true,  false, true,  false>();
-  IsLevenbergMarquardtSolveSuccessful<false, true,  true,  false>();
-  IsLevenbergMarquardtSolveSuccessful<true,  false, false, true>();
-  IsLevenbergMarquardtSolveSuccessful<false, true,  false, true>();
-  IsLevenbergMarquardtSolveSuccessful<false, false, true,  true>();
-  IsLevenbergMarquardtSolveSuccessful<true,  false, false, false>();
-  IsLevenbergMarquardtSolveSuccessful<false, true,  false, false>();
-  IsLevenbergMarquardtSolveSuccessful<false, false, true,  false>();
-  IsLevenbergMarquardtSolveSuccessful<false, false, false, true>();
+  const TrustRegionStrategyType kStrategy = LEVENBERG_MARQUARDT;
+  IsTrustRegionSolveSuccessful<true,  true,  true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  true,  true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  true,  false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, false, true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  false, true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, false, true>(kStrategy);
+}
+
+TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
+  // The following two cases are excluded because they encounter a local minimum.
+  //
+  //  IsTrustRegionSolveSuccessful<true, true, false, true>(kStrategy);
+  //  IsTrustRegionSolveSuccessful<true,  true,  true,  true>(kStrategy);
+
+  const TrustRegionStrategyType kStrategy = DOGLEG;
+  IsTrustRegionSolveSuccessful<true,  true,  true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  true,  false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, false, true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  false, true>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, true,  true>(kStrategy);
+  IsTrustRegionSolveSuccessful<true,  false, false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, true,  false, false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, true,  false>(kStrategy);
+  IsTrustRegionSolveSuccessful<false, false, false, true>(kStrategy);
 }
 
 }  // namespace internal
