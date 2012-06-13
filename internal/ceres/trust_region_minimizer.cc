@@ -196,15 +196,18 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     scale.setOnes();
   }
 
-  const double absolute_gradient_tolerance =
-      options_.gradient_tolerance *
+  // The initial gradient max_norm is bounded from below so that we do
+  // not divide by zero.
+  const double gradient_max_norm_0 =
       max(iteration_summary.gradient_max_norm, kEpsilon);
+  const double absolute_gradient_tolerance =
+      options_.gradient_tolerance * gradient_max_norm_0;
+
   if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
     summary->termination_type = GRADIENT_TOLERANCE;
     VLOG(1) << "Terminating: Gradient tolerance reached."
             << "Relative gradient max norm: "
-            << iteration_summary.gradient_max_norm /
-        summary->iterations[0].gradient_max_norm
+            << iteration_summary.gradient_max_norm / gradient_max_norm_0
             << " <= " << options_.gradient_tolerance;
     return;
   }
@@ -406,8 +409,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         summary->termination_type = GRADIENT_TOLERANCE;
         VLOG(1) << "Terminating: Gradient tolerance reached."
                 << "Relative gradient max norm: "
-                << iteration_summary.gradient_max_norm /
-            summary->iterations[0].gradient_max_norm
+                << iteration_summary.gradient_max_norm / gradient_max_norm_0
                 << " <= " << options_.gradient_tolerance;
         return;
       }
