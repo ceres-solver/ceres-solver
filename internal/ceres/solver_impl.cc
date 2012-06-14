@@ -132,12 +132,16 @@ void SolverImpl::Minimize(const Solver::Options& options,
   Minimizer::Options minimizer_options(options);
   LoggingCallback logging_callback(options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
-    minimizer_options.callbacks.push_back(&logging_callback);
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &logging_callback);
   }
 
   StateUpdatingCallback updating_callback(program, parameters);
   if (options.update_state_every_iteration) {
-    minimizer_options.callbacks.push_back(&updating_callback);
+    // This must get pushed to the front of the callbacks so that it is run
+    // before any of the user callbacks.
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &updating_callback);
   }
 
   minimizer_options.evaluator = evaluator;

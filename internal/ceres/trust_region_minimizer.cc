@@ -59,7 +59,6 @@ const double kEpsilon = 1e-12;
 // the callbacks does not return SOLVER_CONTINUE, then stop and return
 // its status.
 CallbackReturnType TrustRegionMinimizer::RunCallbacks(
-    const Minimizer::Options& options_,
     const IterationSummary& iteration_summary) {
   for (int i = 0; i < options_.callbacks.size(); ++i) {
     const CallbackReturnType status =
@@ -219,7 +218,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   summary->iterations.push_back(iteration_summary);
 
   // Call the various callbacks.
-  switch (RunCallbacks(options_, iteration_summary)) {
+  switch (RunCallbacks(iteration_summary)) {
     case SOLVER_TERMINATE_SUCCESSFULLY:
       summary->termination_type = USER_SUCCESS;
       VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
@@ -441,7 +440,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
 
-    switch (RunCallbacks(options_, iteration_summary)) {
+    switch (RunCallbacks(iteration_summary)) {
       case SOLVER_TERMINATE_SUCCESSFULLY:
         summary->termination_type = USER_SUCCESS;
         VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
