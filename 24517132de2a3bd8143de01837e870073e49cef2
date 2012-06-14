@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGln///44\u003d",
+        "filename": "internal/ceres/minimizer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-14T20:09:59Z",
+      "side": 1,
+      "message": "So there is one more change that needs to be made.\nwhich is the order in which these callbacks are added.\ninside solver_impl, right now we are adding the logging and the state updating callbacks at the back of the callbacks vector.\nthey should be in the front. Otherwise the user\u0027s callback will not get called with the updated state.",
+      "revId": "24517132de2a3bd8143de01837e870073e49cef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
