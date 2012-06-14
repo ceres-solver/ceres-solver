@@ -224,7 +224,7 @@ void SuiteSparse::ScalarMatrixToBlockMatrix(const cholmod_sparse* A,
       vector<int>::const_iterator it = lower_bound(row_block_starts.begin(),
                                                    row_block_starts.end(),
                                                    scalar_rows[idx]);
-      DCHECK(it != row_block_starts.end());
+
       // Only consider the first row of each row block.
       if (*it != scalar_rows[idx]) {
         continue;

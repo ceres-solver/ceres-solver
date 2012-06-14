@@ -115,7 +115,7 @@ TEST(SuiteSparse, ScalarMatrixToBlockMatrix) {
   //     [1 2 3 2]
   // [1]  x   x
   // [2]    x   x
-  // [1]  x x
+  // [2]  x x
   // num_nonzeros = 1 + 3 + 4 + 4 + 1 + 2 = 15
 
   vector<int> col_blocks;
@@ -127,12 +127,12 @@ TEST(SuiteSparse, ScalarMatrixToBlockMatrix) {
   vector<int> row_blocks;
   row_blocks.push_back(1);
   row_blocks.push_back(2);
-  row_blocks.push_back(1);
+  row_blocks.push_back(2);
 
-  TripletSparseMatrix tsm(4, 8, 15);
+  TripletSparseMatrix tsm(5, 8, 18);
   int* rows = tsm.mutable_rows();
   int* cols = tsm.mutable_cols();
-  fill(tsm.mutable_values(), tsm.mutable_values() + 15, 1.0);
+  fill(tsm.mutable_values(), tsm.mutable_values() + 18, 1.0);
   int offset = 0;
 
 #define CERES_TEST_FILL_BLOCK(row_block_id, col_block_id) \
