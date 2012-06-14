@@ -224,9 +224,16 @@ void SuiteSparse::ScalarMatrixToBlockMatrix(const cholmod_sparse* A,
       vector<int>::const_iterator it = lower_bound(row_block_starts.begin(),
                                                    row_block_starts.end(),
                                                    scalar_rows[idx]);
-
-      // Only consider the first row of each row block.
-      if (*it != scalar_rows[idx]) {
+      // Since we are using lower_bound, it will return the row id
+      // where the row block starts. For everything but the first row
+      // of the block, where these values will be the same, we can
+      // skip, as we only need the first row to detect the presence of
+      // the block.
+      //
+      // For rows all but the first row in the last row block,
+      // lower_bound will return row_block_starts.end(), but those can
+      // be skipped like the rows in other row blocks too.
+      if (it == row_block_starts.end() || *it != scalar_rows[idx]) {
         continue;
       }
 
