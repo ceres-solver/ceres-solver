@@ -26,42 +26,38 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: keir@google.com (Keir Mierle)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-
+#include "gtest/gtest.h"
+#include "ceres/iteration_callback.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
-#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as one of the
-// arguments to the Minimize method.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class FakeIterationCallback : public IterationCallback {
  public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
-
- private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  CallbackReturnType RunCallbacks(const IterationSummary& iteration_summary);
-  bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
-                                           const SparseMatrix* jacobian,
-                                           const double* residuals,
-                                           const double* step) const;
-
-  Minimizer::Options options_;
+  virtual ~FakeIterationCallback() {}
+  virtual CallbackReturnType operator()(const IterationSummary& summary) {
+    return SOLVER_CONTINUE;
+  }
 };
+
+TEST(MinimizerTest, InitializationCopiesCallbacks) {
+  FakeIterationCallback callback0;
+  FakeIterationCallback callback1;
+
+  Solver::Options solver_options;
+  solver_options.callbacks.push_back(&callback0);
+  solver_options.callbacks.push_back(&callback1);
+
+  Minimizer::Options minimizer_options(solver_options);
+  ASSERT_EQ(2, minimizer_options.callbacks.size());
+
+  EXPECT_EQ(minimizer_options.callbacks[0], &callback0);
+  EXPECT_EQ(minimizer_options.callbacks[1], &callback1);
+}
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_

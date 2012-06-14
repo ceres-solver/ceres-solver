@@ -78,6 +78,7 @@ class Minimizer {
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
+      callbacks = options.callbacks;
     }
 
     int max_num_iterations;

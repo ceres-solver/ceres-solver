@@ -137,7 +137,10 @@ void SolverImpl::Minimize(const Solver::Options& options,
 
   StateUpdatingCallback updating_callback(program, parameters);
   if (options.update_state_every_iteration) {
-    minimizer_options.callbacks.push_back(&updating_callback);
+    // This must get pushed to the front of the callbacks so that it is run
+    // before any of the user callacks.
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &updating_callback);
   }
 
   minimizer_options.evaluator = evaluator;
