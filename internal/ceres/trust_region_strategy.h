@@ -79,7 +79,7 @@ public:
     double eta;
   };
 
-  ~TrustRegionStrategy();
+  virtual ~TrustRegionStrategy();
 
   // Use the current radius to solve for the trust region step.
   virtual LinearSolver::Summary ComputeStep(
