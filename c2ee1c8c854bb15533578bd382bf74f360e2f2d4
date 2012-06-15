@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///+c\u003d",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-06-15T21:51:06Z",
+      "side": 1,
+      "message": "Can we add a test that fails without this check?",
+      "revId": "c2ee1c8c854bb15533578bd382bf74f360e2f2d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
