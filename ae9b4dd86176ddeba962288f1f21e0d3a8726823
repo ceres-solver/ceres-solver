@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///7E\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-16T08:01:44Z",
+      "side": 1,
+      "message": "This patch still does not address the core issue that the two system callbacks need to come before the user\u0027s callbacks. This is reflected in the fact that the second part of the test which is supposed to test for state update is broken.",
+      "revId": "ae9b4dd86176ddeba962288f1f21e0d3a8726823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///7A\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-16T08:01:44Z",
+      "side": 1,
+      "message": "drop repetition.",
+      "revId": "ae9b4dd86176ddeba962288f1f21e0d3a8726823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///7I\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-16T08:01:44Z",
+      "side": 1,
+      "message": "you are updating the value after the call to Solve? How is this test passing?",
+      "revId": "ae9b4dd86176ddeba962288f1f21e0d3a8726823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///68\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-16T08:01:44Z",
+      "side": 1,
+      "message": "logging but not checking?",
+      "revId": "ae9b4dd86176ddeba962288f1f21e0d3a8726823",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
