@@ -34,6 +34,7 @@
 
 #include <cstddef>
 #include <glog/logging.h>
+#include "ceres/internal/macros.h"
 #include "ceres/internal/manual_constructor.h"
 
 namespace ceres {
@@ -149,7 +150,7 @@ class FixedArray {
 
   // Allocate some space, not an array of elements of type T, so that we can
   // skip calling the T constructors and destructors for space we never use.
-  ManualConstructor<InnerContainer> inline_space_[kInlineElements];
+  ManualConstructor<InnerContainer> inline_space_[kInlineElements] CERES_ALIGN_ATTRIBUTE(16);
 };
 
 // Implementation details follow

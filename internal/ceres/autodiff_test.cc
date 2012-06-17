@@ -377,5 +377,30 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
   }
 }
 
+// This is fragile test that triggers the alignment bug on
+// i686-apple-darwin10-llvm-g++-4.2 (GCC) 4.2.1. It is quite possible,
+// that other combinations of operating system + compiler will
+// re-arrange the operations in this test.
+//
+// But this is the best (and only) way we know of to trigger this
+// problem for now. A more robust solution that guarantees the
+// alignment of Eigen types used for automatic differentiation would
+// be nice.
+TEST(AutoDiff, AlignedAllocationTest) {
+  // This int is needed to allocate 16 bits on the stack, so that the
+  // next allocation is not aligned by default.
+  char y = 0;
+
+  // This is needed to prevent the compiler from optimizing y out of
+  // this function.
+  y += 1;
+
+  typedef Jet<double, 2> JetT;
+  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
+
+  // Need this to makes sure that x does not get optimized out.
+  x[0] = x[0] + JetT(1.0);
+}
+
 }  // namespace internal
 }  // namespace ceres

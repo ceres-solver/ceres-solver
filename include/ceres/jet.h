@@ -210,8 +210,20 @@ struct Jet {
     return *this;
   }
 
-  T a;  // The scalar part.
+  // The infinitesimal part comes before the scalar part to ensure
+  // alignment. Jets get allocated as an array of type FixedArray
+  // which can allocate memory on the stack or on the heap depending
+  // upon the size of the array. We force the memory allocated on the
+  // stack to be 16 byte boundary aligned, but we also need to ensure
+  // that the elements of the struct are themselves aligned.
   Eigen::Matrix<T, N, 1> v;  // The infinitesimal part.
+  T a;  // The scalar part.
+
+  // Needed to make sure that new instances of Jets are properly
+  // aligned. For more details see
+  //
+  // http://eigen.tuxfamily.org/dox/TopicStructHavingEigenMembers.html
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 // Unary +
