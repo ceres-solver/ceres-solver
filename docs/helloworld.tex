@@ -11,7 +11,6 @@ This is a trivial problem, whose minimum is easy to see is located at $x = 10$, 
 Let us write this problem as a non-linear least squares problem by defining the scalar residual function $f_1(x) = 10 - x$. Then $F(x) = [f_1(x)]$ is a residual vector with exactly one component.
 
 When solving a problem with Ceres, the first thing to do is to define a subclass of \texttt{CostFunction}. It is responsible for computing the value of the residual function and its derivative (also known as the Jacobian) with respect to $x$.
-
 \begin{minted}[mathescape]{c++}
 class SimpleCostFunction
   : public ceres::SizedCostFunction<1 /* number of residuals */,
@@ -31,7 +30,6 @@ class SimpleCostFunction
   }
 };
 \end{minted}
-
 \texttt{SimpleCostFunction} is provided with an input array of parameters, an output array for residuals and an optional output array for Jacobians. In our example, there is just one parameter and one residual and this is known at compile time, therefore we can save some code and instead of inheriting from \texttt{CostFunction}, we can instaed inherit from the templated \texttt{SizedCostFunction} class. 
 
 
