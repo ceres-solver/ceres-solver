@@ -449,6 +449,17 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
+  if (options->trust_region_strategy_type == DOGLEG) {
+    if (options->linear_solver_type == ITERATIVE_SCHUR ||
+        options->linear_solver_type == CGNR) {
+      *error = "DOGLEG only supports exact factorization based linear"
+               "solver only. If you want to use an iterative solver "
+               "please use LEVENBERG_MARQUARDT as the "
+               "trust_region_strategy_type";
+      return NULL;
+    }
+  }
+
 #ifdef CERES_NO_SUITESPARSE
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
       options->sparse_linear_algebra_library == SUITE_SPARSE) {

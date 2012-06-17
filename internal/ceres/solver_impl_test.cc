@@ -498,6 +498,19 @@ TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
   EXPECT_EQ(options.num_linear_solver_threads, 1);
 }
 
+TEST(SolverImpl, CreateIterativeLinearSolverForDogleg) {
+  Solver::Options options;
+  options.trust_region_strategy_type = DOGLEG;
+  string error;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
+            static_cast<LinearSolver*>(NULL));
+
+  options.linear_solver_type = CGNR;
+  EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
+            static_cast<LinearSolver*>(NULL));
+}
+
 TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   Solver::Options options;
   scoped_ptr<LinearSolver> solver;
