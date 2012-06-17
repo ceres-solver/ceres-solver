@@ -90,10 +90,10 @@ sudo apt-get install libprotobuf-dev
 We are now ready to build and test Ceres. Note that \texttt{cmake} requires the exact path to the \texttt{libglog.a} and \texttt{libgflag.a}
 
 \begin{minted}{bash}
-tar zxf ceres-solver-1.0.tar.gz
+tar zxf ceres-solver-1.2.0tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0
+cmake ../ceres-solver-1.2.0
 make -j3
 make test
 \end{minted}
@@ -102,7 +102,7 @@ You can also try running the command line bundling application with one of the
 included problems, which comes from the University of Washington's BAL dataset~\cite{Agarwal10bal}:
 \begin{minted}{bash}
 examples/simple_bundle_adjuster \
-  ../ceres-solver-1.0/data/problem-16-22106-pre.txt \
+  ../ceres-solver-1.2.0/data/problem-16-22106-pre.txt \
 \end{minted}
 This runs Ceres for a maximum of 10 iterations using the  \denseschur\ linear solver. The output should look something like this.
 \clearpage
@@ -178,14 +178,21 @@ brew install protobuf
 
 We are now ready to build and test Ceres.
 \begin{minted}{bash}
-tar zxf ceres-solver-1.0.tar.gz
+tar zxf ceres-solver-1.2.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-1.0
+cmake ../ceres-solver-1.2.0
 make -j3
 make test
 \end{minted}
 Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
+
+
+\section{Compiler Flags to use when building your own applications}
+\label{sec:compiler-flags}
+TBD
+
+
 \section{Customizing the Build Process}
 \label{sec:custom}
 It is possible to reduce the libraries needed to build Ceres and

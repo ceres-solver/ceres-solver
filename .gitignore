@@ -5,6 +5,8 @@ CMakeLists.txt.user*
 *.bak
 *.orig
 build/
+build-release/
+build-debug/
 *.aux
 *.blg
 *.toc
