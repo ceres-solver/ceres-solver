@@ -152,4 +152,53 @@ char (&ArraySizeHelper(const T (&array)[N]))[N];
 #define MUST_USE_RESULT
 #endif
 
+// Because MSVC and older GCCs require that the argument to their alignment
+// construct to be a literal constant integer, we use a template instantiated
+// at all the possible powers of two.
+template<int alignment, int size> struct AlignType { };
+template<int size> struct AlignType<0, size> { typedef char result[size]; };
+#if defined(_MSC_VER)
+#define CERES_H_ALIGN_ATTRIBUTE(X) __declspec(align(X))
+#define CERES_H_ALIGN_OF(T) __alignof(T)
+#elif defined(__GNUC__)
+#define CERES_H_ALIGN_ATTRIBUTE(X) __attribute__((aligned(X)))
+#define CERES_H_ALIGN_OF(T) __alignof__(T)
+#endif
+
+// ------- Define CERES_ALIGNED_CHAR_ARRAY --------------------------------
+
+#ifndef CERES_ALIGNED_CHAR_ARRAY
+
+#if defined(CERES_H_ALIGN_ATTRIBUTE)
+
+#define CERES_H_ALIGNTYPE_TEMPLATE(X) \
+  template<int size> struct AlignType<X, size> { \
+    typedef CERES_H_ALIGN_ATTRIBUTE(X) char result[size]; \
+  }
+
+CERES_H_ALIGNTYPE_TEMPLATE(1);
+CERES_H_ALIGNTYPE_TEMPLATE(2);
+CERES_H_ALIGNTYPE_TEMPLATE(4);
+CERES_H_ALIGNTYPE_TEMPLATE(8);
+CERES_H_ALIGNTYPE_TEMPLATE(16);
+CERES_H_ALIGNTYPE_TEMPLATE(32);
+CERES_H_ALIGNTYPE_TEMPLATE(64);
+CERES_H_ALIGNTYPE_TEMPLATE(128);
+CERES_H_ALIGNTYPE_TEMPLATE(256);
+CERES_H_ALIGNTYPE_TEMPLATE(512);
+CERES_H_ALIGNTYPE_TEMPLATE(1024);
+CERES_H_ALIGNTYPE_TEMPLATE(2048);
+CERES_H_ALIGNTYPE_TEMPLATE(4096);
+CERES_H_ALIGNTYPE_TEMPLATE(8192);
+// Any larger and MSVC++ will complain.
+
+#define CERES_ALIGNED_CHAR_ARRAY(T, Size) \
+  typename AlignType<CERES_H_ALIGN_OF(T), sizeof(T) * Size>::result
+
+#else  // defined(CERES_H_ALIGN_ATTRIBUTE)
+#define CERES_ALIGNED_CHAR_ARRAY you_must_define_ALIGNED_CHAR_ARRAY_for_your_compiler
+#endif // defined(CERES_H_ALIGN_ATTRIBUTE)
+
+#endif  // CERES_ALIGNED_CHAR_ARRAY
+
 #endif  // CERES_PUBLIC_INTERNAL_MACROS_H_

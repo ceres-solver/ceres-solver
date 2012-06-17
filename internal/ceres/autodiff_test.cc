@@ -377,5 +377,21 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
   }
 }
 
+TEST(AutoDiff, AlignedAllocationTest) {
+  // This int is needed to allocate 16 bits on the stack, so that the
+  // next allocation is not aligned by default.
+  char y = 0;
+
+  // This is needed to prevent the compiler from optimizing y out of
+  // this function.
+  y += 1;
+
+  typedef Jet<double, 2> JetT;
+  FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(3);
+
+  // Need this to makes sure that x does not get optimized out.
+  x[0] = x[0] + JetT(1.0);
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -210,8 +210,18 @@ struct Jet {
     return *this;
   }
 
-  T a;  // The scalar part.
+  // The infinitesimal part comes before the scalar part to ensure
+  // alignment.
   Eigen::Matrix<T, N, 1> v;  // The infinitesimal part.
+  T a;  // The scalar part.
+
+  // Needed to make sure that new instances of Jets are properly
+  // aligned.  See
+  //
+  // http://eigen.tuxfamily.org/dox/TopicStructHavingEigenMembers.html
+  //
+  // for more details.
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
 // Unary +
