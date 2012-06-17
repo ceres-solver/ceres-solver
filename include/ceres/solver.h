@@ -78,10 +78,16 @@ class Solver {
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
 #endif
 
+      preconditioner_type = JACOBI;
+
       sparse_linear_algebra_library = SUITE_SPARSE;
 #if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
       sparse_linear_algebra_library = CX_SPARSE;
 #endif
+
+      num_linear_solver_threads = 1;
+      num_eliminate_blocks = 0;
+      ordering_type = NATURAL;
 
 #if defined(CERES_NO_SUITESPARSE)
       use_block_amd = false;
@@ -89,10 +95,6 @@ class Solver {
       use_block_amd = true;
 #endif
 
-      preconditioner_type = JACOBI;
-      num_linear_solver_threads = 1;
-      num_eliminate_blocks = 0;
-      ordering_type = NATURAL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -419,6 +421,9 @@ class Solver {
 
     PreconditionerType preconditioner_type;
     OrderingType ordering_type;
+
+    TrustRegionStrategyType trust_region_strategy_type;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
   };
 
   // Once a least squares problem has been built, this function takes

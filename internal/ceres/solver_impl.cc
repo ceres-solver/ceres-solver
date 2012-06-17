@@ -203,6 +203,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->num_residuals = problem_impl->NumResiduals();
 
   summary->num_threads_used = options.num_threads;
+  summary->sparse_linear_algebra_library =
+      options.sparse_linear_algebra_library;
+  summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
   // Evaluate the initial cost and residual vector (if needed). The
   // initial cost needs to be computed on the original unpreprocessed

@@ -89,7 +89,9 @@ Solver::Summary::Summary()
       linear_solver_type_given(SPARSE_NORMAL_CHOLESKY),
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
       preconditioner_type(IDENTITY),
-      ordering_type(NATURAL) {
+      ordering_type(NATURAL),
+      trust_region_strategy_type(LEVENBERG_MARQUARDT),
+      sparse_linear_algebra_library(SUITE_SPARSE) {
 }
 
 string Solver::Summary::BriefReport() const {
@@ -179,10 +181,17 @@ string Solver::Summary::FullReport() const {
 
   internal::StringAppendF(&report, "Threads:            % 25d% 25d\n",
                           num_threads_given, num_threads_used);
-  internal::StringAppendF(&report, "Linear solver threads:% 23d% 25d\n",
+  internal::StringAppendF(&report, "Linear solver threads % 23d% 25d\n",
                           num_linear_solver_threads_given,
                           num_linear_solver_threads_used);
 
+  internal::StringAppendF(&report, "\nSparse Linear Algebra Library %15s\n",
+                          SparseLinearAlgebraLibraryTypeToString(
+                              sparse_linear_algebra_library));
+
+  internal::StringAppendF(&report, "Trust Region Strategy     %19s\n",
+                          TrustRegionStrategyTypeToString(
+                              trust_region_strategy_type));
 
   if (termination_type == DID_NOT_RUN) {
     CHECK(!error.empty())
