@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///3g\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T17:09:26Z",
+      "side": 1,
+      "message": "add author information.",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///3c\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T17:09:26Z",
+      "side": 1,
+      "message": "not from code.google.com?\ncgc is better, since that is public, it ensures that if there is stuff not merged into master yet .. it is not packaged.",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///3Y\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T17:09:26Z",
+      "side": 1,
+      "message": "this is not enough.. you are going to need pygments too.. you can either assume you have minted and pygments, or none.",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
