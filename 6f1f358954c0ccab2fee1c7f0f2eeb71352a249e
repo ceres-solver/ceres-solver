@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGon///0Y\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T01:44:24Z",
+      "side": 1,
+      "message": "Missing a \".\"",
+      "revId": "6f1f358954c0ccab2fee1c7f0f2eeb71352a249e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGon///0U\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T01:44:24Z",
+      "side": 1,
+      "message": "Lots of trailing space added.",
+      "revId": "6f1f358954c0ccab2fee1c7f0f2eeb71352a249e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGon///0Q\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T01:44:24Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "6f1f358954c0ccab2fee1c7f0f2eeb71352a249e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
