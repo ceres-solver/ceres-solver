@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///1g\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:57:16Z",
+      "side": 1,
+      "message": "The comment is misleading, in that the setparameterblockstateptrtouserstateptr only makes any difference if this problem is used again. \n\nThe key point here is that parameterblocks when they are constructed, have their state and user_state pointers equal.",
+      "revId": "a9ecf426232a462d73283ffbf778d8086a5955ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGsX////o\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:57:16Z",
+      "side": 1,
+      "message": "my complaint about the test is this yes it verifies the bug in 1.2.1 but what it does not do is verify the fix. The fix is creating a new invariant",
+      "revId": "a9ecf426232a462d73283ffbf778d8086a5955ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
