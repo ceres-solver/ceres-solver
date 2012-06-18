@@ -207,6 +207,16 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
+  // Ensure the program state is set to the user parameters.
+  Program* program = CHECK_NOTNULL(problem_impl)->mutable_program();
+  if (!program->CopyUserStateToParameterBlocks())  {
+    // This can only happen if there was a numerical problem updating the local
+    // jacobians. Indicate as such and fail out.
+    summary->termination_type == NUMERICAL_FAILURE;
+    summary->error = "Local parameterization failure.";
+    return;
+  }
+
   // Evaluate the initial cost and residual vector (if needed). The
   // initial cost needs to be computed on the original unpreprocessed
   // problem, as it is used to determine the value of the "fixed" part
@@ -315,7 +325,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   time_t post_process_end_time = time(NULL);
   summary->postprocessor_time_in_seconds =
       post_process_end_time - post_process_start_time;
-  return;
 }
 
 // Strips varying parameters and residuals, maintaining order, and updating
