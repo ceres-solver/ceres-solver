@@ -581,6 +581,13 @@ struct RememberingCallback : public IterationCallback {
   vector<double> x_values;
 };
 
+// Note: When run under Valgrind, this test also caught a use-after-free bug.
+// However it is tough to trigger the bug outside valgrind. Occasionally, this
+// test should get run under Valgrind. The error was triggered when this line:
+//
+//   reduced_program->SetParameterBlockStatePtrToUserStatePtr();
+//
+// was missing from SolverImpl::Solve().
 TEST(SolverImpl, UpdateStateEveryIterationOption) {
   double x = 50.0;
   const double original_x = x;
@@ -623,6 +630,58 @@ TEST(SolverImpl, UpdateStateEveryIterationOption) {
   EXPECT_GT(num_iterations, 1);
   EXPECT_EQ(original_x, callback.x_values[0]);
   EXPECT_NE(original_x, callback.x_values[1]);
+}
+
+// The parameters must be in separate blocks so that they can be individually
+// set constant or not.
+struct Quadratic4DCostFunction {
+  template <typename T> bool operator()(const T* const x,
+                                        const T* const y,
+                                        const T* const z,
+                                        const T* const w,
+                                        T* residual) const {
+    // A 4-dimension axis-aligned quadratic.
+    residual[0] = T(10.0) - *x +
+                  T(20.0) - *y +
+                  T(30.0) - *z +
+                  T(40.0) - *w;
+    return true;
+  }
+};
+
+TEST(SolverImpl, ConstantParameterBlocksDoNotChange) {
+  double x = 50.0;
+  double y = 50.0;
+  double z = 50.0;
+  double w = 50.0;
+  const double original_x = 50.0;
+  const double original_y = 50.0;
+  const double original_z = 50.0;
+  const double original_w = 50.0;
+
+  scoped_ptr<CostFunction> cost_function(
+      new AutoDiffCostFunction<Quadratic4DCostFunction, 1, 1, 1, 1, 1>(
+          new Quadratic4DCostFunction));
+
+  Problem::Options problem_options;
+  problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
+
+
+  Problem problem(problem_options);
+  problem.AddResidualBlock(cost_function.get(), NULL, &x, &y, &z, &w);
+  problem.SetParameterBlockConstant(&x);
+  problem.SetParameterBlockConstant(&w);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_QR;
+
+  Solver::Summary summary;
+  SolverImpl::Solve(options, &problem, &summary);
+
+  EXPECT_EQ(original_x, x);
+  EXPECT_NE(original_y, y);
+  EXPECT_NE(original_z, z);
+  EXPECT_EQ(original_w, w);
 }
 
 }  // namespace internal

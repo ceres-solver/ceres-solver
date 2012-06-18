@@ -90,7 +90,8 @@ void Program::CopyParameterBlockStateToUserState() {
   }
 }
 
-bool Program::CopyUserStateToParameterBlocks() {
+
+bool Program::SetParameterBlockStatePtrToUserStatePtr() {
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     if (!parameter_blocks_[i]->SetState(parameter_blocks_[i]->user_state())) {
       return false;

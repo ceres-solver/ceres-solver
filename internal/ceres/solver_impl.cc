@@ -211,22 +211,17 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
-  // Ensure the program state is set to the user parameters.
-  Program* program = CHECK_NOTNULL(problem_impl)->mutable_program();
-  if (!program->CopyUserStateToParameterBlocks())  {
-    // This can only happen if there was a numerical problem updating the local
-    // jacobians. Indicate as such and fail out.
-    summary->termination_type == NUMERICAL_FAILURE;
-    summary->error = "Local parameterization failure.";
-    return;
-  }
-
   // Evaluate the initial cost and residual vector (if needed). The
   // initial cost needs to be computed on the original unpreprocessed
   // problem, as it is used to determine the value of the "fixed" part
   // of the objective function after the problem has undergone
   // reduction. Also the initial residuals are in the order in which
   // the user added the ResidualBlocks to the optimization problem.
+  //
+  // Note: This assumes the parameter block states are pointing to the
+  // user state, instead of some arbitrary other state. This is
+  // ensured by SetParameterBlockStatePtrToUserStatePtr(), which is
+  // called on the way out.
   EvaluateCostAndResiduals(problem_impl,
                            &summary->initial_cost,
                            options.return_initial_residuals
@@ -317,6 +312,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
+
+  // Ensure the program state is set to the user parameters on the way out.
+  reduced_program->SetParameterBlockStatePtrToUserStatePtr();
 
   // Return the final cost and residuals for the original problem.
   EvaluateCostAndResiduals(problem->problem_impl_.get(),
