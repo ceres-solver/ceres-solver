@@ -684,10 +684,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& directory,
 
   string matlab_script;
   StringAppendF(&matlab_script,
-                "function lsqp = lm_iteration_%03d()\n",
-                iteration,
-                iteration);
-
+                "function lsqp = lm_iteration_%03d()\n", iteration);
   StringAppendF(&matlab_script,
                 "lsqp.num_rows = %d;\n", A->num_rows());
   StringAppendF(&matlab_script,

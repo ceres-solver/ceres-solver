@@ -216,7 +216,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   if (!program->CopyUserStateToParameterBlocks())  {
     // This can only happen if there was a numerical problem updating the local
     // jacobians. Indicate as such and fail out.
-    summary->termination_type == NUMERICAL_FAILURE;
+    summary->termination_type = NUMERICAL_FAILURE;
     summary->error = "Local parameterization failure.";
     return;
   }
