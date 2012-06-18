@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGon///sI\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T18:31:53Z",
+      "side": 1,
+      "message": "Unless we permit users to hack the internals, which were careful to prevent, it\u0027s fine.\n\nDocumented.",
+      "parentUuid": "AAAGo3///2M\u003d",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGo3///2I\u003d",
         "filename": "internal/ceres/solver_impl_test.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-18T18:24:19Z",
       "side": 1,
       "message": "I am not sure what this comment adds. In the sense that what is done is done.. this bit of information is not going to add anything in the future.\n\nThis looks more like a commit msg rather than a code comment.",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGon///sE\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T18:31:53Z",
+      "side": 1,
+      "message": "Because no one will run it in valgrind otherwise?",
+      "parentUuid": "AAAGo3///2I\u003d",
       "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGon///sA\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGo3///2E\u003d",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGo3///2A\u003d",
         "filename": "internal/ceres/solver_impl_test.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-06-18T18:24:19Z",
       "side": 1,
       "message": "So this test check for the breakage from the previous bad code, but since that code is deleted, we know this test will pass.\n\nwe need a test that guarantees that the state of the parameter block before and after the solve call is pointing to user_state.\nthats the invariant we need to guarantee.",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGon///r4\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T18:31:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the complaint is. This is a functional test that constant parameter blocks work. The test passes without the change but fails if run in valgrind, since the alignment is different. e.g. it doesn\u0027t just trigger valgrind errors, the test fails.\n\nAnd the test does fail immediately with the 1.2.1 release since the constant parameter block CHECK() fail.",
+      "parentUuid": "AAAGo3///2A\u003d",
       "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
