@@ -4,17 +4,18 @@
 \section*{1.2.1}
 \subsection{New Features}
 \begin{itemize}
-	\item Powell's Dogleg solver
-	\item Documentation now has a brief overview of Trust Region methods and how the Levenberg-Marquardt and Dogleg methods work.
+\item Powell's Dogleg solver
+\item Documentation now has a brief overview of Trust Region methods and how the Levenberg-Marquardt and Dogleg methods work.
 \end{itemize}
 \subsection{Bug Fixes}
 \begin{itemize}
-	\item Destructor for TrustRegionStrategy was not virtual (Thanks Markus Moll)
-	\item Invalid DCHECK in suitesparse.cc (Thanks Markus Moll)
-	\item Logging level changes in ConjugateGradientsSolver
-	\item VisibilityBasedPreconditioner setup does not account for skipped camera pairs. This was debugging code.
-	\item Enable SSE support on MacOS
-	\item \texttt{system\_test} was taking too long and too much memory (Thanks Koichi Akabe)
+\item Destructor for TrustRegionStrategy was not virtual (Thanks Markus Moll)
+\item Invalid DCHECK in suitesparse.cc (Thanks Markus Moll)
+\item Iteration callbacks were not properly invoked (Thanks to Luis Alberto Zarrabeiti for the report)
+\item Logging level changes in ConjugateGradientsSolver
+\item VisibilityBasedPreconditioner setup does not account for skipped camera pairs. This was debugging code.
+\item Enable SSE support on MacOS
+\item \texttt{system\_test} was taking too long and too much memory (Thanks Koichi Akabe)
 \end{itemize}
 \section*{1.2.0}
 \subsection{New Features}
