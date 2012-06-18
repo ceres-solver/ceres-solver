@@ -86,9 +86,17 @@ void Program::ParameterBlocksToStateVector(double *state) const {
 
 void Program::CopyParameterBlockStateToUserState() {
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    parameter_blocks_[i]->GetState(
-        parameter_blocks_[i]->mutable_user_state());
+    parameter_blocks_[i]->GetState(parameter_blocks_[i]->mutable_user_state());
   }
+}
+
+bool Program::CopyUserStateToParameterBlocks() {
+  for (int i = 0; i < parameter_blocks_.size(); ++i) {
+    if (!parameter_blocks_[i]->SetState(parameter_blocks_[i]->user_state())) {
+      return false;
+    }
+  }
+  return true;
 }
 
 bool Program::Plus(const double* state,

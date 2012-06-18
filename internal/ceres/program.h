@@ -71,8 +71,9 @@ class Program {
   bool StateVectorToParameterBlocks(const double *state);
   void ParameterBlocksToStateVector(double *state) const;
 
-  // Copy internal state out to the user's parameters.
+  // Copy internal state to and from the user's parameters.
   void CopyParameterBlockStateToUserState();
+  bool CopyUserStateToParameterBlocks();
 
   // Update a state vector for the program given a delta.
   bool Plus(const double* state,
