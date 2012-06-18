@@ -32,31 +32,32 @@
 #include "ceres/solver.h"
 
 #include <vector>
+#include "ceres/problem.h"
+#include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
-#include "ceres/problem.h"
 
 namespace ceres {
 
 Solver::~Solver() {}
 
-// TODO(sameeragarwal): The timing code here should use a sub-second
-// timer.
+// TODO(sameeragarwal): Use subsecond timers.
 void Solver::Solve(const Solver::Options& options,
                    Problem* problem,
                    Solver::Summary* summary) {
   time_t start_time_seconds = time(NULL);
-  internal::SolverImpl::Solve(options, problem, summary);
+  internal::ProblemImpl* problem_impl =
+      CHECK_NOTNULL(problem)->problem_impl_.get();
+  internal::SolverImpl::Solve(options, problem_impl, summary);
   summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
 }
 
 void Solve(const Solver::Options& options,
            Problem* problem,
            Solver::Summary* summary) {
-  time_t start_time_seconds = time(NULL);
-  internal::SolverImpl::Solve(options, problem, summary);
-  summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
+  Solver solver;
+  solver.Solve(options, problem, summary);
 }
 
 Solver::Summary::Summary()

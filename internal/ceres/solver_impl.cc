@@ -168,7 +168,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
 }
 
 void SolverImpl::Solve(const Solver::Options& original_options,
-                       Problem* problem,
+                       ProblemImpl* problem_impl,
                        Solver::Summary* summary) {
   time_t solver_start_time = time(NULL);
   Solver::Options options(original_options);
@@ -199,8 +199,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       original_options.num_linear_solver_threads;
   summary->ordering_type = original_options.ordering_type;
 
-  ProblemImpl* problem_impl = CHECK_NOTNULL(problem)->problem_impl_.get();
-
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
   summary->num_residual_blocks = problem_impl->NumResidualBlocks();
@@ -211,22 +209,18 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
-  // Ensure the program state is set to the user parameters.
-  Program* program = CHECK_NOTNULL(problem_impl)->mutable_program();
-  if (!program->CopyUserStateToParameterBlocks())  {
-    // This can only happen if there was a numerical problem updating the local
-    // jacobians. Indicate as such and fail out.
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Local parameterization failure.";
-    return;
-  }
-
   // Evaluate the initial cost and residual vector (if needed). The
   // initial cost needs to be computed on the original unpreprocessed
   // problem, as it is used to determine the value of the "fixed" part
   // of the objective function after the problem has undergone
   // reduction. Also the initial residuals are in the order in which
   // the user added the ResidualBlocks to the optimization problem.
+  //
+  // Note: This assumes the parameter block states are pointing to the
+  // user state at start of Solve(), instead of some other pointer.
+  // The invariant is ensured by the ParameterBlock constructor and by
+  // the call to SetParameterBlockStatePtrsToUserStatePtrs() at the
+  // bottom of this function.
   EvaluateCostAndResiduals(problem_impl,
                            &summary->initial_cost,
                            options.return_initial_residuals
@@ -238,6 +232,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // GradientCheckingCostFunction and replacing problem_impl with
   // gradient_checking_problem_impl.
   scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
+  // Save the original problem impl so we don't use the gradient
+  // checking one when computing the residuals.
+  ProblemImpl* original_problem_impl = problem_impl;
   if (options.check_gradients) {
     VLOG(1) << "Checking Gradients";
     gradient_checking_problem_impl.reset(
@@ -318,8 +315,11 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
 
+  // Ensure the program state is set to the user parameters on the way out.
+  reduced_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
   // Return the final cost and residuals for the original problem.
-  EvaluateCostAndResiduals(problem->problem_impl_.get(),
+  EvaluateCostAndResiduals(original_problem_impl,
                            &summary->final_cost,
                            options.return_final_residuals
                            ? &summary->final_residuals
