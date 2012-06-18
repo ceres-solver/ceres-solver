@@ -46,7 +46,7 @@ class SolverImpl {
   // Mirrors the interface in solver.h, but exposes implementation
   // details for testing internally.
   static void Solve(const Solver::Options& options,
-                    Problem* problem,
+                    ProblemImpl* problem_impl,
                     Solver::Summary* summary);
 
   // Create the transformed Program, which has all the fixed blocks
