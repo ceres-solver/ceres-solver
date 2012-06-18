@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///2M\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:24:19Z",
+      "side": 1,
+      "message": "document the fact that this assumes certain things about the state and user_state pointers in parameter blocks.\n\nI am still not entirely happy with this. Its fine that we are making sure that on the way out state points to user state, but assuming that is the case on the way in .. that seems a bit iffy still.",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///2I\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:24:19Z",
+      "side": 1,
+      "message": "I am not sure what this comment adds. In the sense that what is done is done.. this bit of information is not going to add anything in the future.\n\nThis looks more like a commit msg rather than a code comment.",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///2E\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:24:19Z",
+      "side": 1,
+      "message": "trailing spaces",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///2A\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T18:24:19Z",
+      "side": 1,
+      "message": "So this test check for the breakage from the previous bad code, but since that code is deleted, we know this test will pass.\n\nwe need a test that guarantees that the state of the parameter block before and after the solve call is pointing to user_state.\nthats the invariant we need to guarantee.",
+      "revId": "49529ef85f7cc4122f5c786f60fa18ac998de6b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
