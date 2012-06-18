@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGon///0I\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-18T01:45:28Z",
+      "side": 1,
+      "message": "The first sentence needs some love.",
+      "revId": "b25cb33f63173fd7c81b976b0c073ebe6a6e24a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
