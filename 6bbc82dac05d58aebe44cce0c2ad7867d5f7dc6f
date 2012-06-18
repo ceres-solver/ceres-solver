@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGo3///40\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T07:46:37Z",
+      "side": 1,
+      "message": "this needs to be pushed before too, otherwise we will lose one iteration worth of logging if the user\u0027s callback terminates.",
+      "revId": "6bbc82dac05d58aebe44cce0c2ad7867d5f7dc6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///4w\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T07:46:37Z",
+      "side": 1,
+      "message": "num_successful_steps + num_unsuccessful_steps.\nhere and below.",
+      "revId": "6bbc82dac05d58aebe44cce0c2ad7867d5f7dc6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGo3///4s\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-18T07:46:37Z",
+      "side": 1,
+      "message": "This is a weird check.\nThe first value in the callbacks should be the same, and the subsequent ones should be different. Just checking \"different\" seems to be very weak.",
+      "revId": "6bbc82dac05d58aebe44cce0c2ad7867d5f7dc6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
