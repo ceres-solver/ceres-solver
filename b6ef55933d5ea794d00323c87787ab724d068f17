@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAGtX////c\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-19T05:35:23Z",
+      "side": 1,
+      "message": "This comment is not quite right.\nThe invariant it depends on is ensured by two things.\n1. parameter blocks when they are created have this invariant.\n2. if the problem is re-used, only then the invariant is ensured by the call on the way out.",
+      "revId": "b6ef55933d5ea794d00323c87787ab724d068f17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGtX////g\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-19T05:35:23Z",
+      "side": 1,
+      "message": "So this is a minor bug. problem_impl here should be the original problem_impl passed in here. If a gradient checking problem was demanded, then problem_impl gets overwritten, by the one contained in the gradientcheckingproblem.\n\nIts worth keeping a copy of the original pointer perhaps?",
+      "revId": "b6ef55933d5ea794d00323c87787ab724d068f17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGtX////Y\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-19T05:35:23Z",
+      "side": 1,
+      "message": "nice test!",
+      "revId": "b6ef55933d5ea794d00323c87787ab724d068f17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
