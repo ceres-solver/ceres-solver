@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGtX///+c\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-19T07:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAGo3///3g\u003d",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGo3///3c\u003d",
         "filename": "scripts/make_release",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAGon///s4\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-19T07:18:16Z",
+      "side": 1,
+      "message": "googlesource.com is always fresher. Maybe we should add tags?",
+      "parentUuid": "AAAGo3///3c\u003d",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAGo3///3Y\u003d",
         "filename": "scripts/make_release",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-06-18T17:09:26Z",
       "side": 1,
       "message": "this is not enough.. you are going to need pygments too.. you can either assume you have minted and pygments, or none.",
+      "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAGon///s8\u003d",
+        "filename": "scripts/make_release",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-19T07:18:16Z",
+      "side": 1,
+      "message": "You can\u0027t apt-get install minted, but you can for pygments.",
+      "parentUuid": "AAAGo3///3Y\u003d",
       "revId": "1d309b0830085d7ca9cdd844e4d9aa05e25a87d8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
