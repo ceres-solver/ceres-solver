@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG03///yc\u003d",
+        "filename": "docs/helloworld.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-22T17:26:44Z",
+      "side": 1,
+      "message": "Actually, to much actually.",
+      "revId": "190b155d05406180ede00e2a04bc1efbc913b24b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
