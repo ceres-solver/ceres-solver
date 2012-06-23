@@ -34,6 +34,7 @@
 
 #include <cstddef>
 #include <glog/logging.h>
+#include "Eigen/Core"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/manual_constructor.h"
 
@@ -132,6 +133,7 @@ class FixedArray {
   // of this code will be broken.
   struct InnerContainer {
     T element;
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   };
 
   // How many elements should we store inline?
