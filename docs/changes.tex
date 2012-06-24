@@ -1,12 +1,22 @@
 %!TEX root = ceres-solver.tex
 
 \chapter{Version History}
+\section*{1.2.3}
+\subsection{Bug Fixes}
+\begin{itemize}
+\item \texttt{suitesparse\_test} is enabled even when \texttt{-DSUITESPARSE=OFF}.
+\item \texttt{FixedArray} internal struct did not respect \texttt{Eigen}
+  alignment requirements (Thanks Koichi Akabe \& Stephan Kassemeyer).
+\item Fixed \texttt{quadratic.cc} documentation and code mismatch
+  (Thanks Nick Lewycky).
+\end{itemize}
 \section*{1.2.2}
 \subsection{Bug Fixes}
 \begin{itemize}
 \item Fix constant parameter blocks, and other minor fixes (Thanks Markus Moll)
-\item Fix alignment issues when combining Jet and FixedArray in autodiff.
-\item Remove obsolete \texttt{build\_defs} file
+\item Fix alignment issues when combining \texttt{Jet} and
+  \texttt{FixedArray} in automatic differeniation.
+\item Remove obsolete \texttt{build\_defs} file.
 \end{itemize}
 \section*{1.2.1}
 \subsection{New Features}
@@ -16,8 +26,8 @@
 \end{itemize}
 \subsection{Bug Fixes}
 \begin{itemize}
-\item Destructor for TrustRegionStrategy was not virtual (Thanks Markus Moll)
-\item Invalid DCHECK in suitesparse.cc (Thanks Markus Moll)
+\item Destructor for \texttt{TrustRegionStrategy} was not virtual (Thanks Markus Moll)
+\item Invalid \texttt{DCHECK} in \texttt{suitesparse.cc} (Thanks Markus Moll)
 \item Iteration callbacks were not properly invoked (Thanks to Luis Alberto Zarrabeiti for the report)
 \item Logging level changes in ConjugateGradientsSolver
 \item VisibilityBasedPreconditioner setup does not account for skipped camera pairs. This was debugging code.
