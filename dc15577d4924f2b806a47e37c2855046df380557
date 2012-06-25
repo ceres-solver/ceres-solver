@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///78\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-25T06:38:31Z",
+      "side": 1,
+      "message": "It\u0027s expected.",
+      "parentUuid": "AAAG7X///+o\u003d",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG7X///+k\u003d",
         "filename": "examples/powell.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-06-25T05:46:48Z",
       "side": 1,
       "message": "how was this code compiling without these includes?",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7n///74\u003d",
+        "filename": "examples/powell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-25T06:38:31Z",
+      "side": 1,
+      "message": "I think it\u0027s because the glog we used internally before was compiled for gflags, and thus it worked. On windows they are not compiled together.",
+      "parentUuid": "AAAG7X///+k\u003d",
       "revId": "dc15577d4924f2b806a47e37c2855046df380557",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///8E\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-25T06:38:31Z",
+      "side": 1,
+      "message": "Leftovers. Removed.",
+      "parentUuid": "AAAG7X///+g\u003d",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG7X///+c\u003d",
         "filename": "internal/ceres/iterative_schur_complement_solver.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAG7n///70\u003d",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-25T06:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAG7X///+c\u003d",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAG7X///+Y\u003d",
         "filename": "internal/ceres/linear_solver.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2012-06-25T05:46:48Z",
       "side": 1,
       "message": "indentation",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7n///7w\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-06-25T06:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAG7X///+Y\u003d",
       "revId": "dc15577d4924f2b806a47e37c2855046df380557",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
