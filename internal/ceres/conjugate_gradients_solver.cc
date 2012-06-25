@@ -42,6 +42,7 @@
 #include <cmath>
 #include <cstddef>
 #include <glog/logging.h>
+#include "ceres/fpclassify.h"
 #include "ceres/linear_operator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/types.h"
@@ -51,7 +52,7 @@ namespace internal {
 namespace {
 
 bool IsZeroOrInfinity(double x) {
-  return ((x == 0.0) || (isinf(x)));
+  return ((x == 0.0) || (IsInfinite(x)));
 }
 
 // Constant used in the MATLAB implementation ~ 2 * eps.
@@ -150,14 +151,14 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     A->RightMultiply(p.data(), q.data());
     double pq = p.dot(q);
 
-    if ((pq <= 0) || isinf(pq))  {
+    if ((pq <= 0) || !IsNormal(pq))  {
       LOG(ERROR) << "Numerical failure. pq = " << pq;
       summary.termination_type = FAILURE;
       break;
     }
 
     double alpha = rho / pq;
-    if (isinf(alpha)) {
+    if (!IsNormal(alpha)) {
       LOG(ERROR) << "Numerical failure. alpha " << alpha;
       summary.termination_type = FAILURE;
       break;

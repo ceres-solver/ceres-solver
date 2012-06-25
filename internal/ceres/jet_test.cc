@@ -35,6 +35,7 @@
 
 #include <glog/logging.h>
 #include "gtest/gtest.h"
+#include "ceres/fpclassify.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 
@@ -289,10 +290,10 @@ TEST(JetTraitsTest, ClassificationMixed) {
   a.v[0] = std::numeric_limits<double>::quiet_NaN();
   a.v[1] = std::numeric_limits<double>::infinity();
   a.v[2] = -std::numeric_limits<double>::infinity();
-  EXPECT_FALSE(isfinite(a));
-  EXPECT_FALSE(isnormal(a));
-  EXPECT_TRUE(isinf(a));
-  EXPECT_TRUE(isnan(a));
+  EXPECT_FALSE(IsFinite(a));
+  EXPECT_FALSE(IsNormal(a));
+  EXPECT_TRUE(IsInfinite(a));
+  EXPECT_TRUE(IsNaN(a));
 }
 
 TEST(JetTraitsTest, ClassificationNaN) {
@@ -300,10 +301,10 @@ TEST(JetTraitsTest, ClassificationNaN) {
   a.v[0] = std::numeric_limits<double>::quiet_NaN();
   a.v[1] = 0.0;
   a.v[2] = 0.0;
-  EXPECT_FALSE(isfinite(a));
-  EXPECT_FALSE(isnormal(a));
-  EXPECT_FALSE(isinf(a));
-  EXPECT_TRUE(isnan(a));
+  EXPECT_FALSE(IsFinite(a));
+  EXPECT_FALSE(IsNormal(a));
+  EXPECT_FALSE(IsInfinite(a));
+  EXPECT_TRUE(IsNaN(a));
 }
 
 TEST(JetTraitsTest, ClassificationInf) {
@@ -311,10 +312,10 @@ TEST(JetTraitsTest, ClassificationInf) {
   a.v[0] = std::numeric_limits<double>::infinity();
   a.v[1] = 0.0;
   a.v[2] = 0.0;
-  EXPECT_FALSE(isfinite(a));
-  EXPECT_FALSE(isnormal(a));
-  EXPECT_TRUE(isinf(a));
-  EXPECT_FALSE(isnan(a));
+  EXPECT_FALSE(IsFinite(a));
+  EXPECT_FALSE(IsNormal(a));
+  EXPECT_TRUE(IsInfinite(a));
+  EXPECT_FALSE(IsNaN(a));
 }
 
 TEST(JetTraitsTest, ClassificationFinite) {
@@ -322,10 +323,10 @@ TEST(JetTraitsTest, ClassificationFinite) {
   a.v[0] = 100.0;
   a.v[1] = 1.0;
   a.v[2] = 3.14159;
-  EXPECT_TRUE(isfinite(a));
-  EXPECT_TRUE(isnormal(a));
-  EXPECT_FALSE(isinf(a));
-  EXPECT_FALSE(isnan(a));
+  EXPECT_TRUE(IsFinite(a));
+  EXPECT_TRUE(IsNormal(a));
+  EXPECT_FALSE(IsInfinite(a));
+  EXPECT_FALSE(IsNaN(a));
 }
 
 }  // namespace internal
