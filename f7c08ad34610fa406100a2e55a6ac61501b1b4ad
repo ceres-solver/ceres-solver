@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG7X////I\u003d",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T00:40:33Z",
+      "side": 1,
+      "message": "single space after bool.",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X////E\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T00:40:33Z",
+      "side": 1,
+      "message": "IsInfinite",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X////A\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T00:40:33Z",
+      "side": 1,
+      "message": "IsInfinite",
+      "revId": "f7c08ad34610fa406100a2e55a6ac61501b1b4ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
