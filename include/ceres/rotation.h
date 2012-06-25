@@ -327,7 +327,8 @@ template <typename T>
 inline void EulerAnglesToRotationMatrix(const T* euler,
                                         const int row_stride,
                                         T* R) {
-  const T degrees_to_radians(M_PI / 180.0);
+  const double kPi = 3.14159265358979323846;
+  const T degrees_to_radians(kPi / 180.0);
 
   const T pitch(euler[0] * degrees_to_radians);
   const T roll(euler[1] * degrees_to_radians);
@@ -509,4 +510,5 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
 }
 
 }  // namespace ceres
+
 #endif  // CERES_PUBLIC_ROTATION_H_

@@ -33,8 +33,13 @@
 #ifndef CERES_INTERNAL_COLLECTIONS_PORT_H_
 #define CERES_INTERNAL_COLLECTIONS_PORT_H_
 
+#if defined(_MSC_VER) && _MSC_VER <= 1600
+#include <unordered_map>
+#include <unordered_set>
+#else
 #include <tr1/unordered_map>
 #include <tr1/unordered_set>
+#endif
 #include <utility>
 #include "ceres/integral_types.h"
 #include "ceres/internal/port.h"

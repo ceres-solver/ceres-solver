@@ -44,14 +44,12 @@ class BinaryScalarCost {
   template <typename T>
   bool operator()(const T* const x, const T* const y,
                   T* cost) const {
-    cost[0] =
-      x[0] * y[0] + x[1] * y[1]  - T(a_);
+    cost[0] = x[0] * y[0] + x[1] * y[1]  - T(a_);
     return true;
   }
  private:
   double a_;
 };
-
 
 TEST(AutoDiffResidualAndJacobian, BilinearDifferentiationTest) {
   CostFunction* cost_function  =
@@ -71,7 +69,6 @@ TEST(AutoDiffResidualAndJacobian, BilinearDifferentiationTest) {
   double** jacobians = new double*[2];
   jacobians[0] = new double[2];
   jacobians[1] = new double[2];
-
 
   double residuals = 0.0;
 

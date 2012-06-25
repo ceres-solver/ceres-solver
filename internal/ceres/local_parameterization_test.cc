@@ -62,6 +62,10 @@ TEST(IdentityParameterization, EverythingTest) {
   }
 }
 
+// Death tests are not working on Windows yet.
+// TODO(keir): Figure out how to enable these.
+#ifndef _WIN32
+
 TEST(SubsetParameterization, DeathTests) {
   vector<int> constant_parameters;
   EXPECT_DEATH(SubsetParameterization parameterization(1, constant_parameters),
@@ -79,6 +83,8 @@ TEST(SubsetParameterization, DeathTests) {
   EXPECT_DEATH(SubsetParameterization parameterization(2, constant_parameters),
                "duplicates");
 }
+
+#endif  // _WIN32
 
 TEST(SubsetParameterization, NormalFunctionTest) {
   double x[4] = {1.0, 2.0, 3.0, 4.0};

@@ -150,6 +150,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     const LinearSolver::PerSolveOptions& per_solve_options,
     double * x) {
   LOG(FATAL) << "No CXSparse support in Ceres.";
+
+  // Unreachable but MSVC does not know this.
+  return LinearSolver::Summary();
 }
 #endif
 
@@ -233,6 +236,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     const LinearSolver::PerSolveOptions& per_solve_options,
     double * x) {
   LOG(FATAL) << "No SuiteSparse support in Ceres.";
+
+  // Unreachable but MSVC does not know this.
+  return LinearSolver::Summary();
 }
 #endif
 

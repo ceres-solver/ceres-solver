@@ -115,7 +115,8 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
               kTolerance);
 
   // There is nothing else in the matrix besides these four blocks.
-  EXPECT_NEAR(dense.norm(), sqrt(9 + 16 * 16 + 36 * 20 + 9 * 15), kTolerance);
+  EXPECT_NEAR(dense.norm(), sqrt(9. + 16. * 16. + 36. * 20. + 9. * 15.),
+              kTolerance);
 }
 
 // IntPairToLong is private, thus this fixture is needed to access and

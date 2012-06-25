@@ -33,7 +33,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/fpclassify.h"
 #include "ceres/stringprintf.h"
@@ -43,6 +43,8 @@
 
 namespace ceres {
 namespace internal {
+
+const double kE = 2.71828182845904523536;
 
 typedef Jet<double, 2> J;
 
@@ -166,7 +168,7 @@ TEST(Jet, Jet) {
     VL << "x = " << x;
     VL << "y = " << y;
 
-    J u = pow(M_E, logx);
+    J u = pow(kE, logx);
     VL << "u = " << u;
 
     ExpectJetsClose(x, u);
@@ -174,7 +176,7 @@ TEST(Jet, Jet) {
 
   { // Check that pow(e, log(x)) == x.
     J logx = log(x);
-    J e = MakeJet(M_E, 0., 0.);
+    J e = MakeJet(kE, 0., 0.);
     VL << "x = " << x;
     VL << "log(x) = " << logx;
 
@@ -186,7 +188,7 @@ TEST(Jet, Jet) {
 
   { // Check that pow(e, log(x)) == x.
     J logx = log(x);
-    J e = MakeJet(M_E, 0., 0.);
+    J e = MakeJet(kE, 0., 0.);
     VL << "x = " << x;
     VL << "logx = " << logx;
 
@@ -198,7 +200,7 @@ TEST(Jet, Jet) {
 
   { // Check that pow(x,y) = exp(y*log(x)).
     J logx = log(x);
-    J e = MakeJet(M_E, 0., 0.);
+    J e = MakeJet(kE, 0., 0.);
     VL << "x = " << x;
     VL << "logx = " << logx;
 

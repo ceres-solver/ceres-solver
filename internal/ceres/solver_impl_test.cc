@@ -233,10 +233,12 @@ TEST(SolverImpl, ReorderResidualBlockNumEliminateBlockDeathTest) {
   options.linear_solver_type = DENSE_SCHUR;
   options.num_eliminate_blocks = 0;
   string error;
+#ifndef _WIN32
   EXPECT_DEATH(
       SolverImpl::MaybeReorderResidualBlocks(
           options, problem.mutable_program(), &error),
       "Congratulations");
+#endif  // _WIN32
 }
 
 TEST(SolverImpl, ReorderResidualBlockNormalFunction) {

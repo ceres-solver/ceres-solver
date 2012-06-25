@@ -650,6 +650,10 @@ struct NumTraits<ceres::Jet<T, N> > {
   typedef ceres::Jet<T, N> NonInteger;
   typedef ceres::Jet<T, N> Nested;
 
+  static typename ceres::Jet<T, N> dummy_precision() {
+    return ceres::Jet<T, N>(1e-12);
+  }
+
   enum {
     IsComplex = 0,
     IsInteger = 0,

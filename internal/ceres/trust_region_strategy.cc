@@ -20,6 +20,7 @@ TrustRegionStrategy* TrustRegionStrategy::Create(const Options& options) {
 
   LOG(FATAL) << "Unknown trust region strategy: "
              << options.trust_region_strategy_type;
+  return NULL;
 }
 
 }  // namespace internal

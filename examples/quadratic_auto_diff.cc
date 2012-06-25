@@ -34,8 +34,9 @@
 // automatic differentiation.
 
 #include <vector>
-
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
 
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;

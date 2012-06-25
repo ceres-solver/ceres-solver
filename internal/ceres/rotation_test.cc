@@ -45,6 +45,9 @@
 namespace ceres {
 namespace internal {
 
+const double kPi = 3.14159265358979323846;
+const double kHalfSqrt2 = 0.707106781186547524401;
+
 double RandDouble() {
   double r = rand();
   return r / RAND_MAX;
@@ -54,7 +57,7 @@ double RandDouble() {
 static double const kTolerance = numeric_limits<double>::epsilon() * 10;
 
 // Looser tolerance used for for numerically unstable conversions.
-static double const kLooseTolerance = 1e-9;;
+static double const kLooseTolerance = 1e-9;
 
 // Use as:
 // double quaternion[4];
@@ -199,9 +202,9 @@ TEST(Rotation, TinyAngleAxisToQuaternion) {
 
 // Transforms a rotation by pi/2 around X to a quaternion.
 TEST(Rotation, XRotationToQuaternion) {
-  double axis_angle[3] = { M_PI / 2, 0, 0 };
+  double axis_angle[3] = { kPi / 2, 0, 0 };
   double quaternion[4];
-  double expected[4] = { M_SQRT1_2, M_SQRT1_2, 0, 0 };
+  double expected[4] = { kHalfSqrt2, kHalfSqrt2, 0, 0 };
   AngleAxisToQuaternion(axis_angle, quaternion);
   EXPECT_THAT(quaternion, IsNormalizedQuaternion());
   EXPECT_THAT(quaternion, IsNearQuaternion(expected));
@@ -220,7 +223,7 @@ TEST(Rotation, UnitQuaternionToAngleAxis) {
 TEST(Rotation, YRotationQuaternionToAngleAxis) {
   double quaternion[4] = { 0, 0, 1, 0 };
   double axis_angle[3];
-  double expected[3] = { 0, M_PI, 0 };
+  double expected[3] = { 0, kPi, 0 };
   QuaternionToAngleAxis(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
@@ -230,7 +233,7 @@ TEST(Rotation, YRotationQuaternionToAngleAxis) {
 TEST(Rotation, ZRotationQuaternionToAngleAxis) {
   double quaternion[4] = { sqrt(3) / 2, 0, 0, 0.5 };
   double axis_angle[3];
-  double expected[3] = { 0, 0, M_PI / 3 };
+  double expected[3] = { 0, 0, kPi / 3 };
   QuaternionToAngleAxis(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
 }
@@ -275,7 +278,7 @@ TEST(Rotation, AngleAxisToQuaterionAndBack) {
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
-    double theta = M_PI * 2 * RandDouble() - M_PI;
+    double theta = kPi * 2 * RandDouble() - kPi;
     for (int i = 0; i < 3; i++) {
       axis_angle[i] = axis_angle[i] * theta / norm;
     }
@@ -340,7 +343,7 @@ TEST(Rotation, NearZeroAngleAxisToRotationMatrix) {
 
 // Transforms a rotation by pi/2 around X to a rotation matrix and back.
 TEST(Rotation, XRotationToRotationMatrix) {
-  double axis_angle[3] = { M_PI / 2, 0, 0 };
+  double axis_angle[3] = { kPi / 2, 0, 0 };
   double matrix[9];
   // The rotation matrices are stored column-major.
   double expected[9] = { 1, 0, 0, 0, 0, 1, 0, -1, 0 };
@@ -355,7 +358,7 @@ TEST(Rotation, XRotationToRotationMatrix) {
 // Transforms an axis angle that rotates by pi about the Y axis to a
 // rotation matrix and back.
 TEST(Rotation, YRotationToRotationMatrix) {
-  double axis_angle[3] = { 0, M_PI, 0 };
+  double axis_angle[3] = { 0, kPi, 0 };
   double matrix[9];
   double expected[9] = { -1, 0, 0, 0, 1, 0, 0, 0, -1 };
   AngleAxisToRotationMatrix(axis_angle, matrix);
@@ -385,7 +388,7 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
 
     // Angle in [pi - kMaxSmallAngle, pi).
     const double kMaxSmallAngle = 1e-2;
-    double theta = M_PI - kMaxSmallAngle * RandDouble();
+    double theta = kPi - kMaxSmallAngle * RandDouble();
 
     for (int i = 0; i < 3; i++) {
       in_axis_angle[i] *= (theta / norm);
@@ -400,7 +403,7 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
 }
 
 TEST(Rotation, AtPiAngleAxisRoundTrip) {
-  // A rotation of M_PI about the X axis;
+  // A rotation of kPi about the X axis;
   static const double kMatrix[3][3] = {
     {1.0,  0.0,  0.0},
     {0.0,  -1.0,  0.0},
@@ -415,7 +418,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
      }
   }
 
-  const double expected_axis_angle[3] = { M_PI, 0, 0 };
+  const double expected_axis_angle[3] = { kPi, 0, 0 };
 
   double out_matrix[9];
   double axis_angle[3];
@@ -424,7 +427,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
 
   LOG(INFO) << "AngleAxis = " << axis_angle[0] << " " << axis_angle[1]
             << " " << axis_angle[2];
-  LOG(INFO) << "Expected AngleAxis = " << M_PI << " 0 0";
+  LOG(INFO) << "Expected AngleAxis = " << kPi << " 0 0";
   double out_rowmajor[3][3];
   for (int j = 0, k = 0; j < 3; ++j) {
     for (int i = 0; i < 3; ++i, ++k) {
@@ -452,7 +455,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
 // Transforms an axis angle that rotates by pi/3 about the Z axis to a
 // rotation matrix.
 TEST(Rotation, ZRotationToRotationMatrix) {
-  double axis_angle[3] =  { 0, 0, M_PI / 3 };
+  double axis_angle[3] =  { 0, 0, kPi / 3 };
   double matrix[9];
   // This is laid-out row-major on the screen but is actually stored
   // column-major.
@@ -483,7 +486,7 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBack) {
     norm = sqrt(norm);
 
     // Angle in [-pi, pi).
-    double theta = M_PI * 2 * RandDouble() - M_PI;
+    double theta = kPi * 2 * RandDouble() - kPi;
     for (int i = 0; i < 3; i++) {
       axis_angle[i] = axis_angle[i] * theta / norm;
     }
@@ -510,7 +513,7 @@ static void Transpose3x3(double m[9]) {
 // Convert Euler angles from radians to degrees.
 static void ToDegrees(double ea[3]) {
   for (int i = 0; i < 3; ++i)
-    ea[i] *= 180.0 / M_PI;
+    ea[i] *= 180.0 / kPi;
 }
 
 // Compare the 3x3 rotation matrices produced by the axis-angle
@@ -843,7 +846,7 @@ TEST(AngleAxis, RotatePointGivesSameAnswerAsRotationMatrix) {
   double rotation_matrix_rotated_p[3];
 
   for (int i = 0; i < 10000; ++i) {
-    double theta = (2.0 * i * 0.0011 - 1.0) * M_PI;
+    double theta = (2.0 * i * 0.0011 - 1.0) * kPi;
     for (int j = 0; j < 50; ++j) {
       double norm2 = 0.0;
       for (int k = 0; k < 3; ++k) {
