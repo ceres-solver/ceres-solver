@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAG7X///+o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T05:46:48Z",
+      "side": 1,
+      "message": "hmm a lot of tweakage..",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X///+k\u003d",
+        "filename": "examples/powell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T05:46:48Z",
+      "side": 1,
+      "message": "how was this code compiling without these includes?",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X///+g\u003d",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T05:46:48Z",
+      "side": 1,
+      "message": "err? why include jets here?",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X///+c\u003d",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T05:46:48Z",
+      "side": 1,
+      "message": "all three includes are there three lines down..",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAG7X///+Y\u003d",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-06-25T05:46:48Z",
+      "side": 1,
+      "message": "indentation",
+      "revId": "dc15577d4924f2b806a47e37c2855046df380557",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
