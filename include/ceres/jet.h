@@ -509,7 +509,7 @@ bool IsInfinite(const Jet<T, N>& f) {
     return true;
   }
   for (int i = 0; i < N; i++) {
-    if (IsFinite(f.v[i])) {
+    if (IsInfinite(f.v[i])) {
       return true;
     }
   }
