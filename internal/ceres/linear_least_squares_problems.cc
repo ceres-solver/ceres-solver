@@ -61,6 +61,7 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id) {
     default:
       LOG(FATAL) << "Unknown problem id requested " << id;
   }
+  return NULL;
 }
 
 #ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS

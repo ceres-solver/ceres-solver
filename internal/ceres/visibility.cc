@@ -136,8 +136,9 @@ Graph<int>* CreateSchurComplementGraph(const vector<set<int> >& visibility) {
     CHECK_NE(camera1, camera2);
 
     const int count = it->second;
+    // Static cast necessary for Windows.
     const double weight = static_cast<double>(count) /
-        (sqrt(visibility[camera1].size() * visibility[camera2].size()));
+        (sqrt(static_cast<double>(visibility[camera1].size() * visibility[camera2].size())));
     graph->AddEdge(camera1, camera2, weight);
   }
 

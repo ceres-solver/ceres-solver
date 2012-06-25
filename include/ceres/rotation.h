@@ -145,6 +145,13 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]);
 
 // --- IMPLEMENTATION
 
+// Duplicate rather than decorate every use of cmath with _USE_MATH_CONSTANTS.
+// Necessitated by Windows.
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#define CERES_NEED_M_PI_UNDEF
+#endif
+
 template<typename T>
 inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
   const T &a0 = angle_axis[0];
@@ -509,4 +516,11 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
 }
 
 }  // namespace ceres
+
+// Clean define pollution.
+#ifdef CERES_NEED_M_PI_UNDEF
+#undef CERES_NEED_M_PI_UNDEF
+#undef M_PI
+#endif
+
 #endif  // CERES_PUBLIC_ROTATION_H_

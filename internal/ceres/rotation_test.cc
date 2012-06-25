@@ -42,6 +42,16 @@
 #include "ceres/jet.h"
 #include "ceres/rotation.h"
 
+// Duplicate rather than decorate every use of cmath with _USE_MATH_CONSTANTS.
+// Nessitated by Windows.
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#ifndef M_SQRT1_2
+#define M_SQRT1_2 0.707106781186547524401
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -54,7 +64,7 @@ double RandDouble() {
 static double const kTolerance = numeric_limits<double>::epsilon() * 10;
 
 // Looser tolerance used for for numerically unstable conversions.
-static double const kLooseTolerance = 1e-9;;
+static double const kLooseTolerance = 1e-9;
 
 // Use as:
 // double quaternion[4];

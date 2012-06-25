@@ -69,6 +69,12 @@ namespace internal {
 // Non-POD types will be default-initialized just like regular vectors or
 // arrays.
 
+#if defined(_WIN64)
+   typedef __int64      ssize_t;
+#elif defined(_WIN32)
+   typedef __int32      ssize_t;
+#endif
+
 template <typename T, ssize_t inline_elements = -1>
 class FixedArray {
  public:
@@ -152,13 +158,13 @@ class FixedArray {
 
   // Allocate some space, not an array of elements of type T, so that we can
   // skip calling the T constructors and destructors for space we never use.
-  ManualConstructor<InnerContainer> inline_space_[kInlineElements] CERES_ALIGN_ATTRIBUTE(16);
+  ManualConstructor<InnerContainer> CERES_ALIGN_ATTRIBUTE(16) inline_space_[kInlineElements];
 };
 
 // Implementation details follow
 
 template <class T, ssize_t S>
-inline FixedArray<T, S>::FixedArray(FixedArray<T, S>::size_type n)
+inline FixedArray<T, S>::FixedArray(typename FixedArray<T, S>::size_type n)
     : size_(n),
       array_((n <= kInlineElements
               ? reinterpret_cast<InnerContainer*>(inline_space_)

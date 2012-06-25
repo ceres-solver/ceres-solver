@@ -41,6 +41,11 @@
 
 #define VL VLOG(1)
 
+// Duplicate rather than decorate every use of cmath with _USE_MATH_CONSTANTS.
+#ifndef M_PI
+#define M_E 2.71828182845904523536
+#endif
+
 namespace ceres {
 namespace internal {
 

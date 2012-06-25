@@ -106,6 +106,9 @@ class TernaryCostFunction: public CostFunction {
   }
 };
 
+// TODO(keir): Figure out how to enable death tests on Windows.
+#ifndef _WIN32
+
 TEST(Problem, AddResidualWithNullCostFunctionDies) {
   double x[3], y[4], z[5];
 
@@ -169,6 +172,8 @@ TEST(Problem, AddResidualWithIncorrectSizesOfParameterBlockDies) {
                "different block sizes");
 }
 
+#endif  // _WIN32
+
 TEST(Problem, AddResidualAddsDuplicatedParametersOnlyOnce) {
   double x[3], y[4], z[5];
 
@@ -181,6 +186,8 @@ TEST(Problem, AddResidualAddsDuplicatedParametersOnlyOnce) {
   EXPECT_EQ(3, problem.NumParameterBlocks());
   EXPECT_EQ(12, problem.NumParameters());
 }
+
+#ifndef _WIN32
 
 TEST(Problem, AddParameterWithDifferentSizesOnTheSameVariableDies) {
   double x[3], y[4];
@@ -225,6 +232,8 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
 
   ASSERT_EQ(5, problem.NumParameterBlocks());
 }
+
+#endif  // _WIN32
 
 TEST(Problem, AddParameterIgnoresDuplicateCalls) {
   double x[3], y[4];

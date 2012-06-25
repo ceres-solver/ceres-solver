@@ -32,6 +32,7 @@
 
 #include <glog/logging.h>
 #include "ceres/file.h"
+#include "gflags/gflags.h"
 #include "gtest/gtest.h"
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"

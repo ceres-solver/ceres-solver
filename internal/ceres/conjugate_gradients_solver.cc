@@ -46,6 +46,7 @@
 #include "ceres/linear_operator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/types.h"
+#include "ceres/jet.h"
 
 namespace ceres {
 namespace internal {

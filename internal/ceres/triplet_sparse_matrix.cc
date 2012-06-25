@@ -130,7 +130,7 @@ bool TripletSparseMatrix::AllTripletsWithinBounds() const {
 
 void TripletSparseMatrix::Reserve(int new_max_num_nonzeros) {
   CHECK_LE(num_nonzeros_, new_max_num_nonzeros)
-    << "Reallocation will cause data loss";
+      << "Reallocation will cause data loss";
 
   // Nothing to do if we have enough space already.
   if (new_max_num_nonzeros <= max_num_nonzeros_)
