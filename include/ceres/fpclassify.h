@@ -26,42 +26,24 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: keir@google.com (Keir Mierle)
+//
+// Portable floating point classification. The names are picked such that they
+// do not collide with macros. For example, "isnan" in C99 is a macro and hence
+// does not respect namespaces.
+//
+// TODO(keir): Finish porting!
 
-#include "ceres/array_utils.h"
-
-#include <cmath>
-#include <cstddef>
-#include "ceres/fpclassify.h"
+#ifndef CERES_PUBLIC_FPCLASSIFY_H_
+#define CERES_PUBLIC_FPCLASSIFY_H_
 
 namespace ceres {
-namespace internal {
 
-// It is a near impossibility that user code generates this exact
-// value in normal operation, thus we will use it to fill arrays
-// before passing them to user code. If on return an element of the
-// array still contains this value, we will assume that the user code
-// did not write to that memory location.
-const double kImpossibleValue = 1e302;
+inline bool IsFinite  (double x) { return std::isfinite(x); }
+inline bool IsInfinite(double x) { return std::isinf(x);    }
+inline bool IsNaN     (double x) { return std::isnan(x);    }
+inline bool IsNormal  (double x) { return std::isnormal(x); }
 
-bool IsArrayValid(const int size, const double* x) {
-  if (x != NULL) {
-    for (int i = 0; i < size; ++i) {
-      if (!IsFinite(x[i]) || (x[i] == kImpossibleValue))  {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-void InvalidateArray(const int size, double* x) {
-  if (x != NULL) {
-    for (int i = 0; i < size; ++i) {
-      x[i] = kImpossibleValue;
-    }
-  }
-}
-
-}  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_PUBLIC_FPCLASSIFY_H_

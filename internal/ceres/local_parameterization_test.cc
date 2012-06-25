@@ -30,6 +30,7 @@
 
 #include <cmath>
 #include "gtest/gtest.h"
+#include "ceres/fpclassify.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
@@ -183,7 +184,7 @@ void QuaternionParameterizationTestHelper(const double* x,
   double jacobian[12];
   param.ComputeJacobian(x, jacobian);
   for (int i = 0; i < 12; ++i) {
-    EXPECT_TRUE(isfinite(jacobian[i]));
+    EXPECT_TRUE(IsFinite(jacobian[i]));
     EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
         << "Jacobian mismatch: i = " << i
         << "\n Expected \n" << ConstMatrixRef(jacobian_ref, 4, 3)

@@ -162,6 +162,7 @@
 #include <string>
 
 #include "Eigen/Core"
+#include "ceres/fpclassify.h"
 
 namespace ceres {
 
@@ -401,10 +402,6 @@ inline double cos     (double x) { return std::cos(x);      }
 inline double acos    (double x) { return std::acos(x);     }
 inline double sin     (double x) { return std::sin(x);      }
 inline double asin    (double x) { return std::asin(x);     }
-inline bool   isfinite(double x) { return std::isfinite(x); }
-inline bool   isinf   (double x) { return std::isinf(x);    }
-inline bool   isnan   (double x) { return std::isnan(x);    }
-inline bool   isnormal(double x) { return std::isnormal(x); }
 inline double pow  (double x, double y) { return std::pow(x, y);   }
 inline double atan2(double y, double x) { return std::atan2(y, x); }
 
@@ -482,22 +479,23 @@ Jet<T, N> asin(const Jet<T, N>& f) {
 }
 
 // Jet Classification. It is not clear what the appropriate semantics are for
-// these classifications. This picks that isfinite and isnormal are "all"
-// operations, i.e. all elements of the jet must be finite for the jet itself to
-// be finite (or normal). For isnan and isinf, the answer is less clear. This
-// takes a "any" approach for isnan and isinf such that if any part of a jet is
-// nan or inf, then the entire jet is nan or inf. This leads to strange
-// situations like a jet can be both isinf and isnan, but in practice the "any"
-// semantics are the most useful for e.g. checking that derivatives are sane.
+// these classifications. This picks that IsFinite and isnormal are "all"
+// operations, i.e. all elements of the jet must be finite for the jet itself
+// to be finite (or normal). For IsNaN and IsInfinite, the answer is less
+// clear. This takes a "any" approach for IsNaN and IsInfinite such that if any
+// part of a jet is nan or inf, then the entire jet is nan or inf. This leads
+// to strange situations like a jet can be both IsInfinite and IsNaN, but in
+// practice the "any" semantics are the most useful for e.g. checking that
+// derivatives are sane.
 
 // The jet is finite if all parts of the jet are finite.
 template <typename T, int N> inline
-bool isfinite(const Jet<T, N>& f) {
-  if (!isfinite(f.a)) {
+bool IsFinite(const Jet<T, N>& f) {
+  if (!IsFinite(f.a)) {
     return false;
   }
   for (int i = 0; i < N; ++i) {
-    if (!isfinite(f.v[i])) {
+    if (!IsFinite(f.v[i])) {
       return false;
     }
   }
@@ -506,12 +504,12 @@ bool isfinite(const Jet<T, N>& f) {
 
 // The jet is infinite if any part of the jet is infinite.
 template <typename T, int N> inline
-bool isinf(const Jet<T, N>& f) {
-  if (isinf(f.a)) {
+bool IsInfinite(const Jet<T, N>& f) {
+  if (IsInfinite(f.a)) {
     return true;
   }
   for (int i = 0; i < N; i++) {
-    if (isinf(f.v[i])) {
+    if (IsFinite(f.v[i])) {
       return true;
     }
   }
@@ -520,12 +518,12 @@ bool isinf(const Jet<T, N>& f) {
 
 // The jet is NaN if any part of the jet is NaN.
 template <typename T, int N> inline
-bool isnan(const Jet<T, N>& f) {
-  if (isnan(f.a)) {
+bool IsNaN(const Jet<T, N>& f) {
+  if (IsNaN(f.a)) {
     return true;
   }
   for (int i = 0; i < N; ++i) {
-    if (isnan(f.v[i])) {
+    if (IsNaN(f.v[i])) {
       return true;
     }
   }
@@ -534,12 +532,12 @@ bool isnan(const Jet<T, N>& f) {
 
 // The jet is normal if all parts of the jet are normal.
 template <typename T, int N> inline
-bool isnormal(const Jet<T, N>& f) {
-  if (!isnormal(f.a)) {
+bool IsNormal(const Jet<T, N>& f) {
+  if (!IsNormal(f.a)) {
     return false;
   }
   for (int i = 0; i < N; ++i) {
-    if (!isnormal(f.v[i])) {
+    if (!IsNormal(f.v[i])) {
       return false;
     }
   }
