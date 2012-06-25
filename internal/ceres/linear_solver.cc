@@ -81,7 +81,7 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
     default:
       LOG(FATAL) << "Unknown linear solver type :"
                  << options.type;
-	  return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
+      return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
   }
 }
 
