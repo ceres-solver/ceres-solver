@@ -83,7 +83,7 @@ char (&ArraySizeHelper(T (&array)[N]))[N];
 // That gcc wants both of these prototypes seems mysterious. VC, for
 // its part, can't decide which to use (another mystery). Matching of
 // template overloads: the final frontier.
-#ifndef COMPILER_MSVC
+#ifndef _WIN32
 template <typename T, size_t N>
 char (&ArraySizeHelper(const T (&array)[N]))[N];
 #endif
@@ -131,12 +131,13 @@ char (&ArraySizeHelper(const T (&array)[N]))[N];
 //
 // - wan 2005-11-16
 //
-// Starting with Visual C++ 2005, WinNT.h includes ARRAYSIZE.
-#if !defined(COMPILER_MSVC) || (defined(_MSC_VER) && _MSC_VER < 1400)
-#define ARRAYSIZE(a) \
+// Starting with Visual C++ 2005, WinNT.h includes ARRAYSIZE. However,
+// the definition comes from the over-broad windows.h header that 
+// introduces a macro, ERROR, that conflicts with the logging framework
+// that Ceres uses. Instead, rename ARRAYSIZE to CERES_ARRAYSIZE.
+#define CERES_ARRAYSIZE(a) \
   ((sizeof(a) / sizeof(*(a))) / \
    static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
-#endif
 
 // Tell the compiler to warn about unused return values for functions declared
 // with this macro.  The macro should be used on function declarations

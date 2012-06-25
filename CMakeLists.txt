@@ -208,12 +208,12 @@ ELSE (EXISTS ${LAPACK_LIB})
 ENDIF (EXISTS ${LAPACK_LIB})
 
 SET(SUITESPARSE_FOUND
-  ${AMD_FOUND} AND
-  ${CAMD_FOUND} AND
-  ${COLAMD_FOUND} AND
-  ${CCOLAMD_FOUND} AND
-  ${CHOLMOD_FOUND} AND
-  ${BLAS_AND_LAPACK_FOUND})
+    ${AMD_FOUND} AND
+    ${CAMD_FOUND} AND
+    ${COLAMD_FOUND} AND
+    ${CCOLAMD_FOUND} AND
+    ${CHOLMOD_FOUND} AND
+    ${BLAS_AND_LAPACK_FOUND})
 
 # By default, if all of SuiteSparse's dependencies are found, Ceres is
 # built with SuiteSparse support. -DSUITESPARSE=ON/OFF can be used to
@@ -386,8 +386,15 @@ ENDIF (${UNIX})
 
 # Use the std namespace for the hash<> and related templates. This may vary by
 # system.
-ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
-ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
+IF (MSVC)
+  # This is known to work with Visual Studio 2010 Express.
+  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
+  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
+ELSE (MSVC)
+  # This is known to work with recent versions of Linux and Mac OS X.
+  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
+  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
+ENDIF (MSVC)
 
 INCLUDE_DIRECTORIES(
   include
@@ -408,9 +415,6 @@ ENDIF(${CXSPARSE})
 IF (${GFLAGS})
   INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
 ENDIF (${GFLAGS})
-
-ADD_SUBDIRECTORY(internal/ceres)
-ADD_SUBDIRECTORY(examples)
 
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
@@ -449,3 +453,36 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
   SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}"
        CACHE STRING "Release mode flags to the C++ Compiler" FORCE)
 ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
+
+# After the tweaks for the compile settings, disable some warnings on MSVC.
+IF (MSVC)
+  # Disable signed/unsigned int conversion warnings.
+  ADD_DEFINITIONS( "/wd4018")
+  # Disable warning about using struct/class for the same symobl.
+  ADD_DEFINITIONS( "/wd4099")
+  # Disable warning about the insecurity of using "std::copy".
+  ADD_DEFINITIONS("/wd4996")
+  # Disable performance warning about int-to-bool conversion.
+  ADD_DEFINITIONS("/wd4800")
+  # Disable performance warning about fopen insecurity.
+  ADD_DEFINITIONS("/wd4996")
+  # Disable warning about int64 to int32 conversion. Disabling
+  # this warning may not be correct; needs investigation.
+  # TODO(keir): Investigate these warnings in more detail.
+  ADD_DEFINITIONS("/wd4244")
+  # It's not possible to use STL types in DLL interfaces in a portable and
+  # reliable way. However, that's what happens with Google Log and Google Flags
+  # on Windows. MSVC gets upset about this and throws warnings that we can't do
+  # much about. The real solution is to link static versions of Google Log and
+  # Google Test, but that seems tricky on Windows. So, disable the warning.
+  ADD_DEFINITIONS("/wd4251")
+
+  # Google Flags doesn't have their DLL import/export stuff set up correctly,
+  # which results in linker warnings. This is irrelevant for Ceres, so ignore
+  # the warnings.
+  SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
+ENDIF (MSVC)
+
+ADD_SUBDIRECTORY(internal/ceres)
+ADD_SUBDIRECTORY(examples)
+

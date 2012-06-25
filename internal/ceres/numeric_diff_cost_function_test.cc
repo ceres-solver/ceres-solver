@@ -197,7 +197,7 @@ TEST(NumericDiffCostFunction, TransendentalOperationsInCostFunction) {
         { 0.0, 0.0, 0.0, 0.0, 0.0 },
       },
     };
-    for (int k = 0; k < ARRAYSIZE(kTests); ++k) {
+    for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
       double *x1 = &(kTests[k].x1[0]);
       double *x2 = &(kTests[k].x2[0]);
       double *parameters[] = { x1, x2 };

@@ -45,6 +45,7 @@
 
 #include <glog/logging.h>
 #include "ceres/file.h"
+#include "gflags/gflags.h"
 #include "gtest/gtest.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
@@ -310,10 +311,8 @@ TEST(SystemTest, PowellsFunction) {
 class BundleAdjustmentProblem {
  public:
   BundleAdjustmentProblem() {
-    const string input_file =
-        JoinPath(FLAGS_test_srcdir,
-                       "problem-16-22106-pre.txt"); // NOLINT
-
+    const string input_file = JoinPath(FLAGS_test_srcdir,
+                                       "problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }

@@ -37,12 +37,28 @@
 #ifndef CERES_PUBLIC_FPCLASSIFY_H_
 #define CERES_PUBLIC_FPCLASSIFY_H_
 
+#if defined(_MSC_VER)
+#include <float.h>
+#endif
+
 namespace ceres {
 
+#if defined(_MSC_VER)
+inline bool IsFinite  (double x) { return _finite(x);                }
+inline bool IsInfinite(double x) { return !_finite(x) && !_isnan(x); }
+inline bool IsNaN     (double x) { return _isnan(x);                 }
+inline bool IsNormal  (double x) {
+  int classification = _fpclass(x);
+  return classification == _FPCLASS_NN ||
+         classification == _FPCLASS_PN;
+}
+#else
+// TODO(keir): Test the "else" with more platforms.
 inline bool IsFinite  (double x) { return std::isfinite(x); }
 inline bool IsInfinite(double x) { return std::isinf(x);    }
 inline bool IsNaN     (double x) { return std::isnan(x);    }
 inline bool IsNormal  (double x) { return std::isnormal(x); }
+#endif
 
 }  // namespace ceres
 
