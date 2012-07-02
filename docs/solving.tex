@@ -357,8 +357,24 @@ is sent to \texttt{STDOUT}.
 
 \item{\texttt{return\_initial\_residuals }}(\texttt{false})
 \item{\texttt{return\_final\_residuals }}(\texttt{false})
+If true, the vectors \texttt{Solver::Summary::initial\_residuals } and \texttt{Solver::Summary::final\_residuals } are filled with the residuals before and after the optimization. The entries of these vectors are in the order in which ResidualBlocks were added to the Problem object.
+    
+\item{\texttt{return\_initial\_gradient }}(\texttt{false})
+\item{\texttt{return\_final\_gradient }}(\texttt{false})
+If true, the vectors \texttt{Solver::Summary::initial\_gradient } and \texttt{Solver::Summary::final\_gradient } are filled with the gradient before and after the optimization. The entries of these vectors are in the order in which ParameterBlocks were added to the Problem object.
 
+Since \texttt{AddResidualBlock } adds ParameterBlocks to the \texttt{Problem } automatically if they do not already exist, if you wish to have explicit control over the ordering of the vectors, then use \texttt{Problem::AddParameterBlock } to explicitly add the ParameterBlocks in the order desired.
+    
+\item{\texttt{return\_initial\_jacobian }}(\texttt{false})
+\item{\texttt{return\_initial\_jacobian }}(\texttt{false})
+If true, the Jacobian matrices before and after the optimization are returned in \texttt{Solver::Summary::initial\_jacobian } and \texttt{Solver::Summary::final\_jacobian } respectively.
 
+The rows of these matrices are in the same order in which the ResidualBlocks were added to the Problem object. The columns are in the same order in which the ParameterBlocks were added to the Problem object.
+        
+Since \texttt{AddResidualBlock } adds ParameterBlocks to the \texttt{Problem } automatically if they do not already exist, if you wish to have explicit control over the column ordering of the matrix, then use \texttt{Problem::AddParameterBlock } to explicitly add the ParameterBlocks in the order desired.
+
+The Jacobian matrices are stored as compressed row sparse matrices. Please see \texttt{ceres/crs\_matrix.h } for more details of the format.
+    
 \item{\texttt{lsqp\_iterations\_to\_dump }}
  List of iterations at which the optimizer should dump the
      linear least squares problem to disk. Useful for testing and

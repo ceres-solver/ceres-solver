@@ -31,6 +31,9 @@
 #ifndef CERES_INTERNAL_SOLVER_IMPL_H_
 #define CERES_INTERNAL_SOLVER_IMPL_H_
 
+#include <string>
+#include <vector>
+#include "ceres/internal/port.h"
 #include "ceres/solver.h"
 
 namespace ceres {

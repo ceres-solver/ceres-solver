@@ -32,14 +32,18 @@
 
 #include <map>
 #include <vector>
+#include "ceres/casts.h"
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/cost_function.h"
+#include "ceres/evaluator.h"
+#include "ceres/internal/port.h"
+#include "ceres/local_parameterization.h"
+#include "ceres/loss_function.h"
+#include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
+#include "ceres/problem.h"
 #include "ceres/residual_block.h"
 #include "ceres/stl_util.h"
-#include "ceres/map_util.h"
-#include "ceres/problem.h"
-#include "ceres/cost_function.h"
-#include "ceres/loss_function.h"
-#include "ceres/local_parameterization.h"
 
 namespace ceres {
 namespace internal {
@@ -69,7 +73,8 @@ vector<ResidualBlock*>* Program::mutable_residual_blocks() {
 
 bool Program::StateVectorToParameterBlocks(const double *state) {
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    if (!parameter_blocks_[i]->SetState(state)) {
+    if (!parameter_blocks_[i]->IsConstant() &&
+        !parameter_blocks_[i]->SetState(state)) {
       return false;
     }
     state += parameter_blocks_[i]->Size();
@@ -92,7 +97,8 @@ void Program::CopyParameterBlockStateToUserState() {
 
 bool Program::SetParameterBlockStatePtrsToUserStatePtrs() {
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
-    if (!parameter_blocks_[i]->SetState(parameter_blocks_[i]->user_state())) {
+    if (!parameter_blocks_[i]->IsConstant() &&
+        !parameter_blocks_[i]->SetState(parameter_blocks_[i]->user_state())) {
       return false;
     }
   }
@@ -208,42 +214,6 @@ int Program::MaxResidualsPerResidualBlock() const {
                         residual_blocks_[i]->NumResiduals());
   }
   return max_residuals;
-}
-
-bool Program::Evaluate(double* cost, double* residuals) {
-  *cost = 0.0;
-
-  // Scratch space is only needed if residuals is NULL.
-  scoped_array<double> scratch;
-  if (residuals == NULL) {
-    scratch.reset(new double[MaxScratchDoublesNeededForEvaluate()]);
-  } else {
-    // TODO(keir): Is this needed? Check by removing the equivalent statement in
-    // dense_evaluator.cc and running the tests.
-    VectorRef(residuals, NumResiduals()).setZero();
-  }
-
-  for (int i = 0; i < residual_blocks_.size(); ++i) {
-    ResidualBlock* residual_block = residual_blocks_[i];
-
-    // Evaluate the cost function for this residual.
-    double residual_cost;
-    if (!residual_block->Evaluate(&residual_cost,
-                                  residuals,
-                                  NULL,  // No jacobian.
-                                  scratch.get())) {
-      return false;
-    }
-
-    // Accumulate residual cost into the total cost.
-    *cost += residual_cost;
-
-    // Update the residuals cursor.
-    if (residuals != NULL) {
-      residuals += residual_block->NumResiduals();
-    }
-  }
-  return true;
 }
 
 }  // namespace internal
