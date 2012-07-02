@@ -41,6 +41,9 @@
 #include "ceres/types.h"
 
 namespace ceres {
+
+class CRSMatrix;
+
 namespace internal {
 
 class SparseMatrixProto;
@@ -105,6 +108,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // have the same number of columns as this matrix.
   void AppendRows(const CompressedRowSparseMatrix& m);
 
+  void ToCRSMatrix(CRSMatrix* matrix) const;
+
   // Low level access methods that expose the structure of the matrix.
   const int* cols() const { return cols_.get(); }
   int* mutable_cols() { return cols_.get(); }
@@ -112,11 +117,11 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const int* rows() const { return rows_.get(); }
   int* mutable_rows() { return rows_.get(); }
 
-  const vector<int>& row_blocks() const { return row_blocks_; };
-  vector<int>* mutable_row_blocks() { return &row_blocks_; };
+  const vector<int>& row_blocks() const { return row_blocks_; }
+  vector<int>* mutable_row_blocks() { return &row_blocks_; }
 
-  const vector<int>& col_blocks() const { return col_blocks_; };
-  vector<int>* mutable_col_blocks() { return &col_blocks_; };
+  const vector<int>& col_blocks() const { return col_blocks_; }
+  vector<int>* mutable_col_blocks() { return &col_blocks_; }
 
  private:
   scoped_array<int> cols_;
