@@ -28,14 +28,18 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
+#include <vector>
 #include <glog/logging.h>
-#include "ceres/evaluator.h"
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_jacobian_writer.h"
 #include "ceres/compressed_row_jacobian_writer.h"
-#include "ceres/scratch_evaluate_preparer.h"
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/crs_matrix.h"
 #include "ceres/dense_jacobian_writer.h"
+#include "ceres/evaluator.h"
+#include "ceres/internal/port.h"
 #include "ceres/program_evaluator.h"
+#include "ceres/scratch_evaluate_preparer.h"
 
 namespace ceres {
 namespace internal {
@@ -65,6 +69,68 @@ Evaluator* Evaluator::Create(const Evaluator::Options& options,
       *error = "Invalid Linear Solver Type. Unable to create evaluator.";
       return NULL;
   }
+}
+
+bool Evaluator::Evaluate(Program* program,
+                         int num_threads,
+                         double* cost,
+                         vector<double>* output_residuals,
+                         CRSMatrix* output_jacobian) {
+  CHECK_GE(num_threads, 1)
+      << "This is a Ceres bug; please contact the developers!";
+  CHECK_NOTNULL(cost);
+
+  // Setup the Parameter indices and offsets before an evaluator can
+  // be constructed and used.
+  program->SetParameterOffsetsAndIndex();
+
+  Evaluator::Options evaluator_options;
+  evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  evaluator_options.num_threads = num_threads;
+
+  string error;
+  scoped_ptr<Evaluator> evaluator(
+      Evaluator::Create(evaluator_options, program, &error));
+  if (evaluator.get() == NULL) {
+    LOG(ERROR) << "Unable to create an Evaluator object. "
+               << "Error: " << error
+               << "This is a Ceres bug; please contact the developers!";
+    return false;
+  }
+
+  scoped_ptr<CompressedRowSparseMatrix> jacobian;
+  if (output_jacobian != NULL) {
+    jacobian.reset(
+        down_cast<CompressedRowSparseMatrix*>(evaluator->CreateJacobian()));
+  }
+
+  Vector residuals(program->NumResiduals());
+  Vector parameters(program->NumParameters());
+  program->ParameterBlocksToStateVector(parameters.data());
+
+  // Copy the value of the parameter blocks into a vector, since the
+  // Evaluate::Evaluate needs its input as such.
+  if (!evaluator->Evaluate(parameters.data(),
+                           cost,
+                           residuals.data(),
+                           NULL,
+                           jacobian.get())) {
+    return false;
+  }
+
+  if (output_residuals != NULL) {
+    output_residuals->resize(evaluator->NumResiduals());
+    copy(residuals.data(),
+         residuals.data() + residuals.rows(),
+         output_residuals->begin());
+  }
+
+  if (output_jacobian != NULL) {
+    jacobian->ToCRSMatrix(output_jacobian);
+  }
+
+  program->SetParameterBlockStatePtrsToUserStatePtrs();
+  return true;
 }
 
 }  // namespace internal

@@ -30,13 +30,14 @@
 
 #include "ceres/compressed_row_sparse_matrix.h"
 
-#include "gtest/gtest.h"
 #include "ceres/casts.h"
+#include "ceres/crs_matrix.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -177,6 +178,25 @@ TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
   crsm->ToDenseMatrix(&crsm_dense);
 
   EXPECT_EQ((tsm_dense - crsm_dense).norm(), 0.0);
+}
+
+TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
+  CRSMatrix crs_matrix;
+  crsm->ToCRSMatrix(&crs_matrix);
+  EXPECT_EQ(crsm->num_rows(), crs_matrix.num_rows);
+  EXPECT_EQ(crsm->num_cols(), crs_matrix.num_cols);
+  EXPECT_EQ(crsm->num_rows() + 1, crs_matrix.rows.size());
+  EXPECT_EQ(crsm->num_nonzeros(), crs_matrix.cols.size());
+  EXPECT_EQ(crsm->num_nonzeros(), crs_matrix.values.size());
+
+  for (int i = 0; i < crsm->num_rows() + 1; ++i) {
+    EXPECT_EQ(crsm->rows()[i], crs_matrix.rows[i]);
+  }
+
+  for (int i = 0; i < crsm->num_nonzeros(); ++i) {
+    EXPECT_EQ(crsm->cols()[i], crs_matrix.cols[i]);
+    EXPECT_EQ(crsm->values()[i], crs_matrix.values[i]);
+  }
 }
 
 }  // namespace internal

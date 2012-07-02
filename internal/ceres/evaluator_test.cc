@@ -33,16 +33,18 @@
 
 #include "ceres/evaluator.h"
 
-#include "gtest/gtest.h"
 #include "ceres/casts.h"
-#include "ceres/problem_impl.h"
-#include "ceres/program.h"
-#include "ceres/sparse_matrix.h"
+#include "ceres/cost_function.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
-#include "ceres/types.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
 #include "ceres/sized_cost_function.h"
-#include "ceres/internal/eigen.h"
+#include "ceres/solver_impl.h"
+#include "ceres/sparse_matrix.h"
+#include "ceres/types.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
@@ -120,7 +122,8 @@ struct EvaluatorTest
                        const double* expected_residuals,
                        const double* expected_gradient,
                        const double* expected_jacobian) {
-    scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem->mutable_program()));
+    scoped_ptr<Evaluator> evaluator(
+        CreateEvaluator(problem->mutable_program()));
     int num_residuals = expected_num_rows;
     int num_parameters = expected_num_cols;
 
@@ -363,7 +366,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
         /* h(y, z) */ 0, 0,    3, 6, 9,    3, 6, 9, 12,
                       0, 0,    3, 6, 9,    3, 6, 9, 12,
                       0, 0,    3, 6, 9,    3, 6, 9, 12,
-                      0, 0,    3, 6, 9,    3, 6, 9, 12 
+                      0, 0,    3, 6, 9,    3, 6, 9, 12
     }
   };
   CheckAllEvaluationCombinations(expected);
@@ -423,7 +426,7 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
         /* h(y, z) */ 0, 0,    6, 9,    3, 9, 12,
                       0, 0,    6, 9,    3, 9, 12,
                       0, 0,    6, 9,    3, 9, 12,
-                      0, 0,    6, 9,    3, 9, 12 
+                      0, 0,    6, 9,    3, 9, 12
     }
   };
   CheckAllEvaluationCombinations(expected);
@@ -485,7 +488,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
       33.0, 66.0, 99.0,  // y
     },
     // Jacobian
-    //                x        y    
+    //                x        y
     {   /* f(x, y) */ 1, 2,    1, 2, 3,
                       1, 2,    1, 2, 3,
 
@@ -623,7 +626,11 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
     double cost = -1;
     double residuals[2] = { -2, -2};
     SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL, jacobian.get()));
+    ASSERT_TRUE(evaluator->Evaluate(state,
+                                    &cost,
+                                    residuals,
+                                    NULL,
+                                    jacobian.get()));
     EXPECT_EQ(48.5, cost);
     EXPECT_EQ(4, residuals[0]);
     EXPECT_EQ(9, residuals[1]);
@@ -640,6 +647,296 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
         << "\nExpected:\n" << expected_jacobian;
   }
 }
+
+// Simple cost function used for testing Evaluator::Evaluate.
+template <int kNumResiduals, int kNumParameterBlocks >
+class QuadraticCostFunction : public CostFunction {
+ public:
+  QuadraticCostFunction() {
+    CHECK_GT(kNumResiduals, 0);
+    CHECK_GT(kNumParameterBlocks, 0);
+    set_num_residuals(kNumResiduals);
+    for (int i = 0; i < kNumParameterBlocks; ++i) {
+      mutable_parameter_block_sizes()->push_back(kNumResiduals);
+    }
+  }
+
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    for (int i = 0; i < kNumResiduals; ++i) {
+      residuals[i] = i;
+      for (int j = 0; j < kNumParameterBlocks; ++j) {
+        residuals[i] -= (j + 1.0) * parameters[j][i] * parameters[j][i];
+      }
+    }
+
+    if (jacobians == NULL) {
+      return true;
+    }
+
+    for (int j = 0; j < kNumParameterBlocks; ++j) {
+      if (jacobians[j] != NULL) {
+        MatrixRef(jacobians[j], kNumResiduals, kNumResiduals) =
+            (-2.0 * (j + 1.0) *
+             ConstVectorRef(parameters[j], kNumResiduals)).asDiagonal();
+      }
+    }
+
+    return true;
+  }
+};
+
+// Convert a CRSMatrix to a dense Eigen matrix.
+void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
+  Matrix& m = *CHECK_NOTNULL(output);
+  m.resize(input.num_rows, input.num_cols);
+  m.setZero();
+  for (int row = 0; row < input.num_rows; ++row) {
+    for (int j = input.rows[row]; j < input.rows[row + 1]; ++j) {
+      const int col = input.cols[j];
+      m(row, col) = input.values[j];
+    }
+  }
+}
+
+void EvaluateResidualsAndJacobians(double const* const parameter_block1,
+                                   double const* const parameter_block2,
+                                   const CostFunction* cost_function,
+                                   const int num_residuals,
+                                   const int parameter_block_size,
+                                   const int row,
+                                   const int col1,
+                                   const int col2,
+                                   Vector* residuals,
+                                   Matrix* jacobian) {
+  double const* parameters[2];
+  parameters[0] = parameter_block1;
+  parameters[1] = parameter_block2;
+  double* jacobian_buffer[2];
+  jacobian_buffer[0] = new double[num_residuals * parameter_block_size];
+  jacobian_buffer[1] = new double[num_residuals * parameter_block_size];
+  cost_function->Evaluate(parameters, residuals->data() + row, jacobian_buffer);
+
+  jacobian->block(row, col1, num_residuals, parameter_block_size) =
+      MatrixRef(jacobian_buffer[0], num_residuals, parameter_block_size);
+  jacobian->block(row, col2, num_residuals, parameter_block_size) =
+      MatrixRef(jacobian_buffer[1], num_residuals, parameter_block_size);
+
+  delete []jacobian_buffer[0];
+  delete []jacobian_buffer[1];
+}
+
+struct ResidualsAndJacobians {
+  ResidualsAndJacobians(const int num_rows, const int num_cols)
+      : initial_residuals(num_rows),
+        final_residuals(num_rows),
+        initial_jacobian(num_rows, num_cols),
+        final_jacobian(num_rows, num_cols) {
+    initial_residuals.setZero();
+    final_residuals.setZero();
+    initial_jacobian.setZero();
+    final_jacobian.setZero();
+  }
+
+  Vector initial_residuals;
+  Vector final_residuals;
+  Matrix initial_jacobian;
+  Matrix final_jacobian;
+};
+
+void ComputeInitialAndFinalResidualsAndJacobians(
+    ProblemImpl* problem,
+    CostFunction* cost_function,
+    double* parameters,
+    ResidualsAndJacobians* expected,
+    ResidualsAndJacobians* actual,
+    const int jacobian_num_nonzeros) {
+  const int num_rows = actual->initial_jacobian.rows();
+  const int num_cols = actual->initial_jacobian.cols();
+
+  EvaluateResidualsAndJacobians(parameters,
+                                parameters + 2,
+                                cost_function,
+                                2, 2, 0, 0, 2,
+                                &(expected->initial_residuals),
+                                &(expected->initial_jacobian));
+
+  EvaluateResidualsAndJacobians(parameters + 2,
+                                parameters + 4,
+                                cost_function,
+                                2, 2, 2, 2, 4,
+                                &(expected->initial_residuals),
+                                &(expected->initial_jacobian));
+
+  EvaluateResidualsAndJacobians(parameters + 4,
+                                parameters,
+                                cost_function,
+                                2, 2, 4, 4, 0,
+                                &(expected->initial_residuals),
+                                &(expected->initial_jacobian));
+
+  Solver::Options options;
+  Solver::Summary summary;
+  options.return_initial_residuals = true;
+  options.return_final_residuals = true;
+  options.return_initial_jacobian = true;
+  options.return_final_jacobian = true;
+  SolverImpl::Solve(options, problem,  &summary);
+
+  EvaluateResidualsAndJacobians(parameters,
+                                parameters + 2,
+                                cost_function,
+                                2, 2, 0, 0, 2,
+                                &(expected->final_residuals),
+                                &(expected->final_jacobian));
+
+  EvaluateResidualsAndJacobians(parameters + 2,
+                                parameters + 4,
+                                cost_function,
+                                2, 2, 2, 2, 4,
+                                &(expected->final_residuals),
+                                &(expected->final_jacobian));
+
+  EvaluateResidualsAndJacobians(parameters + 4,
+                                parameters,
+                                cost_function,
+                                2, 2, 4, 4, 0,
+                                &(expected->final_residuals),
+                                &(expected->final_jacobian));
+
+  EXPECT_EQ(summary.initial_residuals.size(), num_rows);
+  actual->initial_residuals = VectorRef(&summary.initial_residuals[0],
+                                        num_rows);
+  EXPECT_EQ(summary.initial_jacobian.num_rows, num_rows);
+  EXPECT_EQ(summary.initial_jacobian.num_cols, num_cols);
+  EXPECT_EQ(summary.initial_jacobian.values.size(), jacobian_num_nonzeros);
+  CRSToDenseMatrix(summary.initial_jacobian, &(actual->initial_jacobian));
+
+  EXPECT_EQ(summary.final_residuals.size(), num_rows);
+  actual->final_residuals = VectorRef(&summary.final_residuals[0], num_rows);
+  EXPECT_EQ(summary.final_jacobian.num_rows, num_rows);
+  EXPECT_EQ(summary.final_jacobian.num_cols, num_cols);
+  EXPECT_EQ(summary.final_jacobian.values.size(), jacobian_num_nonzeros);
+  CRSToDenseMatrix(summary.final_jacobian, &(actual->final_jacobian));
+}
+
+
+void CompareResidualsAndJacobians(const ResidualsAndJacobians& actual,
+                                  const ResidualsAndJacobians& expected,
+                                  const double tolerance) {
+  EXPECT_NEAR((actual.initial_residuals - expected.initial_residuals).norm(),
+              0.0, tolerance);
+  EXPECT_NEAR((actual.final_residuals - expected.final_residuals).norm(),
+              0.0, tolerance);
+  EXPECT_NEAR((actual.initial_jacobian - expected.initial_jacobian).norm(),
+              0.0, tolerance);
+  EXPECT_NEAR((actual.final_jacobian - expected.final_jacobian).norm(),
+              0.0, tolerance);
+}
+
+TEST(Evaluator, EvaluateMultipleResidualBlocks) {
+  ProblemImpl problem;
+  double parameters[6];
+  for (int i = 0; i < 6; ++i) {
+    parameters[i] = static_cast<double>(i);
+  }
+
+  CostFunction* cost_function = new QuadraticCostFunction<2, 2>;
+  problem.AddResidualBlock(cost_function, NULL, parameters, parameters + 2);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 2, parameters + 4);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 4, parameters);
+
+  ResidualsAndJacobians expected(6, 6);
+  ResidualsAndJacobians actual(6, 6);
+  ComputeInitialAndFinalResidualsAndJacobians(&problem,
+                                              cost_function,
+                                              parameters,
+                                              &expected,
+                                              &actual,
+                                              24);
+
+  CompareResidualsAndJacobians(actual, expected, 1e-14);
+}
+
+TEST(Evaluator, EvaluateMultipleResidualBlocksWithConstantParameterBlocks) {
+  ProblemImpl problem;
+  double parameters[6];
+  for (int i = 0; i < 6; ++i) {
+    parameters[i] = static_cast<double>(i);
+  }
+
+  CostFunction* cost_function = new QuadraticCostFunction<2, 2>;
+  problem.AddResidualBlock(cost_function, NULL, parameters, parameters + 2);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 2, parameters + 4);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 4, parameters);
+
+  // Set the second parameter block constant.
+  problem.SetParameterBlockConstant(parameters + 2);
+
+  ResidualsAndJacobians expected(6, 6);
+  ResidualsAndJacobians actual(6, 6);
+  ComputeInitialAndFinalResidualsAndJacobians(&problem,
+                                              cost_function,
+                                              parameters,
+                                              &expected,
+                                              &actual,
+                                              16);
+
+  // Set the columns corresponding to the second parameter block to
+  // zero.
+  expected.initial_jacobian.block(0, 2, 6, 2).setZero();
+  expected.final_jacobian.block(0, 2, 6, 2).setZero();
+
+  CompareResidualsAndJacobians(actual, expected, 1e-14);
+}
+
+TEST(Evaluator, EvaluateMultipleResidualBlocksWithLocalParameterization) {
+  ProblemImpl problem;
+  double parameters[6];
+  for (int i = 0; i < 6; ++i) {
+    parameters[i] = static_cast<double>(i);
+  }
+
+  CostFunction* cost_function = new QuadraticCostFunction<2, 2>;
+  problem.AddResidualBlock(cost_function, NULL, parameters, parameters + 2);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 2, parameters + 4);
+  problem.AddResidualBlock(cost_function, NULL, parameters + 4, parameters);
+
+  vector<int> constant_parameters;
+  constant_parameters.push_back(0);
+  problem.SetParameterization(parameters + 2,
+                              new SubsetParameterization(2,
+                                                         constant_parameters));
+
+  ResidualsAndJacobians expected(6, 6);
+  ResidualsAndJacobians actual(6, 5);
+  ComputeInitialAndFinalResidualsAndJacobians(&problem,
+                                              cost_function,
+                                              parameters,
+                                              &expected,
+                                              &actual,
+                                              20);
+  // Perform surgery on the expected jacobians to get rid of the first
+  // column corresponding to the second parameter block, so that its
+  // size is equal to the actual jacobians and they can be compared.
+  Matrix expected_initial_jacobian = expected.initial_jacobian;
+  expected.initial_jacobian.resize(6, 5);
+  expected.initial_jacobian.block(0, 0, 6, 2) =
+      expected_initial_jacobian.block(0, 0, 6, 2);
+  expected.initial_jacobian.block(0, 2, 6, 3) =
+      expected_initial_jacobian.block(0, 3, 6, 3);
+
+  Matrix expected_final_jacobian = expected.final_jacobian;
+  expected.final_jacobian.resize(6, 5);
+  expected.final_jacobian.block(0, 0, 6, 2) =
+      expected_final_jacobian.block(0, 0, 6, 2);
+  expected.final_jacobian.block(0, 2, 6, 3) =
+      expected_final_jacobian.block(0, 3, 6, 3);
+
+  CompareResidualsAndJacobians(actual, expected, 1e-14);
+}
+
 
 }  // namespace internal
 }  // namespace ceres
