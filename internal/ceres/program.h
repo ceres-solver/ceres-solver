@@ -35,6 +35,9 @@
 #include "ceres/internal/port.h"
 
 namespace ceres {
+
+class CRSMatrix;
+
 namespace internal {
 
 class ParameterBlock;
@@ -109,15 +112,35 @@ class Program {
   int MaxDerivativesPerResidualBlock() const;
   int MaxParametersPerResidualBlock() const;
 
-  // Evaluate the cost and maybe the residuals for the program. If residuals is
-  // NULL, then residuals are not calculated. If the jacobian is needed, instead
-  // use the various evaluators (e.g. dense_evaluator.h).
+  // Program evaluator. This is used for computing the cost, residual
+  // and Jacobian for returning to the user. For actually solving the
+  // optimization problem, the optimization algorithm uses the
+  // ProgramEvaluator objects directly.
   //
-  // This is a trivial implementation of evaluate not intended for use in the
-  // core solving loop. The other evaluators, which support constructing the
-  // jacobian in addition to the cost and residuals, are considerably
-  // complicated by the need to construct the jacobian.
-  bool Evaluate(double* cost, double* residuals);
+  // The residual and jacobian pointers can be NULL, in which case
+  // they will not be evaluated. cost cannot be NULL.
+  //
+  // The parallelism of the evaluator is controlled by num_threads, it
+  // should be at least 1.
+  //
+  // Note: This function assumes that the state of the parameter
+  // blocks is already set to the value that is of interest to the
+  // user. In practice what this means is that
+  // Program::SetParameterBlockStatePtrsToUserStatePtrs() has been
+  // called before calling Evaluate, so that the state pointers of all
+  // the parameter blocks point to the user state pointer.
+  //
+  // Also worth noting is that this function mutates program by
+  // calling, Program::SetParameterOffsetsAndIndex() on it, so that an
+  // evaluator object can be constructed. Further, Evaluate calls
+  // program->SetParameterBlockStatePtrsToUserStatePtrs() on the way
+  // out. So that the state of the ParameterBlocks does not point to
+  // some vector that doesn exist in memory anymore.
+  static bool Evaluate(Program* program,
+                       int num_threads,
+                       double* cost,
+                       vector<double>* residuals,
+                       CRSMatrix* jacobian);
 
  private:
   // The Program does not own the ParameterBlock or ResidualBlock objects.

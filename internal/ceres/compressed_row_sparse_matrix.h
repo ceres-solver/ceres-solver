@@ -41,6 +41,9 @@
 #include "ceres/types.h"
 
 namespace ceres {
+
+class CRSMatrix;
+
 namespace internal {
 
 class SparseMatrixProto;
@@ -104,6 +107,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // Append the contents of m to the bottom of this matrix. m must
   // have the same number of columns as this matrix.
   void AppendRows(const CompressedRowSparseMatrix& m);
+
+  void ToCRSMatrix(CRSMatrix* matrix) const;
 
   // Low level access methods that expose the structure of the matrix.
   const int* cols() const { return cols_.get(); }
