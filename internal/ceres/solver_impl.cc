@@ -52,19 +52,6 @@ namespace ceres {
 namespace internal {
 namespace {
 
-void EvaluateCostAndResiduals(ProblemImpl* problem_impl,
-                              double* cost,
-                              vector<double>* residuals) {
-  CHECK_NOTNULL(cost);
-  Program* program = CHECK_NOTNULL(problem_impl)->mutable_program();
-  if (residuals != NULL) {
-    residuals->resize(program->NumResiduals());
-    program->Evaluate(cost, &(*residuals)[0]);
-  } else {
-    program->Evaluate(cost, NULL);
-  }
-}
-
 // Callback for updating the user's parameter blocks. Updates are only
 // done if the step is successful.
 class StateUpdatingCallback : public IterationCallback {
@@ -168,10 +155,14 @@ void SolverImpl::Minimize(const Solver::Options& options,
 }
 
 void SolverImpl::Solve(const Solver::Options& original_options,
-                       ProblemImpl* problem_impl,
+                       ProblemImpl* original_problem_impl,
                        Solver::Summary* summary) {
   time_t solver_start_time = time(NULL);
   Solver::Options options(original_options);
+  ProblemImpl* problem_impl = original_problem_impl;
+  // Reset the summary object to its default values.
+  *CHECK_NOTNULL(summary) = Solver::Summary();
+
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -190,8 +181,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 #endif
 
-  // Reset the summary object to its default values;
-  *CHECK_NOTNULL(summary) = Solver::Summary();
   summary->linear_solver_type_given = options.linear_solver_type;
   summary->num_eliminate_blocks_given = original_options.num_eliminate_blocks;
   summary->num_threads_given = original_options.num_threads;
@@ -209,23 +198,17 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
-  // Evaluate the initial cost and residual vector (if needed). The
-  // initial cost needs to be computed on the original unpreprocessed
-  // problem, as it is used to determine the value of the "fixed" part
-  // of the objective function after the problem has undergone
-  // reduction. Also the initial residuals are in the order in which
-  // the user added the ResidualBlocks to the optimization problem.
-  //
-  // Note: This assumes the parameter block states are pointing to the
-  // user state at start of Solve(), instead of some other pointer.
-  // The invariant is ensured by the ParameterBlock constructor and by
-  // the call to SetParameterBlockStatePtrsToUserStatePtrs() at the
-  // bottom of this function.
-  EvaluateCostAndResiduals(problem_impl,
-                           &summary->initial_cost,
-                           options.return_initial_residuals
-                           ? &summary->initial_residuals
-                           : NULL);
+  // Evaluate the initial cost, residual vector and the jacobian
+  // matrix if requested by the user. The initial cost needs to be
+  // computed on the original unpreprocessed problem, as it is used to
+  // determine the value of the "fixed" part of the objective function
+  // after the problem has undergone reduction.
+  Evaluator::Evaluate(
+      original_problem_impl->mutable_program(),
+      options.num_threads,
+      &(summary->initial_cost),
+      options.return_initial_residuals ? &summary->initial_residuals : NULL,
+      options.return_initial_jacobian ? &summary->initial_jacobian : NULL);
 
   // If the user requests gradient checking, construct a new
   // ProblemImpl by wrapping the CostFunctions of problem_impl inside
@@ -234,7 +217,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
   // Save the original problem impl so we don't use the gradient
   // checking one when computing the residuals.
-  ProblemImpl* original_problem_impl = problem_impl;
   if (options.check_gradients) {
     VLOG(1) << "Checking Gradients";
     gradient_checking_problem_impl.reset(
@@ -311,6 +293,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 
   time_t post_process_start_time = time(NULL);
+
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
@@ -318,17 +301,17 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Ensure the program state is set to the user parameters on the way out.
   reduced_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
-  // Return the final cost and residuals for the original problem.
-  EvaluateCostAndResiduals(original_problem_impl,
-                           &summary->final_cost,
-                           options.return_final_residuals
-                           ? &summary->final_residuals
-                           : NULL);
+  // Evaluate the final cost, residual vector and the jacobian
+  // matrix if requested by the user.
+  Evaluator::Evaluate(
+      original_problem_impl->mutable_program(),
+      options.num_threads,
+      &summary->final_cost,
+      options.return_final_residuals ? &summary->final_residuals : NULL,
+      options.return_final_jacobian ? &summary->final_jacobian : NULL);
 
   // Stick a fork in it, we're done.
-  time_t post_process_end_time = time(NULL);
-  summary->postprocessor_time_in_seconds =
-      post_process_end_time - post_process_start_time;
+  summary->postprocessor_time_in_seconds = time(NULL) - post_process_start_time;
 }
 
 // Strips varying parameters and residuals, maintaining order, and updating

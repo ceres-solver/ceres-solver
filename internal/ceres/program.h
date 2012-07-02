@@ -109,16 +109,6 @@ class Program {
   int MaxDerivativesPerResidualBlock() const;
   int MaxParametersPerResidualBlock() const;
 
-  // Evaluate the cost and maybe the residuals for the program. If residuals is
-  // NULL, then residuals are not calculated. If the jacobian is needed, instead
-  // use the various evaluators (e.g. dense_evaluator.h).
-  //
-  // This is a trivial implementation of evaluate not intended for use in the
-  // core solving loop. The other evaluators, which support constructing the
-  // jacobian in addition to the cost and residuals, are considerably
-  // complicated by the need to construct the jacobian.
-  bool Evaluate(double* cost, double* residuals);
-
  private:
   // The Program does not own the ParameterBlock or ResidualBlock objects.
   vector<ParameterBlock*> parameter_blocks_;

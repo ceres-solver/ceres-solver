@@ -83,6 +83,7 @@
 #include <omp.h>
 #endif
 
+#include <vector>
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
@@ -128,7 +129,7 @@ class ProgramEvaluator : public Evaluator {
 
     if (residuals != NULL) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
-    } 
+    }
 
     if (jacobian != NULL) {
       jacobian->SetZero();
