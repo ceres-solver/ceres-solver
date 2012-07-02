@@ -572,7 +572,7 @@ struct QuadraticCostFunction {
 };
 
 struct RememberingCallback : public IterationCallback {
-  RememberingCallback(double *x) : calls(0), x(x) {}
+  explicit RememberingCallback(double *x) : calls(0), x(x) {}
   virtual ~RememberingCallback() {}
   virtual CallbackReturnType operator()(const IterationSummary& summary) {
     x_values.push_back(*x);

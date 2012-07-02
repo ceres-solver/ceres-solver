@@ -83,6 +83,7 @@
 #include <omp.h>
 #endif
 
+#include <vector>
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
@@ -129,15 +130,18 @@ class ProgramEvaluator : public Evaluator {
 
     if (residuals != NULL) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
-    } 
+    }
 
     if (jacobian != NULL) {
       jacobian->SetZero();
     }
 
+    const int num_parameters = program_->NumEffectiveParameters();
     // Each thread gets it's own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
+      VectorRef(evaluate_scratch_[i].gradient.get(),
+                num_parameters).setZero();
     }
 
     // This bool is used to disable the loop if an error is encountered
@@ -230,7 +234,6 @@ class ProgramEvaluator : public Evaluator {
     if (!abort) {
       // Sum the cost and gradient (if requested) from each thread.
       (*cost) = 0.0;
-      int num_parameters = program_->NumEffectiveParameters();
       if (gradient != NULL) {
         VectorRef(gradient, num_parameters).setZero();
       }
