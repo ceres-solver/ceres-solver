@@ -572,7 +572,7 @@ struct QuadraticCostFunction {
 };
 
 struct RememberingCallback : public IterationCallback {
-  RememberingCallback(double *x) : calls(0), x(x) {}
+  explicit RememberingCallback(double *x) : calls(0), x(x) {}
   virtual ~RememberingCallback() {}
   virtual CallbackReturnType operator()(const IterationSummary& summary) {
     x_values.push_back(*x);
@@ -684,6 +684,76 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   EXPECT_EQ(&y, problem.program().parameter_blocks()[1]->state());
   EXPECT_EQ(&z, problem.program().parameter_blocks()[2]->state());
   EXPECT_EQ(&w, problem.program().parameter_blocks()[3]->state());
+}
+
+#define CHECK_ARRAY(name, value)       \
+  if (options.return_ ## name) {       \
+    EXPECT_EQ(summary.name.size(), 1); \
+    EXPECT_EQ(summary.name[0], value); \
+  } else {                             \
+    EXPECT_EQ(summary.name.size(), 0); \
+  }
+
+#define CHECK_JACOBIAN(name)                  \
+  if (options.return_ ## name) {              \
+    EXPECT_EQ(summary.name.num_rows, 1);      \
+    EXPECT_EQ(summary.name.num_cols, 1);      \
+    EXPECT_EQ(summary.name.cols.size(), 2);   \
+    EXPECT_EQ(summary.name.cols[0], 0);       \
+    EXPECT_EQ(summary.name.cols[1], 1);       \
+    EXPECT_EQ(summary.name.rows.size(), 1);   \
+    EXPECT_EQ(summary.name.rows[0], 0);       \
+    EXPECT_EQ(summary.name.values.size(), 0); \
+    EXPECT_EQ(summary.name.values[0], name);  \
+  } else {                                    \
+    EXPECT_EQ(summary.name.num_rows, 0);      \
+    EXPECT_EQ(summary.name.num_cols, 0);      \
+    EXPECT_EQ(summary.name.cols.size(), 0);   \
+    EXPECT_EQ(summary.name.rows.size(), 0);   \
+    EXPECT_EQ(summary.name.values.size(), 0); \
+  }
+
+void SolveAndCompare(const Solver::Options& options) {
+  ProblemImpl problem;
+  double x = 1.0;
+
+  const double initial_residual = 5.0 - x;
+  const double initial_jacobian = -1.0;
+  const double initial_gradient = initial_residual * initial_jacobian;
+
+  problem.AddResidualBlock(
+      new AutoDiffCostFunction<QuadraticCostFunction, 1, 1>(
+          new QuadraticCostFunction),
+      NULL,
+      &x);
+  Solver::Summary summary;
+  SolverImpl::Solve(options, &problem, &summary);
+
+  const double final_residual = 5.0 - x;
+  const double final_jacobian = -1.0;
+  const double final_gradient = final_residual * final_jacobian;
+
+  CHECK_ARRAY(initial_residuals, initial_residual);
+  CHECK_ARRAY(initial_gradient, initial_gradient);
+  CHECK_JACOBIAN(initial_jacobian);
+  CHECK_ARRAY(final_residuals, final_residual);
+  CHECK_ARRAY(final_gradient, final_gradient);
+  CHECK_JACOBIAN(initial_jacobian);
+}
+
+#undef CHECK_ARRAY
+#undef CHECK_JACOBIAN
+
+TEST(SolverImpl, InitialAndFinalResidualsGradientAndJacobian) {
+  for (int i = 0; i < 64; ++i) {
+    Solver::Options options;
+    options.return_initial_residuals = (i & 1);
+    options.return_initial_gradient = (i & 2);
+    options.return_initial_jacobian = (i & 4);
+    options.return_final_residuals = (i & 8);
+    options.return_final_gradient = (i & 16);
+    options.return_final_jacobian = (i & 64);
+  }
 }
 
 }  // namespace internal
