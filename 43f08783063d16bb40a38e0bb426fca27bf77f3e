@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJX///3Y\u003d",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "2012",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3U\u003d",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "CERES_PUBLIC_CRS_MATRIX_H_\n\nThis is is the pattern followed elsewhere.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3Q\u003d",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "CompressedRowSparseMatrix\n\nNo point in abbreviating.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3M\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Is this true? We reorder the residuals.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3I\u003d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "+1?",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3E\u003d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "I don\u0027t especially like this test because it doesn\u0027t test the contents of the matrix. Consider adding a CRSMatrix.ToDense() or something similar, and checking the actual contents vs SparseMatrix::ToDenseMatrix().",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///3A\u003d",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Consider making this a static method inside Evaluator. Putting this here in the first place was a mistake.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///28\u003d",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Remove extra blank.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///24\u003d",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Drop both commas.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///20\u003d",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "The last sentence here is confusing.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2w\u003d",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Move to Evaluator please.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2s\u003d",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "double const* const\n\nThe * goes with the modifier.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2o\u003d",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Space after ,.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2g\u003d",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Consider including a local parameterization test.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2k\u003d",
+        "filename": "internal/ceres/program_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Only one blank.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2c\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "Why? Also use . not ;.",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///2Y\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-05T21:49:13Z",
+      "side": 1,
+      "message": "\"..\"",
+      "revId": "43f08783063d16bb40a38e0bb426fca27bf77f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
