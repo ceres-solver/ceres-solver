@@ -88,6 +88,15 @@ class ParameterIgnoringCostFunction
   }
 };
 
+struct ExpectedEvaluation {
+  int num_rows;
+  int num_cols;
+  double cost;
+  const double residuals[50];
+  const double gradient[50];
+  const double jacobian[200];
+};
+
 struct EvaluatorTest
     : public ::testing::TestWithParam<pair<LinearSolverType, int> > {
   Evaluator* CreateEvaluator(Program* program) {
@@ -103,6 +112,93 @@ struct EvaluatorTest
     string error;
     return Evaluator::Create(options, program, &error);
   }
+
+  void CheckEvaluation(ProblemImpl *problem,
+                       int expected_num_rows,
+                       int expected_num_cols,
+                       double expected_cost,
+                       const double* expected_residuals,
+                       const double* expected_gradient,
+                       const double* expected_jacobian) {
+    scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem->mutable_program()));
+    int num_residuals = expected_num_rows;
+    int num_parameters = expected_num_cols;
+
+    double cost = -1;
+
+    Vector residuals(num_residuals);
+    residuals.setConstant(-2000);
+
+    Vector gradient(num_parameters);
+    gradient.setConstant(-3000);
+
+    scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+
+    ASSERT_EQ(expected_num_rows, evaluator->NumResiduals());
+    ASSERT_EQ(expected_num_cols, evaluator->NumEffectiveParameters());
+    ASSERT_EQ(expected_num_rows, jacobian->num_rows());
+    ASSERT_EQ(expected_num_cols, jacobian->num_cols());
+
+    vector<double> state(evaluator->NumParameters());
+
+    ASSERT_TRUE(evaluator->Evaluate(
+          &state[0],
+          &cost,
+          expected_residuals != NULL ? &residuals[0]  : NULL,
+          expected_gradient  != NULL ? &gradient[0]   : NULL,
+          expected_jacobian  != NULL ? jacobian.get() : NULL));
+
+    EXPECT_EQ(expected_cost, cost);
+
+    if (expected_residuals != NULL) {
+      for (int i = 0; i < num_residuals; ++i) {
+        EXPECT_EQ(expected_residuals[i], residuals[i]) << i;
+      }
+    }
+
+    if (expected_gradient != NULL) {
+      ConstVectorRef expected_gradient_vector(expected_gradient,
+                                              expected_num_cols);
+
+      EXPECT_TRUE((gradient.array() ==
+                   expected_gradient_vector.array()).all())
+          << "Actual:\n" << gradient.transpose()
+          << "\nExpected:\n" << expected_gradient_vector.transpose();
+    }
+
+    if (expected_jacobian != NULL) {
+      ConstMatrixRef expected_jacobian_matrix(expected_jacobian,
+                                              expected_num_rows,
+                                              expected_num_cols);
+      Matrix actual_jacobian;
+      jacobian->ToDenseMatrix(&actual_jacobian);
+
+      EXPECT_TRUE((actual_jacobian.array() ==
+                   expected_jacobian_matrix.array()).all())
+          << "Actual:\n" << actual_jacobian
+          << "\nExpected:\n" << expected_jacobian;
+    }
+  }
+
+  // Try all combinations of parameters for the evaluator.
+  void CheckAllEvaluationCombinations(const ExpectedEvaluation &expected) {
+    for (int i = 0; i < 8; ++i) {
+      CheckEvaluation(&problem,
+                      expected.num_rows,
+                      expected.num_cols,
+                      expected.cost,
+                      (i & 1) ? expected.residuals : NULL,
+                      (i & 2) ? expected.gradient  : NULL,
+                      (i & 4) ? expected.jacobian  : NULL);
+    }
+  }
+
+  // The values are ignored completely by the cost function.
+  double x[2];
+  double y[3];
+  double z[4];
+
+  ProblemImpl problem;
 };
 
 void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
@@ -111,77 +207,32 @@ void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
 }
 
 TEST_P(EvaluatorTest, SingleResidualProblem) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
                            NULL,
                            x, y, z);
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(3, jacobian->num_rows());
-  ASSERT_EQ(9, jacobian->num_cols());
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(7.0, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    Matrix expected_jacobian(3, 9);
-    expected_jacobian
-        // x       y          z
-        << 1, 2,   1, 2, 3,   1, 2, 3, 4,
-           1, 2,   1, 2, 3,   1, 2, 3, 4,
-           1, 2,   1, 2, 3,   1, 2, 3, 4;
-
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    3, 9,
+    // Cost
+    7.0,
+    // Residuals
+    { 1.0, 2.0, 3.0 },
+    // Gradient
+    { 6.0, 12.0,              // x
+      6.0, 12.0, 18.0,        // y
+      6.0, 12.0, 18.0, 24.0,  // z
+    },
+    // Jacobian
+    //   x          y             z
+    { 1, 2,   1, 2, 3,   1, 2, 3, 4,
+      1, 2,   1, 2, 3,   1, 2, 3, 4,
+      1, 2,   1, 2, 3,   1, 2, 3, 4
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 }
-
 TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   // Add the parameters in explicit order to force the ordering in the program.
   problem.AddParameterBlock(x,  2);
   problem.AddParameterBlock(y,  3);
@@ -197,143 +248,76 @@ TEST_P(EvaluatorTest, SingleResidualProblemWithPermutedParameters) {
                            NULL,
                            z, y, x);
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(3, jacobian->num_rows());
-  ASSERT_EQ(9, jacobian->num_cols());
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(7.0, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    Matrix expected_jacobian(3, 9);
-    expected_jacobian
-        // x       y          z
-        << 1, 2,   1, 2, 3,   1, 2, 3, 4,
-           1, 2,   1, 2, 3,   1, 2, 3, 4,
-           1, 2,   1, 2, 3,   1, 2, 3, 4;
-
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    3, 9,
+    // Cost
+    7.0,
+    // Residuals
+    { 1.0, 2.0, 3.0 },
+    // Gradient
+    { 6.0, 12.0,              // x
+      6.0, 12.0, 18.0,        // y
+      6.0, 12.0, 18.0, 24.0,  // z
+    },
+    // Jacobian
+    //   x          y             z
+    { 1, 2,   1, 2, 3,   1, 2, 3, 4,
+      1, 2,   1, 2, 3,   1, 2, 3, 4,
+      1, 2,   1, 2, 3,   1, 2, 3, 4
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 }
+
 TEST_P(EvaluatorTest, SingleResidualProblemWithNuisanceParameters) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   // These parameters are not used.
-  double w1[2];
-  double w2[1];
-  double w3[1];
-  double w4[3];
+  double a[2];
+  double b[1];
+  double c[1];
+  double d[3];
 
   // Add the parameters in a mixed order so the Jacobian is "checkered" with the
   // values from the other parameters.
-  problem.AddParameterBlock(w1, 2);
-  problem.AddParameterBlock(x,  2);
-  problem.AddParameterBlock(w2, 1);
-  problem.AddParameterBlock(y,  3);
-  problem.AddParameterBlock(w3, 1);
-  problem.AddParameterBlock(z,  4);
-  problem.AddParameterBlock(w4, 3);
+  problem.AddParameterBlock(a, 2);
+  problem.AddParameterBlock(x, 2);
+  problem.AddParameterBlock(b, 1);
+  problem.AddParameterBlock(y, 3);
+  problem.AddParameterBlock(c, 1);
+  problem.AddParameterBlock(z, 4);
+  problem.AddParameterBlock(d, 3);
 
   problem.AddResidualBlock(new ParameterIgnoringCostFunction<1, 3, 2, 3, 4>,
                            NULL,
                            x, y, z);
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(3, jacobian->num_rows());
-  ASSERT_EQ(16, jacobian->num_cols());
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(7.0, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[3] = { -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(7.0, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(3.0, residuals[2]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    Matrix expected_jacobian(3, 16);
-    expected_jacobian
-        // w1       x        w2    y           w2    z              w3
-        << 0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0,
-           0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0,
-           0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0;
-
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    3, 16,
+    // Cost
+    7.0,
+    // Residuals
+    { 1.0, 2.0, 3.0 },
+    // Gradient
+    { 0.0, 0.0,               // a
+      6.0, 12.0,              // x
+      0.0,                    // b
+      6.0, 12.0, 18.0,        // y
+      0.0,                    // c
+      6.0, 12.0, 18.0, 24.0,  // z
+      0.0, 0.0, 0.0,          // d
+    },
+    // Jacobian
+    //   a        x     b           y     c              z           d
+    { 0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0,
+      0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0,
+      0, 0,    1, 2,    0,    1, 2, 3,    0,    1, 2, 3, 4,    0, 0, 0
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, MultipleResidualProblem) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   // Add the parameters in explicit order to force the ordering in the program.
   problem.AddParameterBlock(x,  2);
   problem.AddParameterBlock(y,  3);
@@ -354,63 +338,22 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
                            NULL,
                            y, z);
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(9, jacobian->num_rows());
-  ASSERT_EQ(9, jacobian->num_cols());
-
-  //                      f       g           h
-  double expected_cost = (1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0;
-
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(expected_cost, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    Matrix expected_jacobian(9, 9);
-    expected_jacobian <<
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    9, 9,
+    // Cost
+    // f       g           h
+    (  1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0,
+    // Residuals
+    { 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0 },
+    // Gradient
+    { 15.0, 30.0,               // x
+      33.0, 66.0, 99.0,         // y
+      42.0, 84.0, 126.0, 168.0  // z
+    },
+    // Jacobian
     //                x        y           z
-        /* f(x, y) */ 1, 2,    1, 2, 3,    0, 0, 0, 0,
+    {   /* f(x, y) */ 1, 2,    1, 2, 3,    0, 0, 0, 0,
                       1, 2,    1, 2, 3,    0, 0, 0, 0,
 
         /* g(x, z) */ 2, 4,    0, 0, 0,    2, 4, 6, 8,
@@ -420,23 +363,13 @@ TEST_P(EvaluatorTest, MultipleResidualProblem) {
         /* h(y, z) */ 0, 0,    3, 6, 9,    3, 6, 9, 12,
                       0, 0,    3, 6, 9,    3, 6, 9, 12,
                       0, 0,    3, 6, 9,    3, 6, 9, 12,
-                      0, 0,    3, 6, 9,    3, 6, 9, 12;
-
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+                      0, 0,    3, 6, 9,    3, 6, 9, 12 
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   // Add the parameters in explicit order to force the ordering in the program.
   problem.AddParameterBlock(x,  2);
 
@@ -465,64 +398,22 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
                            NULL,
                            y, z);
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(9, jacobian->num_rows());
-  ASSERT_EQ(7, jacobian->num_cols());
-
-  //                      f       g           h
-  double expected_cost = (1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0;
-
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(expected_cost, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    // Note y and z are missing columns due to the subset parameterization.
-    Matrix expected_jacobian(9, 7);
-    expected_jacobian <<
-    //                x        y        z
-        /* f(x, y) */ 1, 2,    2, 3,    0, 0, 0,
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    9, 7,
+    // Cost
+    // f       g           h
+    (  1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0,
+    // Residuals
+    { 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0 },
+    // Gradient
+    { 15.0, 30.0,         // x
+      66.0, 99.0,         // y
+      42.0, 126.0, 168.0  // z
+    },
+    // Jacobian
+    //                x        y           z
+    {   /* f(x, y) */ 1, 2,    2, 3,    0, 0, 0,
                       1, 2,    2, 3,    0, 0, 0,
 
         /* g(x, z) */ 2, 4,    0, 0,    2, 6, 8,
@@ -532,17 +423,13 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
         /* h(y, z) */ 0, 0,    6, 9,    3, 9, 12,
                       0, 0,    6, 9,    3, 9, 12,
                       0, 0,    6, 9,    3, 9, 12,
-                      0, 0,    6, 9,    3, 9, 12;
-
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+                      0, 0,    6, 9,    3, 9, 12 
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 }
 
 TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
-  ProblemImpl problem;
-
   // The values are ignored completely by the cost function.
   double x[2];
   double y[3];
@@ -576,71 +463,30 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   // Normally, the preprocessing of the program that happens in solver_impl
   // takes care of this, but we don't want to invoke the solver here.
   Program reduced_program;
-  *reduced_program.mutable_residual_blocks() =
-      problem.program().residual_blocks();
-  *reduced_program.mutable_parameter_blocks() =
-      problem.program().parameter_blocks();
+  vector<ParameterBlock*>* parameter_blocks =
+      problem.mutable_program()->mutable_parameter_blocks();
 
-  // "z" is the last parameter; pop it off.
-  reduced_program.mutable_parameter_blocks()->pop_back();
+  // "z" is the last parameter; save it for later and pop it off temporarily.
+  // Note that "z" will still get read during evaluation, so it cannot be
+  // deleted at this point.
+  ParameterBlock* parameter_block_z = parameter_blocks->back();
+  parameter_blocks->pop_back();
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(&reduced_program));
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  ASSERT_EQ(9, jacobian->num_rows());
-  ASSERT_EQ(5, jacobian->num_cols());
-
-  //                      f       g           h
-  double expected_cost = (1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0;
-
-
-  // Cost only; no residuals and no jacobian.
-  {
-    double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
-    EXPECT_EQ(expected_cost, cost);
-  }
-
-  // Cost and residuals, no jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-  }
-
-  // Cost, residuals, and jacobian.
-  {
-    double cost = -1;
-    double residuals[9] = { -2, -2, -2, -2, -2, -2, -2, -2, -2 };
-    SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
-    EXPECT_EQ(expected_cost, cost);
-    EXPECT_EQ(1.0, residuals[0]);
-    EXPECT_EQ(2.0, residuals[1]);
-    EXPECT_EQ(1.0, residuals[2]);
-    EXPECT_EQ(2.0, residuals[3]);
-    EXPECT_EQ(3.0, residuals[4]);
-    EXPECT_EQ(1.0, residuals[5]);
-    EXPECT_EQ(2.0, residuals[6]);
-    EXPECT_EQ(3.0, residuals[7]);
-    EXPECT_EQ(4.0, residuals[8]);
-
-    Matrix actual_jacobian;
-    jacobian->ToDenseMatrix(&actual_jacobian);
-
-    Matrix expected_jacobian(9, 5);
-    expected_jacobian <<
-    //                x        y
-        /* f(x, y) */ 1, 2,    1, 2, 3,
+  ExpectedEvaluation expected = {
+    // Rows/columns
+    9, 5,
+    // Cost
+    // f       g           h
+    (  1 + 4 + 1 + 4 + 9 + 1 + 4 + 9 + 16) / 2.0,
+    // Residuals
+    { 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 4.0 },
+    // Gradient
+    { 15.0, 30.0,        // x
+      33.0, 66.0, 99.0,  // y
+    },
+    // Jacobian
+    //                x        y    
+    {   /* f(x, y) */ 1, 2,    1, 2, 3,
                       1, 2,    1, 2, 3,
 
         /* g(x, z) */ 2, 4,    0, 0, 0,
@@ -650,31 +496,27 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
         /* h(y, z) */ 0, 0,    3, 6, 9,
                       0, 0,    3, 6, 9,
                       0, 0,    3, 6, 9,
-                      0, 0,    3, 6, 9;
+                      0, 0,    3, 6, 9
+    }
+  };
+  CheckAllEvaluationCombinations(expected);
 
-    EXPECT_TRUE((actual_jacobian.array() == expected_jacobian.array()).all())
-        << "Actual:\n" << actual_jacobian
-        << "\nExpected:\n" << expected_jacobian;
-  }
+  // Restore parameter block z, so it will get freed in a consistent way.
+  parameter_blocks->push_back(parameter_block_z);
 }
 
 TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
-  ProblemImpl problem;
-
-  // The values are ignored completely by the cost function.
-  double x[2];
-  double y[3];
-  double z[4];
-  double state[9];
-
   // Switch the return value to failure.
   problem.AddResidualBlock(
       new ParameterIgnoringCostFunction<20, 3, 2, 3, 4, false>, NULL, x, y, z);
 
+  // The values are ignored.
+  double state[9];
+
   scoped_ptr<Evaluator> evaluator(CreateEvaluator(problem.mutable_program()));
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   double cost;
-  EXPECT_FALSE(evaluator->Evaluate(state, &cost, NULL, NULL));
+  EXPECT_FALSE(evaluator->Evaluate(state, &cost, NULL, NULL, NULL));
 }
 
 // In the pairs, the first argument is the linear solver type, and the second
@@ -762,7 +604,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   // Cost only; no residuals and no jacobian.
   {
     double cost = -1;
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL));
+    ASSERT_TRUE(evaluator->Evaluate(state, &cost, NULL, NULL, NULL));
     EXPECT_EQ(48.5, cost);
   }
 
@@ -770,7 +612,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
   {
     double cost = -1;
     double residuals[2] = { -2, -2 };
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL));
+    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL, NULL));
     EXPECT_EQ(48.5, cost);
     EXPECT_EQ(4, residuals[0]);
     EXPECT_EQ(9, residuals[1]);
@@ -781,7 +623,7 @@ TEST(Evaluator, EvaluatorRespectsParameterChanges) {
     double cost = -1;
     double residuals[2] = { -2, -2};
     SetSparseMatrixConstant(jacobian.get(), -1);
-    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, jacobian.get()));
+    ASSERT_TRUE(evaluator->Evaluate(state, &cost, residuals, NULL, jacobian.get()));
     EXPECT_EQ(48.5, cost);
     EXPECT_EQ(4, residuals[0]);
     EXPECT_EQ(9, residuals[1]);

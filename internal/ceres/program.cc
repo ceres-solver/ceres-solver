@@ -201,6 +201,15 @@ int Program::MaxParametersPerResidualBlock() const {
   return max_parameters;
 }
 
+int Program::MaxResidualsPerResidualBlock() const {
+  int max_residuals = 0;
+  for (int i = 0; i < residual_blocks_.size(); ++i) {
+    max_residuals = max(max_residuals,
+                        residual_blocks_[i]->NumResiduals());
+  }
+  return max_residuals;
+}
+
 bool Program::Evaluate(double* cost, double* residuals) {
   *cost = 0.0;
 

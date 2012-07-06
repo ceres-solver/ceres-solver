@@ -83,6 +83,7 @@ class PowellEvaluator2 : public Evaluator {
   virtual bool Evaluate(const double* state,
                         double* cost,
                         double* residuals,
+                        double* /* gradient */,
                         SparseMatrix* jacobian) {
     double x1 = state[0];
     double x2 = state[1];

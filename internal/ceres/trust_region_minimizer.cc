@@ -161,7 +161,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   // Do initial cost and Jacobian evaluation.
   double cost = 0.0;
-  if (!evaluator->Evaluate(x.data(), &cost, residuals.data(), jacobian)) {
+  if (!evaluator->Evaluate(x.data(), &cost, residuals.data(), NULL, jacobian)) {
     LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
     summary->termination_type = NUMERICAL_FAILURE;
     return;
@@ -362,7 +362,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
       // Try this step.
       double new_cost;
-      if (!evaluator->Evaluate(x_plus_delta.data(), &new_cost, NULL, NULL)) {
+      if (!evaluator->Evaluate(x_plus_delta.data(),
+                               &new_cost,
+                               NULL, NULL, NULL)) {
         summary->termination_type = NUMERICAL_FAILURE;
         LOG(WARNING) << "Terminating: Cost evaluation failed.";
         return;
@@ -394,7 +396,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       x_norm = x.norm();
       // Step looks good, evaluate the residuals and Jacobian at this
       // point.
-      if (!evaluator->Evaluate(x.data(), &cost, residuals.data(), jacobian)) {
+      if (!evaluator->Evaluate(x.data(),
+                               &cost,
+                               residuals.data(),
+                               NULL,
+                               jacobian)) {
         summary->termination_type = NUMERICAL_FAILURE;
         LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
         return;

@@ -95,6 +95,7 @@ class Evaluator {
   virtual bool Evaluate(const double* state,
                         double* cost,
                         double* residuals,
+                        double* gradient,
                         SparseMatrix* jacobian) = 0;
 
   // Make a change delta (of size NumEffectiveParameters()) to state (of size
