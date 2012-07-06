@@ -36,6 +36,8 @@
 #ifndef CERES_INTERNAL_BLOCK_EVALUATE_PREPARER_H_
 #define CERES_INTERNAL_BLOCK_EVALUATE_PREPARER_H_
 
+#include "ceres/scratch_evaluate_preparer.h"
+
 namespace ceres {
 namespace internal {
 
@@ -47,7 +49,8 @@ class BlockEvaluatePreparer {
   // Using Init() instead of a constructor allows for allocating this structure
   // with new[]. This is because C++ doesn't allow passing arguments to objects
   // constructed with new[] (as opposed to plain 'new').
-  void Init(int** jacobian_layout);
+  void Init(int const* const* jacobian_layout,
+            int max_derivatives_per_residual_block);
 
   // EvaluatePreparer interface
 
@@ -55,10 +58,15 @@ class BlockEvaluatePreparer {
   void Prepare(const ResidualBlock* residual_block,
                int residual_block_index,
                SparseMatrix* jacobian,
-               double** jacobians) const;
+               double** jacobians);
 
  private:
   int const* const* jacobian_layout_;
+
+  // For the case that the overall jacobian is not available, but the
+  // individual jacobians are requested, use a pass-through scratch evaluate
+  // preparer.
+  ScratchEvaluatePreparer scratch_evaluate_preparer_;
 };
 
 }  // namespace internal

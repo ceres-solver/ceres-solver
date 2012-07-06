@@ -108,6 +108,7 @@ class Program {
   int MaxScratchDoublesNeededForEvaluate() const;
   int MaxDerivativesPerResidualBlock() const;
   int MaxParametersPerResidualBlock() const;
+  int MaxResidualsPerResidualBlock() const;
 
   // Evaluate the cost and maybe the residuals for the program. If residuals is
   // NULL, then residuals are not calculated. If the jacobian is needed, instead
