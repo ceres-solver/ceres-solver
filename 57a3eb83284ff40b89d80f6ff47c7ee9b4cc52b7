@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHJH///XQ\u003d",
+        "filename": "internal/ceres/block_evaluate_preparer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": "Can\u0027t; the object is used directly and not via pointer.",
+      "parentUuid": "AAAHJH///dU\u003d",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJH///dY\u003d",
         "filename": "internal/ceres/block_evaluate_preparer.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHJH///XM\u003d",
+        "filename": "internal/ceres/block_evaluate_preparer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHJH///dY\u003d",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///YQ\u003d",
         "filename": "internal/ceres/evaluator_test.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-07-11T14:59:25Z",
       "side": 1,
       "message": "nice refactoring of tests.",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJH///XI\u003d",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "AAAHJX///YQ\u003d",
       "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHJH///W8\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": "It is a direct copy of the name of the member in Program(), and describes it\u0027s purpose. I think the confusion is due to the overloaded \"Evaluate\" word; the whole file is a program evaluator but in this context it\u0027s referring to a single residual block.\n\nI renamed the EvaluateScratch member variable to be clearer.",
+      "parentUuid": "AAAHJX///Yo\u003d",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///Yk\u003d",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 1
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHJH///W4\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "AAAHJX///Yk\u003d",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///Yc\u003d",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 1
@@ -115,6 +205,24 @@
       "writtenOn": "2012-07-11T14:59:25Z",
       "side": 1,
       "message": "this should be NumEffectiveParameters",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJH///W0\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-11T16:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHJX///Yc\u003d",
       "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
