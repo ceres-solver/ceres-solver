@@ -340,7 +340,11 @@ void ParameterBlocksAreEquivalent(const ParameterBlock*  left,
 }
 
 TEST(GradientCheckingProblemImpl, ProblemDimensionsMatch) {
-  double x[3], y[4], z[5], w[4];
+  // Parameter blocks with arbitrarily chosen initial values.
+  double x[] = {1.0, 2.0, 3.0};
+  double y[] = {4.0, 5.0, 6.0, 7.0};
+  double z[] = {8.0, 9.0, 10.0, 11.0, 12.0};
+  double w[] = {13.0, 14.0, 15.0, 16.0};
 
   ProblemImpl problem_impl;
   problem_impl.AddParameterBlock(x, 3);
