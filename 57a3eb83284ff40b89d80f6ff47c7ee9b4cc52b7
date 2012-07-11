@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJH///dU\u003d",
+        "filename": "internal/ceres/block_evaluate_preparer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "forward declare?",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJH///dY\u003d",
+        "filename": "internal/ceres/block_evaluate_preparer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "This comment is not quite accurate in light of the pass though scratch preparer.",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///YQ\u003d",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "nice refactoring of tests.",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///Ys\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "worth adding a bit of documentation about this structure and how its used.\n\nAlso it maybe worth naming it so that it indicates that this is carrying per thread storage..",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///Yo\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "This parameter name made sense when there was one array being allocated. Now its confusing.",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///Yk\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "This is a confusing variable name now. Like the other menbers variables its worth making this more descriptive.",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///Yc\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-11T14:59:25Z",
+      "side": 1,
+      "message": "this should be NumEffectiveParameters",
+      "revId": "57a3eb83284ff40b89d80f6ff47c7ee9b4cc52b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
