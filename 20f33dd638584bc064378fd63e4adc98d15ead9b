@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHJX///QY\u003d",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "2012 only",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///QU\u003d",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "add \"method\" after Evaluate, or remove the \"the\" on the previous sentence.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///QI\u003d",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "Remove. This code should not fiddle with the state. The contract is that Evaluate() evaluates whatever the current state is, possibly setting the offsets.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///QQ\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "use ; instead of ,. Otherwise make into two sentences.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///QE\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "This sentence starting with \"In practice...\" should get it\u0027s own paragraph. I am also unconvinced we want it at all.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///P4\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "Why is this? I think this last call does not belong.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHJX///Ps\u003d",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-12T18:02:47Z",
+      "side": 1,
+      "message": "Consider putting the additional jacobian check against Evaluator::Evaluate() in here; then drop the test code below.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
