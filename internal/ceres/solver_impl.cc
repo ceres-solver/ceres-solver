@@ -199,6 +199,8 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
 
+  summary->fixed_cost = 0.0;
+
   // Evaluate the initial cost, residual vector and the jacobian
   // matrix if requested by the user. The initial cost needs to be
   // computed on the original unpreprocessed problem, as it is used to
@@ -236,7 +238,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // evaluator, and the linear solver.
 
   scoped_ptr<Program> reduced_program(
-      CreateReducedProgram(&options, problem_impl, &summary->error));
+      CreateReducedProgram(&options, problem_impl, &summary->fixed_cost, &summary->error));
   if (reduced_program == NULL) {
     return;
   }
@@ -321,10 +323,17 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 // num_eliminate_blocks.
 bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
                                               int* num_eliminate_blocks,
+                                              double* fixed_cost,
                                               string* error) {
   int original_num_eliminate_blocks = *num_eliminate_blocks;
   vector<ParameterBlock*>* parameter_blocks =
       program->mutable_parameter_blocks();
+
+  // Allocate scratch space to evaluate the residual blocks
+  scoped_array<double> scratch;
+  if(fixed_cost != NULL) {
+    scratch.reset(new double[program->MaxScratchDoublesNeededForEvaluate()]);
+  }
 
   // Mark all the parameters as unused. Abuse the index member of the parameter
   // blocks for the marking.
@@ -355,6 +364,13 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
 
       if (!all_constant) {
         (*residual_blocks)[j++] = (*residual_blocks)[i];
+      } else if (fixed_cost != NULL) {
+        // As the block is fixed, we need to add the residual to fixed_cost
+        double cost = 0.0;
+        if(!(*residual_blocks)[i]->Evaluate(&cost, NULL, NULL, scratch.get())) {
+          LOG(WARNING) << "Evaluation of fixed residual failed.";
+        }
+        *fixed_cost += cost;
       }
     }
     residual_blocks->resize(j);
@@ -387,6 +403,7 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
 
 Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
+                                          double* fixed_cost,
                                           string* error) {
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
@@ -417,6 +434,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
                                     &num_eliminate_blocks,
+                                    fixed_cost,
                                     error)) {
     return NULL;
   }
