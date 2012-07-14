@@ -167,23 +167,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
-  // Compute the fixed part of the cost.
-  //
-  // This is a poor way to do this computation. Even if fixed_cost is
-  // zero, because we are subtracting two possibly large numbers, we
-  // are depending on exact cancellation to give us a zero here. But
-  // initial_cost and cost have been computed by two different
-  // evaluators. One which runs on the whole problem (in
-  // solver_impl.cc) in single threaded mode and another which runs
-  // here on the reduced problem, so fixed_cost can (and does) contain
-  // some numerical garbage with a relative magnitude of 1e-14.
-  //
-  // The right way to do this, would be to compute the fixed cost on
-  // just the set of residual blocks which are held constant and were
-  // removed from the original problem when the reduced problem was
-  // constructed.
-  summary->fixed_cost = summary->initial_cost - cost;
-
   gradient.setZero();
   jacobian->LeftMultiply(residuals.data(), gradient.data());
   iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();

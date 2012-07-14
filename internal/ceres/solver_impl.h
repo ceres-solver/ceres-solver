@@ -53,8 +53,11 @@ class SolverImpl {
   // and residuals eliminated, and in the case of automatic schur
   // ordering, has the E blocks first in the resulting program, with
   // options.num_eliminate_blocks set appropriately.
+  // Also accumulate fixed_cost as residual blocks are eliminated unless
+  // fixed_cost is NULL.
   static Program* CreateReducedProgram(Solver::Options* options,
                                        ProblemImpl* problem_impl,
+                                       double* fixed_cost,
                                        string* error);
 
   // Create the appropriate linear solver, taking into account any
@@ -99,8 +102,11 @@ class SolverImpl {
   // depending only on fixed parameters from the problem. Also updates
   // num_eliminate_blocks, since removed parameters changes the point
   // at which the eliminated blocks is valid.
+  // While removing fixed residual blocks, add the corresponding cost
+  // to fixed_cost unless fixed_cost is NULL.
   static bool RemoveFixedBlocksFromProgram(Program* program,
                                            int* num_eliminate_blocks,
+                                           double* fixed_cost,
                                            string* error);
 };
 
