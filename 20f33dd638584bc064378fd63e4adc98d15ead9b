@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHS3///+w\u003d",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHJX///QY\u003d",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///QU\u003d",
         "filename": "internal/ceres/evaluator.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-12T18:02:47Z",
       "side": 1,
       "message": "add \"method\" after Evaluate, or remove the \"the\" on the previous sentence.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHS3///+s\u003d",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHJX///QU\u003d",
       "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHS3///+o\u003d",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "Not quite. The contract for this evaluate method is that it evaluates whats in the user_state pointer. There is no state to set. The correct thing to do is to move this call above before extracting the parameter values. \n\nInstead of setting it on exist I have moved the call into SolverImpl.",
+      "parentUuid": "AAAHJX///QI\u003d",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///QQ\u003d",
         "filename": "internal/ceres/evaluator.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2012-07-12T18:02:47Z",
       "side": 1,
       "message": "use ; instead of ,. Otherwise make into two sentences.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHS3///+g\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHJX///QQ\u003d",
       "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHS3///+c\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "Changed to make the contract of this function more explicit.",
+      "parentUuid": "AAAHJX///QE\u003d",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///P4\u003d",
         "filename": "internal/ceres/evaluator.h",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHS3///+k\u003d",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "I have deleted this sentence as its not true anymore.",
+      "parentUuid": "AAAHJX///P4\u003d",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHJX///Ps\u003d",
         "filename": "internal/ceres/evaluator_test.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2012-07-12T18:02:47Z",
       "side": 1,
       "message": "Consider putting the additional jacobian check against Evaluator::Evaluate() in here; then drop the test code below.",
+      "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHS3///+Y\u003d",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-15T07:25:12Z",
+      "side": 1,
+      "message": "I have refactored the code extensively. Please take a look.",
+      "parentUuid": "AAAHJX///Ps\u003d",
       "revId": "20f33dd638584bc064378fd63e4adc98d15ead9b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
