@@ -1,4 +1,4 @@
-// Ceres Solver - A fast non-linear least squares minimizer
+ing co// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
@@ -211,20 +211,26 @@ struct Jet {
     return *this;
   }
 
-  // The infinitesimal part comes before the scalar part to ensure
-  // alignment. Jets get allocated as an array of type FixedArray
-  // which can allocate memory on the stack or on the heap depending
-  // upon the size of the array. We force the memory allocated on the
-  // stack to be 16 byte boundary aligned, but we also need to ensure
-  // that the elements of the struct are themselves aligned.
-  Eigen::Matrix<T, N, 1> v;  // The infinitesimal part.
-  T a;  // The scalar part.
+  // The scalar part.
+  T a;
 
-  // Needed to make sure that new instances of Jets are properly
-  // aligned. For more details see
+  // The infinitesimal part.
   //
-  // http://eigen.tuxfamily.org/dox/TopicStructHavingEigenMembers.html
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  // Note the Eigen::DontAlign bit is needed here because this object
+  // gets allocated on the stack and as part of other arrays and
+  // structs. Forcing the right alignment there is the source of much
+  // pain and suffering. Even if that works, passing Jets around to
+  // functions by value has problem because the C++ ABI does not
+  // guarantee alignment for function arguments.
+  //
+  // Setting the DontAlign bit causes Eigen's SSE code not being used
+  // for the various operations on Jets. This is a small performance
+  // penalty since the AutoDiff code will still expose much of the
+  // code as statically sized loops to the compiler. But given the
+  // subtle issues that arise due to alignment, especially when
+  // dealing with multiple platforms, it seems to be a trade off worth
+  // making.
+  Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
 };
 
 // Unary +
