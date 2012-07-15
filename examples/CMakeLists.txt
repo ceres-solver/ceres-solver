@@ -28,21 +28,24 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-ADD_EXECUTABLE(quadratic quadratic.cc)
-TARGET_LINK_LIBRARIES(quadratic ceres)
-
-ADD_EXECUTABLE(quadratic_auto_diff quadratic_auto_diff.cc)
-TARGET_LINK_LIBRARIES(quadratic_auto_diff ceres)
-
-ADD_EXECUTABLE(quadratic_numeric_diff quadratic_numeric_diff.cc)
-TARGET_LINK_LIBRARIES(quadratic_numeric_diff ceres)
-
-ADD_EXECUTABLE(powell powell.cc)
-TARGET_LINK_LIBRARIES(powell ceres)
-
 IF (${GFLAGS})
+  ADD_EXECUTABLE(quadratic quadratic.cc)
+  TARGET_LINK_LIBRARIES(quadratic ceres)
+
+  ADD_EXECUTABLE(quadratic_auto_diff quadratic_auto_diff.cc)
+  TARGET_LINK_LIBRARIES(quadratic_auto_diff ceres)
+
+  ADD_EXECUTABLE(quadratic_numeric_diff quadratic_numeric_diff.cc)
+  TARGET_LINK_LIBRARIES(quadratic_numeric_diff ceres)
+
+  ADD_EXECUTABLE(powell powell.cc)
+  TARGET_LINK_LIBRARIES(powell ceres)
+
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
   TARGET_LINK_LIBRARIES(circle_fit ceres)
+
+  ADD_EXECUTABLE(data_fitting data_fitting.cc)
+  TARGET_LINK_LIBRARIES(data_fitting ceres)
 
   ADD_EXECUTABLE(bundle_adjuster
                  bundle_adjuster.cc
