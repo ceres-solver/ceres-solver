@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHVn///8s\u003d",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-16T18:17:40Z",
+      "side": 1,
+      "message": "Please follow the commenting same style as the examples above, or change the above style to match this. No point in being inconsistent.",
+      "revId": "3b4e4bc1c37199252c53767d88436d33cbfc4cdc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHVn///8U\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-16T18:17:40Z",
+      "side": 1,
+      "message": "nice :)",
+      "revId": "3b4e4bc1c37199252c53767d88436d33cbfc4cdc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
