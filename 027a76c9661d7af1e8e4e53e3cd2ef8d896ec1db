@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHVn///80\u003d",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-16T17:49:40Z",
+      "side": 1,
+      "message": "Trailing spaces.",
+      "revId": "027a76c9661d7af1e8e4e53e3cd2ef8d896ec1db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
