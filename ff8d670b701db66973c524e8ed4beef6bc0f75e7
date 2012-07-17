@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHYH////Y\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:07:37Z",
+      "side": 1,
+      "message": "Make a CERES_SOURCE_DEPENDENCIES variable and reuse it.",
+      "revId": "ff8d670b701db66973c524e8ed4beef6bc0f75e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
