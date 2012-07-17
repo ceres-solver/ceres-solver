@@ -220,7 +220,7 @@ struct Jet {
   // gets allocated on the stack and as part of other arrays and
   // structs. Forcing the right alignment there is the source of much
   // pain and suffering. Even if that works, passing Jets around to
-  // functions by value has problem because the C++ ABI does not
+  // functions by value has problems because the C++ ABI does not
   // guarantee alignment for function arguments.
   //
   // Setting the DontAlign bit prevents Eigen from using SSE for the
