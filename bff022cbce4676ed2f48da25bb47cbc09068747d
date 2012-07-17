@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAHYH////A\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Space after if.\n\nInitialize *fixed_cost to 0. Yes, I see that in the caller fixed_cost is initialized. This function should not rely on that.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+8\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Comments should be full sentences, and end with a period.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHVn///y0\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 2
@@ -13,6 +47,23 @@
       "writtenOn": "2012-07-17T14:50:58Z",
       "side": 1,
       "message": "why not just residual_block-\u003eEvaluate? we are still inside the loop.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH////E\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Space after \"if\"\n\ne.g.\n\n\"if (...)\"\n\nnot\n\n\"if(...)\"",
       "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +104,109 @@
     },
     {
       "key": {
+        "uuid": "AAAHYH///+4\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Actually as written, the existing value of fixed_cost is used. I suggested that it should always get initialized to zero.",
+      "parentUuid": "AAAHVn///y8\u003d",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+w\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Space after if.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+s\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Drop extra blank.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+E\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Thanks for adding a test.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+k\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "y and z should probably get initialized even if they are not used to prevent valgrind complaints.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+o\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "Remove trailing space",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHVn///ys\u003d",
         "filename": "internal/ceres/solver_impl_test.cc",
         "patchSetId": 2
@@ -64,6 +218,24 @@
       "writtenOn": "2012-07-17T14:50:58Z",
       "side": 1,
       "message": "I had not realized that there was an EXPECT_DOUBLE_EQ, we should be using more of this function! Thanks for finding this.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHYH///+Q\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-17T17:20:36Z",
+      "side": 1,
+      "message": "In my experience the GTest floating point macros are not that useful since they don\u0027t support relative precision, which is what you almost always want.\n\nFixing that upstream is on my list but I\u0027ll probably never get there at this rate.",
+      "parentUuid": "AAAHVn///ys\u003d",
       "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
