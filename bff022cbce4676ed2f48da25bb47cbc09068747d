@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHVn///y0\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-17T14:50:58Z",
+      "side": 1,
+      "message": "why not just residual_block-\u003eEvaluate? we are still inside the loop.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHVn///y4\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-17T14:50:58Z",
+      "side": 1,
+      "message": "This should not just be a warning. Use the error string to report this error and return false.\n\nIf evaluation fails, its usually indicative of a more serious problem, and no point continuing the optimization/process further.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHVn///y8\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-17T14:50:58Z",
+      "side": 1,
+      "message": "How about\n\n\"If fixed_cost is NULL, the cost corresponding to the eliminated residual blocks is computed and stored in it.\n\nI want to be clear that there is accumulation -- the initial value of fixed_cost does not matter, and that the computation only happens if fixed_cost is non-null.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHVn///ys\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-17T14:50:58Z",
+      "side": 1,
+      "message": "I had not realized that there was an EXPECT_DOUBLE_EQ, we should be using more of this function! Thanks for finding this.",
+      "revId": "bff022cbce4676ed2f48da25bb47cbc09068747d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
