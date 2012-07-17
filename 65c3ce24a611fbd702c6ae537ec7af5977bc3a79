@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHY3////U\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-17T20:18:47Z",
+      "side": 1,
+      "message": "residual_block-\u003eEvaluate\ninstead of going back to the array.",
+      "revId": "65c3ce24a611fbd702c6ae537ec7af5977bc3a79",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
