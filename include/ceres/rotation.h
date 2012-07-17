@@ -252,7 +252,7 @@ inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
 
   // Case 2: theta ~ 0, means sin(theta) ~ theta to a good
   // approximation.
-  if (costheta > 0) {
+  if (costheta > 0.0) {
     const T kHalf = T(0.5);
     for (int i = 0; i < 3; ++i) {
       angle_axis[i] *= kHalf;
@@ -277,8 +277,8 @@ inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
   // angle_axis[i] should be positive, otherwise negative.
   for (int i = 0; i < 3; ++i) {
     angle_axis[i] = theta * sqrt((R[i*4] - costheta) * inv_one_minus_costheta);
-    if (((sintheta < 0) && (angle_axis[i] > 0)) ||
-        ((sintheta > 0) && (angle_axis[i] < 0))) {
+    if (((sintheta < 0.0) && (angle_axis[i] > 0.0)) ||
+        ((sintheta > 0.0) && (angle_axis[i] < 0.0))) {
       angle_axis[i] = -angle_axis[i];
     }
   }
