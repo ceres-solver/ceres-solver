@@ -329,7 +329,7 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
 
   scoped_array<double> residual_block_evaluate_scratch;
   if (fixed_cost != NULL) {
-    residual_block_evalute_scratch.reset(
+    residual_block_evaluate_scratch.reset(
         new double[program->MaxScratchDoublesNeededForEvaluate()]);
     *fixed_cost = 0.0;
   }
