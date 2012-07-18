@@ -36,6 +36,16 @@ ENDIF (COMMAND cmake_policy)
 
 PROJECT(CERES C CXX)
 
+# Important: Always bump the second number (e.g. 1.3.x to 1.4.0) for any
+# release that changes the ABI. The ABI changes for almost any modification to
+# include/ceres (e.g. the public API). If you are unsure about whether
+# something is an ABI change, please ask on the list.
+#
+# For versions without ABI changes, bump the smallest number in CERES_VERSION,
+# but leave the CERES_ABI_VERSION unchanged.
+SET(CERES_VERSION 1.3.0)
+SET(CERES_ABI_VERSION 1.3.0)
+
 ENABLE_TESTING()
 
 OPTION(BUILD_TESTING
