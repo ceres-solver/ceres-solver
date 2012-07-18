@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHaH///9A\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-18T16:04:11Z",
+      "side": 1,
+      "message": "All comments should be full sentences and end with a period. However in this case I don\u0027t think it adds value; consider removing.",
+      "revId": "b462f42bb5af0d96a39f6c627b161a8e8e138c4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHaH///88\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-18T16:04:11Z",
+      "side": 1,
+      "message": "Rename this to \"residual_block_evaluate_scratch\"\n\nThen the comment above is unnecessary.",
+      "revId": "b462f42bb5af0d96a39f6c627b161a8e8e138c4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHaH///9E\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-18T16:04:11Z",
+      "side": 1,
+      "message": "Remove this comment; it adds no value.",
+      "revId": "b462f42bb5af0d96a39f6c627b161a8e8e138c4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHaH///84\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-18T16:04:11Z",
+      "side": 1,
+      "message": "Move this into the above if statement and remove this one.",
+      "revId": "b462f42bb5af0d96a39f6c627b161a8e8e138c4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
