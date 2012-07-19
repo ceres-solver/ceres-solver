@@ -188,6 +188,48 @@ make test
 Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
 
 
+\section{Building on Windows with Visual Studio}
+On Windows, we support building with Visual Studio 2010 or newer. Note that the
+Windows port is less featureful than the Linux or Mac OS X versions due to the
+unavaliability of SuiteSparse and CXSparse.
+
+Also, building is more involved since there is no automated way to install the
+dependencies.
+
+\begin{enumerate}
+  \item Make a toplevel directory for deps \& build \& src somewhere: ceres/
+  \item Get dependencies; unpack them as subdirectories in ceres/ (ceres/eigen, ceres/glog, etc)
+  \begin{itemize}
+    \item Eigen 3.1 from eigen.tuxfamily.org (needed on windows; 3.0.x will not work) No need to build; just unpack
+    \item Goolge Log. Open up the VS solution and build it.
+    \item Goolge Flags. Open up the VS solution and build it.
+  \end{itemize}
+  \item Get git installed.
+  \item Checkout Ceres git into ceres/ceres-solver.git/
+  \item Get CMake installed.
+  \item Make a dir \texttt{ceres/ceres-bin} (for an out-of-tree build)
+  \item Run CMake; select the ceres-solver.git directory for the cmake file. Then select the ceres-bin for the build dir.
+  \item Try running "Configure". It won't work. It'll show a bunch of options. You'll need to set:
+    \begin{itemize}
+    \item \texttt{GLOG\_INCLUDE}
+    \item \texttt{GLOG\_LIB}
+    \item \texttt{GFLAGS\_LIB}
+    \item \texttt{GFLAGS\_INCLUDE}
+    \end{itemize}
+ to the appropriate place where you unpacked/built them.
+
+  \item Uncheck "SCHUR\_SPECIALIZATIONS". If it's enabled, the build will be really slow, and depending on your cost function will lead to no benefit.
+  \item Keep hitting Configure \& Generate, tweaking until it generates
+  \item Open the solution and build it in MSVC
+\end{enumerate}
+
+To run the tests, select the \texttt{RUN\_TESTS} target and hit "Build RUN\_TESTS" from the build menu.
+
+Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
+
+Note: currently \texttt{system\_test} is not working properly.
+Note: building Ceres as a DLL is not supported; patches welcome.
+
 \section{Compiler Flags to use when building your own applications}
 \label{sec:compiler-flags}
 TBD
@@ -255,3 +297,4 @@ On certain platforms like Android, multithreading with OpenMP is not supported. 
 -DOPENMP=OFF.
 \end{minted}
 \end{enumerate}
+
