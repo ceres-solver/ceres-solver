@@ -73,7 +73,8 @@ pdflatex -shell-escape ceres-solver && \
   bibtex ceres-solver && \
   pdflatex -shell-escape ceres-solver && \
   pdflatex -shell-escape ceres-solver
-cp $DOCS_TMP/ceres-solver.pdf "$TMP/docs/ceres-solver-$1.pdf"
+cp $DOCS_TMP/ceres-solver.pdf "$TMP/docs/ceres-solver.pdf"
+cp $DOCS_TMP/ceres-solver.pdf "/tmp/ceres-solver-$1.pdf"
 
 # Build the tarball.
 cd /tmp
