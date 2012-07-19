@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHnn////o\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-19T19:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHkH///4c\u003d",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHkH///4k\u003d",
         "filename": "docs/build.tex",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-19T18:55:39Z",
       "side": 1,
       "message": "Install Cmake.",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHnn////k\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-19T19:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHkH///4k\u003d",
       "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAHnn////g\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-19T19:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHm3////4\u003d",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAHm3////0\u003d",
         "filename": "docs/build.tex",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-07-19T18:55:39Z",
       "side": 1,
       "message": "this maybe worth moving above, since all our instructions are generally for release mode?",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHnn////c\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-19T19:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAHm3////0\u003d",
       "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
