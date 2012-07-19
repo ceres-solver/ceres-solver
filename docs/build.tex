@@ -188,6 +188,65 @@ make test
 Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
 
 
+\section{Building on Windows with Visual Studio}
+On Windows, we support building with Visual Studio 2010 or newer. Note that the
+Windows port is less featureful and less tested than the Linux or Mac OS X
+versions due to the unavaliability of SuiteSparse and CXSparse. Building is
+also more involved since there is no automated way to install the dependencies.
+
+\begin{enumerate}
+  \item Make a toplevel directory for deps \& build \& src somewhere: \texttt{ceres/}
+  \item Get dependencies; unpack them as subdirectories in \texttt{ceres/}
+        (\texttt{ceres/eigen}, \texttt{ceres/glog}, etc)
+        \begin{itemize}
+          \item Eigen 3.1 from eigen.tuxfamily.org (needed on Windows; 3.0.x will not
+                work). There is no need to build anything; just unpack the source
+                tarball.
+          \item Goolge Log. Open up the Visual Studio solution and build it.
+          \item Goolge Flags. Open up the Visual Studio solution and build it.
+        \end{itemize}
+  \item Unpack the Ceres tarball into \texttt{ceres}. For the tarball, you
+        should get a directory inside \texttt{ceres} similar to
+        \texttt{ceres-solver-1.3.0}. Alternately, checkout Ceres via git to get
+        \texttt{ceres-solver.git} inside \texttt{ceres}.
+  \item Install CMake.
+  \item Make a dir \texttt{ceres/ceres-bin} (for an out-of-tree build)
+  \item Run CMake; select the \texttt{ceres-solver-X.Y.Z} or
+        \texttt{ceres-solver.git} directory for the CMake file. Then select the
+        \texttt{ceres-bin} for the build dir.
+  \item Try running "Configure". It won't work. It'll show a bunch of options.
+        You'll need to set:
+        \begin{itemize}
+        \item \texttt{GLOG\_INCLUDE}
+        \item \texttt{GLOG\_LIB}
+        \item \texttt{GFLAGS\_LIB}
+        \item \texttt{GFLAGS\_INCLUDE}
+        \end{itemize}
+        to the appropriate place where you unpacked/built them.
+  \item You may have to tweak some more settings to generate a MSVC project.
+        After each adjustment, try pressing Configure \& Generate until it
+        generates successfully.
+  \item Open the solution and build it in MSVC
+\end{enumerate}
+
+To run the tests, select the \texttt{RUN\_TESTS} target and hit "Build RUN\_TESTS" from the build menu.
+
+Like the Linux build, you should now be able to run \texttt{examples/simple\_bundle\_adjuster}.
+
+Notes:
+\begin{itemize}
+\item The default build is Debug; consider switching it to release mode.
+\item Currently \texttt{system\_test} is not working properly.
+\item Building Ceres as a DLL is not supported; patches welcome.
+\item CMake puts the resulting test binaries in ceres-bin/examples/Debug by
+      default.
+\item The solvers supported on Windows are \texttt{DENSE\_QR},
+      \texttt{DENSE\_SCHUR}, \texttt{CGNR}, and \texttt{ITERATIVE\_SCHUR}.
+\item We're looking for someone to work with upstream SuiteSparse to port their
+      build system to something sane like CMake, and get a supported Windows
+      port.
+\end{itemize}
+
 \section{Compiler Flags to use when building your own applications}
 \label{sec:compiler-flags}
 TBD
@@ -255,3 +314,4 @@ On certain platforms like Android, multithreading with OpenMP is not supported. 
 -DOPENMP=OFF.
 \end{minted}
 \end{enumerate}
+
