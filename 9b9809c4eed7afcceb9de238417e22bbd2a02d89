@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHkH///4c\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:55:39Z",
+      "side": 1,
+      "message": "ceres/ceres-solver-src maybe better here and elsewhere, since ceres/ceres-solver is a bit confusing.",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHkH///4k\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:55:39Z",
+      "side": 1,
+      "message": "Install Cmake.",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHm3////4\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:55:39Z",
+      "side": 1,
+      "message": "This maybe a bit redundant. Or have a more positive statement,  which say, \"You may have to tweak some more settings\"",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHm3////0\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:55:39Z",
+      "side": 1,
+      "message": "this maybe worth moving above, since all our instructions are generally for release mode?",
+      "revId": "9b9809c4eed7afcceb9de238417e22bbd2a02d89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
