@@ -1,6 +1,27 @@
 %!TEX root = ceres-solver.tex
 
 \chapter{Version History}
+\section*{1.3.0}
+\subsection{New Features}
+\begin{itemize}
+\item Windows port (Thanks Changchang Wu and Pierre Moulon)
+\item Support for returning initial and final derivatives (gradient \& Jacobian). (Thanks Gim Hee for suggesting this)
+\item  Gradient computation support in the evaluators, with an eye towards developing first order/gradient based solvers. 
+\item Ability to build Ceres as a shared library, associated versioning and build release script changes. (Thanks Koichi Akabe for suggesting this)
+\item A better way to compute \texttt{Solver::Summary::fixed\_cost}. (Thanks Markus Moll)
+\item Portable floating point classification API. 
+\end{itemize}
+
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Fix IsInfinite on Jets.
+\item Drop alignment requirements for Jets.
+\item Fixed Jet to integer comparison. (Thanks Keith Leung)
+\item Fix use of uninitialized arrays. (Thanks Sebastian Koch \& Markus Moll)
+\item Conditionally compile gflag dependencies.(Thanks Casey Goodlett)
+\item Add \texttt{data\_fitting.cc } to the examples CMake file. 
+\end{itemize}
+
 \section*{1.2.3}
 \subsection{Bug Fixes}
 \begin{itemize}
