@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHkH///6I\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:38:19Z",
+      "side": 1,
+      "message": "since system_test and dll issues are not sorted out, have a statement about how this port is still in its early stages.",
+      "revId": "52bf5c4781ab4abf20b171eb88836107eaa931d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHkH///6M\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:38:19Z",
+      "side": 1,
+      "message": "do we need to say something about 32/64 bit?\n\nHave a clearer statement about what is actually supported. Essentially DENSE_SCHUR, DENSE_QR and CGNR right?",
+      "revId": "52bf5c4781ab4abf20b171eb88836107eaa931d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHkH///6U\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:38:19Z",
+      "side": 1,
+      "message": "no point bringing git into this. assume like others that you are using a tar file/zip file.",
+      "revId": "52bf5c4781ab4abf20b171eb88836107eaa931d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHkH///6Q\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-19T18:38:19Z",
+      "side": 1,
+      "message": "Do not include this here, its redundant with the instructions later on. If you want you should include this in the second below dealing with the schur specializations.",
+      "revId": "52bf5c4781ab4abf20b171eb88836107eaa931d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
