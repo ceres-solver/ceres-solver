@@ -1,19 +1,40 @@
 %!TEX root = ceres-solver.tex
 
 \chapter{Version History}
+\section*{1.3.0}
+\subsection{New Features}
+\begin{itemize}
+\item Windows port. (Changchang Wu and Pierre Moulon also contributed to the port)
+\item Support for returning initial and final derivatives (Gradient \& Jacobian).
+\item Gradient computation support in the evaluators, with an eye towards developing first order/gradient based solvers.
+\item Ability to build Ceres as a shared library, associated versioning and build release script changes.
+\item A better way to compute \texttt{Solver::Summary::fixed\_cost}. (Markus Moll)
+\item Portable floating point classification API.
+\end{itemize}
+
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Fix IsInfinite on Jets.
+\item Drop alignment requirements for Jets.
+\item Fixed Jet to integer comparison. (Keith Leung)
+\item Fix use of uninitialized arrays. (Sebastian Koch \& Markus Moll)
+\item Conditionally compile gflag dependencies.(Casey Goodlett)
+\item Add \texttt{data\_fitting.cc } to the examples CMake file.
+\end{itemize}
+
 \section*{1.2.3}
 \subsection{Bug Fixes}
 \begin{itemize}
 \item \texttt{suitesparse\_test} is enabled even when \texttt{-DSUITESPARSE=OFF}.
 \item \texttt{FixedArray} internal struct did not respect \texttt{Eigen}
-  alignment requirements (Thanks Koichi Akabe \& Stephan Kassemeyer).
+  alignment requirements (Koichi Akabe \& Stephan Kassemeyer).
 \item Fixed \texttt{quadratic.cc} documentation and code mismatch
-  (Thanks Nick Lewycky).
+  (Nick Lewycky).
 \end{itemize}
 \section*{1.2.2}
 \subsection{Bug Fixes}
 \begin{itemize}
-\item Fix constant parameter blocks, and other minor fixes (Thanks Markus Moll)
+\item Fix constant parameter blocks, and other minor fixes (Markus Moll)
 \item Fix alignment issues when combining \texttt{Jet} and
   \texttt{FixedArray} in automatic differeniation.
 \item Remove obsolete \texttt{build\_defs} file.
@@ -26,13 +47,13 @@
 \end{itemize}
 \subsection{Bug Fixes}
 \begin{itemize}
-\item Destructor for \texttt{TrustRegionStrategy} was not virtual (Thanks Markus Moll)
-\item Invalid \texttt{DCHECK} in \texttt{suitesparse.cc} (Thanks Markus Moll)
-\item Iteration callbacks were not properly invoked (Thanks to Luis Alberto Zarrabeiti for the report)
+\item Destructor for \texttt{TrustRegionStrategy} was not virtual (Markus Moll)
+\item Invalid \texttt{DCHECK} in \texttt{suitesparse.cc} (Markus Moll)
+\item Iteration callbacks were not properly invoked (Luis Alberto Zarrabeiti)
 \item Logging level changes in ConjugateGradientsSolver
 \item VisibilityBasedPreconditioner setup does not account for skipped camera pairs. This was debugging code.
 \item Enable SSE support on MacOS
-\item \texttt{system\_test} was taking too long and too much memory (Thanks Koichi Akabe)
+\item \texttt{system\_test} was taking too long and too much memory (Koichi Akabe)
 \end{itemize}
 \section*{1.2.0}
 \subsection{New Features}
@@ -59,7 +80,7 @@ trust region step strategies. Currently only Levenberg-Marquardt is supported, b
 \section*{1.1.1}
 \subsection{Bug Fixes}
 \begin{itemize}
-\item Fix a bug in the handling of constant blocks. Thanks to Louis Simard for reporting this.
+\item Fix a bug in the handling of constant blocks. (Louis Simard)
 \item Add an optional lower bound to the Levenberg-Marquardt regularizer to prevent oscillating between well and ill posed linear problems.
 \item Some internal refactoring and test fixes.
 \end{itemize}
