@@ -34,35 +34,56 @@
 # pygments, for this to work.
 
 if [ -z $1 ] ; then
-  echo 'usage: make_release.sh <version>'
+  echo 'usage: scripts/make_release <version>'
+  echo '       must be run from toplevel Ceres source directory'
   exit 1
 fi
 
 TMP="/tmp/ceres-solver-$1"
+DOCS_TMP="/tmp/ceres-solver-docs-$1"
+VERSION=$(grep 'SET(CERES_VERSION' CMakeLists.txt | \
+          sed -e 's/SET(CERES_VERSION //' | \
+          sed -e 's/)//')
+ABI_VERSION=$(grep 'SET(CERES_ABI_VERSION' CMakeLists.txt | \
+              sed -e 's/SET(CERES_ABI_VERSION //' | \
+              sed -e 's/)//')
+GIT_COMMIT=$(git log -1 HEAD |grep commit)
+
+if [[ $1 != $VERSION ]] ; then
+  echo "ERROR: Version $1 does not match CERES_VERSION in CMakeLists.txt."
+  echo "       which is $VERSION. You may not be in the toplevel source dir."
+  exit 1
+fi
 
 # Clone the repository and clean out the git extras.
-git clone https://ceres-solver.googlesource.com/ceres-solver $TMP
+git clone . $TMP
 rm -rf "$TMP/.git"
 
-# Build the docs.
-cp -pr "$TMP/docs" /tmp/docs
-cd /tmp/docs
+# Build the VERSION file.
+VERSIONFILE=$TMP/VERSION
+echo "version $VERSION" >> $VERSIONFILE
+echo "abi_version $VERSION" >> $VERSIONFILE
+echo "$GIT_COMMIT" >> $VERSIONFILE
+
+# Build the documentation.
+cp -pr "$TMP/docs" $DOCS_TMP
+cd $DOCS_TMP
 curl http://minted.googlecode.com/files/minted.sty > minted.sty
 pdflatex -shell-escape ceres-solver && \
   bibtex ceres-solver && \
   pdflatex -shell-escape ceres-solver && \
   pdflatex -shell-escape ceres-solver
-cp /tmp/docs/ceres-solver.pdf "$TMP/docs/ceres-solver.pdf"
-cp /tmp/docs/ceres-solver.pdf "/tmp/ceres-solver-$1.pdf"
+cp $DOCS_TMP/ceres-solver.pdf "$TMP/docs/ceres-solver-$1.pdf"
 
 # Build the tarball.
 cd /tmp
 tar -cvzf "ceres-solver-$1.tar.gz" "ceres-solver-$1"
 
 # Don't leave a mess behind.
-rm -rf /tmp/docs
+rm -rf $DOCS_TMP
 rm -rf $TMP
 
+# Reminder to upload.
 echo
 echo "TODO: upload /tmp/ceres-solver-$1.tar.gz"
 echo "TODO: upload /tmp/ceres-solver-$1.pdf"
