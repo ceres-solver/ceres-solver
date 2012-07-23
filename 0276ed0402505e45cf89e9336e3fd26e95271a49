@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHs3///MI\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-23T16:05:42Z",
+      "side": 1,
+      "message": "Unfortunately we can\u0027t accept this as written, especially if it is a direct copy of NETLIB code. Any code in Ceres core must be licensable by us as BSD, and as written this appears to be a derived work.\n\nAt the moment we don\u0027t have a third_party/ directory where we could potentially put this. My preference is to write a specialized version we can safely license as BSD. Barring that we could start a third party directory, but it seems silly to do so for such a small method.\n\nFurthermore, this is unreadable code and not up to Ceres standards. It needs comments, style fixes, better variable names, cleaner structure, etc, so it is understandable.\n\nNit: We don\u0027t permit non-const reference parameters.",
+      "revId": "0276ed0402505e45cf89e9336e3fd26e95271a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHs3///MM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-23T16:05:42Z",
+      "side": 1,
+      "message": "Just put \"markus\". People can figure out from the commit logs who you are. We can revisit this if another Markus comes along, but until then let\u0027s omit full emails from TODO items.",
+      "revId": "0276ed0402505e45cf89e9336e3fd26e95271a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHs3///L8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-23T16:05:42Z",
+      "side": 1,
+      "message": "This type should move into TrustRegionStrategy::Options.",
+      "revId": "0276ed0402505e45cf89e9336e3fd26e95271a49",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
