@@ -31,7 +31,7 @@
 #include "ceres/dogleg_strategy.h"
 
 #include <cmath>
-#include "Eigen/Core"
+#include "Eigen/Dense"
 #include <glog/logging.h>
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
@@ -39,6 +39,8 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
+#include "ceres/polynomial_solver.h"
+#include "ceres/fpclassify.h"
 
 namespace ceres {
 namespace internal {
@@ -60,7 +62,8 @@ DoglegStrategy::DoglegStrategy(const TrustRegionStrategy::Options& options)
       increase_threshold_(0.75),
       decrease_threshold_(0.25),
       dogleg_step_norm_(0.0),
-      reuse_(false) {
+      reuse_(false),
+      dogleg_type_(options.dogleg_type) {
   CHECK_NOTNULL(linear_solver_);
   CHECK_GT(min_diagonal_, 0.0);
   CHECK_LT(min_diagonal_, max_diagonal_);
@@ -83,8 +86,19 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
   const int n = jacobian->num_cols();
   if (reuse_) {
     // Gauss-Newton and gradient vectors are always available, only a
-    // new interpolant need to be computed.
-    ComputeDoglegStep(step);
+    // new interpolant need to be computed. For the subspace case,
+    // the subspace and the two-dimensional model are also still valid.
+    //
+    // TODO(markus) Refactor into two subclasses?
+    switch(dogleg_type_) {
+      case TRADITIONAL_DOGLEG:
+        ComputeTraditionalDoglegStep(step);
+        break;
+
+      case SUBSPACE_DOGLEG:
+        ComputeSubspaceDoglegStep(step);
+        break;
+    }
     LinearSolver::Summary linear_solver_summary;
     linear_solver_summary.num_iterations = 0;
     linear_solver_summary.termination_type = TOLERANCE;
@@ -119,15 +133,28 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
   LinearSolver::Summary linear_solver_summary =
       ComputeGaussNewtonStep(jacobian, residuals);
 
-  // Interpolate the Cauchy point and the Gauss-Newton step.
   if (linear_solver_summary.termination_type != FAILURE) {
-    ComputeDoglegStep(step);
+    switch(dogleg_type_) {
+      // Interpolate the Cauchy point and the Gauss-Newton step.
+      case TRADITIONAL_DOGLEG:
+        ComputeTraditionalDoglegStep(step);
+        break;
+
+      // Find the minimum in the subspace defined by the
+      // Cauchy point and the (Gauss-)Newton step.
+      case SUBSPACE_DOGLEG:
+        ComputeSubspaceModel(jacobian);
+        ComputeSubspaceDoglegStep(step);
+        break;
+    }
   }
 
   return linear_solver_summary;
 }
 
-void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
+void DoglegStrategy::ComputeTraditionalDoglegStep(double* dogleg) {
+  CHECK_EQ(dogleg_type_, TRADITIONAL_DOGLEG);
+
   VectorRef dogleg_step(dogleg, gradient_.rows());
 
   // Case 1. The Gauss-Newton step lies inside the trust region, and
@@ -179,6 +206,104 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
   dogleg_step_norm_ = dogleg_step.norm();
   VLOG(3) << "Dogleg step size: " << dogleg_step_norm_
           << " radius: " << radius_;
+}
+
+void DoglegStrategy::ComputeSubspaceDoglegStep(double* dogleg) {
+  CHECK_EQ(dogleg_type_, SUBSPACE_DOGLEG);
+
+  VectorRef dogleg_step(dogleg, gradient_.rows());
+
+  // Find the minimum of the two-dimensional problem
+  //    min. 1/2 x' B' H B x + g' B x
+  //    s.t. || B x ||^2 <= r^2
+  // where r is the trust region radius and B is the matrix with unit columns
+  // spanning the subspace defined by the steepest descent and Newton direction.
+
+  const double gauss_newton_norm = gauss_newton_step_.norm();
+
+  // (0,-gauss_newton_norm) is the minimum of the unconstrained problem. If it lies
+  // within the trust region, it is also the solution of the constrained
+  // problem.
+  if (gauss_newton_norm <= radius_) {
+    dogleg_step = gauss_newton_step_;
+    dogleg_step_norm_ = gauss_newton_norm;
+    VLOG(3) << "GaussNewton step size: " << dogleg_step_norm_
+            << " radius: " << radius_;
+    return;
+  }
+
+  // If (0,-gauss_newton_norm) does not lie within the trust region, the
+  // optimum lies on the boundary of the trust region. The above problem
+  // therefore becomes
+  //    min. 1/2 x' B' H B x + g' B x
+  //    s.t. || B x ||^2 = r^2
+  // Notice the equality in the constraint.
+  //
+  // This can be solved by forming the Lagrangian, solving for x(lambda)
+  // using the gradient of the objective, and putting x(lambda) back into
+  // the constraint. This results in a fourth order polynomial in lambda,
+  // which can be solved using e.g. the companion matrix.
+  // The result is up to four real roots, not all of which correspond to
+  // feasible points. The feasible points x(lambda*) have to be tested
+  // for optimality.
+  EigenTypes<2,2>::Vector minimum(0.0, 0.0);
+  FindMinimumOnTrustRegionBoundary(&minimum);
+
+  // Test first order optimality at the minimum
+  const EigenTypes<2,2>::Vector grad_minimum = subspace_B_ * minimum + subspace_g_;
+  if (-minimum.dot(grad_minimum) < 0.99 * minimum.norm() * grad_minimum.norm()) {
+    LOG(WARNING) << "First order optimality seems to be violated in subspace method!";
+  }
+
+  // Create the full step from the optimal 2d solution.
+  dogleg_step = subspace_basis_ * minimum;
+  dogleg_step_norm_ = dogleg_step.norm();
+  VLOG(3) << "Dogleg subspace step size: " << dogleg_step_norm_
+          << " radius: " << radius_;
+}
+
+void DoglegStrategy::FindMinimumOnTrustRegionBoundary(EigenTypes<2,2>::Vector* minimum) {
+  CHECK_NOTNULL(minimum);
+
+  const double detB = subspace_B_.determinant();
+  const double trB = subspace_B_.trace();
+  const double r2 = radius_ * radius_;
+  EigenTypes<2,2>::Matrix B_adj;
+  B_adj <<  subspace_B_(1,1) , -subspace_B_(0,1),
+            -subspace_B_(1,0) ,  subspace_B_(0,0);
+
+  // Build the fourth-order polynomial
+  Vector polynomial(5);
+  polynomial(4) = r2 * detB * detB - (B_adj * subspace_g_).squaredNorm();
+  polynomial(3) = 2.0 * ( subspace_g_.transpose() * B_adj * subspace_g_ - r2 * detB * trB );
+  polynomial(2) = r2 * ( trB * trB + 2.0 * detB ) - subspace_g_.squaredNorm();
+  polynomial(1) = -2.0 * r2 * trB;
+  polynomial(0) = r2;
+
+  // Find the real parts lambda_i of its roots
+  Vector lambda;
+  if(0 != FindPolynomialRoots(polynomial, &lambda)) {
+    // TODO(markus) what to do here?
+  }
+
+  // For each root lambda, compute B x(lambda) and check for feasibility.
+  double minimum_value = std::numeric_limits<double>::max();
+  for (int i=0; i<4; ++i) {
+    const double lambda_i = lambda(i);
+    const EigenTypes<2,2>::Matrix B_i = subspace_B_ - lambda_i * EigenTypes<2,2>::Matrix::Identity();
+    const EigenTypes<2,2>::Vector x_i = -B_i.partialPivLu().solve(subspace_g_);
+
+    // TODO(markus) Should this threshold be configurable?
+    // Alternatively, all vectors can safely be rescaled to the trust-region
+    // radius without.
+    if (abs((x_i.norm() - radius_) / radius_) < 1e-6) {
+      const double fi = 0.5 * x_i.transpose() * subspace_B_ * x_i + subspace_g_.dot(x_i);
+      if (fi < minimum_value) {
+        minimum_value = fi;
+        *minimum = x_i;
+      }
+    }
+  }
 }
 
 LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
@@ -275,6 +400,42 @@ void DoglegStrategy::StepIsInvalid() {
 
 double DoglegStrategy::Radius() const {
   return radius_;
+}
+
+void DoglegStrategy::ComputeSubspaceModel(SparseMatrix* jacobian) {
+  const double gradient_norm = gradient_.norm();
+  const double gauss_newton_norm = gauss_newton_step_.norm();
+
+  // Compute an orthogonal basis for the subspace.
+  //
+  // TODO(markus) Need to deal with zeros
+  // due to short gradients or quasi-parallel vectors.
+  subspace_basis_.resize(jacobian->num_cols(), 2);
+  subspace_basis_.col(0) = gradient_ / gradient_norm;
+  subspace_basis_.col(1) = gauss_newton_step_;
+  subspace_basis_.col(1) -= subspace_basis_.col(0).dot(gauss_newton_step_) * subspace_basis_.col(0);
+  subspace_basis_.col(1) /= subspace_basis_.col(1).norm();
+
+  // Compute the subspace model.
+  //
+  // TODO(markus) The gradient_ member seems to be a
+  // descent direction (i.e. neg. gradient), which is counter-intuitive.
+  subspace_g_ = subspace_basis_.transpose() * -gradient_;
+
+  Vector Jb1(jacobian->num_rows());
+  Vector Jb2(jacobian->num_rows());
+  Jb1.setZero();
+  Jb2.setZero();
+  Vector tmp;
+
+  tmp = subspace_basis_.col(0);
+  jacobian->RightMultiply(tmp.data(), Jb1.data());
+  tmp = subspace_basis_.col(1);
+  jacobian->RightMultiply(tmp.data(), Jb2.data());
+
+  subspace_B_(0,0) = Jb1.dot(Jb1);
+  subspace_B_(0,1) = subspace_B_(1,0) = Jb1.dot(Jb2);
+  subspace_B_(1,1) = Jb2.dot(Jb2);
 }
 
 }  // namespace internal

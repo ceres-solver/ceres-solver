@@ -85,6 +85,7 @@ DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
 DEFINE_bool(robustify, false, "Use a robust loss function");
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
 DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_string(dogleg_type, "traditional", "Options are: traditional, subspace");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 
 namespace ceres {
@@ -228,6 +229,14 @@ void SetMinimizerOptions(Solver::Options* options) {
   } else {
     LOG(FATAL) << "Unknown trust region strategy: "
                << FLAGS_trust_region_strategy;
+  }
+  if (FLAGS_dogleg_type == "traditional") {
+    options->dogleg_type = TRADITIONAL_DOGLEG;
+  } else if (FLAGS_dogleg_type == "subspace") {
+    options->dogleg_type = SUBSPACE_DOGLEG;
+  } else {
+    LOG(FATAL) << "Unknown dogleg type: "
+               << FLAGS_dogleg_type;
   }
 }
 
