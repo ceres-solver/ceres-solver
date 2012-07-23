@@ -47,6 +47,11 @@ namespace internal {
 // Gauss-Newton step, we compute a regularized version of it. This is
 // because the Jacobian is often rank-deficient and in such cases
 // using a direct solver leads to numerical failure.
+//
+// If SUBSPACE is passed as the type argument to the constructor, the
+// DoglegStrategy follows the approach by Shultz, Schnabel, Byrd.
+// This finds the exact optimum over the two-dimensional subspace
+// spanned by the two Dogleg vectors.
 class DoglegStrategy : public TrustRegionStrategy {
 public:
   DoglegStrategy(const TrustRegionStrategy::Options& options);
@@ -68,7 +73,10 @@ public:
   void ComputeCauchyStep();
   LinearSolver::Summary ComputeGaussNewtonStep(SparseMatrix* jacobian,
                                                const double* residuals);
-  void ComputeDoglegStep(double* step);
+  void ComputeTraditionalDoglegStep(double* step);
+  void ComputeSubspaceModel(SparseMatrix* jacobian);
+  void ComputeSubspaceDoglegStep(double* step);
+  void FindMinimumOnTrustRegionBoundary(EigenTypes<2,2>::Vector *minimum);
 
   LinearSolver* linear_solver_;
   double radius_;
@@ -122,6 +130,16 @@ public:
   // increased and a new solve should be done when ComputeStep is
   // called again, thus reuse is set to false.
   bool reuse_;
+
+  // The dogleg type determines how the minimum of the local
+  // quadratic model is found.
+  DoglegType dogleg_type_;
+
+  // If the type is SUBSPACE_DOGLEG, the two-dimensional
+  // model 1/2 x^T B x + g^T x has to be computed and stored.
+  Matrix subspace_basis_;
+  EigenTypes<2,2>::Vector subspace_g_;
+  EigenTypes<2,2>::Matrix subspace_B_;
 };
 
 }  // namespace internal

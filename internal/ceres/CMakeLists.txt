@@ -62,6 +62,7 @@ SET(CERES_INTERNAL_SRC
     loss_function.cc
     normal_prior.cc
     partitioned_matrix_view.cc
+    polynomial_solver.cc
     problem.cc
     problem_impl.cc
     program.cc
