@@ -180,7 +180,15 @@ enum TrustRegionStrategyType {
   // 2. For now this strategy should only be used with exact
   // factorization based linear solvers, i.e., SPARSE_SCHUR,
   // DENSE_SCHUR, DENSE_QR and SPARSE_NORMAL_CHOLESKY.
-  DOGLEG
+  DOGLEG,
+
+  // The subspace dogleg method by Shultz, Schnabel, Byrd.
+  // This is similar to the Dogleg strategy above, but it
+  // performs exact minimization over the two-dimensional
+  // subspace spanned by the gradient and the 
+  // (Gauss-)Newton direction instead of following the
+  // dogleg path.
+  DOGLEG_SUBSPACE
 };
 
 enum SolverTerminationType {

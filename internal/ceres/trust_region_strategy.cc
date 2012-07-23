@@ -12,7 +12,9 @@ TrustRegionStrategy* TrustRegionStrategy::Create(const Options& options) {
     case LEVENBERG_MARQUARDT:
       return new LevenbergMarquardtStrategy(options);
     case DOGLEG:
-      return new DoglegStrategy(options);
+      return new DoglegStrategy(options, DoglegStrategy::TRADITIONAL);
+    case DOGLEG_SUBSPACE:
+      return new DoglegStrategy(options, DoglegStrategy::SUBSPACE);
     default:
       LOG(FATAL) << "Unknown trust region strategy: "
                  << options.trust_region_strategy_type;
