@@ -112,6 +112,7 @@ const char* TrustRegionStrategyTypeToString(
   switch (trust_region_strategy_type) {
     CASESTR(LEVENBERG_MARQUARDT);
     CASESTR(DOGLEG);
+    CASESTR(DOGLEG_SUBSPACE);
     default:
       return "UNKNOWN";
   }
