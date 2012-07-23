@@ -58,6 +58,7 @@ class Solver {
     // Default constructor that sets up a generic sparse problem.
     Options() {
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
+      dogleg_type = TRADITIONAL_DOGLEG;
       max_num_iterations = 50;
       max_solver_time_in_seconds = 1e9;
       num_threads = 1;
@@ -118,6 +119,9 @@ class Solver {
     // Minimizer options ----------------------------------------
 
     TrustRegionStrategyType trust_region_strategy_type;
+
+    // Type of dogleg strategy to use.
+    DoglegType dogleg_type;
 
     // Maximum number of iterations for the minimizer to run for.
     int max_num_iterations;
