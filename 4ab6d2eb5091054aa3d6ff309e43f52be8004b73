@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHs3//+Lg\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-24T20:19:16Z",
+      "side": 1,
+      "message": "I think the optimizing here is misguided. Consider using Eigen one-liners for these methods instead; e.g.\n\nC.rowwise().norm()\n\nThe C matrix is 4x4 in practice, right?",
+      "revId": "4ab6d2eb5091054aa3d6ff309e43f52be8004b73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHs3//+Kk\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-07-24T20:19:16Z",
+      "side": 1,
+      "message": "I believe this can get simplified considerably using direct eigen expressions and sacrificing a tiny amount of performance.",
+      "revId": "4ab6d2eb5091054aa3d6ff309e43f52be8004b73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
