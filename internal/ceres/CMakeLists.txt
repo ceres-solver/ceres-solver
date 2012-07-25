@@ -62,6 +62,7 @@ SET(CERES_INTERNAL_SRC
     loss_function.cc
     normal_prior.cc
     partitioned_matrix_view.cc
+    polynomial_solver.cc
     problem.cc
     problem_impl.cc
     program.cc
@@ -198,6 +199,7 @@ IF (${BUILD_TESTING})
   CERES_TEST(numeric_diff_cost_function)
   CERES_TEST(parameter_block)
   CERES_TEST(partitioned_matrix_view)
+  CERES_TEST(polynomial_solver)
   CERES_TEST(problem)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
