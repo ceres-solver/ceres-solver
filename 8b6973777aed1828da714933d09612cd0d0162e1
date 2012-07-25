@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAHwn///8Q\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "Give full citation.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///8A\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "despite one or two violations, we generally use lower case for variables. how about companion_matrix_ptr",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///78\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "Matrix\u0026 companion_matrix \u003d *companion_matrix_ptr;",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///74\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "space before and after binary operands.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7k\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "document the deviation in the diagonal behaviour her again.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7w\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "same naming convention as above.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7o\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "Document the fact that you depend on that in the construction of this companion matrix.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7s\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "use a one liner here which sets the entire column at once.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///68\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "use full word, imaginary",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7Q\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "either return bools or enums.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7c\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "real !\u003d NULL",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7A\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "can it be that the user asks for a NULL real but a non-null imag?",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7Y\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "imag !\u003d NULL",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7U\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "check for both not being null.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6Y\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "check for leading term to be non-zero? if so then shift things? or return an error to the user?",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7g\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "use eigen oneliner.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7I\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "reduce nesting by early termination.\n\nif (degree \u003d\u003d 0) {\n  return;\n}",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///7E\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "same for this case.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///64\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "companion_matrix.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///60\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "there maybe an eigen oneliner here.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///8E\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "all the complex roots of the polynomial.\nwhat happens if the polynomial has complex roots but image \u003d NULL?\n\nUse the same notation in the mathematical expression as the variable use to hold the coefficients.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///8I\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "use bool for success.\nNo default parameters.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///8M\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "space before and after \u003d and before and after \u003c.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6c\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "nice thorough tests!",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6w\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "no default parameters\nfunction documentation.\nfunctions are named starting with upper case.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6k\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "I am not sure I understand the comment here.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6g\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "Like below, break out the test into four tests.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6o\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "worth breaking out each of the four polynomials into their own test with the test name saying what you are testing. This way when the test fails, we know what happened without going to the code necessarily.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAHwn///6s\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-25T13:31:03Z",
+      "side": 1,
+      "message": "describe the polynomial symbolically, here and elsewhere.",
+      "revId": "8b6973777aed1828da714933d09612cd0d0162e1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
