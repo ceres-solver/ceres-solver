@@ -52,6 +52,14 @@ inline bool IsNormal  (double x) {
   return classification == _FPCLASS_NN ||
          classification == _FPCLASS_PN;
 }
+#elif defined(ANDROID)
+// On Android, the C++ fpclassify functions are not available. Strictly
+// speaking, the std functions are are not standard until C++11. Instead use
+// the C99 macros on Android.
+inline bool IsFinite  (double x) { return isfinite(x); }
+inline bool IsInfinite(double x) { return isinf(x);    }
+inline bool IsNaN     (double x) { return isnan(x);    }
+inline bool IsNormal  (double x) { return isnormal(x); }
 #else
 // TODO(keir): Test the "else" with more platforms.
 inline bool IsFinite  (double x) { return std::isfinite(x); }
