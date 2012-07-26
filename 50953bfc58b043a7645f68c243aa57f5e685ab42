@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH3X///dc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Comment blank below. In general, we try to have equations indented by three spaces after the // and a blank above and below. For example:\n\n // Find the minimum of the two-dimensional problem\n //\n //   min. 1/2 x\u0027 B\u0027 H B x + g\u0027 B x\n //   s.t. || B x ||^2 \u003c\u003d r^2\n //\n // where r is the trust region radius and B is the matrix with  unit columns\n // spanning the subspace defined by the steepest descent and Newton direction.\n\nThroughout.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///dA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///ao\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Space after comma, though this should not use EigenTypes anyway.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///as\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Document where the 0.99 comes from. What is it? Why 0.99? Should it be a configurable knob?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///c0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Out of curiosity, why use EigenTypes? IIRC we have EigenTypes for some trickery we do in the specialized schur solver, but it\u0027s not obvious we need it here. Consider instead using\n\nEigen::Matrix\u003cdouble, 2, 2\u003e\n\nthroughout. Feel free to make a typedef at the top as well, with something like Matrix2d or Vector2d.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///co\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "We don\u0027t generally use yoda conditions in Ceres. Consider writing this as simply\n\nif (FindPoly...)\n\nAlso, space after if.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///a0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Spacing:\n\nfor (int i \u003d 0; i \u003c 4; ++i)",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///cg\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Line length. Don\u0027t use EigenTypes.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "I *think* you want fabs here.\n\nDocument what this is guarding against. Where does 1e-6 come from?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Is this difficult to handle? We try to take numerical stability pretty seriously in Ceres, so if this is not difficult to handle consider seeing if you can.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "1. The TODO format is \n\n // TODO(alice): What to do here.\n\n2. This TODO() does not explain what someone should do. In this case, I\u0027d change this to:\n\n // TODO(markus): It appears gradient_ is in fact the negative gradient.\n // Rename gradient_ to negative_gradient_.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bk\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Move this down a line to match with the use of tmp.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bY\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Space after , here and next two lines.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///ac\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T21:53:04Z",
+      "side": 1,
+      "message": "Don\u0027t use EigenTypes.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
