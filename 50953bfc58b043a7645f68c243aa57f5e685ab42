@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAH3X///dQ\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "perhaps a more complete reference here would be nice. Either the papers or nocedal \u0026 wright.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///aA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "whats your plan to test this code?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///dc\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -30,6 +64,23 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Space after ,",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bs\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "eigentypes were created for template specialization inside the schur solver. here you can use eigen\u0027s vector and matrix types directly.",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +121,40 @@
     },
     {
       "key": {
+        "uuid": "AAAH3X///bo\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "what does this mean in practice?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "this function can return a 2 vector by value.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///c0\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -81,6 +166,23 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Out of curiosity, why use EigenTypes? IIRC we have EigenTypes for some trickery we do in the specialized schur solver, but it\u0027s not obvious we need it here. Consider instead using\n\nEigen::Matrix\u003cdouble, 2, 2\u003e\n\nthroughout. Feel free to make a typedef at the top as well, with something like Matrix2d or Vector2d.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///ag\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "make a function out of the polynomial construction so that it can be tested.",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +206,23 @@
     },
     {
       "key": {
+        "uuid": "AAAH3X///aw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "what are the reasons for which this polynomial root finding may fail?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///a0\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -115,6 +234,23 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Spacing:\n\nfor (int i \u003d 0; i \u003c 4; ++i)",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///ak\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "make a function out of a single lambda evaluation so that it can be tested.",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +291,23 @@
     },
     {
       "key": {
+        "uuid": "AAAH3X///aM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "yes define this as a constant and make give it a default value. we can decide on exposing it outside all the way up to solver::options later on.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///bc\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -172,6 +325,40 @@
     },
     {
       "key": {
+        "uuid": "AAAH3X///cQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "Isn\u0027t this better done by forming a dense nx2 matrix and calling QR factorization on it?",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///bg\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "and you do get a rank 1 subspace, does your method naturally reduce to one dimensional search then? if not then we must do so.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///bw\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -183,6 +370,23 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "1. The TODO format is \n\n // TODO(alice): What to do here.\n\n2. This TODO() does not explain what someone should do. In this case, I\u0027d change this to:\n\n // TODO(markus): It appears gradient_ is in fact the negative gradient.\n // Rename gradient_ to negative_gradient_.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///cI\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "we should change the name of gradient here and elsewhere to negative_gradient_ to be clear.",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -217,6 +421,23 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Space after , here and next two lines.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///b4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T21:56:02Z",
+      "side": 1,
+      "message": "single symmetric outer product will do if you store Jb as a 2xn row major matrix.",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
