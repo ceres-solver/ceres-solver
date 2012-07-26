@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH3n///wY\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "Full citation please.",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wU\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "add // namespace to indicate end of anonymous namespace",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wQ\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "since the size may have been larger, this should actually be \n\nof \"degree 0\"",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wM\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "move this test above the division by the leading term.",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wI\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "drop spaces around template argument.",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wE\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "this should align with the brackets.\n\nsolver(companion_matrix,\n         Eigen::EigenvaluesOnly);",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///wA\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "add a blank line and indent the math expression for better readability.",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n///v8\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-26T14:04:55Z",
+      "side": 1,
+      "message": "Failure cases are more than this. e.g. degree of the polynomial is too low. Perhaps its better to just say that the roots could not be computed and that the reason for failure is logged to LOG(ERROR).",
+      "revId": "91bd0f45a804ce6d1f7dd5a4a0d9e86870ba8dbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
