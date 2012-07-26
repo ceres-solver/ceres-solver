@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH3X///s0\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "There are two styles for argument wrapping; in general if the arguments can fit on the same line they get stacked after the (, one argument per line.\n\nhttp://google-styleguide.googlecode.com/svn/trunk/cppguide.xml?showone\u003dFunction_Declarations_and_Definitions#Function_Declarations_and_Definitions\n\nAlthough the style guide shows putting multiple arguments on one line, we only do that in special cases in Ceres; for example, you might have double x, double y on one line, but for two random arguments, always split across lines.\n\nUnless of course the entire declaration fits on one line.",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///sw\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "Please move this into the loop condition and drop the if.",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///ss\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "See above re: argument stacking.",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///sk\u003d",
+        "filename": "internal/ceres/polynomial_solver.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "Please stack these with the arguments after the ( e.g.\n\nbool FindPolynomialRoots(const Vector\u0026 polynomial,\n                         Vector* real,\n                         Vector* imaginary);\n\npaste in a fixed-width editor to see the correct stacking, as gerrit messes up the formatting. I wish gerrit used fixed width font for comments.",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///sg\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "See argument stacking comment.",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3X///sc\u003d",
+        "filename": "internal/ceres/polynomial_solver_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-07-26T15:50:15Z",
+      "side": 1,
+      "message": "Nice tests!",
+      "revId": "be1b86bdc99653e7142984304f74ef11dce4f677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
