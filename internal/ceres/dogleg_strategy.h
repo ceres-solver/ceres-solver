@@ -95,7 +95,7 @@ public:
   Vector diagonal_;
   Vector lm_diagonal_;
 
-  Vector gradient_;
+  Vector negative_gradient_;
   Vector gauss_newton_step_;
 
   // cauchy_step = alpha * gradient

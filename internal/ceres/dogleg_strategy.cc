@@ -96,7 +96,7 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
   // temporary vectors.
   if (diagonal_.rows() != n) {
     diagonal_.resize(n, 1);
-    gradient_.resize(n, 1);
+    negative_gradient_.resize(n, 1);
     gauss_newton_step_.resize(n, 1);
   }
 
@@ -107,14 +107,14 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
     diagonal_[i] = min(max(diagonal_[i], min_diagonal_), max_diagonal_);
   }
 
-  gradient_.setZero();
-  jacobian->LeftMultiply(residuals, gradient_.data());
+  negative_gradient_.setZero();
+  jacobian->LeftMultiply(residuals, negative_gradient_.data());
 
   // alpha * gradient is the Cauchy point.
   Vector Jg(jacobian->num_rows());
   Jg.setZero();
-  jacobian->RightMultiply(gradient_.data(), Jg.data());
-  alpha_ = gradient_.squaredNorm() / Jg.squaredNorm();
+  jacobian->RightMultiply(negative_gradient_.data(), Jg.data());
+  alpha_ = negative_gradient_.squaredNorm() / Jg.squaredNorm();
 
   LinearSolver::Summary linear_solver_summary =
       ComputeGaussNewtonStep(jacobian, residuals);
@@ -128,11 +128,11 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
 }
 
 void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
-  VectorRef dogleg_step(dogleg, gradient_.rows());
+  VectorRef dogleg_step(dogleg, negative_gradient_.rows());
 
   // Case 1. The Gauss-Newton step lies inside the trust region, and
   // is therefore the optimal solution to the trust-region problem.
-  const double gradient_norm = gradient_.norm();
+  const double gradient_norm = negative_gradient_.norm();
   const double gauss_newton_norm = gauss_newton_step_.norm();
   if (gauss_newton_norm <= radius_) {
     dogleg_step = gauss_newton_step_;
@@ -146,7 +146,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
   // the trust region. Rescale the Cauchy point to the trust region
   // and return.
   if  (gradient_norm * alpha_ >= radius_) {
-    dogleg_step = (radius_ / gradient_norm) * gradient_;
+    dogleg_step = (radius_ / gradient_norm) * negative_gradient_;
     dogleg_step_norm_ = radius_;
     VLOG(3) << "Cauchy step size: " << dogleg_step_norm_
             << " radius: " << radius_;
@@ -160,7 +160,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
 
   // a = alpha * gradient
   // b = gauss_newton_step
-  const double b_dot_a = alpha_ * gradient_.dot(gauss_newton_step_);
+  const double b_dot_a = alpha_ * negative_gradient_.dot(gauss_newton_step_);
   const double a_squared_norm = pow(alpha_ * gradient_norm, 2.0);
   const double b_minus_a_squared_norm =
       a_squared_norm - 2 * b_dot_a + pow(gauss_newton_norm, 2);
@@ -175,7 +175,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
       (c <= 0)
       ? (d - c) /  b_minus_a_squared_norm
       : (radius_ * radius_ - a_squared_norm) / (d + c);
-  dogleg_step = (alpha_ * (1.0 - beta)) * gradient_ + beta * gauss_newton_step_;
+  dogleg_step = (alpha_ * (1.0 - beta)) * negative_gradient_ + beta * gauss_newton_step_;
   dogleg_step_norm_ = dogleg_step.norm();
   VLOG(3) << "Dogleg step size: " << dogleg_step_norm_
           << " radius: " << radius_;
