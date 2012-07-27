@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH63///98\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "Apart from unit tests (for the 2D optimization on the trust-region), I\u0027d suggest adding an option to the bundle adjustment code that allows one to perturb the data. I think a valid test is then to look at how often the code (in say 100 random runs)\na) produces an optimum that is at least as good as the optimum returned by Dogleg or LM\nb) uses fewer steps than Dogleg or LM\nc) uses less time than Dogleg or LM\n\nIf it wins over Dogleg (which it should), I don\u0027t see a reason why it shouldn\u0027t be used (admittedly, both Dogleg and Dogleg-Subspace might be buggy in this case).\nHow did you test the other strategies?",
+      "parentUuid": "AAAH3X///aA\u003d",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///dc\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -138,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH63///+M\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "Basically this should never happen. If the subspace method correctly finds the (2d) optimum on the trust-region boundary, then the first order condition\n  \n   grad(f)(x) \u003d lambda grad(g)(x)\n\nshould hold. If it doesn\u0027t, something went wrong. It could be that this is just a fluke because the roots of the polynomial were badly estimated, it could be a real bug.",
+      "parentUuid": "AAAH3X///bo\u003d",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///bA\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -166,6 +202,24 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Out of curiosity, why use EigenTypes? IIRC we have EigenTypes for some trickery we do in the specialized schur solver, but it\u0027s not obvious we need it here. Consider instead using\n\nEigen::Matrix\u003cdouble, 2, 2\u003e\n\nthroughout. Feel free to make a typedef at the top as well, with something like Matrix2d or Vector2d.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH63///+I\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "Because I didn\u0027t know and it looked like you wanted to abstract away things like alignment or memory layout by having your own typedefs (over sizes only).\nSounds like a good idea to me anyway!",
+      "parentUuid": "AAAH3X///c0\u003d",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -308,6 +362,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH63///+E\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "What\u0027s your policy there? In C++, there are overloaded abs for float and double (and long double). Personally I prefer abs() (reads better), but there is a certain danger that you forget to include \u003ccmath\u003e, do include \u003ccstdlib\u003e (?) and ignore the compiler warning. In that case, abs(int) is used.",
+      "parentUuid": "AAAH3X///bQ\u003d",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3X///bc\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 10
@@ -319,6 +391,24 @@
       "writtenOn": "2012-07-26T21:53:04Z",
       "side": 1,
       "message": "Is this difficult to handle? We try to take numerical stability pretty seriously in Ceres, so if this is not difficult to handle consider seeing if you can.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH63///+A\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "On second thought, a zero gradient will not occur (if it does, the solver should have terminated already.)\nThe problem occurs when the gradient points right along one of the axes of the quadratic model (i.e. if it is an eigenvector).\nI think it\u0027s safe to fall back to a one-dimensional \"search\" then.\n(x_min \u003d trust_region_radius * negative_gradient_/||negative_gradient_||",
+      "parentUuid": "AAAH3X///bc\u003d",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -438,6 +528,24 @@
       "writtenOn": "2012-07-26T21:56:02Z",
       "side": 1,
       "message": "single symmetric outer product will do if you store Jb as a 2xn row major matrix.",
+      "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH63///94\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-07-27T06:49:53Z",
+      "side": 1,
+      "message": "Can I safely assume that matrices are and will be row major?",
+      "parentUuid": "AAAH3X///b4\u003d",
       "revId": "50953bfc58b043a7645f68c243aa57f5e685ab42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
