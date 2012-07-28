@@ -52,6 +52,10 @@ OPTION(BUILD_TESTING
        "Enable tests"
        ON)
 
+OPTION(BUILD_ANDROID
+       "Build for Android. Use build_android.sh instead of setting this."
+       OFF)
+
 # To get a more static build, try the following line on Mac and Linux:
 # SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 
@@ -315,22 +319,29 @@ ELSE (${GFLAGS})
 ENDIF (${GFLAGS})
 
 # Google Logging
-MESSAGE("-- Check for Google Log")
-FIND_LIBRARY(GLOG_LIB NAMES glog PATHS ${SEARCH_LIBS})
-IF (NOT EXISTS ${GLOG_LIB})
-  MESSAGE(FATAL_ERROR
-          "Can't find Google Log. Please specify: "
-          "-DGLOG_LIB=...")
-ENDIF (NOT EXISTS ${GLOG_LIB})
-MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
+IF (NOT ${BUILD_ANDROID})
+  MESSAGE("-- Check for Google Log")
+  FIND_LIBRARY(GLOG_LIB NAMES glog PATHS ${SEARCH_LIBS})
+  IF (NOT EXISTS ${GLOG_LIB})
+    MESSAGE(FATAL_ERROR
+            "Can't find Google Log. Please specify: "
+            "-DGLOG_LIB=...")
+  ENDIF (NOT EXISTS ${GLOG_LIB})
+  MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
 
-FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h PATHS ${SEARCH_HEADERS})
-IF (NOT EXISTS ${GLOG_INCLUDE})
-  MESSAGE(FATAL_ERROR
-          "Can't find Google Log. Please specify: "
-          "-DGLOG_INCLUDE=...")
-ENDIF (NOT EXISTS ${GLOG_INCLUDE})
-MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
+  FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h PATHS ${SEARCH_HEADERS})
+  IF (NOT EXISTS ${GLOG_INCLUDE})
+    MESSAGE(FATAL_ERROR
+            "Can't find Google Log. Please specify: "
+            "-DGLOG_INCLUDE=...")
+  ENDIF (NOT EXISTS ${GLOG_INCLUDE})
+  MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
+ELSE (NOT ${BUILD_ANDROID})
+  SET(GLOG_LIB miniglog)
+  MESSAGE("-- Using minimal Glog substitute for Android (library): ${GLOG_LIB}")
+  SET(GLOG_INCLUDE internal/ceres/miniglog)
+  MESSAGE("-- Using minimal Glog substitute for Android (include): ${GLOG_INCLUDE}")
+ENDIF (NOT ${BUILD_ANDROID})
 
 # Eigen
 MESSAGE("-- Check for Eigen 3.0")
@@ -385,14 +396,22 @@ ELSE (${PROTOBUF})
   ADD_DEFINITIONS(-DCERES_DONT_HAVE_PROTOCOL_BUFFERS)
 ENDIF (${PROTOBUF})
 
-IF (${UNIX})
-  # At least on linux, we need pthreads to be enabled for mutex to
-  # compile. This may not work on windows or android.
+
+# Use threads but not on Android, where there is no support for OpenMP yet.
+IF (${UNIX} AND NOT ${BUILD_ANDROID})
+  # At least on Linux, we need pthreads to be enabled for mutex to compile.
+  # This may not work on windows or android.
   FIND_PACKAGE(Threads REQUIRED)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
   ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
   ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-ENDIF (${UNIX})
+ENDIF (${UNIX} AND NOT ${BUILD_ANDROID})
+
+# Disable threads in mutex.h. Someday, after there is OpenMP support in
+# Android, this can get removed.
+IF (${BUILD_ANDROID})
+  ADD_DEFINITIONS(-DNO_THREADS)
+ENDIF (${BUILD_ANDROID})
 
 # Use the std namespace for the hash<> and related templates. This may vary by
 # system.
@@ -450,15 +469,19 @@ SET (CERES_CXX_FLAGS)
 
 IF (CMAKE_BUILD_TYPE STREQUAL "Release")
   IF (CMAKE_COMPILER_IS_GNUCXX)
-    # Linux
-    IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-      SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
-    ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-    # Mac OS X
-    IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-      SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast -msse3")
-    ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    IF (${BUILD_ANDROID})
+      # TODO(keir): Figure out what flags should go here to make an optimized
+      # native ARM binary for Android.
+    ELSE (${BUILD_ANDROID})
+      # Linux
+      IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
+      ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+      # Mac OS X
+      IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast -msse3")
+      ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    ENDIF (${BUILD_ANDROID})
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
   SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}"
        CACHE STRING "Release mode flags to the C++ Compiler" FORCE)
@@ -467,9 +490,9 @@ ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
 # After the tweaks for the compile settings, disable some warnings on MSVC.
 IF (MSVC)
   # Disable signed/unsigned int conversion warnings.
-  ADD_DEFINITIONS( "/wd4018")
+  ADD_DEFINITIONS("/wd4018")
   # Disable warning about using struct/class for the same symobl.
-  ADD_DEFINITIONS( "/wd4099")
+  ADD_DEFINITIONS("/wd4099")
   # Disable warning about the insecurity of using "std::copy".
   ADD_DEFINITIONS("/wd4996")
   # Disable performance warning about int-to-bool conversion.

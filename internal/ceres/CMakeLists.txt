@@ -103,6 +103,16 @@ ELSE (${SCHUR_SPECIALIZATIONS})
   FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/schur_eliminator_d_d_d.cc)
 ENDIF (${SCHUR_SPECIALIZATIONS})
 
+# For Android, use the internal Glog implementation.
+IF (${BUILD_ANDROID})
+  ADD_LIBRARY(miniglog STATIC
+              miniglog/glog/logging.cc)
+
+  # The Android logging library that defines e.g. __android_log_print is
+  # creatively named "log".
+  TARGET_LINK_LIBRARIES(miniglog log)
+ENDIF (${BUILD_ANDROID})
+
 SET(CERES_LIBRARY_DEPENDENCIES ${GLOG_LIB})
 
 IF (${GFLAGS})
@@ -151,15 +161,15 @@ TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
 # Don't build a DLL on MSVC. Supporting Ceres as a DLL on Windows involves
 # nontrivial changes that we haven't made yet.
-IF (NOT MSVC)
+IF (NOT MSVC AND NOT ${BUILD_ANDROID})
   ADD_LIBRARY(ceres_shared SHARED ${CERES_LIBRARY_SOURCE})
   TARGET_LINK_LIBRARIES(ceres_shared ${CERES_LIBRARY_DEPENDENCIES})
   SET_TARGET_PROPERTIES(ceres_shared PROPERTIES
       VERSION ${CERES_VERSION}
       SOVERSION ${CERES_ABI_VERSION})
-ENDIF (NOT MSVC)
+ENDIF (NOT MSVC AND NOT ${BUILD_ANDROID})
 
-IF (${BUILD_TESTING})
+IF (${BUILD_TESTING} AND ${GFLAGS})
   ADD_LIBRARY(gtest gmock_gtest_all.cc gmock_main.cc)
   ADD_LIBRARY(test_util test_util.cc)
   TARGET_LINK_LIBRARIES(gtest ${GFLAGS_LIB} ${GLOG_LIB})
@@ -206,25 +216,17 @@ IF (${BUILD_TESTING})
   CERES_TEST(rotation)
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
-  IF (GFLAGS)
-    CERES_TEST(schur_eliminator)
-  ENDIF (GFLAGS)
+  CERES_TEST(schur_eliminator)
   CERES_TEST(schur_ordering)
   CERES_TEST(solver_impl)
-  IF (SUITESPARSE)
-    CERES_TEST(suitesparse)
-  ENDIF(SUITESPARSE)
+  CERES_TEST(suitesparse)
   CERES_TEST(symmetric_linear_solver)
   CERES_TEST(triplet_sparse_matrix)
   CERES_TEST(trust_region_minimizer)
   CERES_TEST(unsymmetric_linear_solver)
   CERES_TEST(visibility)
-  IF (GFLAGS)
-    CERES_TEST(visibility_based_preconditioner)
-  ENDIF (GFLAGS)
+  CERES_TEST(visibility_based_preconditioner)
 
-  # Large end to end test for the entire solver.
-  IF (${GFLAGS})
-    CERES_TEST(system)
-  ENDIF (${GFLAGS})
+  # Put the large end to end test last.
+  CERES_TEST(system)
 ENDIF (${BUILD_TESTING})
