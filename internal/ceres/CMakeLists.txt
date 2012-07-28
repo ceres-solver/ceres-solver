@@ -103,6 +103,16 @@ ELSE (${SCHUR_SPECIALIZATIONS})
   FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/schur_eliminator_d_d_d.cc)
 ENDIF (${SCHUR_SPECIALIZATIONS})
 
+# For Android, use the internal Glog implementation.
+IF (${BUILD_ANDROID}) 
+  ADD_LIBRARY(miniglog STATIC
+              miniglog/glog/logging.cc)
+
+  # The Android logging library that defines e.g. __android_log_print is
+  # creatively named "log".
+  TARGET_LINK_LIBRARIES(miniglog log)
+ENDIF (${BUILD_ANDROID}) 
+
 SET(CERES_LIBRARY_DEPENDENCIES ${GLOG_LIB})
 
 IF (${GFLAGS})
@@ -151,7 +161,7 @@ TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
 # Don't build a DLL on MSVC. Supporting Ceres as a DLL on Windows involves
 # nontrivial changes that we haven't made yet.
-IF (NOT MSVC)
+IF (NOT MSVC AND NOT ${BUILD_ANDROID})
   ADD_LIBRARY(ceres_shared SHARED ${CERES_LIBRARY_SOURCE})
   TARGET_LINK_LIBRARIES(ceres_shared ${CERES_LIBRARY_DEPENDENCIES})
   SET_TARGET_PROPERTIES(ceres_shared PROPERTIES
@@ -185,7 +195,9 @@ IF (${BUILD_TESTING})
   CERES_TEST(corrector)
   CERES_TEST(dense_sparse_matrix)
   CERES_TEST(evaluator)
-  CERES_TEST(gradient_checking_cost_function)
+  IF (GFLAGS)
+    CERES_TEST(gradient_checking_cost_function)
+  ENDIF (GFLAGS)
   CERES_TEST(graph)
   CERES_TEST(graph_algorithms)
   CERES_TEST(implicit_schur_complement)
@@ -203,7 +215,9 @@ IF (${BUILD_TESTING})
   CERES_TEST(problem)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
-  CERES_TEST(rotation)
+  IF (GFLAGS)
+    CERES_TEST(rotation)
+  ENDIF (GFLAGS)
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   IF (GFLAGS)
