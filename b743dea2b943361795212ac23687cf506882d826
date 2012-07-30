@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH3n//+aA\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "I would recommend combining these two clauses, since they relate to a single library and can\u0027t possibly take different branches.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Z8\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "does android identify itself as unix?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Z0\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "where is this variable defined? define this as a blank value and documentation if you expect the user to define it.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Z4\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "indentation.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zw\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "just for my own understanding, CMAKE_SYSTEM_NAME refers to the system being used to build, or the target system? also I do not quite understand the point of this if, since you aren\u0027t actually doing anything with the flags.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zs\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "lbraray for ? spelling and incomplete sentence.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zg\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "something about jellybean goes in here?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZU\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "also point out that the script extracts a copy of the toolchain. which is the big operation done by this script.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zo\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "I do not understand this comment, what happens when you re-run it?\n\nalso wit \u003d with.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zk\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "you can\u0027t build ceres-solver/build-android and work in that directory?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Zc\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "since jelly bean is not supported yet, version checking?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZY\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "schur_specializations? hmm maybe not.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZQ\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "Isn\u0027t this the reverse of the VLOG convention. Where higher levels are less important. for example we log at VLOG(3) for stuff which we will very rare need to see for debugging information.\n\nWith this setup, VLOG(3) will print as a warning always.\n\nAlso does this affect the performance of the library with our copious use of VLOG? since VLOG will always log now?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZM\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "one argument per line?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZA\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "run cpplint on this file?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZI\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "drop space.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+ZE\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "drop space.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH3n//+Y8\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-07-30T14:17:56Z",
+      "side": 1,
+      "message": "argument stacking.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
