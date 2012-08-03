@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///UA\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+aA\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+Z8\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "does android identify itself as unix?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///T8\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Sadly yes.",
+      "parentUuid": "AAAH3n//+Z8\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///T4\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+Z0\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+Z4\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "indentation.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///Tw\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+Z4\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///Ts\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "CMake has no notion of a \"target\" system. System name is the host.",
+      "parentUuid": "AAAH3n//+Zw\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+Zs\u003d",
         "filename": "android/build_android.sh",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "lbraray for ? spelling and incomplete sentence.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///TY\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+Zs\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///TM\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Added lower down.",
+      "parentUuid": "AAAH3n//+Zg\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+ZU\u003d",
         "filename": "android/build_android.sh",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "also point out that the script extracts a copy of the toolchain. which is the big operation done by this script.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///TI\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+ZU\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///TE\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "This is from Scott. I am not sure. Removing for now.",
+      "parentUuid": "AAAH3n//+Zo\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+Zk\u003d",
         "filename": "android/build_android.sh",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "you can\u0027t build ceres-solver/build-android and work in that directory?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///S8\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "CMake has some weird issues with build-under-source iirc.",
+      "parentUuid": "AAAH3n//+Zk\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH7n///SA\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Not so easy to do. I extended the TODO.",
+      "parentUuid": "AAAH3n//+Zc\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+ZY\u003d",
         "filename": "android/build_android.sh",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "schur_specializations? hmm maybe not.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH7n///Ro\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Added comments about this.",
+      "parentUuid": "AAAH3n//+ZY\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///Hs\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "I reworked this. Check out the new implementation.",
+      "parentUuid": "AAAH3n//+ZQ\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+ZM\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 1
@@ -234,6 +468,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "one argument per line?",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Ho\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+ZM\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///Hg\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "not so easy outside google3",
+      "parentUuid": "AAAH3n//+ZA\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+ZI\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 1
@@ -268,6 +538,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "drop space.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Hc\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "AAAH3n//+ZI\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "AAAH+3///HY\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAH3n//+ZE\u003d",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAH3n//+Y8\u003d",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 1
@@ -302,6 +608,24 @@
       "writtenOn": "2012-07-30T14:17:56Z",
       "side": 1,
       "message": "argument stacking.",
+      "revId": "b743dea2b943361795212ac23687cf506882d826",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///HU\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-03T00:05:07Z",
+      "side": 1,
+      "message": "Huh? Putting the ++iter on its own line is unnecessary here.",
+      "parentUuid": "AAAH3n//+Y8\u003d",
       "revId": "b743dea2b943361795212ac23687cf506882d826",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
