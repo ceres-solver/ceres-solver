@@ -398,14 +398,14 @@ ENDIF (${PROTOBUF})
 
 
 # Use threads but not on Android, where there is no support for OpenMP yet.
-IF (${UNIX} AND NOT ${BUILD_ANDROID})
+IF ("${UNIX}" AND NOT ${BUILD_ANDROID})
   # At least on Linux, we need pthreads to be enabled for mutex to compile.
   # This may not work on windows or android.
   FIND_PACKAGE(Threads REQUIRED)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
   ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
   ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-ENDIF (${UNIX} AND NOT ${BUILD_ANDROID})
+ENDIF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 
 # Disable threads in mutex.h. Someday, after there is OpenMP support in
 # Android, this can get removed.
