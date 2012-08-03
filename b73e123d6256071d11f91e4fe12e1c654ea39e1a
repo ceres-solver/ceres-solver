@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH+3///FI\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "extracting",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///E8\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "I was following the instructions till this point.. and after this the two paragraphs basically make no sense to me.",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///FE\u003d",
+        "filename": "android/build_android.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "change",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Ew\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Es\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///EI\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "order them in order of severity ? start with VLOG(N) and go down to fatal, LOG(INFO), LG on the same line.",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///D8\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "also I thought you were contracting them into the same output.. \n\neither ways, -1 and 4 are very confusing.",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///EE\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "err? why is 4 error?",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///D4\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "this contradicts the -1 definition earlier.",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAH+3///Dk\u003d",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T00:40:53Z",
+      "side": 1,
+      "message": "This contradicts your documentation earlier where negativelevels all go to fatal...",
+      "revId": "b73e123d6256071d11f91e4fe12e1c654ea39e1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
