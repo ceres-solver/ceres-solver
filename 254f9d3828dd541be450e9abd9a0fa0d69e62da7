@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH/X//+7k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T12:38:00Z",
+      "side": 1,
+      "message": "why the quotes? please edumacate me.",
+      "revId": "254f9d3828dd541be450e9abd9a0fa0d69e62da7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
