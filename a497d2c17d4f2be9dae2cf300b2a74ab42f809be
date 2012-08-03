@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAH+3//+/8\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-03T01:32:51Z",
+      "side": 1,
+      "message": "update endif condition.. this should actually fail with cmake right now.",
+      "revId": "a497d2c17d4f2be9dae2cf300b2a74ab42f809be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
