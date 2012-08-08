@@ -86,6 +86,8 @@ DEFINE_bool(robustify, false, "Use a robust loss function");
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
 DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
+DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
+            " nonmonotic steps");
 
 namespace ceres {
 namespace examples {
@@ -221,6 +223,7 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->num_threads = FLAGS_num_threads;
   options->eta = FLAGS_eta;
   options->max_solver_time_in_seconds = FLAGS_max_solver_time;
+  options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
   if (FLAGS_trust_region_strategy == "lm") {
     options->trust_region_strategy_type = LEVENBERG_MARQUARDT;
   } else if (FLAGS_trust_region_strategy == "dogleg") {
