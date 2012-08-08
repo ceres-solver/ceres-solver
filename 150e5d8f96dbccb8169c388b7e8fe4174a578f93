@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIE3///L8\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "Comment on what x_min is.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///LA\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "Consider renaming kMaxConsecutiveNonMonotonicSteps.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///LQ\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "This is the max consecutive increasing steps right? Perhaps we should count the number of overall nonmonotonic steps.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///LI\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "_r and _c are not particularly informative. I get that they probably match subscripts in the book\u0027s equations, but they are not meaningful here. Please pick better postscripts for _r and _c, commenting on their relation to the books subscripts.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///LE\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "Describe what sigma is.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///K0\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "Why \"c\" and \"h\"? Consider rho and rho_boosted or similar.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///Ks\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///Lg\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "These log statements are pretty cryptic. Expand, possibly make vlogs, or remove.",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3///LY\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T17:50:53Z",
+      "side": 1,
+      "message": "This is odd. Isn\u0027t this the number of consecutive nonmonotonic steps?",
+      "revId": "150e5d8f96dbccb8169c388b7e8fe4174a578f93",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
