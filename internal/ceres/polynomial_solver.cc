@@ -106,7 +106,7 @@ void BuildCompanionMatrix(const Vector& polynomial,
   companion_matrix.resize(degree, degree);
   companion_matrix.setZero();
   companion_matrix.diagonal(-1).setOnes();
-  companion_matrix.col(degree-1) = -polynomial.reverse().head(degree);
+  companion_matrix.col(degree - 1) = -polynomial.reverse().head(degree);
 }
 
 // Remove leading terms with zero coefficients.
