@@ -58,6 +58,8 @@ class Solver {
     // Default constructor that sets up a generic sparse problem.
     Options() {
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
+      use_nonmonotonic_steps = false;
+      max_consecutive_nonmonotonic_steps = 5;
       max_num_iterations = 50;
       max_solver_time_in_seconds = 1e9;
       num_threads = 1;
@@ -118,6 +120,34 @@ class Solver {
     // Minimizer options ----------------------------------------
 
     TrustRegionStrategyType trust_region_strategy_type;
+
+    // The classical trust region methods are descent methods, in that
+    // they only accept a point if it strictly reduces the value of
+    // the objective function.
+    //
+    // Relaxing this requirement allows the algorithm to be more
+    // efficient in the long term at the cost of some local increase
+    // in the value of the objective function.
+    //
+    // This is because, allowing for non-decreasing objective function
+    // values in a princpled manner allows the algorithm to "jump over
+    // boulders" as the method is not restricted to move into narrow
+    // valleys while preserving its convergence properties.
+    //
+    // Setting use_nonmonotonic_steps to true enables the
+    // non-monotonic trust region algorithm as described by Conn,
+    // Gould & Toint in "Trust Region Methods", Section 10.1.
+    //
+    // The parameter max_consecutive_nonmonotonic_steps controls the
+    // window size used by the step selection algorithm to accept
+    // non-monotonic steps.
+    //
+    // Even though the value of the objective function may be larger
+    // than the minimum value encountered over the course of the
+    // optimization, the final parameters returned to the user are the
+    // ones corresponding to the minimum cost over all iterations.
+    bool use_nonmonotonic_steps;
+    int max_consecutive_nonmonotonic_steps;
 
     // Maximum number of iterations for the minimizer to run for.
     int max_num_iterations;

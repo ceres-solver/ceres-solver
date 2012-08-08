@@ -132,7 +132,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   const int num_effective_parameters = evaluator->NumEffectiveParameters();
   const int num_residuals = evaluator->NumResiduals();
 
-  VectorRef x(parameters, num_parameters);
+  VectorRef x_min(parameters, num_parameters);
+  Vector x = x_min;
   double x_norm = x.norm();
 
   Vector residuals(num_residuals);
@@ -166,6 +167,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
+
+  int num_consecutive_nonmonotonic_steps = 0;
+  double minimum_cost = cost;
+  double reference_cost = cost;
+  double accumulated_reference_model_cost_change = 0.0;
+  double candidate_cost = cost;
+  double accumulated_candidate_model_cost_change = 0.0;
 
   gradient.setZero();
   jacobian->LeftMultiply(residuals.data(), gradient.data());
@@ -366,10 +374,40 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
-      iteration_summary.relative_decrease =
+      const double relative_decrease =
           iteration_summary.cost_change / model_cost_change;
+
+      const double historical_relative_decrease =
+          (reference_cost - new_cost) /
+          (accumulated_reference_model_cost_change + model_cost_change);
+
+      // If monotonic steps are being used, then the relative_decrease
+      // is the usual ratio of the change in objective function value
+      // divided by the change in model cost.
+      //
+      // If non-monotonic steps are allowed, then we take the maximum
+      // of the relative_decrease and the
+      // historical_relative_decrease, which measures the increase
+      // from a reference iteration. The model cost change is
+      // estimated by accumulating the model cost changes since the
+      // reference iteration. The historical relative_decrease offers
+      // a boost to a step which is not too bad compared to the
+      // reference iteration, allowing for non-monotonic steps.
+      iteration_summary.relative_decrease =
+          options.use_nonmonotonic_steps
+          ? max(relative_decrease, historical_relative_decrease)
+          : relative_decrease;
+
       iteration_summary.step_is_successful =
           iteration_summary.relative_decrease > options_.min_relative_decrease;
+
+      if (iteration_summary.step_is_successful) {
+        accumulated_candidate_model_cost_change += model_cost_change;
+        accumulated_reference_model_cost_change += model_cost_change;
+        if (relative_decrease <= options_.min_relative_decrease) {
+          VLOG(2) << "Non-monotonic step!";
+        }
+      }
     }
 
     if (iteration_summary.step_is_successful) {
@@ -377,6 +415,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       strategy->StepAccepted(iteration_summary.relative_decrease);
       x = x_plus_delta;
       x_norm = x.norm();
+
       // Step looks good, evaluate the residuals and Jacobian at this
       // point.
       if (!evaluator->Evaluate(x.data(),
@@ -404,6 +443,36 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
       if (options_.jacobi_scaling) {
         jacobian->ScaleColumns(scale.data());
+      }
+
+      // Update the best, reference and candidate iterates.
+      //
+      // Based on algorithm 10.1.2 (page 357) of "Trust Region
+      // Methods" by Conn Gould & Toint.
+      if (cost < minimum_cost) {
+        // A step that improves solution quality was found.
+        x_min = x;
+        minimum_cost = cost;
+        // Set the candidate to the current iterate.
+        candidate_cost = cost;
+        num_consecutive_nonmonotonic_steps = 0;
+        accumulated_candidate_model_cost_change = 0.0;
+      } else {
+        ++num_consecutive_nonmonotonic_steps;
+
+        if (cost > candidate_cost) {
+          VLOG(2) << "Updating the candidate point to the current iterate.";
+          candidate_cost = cost;
+          accumulated_candidate_model_cost_change = 0.0;
+        }
+
+        if (num_consecutive_nonmonotonic_steps ==
+            options.max_consecutive_nonmonotonic_steps) {
+          VLOG(2) << "Resetting the reference point to the candidate point";
+          reference_cost = candidate_cost;
+          accumulated_reference_model_cost_change =
+              accumulated_candidate_model_cost_change;
+        }
       }
     } else {
       ++summary->num_unsuccessful_steps;
