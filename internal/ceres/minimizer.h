@@ -68,6 +68,9 @@ class Minimizer {
       min_relative_decrease = options.min_relative_decrease;
       eta = options.eta;
       jacobi_scaling = options.jacobi_scaling;
+      use_nonmonotonic_steps = options.use_nonmonotonic_steps;
+      max_consecutive_nonmonotonic_steps =
+          options.max_consecutive_nonmonotonic_steps;
       lsqp_dump_directory = options.lsqp_dump_directory;
       lsqp_iterations_to_dump = options.lsqp_iterations_to_dump;
       lsqp_dump_format_type = options.lsqp_dump_format_type;
@@ -96,6 +99,8 @@ class Minimizer {
     double min_relative_decrease;
     double eta;
     bool jacobi_scaling;
+    bool use_nonmonotonic_steps;
+    bool max_consecutive_nonmonotonic_steps;
     vector<int> lsqp_iterations_to_dump;
     DumpFormatType lsqp_dump_format_type;
     string lsqp_dump_directory;
