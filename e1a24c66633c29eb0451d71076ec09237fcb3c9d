@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIE3//+xg\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T23:39:19Z",
+      "side": 1,
+      "message": "I\u0027m confused; isn\u0027t this losing the candidate, since the parameters are not saved? Perhaps comment above the if.",
+      "revId": "e1a24c66633c29eb0451d71076ec09237fcb3c9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIE3//+xQ\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-08T23:39:19Z",
+      "side": 1,
+      "message": "I don\u0027t understand how the behaviour will change after we hit the max nonmonotonic steps. Can you expand with a comment?",
+      "revId": "e1a24c66633c29eb0451d71076ec09237fcb3c9d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
