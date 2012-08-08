@@ -132,7 +132,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   const int num_effective_parameters = evaluator->NumEffectiveParameters();
   const int num_residuals = evaluator->NumResiduals();
 
-  VectorRef x(parameters, num_parameters);
+  VectorRef x_min(parameters, num_parameters);
+  Vector x = x_min;
   double x_norm = x.norm();
 
   Vector residuals(num_residuals);
@@ -166,6 +167,14 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
+
+  const int kMaxNonMonotonicSteps = 10;
+  int num_nonmonotonic_steps = 0;
+  double cost_min = cost;
+  double cost_r = cost;
+  double sigma_r = 0.0;
+  double cost_c = cost;
+  double sigma_c = 0.0;
 
   gradient.setZero();
   jacobian->LeftMultiply(residuals.data(), gradient.data());
@@ -366,13 +375,31 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
-      iteration_summary.relative_decrease =
-          iteration_summary.cost_change / model_cost_change;
+
+      // The usual relative decrease.
+      const double rho_c = iteration_summary.cost_change / model_cost_change;
+
+      // The boosted relative decrease
+      const double rho_h = (cost_r - new_cost) / (sigma_r + model_cost_change);
+
+      LOG(INFO) << "rho_c: " << rho_c << " rho_h: " << rho_h;
+      if (rho_c <= options_.min_relative_decrease &&
+          options.min_relative_decrease < rho_h) {
+        LOG(INFO) << "Non-monotonic step!";
+      }
+
+      iteration_summary.relative_decrease = max(rho_c, rho_c);
       iteration_summary.step_is_successful =
           iteration_summary.relative_decrease > options_.min_relative_decrease;
+
+      if (iteration_summary.step_is_successful) {
+        sigma_c += model_cost_change;
+        sigma_r += model_cost_change;
+      }
     }
 
     if (iteration_summary.step_is_successful) {
+
       ++summary->num_successful_steps;
       strategy->StepAccepted(iteration_summary.relative_decrease);
       x = x_plus_delta;
@@ -387,6 +414,28 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         summary->termination_type = NUMERICAL_FAILURE;
         LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
         return;
+      }
+
+      if (cost < cost_min) {
+        LOG(INFO) << "3b: best value";
+        cost_c = cost;
+        cost_min = cost;
+        x_min = x;
+        sigma_c = 0;
+        num_nonmonotonic_steps = 0;
+      } else {
+        ++num_nonmonotonic_steps;
+        if (cost > cost_c) {
+          LOG(INFO) << "3c: update candidate";
+          cost_c = cost;
+          sigma_c = 0.0;
+        }
+
+        if (num_nonmonotonic_steps == kMaxNonMonotonicSteps) {
+          LOG(INFO) << "3d: Resetting";
+          cost_r = cost_c;
+          sigma_r = sigma_c;
+        }
       }
 
       gradient.setZero();
