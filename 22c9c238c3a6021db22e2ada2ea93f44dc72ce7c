@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///0I\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T17:36:01Z",
+      "side": 1,
+      "message": "Eigen?",
+      "revId": "22c9c238c3a6021db22e2ada2ea93f44dc72ce7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///0E\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T17:36:01Z",
+      "side": 1,
+      "message": "Eigen?",
+      "revId": "22c9c238c3a6021db22e2ada2ea93f44dc72ce7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///zw\u003d",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T17:36:01Z",
+      "side": 1,
+      "message": "Add yourself",
+      "revId": "22c9c238c3a6021db22e2ada2ea93f44dc72ce7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///zo\u003d",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T17:36:01Z",
+      "side": 1,
+      "message": "Please include a reference to where this algorithm comes from.",
+      "revId": "22c9c238c3a6021db22e2ada2ea93f44dc72ce7c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
