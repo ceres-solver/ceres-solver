@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIOH///mw\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T22:37:54Z",
+      "side": 1,
+      "message": "explicit comparison to NULL.",
+      "revId": "0ecc143ab522c23635ca167ca3cdf1c3e316511c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIOH///m8\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T22:37:54Z",
+      "side": 1,
+      "message": "here and above compare to NULL explicitly. The old code violates this rule.",
+      "revId": "0ecc143ab522c23635ca167ca3cdf1c3e316511c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIOH///m4\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T22:37:54Z",
+      "side": 1,
+      "message": "space before and after *",
+      "revId": "0ecc143ab522c23635ca167ca3cdf1c3e316511c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIOH///m0\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T22:37:54Z",
+      "side": 1,
+      "message": "const",
+      "revId": "0ecc143ab522c23635ca167ca3cdf1c3e316511c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
