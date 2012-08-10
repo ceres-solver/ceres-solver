@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///2Y\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T17:27:45Z",
+      "side": 1,
+      "message": "Remove comma.",
+      "revId": "a064ae1a42c64c1fdb69decd03a267b010941dc8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
