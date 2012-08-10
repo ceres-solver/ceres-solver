@@ -44,8 +44,10 @@ namespace examples {
 
 class BALProblem {
  public:
-  explicit BALProblem(const std::string filename, bool use_quaternions);
+  explicit BALProblem(const std::string& filename, bool use_quaternions);
   ~BALProblem();
+
+  void WriteToFile(const std::string& filename) const;
 
   // Perturb the camera pose and the geometry with random normal
   // numbers with corresponding standard deviations.
