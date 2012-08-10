@@ -54,6 +54,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <string>
 #include <vector>
 
@@ -64,6 +65,16 @@
 #include "ceres/ceres.h"
 
 DEFINE_string(input, "", "Input File name");
+DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
+            "rotations. If false, angle axis is used");
+DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
+            "parameterization.");
+DEFINE_bool(robustify, false, "Use a robust loss function");
+
+DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
+             "accuracy of each linear solve of the truncated newton step. "
+             "Changing this parameter can affect solve performance ");
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, cholesky, "
               "dense_qr, and conjugate_gradients");
@@ -72,20 +83,24 @@ DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "cluster_tridiagonal");
 DEFINE_string(sparse_linear_algebra_library, "suitesparse",
               "Options are: suitesparse and cxsparse");
-DEFINE_int32(num_iterations, 5, "Number of iterations");
-DEFINE_int32(num_threads, 1, "Number of threads");
-DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
-             "accuracy of each linear solve of the truncated newton step. "
-             "Changing this parameter can affect solve performance ");
+
 DEFINE_string(ordering_type, "schur", "Options are: schur, user, natural");
-DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
-            "rotations. If false, angle axis is used");
-DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
-            "parameterization.");
-DEFINE_bool(robustify, false, "Use a robust loss function");
-DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
-DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
+            "ordering.");
+
+DEFINE_int32(num_threads, 1, "Number of threads");
+DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
+
+DEFINE_double(rotation_sigma, 0.0, "Standard deviation of camera rotation "
+              "perturbation.");
+DEFINE_double(translation_sigma, 0.0, "Standard deviation of the camera "
+              "translation perturbation.");
+DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
+              "perturbation");
+DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
+             "of the pseudo random number generator used to generate "
+             "the pertubations.");
 
 namespace ceres {
 namespace examples {
@@ -238,11 +253,56 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
   SetOrdering(bal_problem, options);
 }
 
+// Uniform random numbers between 0 and 1.
+double UniformRandom() {
+  return static_cast<double>(random()) / static_cast<double>(RAND_MAX);
+}
+
+// Normal random numbers using the Box-Mueller algorithm. Its a bit
+// wasteful, as it generates two but only returns one.
+double RandNormal() {
+  double x1, x2, w, y1, y2;
+  do {
+    x1 = 2.0 * UniformRandom() - 1.0;
+    x2 = 2.0 * UniformRandom() - 1.0;
+    w = x1 * x1 + x2 * x2;
+  } while ( w >= 1.0 );
+
+  w = sqrt((-2.0 * log(w)) / w);
+  y1 = x1 * w;
+  y2 = x2 * w;
+  return y1;
+}
+
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
+  srandom(FLAGS_random_seed);
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
   double* points = bal_problem->mutable_points();
   double* cameras = bal_problem->mutable_cameras();
+
+  for (int i = 0; i < 3 * bal_problem->num_points(); ++i) {
+    points[i] += FLAGS_point_sigma * RandNormal();
+  }
+
+  for (int i = 0; i < bal_problem->num_cameras(); ++i) {
+    cameras[camera_block_size * i] += FLAGS_rotation_sigma * RandNormal();
+    cameras[camera_block_size * i + 1] += FLAGS_rotation_sigma * RandNormal();
+    cameras[camera_block_size * i + 2] += FLAGS_rotation_sigma * RandNormal();
+
+    int p = 3;
+    if (FLAGS_use_quaternions) {
+      cameras[camera_block_size * i + 3] += FLAGS_rotation_sigma * RandNormal();
+      ++p;
+    }
+
+    cameras[camera_block_size * i + p ] +=
+        FLAGS_translation_sigma * RandNormal();
+    cameras[camera_block_size * i + p + 1] +=
+        FLAGS_translation_sigma * RandNormal();
+    cameras[camera_block_size * i + p + 2] +=
+        FLAGS_translation_sigma * RandNormal();
+  }
 
   // Observations is 2*num_observations long array observations =
   // [u_1, u_2, ... , u_n], where each u_i is two dimensional, the x
@@ -255,8 +315,8 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     // outputs a 2 dimensional residual.
     if (FLAGS_use_quaternions) {
       cost_function = new AutoDiffCostFunction<
-          SnavelyReprojectionErrorWitQuaternions, 2, 4, 6, 3>(
-              new SnavelyReprojectionErrorWitQuaternions(
+          SnavelyReprojectionErrorWithQuaternions, 2, 4, 6, 3>(
+              new SnavelyReprojectionErrorWithQuaternions(
                   observations[2 * i + 0],
                   observations[2 * i + 1]));
     } else {

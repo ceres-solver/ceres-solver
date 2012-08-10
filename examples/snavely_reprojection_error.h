@@ -100,10 +100,10 @@ struct SnavelyReprojectionError {
 // translation, 1 for focal length and 2 for radial distortion. The
 // principal point is not modeled (i.e. it is assumed be located at
 // the image center).
-struct SnavelyReprojectionErrorWitQuaternions {
+struct SnavelyReprojectionErrorWithQuaternions {
   // (u, v): the position of the observation with respect to the image
   // center point.
-  SnavelyReprojectionErrorWitQuaternions(double observed_x, double observed_y)
+  SnavelyReprojectionErrorWithQuaternions(double observed_x, double observed_y)
       : observed_x(observed_x), observed_y(observed_y) {}
 
   template <typename T>
