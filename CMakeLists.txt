@@ -427,6 +427,7 @@ ENDIF (MSVC)
 
 INCLUDE_DIRECTORIES(
   include
+  tools
   internal
   internal/ceres
   ${GLOG_INCLUDE}
@@ -518,4 +519,4 @@ ENDIF (MSVC)
 
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
-
+ADD_SUBDIRECTORY(tools)

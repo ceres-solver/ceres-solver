@@ -54,6 +54,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,7 @@
 #include "snavely_reprojection_error.h"
 #include "ceres/ceres.h"
 #include "ceres/random.h"
+#include "performance.h"
 
 DEFINE_string(input, "", "Input File name");
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
@@ -103,6 +105,8 @@ DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
 DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
              "the pertubations.");
+DEFINE_string(performance_dir, "", "");
+DEFINE_string(problem_name, "", "");
 
 namespace ceres {
 namespace examples {
@@ -256,8 +260,28 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
   SetOrdering(bal_problem, options);
 }
 
+// Uniform random numbers between 0 and 1.
+double UniformRandom() {
+  return static_cast<double>(random()) / static_cast<double>(RAND_MAX);
+}
+
+// Normal random numbers using the Box-Mueller algorithm. Its a bit
+// wasteful, as it generates two but only returns one.
+double RandNormal() {
+  double x1, x2, w, y1, y2;
+  do {
+    x1 = 2.0 * UniformRandom() - 1.0;
+    x2 = 2.0 * UniformRandom() - 1.0;
+    w = x1 * x1 + x2 * x2;
+  } while ( w >= 1.0 );
+
+  w = sqrt((-2.0 * log(w)) / w);
+  y1 = x1 * w;
+  y2 = x2 * w;
+  return y1;
+}
+
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
-  SetRandomState(FLAGS_random_seed);
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
   double* points = bal_problem->mutable_points();
@@ -333,7 +357,18 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   Solver::Summary summary;
-  Solve(options, &problem, &summary);
+  if (FLAGS_performance_dir.empty()) {
+    Solve(options, &problem, &summary);
+  } else {
+    CHECK(!FLAGS_problem_name.empty());
+    CHECK(!FLAGS_performance_dir.empty());
+    tools::SolveAndRecordPerformance(FLAGS_problem_name,
+                                     FLAGS_performance_dir,
+                                     options,
+                                     &problem,
+                                     &summary);
+  }
+
   std::cout << summary.FullReport() << "\n";
 }
 
