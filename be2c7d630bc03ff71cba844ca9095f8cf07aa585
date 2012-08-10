@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIQH////8\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-10T09:34:24Z",
+      "side": 1,
+      "message": "sorry, that should be x1 \u003d sqrt(w) * cos(angle) and x2 \u003d sqrt(w) * sin(angle) of course.\n\nI see that wikipedia prefers your variant.",
+      "parentUuid": "AAAIPH////Q\u003d",
+      "revId": "be2c7d630bc03ff71cba844ca9095f8cf07aa585",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIPH////M\u003d",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 1
