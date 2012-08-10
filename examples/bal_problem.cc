@@ -136,7 +136,7 @@ void BALProblem::Perturb(const double rotation_sigma,
       camera[2] += rotation_sigma * RandNormal();
 
       if (use_quaternions_) {
-        camera[4] += rotation_sigma * RandNormal();
+        camera[3] += rotation_sigma * RandNormal();
 
         // Normalize the quaternion.
         double norm = 0.0;
@@ -152,9 +152,9 @@ void BALProblem::Perturb(const double rotation_sigma,
 
     if (translation_sigma > 0.0) {
       // Translation.
+      camera[camera_block_size() - 6] += translation_sigma * RandNormal();
       camera[camera_block_size() - 5] += translation_sigma * RandNormal();
       camera[camera_block_size() - 4] += translation_sigma * RandNormal();
-      camera[camera_block_size() - 3] += translation_sigma * RandNormal();
     }
   }
 }
