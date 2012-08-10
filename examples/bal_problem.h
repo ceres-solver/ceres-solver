@@ -47,6 +47,12 @@ class BALProblem {
   explicit BALProblem(const std::string filename, bool use_quaternions);
   ~BALProblem();
 
+  // Perturb the camera pose and the geometry with random normal
+  // numbers with corresponding standard deviations.
+  void Perturb(const double rotation_sigma,
+               const double translation_sigma,
+               const double point_sigma);
+
   int camera_block_size()      const { return use_quaternions_ ? 10 : 9; }
   int point_block_size()       const { return 3;                         }
   int num_cameras()            const { return num_cameras_;              }

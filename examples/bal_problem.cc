@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <string>
 #include <glog/logging.h>
+#include "ceres/random.h"
 #include "ceres/rotation.h"
 
 namespace ceres {
@@ -107,6 +108,54 @@ BALProblem::BALProblem(const std::string filename, bool use_quaternions) {
     // Swap in the quaternion parameters.
     delete []parameters_;
     parameters_ = quaternion_parameters;
+  }
+}
+
+void BALProblem::Perturb(const double rotation_sigma,
+                         const double translation_sigma,
+                         const double point_sigma) {
+  CHECK_GE(point_sigma, 0.0);
+  CHECK_GE(rotation_sigma, 0.0);
+  CHECK_GE(translation_sigma, 0.0);
+
+  double* points = mutable_points();
+  if (point_sigma > 0) {
+    for (int i = 0; i < 3 * num_points_; ++i) {
+      points[i] += point_sigma * RandNormal();
+    }
+  }
+
+  for (int i = 0; i < num_cameras_; ++i) {
+    double* camera = mutable_cameras() + camera_block_size() * i;
+
+    // First three coordinates of the camera rotation are shared
+    // between the angle-axis and the quaternion representations.
+    if (rotation_sigma > 0.0) {
+      camera[0] += rotation_sigma * RandNormal();
+      camera[1] += rotation_sigma * RandNormal();
+      camera[2] += rotation_sigma * RandNormal();
+
+      if (use_quaternions_) {
+        camera[4] += rotation_sigma * RandNormal();
+
+        // Normalize the quaternion.
+        double norm = 0.0;
+        for (int j = 0; j < 4; ++j) {
+          norm += camera[j] * camera[j];
+        }
+        norm = sqrt(norm);
+        for (int j = 0; j < 4; ++j) {
+          camera[j] /= norm;
+        }
+      }
+    }
+
+    if (translation_sigma > 0.0) {
+      // Translation.
+      camera[camera_block_size() - 5] += translation_sigma * RandNormal();
+      camera[camera_block_size() - 4] += translation_sigma * RandNormal();
+      camera[camera_block_size() - 3] += translation_sigma * RandNormal();
+    }
   }
 }
 
