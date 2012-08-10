@@ -376,6 +376,10 @@ class Solver {
     //
     // The solver does NOT take ownership of these pointers.
     vector<IterationCallback*> callbacks;
+
+    // If non-empty, a summary of the execution of the solver is
+    // recorded to this file.
+    string solver_log;
   };
 
   struct Summary {
