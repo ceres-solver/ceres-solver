@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///u0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T19:46:47Z",
+      "side": 1,
+      "message": "Prefer blank lines around equations. For example,\n\n// Vector used to form the diagonal matrix that is used to\n// regularize the Gauss-Newton solve and that defines the\n// elliptical trust region\n//\n//   || D * step || \u003c\u003d radius_  .\n//\n\nNote the trailing comment blank, and the period.",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///uw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T19:46:47Z",
+      "side": 1,
+      "message": "Drop this line; the function name suffices.",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///r4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T19:46:47Z",
+      "side": 1,
+      "message": "Indent 2 more spaces.",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
