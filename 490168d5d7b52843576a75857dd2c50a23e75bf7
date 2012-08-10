@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///us\u003d",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T18:32:12Z",
+      "side": 1,
+      "message": "Colon remains.",
+      "revId": "490168d5d7b52843576a75857dd2c50a23e75bf7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
