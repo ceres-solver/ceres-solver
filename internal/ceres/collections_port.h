@@ -48,10 +48,10 @@ namespace ceres {
 namespace internal {
 
 template<typename K, typename V>
-struct HashMap : tr1::unordered_map<K, V> {};
+struct HashMap : std::tr1::unordered_map<K, V> {};
 
 template<typename K>
-struct HashSet : tr1::unordered_set<K> {};
+struct HashSet : std::tr1::unordered_set<K> {};
 
 #ifdef _WIN32
 #define GG_LONGLONG(x) x##I64
