@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIPn///9s\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-10T21:19:38Z",
+      "side": 1,
+      "message": "I guess this should be camera[3] +\u003d ...",
+      "revId": "5476df506e97904ee7dcd1578d55d5980f33b0b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIPn///9o\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-10T21:19:38Z",
+      "side": 1,
+      "message": "Aren\u0027t the camera_block_sizes 9 (axis-angle) or 10 (quaternion)?\nI guess the last parameters are distortion parameters?\nIn that case this is again off by one (should be -6, -5, -4)",
+      "revId": "5476df506e97904ee7dcd1578d55d5980f33b0b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
