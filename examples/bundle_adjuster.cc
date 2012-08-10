@@ -62,8 +62,19 @@
 #include "bal_problem.h"
 #include "snavely_reprojection_error.h"
 #include "ceres/ceres.h"
+#include "ceres/random.h"
 
 DEFINE_string(input, "", "Input File name");
+DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
+            "rotations. If false, angle axis is used");
+DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
+            "parameterization.");
+DEFINE_bool(robustify, false, "Use a robust loss function");
+
+DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
+             "accuracy of each linear solve of the truncated newton step. "
+             "Changing this parameter can affect solve performance ");
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, cholesky, "
               "dense_qr, and conjugate_gradients");
@@ -72,20 +83,24 @@ DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "cluster_tridiagonal");
 DEFINE_string(sparse_linear_algebra_library, "suitesparse",
               "Options are: suitesparse and cxsparse");
-DEFINE_int32(num_iterations, 5, "Number of iterations");
-DEFINE_int32(num_threads, 1, "Number of threads");
-DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
-             "accuracy of each linear solve of the truncated newton step. "
-             "Changing this parameter can affect solve performance ");
+
 DEFINE_string(ordering_type, "schur", "Options are: schur, user, natural");
-DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
-            "rotations. If false, angle axis is used");
-DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
-            "parameterization.");
-DEFINE_bool(robustify, false, "Use a robust loss function");
-DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing ordering.");
-DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
+DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
+            "ordering.");
+
+DEFINE_int32(num_threads, 1, "Number of threads");
+DEFINE_int32(num_iterations, 5, "Number of iterations");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
+
+DEFINE_double(rotation_sigma, 0.0, "Standard deviation of camera rotation "
+              "perturbation.");
+DEFINE_double(translation_sigma, 0.0, "Standard deviation of the camera "
+              "translation perturbation.");
+DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
+              "perturbation");
+DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
+             "of the pseudo random number generator used to generate "
+             "the pertubations.");
 
 namespace ceres {
 namespace examples {
@@ -239,6 +254,7 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
+  SetRandomState(FLAGS_random_seed);
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
   double* points = bal_problem->mutable_points();
@@ -255,8 +271,8 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     // outputs a 2 dimensional residual.
     if (FLAGS_use_quaternions) {
       cost_function = new AutoDiffCostFunction<
-          SnavelyReprojectionErrorWitQuaternions, 2, 4, 6, 3>(
-              new SnavelyReprojectionErrorWitQuaternions(
+          SnavelyReprojectionErrorWithQuaternions, 2, 4, 6, 3>(
+              new SnavelyReprojectionErrorWithQuaternions(
                   observations[2 * i + 0],
                   observations[2 * i + 1]));
     } else {
@@ -304,6 +320,12 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
 void SolveProblem(const char* filename) {
   BALProblem bal_problem(filename, FLAGS_use_quaternions);
   Problem problem;
+
+  SetRandomState(FLAGS_random_seed);
+  bal_problem.Perturb(FLAGS_rotation_sigma,
+                      FLAGS_translation_sigma,
+                      FLAGS_point_sigma);
+
   BuildProblem(&bal_problem, &problem);
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
