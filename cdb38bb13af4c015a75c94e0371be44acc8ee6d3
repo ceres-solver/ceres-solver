@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///h8\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-10T22:35:11Z",
+      "side": 1,
+      "message": "Drop a TODO() to make this format more complete.",
+      "revId": "cdb38bb13af4c015a75c94e0371be44acc8ee6d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
