@@ -48,10 +48,10 @@ void FscanfOrDie(FILE *fptr, const char *format, T *value) {
   }
 }
 
-BALProblem::BALProblem(const std::string filename, bool use_quaternions) {
+BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   FILE* fptr = fopen(filename.c_str(), "r");
 
-  if (!fptr) {
+  if (fptr == NULL) {
     LOG(FATAL) << "Error: unable to open file " << filename;
     return;
   };
@@ -109,6 +109,51 @@ BALProblem::BALProblem(const std::string filename, bool use_quaternions) {
     delete []parameters_;
     parameters_ = quaternion_parameters;
   }
+}
+
+// This function writes the problem to a file in the same format that
+// is read by the constructor.
+void BALProblem::WriteToFile(const std::string& filename) const {
+  FILE* fptr = fopen(filename.c_str(), "w");
+
+  if (fptr == NULL) {
+    LOG(FATAL) << "Error: unable to open file " << filename;
+    return;
+  };
+
+  fprintf(fptr, "%d %d %d\n", num_cameras_, num_points_, num_observations_);
+
+  for (int i = 0; i < num_observations_; ++i) {
+    fprintf(fptr, "%d %d", camera_index_[i], point_index_[i]);
+    for (int j = 0; j < 2; ++j) {
+      fprintf(fptr, " %g", observations_[2 * i + j]);
+    }
+    fprintf(fptr, "\n");
+  }
+
+  for (int i = 0; i < num_cameras(); ++i) {
+    double angleaxis[9];
+    if (use_quaternions_) {
+      // Output in angle-axis format.
+      QuaternionToAngleAxis(parameters_ + 10 * i, angleaxis);
+      memcpy(angleaxis + 3, parameters_ + 10 * i + 4, 6 * sizeof(double));
+    } else {
+      memcpy(angleaxis, parameters_ + 9 * i, 9 * sizeof(double));
+    }
+    for (int j = 0; j < 9; ++j) {
+      fprintf(fptr, "%.16g\n", angleaxis[j]);
+    }
+  }
+
+  const double* points = parameters_ + camera_block_size() * num_cameras_;
+  for (int i = 0; i < num_points(); ++i) {
+    const double* point = points + i * point_block_size();
+    for (int j = 0; j < point_block_size(); ++j) {
+      fprintf(fptr, "%.16g\n", point[j]);
+    }
+  }
+
+  fclose(fptr);
 }
 
 void BALProblem::Perturb(const double rotation_sigma,
