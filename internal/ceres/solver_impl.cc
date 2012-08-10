@@ -30,6 +30,7 @@
 
 #include "ceres/solver_impl.h"
 
+#include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
 #include "ceres/evaluator.h"
@@ -108,6 +109,34 @@ class LoggingCallback : public IterationCallback {
   const bool log_to_stdout_;
 };
 
+// Basic callback to record the execution of the solver to a file for
+// offline analysis.
+class FileLoggingCallback : public IterationCallback {
+ public:
+  explicit FileLoggingCallback(const string& filename)
+      : fptr_(NULL) {
+    fptr_ = fopen(filename.c_str(), "w");
+    CHECK_NOTNULL(fptr_);
+  }
+
+  virtual ~FileLoggingCallback() {
+    if (fptr_ != NULL) {
+      fclose(fptr_);
+    }
+  }
+
+  virtual CallbackReturnType operator()(const IterationSummary& summary) {
+    fprintf(fptr_,
+            "%4d %e %e\n",
+            summary.iteration,
+            summary.cost,
+            summary.cumulative_time_in_seconds);
+    return SOLVER_CONTINUE;
+  }
+ private:
+    FILE* fptr_;
+};
+
 }  // namespace
 
 void SolverImpl::Minimize(const Solver::Options& options,
@@ -117,6 +146,16 @@ void SolverImpl::Minimize(const Solver::Options& options,
                           double* parameters,
                           Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
+
+  // TODO(sameeragarwal): Add support for logging the configuration
+  // and more detailed stats.
+  scoped_ptr<IterationCallback> file_logging_callback;
+  if (!options.solver_log.empty()) {
+    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       file_logging_callback.get());
+  }
+
   LoggingCallback logging_callback(options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
