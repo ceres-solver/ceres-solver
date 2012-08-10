@@ -83,6 +83,8 @@ BALProblem::BALProblem(const std::string filename, bool use_quaternions) {
     FscanfOrDie(fptr, "%lf", parameters_ + i);
   }
 
+  fclose(fptr);
+
   use_quaternions_ = use_quaternions;
   if (use_quaternions) {
     // Switch the angle-axis rotations to quaternions.
