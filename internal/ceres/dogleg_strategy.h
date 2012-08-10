@@ -65,10 +65,12 @@ public:
   virtual double Radius() const;
 
  private:
-  void ComputeCauchyStep();
   LinearSolver::Summary ComputeGaussNewtonStep(SparseMatrix* jacobian,
                                                const double* residuals);
+  void ComputeCauchyPoint(SparseMatrix* jacobian);
+  void ComputeGradient(SparseMatrix* jacobian, const double* residuals);
   void ComputeDoglegStep(double* step);
+  void RescaleStep(double* step);
 
   LinearSolver* linear_solver_;
   double radius_;
@@ -92,7 +94,7 @@ public:
   const double increase_threshold_;
   const double decrease_threshold_;
 
-  Vector diagonal_;
+  Vector diagonal_;  // sqrt(diag(J^T J))
   Vector lm_diagonal_;
 
   Vector gradient_;
