@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIOH///mU\u003d",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T23:50:56Z",
+      "side": 1,
+      "message": "I am not even going to pretend that I understand the intricacies of the namespace lookup here.",
+      "revId": "d16c34fb4ae3bc5433ec5364e2757c227d4ca39c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
