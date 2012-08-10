@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///aw\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-10T23:48:33Z",
+      "side": 1,
+      "message": "80 colums",
+      "revId": "12aa3d9ad4a4a2664b830c71b3f1dc8c6ce44b6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAINX///as\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-10T23:48:33Z",
+      "side": 1,
+      "message": "80 colums",
+      "revId": "12aa3d9ad4a4a2664b830c71b3f1dc8c6ce44b6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
