@@ -36,6 +36,7 @@
 #include <glog/logging.h>
 #include "ceres/random.h"
 #include "ceres/rotation.h"
+#include "Eigen/Core"
 
 namespace ceres {
 namespace examples {
@@ -128,6 +129,35 @@ void BALProblem::Perturb(const double rotation_sigma,
   for (int i = 0; i < num_cameras_; ++i) {
     double* camera = mutable_cameras() + camera_block_size() * i;
 
+    // Perturb the location of the camera rather than the translation
+    // vector. This is makes the perturbation physically more sensible.
+    if (translation_sigma > 0.0) {
+      double center[3];
+      Eigen::VectorXd angle_axis(3);
+
+      if (use_quaternions_) {
+        angle_axis = Eigen::Map<Eigen::VectorXd>(camera, 3);
+      } else {
+        QuaternionToAngleAxis(camera, angle_axis.data());
+      }
+      angle_axis *= -1.0;
+
+      // Camera center is c = -R't, the negative sign does not matter.
+      AngleAxisRotatePoint(angle_axis.data(),
+                           camera + camera_block_size() - 6,
+                           center);
+
+      // Perturb center.
+      for (int j = 0; j < 3; ++j) {
+        center[j] += translation_sigma * RandNormal();
+      }
+
+      // t = -R * (- R' t + perturbation)
+      AngleAxisRotatePoint(angle_axis.data(),
+                           center,
+                           camera + camera_block_size() - 6);
+    }
+
     // First three coordinates of the camera rotation are shared
     // between the angle-axis and the quaternion representations.
     if (rotation_sigma > 0.0) {
@@ -137,25 +167,10 @@ void BALProblem::Perturb(const double rotation_sigma,
 
       if (use_quaternions_) {
         camera[3] += rotation_sigma * RandNormal();
-
-        // Normalize the quaternion.
-        double norm = 0.0;
-        for (int j = 0; j < 4; ++j) {
-          norm += camera[j] * camera[j];
-        }
-        norm = sqrt(norm);
-        for (int j = 0; j < 4; ++j) {
-          camera[j] /= norm;
-        }
+        Eigen::Map<Eigen::VectorXd>(camera, 4).normalize();
       }
     }
 
-    if (translation_sigma > 0.0) {
-      // Translation.
-      camera[camera_block_size() - 6] += translation_sigma * RandNormal();
-      camera[camera_block_size() - 5] += translation_sigma * RandNormal();
-      camera[camera_block_size() - 4] += translation_sigma * RandNormal();
-    }
   }
 }
 
