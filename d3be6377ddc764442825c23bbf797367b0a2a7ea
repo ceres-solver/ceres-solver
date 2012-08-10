@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIOH///oA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T21:54:46Z",
+      "side": 1,
+      "message": "I think you need to rescale the step here?\nalso, it maybe worth calling the rescaling function from within ComputeDoglegStep().",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAINX///u0\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 2
@@ -36,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "AAAIOH///nw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T21:54:46Z",
+      "side": 1,
+      "message": "indentation",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAINX///r4\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 2
@@ -47,6 +81,40 @@
       "writtenOn": "2012-08-10T19:46:47Z",
       "side": 1,
       "message": "Indent 2 more spaces.",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIOH///nc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T21:54:46Z",
+      "side": 1,
+      "message": "is it worth making this a generic function that gets called everytime you do scaling of a vector? otherwise its a bit odd, that everywhere else you go ahead and explicitly rescale the vector and only for the dogleg step do you make this function call.",
+      "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIOH///oQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-10T21:54:46Z",
+      "side": 1,
+      "message": "I think I named lm_diagonal_  rather poorly. Its either worth not making this a member, or naming this something a bit more sane.",
       "revId": "d3be6377ddc764442825c23bbf797367b0a2a7ea",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
