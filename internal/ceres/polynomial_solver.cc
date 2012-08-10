@@ -122,8 +122,6 @@ Vector RemoveLeadingZeros(const Vector& polynomial_in) {
 bool FindPolynomialRoots(const Vector& polynomial_in,
                          Vector* real,
                          Vector* imaginary) {
-  const double epsilon = std::numeric_limits<double>::epsilon();
-
   if (polynomial_in.size() == 0) {
     LOG(ERROR) << "Invalid polynomial of size 0 passed to FindPolynomialRoots";
     return false;
