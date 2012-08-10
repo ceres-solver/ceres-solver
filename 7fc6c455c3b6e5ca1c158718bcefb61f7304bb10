@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAINX///xQ\u003d",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-10T18:09:16Z",
+      "side": 1,
+      "message": "Drop the comma.",
+      "revId": "7fc6c455c3b6e5ca1c158718bcefb61f7304bb10",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
