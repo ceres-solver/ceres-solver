@@ -347,6 +347,7 @@ void SolveProblem(const char* filename) {
   Problem problem;
 
   SetRandomState(FLAGS_random_seed);
+  bal_problem.Normalize();
   bal_problem.Perturb(FLAGS_rotation_sigma,
                       FLAGS_translation_sigma,
                       FLAGS_point_sigma);
@@ -355,6 +356,8 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.solver_log = FLAGS_solver_log;
+  options.gradient_tolerance *= 1e-3;
+
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

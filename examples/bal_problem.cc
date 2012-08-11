@@ -33,6 +33,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <vector>
 #include <glog/logging.h>
 #include "ceres/random.h"
 #include "ceres/rotation.h"
@@ -40,14 +41,32 @@
 
 namespace ceres {
 namespace examples {
+namespace {
+typedef Eigen::Map<Eigen::VectorXd> VectorRef;
+typedef Eigen::Map<const Eigen::VectorXd> ConstVectorRef;
 
 template<typename T>
-void FscanfOrDie(FILE *fptr, const char *format, T *value) {
+void FscanfOrDie(FILE* fptr, const char* format, T* value) {
   int num_scanned = fscanf(fptr, format, value);
   if (num_scanned != 1) {
     LOG(FATAL) << "Invalid UW data file.";
   }
 }
+
+void PerturbPoint3(const double sigma, double* point) {
+  for (int i = 0; i < 3; ++i) {
+    point[i] += RandNormal() * sigma;
+  }
+}
+
+double Median(std::vector<double>* data) {
+  int n = data->size();
+  std::vector<double>::iterator mid_point = data->begin() + n / 2;
+  std::nth_element(data->begin(), mid_point, data->end());
+  return *mid_point;
+}
+
+}  // namespace
 
 BALProblem::BALProblem(const std::string& filename, bool use_quaternions) {
   FILE* fptr = fopen(filename.c_str(), "r");
@@ -157,6 +176,87 @@ void BALProblem::WriteToFile(const std::string& filename) const {
   fclose(fptr);
 }
 
+void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
+                                            double* angle_axis,
+                                            double* center) {
+  VectorRef angle_axis_ref(angle_axis, 3);
+  if (use_quaternions_) {
+    QuaternionToAngleAxis(camera, angle_axis);
+  } else {
+    angle_axis_ref = ConstVectorRef(camera, 3);
+  }
+
+  // c = -R't
+  Eigen::VectorXd inverse_rotation = -angle_axis_ref;
+  AngleAxisRotatePoint(inverse_rotation.data(),
+                       camera + camera_block_size() - 6,
+                       center);
+  VectorRef(center, 3) *= -1.0;
+}
+
+void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
+                                            const double* center,
+                                            double* camera) {
+  ConstVectorRef angle_axis_ref(angle_axis, 3);
+  if (use_quaternions_) {
+    AngleAxisToQuaternion(angle_axis, camera);
+  } else {
+    VectorRef(camera, 3) = angle_axis_ref;
+  }
+
+  // t = -R * c
+  AngleAxisRotatePoint(angle_axis,
+                       center,
+                       camera + camera_block_size() - 6);
+  VectorRef(camera + camera_block_size() - 6, 3) *= -1.0;
+}
+
+
+void BALProblem::Normalize() {
+  // Compute the marginal median of the geometry.
+  std::vector<double> tmp(num_points_);
+  Eigen::Vector3d median;
+  double* points = mutable_points();
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < num_points_; ++j) {
+      tmp[j] = points[3 * j + i];
+    }
+    median(i) = Median(&tmp);
+  }
+
+  for (int i = 0; i < num_points_; ++i) {
+    VectorRef point(points + 3 * i, 3);
+    tmp[i] = (point - median).lpNorm<1>();
+  }
+
+  const double median_absolute_deviation = Median(&tmp);
+
+  // Scale so that the median absolute deviation of the resulting
+  // reconstruction is 100.
+  const double scale = 100.0 / median_absolute_deviation;
+
+  VLOG(2) << "median: " << median.transpose();
+  VLOG(2) << "median absolute deviation: " << median_absolute_deviation;
+  VLOG(2) << "scale: " << scale;
+
+  // X = scale * (X - median)
+  for (int i = 0; i < num_points_; ++i) {
+    VectorRef point(points + 3 * i, 3);
+    point = scale * (point - median);
+  }
+
+  double* cameras = mutable_cameras();
+  double angle_axis[3];
+  double center[3];
+  for (int i = 0; i < num_cameras_; ++i) {
+    double* camera = cameras + camera_block_size() * i;
+    CameraToAngleAxisAndCenter(camera, angle_axis, center);
+    // center = scale * (center - median)
+    VectorRef(center, 3) = scale * (VectorRef(center, 3) - median);
+    AngleAxisAndCenterToCamera(angle_axis, center, camera);
+  }
+}
+
 void BALProblem::Perturb(const double rotation_sigma,
                          const double translation_sigma,
                          const double point_sigma) {
@@ -166,60 +266,27 @@ void BALProblem::Perturb(const double rotation_sigma,
 
   double* points = mutable_points();
   if (point_sigma > 0) {
-    for (int i = 0; i < 3 * num_points_; ++i) {
-      points[i] += point_sigma * RandNormal();
+    for (int i = 0; i < num_points_; ++i) {
+      PerturbPoint3(point_sigma, points + 3 * i);
     }
   }
 
   for (int i = 0; i < num_cameras_; ++i) {
     double* camera = mutable_cameras() + camera_block_size() * i;
 
-    // Decompose the camera into an angle-axis rotation and camera
-    // center vector.
+    double angle_axis[3];
     double center[3];
-    Eigen::VectorXd angle_axis(3);
-
-    if (use_quaternions_) {
-      QuaternionToAngleAxis(camera, angle_axis.data());
-    } else {
-      angle_axis = Eigen::Map<Eigen::VectorXd>(camera, 3);
-    }
-    // Invert rotation.
-    angle_axis *= -1.0;
-
-    // Camera center is c = -R't, the negative sign does not matter.
-    AngleAxisRotatePoint(angle_axis.data(),
-                         camera + camera_block_size() - 6,
-                         center);
-
-    // Perturb the location of the camera rather than the translation
-    // vector. This is makes the perturbation physically more sensible.
-    if (translation_sigma > 0.0) {
-      // Perturb center.
-      for (int j = 0; j < 3; ++j) {
-        center[j] += translation_sigma * RandNormal();
-      }
-    }
-
+    // Perturb in the rotation of the camera in the angle-axis
+    // representation.
+    CameraToAngleAxisAndCenter(camera, angle_axis, center);
     if (rotation_sigma > 0.0) {
-      for (int j = 0; j < 3; ++j) {
-        angle_axis[j] += rotation_sigma * RandNormal();
-      }
+      PerturbPoint3(rotation_sigma, angle_axis);
     }
+    AngleAxisAndCenterToCamera(angle_axis, center, camera);
 
-    // Invert rotation.
-    angle_axis *= -1.0;
-    if (use_quaternions_) {
-      AngleAxisToQuaternion(angle_axis.data(), camera);
-    } else {
-      Eigen::Map<Eigen::VectorXd>(camera, 3) = angle_axis;
+    if (translation_sigma > 0.0) {
+      PerturbPoint3(translation_sigma, camera + camera_block_size() - 6);
     }
-
-    // t = -R * (- R' t + perturbation)
-    AngleAxisRotatePoint(angle_axis.data(),
-                         center,
-                         camera + camera_block_size() - 6);
-
   }
 }
 
