@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAITX////8\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "Are the extra spaces intentional?",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////4\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "Again, two spaces after \u003d?",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////0\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "Purely optional: Make mid_point a vector::iterator so that it can be used directly below?",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////w\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "std::nth_element",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////s\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "Maybe some explanation? The above looks vaguely like half an MAD estimate, but at first sight I have no idea where e.g. the 100.0 comes from.",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////o\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-11T17:29:08Z",
+      "side": 1,
+      "message": "Ok. But the Gaussian is invariant under this rotation anyway?",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
