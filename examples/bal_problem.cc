@@ -33,6 +33,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include <vector>
 #include <glog/logging.h>
 #include "ceres/random.h"
 #include "ceres/rotation.h"
@@ -40,6 +41,9 @@
 
 namespace ceres {
 namespace examples {
+
+typedef  Eigen::Map<Eigen::VectorXd> VectorRef;
+typedef  Eigen::Map<const Eigen::VectorXd> ConstVectorRef;
 
 template<typename T>
 void FscanfOrDie(FILE *fptr, const char *format, T *value) {
@@ -112,12 +116,90 @@ BALProblem::BALProblem(const std::string filename, bool use_quaternions) {
   }
 }
 
+void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
+                                            double* angle_axis,
+                                            double* center) {
+  VectorRef angle_axis_ref(angle_axis, 3);
+  if (use_quaternions_) {
+    QuaternionToAngleAxis(camera, angle_axis);
+  } else {
+    angle_axis_ref =  ConstVectorRef(camera, 3);
+  }
+
+  // c = -R't
+  Eigen::VectorXd inverse_rotation = -angle_axis_ref;
+  AngleAxisRotatePoint(inverse_rotation.data(),
+                       camera + camera_block_size() - 6,
+                       center);
+  VectorRef(center, 3) *= -1.0;
+}
+
+void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
+                                            const double* center,
+                                            double* camera) {
+  ConstVectorRef angle_axis_ref(angle_axis, 3);
+  if (use_quaternions_) {
+    AngleAxisToQuaternion(angle_axis, camera);
+  } else {
+    VectorRef(camera, 3) = angle_axis_ref;
+  }
+
+  // t = -R * c
+  AngleAxisRotatePoint(angle_axis,
+                       center,
+                       camera + camera_block_size() - 6);
+  VectorRef(camera + camera_block_size() - 6, 3) *= -1.0;
+}
+
+
+void BALProblem::Normalize() {
+  // Compute the marginal median of the geometry.
+  std::vector<double> tmp(num_points_);
+  Eigen::Vector3d median;
+  double* points = mutable_points();
+  int mid_point = num_points_ / 2;
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < num_points_; ++j) {
+      tmp[j] = points[3 * j + i];
+    }
+    nth_element(tmp.begin(), tmp.begin() + mid_point, tmp.end());
+    median(i) = tmp[mid_point];
+  }
+
+  double absolute_deviation = 0.0;
+  for (int i = 0; i < num_points_; ++i) {
+    VectorRef point(points + 3 * i, 3);
+    absolute_deviation += (point - median).lpNorm<1>();
+  }
+  scale = num_points_ / (100.0 * absolute_deviation);
+
+  VLOG(2) << "median: " << median;
+  VLOG(2) << "absolute deviation: " << absolute_deviation;
+  VLOG(2) << "scale: " << scale;
+
+  for (int i = 0; i < num_points_; ++i) {
+    VectorRef point(points + 3 * i, 3);
+    point = scale * (point - median);
+  }
+
+  double* cameras = mutable_cameras();
+  double angle_axis[3];
+  double center[3];
+  for (int i = 0; i < num_cameras_; ++i) {
+    double* camera = cameras + camera_block_size() * i;
+    CameraToAngleAxisAndCenter(camera, angle_axis, center);
+    VectorRef(center, 3) = scale * (VectorRef(center, 3) - median);
+    AngleAxisAndCenterToCamera(angle_axis, center, camera);
+  }
+}
+
 void BALProblem::Perturb(const double rotation_sigma,
                          const double translation_sigma,
                          const double point_sigma) {
   CHECK_GE(point_sigma, 0.0);
   CHECK_GE(rotation_sigma, 0.0);
   CHECK_GE(translation_sigma, 0.0);
+  Normalize();
 
   double* points = mutable_points();
   if (point_sigma > 0) {
@@ -129,23 +211,9 @@ void BALProblem::Perturb(const double rotation_sigma,
   for (int i = 0; i < num_cameras_; ++i) {
     double* camera = mutable_cameras() + camera_block_size() * i;
 
-    // Decompose the camera into an angle-axis rotation and camera
-    // center vector.
+    double angle_axis[3];
     double center[3];
-    Eigen::VectorXd angle_axis(3);
-
-    if (use_quaternions_) {
-      QuaternionToAngleAxis(camera, angle_axis.data());
-    } else {
-      angle_axis = Eigen::Map<Eigen::VectorXd>(camera, 3);
-    }
-    // Invert rotation.
-    angle_axis *= -1.0;
-
-    // Camera center is c = -R't, the negative sign does not matter.
-    AngleAxisRotatePoint(angle_axis.data(),
-                         camera + camera_block_size() - 6,
-                         center);
+    CameraToAngleAxisAndCenter(camera, angle_axis, center);
 
     // Perturb the location of the camera rather than the translation
     // vector. This is makes the perturbation physically more sensible.
@@ -162,19 +230,7 @@ void BALProblem::Perturb(const double rotation_sigma,
       }
     }
 
-    // Invert rotation.
-    angle_axis *= -1.0;
-    if (use_quaternions_) {
-      AngleAxisToQuaternion(angle_axis.data(), camera);
-    } else {
-      Eigen::Map<Eigen::VectorXd>(camera, 3) = angle_axis;
-    }
-
-    // t = -R * (- R' t + perturbation)
-    AngleAxisRotatePoint(angle_axis.data(),
-                         center,
-                         camera + camera_block_size() - 6);
-
+    AngleAxisAndCenterToCamera(angle_axis, center, camera);
   }
 }
 
