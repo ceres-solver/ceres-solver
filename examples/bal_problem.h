@@ -47,6 +47,14 @@ class BALProblem {
   explicit BALProblem(const std::string filename, bool use_quaternions);
   ~BALProblem();
 
+  // Move the "center" of the reconstruction to the origin, where the
+  // center is determined by computing the marginal median of the
+  // points. The reconstruction is then scaled so that the absolute
+  // deviation of the points measured from the origin is 100.0.
+  //
+  // The reprojection error of the problem remains the same.
+  void Normalize();
+
   // Perturb the camera pose and the geometry with random normal
   // numbers with corresponding standard deviations.
   void Perturb(const double rotation_sigma,
@@ -69,6 +77,13 @@ class BALProblem {
   }
 
  private:
+  void CameraToAngleAxisAndCenter(const double* camera,
+                                  double* angle_axis,
+                                  double* center);
+
+  void AngleAxisAndCenterToCamera(const double* angle_axis,
+                                  const double* center,
+                                  double* camera);
   int num_cameras_;
   int num_points_;
   int num_observations_;
