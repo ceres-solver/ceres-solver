@@ -347,6 +347,7 @@ void SolveProblem(const char* filename) {
   Problem problem;
 
   SetRandomState(FLAGS_random_seed);
+  bal_problem.Normalize();
   bal_problem.Perturb(FLAGS_rotation_sigma,
                       FLAGS_translation_sigma,
                       FLAGS_point_sigma);
