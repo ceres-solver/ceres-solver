@@ -410,7 +410,7 @@ ENDIF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 # Disable threads in mutex.h. Someday, after there is OpenMP support in
 # Android, this can get removed.
 IF (${BUILD_ANDROID})
-  ADD_DEFINITIONS(-DNO_THREADS)
+  ADD_DEFINITIONS(-DCERES_NO_THREADS)
 ENDIF (${BUILD_ANDROID})
 
 # Use the std namespace for the hash<> and related templates. This may vary by
