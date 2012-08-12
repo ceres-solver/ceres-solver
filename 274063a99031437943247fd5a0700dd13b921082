@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIR3///84\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "AAAITX////8\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIRn///90\u003d",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-12T16:41:59Z",
       "side": 1,
       "message": "*\u0027s should be next to the type",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///80\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIRn///90\u003d",
       "revId": "274063a99031437943247fd5a0700dd13b921082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIR3///8w\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAITX////4\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAITX////0\u003d",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-11T17:29:08Z",
       "side": 1,
       "message": "Purely optional: Make mid_point a vector::iterator so that it can be used directly below?",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///8s\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAITX////0\u003d",
       "revId": "274063a99031437943247fd5a0700dd13b921082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIR3///8o\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAITX////w\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIRn///9w\u003d",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-08-12T16:41:59Z",
       "side": 1,
       "message": "Since you don\u0027t do the division, consider naming this total_absolute_deviation.",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///8k\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIRn///9w\u003d",
       "revId": "274063a99031437943247fd5a0700dd13b921082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIR3///8g\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "That 100 should be in the numerator, so that the absolute deviation is a 100. 1 seems too small for large reconstructions.",
+      "parentUuid": "AAAITX////s\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIRn///9s\u003d",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIR3///8c\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIRn///9s\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIRn///9o\u003d",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2012-08-12T16:41:59Z",
       "side": 1,
       "message": "This is the total absolute deviation; update comment or divide by num points.",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///8Y\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIRn///9o\u003d",
       "revId": "274063a99031437943247fd5a0700dd13b921082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -183,6 +345,24 @@
       "writtenOn": "2012-08-12T16:41:59Z",
       "side": 1,
       "message": "I think the comment applies to only the translation bit, not the rotation.",
+      "parentUuid": "AAAITX////o\u003d",
+      "revId": "274063a99031437943247fd5a0700dd13b921082",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///8U\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-12T21:24:12Z",
+      "side": 1,
+      "message": "The comment refers to the translation of the camera.",
       "parentUuid": "AAAITX////o\u003d",
       "revId": "274063a99031437943247fd5a0700dd13b921082",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
