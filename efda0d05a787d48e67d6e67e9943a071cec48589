@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIR3///gc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "This should be a  separate CL.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///gY\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "This is a sweeping change and should go on it\u0027s own.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///gQ\u003d",
+        "filename": "examples/data_fitting.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "Ceres should go first.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///gM\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "Ordering.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///gA\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "Grouping.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///f8\u003d",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:02:04Z",
+      "side": 1,
+      "message": "Oredring.",
+      "revId": "efda0d05a787d48e67d6e67e9943a071cec48589",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
