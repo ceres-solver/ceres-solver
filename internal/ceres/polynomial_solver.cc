@@ -30,12 +30,11 @@
 
 #include "ceres/polynomial_solver.h"
 
-#include <glog/logging.h>
 #include <cmath>
 #include <cstddef>
-
 #include "Eigen/Dense"
 #include "ceres/internal/port.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

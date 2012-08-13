@@ -38,14 +38,13 @@
 #include <cmath>
 #include <string>
 #include <vector>
-
-#include <glog/logging.h>
-#include "gtest/gtest.h"
-#include "ceres/stringprintf.h"
-#include "ceres/test_util.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/stringprintf.h"
+#include "ceres/test_util.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

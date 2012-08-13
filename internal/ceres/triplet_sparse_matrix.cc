@@ -32,12 +32,12 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <glog/logging.h>
-#include "ceres/matrix_proto.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/matrix_proto.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

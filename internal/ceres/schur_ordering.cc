@@ -30,14 +30,14 @@
 
 #include "ceres/schur_ordering.h"
 
-#include <glog/logging.h>
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/internal/scoped_ptr.h"
+#include "glog/logging.h"
 
 CERES_HASH_NAMESPACE_START
 
