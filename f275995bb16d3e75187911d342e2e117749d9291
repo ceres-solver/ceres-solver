@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIR3///do\u003d",
+        "filename": "internal/ceres/block_random_access_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:36:15Z",
+      "side": 1,
+      "message": "sorting",
+      "revId": "f275995bb16d3e75187911d342e2e117749d9291",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///dk\u003d",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:36:15Z",
+      "side": 1,
+      "message": "sorting",
+      "revId": "f275995bb16d3e75187911d342e2e117749d9291",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///dg\u003d",
+        "filename": "internal/ceres/block_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:36:15Z",
+      "side": 1,
+      "message": "sorting",
+      "revId": "f275995bb16d3e75187911d342e2e117749d9291",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///dc\u003d",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:36:15Z",
+      "side": 1,
+      "message": "sorting",
+      "revId": "f275995bb16d3e75187911d342e2e117749d9291",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///dY\u003d",
+        "filename": "internal/ceres/conditioned_cost_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:36:15Z",
+      "side": 1,
+      "message": "sorting]",
+      "revId": "f275995bb16d3e75187911d342e2e117749d9291",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
