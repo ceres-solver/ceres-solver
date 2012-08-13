@@ -30,7 +30,7 @@
 
 #include <cstddef>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"

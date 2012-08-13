@@ -33,7 +33,7 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"

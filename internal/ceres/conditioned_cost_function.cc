@@ -34,7 +34,7 @@
 
 #include <cstddef>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/stl_util.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/types.h"

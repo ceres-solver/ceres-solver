@@ -43,17 +43,17 @@
 #include <cstdlib>
 #include <string>
 
-#include <glog/logging.h>
+#include "ceres/autodiff_cost_function.h"
 #include "ceres/file.h"
-#include "gflags/gflags.h"
-#include "gtest/gtest.h"
+#include "ceres/problem.h"
+#include "ceres/rotation.h"
+#include "ceres/solver.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/problem.h"
-#include "ceres/solver.h"
 #include "ceres/types.h"
-#include "ceres/rotation.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 DECLARE_string(test_srcdir);
 

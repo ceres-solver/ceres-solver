@@ -32,7 +32,7 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"

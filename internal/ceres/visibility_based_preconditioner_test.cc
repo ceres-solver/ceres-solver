@@ -32,7 +32,7 @@
 
 #include "ceres/visibility_based_preconditioner.h"
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/file.h"
 #include "gtest/gtest.h"
 #include "Eigen/Dense"
