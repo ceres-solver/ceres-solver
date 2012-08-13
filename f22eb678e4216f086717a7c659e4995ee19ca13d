@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIR3///bU\u003d",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:42:11Z",
+      "side": 1,
+      "message": "Sorting.",
+      "revId": "f22eb678e4216f086717a7c659e4995ee19ca13d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///bQ\u003d",
+        "filename": "internal/ceres/polynomial_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:42:11Z",
+      "side": 1,
+      "message": "Sorting",
+      "revId": "f22eb678e4216f086717a7c659e4995ee19ca13d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIR3///bM\u003d",
+        "filename": "internal/ceres/runtime_numeric_diff_cost_function_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-13T22:42:11Z",
+      "side": 1,
+      "message": "Sorting",
+      "revId": "f22eb678e4216f086717a7c659e4995ee19ca13d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
