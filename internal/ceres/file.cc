@@ -48,7 +48,7 @@ void WriteStringToFileOrDie(const string &data, const string &filename) {
 }
 
 void ReadFileToStringOrDie(const string &filename, string *data) {
-  FILE* file_descriptor = file_descriptor = fopen(filename.c_str(), "r");
+  FILE* file_descriptor = fopen(filename.c_str(), "r");
 
   if (!file_descriptor) {
     LOG(FATAL) << "Couldn't read file: " << filename;
