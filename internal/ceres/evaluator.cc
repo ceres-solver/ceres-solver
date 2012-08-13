@@ -29,7 +29,6 @@
 // Author: keir@google.com (Keir Mierle)
 
 #include <vector>
-#include <glog/logging.h>
 #include "ceres/block_evaluate_preparer.h"
 #include "ceres/block_jacobian_writer.h"
 #include "ceres/compressed_row_jacobian_writer.h"
@@ -40,6 +39,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/program_evaluator.h"
 #include "ceres/scratch_evaluate_preparer.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

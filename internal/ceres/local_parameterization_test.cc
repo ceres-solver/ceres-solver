@@ -29,12 +29,12 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <cmath>
-#include "gtest/gtest.h"
 #include "ceres/fpclassify.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/rotation.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

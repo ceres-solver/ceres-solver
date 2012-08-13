@@ -41,11 +41,11 @@
 
 #include <cmath>
 #include <cstddef>
-#include <glog/logging.h>
 #include "ceres/fpclassify.h"
-#include "ceres/linear_operator.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/linear_operator.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

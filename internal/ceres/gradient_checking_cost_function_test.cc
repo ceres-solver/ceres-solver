@@ -32,22 +32,21 @@
 
 #include <cmath>
 #include <vector>
-
-#include <glog/logging.h>
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
-#include "ceres/mock_log.h"
-#include "ceres/problem_impl.h"
-#include "ceres/program.h"
-#include "ceres/parameter_block.h"
-#include "ceres/residual_block.h"
-#include "ceres/random.h"
 #include "ceres/cost_function.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
+#include "ceres/mock_log.h"
+#include "ceres/parameter_block.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
+#include "ceres/random.h"
+#include "ceres/residual_block.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 using testing::AllOf;
 using testing::AnyNumber;

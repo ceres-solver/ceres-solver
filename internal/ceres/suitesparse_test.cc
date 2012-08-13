@@ -29,11 +29,11 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <algorithm>
-#include <glog/logging.h>
-#include "gtest/gtest.h"
+#include "ceres/internal/port.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/internal/port.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
