@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAITX////U\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-13T08:54:31Z",
+      "side": 1,
+      "message": "What I meant here is that you seem to do this only to add noise. So your noisy translation is\n\nt\u0027  \u003d -R * ( R\u0027 * t + N(0;Sigma) ) \u003d t -R * N(0; Sigma) \u003d t + N(0; R*Sigma*R\u0027 )\n\nand as Sigma \u003d sigma * I, this should pretty much be t\u0027 \u003d N(t; Sigma)",
+      "revId": "9b51667d41cf757094414c661025ddb64e9a8f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAITX////Q\u003d",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-13T08:54:31Z",
+      "side": 1,
+      "message": "why parentheses around total_absolute_deviation?\nAdditionally: Wouldn\u0027t it be easier to understand if you computed average_absolute_deviation (\u003d total_absolute_deviation / num_points_) right away?\nAnd why not use the more robust median absolute deviation anyway?",
+      "revId": "9b51667d41cf757094414c661025ddb64e9a8f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
