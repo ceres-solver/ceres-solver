@@ -34,10 +34,10 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <glog/logging.h>
+#include "Eigen/Core"
 #include "ceres/random.h"
 #include "ceres/rotation.h"
-#include "Eigen/Core"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace examples {

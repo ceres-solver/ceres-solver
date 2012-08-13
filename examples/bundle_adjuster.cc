@@ -58,12 +58,12 @@
 #include <string>
 #include <vector>
 
-#include <gflags/gflags.h>
-#include <glog/logging.h>
 #include "bal_problem.h"
-#include "snavely_reprojection_error.h"
 #include "ceres/ceres.h"
 #include "ceres/random.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
+#include "snavely_reprojection_error.h"
 
 DEFINE_string(input, "", "Input File name");
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
