@@ -31,7 +31,7 @@
 #include "ceres/block_random_access_dense_matrix.h"
 
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 

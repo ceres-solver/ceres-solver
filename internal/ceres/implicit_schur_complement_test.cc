@@ -31,7 +31,7 @@
 #include "ceres/implicit_schur_complement.h"
 
 #include <cstddef>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"

@@ -28,7 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
 

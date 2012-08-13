@@ -32,7 +32,7 @@
 
 #include <cstddef>
 #include <cmath>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/internal/eigen.h"
 
 namespace ceres {

@@ -29,7 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <algorithm>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"

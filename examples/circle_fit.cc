@@ -53,7 +53,8 @@
 #include <cstdio>
 #include <vector>
 
-#include <gflags/gflags.h>
+#include "gflags/gflags.h"
+#include "glog/logging.h"
 #include "ceres/ceres.h"
 
 using ceres::AutoDiffCostFunction;

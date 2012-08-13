@@ -36,7 +36,7 @@
 #include <set>
 #include <utility>
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "Eigen/Dense"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"

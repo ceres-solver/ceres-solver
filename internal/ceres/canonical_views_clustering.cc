@@ -31,7 +31,7 @@
 
 #include "ceres/canonical_views_clustering.h"
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/graph.h"
 #include "ceres/collections_port.h"
 #include "ceres/map_util.h"

@@ -30,7 +30,7 @@
 
 #include "ceres/linear_solver.h"
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/cgnr_solver.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/iterative_schur_complement_solver.h"

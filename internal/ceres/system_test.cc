@@ -43,7 +43,7 @@
 #include <cstdlib>
 #include <string>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/file.h"
 #include "gflags/gflags.h"
 #include "gtest/gtest.h"
