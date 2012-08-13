@@ -33,17 +33,17 @@
 #include <cstdio>
 #include <string>
 #include <vector>
-#include <glog/logging.h>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/file.h"
-#include "ceres/matrix_proto.h"
-#include "ceres/triplet_sparse_matrix.h"
-#include "ceres/stringprintf.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/matrix_proto.h"
+#include "ceres/stringprintf.h"
+#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

@@ -33,11 +33,11 @@
 #include <cstddef>
 #include <algorithm>
 #include <vector>
-#include <glog/logging.h>
 #include "ceres/block_structure.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/internal/eigen.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

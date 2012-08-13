@@ -47,6 +47,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include "glog/logging.h"
 
 namespace ceres {
 

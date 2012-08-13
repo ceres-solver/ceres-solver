@@ -36,7 +36,6 @@
 #include <set>
 #include <utility>
 #include <vector>
-#include <glog/logging.h>
 #include "Eigen/Dense"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
@@ -45,10 +44,11 @@
 #include "ceres/detect_structure.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/visibility.h"
-#include "ceres/internal/scoped_ptr.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
