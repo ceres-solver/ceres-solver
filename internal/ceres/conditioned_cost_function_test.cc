@@ -32,10 +32,10 @@
 
 #include "ceres/conditioned_cost_function.h"
 
-#include "gtest/gtest.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/normal_prior.h"
 #include "ceres/types.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

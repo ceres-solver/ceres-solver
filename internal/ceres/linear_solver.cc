@@ -30,13 +30,13 @@
 
 #include "ceres/linear_solver.h"
 
-#include <glog/logging.h>
 #include "ceres/cgnr_solver.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/iterative_schur_complement_solver.h"
 #include "ceres/schur_complement_solver.h"
 #include "ceres/sparse_normal_cholesky_solver.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

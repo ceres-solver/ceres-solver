@@ -31,16 +31,15 @@
 #include <cmath>
 #include <limits>
 #include <string>
-
-#include <glog/logging.h>
-#include "gmock/gmock.h"
-#include "gtest/gtest.h"
-#include "ceres/stringprintf.h"
-#include "ceres/test_util.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/jet.h"
 #include "ceres/rotation.h"
+#include "ceres/stringprintf.h"
+#include "ceres/test_util.h"
+#include "glog/logging.h"
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

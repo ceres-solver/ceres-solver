@@ -32,21 +32,21 @@
 
 #include "ceres/visibility_based_preconditioner.h"
 
-#include <glog/logging.h>
-#include "ceres/file.h"
-#include "gtest/gtest.h"
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/collections_port.h"
+#include "ceres/file.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/stringprintf.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 DECLARE_string(test_srcdir);
 

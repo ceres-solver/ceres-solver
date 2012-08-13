@@ -33,8 +33,6 @@
 #include <algorithm>
 #include <cstring>
 #include <vector>
-
-#include <glog/logging.h>
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -46,6 +44,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/visibility_based_preconditioner.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
