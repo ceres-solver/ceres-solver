@@ -29,18 +29,17 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <cstddef>
-
-#include <glog/logging.h>
-#include "gtest/gtest.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_complement_solver.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

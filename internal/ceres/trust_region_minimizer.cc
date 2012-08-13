@@ -36,17 +36,17 @@
 #include <cstring>
 #include <string>
 #include <vector>
-#include <glog/logging.h>
 
 #include "Eigen/Core"
 #include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
-#include "ceres/linear_least_squares_problems.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/linear_least_squares_problems.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

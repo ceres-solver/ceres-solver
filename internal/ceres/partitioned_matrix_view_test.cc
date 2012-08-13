@@ -31,7 +31,7 @@
 #include "ceres/partitioned_matrix_view.h"
 
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"

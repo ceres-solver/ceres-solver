@@ -33,11 +33,11 @@
 
 #include <set>
 #include <vector>
-#include <glog/logging.h>
-#include "gtest/gtest.h"
 #include "ceres/block_structure.h"
 #include "ceres/graph.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
