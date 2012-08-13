@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
 
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;

@@ -53,8 +53,9 @@
 #include <cstdio>
 #include <vector>
 
-#include <gflags/gflags.h>
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
 
 using ceres::AutoDiffCostFunction;
 using ceres::CauchyLoss;
