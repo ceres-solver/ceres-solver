@@ -30,7 +30,7 @@
 
 #include "ceres/schur_ordering.h"
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/graph.h"
 #include "ceres/graph_algorithms.h"
 #include "ceres/map_util.h"

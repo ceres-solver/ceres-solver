@@ -34,7 +34,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/random.h"
 #include "ceres/rotation.h"
 #include "Eigen/Core"

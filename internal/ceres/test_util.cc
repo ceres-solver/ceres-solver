@@ -31,7 +31,7 @@
 // Utility functions useful for testing.
 
 #include <cmath>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/stringprintf.h"
 

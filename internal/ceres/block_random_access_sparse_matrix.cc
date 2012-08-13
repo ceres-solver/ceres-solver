@@ -34,7 +34,7 @@
 #include <set>
 #include <utility>
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/mutex.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/port.h"

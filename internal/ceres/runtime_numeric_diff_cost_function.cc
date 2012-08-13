@@ -36,7 +36,7 @@
 #include <numeric>
 #include <vector>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "Eigen/Dense"
 #include "ceres/cost_function.h"
 #include "ceres/internal/scoped_ptr.h"

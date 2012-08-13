@@ -38,7 +38,7 @@
 #include <utility>
 #include <vector>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"

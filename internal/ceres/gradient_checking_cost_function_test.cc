@@ -33,7 +33,7 @@
 #include <cmath>
 #include <vector>
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "ceres/mock_log.h"

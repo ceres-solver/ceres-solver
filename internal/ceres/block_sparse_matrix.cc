@@ -33,7 +33,7 @@
 #include <cstddef>
 #include <algorithm>
 #include <vector>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/block_structure.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"

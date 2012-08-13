@@ -30,7 +30,7 @@
 
 #include "ceres/polynomial_solver.h"
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include <cmath>
 #include <cstddef>
 

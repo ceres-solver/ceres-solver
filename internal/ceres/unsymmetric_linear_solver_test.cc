@@ -28,7 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"

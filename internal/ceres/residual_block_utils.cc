@@ -33,7 +33,7 @@
 #include <cmath>
 #include <cstddef>
 #include <limits>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "ceres/array_utils.h"
 #include "ceres/residual_block.h"
 #include "ceres/parameter_block.h"
