@@ -57,6 +57,10 @@
 
 DECLARE_string(test_srcdir);
 
+#ifndef CERES_TEST_SRCDIR_POSTFIX
+#define CERES_TEST_SRCDIR_POSTFIX ""
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -311,8 +315,9 @@ TEST(SystemTest, PowellsFunction) {
 class BundleAdjustmentProblem {
  public:
   BundleAdjustmentProblem() {
-    const string input_file = JoinPath(FLAGS_test_srcdir,
-                                       "problem-16-22106-pre.txt");
+    const string input_file = JoinPath(
+        FLAGS_test_srcdir + CERES_TEST_SRCDIR_POSTFIX,
+        "problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }

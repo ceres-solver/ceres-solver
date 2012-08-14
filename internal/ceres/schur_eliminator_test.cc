@@ -41,7 +41,7 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "gflags/gflags.h"
+//#include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -49,6 +49,10 @@
 // parameterization to be more efficient.
 
 DECLARE_string(test_srcdir);
+
+#ifndef CERES_TEST_SRCDIR_POSTFIX
+#define CERES_TEST_SRCDIR_POSTFIX ""
+#endif
 
 namespace ceres {
 namespace internal {
@@ -220,8 +224,8 @@ TEST_F(SchurEliminatorTest, ScalarProblem) {
 #ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
 TEST_F(SchurEliminatorTest, BlockProblem) {
   const string input_file =
-      JoinPath(FLAGS_test_srcdir,
-                     "problem-6-1384-000.lsqp");  // NOLINT
+      JoinPath(FLAGS_test_srcdir + CERES_TEST_SRCDIR_POSTFIX,
+               "problem-6-1384-000.lsqp");  // NOLINT
 
   SetUpFromFilename(input_file);
   ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));

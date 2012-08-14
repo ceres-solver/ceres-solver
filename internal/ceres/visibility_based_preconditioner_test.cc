@@ -50,6 +50,10 @@
 
 DECLARE_string(test_srcdir);
 
+#ifndef CERES_TEST_SRCDIR_POSTFIX
+#define CERES_TEST_SRCDIR_POSTFIX ""
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -66,8 +70,8 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
  protected:
   void SetUp() {
     string input_file =
-        JoinPath(FLAGS_test_srcdir,
-                       "problem-6-1384-000.lsqp"); // NOLINT
+        JoinPath(FLAGS_test_srcdir + CERES_TEST_SRCDIR_POSTFIX,
+                 "problem-6-1384-000.lsqp"); // NOLINT
 
     scoped_ptr<LinearLeastSquaresProblem> problem(
         CHECK_NOTNULL(CreateLinearLeastSquaresProblemFromFile(input_file)));
