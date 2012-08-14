@@ -31,8 +31,8 @@
 
 #include "glog/logging.h"
 #include "gmock/gmock.h"
+#include "gmock/mock-log.h"
 #include "gtest/gtest.h"
-#include "ceres/mock_log.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/internal/eigen.h"

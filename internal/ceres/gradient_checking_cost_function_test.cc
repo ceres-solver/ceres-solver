@@ -36,7 +36,6 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
-#include "ceres/mock_log.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -46,6 +45,7 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
+#include "gmock/mock-log.h"
 #include "gtest/gtest.h"
 
 using testing::AllOf;
