@@ -35,20 +35,17 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/detect_structure.h"
-#include "ceres/file.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
+#include "ceres/test_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
 // TODO(sameeragarwal): Reduce the size of these tests and redo the
 // parameterization to be more efficient.
-
-DECLARE_string(test_srcdir);
 
 namespace ceres {
 namespace internal {
@@ -219,9 +216,7 @@ TEST_F(SchurEliminatorTest, ScalarProblem) {
 
 #ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
 TEST_F(SchurEliminatorTest, BlockProblem) {
-  const string input_file =
-      JoinPath(FLAGS_test_srcdir,
-                     "problem-6-1384-000.lsqp");  // NOLINT
+  const string input_file = TestFileAbsolutePath("problem-6-1384-000.lsqp");
 
   SetUpFromFilename(input_file);
   ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));

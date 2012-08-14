@@ -28,6 +28,9 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
+#include <string>
+#include "ceres/internal/port.h"
+
 #ifndef CERES_INTERNAL_TEST_UTIL_H_
 #define CERES_INTERNAL_TEST_UTIL_H_
 
@@ -57,6 +60,10 @@ void ExpectArraysCloseUptoScale(int n,
                                 const double* p,
                                 const double* q,
                                 double tolerance);
+
+// Construct a fully qualified path for the test file depending on the
+// local build/testing environment.
+string TestFileAbsolutePath(const string& filename);
 
 }  // namespace internal
 }  // namespace ceres
