@@ -479,7 +479,6 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   double x[2];
   double y[3];
   double z[4];
-  double state[9];
 
   // Add the parameters in explicit order to force the ordering in the program.
   problem.AddParameterBlock(x,  2);
