@@ -45,10 +45,9 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
+#include "ceres/test_util.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-
-DECLARE_string(test_srcdir);
 
 namespace ceres {
 namespace internal {
@@ -65,9 +64,7 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
 
  protected:
   void SetUp() {
-    string input_file =
-        JoinPath(FLAGS_test_srcdir,
-                       "problem-6-1384-000.lsqp"); // NOLINT
+    string input_file = TestFileAbsolutePath("problem-6-1384-000.lsqp");
 
     scoped_ptr<LinearLeastSquaresProblem> problem(
         CHECK_NOTNULL(CreateLinearLeastSquaresProblemFromFile(input_file)));

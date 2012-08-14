@@ -44,7 +44,6 @@
 #include <string>
 
 #include "ceres/autodiff_cost_function.h"
-#include "ceres/file.h"
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
@@ -54,8 +53,6 @@
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-
-DECLARE_string(test_srcdir);
 
 namespace ceres {
 namespace internal {
@@ -311,8 +308,7 @@ TEST(SystemTest, PowellsFunction) {
 class BundleAdjustmentProblem {
  public:
   BundleAdjustmentProblem() {
-    const string input_file = JoinPath(FLAGS_test_srcdir,
-                                       "problem-16-22106-pre.txt");
+    const string input_file = TestFileAbsolutePath("problem-16-22106-pre.txt");
     ReadData(input_file);
     BuildProblem();
   }
