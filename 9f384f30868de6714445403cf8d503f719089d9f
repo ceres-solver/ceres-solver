@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIW3///rg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-14T18:34:02Z",
+      "side": 1,
+      "message": "Consider instead:\n\nConsolidate path handling for test data files.",
+      "revId": "9f384f30868de6714445403cf8d503f719089d9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
