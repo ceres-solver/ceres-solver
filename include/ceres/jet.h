@@ -175,7 +175,9 @@ struct Jet {
   // (where T is a Jet<T, N>). This usually only happens in opt mode. Note that
   // the C++ standard mandates that e.g. default constructed doubles are
   // initialized to 0.0; see sections 8.5 of the C++03 standard.
-  Jet() : a() {}
+  Jet() : a() {
+    v.setZero();
+  }
 
   // Constructor from scalar: a + 0.
   explicit Jet(const T& value) {
