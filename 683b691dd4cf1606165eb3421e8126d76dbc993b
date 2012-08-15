@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIbH///vU\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-15T16:41:16Z",
+      "side": 1,
+      "message": "Please follow the code convention used elsewhere (e.g. no space after (, etc).\n\nAnd above.\n\nLike with the other flags, please add a message in similar style to the others indicating that the documentation will get built.",
+      "revId": "683b691dd4cf1606165eb3421e8126d76dbc993b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIbH///vQ\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-15T16:41:16Z",
+      "side": 1,
+      "message": "This needs to follow the same style as the other CMake files. That includes at least:\n\n- File header\n- Proper formatting; e.g. style around()\u0027s.\n- No random blank lines at the end of the file, or anywhere they don\u0027t serve a purpose, etc.",
+      "revId": "683b691dd4cf1606165eb3421e8126d76dbc993b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIbH///vM\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-15T16:41:16Z",
+      "side": 1,
+      "message": "Remove random blank line.",
+      "revId": "683b691dd4cf1606165eb3421e8126d76dbc993b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIbH///vI\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-15T16:41:16Z",
+      "side": 1,
+      "message": "Remove trailing newlines.",
+      "revId": "683b691dd4cf1606165eb3421e8126d76dbc993b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIbH///vE\u003d",
+        "filename": "docs/ceres-solver.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-15T16:41:16Z",
+      "side": 1,
+      "message": "Why is this needed? The docs build for me without this.",
+      "revId": "683b691dd4cf1606165eb3421e8126d76dbc993b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
