@@ -519,3 +519,12 @@ ENDIF (MSVC)
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
 
+OPTION( BUILD_DOCUMENTATION
+  "Build User's Guide (pdf)"
+  OFF)
+
+IF (${BUILD_DOCUMENTATION})
+  # Generate the User's Guide (pdf).
+  # The corresponding target is UserGuide, but is included in ALL.
+  ADD_SUBDIRECTORY(docs)
+ENDIF (${BUILD_DOCUMENTATION})
