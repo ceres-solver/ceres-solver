@@ -271,8 +271,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
     double new_model_cost = 0.0;
     if (strategy_summary.termination_type != FAILURE) {
-      // new_model_cost = 1/2 |J * step - f|^2
-      model_residuals = -residuals;
+      // new_model_cost = 1/2 |f + J * step|^2
+      model_residuals = residuals;
       jacobian->RightMultiply(trust_region_step.data(), model_residuals.data());
       new_model_cost = model_residuals.squaredNorm() / 2.0;
 
@@ -328,7 +328,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       const double model_cost_change = max(kEpsilon, cost - new_model_cost);
 
       // Undo the Jacobian column scaling.
-      delta =  -(trust_region_step.array() * scale.array()).matrix();
+      delta = (trust_region_step.array() * scale.array()).matrix();
       iteration_summary.step_norm = delta.norm();
 
       // Convergence based on parameter_tolerance.
