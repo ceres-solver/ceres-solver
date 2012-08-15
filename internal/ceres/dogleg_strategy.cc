@@ -103,8 +103,9 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
   // Vector used to form the diagonal matrix that is used to
   // regularize the Gauss-Newton solve and that defines the
   // elliptical trust region
-  //   || D * step || <= radius_
-  // .
+  //
+  //   || D * step || <= radius_ .
+  //
   jacobian->SquaredColumnNorm(diagonal_.data());
   for (int i = 0; i < n; ++i) {
     diagonal_[i] = min(max(diagonal_[i], min_diagonal_), max_diagonal_);
@@ -122,13 +123,9 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
     ComputeDoglegStep(step);
   }
 
-  // Undo transformation to spherical trust region space.
-  RescaleStep(step);
-
   return linear_solver_summary;
 }
 
-// Compute the gradient.
 // The trust region is assumed to be elliptical with the
 // diagonal scaling matrix D defined by sqrt(diagonal_).
 // It is implemented by substituting step' = D * step.
@@ -136,8 +133,9 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
 // The gradient, the Gauss-Newton step, the Cauchy point,
 // and all calculations involving the Jacobian have to
 // be adjusted accordingly.
-void DoglegStrategy::ComputeGradient(SparseMatrix* jacobian,
-                                     const double* residuals) {
+void DoglegStrategy::ComputeGradient(
+    SparseMatrix* jacobian,
+    const double* residuals) {
   gradient_.setZero();
   jacobian->LeftMultiply(residuals, gradient_.data());
   gradient_.array() /= diagonal_.array();
@@ -150,14 +148,9 @@ void DoglegStrategy::ComputeCauchyPoint(SparseMatrix* jacobian) {
   // The Jacobian is scaled implicitly by computing J * (D^-1 * (D^-1 * g))
   // instead of (J * D^-1) * (D^-1 * g).
   Vector scaled_gradient =
-    (gradient_.array() / diagonal_.array()).matrix();
+      (gradient_.array() / diagonal_.array()).matrix();
   jacobian->RightMultiply(scaled_gradient.data(), Jg.data());
   alpha_ = gradient_.squaredNorm() / Jg.squaredNorm();
-}
-
-void DoglegStrategy::RescaleStep(double* step) {
-  VectorRef dogleg_step(step, gradient_.rows());
-  dogleg_step.array() /= diagonal_.array();
 }
 
 void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
@@ -170,6 +163,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
   if (gauss_newton_norm <= radius_) {
     dogleg_step = gauss_newton_step_;
     dogleg_step_norm_ = gauss_newton_norm;
+    dogleg_step.array() /= diagonal_.array();
     VLOG(3) << "GaussNewton step size: " << dogleg_step_norm_
             << " radius: " << radius_;
     return;
@@ -181,6 +175,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
   if  (gradient_norm * alpha_ >= radius_) {
     dogleg_step = (radius_ / gradient_norm) * gradient_;
     dogleg_step_norm_ = radius_;
+    dogleg_step.array() /= diagonal_.array();
     VLOG(3) << "Cauchy step size: " << dogleg_step_norm_
             << " radius: " << radius_;
     return;
@@ -210,6 +205,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
       : (radius_ * radius_ - a_squared_norm) / (d + c);
   dogleg_step = (alpha_ * (1.0 - beta)) * gradient_ + beta * gauss_newton_step_;
   dogleg_step_norm_ = dogleg_step.norm();
+  dogleg_step.array() /= diagonal_.array();
   VLOG(3) << "Dogleg step size: " << dogleg_step_norm_
           << " radius: " << radius_;
 }
@@ -275,7 +271,7 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
     break;
   }
 
-  // The scaled Gauss-Newton step is D * GN.
+  // The scaled Gauss-Newton step is D * GN:
   //
   //     - (D^-1 J^T J D^-1)^-1 (D^-1 g)
   //   = - D (J^T J)^-1 D D^-1 g

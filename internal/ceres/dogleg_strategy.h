@@ -70,7 +70,6 @@ public:
   void ComputeCauchyPoint(SparseMatrix* jacobian);
   void ComputeGradient(SparseMatrix* jacobian, const double* residuals);
   void ComputeDoglegStep(double* step);
-  void RescaleStep(double* step);
 
   LinearSolver* linear_solver_;
   double radius_;
