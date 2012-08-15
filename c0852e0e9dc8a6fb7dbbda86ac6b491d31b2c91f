@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIbn///To\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-15T23:26:08Z",
+      "side": 1,
+      "message": "isn\u0027t there a sign here error, here since gauss-newton step is now inverted.. so case3 needs to be updated to account for that?",
+      "revId": "c0852e0e9dc8a6fb7dbbda86ac6b491d31b2c91f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIbn///U4\u003d",
+        "filename": "internal/ceres/levenberg_marquardt_strategy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-15T23:26:08Z",
+      "side": 1,
+      "message": "-1.0",
+      "revId": "c0852e0e9dc8a6fb7dbbda86ac6b491d31b2c91f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
