@@ -98,6 +98,10 @@ LinearSolver::Summary LevenbergMarquardtStrategy::ComputeStep(
   // to happen for the DENSE_QR and then DENSE_SCHUR solver when
   // the Jacobin is severly rank deficient and mu is too small.
   InvalidateArray(num_parameters, step);
+
+  // Instead of solving Jx = -r, solve Jy = r.
+  // Then x can be found as x = -y, but the inputs jacobian and residuals
+  // do not need to be modified.
   LinearSolver::Summary linear_solver_summary =
       linear_solver_->Solve(jacobian, residuals, solve_options, step);
   if (linear_solver_summary.termination_type == FAILURE ||
@@ -106,6 +110,7 @@ LinearSolver::Summary LevenbergMarquardtStrategy::ComputeStep(
     linear_solver_summary.termination_type = FAILURE;
   }
 
+  VectorRef(step, num_parameters) *= -1;
   reuse_diagonal_ = true;
   return linear_solver_summary;
 }
