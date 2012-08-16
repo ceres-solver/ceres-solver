@@ -53,9 +53,29 @@ inline bool IsNormal  (double x) {
          classification == _FPCLASS_PN;
 }
 #elif defined(ANDROID)
-// On Android, the C++ fpclassify functions are not available. Strictly
-// speaking, the std functions are are not standard until C++11. Instead use
-// the C99 macros on Android.
+#  if defined(_STLP_CMATH)
+// On Android when using STLPort, the isinf and isfinite functions are not
+// available, so reimplement them.
+inline bool IsFinite(double x) {
+  return !isnan(x) && !IsInfinite(x);
+}
+
+inline bool IsInfinite(double x) {
+  return x ==  std::numeric_limits<T>::infinity() ||
+         x == -std::numeric_limits<T>::infinity();
+}
+#  else
+inline bool IsFinite  (double x) { return isfinite(x); }
+inline bool IsInfinite(double x) { return isinf(x);    }
+#  endif  // defined(_STLP_CMATH)
+
+inline bool IsNaN     (double x) { return isnan(x);    }
+inline bool IsNormal  (double x) { return isnormal(x); }
+
+#elif defined(ANDROID)
+// On Android when using the GNU STL, the C++ fpclassify functions are not
+// available. Strictly speaking, the std functions are are not standard until
+// C++11. Instead use the C99 macros on Android.
 inline bool IsFinite  (double x) { return isfinite(x); }
 inline bool IsInfinite(double x) { return isinf(x);    }
 inline bool IsNaN     (double x) { return isnan(x);    }
