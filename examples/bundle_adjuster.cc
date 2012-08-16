@@ -86,6 +86,7 @@ DEFINE_string(sparse_linear_algebra_library, "suitesparse",
               "Options are: suitesparse and cxsparse");
 
 DEFINE_string(ordering_type, "schur", "Options are: schur, user, natural");
+DEFINE_string(dogleg_type, "traditional", "Options are: traditional, subspace");
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
             "ordering.");
 
@@ -248,6 +249,14 @@ void SetMinimizerOptions(Solver::Options* options) {
   } else {
     LOG(FATAL) << "Unknown trust region strategy: "
                << FLAGS_trust_region_strategy;
+  }
+  if (FLAGS_dogleg_type == "traditional") {
+    options->dogleg_type = TRADITIONAL_DOGLEG;
+  } else if (FLAGS_dogleg_type == "subspace") {
+    options->dogleg_type = SUBSPACE_DOGLEG;
+  } else {
+    LOG(FATAL) << "Unknown dogleg type: "
+               << FLAGS_dogleg_type;
   }
 }
 
