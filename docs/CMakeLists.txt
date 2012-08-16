@@ -61,3 +61,6 @@ ADD_CUSTOM_TARGET(UserGuide ALL
         -shell-escape ${CMAKE_BINARY_DIR}/docs/ceres-solver.tex
         -output-directory ${CMAKE_BINARY_DIR}/docs
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/docs/ceres-solver.pdf
+        DESTINATION share/ceres/docs)

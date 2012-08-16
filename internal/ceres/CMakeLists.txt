@@ -112,6 +112,11 @@ IF (${BUILD_ANDROID})
   # The Android logging library that defines e.g. __android_log_print is
   # creatively named "log".
   TARGET_LINK_LIBRARIES(miniglog log)
+
+  INSTALL(TARGETS miniglog
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib)
 ENDIF (${BUILD_ANDROID})
 
 SET(CERES_LIBRARY_DEPENDENCIES ${GLOG_LIB})
@@ -163,14 +168,25 @@ SET(CERES_LIBRARY_SOURCE
 ADD_LIBRARY(ceres STATIC ${CERES_LIBRARY_SOURCE})
 TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
+INSTALL(TARGETS ceres
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+
 # Don't build a DLL on MSVC. Supporting Ceres as a DLL on Windows involves
 # nontrivial changes that we haven't made yet.
 IF (NOT MSVC AND NOT ${BUILD_ANDROID})
   ADD_LIBRARY(ceres_shared SHARED ${CERES_LIBRARY_SOURCE})
   TARGET_LINK_LIBRARIES(ceres_shared ${CERES_LIBRARY_DEPENDENCIES})
   SET_TARGET_PROPERTIES(ceres_shared PROPERTIES
-      VERSION ${CERES_VERSION}
-      SOVERSION ${CERES_ABI_VERSION})
+                        VERSION ${CERES_VERSION}
+                        SOVERSION ${CERES_ABI_VERSION})
+
+  INSTALL(TARGETS ceres_shared
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib)
+
 ENDIF (NOT MSVC AND NOT ${BUILD_ANDROID})
 
 IF (${BUILD_TESTING} AND ${GFLAGS})
