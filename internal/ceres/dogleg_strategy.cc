@@ -286,7 +286,6 @@ void DoglegStrategy::StepAccepted(double step_quality) {
   CHECK_GT(step_quality, 0.0);
   if (step_quality < decrease_threshold_) {
     radius_ *= 0.5;
-    return;
   }
 
   if (step_quality > increase_threshold_) {
