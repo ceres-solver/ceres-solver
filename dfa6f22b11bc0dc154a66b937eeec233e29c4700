@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIf3///sY\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "No space after (.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///sU\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "These two lines should be indented such that the arguments align. See how the other OPTION() sections are indented.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///sQ\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Please include a MESSAGE() like in the above code indicating that documentation building is enabled.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///rw\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Missing license header etc. Please see the header at the top of the root CMakeLists.txt.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///r0\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Indent 2 more spaces.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///sE\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Space after IF; e.g.\n\nIF (...)\n\nnot \n\nIF(...)\n\n(and for ENDIF).",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///sI\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Column align arguments.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///sA\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "Since column aligning here is too much, intent everything 4 spaces.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///r8\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-16T18:28:05Z",
+      "side": 1,
+      "message": "These continuations should be indented 8 spaces.",
+      "revId": "dfa6f22b11bc0dc154a66b937eeec233e29c4700",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
