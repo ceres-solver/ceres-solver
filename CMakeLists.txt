@@ -413,17 +413,27 @@ IF (${BUILD_ANDROID})
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
 ENDIF (${BUILD_ANDROID})
 
-# Use the std namespace for the hash<> and related templates. This may vary by
-# system.
-IF (MSVC)
-  # This is known to work with Visual Studio 2010 Express.
-  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
-  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
-ELSE (MSVC)
-  # This is known to work with recent versions of Linux and Mac OS X.
-  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
-  ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
-ENDIF (MSVC)
+OPTION(DISABLE_TR1
+       "Don't use TR1. This replaces some hash tables with sets. Slower."
+       OFF)
+
+IF (${DISABLE_TR1})
+  MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
+  ADD_DEFINITIONS(-DCERES_NO_TR1)
+ELSE (${DISABLE_TR1})
+  MESSAGE("-- Using normal TR1 unordered_map/set")
+  # Use the std namespace for the hash<> and related templates. This may vary by
+  # system.
+  IF (MSVC)
+    # This is known to work with Visual Studio 2010 Express.
+    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
+    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
+  ELSE (MSVC)
+    # This is known to work with recent versions of Linux and Mac OS X.
+    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
+    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
+  ENDIF (MSVC)
+ENDIF (${DISABLE_TR1})
 
 INCLUDE_DIRECTORIES(
   include
