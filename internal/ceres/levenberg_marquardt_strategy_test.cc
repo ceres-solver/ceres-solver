@@ -85,7 +85,9 @@ TEST(LevenbergMarquardtStrategy, AcceptRejectStepRadiusScaling) {
   options.lm_max_diagonal = 1e8;
 
   // We need a non-null pointer here, so anything should do.
-  options.linear_solver = new RegularizationCheckingLinearSolver(0, NULL);
+  scoped_ptr<LinearSolver> linear_solver(
+      new RegularizationCheckingLinearSolver(0, NULL));
+  options.linear_solver = linear_solver.get();
 
   LevenbergMarquardtStrategy lms(options);
   EXPECT_EQ(lms.Radius(), options.initial_radius);
