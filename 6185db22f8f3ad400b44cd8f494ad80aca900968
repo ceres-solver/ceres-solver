@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIi3///8g\u003d",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-16T21:59:00Z",
+      "side": 1,
+      "message": "I firmly believe that those \"T\"s should be \"double\"...",
+      "revId": "6185db22f8f3ad400b44cd8f494ad80aca900968",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
