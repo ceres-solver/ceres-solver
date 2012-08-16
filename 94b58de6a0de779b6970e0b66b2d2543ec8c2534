@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIf3///dA\u003d",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-16T22:01:06Z",
+      "side": 1,
+      "message": "standalone",
+      "revId": "94b58de6a0de779b6970e0b66b2d2543ec8c2534",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///cs\u003d",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-16T22:01:06Z",
+      "side": 1,
+      "message": "maybe worth making this define consistent with the rest of them later instead of \"DONT_HAVE\", just NO seems more sane.",
+      "revId": "94b58de6a0de779b6970e0b66b2d2543ec8c2534",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIf3///c4\u003d",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-16T22:01:06Z",
+      "side": 1,
+      "message": "how do we plan to keep this in sync with the main cmake file? I worry that this will go out of sync very quickly.\n\nPerhaps generate this using a script instead? or based off the cmake file?",
+      "revId": "94b58de6a0de779b6970e0b66b2d2543ec8c2534",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
