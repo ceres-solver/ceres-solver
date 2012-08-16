@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIf3///0M\u003d",
+        "filename": "docs/ceres-solver.tex",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-16T14:52:31Z",
+      "side": 1,
+      "message": "remove line.",
+      "revId": "e22f9c0479fe19fc5c969ae27d2d1f2e6ea45057",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
