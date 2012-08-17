@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "AAAIk3///lk\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T21:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAInH///1A\u003d",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///lg\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T21:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///nc\u003d",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAInH///1E\u003d",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 2
@@ -54,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIk3///lY\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T21:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAInH///1E\u003d",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAInH///08\u003d",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 2
@@ -65,6 +119,24 @@
       "writtenOn": "2012-08-17T21:13:33Z",
       "side": 1,
       "message": "Why not like above with e.g. double theta \u003d 0.75 * pi;",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///lU\u003d",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T21:26:30Z",
+      "side": 1,
+      "message": "This was the example that was reported to me as a problem, but you are right, I can do a more understandable less magic example.",
+      "parentUuid": "AAAInH///08\u003d",
       "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
