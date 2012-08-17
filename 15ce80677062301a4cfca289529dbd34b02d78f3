@@ -33,6 +33,24 @@
       "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///1U\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T18:19:32Z",
+      "side": 1,
+      "message": "Ok, sorry, my previous reply was too quick. I now understand why the above works.\nAs sin_theta is always positive, atan2 will return a value between 0 and pi. So by design theta will be between 0 and 2*pi. Isn\u0027t it more straight-forward to use the slightly wasteful atan2(sin(theta2), cos(theta2)) construct in this case? (Or any other method to normalize the angle)",
+      "parentUuid": "AAAInH///1g\u003d",
+      "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
