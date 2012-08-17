@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///0c\u003d",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:04:42Z",
+      "side": 1,
+      "message": "2012 only.",
+      "revId": "8bf0676e1f35aed22a543c6a3a0f097a8cb4a357",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
