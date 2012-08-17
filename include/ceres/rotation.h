@@ -180,13 +180,16 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
   const T &q1 = quaternion[1];
   const T &q2 = quaternion[2];
   const T &q3 = quaternion[3];
-  const T sin_squared = q1 * q1 + q2 * q2 + q3 * q3;
+  const T sin_squared_theta = q1 * q1 + q2 * q2 + q3 * q3;
 
   // For quaternions representing non-zero rotation, the conversion
   // is numerically stable.
-  if (sin_squared > T(0.0)) {
-    const T sin_theta = sqrt(sin_squared);
-    const T k = T(2.0) * atan2(sin_theta, quaternion[0]) / sin_theta;
+  if (sin_squared_theta > T(0.0)) {
+    const T sin_theta = sqrt(sin_squared_theta);
+    const T &cos_theta = quaternion[0];
+    const T theta2 = atan2(T(2.0) * sin_theta * cos_theta,
+                           1.0 - 2.0 * sin_squared_theta);
+    const T k = theta2 / sin_theta;
     angle_axis[0] = q1 * k;
     angle_axis[1] = q2 * k;
     angle_axis[2] = q3 * k;

@@ -87,14 +87,43 @@ MATCHER_P(IsNearQuaternion, expected, "") {
     return false;
   }
 
+  // Quaternions are equivalent upto a sign change. So we will compare
+  // both signs before declaring failure.
+  bool near = true;
   for (int i = 0; i < 4; i++) {
     if (fabs(arg[i] - expected[i]) > kTolerance) {
-      *result_listener << "component " << i << " should be " << expected[i];
-      return false;
+      near = false;
+      break;
     }
   }
 
-  return true;
+  if (near) {
+    return true;
+  }
+
+  near = true;
+  for (int i = 0; i < 4; i++) {
+    if (fabs(arg[i] + expected[i]) > kTolerance) {
+      near = false;
+      break;
+    }
+  }
+
+  if (near) {
+    return true;
+  }
+
+  *result_listener << "expected : "
+                   << expected[0] << " "
+                   << expected[1] << " "
+                   << expected[2] << " "
+                   << expected[3] << " "
+                   << "actual : "
+                   << arg[0] << " "
+                   << arg[1] << " "
+                   << arg[2] << " "
+                   << arg[3];
+  return false;
 }
 
 // Use as:
@@ -257,6 +286,21 @@ TEST(Rotation, TinyQuaternionToAngleAxis) {
   double expected[3] = { theta, 0, 0 };
   QuaternionToAngleAxis(quaternion, axis_angle);
   EXPECT_THAT(axis_angle, IsNearAngleAxis(expected));
+}
+
+TEST(Rotation, QuaternionToAngleAxisAngleIsLessThanPi) {
+  double quaternion[4];
+  double angle_axis[3];
+
+  quaternion[0] = -0.0107399;
+  quaternion[1] = 0.00987652;
+  quaternion[2] = -0.999836;
+  quaternion[3] = 0.0107603;
+  QuaternionToAngleAxis(quaternion, angle_axis);
+  const double angle = sqrt(angle_axis[0] * angle_axis[0] +
+                            angle_axis[1] * angle_axis[1] +
+                            angle_axis[2] * angle_axis[2]);
+  EXPECT_LE(angle, kPi);
 }
 
 static const int kNumTrials = 10000;
