@@ -16,6 +16,58 @@
       "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///1A\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T21:13:33Z",
+      "side": 1,
+      "message": "Also, the left hand side should be theta - pi.",
+      "parentUuid": "AAAIlH///nc\u003d",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///1E\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T21:13:33Z",
+      "side": 1,
+      "message": "Unary - is overloaded for jets, so I\u0027d write atan2(-sin_theta, -cos_theta).",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///08\u003d",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T21:13:33Z",
+      "side": 1,
+      "message": "Why not like above with e.g. double theta \u003d 0.75 * pi;",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
