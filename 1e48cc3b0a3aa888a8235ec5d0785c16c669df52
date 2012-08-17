@@ -16,6 +16,24 @@
       "revId": "1e48cc3b0a3aa888a8235ec5d0785c16c669df52",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///0A\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T17:26:59Z",
+      "side": 1,
+      "message": "The three preconditioners listed below use SuiteSparse.",
+      "parentUuid": "AAAIlH///0I\u003d",
+      "revId": "1e48cc3b0a3aa888a8235ec5d0785c16c669df52",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
