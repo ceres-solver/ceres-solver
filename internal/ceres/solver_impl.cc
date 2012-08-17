@@ -274,8 +274,10 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Create the three objects needed to minimize: the transformed program, the
   // evaluator, and the linear solver.
 
-  scoped_ptr<Program> reduced_program(
-      CreateReducedProgram(&options, problem_impl, &summary->fixed_cost, &summary->error));
+  scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
+                                                           problem_impl,
+                                                           &summary->fixed_cost,
+                                                           &summary->error));
   if (reduced_program == NULL) {
     return;
   }
