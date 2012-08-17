@@ -36,6 +36,16 @@ ENDIF (COMMAND cmake_policy)
 
 PROJECT(CERES C CXX)
 
+# Set up gerrit hook for developer
+IF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  # only if it is a clone
+  IF (NOT EXISTS ${CMAKE_SOURCE_DIR}/.git/hooks/commit-msg)
+    # Download the hook only if it is not already present
+    FILE(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
+         ${CMAKE_SOURCE_DIR}/.git/hooks/commit-msg)
+  ENDIF (NOT EXISTS ${CMAKE_SOURCE_DIR}/.git/hooks/commit-msg)
+ENDIF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+
 # Important: Always bump the second number (e.g. 1.3.x to 1.4.0) for any
 # release that changes the ABI. The ABI changes for almost any modification to
 # include/ceres (e.g. the public API). If you are unsure about whether
@@ -518,4 +528,5 @@ ENDIF (MSVC)
 
 ADD_SUBDIRECTORY(internal/ceres)
 ADD_SUBDIRECTORY(examples)
+
 
