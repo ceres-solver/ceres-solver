@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIkn///tM\u003d",
+        "filename": "scripts/setup",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T15:19:30Z",
+      "side": 1,
+      "message": "it would be nice if the script figured out what directory it is in. The way it is now, it assumes that its run from the scripts folder, but I can well imagine running\n\nbash scripts/setup and in that case it will easily fail. \n\nA minor annoyance but it would be nice to fix.\n\nor atleast indicate to the user that it should be run from the scripts folder by detecting that ../.git exists.",
+      "revId": "8a5a00cf0c7f0ff13a7fad29462c984aaf4b7f1d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
