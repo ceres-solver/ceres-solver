@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///ks\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T21:30:54Z",
+      "side": 1,
+      "message": "Needs to be indented 1 more space. Merge it yourself after updating.",
+      "revId": "73b7a76041848ca042f9e7455629b7ef6cc72cbd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
