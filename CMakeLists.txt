@@ -36,6 +36,34 @@ ENDIF (COMMAND cmake_policy)
 
 PROJECT(CERES C CXX)
 
+# Set up gerrit hook for developer
+SET (LOCAL_GIT_DIRECTORY)
+
+# If the current source directory is a clone there should be one git directory
+IF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  # .git directory can be found on Unix based system, or on Windows with
+  # Git Bash (shipped with msysgit)
+  SET (LOCAL_GIT_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
+ELSE (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  #TODO(keir) Add proper windows support
+ENDIF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+
+IF (EXISTS ${LOCAL_GIT_DIRECTORY})
+  IF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+    # Download the hook only if it is not already present
+    FILE(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
+         ${CMAKE_BINARY_DIR}/commit-msg)
+
+    # The downloaded file is not executable
+    FILE(COPY ${CMAKE_BINARY_DIR}/commit-msg
+         DESTINATION ${LOCAL_GIT_DIRECTORY}/hooks/
+         FILE_PERMISSIONS
+           OWNER_READ OWNER_WRITE OWNER_EXECUTE
+           GROUP_READ GROUP_WRITE GROUP_EXECUTE
+           WORLD_READ WORLD_EXECUTE)
+  ENDIF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
+
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
