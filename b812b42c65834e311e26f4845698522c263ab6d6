@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIkn///s4\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T15:48:41Z",
+      "side": 1,
+      "message": "These two should be mutually exclusive, right?",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIkn///s0\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T15:48:41Z",
+      "side": 1,
+      "message": "put the entire OR expression on one line.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
