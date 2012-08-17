@@ -214,7 +214,7 @@ TEST_F(SchurEliminatorTest, ScalarProblem) {
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), false, 1e-14);
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(SchurEliminatorTest, BlockProblem) {
   const string input_file = TestFileAbsolutePath("problem-6-1384-000.lsqp");
 
@@ -223,7 +223,7 @@ TEST_F(SchurEliminatorTest, BlockProblem) {
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), true, 1e-10);
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), false, 1e-10);
 }
-#endif  // CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#endif  // CERES_NO_PROTOCOL_BUFFERS
 
 }  // namespace internal
 }  // namespace ceres
