@@ -177,8 +177,8 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   MACRO (CERES_TEST NAME)
     ADD_EXECUTABLE(${NAME}_test ${NAME}_test.cc)
     TARGET_LINK_LIBRARIES(${NAME}_test test_util ceres gtest)
-    ADD_TEST(${NAME}_test
-             ${NAME}_test
+    ADD_TEST(NAME ${NAME}_test
+             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
              ${CMAKE_SOURCE_DIR}/data)
   ENDMACRO (CERES_TEST)
