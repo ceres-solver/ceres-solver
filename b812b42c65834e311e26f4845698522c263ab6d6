@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIlH///1A\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:02:44Z",
+      "side": 1,
+      "message": "Somehow indicate that this is only for SuiteSparse v4; e.g.\n\nMESSAGE(\"-- Check for suitesparseconfig (SuiteSparse v4)\")",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///08\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:02:44Z",
+      "side": 1,
+      "message": "Break before NAMES and PATHS.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///1E\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:02:44Z",
+      "side": 1,
+      "message": "Break before NAMES and before PATHS to make this more readable.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIkn///s4\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -19,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "AAAIlH///04\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:02:44Z",
+      "side": 1,
+      "message": "Also indicate that this is for suitesparse v3, similar to above.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIkn///s0\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -30,6 +98,23 @@
       "writtenOn": "2012-08-17T15:48:41Z",
       "side": 1,
       "message": "put the entire OR expression on one line.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///0k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:02:44Z",
+      "side": 1,
+      "message": "Interesting. I wonder why this worked before?",
       "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
