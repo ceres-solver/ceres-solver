@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAInH///1g\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T18:00:03Z",
+      "side": 1,
+      "message": "1. Is the \u0026 in T \u0026cos_theta style-conformant?\n2. I don\u0027t get it. I see that it is correct, but why is it numerically better than the previous version? In particular, when sin_squared_theta ~ 1, the cancellation in the x term looks bad to me. When exactly did the previous method fail? There was the possibility of a near-underflow of sin_squared_theta, in which case the computed values would have been wrong. In this case sin_theta would have been underestimated and therefore theta2 / sin_theta could have become larger than pi / ||(q1,q2,q3)||.\n\nI think the proper fix for this is to use the else branch a lot earlier. sin x is numerically equal to x roughly when x^2 \u003c machine epsilon, which means |x| ~ 1e-9. Make that |x| \u003c 1e-15 if you want and it\u0027s still way above critical regions where underflow happens.\n\nUntested suggested fix:\nl.186: if (std::abs(sin_squared_theta) \u003c 1e-30) {",
+      "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
