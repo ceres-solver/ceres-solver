@@ -186,9 +186,16 @@ string Solver::Summary::FullReport() const {
                           num_linear_solver_threads_given,
                           num_linear_solver_threads_used);
 
-  internal::StringAppendF(&report, "\nSparse Linear Algebra Library %15s\n",
-                          SparseLinearAlgebraLibraryTypeToString(
-                              sparse_linear_algebra_library));
+  if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
+      linear_solver_type_used == SPARSE_SCHUR ||
+      (linear_solver_type_used == ITERATIVE_SCHUR &&
+       (preconditioner_type == SCHUR_JACOBI ||
+        preconditioner_type == CLUSTER_JACOBI ||
+        preconditioner_type == CLUSTER_TRIDIAGONAL))) {
+    internal::StringAppendF(&report, "\nSparse Linear Algebra Library %15s\n",
+                            SparseLinearAlgebraLibraryTypeToString(
+                                sparse_linear_algebra_library));
+  }
 
   internal::StringAppendF(&report, "Trust Region Strategy     %19s\n",
                           TrustRegionStrategyTypeToString(
