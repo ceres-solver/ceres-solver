@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///z8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Nah, I think this is fine. You can drop the TODO.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zw\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zo\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after if.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zk\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Remove this line; it adds no value beyond what the log statement says.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zc\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Is 0.99 something anyone would want to tune? What is the justification for the value?\n\nI also note that nothing is done differently if the 0.99 constraint is violated; only logging. Is that correct?",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zY\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "the subspace method",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zU\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Is there a reference to how to derive these coefficients? It\u0027s possible I missed it from elsewhere in the code. If not, it\u0027d be nice to include a short note.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zM\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zI\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zE\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after if.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///zA\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Spaces around \u003d, \u003c.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///y8\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Cruft.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///y4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Space after switch.\n\nI wonder if we should rely on this rank estimation. I didn\u0027t think PQR was a good at revealing rank. What does eigen use for the rank thresholds?\n\nI wonder if we should do an SVD instead (should be cheap) and make our own decisions about the conditioning.\n\nAlso, why not just take the angle? It seems doing a full decomp is unnecessary.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///y0\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:29:24Z",
+      "side": 1,
+      "message": "Indent 2 more.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
