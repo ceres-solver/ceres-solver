@@ -109,7 +109,7 @@ TEST_F(BlockSparseMatrixTest, ToDenseMatrixTest) {
   EXPECT_LT((m_a - m_b).norm(), 1e-12);
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(BlockSparseMatrixTest, Serialization) {
   // Roundtrip through serialization and check for equality.
   SparseMatrixProto proto;

@@ -96,7 +96,7 @@ class BlockSparseMatrix : public BlockSparseMatrixBase {
   explicit BlockSparseMatrix(CompressedRowBlockStructure* block_structure);
 
   // Construct a block sparse matrix from a protocol buffer.
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
   explicit BlockSparseMatrix(const SparseMatrixProto& proto);
 #endif
 
@@ -110,7 +110,7 @@ class BlockSparseMatrix : public BlockSparseMatrixBase {
   virtual void SquaredColumnNorm(double* x) const;
   virtual void ScaleColumns(const double* scale);
   virtual void ToDenseMatrix(Matrix* dense_matrix) const;
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
   virtual void ToProto(SparseMatrixProto* proto) const;
 #endif
   virtual void ToTextFile(FILE* file) const;

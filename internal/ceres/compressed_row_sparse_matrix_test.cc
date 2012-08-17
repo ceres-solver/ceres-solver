@@ -146,7 +146,7 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
   }
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(CompressedRowSparseMatrixTest, Serialization) {
   SparseMatrixProto proto;
   crsm->ToProto(&proto);
