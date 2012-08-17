@@ -51,6 +51,24 @@
       "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///1M\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T18:51:48Z",
+      "side": 1,
+      "message": "Whew, finally. Ok, I agree that two atan2\u0027s are not nice either.\nHow about the following:\n\nLet s \u003d sin_theta, c \u003d cos_theta.\n\nWe want to compute the normalized angle -pi \u003c nrm(2*theta) \u003c\u003d pi.\n\nAs 0 \u003c\u003d theta \u003c\u003d pi, nrm(2*theta) !\u003d 2*theta iff c \u003c 0.\n\nIn that case nrm(2*theta) \u003d 2*theta - 2*pi \u003d 2*(theta - pi).\n\nBut (theta - pi) \u003d atan2(-s, -c)\n\nSo in total:\n\nif (cos_theta \u003c 0) {\n\ntheta2 \u003d 2 * atan2(-sin_theta, -cos_theta);\n\n} else {\n\ntheta2 \u003d 2 * atan2(sin_theta, cos_theta);\n\n}\n\nshould work.\n\nAgain, sorry for not reading carefully enough.",
+      "parentUuid": "AAAInH///1U\u003d",
+      "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
