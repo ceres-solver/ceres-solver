@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIlH///u0\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T18:10:19Z",
+      "side": 1,
+      "message": "This needs some explanation.",
+      "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAInH///1g\u003d",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
