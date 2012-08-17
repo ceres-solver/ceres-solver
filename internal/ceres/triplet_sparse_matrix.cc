@@ -82,7 +82,7 @@ TripletSparseMatrix::TripletSparseMatrix(const TripletSparseMatrix& orig)
   CopyData(orig);
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TripletSparseMatrix::TripletSparseMatrix(const SparseMatrixProto& outer_proto) {
   CHECK(outer_proto.has_triplet_matrix());
 
@@ -214,7 +214,7 @@ void TripletSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   }
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 void TripletSparseMatrix::ToProto(SparseMatrixProto *proto) const {
   proto->Clear();
 

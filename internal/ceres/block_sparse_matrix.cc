@@ -81,7 +81,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   CHECK_NOTNULL(values_.get());
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 BlockSparseMatrix::BlockSparseMatrix(const SparseMatrixProto& outer_proto) {
   CHECK(outer_proto.has_block_matrix());
 
@@ -244,7 +244,7 @@ const CompressedRowBlockStructure* BlockSparseMatrix::block_structure()
   return block_structure_.get();
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 void BlockSparseMatrix::ToProto(SparseMatrixProto* outer_proto) const {
   outer_proto->Clear();
 

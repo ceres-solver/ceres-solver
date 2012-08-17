@@ -155,7 +155,7 @@ TEST_F(DenseSparseMatrixTest, Scale) {
   CompareMatrices(tsm.get(), dsm.get());
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(DenseSparseMatrixTest, Serialization) {
   SparseMatrixProto proto;
   dsm->ToProto(&proto);
@@ -182,7 +182,7 @@ TEST_F(DenseSparseMatrixTest, ToDenseMatrix) {
 }
 
 // TODO(keir): Make this work without protocol buffers.
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(DenseSparseMatrixTest, AppendDiagonal) {
   DenseSparseMatrixProto proto;
   proto.set_num_rows(3);

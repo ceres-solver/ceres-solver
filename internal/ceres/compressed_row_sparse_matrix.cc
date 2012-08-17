@@ -135,7 +135,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(
   CHECK_EQ(num_nonzeros(), m.num_nonzeros());
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(
     const SparseMatrixProto& outer_proto) {
   CHECK(outer_proto.has_compressed_row_matrix());
@@ -248,7 +248,7 @@ void CompressedRowSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   }
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 void CompressedRowSparseMatrix::ToProto(SparseMatrixProto* outer_proto) const {
   CHECK_NOTNULL(outer_proto);
 

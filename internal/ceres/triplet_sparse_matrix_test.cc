@@ -318,7 +318,7 @@ TEST(TripletSparseMatrix, Resize) {
   }
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST(TripletSparseMatrix, Serialization) {
   TripletSparseMatrix m(2, 5, 4);
 
