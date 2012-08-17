@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAInH///0g\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///1A\u003d",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///08\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAInH///0k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///08\u003d",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///1E\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-17T16:02:44Z",
       "side": 1,
       "message": "Break before NAMES and before PATHS to make this more readable.",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///0o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///1E\u003d",
       "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AAAInH///0s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///04\u003d",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIkn///s0\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAInH///0w\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIkn///s0\u003d",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///0k\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -115,6 +205,24 @@
       "writtenOn": "2012-08-17T16:02:44Z",
       "side": 1,
       "message": "Interesting. I wonder why this worked before?",
+      "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAInH///00\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-17T22:01:56Z",
+      "side": 1,
+      "message": "Actually they\u0027re not needed. (except ufconfig/suitesparseconfig)",
+      "parentUuid": "AAAIlH///0k\u003d",
       "revId": "b812b42c65834e311e26f4845698522c263ab6d6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
