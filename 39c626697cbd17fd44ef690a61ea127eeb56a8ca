@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///nc\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T20:47:31Z",
+      "side": 1,
+      "message": "Please indent the equation and leave one blank after like elsewhere in Ceres.",
+      "revId": "39c626697cbd17fd44ef690a61ea127eeb56a8ca",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
