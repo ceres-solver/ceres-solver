@@ -69,6 +69,24 @@
       "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIk3///p0\u003d",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-17T20:32:45Z",
+      "side": 1,
+      "message": "This is a simpler solution, fewer arithmetic operations.\nI like it.  I will go ahead and update the CL with this.",
+      "parentUuid": "AAAInH///1M\u003d",
+      "revId": "15ce80677062301a4cfca289529dbd34b02d78f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
