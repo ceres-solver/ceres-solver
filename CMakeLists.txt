@@ -36,6 +36,10 @@ ENDIF (COMMAND cmake_policy)
 
 PROJECT(CERES C CXX)
 
+SET( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin )
+SET( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+SET( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib )
+
 # Important: Always bump the second number (e.g. 1.3.x to 1.4.0) for any
 # release that changes the ABI. The ABI changes for almost any modification to
 # include/ceres (e.g. the public API). If you are unsure about whether
