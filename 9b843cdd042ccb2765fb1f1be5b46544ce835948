@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIlH///yg\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T16:32:36Z",
+      "side": 1,
+      "message": "Nit: \"CMake\" not \"cmake\" (and below).",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///1g\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
