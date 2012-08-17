@@ -222,7 +222,11 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(schur_eliminator)
   CERES_TEST(schur_ordering)
   CERES_TEST(solver_impl)
-  CERES_TEST(suitesparse)
+
+  IF (${SUITESPARSE_FOUND})
+    CERES_TEST(suitesparse)
+  ENDIF (${SUITESPARSE_FOUND})
+
   CERES_TEST(symmetric_linear_solver)
   CERES_TEST(triplet_sparse_matrix)
   CERES_TEST(trust_region_minimizer)
