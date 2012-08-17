@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIlH///1g\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T15:55:07Z",
+      "side": 1,
+      "message": "Wrap this entire bit with a \"not windows\" statement (see elsewhere in the CMake). On Windows, the git files go in _git, but I don\u0027t have a Windosw machine right now.\n\nSo, turn this off on Windows and leave a TODO() for me. I\u0027ll fix the Windows port.",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///1U\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T15:55:07Z",
+      "side": 1,
+      "message": "The hook needs to get chmod +x\u0027d as well.",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIlH///1c\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-17T15:55:07Z",
+      "side": 1,
+      "message": "Remove extra trailing blank.",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
