@@ -232,7 +232,7 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
   scoped_ptr<BlockRandomAccessDenseMatrix> schur_complement_;
 };
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 TEST_F(VisibilityBasedPreconditionerTest, SchurJacobiStructure) {
   options_.preconditioner_type = SCHUR_JACOBI;
   preconditioner_.reset(
@@ -352,7 +352,7 @@ TEST_F(VisibilityBasedPreconditionerTest, ClusterTridiagonal) {
   EXPECT_TRUE(IsSparsityStructureValid());
   EXPECT_TRUE(PreconditionerValuesMatch());
 }
-#endif  // CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#endif  // CERES_NO_PROTOCOL_BUFFERS
 
 }  // namespace internal
 }  // namespace ceres

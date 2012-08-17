@@ -20,14 +20,14 @@ class F4 : public ceres::SizedCostFunction<1, 4> {
                         double* residuals,
                         double** jacobians) const {
     double x1 = parameters[0][0];
-    double x4 = parameters[1][0];
+    double x4 = parameters[0][3];
     // $f_4 = \sqrt{10} * (x_1 - x_4)^2$
     residuals[0] = sqrt(10.0) * (x1 - x4) * (x1 - x4)
     if (jacobians != NULL) {
-      jacobians[0][0] = 2.0 * sqrt(10.0) * (x1 - x4);   // $\partial_{x_1}f_1(x)$
-      jacobians[0][1] = 0.0;                            // $\partial_{x_2}f_1(x)$
-      jacobians[0][2] = 0.0;                            // $\partial_{x_3}f_1(x)$
-      jacobians[0][3] = -2.0 * sqrt(10.0) * (x1 - x4);  // $\partial_{x_4}f_1(x)$
+      jacobians[0][0] = 2.0 * sqrt(10.0) * (x1 - x4);   // $\partial_{x_1}f_4(x)$
+      jacobians[0][1] = 0.0;                            // $\partial_{x_2}f_4(x)$
+      jacobians[0][2] = 0.0;                            // $\partial_{x_3}f_4(x)$
+      jacobians[0][3] = -2.0 * sqrt(10.0) * (x1 - x4);  // $\partial_{x_4}f_4(x)$
     }
     return true;
   }

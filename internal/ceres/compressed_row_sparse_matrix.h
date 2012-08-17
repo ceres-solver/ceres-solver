@@ -57,7 +57,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   //
   // We assume that m does not have any repeated entries.
   explicit CompressedRowSparseMatrix(const TripletSparseMatrix& m);
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
   explicit CompressedRowSparseMatrix(const SparseMatrixProto& proto);
 #endif
 
@@ -90,7 +90,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual void ScaleColumns(const double* scale);
 
   virtual void ToDenseMatrix(Matrix* dense_matrix) const;
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
   virtual void ToProto(SparseMatrixProto* proto) const;
 #endif
   virtual void ToTextFile(FILE* file) const;

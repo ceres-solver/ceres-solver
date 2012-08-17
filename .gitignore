@@ -16,3 +16,5 @@ build-debug/
 *.synctex.gz
 ceres.pdf
 ceres-solver.pdf
+obj/
+jni/libs/

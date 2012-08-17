@@ -186,15 +186,15 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
   // points and the point on it which intersects the trust region
   // boundary.
 
-  // a = alpha * gradient
+  // a = alpha * -gradient
   // b = gauss_newton_step
-  const double b_dot_a = alpha_ * gradient_.dot(gauss_newton_step_);
+  const double b_dot_a = -alpha_ * gradient_.dot(gauss_newton_step_);
   const double a_squared_norm = pow(alpha_ * gradient_norm, 2.0);
   const double b_minus_a_squared_norm =
       a_squared_norm - 2 * b_dot_a + pow(gauss_newton_norm, 2);
 
   // c = a' (b - a)
-  //   = alpha * gradient' gauss_newton_step - alpha^2 |gradient|^2
+  //   = alpha * -gradient' gauss_newton_step - alpha^2 |gradient|^2
   const double c = b_dot_a - a_squared_norm;
   const double d = sqrt(c * c + b_minus_a_squared_norm *
                         (pow(radius_, 2.0) - a_squared_norm));
@@ -203,7 +203,7 @@ void DoglegStrategy::ComputeDoglegStep(double* dogleg) {
       (c <= 0)
       ? (d - c) /  b_minus_a_squared_norm
       : (radius_ * radius_ - a_squared_norm) / (d + c);
-  dogleg_step = (alpha_ * (1.0 - beta)) * gradient_ + beta * gauss_newton_step_;
+  dogleg_step = (-alpha_ * (1.0 - beta)) * gradient_ + beta * gauss_newton_step_;
   dogleg_step_norm_ = dogleg_step.norm();
   dogleg_step.array() /= diagonal_.array();
   VLOG(3) << "Dogleg step size: " << dogleg_step_norm_
@@ -289,7 +289,6 @@ void DoglegStrategy::StepAccepted(double step_quality) {
   CHECK_GT(step_quality, 0.0);
   if (step_quality < decrease_threshold_) {
     radius_ *= 0.5;
-    return;
   }
 
   if (step_quality > increase_threshold_) {

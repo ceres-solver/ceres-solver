@@ -64,7 +64,7 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id) {
   return NULL;
 }
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromFile(
     const string& filename) {
   LinearLeastSquaresProblemProto problem_proto;
@@ -130,7 +130,7 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromFile(
       << "Ceres to be built with Protocol Buffers support.";
   return NULL;
 }
-#endif  // CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#endif  // CERES_NO_PROTOCOL_BUFFERS
 
 /*
 A = [1   2]
@@ -600,7 +600,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const string& directory,
   return true;
 };
 
-#ifndef CERES_DONT_HAVE_PROTOCOL_BUFFERS
+#ifndef CERES_NO_PROTOCOL_BUFFERS
 bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& directory,
                                                    int iteration,
                                                    const SparseMatrix* A,

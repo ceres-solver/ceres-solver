@@ -108,6 +108,8 @@ LinearSolver::Summary LevenbergMarquardtStrategy::ComputeStep(
       !IsArrayValid(num_parameters, step)) {
     LOG(WARNING) << "Linear solver failure. Failed to compute a finite step.";
     linear_solver_summary.termination_type = FAILURE;
+  } else {
+    VectorRef(step, num_parameters) *= -1.0;
   }
 
   VectorRef(step, num_parameters) *= -1;
