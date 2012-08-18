@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAIsH///+M\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "outdated comment.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///+I\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "this fits on one line right?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///+E\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "I do not understand this comment. Are you saying that the gradient and the gauss newton points are orthogonal to each other?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9o\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "we usually do constants as\n\nconst double kCosineThreshold \u003d 0.99",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9k\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "so even though we check this condition, we do not do anything about it?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///+4\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 13
@@ -13,6 +98,142 @@
       "writtenOn": "2012-08-18T15:59:56Z",
       "side": 1,
       "message": "Wow, nice note!",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9A\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "You are using y and lambda interchangably here and elsewhere. y is better to work with, so I would recommend making it y everywhere.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9M\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "a missing + sign here before the last term.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9I\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "very nice and detailed derivation.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9E\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "I would recommend inverting the construction, so that one can read off the equations above and the construction in the same order.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///9g\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "you are assuming there will always be four roots, can the polynomial be degenerate? and you get fewer roots?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///+A\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "We have tried to remove any LOG(FATAL)s from deep inside the solver. I think the strategy should log a message and return with numerical failure. Otherwise we risk taking the entire application down with us.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///98\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "move this below as part of the subspace basis computation?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///90\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-18T19:20:19Z",
+      "side": 1,
+      "message": "shoudn\u0027t this be called subspace_H_ to match the comments above.\n\nalso in the comments you use g_sub and H_sub, it would be nice to make these consistent.",
       "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
