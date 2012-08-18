@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////w\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zw\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///zo\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -47,6 +65,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Space after if.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////s\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zo\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////o\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zk\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///zc\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -81,6 +135,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Is 0.99 something anyone would want to tune? What is the justification for the value?\n\nI also note that nothing is done differently if the 0.99 constraint is violated; only logging. Is that correct?",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////k\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "In theory, we should have cosine_angle \u003d 1. I chose 0.99 to relax that condition a bit so as not to trigger too many false warnings. It\u0027s an arbitrary constant close enough to 1, but I don\u0027t think there\u0027s any reason to \"tune\" it. I\u0027ll make it a constant, though.\n\nThis is mostly a safety check. When it fails, there is a certain chance that the code is buggy. However, that also depends on the frequency (a single bad step returned by the strategy will probably not do too much harm and will be rejected anyway) as well as the actual value of cosine_angle (anything close to 1 is still reasonable. -1 is not.) I would make this an assertion, but I fear running into it when cosine_angle is say 0.989 because of numerical issues. (I would consider 0.989 good enough if it occurs only infrequently)",
+      "parentUuid": "AAAIlH///zc\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////g\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zY\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///zU\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -115,6 +205,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Is there a reference to how to derive these coefficients? It\u0027s possible I missed it from elsewhere in the code. If not, it\u0027d be nice to include a short note.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////U\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zU\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////Y\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zQ\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///zM\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -149,6 +275,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Space after ,",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////c\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zM\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////Q\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zI\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///zE\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -183,6 +345,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Space after if.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////M\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zE\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////I\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///zA\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///y8\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH////E\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///y8\u003d",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///y4\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 11
@@ -234,6 +450,24 @@
       "writtenOn": "2012-08-17T16:29:24Z",
       "side": 1,
       "message": "Space after switch.\n\nI wonder if we should rely on this rank estimation. I didn\u0027t think PQR was a good at revealing rank. What does eigen use for the rank thresholds?\n\nI wonder if we should do an SVD instead (should be cheap) and make our own decisions about the conditioning.\n\nAlso, why not just take the angle? It seems doing a full decomp is unnecessary.",
+      "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH////A\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T10:38:10Z",
+      "side": 1,
+      "message": "Re rank estimation: no idea, no experience. Eigen claims that ColPivHouseholderQR was rank-revealing.\n\n\nThe QR decomposition is done to obtain an orthogonal basis. Sameer suggested that.\n\nI don\u0027t think the thresholds matter too much here. It is always safe to do a one-dimensional search (i.e. gradient descent) and I doubt that we can get anywhere near a null matrix (gradient is guaranteed to be not too small).",
+      "parentUuid": "AAAIlH///y4\u003d",
       "revId": "73d48cf01c86a20e0c573b69010d79226e0be24d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
