@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIvX////w\u003d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-18T23:13:42Z",
+      "side": 1,
+      "message": "The scalar defaults to 1.0, so maybe it\u0027s more straight-forward to drop it.",
+      "revId": "525b28f54f672d8cf1d194ab45c8c71d10bedffa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
