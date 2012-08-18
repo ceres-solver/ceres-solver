@@ -77,7 +77,8 @@ void TrustRegionMinimizer::EstimateScale(const SparseMatrix& jacobian,
                                          double* scale) const {
   jacobian.SquaredColumnNorm(scale);
   for (int i = 0; i < jacobian.num_cols(); ++i) {
-    scale[i] = 1.0 / (kEpsilon + sqrt(scale[i]));
+    const double s = sqrt(scale[i]);
+    scale[i] = s > kEpsilon ? 1.0 / s : 1.0;
   }
 }
 

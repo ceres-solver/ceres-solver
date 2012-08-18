@@ -34,12 +34,14 @@
 // Program and Problem machinery.
 
 #include <cmath>
+#include "ceres/cost_function.h"
 #include "ceres/dense_qr_solver.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/port.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
+#include "ceres/problem.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
 #include "gtest/gtest.h"
@@ -275,6 +277,95 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
   IsTrustRegionSolveSuccessful<false, true,  false, false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, true,  false>(kStrategy);
   IsTrustRegionSolveSuccessful<false, false, false, true >(kStrategy);
+}
+
+
+class CurveCostFunction : public CostFunction {
+ public:
+  CurveCostFunction(int num_vertices, double target_length)
+      : num_vertices_(num_vertices), target_length_(target_length) {
+    set_num_residuals(1);
+    for (int i = 0; i < num_vertices_; ++i) {
+      mutable_parameter_block_sizes()->push_back(2);
+    }
+  }
+
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const {
+    residuals[0] = target_length_;
+
+    for (int i = 0; i < num_vertices_; ++i) {
+      int prev = (num_vertices_ + i - 1) % num_vertices_;
+      double length = 0.0;
+      for (int dim = 0; dim < 2; dim++) {
+        const double diff = parameters[prev][dim] - parameters[i][dim];
+        length += diff * diff;
+      }
+      residuals[0] -= sqrt(length);
+    }
+
+    if (jacobians == NULL) {
+      return true;
+    }
+
+    for (int i = 0; i < num_vertices_; ++i) {
+      if (jacobians[i] != NULL) {
+        int prev = (num_vertices_ + i - 1) % num_vertices_;
+        int next = (i + 1) % num_vertices_;
+
+        double u[2], v[2];
+        double norm_u = 0., norm_v = 0.;
+        for (int dim = 0; dim < 2; dim++) {
+          u[dim] = parameters[i][dim] - parameters[prev][dim];
+          norm_u += u[dim] * u[dim];
+          v[dim] = parameters[next][dim] - parameters[i][dim];
+          norm_v += v[dim] * v[dim];
+        }
+
+        norm_u = sqrt(norm_u);
+        norm_v = sqrt(norm_v);
+
+        for (int dim = 0; dim < 2; dim++) {
+          jacobians[i][dim] = 0.;
+
+          if (norm_u > std::numeric_limits< double >::min()) {
+            jacobians[i][dim] -= u[dim] / norm_u;
+          }
+
+          if (norm_v > std::numeric_limits< double >::min()) {
+            jacobians[i][dim] += v[dim] / norm_v;
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+ private:
+  int     num_vertices_;
+  double  target_length_;
+};
+
+TEST(TrustRegionMinimizer, JacobiScalingTest) {
+  int N = 6;
+  std::vector< double* > y(N);
+  const double pi = 3.1415926535897932384626433;
+  for (int i = 0; i < N; i++) {
+    double theta = i * 2. * pi/ static_cast< double >(N);
+    y[i] = new double[2];
+    y[i][0] = cos(theta);
+    y[i][1] = sin(theta);
+  }
+
+  Problem problem;
+  problem.AddResidualBlock(new CurveCostFunction(N, 10.), NULL, y);
+  Solver::Options options;
+  options.linear_solver_type = ceres::DENSE_QR;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_LE(summary.final_cost, 1e-10);
 }
 
 }  // namespace internal
