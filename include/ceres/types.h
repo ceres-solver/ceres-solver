@@ -59,13 +59,17 @@ enum LinearSolverType {
   // normal equations A'A x = A'b. They are direct solvers and do not
   // assume any special problem structure.
 
-  // Solve the normal equations using a sparse cholesky solver; based
-  // on CHOLMOD.
-  SPARSE_NORMAL_CHOLESKY,
+  // Solve the normal equations using a dense Cholesky solver; based
+  // on Eigen.
+  DENSE_NORMAL_CHOLESKY,
 
   // Solve the normal equations using a dense QR solver; based on
   // Eigen.
   DENSE_QR,
+
+  // Solve the normal equations using a sparse cholesky solver; based
+  // on CHOLMOD.
+  SPARSE_NORMAL_CHOLESKY,
 
   // Specialized solvers, specific to problems with a generalized
   // bi-partitite structure.

@@ -577,6 +577,12 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   EXPECT_EQ(options.linear_solver_type, DENSE_QR);
   EXPECT_TRUE(solver.get() != NULL);
 
+  options.linear_solver_type = DENSE_NORMAL_CHOLESKY;
+  string error;
+  solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
+  EXPECT_EQ(options.linear_solver_type, DENSE_QR);
+  EXPECT_TRUE(solver.get() != NULL);
+
 #ifndef CERES_NO_SUITESPARSE
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   options.sparse_linear_algebra_library = SUITE_SPARSE;

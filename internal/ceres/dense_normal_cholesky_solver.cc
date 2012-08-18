@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,66 +28,53 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/linear_solver.h"
-
-#include "ceres/cgnr_solver.h"
 #include "ceres/dense_normal_cholesky_solver.h"
-#include "ceres/dense_qr_solver.h"
-#include "ceres/iterative_schur_complement_solver.h"
-#include "ceres/schur_complement_solver.h"
-#include "ceres/sparse_normal_cholesky_solver.h"
+
+#include <cstddef>
+
+#include "Eigen/Dense"
+#include "ceres/dense_sparse_matrix.h"
+#include "ceres/linear_solver.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-LinearSolver::~LinearSolver() {
-}
+DenseNormalCholeskySolver::DenseNormalCholeskySolver(
+    const LinearSolver::Options& options)
+    : options_(options) {}
 
-LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
-  switch (options.type) {
-    case CGNR:
-      return new CgnrSolver(options);
+LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
+    DenseSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  const int num_rows = A->num_rows();
+  const int num_cols = A->num_cols();
+  VLOG(2) << "DenseNormalCholeskySolver: "
+          << num_rows << " x " << num_cols << " system.";
 
-    case SPARSE_NORMAL_CHOLESKY:
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-      LOG(WARNING) << "SPARSE_NORMAL_CHOLESKY is not available. Please "
-                   << "build Ceres with SuiteSparse or CXSparse. "
-                   << "Returning NULL.";
-      return NULL;
-#else
-      return new SparseNormalCholeskySolver(options);
-#endif
+  ConstAlignedMatrixRef Aref = A->matrix();
+  Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
+      lhs(num_cols, num_cols);
+  lhs.setZero();
+  lhs.selfadjointView<Eigen::Upper>().rankUpdate(Aref.transpose(), 1.0);
+  Vector rhs = Aref.transpose() * ConstVectorRef(b, num_rows);
 
-    case SPARSE_SCHUR:
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-      LOG(WARNING) << "SPARSE_SCHUR is not available. Please "
-                   << "build Ceres with SuiteSparse or CXSparse. "
-                   << "Returning NULL.";
-      return NULL;
-#else
-      return new SparseSchurComplementSolver(options);
-#endif
-
-    case DENSE_SCHUR:
-      return new DenseSchurComplementSolver(options);
-
-    case ITERATIVE_SCHUR:
-      return new IterativeSchurComplementSolver(options);
-
-    case DENSE_QR:
-      return new DenseQRSolver(options);
-
-    case DENSE_NORMAL_CHOLESKY:
-      return new DenseNormalCholeskySolver(options);
-
-    default:
-      LOG(FATAL) << "Unknown linear solver type :"
-                 << options.type;
-      return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
+  if (per_solve_options.D != NULL) {
+    ConstVectorRef D(per_solve_options.D, num_cols);
+    lhs += D.array().square().matrix().asDiagonal();
   }
+
+  VectorRef(x, num_cols) = lhs.selfadjointView<Eigen::Upper>().ldlt().solve(rhs);
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = TOLERANCE;
+  return summary;
 }
 
-}  // namespace internal
-}  // namespace ceres
+}   // namespace internal
+}   // namespace ceres
