@@ -63,8 +63,7 @@ int ComputeSchurOrdering(const Program& program,
 
   scoped_ptr<Graph< ParameterBlock*> > graph(
       CHECK_NOTNULL(CreateHessianGraph(program)));
-  int independent_set_size =
-      IndependentSetOrdering<ParameterBlock*>(*graph, ordering);
+  int independent_set_size = IndependentSetOrdering(*graph, ordering);
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
   // Add the excluded blocks to back of the ordering vector.
