@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIu3///+4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-18T15:59:56Z",
+      "side": 1,
+      "message": "Wow, nice note!",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
