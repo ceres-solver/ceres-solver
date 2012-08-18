@@ -73,7 +73,8 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
 
     scoped_ptr<SparseMatrix> transformed_A;
 
-    if (linear_solver_type == DENSE_QR) {
+    if (linear_solver_type == DENSE_QR ||
+        linear_solver_type == DENSE_NORMAL_CHOLESKY) {
       transformed_A.reset(new DenseSparseMatrix(*A_));
     } else if (linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
       transformed_A.reset(new   CompressedRowSparseMatrix(*A_));
@@ -116,6 +117,10 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
 
 TEST_F(UnsymmetricLinearSolverTest, DenseQR) {
   TestSolver(DENSE_QR, SUITE_SPARSE);
+}
+
+TEST_F(UnsymmetricLinearSolverTest, DenseNormalCholesky) {
+  TestSolver(DENSE_NORMAL_CHOLESKY, SUITE_SPARSE);
 }
 
 #ifndef CERES_NO_SUITESPARSE

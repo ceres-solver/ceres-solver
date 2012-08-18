@@ -77,8 +77,8 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
              "accuracy of each linear solve of the truncated newton step. "
              "Changing this parameter can affect solve performance ");
 DEFINE_string(solver_type, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, cholesky, "
-              "dense_qr, and conjugate_gradients");
+              "sparse_schur, dense_schur, iterative_schur, sparse_cholesky, "
+              "dense_qr, dense_cholesky and conjugate_gradients");
 DEFINE_string(preconditioner_type, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal");
@@ -116,7 +116,7 @@ void SetLinearSolver(Solver::Options* options) {
     options->linear_solver_type = ceres::DENSE_SCHUR;
   } else if (FLAGS_solver_type == "iterative_schur") {
     options->linear_solver_type = ceres::ITERATIVE_SCHUR;
-  } else if (FLAGS_solver_type == "cholesky") {
+  } else if (FLAGS_solver_type == "sparse_cholesky") {
     options->linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
   } else if (FLAGS_solver_type == "cgnr") {
     options->linear_solver_type = ceres::CGNR;
@@ -126,6 +126,12 @@ void SetLinearSolver(Solver::Options* options) {
     // to store even the smallest of the bundle adjustment jacobian
     // arrays
     options->linear_solver_type = ceres::DENSE_QR;
+  } else if (FLAGS_solver_type == "dense_cholesky") {
+    // DENSE_NORMAL_CHOLESKY is included here for completeness, but
+    // actually using this option is a bad idea due to the amount of
+    // memory needed to store even the smallest of the bundle
+    // adjustment jacobian arrays
+    options->linear_solver_type = ceres::DENSE_NORMAL_CHOLESKY;
   } else {
     LOG(FATAL) << "Unknown ceres solver type: "
                << FLAGS_solver_type;

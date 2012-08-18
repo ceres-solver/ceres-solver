@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,9 +28,11 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
-// Solve dense rectangular systems Ax = b using the QR factorization.
-#ifndef CERES_INTERNAL_DENSE_QR_SOLVER_H_
-#define CERES_INTERNAL_DENSE_QR_SOLVER_H_
+// Solve dense rectangular systems Ax = b by forming the normal
+// equations and solving them using the Cholesky factorization.
+
+#ifndef CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
+#define CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
 
 #include "ceres/linear_solver.h"
 #include "ceres/internal/macros.h"
@@ -52,19 +54,13 @@ class DenseSparseMatrix;
 //
 //   min_x |Ax - b|^2
 //
-// The solution strategy is based on computing the QR decomposition of
-// A, i.e.
+// Setting the gradient of the above optimization problem to zero
+// gives us the normal equations
 //
-//   A = QR
+//   A'Ax = A'b
 //
-// Where Q is an orthonormal matrix and R is an upper triangular
-// matrix. Then
-//
-//     Ax = b
-//    QRx = b
-//  Q'QRx = Q'b
-//     Rx = Q'b
-//      x = R^{-1} Q'b
+// A'A is a positive definite matrix (hopefully), and the resulting
+// linear system can be solved using Cholesky factorization.
 //
 // If the PerSolveOptions struct has a non-null array D, then the
 // augmented/regularized linear system
@@ -74,13 +70,13 @@ class DenseSparseMatrix;
 //
 // is solved.
 //
-// This class uses the dense QR factorization routines from the Eigen
+// This class uses the LDLT factorization routines from the Eigen
 // library. This solver always returns a solution, it is the user's
 // responsibility to judge if the solution is good enough for their
 // purposes.
-class DenseQRSolver: public DenseSparseMatrixSolver {
+class DenseNormalCholeskySolver: public DenseSparseMatrixSolver {
  public:
-  explicit DenseQRSolver(const LinearSolver::Options& options);
+  explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
 
  private:
   virtual LinearSolver::Summary SolveImpl(
@@ -90,10 +86,10 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
       double* x);
 
   const LinearSolver::Options options_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(DenseNormalCholeskySolver);
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_DENSE_QR_SOLVER_H_
+#endif  // CERES_INTERNAL_DENSE_NORMAL_CHOLESKY_SOLVER_H_
