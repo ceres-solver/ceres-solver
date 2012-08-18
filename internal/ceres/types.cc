@@ -37,8 +37,9 @@ namespace ceres {
 
 const char* LinearSolverTypeToString(LinearSolverType solver_type) {
   switch (solver_type) {
-    CASESTR(SPARSE_NORMAL_CHOLESKY);
+    CASESTR(DENSE_NORMAL_CHOLESKY);
     CASESTR(DENSE_QR);
+    CASESTR(SPARSE_NORMAL_CHOLESKY);
     CASESTR(DENSE_SCHUR);
     CASESTR(SPARSE_SCHUR);
     CASESTR(ITERATIVE_SCHUR);
