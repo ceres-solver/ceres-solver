@@ -58,6 +58,7 @@ class Solver {
     // Default constructor that sets up a generic sparse problem.
     Options() {
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
+      dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
       max_consecutive_nonmonotonic_steps = 5;
       max_num_iterations = 50;
@@ -120,6 +121,9 @@ class Solver {
     // Minimizer options ----------------------------------------
 
     TrustRegionStrategyType trust_region_strategy_type;
+
+    // Type of dogleg strategy to use.
+    DoglegType dogleg_type;
 
     // The classical trust region methods are descent methods, in that
     // they only accept a point if it strictly reduces the value of

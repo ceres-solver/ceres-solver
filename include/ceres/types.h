@@ -183,6 +183,24 @@ enum TrustRegionStrategyType {
   DOGLEG
 };
 
+// Ceres supports two different dogleg strategies.
+// The "traditional" dogleg method by Powell and the
+// "subspace" method described in
+// R. H. Byrd, R. B. Schnabel, and G. A. Shultz,
+// "Approximate solution of the trust region problem by minimization
+//  over two-dimensional subspaces", Mathematical Programming,
+// 40 (1988), pp. 247--263
+enum DoglegType {
+  // The traditional approach constructs a dogleg path
+  // consisting of two line segments and finds the furthest
+  // point on that path that is still inside the trust region.
+  TRADITIONAL_DOGLEG,
+
+  // The subspace approach finds the exact minimum of the model
+  // constrained to the subspace spanned by the dogleg path.
+  SUBSPACE_DOGLEG
+};
+
 enum SolverTerminationType {
   // The minimizer did not run at all; usually due to errors in the user's
   // Problem or the solver options.
