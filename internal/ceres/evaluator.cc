@@ -51,6 +51,7 @@ Evaluator* Evaluator::Create(const Evaluator::Options& options,
                              string* error) {
   switch (options.linear_solver_type) {
     case DENSE_QR:
+    case DENSE_NORMAL_CHOLESKY:
       return new ProgramEvaluator<ScratchEvaluatePreparer,
                                   DenseJacobianWriter>(options,
                                                        program);

@@ -45,6 +45,7 @@ SET(CERES_INTERNAL_SRC
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
     corrector.cc
+    dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
     dense_sparse_matrix.cc
     detect_structure.cc

@@ -279,7 +279,8 @@ TEST(SystemTest, PowellsFunction) {
                                  sparse_linear_algebra_library,           \
                                  ordering))
 
-  CONFIGURE(DENSE_QR,    SUITE_SPARSE, NATURAL);
+  CONFIGURE(DENSE_QR, SUITE_SPARSE, NATURAL);
+  CONFIGURE(DENSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL);
   CONFIGURE(DENSE_SCHUR, SUITE_SPARSE, SCHUR);
 
 #ifndef CERES_NO_SUITESPARSE
