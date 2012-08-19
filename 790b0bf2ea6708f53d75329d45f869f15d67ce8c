@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///+s\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-19T15:52:39Z",
+      "side": 1,
+      "message": "whoops",
+      "parentUuid": "AAAIsH///+M\u003d",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///+I\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///+o\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-19T15:52:39Z",
+      "side": 1,
+      "message": "the semicolon will be the 81st character.",
+      "parentUuid": "AAAIsH///+I\u003d",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///+E\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-18T19:20:19Z",
       "side": 1,
       "message": "I do not understand this comment. Are you saying that the gradient and the gauss newton points are orthogonal to each other?",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH///+k\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-19T15:52:39Z",
+      "side": 1,
+      "message": "I\u0027ll clarify. I wanted to say that we can use gauss_newton_step_.norm() even while gauss_newton_step_ is not expressed in the subspace basis.",
+      "parentUuid": "AAAIsH///+E\u003d",
       "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///+g\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-19T15:52:39Z",
+      "side": 1,
+      "message": "I\u0027m open to using regular dogleg here as well, but the correct thing to do at this point (if someone observes these messages frequently) is to find the problem in the code.\nMaybe this should follow the same logic as \"invalid step\", i.e. stop with an error if it happens more than once in say ten consecutive calls.",
+      "parentUuid": "AAAIsH///9k\u003d",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///+4\u003d",
         "filename": "internal/ceres/dogleg_strategy.cc",
         "patchSetId": 13
@@ -115,6 +187,24 @@
       "writtenOn": "2012-08-18T19:20:19Z",
       "side": 1,
       "message": "You are using y and lambda interchangably here and elsewhere. y is better to work with, so I would recommend making it y everywhere.",
+      "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH///+c\u003d",
+        "filename": "internal/ceres/dogleg_strategy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-19T15:52:39Z",
+      "side": 1,
+      "message": "Makes sense, I\u0027ll do that. I started with lambda, as that is more common, but here it simply became too long.",
+      "parentUuid": "AAAIsH///9A\u003d",
       "revId": "790b0bf2ea6708f53d75329d45f869f15d67ce8c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
