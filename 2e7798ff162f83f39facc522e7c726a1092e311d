@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIu3///6c\u003d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-19T08:21:47Z",
+      "side": 1,
+      "message": "Isn\u0027t this type simply the ceres::internal::Matrix typedef?",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///6Y\u003d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-19T08:21:47Z",
+      "side": 1,
+      "message": "Maybe I am misreading this, but what\u0027s the reason to not use Eigen\u0027s GEMM routines instead? I suspect this is slower than a genera matrix multiply. Might be worth checking.\n\nIn either case,  a short comment would be nice.",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///6U\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-19T08:21:47Z",
+      "side": 1,
+      "message": "The alignment in this block is odd. Consider removing the tabular structure from this block, since the DENSE_NORMAL_CHOLESKY makes things awkward.",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
