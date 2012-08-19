@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIsH///7E\u003d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-19T15:47:44Z",
+      "side": 1,
+      "message": "You are right. I had a brainfart about alignment.",
+      "parentUuid": "AAAIu3///6c\u003d",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///6Y\u003d",
         "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIsH///7A\u003d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-19T15:47:44Z",
+      "side": 1,
+      "message": "rankupdate informs eigen that its an outer product, so it knows that that its evaluating A \u003d B\u0027B, rather than A \u003d B\u0027C. If eigen is doing things right, this should be faster.",
+      "parentUuid": "AAAIu3///6Y\u003d",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///6U\u003d",
         "filename": "internal/ceres/system_test.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-19T08:21:47Z",
       "side": 1,
       "message": "The alignment in this block is odd. Consider removing the tabular structure from this block, since the DENSE_NORMAL_CHOLESKY makes things awkward.",
+      "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///68\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-19T15:47:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIu3///6U\u003d",
       "revId": "2e7798ff162f83f39facc522e7c726a1092e311d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
