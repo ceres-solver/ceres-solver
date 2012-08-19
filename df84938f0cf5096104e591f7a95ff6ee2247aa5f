@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIsH///44\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-19T21:13:27Z",
+      "side": 1,
+      "message": "or CXSparse?",
+      "revId": "df84938f0cf5096104e591f7a95ff6ee2247aa5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///40\u003d",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-19T21:13:27Z",
+      "side": 1,
+      "message": "Remove the hard tab. This is not a rule; so use spaces instead.",
+      "revId": "df84938f0cf5096104e591f7a95ff6ee2247aa5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
