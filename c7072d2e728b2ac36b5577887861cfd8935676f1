@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIu3///z0\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-20T15:31:40Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "c7072d2e728b2ac36b5577887861cfd8935676f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///zw\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-20T15:31:40Z",
+      "side": 1,
+      "message": "Document; number of iterations of what? The preconditioned conjugate gradient?",
+      "revId": "c7072d2e728b2ac36b5577887861cfd8935676f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIu3///zo\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-20T15:31:40Z",
+      "side": 1,
+      "message": "Is this the right type to use? I guess it\u0027s fine but things may change with e.g. line search.",
+      "revId": "c7072d2e728b2ac36b5577887861cfd8935676f1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
