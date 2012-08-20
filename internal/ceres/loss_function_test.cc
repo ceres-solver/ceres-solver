@@ -104,6 +104,49 @@ TEST(LossFunction, CauchyLoss) {
   AssertLossFunctionIsValid(CauchyLoss(1.3), 1.792);
 }
 
+TEST(LossFunction, ArctanLoss) {
+  AssertLossFunctionIsValid(ArctanLoss(0.7), 0.357);
+  AssertLossFunctionIsValid(ArctanLoss(0.7), 1.792);
+  AssertLossFunctionIsValid(ArctanLoss(1.3), 0.357);
+  AssertLossFunctionIsValid(ArctanLoss(1.3), 1.792);
+}
+
+TEST(LossFunction, TolerantLoss) {
+  AssertLossFunctionIsValid(TolerantLoss(0.7, 0.4), 0.357);
+  AssertLossFunctionIsValid(TolerantLoss(0.7, 0.4), 1.792);
+  AssertLossFunctionIsValid(TolerantLoss(0.7, 0.4), 55.5);
+  AssertLossFunctionIsValid(TolerantLoss(1.3, 0.1), 0.357);
+  AssertLossFunctionIsValid(TolerantLoss(1.3, 0.1), 1.792);
+  AssertLossFunctionIsValid(TolerantLoss(1.3, 0.1), 55.5);
+  // Check the value at zero is actually zero.
+  double rho[3];
+  TolerantLoss(0.7, 0.4).Evaluate(0.0, rho);
+  ASSERT_NEAR(rho[0], 0.0, 1e-6);
+  // Check that loss before and after the approximation threshold are good.
+  // A threshold of 36.7 is used by the implementation.
+  AssertLossFunctionIsValid(TolerantLoss(20.0, 1.0), 20.0 + 36.6);
+  AssertLossFunctionIsValid(TolerantLoss(20.0, 1.0), 20.0 + 36.7);
+  AssertLossFunctionIsValid(TolerantLoss(20.0, 1.0), 20.0 + 36.8);
+  AssertLossFunctionIsValid(TolerantLoss(20.0, 1.0), 20.0 + 1000.0);
+}
+
+TEST(LossFunction, ComposedLoss) {
+  {
+    HuberLoss f(0.7);
+    CauchyLoss g(1.3);
+    ComposedLoss c(&f, DO_NOT_TAKE_OWNERSHIP, &g, DO_NOT_TAKE_OWNERSHIP);
+    AssertLossFunctionIsValid(c, 0.357);
+    AssertLossFunctionIsValid(c, 1.792);
+  }
+  {
+    CauchyLoss f(0.7);
+    HuberLoss g(1.3);
+    ComposedLoss c(&f, DO_NOT_TAKE_OWNERSHIP, &g, DO_NOT_TAKE_OWNERSHIP);
+    AssertLossFunctionIsValid(c, 0.357);
+    AssertLossFunctionIsValid(c, 1.792);
+  }
+}
+
 TEST(LossFunction, ScaledLoss) {
   // Wrap a few loss functions, and a few scale factors. This can't combine
   // construction with the call to AssertLossFunctionIsValid() because Apple's
@@ -126,6 +169,22 @@ TEST(LossFunction, ScaledLoss) {
   }
   {
     ScaledLoss scaled_loss(new CauchyLoss(1.3), 10, TAKE_OWNERSHIP);
+    AssertLossFunctionIsValid(scaled_loss, 1.792);
+  }
+  {
+    ScaledLoss scaled_loss(new ArctanLoss(1.3), 10, TAKE_OWNERSHIP);
+    AssertLossFunctionIsValid(scaled_loss, 1.792);
+  }
+  {
+    ScaledLoss scaled_loss(
+        new TolerantLoss(1.3, 0.1), 10, TAKE_OWNERSHIP);
+    AssertLossFunctionIsValid(scaled_loss, 1.792);
+  }
+  {
+    ScaledLoss scaled_loss(
+        new ComposedLoss(
+            new HuberLoss(0.8), TAKE_OWNERSHIP,
+            new TolerantLoss(1.3, 0.5), TAKE_OWNERSHIP), 10, TAKE_OWNERSHIP);
     AssertLossFunctionIsValid(scaled_loss, 1.792);
   }
 }
