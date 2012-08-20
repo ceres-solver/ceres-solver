@@ -225,6 +225,7 @@ string Program::ToString() const {
     ret += StringPrintf("%d: %s\n",
                         i, parameter_blocks_[i]->ToString().c_str());
   }
+  return ret;
 }
 
 }  // namespace internal
