@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIu3///ns\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-20T17:54:41Z",
+      "side": 1,
+      "message": "Is this file changed? I see there is a new patch set but I don\u0027t see the new files. I wonder if Gerrit is messing up?\n\nRegarding coding style: We follow a coding convention which is close to the other Google styles. It\u0027s not written up anywhere though; sorry. I need to make a wiki page about this. Overall, if you follow the example set by other code you should be fine.",
+      "parentUuid": "AAAIvX///9w\u003d",
+      "revId": "b838a91c20bd16096e451def4d9f9aa5e778a61b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///y8\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
