@@ -582,7 +582,6 @@ IF (MSVC)
 ENDIF (MSVC)
 
 ADD_SUBDIRECTORY(internal/ceres)
-ADD_SUBDIRECTORY(examples)
 
 OPTION(BUILD_DOCUMENTATION
        "Build User's Guide (pdf)"
@@ -595,3 +594,12 @@ IF (${BUILD_DOCUMENTATION})
   # The corresponding target is UserGuide, but is included in ALL.
   ADD_SUBDIRECTORY(docs)
 ENDIF (${BUILD_DOCUMENTATION})
+
+OPTION(BUILD_EXAMPLES "Build examples" ON)
+
+IF (${BUILD_EXAMPLES})
+  MESSAGE("-- Build the examples.")
+  ADD_SUBDIRECTORY(examples)
+ELSE (${BUILD_EXAMPLES})
+  MESSAGE("-- Do not build any example.")
+ENDIF (${BUILD_EXAMPLES})
