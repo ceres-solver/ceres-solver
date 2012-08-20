@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///80\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T14:31:07Z",
+      "side": 1,
+      "message": "Here it is a GLOB_RECURSE not a simple GLOB, so all headers file from include/internal get installed too...",
+      "parentUuid": "AAAIsH///zw\u003d",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///z4\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///8w\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T14:31:07Z",
+      "side": 1,
+      "message": "Right, the line \n  RUNTIME DESTINATION bin\n\ncan be removed since there is no targets in this case...",
+      "parentUuid": "AAAIsH///z4\u003d",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///z0\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-20T14:17:27Z",
       "side": 1,
       "message": "I am also wondering if its worth making bin/examples and bin/tests? to separate the two out.",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH///8s\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T14:31:07Z",
+      "side": 1,
+      "message": "you mean in the installation process or in the compilation process?",
+      "parentUuid": "AAAIsH///z0\u003d",
       "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
