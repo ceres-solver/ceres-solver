@@ -250,7 +250,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     const time_t strategy_start_time = time(NULL);
     TrustRegionStrategy::PerSolveOptions per_solve_options;
     per_solve_options.eta = options_.eta;
-    LinearSolver::Summary strategy_summary =
+    TrustRegionStrategy::Summary strategy_summary =
         strategy->ComputeStep(per_solve_options,
                               jacobian,
                               residuals.data(),

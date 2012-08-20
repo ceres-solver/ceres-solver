@@ -53,11 +53,10 @@ public:
   virtual ~DoglegStrategy() {}
 
   // TrustRegionStrategy interface
-  virtual LinearSolver::Summary ComputeStep(
-      const TrustRegionStrategy::PerSolveOptions& per_solve_options,
-      SparseMatrix* jacobian,
-      const double* residuals,
-      double* step);
+  virtual Summary ComputeStep(const PerSolveOptions& per_solve_options,
+                              SparseMatrix* jacobian,
+                              const double* residuals,
+                              double* step);
   virtual void StepAccepted(double step_quality);
   virtual void StepRejected(double step_quality);
   virtual void StepIsInvalid();

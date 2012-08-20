@@ -71,7 +71,7 @@ DoglegStrategy::DoglegStrategy(const TrustRegionStrategy::Options& options)
 // gradient) and the new Gauss-Newton step are computed from
 // scratch. The Dogleg step is then computed as interpolation of these
 // two vectors.
-LinearSolver::Summary DoglegStrategy::ComputeStep(
+TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
     const TrustRegionStrategy::PerSolveOptions& per_solve_options,
     SparseMatrix* jacobian,
     const double* residuals,
@@ -85,10 +85,10 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
     // Gauss-Newton and gradient vectors are always available, only a
     // new interpolant need to be computed.
     ComputeDoglegStep(step);
-    LinearSolver::Summary linear_solver_summary;
-    linear_solver_summary.num_iterations = 0;
-    linear_solver_summary.termination_type = TOLERANCE;
-    return linear_solver_summary;
+    TrustRegionStrategy::Summary summary;
+    summary.num_iterations = 0;
+    summary.termination_type = TOLERANCE;
+    return summary;
   }
 
   reuse_ = true;
@@ -123,7 +123,11 @@ LinearSolver::Summary DoglegStrategy::ComputeStep(
     ComputeDoglegStep(step);
   }
 
-  return linear_solver_summary;
+  TrustRegionStrategy::Summary summary;
+  summary.residual_norm = linear_solver_summary.residual_norm;
+  summary.num_iterations = linear_solver_summary.num_iterations;
+  summary.termination_type = linear_solver_summary.termination_type;
+  return summary;
 }
 
 // The trust region is assumed to be elliptical with the

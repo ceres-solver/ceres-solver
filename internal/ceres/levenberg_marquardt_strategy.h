@@ -31,7 +31,7 @@
 #ifndef CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 #define CERES_INTERNAL_LEVENBERG_MARQUARDT_STRATEGY_H_
 
-#include "ceres/linear_solver.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/trust_region_strategy.h"
 
 namespace ceres {
@@ -48,7 +48,7 @@ public:
   virtual ~LevenbergMarquardtStrategy();
 
   // TrustRegionStrategy interface
-  virtual LinearSolver::Summary ComputeStep(
+  virtual TrustRegionStrategy::Summary ComputeStep(
       const TrustRegionStrategy::PerSolveOptions& per_solve_options,
       SparseMatrix* jacobian,
       const double* residuals,

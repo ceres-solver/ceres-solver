@@ -31,10 +31,13 @@
 #ifndef CERES_INTERNAL_TRUST_REGION_STRATEGY_H_
 #define CERES_INTERNAL_TRUST_REGION_STRATEGY_H_
 
-#include "ceres/linear_solver.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
+
+class LinearSolver;
+class SparseMatrix;
 
 // Interface for classes implementing various trust region strategies
 // for nonlinear least squares problems.
@@ -79,14 +82,25 @@ public:
     double eta;
   };
 
+  struct Summary {
+    Summary()
+        : residual_norm(0.0),
+          num_iterations(-1),
+          termination_type(FAILURE) {
+    }
+
+    double residual_norm;
+    int num_iterations;
+    LinearSolverTerminationType termination_type;
+  };
+
   virtual ~TrustRegionStrategy();
 
   // Use the current radius to solve for the trust region step.
-  virtual LinearSolver::Summary ComputeStep(
-      const PerSolveOptions& per_solve_options,
-      SparseMatrix* jacobian,
-      const double* residuals,
-      double* step) = 0;
+  virtual Summary ComputeStep(const PerSolveOptions& per_solve_options,
+                              SparseMatrix* jacobian,
+                              const double* residuals,
+                              double* step) = 0;
 
   // Inform the strategy that the current step has been accepted, and
   // that the ratio of the decrease in the non-linear objective to the
