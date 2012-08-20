@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIsH///zw\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:17:27Z",
+      "side": 1,
+      "message": "I think you are going to need include and include/internal and that should suffice. If it doesn\u0027t then we have a bug.",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///z4\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:17:27Z",
+      "side": 1,
+      "message": "I do not think we should be installing the binaries.\nalso for android I think things are a bit more complicated.",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///z0\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:17:27Z",
+      "side": 1,
+      "message": "I am also wondering if its worth making bin/examples and bin/tests? to separate the two out.",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
