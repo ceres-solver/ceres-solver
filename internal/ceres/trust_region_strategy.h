@@ -59,7 +59,8 @@ public:
           initial_radius(1e4),
           max_radius(1e32),
           lm_min_diagonal(1e-6),
-          lm_max_diagonal(1e32) {
+          lm_max_diagonal(1e32),
+          dogleg_type(TRADITIONAL_DOGLEG) {
     }
 
     TrustRegionStrategyType trust_region_strategy_type;
@@ -74,6 +75,9 @@ public:
     // that the Gauss-Newton step computation is of full rank.
     double lm_min_diagonal;
     double lm_max_diagonal;
+
+    // Further specify which dogleg method to use
+    DoglegType dogleg_type;
   };
 
   // Per solve options.

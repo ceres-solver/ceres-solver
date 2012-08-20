@@ -47,6 +47,11 @@ namespace internal {
 // Gauss-Newton step, we compute a regularized version of it. This is
 // because the Jacobian is often rank-deficient and in such cases
 // using a direct solver leads to numerical failure.
+//
+// If SUBSPACE is passed as the type argument to the constructor, the
+// DoglegStrategy follows the approach by Shultz, Schnabel, Byrd.
+// This finds the exact optimum over the two-dimensional subspace
+// spanned by the two Dogleg vectors.
 class DoglegStrategy : public TrustRegionStrategy {
 public:
   DoglegStrategy(const TrustRegionStrategy::Options& options);
@@ -64,11 +69,21 @@ public:
   virtual double Radius() const;
 
  private:
+  typedef Eigen::Matrix<double, 2, 1, Eigen::DontAlign> Vector2d;
+  typedef Eigen::Matrix<double, 2, 2, Eigen::DontAlign> Matrix2d;
+
   LinearSolver::Summary ComputeGaussNewtonStep(SparseMatrix* jacobian,
                                                const double* residuals);
   void ComputeCauchyPoint(SparseMatrix* jacobian);
   void ComputeGradient(SparseMatrix* jacobian, const double* residuals);
-  void ComputeDoglegStep(double* step);
+  void ComputeTraditionalDoglegStep(double* step);
+  bool ComputeSubspaceModel(SparseMatrix* jacobian);
+  void ComputeSubspaceDoglegStep(double* step);
+
+  bool FindMinimumOnTrustRegionBoundary(Vector2d* minimum) const;
+  Vector MakePolynomialForBoundaryConstrainedProblem() const;
+  Vector2d ComputeSubspaceStepFromRoot(double lambda) const;
+  double EvaluateSubspaceModel(const Vector2d& x) const;
 
   LinearSolver* linear_solver_;
   double radius_;
@@ -122,6 +137,17 @@ public:
   // increased and a new solve should be done when ComputeStep is
   // called again, thus reuse is set to false.
   bool reuse_;
+
+  // The dogleg type determines how the minimum of the local
+  // quadratic model is found.
+  DoglegType dogleg_type_;
+
+  // If the type is SUBSPACE_DOGLEG, the two-dimensional
+  // model 1/2 x^T B x + g^T x has to be computed and stored.
+  bool subspace_is_one_dimensional_;
+  Matrix subspace_basis_;
+  Vector2d subspace_g_;
+  Matrix2d subspace_B_;
 };
 
 }  // namespace internal
