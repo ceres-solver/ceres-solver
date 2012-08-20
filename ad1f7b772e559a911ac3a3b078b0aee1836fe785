@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIu3///mQ\u003d",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-20T18:16:02Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "ad1f7b772e559a911ac3a3b078b0aee1836fe785",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
