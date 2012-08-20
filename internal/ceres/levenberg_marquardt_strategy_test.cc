@@ -28,14 +28,15 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
+#include "ceres/levenberg_marquardt_strategy.h"
+#include "ceres/linear_solver.h"
+#include "ceres/trust_region_strategy.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
 #include "gmock/mock-log.h"
 #include "gtest/gtest.h"
-#include "ceres/trust_region_strategy.h"
-#include "ceres/levenberg_marquardt_strategy.h"
-#include "ceres/internal/eigen.h"
 
 using testing::AllOf;
 using testing::AnyNumber;
@@ -147,7 +148,7 @@ TEST(LevenbergMarquardtStrategy, CorrectDiagonalToLinearSolver) {
     EXPECT_CALL(log, Log(WARNING, _,
                          HasSubstr("Failed to compute a finite step.")));
 
-    LinearSolver::Summary summary = lms.ComputeStep(pso, &dsm, &residual, x);
+    TrustRegionStrategy::Summary summary = lms.ComputeStep(pso, &dsm, &residual, x);
     EXPECT_EQ(summary.termination_type, FAILURE);
   }
 }

@@ -45,6 +45,7 @@ SET(CERES_INTERNAL_SRC
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
     corrector.cc
+    dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
     dense_sparse_matrix.cc
     detect_structure.cc
@@ -180,8 +181,8 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   MACRO (CERES_TEST NAME)
     ADD_EXECUTABLE(${NAME}_test ${NAME}_test.cc)
     TARGET_LINK_LIBRARIES(${NAME}_test test_util ceres gtest)
-    ADD_TEST(${NAME}_test
-             ${NAME}_test
+    ADD_TEST(NAME ${NAME}_test
+             COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
              ${CMAKE_SOURCE_DIR}/data)
   ENDMACRO (CERES_TEST)

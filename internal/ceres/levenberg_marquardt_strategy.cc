@@ -61,7 +61,7 @@ LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
 LevenbergMarquardtStrategy::~LevenbergMarquardtStrategy() {
 }
 
-LinearSolver::Summary LevenbergMarquardtStrategy::ComputeStep(
+TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
     const TrustRegionStrategy::PerSolveOptions& per_solve_options,
     SparseMatrix* jacobian,
     const double* residuals,
@@ -114,7 +114,12 @@ LinearSolver::Summary LevenbergMarquardtStrategy::ComputeStep(
 
   VectorRef(step, num_parameters) *= -1;
   reuse_diagonal_ = true;
-  return linear_solver_summary;
+
+  TrustRegionStrategy::Summary summary;
+  summary.residual_norm = linear_solver_summary.residual_norm;
+  summary.num_iterations = linear_solver_summary.num_iterations;
+  summary.termination_type = linear_solver_summary.termination_type;
+  return summary;
 }
 
 void LevenbergMarquardtStrategy::StepAccepted(double step_quality) {
