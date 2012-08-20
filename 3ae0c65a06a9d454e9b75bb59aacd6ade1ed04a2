@@ -16,6 +16,40 @@
       "revId": "3ae0c65a06a9d454e9b75bb59aacd6ade1ed04a2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///po\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T17:38:03Z",
+      "side": 1,
+      "message": "indentation.",
+      "revId": "3ae0c65a06a9d454e9b75bb59aacd6ade1ed04a2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///pk\u003d",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T17:38:03Z",
+      "side": 1,
+      "message": "indentation.",
+      "revId": "3ae0c65a06a9d454e9b75bb59aacd6ade1ed04a2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
