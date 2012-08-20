@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIu3///xU\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-20T15:57:15Z",
+      "side": 1,
+      "message": "Add a \"MESSAGE()\" like in the above sections. Include a message on both sides of the branch.",
+      "revId": "2ac5a3d5e85672a7694429eaa0ff8dd82b5cc3a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
