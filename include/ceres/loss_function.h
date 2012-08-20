@@ -175,6 +175,7 @@ class HuberLoss : public LossFunction {
  public:
   explicit HuberLoss(double a) : a_(a), b_(a * a) { }
   virtual void Evaluate(double, double*) const;
+
  private:
   const double a_;
   // b = a^2.
@@ -190,6 +191,7 @@ class SoftLOneLoss : public LossFunction {
  public:
   explicit SoftLOneLoss(double a) : b_(a * a), c_(1 / b_) { }
   virtual void Evaluate(double, double*) const;
+
  private:
   // b = a^2.
   const double b_;
@@ -206,6 +208,7 @@ class CauchyLoss : public LossFunction {
  public:
   explicit CauchyLoss(double a) : b_(a * a), c_(1 / b_) { }
   virtual void Evaluate(double, double*) const;
+
  private:
   // b = a^2.
   const double b_;
@@ -226,6 +229,7 @@ class ArctanLoss : public LossFunction {
  public:
   explicit ArctanLoss(double a) : a_(a), b_(1 / (a * a)) { }
   virtual void Evaluate(double, double*) const;
+
  private:
   const double a_;
   // b = 1 / a^2.
