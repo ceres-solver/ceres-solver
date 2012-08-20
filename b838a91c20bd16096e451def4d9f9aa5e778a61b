@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIvX///9w\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T17:25:52Z",
+      "side": 1,
+      "message": "Is there some coding style for cmake that you are using available somewhere?\n\nmy text editor is set up for \"standard\" cmake coding style, that have been used among itk, vtk, opencv...\n\nDone",
+      "parentUuid": "AAAIu3///zE\u003d",
+      "revId": "b838a91c20bd16096e451def4d9f9aa5e778a61b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///y8\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIvX///9o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T17:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIu3///y8\u003d",
+      "revId": "b838a91c20bd16096e451def4d9f9aa5e778a61b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIu3///zI\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-20T15:44:47Z",
       "side": 1,
       "message": "Please make sure all lines are \u003c 80 columns. In this case you could wrap after FILE_PERMISSIONS, indent each permission, and stack them.",
+      "revId": "b838a91c20bd16096e451def4d9f9aa5e778a61b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIvX///9s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T17:25:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIu3///zI\u003d",
       "revId": "b838a91c20bd16096e451def4d9f9aa5e778a61b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
