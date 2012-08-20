@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_PROGRAM_H_
 #define CERES_INTERNAL_PROGRAM_H_
 
+#include <string>
 #include <vector>
 #include "ceres/internal/port.h"
 
@@ -109,6 +110,10 @@ class Program {
   int MaxDerivativesPerResidualBlock() const;
   int MaxParametersPerResidualBlock() const;
   int MaxResidualsPerResidualBlock() const;
+
+  // A human-readable dump of the parameter blocks for debugging.
+  // TODO(keir): If necessary, also dump the residual blocks.
+  string ToString() const;
 
  private:
   // The Program does not own the ParameterBlock or ResidualBlock objects.
