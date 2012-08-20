@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///9w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T08:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///yg\u003d",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///1g\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAItH///94\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T08:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///1g\u003d",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIlH///1U\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-17T15:55:07Z",
       "side": 1,
       "message": "The hook needs to get chmod +x\u0027d as well.",
+      "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAItH///90\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-20T08:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIlH///1U\u003d",
       "revId": "9b843cdd042ccb2765fb1f1be5b46544ce835948",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
