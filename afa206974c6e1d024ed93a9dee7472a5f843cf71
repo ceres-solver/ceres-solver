@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIsH///y4\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:46:13Z",
+      "side": 1,
+      "message": "oh Good point, I did not realize that.\nI am surprised that you are having trouble compiling stuff then.\ncould you point me to a specific compile errors you are getting?",
+      "parentUuid": "AAAItH///80\u003d",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///z4\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIsH///y0\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:46:13Z",
+      "side": 1,
+      "message": "I am not even sure what the library install situation for android is. Keir can comment.",
+      "parentUuid": "AAAItH///8w\u003d",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIsH///z0\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "you mean in the installation process or in the compilation process?",
       "parentUuid": "AAAIsH///z0\u003d",
+      "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIsH///yw\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-20T14:46:13Z",
+      "side": 1,
+      "message": "sorry I meant compilation.\n\nI do not think we should be installing examples and tests anyways.",
+      "parentUuid": "AAAItH///8s\u003d",
       "revId": "afa206974c6e1d024ed93a9dee7472a5f843cf71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
