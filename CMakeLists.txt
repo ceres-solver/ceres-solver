@@ -582,4 +582,12 @@ IF (MSVC)
 ENDIF (MSVC)
 
 ADD_SUBDIRECTORY(internal/ceres)
-ADD_SUBDIRECTORY(examples)
+
+OPTION(BUILD_EXAMPLES "Build examples" ON)
+
+IF (${BUILD_EXAMPLES})
+  MESSAGE("-- Build the examples.")
+  ADD_SUBDIRECTORY(examples)
+ELSE (${BUILD_EXAMPLES})
+  MESSAGE("-- Do not build any example.")
+ENDIF (${BUILD_EXAMPLES})
