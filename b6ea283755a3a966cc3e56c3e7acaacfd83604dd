@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIw3///7M\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-21T17:15:40Z",
+      "side": 1,
+      "message": "I think you are the author here not me :)",
+      "revId": "b6ea283755a3a966cc3e56c3e7acaacfd83604dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///60\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-21T17:15:40Z",
+      "side": 1,
+      "message": "are you using any of this stuff?",
+      "revId": "b6ea283755a3a966cc3e56c3e7acaacfd83604dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///54\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-21T17:15:40Z",
+      "side": 1,
+      "message": "if you include ceres/internal/port.h you do not need to use std::",
+      "revId": "b6ea283755a3a966cc3e56c3e7acaacfd83604dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIw3///6s\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-21T17:15:40Z",
+      "side": 1,
+      "message": "why not combine this with the previous test, since the setup is identical, and if you would like to keep these two tests separate, use a text fixture to setup the problem for each of these tests.\n\nIt will also reduce the amount of common code and allow the reader to see the differences amongst the tests.",
+      "revId": "b6ea283755a3a966cc3e56c3e7acaacfd83604dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
