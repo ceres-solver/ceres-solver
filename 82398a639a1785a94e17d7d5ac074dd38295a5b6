@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIyn///+s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T07:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIxn///8g\u003d",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIxn///8U\u003d",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-21T07:01:48Z",
       "side": 1,
       "message": "This comment doesn\u0027t add much and can probably get removed (and the blank line above).",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIyn///+o\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T07:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIxn///8U\u003d",
       "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2012-08-21T07:01:48Z",
       "side": 1,
       "message": "Consider instead:\n\n  # Make the downloaded file executable, since it is not by default.",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIyn///+k\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T07:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIxn///8Y\u003d",
       "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
