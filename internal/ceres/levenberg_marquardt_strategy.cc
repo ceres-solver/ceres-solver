@@ -54,7 +54,7 @@ LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
       reuse_diagonal_(false) {
   CHECK_NOTNULL(linear_solver_);
   CHECK_GT(min_diagonal_, 0.0);
-  CHECK_LT(min_diagonal_, max_diagonal_);
+  CHECK_LE(min_diagonal_, max_diagonal_);
   CHECK_GT(max_radius_, 0.0);
 }
 
