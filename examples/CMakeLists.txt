@@ -54,6 +54,12 @@ IF (${GFLAGS})
                  bundle_adjuster.cc
                  bal_problem.cc)
   TARGET_LINK_LIBRARIES(bundle_adjuster ceres)
+
+  ADD_EXECUTABLE(denoising
+                 denoising.cc
+                 fields_of_experts.cc
+                 pgm_image.cc)
+  TARGET_LINK_LIBRARIES(denoising ceres)
 ENDIF (${GFLAGS})
 
 ADD_EXECUTABLE(simple_bundle_adjuster
