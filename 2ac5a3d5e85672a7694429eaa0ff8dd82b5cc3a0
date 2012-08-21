@@ -16,6 +16,24 @@
       "revId": "2ac5a3d5e85672a7694429eaa0ff8dd82b5cc3a0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIyn////4\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T06:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIu3///xU\u003d",
+      "revId": "2ac5a3d5e85672a7694429eaa0ff8dd82b5cc3a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
