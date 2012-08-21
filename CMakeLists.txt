@@ -635,3 +635,11 @@ IF (${BUILD_EXAMPLES})
 ELSE (${BUILD_EXAMPLES})
   MESSAGE("-- Do not build any example.")
 ENDIF (${BUILD_EXAMPLES})
+
+# Add an uninstall target to remove all installed files.
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
+               "${CMAKE_BINARY_DIR}/cmake/cmake_uninstall.cmake"
+               IMMEDIATE @ONLY)
+
+ADD_CUSTOM_TARGET(uninstall
+                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/cmake_uninstall.cmake)
