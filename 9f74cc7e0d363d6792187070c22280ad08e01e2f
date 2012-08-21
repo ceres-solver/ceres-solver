@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIxn///8s\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T06:53:58Z",
+      "side": 1,
+      "message": "These headers are critical to the function of Ceres. Without them, includes inside the Ceres headers will not work. See for example, autodiff_cost_function.h:\n\n  #include \u003cglog/logging.h\u003e\n  #include \"ceres/internal/autodiff.h\"\n  #include \"ceres/internal/scoped_ptr.h\"\n  #include \"ceres/sized_cost_function.h\"\n  #include \"ceres/types.h\"      \n\nThose internal includes are not part of the public API, but are necessary for the inlined / templated components to work. Since we do not guarantee API stability for any of those components, we isolated them inside include/ceres/internal.",
+      "parentUuid": "AAAIyn////E\u003d",
+      "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIxn///9Q\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "AAAIxn///9Q\u003d",
+      "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///8o\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T06:53:58Z",
+      "side": 1,
+      "message": "I see no changes. Please check in Gerrit that the changes are visible before sending out \"Done\" comments; otherwise I spend time looking and scratching my head wondering what happened!",
+      "parentUuid": "AAAIyn////A\u003d",
       "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
