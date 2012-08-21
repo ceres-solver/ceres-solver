@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIxn///8M\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T07:05:23Z",
+      "side": 1,
+      "message": "Consider naming this CERES_PUBLIC_INTERNAL_HDRS. There is already a CERES_INTERNAL_HDRS in internal/ceres/CMakeLists.txt.",
+      "revId": "bdd74829d255f5f7ac5a1963b85738b547673604",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
