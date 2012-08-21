@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIyn///98\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T09:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIxn///7Q\u003d",
+      "revId": "678b3bbba68b4ac6c438407ae22eaedf1b5f55c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIxn///7U\u003d",
         "filename": "cmake/cmake_uninstall.cmake.in",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-21T09:05:19Z",
       "side": 1,
       "message": "Please add the standard Ceres CMake header.\n\nWhy does the filename end with \".in\"? Note that I am not a CMake expert. Why not call this file \"uninstall.cmake\", since it is already in the cmake/ directory?",
+      "revId": "678b3bbba68b4ac6c438407ae22eaedf1b5f55c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIyn///94\u003d",
+        "filename": "cmake/cmake_uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T09:38:31Z",
+      "side": 1,
+      "message": "I have added the header.\n\nIn the main CMakeLists.txt file, you will see that there is one configure_file command with this file. It copy this file to the binary_dir/cmake and replace all variables in betweem \u0027@\u0027 by its cmake value. This is performed at cmake time.\n\nUsually, with cmake files to be configured (generated given cmake variables) have an extra extension \".in\" and the generated one has the proper filename.\n\nI hope I have been clear?",
+      "parentUuid": "AAAIxn///7U\u003d",
       "revId": "678b3bbba68b4ac6c438407ae22eaedf1b5f55c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
