@@ -1,0 +1,261 @@
+// Ceres Solver - A fast non-linear least squares minimizer
+// Copyright 2012 Google Inc. All rights reserved.
+// http://code.google.com/p/ceres-solver/
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// * Redistributions of source code must retain the above copyright notice,
+//   this list of conditions and the following disclaimer.
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+// * Neither the name of Google Inc. nor the names of its contributors may be
+//   used to endorse or promote products derived from this software without
+//   specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: strandmark@google.com (Petter Strandmark)
+//
+// Simple class for accessing PGM images.
+
+#include "pgm_image.h"
+
+#include <algorithm>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+#include "glog/logging.h"
+
+namespace ceres {
+namespace examples {
+
+using std::cerr;
+using std::endl;
+
+template<typename real>
+PGMImage<real>::PGMImage(unsigned width, unsigned height)
+  : height_(height), width_(width), data_(width*height, 0.0) {
+}
+
+template<typename real>
+PGMImage<real>::PGMImage(std::string filename) {
+  if (!ReadFromFile(filename)) {
+    height_ = 0;
+    width_  = 0;
+  }
+}
+
+template<typename real>
+void PGMImage<real>::Set(double constant) {
+  for (unsigned i = 0; i < data_.size(); ++i) {
+    data_[i] = constant;
+  }
+}
+
+template<typename real>
+unsigned PGMImage<real>::width() const {
+  return width_;
+}
+
+template<typename real>
+unsigned PGMImage<real>::height() const {
+  return height_;
+}
+
+template<typename real>
+unsigned PGMImage<real>::NumPixels() const {
+  return width_ * height_;
+}
+
+template<typename real>
+real& PGMImage<real>::Pixel(unsigned x, unsigned y) {
+  return Pixel(LinearIndex(x, y));
+}
+
+template<typename real>
+real  PGMImage<real>::Pixel(unsigned x, unsigned y) const {
+  return Pixel(LinearIndex(x, y));
+}
+
+template<typename real>
+real& PGMImage<real>::Pixel(unsigned ind) {
+  CHECK(ind < width_ * height_);
+  CHECK(ind < data_.size());
+  return data_[ind];
+}
+
+template<typename real>
+real  PGMImage<real>::Pixel(unsigned ind) const {
+  CHECK(ind < width_ * height_);
+  CHECK(ind < data_.size());
+  return data_[ind];
+}
+
+template<typename real>
+unsigned PGMImage<real>::LinearIndex(unsigned x, unsigned y) const {
+  return x + width_*y;
+}
+
+// Adds an image to another
+template<typename real>
+void PGMImage<real>::operator+= (const PGMImage<real>& image) {
+  CHECK(data_.size() == image.data_.size());
+  for (unsigned i = 0; i < data_.size(); ++i) {
+    data_[i] += image.data_[i];
+  }
+}
+
+// Adds a constant to an image
+template<typename real>
+void PGMImage<real>::operator+= (real a) {
+  for (unsigned i = 0; i < data_.size(); ++i) {
+    data_[i] += a;
+  }
+}
+
+// Multiplies an image by a constant
+template<typename real>
+void PGMImage<real>::operator*= (real a) {
+  for (unsigned i = 0; i < data_.size(); ++i) {
+    data_[i] *= a;
+  }
+}
+
+template<typename real>
+bool PGMImage<real>::WriteToFile(std::string filename) const {
+  std::ofstream outputfile(filename.c_str());
+  outputfile << "P2" << std::endl;
+  outputfile << "# PGM format" << std::endl;
+  outputfile << " # <width> <height> <levels> " << std::endl;
+  outputfile << " # <data> ... " << std::endl;
+  outputfile << width_ << ' ' << height_ << " 255 " << std::endl;
+
+  // Write data
+  unsigned num_pixels = width_*height_;
+  for (unsigned i = 0; i < num_pixels; ++i) {
+    // Convert to integer by rounding when writing file
+    outputfile << static_cast<int>(data_[i] + 0.5) << ' ';
+  }
+
+  return outputfile;  // Returns true/false
+}
+
+namespace  {
+
+// Helper function to read data from a text file, ignoring "#" comments.
+template<typename T>
+bool GetIgnoreComment(std::istream* in, T& t) {
+  std::string word;
+  bool ok;
+  do {
+    ok = true;
+    (*in) >> word;
+    if (word.length() > 0 && word[0] == '#') {
+      // Comment; read the whole line
+      ok = false;
+      std::getline(*in, word);
+    }
+  } while (!ok);
+
+  // Convert the string
+  std::stringstream sin(word);
+  sin >> t;
+
+  // Check for success
+  if (!in || !sin) {
+    return false;
+  }
+  return true;
+}
+}  // namespace
+
+template<typename real>
+bool PGMImage<real>::ReadFromFile(std::string filename) {
+  std::ifstream inputfile(filename.c_str());
+
+  // File must start with "P2"
+  char ch1, ch2;
+  inputfile >> ch1 >> ch2;
+  if (!inputfile || ch1 != 'P' || (ch2 != '2' && ch2 != '5')) {
+    return false;
+  }
+
+  // Read the image header
+  unsigned two_fifty_five;
+  if (!GetIgnoreComment(&inputfile, width_)  ||
+      !GetIgnoreComment(&inputfile, height_) ||
+      !GetIgnoreComment(&inputfile, two_fifty_five) ) {
+    return false;
+  }
+  // Assert that the number of grey levels is 255.
+  if (two_fifty_five != 255) {
+    return false;
+  }
+
+  // Now read the data
+  unsigned num_pixels = width_*height_;
+  data_.resize(num_pixels);
+  if (ch2 == '2') {
+    // Ascii file
+    for (unsigned i = 0; i < num_pixels; ++i) {
+      int pixel_data;
+      bool res = GetIgnoreComment(&inputfile, pixel_data);
+      if (!res) {
+        return false;
+      }
+      data_[i] = pixel_data;
+    }
+  } else {
+    // Read the line feed character
+    if (inputfile.get() != '\n') {
+      return false;
+    }
+    // Binary file
+    // TODO(strandmark): Will not work on Windows (linebreak conversion).
+    for (unsigned i = 0; i < num_pixels; ++i) {
+      unsigned char pixel_data = inputfile.get();
+      if (!inputfile) {
+        return false;
+      }
+      data_[i] = pixel_data;
+    }
+  }
+
+  return true;
+}
+
+template<typename real>
+bool PGMImage<real>::SetData(const std::vector<real>& new_data) {
+  // This function cannot change the dimensions
+  if (new_data.size() != data_.size()) {
+    return false;
+  }
+  std::copy(new_data.begin(), new_data.end(), data_.begin());
+  return true;
+}
+
+template<typename real>
+const std::vector<real>& PGMImage<real>::data() const {
+  return data_;
+}
+
+// Instantiate templates
+template class PGMImage<double>;
+template class PGMImage<float>;
+
+}  // namespace examples
+}  // namespace ceres
