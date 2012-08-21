@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIxn///8g\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T07:01:48Z",
+      "side": 1,
+      "message": "For comments, the style we follow is the same as the Google style, which is that all comments should be full sentences. This means at least, that the comments are capitalized and end with a period.\n\nFor this comment, I suggest:\n\n  # Set up the git hook to make Gerrit Change-Id: lines in commit messages.\n\nwhich is more informative anyway.",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///8U\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T07:01:48Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add much and can probably get removed (and the blank line above).",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///8c\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T07:01:48Z",
+      "side": 1,
+      "message": "Instead of\n\n  #TODO(keir) ...\n\ndo\n\n  # TODO(keir): ...",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///8Y\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-21T07:01:48Z",
+      "side": 1,
+      "message": "Consider instead:\n\n  # Make the downloaded file executable, since it is not by default.",
+      "revId": "82398a639a1785a94e17d7d5ac074dd38295a5b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
