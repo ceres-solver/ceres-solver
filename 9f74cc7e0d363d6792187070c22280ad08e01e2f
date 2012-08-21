@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAIyn////E\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T06:48:22Z",
+      "side": 1,
+      "message": "My understanding that these files did not really need to be installed in include/ceres/internal. For sure they won\u0027t get installed at this location.\n\nThen, I\u0027ll rework the patch to make it installed in include/ceres/internal for compliance...",
+      "parentUuid": "AAAIxn///9Y\u003d",
+      "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAIxn///9Q\u003d",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-21T06:44:28Z",
       "side": 1,
       "message": "These should not get installed.",
+      "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIyn////A\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5020
+      },
+      "writtenOn": "2012-08-21T06:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIxn///9Q\u003d",
       "revId": "9f74cc7e0d363d6792187070c22280ad08e01e2f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
