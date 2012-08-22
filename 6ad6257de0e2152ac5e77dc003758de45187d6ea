@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13///RQ\u003d",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-22T18:17:29Z",
+      "side": 1,
+      "message": "so the only thing I dislike about this, is that its one location, even though the exact same code\nis used at three other places\nI would prefer if we did the same disabling at the other two/three callsites",
+      "revId": "6ad6257de0e2152ac5e77dc003758de45187d6ea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
