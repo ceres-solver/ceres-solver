@@ -511,6 +511,7 @@ class Solver {
     OrderingType ordering_type;
 
     TrustRegionStrategyType trust_region_strategy_type;
+    DoglegType dogleg_type;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
   };
 

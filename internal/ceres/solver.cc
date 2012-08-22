@@ -197,9 +197,18 @@ string Solver::Summary::FullReport() const {
                                 sparse_linear_algebra_library));
   }
 
-  internal::StringAppendF(&report, "Trust Region Strategy     %19s\n",
+  internal::StringAppendF(&report, "Trust Region Strategy     %19s",
                           TrustRegionStrategyTypeToString(
                               trust_region_strategy_type));
+  if (trust_region_strategy_type == DOGLEG) {
+    if (dogleg_type == TRADITIONAL_DOGLEG) {
+      internal::StringAppendF(&report, " (TRADITIONAL)");
+    } else {
+      internal::StringAppendF(&report, " (SUBSPACE)");
+    }
+  }
+  internal::StringAppendF(&report, "\n");
+
 
   if (termination_type == DID_NOT_RUN) {
     CHECK(!error.empty())
