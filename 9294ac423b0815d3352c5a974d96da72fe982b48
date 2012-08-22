@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI5H////4\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-22T09:33:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this go into TrustRegionStrategyTypeToString?",
+      "revId": "9294ac423b0815d3352c5a974d96da72fe982b48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
