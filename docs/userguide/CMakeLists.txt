@@ -28,13 +28,39 @@
 #
 # Author: arnaudgelas@gmail.com (Arnaud Gelas)
 
-ADD_SUBDIRECTORY(userguide)
+FIND_PROGRAM(PYGMENTIZE NAMES pygmentize
+    PATHS
+        /usr/bin
+        /usr/local/bin
+        /opt/bin
+        /opt/local/bin)
 
-OPTION(BUILD_DOXYGEN
-       "Build doxygen documentation."
-       OFF)
+IF (${PYGMENTIZE} MATCHES PYGMENTIZE-NOTFOUND)
+  MESSAGE(SEND_ERROR "Pygmentize is not installed")
+ENDIF (${PYGMENTIZE} MATCHES PYGMENTIZE-NOTFOUND)
 
-IF(${BUILD_DOXYGEN})
-  MESSAGE("-- Build doxygen documentation.")
-  ADD_SUBDIRECTORY(doxygen)
-ENDIF(${BUILD_DOXYGEN})
+FIND_PACKAGE(LATEX REQUIRED)
+
+FILE(DOWNLOAD http://minted.googlecode.com/files/minted.sty
+     ${CMAKE_BINARY_DIR}/docs/userguide/minted.sty
+     SHOW_PROGRESS)
+
+ADD_CUSTOM_TARGET(UserGuide ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/docs/userguide ${CMAKE_BINARY_DIR}/docs/userguide
+    COMMAND ${PDFLATEX_COMPILER}
+        -shell-escape ${CMAKE_BINARY_DIR}/docs/userguide/ceres-solver.tex
+        -output-directory ${CMAKE_BINARY_DIR}/docs/userguide
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs/userguide
+    COMMAND ${BIBTEX_COMPILER} ${CMAKE_BINARY_DIR}/docs/userguide/ceres-solver.aux
+    COMMAND ${PDFLATEX_COMPILER}
+        -shell-escape ${CMAKE_BINARY_DIR}/docs/userguide/ceres-solver.tex
+        -output-directory ${CMAKE_BINARY_DIR}/docs/userguide
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs/userguide
+    COMMAND ${PDFLATEX_COMPILER}
+        -shell-escape ${CMAKE_BINARY_DIR}/docs/userguide/ceres-solver.tex
+        -output-directory ${CMAKE_BINARY_DIR}/docs/userguide
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs/userguide)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/docs/userguide/ceres-solver.pdf
+        DESTINATION share/ceres/docs/userguide)
