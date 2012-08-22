@@ -532,7 +532,29 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       // like the Matrix class does.
       Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
           block(m, r, c,  block1_size, block2_size);
-      block.noalias() -=  b1_transpose_inverse_ete * b2;
+#ifdef CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
+      // Removing the ".noalias()" annotation on the following statement is
+      // necessary to produce a correct build with the Android NDK, including
+      // versions 6, 7, 8, and 8b, when built with STLPort and the
+      // non-standalone toolchain (i.e. ndk-build). This appears to be a
+      // compiler bug; if the workaround is not in place, the line
+      //
+      //   block.noalias() -= b1_transpose_inverse_ete * b2;
+      //
+      // gets compiled to
+      //
+      //   block.noalias() += b1_transpose_inverse_ete * b2;
+      //
+      // which breaks schur elimination. Introducing a temporary by removing the
+      // .noalias() annotation causes the issue to disappear. Tracking this
+      // issue down was tricky, since the test suite doesn't run when built with
+      // the non-standalone toolchain.
+      //
+      // TODO(keir): Make a reproduction case for this and send it upstream.
+      block -= b1_transpose_inverse_ete * b2;
+#else
+      block.noalias() -= b1_transpose_inverse_ete * b2;
+#endif  // CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
     }
   }
 }

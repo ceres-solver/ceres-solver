@@ -479,9 +479,10 @@ IF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 ENDIF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 
 # Disable threads in mutex.h. Someday, after there is OpenMP support in
-# Android, this can get removed.
+# Android, this can get removed. Also turn on a workaround for an NDK bug.
 IF (${BUILD_ANDROID})
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
+  ADD_DEFINITIONS(-DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG)
 ENDIF (${BUILD_ANDROID})
 
 OPTION(DISABLE_TR1
