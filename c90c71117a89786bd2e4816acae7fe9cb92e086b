@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13///ws\u003d",
+        "filename": "cmake/cmake_uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T00:28:03Z",
+      "side": 1,
+      "message": "2012 only.",
+      "revId": "c90c71117a89786bd2e4816acae7fe9cb92e086b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
