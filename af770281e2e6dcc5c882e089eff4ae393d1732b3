@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAIxn///5M\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T03:08:19Z",
+      "side": 1,
+      "message": "Update the authorship.",
+      "revId": "af770281e2e6dcc5c882e089eff4ae393d1732b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///5I\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T03:08:19Z",
+      "side": 1,
+      "message": "Trailing spaces.",
+      "revId": "af770281e2e6dcc5c882e089eff4ae393d1732b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///5E\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T03:08:19Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "af770281e2e6dcc5c882e089eff4ae393d1732b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAIxn///yQ\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T03:08:19Z",
+      "side": 1,
+      "message": "Trailing space. If you\u0027re using Eclipse, consider getting AnyEdit.",
+      "revId": "af770281e2e6dcc5c882e089eff4ae393d1732b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///mg\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T03:08:19Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "af770281e2e6dcc5c882e089eff4ae393d1732b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
