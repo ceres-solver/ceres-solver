@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13///hM\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T06:17:22Z",
+      "side": 1,
+      "message": "cmake_uninstall -\u003e uninstall",
+      "revId": "49eb396b1f923c41f875ac0af530eefd3501e182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///hI\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T06:17:22Z",
+      "side": 1,
+      "message": "cmake_uninstall -\u003e uninstall",
+      "revId": "49eb396b1f923c41f875ac0af530eefd3501e182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///hE\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T06:17:22Z",
+      "side": 1,
+      "message": "cmake_uninstall -\u003e uninstall",
+      "revId": "49eb396b1f923c41f875ac0af530eefd3501e182",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
