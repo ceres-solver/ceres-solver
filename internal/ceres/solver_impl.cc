@@ -238,6 +238,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->sparse_linear_algebra_library =
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
+  summary->dogleg_type = options.dogleg_type;
 
   // Evaluate the initial cost, residual vector and the jacobian
   // matrix if requested by the user. The initial cost needs to be
