@@ -16,6 +16,24 @@
       "revId": "9294ac423b0815d3352c5a974d96da72fe982b48",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///eE\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-22T12:27:41Z",
+      "side": 1,
+      "message": "Yes and no. That would change the API of the TrustRegionStrategyTypeToString, which right now is along the lines of the rest of the enums. I agree this is not pretty.",
+      "parentUuid": "AAAI5H////4\u003d",
+      "revId": "9294ac423b0815d3352c5a974d96da72fe982b48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
