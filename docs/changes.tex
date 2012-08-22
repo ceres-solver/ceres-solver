@@ -4,16 +4,63 @@
 \section*{1.3.0}
 \subsection{New Features}
 \begin{itemize}
+\item Android Port (Scott Ettinger also contributed to the port)
 \item Windows port. (Changchang Wu and Pierre Moulon also contributed to the port)
-\item Support for returning initial and final derivatives (Gradient \& Jacobian).
-\item Gradient computation support in the evaluators, with an eye towards developing first order/gradient based solvers.
-\item Ability to build Ceres as a shared library, associated versioning and build release script changes.
+\item New subspace Dogleg Solver. (Markus Moll)
+\item Trust region algorithm now supports the option of non-monotonic steps.
+\item New loss functions \texttt{ArcTanLossFunction,
+    TolerantLossFunction} and \texttt{ComposedLossFunction}. (James Roseborough).
+\item New \texttt{DENSE\_NORMAL\_CHOLESKY} linear solver, which uses Eigen's
+  \texttt{LDLT} factorization on the normal equations.
+\item The traditional Dogleg solver now uses an elliptical trust
+  region (Markus Moll)
+\item Support for returning initial and final gradients \& Jacobians.
+\item Gradient computation support in the evaluators, with an eye
+  towards developing first order/gradient based solvers.
 \item A better way to compute \texttt{Solver::Summary::fixed\_cost}. (Markus Moll)
+\item Cmake support for building documentation, separate examples,
+  installing and uninstalling the library and Gerrit hooks (Arnaud
+  Gelas)
+\item SuiteSparse4 support (Markus Moll)
+\item Support for building Ceres without \texttt{TR1} (This leads to
+  slightly slower \texttt{DENSE\_SCHUR} and \texttt{SPARSE\_SCHUR} solvers).
+\item \texttt{BALProblem} can now write a problem back to disk.
+\item \texttt{bundle\_adjuster} now allows the user to normalize perturb the
+  problem before solving.
+\item Solver progress logging to file.
+\item Added \texttt{Program::ToString} and
+  \texttt{ParameterBlock::ToString}  to help with debugging.
+\item Ability to build Ceres as a shared library (MacOS and Linux only), associated versioning and build release script changes.
 \item Portable floating point classification API.
 \end{itemize}
 
 \subsection{Bug Fixes}
 \begin{itemize}
+\item \texttt{TrustRegionMinimizer} does not implicitly negate the
+  steps that it takes. (Markus Moll)
+\item Diagonal scaling allows for equal upper and lower bounds (Markus Moll)
+\item TrustRegionStrategy does not misuse LinearSolver:Summary anymore.
+\item Fix Eigen3 Row/Column Major storage issue. (Lena Gieseke)
+\item QuaternionToAngleAxis now guarantees an angle in $[-\pi, \pi]$. (Guoxuan Zhang)
+\item Added a workaround for a compiler bug in the Android NDK to the
+  Schur eliminator.
+\item The sparse linear algebra library is only logged in
+  Summary::FullReport if it is used.
+\item Rename the macro \texttt{CERES\_DONT\_HAVE\_PROTOCOL\_BUFFERS}
+  to \texttt{CERES\_NO\_PROTOCOL\_BUFFERS} for consistency.
+\item Fix how static structure detection for the Schur eliminator logs
+  its results.
+\item Correct example code in the documentation. (Petter Strandmark)
+\item Fix \texttt{fpclassify.h} to work with the Android NDK and STLport.
+\item Fix a memory leak in the \texttt{levenber\_marquardt\_strategy\_test.cc}
+\item Fix an early return bug in the Dogleg solver. (Markus Moll)
+\item Zero initialize Jets.
+\item Moved \texttt{internal/ceres/mock\_log.h} to \texttt{internal/ceres/gmock/mock-log.h}
+\item Unified file path handling in tests.
+\item \texttt{data\_fitting.cc} includes \texttt{gflags}
+\item Renamed Ceres' Mutex class and associated macros to avoid
+  namespace conflicts.
+\item Close the BAL problem file after reading it (Markus Moll)
 \item Fix IsInfinite on Jets.
 \item Drop alignment requirements for Jets.
 \item Fixed Jet to integer comparison. (Keith Leung)
