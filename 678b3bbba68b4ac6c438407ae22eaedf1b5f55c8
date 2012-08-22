@@ -69,6 +69,24 @@
       "revId": "678b3bbba68b4ac6c438407ae22eaedf1b5f55c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///wg\u003d",
+        "filename": "cmake/cmake_uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-22T00:27:54Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I think the extra \"cmake_\" prefix on the filename is unnecessary.",
+      "parentUuid": "AAAIyn///94\u003d",
+      "revId": "678b3bbba68b4ac6c438407ae22eaedf1b5f55c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
