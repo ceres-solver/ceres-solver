@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///WI\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///9g\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///9Y\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Trailing space.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///WE\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///9Y\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///WM\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///bA\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///a8\u003d",
         "filename": "examples/fields_of_experts.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Indent 2 more.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///Ws\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///a8\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///WU\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///a0\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///ag\u003d",
         "filename": "examples/fields_of_experts.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Throughout this patch: Don\u0027t put these leading and trailing //\u0027s. The only exception is for equations, which you can see other examples of in the code (e.g. dogleg_strategy.cc).",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///YM\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///ag\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///YI\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///aY\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///Zo\u003d",
         "filename": "examples/fields_of_experts.h",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Is this a 2D filter? Please explain.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///XU\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///Zo\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///XY\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///Zs\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///aE\u003d",
         "filename": "examples/fields_of_experts.h",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Add some explanation around this equation. Why was it selected? Can you refer to any publications?",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///XI\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///aE\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///XQ\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///Zc\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///aA\u003d",
         "filename": "examples/fields_of_experts.h",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "Blank after.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///X8\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///aA\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///YA\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///ZE\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///Z4\u003d",
         "filename": "examples/fields_of_experts.h",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "This class needs a description. From the name, it is unclear what its purpose is.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///X0\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///Z4\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///XA\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAIw3///is\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///+w\u003d",
         "filename": "examples/pgm_image.cc",
         "patchSetId": 2
@@ -268,6 +538,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "There should only be 1 blank line between functions (throughout).",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///W8\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///+w\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///W4\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///+c\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13///+Q\u003d",
         "filename": "examples/pgm_image.cc",
         "patchSetId": 2
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI13///W0\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI13///+Q\u003d",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI13////A\u003d",
         "filename": "examples/pgm_image.h",
         "patchSetId": 2
@@ -319,6 +643,24 @@
       "writtenOn": "2012-08-22T16:20:29Z",
       "side": 1,
       "message": "What\u0027s the reason to not simply use an Eigen::Matrix\u003cunsigned char, Dynamic, Dynamic\u003e here? Then you can avoid writing all the operator+\u003d, *, etc stuff and it\u0027s much faster too.",
+      "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13///V4\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-22T17:04:29Z",
+      "side": 1,
+      "message": "I thought having the image class written in standard C++ would be nice. It makes it easier to reuse it for other purposes. Another reason is that I have not used Eigen.",
+      "parentUuid": "AAAI13////A\u003d",
       "revId": "69670707321ae5bf885a8cc621d8bff46b0660c0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
