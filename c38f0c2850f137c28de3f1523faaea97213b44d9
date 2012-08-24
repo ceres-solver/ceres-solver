@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13//94Q\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T03:26:01Z",
+      "side": 1,
+      "message": "I dunno, I think we should credit ourselves. I did a considerable amount of work on this too.",
+      "revId": "c38f0c2850f137c28de3f1523faaea97213b44d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//94M\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T03:26:01Z",
+      "side": 1,
+      "message": "Please add a short explanation if the docs are not otherwise updated.",
+      "revId": "c38f0c2850f137c28de3f1523faaea97213b44d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//94A\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T03:26:01Z",
+      "side": 1,
+      "message": "Mention that it\u0027s slower?",
+      "revId": "c38f0c2850f137c28de3f1523faaea97213b44d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//94I\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T03:26:01Z",
+      "side": 1,
+      "message": "Mention that this is only supported on Mac and Linux.",
+      "revId": "c38f0c2850f137c28de3f1523faaea97213b44d9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
