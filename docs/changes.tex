@@ -11,17 +11,17 @@
 \item New loss functions \texttt{ArcTanLossFunction,
     TolerantLossFunction} and \texttt{ComposedLossFunction}. (James Roseborough).
 \item New \texttt{DENSE\_NORMAL\_CHOLESKY} linear solver, which uses Eigen's
-  \texttt{LDLT} factorization on the normal equations.
+  LDLT factorization on the normal equations.
 \item The traditional Dogleg solver now uses an elliptical trust
   region (Markus Moll)
 \item Support for returning initial and final gradients \& Jacobians.
 \item Gradient computation support in the evaluators, with an eye
   towards developing first order/gradient based solvers.
 \item A better way to compute \texttt{Solver::Summary::fixed\_cost}. (Markus Moll)
-\item Cmake support for building documentation, separate examples,
+\item \texttt{CMake} support for building documentation, separate examples,
   installing and uninstalling the library and Gerrit hooks (Arnaud
   Gelas)
-\item SuiteSparse4 support (Markus Moll)
+\item \texttt{SuiteSparse4} support (Markus Moll)
 \item Support for building Ceres without \texttt{TR1} (This leads to
   slightly slower \texttt{DENSE\_SCHUR} and \texttt{SPARSE\_SCHUR} solvers).
 \item \texttt{BALProblem} can now write a problem back to disk.
@@ -66,7 +66,7 @@
 \item Fixed Jet to integer comparison. (Keith Leung)
 \item Fix use of uninitialized arrays. (Sebastian Koch \& Markus Moll)
 \item Conditionally compile gflag dependencies.(Casey Goodlett)
-\item Add \texttt{data\_fitting.cc } to the examples CMake file.
+\item Add \texttt{data\_fitting.cc } to the examples \texttt{CMake} file.
 \end{itemize}
 
 \section*{1.2.3}
@@ -111,7 +111,7 @@ reduces the factorization time for sparse
 \texttt{CHOLMOD} significantly.
 \item New Trust region loop with support for multiple
 trust region step strategies. Currently only Levenberg-Marquardt is supported, but this refactoring opens the door for Dog-leg, Stiehaug and others.
-\item \texttt{Cmake} file restructuring.  Builds in \texttt{Release} mode by default, and now has platform specific tuning flags.
+\item \texttt{CMake} file restructuring.  Builds in \texttt{Release} mode by default, and now has platform specific tuning flags.
 \item Re-organized documentation. No new content, but better organization.
 \end{itemize}
 
