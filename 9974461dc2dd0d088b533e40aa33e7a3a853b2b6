@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI13//9YQ\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T23:49:55Z",
+      "side": 1,
+      "message": "Download the NDK.\n\nRun ndk-build from inside the jni directory.\n\nUse the libceres.a that gets created.",
+      "revId": "9974461dc2dd0d088b533e40aa33e7a3a853b2b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//9YM\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T23:49:55Z",
+      "side": 1,
+      "message": "Weird indenting.",
+      "revId": "9974461dc2dd0d088b533e40aa33e7a3a853b2b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//9YE\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T23:49:55Z",
+      "side": 1,
+      "message": "\"the\" is weird. Ceres uses Professor Tim Davis\u0027 ...",
+      "revId": "9974461dc2dd0d088b533e40aa33e7a3a853b2b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI13//9YA\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-24T23:49:55Z",
+      "side": 1,
+      "message": "Weird indentation here and below.",
+      "revId": "9974461dc2dd0d088b533e40aa33e7a3a853b2b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
