@@ -2,8 +2,8 @@
 \chapter{Modeling}
 \label{chapter:api}
 \section{\texttt{CostFunction}}
-Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a \texttt{CostFunction} is responsible for computing 
-a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{k_i}\right)$ and the matrices 
+Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a \texttt{CostFunction} is responsible for computing
+a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{k_i}\right)$ and the matrices
 \begin{equation}
 J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},\hdots,x_{k_i}\right),\quad \forall j = i_1,\hdots, i_k
 \end{equation}
@@ -13,7 +13,7 @@ class CostFunction {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) = 0;
-  const vector<int16>& parameter_block_sizes(); 
+  const vector<int16>& parameter_block_sizes();
   int num_residuals() const;
 
  protected:
@@ -26,18 +26,18 @@ The signature of the function (number and sizes of input parameter blocks and nu
 is stored in \texttt{parameter\_block\_sizes\_} and \texttt{num\_residuals\_} respectively. User
 code inheriting from this class is expected to set these two members with the
 corresponding accessors. This information will be verified by the Problem
-when added with \texttt{Problem::AddResidualBlock}. 
+when added with \texttt{Problem::AddResidualBlock}.
 
 The most important method here is \texttt{Evaluate}. It implements the residual and Jacobian computation.
 
-\texttt{parameters}  is an array of pointers to arrays containing the various parameter blocks. parameters has the same number of elements as parameter\_block\_sizes\_.  Parameter blocks are in the same order as parameter\_block\_sizes\_. 
+\texttt{parameters}  is an array of pointers to arrays containing the various parameter blocks. parameters has the same number of elements as parameter\_block\_sizes\_.  Parameter blocks are in the same order as parameter\_block\_sizes\_.
 
 
-\texttt{residuals} is an array of size \texttt{num\_residuals\_}. 
+\texttt{residuals} is an array of size \texttt{num\_residuals\_}.
 
 
-\texttt{jacobians} is an array of size \texttt{parameter\_block\_sizes\_} containing pointers to storage for Jacobian matrices corresponding to each parameter block. The Jacobian matrices are in the same order as \texttt{parameter\_block\_sizes\_}. \texttt{jacobians[i]} is an array that contains \texttt{num\_residuals\_} $\times$ \texttt{parameter\_block\_sizes\_[i]} elements. Each Jacobian matrix is stored in row-major order, i.e., 
- 
+\texttt{jacobians} is an array of size \texttt{parameter\_block\_sizes\_} containing pointers to storage for Jacobian matrices corresponding to each parameter block. The Jacobian matrices are in the same order as \texttt{parameter\_block\_sizes\_}. \texttt{jacobians[i]} is an array that contains \texttt{num\_residuals\_} $\times$ \texttt{parameter\_block\_sizes\_[i]} elements. Each Jacobian matrix is stored in row-major order, i.e.,
+
 \begin{equation}
 \texttt{jacobians[i][r * parameter\_block\_size\_[i] + c]} =
 %\frac{\partial}{\partial x_{ic}}  f_{r}\left(x_{1},\hdots, x_{k}\right)
@@ -98,7 +98,7 @@ class MyScalarCostFunction {
   double k_;
 };
 \end{minted}
- 
+
 Note that in the declaration of \texttt{operator()} the input parameters \texttt{x} and \texttt{y} come
  first, and are passed as const pointers to arrays of \texttt{T}. If there were three
  input parameters, then the third input parameter would come after \texttt{y}. The
@@ -136,7 +136,7 @@ In the instantiation above, the template parameters following
  set the template parameters to (dimension of residual, number of parameters)
  instead of passing a dimension parameter for {\em every parameter block}. In the
  example above, that would be \texttt{<MyScalarCostFunction, 1, 2>}, which is missing
- the 2 as the last template argument. 
+ the 2 as the last template argument.
 
 \subsection{Theory \& Implementation}
 TBD
@@ -206,7 +206,7 @@ class LossFunction {
  public:
   virtual void Evaluate(double s, double out[3]) const = 0;
 };
-\end{minted}	
+\end{minted}
 
 The key method is \texttt{Evaluate}, which given a non-negative scalar \texttt{s}, computes
 \begin{align}
@@ -227,7 +227,7 @@ so that they mimic the squared cost for small residuals.
 \subsection{Scaling}
 Given one robustifier $\rho(s)$
  one can change the length scale at which robustification takes
- place, by adding a scale factor $a > 0$ which gives us $\rho(s,a) = a^2 \rho(s / a^2)$ and the first and second derivatives as $\rho'(s / a^2)$ and   $(1 / a^2) \rho''(s / a^2)$ respectively. 
+ place, by adding a scale factor $a > 0$ which gives us $\rho(s,a) = a^2 \rho(s / a^2)$ and the first and second derivatives as $\rho'(s / a^2)$ and   $(1 / a^2) \rho''(s / a^2)$ respectively.
 
 
 \begin{figure}[hbt]
@@ -238,7 +238,7 @@ Given one robustifier $\rho(s)$
 
 
 The reason for the appearance of squaring is that $a$ is in the units of the residual vector norm whereas $s$ is a squared norm. For applications it is more convenient to specify $a$ than
-its square. 
+its square.
 
 Here are some common loss functions implemented in Ceres. For simplicity we described their unscaled versions. Figure~\ref{fig:loss} illustrates their shape graphically.
 
@@ -252,8 +252,36 @@ Here are some common loss functions implemented in Ceres. For simplicity we desc
 		\rho(s) &= \log(1 + s) \tag{\texttt{CauchyLoss}}
 \end{align}
 
+Ceres includes a number of other loss functions, the descriptions and
+documentation for which can be found in \texttt{loss\_function.h}.
+
 \subsection{Theory \& Implementation}
-TBD
+Let us consider a problem with a single problem and a single parameter
+block.
+\begin{align}
+\min_x \frac{1}{2}\rho(f^2(x))
+\end{align}
+
+Then, the robustified gradient and the Gauss-Newton Hessian are
+\begin{align}
+	g(x) &= \rho'J^\top(x)f(x)\\
+	H(x) &= J^\top(x)\left(\rho' + 2 \rho''f(x)f^\top(x)\right)J(x) 
+\end{align}
+where the terms involving the second derivatives of $f(x)$ have been ignored. Note that $H(x)$ is indefinite if $\rho''f(x)^\top f(x) + \frac{1}{2}\rho' < 0$. If this is not the case, then its possible to re-weight the residual and the Jacobian matrix such that the corresponding linear least squares problem for the robustified Gauss-Newton step. 
+
+
+Let $\alpha$ be a root of 
+\begin{equation}
+	\frac{1}{2}\alpha^2 - \alpha - \frac{\rho''}{\rho'}\|f(x)\|^2 = 0.
+\end{equation}
+Then, define the rescaled residual and Jacobian as
+\begin{align}
+	\tilde{f}(x) &= \frac{\sqrt{\rho'}}{1 - \alpha} f(x)\\
+	\tilde{J}(x) &= \sqrt{\rho'}\left(1 - \alpha \frac{f(x)f^\top(x)}{\left\|f(x)\right\|^2} \right)J(x)
+\end{align}
+In the case $2 \rho''\left\|f(x)\right\|^2 + \rho' \lesssim 0$, we limit $\alpha \le 1- \epsilon$ for some small $\epsilon$. For more details see Triggs et al~\cite{triggs-etal-1999}.
+
+With this simple rescaling, one can use any Jacobian based non-linear least squares algorithm to robustifed non-linear least squares problems.
 
 \section{\texttt{LocalParameterization}}
 Sometimes the parameters $x$ can overparameterize a problem. In
@@ -302,7 +330,7 @@ class LocalParameterization {
 };
 \end{minted}
 
-\texttt{GlobalSize} is the dimension of the ambient space in which the parameter block $x$ lives. \texttt{LocalSize} is the size of the tangent space that $\Delta x$ lives in. \texttt{Plus} implements $\boxplus(x,\Delta x)$ and $\texttt{ComputeJacobian}$ computes the Jacobian matrix 
+\texttt{GlobalSize} is the dimension of the ambient space in which the parameter block $x$ lives. \texttt{LocalSize} is the size of the tangent space that $\Delta x$ lives in. \texttt{Plus} implements $\boxplus(x,\Delta x)$ and $\texttt{ComputeJacobian}$ computes the Jacobian matrix
 \begin{equation}
 	J = \left . \frac{\partial }{\partial \Delta x} \boxplus(x,\Delta x)\right|_{\Delta x = 0}
 \end{equation}
@@ -334,9 +362,9 @@ the quaternion. One way to do this is to let $\Delta x$ be a 3
 dimensional vector and define $\boxplus$ to be
 
 \begin{equation}
-  \boxplus(x, \Delta x) = 
+  \boxplus(x, \Delta x) =
 \left[
-\cos(|\Delta x|), \frac{\sin\left(|\Delta x|\right)}{|\Delta x|} \Delta x 
+\cos(|\Delta x|), \frac{\sin\left(|\Delta x|\right)}{|\Delta x|} \Delta x
 \right] * x
 \label{eq:quaternion}
 \end{equation}
@@ -413,13 +441,13 @@ The cost
    blocks if they are not present, so calling \texttt{AddParameterBlock}
    explicitly is not required.
 
-  
+
    \texttt{Problem} by default takes ownership of the
   \texttt{cost\_function} and \texttt{loss\_function pointers}. These objects remain
    live for the life of the \texttt{Problem} object. If the user wishes to
   keep control over the destruction of these objects, then they can
   do this by setting the corresponding enums in the \texttt{Options} struct.
-  
+
 
   Note that even though the Problem takes ownership of \texttt{cost\_function}
   and \texttt{loss\_function}, it does not preclude the user from re-using
@@ -430,9 +458,9 @@ The cost
 \texttt{AddParameterBlock} explicitly adds a parameter block to the \texttt{Problem}. Optionally it allows the user to associate a LocalParameterization object with the parameter block too. Repeated calls with the same arguments are ignored. Repeated
 calls with the same double pointer but a different size results in undefined behaviour.
 
-You can set any parameter block to be constant using 
+You can set any parameter block to be constant using
 
-\texttt{Problem::SetParameterBlockConstant} 
+\texttt{Problem::SetParameterBlockConstant}
 
 and undo this using
 
