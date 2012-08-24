@@ -16,9 +16,14 @@ The general strategy when solving non-linear optimization problems is to solve a
          \min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2
         \label{eq:linearapprox}
 \end{equation}
-Unfortunately, na\"ively solving a sequence of these problems and updating $x \leftarrow x+ \Delta x$ leads to an algorithm that may not converge.  To get a convergent algorithm, we need to control the size of the step $\Delta x$. And this is where the idea of a trust-region comes in. The generic trust-region loop for non-linear least squares problems looks something like this
+Unfortunately, na\"ively solving a sequence of these problems and
+updating $x \leftarrow x+ \Delta x$ leads to an algorithm that may not
+converge.  To get a convergent algorithm, we need to control the size
+of the step $\Delta x$. And this is where the idea of a trust-region
+comes in. Algorithm~\ref{alg:trust-region} describes the basic  trust-region loop for non-linear least squares problems.
 
-
+\begin{algorithm}
+\caption{The basic trust-region algorithm.\label{alg:trust-region}}
 \begin{algorithmic}
 \REQUIRE Initial point $x$ and a trust region radius $\mu$.
 \LOOP
@@ -36,6 +41,7 @@ Unfortunately, na\"ively solving a sequence of these problems and updating $x \l
 \ENDIF
 \ENDLOOP
 \end{algorithmic}
+\end{algorithm}
 
 Here, $\mu$ is the trust region radius, $D(x)$ is some matrix used to define a metric on the domain of $F(x)$ and $\rho$ measures the quality of the step $\Delta x$, i.e., how well did the linear model predict the decrease in the value of the non-linear objective. The idea is to increase or decrease the radius of the trust region depending on how well the linearization predicts the behavior of the non-linear objective, which in turn is reflected in the value of $\rho$.
 
@@ -46,7 +52,7 @@ The key computational step in a trust-region algorithm is the solution of the co
 \label{eq:trp}
 \end{align}
 
-There are a number of different ways of solving this problem, each giving rise to a different concrete trust-region algorithm. Currently Ceres, implements two trust-region algorithms - Levenberg-Marquardt and Powell's Dogleg.
+There are a number of different ways of solving this problem, each giving rise to a different concrete trust-region algorithm. Currently Ceres, implements two trust-region algorithms - Levenberg-Marquardt and  Dogleg.
 
 \subsection{Levenberg-Marquardt}
 The Levenberg-Marquardt algorithm~\cite{levenberg1944method, marquardt1963algorithm} is the most popular algorithm for solving non-linear least squares problems.  It was also the first trust region algorithm to be developed~\cite{levenberg1944method,marquardt1963algorithm}. Ceres implements an exact step~\cite{madsen2004methods} and an inexact step variant of the Levenberg-Marquardt algorithm~\cite{wright1985inexact,nash1990assessing}.
@@ -79,19 +85,61 @@ Here, $k$ indicates the Levenberg-Marquardt iteration number and $0 < \eta_k <1$
 
 Ceres supports both exact and inexact step solution strategies. When the user chooses a factorization based linear solver, the exact step Levenberg-Marquardt algorithm is used. When the user chooses an iterative linear solver, the inexact step Levenberg-Marquardt algorithm is used.
 
-\subsection{Powell's Dogleg}
+\subsection{Dogleg}
 Another strategy for solving the trust region problem~\eqref{eq:trp} was introduced by M. J. D. Powell. The key idea there is to compute two vectors
 \begin{align}
         \Delta x^{\text{Gauss-Newton}} &= \arg \min_{\Delta x}\frac{1}{2} \|J(x)\Delta x + f(x)\|^2.\\
         \Delta x^{\text{Cauchy}} &= -\frac{\|g(x)\|^2}{\|J(x)g(x)\|^2}g(x).
 \end{align}
-Note that the vector $\Delta x^{\text{Gauss-Newton}}$ is the solution to~\eqref{eq:linearapprox} and $\Delta x^{\text{Cauchy}}$ is the vector that minimizes the linear approximation if we restrict ourselves to moving along the direction of the gradient.
+Note that the vector $\Delta x^{\text{Gauss-Newton}}$ is the solution
+to~\eqref{eq:linearapprox} and $\Delta x^{\text{Cauchy}}$ is the
+vector that minimizes the linear approximation if we restrict
+ourselves to moving along the direction of the gradient. Dogleg methods finds a vector $\Delta x$ defined by $\Delta
+x^{\text{Gauss-Newton}}$ and $\Delta x^{\text{Cauchy}}$ that solves
+the trust region problem. Ceres supports two
+variants.
 
-Then Powell's Dogleg method finds a vector $\Delta x$ in the two dimensional subspace defined by $\Delta x^{\text{Gauss-Newton}}$ and $\Delta x^{\text{Cauchy}}$ that solves the trust region problem. For more details on the exact reasoning and computations, please see Madsen et al~\cite{madsen2004methods}.
+\texttt{TRADITIONAL\_DOGLEG} as described by Powell,
+constructs two line segments using the Gauss-Newton and Cauchy vectors
+and finds the point farthest along this line shaped like a dogleg
+(hence the name) that is contained in the
+trust-region. For more details on the exact reasoning and computations, please see Madsen et al~\cite{madsen2004methods}.
 
-The key advantage of the Dogleg over Levenberg Marquardt is that if the step computation for a particular choice of $\mu$ does not result in sufficient decrease in the value of the objective function, Levenberg-Marquardt solves the linear approximation from scratch with a small value of $\mu$. Dogleg on the other hand, only needs to compute the interpolation between the Gauss-Newton and the Cauchy vectors, as neither of them depend on the value of $\mu$.
+ \texttt{SUBSPACE\_DOGLEG} is a more sophisticated method
+that considers the entire two dimensional subspace spanned by these
+two vectors and finds the point that minimizes the trust region
+problem in this subspace\cite{byrd1988approximate}.
+
+The key advantage of the Dogleg over Levenberg Marquardt is that if the step computation for a particular choice of $\mu$ does not result in sufficient decrease in the value of the objective function, Levenberg-Marquardt solves the linear approximation from scratch with a smaller value of $\mu$. Dogleg on the other hand, only needs to compute the interpolation between the Gauss-Newton and the Cauchy vectors, as neither of them depend on the value of $\mu$.
 
 The Dogleg method can only be used with the exact factorization based linear solvers.
+
+\subsection{Non-monotonic Steps}
+Note that the basic trust-region algorithm described in
+Algorithm~\ref{alg:trust-region} is a descent algorithm  in that
+    they only accept a point if it strictly reduces the value of
+     the objective function.
+
+     Relaxing this requirement allows the algorithm to be more
+     efficient in the long term at the cost of some local increase
+     in the value of the objective function.
+
+     This is because allowing for non-decreasing objective function
+     values in a princpled manner allows the algorithm to "jump over
+     boulders" as the method is not restricted to move into narrow
+     valleys while preserving its convergence properties.
+
+     Setting \texttt{Solver::Options::use\_nonmonotonic\_steps} to true enables the
+     non-monotonic trust region algorithm as described by
+Conn,  Gould \& Toint in~\cite{conn2000trust}.
+
+     Even though the value of the objective function may be larger
+     than the minimum value encountered over the course of the
+     optimization, the final parameters returned to the user are the
+     ones corresponding to the minimum cost over all iterations.
+
+    The option to take non-monotonic is available for all trust region
+strategies.
 
 \section{\texttt{LinearSolver}}
 Recall that in both of the trust-region methods described above, the key computational cost is the solution of a linear least squares problem of the form
@@ -113,19 +161,27 @@ For small problems (a couple of hundred parameters and a few thousand residuals)
 \begin{align}
     \Delta x^* = -R^{-1}Q^\top f
 \end{align}
-Ceres uses \texttt{Eigen}'s dense QR decomposition routines.
+Ceres uses \texttt{Eigen}'s dense QR factorization routines.
 
-
-\subsection{\texttt{SPARSE\_NORMAL\_CHOLESKY}}
+\subsection{\texttt{DENSE\_NORMAL\_CHOLESKY} \& \texttt{SPARSE\_NORMAL\_CHOLESKY}}
 Large non-linear least square problems are usually sparse. In such cases, using a dense QR factorization is inefficient. Let $H = R^\top R$ be the Cholesky factorization of the normal equations, where $R$ is an upper triangular matrix, then the  solution to ~\eqref{eq:normal} is given by
 \begin{equation}
     \Delta x^* = R^{-1} R^{-\top} g.
 \end{equation}
-The observant reader will note that the $R$ in the Cholesky factorization of $H$ is the same upper triangular matrix $R$ in the QR factorization of $J$. Since $Q$ is an orthonormal matrix, $J=QR$ implies that $J^\top J = R^\top Q^\top Q R = R^\top R$.
+The observant reader will note that the $R$ in the Cholesky
+factorization of $H$ is the same upper triangular matrix $R$ in the QR
+factorization of $J$. Since $Q$ is an orthonormal matrix, $J=QR$
+implies that $J^\top J = R^\top Q^\top Q R = R^\top R$. There are two variants of Cholesky factorization -- sparse and
+dense.
 
+\texttt{DENSE\_NORMAL\_CHOLESKY}  as the name implies performs a dense
+Cholesky factorization of the normal equations. Ceres uses
+\texttt{Eigen}'s dense LDLT factorization routines.
 
-There are two variants of Cholesky factorization -- sparse and dense. \texttt{SPARSE\_NORMAL\_CHOLESKY}, as the name implies performs a sparse Cholesky factorization of the normal equations. This leads to substantial savings in time and memory for large sparse problems. We use the Professor Tim Davis' \texttt{CHOLMOD} library (part of the \texttt{SuiteSparse} package) to perform the sparse cholesky~\cite{chen2006acs}.
-
+\texttt{SPARSE\_NORMAL\_CHOLESKY}, as the name implies performs a
+sparse Cholesky factorization of the normal equations. This leads to
+substantial savings in time and memory for large sparse
+problems. Ceres uses the Professor Tim Davis' \texttt{CHOLMOD} library (part of the \texttt{SuiteSparse} package) to perform the sparse cholesky~\cite{chen2006acs}.
 
 \subsection{\texttt{DENSE\_SCHUR} \& \texttt{SPARSE\_SCHUR}}
 While it is possible to use \texttt{SPARSE\_NORMAL\_CHOLESKY} to solve bundle adjustment problems, bundle adjustment problem have a special structure, and a more efficient scheme for solving~\eqref{eq:normal} can be constructed.
@@ -254,6 +310,40 @@ Thus, the aim of the \texttt{SCHUR} ordering algorithm is to identify the larges
 
 \item{\texttt{trust\_region\_strategy\_type }} (\texttt{LEVENBERG\_MARQUARDT}) The  trust region step computation algorithm used by Ceres. Currently \texttt{LEVENBERG\_MARQUARDT } and \texttt{DOGLEG} are the two valid choices.
 
+\item{\texttt{dogleg\_type}} (\texttt{TRADITIONAL\_DOGLEG})  Ceres supports two different dogleg strategies.
+\texttt{TRADITIONAL\_DOGLEG} method by Powell and the
+\texttt{SUBSPACE\_DOGLEG} method described by Byrd et al.
+~\cite{byrd1988approximate}.
+
+\item{\texttt{use\_nonmonotoic\_steps}} (\texttt{false})
+
+The classical trust region methods are descent methods, in that
+      they only accept a point if it strictly reduces the value of
+      the objective function.
+
+      Relaxing this requirement allows the algorithm to be more
+      efficient in the long term at the cost of some local increase
+      in the value of the objective function.
+
+      This is because allowing for non-decreasing objective function
+      values in a princpled manner allows the algorithm to "jump over
+      boulders" as the method is not restricted to move into narrow
+      valleys while preserving its convergence properties.
+
+      Setting use_nonmonotonic_steps to true enables the
+      non-monotonic trust region algorithm as described by Conn,
+      Gould & Toint~\cite{conn2000trust}.
+
+ Even though the value of the objective function may be larger
+     than the minimum value encountered over the course of the
+     optimization, the final parameters returned to the user are the
+     ones corresponding to the minimum cost over all iterations.
+
+\item{\texttt{max\_consecutive\_nonmonotonic\_steps}} (5)
+ The
+     window size used by the step selection algorithm to accept
+    non-monotonic steps.
+
 \item{\texttt{max\_num\_iterations }}(\texttt{50}) Maximum number of iterations for Levenberg-Marquardt.
 
 \item{\texttt{max\_solver\_time\_in\_seconds }} ($10^9$) Maximum amount of time for which the solver should run.
@@ -358,23 +448,23 @@ is sent to \texttt{STDOUT}.
 \item{\texttt{return\_initial\_residuals }}(\texttt{false})
 \item{\texttt{return\_final\_residuals }}(\texttt{false})
 If true, the vectors \texttt{Solver::Summary::initial\_residuals } and \texttt{Solver::Summary::final\_residuals } are filled with the residuals before and after the optimization. The entries of these vectors are in the order in which ResidualBlocks were added to the Problem object.
-    
+
 \item{\texttt{return\_initial\_gradient }}(\texttt{false})
 \item{\texttt{return\_final\_gradient }}(\texttt{false})
 If true, the vectors \texttt{Solver::Summary::initial\_gradient } and \texttt{Solver::Summary::final\_gradient } are filled with the gradient before and after the optimization. The entries of these vectors are in the order in which ParameterBlocks were added to the Problem object.
 
 Since \texttt{AddResidualBlock } adds ParameterBlocks to the \texttt{Problem } automatically if they do not already exist, if you wish to have explicit control over the ordering of the vectors, then use \texttt{Problem::AddParameterBlock } to explicitly add the ParameterBlocks in the order desired.
-    
+
 \item{\texttt{return\_initial\_jacobian }}(\texttt{false})
 \item{\texttt{return\_initial\_jacobian }}(\texttt{false})
 If true, the Jacobian matrices before and after the optimization are returned in \texttt{Solver::Summary::initial\_jacobian } and \texttt{Solver::Summary::final\_jacobian } respectively.
 
 The rows of these matrices are in the same order in which the ResidualBlocks were added to the Problem object. The columns are in the same order in which the ParameterBlocks were added to the Problem object.
-        
+
 Since \texttt{AddResidualBlock } adds ParameterBlocks to the \texttt{Problem } automatically if they do not already exist, if you wish to have explicit control over the column ordering of the matrix, then use \texttt{Problem::AddParameterBlock } to explicitly add the ParameterBlocks in the order desired.
 
 The Jacobian matrices are stored as compressed row sparse matrices. Please see \texttt{ceres/crs\_matrix.h } for more details of the format.
-    
+
 \item{\texttt{lsqp\_iterations\_to\_dump }}
  List of iterations at which the optimizer should dump the
      linear least squares problem to disk. Useful for testing and
@@ -455,7 +545,17 @@ when \texttt{lsqp\_iterations\_to\_dump} is non-empty.  There are three options
      The solver does NOT take ownership of these pointers.
 
 \item{\texttt{update\_state\_every\_iteration }}(\texttt{false})
-Normally the parameter blocks are only updated when the solver terminates. Setting this to true update them in every iteration. This setting is useful when building an interactive application using Ceres and using an \texttt{IterationCallback}.
+Normally the parameter blocks are only updated when the solver
+terminates. Setting this to true update them in every iteration. This
+setting is useful when building an interactive application using Ceres
+and using an \texttt{IterationCallback}.
+
+\item{\texttt{solver\_log}}  If non-empty, a summary of the execution of the solver is
+ recorded to this file.  This file is used for recording and Ceres'
+ performance. Currently, only the iteration number, total
+ time and the objective function value are logged. The format of this
+ file is expected to change over time as the performance evaluation
+ framework is fleshed out.
 \end{enumerate}
 
 \section{\texttt{Solver::Summary}}
