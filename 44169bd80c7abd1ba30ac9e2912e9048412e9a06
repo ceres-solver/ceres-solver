@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X///bE\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "Perhaps we should add a TODO() to expand this is more detail. It would be nice to have a complete Android example.",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///a8\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "Weird indentation.\n\naccept -\u003e accepts",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///a4\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "Do you want \" or `` and \u0027\u0027?",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///a0\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "true -\u003e texttt{true}",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///ao\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "I wonder if we should mention that solving the normal equations explicitly leads to potential ill-conditioning. I\u0027m not sure what location is best; perhaps in the above section on the *_NORMAL_CHOLESKY factorizers?\n\nIt might also be worth mentioning this in the QR section (since the QR version is more stable).",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///aU\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "These are documented above; should you refer instead?",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///ag\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T20:08:03Z",
+      "side": 1,
+      "message": "Isn\u0027t this duplicated? Look above; you have this explained already.",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
