@@ -68,6 +68,13 @@ public:
 
   virtual double Radius() const;
 
+  // These functions are predominantly for testing.
+  Vector Gradient() const { return gradient_; }
+  Vector GaussNewtonStep() const { return gauss_newton_step_; }
+  Matrix SubspaceBasis() { return subspace_basis_; }
+  Vector SubspaceG() { return subspace_g_; }
+  Matrix SubspaceB() { return subspace_B_; }
+
  private:
   typedef Eigen::Matrix<double, 2, 1, Eigen::DontAlign> Vector2d;
   typedef Eigen::Matrix<double, 2, 2, Eigen::DontAlign> Matrix2d;
