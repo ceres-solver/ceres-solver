@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI6X///XM\u003d",
+        "filename": "docs/build.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///bE\u003d",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///a8\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-27T20:08:03Z",
       "side": 1,
       "message": "Weird indentation.\n\naccept -\u003e accepts",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///X8\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///a8\u003d",
       "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI6X///X4\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///a4\u003d",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///a0\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-27T20:08:03Z",
       "side": 1,
       "message": "true -\u003e texttt{true}",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///X0\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///a0\u003d",
       "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI6X///XY\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "So the discussion of stability is both more complicated and more  academic. In our case, even if the direct factorization does not return a very accurate solution, it is actually okay, which is why for now I am inclined to skip over it.\n\nIf we decide to expand the coverage of the linear solvers, we will go ahead and include more details.",
+      "parentUuid": "AAAI6X///ao\u003d",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///aU\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI6X///Xo\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///aU\u003d",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///ag\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2012-08-27T20:08:03Z",
       "side": 1,
       "message": "Isn\u0027t this duplicated? Look above; you have this explained already.",
+      "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///Xg\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///ag\u003d",
       "revId": "44169bd80c7abd1ba30ac9e2912e9048412e9a06",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
