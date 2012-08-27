@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI53///yc\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-27T23:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///V0\u003d",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///Vs\u003d",
         "filename": "internal/ceres/dogleg_strategy_test.cc",
         "patchSetId": 4
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI53///yk\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-27T23:09:40Z",
+      "side": 1,
+      "message": "Can add it, but predominantly wanted to test that the returned step does not lie outside the trust region?",
+      "parentUuid": "AAAI6X///Vo\u003d",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X///VU\u003d",
         "filename": "internal/ceres/dogleg_strategy_test.cc",
         "patchSetId": 4
@@ -81,6 +117,24 @@
       "writtenOn": "2012-08-27T21:17:16Z",
       "side": 1,
       "message": "The two comments here and above are identical and since the only difference is in the radius, its worth pointing that out and explaining a bit more.",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI53///yg\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-08-27T23:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X///VU\u003d",
       "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
