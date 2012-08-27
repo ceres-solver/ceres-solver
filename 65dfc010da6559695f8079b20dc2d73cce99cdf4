@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X///V4\u003d",
+        "filename": "internal/ceres/dogleg_strategy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T21:17:16Z",
+      "side": 1,
+      "message": "The google coding convention is that for accessors, we use lower case names with the same name as the variable without the trailing _.",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///V0\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T21:17:16Z",
+      "side": 1,
+      "message": "These two gmock includes are not needed.",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///Vs\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T21:17:16Z",
+      "side": 1,
+      "message": "protected variables have the same naming convention as private variables, trailing _.",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///Vo\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T21:17:16Z",
+      "side": 1,
+      "message": "what about a minimum norm check on norm(x) ?",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///VU\u003d",
+        "filename": "internal/ceres/dogleg_strategy_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-27T21:17:16Z",
+      "side": 1,
+      "message": "The two comments here and above are identical and since the only difference is in the radius, its worth pointing that out and explaining a bit more.",
+      "revId": "65dfc010da6559695f8079b20dc2d73cce99cdf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
