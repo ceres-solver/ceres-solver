@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X///T8\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T21:39:33Z",
+      "side": 1,
+      "message": "Comment style.",
+      "revId": "1a2211cf663ff30c5394a75463558acdb2d15f19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///T4\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T21:39:33Z",
+      "side": 1,
+      "message": "Indent 2 more.",
+      "revId": "1a2211cf663ff30c5394a75463558acdb2d15f19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///Ts\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T21:39:33Z",
+      "side": 1,
+      "message": "What\u0027s X?",
+      "revId": "1a2211cf663ff30c5394a75463558acdb2d15f19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///To\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T21:39:33Z",
+      "side": 1,
+      "message": "Comment style; there should be a blank before and after.",
+      "revId": "1a2211cf663ff30c5394a75463558acdb2d15f19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X///Tg\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2012-08-27T21:39:33Z",
+      "side": 1,
+      "message": "Normally we put one blank line after namespace.",
+      "revId": "1a2211cf663ff30c5394a75463558acdb2d15f19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
