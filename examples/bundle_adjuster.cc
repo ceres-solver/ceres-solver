@@ -273,27 +273,6 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
   SetOrdering(bal_problem, options);
 }
 
-// Uniform random numbers between 0 and 1.
-double UniformRandom() {
-  return static_cast<double>(random()) / static_cast<double>(RAND_MAX);
-}
-
-// Normal random numbers using the Box-Mueller algorithm. Its a bit
-// wasteful, as it generates two but only returns one.
-double RandNormal() {
-  double x1, x2, w, y1, y2;
-  do {
-    x1 = 2.0 * UniformRandom() - 1.0;
-    x2 = 2.0 * UniformRandom() - 1.0;
-    w = x1 * x1 + x2 * x2;
-  } while ( w >= 1.0 );
-
-  w = sqrt((-2.0 * log(w)) / w);
-  y1 = x1 * w;
-  y2 = x2 * w;
-  return y1;
-}
-
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();

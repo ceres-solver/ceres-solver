@@ -34,19 +34,20 @@
 
 #include <cmath>
 #include <cstdlib>
+#include "ceres/internal/port.h"
 
 namespace ceres {
 
 inline void SetRandomState(int state) {
-  srandom(state);
+  srand(state);
 }
 
 inline int Uniform(int n) {
-  return random() % n;
+  return rand() % n;
 }
 
 inline double RandDouble() {
-  double r = static_cast<double>(random());
+  double r = static_cast<double>(rand());
   return r / RAND_MAX;
 }
 
