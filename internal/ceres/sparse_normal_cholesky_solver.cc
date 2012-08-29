@@ -55,6 +55,10 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
 #ifndef CERES_NO_SUITESPARSE
   factor_ = NULL;
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  cxsparse_factor_ = NULL;
+#endif  // CERES_NO_CXSPARSE
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
@@ -64,6 +68,13 @@ SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
     factor_ = NULL;
   }
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  if (cxsparse_factor_ != NULL) {
+    cxsparse_.Free(cxsparse_factor_);
+    cxsparse_factor_ = NULL;
+  }
+#endif  // CERES_NO_CXSPARSE
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
@@ -108,14 +119,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   VectorRef(x, num_cols).setZero();
 
   // Wrap the augmented Jacobian in a compressed sparse column matrix.
-  cs_di At;
-  At.m = A->num_cols();
-  At.n = A->num_rows();
-  At.nz = -1;
-  At.nzmax = A->num_nonzeros();
-  At.p = A->mutable_rows();
-  At.i = A->mutable_cols();
-  At.x = A->mutable_values();
+  cs_di At = cxsparse_.CreateSparseMatrixTransposeView(A);
 
   // Compute the normal equations. J'J delta = J'f and solve them
   // using a sparse Cholesky factorization. Notice that when compared
@@ -127,20 +131,23 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   cs_di* A2 = cs_transpose(&At, 1);
   cs_di* AtA = cs_multiply(&At,A2);
 
-  cs_free(A2);
+  cxsparse_.Free(A2);
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
 
-  // This recomputes the symbolic factorization every time it is
-  // invoked. It will perhaps be worth it to cache the symbolic
-  // factorization the way we do for SuiteSparse.
-  if (cs_cholsol(1, AtA, Atb.data())) {
+  // Compute symbolic factorization if not available.
+  if (cxsparse_factor_ == NULL) {
+    cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.AnalyzeCholesky(AtA));
+  }
+
+  // Solve the linear system.
+  if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
     summary.termination_type = TOLERANCE;
   }
 
-  cs_free(AtA);
+  cxsparse_.Free(AtA);
   return summary;
 }
 #else
