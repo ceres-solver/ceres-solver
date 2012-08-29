@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63//9y0\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "drop this, as it is redundant.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yw\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "initialize the scratch pointer to NULL.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9ys\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "LOG a warning here.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yo\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "are all of these methods guaranteed to succeed?\nadd a comment why this is conditioned on the success of the cholesky factorization.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yk\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "provide methods for symbolic factorization also.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9zM\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "why do you need string here?",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9zI\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "or here?",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9zE\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "why do you need vector?",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9zA\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "and this?",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yY\u003d",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "no need for the ifdef here since the include file cxsparse.h  will be empty.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yM\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "move the free methods into the cxsparse interface like suitesparse.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9x8\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "Move this construction into the interface.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9x4\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "and these guys too.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9x0\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9yA\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-29T20:05:38Z",
+      "side": 1,
+      "message": "move this into the interface to parallel suitesparse",
+      "revId": "af2dc5402f55551e68017367979d5eb27652aa4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
