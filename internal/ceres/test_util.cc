@@ -33,6 +33,7 @@
 #include <cmath>
 #include "ceres/file.h"
 #include "ceres/stringprintf.h"
+#include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
