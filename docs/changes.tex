@@ -25,7 +25,7 @@
 \item Support for building Ceres without \texttt{TR1} (This leads to
   slightly slower \texttt{DENSE\_SCHUR} and \texttt{SPARSE\_SCHUR} solvers).
 \item \texttt{BALProblem} can now write a problem back to disk.
-\item \texttt{bundle\_adjuster} now allows the user to normalize perturb the
+\item \texttt{bundle\_adjuster} now allows the user to normalize and perturb the
   problem before solving.
 \item Solver progress logging to file.
 \item Added \texttt{Program::ToString} and
@@ -36,9 +36,14 @@
 
 \subsection{Bug Fixes}
 \begin{itemize}
+\item Do not link to \texttt{libgomp} when building on
+  windows. (Petter Strandmark)
+\item Include \texttt{gflags.h} in \texttt{test_utils.cc}. (Petter
+  Strandmark)
+\item Use standard random number generation routines. (Petter Strandmark)
 \item \texttt{TrustRegionMinimizer} does not implicitly negate the
   steps that it takes. (Markus Moll)
-\item Diagonal scaling allows for equal upper and lower bounds (Markus Moll)
+\item Diagonal scaling allows for equal upper and lower bounds. (Markus Moll)
 \item TrustRegionStrategy does not misuse LinearSolver:Summary anymore.
 \item Fix Eigen3 Row/Column Major storage issue. (Lena Gieseke)
 \item QuaternionToAngleAxis now guarantees an angle in $[-\pi, \pi]$. (Guoxuan Zhang)
