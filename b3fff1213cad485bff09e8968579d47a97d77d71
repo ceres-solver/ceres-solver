@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1n///w0\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T21:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9w8\u003d",
+      "revId": "b3fff1213cad485bff09e8968579d47a97d77d71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9ww\u003d",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1n///xM\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T21:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9ww\u003d",
+      "revId": "b3fff1213cad485bff09e8968579d47a97d77d71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9wo\u003d",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2012-08-29T20:27:35Z",
       "side": 1,
       "message": "cs_di construction should be in the interface",
+      "revId": "b3fff1213cad485bff09e8968579d47a97d77d71",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1n///w4\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T21:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9wo\u003d",
       "revId": "b3fff1213cad485bff09e8968579d47a97d77d71",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
