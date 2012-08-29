@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///3U\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+GE\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+GA\u003d",
         "filename": "internal/ceres/cxsparse.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-29T22:54:38Z",
       "side": 1,
       "message": "Blank after. Headers for the matching .cc should go first with a blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///3Q\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+GA\u003d",
       "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///3M\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+F8\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+F4\u003d",
         "filename": "internal/ceres/cxsparse.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-29T22:54:38Z",
       "side": 1,
       "message": "Blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///3I\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+F4\u003d",
       "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///3E\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+F0\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+Ew\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2012-08-29T22:54:38Z",
       "side": 1,
       "message": "\"a linear system\" -\u003e \"linear systems\"",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///3A\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+Ew\u003d",
       "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///28\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+Fk\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+E4\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 5
@@ -132,6 +258,24 @@
       "writtenOn": "2012-08-29T22:54:38Z",
       "side": 1,
       "message": "I wonder it\u0027s worth trying to get better info about the failure from CXSparse, for reporting to the user.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///24\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "CXSparse does not provide that information. Cholesky factorization can fail in two ways: allocation failure and positive definiteness. Distinguishing between then does not seem possible.",
+      "parentUuid": "AAAI6n//+E4\u003d",
       "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///20\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "\"css\" is a macro for \"cs_dis.\" I have changed this.",
+      "parentUuid": "AAAI6n//+FU\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+Fc\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 5
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///2w\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6n//+Fc\u003d",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6n//+E8\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 5
@@ -183,6 +363,24 @@
       "writtenOn": "2012-08-29T22:54:38Z",
       "side": 1,
       "message": "So I won\u0027t make you do this change now, but in general favor handles with virtual destructors that call the appropriate non-c++ deallocation on destruction.\n\nRequiring users to call a random \"Free()\" method instead of relying on normal destruction is asking for trouble. For example, users can\u0027t simply stick this object into a scoped pointer and forget about it.\n\nWe should probably add a class \"ScopedHandle\" which takes a functor to deallocate, and return one of those. For another commit.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///2s\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-29T23:12:33Z",
+      "side": 1,
+      "message": "OK. I was looking at SuiteSparse, which had Free() methods.",
+      "parentUuid": "AAAI6n//+E8\u003d",
       "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
