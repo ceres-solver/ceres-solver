@@ -152,6 +152,11 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
 #ifndef CERES_NO_SUITESPARSE
   factor_ = NULL;
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  cxsparse_factor_ = NULL;
+  cxsparse_scratch_ = NULL;
+#endif  // CERES_NO_CXSPARSE
 }
 
 SparseSchurComplementSolver::~SparseSchurComplementSolver() {
@@ -161,6 +166,17 @@ SparseSchurComplementSolver::~SparseSchurComplementSolver() {
     factor_ = NULL;
   }
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  if (cxsparse_factor_ != NULL) {
+    cs_sfree(cxsparse_factor_);
+    cxsparse_factor_ = NULL;
+  }
+  if (cxsparse_scratch_ != NULL) {
+    cs_free(cxsparse_scratch_);
+    cxsparse_scratch_ = NULL;
+  }
+#endif  // CERES_NO_CXSPARSE
 }
 
 // Determine the non-zero blocks in the Schur Complement matrix, and
@@ -362,9 +378,36 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
   cs_di_sparse* lhs = cs_compress(&tsm_wrapper);
   VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
 
-  // It maybe worth caching the ordering here, but for now we are
-  // going to go with the simple cholsol based implementation.
-  int ok = cs_di_cholsol(1, lhs, solution);
+  // Compute symbolic factorization if not available.
+  if (cxsparse_factor_ == NULL) {
+    cxsparse_factor_ = cs_schol(1, lhs);
+    CHECK_NOTNULL(cxsparse_factor_);
+
+    // Allocate scratch space.
+    cxsparse_scratch_ =
+      reinterpret_cast<CS_ENTRY*>(cs_malloc(lhs->n, sizeof(CS_ENTRY)));
+    CHECK_NOTNULL(cxsparse_scratch_);
+  }
+
+  // Solve using Cholesky factorization
+  csn* N = cs_di_chol(lhs, cxsparse_factor_);
+  bool ok = N != NULL;
+  if (ok) {
+    // Shorthand notation below:
+    //   x is cxsparse_scratch_.
+    //   b is solution.
+    // Set x = P * b.
+    cs_ipvec(cxsparse_factor_->pinv, solution, cxsparse_scratch_, lhs->n);
+    // Set x = L \ x.
+    cs_lsolve(N->L, cxsparse_scratch_);
+    // Set x = L' \ x.
+    cs_ltsolve(N->L, cxsparse_scratch_);
+    // Set b = P' * b.
+    cs_pvec(cxsparse_factor_->pinv, cxsparse_scratch_, solution, lhs->n);
+
+    // Free Cholesky factorization.
+    cs_nfree(N);
+  }
   cs_free(lhs);
   return ok;
 }

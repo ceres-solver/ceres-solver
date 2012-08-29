@@ -33,6 +33,11 @@
 
 #include <set>
 #include <utility>
+
+#ifndef CERES_NO_CXSPARSE
+#include "cs.h"
+#endif
+
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -169,6 +174,13 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   // once and reused in subsequent calls.
   cholmod_factor* factor_;
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  // Cached factorization
+  css* cxsparse_factor_;
+  // Cached scratch space
+  CS_ENTRY* cxsparse_scratch_;
+#endif  // CERES_NO_CXSPARSE
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
 

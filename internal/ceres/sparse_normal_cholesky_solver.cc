@@ -55,6 +55,11 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
 #ifndef CERES_NO_SUITESPARSE
   factor_ = NULL;
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  cxsparse_factor_ = NULL;
+  cxsparse_scratch_ = NULL;
+#endif  // CERES_NO_CXSPARSE
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
@@ -64,6 +69,17 @@ SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
     factor_ = NULL;
   }
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  if (cxsparse_factor_ != NULL) {
+    cs_sfree(cxsparse_factor_);
+    cxsparse_factor_ = NULL;
+  }
+  if (cxsparse_scratch_ != NULL) {
+    cs_free(cxsparse_scratch_);
+    cxsparse_scratch_ = NULL;
+  }
+#endif  // CERES_NO_CXSPARSE
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
@@ -132,10 +148,35 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     A->DeleteRows(num_cols);
   }
 
-  // This recomputes the symbolic factorization every time it is
-  // invoked. It will perhaps be worth it to cache the symbolic
-  // factorization the way we do for SuiteSparse.
-  if (cs_cholsol(1, AtA, Atb.data())) {
+  // Compute symbolic factorization if not available.
+  if (cxsparse_factor_ == NULL) {
+    cxsparse_factor_ = cs_schol(1, AtA);
+    CHECK_NOTNULL(cxsparse_factor_);
+
+    // Allocate scratch space.
+    cxsparse_scratch_ =
+      reinterpret_cast<CS_ENTRY*>(cs_malloc(AtA->n, sizeof(CS_ENTRY)));
+    CHECK_NOTNULL(cxsparse_scratch_);
+  }
+
+  // Solve using Cholesky factorization
+  csn* N = cs_chol(AtA, cxsparse_factor_);
+  if (N != NULL) {
+    // Shorthand notation below:
+    //   x is cxsparse_scratch_.
+    //   b is Atb.data().
+    // Set x = P * b.
+    cs_ipvec(cxsparse_factor_->pinv, Atb.data(), cxsparse_scratch_, AtA->n);
+    // Set x = L \ x.
+    cs_lsolve(N->L, cxsparse_scratch_);
+    // Set x = L' \ x.
+    cs_ltsolve(N->L, cxsparse_scratch_);
+    // Set b = P' * b.
+    cs_pvec(cxsparse_factor_->pinv, cxsparse_scratch_, Atb.data(), AtA->n);
+
+    // Free Cholesky factorization.
+    cs_nfree(N);
+
     VectorRef(x, Atb.rows()) = Atb;
     summary.termination_type = TOLERANCE;
   }
