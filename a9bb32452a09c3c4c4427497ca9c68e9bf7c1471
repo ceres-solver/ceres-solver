@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//+GE\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+GA\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Blank after. Headers for the matching .cc should go first with a blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+F8\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+F4\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+F0\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+Ew\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "\"a linear system\" -\u003e \"linear systems\"",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+Fk\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "\"a linear\" -\u003e \"a symmetric linear\"",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+E4\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "I wonder it\u0027s worth trying to get better info about the failure from CXSparse, for reporting to the user.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+FU\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "AnalyzeCholesky returns a \"cs_dis*\", but in this function the argument \"factor\" is a \"css*\". Please document.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+Fc\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "Drop \"Allocates and\".",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//+E8\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-29T22:54:38Z",
+      "side": 1,
+      "message": "So I won\u0027t make you do this change now, but in general favor handles with virtual destructors that call the appropriate non-c++ deallocation on destruction.\n\nRequiring users to call a random \"Free()\" method instead of relying on normal destruction is asking for trouble. For example, users can\u0027t simply stick this object into a scoped pointer and forget about it.\n\nWe should probably add a class \"ScopedHandle\" which takes a functor to deallocate, and return one of those. For another commit.",
+      "revId": "a9bb32452a09c3c4c4427497ca9c68e9bf7c1471",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
