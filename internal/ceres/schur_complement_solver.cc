@@ -152,6 +152,10 @@ SparseSchurComplementSolver::SparseSchurComplementSolver(
 #ifndef CERES_NO_SUITESPARSE
   factor_ = NULL;
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  cxsparse_factor_ = NULL;
+#endif  // CERES_NO_CXSPARSE
 }
 
 SparseSchurComplementSolver::~SparseSchurComplementSolver() {
@@ -161,6 +165,13 @@ SparseSchurComplementSolver::~SparseSchurComplementSolver() {
     factor_ = NULL;
   }
 #endif  // CERES_NO_SUITESPARSE
+
+#ifndef CERES_NO_CXSPARSE
+  if (cxsparse_factor_ != NULL) {
+    cs_sfree(cxsparse_factor_);
+    cxsparse_factor_ = NULL;
+  }
+#endif  // CERES_NO_CXSPARSE
 }
 
 // Determine the non-zero blocks in the Schur Complement matrix, and
@@ -362,9 +373,15 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
   cs_di_sparse* lhs = cs_compress(&tsm_wrapper);
   VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
 
-  // It maybe worth caching the ordering here, but for now we are
-  // going to go with the simple cholsol based implementation.
-  int ok = cs_di_cholsol(1, lhs, solution);
+  // Compute symbolic factorization if not available.
+  if (cxsparse_factor_ == NULL) {
+    cxsparse_factor_ = cs_schol(1, lhs);
+    CHECK_NOTNULL(cxsparse_factor_);
+  }
+
+  // Solve the linear system.
+  bool ok = cxsparse_.SolveCholesky(lhs, cxsparse_factor_, solution);
+
   cs_free(lhs);
   return ok;
 }

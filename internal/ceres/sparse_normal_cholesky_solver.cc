@@ -55,6 +55,10 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
 #ifndef CERES_NO_SUITESPARSE
   factor_ = NULL;
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  cxsparse_factor_ = NULL;
+#endif  // CERES_NO_CXSPARSE
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
@@ -64,6 +68,13 @@ SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
     factor_ = NULL;
   }
 #endif
+
+#ifndef CERES_NO_CXSPARSE
+  if (cxsparse_factor_ != NULL) {
+    cs_sfree(cxsparse_factor_);
+    cxsparse_factor_ = NULL;
+  }
+#endif  // CERES_NO_CXSPARSE
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
@@ -132,10 +143,14 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     A->DeleteRows(num_cols);
   }
 
-  // This recomputes the symbolic factorization every time it is
-  // invoked. It will perhaps be worth it to cache the symbolic
-  // factorization the way we do for SuiteSparse.
-  if (cs_cholsol(1, AtA, Atb.data())) {
+  // Compute symbolic factorization if not available.
+  if (cxsparse_factor_ == NULL) {
+    cxsparse_factor_ = cs_schol(1, AtA);
+    CHECK_NOTNULL(cxsparse_factor_);
+  }
+
+  // Solve the linear system.
+  if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
     summary.termination_type = TOLERANCE;
   }
