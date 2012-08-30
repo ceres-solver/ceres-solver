@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//83c\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T18:49:57Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "b34b76cae2fe3a6c79078850b881555c8cf62268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//83U\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T18:49:57Z",
+      "side": 1,
+      "message": "These comments above the cost functions don\u0027t help with their readability.",
+      "revId": "b34b76cae2fe3a6c79078850b881555c8cf62268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
