@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//9u4\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "Rename \"factor\" to \"symbolic_factorization\".\n\nThere\u0027s no need to propagate naming badness from CXSparse.",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//9vA\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "Is\u0027n \"L\" usually used for the Cholesky factor? We use N for ordinal values elsewhere in Ceres.\n\nI suppose this is for \"Normal equations\"? Consider calling this either \"L\" or \"cholesky_factors\".",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//9vM\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "succeeded -\u003e succeeds",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//9vI\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//9vE\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "This comment is not informative. Sameer has a copy of the book; maybe he can provide a more meaningful comment?",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6n//9us\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T17:13:36Z",
+      "side": 1,
+      "message": "Rename to symbolic_factorization.",
+      "revId": "1e3cbd9a4442cdd8fda43a7fb452f19dac8c74af",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
