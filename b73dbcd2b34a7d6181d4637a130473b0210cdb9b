@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//8yU\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "\"Some due\" -\u003e \"Some fail due\"",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8yM\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "\"some because\" -\u003e \"some fail because\"",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8ww\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "GetAndSplitLine?",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8w4\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Document loop nest.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xM\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xE\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Document loop nest.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8w8\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Document loop nest.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8x8\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Space before \\ (and below).",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xQ\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "The leading indent for \u0027y\u0027 is inconsistent among the functions; please make them all 1 space.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8ws\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "I would consider breaking the style guide here for readability, compacting the spaces around *\u0027s. I don\u0027t feel strongly though. Overall.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8yI\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Indentation. Feel free to break this over more lines.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8yE\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8x4\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8x0\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Perhaps mention above this loop that while it\u0027s possible to have a single n-dimension residual for each problem, it\u0027s shorter in code to express it this way.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xs\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Need to document (above loop nest) why Solve() is called twice. It\u0027s not obvious.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xk\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8xY\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T20:16:51Z",
+      "side": 1,
+      "message": "Please leave a TODO() to expand the solvers used. We should at least try DENSE_NORMAL_CHOLESKY and CGNR.",
+      "revId": "b73dbcd2b34a7d6181d4637a130473b0210cdb9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
