@@ -32,6 +32,9 @@ IF (${GFLAGS})
   ADD_EXECUTABLE(quadratic quadratic.cc)
   TARGET_LINK_LIBRARIES(quadratic ceres)
 
+  ADD_EXECUTABLE(nist nist.cc)
+  TARGET_LINK_LIBRARIES(nist ceres)
+
   ADD_EXECUTABLE(quadratic_auto_diff quadratic_auto_diff.cc)
   TARGET_LINK_LIBRARIES(quadratic_auto_diff ceres)
 
