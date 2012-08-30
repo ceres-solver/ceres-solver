@@ -14,6 +14,8 @@
   LDLT factorization on the normal equations.
 \item Cached symbolic factorization when using \texttt{CXSparse}.
   (Petter Strandark)
+\item New example \texttt{nist.cc} and data from the NIST non-linear
+  regression test suite. (Thanks to Douglas Bates for suggesting this.)
 \item The traditional Dogleg solver now uses an elliptical trust
   region (Markus Moll)
 \item Support for returning initial and final gradients \& Jacobians.
@@ -38,6 +40,7 @@
 
 \subsection{Bug Fixes}
 \begin{itemize}
+\item Fix an inadvertant integer to bool conversion. (Petter Strandmark)
 \item Do not link to \texttt{libgomp} when building on
   windows. (Petter Strandmark)
 \item Include \texttt{gflags.h} in \texttt{test\_utils.cc}. (Petter
