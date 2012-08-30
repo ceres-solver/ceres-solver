@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6n//9YY\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-30T22:29:39Z",
+      "side": 1,
+      "message": "Alignment.",
+      "revId": "58c12ed3dcc91e331d4dc8beebf9bfabc1620109",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
