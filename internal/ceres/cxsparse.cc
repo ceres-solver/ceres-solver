@@ -48,7 +48,9 @@ CXSparse::~CXSparse() {
   }
 }
 
-bool CXSparse::SolveCholesky(cs_di* A, cs_dis* factor, double* b) {
+bool CXSparse::SolveCholesky(cs_di* A,
+                             cs_dis* symbolic_factorization,
+                             double* b) {
   // Make sure we have enough scratch space available.
   if (scratch_size_ < A->n) {
     if (scratch_size_ > 0) {
@@ -58,28 +60,29 @@ bool CXSparse::SolveCholesky(cs_di* A, cs_dis* factor, double* b) {
   }
 
   // Solve using Cholesky factorization
-  csn* N = cs_chol(A, factor);
-  if (N == NULL) {
+  csn* numeric_factorization = cs_chol(A, symbolic_factorization);
+  if (numeric_factorization == NULL) {
     LOG(WARNING) << "Cholesky factorization failed.";
     return false;
   }
 
   // When the Cholesky factorization succeeded, these methods are guaranteed to
-  // succeed as well. In the comments below, "x" refers to the scratch space.
+  // succeeded as well. In the comments below, "x" refers to the scratch space.
+  //
   // Set x = P * b.
-  cs_ipvec(factor->pinv, b, scratch_, A->n);
+  cs_ipvec(symbolic_factorization->pinv, b, scratch_, A->n);
 
   // Set x = L \ x.
-  cs_lsolve(N->L, scratch_);
+  cs_lsolve(numeric_factorization->L, scratch_);
 
   // Set x = L' \ x.
-  cs_ltsolve(N->L, scratch_);
+  cs_ltsolve(numeric_factorization->L, scratch_);
 
   // Set b = P' * x.
-  cs_pvec(factor->pinv, scratch_, b, A->n);
+  cs_pvec(symbolic_factorization->pinv, scratch_, b, A->n);
 
   // Free Cholesky factorization.
-  cs_nfree(N);
+  cs_nfree(numeric_factorization);
   return true;
 }
 

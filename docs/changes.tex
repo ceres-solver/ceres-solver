@@ -12,6 +12,8 @@
     TolerantLossFunction} and \texttt{ComposedLossFunction}. (James Roseborough).
 \item New \texttt{DENSE\_NORMAL\_CHOLESKY} linear solver, which uses Eigen's
   LDLT factorization on the normal equations.
+\item Cached symbolic factorization when using \texttt{CXSparse}.
+  (Petter Strandark)
 \item The traditional Dogleg solver now uses an elliptical trust
   region (Markus Moll)
 \item Support for returning initial and final gradients \& Jacobians.
@@ -38,7 +40,7 @@
 \begin{itemize}
 \item Do not link to \texttt{libgomp} when building on
   windows. (Petter Strandmark)
-\item Include \texttt{gflags.h} in \texttt{test_utils.cc}. (Petter
+\item Include \texttt{gflags.h} in \texttt{test\_utils.cc}. (Petter
   Strandmark)
 \item Use standard random number generation routines. (Petter Strandmark)
 \item \texttt{TrustRegionMinimizer} does not implicitly negate the

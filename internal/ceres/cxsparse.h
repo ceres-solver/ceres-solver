@@ -51,13 +51,13 @@ class CXSparse {
   ~CXSparse();
 
   // Solves a symmetric linear system A * x = b using Cholesky factorization.
-  //  A      - The system matrix.
-  //  factor - The symbolic factorization of A. This is obtained from
-  //           AnalyzeCholesky.
-  //  b      - The right hand size of the linear equation. This array will also
-  //           recieve the solution.
+  //  A                      - The system matrix.
+  //  symbolic_factorization - The symbolic factorization of A. This is obtained
+  //                           from AnalyzeCholesky.
+  //  b                      - The right hand size of the linear equation. This
+  //                           array will also recieve the solution.
   // Returns false if Cholesky factorization of A fails.
-  bool SolveCholesky(cs_di* A, cs_dis* factor, double* b);
+  bool SolveCholesky(cs_di* A, cs_dis* symbolic_factorization, double* b);
 
   // Creates a sparse matrix from a compressed-column form. No memory is
   // allocated or copied; the structure A is filled out with info from the
