@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63//9bs\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "At this point, just the statement \"A simple C++ interface to CXSparse\" is good enough, since the interface has expanded.\n\nAnd this comment should just belong in the header file and not here.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bk\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "something maybe wrong with my browser window, but could you check that this indentation is correct and the whole thing fits in 80 characters?\n\nAlso this function should return a cs_di rather than taking one as input, since it is a small shallow object.\n\nIn that way the interfaces for CreateSparseMatrix and CreateSparseMatrixTransposeView will be similar.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bQ\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "I think this interface should be similar to CreateSparseMatrix.. as in it should return a cs_di object. See the corresponding interface in suitesparse.h",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bY\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "the returned",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bc\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "document the order parameter.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bM\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "if you want, you can move these two calls into the CXSparse interface too.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bI\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "This should be a CXSparse call.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//9bE\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-30T03:17:01Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
