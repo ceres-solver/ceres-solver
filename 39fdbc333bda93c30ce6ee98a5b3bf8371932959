@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///z0\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9bs\u003d",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9bk\u003d",
         "filename": "internal/ceres/cxsparse.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-30T03:17:01Z",
       "side": 1,
       "message": "something maybe wrong with my browser window, but could you check that this indentation is correct and the whole thing fits in 80 characters?\n\nAlso this function should return a cs_di rather than taking one as input, since it is a small shallow object.\n\nIn that way the interfaces for CreateSparseMatrix and CreateSparseMatrixTransposeView will be similar.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///zg\u003d",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "The indentation looks correct in my text editor.",
+      "parentUuid": "AAAI63//9bk\u003d",
       "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///zM\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "Now returns At by value.",
+      "parentUuid": "AAAI63//9bQ\u003d",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9bY\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///zw\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9bY\u003d",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9bc\u003d",
         "filename": "internal/ceres/cxsparse.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2012-08-30T03:17:01Z",
       "side": 1,
       "message": "document the order parameter.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///zs\u003d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "CXSparse barly contains any documentation at all (his book is the documentation). But if I understand correctly, there will never be any reason for \"order\" to be anything other than 1 for Cholesky. I have therefore removed the order argument.",
+      "parentUuid": "AAAI63//9bc\u003d",
       "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///zc\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9bI\u003d",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//9bE\u003d",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 6
@@ -132,6 +240,24 @@
       "writtenOn": "2012-08-30T03:17:01Z",
       "side": 1,
       "message": "same here.",
+      "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///zY\u003d",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-30T16:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//9bE\u003d",
       "revId": "39fdbc333bda93c30ce6ee98a5b3bf8371932959",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
