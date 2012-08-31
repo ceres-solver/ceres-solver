@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -281,9 +282,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // new_model_cost can actually be larger than half the squared
       // norm of the residual vector. We allow for small tolerance
       // around cost and beyond that declare the step to be invalid.
-      if (cost < (new_model_cost - kEpsilon)) {
+      if ((new_model_cost/ cost - 1.0) > kEpsilon) {
         VLOG(1) << "Invalid step: current_cost: " << cost
-                << " new_model_cost " << new_model_cost;
+                << " new_model_cost " << new_model_cost
+                << " difference " << new_model_cost - cost;
       } else {
         iteration_summary.step_is_valid = true;
       }
@@ -320,12 +322,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       num_consecutive_invalid_steps = 0;
 
       // We allow some slop around 0, and clamp the model_cost_change
-      // at kEpsilon from below.
-      //
-      // There is probably a better way to do this, as it is going to
-      // create problems for problems where the objective function is
-      // kEpsilon close to zero.
-      const double model_cost_change = max(kEpsilon, cost - new_model_cost);
+      // at kEpsilon * min(1.0, cost) from below.
+      const double model_cost_change =
+          max(kEpsilon * min(1.0, cost), cost - new_model_cost);
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
@@ -356,9 +355,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (!evaluator->Evaluate(x_plus_delta.data(),
                                &new_cost,
                                NULL, NULL, NULL)) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating: Cost evaluation failed.";
-        return;
+        // If the evaluation of the new cost fails, treat it as a step
+        // with high cost.
+        LOG(WARNING) << "Step failed to evaluate. "
+                     << "Treating it as step with infinite cost";
+        new_cost = numeric_limits<double>::max();
       }
 
       VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;
