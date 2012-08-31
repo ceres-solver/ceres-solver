@@ -1,0 +1,514 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63//8b8\u003d",
+        "filename": "data/ceres_noisy.pgm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "I do not think this is a good name for this file.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bE\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "This should probably be moved into the same place where you have the filter cost functions.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8b4\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "This logging belongs in the FieldOfExperts object.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8b0\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "have a flag for the image_filename.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bw\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "don\u0027t default, but actually fail. Relative paths are hard to get right in a cross platform manner.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bs\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "Logging belongs in the pgm reader at some vlog level.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bo\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "Break this function into two /three pieces and call them from main. \n\nA large main like this is hard to read.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bk\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "not sure this bit of logging adds much.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bg\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "const double, and pull it out of the loop.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bc\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "nice idea.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bY\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "redundant bit of logging.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bU\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "we do not use unsigned integers anywhere in our code. here and elsewhere convert to int.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bQ\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "pixels? parameters? better name?",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bM\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "no need for this.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bI\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "unsigned -\u003e int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8a4\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8a0\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8aw\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8as\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8ao\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8ac\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "sq_norm",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8aQ\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "rad?",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8bA\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "FieldOfExpertsCost ?",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8ag\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "pass a const reference. that way its clear it is never going to get mutated.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8ak\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "store a const reference instead? why bother witha pointer?",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8a8\u003d",
+        "filename": "examples/fields_of_experts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "this is just filter_-\u003esize(), why save it separately?\nI do not think you are even setting this in the constructor.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8aI\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "Real",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8aM\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "ints everywhere",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8aE\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "int",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Z8\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T13:29:59Z",
+      "side": 1,
+      "message": "why not use eigen vector/matrix to store this, you will get simpler faster and cheaper implementations of the various image operations.",
+      "revId": "0c2a2df859207e12348cdd3627e22c271d4df1bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
