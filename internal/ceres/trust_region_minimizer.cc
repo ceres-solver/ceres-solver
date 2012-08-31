@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -356,9 +357,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (!evaluator->Evaluate(x_plus_delta.data(),
                                &new_cost,
                                NULL, NULL, NULL)) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating: Cost evaluation failed.";
-        return;
+        // If the evaluation of the new cost fails, treat it as a step
+        // with high cost.
+        LOG(WARNING) << "Step failed to evaluate. "
+                     << "Treating it as step with infinite cost";
+        new_cost = numeric_limits<double>::max();
       }
 
       VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;
