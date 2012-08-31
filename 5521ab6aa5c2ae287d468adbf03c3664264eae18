@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///sI\u003d",
+        "filename": "data/README.foe",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Ow\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8N0\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-31T18:29:57Z",
       "side": 1,
       "message": "check that sigma is positive.",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///rg\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8N0\u003d",
       "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///rY\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8No\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Nw\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-31T18:29:57Z",
       "side": 1,
       "message": "int index \u003d 0;",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///rU\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Nw\u003d",
       "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///rE\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Nk\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8OA\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///rA\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done. Added --verbose flag.",
+      "parentUuid": "AAAI63//8OA\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Ok\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2012-08-31T18:29:57Z",
       "side": 1,
       "message": "Actually the pattern here is\n\nQCHECK(!FLAGS_input.empty()) \u003c\u003c \"msg\"; \n\nfewer lines of code and you get the exit call for free.\n\nyou can use this for all your if statements below and convert them into one liners.\n\nsorry I should have pointed this out earlier.",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///q0\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "My Ubuntu glog package does not seem to have QCHECK.",
+      "parentUuid": "AAAI63//8Ok\u003d",
       "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///q4\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8OU\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8NY\u003d",
         "filename": "examples/fields_of_experts.cc",
         "patchSetId": 7
@@ -166,6 +310,24 @@
       "writtenOn": "2012-08-31T18:29:57Z",
       "side": 1,
       "message": "const int or just get rid of the temporary.. it doesn\u0027t add anything.",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///sA\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8NY\u003d",
       "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///ro\u003d",
+        "filename": "examples/fields_of_experts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8M4\u003d",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8M0\u003d",
         "filename": "examples/pgm_image.h",
         "patchSetId": 7
@@ -200,6 +380,24 @@
       "writtenOn": "2012-08-31T18:29:57Z",
       "side": 1,
       "message": "here and elsewhere call it index, the abbreviation does not add anything.",
+      "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///sE\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T19:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8M0\u003d",
       "revId": "5521ab6aa5c2ae287d468adbf03c3664264eae18",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
