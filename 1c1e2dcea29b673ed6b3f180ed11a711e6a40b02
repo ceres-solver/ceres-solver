@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///sQ\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "The program still works if the image is smaller. It will just not add any regularization.",
+      "parentUuid": "AAAI63//8U0\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Uw\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "get numfilters once and then this can fit on one line.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///ts\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "It now fits on one line.",
+      "parentUuid": "AAAI63//8Uw\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///to\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8VQ\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8VM\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "empty",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///tk\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8VM\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///tg\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "AAAI63//8VI\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8VE\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "consts come before the mutables.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///tc\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8VE\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///tY\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8VA\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8U8\u003d",
         "filename": "examples/denoising.cc",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "don\u0027t do this. If the user does not want you to write out the output, then you shouldn\u0027t. Don\u0027t create a file forcibly.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///tU\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "OK. I removed this.",
+      "parentUuid": "AAAI63//8U8\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///sU\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "OK, I will change PGMImage to only use the header.",
+      "parentUuid": "AAAI63//8VU\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Vs\u003d",
         "filename": "examples/pgm_image.h",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "and -\u003e an",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///tQ\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Vs\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///sk\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Vk\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Vc\u003d",
         "filename": "examples/pgm_image.h",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "Don\u0027t overload like this. \nuse an explicit name\nPixelFromLinearIndex",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///sg\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Vc\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI1X///tM\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "I need the mutable pixels to create the problem.",
+      "parentUuid": "AAAI63//8VY\u003d",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI63//8Vg\u003d",
         "filename": "examples/pgm_image.h",
         "patchSetId": 6
@@ -234,6 +468,24 @@
       "writtenOn": "2012-08-31T17:01:28Z",
       "side": 1,
       "message": "no need for space here and above before (",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI1X///tI\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-08-31T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI63//8Vg\u003d",
       "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
