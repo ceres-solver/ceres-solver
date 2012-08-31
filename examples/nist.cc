@@ -264,7 +264,7 @@ NIST_END
 
 // y = b1 / ((1+exp[b2-b3*x])**(1/b4))  +  e
 NIST_BEGIN(Rat43)
-  b[0] / pow(T(1.0) + exp(b[1] - b[2] * x), T(1.0) / b[4])
+  b[0] / pow(T(1.0) + exp(b[1] - b[2] * x), T(1.0) / b[3])
 NIST_END
 
 // y = (b1 + b2*x + b3*x**2 + b4*x**3) /
@@ -320,13 +320,14 @@ int RegressionDriver(const std::string& filename,
   Matrix response = nist_problem.response();
   Matrix final_parameters = nist_problem.final_parameters();
   std::vector<ceres::Solver::Summary> summaries(nist_problem.num_starts() + 1);
+  std::cerr << filename << std::endl;
 
   // Each NIST problem comes with multiple starting points, so we
   // construct the problem from scratch for each case and solve it.
   for (int start = 0; start < nist_problem.num_starts(); ++start) {
     Matrix initial_parameters = nist_problem.initial_parameters(start);
-    ceres::Problem problem;
 
+    ceres::Problem problem;
     for (int i = 0; i < nist_problem.num_observations(); ++i) {
       problem.AddResidualBlock(
           new ceres::AutoDiffCostFunction<Model, num_residuals, num_parameters>(
@@ -340,44 +341,51 @@ int RegressionDriver(const std::string& filename,
   }
 
   // Ugly hack to get the objective function value at the certified
-  // optimal parameter values.
-  Matrix initial_parameters = nist_problem.final_parameters();
-  ceres::Problem problem;
-  for (int i = 0; i < nist_problem.num_observations(); ++i) {
-    problem.AddResidualBlock(
-        new ceres::AutoDiffCostFunction<Model, num_residuals, num_parameters>(
-            new Model(predictor.data() + nist_problem.predictor_size() * i,
-                      response.data() + nist_problem.response_size() * i)),
-        NULL,
-        initial_parameters.data());
+  // optimal parameter values. So we build the problem and call Ceres
+  // with zero iterations to get the initial_cost.
+  {
+    Matrix initial_parameters = nist_problem.final_parameters();
+    ceres::Problem problem;
+    for (int i = 0; i < nist_problem.num_observations(); ++i) {
+      problem.AddResidualBlock(
+          new ceres::AutoDiffCostFunction<Model, num_residuals, num_parameters>(
+              new Model(predictor.data() + nist_problem.predictor_size() * i,
+                        response.data() + nist_problem.response_size() * i)),
+          NULL,
+          initial_parameters.data());
+    }
+
+    ceres::Solver::Options options;
+    options.max_num_iterations = 0;
+    Solve(options, &problem, &summaries[nist_problem.num_starts()]);
   }
-  Solve(options, &problem, &summaries.back());
-  double certified_cost = summaries.back().initial_cost;
-  std::cout << filename << std::endl;
+
+  double certified_cost = summaries[nist_problem.num_starts()].initial_cost;
 
   int num_success = 0;
-  for (int i = 0; i < nist_problem.num_starts(); ++i) {
+  for (int start = 0; start < nist_problem.num_starts(); ++start) {
+    const ceres::Solver::Summary& summary = summaries[start];
     const int num_matching_digits =
         -std::log10(1e-18 +
-                    fabs(summaries[i].final_cost - certified_cost)
+                    fabs(summary.final_cost - certified_cost)
                     / certified_cost);
-    std::cout << "start " << i + 1 << " " ;
+    std::cerr << "start " << start + 1 << " " ;
     if (num_matching_digits > 4) {
       ++num_success;
-      std::cout <<  "SUCCESS";
+      std::cerr <<  "SUCCESS";
     } else {
-      std::cout << "FAILURE";
+      std::cerr << "FAILURE";
     }
-    std::cout << " digits: " << num_matching_digits;
-    std::cout << " termination: "
-              << ceres::SolverTerminationTypeToString(summaries[i].termination_type)
+    std::cerr << " digits: " << num_matching_digits;
+    std::cerr << " summary: "
+              << summary.BriefReport()
               << std::endl;
   }
   return num_success;
 }
 
 void SolveNISTProblems(const ceres::Solver::Options& options) {
-  std::cout << "Lower Difficulty\n";
+  std::cerr << "Lower Difficulty\n";
   int easy_success = 0;
   easy_success += RegressionDriver<Misra1a,  1, 2>("Misra1a.dat",  options);
   easy_success += RegressionDriver<Chwirut,  1, 3>("Chwirut1.dat", options);
@@ -388,7 +396,7 @@ void SolveNISTProblems(const ceres::Solver::Options& options) {
   easy_success += RegressionDriver<DanWood,  1, 2>("DanWood.dat",  options);
   easy_success += RegressionDriver<Misra1b,  1, 2>("Misra1b.dat",  options);
 
-  std::cout << "\nMedium Difficulty\n";
+  std::cerr << "\nMedium Difficulty\n";
   int medium_success = 0;
   medium_success += RegressionDriver<Kirby2,   1, 5>("Kirby2.dat",   options);
   medium_success += RegressionDriver<Hahn1,    1, 7>("Hahn1.dat",    options);
@@ -402,22 +410,23 @@ void SolveNISTProblems(const ceres::Solver::Options& options) {
   medium_success += RegressionDriver<Roszman1, 1, 4>("Roszman1.dat", options);
   medium_success += RegressionDriver<ENSO,     1, 9>("ENSO.dat",     options);
 
-  std::cout << "\nHigher Difficulty\n";
+  std::cerr << "\nHigher Difficulty\n";
   int hard_success = 0;
   hard_success += RegressionDriver<MGH09,    1, 4>("MGH09.dat",    options);
   hard_success += RegressionDriver<Thurber,  1, 7>("Thurber.dat",  options);
   hard_success += RegressionDriver<BoxBOD,   1, 2>("BoxBOD.dat",   options);
   hard_success += RegressionDriver<Rat42,    1, 3>("Rat42.dat",    options);
   hard_success += RegressionDriver<MGH10,    1, 3>("MGH10.dat",    options);
+
   hard_success += RegressionDriver<Eckerle4, 1, 3>("Eckerle4.dat", options);
   hard_success += RegressionDriver<Rat43,    1, 4>("Rat43.dat",    options);
   hard_success += RegressionDriver<Bennet5,  1, 3>("Bennett5.dat", options);
 
-  std::cout << "\n";
-  std::cout << "Easy    : " << easy_success << "/16\n";
-  std::cout << "Medium  : " << medium_success << "/22\n";
-  std::cout << "Hard    : " << hard_success << "/16\n";
-  std::cout << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
+  std::cerr << "\n";
+  std::cerr << "Easy    : " << easy_success << "/16\n";
+  std::cerr << "Medium  : " << medium_success << "/22\n";
+  std::cerr << "Hard    : " << hard_success << "/16\n";
+  std::cerr << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
 }
 
 int main(int argc, char** argv) {
@@ -428,7 +437,7 @@ int main(int argc, char** argv) {
   // linear solvers.
   ceres::Solver::Options options;
   options.linear_solver_type = ceres::DENSE_QR;
-  options.max_num_iterations = 1000;
+  options.max_num_iterations = 2000;
   options.function_tolerance *= 1e-10;
   options.gradient_tolerance *= 1e-10;
   options.parameter_tolerance *= 1e-10;
