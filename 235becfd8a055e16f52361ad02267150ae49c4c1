@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//8SM\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T16:34:13Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "235becfd8a055e16f52361ad02267150ae49c4c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8SA\u003d",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T16:34:13Z",
+      "side": 1,
+      "message": "Unfortunately this is orthogonal to the evaluate function failing. I wonder if we need a separate return path for \"residual block broken, programmer error\" and \"residual block numerical issue\".",
+      "revId": "235becfd8a055e16f52361ad02267150ae49c4c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8R8\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T16:34:13Z",
+      "side": 1,
+      "message": "Spacing around /",
+      "revId": "235becfd8a055e16f52361ad02267150ae49c4c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8R4\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T16:34:13Z",
+      "side": 1,
+      "message": "Perhaps we should show the relative difference too.",
+      "revId": "235becfd8a055e16f52361ad02267150ae49c4c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//8Rk\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T16:34:13Z",
+      "side": 1,
+      "message": "Why? Please add some explanation.",
+      "revId": "235becfd8a055e16f52361ad02267150ae49c4c1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
