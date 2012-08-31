@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63//8U0\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "ideally you should check that the user is not giving you a pathological case where the image is smaller than the foe size.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Uw\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "get numfilters once and then this can fit on one line.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VQ\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "empty()",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VM\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "empty",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VI\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "explicitly set to zero?\nso as not to depend on the default initialization of the object.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VE\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "consts come before the mutables.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VA\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "empty()",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8U8\u003d",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "don\u0027t do this. If the user does not want you to write out the output, then you shouldn\u0027t. Don\u0027t create a file forcibly.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VU\u003d",
+        "filename": "examples/pgm_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "since your class is templated, the implementation can\u0027t be in a cc file, it should be in the .h file at the bottom of it or inline.\n\nSee rotation.h for an example of this.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Vs\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "and -\u003e an",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Vk\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "references should be const.\nif you want things to be mutable, then say MutablePixel and return a pointer.",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Vc\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "Don\u0027t overload like this. \nuse an explicit name\nPixelFromLinearIndex",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8VY\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "also it maybe better to just have setters, \nSetPixel(i, j, a)\nSetPixelFromLinearIndex(i, a)",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//8Vg\u003d",
+        "filename": "examples/pgm_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-08-31T17:01:28Z",
+      "side": 1,
+      "message": "no need for space here and above before (",
+      "revId": "1c1e2dcea29b673ed6b3f180ed11a711e6a40b02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
