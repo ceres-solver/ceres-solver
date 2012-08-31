@@ -32,7 +32,7 @@ Model:         Miscellaneous Class
                4 Parameters (b1 to b4)
 
                pi = 3.141592653589793238462643383279E0
-               y =  b1 - b2*x - arctan[b3/(x-b4)]/pi  +  e
+               y =  1 + b1 - b2*x - arctan[b3/(x-b4)]/pi  +  e
 
 
           Starting Values                  Certified Values

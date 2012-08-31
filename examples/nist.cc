@@ -254,7 +254,7 @@ const double kPi = 3.141592653589793238462643383279;
 // pi = 3.141592653589793238462643383279E0
 // y =  b1 - b2*x - arctan[b3/(x-b4)]/pi  +  e
 NIST_BEGIN(Roszman1)
-  b[0] - b[1] * x - atan2(b[2], (x - b[3]))/T(kPi)
+  T(1.0) + b[0] - b[1] * x - atan2(b[2], (x - b[3]))/T(kPi)
 NIST_END
 
 // y = b1 / (1+exp[b2-b3*x])  +  e
