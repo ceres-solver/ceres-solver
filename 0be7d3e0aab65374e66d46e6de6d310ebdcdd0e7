@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//8Do\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-08-31T19:22:08Z",
+      "side": 1,
+      "message": "Parens around the subtraction (here and next line).",
+      "revId": "0be7d3e0aab65374e66d46e6de6d310ebdcdd0e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
