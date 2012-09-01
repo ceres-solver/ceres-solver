@@ -363,24 +363,29 @@ int RegressionDriver(const std::string& filename,
   double certified_cost = summaries[nist_problem.num_starts()].initial_cost;
 
   int num_success = 0;
+  const int kMinNumMatchingDigits = 4;
   for (int start = 0; start < nist_problem.num_starts(); ++start) {
     const ceres::Solver::Summary& summary = summaries[start];
-    const int num_matching_digits =
-        -std::log10(1e-18 +
-                    fabs(summary.final_cost - certified_cost)
-                    / certified_cost);
-    std::cerr << "start " << start + 1 << " " ;
-    if (num_matching_digits > 4) {
-      ++num_success;
-      std::cerr <<  "SUCCESS";
+
+    int num_matching_digits = 0;
+    if (summary.final_cost < certified_cost) {
+      num_matching_digits = kMinNumMatchingDigits + 1;
     } else {
-      std::cerr << "FAILURE";
+      num_matching_digits =
+          -std::log10(fabs(summary.final_cost - certified_cost) / certified_cost);
     }
-    std::cerr << " digits: " << num_matching_digits;
-    std::cerr << " summary: "
-              << summary.BriefReport()
-              << std::endl;
+
+    if (num_matching_digits <= kMinNumMatchingDigits) {
+      std::cerr << "start " << start + 1 << " " ;
+      std::cerr <<  "FAILURE";
+      std::cerr << " summary: "
+                << summary.BriefReport()
+                << std::endl;
+    } else {
+      ++num_success;
+    }
   }
+
   return num_success;
 }
 
@@ -436,12 +441,45 @@ int main(int argc, char** argv) {
   // TODO(sameeragarwal): Test more combinations of non-linear and
   // linear solvers.
   ceres::Solver::Options options;
-  options.linear_solver_type = ceres::DENSE_QR;
-  options.max_num_iterations = 2000;
+  options.max_num_iterations = 10000;
   options.function_tolerance *= 1e-10;
   options.gradient_tolerance *= 1e-10;
   options.parameter_tolerance *= 1e-10;
 
+  options.linear_solver_type = ceres::DENSE_QR;
+  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
+  std::cerr << "Levenberg-Marquardt - DENSE_QR\n";
+  SolveNISTProblems(options);
+
+  options.trust_region_strategy_type = ceres::DOGLEG;
+  options.dogleg_type = ceres::TRADITIONAL_DOGLEG;
+  std::cerr << "\n\nTraditional Dogleg - DENSE_QR\n\n";
+  SolveNISTProblems(options);
+
+  options.trust_region_strategy_type = ceres::DOGLEG;
+  options.dogleg_type = ceres::SUBSPACE_DOGLEG;
+  std::cerr << "\n\nSubspace Dogleg - DENSE_QR\n\n";
+  SolveNISTProblems(options);
+
+  options.linear_solver_type = ceres::DENSE_NORMAL_CHOLESKY;
+  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
+  std::cerr << "Levenberg-Marquardt - DENSE_NORMAL_CHOLESKY\n";
+  SolveNISTProblems(options);
+
+  options.trust_region_strategy_type = ceres::DOGLEG;
+  options.dogleg_type = ceres::TRADITIONAL_DOGLEG;
+  std::cerr << "\n\nTraditional Dogleg - DENSE_NORMAL_CHOLESKY\n\n";
+  SolveNISTProblems(options);
+
+  options.trust_region_strategy_type = ceres::DOGLEG;
+  options.dogleg_type = ceres::SUBSPACE_DOGLEG;
+  std::cerr << "\n\nSubspace Dogleg - DENSE_NORMAL_CHOLESKY\n\n";
+  SolveNISTProblems(options);
+
+  options.linear_solver_type = ceres::CGNR;
+  options.preconditioner_type = ceres::JACOBI;
+  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
+  std::cerr << "Levenberg-Marquardt - CGNR + JACOBI\n";
   SolveNISTProblems(options);
 
   return 0;

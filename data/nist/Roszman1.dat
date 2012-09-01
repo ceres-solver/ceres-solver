@@ -14,7 +14,7 @@ Description:   These data are the result of a NIST study involving
                predictor variable is the excited energy state.
                The argument to the ARCTAN function is in radians.
 
-Reference:     Roszman, L., NIST (19??).  
+Reference:     Roszman, L., NIST (19??).
                Quantum Defects for Sulfur I Atom.
 
 
@@ -38,7 +38,7 @@ Model:         Miscellaneous Class
           Starting Values                  Certified Values
 
         Start 1     Start 2           Parameter     Standard Deviation
-  b1 =      0.1         0.2         2.0196866396E-01  1.9172666023E-02
+  b1 =      0.1         0.2         1.20196866396E-0  1.9172666023E-02
   b2 =     -0.00001    -0.000005   -6.1953516256E-06  3.2058931691E-06
   b3 =   1000        1200           1.2044556708E+03  7.4050983057E+01
   b4 =   -100        -150          -1.8134269537E+02  4.9573513849E+01
