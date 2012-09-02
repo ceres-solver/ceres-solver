@@ -51,6 +51,18 @@
 
 DEFINE_string(nist_data_dir, "", "Directory containing the NIST non-linear"
               "regression examples");
+DEFINE_string(trust_region_strategy, "levenberg_marquardt",
+              "Options are: levenberg_marquardt, dogleg");
+DEFINE_string(dogleg, "traditional_dogleg",
+              "Options are: traditional_dogleg, subspace_dogleg");
+DEFINE_string(linear_solver, "dense_qr", "Options are: "
+              "sparse_cholesky, dense_qr, dense_normal_cholesky and"
+              "cgnr");
+DEFINE_string(preconditioner, "jacobi", "Options are: "
+              "identity, jacobi");
+DEFINE_int32(num_iterations, 10000, "Number of iterations");
+DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
+            " nonmonotic steps");
 
 using Eigen::Dynamic;
 using Eigen::RowMajor;
@@ -120,8 +132,13 @@ class NISTProblem {
      final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
     }
 
+    // Certfied cost
+    SkipLines(ifs, 1);
+    GetAndSplitLine(ifs, &pieces);
+    certified_cost_ = std::atof(pieces[4].c_str()) / 2.0;
+
     // Read the observations.
-    SkipLines(ifs, 20 - kNumParameters);
+    SkipLines(ifs, 18 - kNumParameters);
     for (int i = 0; i < kNumObservations; ++i) {
       GetAndSplitLine(ifs, &pieces);
       // Response.
@@ -145,12 +162,14 @@ class NISTProblem {
   int response_size()       const { return response_.cols();   }
   int num_parameters()      const { return initial_parameters_.cols(); }
   int num_starts()          const { return initial_parameters_.rows(); }
+  double certified_cost()   const { return certified_cost_; }
 
  private:
   Matrix predictor_;
   Matrix response_;
   Matrix initial_parameters_;
   Matrix final_parameters_;
+  double certified_cost_;
 };
 
 #define NIST_BEGIN(CostFunctionName) \
@@ -340,27 +359,7 @@ int RegressionDriver(const std::string& filename,
     Solve(options, &problem, &summaries[start]);
   }
 
-  // Ugly hack to get the objective function value at the certified
-  // optimal parameter values. So we build the problem and call Ceres
-  // with zero iterations to get the initial_cost.
-  {
-    Matrix initial_parameters = nist_problem.final_parameters();
-    ceres::Problem problem;
-    for (int i = 0; i < nist_problem.num_observations(); ++i) {
-      problem.AddResidualBlock(
-          new ceres::AutoDiffCostFunction<Model, num_residuals, num_parameters>(
-              new Model(predictor.data() + nist_problem.predictor_size() * i,
-                        response.data() + nist_problem.response_size() * i)),
-          NULL,
-          initial_parameters.data());
-    }
-
-    ceres::Solver::Options options;
-    options.max_num_iterations = 0;
-    Solve(options, &problem, &summaries[nist_problem.num_starts()]);
-  }
-
-  double certified_cost = summaries[nist_problem.num_starts()].initial_cost;
+  const double certified_cost = nist_problem.certified_cost();
 
   int num_success = 0;
   const int kMinNumMatchingDigits = 4;
@@ -380,6 +379,7 @@ int RegressionDriver(const std::string& filename,
       std::cerr <<  "FAILURE";
       std::cerr << " summary: "
                 << summary.BriefReport()
+                << " Certified cost: " << certified_cost
                 << std::endl;
     } else {
       ++num_success;
@@ -389,7 +389,29 @@ int RegressionDriver(const std::string& filename,
   return num_success;
 }
 
-void SolveNISTProblems(const ceres::Solver::Options& options) {
+void SetMinimizerOptions(ceres::Solver::Options* options) {
+  options->linear_solver_type =
+      ceres::StringToLinearSolverType(FLAGS_linear_solver);
+  options->preconditioner_type =
+      ceres::StringToPreconditionerType(FLAGS_preconditioner);
+  options->max_num_iterations = FLAGS_num_iterations;
+  options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
+  options->trust_region_strategy_type =
+      ceres::StringToTrustRegionStrategyType(FLAGS_trust_region_strategy);
+  options->dogleg_type = ceres::StringToDoglegType(FLAGS_dogleg);
+  options->function_tolerance = 1e-18;
+  options->gradient_tolerance = 1e-18;
+  options->parameter_tolerance = 1e-18;
+}
+
+void SolveNISTProblems() {
+  if (FLAGS_nist_data_dir.empty()) {
+    LOG(FATAL) << "Must specify the directory containing the NIST problems";
+  }
+
+  ceres::Solver::Options options;
+  SetMinimizerOptions(&options);
+
   std::cerr << "Lower Difficulty\n";
   int easy_success = 0;
   easy_success += RegressionDriver<Misra1a,  1, 2>("Misra1a.dat",  options);
@@ -437,50 +459,6 @@ void SolveNISTProblems(const ceres::Solver::Options& options) {
 int main(int argc, char** argv) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
-
-  // TODO(sameeragarwal): Test more combinations of non-linear and
-  // linear solvers.
-  ceres::Solver::Options options;
-  options.max_num_iterations = 10000;
-  options.function_tolerance *= 1e-10;
-  options.gradient_tolerance *= 1e-10;
-  options.parameter_tolerance *= 1e-10;
-
-  options.linear_solver_type = ceres::DENSE_QR;
-  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
-  std::cerr << "Levenberg-Marquardt - DENSE_QR\n";
-  SolveNISTProblems(options);
-
-  options.trust_region_strategy_type = ceres::DOGLEG;
-  options.dogleg_type = ceres::TRADITIONAL_DOGLEG;
-  std::cerr << "\n\nTraditional Dogleg - DENSE_QR\n\n";
-  SolveNISTProblems(options);
-
-  options.trust_region_strategy_type = ceres::DOGLEG;
-  options.dogleg_type = ceres::SUBSPACE_DOGLEG;
-  std::cerr << "\n\nSubspace Dogleg - DENSE_QR\n\n";
-  SolveNISTProblems(options);
-
-  options.linear_solver_type = ceres::DENSE_NORMAL_CHOLESKY;
-  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
-  std::cerr << "Levenberg-Marquardt - DENSE_NORMAL_CHOLESKY\n";
-  SolveNISTProblems(options);
-
-  options.trust_region_strategy_type = ceres::DOGLEG;
-  options.dogleg_type = ceres::TRADITIONAL_DOGLEG;
-  std::cerr << "\n\nTraditional Dogleg - DENSE_NORMAL_CHOLESKY\n\n";
-  SolveNISTProblems(options);
-
-  options.trust_region_strategy_type = ceres::DOGLEG;
-  options.dogleg_type = ceres::SUBSPACE_DOGLEG;
-  std::cerr << "\n\nSubspace Dogleg - DENSE_NORMAL_CHOLESKY\n\n";
-  SolveNISTProblems(options);
-
-  options.linear_solver_type = ceres::CGNR;
-  options.preconditioner_type = ceres::JACOBI;
-  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
-  std::cerr << "Levenberg-Marquardt - CGNR + JACOBI\n";
-  SolveNISTProblems(options);
-
+  SolveNISTProblems();
   return 0;
 };
