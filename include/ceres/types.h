@@ -37,6 +37,8 @@
 #ifndef CERES_PUBLIC_TYPES_H_
 #define CERES_PUBLIC_TYPES_H_
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 
 // Basic integer types. These typedefs are in the Ceres namespace to avoid
@@ -297,16 +299,31 @@ enum DimensionType {
 };
 
 const char* LinearSolverTypeToString(LinearSolverType type);
+bool StringToLinearSolverType(string value, LinearSolverType* type);
+
 const char* PreconditionerTypeToString(PreconditionerType type);
+bool StringToPreconditionerType(string value, PreconditionerType* type);
+
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type);
+bool StringToSparseLinearAlgebraLibraryType(
+    string value,
+    SparseLinearAlgebraLibraryType* type);
+
+const char* OrderingTypeToString(OrderingType type);
+bool StringToOrderingType(string value, OrderingType* type);
+
+const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type);
+bool StringToTrustRegionStrategyType(string value,
+                                     TrustRegionStrategyType* type);
+
+const char* DoglegTypeToString(DoglegType type);
+bool StringToDoglegType(string value, DoglegType* type);
+
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
-const char* OrderingTypeToString(OrderingType type);
+
 const char* SolverTerminationTypeToString(SolverTerminationType type);
-const char* SparseLinearAlgebraLibraryTypeToString(
-    SparseLinearAlgebraLibraryType type);
-const char* TrustRegionStrategyTypeToString( TrustRegionStrategyType type);
 bool IsSchurType(LinearSolverType type);
 
 }  // namespace ceres
