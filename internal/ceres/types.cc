@@ -28,12 +28,20 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <string>
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
 #define CASESTR(x) case x: return #x
+
+#define STRENUM(x) if (value == #x) return x;
+
+void UpperCase(string* input) {
+  std::transform(input->begin(), input->end(), input->begin(), ::toupper);
+}
 
 const char* LinearSolverTypeToString(LinearSolverType solver_type) {
   switch (solver_type) {
@@ -49,6 +57,20 @@ const char* LinearSolverTypeToString(LinearSolverType solver_type) {
   }
 }
 
+LinearSolverType StringToLinearSolverType(string value) {
+  UpperCase(&value);
+  STRENUM(DENSE_NORMAL_CHOLESKY);
+  STRENUM(DENSE_QR);
+  STRENUM(SPARSE_NORMAL_CHOLESKY);
+  STRENUM(DENSE_SCHUR);
+  STRENUM(SPARSE_SCHUR);
+  STRENUM(ITERATIVE_SCHUR);
+  STRENUM(CGNR);
+  LOG(FATAL) << "Unknown linear solver type : " << value;
+  // Control never reaches here.
+  return DENSE_QR;
+}
+
 const char* PreconditionerTypeToString(
     PreconditionerType preconditioner_type) {
   switch (preconditioner_type) {
@@ -62,6 +84,18 @@ const char* PreconditionerTypeToString(
   }
 }
 
+PreconditionerType StringToPreconditionerType(string value) {
+  UpperCase(&value);
+  STRENUM(IDENTITY);
+  STRENUM(JACOBI);
+  STRENUM(SCHUR_JACOBI);
+  STRENUM(CLUSTER_JACOBI);
+  STRENUM(CLUSTER_TRIDIAGONAL);
+  LOG(FATAL) << "Unknown preconditioner type : " << value;
+  // Control never reaches here.
+  return IDENTITY;
+}
+
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
   switch (sparse_linear_algebra_library_type) {
@@ -72,6 +106,16 @@ const char* SparseLinearAlgebraLibraryTypeToString(
   }
 }
 
+SparseLinearAlgebraLibraryType
+StringToSparseLinearAlgebraLibraryType(string value) {
+  UpperCase(&value);
+  STRENUM(SUITE_SPARSE);
+  STRENUM(CX_SPARSE);
+  LOG(FATAL) << "Unknown sparse linear algebra library type : " << value;
+  // Control never reaches here.
+  return SUITE_SPARSE;
+}
+
 const char* OrderingTypeToString(OrderingType ordering_type) {
   switch (ordering_type) {
     CASESTR(NATURAL);
@@ -80,6 +124,53 @@ const char* OrderingTypeToString(OrderingType ordering_type) {
     default:
       return "UNKNOWN";
   }
+}
+
+OrderingType StringToOrderingType(string value) {
+  UpperCase(&value);
+  STRENUM(NATURAL);
+  STRENUM(USER);
+  STRENUM(SCHUR);
+  LOG(FATAL) << "Unknown ordering type : " << value;
+  // Control never reaches here.
+  return NATURAL;
+}
+
+const char* TrustRegionStrategyTypeToString(
+    TrustRegionStrategyType trust_region_strategy_type) {
+  switch (trust_region_strategy_type) {
+    CASESTR(LEVENBERG_MARQUARDT);
+    CASESTR(DOGLEG);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+TrustRegionStrategyType StringToTrustRegionStrategyType(string value) {
+  UpperCase(&value);
+  STRENUM(LEVENBERG_MARQUARDT);
+  STRENUM(DOGLEG);
+  LOG(FATAL) << "Unknown trust region strategy type : " << value;
+  // Control never reaches here.
+  return LEVENBERG_MARQUARDT;
+}
+
+const char* DoglegTypeToString(DoglegType dogleg_type) {
+  switch (dogleg_type) {
+    CASESTR(TRADITIONAL_DOGLEG);
+    CASESTR(SUBSPACE_DOGLEG);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+DoglegType StringToDoglegType(string value) {
+  UpperCase(&value);
+  STRENUM(TRADITIONAL_DOGLEG);
+  STRENUM(SUBSPACE_DOGLEG);
+  LOG(FATAL) << "Unknown dogleg type : " << value;
+  // Control never reaches here.
+  return TRADITIONAL_DOGLEG;
 }
 
 const char* SolverTerminationTypeToString(
@@ -93,26 +184,6 @@ const char* SolverTerminationTypeToString(
     CASESTR(USER_ABORT);
     CASESTR(USER_SUCCESS);
     CASESTR(DID_NOT_RUN);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-const char* SparseLinearAlgebraTypeToString(
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
-  switch (sparse_linear_algebra_library_type) {
-    CASESTR(CX_SPARSE);
-    CASESTR(SUITE_SPARSE);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-const char* TrustRegionStrategyTypeToString(
-    TrustRegionStrategyType trust_region_strategy_type) {
-  switch (trust_region_strategy_type) {
-    CASESTR(LEVENBERG_MARQUARDT);
-    CASESTR(DOGLEG);
     default:
       return "UNKNOWN";
   }
