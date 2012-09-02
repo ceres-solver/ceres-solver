@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI63//7xI\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-02T18:50:31Z",
+      "side": 1,
+      "message": "Consider structifying these configurations for more compact code.",
+      "revId": "ca0ff62ddb8763e0f0f1a3e92dafd1bf24f34166",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
