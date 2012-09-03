@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI5H///C4\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-03T17:16:50Z",
+      "side": 1,
+      "message": "The atoX family of functions is generally considered broken (parsing errors go undetected). Maybe it\u0027s better to write a short convert_string_to\u003cT\u003e template or such that uses istringstream (and returns an error code).",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI5H///C0\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-03T17:16:50Z",
+      "side": 1,
+      "message": "indentation of const looks wrong on my computer.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI5H///Cw\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-03T17:16:50Z",
+      "side": 1,
+      "message": "Wanted to ask before: why *\u003d 1e-10 instead of some absolute value? I find it a bit confusing as it\u0027s written because you have to look up the default values to find out what the tolerances actually are.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
