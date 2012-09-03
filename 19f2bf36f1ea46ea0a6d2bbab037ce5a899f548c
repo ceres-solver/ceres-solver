@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI63//7vQ\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-03T19:43:32Z",
+      "side": 1,
+      "message": "I thought about it, but you will notice that not all options work on these problems, I think a better set of functions would be the inverse of the enum to string functions we have which will take a string and make a enum out of..",
+      "parentUuid": "AAAI6X//7gY\u003d",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI6X//7gI\u003d",
         "filename": "examples/nist.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI63//7vM\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-03T19:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI6X//7gI\u003d",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI5H///C4\u003d",
         "filename": "examples/nist.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2012-09-03T17:16:50Z",
       "side": 1,
       "message": "The atoX family of functions is generally considered broken (parsing errors go undetected). Maybe it\u0027s better to write a short convert_string_to\u003cT\u003e template or such that uses istringstream (and returns an error code).",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//7vI\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-03T19:43:32Z",
+      "side": 1,
+      "message": "Good point, I will look into it in a future cl.",
+      "parentUuid": "AAAI5H///C4\u003d",
       "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -81,6 +135,24 @@
       "writtenOn": "2012-09-03T18:02:37Z",
       "side": 1,
       "message": "+1",
+      "parentUuid": "AAAI5H///C0\u003d",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//7vE\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-03T19:43:32Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "AAAI5H///C0\u003d",
       "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
@@ -133,6 +205,24 @@
       "writtenOn": "2012-09-03T18:02:37Z",
       "side": 1,
       "message": "+1",
+      "parentUuid": "AAAI5H///Cw\u003d",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI63//7vA\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-03T19:43:32Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "AAAI5H///Cw\u003d",
       "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
