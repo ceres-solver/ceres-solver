@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAI6X//7gY\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-03T18:02:37Z",
+      "side": 1,
+      "message": "We should consider having a contrib module with a function that reads something like \"SolverOptionsFromFlags(\u0026options)\". We can use it here and for the other examples.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//7gI\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-03T18:02:37Z",
+      "side": 1,
+      "message": "Semicolon at the end.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI5H///C4\u003d",
         "filename": "examples/nist.cc",
         "patchSetId": 1
@@ -36,6 +70,41 @@
     },
     {
       "key": {
+        "uuid": "AAAI6X//7gU\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-03T18:02:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "AAAI5H///C0\u003d",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//7gQ\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-03T18:02:37Z",
+      "side": 1,
+      "message": "Yes, I think it would be good to generalize this. We are going to need a way to go from strings to options at some point anyway.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI5H///Cw\u003d",
         "filename": "examples/nist.cc",
         "patchSetId": 1
@@ -47,6 +116,24 @@
       "writtenOn": "2012-09-03T17:16:50Z",
       "side": 1,
       "message": "Wanted to ask before: why *\u003d 1e-10 instead of some absolute value? I find it a bit confusing as it\u0027s written because you have to look up the default values to find out what the tolerances actually are.",
+      "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI6X//7gM\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-03T18:02:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "AAAI5H///Cw\u003d",
       "revId": "19f2bf36f1ea46ea0a6d2bbab037ce5a899f548c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
