@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//69I\u003d",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-04T21:52:32Z",
+      "side": 1,
+      "message": "I\u0027m vaguely concerned that there is no error path here.\n\nWhat about making this take an enum pointer, and a bool?",
+      "revId": "558f066d8e65c98b8fb3725ca4412f09aada9946",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
