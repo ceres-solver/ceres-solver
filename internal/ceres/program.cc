@@ -216,5 +216,17 @@ int Program::MaxResidualsPerResidualBlock() const {
   return max_residuals;
 }
 
+string Program::ToString() const {
+  string ret = "Program dump\n";
+  ret += StringPrintf("Number of parameter blocks: %d\n", NumParameterBlocks());
+  ret += StringPrintf("Number of parameters: %d\n", NumParameters());
+  ret += "Parameters:\n";
+  for (int i = 0; i < parameter_blocks_.size(); ++i) {
+    ret += StringPrintf("%d: %s\n",
+                        i, parameter_blocks_[i]->ToString().c_str());
+  }
+  return ret;
+}
+
 }  // namespace internal
 }  // namespace ceres

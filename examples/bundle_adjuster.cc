@@ -66,26 +66,30 @@
 #include "snavely_reprojection_error.h"
 
 DEFINE_string(input, "", "Input File name");
+DEFINE_string(trust_region_strategy, "levenberg_marquardt",
+              "Options are: levenberg_marquardt, dogleg");
+DEFINE_string(linear_solver, "sparse_schur", "Options are: "
+              "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
+              "dense_qr, dense_normal_cholesky and cgnr");
+DEFINE_string(preconditioner, "jacobi", "Options are: "
+              "identity, jacobi, schur_jacobi, cluster_jacobi, "
+              "cluster_tridiagonal");
+DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
+              "Options are: suite_sparse and cx_sparse");
+DEFINE_string(ordering, "schur", "Options are: schur, user, natural");
+DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
+              "subspace_dogleg");
+
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used");
 DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
             "parameterization.");
 DEFINE_bool(robustify, false, "Use a robust loss function");
 
-DEFINE_string(trust_region_strategy, "lm", "Options are: lm, dogleg");
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
              "accuracy of each linear solve of the truncated newton step. "
              "Changing this parameter can affect solve performance ");
-DEFINE_string(solver_type, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, sparse_cholesky, "
-              "dense_qr, dense_cholesky and conjugate_gradients");
-DEFINE_string(preconditioner_type, "jacobi", "Options are: "
-              "identity, jacobi, schur_jacobi, cluster_jacobi, "
-              "cluster_tridiagonal");
-DEFINE_string(sparse_linear_algebra_library, "suitesparse",
-              "Options are: suitesparse and cxsparse");
 
-DEFINE_string(ordering_type, "schur", "Options are: schur, user, natural");
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
             "ordering.");
 
@@ -110,88 +114,19 @@ namespace ceres {
 namespace examples {
 
 void SetLinearSolver(Solver::Options* options) {
-  if (FLAGS_solver_type == "sparse_schur") {
-    options->linear_solver_type = ceres::SPARSE_SCHUR;
-  } else if (FLAGS_solver_type == "dense_schur") {
-    options->linear_solver_type = ceres::DENSE_SCHUR;
-  } else if (FLAGS_solver_type == "iterative_schur") {
-    options->linear_solver_type = ceres::ITERATIVE_SCHUR;
-  } else if (FLAGS_solver_type == "sparse_cholesky") {
-    options->linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
-  } else if (FLAGS_solver_type == "cgnr") {
-    options->linear_solver_type = ceres::CGNR;
-  } else if (FLAGS_solver_type == "dense_qr") {
-    // DENSE_QR is included here for completeness, but actually using
-    // this option is a bad idea due to the amount of memory needed
-    // to store even the smallest of the bundle adjustment jacobian
-    // arrays
-    options->linear_solver_type = ceres::DENSE_QR;
-  } else if (FLAGS_solver_type == "dense_cholesky") {
-    // DENSE_NORMAL_CHOLESKY is included here for completeness, but
-    // actually using this option is a bad idea due to the amount of
-    // memory needed to store even the smallest of the bundle
-    // adjustment jacobian arrays
-    options->linear_solver_type = ceres::DENSE_NORMAL_CHOLESKY;
-  } else {
-    LOG(FATAL) << "Unknown ceres solver type: "
-               << FLAGS_solver_type;
-  }
-
-  if (options->linear_solver_type == ceres::CGNR) {
-    options->linear_solver_min_num_iterations = 5;
-    if (FLAGS_preconditioner_type == "identity") {
-      options->preconditioner_type = ceres::IDENTITY;
-    } else if (FLAGS_preconditioner_type == "jacobi") {
-      options->preconditioner_type = ceres::JACOBI;
-    } else {
-      LOG(FATAL) << "For CGNR, only identity and jacobian "
-                 << "preconditioners are supported. Got: "
-                 << FLAGS_preconditioner_type;
-    }
-  }
-
-  if (options->linear_solver_type == ceres::ITERATIVE_SCHUR) {
-    options->linear_solver_min_num_iterations = 5;
-    if (FLAGS_preconditioner_type == "identity") {
-      options->preconditioner_type = ceres::IDENTITY;
-    } else if (FLAGS_preconditioner_type == "jacobi") {
-      options->preconditioner_type = ceres::JACOBI;
-    } else if (FLAGS_preconditioner_type == "schur_jacobi") {
-      options->preconditioner_type = ceres::SCHUR_JACOBI;
-    } else if (FLAGS_preconditioner_type == "cluster_jacobi") {
-      options->preconditioner_type = ceres::CLUSTER_JACOBI;
-    } else if (FLAGS_preconditioner_type == "cluster_tridiagonal") {
-      options->preconditioner_type = ceres::CLUSTER_TRIDIAGONAL;
-    } else {
-      LOG(FATAL) << "Unknown ceres preconditioner type: "
-                 << FLAGS_preconditioner_type;
-    }
-  }
-
-  if (FLAGS_sparse_linear_algebra_library == "suitesparse") {
-    options->sparse_linear_algebra_library = SUITE_SPARSE;
-  } else if (FLAGS_sparse_linear_algebra_library == "cxsparse") {
-    options->sparse_linear_algebra_library = CX_SPARSE;
-  } else {
-    LOG(FATAL) << "Unknown sparse linear algebra library type.";
-  }
-
+  CHECK(StringToLinearSolverType(FLAGS_linear_solver,
+                                 &options->linear_solver_type));
+  CHECK(StringToPreconditionerType(FLAGS_preconditioner,
+                                   &options->preconditioner_type));
+  CHECK(StringToSparseLinearAlgebraLibraryType(
+            FLAGS_sparse_linear_algebra_library,
+            &options->sparse_linear_algebra_library));
   options->num_linear_solver_threads = FLAGS_num_threads;
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   options->use_block_amd = FLAGS_use_block_amd;
-
-  // Only non-Schur solvers support the natural ordering for this
-  // problem.
-  if (FLAGS_ordering_type == "natural") {
-    if (options->linear_solver_type == SPARSE_SCHUR ||
-        options->linear_solver_type == DENSE_SCHUR ||
-        options->linear_solver_type == ITERATIVE_SCHUR) {
-      LOG(FATAL) << "Natural ordering with Schur type solver does not work.";
-    }
-    return;
-  }
+  CHECK(StringToOrderingType(FLAGS_ordering, &options->ordering_type));
 
   // Bundle adjustment problems have a sparsity structure that makes
   // them amenable to more specialized and much more efficient
@@ -207,8 +142,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  if (FLAGS_ordering_type == "schur") {
-    options->ordering_type = ceres::SCHUR;
+  if (options->ordering_type == ceres::SCHUR) {
     return;
   }
 
@@ -247,14 +181,9 @@ void SetMinimizerOptions(Solver::Options* options) {
   options->eta = FLAGS_eta;
   options->max_solver_time_in_seconds = FLAGS_max_solver_time;
   options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
-  if (FLAGS_trust_region_strategy == "lm") {
-    options->trust_region_strategy_type = LEVENBERG_MARQUARDT;
-  } else if (FLAGS_trust_region_strategy == "dogleg") {
-    options->trust_region_strategy_type = DOGLEG;
-  } else {
-    LOG(FATAL) << "Unknown trust region strategy: "
-               << FLAGS_trust_region_strategy;
-  }
+  CHECK(StringToTrustRegionStrategyType(FLAGS_trust_region_strategy,
+                                        &options->trust_region_strategy_type));
+  CHECK(StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
@@ -262,27 +191,6 @@ void SetSolverOptionsFromFlags(BALProblem* bal_problem,
   SetMinimizerOptions(options);
   SetLinearSolver(options);
   SetOrdering(bal_problem, options);
-}
-
-// Uniform random numbers between 0 and 1.
-double UniformRandom() {
-  return static_cast<double>(random()) / static_cast<double>(RAND_MAX);
-}
-
-// Normal random numbers using the Box-Mueller algorithm. Its a bit
-// wasteful, as it generates two but only returns one.
-double RandNormal() {
-  double x1, x2, w, y1, y2;
-  do {
-    x1 = 2.0 * UniformRandom() - 1.0;
-    x2 = 2.0 * UniformRandom() - 1.0;
-    w = x1 * x1 + x2 * x2;
-  } while ( w >= 1.0 );
-
-  w = sqrt((-2.0 * log(w)) / w);
-  y1 = x1 * w;
-  y2 = x2 * w;
-  return y1;
 }
 
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {

@@ -52,7 +52,7 @@ ADD_CUSTOM_TARGET(UserGuide ALL
         -shell-escape ${CMAKE_BINARY_DIR}/docs/ceres-solver.tex
         -output-directory ${CMAKE_BINARY_DIR}/docs
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs
-    COMMAND ${BIBTEX_COMPILER} ${CMAKE_BINARY_DIR}/docs/ceres-solver.aux
+    COMMAND ${BIBTEX_COMPILER} ceres-solver.aux
     COMMAND ${PDFLATEX_COMPILER}
         -shell-escape ${CMAKE_BINARY_DIR}/docs/ceres-solver.tex
         -output-directory ${CMAKE_BINARY_DIR}/docs
@@ -61,3 +61,6 @@ ADD_CUSTOM_TARGET(UserGuide ALL
         -shell-escape ${CMAKE_BINARY_DIR}/docs/ceres-solver.tex
         -output-directory ${CMAKE_BINARY_DIR}/docs
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docs)
+
+INSTALL(FILES ${CMAKE_BINARY_DIR}/docs/ceres-solver.pdf
+        DESTINATION share/ceres/docs)

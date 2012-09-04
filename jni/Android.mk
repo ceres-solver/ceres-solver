@@ -87,7 +87,8 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_GFLAGS \
                 -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
-                -DCERES_NO_TR1
+                -DCERES_NO_TR1 \
+                -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/block_evaluate_preparer.cc \

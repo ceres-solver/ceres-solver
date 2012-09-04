@@ -37,6 +37,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/sized_cost_function.h"
 #include "ceres/stringprintf.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
@@ -228,6 +229,42 @@ TEST(NumericDiffCostFunction, TransendentalOperationsInCostFunction) {
       }
     }
   }
+}
+
+
+template<int num_rows, int num_cols>
+class SizeTestingCostFunction : public SizedCostFunction<num_rows, num_cols> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return true;
+  }
+};
+
+// As described in
+// http://forum.kde.org/viewtopic.php?f=74&t=98536#p210774
+// Eigen3 has restrictions on the Row/Column major storage of vectors,
+// depending on their dimensions. This test ensures that the correct
+// templates are instantiated for various shapes of the Jacobian
+// matrix.
+TEST(NumericDiffCostFunction, EigenRowMajorColMajorTest) {
+  scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
+      new NumericDiffCostFunction<SizeTestingCostFunction<1,1>,  CENTRAL, 1, 1>(
+          new SizeTestingCostFunction<1,1>, ceres::TAKE_OWNERSHIP));
+
+  cost_function.reset(
+      new NumericDiffCostFunction<SizeTestingCostFunction<2,1>,  CENTRAL, 2, 1>(
+          new SizeTestingCostFunction<2,1>, ceres::TAKE_OWNERSHIP));
+
+  cost_function.reset(
+      new NumericDiffCostFunction<SizeTestingCostFunction<1,2>,  CENTRAL, 1, 2>(
+          new SizeTestingCostFunction<1,2>, ceres::TAKE_OWNERSHIP));
+
+  cost_function.reset(
+      new NumericDiffCostFunction<SizeTestingCostFunction<2,2>,  CENTRAL, 2, 2>(
+          new SizeTestingCostFunction<2,2>, ceres::TAKE_OWNERSHIP));
 }
 
 }  // namespace internal

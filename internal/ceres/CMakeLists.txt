@@ -45,6 +45,7 @@ SET(CERES_INTERNAL_SRC
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
     corrector.cc
+    cxsparse.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
     dense_sparse_matrix.cc
@@ -112,6 +113,11 @@ IF (${BUILD_ANDROID})
   # The Android logging library that defines e.g. __android_log_print is
   # creatively named "log".
   TARGET_LINK_LIBRARIES(miniglog log)
+
+  INSTALL(TARGETS miniglog
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib)
 ENDIF (${BUILD_ANDROID})
 
 SET(CERES_LIBRARY_DEPENDENCIES ${GLOG_LIB})
@@ -146,7 +152,9 @@ IF (${CXSPARSE_FOUND})
 ENDIF (${CXSPARSE_FOUND})
 
 IF (${OPENMP_FOUND})
-  LIST(APPEND CERES_LIBRARY_DEPENDENCIES gomp)
+  IF (NOT MSVC)
+    LIST(APPEND CERES_LIBRARY_DEPENDENCIES gomp)
+  ENDIF (NOT MSVC)
 ENDIF (${OPENMP_FOUND})
 
 IF (${PROTOBUF_FOUND})
@@ -163,14 +171,25 @@ SET(CERES_LIBRARY_SOURCE
 ADD_LIBRARY(ceres STATIC ${CERES_LIBRARY_SOURCE})
 TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
+INSTALL(TARGETS ceres
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+
 # Don't build a DLL on MSVC. Supporting Ceres as a DLL on Windows involves
 # nontrivial changes that we haven't made yet.
 IF (NOT MSVC AND NOT ${BUILD_ANDROID})
   ADD_LIBRARY(ceres_shared SHARED ${CERES_LIBRARY_SOURCE})
   TARGET_LINK_LIBRARIES(ceres_shared ${CERES_LIBRARY_DEPENDENCIES})
   SET_TARGET_PROPERTIES(ceres_shared PROPERTIES
-      VERSION ${CERES_VERSION}
-      SOVERSION ${CERES_ABI_VERSION})
+                        VERSION ${CERES_VERSION}
+                        SOVERSION ${CERES_ABI_VERSION})
+
+  INSTALL(TARGETS ceres_shared
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib)
+
 ENDIF (NOT MSVC AND NOT ${BUILD_ANDROID})
 
 IF (${BUILD_TESTING} AND ${GFLAGS})
@@ -206,6 +225,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(iterative_schur_complement_solver)
   CERES_TEST(jet)
   CERES_TEST(levenberg_marquardt_strategy)
+  CERES_TEST(dogleg_strategy)
   CERES_TEST(local_parameterization)
   CERES_TEST(loss_function)
   CERES_TEST(minimizer)

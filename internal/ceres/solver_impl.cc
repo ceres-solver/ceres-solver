@@ -183,6 +183,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
   trust_region_strategy_options.lm_max_diagonal = options.lm_max_diagonal;
   trust_region_strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
+  trust_region_strategy_options.dogleg_type = options.dogleg_type;
   scoped_ptr<TrustRegionStrategy> strategy(
       TrustRegionStrategy::Create(trust_region_strategy_options));
   minimizer_options.trust_region_strategy = strategy.get();
@@ -237,6 +238,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->sparse_linear_algebra_library =
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
+  summary->dogleg_type = options.dogleg_type;
 
   // Evaluate the initial cost, residual vector and the jacobian
   // matrix if requested by the user. The initial cost needs to be

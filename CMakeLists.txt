@@ -36,6 +36,32 @@ ENDIF (COMMAND cmake_policy)
 
 PROJECT(CERES C CXX)
 
+# Set up the git hook to make Gerrit Change-Id: lines in commit messages.
+SET (LOCAL_GIT_DIRECTORY)
+IF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  # .git directory can be found on Unix based system, or on Windows with
+  # Git Bash (shipped with msysgit)
+  SET (LOCAL_GIT_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
+ELSE (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  # TODO(keir) Add proper windows support
+ENDIF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+
+IF (EXISTS ${LOCAL_GIT_DIRECTORY})
+  IF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+    # Download the hook only if it is not already present
+    FILE(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
+         ${CMAKE_BINARY_DIR}/commit-msg)
+
+    # Make the downloaded file executable, since it is not by default.
+    FILE(COPY ${CMAKE_BINARY_DIR}/commit-msg
+         DESTINATION ${LOCAL_GIT_DIRECTORY}/hooks/
+         FILE_PERMISSIONS
+           OWNER_READ OWNER_WRITE OWNER_EXECUTE
+           GROUP_READ GROUP_WRITE GROUP_EXECUTE
+           WORLD_READ WORLD_EXECUTE)
+  ENDIF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
+
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -453,9 +479,10 @@ IF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 ENDIF ("${UNIX}" AND NOT ${BUILD_ANDROID})
 
 # Disable threads in mutex.h. Someday, after there is OpenMP support in
-# Android, this can get removed.
+# Android, this can get removed. Also turn on a workaround for an NDK bug.
 IF (${BUILD_ANDROID})
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
+  ADD_DEFINITIONS(-DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG)
 ENDIF (${BUILD_ANDROID})
 
 OPTION(DISABLE_TR1
@@ -487,6 +514,12 @@ INCLUDE_DIRECTORIES(
   ${GLOG_INCLUDE}
   ${EIGEN_INCLUDE}
   )
+
+FILE(GLOB CERES_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/*.h)
+INSTALL(FILES ${CERES_HDRS} DESTINATION include/ceres)
+
+FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/*.h)
+INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 
 IF (${SUITESPARSE})
   INCLUDE_DIRECTORIES(${AMD_INCLUDE})
@@ -582,7 +615,6 @@ IF (MSVC)
 ENDIF (MSVC)
 
 ADD_SUBDIRECTORY(internal/ceres)
-ADD_SUBDIRECTORY(examples)
 
 OPTION(BUILD_DOCUMENTATION
        "Build User's Guide (pdf)"
@@ -595,3 +627,20 @@ IF (${BUILD_DOCUMENTATION})
   # The corresponding target is UserGuide, but is included in ALL.
   ADD_SUBDIRECTORY(docs)
 ENDIF (${BUILD_DOCUMENTATION})
+
+OPTION(BUILD_EXAMPLES "Build examples" ON)
+
+IF (${BUILD_EXAMPLES})
+  MESSAGE("-- Build the examples.")
+  ADD_SUBDIRECTORY(examples)
+ELSE (${BUILD_EXAMPLES})
+  MESSAGE("-- Do not build any example.")
+ENDIF (${BUILD_EXAMPLES})
+
+# Add an uninstall target to remove all installed files.
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
+               "${CMAKE_BINARY_DIR}/cmake/uninstall.cmake"
+               IMMEDIATE @ONLY)
+
+ADD_CUSTOM_TARGET(uninstall
+                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)

@@ -39,21 +39,6 @@
 #include "ceres/residual_block.h"
 #include "glog/logging.h"
 
-#if !defined(CERES_NO_TR1)
-
-CERES_HASH_NAMESPACE_START
-
-// Allow us to hash pointers as if they were int's
-template<> struct hash< ::ceres::internal::ParameterBlock*> {
-  size_t operator()(::ceres::internal::ParameterBlock* x) const {
-    return reinterpret_cast<size_t>(x);
-  }
-};
-
-CERES_HASH_NAMESPACE_END
-
-#endif
-
 namespace ceres {
 namespace internal {
 

@@ -28,12 +28,20 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include <string>
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
 #define CASESTR(x) case x: return #x
+
+#define STRENUM(x) if (value == #x) { *type = x; return true;}
+
+void UpperCase(string* input) {
+  std::transform(input->begin(), input->end(), input->begin(), ::toupper);
+}
 
 const char* LinearSolverTypeToString(LinearSolverType solver_type) {
   switch (solver_type) {
@@ -49,6 +57,18 @@ const char* LinearSolverTypeToString(LinearSolverType solver_type) {
   }
 }
 
+bool StringToLinearSolverType(string value, LinearSolverType* type) {
+  UpperCase(&value);
+  STRENUM(DENSE_NORMAL_CHOLESKY);
+  STRENUM(DENSE_QR);
+  STRENUM(SPARSE_NORMAL_CHOLESKY);
+  STRENUM(DENSE_SCHUR);
+  STRENUM(SPARSE_SCHUR);
+  STRENUM(ITERATIVE_SCHUR);
+  STRENUM(CGNR);
+  return false;
+}
+
 const char* PreconditionerTypeToString(
     PreconditionerType preconditioner_type) {
   switch (preconditioner_type) {
@@ -62,6 +82,16 @@ const char* PreconditionerTypeToString(
   }
 }
 
+bool StringToPreconditionerType(string value, PreconditionerType* type) {
+  UpperCase(&value);
+  STRENUM(IDENTITY);
+  STRENUM(JACOBI);
+  STRENUM(SCHUR_JACOBI);
+  STRENUM(CLUSTER_JACOBI);
+  STRENUM(CLUSTER_TRIDIAGONAL);
+  return false;
+}
+
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
   switch (sparse_linear_algebra_library_type) {
@@ -72,6 +102,16 @@ const char* SparseLinearAlgebraLibraryTypeToString(
   }
 }
 
+
+bool StringToSparseLinearAlgebraLibraryType(
+    string value,
+    SparseLinearAlgebraLibraryType* type) {
+  UpperCase(&value);
+  STRENUM(SUITE_SPARSE);
+  STRENUM(CX_SPARSE);
+  return false;
+}
+
 const char* OrderingTypeToString(OrderingType ordering_type) {
   switch (ordering_type) {
     CASESTR(NATURAL);
@@ -80,6 +120,48 @@ const char* OrderingTypeToString(OrderingType ordering_type) {
     default:
       return "UNKNOWN";
   }
+}
+
+bool StringToOrderingType(string value, OrderingType* type) {
+  UpperCase(&value);
+  STRENUM(NATURAL);
+  STRENUM(USER);
+  STRENUM(SCHUR);
+  return false;
+}
+
+const char* TrustRegionStrategyTypeToString(
+    TrustRegionStrategyType trust_region_strategy_type) {
+  switch (trust_region_strategy_type) {
+    CASESTR(LEVENBERG_MARQUARDT);
+    CASESTR(DOGLEG);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToTrustRegionStrategyType(string value,
+                                     TrustRegionStrategyType* type) {
+  UpperCase(&value);
+  STRENUM(LEVENBERG_MARQUARDT);
+  STRENUM(DOGLEG);
+  return false;
+}
+
+const char* DoglegTypeToString(DoglegType dogleg_type) {
+  switch (dogleg_type) {
+    CASESTR(TRADITIONAL_DOGLEG);
+    CASESTR(SUBSPACE_DOGLEG);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToDoglegType(string value, DoglegType* type) {
+  UpperCase(&value);
+  STRENUM(TRADITIONAL_DOGLEG);
+  STRENUM(SUBSPACE_DOGLEG);
+  return false;
 }
 
 const char* SolverTerminationTypeToString(
@@ -98,27 +180,20 @@ const char* SolverTerminationTypeToString(
   }
 }
 
-const char* SparseLinearAlgebraTypeToString(
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
-  switch (sparse_linear_algebra_library_type) {
-    CASESTR(CX_SPARSE);
-    CASESTR(SUITE_SPARSE);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-const char* TrustRegionStrategyTypeToString(
-    TrustRegionStrategyType trust_region_strategy_type) {
-  switch (trust_region_strategy_type) {
-    CASESTR(LEVENBERG_MARQUARDT);
-    CASESTR(DOGLEG);
+const char* LinearSolverTerminationTypeToString(
+    LinearSolverTerminationType termination_type) {
+  switch (termination_type) {
+    CASESTR(TOLERANCE);
+    CASESTR(MAX_ITERATIONS);
+    CASESTR(STAGNATION);
+    CASESTR(FAILURE);
     default:
       return "UNKNOWN";
   }
 }
 
 #undef CASESTR
+#undef STRENUM
 
 bool IsSchurType(LinearSolverType type) {
   return ((type == SPARSE_SCHUR) ||

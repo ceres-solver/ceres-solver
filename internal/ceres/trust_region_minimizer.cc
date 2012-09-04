@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -76,7 +77,7 @@ void TrustRegionMinimizer::EstimateScale(const SparseMatrix& jacobian,
                                          double* scale) const {
   jacobian.SquaredColumnNorm(scale);
   for (int i = 0; i < jacobian.num_cols(); ++i) {
-    scale[i] = 1.0 / (kEpsilon + sqrt(scale[i]));
+    scale[i] = 1.0 / (1.0 + sqrt(scale[i]));
   }
 }
 
@@ -281,9 +282,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // new_model_cost can actually be larger than half the squared
       // norm of the residual vector. We allow for small tolerance
       // around cost and beyond that declare the step to be invalid.
-      if (cost < (new_model_cost - kEpsilon)) {
+      if ((1.0 - new_model_cost / cost) < -kEpsilon) {
         VLOG(1) << "Invalid step: current_cost: " << cost
-                << " new_model_cost " << new_model_cost;
+                << " new_model_cost " << new_model_cost
+                << " absolute difference " << (cost - new_model_cost)
+                << " relative difference " << (1.0 - new_model_cost/cost);
       } else {
         iteration_summary.step_is_valid = true;
       }
@@ -320,12 +323,23 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       num_consecutive_invalid_steps = 0;
 
       // We allow some slop around 0, and clamp the model_cost_change
-      // at kEpsilon from below.
+      // at kEpsilon * min(1.0, cost) from below.
       //
-      // There is probably a better way to do this, as it is going to
-      // create problems for problems where the objective function is
-      // kEpsilon close to zero.
-      const double model_cost_change = max(kEpsilon, cost - new_model_cost);
+      // In exact arithmetic this should never be needed, as we are
+      // guaranteed to new_model_cost <= cost. However, due to various
+      // numerical issues, it is possible that new_model_cost is
+      // nearly equal to cost, and the difference is a small negative
+      // number. To make sure that the relative_decrease computation
+      // remains sane, as clamp the difference (cost - new_model_cost)
+      // from below at a small positive number.
+      //
+      // This number is the minimum of kEpsilon * (cost, 1.0), which
+      // ensures that it will never get too large in absolute value,
+      // while scaling down proportionally with the magnitude of the
+      // cost. This is important for problems where the minimum of the
+      // objective function is near zero.
+      const double model_cost_change =
+          max(kEpsilon * min(1.0, cost), cost - new_model_cost);
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
@@ -356,9 +370,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (!evaluator->Evaluate(x_plus_delta.data(),
                                &new_cost,
                                NULL, NULL, NULL)) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating: Cost evaluation failed.";
-        return;
+        // If the evaluation of the new cost fails, treat it as a step
+        // with high cost.
+        LOG(WARNING) << "Step failed to evaluate. "
+                     << "Treating it as step with infinite cost";
+        new_cost = numeric_limits<double>::max();
       }
 
       VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;

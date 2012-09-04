@@ -37,6 +37,8 @@
 #ifndef CERES_PUBLIC_TYPES_H_
 #define CERES_PUBLIC_TYPES_H_
 
+#include "ceres/internal/port.h"
+
 namespace ceres {
 
 // Basic integer types. These typedefs are in the Ceres namespace to avoid
@@ -187,6 +189,24 @@ enum TrustRegionStrategyType {
   DOGLEG
 };
 
+// Ceres supports two different dogleg strategies.
+// The "traditional" dogleg method by Powell and the
+// "subspace" method described in
+// R. H. Byrd, R. B. Schnabel, and G. A. Shultz,
+// "Approximate solution of the trust region problem by minimization
+//  over two-dimensional subspaces", Mathematical Programming,
+// 40 (1988), pp. 247--263
+enum DoglegType {
+  // The traditional approach constructs a dogleg path
+  // consisting of two line segments and finds the furthest
+  // point on that path that is still inside the trust region.
+  TRADITIONAL_DOGLEG,
+
+  // The subspace approach finds the exact minimum of the model
+  // constrained to the subspace spanned by the dogleg path.
+  SUBSPACE_DOGLEG
+};
+
 enum SolverTerminationType {
   // The minimizer did not run at all; usually due to errors in the user's
   // Problem or the solver options.
@@ -279,16 +299,31 @@ enum DimensionType {
 };
 
 const char* LinearSolverTypeToString(LinearSolverType type);
+bool StringToLinearSolverType(string value, LinearSolverType* type);
+
 const char* PreconditionerTypeToString(PreconditionerType type);
+bool StringToPreconditionerType(string value, PreconditionerType* type);
+
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type);
+bool StringToSparseLinearAlgebraLibraryType(
+    string value,
+    SparseLinearAlgebraLibraryType* type);
+
+const char* OrderingTypeToString(OrderingType type);
+bool StringToOrderingType(string value, OrderingType* type);
+
+const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type);
+bool StringToTrustRegionStrategyType(string value,
+                                     TrustRegionStrategyType* type);
+
+const char* DoglegTypeToString(DoglegType type);
+bool StringToDoglegType(string value, DoglegType* type);
+
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
-const char* OrderingTypeToString(OrderingType type);
+
 const char* SolverTerminationTypeToString(SolverTerminationType type);
-const char* SparseLinearAlgebraLibraryTypeToString(
-    SparseLinearAlgebraLibraryType type);
-const char* TrustRegionStrategyTypeToString( TrustRegionStrategyType type);
 bool IsSchurType(LinearSolverType type);
 
 }  // namespace ceres

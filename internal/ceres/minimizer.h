@@ -100,7 +100,7 @@ class Minimizer {
     double eta;
     bool jacobi_scaling;
     bool use_nonmonotonic_steps;
-    bool max_consecutive_nonmonotonic_steps;
+    int max_consecutive_nonmonotonic_steps;
     vector<int> lsqp_iterations_to_dump;
     DumpFormatType lsqp_dump_format_type;
     string lsqp_dump_directory;
