@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI5H//+5w\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-04T16:29:14Z",
+      "side": 1,
+      "message": "Hm, I agree that this is not an ideal fix. Actually I think while fixing that specific bug, it might make things worse. Now scale[i] is discontinuous, while before it was smooth. The jump is weird and may make things worse around kEpsilon.\nkEpsilon should at least be chosen carefully by looking at the actual values of the jacobian column norms. I don\u0027t have time for a deeper look right now, sorry.",
+      "revId": "408a0d2e5692f892f0274196b0928a37ea270a9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
