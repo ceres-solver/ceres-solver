@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//7QM\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-04T17:46:41Z",
+      "side": 1,
+      "message": "I\u0027d still like to do experiments where we recalculate the scales if they have changed substantially since the initial conditions. It\u0027s not clear this scaling is good near the optimum.",
+      "revId": "a406b17d66d90b26033331857f82eb2116795641",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
