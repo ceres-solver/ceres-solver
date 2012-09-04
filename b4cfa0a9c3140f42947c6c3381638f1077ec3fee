@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI6X//62o\u003d",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-04T22:34:47Z",
+      "side": 1,
+      "message": "Missing STRENUM",
+      "revId": "b4cfa0a9c3140f42947c6c3381638f1077ec3fee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
