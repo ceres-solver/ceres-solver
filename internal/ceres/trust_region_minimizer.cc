@@ -47,6 +47,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -117,8 +118,8 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
                                     Solver::Summary* summary) {
-  time_t start_time = time(NULL);
-  time_t iteration_start_time =  start_time;
+  double start_time = WallTimeInSeconds();
+  double iteration_start_time =  start_time;
   Init(options);
 
   summary->termination_type = NO_CONVERGENCE;
@@ -204,9 +205,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   }
 
   iteration_summary.iteration_time_in_seconds =
-      time(NULL) - iteration_start_time;
-  iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
-        summary->preprocessor_time_in_seconds;
+      WallTimeInSeconds() - iteration_start_time;
+  iteration_summary.cumulative_time_in_seconds =
+      WallTimeInSeconds() - start_time
+      + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
   // Call the various callbacks.
@@ -227,7 +229,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   int num_consecutive_invalid_steps = 0;
   while (true) {
-    iteration_start_time = time(NULL);
+    iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
       summary->termination_type = NO_CONVERGENCE;
       VLOG(1) << "Terminating: Maximum number of iterations reached.";
@@ -248,7 +250,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_is_valid = false;
     iteration_summary.step_is_successful = false;
 
-    const time_t strategy_start_time = time(NULL);
+    const double strategy_start_time = WallTimeInSeconds();
     TrustRegionStrategy::PerSolveOptions per_solve_options;
     per_solve_options.eta = options_.eta;
     TrustRegionStrategy::Summary strategy_summary =
@@ -258,7 +260,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                               trust_region_step.data());
 
     iteration_summary.step_solver_time_in_seconds =
-        time(NULL) - strategy_start_time;
+        WallTimeInSeconds() - strategy_start_time;
     iteration_summary.linear_solver_iterations =
         strategy_summary.num_iterations;
 
@@ -505,9 +507,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     iteration_summary.iteration_time_in_seconds =
-        time(NULL) - iteration_start_time;
-    iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
-        summary->preprocessor_time_in_seconds;
+        WallTimeInSeconds() - iteration_start_time;
+    iteration_summary.cumulative_time_in_seconds =
+        WallTimeInSeconds() - start_time
+        + summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
 
     switch (RunCallbacks(iteration_summary)) {

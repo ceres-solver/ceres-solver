@@ -88,6 +88,7 @@ SET(CERES_INTERNAL_SRC
     types.cc
     visibility_based_preconditioner.cc
     visibility.cc
+    wall_time.cc
 )
 
 If (${PROTOBUF_FOUND})
