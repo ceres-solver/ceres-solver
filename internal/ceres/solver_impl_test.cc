@@ -542,6 +542,18 @@ TEST(SolverImpl, CreateLinearSolverZeroNumEliminateBlocks) {
 #endif
 }
 
+TEST(SolverImpl, ZeroNumEliminateBlocks) {
+  Solver::Options options;
+  options.num_eliminate_blocks = 0;
+  options.linear_solver_type = DENSE_SCHUR;
+  options.ordering_type = NATURAL;
+  ProblemImpl problem;
+  Solver::Summary summary;
+  SolverImpl::Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
+  EXPECT_EQ(summary.error.substr(0,25), "Using a Schur type solver");
+}
+
 TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
   Solver::Options options;
   options.num_eliminate_blocks = 1;

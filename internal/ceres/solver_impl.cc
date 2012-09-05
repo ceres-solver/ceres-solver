@@ -215,12 +215,25 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
   if (options.num_linear_solver_threads > 1) {
     LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
+        << "OpenMP support is not compiled into this binary"
         << "only options.num_linear_solver_threads=1 is supported. Switching"
         << "to single threaded mode.";
     options.num_linear_solver_threads = 1;
   }
 #endif
+
+  if (IsSchurType(options.linear_solver_type) &&
+      options.ordering_type != SCHUR &&
+      options.num_eliminate_blocks < 1) {
+    summary->error =
+        StringPrintf("Using a Schur type solver with %s"
+                     " ordering requires that"
+                     " Solver::Options::num_eliminate_blocks"
+                     " be set to a positive integer.",
+                     OrderingTypeToString(options.ordering_type));
+    LOG(WARNING) << summary->error;
+    return;
+  }
 
   summary->linear_solver_type_given = options.linear_solver_type;
   summary->num_eliminate_blocks_given = original_options.num_eliminate_blocks;
@@ -275,7 +288,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 
   // Create the three objects needed to minimize: the transformed program, the
   // evaluator, and the linear solver.
-
   scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
                                                            problem_impl,
                                                            &summary->fixed_cost,
