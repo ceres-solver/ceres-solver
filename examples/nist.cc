@@ -374,16 +374,18 @@ int RegressionDriver(const std::string& filename,
           -std::log10(fabs(summary.final_cost - certified_cost) / certified_cost);
     }
 
+    std::cerr << "start " << start + 1 << " " ;
     if (num_matching_digits <= kMinNumMatchingDigits) {
-      std::cerr << "start " << start + 1 << " " ;
       std::cerr <<  "FAILURE";
-      std::cerr << " summary: "
-                << summary.BriefReport()
-                << " Certified cost: " << certified_cost
-                << std::endl;
     } else {
+      std::cerr <<  "SUCCESS";
       ++num_success;
     }
+    std::cerr << " summary: "
+              << summary.BriefReport()
+              << " Certified cost: " << certified_cost
+              << std::endl;
+
   }
 
   return num_success;

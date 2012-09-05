@@ -270,23 +270,24 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                  << options.lsqp_dump_directory << "but failed.";
     }
 
-    double new_model_cost = 0.0;
+    double model_cost_change = 0.0;
     if (strategy_summary.termination_type != FAILURE) {
-      // new_model_cost = 1/2 |f + J * step|^2
-      model_residuals = residuals;
+      // new_model_cost
+      //  = 1/2 [f + J * step]^2
+      //  = 1/2 [ f'f + 2f'J * step + step' * J' * J * step ]
+      // model_cost_change
+      //  = cost - new_model_cost
+      //  = f'f/2  - 1/2 [ f'f + 2f'J * step + step' * J' * J * step]
+      //  = -f'J * step - step' * J' * J * step / 2
+      model_residuals.setZero();
       jacobian->RightMultiply(trust_region_step.data(), model_residuals.data());
-      new_model_cost = model_residuals.squaredNorm() / 2.0;
+      model_cost_change = -(residuals.dot(model_residuals) +
+                            model_residuals.squaredNorm() / 2.0);
 
-      // In exact arithmetic, this would never be the case. But poorly
-      // conditioned matrices can give rise to situations where the
-      // new_model_cost can actually be larger than half the squared
-      // norm of the residual vector. We allow for small tolerance
-      // around cost and beyond that declare the step to be invalid.
-      if ((1.0 - new_model_cost / cost) < -kEpsilon) {
+      if (model_cost_change < 0.0) {
         VLOG(1) << "Invalid step: current_cost: " << cost
-                << " new_model_cost " << new_model_cost
-                << " absolute difference " << (cost - new_model_cost)
-                << " relative difference " << (1.0 - new_model_cost/cost);
+                << " absolute difference " << model_cost_change
+                << " relative difference " << (model_cost_change / cost);
       } else {
         iteration_summary.step_is_valid = true;
       }
@@ -321,25 +322,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     } else {
       // The step is numerically valid, so now we can judge its quality.
       num_consecutive_invalid_steps = 0;
-
-      // We allow some slop around 0, and clamp the model_cost_change
-      // at kEpsilon * min(1.0, cost) from below.
-      //
-      // In exact arithmetic this should never be needed, as we are
-      // guaranteed to new_model_cost <= cost. However, due to various
-      // numerical issues, it is possible that new_model_cost is
-      // nearly equal to cost, and the difference is a small negative
-      // number. To make sure that the relative_decrease computation
-      // remains sane, as clamp the difference (cost - new_model_cost)
-      // from below at a small positive number.
-      //
-      // This number is the minimum of kEpsilon * (cost, 1.0), which
-      // ensures that it will never get too large in absolute value,
-      // while scaling down proportionally with the magnitude of the
-      // cost. This is important for problems where the minimum of the
-      // objective function is near zero.
-      const double model_cost_change =
-          max(kEpsilon * min(1.0, cost), cost - new_model_cost);
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();

@@ -270,8 +270,8 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.solver_log = FLAGS_solver_log;
-  options.gradient_tolerance *= 1e-3;
-
+  options.gradient_tolerance = 1e-12;
+  options.function_tolerance = 1e-12;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
