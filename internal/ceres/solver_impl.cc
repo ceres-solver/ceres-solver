@@ -33,6 +33,7 @@
 #include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
+#include "ceres/ceres_time.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
@@ -189,15 +190,15 @@ void SolverImpl::Minimize(const Solver::Options& options,
   minimizer_options.trust_region_strategy = strategy.get();
 
   TrustRegionMinimizer minimizer;
-  time_t minimizer_start_time = time(NULL);
+  double minimizer_start_time = CeresTime();
   minimizer.Minimize(minimizer_options, parameters, summary);
-  summary->minimizer_time_in_seconds = time(NULL) - minimizer_start_time;
+  summary->minimizer_time_in_seconds = CeresTime() - minimizer_start_time;
 }
 
 void SolverImpl::Solve(const Solver::Options& original_options,
                        ProblemImpl* original_problem_impl,
                        Solver::Summary* summary) {
-  time_t solver_start_time = time(NULL);
+  double solver_start_time = CeresTime();
   Solver::Options options(original_options);
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
@@ -330,7 +331,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Collect the discontiguous parameters into a contiguous state vector.
   reduced_program->ParameterBlocksToStateVector(parameters.data());
 
-  time_t minimizer_start_time = time(NULL);
+  double minimizer_start_time = CeresTime();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
@@ -350,7 +351,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
     return;
   }
 
-  time_t post_process_start_time = time(NULL);
+  double post_process_start_time = CeresTime();
 
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
@@ -369,7 +370,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
   // Stick a fork in it, we're done.
-  summary->postprocessor_time_in_seconds = time(NULL) - post_process_start_time;
+  summary->postprocessor_time_in_seconds = CeresTime() - post_process_start_time;
 }
 
 // Strips varying parameters and residuals, maintaining order, and updating
