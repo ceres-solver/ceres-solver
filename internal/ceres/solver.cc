@@ -37,20 +37,21 @@
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 
 Solver::~Solver() {}
 
-// TODO(sameeragarwal): Use subsecond timers.
 void Solver::Solve(const Solver::Options& options,
                    Problem* problem,
                    Solver::Summary* summary) {
-  time_t start_time_seconds = time(NULL);
+  double start_time_seconds = internal::WallTimeInSeconds();
   internal::ProblemImpl* problem_impl =
       CHECK_NOTNULL(problem)->problem_impl_.get();
   internal::SolverImpl::Solve(options, problem_impl, summary);
-  summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
 }
 
 void Solve(const Solver::Options& options,
