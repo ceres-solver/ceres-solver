@@ -201,4 +201,26 @@ bool IsSchurType(LinearSolverType type) {
           (type == ITERATIVE_SCHUR));
 }
 
+bool IsSparseLinearAlgebraLibraryTypeAvailable(
+    SparseLinearAlgebraLibraryType type) {
+  if (type == SUITE_SPARSE) {
+#ifdef CERES_NO_SUITESPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  if (type == CX_SPARSE) {
+#ifdef CERES_NO_CXSPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  LOG(WARNING) << "Unknown sparse linear algebra library " << type;
+  return false;
+}
+
 }  // namespace ceres

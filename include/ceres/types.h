@@ -324,7 +324,11 @@ const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
 
 const char* SolverTerminationTypeToString(SolverTerminationType type);
+
 bool IsSchurType(LinearSolverType type);
+bool IsSparseLinearAlgebraLibraryTypeAvailable(
+    SparseLinearAlgebraLibraryType type);
+
 
 }  // namespace ceres
 
