@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI7H///gU\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-07T17:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83///eM\u003d",
+      "revId": "1eb418841970c3bc2bfb9873f0b1a5520c39f844",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83///eE\u003d",
         "filename": "examples/nist.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-07T17:13:47Z",
       "side": 1,
       "message": "this function maybe worth moving into types.h/cc ultimately. should be useful for other users also.",
+      "revId": "1eb418841970c3bc2bfb9873f0b1a5520c39f844",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI7H///gY\u003d",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-07T17:23:46Z",
+      "side": 1,
+      "message": "I thought about that but I wondered if it really is generic enough.\nWhat constitutes \"successful\" termination might be application dependent, especially whether or not to consider \"maximum iteration count reached\" as successful termination.\n\nShould I move it?",
+      "parentUuid": "AAAI83///eE\u003d",
       "revId": "1eb418841970c3bc2bfb9873f0b1a5520c39f844",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
