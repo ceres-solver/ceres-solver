@@ -63,6 +63,7 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
 DEFINE_int32(num_iterations, 10000, "Number of iterations");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps");
+DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
 
 using Eigen::Dynamic;
 using Eigen::RowMajor;
@@ -403,6 +404,7 @@ void SetMinimizerOptions(ceres::Solver::Options* options) {
 
   options->max_num_iterations = FLAGS_num_iterations;
   options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
+  options->initial_trust_region_radius = FLAGS_initial_trust_region_radius;
   options->function_tolerance = 1e-18;
   options->gradient_tolerance = 1e-18;
   options->parameter_tolerance = 1e-18;
