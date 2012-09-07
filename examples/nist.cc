@@ -85,6 +85,14 @@ void SkipLines(std::ifstream& ifs, int num_lines) {
   }
 }
 
+bool IsSuccessfulTermination(ceres::SolverTerminationType status) {
+  return
+      (status == ceres::FUNCTION_TOLERANCE) ||
+      (status == ceres::GRADIENT_TOLERANCE) ||
+      (status == ceres::PARAMETER_TOLERANCE) ||
+      (status == ceres::USER_SUCCESS);
+}
+
 class NISTProblem {
  public:
   explicit NISTProblem(const std::string& filename) {
@@ -368,7 +376,8 @@ int RegressionDriver(const std::string& filename,
     const ceres::Solver::Summary& summary = summaries[start];
 
     int num_matching_digits = 0;
-    if (summary.final_cost < certified_cost) {
+    if (IsSuccessfulTermination(summary.termination_type)
+        && summary.final_cost < certified_cost) {
       num_matching_digits = kMinNumMatchingDigits + 1;
     } else {
       num_matching_digits =
