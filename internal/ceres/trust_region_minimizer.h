@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 #define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 
+#include "ceres/internal/eigen.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"
@@ -52,7 +53,8 @@ class TrustRegionMinimizer : public Minimizer {
 
  private:
   void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
+  Vector UpdateScaleEstimate(const SparseMatrix& jacobian,
+                             const Vector& oldscale) const;
   CallbackReturnType RunCallbacks(const IterationSummary& iteration_summary);
   bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
                                            const SparseMatrix* jacobian,

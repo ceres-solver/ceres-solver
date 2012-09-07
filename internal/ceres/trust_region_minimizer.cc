@@ -54,6 +54,7 @@ namespace internal {
 namespace {
 // Small constant for various floating point issues.
 const double kEpsilon = 1e-12;
+const double kScaleDamping = 0.6;
 }  // namespace
 
 // Execute the list of IterationCallbacks sequentially. If any one of
@@ -73,12 +74,17 @@ CallbackReturnType TrustRegionMinimizer::RunCallbacks(
 
 // Compute a scaling vector that is used to improve the conditioning
 // of the Jacobian.
-void TrustRegionMinimizer::EstimateScale(const SparseMatrix& jacobian,
-                                         double* scale) const {
-  jacobian.SquaredColumnNorm(scale);
+Vector TrustRegionMinimizer::UpdateScaleEstimate(const SparseMatrix& jacobian,
+                                                 const Vector& oldscale) const {
+  Vector scale = oldscale;
+  jacobian.SquaredColumnNorm(scale.data());
   for (int i = 0; i < jacobian.num_cols(); ++i) {
-    scale[i] = 1.0 / (1.0 + sqrt(scale[i]));
+    double inv_scale = 1.0 / oldscale(i);
+    inv_scale = 1.0 + std::max(std::sqrt(scale(i)),
+                               kScaleDamping * inv_scale);
+    scale(i) = 1.0 / inv_scale;
   }
+  return scale;
 }
 
 void TrustRegionMinimizer::Init(const Minimizer::Options& options) {
@@ -180,11 +186,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   jacobian->LeftMultiply(residuals.data(), gradient.data());
   iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
 
+  scale.setOnes();
+
   if (options_.jacobi_scaling) {
-    EstimateScale(*jacobian, scale.data());
+    scale = UpdateScaleEstimate(*jacobian, scale);
     jacobian->ScaleColumns(scale.data());
-  } else {
-    scale.setOnes();
   }
 
   // The initial gradient max_norm is bounded from below so that we do
@@ -443,6 +449,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
 
       if (options_.jacobi_scaling) {
+        scale = UpdateScaleEstimate(*jacobian, scale);
         jacobian->ScaleColumns(scale.data());
       }
 
