@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83//+6c\u003d",
+        "filename": "internal/ceres/ceres_time.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-08T22:16:03Z",
+      "side": 1,
+      "message": "we will need a bit more here, since even on macos the default compiler is now clang which does not have openmp support. if we are going to resort to doing an ifdef, then perhaps doing a bit more research on the various platform specific calls that are there would be useful.\n\nAlso I agree that CeresTime is a bit redundant, since it is already in the ceres::internal namespace. How about GetTime() ?\n\nKeir has more experience with timer and general cross platform issues, I will defer to him on this patch.",
+      "revId": "5112c6b0bcc93b8f217461c2e9a128a8b72c1360",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
