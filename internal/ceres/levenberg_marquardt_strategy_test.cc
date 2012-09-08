@@ -119,7 +119,7 @@ TEST(LevenbergMarquardtStrategy, CorrectDiagonalToLinearSolver) {
   jacobian(0,2) = 100.0;
 
   double residual = 1.0;
-  double x[2];
+  double x[3];
   DenseSparseMatrix dsm(jacobian);
 
   TrustRegionStrategy::Options options;
