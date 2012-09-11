@@ -42,6 +42,7 @@
 
 namespace ceres {
 
+class Ordering;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -89,6 +90,8 @@ class Solver {
 #endif
 
       num_linear_solver_threads = 1;
+      use_new_ordering_api = false;
+      ordering_new_api = NULL;
       num_eliminate_blocks = 0;
       ordering_type = NATURAL;
 
@@ -228,6 +231,18 @@ class Solver {
     // step. Currently only the SPARSE_SCHUR solver is capable of
     // using this setting.
     int num_linear_solver_threads;
+
+    // Whether the old or the new ordering API should be used. If this
+    // is true, all assignments to Solve::Options::ordering_type,
+    // Solver::Options::ordering and
+    // Solver::Options::num_eliminate_blocks are ignored.
+    bool use_new_ordering_api;
+
+    // Ordering object for the new ordering API. If NULL, then all
+    // parameter blocks are assumed to be in the same group and the
+    // solver is free to decide the best ordering. (See ordering.h for
+    // more details).
+    Ordering* ordering_new_api;
 
     // For Schur reduction based methods, the first 0 to num blocks are
     // eliminated using the Schur reduction. For example, when solving
