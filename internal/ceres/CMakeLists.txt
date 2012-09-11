@@ -63,6 +63,7 @@ SET(CERES_INTERNAL_SRC
     local_parameterization.cc
     loss_function.cc
     normal_prior.cc
+    ordering.cc
     partitioned_matrix_view.cc
     polynomial_solver.cc
     problem.cc
@@ -232,6 +233,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(minimizer)
   CERES_TEST(normal_prior)
   CERES_TEST(numeric_diff_cost_function)
+  CERES_TEST(ordering)
   CERES_TEST(parameter_block)
   CERES_TEST(partitioned_matrix_view)
   CERES_TEST(polynomial_solver)
