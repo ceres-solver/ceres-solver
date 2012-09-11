@@ -123,6 +123,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
+                   $(CERES_SRC_PATH)/ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial_solver.cc \
                    $(CERES_SRC_PATH)/problem.cc \

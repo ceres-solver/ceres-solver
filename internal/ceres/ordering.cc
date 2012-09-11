@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,46 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
-
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/cost_function.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
+#include <map>
+#include <set>
+#include "ceres/internal/port.h"
 #include "ceres/ordering.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
+#include "glog/logging.h"
 
-#endif  // CERES_PUBLIC_CERES_H_
+namespace ceres {
+
+void Ordering::AddParameterBlock(double* parameter_block, int group_id) {
+  const map<double*, int>::const_iterator it =
+      parameter_block_to_group_id_.find(parameter_block);
+
+  if (it != parameter_block_to_group_id_.end()) {
+    const int current_group_id = it->second;
+    group_id_to_parameter_blocks_[group_id].erase(parameter_block);
+  }
+
+  parameter_block_to_group_id_[parameter_block] = group_id;
+  group_id_to_parameter_blocks_[group_id].insert(parameter_block);
+}
+
+int Ordering::GetGroupId(double* parameter_block) const {
+  const map<double*, int>::const_iterator it =
+      parameter_block_to_group_id_.find(parameter_block);
+  CHECK(it !=  parameter_block_to_group_id_.end());
+  return it->second;
+}
+
+int Ordering::NumParameterBlocks() const {
+  return parameter_block_to_group_id_.size();
+}
+
+int Ordering::NumGroups() const {
+  return group_id_to_parameter_blocks_.size();
+}
+
+const map<int, set<double*> >& Ordering::group_id_to_parameter_blocks() const {
+  return group_id_to_parameter_blocks_;
+}
+
+}  // namespace ceres
