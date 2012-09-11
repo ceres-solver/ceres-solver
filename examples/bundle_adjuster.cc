@@ -126,7 +126,6 @@ void SetLinearSolver(Solver::Options* options) {
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   options->use_block_amd = FLAGS_use_block_amd;
-  CHECK(StringToOrderingType(FLAGS_ordering, &options->ordering_type));
 
   // Bundle adjustment problems have a sparsity structure that makes
   // them amenable to more specialized and much more efficient
@@ -142,11 +141,11 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  if (options->ordering_type == ceres::SCHUR) {
+  options->use_new_ordering_api = true;
+  if (FLAGS_ordering == "schur") {
     return;
   }
 
-  options->ordering_type = ceres::USER;
   const int num_points = bal_problem->num_points();
   const int point_block_size = bal_problem->point_block_size();
   double* points = bal_problem->mutable_points();
@@ -154,24 +153,25 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   const int camera_block_size = bal_problem->camera_block_size();
   double* cameras = bal_problem->mutable_cameras();
 
+  ceres::Ordering* ordering = new ceres::Ordering;
+
   // The points come before the cameras.
   for (int i = 0; i < num_points; ++i) {
-    options->ordering.push_back(points + point_block_size * i);
+    ordering->AddParameterBlock(points + point_block_size * i, 0);
   }
 
   for (int i = 0; i < num_cameras; ++i) {
     // When using axis-angle, there is a single parameter block for
     // the entire camera.
-    options->ordering.push_back(cameras + camera_block_size * i);
-
+    ordering->AddParameterBlock(cameras + camera_block_size * i, 1);
     // If quaternions are used, there are two blocks, so add the
     // second block to the ordering.
     if (FLAGS_use_quaternions) {
-      options->ordering.push_back(cameras + camera_block_size * i + 4);
+      ordering->AddParameterBlock(cameras + camera_block_size * i + 4, 1);
     }
   }
 
-  options->num_eliminate_blocks = num_points;
+  options->ordering_new_api = ordering;
 }
 
 void SetMinimizerOptions(Solver::Options* options) {
