@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI83//9c8\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//9gA\u003d",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//9f8\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-11T22:11:13Z",
       "side": 1,
       "message": "You don\u0027t need to include the ordering.h header; only forward declare Ordering.",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//9cs\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//9f8\u003d",
       "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI83//9co\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "this is checking linear solver type, not ordering type. If use_new_ordering, then everything else gets clobbered.",
+      "parentUuid": "AAAI83//9f0\u003d",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//9eo\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2012-09-11T22:11:13Z",
       "side": 1,
       "message": "Check if it\u0027s USER explicitly.",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//9cQ\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "since we are clobbering, I do not think there is any need.\nin that sense I am going to remove the CHECK below and just clear the vector.",
+      "parentUuid": "AAAI83//9eo\u003d",
       "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAI83//9cU\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//9fs\u003d",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//9ek\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2012-09-11T22:11:13Z",
       "side": 1,
       "message": "Die here on unexpected value.",
+      "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//9cg\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-11T22:32:44Z",
+      "side": 1,
+      "message": "its the final case anyways, since are in the last else..",
+      "parentUuid": "AAAI83//9ek\u003d",
       "revId": "c01a8a8bcdc5389397b5ef58175c7004fb78ac7a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
