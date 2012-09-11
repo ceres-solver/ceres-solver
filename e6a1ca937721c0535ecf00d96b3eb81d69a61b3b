@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83//9w0\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-11T18:51:48Z",
+      "side": 1,
+      "message": "Why expose this?",
+      "revId": "e6a1ca937721c0535ecf00d96b3eb81d69a61b3b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//9w8\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-11T18:51:48Z",
+      "side": 1,
+      "message": "Delete.",
+      "revId": "e6a1ca937721c0535ecf00d96b3eb81d69a61b3b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
