@@ -40,6 +40,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
+#include "ceres/ordering.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
@@ -201,6 +202,51 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        Solver::Summary* summary) {
   double solver_start_time = WallTimeInSeconds();
   Solver::Options options(original_options);
+
+  // Code for supporting both the old and the new ordering API. This
+  // code will get refactored and re-written as the old API is
+  // steadily deprecated.
+
+  // Clobber all the input parameters from the old api parameters.
+  if (options.use_new_ordering_api) {
+    // For linear solvers which are not of Schur type, do nothing.
+    options.ordering.clear();
+    options.num_eliminate_blocks = 0;
+    options.ordering_type = ceres::NATURAL;
+
+    if (IsSchurType(options.linear_solver_type)) {
+      if (options.ordering_new_api == NULL) {
+        // User says we are free to find the independent set, and order
+        // any which way.
+        options.ordering_type = ceres::SCHUR;
+      } else {
+        // User has given an ordering and asked for a Schur type solver.
+        options.ordering_type = ceres::USER;
+
+        // The lowest numbered group corresponds to
+        // num_eliminate_blocks e_blocks.
+        const map<int, set<double*> >& group_id_to_parameter_block
+            = options.ordering_new_api->group_id_to_parameter_blocks();
+
+        map<int, set<double*> >::const_iterator it =
+            group_id_to_parameter_block.begin();
+        CHECK(it != group_id_to_parameter_block.end());
+
+        options.num_eliminate_blocks = it->second.size();
+        for (; it != group_id_to_parameter_block.end(); ++it) {
+          options.ordering.insert(options.ordering.end(),
+                                  it->second.begin(),
+                                  it->second.end());
+        }
+        CHECK_EQ(options.ordering.size(),
+                 original_problem_impl->NumParameterBlocks());
+      }
+    }
+  } else {
+    CHECK(options.ordering_new_api == NULL);
+  }
+
+
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
   // Reset the summary object to its default values.
