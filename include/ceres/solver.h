@@ -38,6 +38,7 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/ordering.h"
 #include "ceres/types.h"
 
 namespace ceres {
@@ -89,6 +90,8 @@ class Solver {
 #endif
 
       num_linear_solver_threads = 1;
+      use_new_ordering_api = false;
+      ordering_new_api = NULL;
       num_eliminate_blocks = 0;
       ordering_type = NATURAL;
 
@@ -228,6 +231,9 @@ class Solver {
     // step. Currently only the SPARSE_SCHUR solver is capable of
     // using this setting.
     int num_linear_solver_threads;
+
+    bool use_new_ordering_api;
+    Ordering* ordering_new_api;
 
     // For Schur reduction based methods, the first 0 to num blocks are
     // eliminated using the Schur reduction. For example, when solving

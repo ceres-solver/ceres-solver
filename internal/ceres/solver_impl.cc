@@ -199,6 +199,44 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        Solver::Summary* summary) {
   time_t solver_start_time = time(NULL);
   Solver::Options options(original_options);
+
+  // Clobber all the input parameters from the old api parameters.
+  if (options.use_new_ordering_api) {
+    // For linear solvers which are not of Schur type, do nothing.
+    if (!IsSchurType(options.linear_solver_type)) {
+      options.ordering_type = ceres::NATURAL;
+      options.ordering.clear();
+      options.num_eliminate_blocks = 0;
+    } else if (options.ordering_new_api == NULL) {
+      // User says we are free to find the independent set, and order
+      // any which way.
+      options.ordering_type = ceres::SCHUR;
+      options.ordering.clear();
+      options.num_eliminate_blocks = 0;
+    } else {
+      CHECK_EQ(options.ordering.size(), 0);
+      // User has given an ordering and asked for a Schur type solver.
+      options.ordering_type = ceres::USER;
+      LOG(INFO) << "User ordering";
+
+      // The lowest numbered group corresponds to
+      // num_eliminate_blocks e_blocks.
+      const map<int, set<double*> >& group_id_to_parameter_block
+          = options.ordering_new_api->group_id_to_parameter_blocks();
+      map<int, set<double*> >::const_iterator it =
+          group_id_to_parameter_block.begin();
+      options.num_eliminate_blocks = it->second.size();
+      for (; it != group_id_to_parameter_block.end(); ++it) {
+        options.ordering.insert(options.ordering.end(),
+                                it->second.begin(),
+                                it->second.end());
+      }
+    }
+  } else {
+    CHECK(options.ordering_new_api != NULL);
+  }
+
+
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
   // Reset the summary object to its default values.
