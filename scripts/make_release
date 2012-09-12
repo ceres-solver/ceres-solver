@@ -47,11 +47,35 @@ VERSION=$(grep 'SET(CERES_VERSION' CMakeLists.txt | \
 ABI_VERSION=$(grep 'SET(CERES_ABI_VERSION' CMakeLists.txt | \
               sed -e 's/SET(CERES_ABI_VERSION //' | \
               sed -e 's/)//')
+VERSION_IN_HEADER=$(grep '#define CERES_VERSION' include/ceres/ceres.h | \
+                    sed -e 's/#define CERES_VERSION //')
+ABI_VERSION_IN_HEADER=$(grep '#define CERES_ABI_VERSION' \
+                              include/ceres/ceres.h | \
+                        sed -e 's/#define CERES_ABI_VERSION //')
 GIT_COMMIT=$(git log -1 HEAD |grep commit)
 
 if [[ $1 != $VERSION ]] ; then
-  echo "ERROR: Version $1 does not match CERES_VERSION in CMakeLists.txt."
-  echo "       which is $VERSION. You may not be in the toplevel source dir."
+  echo "ERROR: Version from the command line $1 does not match CERES_VERSION"
+  echo "       in CMakeLists.txt, which is $VERSION. You may not be in the "
+  echo "       toplevel source dir."
+  exit 1
+fi
+
+if [[ $VERSION_IN_HEADER != $VERSION ]] ; then
+  echo "ERROR: CERES_VERSION version from include/ceres/ceres.h, which is"
+  echo "       $VERSION_IN_HEADER, does not match the ABI version"
+  echo "       from the toplevel CMakeLists.txt, which is $ABI_VERSION."
+  echo "       You may not be in the toplevel source directory, or the"
+  echo "       versions are out of sync."
+  exit 1
+fi
+
+if [[ $ABI_VERSION_IN_HEADER != $ABI_VERSION ]] ; then
+  echo "ERROR: CERES_ABI_VERSION from include/ceres/ceres.h, which is"
+  echo "       $ABI_VERSION_IN_HEADER, does not match the ABI version"
+  echo "       from the toplevel CMakeLists.txt, which is $ABI_VERSION."
+  echo "       You may not be in the toplevel source directory, or the"
+  echo "       versions are out of sync."
   exit 1
 fi
 
