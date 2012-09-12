@@ -141,7 +141,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  options->use_new_ordering_api = true;
   if (FLAGS_ordering == "schur") {
     return;
   }
@@ -171,7 +170,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     }
   }
 
-  options->ordering_new_api = ordering;
+  options->ordering = ordering;
 }
 
 void SetMinimizerOptions(Solver::Options* options) {

@@ -179,6 +179,8 @@ SparseSchurComplementSolver::~SparseSchurComplementSolver() {
 void SparseSchurComplementSolver::InitStorage(
     const CompressedRowBlockStructure* bs) {
   const int num_eliminate_blocks = options().elimination_groups[0];
+  LOG(INFO) << "num eliminate blocks " << num_eliminate_blocks;
+
   const int num_col_blocks = bs->cols.size();
   const int num_row_blocks = bs->rows.size();
 

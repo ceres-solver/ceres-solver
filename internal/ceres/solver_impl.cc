@@ -51,6 +51,13 @@
 #include "ceres/trust_region_minimizer.h"
 
 namespace ceres {
+
+Solver::Options::~Options() {
+  if (ordering != NULL) {
+    delete ordering;
+  }
+}
+
 namespace internal {
 namespace {
 
@@ -200,56 +207,10 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        Solver::Summary* summary) {
   time_t solver_start_time = time(NULL);
   Solver::Options options(original_options);
-
-  // Code for supporting both the old and the new ordering API. This
-  // code will get refactored and re-written as the old API is
-  // steadily deprecated.
-
-  // Clobber all the input parameters from the old api parameters.
-  if (options.use_new_ordering_api) {
-    // For linear solvers which are not of Schur type, do nothing.
-    options.ordering.clear();
-    options.num_eliminate_blocks = 0;
-    options.ordering_type = ceres::NATURAL;
-
-    if (IsSchurType(options.linear_solver_type)) {
-      if (options.ordering_new_api == NULL) {
-        // User says we are free to find the independent set, and order
-        // any which way.
-        options.ordering_type = ceres::SCHUR;
-      } else {
-        // User has given an ordering and asked for a Schur type solver.
-        options.ordering_type = ceres::USER;
-
-        // The lowest numbered group corresponds to
-        // num_eliminate_blocks e_blocks.
-        const map<int, set<double*> >& group_id_to_parameter_block
-            = options.ordering_new_api->group_id_to_parameter_blocks();
-
-        map<int, set<double*> >::const_iterator it =
-            group_id_to_parameter_block.begin();
-        CHECK(it != group_id_to_parameter_block.end());
-
-        options.num_eliminate_blocks = it->second.size();
-        for (; it != group_id_to_parameter_block.end(); ++it) {
-          options.ordering.insert(options.ordering.end(),
-                                  it->second.begin(),
-                                  it->second.end());
-        }
-        CHECK_EQ(options.ordering.size(),
-                 original_problem_impl->NumParameterBlocks());
-      }
-    }
-  } else {
-    CHECK(options.ordering_new_api == NULL);
-  }
-
-
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
-
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -268,25 +229,10 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 #endif
 
-  if (IsSchurType(options.linear_solver_type) &&
-      options.ordering_type != SCHUR &&
-      options.num_eliminate_blocks < 1) {
-    summary->error =
-        StringPrintf("Using a Schur type solver with %s"
-                     " ordering requires that"
-                     " Solver::Options::num_eliminate_blocks"
-                     " be set to a positive integer.",
-                     OrderingTypeToString(options.ordering_type));
-    LOG(WARNING) << summary->error;
-    return;
-  }
-
   summary->linear_solver_type_given = options.linear_solver_type;
-  summary->num_eliminate_blocks_given = original_options.num_eliminate_blocks;
   summary->num_threads_given = original_options.num_threads;
   summary->num_linear_solver_threads_given =
       original_options.num_linear_solver_threads;
-  summary->ordering_type = original_options.ordering_type;
 
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
@@ -298,6 +244,21 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       options.sparse_linear_algebra_library;
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
   summary->dogleg_type = options.dogleg_type;
+
+  if (original_options.ordering != NULL) {
+    options.ordering = new Ordering(*original_options.ordering);
+  } else {
+    LOG(INFO) << "Creating new ordering";
+    options.ordering = new Ordering;
+    const ProblemImpl::ParameterMap& parameter_map =
+        problem_impl->parameter_map();
+
+    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
+         it != parameter_map.end();
+         ++it) {
+      options.ordering->AddParameterBlock(it->first, 0);
+    }
+  }
 
   // Evaluate the initial cost, residual vector and the jacobian
   // matrix if requested by the user. The initial cost needs to be
@@ -351,7 +312,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       linear_solver(CreateLinearSolver(&options, &summary->error));
   summary->linear_solver_type_used = options.linear_solver_type;
   summary->preconditioner_type = options.preconditioner_type;
-  summary->num_eliminate_blocks_used = options.num_eliminate_blocks;
   summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
 
   if (linear_solver == NULL) {
@@ -421,10 +381,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 // Strips varying parameters and residuals, maintaining order, and updating
 // num_eliminate_blocks.
 bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
-                                              int* num_eliminate_blocks,
+                                              Ordering* ordering,
                                               double* fixed_cost,
                                               string* error) {
-  int original_num_eliminate_blocks = *num_eliminate_blocks;
   vector<ParameterBlock*>* parameter_blocks =
       program->mutable_parameter_blocks();
 
@@ -481,7 +440,7 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
   }
 
   // Filter out unused or fixed parameter blocks, and update
-  // num_eliminate_blocks as necessary.
+  // the ordering.
   {
     vector<ParameterBlock*>* parameter_blocks =
         program->mutable_parameter_blocks();
@@ -490,8 +449,8 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
       ParameterBlock* parameter_block = (*parameter_blocks)[i];
       if (parameter_block->index() == 1) {
         (*parameter_blocks)[j++] = parameter_block;
-      } else if (i < original_num_eliminate_blocks) {
-        (*num_eliminate_blocks)--;
+      } else {
+        ordering->RemoveParameterBlock(parameter_block->mutable_user_state());
       }
     }
     parameter_blocks->resize(j);
@@ -509,35 +468,17 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
+  CHECK_NOTNULL(options->ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
+  Ordering* ordering = options->ordering;
 
-  if (options->ordering_type == USER &&
-      !ApplyUserOrdering(*problem_impl,
-                         options->ordering,
-                         transformed_program.get(),
-                         error)) {
-    return NULL;
-  }
-
-  if (options->ordering_type == SCHUR && options->num_eliminate_blocks != 0) {
-    *error = "Can't specify SCHUR ordering and num_eliminate_blocks "
-        "at the same time; SCHUR ordering determines "
-        "num_eliminate_blocks automatically.";
-    return NULL;
-  }
-
-  if (options->ordering_type == SCHUR && options->ordering.size() != 0) {
-    *error = "Can't specify SCHUR ordering type and the ordering "
-        "vector at the same time; SCHUR ordering determines "
-        "a suitable parameter ordering automatically.";
-    return NULL;
-  }
-
-  int num_eliminate_blocks = options->num_eliminate_blocks;
+  const int min_group_id =
+      ordering->group_id_to_parameter_blocks().begin()->first;
+  const int original_num_groups = ordering->NumGroups();
 
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
-                                    &num_eliminate_blocks,
+                                    ordering,
                                     fixed_cost,
                                     error)) {
     return NULL;
@@ -549,21 +490,52 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
-  if (options->ordering_type == SCHUR) {
+  if (original_num_groups == 1 &&
+      IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
-    num_eliminate_blocks = ComputeSchurOrdering(*transformed_program,
-                                                &schur_ordering);
+    const int num_eliminate_blocks = ComputeSchurOrdering(*original_program,
+                                                          &schur_ordering);
     CHECK_EQ(schur_ordering.size(), transformed_program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
 
-    // Replace the transformed program's ordering with the schur ordering.
-    swap(*transformed_program->mutable_parameter_blocks(), schur_ordering);
+    for (int i = 0; i < schur_ordering.size(); ++i) {
+      ordering->AddParameterBlock(schur_ordering[i]->mutable_user_state(),
+                                  (i < num_eliminate_blocks) ? 0 : 1);
+    }
   }
-  options->num_eliminate_blocks = num_eliminate_blocks;
-  CHECK_GE(options->num_eliminate_blocks, 0)
-      << "Congratulations, you found a Ceres bug! Please report this error "
-      << "to the developers.";
+
+  if (!ApplyUserOrdering(
+          *problem_impl, ordering, transformed_program.get(), error)) {
+    return NULL;
+  }
+
+  if (IsSchurType(options->linear_solver_type) &&
+      original_num_groups > 1 &&
+      ordering->GroupSize(min_group_id) == 0) {
+    string msg = "No e_blocks remaining. Switching from ";
+    if (options->linear_solver_type == SPARSE_SCHUR) {
+      options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+      msg += "SPARSE_SCHUR to SPARSE_NORMAL_CHOLESKY.";
+    } else if (options->linear_solver_type == DENSE_SCHUR) {
+      // TODO(sameeragarwal): This is probably not a great choice.
+      // ideally, we should have a DENSE_NORMAL_CHOLESKY, that can
+      // take a BlockSparseMatrix as input.
+      options->linear_solver_type = DENSE_QR;
+      msg += "DENSE_SCHUR to DENSE_QR.";
+    } else if (options->linear_solver_type == ITERATIVE_SCHUR) {
+      msg += StringPrintf("ITERATIVE_SCHUR with %s preconditioner "
+                          "to CGNR with JACOBI preconditioner.",
+                          PreconditionerTypeToString(
+                              options->preconditioner_type));
+      options->linear_solver_type = CGNR;
+      if (options->preconditioner_type != IDENTITY) {
+        options->preconditioner_type = JACOBI;
+      }
+    }
+
+    LOG(WARNING) << msg;
+  }
 
   // Since the transformed program is the "active" program, and it is mutated,
   // update the parameter offsets and indices.
@@ -573,6 +545,10 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
+  CHECK_NOTNULL(options);
+  CHECK_NOTNULL(options->ordering);
+  CHECK_NOTNULL(error);
+
   if (options->trust_region_strategy_type == DOGLEG) {
     if (options->linear_solver_type == ITERATIVE_SCHUR ||
         options->linear_solver_type == CGNR) {
@@ -590,6 +566,24 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
              "SuiteSparse was not enabled when Ceres was built.";
     return NULL;
   }
+
+  if (linear_solver_options.preconditioner_type == SCHUR_JACOBI) {
+    *error =  "SCHUR_JACOBI preconditioner not suppored. Please build Ceres "
+        "with SuiteSparse support.";
+    return NULL;
+  }
+
+  if (linear_solver_options.preconditioner_type == CLUSTER_JACOBI) {
+    *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
+        "with SuiteSparse support.";
+    return NULL;
+  }
+
+  if (linear_solver_options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
+        "Ceres with SuiteSparse support.";
+    return NULL;
+  }
 #endif
 
 #ifdef CERES_NO_CXSPARSE
@@ -601,6 +595,13 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   }
 #endif
 
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+  if (linear_solver_options.type == SPARSE_SCHUR) {
+    *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
+        "CXSparse was enabled when Ceres was compiled.";
+    return NULL;
+  }
+#endif
 
   if (options->linear_solver_max_num_iterations <= 0) {
     *error = "Solver::Options::linear_solver_max_num_iterations is 0.";
@@ -626,61 +627,8 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.preconditioner_type = options->preconditioner_type;
   linear_solver_options.sparse_linear_algebra_library =
       options->sparse_linear_algebra_library;
-  linear_solver_options.use_block_amd = options->use_block_amd;
-
-#ifdef CERES_NO_SUITESPARSE
-  if (linear_solver_options.preconditioner_type == SCHUR_JACOBI) {
-    *error =  "SCHUR_JACOBI preconditioner not suppored. Please build Ceres "
-        "with SuiteSparse support.";
-    return NULL;
-  }
-
-  if (linear_solver_options.preconditioner_type == CLUSTER_JACOBI) {
-    *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
-        "with SuiteSparse support.";
-    return NULL;
-  }
-
-  if (linear_solver_options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
-    *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
-        "Ceres with SuiteSparse support.";
-    return NULL;
-  }
-#endif
 
   linear_solver_options.num_threads = options->num_linear_solver_threads;
-  if (options->num_eliminate_blocks > 0) {
-    linear_solver_options
-        .elimination_groups.push_back(options->num_eliminate_blocks);
-  }
-
-  // TODO(sameeragarwal): Fix this. Right now these are dummy values
-  // and violate the contract that elimination_groups should sum to
-  // the number of parameter blocks, but fixing this requires a bit
-  // more refactoring in solver_impl.cc, which is better done as we
-  // start deprecating the old API.
-  linear_solver_options.elimination_groups.push_back(1);
-
-  if (linear_solver_options.elimination_groups.size() == 1 &&
-      IsSchurType(linear_solver_options.type)) {
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-    LOG(INFO) << "No elimination block remaining switching to DENSE_QR.";
-    linear_solver_options.type = DENSE_QR;
-#else
-    LOG(INFO) << "No elimination block remaining "
-              << "switching to SPARSE_NORMAL_CHOLESKY.";
-    linear_solver_options.type = SPARSE_NORMAL_CHOLESKY;
-#endif
-  }
-
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-  if (linear_solver_options.type == SPARSE_SCHUR) {
-    *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
-             "CXSparse was enabled when Ceres was compiled.";
-    return NULL;
-  }
-#endif
-
   // The matrix used for storing the dense Schur complement has a
   // single lock guarding the whole matrix. Running the
   // SchurComplementSolver with multiple threads leads to maximum
@@ -695,56 +643,66 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                  << "switching to single-threaded.";
     linear_solver_options.num_threads = 1;
   }
-
-  options->linear_solver_type = linear_solver_options.type;
   options->num_linear_solver_threads = linear_solver_options.num_threads;
+
+  linear_solver_options.use_block_amd = options->use_block_amd;
+  const map<int, set<double*> >& groups =
+      options->ordering->group_id_to_parameter_blocks();
+  for (map<int, set<double*> >::const_iterator it = groups.begin();
+       it != groups.end();
+       ++it) {
+    linear_solver_options.elimination_groups.push_back(it->second.size());
+  }
+  // Schur type solvers, expect atleast two elimination groups. If
+  // there is only one elimination group, then CreateReducedProblem
+  // guarantees that this group only contains e_blocks. Thus we add a
+  // dummy elimination group with zero blocks in it.
+  if (IsSchurType(linear_solver_options.type) &&
+      linear_solver_options.elimination_groups.size() == 1) {
+    linear_solver_options.elimination_groups.push_back(0);
+  }
 
   return LinearSolver::Create(linear_solver_options);
 }
 
 bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
-                                   vector<double*>& ordering,
+                                   const Ordering* ordering,
                                    Program* program,
                                    string* error) {
-  if (ordering.size() != program->NumParameterBlocks()) {
+  if (ordering->NumParameterBlocks() != program->NumParameterBlocks()) {
     *error = StringPrintf("User specified ordering does not have the same "
                           "number of parameters as the problem. The problem"
-                          "has %d blocks while the ordering has %ld blocks.",
+                          "has %d blocks while the ordering has %d blocks.",
                           program->NumParameterBlocks(),
-                          ordering.size());
+                          ordering->NumParameterBlocks());
     return false;
-  }
-
-  // Ensure that there are no duplicates in the user's ordering.
-  {
-    vector<double*> ordering_copy(ordering);
-    sort(ordering_copy.begin(), ordering_copy.end());
-    if (unique(ordering_copy.begin(), ordering_copy.end())
-        != ordering_copy.end()) {
-      *error = "User specified ordering contains duplicates.";
-      return false;
-    }
   }
 
   vector<ParameterBlock*>* parameter_blocks =
       program->mutable_parameter_blocks();
+  parameter_blocks->clear();
 
-  fill(parameter_blocks->begin(),
-       parameter_blocks->end(),
-       static_cast<ParameterBlock*>(NULL));
+  const ProblemImpl::ProblemImpl::ParameterMap& parameter_map =
+      problem_impl.parameter_map();
+  const map<int, set<double*> >& groups =
+      ordering->group_id_to_parameter_blocks();
 
-  const ProblemImpl::ParameterMap& parameter_map = problem_impl.parameter_map();
-  for (int i = 0; i < ordering.size(); ++i) {
-    ProblemImpl::ParameterMap::const_iterator it =
-        parameter_map.find(ordering[i]);
-    if (it == parameter_map.end()) {
-      *error = StringPrintf("User specified ordering contains a pointer "
-                            "to a double that is not a parameter block in the "
-                            "problem. The invalid double is at position %d "
-                            " in options.ordering.", i);
-      return false;
+  for (map<int, set<double*> >::const_iterator it = groups.begin();
+       it != groups.end();
+       ++it) {
+    for (set<double*>::const_iterator it2 = it->second.begin();
+         it2 != it->second.end();
+         ++it2) {
+      ProblemImpl::ParameterMap::const_iterator it3 = parameter_map.find(*it2);
+      if (it3 == parameter_map.end()) {
+        *error = StringPrintf("User specified ordering contains a pointer "
+                              "to a double that is not a parameter block in the "
+                              "problem. The invalid double is in group: %d",
+                              it->first);
+        return false;
+      }
+      parameter_blocks->push_back(it3->second);
     }
-    (*parameter_blocks)[i] = it->second;
   }
   return true;
 }
@@ -779,28 +737,26 @@ bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
     return true;
   }
 
-  CHECK_NE(0, options.num_eliminate_blocks)
-        << "Congratulations, you found a Ceres bug! Please report this error "
-        << "to the developers.";
+  const int num_eliminate_blocks =
+      options.ordering->group_id_to_parameter_blocks().begin()->second.size();
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
-  vector<int> residual_blocks_per_e_block(options.num_eliminate_blocks + 1);
+  vector<int> residual_blocks_per_e_block(num_eliminate_blocks + 1);
   vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
   vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
-    int position = MinParameterBlock(residual_block,
-                                     options.num_eliminate_blocks);
+    int position = MinParameterBlock(residual_block, num_eliminate_blocks);
     min_position_per_residual[i] = position;
-    DCHECK_LE(position, options.num_eliminate_blocks);
+    DCHECK_LE(position, num_eliminate_blocks);
     residual_blocks_per_e_block[position]++;
   }
 
   // Run a cumulative sum on the histogram, to obtain offsets to the start of
   // each histogram bucket (where each bucket is for the residuals for that
   // E-block).
-  vector<int> offsets(options.num_eliminate_blocks + 1);
+  vector<int> offsets(num_eliminate_blocks + 1);
   std::partial_sum(residual_blocks_per_e_block.begin(),
                    residual_blocks_per_e_block.end(),
                    offsets.begin());
@@ -839,7 +795,7 @@ bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
 
   // Sanity check #1: The difference in bucket offsets should match the
   // histogram sizes.
-  for (int i = 0; i < options.num_eliminate_blocks; ++i) {
+  for (int i = 0; i < num_eliminate_blocks; ++i) {
     CHECK_EQ(residual_blocks_per_e_block[i], offsets[i + 1] - offsets[i])
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
@@ -861,7 +817,12 @@ Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
                                        string* error) {
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
-  evaluator_options.num_eliminate_blocks = options.num_eliminate_blocks;
+
+  evaluator_options.num_eliminate_blocks =
+      (options.ordering->NumGroups() > 0 &&
+       IsSchurType(options.linear_solver_type))
+       ? options.ordering->group_id_to_parameter_blocks().begin()->second.size()
+       : 0;
   evaluator_options.num_threads = options.num_threads;
   return Evaluator::Create(evaluator_options, program, error);
 }
