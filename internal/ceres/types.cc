@@ -112,24 +112,6 @@ bool StringToSparseLinearAlgebraLibraryType(
   return false;
 }
 
-const char* OrderingTypeToString(OrderingType ordering_type) {
-  switch (ordering_type) {
-    CASESTR(NATURAL);
-    CASESTR(USER);
-    CASESTR(SCHUR);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-bool StringToOrderingType(string value, OrderingType* type) {
-  UpperCase(&value);
-  STRENUM(NATURAL);
-  STRENUM(USER);
-  STRENUM(SCHUR);
-  return false;
-}
-
 const char* TrustRegionStrategyTypeToString(
     TrustRegionStrategyType trust_region_strategy_type) {
   switch (trust_region_strategy_type) {

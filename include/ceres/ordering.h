@@ -86,38 +86,20 @@ class Ordering {
   // Add a parameter block to a group with id group_id. If a group
   // with this id does not exist, one is created. This method can be
   // called any number of times for a parameter block.
-  void AddParameterBlock(double* parameter_block, int group_id) {
-    const map<double*, int>::const_iterator it =
-        parameter_block_to_group_id_.find(parameter_block);
+  void AddParameterBlock(double* parameter_block, int group_id);
 
-    if (it != parameter_block_to_group_id_.end()) {
-      const int current_group_id = it->second;
-      group_id_to_parameter_blocks_[group_id].erase(parameter_block);
-    }
-
-    parameter_block_to_group_id_[parameter_block] = group_id;
-    group_id_to_parameter_blocks_[group_id].insert(parameter_block);
-  }
+  void RemoveParameterBlock(double* parameter_block);
 
   // Return the group id for the parameter block. If the parameter
   // block is not known to the Ordering, calling this method results
   // in a crash.
-  int GetGroupId(double* parameter_block) const {
-    const map<double*, int>::const_iterator it =
-        parameter_block_to_group_id_.find(parameter_block);
-    CHECK(it !=  parameter_block_to_group_id_.end());
-    return it->second;
-  }
+  int GroupIdForParameterBlock(double* parameter_block) const;
 
-  int NumParameterBlocks() const {
-    return parameter_block_to_group_id_.size();
-  }
-
-  int NumGroups() const { return group_id_to_parameter_blocks_.size(); }
-
-  const map<int, set<double*> >& group_id_to_parameter_blocks() const {
-    return group_id_to_parameter_blocks_;
-  }
+  int NumParameterBlocks() const;
+  int NumGroups() const;
+  int GroupSize(int group_id) const;
+  bool ContainsParameterBlock(double* parameter_block) const;
+  const map<int, set<double*> >& group_id_to_parameter_blocks() const;
 
  private:
   map<int, set<double*> > group_id_to_parameter_blocks_;

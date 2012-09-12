@@ -74,7 +74,6 @@ class Minimizer {
       lsqp_dump_directory = options.lsqp_dump_directory;
       lsqp_iterations_to_dump = options.lsqp_iterations_to_dump;
       lsqp_dump_format_type = options.lsqp_dump_format_type;
-      num_eliminate_blocks = options.num_eliminate_blocks;
       max_num_consecutive_invalid_steps =
           options.max_num_consecutive_invalid_steps;
       min_trust_region_radius = options.min_trust_region_radius;
@@ -104,7 +103,6 @@ class Minimizer {
     vector<int> lsqp_iterations_to_dump;
     DumpFormatType lsqp_dump_format_type;
     string lsqp_dump_directory;
-    int num_eliminate_blocks;
     int max_num_consecutive_invalid_steps;
     int min_trust_region_radius;
 

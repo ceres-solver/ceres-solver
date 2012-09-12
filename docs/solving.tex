@@ -291,6 +291,8 @@ For \texttt{ITERATIVE\_SCHUR} there are two obvious choices for block diagonal p
 For bundle adjustment problems arising in reconstruction from community photo collections, more effective preconditioners can be constructed by analyzing and exploiting the camera-point visibility structure of the scene~\cite{kushal2012}. Ceres implements the two visibility based preconditioners described by Kushal \& Agarwal as \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}. These are fairly new preconditioners and Ceres' implementation of them is in its early stages and is not as mature as the other preconditioners described above.
 
 \section{Ordering}
+TBD - re-write this section once the ordering API is complete.
+
 All three of the Schur based solvers depend on the user indicating to the solver, which of the parameter blocks correspond to the points and which correspond to the cameras. Ceres refers to them as \texttt{e\_block}s and \texttt{f\_blocks}. The only constraint on \texttt{e\_block}s is that there should be no term in the objective function with two or more \texttt{e\_block}s.
 
 As we saw in Section~\ref{chapter:tutorial:bundleadjustment}, there are two ways to indicate \texttt{e\_block}s to Ceres. The first is to explicitly create an ordering vector \texttt{Solver::Options::ordering} containing the parameter blocks such that all the \texttt{e\_block}s/points occur before the \texttt{f\_blocks}, and setting \texttt{Solver::Options::num\_eliminate\_blocks} to the number \texttt{e\_block}s.
@@ -426,25 +428,25 @@ where $\Delta x$ is the step computed by the linear solver in the current iterat
 \item{\texttt{num\_linear\_solver\_threads }}(\texttt{1}) Number of
   threads used by the linear solver.
 
-\item{\texttt{num\_eliminate\_blocks }}(\texttt{0})
-For Schur reduction based methods, the first 0 to num blocks are
-eliminated using the Schur reduction. For example, when solving
-traditional structure from motion problems where the parameters are in
-two classes (cameras and points) then \texttt{num\_eliminate\_blocks}
-would be the number of points.
-
-\item{\texttt{ordering\_type }}(\texttt{NATURAL}) Internally Ceres
-  reorders the parameter blocks to help the various linear
-  solvers. This parameter allows the user to influence the re-ordering
-  strategy used. For structure from motion problems use
-  \texttt{SCHUR}, for other problems \texttt{NATURAL} (default) is a
-  good choice. In case you wish to specify your own ordering scheme,
-  for example in conjunction with \texttt{num\_eliminate\_blocks}, use
-  \texttt{USER}.
-
-\item{\texttt{ordering }} The ordering of the parameter blocks. The
-  solver pays attention to it if the \texttt{ordering\_type} is set to
-  \texttt{USER} and the ordering vector is non-empty.
+%\item{\texttt{num\_eliminate\_blocks }}(\texttt{0})
+%For Schur reduction based methods, the first 0 to num blocks are
+%eliminated using the Schur reduction. For example, when solving
+%traditional structure from motion problems where the parameters are in
+%two classes (cameras and points) then \texttt{num\_eliminate\_blocks}
+%would be the number of points.
+%
+%\item{\texttt{ordering\_type }}(\texttt{NATURAL}) Internally Ceres
+%  reorders the parameter blocks to help the various linear
+%  solvers. This parameter allows the user to influence the re-ordering
+%  strategy used. For structure from motion problems use
+%  \texttt{SCHUR}, for other problems \texttt{NATURAL} (default) is a
+%  good choice. In case you wish to specify your own ordering scheme,
+%  for example in conjunction with \texttt{num\_eliminate\_blocks}, use
+%  \texttt{USER}.
+%
+%\item{\texttt{ordering }} The ordering of the parameter blocks. The
+%  solver pays attention to it if the \texttt{ordering\_type} is set to
+%  \texttt{USER} and the ordering vector is non-empty.
 
 \item{\texttt{use\_block\_amd } (\texttt{true})} By virtue of the
   modeling layer in Ceres being block oriented, all the matrices used
