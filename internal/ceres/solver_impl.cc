@@ -241,7 +241,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       }
     }
   } else {
-    CHECK(options.ordering_new_api != NULL);
+    CHECK(options.ordering_new_api == NULL);
   }
 
 
@@ -649,10 +649,19 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 #endif
 
   linear_solver_options.num_threads = options->num_linear_solver_threads;
-  linear_solver_options.num_eliminate_blocks =
-      options->num_eliminate_blocks;
+  if (options->num_eliminate_blocks > 0) {
+    linear_solver_options
+        .elimination_groups.push_back(options->num_eliminate_blocks);
+  }
 
-  if ((linear_solver_options.num_eliminate_blocks == 0) &&
+  // TODO(sameeragarwal): Fix this. Right now these are dummy values
+  // and violate the contract that elimination_groups should sum to
+  // the number of parameter blocks, but fixing this requires a bit
+  // more refactoring in solver_impl.cc, which is better done as we
+  // start deprecating the old API.
+  linear_solver_options.elimination_groups.push_back(1);
+
+  if (linear_solver_options.elimination_groups.size() == 1 &&
       IsSchurType(linear_solver_options.type)) {
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
     LOG(INFO) << "No elimination block remaining switching to DENSE_QR.";

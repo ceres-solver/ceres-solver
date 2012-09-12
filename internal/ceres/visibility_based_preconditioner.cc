@@ -70,12 +70,13 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
       num_blocks_(0),
       num_clusters_(0),
       factor_(NULL) {
-  CHECK_GT(options_.num_eliminate_blocks, 0);
+  CHECK_GT(options_.elimination_groups.size(), 1);
+  CHECK_GT(options_.elimination_groups[0], 0);
   CHECK(options_.preconditioner_type == SCHUR_JACOBI ||
         options_.preconditioner_type == CLUSTER_JACOBI ||
         options_.preconditioner_type == CLUSTER_TRIDIAGONAL)
       << "Unknown preconditioner type: " << options_.preconditioner_type;
-  num_blocks_ = bs.cols.size() - options_.num_eliminate_blocks;
+  num_blocks_ = bs.cols.size() - options_.elimination_groups[0];
   CHECK_GT(num_blocks_, 0)
       << "Jacobian should have atleast 1 f_block for "
       << "visibility based preconditioning.";
@@ -83,7 +84,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   // Vector of camera block sizes
   block_size_.resize(num_blocks_);
   for (int i = 0; i < num_blocks_; ++i) {
-    block_size_[i] = bs.cols[i + options_.num_eliminate_blocks].size;
+    block_size_[i] = bs.cols[i + options_.elimination_groups[0]].size;
   }
 
   const time_t start_time = time(NULL);
@@ -155,7 +156,7 @@ void VisibilityBasedPreconditioner::ComputeSchurJacobiSparsity(
 void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
     const CompressedRowBlockStructure& bs) {
   vector<set<int> > visibility;
-  ComputeVisibility(bs, options_.num_eliminate_blocks, &visibility);
+  ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
   cluster_pairs_.clear();
@@ -173,7 +174,7 @@ void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
 void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
     const CompressedRowBlockStructure& bs) {
   vector<set<int> > visibility;
-  ComputeVisibility(bs, options_.num_eliminate_blocks, &visibility);
+  ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
 
@@ -253,7 +254,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
 
   int r = 0;
   const int num_row_blocks = bs.rows.size();
-  const int num_eliminate_blocks = options_.num_eliminate_blocks;
+  const int num_eliminate_blocks = options_.elimination_groups[0];
 
   // Iterate over each row of the matrix. The block structure of the
   // matrix is assumed to be sorted in order of the e_blocks/point
@@ -331,16 +332,17 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
 void VisibilityBasedPreconditioner::InitEliminator(
     const CompressedRowBlockStructure& bs) {
   LinearSolver::Options eliminator_options;
-  eliminator_options.num_eliminate_blocks = options_.num_eliminate_blocks;
+
+  eliminator_options.elimination_groups = options_.elimination_groups;
   eliminator_options.num_threads = options_.num_threads;
 
-  DetectStructure(bs, options_.num_eliminate_blocks,
+  DetectStructure(bs, options_.elimination_groups[0],
                   &eliminator_options.row_block_size,
                   &eliminator_options.e_block_size,
                   &eliminator_options.f_block_size);
 
   eliminator_.reset(SchurEliminatorBase::Create(eliminator_options));
-  eliminator_->Init(options_.num_eliminate_blocks, &bs);
+  eliminator_->Init(options_.elimination_groups[0], &bs);
 }
 
 // Update the values of the preconditioner matrix and factorize it.

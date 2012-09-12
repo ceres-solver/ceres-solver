@@ -66,12 +66,12 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   if (eliminator_.get() == NULL) {
     InitStorage(A->block_structure());
     DetectStructure(*A->block_structure(),
-                    options_.num_eliminate_blocks,
+                    options_.elimination_groups[0],
                     &options_.row_block_size,
                     &options_.e_block_size,
                     &options_.f_block_size);
     eliminator_.reset(CHECK_NOTNULL(SchurEliminatorBase::Create(options_)));
-    eliminator_->Init(options_.num_eliminate_blocks, A->block_structure());
+    eliminator_->Init(options_.elimination_groups[0], A->block_structure());
   };
   const time_t init_time = time(NULL);
   fill(x, x + A->num_cols(), 0.0);
@@ -106,7 +106,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
 // complement.
 void DenseSchurComplementSolver::InitStorage(
     const CompressedRowBlockStructure* bs) {
-  const int num_eliminate_blocks = options().num_eliminate_blocks;
+  const int num_eliminate_blocks = options().elimination_groups[0];
   const int num_col_blocks = bs->cols.size();
 
   vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
@@ -178,7 +178,7 @@ SparseSchurComplementSolver::~SparseSchurComplementSolver() {
 // initialize a BlockRandomAccessSparseMatrix object.
 void SparseSchurComplementSolver::InitStorage(
     const CompressedRowBlockStructure* bs) {
-  const int num_eliminate_blocks = options().num_eliminate_blocks;
+  const int num_eliminate_blocks = options().elimination_groups[0];
   const int num_col_blocks = bs->cols.size();
   const int num_row_blocks = bs->rows.size();
 
