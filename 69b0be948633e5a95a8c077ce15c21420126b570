@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJAH///18\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "In some cases it is best possible, we do not want to rule out that for simple matrix structures, re-ordering may be optimal.",
+      "parentUuid": "AAAI83//86I\u003d",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//854\u003d",
         "filename": "include/ceres/ordering.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-12T20:12:18Z",
       "side": 1,
       "message": "is -\u003e is an",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJAH///14\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//854\u003d",
       "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJAH///1o\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//850\u003d",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//85w\u003d",
         "filename": "include/ceres/ordering.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJAH///10\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//85w\u003d",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAI83//85s\u003d",
         "filename": "include/ceres/ordering.h",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2012-09-12T20:12:18Z",
       "side": 1,
       "message": "\"Let us\" -\u003e \"\"",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJAH///1w\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//85s\u003d",
       "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -166,6 +256,24 @@
       "writtenOn": "2012-09-12T20:12:18Z",
       "side": 1,
       "message": "I don\u0027t think we should promote putting all the variables in group 0; instead the user should omit the ordering object from options.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJAH///1s\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-12T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAI83//840\u003d",
       "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
