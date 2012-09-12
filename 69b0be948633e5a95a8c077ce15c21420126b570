@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAI83//86I\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "remove \"possible\"; we use heuristics.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//854\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "is -\u003e is an",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//850\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "Include references to what elimination in this context means, either here or above. There are people who will know and use Ceres but will not be familiar with this.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85w\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "\"to do\" -\u003e \"to order the variables\"",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85s\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "\"Let us\" -\u003e \"\"",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85c\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "\"So if the user\" is wordy without being clear. Consider instead:\n\n1. To have Ceres determine the ordering automatically using heuristics, put all the variables in group 0.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85o\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "Indent to align under the S (and below).",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85k\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "\"then if\" -\u003e \"and\"\n\nThough, I vote instead\n\n2. To control the ordering for every variable, create groups 0..N-1, one per variable, in the desired order.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//85g\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "Be more explicit about what an id is in this context. Parameter block id?",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAI83//840\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-12T20:12:18Z",
+      "side": 1,
+      "message": "I don\u0027t think we should promote putting all the variables in group 0; instead the user should omit the ordering object from options.",
+      "revId": "69b0be948633e5a95a8c077ce15c21420126b570",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
