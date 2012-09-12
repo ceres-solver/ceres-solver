@@ -91,18 +91,31 @@ class Ordering {
         parameter_block_to_group_id_.find(parameter_block);
 
     if (it != parameter_block_to_group_id_.end()) {
-      const int current_group_id = it->second;
-      group_id_to_parameter_blocks_[group_id].erase(parameter_block);
+      group_id_to_parameter_blocks_[it->second].erase(parameter_block);
     }
 
     parameter_block_to_group_id_[parameter_block] = group_id;
     group_id_to_parameter_blocks_[group_id].insert(parameter_block);
   }
 
+  void RemoveParameterBlock(double* parameter_block) {
+    map<double*, int>::const_iterator it =
+        parameter_block_to_group_id_.find(parameter_block);
+    CHECK(it != parameter_block_to_group_id_.end());
+
+    const int current_group_id = it->second;
+    group_id_to_parameter_blocks_[current_group_id].erase(parameter_block);
+    if (group_id_to_parameter_blocks_[current_group_id].size() == 0) {
+      group_id_to_parameter_blocks_.erase(current_group_id);
+    }
+
+    parameter_block_to_group_id_.erase(parameter_block);
+  }
+
   // Return the group id for the parameter block. If the parameter
   // block is not known to the Ordering, calling this method results
   // in a crash.
-  int GetGroupId(double* parameter_block) const {
+  int GroupIdForParameterBlock(double* parameter_block) const {
     const map<double*, int>::const_iterator it =
         parameter_block_to_group_id_.find(parameter_block);
     CHECK(it !=  parameter_block_to_group_id_.end());
@@ -114,6 +127,11 @@ class Ordering {
   }
 
   int NumGroups() const { return group_id_to_parameter_blocks_.size(); }
+
+  int GroupSize(int group_id) {
+    map<int, set<double*> >::const_iterator it = group_id_to_parameter_blocks_.find(group_id);
+    return (it ==  group_id_to_parameter_blocks_.end()) ? 0 : it->second.size();
+  }
 
   const map<int, set<double*> >& group_id_to_parameter_blocks() const {
     return group_id_to_parameter_blocks_;

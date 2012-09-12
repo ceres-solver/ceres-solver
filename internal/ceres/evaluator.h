@@ -57,7 +57,7 @@ class Evaluator {
   struct Options {
     Options()
         : num_threads(1),
-          num_eliminate_blocks(-1),
+          //num_eliminate_blocks(-1),
           linear_solver_type(DENSE_QR) {}
 
     int num_threads;

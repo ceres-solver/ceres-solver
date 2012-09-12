@@ -31,6 +31,7 @@
 #include "gtest/gtest.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/linear_solver.h"
+#include "ceres/ordering.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -87,29 +88,19 @@ TEST(SolverImpl, RemoveFixedBlocksNothingConstant) {
 
   string error;
   {
-    int num_eliminate_blocks = 0;
+    Ordering ordering;
+    ordering.AddParameterBlock(&x, 0);
+    ordering.AddParameterBlock(&y, 0);
+    ordering.AddParameterBlock(&z, 0);
+
     Program program(*problem.mutable_program());
     EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                         &num_eliminate_blocks,
+                                                         &ordering,
                                                          NULL,
                                                          &error));
     EXPECT_EQ(program.NumParameterBlocks(), 3);
     EXPECT_EQ(program.NumResidualBlocks(), 3);
-    EXPECT_EQ(num_eliminate_blocks, 0);
-  }
-
-  // Check that num_eliminate_blocks is preserved, when it contains
-  // all blocks.
-  {
-    int num_eliminate_blocks = 3;
-    Program program(problem.program());
-    EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                         &num_eliminate_blocks,
-                                                         NULL,
-                                                         &error));
-    EXPECT_EQ(program.NumParameterBlocks(), 3);
-    EXPECT_EQ(program.NumResidualBlocks(), 3);
-    EXPECT_EQ(num_eliminate_blocks, 3);
+    EXPECT_EQ(ordering.NumParameterBlocks(), 3);
   }
 }
 
@@ -121,16 +112,18 @@ TEST(SolverImpl, RemoveFixedBlocksAllParameterBlocksConstant) {
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
   problem.SetParameterBlockConstant(&x);
 
-  int num_eliminate_blocks = 0;
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &num_eliminate_blocks,
+                                                       &ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(num_eliminate_blocks, 0);
+  EXPECT_EQ(ordering.NumParameterBlocks(), 0);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
@@ -143,16 +136,21 @@ TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  int num_eliminate_blocks = 0;
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 0);
+  ordering.AddParameterBlock(&z, 0);
+
+
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &num_eliminate_blocks,
+                                                       &ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(num_eliminate_blocks, 0);
+  EXPECT_EQ(ordering.NumParameterBlocks(), 0);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
@@ -164,20 +162,26 @@ TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
   problem.AddParameterBlock(&x, 1);
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
+
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 0);
+  ordering.AddParameterBlock(&z, 0);
+
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  int num_eliminate_blocks = 0;
+
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &num_eliminate_blocks,
+                                                       &ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 1);
   EXPECT_EQ(program.NumResidualBlocks(), 1);
-  EXPECT_EQ(num_eliminate_blocks, 0);
+  EXPECT_EQ(ordering.NumParameterBlocks(), 1);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
@@ -194,16 +198,22 @@ TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  int num_eliminate_blocks = 2;
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 0);
+  ordering.AddParameterBlock(&z, 1);
+
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &num_eliminate_blocks,
+                                                       &ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(num_eliminate_blocks, 1);
+  EXPECT_EQ(ordering.NumParameterBlocks(), 2);
+  EXPECT_EQ(ordering.GroupIdForParameterBlock(&y), 0);
+  EXPECT_EQ(ordering.GroupIdForParameterBlock(&z), 1);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
@@ -220,7 +230,11 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  int num_eliminate_blocks = 2;
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 0);
+  ordering.AddParameterBlock(&z, 1);
+
   double fixed_cost = 0.0;
   Program program(problem.program());
 
@@ -231,12 +245,14 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
 
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &num_eliminate_blocks,
+                                                       &ordering,
                                                        &fixed_cost,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(num_eliminate_blocks, 1);
+  EXPECT_EQ(ordering.NumParameterBlocks(), 2);
+  EXPECT_EQ(ordering.GroupIdForParameterBlock(&y), 0);
+  EXPECT_EQ(ordering.GroupIdForParameterBlock(&z), 1);
   EXPECT_DOUBLE_EQ(fixed_cost, expected_fixed_cost);
 }
 
@@ -253,6 +269,11 @@ TEST(SolverImpl, ReorderResidualBlockNonSchurSolver) {
   problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
 
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 0);
+  ordering.AddParameterBlock(&z, 0);
+
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
   vector<ResidualBlock*> current_residual_blocks(residual_blocks);
@@ -268,31 +289,6 @@ TEST(SolverImpl, ReorderResidualBlockNonSchurSolver) {
   for (int i = 0; i < current_residual_blocks.size(); ++i) {
     EXPECT_EQ(current_residual_blocks[i], residual_blocks[i]);
   }
-}
-
-TEST(SolverImpl, ReorderResidualBlockNumEliminateBlockDeathTest) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-
-  Solver::Options options;
-  options.linear_solver_type = DENSE_SCHUR;
-  options.num_eliminate_blocks = 0;
-  string error;
-#ifndef _WIN32
-  EXPECT_DEATH(
-      SolverImpl::MaybeReorderResidualBlocks(
-          options, problem.mutable_program(), &error),
-      "Congratulations");
-#endif  // _WIN32
 }
 
 TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
@@ -312,9 +308,14 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
 
+  Ordering* ordering = new Ordering;
+  ordering->AddParameterBlock(&x, 0);
+  ordering->AddParameterBlock(&y, 0);
+  ordering->AddParameterBlock(&z, 1);
+
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.num_eliminate_blocks = 2;
+  options.ordering = ordering;
 
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
@@ -368,9 +369,14 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);  // 6 x
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);       // 7
 
+  Ordering* ordering = new Ordering;
+  ordering->AddParameterBlock(&x, 0);
+  ordering->AddParameterBlock(&z, 0);
+  ordering->AddParameterBlock(&y, 1);
+
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.num_eliminate_blocks = 2;
+  options.ordering = ordering;
 
   // Create the reduced program. This should remove the fixed block "z",
   // marking the index to -1 at the same time. x and y also get indices.
@@ -413,6 +419,7 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   }
 }
 
+
 TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
   ProblemImpl problem;
   double x;
@@ -423,41 +430,17 @@ TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  vector<double*> ordering;
-  ordering.push_back(&x);
-  ordering.push_back(&z);
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 1);
 
   Program program(problem.program());
   string error;
   EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem,
-                                             ordering,
+                                             &ordering,
                                              &program,
                                              &error));
 }
-
-TEST(SolverImpl, ApplyUserOrderingHasDuplicates) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-
-  vector<double*> ordering;
-  ordering.push_back(&x);
-  ordering.push_back(&z);
-  ordering.push_back(&z);
-
-  Program program(problem.program());
-  string error;
-  EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem,
-                                             ordering,
-                                             &program,
-                                             &error));
-}
-
 
 TEST(SolverImpl, ApplyUserOrderingNormal) {
   ProblemImpl problem;
@@ -469,16 +452,16 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  vector<double*> ordering;
-  ordering.push_back(&x);
-  ordering.push_back(&z);
-  ordering.push_back(&y);
+  Ordering ordering;
+  ordering.AddParameterBlock(&x, 0);
+  ordering.AddParameterBlock(&y, 2);
+  ordering.AddParameterBlock(&z, 1);
 
   Program* program = problem.mutable_program();
   string error;
 
   EXPECT_TRUE(SolverImpl::ApplyUserOrdering(problem,
-                                            ordering,
+                                            &ordering,
                                             program,
                                             &error));
   const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
@@ -488,6 +471,7 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
   EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
   EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
 }
+
 
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
 TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
@@ -502,6 +486,7 @@ TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_max_num_iterations = -1;
+  options.ordering = new Ordering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
@@ -511,6 +496,7 @@ TEST(SolverImpl, CreateLinearSolverNegativeMinNumIterations) {
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_min_num_iterations = -1;
+  options.ordering = new Ordering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
@@ -521,44 +507,22 @@ TEST(SolverImpl, CreateLinearSolverMaxLessThanMinIterations) {
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_min_num_iterations = 10;
   options.linear_solver_max_num_iterations = 5;
+  options.ordering = new Ordering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
 }
 
-TEST(SolverImpl, CreateLinearSolverZeroNumEliminateBlocks) {
-  Solver::Options options;
-  options.num_eliminate_blocks = 0;
-  options.linear_solver_type = DENSE_SCHUR;
-  string error;
-  scoped_ptr<LinearSolver> solver(
-      SolverImpl::CreateLinearSolver(&options, &error));
-  EXPECT_TRUE(solver != NULL);
-
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-  EXPECT_EQ(options.linear_solver_type, DENSE_QR);
-#else
-  EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
-#endif
-}
-
-TEST(SolverImpl, ZeroNumEliminateBlocks) {
-  Solver::Options options;
-  options.num_eliminate_blocks = 0;
-  options.linear_solver_type = DENSE_SCHUR;
-  options.ordering_type = NATURAL;
-  ProblemImpl problem;
-  Solver::Summary summary;
-  SolverImpl::Solve(options, &problem, &summary);
-  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
-  EXPECT_EQ(summary.error.substr(0,25), "Using a Schur type solver");
-}
-
 TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
   Solver::Options options;
-  options.num_eliminate_blocks = 1;
   options.linear_solver_type = DENSE_SCHUR;
   options.num_linear_solver_threads = 2;
+  options.ordering = new Ordering;
+  double x;
+  double y;
+  options.ordering->AddParameterBlock(&x, 0);
+  options.ordering->AddParameterBlock(&y, 0);
+
   string error;
   scoped_ptr<LinearSolver> solver(
       SolverImpl::CreateLinearSolver(&options, &error));
@@ -570,6 +534,7 @@ TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
 TEST(SolverImpl, CreateIterativeLinearSolverForDogleg) {
   Solver::Options options;
   options.trust_region_strategy_type = DOGLEG;
+  options.ordering = new Ordering;
   string error;
   options.linear_solver_type = ITERATIVE_SCHUR;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
@@ -584,6 +549,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   Solver::Options options;
   scoped_ptr<LinearSolver> solver;
   options.linear_solver_type = DENSE_QR;
+  options.ordering = new Ordering;
   string error;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, DENSE_QR);
@@ -610,14 +576,17 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   EXPECT_TRUE(solver.get() != NULL);
 #endif
 
+  double x;
+  double y;
+  options.ordering->AddParameterBlock(&x, 0);
+  options.ordering->AddParameterBlock(&y, 0);
+
   options.linear_solver_type = DENSE_SCHUR;
-  options.num_eliminate_blocks = 2;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, DENSE_SCHUR);
   EXPECT_TRUE(solver.get() != NULL);
 
   options.linear_solver_type = SPARSE_SCHUR;
-  options.num_eliminate_blocks = 2;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
 
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
@@ -628,7 +597,6 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 #endif
 
   options.linear_solver_type = ITERATIVE_SCHUR;
-  options.num_eliminate_blocks = 2;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, ITERATIVE_SCHUR);
   EXPECT_TRUE(solver.get() != NULL);

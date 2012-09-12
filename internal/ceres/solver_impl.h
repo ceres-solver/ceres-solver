@@ -37,6 +37,8 @@
 #include "ceres/solver.h"
 
 namespace ceres {
+class Ordering;
+
 namespace internal {
 
 class Evaluator;
@@ -76,7 +78,7 @@ class SolverImpl {
   // indicates an error was encountered whose cause is logged to
   // LOG(ERROR).
   static bool ApplyUserOrdering(const ProblemImpl& problem_impl,
-                                vector<double*>& ordering,
+                                const Ordering* ordering,
                                 Program* program,
                                 string* error);
 
@@ -108,7 +110,7 @@ class SolverImpl {
   // If fixed_cost is not NULL, the residual blocks that are removed
   // are evaluated and the sum of their cost is returned in fixed_cost.
   static bool RemoveFixedBlocksFromProgram(Program* program,
-                                           int* num_eliminate_blocks,
+                                           Ordering* ordering,
                                            double* fixed_cost,
                                            string* error);
 };
