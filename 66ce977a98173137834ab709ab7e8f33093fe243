@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJA3///mc\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-13T22:20:36Z",
+      "side": 1,
+      "message": "This should go in solver_impl, not here.",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJA3///mU\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-13T22:20:36Z",
+      "side": 1,
+      "message": "Wrong header.",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJA3///mQ\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-13T22:20:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this file got updated.",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJA3///mI\u003d",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-13T22:20:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this will work on Windows.",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
