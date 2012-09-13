@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJBn///98\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-09-13T23:34:54Z",
+      "side": 1,
+      "message": "The reason the timing is here is because I just replaced std::time with WallTimeInSeconds.\n\nI\u0027ll move it.",
+      "parentUuid": "AAAJA3///mc\u003d",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJA3///mU\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 3
@@ -64,6 +82,24 @@
       "writtenOn": "2012-09-13T22:20:36Z",
       "side": 1,
       "message": "I don\u0027t think this will work on Windows.",
+      "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJBn///+A\u003d",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-09-13T23:34:54Z",
+      "side": 1,
+      "message": "Why? \nI am pretty sure I tried this code both with and without OpenMP with Visual Studio 2010, 64-bit. I don\u0027t have my laptop available now, though.",
+      "parentUuid": "AAAJA3///mI\u003d",
       "revId": "66ce977a98173137834ab709ab7e8f33093fe243",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
