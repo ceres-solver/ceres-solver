@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJFH////8\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2012-09-14T01:10:38Z",
+      "side": 1,
+      "message": "I see. I\u0027ll move it back, then.",
+      "parentUuid": "AAAJBH///Q8\u003d",
+      "revId": "d08fba92ffa0cd7d7f2936665a57fc11bfe3b609",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJBH///Q4\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 5
