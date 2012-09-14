@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJBH///Q8\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-14T01:06:44Z",
+      "side": 1,
+      "message": "There is a reason this is here. There are many many exit points in Solve(), and instrumenting all of them would be a pain, so actually putting the time around the call to Solve is much better.",
+      "revId": "d08fba92ffa0cd7d7f2936665a57fc11bfe3b609",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJBH///Q4\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-14T01:06:44Z",
+      "side": 1,
+      "message": "See my comment in solver.cc",
+      "revId": "d08fba92ffa0cd7d7f2936665a57fc11bfe3b609",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
