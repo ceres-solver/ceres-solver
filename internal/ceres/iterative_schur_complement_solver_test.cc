@@ -89,7 +89,7 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
     Vector reference_solution(num_cols_);
     qr->Solve(&dense_A, b_.get(), per_solve_options, reference_solution.data());
 
-    options.num_eliminate_blocks = num_eliminate_blocks_;
+    options.elimination_groups.push_back(num_eliminate_blocks_);
     options.max_num_iterations = num_cols_;
     IterativeSchurComplementSolver isc(options);
 

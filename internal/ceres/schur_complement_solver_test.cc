@@ -98,7 +98,9 @@ class SchurComplementSolverTest : public ::testing::Test {
       ceres::SparseLinearAlgebraLibraryType sparse_linear_algebra_library) {
     SetUpFromProblemId(problem_id);
     LinearSolver::Options options;
-    options.num_eliminate_blocks = num_eliminate_blocks;
+    options.elimination_groups.push_back(num_eliminate_blocks);
+    options.elimination_groups.push_back(
+        A->block_structure()->cols.size() - num_eliminate_blocks);
     options.type = linear_solver_type;
     options.sparse_linear_algebra_library = sparse_linear_algebra_library;
 
