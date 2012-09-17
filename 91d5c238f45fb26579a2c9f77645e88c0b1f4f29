@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJ3///Vo\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "Perhaps this should be AddParameterBlockToGroup?",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Vg\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "communicate",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Vc\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "Indent this block like equations.",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///VY\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "to",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///VU\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": ", \n\nI am getting dejavu; didn\u0027t I comment on this before? Weird.",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///VQ\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "she -\u003e they",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///VI\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "Consider AddParameterBlockToGroup() instead.",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///VE\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "... from the ordering, no matter which group it is in.",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///U8\u003d",
+        "filename": "include/ceres/ordering.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to expose this implementation detail. Consider if there is a better way.",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Uo\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:12:05Z",
+      "side": 1,
+      "message": "Is the CERES:: prefix needed? I don\u0027t think so. (throughout)",
+      "revId": "91d5c238f45fb26579a2c9f77645e88c0b1f4f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
