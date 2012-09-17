@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJ3//+/4\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T22:35:38Z",
+      "side": 1,
+      "message": "Consider table-style column alignment.",
+      "revId": "b5888f2deee9f3a8467f516f1d06924df09af5ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3//+/w\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T22:35:38Z",
+      "side": 1,
+      "message": "Consider num_threads instead.",
+      "revId": "b5888f2deee9f3a8467f516f1d06924df09af5ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3//+/0\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T22:35:38Z",
+      "side": 1,
+      "message": "If threads is always 1, why is it present?",
+      "revId": "b5888f2deee9f3a8467f516f1d06924df09af5ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3//+/o\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T22:35:38Z",
+      "side": 1,
+      "message": "If this is broken, just delete the commented out code. Leave the TODO(). The code is in git if need be.",
+      "revId": "b5888f2deee9f3a8467f516f1d06924df09af5ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
