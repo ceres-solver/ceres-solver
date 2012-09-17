@@ -76,7 +76,7 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
               "cluster_tridiagonal");
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse and cx_sparse");
-DEFINE_string(ordering, "schur", "Options are: schur, user, natural");
+DEFINE_string(ordering, "automatic", "Options are: automatic, user ");
 DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
               "subspace_dogleg");
 
@@ -131,18 +131,14 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   // them amenable to more specialized and much more efficient
   // solution strategies. The SPARSE_SCHUR, DENSE_SCHUR and
   // ITERATIVE_SCHUR solvers make use of this specialized
-  // structure. Using them however requires that the ParameterBlocks
-  // are in a particular order (points before cameras) and
-  // Solver::Options::num_eliminate_blocks is set to the number of
-  // points.
+  // structure.
   //
   // This can either be done by specifying Options::ordering_type =
   // ceres::SCHUR, in which case Ceres will automatically determine
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  options->use_new_ordering_api = true;
-  if (FLAGS_ordering == "schur") {
+  if (FLAGS_ordering == "automatic") {
     return;
   }
 
@@ -172,7 +168,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     }
   }
 
-  options->ordering_new_api = ordering;
+  options->ordering = ordering;
 }
 
 void SetMinimizerOptions(Solver::Options* options) {

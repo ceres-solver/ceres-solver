@@ -109,13 +109,15 @@ class Ordering {
   // block is not known to the Ordering, calling this method results
   // in a crash.
   int GroupIdForParameterBlock(double* parameter_block) const;
-  int NumParameterBlocks() const;
-  int NumGroups() const;
 
   // This function always succeeds. For a group_id unknown to the
   // ordering is treated as empty groups and the function returns
   // zero.
   int GroupSize(int group_id) const;
+
+  bool ContainsParameterBlock(double* parameter_block) const;
+  int NumParameterBlocks() const;
+  int NumGroups() const;
   const map<int, set<double*> >& group_id_to_parameter_blocks() const;
 
  private:

@@ -102,6 +102,7 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
   // stored on disk.
   //
   // For now, we will just not dump the regularizer.
+  /*
   return (!binary_search(options_.lsqp_iterations_to_dump.begin(),
                          options_.lsqp_iterations_to_dump.end(),
                          iteration) ||
@@ -113,6 +114,8 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
                                         residuals,
                                         step,
                                         options_.num_eliminate_blocks));
+  */
+  return true;
 }
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
