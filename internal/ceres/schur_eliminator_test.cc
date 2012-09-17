@@ -149,10 +149,10 @@ class SchurEliminatorTest : public ::testing::Test {
     Vector rhs(schur_size);
 
     LinearSolver::Options options;
-    options.num_eliminate_blocks = num_eliminate_blocks;
+    options.elimination_groups.push_back(num_eliminate_blocks);
     if (use_static_structure) {
       DetectStructure(*bs,
-                      options.num_eliminate_blocks,
+                      num_eliminate_blocks,
                       &options.row_block_size,
                       &options.e_block_size,
                       &options.f_block_size);

@@ -67,7 +67,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   // Initialize a ImplicitSchurComplement object.
   if (schur_complement_ == NULL) {
     schur_complement_.reset(
-        new ImplicitSchurComplement(options_.num_eliminate_blocks,
+        new ImplicitSchurComplement(options_.elimination_groups[0],
                                     options_.preconditioner_type == JACOBI));
   }
   schur_complement_->Init(*A, per_solve_options.D, b);

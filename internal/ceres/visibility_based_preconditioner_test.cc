@@ -80,7 +80,9 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
     num_rows_ = A_->num_rows();
     num_eliminate_blocks_ = problem->num_eliminate_blocks;
     num_camera_blocks_ = num_col_blocks - num_eliminate_blocks_;
-    options_.num_eliminate_blocks = num_eliminate_blocks_;
+    options_.elimination_groups.push_back(num_eliminate_blocks_);
+    options_.elimination_groups.push_back(
+        A_->block_structure()->cols.size() - num_eliminate_blocks_);
 
     vector<int> blocks(num_col_blocks - num_eliminate_blocks_, 0);
     for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {

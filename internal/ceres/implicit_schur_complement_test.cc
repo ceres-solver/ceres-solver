@@ -83,7 +83,7 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     const int num_schur_rows = blhs.num_rows();
 
     LinearSolver::Options options;
-    options.num_eliminate_blocks = num_eliminate_blocks_;
+    options.elimination_groups.push_back(num_eliminate_blocks_);
     options.type = DENSE_SCHUR;
 
     scoped_ptr<SchurEliminatorBase> eliminator(
