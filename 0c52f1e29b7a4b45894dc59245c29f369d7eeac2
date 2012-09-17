@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJ3///II\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 0,
+      "message": "Leave a TODO() to add this. I\u0027d actually like to have this with this CL if possible.",
+      "revId": "0c52f1e29b7a4b45894dc59245c29f369d7eeac2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GU\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 0,
+      "message": "Why is this removed? If this usage is expected to work now, then perhaps this test should demonstrate that.",
+      "revId": "0c52f1e29b7a4b45894dc59245c29f369d7eeac2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
