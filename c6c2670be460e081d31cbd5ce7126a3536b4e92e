@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJ3///QY\u003d",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:37:28Z",
+      "side": 1,
+      "message": "eg -\u003e For example,",
+      "revId": "c6c2670be460e081d31cbd5ce7126a3536b4e92e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///QU\u003d",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:37:28Z",
+      "side": 1,
+      "message": "Drop blank; collapse paragraphs.",
+      "revId": "c6c2670be460e081d31cbd5ce7126a3536b4e92e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///QQ\u003d",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:37:28Z",
+      "side": 1,
+      "message": "at least.",
+      "revId": "c6c2670be460e081d31cbd5ce7126a3536b4e92e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///QE\u003d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:37:28Z",
+      "side": 1,
+      "message": "Should we check in a few places that elimination_groups.size() \u003e 0?",
+      "revId": "c6c2670be460e081d31cbd5ce7126a3536b4e92e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///QA\u003d",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T18:37:28Z",
+      "side": 1,
+      "message": "Oh.",
+      "revId": "c6c2670be460e081d31cbd5ce7126a3536b4e92e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
