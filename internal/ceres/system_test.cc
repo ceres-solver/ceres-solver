@@ -44,6 +44,7 @@
 #include <string>
 
 #include "ceres/autodiff_cost_function.h"
+#include "ceres/ordering.h"
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
@@ -57,28 +58,30 @@
 namespace ceres {
 namespace internal {
 
+const bool kAutomaticOrdering = true;
+const bool kUserOrdering = false;
+
 // Struct used for configuring the solver.
 struct SolverConfig {
   SolverConfig(LinearSolverType linear_solver_type,
                SparseLinearAlgebraLibraryType sparse_linear_algebra_library,
-               OrderingType ordering_type)
+               bool use_automatic_ordering)
       : linear_solver_type(linear_solver_type),
         sparse_linear_algebra_library(sparse_linear_algebra_library),
-        ordering_type(ordering_type),
+        use_automatic_ordering(use_automatic_ordering),
         preconditioner_type(IDENTITY),
         num_threads(1) {
   }
 
   SolverConfig(LinearSolverType linear_solver_type,
                SparseLinearAlgebraLibraryType sparse_linear_algebra_library,
-               OrderingType ordering_type,
-               PreconditionerType preconditioner_type,
-               int num_threads)
+               bool use_automatic_ordering,
+               PreconditionerType preconditioner_type)
       : linear_solver_type(linear_solver_type),
         sparse_linear_algebra_library(sparse_linear_algebra_library),
-        ordering_type(ordering_type),
+        use_automatic_ordering(use_automatic_ordering),
         preconditioner_type(preconditioner_type),
-        num_threads(num_threads) {
+        num_threads(1) {
   }
 
   string ToString() const {
@@ -86,14 +89,14 @@ struct SolverConfig {
         "(%s, %s, %s, %s, %d)",
         LinearSolverTypeToString(linear_solver_type),
         SparseLinearAlgebraLibraryTypeToString(sparse_linear_algebra_library),
-        OrderingTypeToString(ordering_type),
+        use_automatic_ordering ? "AUTOMATIC" : "USER",
         PreconditionerTypeToString(preconditioner_type),
         num_threads);
   }
 
   LinearSolverType linear_solver_type;
   SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
-  OrderingType ordering_type;
+  bool use_automatic_ordering;
   PreconditionerType preconditioner_type;
   int num_threads;
 };
@@ -129,18 +132,14 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
     options.linear_solver_type = config.linear_solver_type;
     options.sparse_linear_algebra_library =
         config.sparse_linear_algebra_library;
-    options.ordering_type = config.ordering_type;
     options.preconditioner_type = config.preconditioner_type;
     options.num_threads = config.num_threads;
     options.num_linear_solver_threads = config.num_threads;
     options.return_final_residuals = true;
 
-    if (options.ordering_type == SCHUR || options.ordering_type == NATURAL) {
-      options.ordering.clear();
-    }
-
-    if (options.ordering_type == SCHUR) {
-      options.num_eliminate_blocks = 0;
+    if (config.use_automatic_ordering) {
+      delete options.ordering;
+      options.ordering = NULL;
     }
 
     LOG(INFO) << "Running solver configuration: "
@@ -279,21 +278,19 @@ TEST(SystemTest, PowellsFunction) {
                                  sparse_linear_algebra_library,           \
                                  ordering))
 
-  CONFIGURE(DENSE_QR, SUITE_SPARSE, NATURAL);
-  CONFIGURE(DENSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL);
-  CONFIGURE(DENSE_SCHUR, SUITE_SPARSE, SCHUR);
+  CONFIGURE(DENSE_QR,               SUITE_SPARSE, kAutomaticOrdering);
+  CONFIGURE(DENSE_NORMAL_CHOLESKY,  SUITE_SPARSE, kAutomaticOrdering);
+  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kAutomaticOrdering);
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, SCHUR);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kAutomaticOrdering);
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, NATURAL);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE, SCHUR);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, CX_SPARSE,    kAutomaticOrdering);
 #endif  // CERES_NO_CXSPARSE
 
-  CONFIGURE(ITERATIVE_SCHUR, SUITE_SPARSE, SCHUR);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kAutomaticOrdering);
 
 #undef CONFIGURE
 
@@ -390,16 +387,17 @@ class BundleAdjustmentProblem {
       problem_.AddResidualBlock(cost_function, NULL, camera, point);
     }
 
+    options_.ordering = new Ordering;
+
     // The points come before the cameras.
     for (int i = 0; i < num_points_; ++i) {
-      options_.ordering.push_back(points + 3 * i);
+      options_.ordering->AddParameterBlockToGroup(points + 3 * i, 0);
     }
 
     for (int i = 0; i < num_cameras_; ++i) {
-      options_.ordering.push_back(cameras + 9 * i);
+      options_.ordering->AddParameterBlockToGroup(cameras + 9 * i, 1);
     }
 
-    options_.num_eliminate_blocks = num_points();
     options_.max_num_iterations = 25;
     options_.function_tolerance = 1e-10;
     options_.gradient_tolerance = 1e-10;
@@ -479,46 +477,43 @@ class BundleAdjustmentProblem {
 TEST(SystemTest, BundleAdjustmentProblem) {
   vector<SolverConfig> configs;
 
-#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering, preconditioner, threads) \
+#define CONFIGURE(linear_solver, sparse_linear_algebra_library, ordering, preconditioner) \
   configs.push_back(SolverConfig(linear_solver,                         \
                                  sparse_linear_algebra_library,         \
                                  ordering,                              \
-                                 preconditioner,                        \
-                                 threads))
+                                 preconditioner))
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, NATURAL, IDENTITY, 1);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, USER,    IDENTITY, 1);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, SCHUR,   IDENTITY, 1);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
+  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kUserOrdering,      IDENTITY);
 
-  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, USER,    IDENTITY, 1);
-  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, SCHUR,   IDENTITY, 1);
+  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
+  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, kUserOrdering,      IDENTITY);
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
-  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE, USER,       IDENTITY, 1);
-  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE, SCHUR,      IDENTITY, 1);
+  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kAutomaticOrdering, IDENTITY);
+  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kUserOrdering,      IDENTITY);
 #endif  // CERES_NO_CXSPARSE
 
-  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, USER,    IDENTITY, 1);
-  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, SCHUR,   IDENTITY, 1);
+  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
+  CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kUserOrdering,      IDENTITY);
 
-  CONFIGURE(CGNR,                   SUITE_SPARSE, USER,    JACOBI, 1);
-
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    JACOBI, 1);
+  CONFIGURE(CGNR,                   SUITE_SPARSE, kAutomaticOrdering, JACOBI);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kUserOrdering,      JACOBI);
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    SCHUR_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    CLUSTER_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, USER,    CLUSTER_TRIDIAGONAL, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kUserOrdering,      SCHUR_JACOBI);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kUserOrdering,      CLUSTER_JACOBI);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kUserOrdering,      CLUSTER_TRIDIAGONAL);
 #endif  // CERES_NO_SUITESPARSE
 
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   JACOBI, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kAutomaticOrdering, JACOBI);
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   SCHUR_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   CLUSTER_JACOBI, 1);
-  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, SCHUR,   CLUSTER_TRIDIAGONAL, 1);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kAutomaticOrdering, SCHUR_JACOBI);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kAutomaticOrdering, CLUSTER_JACOBI);
+  CONFIGURE(ITERATIVE_SCHUR,        SUITE_SPARSE, kAutomaticOrdering, CLUSTER_TRIDIAGONAL);
 #endif  // CERES_NO_SUITESPARSE
 
 #undef CONFIGURE

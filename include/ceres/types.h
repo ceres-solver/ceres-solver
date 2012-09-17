@@ -145,18 +145,6 @@ enum LinearSolverTerminationType {
   FAILURE
 };
 
-enum OrderingType {
-  // The order in which the parameter blocks were defined.
-  NATURAL,
-
-  // Use the ordering specificed in the vector ordering.
-  USER,
-
-  // Automatically figure out the best ordering to use the schur
-  // complement based solver.
-  SCHUR
-};
-
 // Logging options
 // The options get progressively noisier.
 enum LoggingType {
@@ -309,9 +297,6 @@ const char* SparseLinearAlgebraLibraryTypeToString(
 bool StringToSparseLinearAlgebraLibraryType(
     string value,
     SparseLinearAlgebraLibraryType* type);
-
-const char* OrderingTypeToString(OrderingType type);
-bool StringToOrderingType(string value, OrderingType* type);
 
 const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type);
 bool StringToTrustRegionStrategyType(string value,

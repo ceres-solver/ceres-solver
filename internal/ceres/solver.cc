@@ -82,8 +82,6 @@ Solver::Summary::Summary()
       num_parameters_reduced(-1),
       num_residual_blocks_reduced(-1),
       num_residuals_reduced(-1),
-      num_eliminate_blocks_given(-1),
-      num_eliminate_blocks_used(-1),
       num_threads_given(-1),
       num_threads_used(-1),
       num_linear_solver_threads_given(-1),
@@ -91,7 +89,6 @@ Solver::Summary::Summary()
       linear_solver_type_given(SPARSE_NORMAL_CHOLESKY),
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
       preconditioner_type(IDENTITY),
-      ordering_type(NATURAL),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
       sparse_linear_algebra_library(SUITE_SPARSE) {
 }
@@ -165,22 +162,7 @@ string Solver::Summary::FullReport() const {
                             "N/A", "N/A");
   }
 
-  internal::StringAppendF(&report, "Ordering            %25s%25s\n",
-                          OrderingTypeToString(ordering_type),
-                          OrderingTypeToString(ordering_type));
-
-  if (IsSchurType(linear_solver_type_given)) {
-    if (ordering_type == SCHUR) {
-      internal::StringAppendF(&report, "num_eliminate_blocks%25s% 25d\n",
-                              "N/A",
-                              num_eliminate_blocks_used);
-    } else {
-      internal::StringAppendF(&report, "num_eliminate_blocks% 25d% 25d\n",
-                              num_eliminate_blocks_given,
-                              num_eliminate_blocks_used);
-    }
-  }
-
+  // TODO(sameeragarwal): Add support for logging the ordering object.
   internal::StringAppendF(&report, "Threads:            % 25d% 25d\n",
                           num_threads_given, num_threads_used);
   internal::StringAppendF(&report, "Linear solver threads % 23d% 25d\n",
