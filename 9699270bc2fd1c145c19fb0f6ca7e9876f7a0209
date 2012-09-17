@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJJ3///M8\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Extra space after user.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Hg\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///HU\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Needs loop header;\n\n// Ensure that group 0 is an independent set if the solver is schur-type.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///HM\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Block needs a comment. What is this doing?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///HA\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Block needs a header comment.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///HE\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Isn\u0027t there an enum to string facility now?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///HI\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Ideally",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///G8\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Perhaps a comment line above this\n\n// CGRN only supports the JACOBI preconditioner.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///G4\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Remove \",\"\n\natleast -\u003e at least",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Gs\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "it, it2, it3? Let\u0027s use better iterator names. How about\n\nit -\u003e group_it\nit2 -\u003e group_parameter_block_it\nit3 -\u003e parametert_block_ptr_it?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Gk\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Are all these assumptions safe?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Gg\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Condition fits on one line",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GY\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GM\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GI\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GE\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///GA\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///F8\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Fw\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "true -\u003e use a symbolic constant. kAutomatic and kNatural?",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Fk\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Why is this needed?\n\nI have to say, initializing to a new ordering then doing nothing with it does not make for readable callsites.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///Fc\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Using boolean values here is less readable.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///FY\u003d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Fix alignment (throughout).",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJJ3///FU\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-17T21:43:11Z",
+      "side": 1,
+      "message": "Please fix.",
+      "revId": "9699270bc2fd1c145c19fb0f6ca7e9876f7a0209",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
