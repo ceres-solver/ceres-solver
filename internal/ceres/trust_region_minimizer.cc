@@ -97,22 +97,27 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
   // moved inside TrustRegionStrategy, its not clear how we dump the
   // regularization vector/matrix anymore.
   //
-  // Doing this right requires either an API change to the
-  // TrustRegionStrategy and/or how LinearLeastSquares problems are
-  // stored on disk.
+  // Also num_eliminate_blocks is not visible to the trust region
+  // minimizer either.
   //
-  // For now, we will just not dump the regularizer.
-  return (!binary_search(options_.lsqp_iterations_to_dump.begin(),
-                         options_.lsqp_iterations_to_dump.end(),
-                         iteration) ||
-          DumpLinearLeastSquaresProblem(options_.lsqp_dump_directory,
-                                        iteration,
-                                        options_.lsqp_dump_format_type,
-                                        jacobian,
-                                        NULL,
-                                        residuals,
-                                        step,
-                                        options_.num_eliminate_blocks));
+  // Both of these indicate that this is the wrong place for this
+  // code, and going forward this should needs fixing/refactoring.
+
+  //return (!binary_search(options_.lsqp_iterations_to_dump.begin(),
+  //                       options_.lsqp_iterations_to_dump.end(),
+  //                      iteration) ||
+  //      DumpLinearLeastSquaresProblem(options_.lsqp_dump_directory,
+  //                                    iteration,
+  //                                    options_.lsqp_dump_format_type,
+  //                                    jacobian,
+  //                                    NULL,
+  //                                    residuals,
+  //                                    step,
+  //                                    options_.num_eliminate_blocks));
+
+  LOG(WARNING) << "Dumping linear least squares problem to disk is "
+               << "currently broken.";
+  return true;
 }
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,

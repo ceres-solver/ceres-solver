@@ -92,7 +92,6 @@ One way to solve this problem is to set \texttt{Solver::Options::linear\_solver\
 \begin{minted}{c++}
 ceres::Solver::Options options;
 options.linear_solver_type = ceres::DENSE_SCHUR;
-options.ordering_type = ceres::SCHUR;
 options.minimizer_progress_to_stdout = true;
 ceres::Solver::Summary summary;
 ceres::Solve(options, &problem, &summary);

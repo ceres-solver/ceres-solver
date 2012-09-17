@@ -70,6 +70,12 @@ int Ordering::GroupIdForParameterBlock(double* parameter_block) const {
   return it->second;
 }
 
+bool Ordering::ContainsParameterBlock(double* parameter_block) const {
+  const map<double*, int>::const_iterator it =
+      parameter_block_to_group_id_.find(parameter_block);
+  return (it != parameter_block_to_group_id_.end());
+}
+
 int Ordering::NumParameterBlocks() const {
   return parameter_block_to_group_id_.size();
 }
