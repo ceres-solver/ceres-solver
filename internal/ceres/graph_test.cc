@@ -83,21 +83,15 @@ TEST(Graph, AddVertexIdempotence) {
   EXPECT_EQ(graph.EdgeWeight(1, 0), 0.5);
 }
 
-// Death tests don't work on Windows.
-// TODO(keir): Figure out why this test doesn't work on Windows.
-#ifndef _WIN32
-
 TEST(Graph, DieOnNonExistentVertex) {
   Graph<int> graph;
   graph.AddVertex(0, 1.0);
   graph.AddVertex(1, 2.0);
   graph.AddEdge(0, 1, 0.5);
 
-  EXPECT_DEATH(graph.VertexWeight(2), "key not found");
-  EXPECT_DEATH(graph.Neighbors(2), "key not found");
+  EXPECT_DEATH_IF_SUPPORTED(graph.VertexWeight(2), "key not found");
+  EXPECT_DEATH_IF_SUPPORTED(graph.Neighbors(2), "key not found");
 }
-
-#endif  // _WIN32
 
 TEST(Graph, NonExistentEdge) {
   Graph<int> graph;

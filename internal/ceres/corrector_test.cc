@@ -44,19 +44,15 @@ namespace internal {
 // If rho[1] is zero, the Corrector constructor should crash.
 TEST(Corrector, ZeroGradientDeathTest) {
   const double kRho[] = {0.0, 0.0, 0.0};
-#ifndef _WIN32
-  ASSERT_DEATH({Corrector c(1.0, kRho);},
+  EXPECT_DEATH_IF_SUPPORTED({Corrector c(1.0, kRho);},
                ".*");
-#endif  // _WIN32
 }
 
 // If rho[1] is negative, the Corrector constructor should crash.
 TEST(Corrector, NegativeGradientDeathTest) {
   const double kRho[] = {0.0, -0.1, 0.0};
-#ifndef _WIN32
-  ASSERT_DEATH({Corrector c(1.0, kRho);},
+  EXPECT_DEATH_IF_SUPPORTED({Corrector c(1.0, kRho);},
                ".*");
-#endif  // _WIN32
 }
 
 TEST(Corrector, ScalarCorrection) {
