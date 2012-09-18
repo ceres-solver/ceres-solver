@@ -614,6 +614,11 @@ IF (MSVC)
   SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
 ENDIF (MSVC)
 
+# GCC is not strict enough by default, so enable most of the warnings.
+IF ("${UNIX}")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-sign-compare")
+ENDIF ("${UNIX}")
+
 ADD_SUBDIRECTORY(internal/ceres)
 
 OPTION(BUILD_DOCUMENTATION
