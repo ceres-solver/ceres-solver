@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJK3///1k\u003d",
+        "filename": "examples/Makefile.example",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-18T19:13:14Z",
+      "side": 1,
+      "message": "I think you need a -DNDEBUG to get optimized eigen",
+      "revId": "c95039fdbd1468f1db06014486c6947a969aac9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
