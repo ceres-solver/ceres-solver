@@ -81,6 +81,7 @@ class Minimizer {
       trust_region_strategy = NULL;
       jacobian = NULL;
       callbacks = options.callbacks;
+      inner_iteration_minimizer = NULL;
     }
 
     int max_num_iterations;
@@ -126,6 +127,8 @@ class Minimizer {
     // and will remain constant for the life time of the
     // optimization. The Options struct does not own this pointer.
     SparseMatrix* jacobian;
+
+    Minimizer* inner_iteration_minimizer;
   };
 
   virtual ~Minimizer() {}

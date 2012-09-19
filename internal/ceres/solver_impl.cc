@@ -36,6 +36,7 @@
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/inner_iteration_minimizer.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
@@ -150,6 +151,7 @@ class FileLoggingCallback : public IterationCallback {
 
 void SolverImpl::Minimize(const Solver::Options& options,
                           Program* program,
+                          InnerIterationMinimizer* inner_iteration_minimizer,
                           Evaluator* evaluator,
                           LinearSolver* linear_solver,
                           double* parameters,
@@ -182,6 +184,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
   minimizer_options.evaluator = evaluator;
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   minimizer_options.jacobian = jacobian.get();
+  minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
   TrustRegionStrategy::Options trust_region_strategy_options;
   trust_region_strategy_options.linear_solver = linear_solver;
@@ -213,6 +216,11 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   ProblemImpl* problem_impl = original_problem_impl;
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
+
+  if (options.lsqp_iterations_to_dump.size() > 0) {
+    LOG(WARNING) << "Dumping linear least squares problems to disk is"
+        " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
+  }
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -323,16 +331,35 @@ void SolverImpl::Solve(const Solver::Options& original_options,
     return;
   }
 
-  if (!MaybeReorderResidualBlocks(options,
-                                  reduced_program.get(),
-                                  &summary->error)) {
+  // Only Schur types require the lexicographic reordering.
+  if (IsSchurType(options.linear_solver_type)) {
+    const int num_eliminate_blocks =
+        options.ordering->group_id_to_parameter_blocks().begin()->second.size();
+    if (!LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
+                                              reduced_program.get(),
+                                              &summary->error)) {
+      return;
+    }
+  }
+
+  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+                                                  problem_impl->parameter_map(),
+                                                  reduced_program.get(),
+                                                  &summary->error));
+  if (evaluator == NULL) {
     return;
   }
 
-  scoped_ptr<Evaluator> evaluator(
-      CreateEvaluator(options, reduced_program.get(), &summary->error));
-  if (evaluator == NULL) {
-    return;
+  scoped_ptr<InnerIterationMinimizer> inner_iteration_minimizer;
+  if (options.use_inner_iterations) {
+    inner_iteration_minimizer.reset(new InnerIterationMinimizer);
+    if (!inner_iteration_minimizer->Init(
+            *reduced_program,
+            problem_impl->parameter_map(),
+            options.parameter_blocks_for_inner_iterations,
+            &summary->error)) {
+      return;
+    }
   }
 
   // The optimizer works on contiguous parameter vectors; allocate some.
@@ -348,6 +375,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Run the optimization.
   Minimize(options,
            reduced_program.get(),
+           inner_iteration_minimizer.get(),
            evaluator.get(),
            linear_solver.get(),
            parameters.data(),
@@ -572,8 +600,10 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     }
   }
 
-  if (!ApplyUserOrdering(
-          *problem_impl, ordering, transformed_program.get(), error)) {
+  if (!ApplyUserOrdering(problem_impl->parameter_map(),
+                         ordering,
+                         transformed_program.get(),
+                         error)) {
     return NULL;
   }
 
@@ -744,7 +774,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   return LinearSolver::Create(linear_solver_options);
 }
 
-bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
+bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
                                    const Ordering* ordering,
                                    Program* program,
                                    string* error) {
@@ -761,8 +791,6 @@ bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const ProblemImpl::ParameterMap& parameter_map =
-      problem_impl.parameter_map();
   const map<int, set<double*> >& groups =
       ordering->group_id_to_parameter_blocks();
 
@@ -810,16 +838,12 @@ int MinParameterBlock(const ResidualBlock* residual_block,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
-                                            Program* program,
-                                            string* error) {
-  // Only Schur types require the lexicographic reordering.
-  if (!IsSchurType(options.linear_solver_type)) {
-    return true;
-  }
-
-  const int num_eliminate_blocks =
-      options.ordering->group_id_to_parameter_blocks().begin()->second.size();
+bool SolverImpl::LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
+                                                      Program* program,
+                                                      string* error) {
+  CHECK_GE(num_eliminate_blocks, 1)
+      << "Congratulations, you found a Ceres bug! Please report this error "
+      << "to the developers.";
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
@@ -894,16 +918,16 @@ bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
 }
 
 Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
+                                       const ProblemImpl::ParameterMap& parameter_map,
                                        Program* program,
                                        string* error) {
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
-
   evaluator_options.num_eliminate_blocks =
       (options.ordering->NumGroups() > 0 &&
        IsSchurType(options.linear_solver_type))
-       ? options.ordering->group_id_to_parameter_blocks().begin()->second.size()
-       : 0;
+      ? options.ordering->group_id_to_parameter_blocks().begin()->second.size()
+      : 0;
   evaluator_options.num_threads = options.num_threads;
   return Evaluator::Create(evaluator_options, program, error);
 }

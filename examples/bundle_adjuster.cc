@@ -68,6 +68,15 @@
 DEFINE_string(input, "", "Input File name");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
               "Options are: levenberg_marquardt, dogleg.");
+DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
+              "subspace_dogleg.");
+
+DEFINE_bool(inner_iterations, false, "Use inner iterations to non-linearly "
+            "refine each successful trust region step.");
+
+DEFINE_string(blocks_for_inner_iterations, "cameras", "Options are: "
+            "automatic, cameras, points");
+
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
               "dense_qr, dense_normal_cholesky and cgnr.");
@@ -77,8 +86,6 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse and cx_sparse.");
 DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
-DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
-              "subspace_dogleg.");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
@@ -125,7 +132,34 @@ void SetLinearSolver(Solver::Options* options) {
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
+  const int num_points = bal_problem->num_points();
+  const int point_block_size = bal_problem->point_block_size();
+  double* points = bal_problem->mutable_points();
+
+  const int num_cameras = bal_problem->num_cameras();
+  const int camera_block_size = bal_problem->camera_block_size();
+  double* cameras = bal_problem->mutable_cameras();
+
   options->use_block_amd = FLAGS_use_block_amd;
+
+  if (options->use_inner_iterations) {
+    if (FLAGS_blocks_for_inner_iterations == "cameras") {
+      LOG(INFO) << "Camera blocks for inner iterations";
+      for (int i = 0; i < num_cameras; ++i) {
+        options->parameter_blocks_for_inner_iterations.push_back(cameras + camera_block_size * i);
+      }
+    } else if (FLAGS_blocks_for_inner_iterations == "points") {
+      LOG(INFO) << "Point blocks for inner iterations";
+      for (int i = 0; i < num_points; ++i) {
+        options->parameter_blocks_for_inner_iterations.push_back(points + point_block_size * i);
+      }
+    } else if (FLAGS_blocks_for_inner_iterations == "automatic") {
+      LOG(INFO) << "Choosing automatic blocks for inner iterations";
+    } else {
+      LOG(ERROR) << "Unknown block type for inner iterations: "
+                 << FLAGS_blocks_for_inner_iterations;
+    }
+  }
 
   // Bundle adjustment problems have a sparsity structure that makes
   // them amenable to more specialized and much more efficient
@@ -141,13 +175,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   if (FLAGS_ordering == "automatic") {
     return;
   }
-
-  const int num_points = bal_problem->num_points();
-  const int point_block_size = bal_problem->point_block_size();
-  double* points = bal_problem->mutable_points();
-  const int num_cameras = bal_problem->num_cameras();
-  const int camera_block_size = bal_problem->camera_block_size();
-  double* cameras = bal_problem->mutable_cameras();
 
   ceres::Ordering* ordering = new ceres::Ordering;
 
@@ -181,6 +208,7 @@ void SetMinimizerOptions(Solver::Options* options) {
   CHECK(StringToTrustRegionStrategyType(FLAGS_trust_region_strategy,
                                         &options->trust_region_strategy_type));
   CHECK(StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
+  options->use_inner_iterations = FLAGS_inner_iterations;
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
@@ -267,8 +295,8 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.solver_log = FLAGS_solver_log;
-  options.gradient_tolerance = 1e-12;
-  options.function_tolerance = 1e-12;
+  options.gradient_tolerance = 1e-16;
+  options.function_tolerance = 1e-16;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
