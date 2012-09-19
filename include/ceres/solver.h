@@ -97,6 +97,7 @@ class Solver {
       use_block_amd = true;
 #endif
       ordering = NULL;
+      use_inner_iterations = false;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -229,10 +230,105 @@ class Solver {
     // using this setting.
     int num_linear_solver_threads;
 
+    // The order in which variables are eliminated in a linear solver
+    // can have a significant of impact on the efficiency and accuracy
+    // of the method. e.g., when doing sparse Cholesky factorization,
+    // there are matrices for which a good ordering will give a
+    // Cholesky factor with O(n) storage, where as a bad ordering will
+    // result in an completely dense factor.
+    //
+    // Ceres allows the user to provide varying amounts of hints to
+    // the solver about the variable elimination ordering to use. This
+    // can range from no hints, where the solver is free to decide the
+    // best possible ordering based on the user's choices like the
+    // linear solver being used, to an exact order in which the
+    // variables should be eliminated, and a variety of possibilities
+    // in between.
+    //
+    // Instances of the Ordering class are used to communicate this
+    // infornation to Ceres.
+    //
+    // Formally an ordering is an ordered partitioning of the parameter
+    // blocks, i.e, each parameter block belongs to exactly one group, and
+    // each group has a unique integer associated with it, that determines
+    // its order in the set of groups.
+    //
+    // Given such an ordering, Ceres ensures that the parameter blocks in
+    // the lowest numbered group are eliminated first, and then the
+    // parmeter blocks in the next lowest numbered group and so on. Within
+    // each group, Ceres is free to order the parameter blocks as it
+    // chooses.
+    //
     // If NULL, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
     // ordering. (See ordering.h for more details).
     Ordering* ordering;
+
+    // Some non-linear least squares problems have additional
+    // structure in the way the parameter blocks interact that it is
+    // beneficial to modify the way the trust region step is computed.
+    //
+    // e.g., consider the following regression problem
+    //
+    //   y = a_1 exp(b_1 x) + a_2 exp(b_3 x^2 + c_1)
+    //
+    // Given a set of pairs{(x_i, y_i)}, the user wishes to estimate
+    // a_1, a_2, b_1, b_2, and c_1.
+    //
+    // Notice here that the expression on the left is linear in a_1
+    // and a_2, and given any value for b_1, b_2 and c_1, it is
+    // possible to use linear regression to estimate the optimal
+    // values of a_1 and a_2. Indeed, its possible to analytically
+    // eliminate the variables a_1 and a_2 from the problem all
+    // together. Problems like these are known as separable least
+    // squares problem and the most famous algorithm for solving them
+    // is the Variable Projection algorithm invented by Golub &
+    // Pereyra.
+    //
+    // Similar structure can be found in the matrix factorization with
+    // missing data problem. There the corresponding algorithm is
+    // known as Wiberg's algorithm.
+    //
+    // Ruhe & Wedin (Algorithms for Separable Nonlinear Least Squares
+    // Problems, SIAM Reviews, 22(3), 1980) present an analyis of
+    // various algorithms for solving separable non-linear least
+    // squares problems and refer to "Variable Projection" as
+    // Algorithm I in their paper.
+    //
+    // Implementing Variable Projection is tedious and expensive, and
+    // they present a simpler algorithm, which they refer to as
+    // Algorithm II, where once the Newton/Trust Region step has been
+    // computed for the whole problem (a_1, a_2, b_1, b_2, c_1) and
+    // additional optimization step is performed to estimate a_1 and
+    // a_2 exactly.
+    //
+    // This idea can be generalized to cases where the residual is not
+    // linear in a_1 and a_2, i.e., Solve for the trust region step
+    // for the full problem, and then use it as the starting point to
+    // further optimize just a_1 and a_2. For the linear case, this
+    // amounts to doing a single linear least squares solve. For
+    // non-linear problems, any method for solving the a_1 and a_2
+    // optimization problems will do. The only constraint on a_1 and
+    // a_2 is that they do not co-occur in any residual block.
+    //
+    // Setting "use_inner_iterations" to true enables the use of this
+    // non-linear generalization of Ruhe & Wedin's Algorithm II.  This
+    // version of Ceres has a higher iteration complexity, but also
+    // displays better convergence behaviour per iteration.
+    bool use_inner_iterations;
+
+    // If inner_iterations is true, then the user has two choices.
+    //
+    // 1. Provide a list of parameter blocks, which should be subject
+    // to inner iterations. The only requirement on the set of
+    // parameter blocks is that they form an independent set in the
+    // Hessian matrix, much like the first elimination group in
+    // Solver::Options::ordering.
+    //
+    // 2. The second is to leave it empty, in which case, Ceres will
+    // use a heuristic to automatically choose a set of parameter
+    // blocks.
+    vector<double*> parameter_blocks_for_inner_iterations;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When
