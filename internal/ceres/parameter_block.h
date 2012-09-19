@@ -112,6 +112,10 @@ class ParameterBlock {
   int index() const { return index_; }
   void set_index(int index) { index_ = index; }
 
+  // This parameter offset inside a larger state vector.
+  int state_offset() const { return state_offset_; }
+  void set_state_offset(int state_offset) { state_offset_ = state_offset; }
+
   // This parameter offset inside a larger delta vector.
   int delta_offset() const { return delta_offset_; }
   void set_delta_offset(int delta_offset) { delta_offset_ = delta_offset; }
@@ -172,13 +176,14 @@ class ParameterBlock {
 
   string ToString() const {
     return StringPrintf("{ user_state=%p, state=%p, size=%d, "
-                        "constant=%d, index=%d, "
+                        "constant=%d, index=%d, state_offset=%d, "
                         "delta_offset=%d }",
                         user_state_,
                         state_,
                         size_,
                         is_constant_,
                         index_,
+                        state_offset_,
                         delta_offset_);
   }
 
@@ -197,6 +202,7 @@ class ParameterBlock {
     }
 
     index_ = -1;
+    state_offset_ = -1;
     delta_offset_ = -1;
   }
 
@@ -248,6 +254,9 @@ class ParameterBlock {
   // The index of the parameter. This is used by various other parts of Ceres to
   // permit switching from a ParameterBlock* to an index in another array.
   int32 index_;
+
+  // The offset of this parameter block inside a larger state vector.
+  int32 state_offset_;
 
   // The offset of this parameter block inside a larger delta vector.
   int32 delta_offset_;
