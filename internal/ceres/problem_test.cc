@@ -275,6 +275,7 @@ TEST(Problem, AddingParametersAndResidualsResultsInExpectedProblem) {
   EXPECT_EQ(12, problem.NumParameters());
 
   // Add a parameter that has a local parameterization.
+  w[0] = 1.0; w[1] = 0.0; w[2] = 0.0; w[3] = 0.0;
   problem.AddParameterBlock(w, 4, new QuaternionParameterization);
   EXPECT_EQ(4,  problem.NumParameterBlocks());
   EXPECT_EQ(16, problem.NumParameters());

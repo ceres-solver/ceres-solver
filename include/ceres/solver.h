@@ -97,6 +97,7 @@ class Solver {
       use_block_amd = true;
 #endif
       ordering = NULL;
+      inner_iterations = false;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -229,10 +230,55 @@ class Solver {
     // using this setting.
     int num_linear_solver_threads;
 
+    // The order in which variables are eliminated in a linear solver
+    // can have a significant of impact on the efficiency and accuracy
+    // of the method. e.g., when doing sparse Cholesky factorization,
+    // there are matrices for which a good ordering will give a
+    // Cholesky factor with O(n) storage, where as a bad ordering will
+    // result in an completely dense factor.
+    //
+    // Ceres allows the user to provide varying amounts of hints to
+    // the solver about the variable elimination ordering to use. This
+    // can range from no hints, where the solver is free to decide the
+    // best possible ordering based on the user's choices like the
+    // linear solver being used, to an exact order in which the
+    // variables should be eliminated, and a variety of possibilities
+    // in between.
+    //
+    // Instances of the Ordering class are used to communicate this
+    // infornation to Ceres.
+    //
+    // Formally an ordering is an ordered partitioning of the parameter
+    // blocks, i.e, each parameter block belongs to exactly one group, and
+    // each group has a unique integer associated with it, that determines
+    // its order in the set of groups.
+    //
+    // Given such an ordering, Ceres ensures that the parameter blocks in
+    // the lowest numbered group are eliminated first, and then the
+    // parmeter blocks in the next lowest numbered group and so on. Within
+    // each group, Ceres is free to order the parameter blocks as it
+    // chooses.
+    //
     // If NULL, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
     // ordering. (See ordering.h for more details).
     Ordering* ordering;
+
+    //
+    bool inner_iterations;
+
+    // If inner_iterations is true, then the user has two choices.
+    // They can provide a list of parameter blocks, which should be
+    // subject to inner iterations. The only requirement no this set
+    // of parameter blocks is that they form an independent set in the
+    // Hessian matrix, much like the first elimination group in
+    // Solver::Options::ordering.
+    //
+    // Another option is to leave it empty, in which case, Ceres will
+    // use a purely combinatorial criterion to decide on a set of
+    // parameter blocks it thinks are best suited for inner
+    // iterations.
+    vector<double*> parameter_blocks_for_inner_iterations;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When
