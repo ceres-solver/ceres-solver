@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJQX///WE\u003d",
+        "filename": "internal/ceres/program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-19T18:30:00Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "f2f7b652b34bc6b6c9a31bb92d59af7d57937128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
