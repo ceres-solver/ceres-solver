@@ -139,9 +139,8 @@ struct SnavelyReprojectionError {
     // Compute the center of distortion. The sign change comes from
     // the camera model that Noah Snavely's Bundler assumes, whereby
     // the camera coordinate system has a negative z axis.
-    const T& focal = camera[6];
-    T xp = - focal * p[0] / p[2];
-    T yp = - focal * p[1] / p[2];
+    T xp = - p[0] / p[2];
+    T yp = - p[1] / p[2];
 
     // Apply second and fourth order radial distortion.
     const T& l1 = camera[7];
@@ -150,8 +149,9 @@ struct SnavelyReprojectionError {
     T distortion = T(1.0) + r2  * (l1 + l2  * r2);
 
     // Compute final projected point position.
-    T predicted_x = distortion * xp;
-    T predicted_y = distortion * yp;
+    const T& focal = camera[6];
+    T predicted_x = focal * distortion * xp;
+    T predicted_y = focal * distortion * yp;
 
     // The error is the difference between the predicted and observed position.
     residuals[0] = predicted_x - T(observed_x);
