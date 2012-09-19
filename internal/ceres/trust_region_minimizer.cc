@@ -45,6 +45,7 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/stringprintf.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
@@ -102,8 +103,6 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
   //
   // Both of these indicate that this is the wrong place for this
   // code, and going forward this should needs fixing/refactoring.
-  LOG(WARNING) << "Dumping linear least squares problem to disk is "
-               << "currently broken.";
   return true;
 }
 
@@ -142,7 +141,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.iteration = 0;
   iteration_summary.step_is_valid = false;
   iteration_summary.step_is_successful = false;
-  iteration_summary.cost = summary->initial_cost;
   iteration_summary.cost_change = 0.0;
   iteration_summary.gradient_max_norm = 0.0;
   iteration_summary.step_norm = 0.0;
@@ -161,6 +159,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
+
+  iteration_summary.cost = cost + summary->fixed_cost;
 
   int num_consecutive_nonmonotonic_steps = 0;
   double minimum_cost = cost;
@@ -294,10 +294,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (++num_consecutive_invalid_steps >=
           options_.max_num_consecutive_invalid_steps) {
         summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating. Number of successive invalid steps more "
-                     << "than "
-                     << "Solver::Options::max_num_consecutive_invalid_steps: "
-                     << options_.max_num_consecutive_invalid_steps;
+        summary->error =StringPrintf(
+            "Terminating. Number of successive invalid steps more "
+            "than "
+            "Solver::Options::max_num_consecutive_invalid_steps: %d",
+            options_.max_num_consecutive_invalid_steps);
+
+        LOG(WARNING) << summary->error;
         return;
       }
 
@@ -306,7 +309,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // as an unsuccessful iteration. Since the various callbacks are
       // still executed, we are going to fill the iteration summary
       // with data that assumes a step of length zero and no progress.
-      iteration_summary.cost = cost;
+      iteration_summary.cost = cost + summary->fixed_cost;
       iteration_summary.cost_change = 0.0;
       iteration_summary.gradient_max_norm =
           summary->iterations.back().gradient_max_norm;
@@ -319,7 +322,33 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
-      iteration_summary.step_norm = delta.norm();
+      if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+        summary->termination_type = NUMERICAL_FAILURE;
+        summary->error =
+            "Terminating. Failed to compute Plus(x, delta, x_plus_delta).";
+
+        LOG(WARNING) << summary->error;
+        return;
+      }
+
+      // Try this step.
+      double new_cost = numeric_limits<double>::max();
+      if (!evaluator->Evaluate(x_plus_delta.data(),
+                               &new_cost,
+                               NULL, NULL, NULL)) {
+        // If the evaluation of the new cost fails, treat it as a step
+        // with high cost.
+        LOG(WARNING) << "Step failed to evaluate. "
+                     << "Treating it as step with infinite cost";
+        new_cost = numeric_limits<double>::max();
+      } else if (new_cost < cost && options.inner_iteration_minimizer != NULL) {
+        Solver::Summary inner_iteration_summary;
+        options.inner_iteration_minimizer->Minimize(options,
+                                                    x_plus_delta.data(),
+                                                    &inner_iteration_summary);
+      }
+
+      iteration_summary.step_norm = (x - x_plus_delta).norm();
 
       // Convergence based on parameter_tolerance.
       const double step_size_tolerance =  options_.parameter_tolerance *
@@ -332,25 +361,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                 << " <= " << options_.parameter_tolerance;
         summary->termination_type = PARAMETER_TOLERANCE;
         return;
-      }
-
-      if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating. Failed to compute "
-                     << "Plus(x, delta, x_plus_delta).";
-        return;
-      }
-
-      // Try this step.
-      double new_cost;
-      if (!evaluator->Evaluate(x_plus_delta.data(),
-                               &new_cost,
-                               NULL, NULL, NULL)) {
-        // If the evaluation of the new cost fails, treat it as a step
-        // with high cost.
-        LOG(WARNING) << "Step failed to evaluate. "
-                     << "Treating it as step with infinite cost";
-        new_cost = numeric_limits<double>::max();
       }
 
       VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;
@@ -419,7 +429,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                NULL,
                                jacobian)) {
         summary->termination_type = NUMERICAL_FAILURE;
-        LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
+        summary->error = "Terminating: Residual and Jacobian evaluation failed.";
+        LOG(WARNING) << summary->error;
         return;
       }
 
