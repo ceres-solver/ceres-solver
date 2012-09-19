@@ -282,9 +282,10 @@ TEST(SolverImpl, ReorderResidualBlockNonSchurSolver) {
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
   string error;
 
-  EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
-                                                     problem.mutable_program(),
-                                                     &error));
+  EXPECT_FALSE(SolverImpl::LexicographicallyOrderResidualBlocks(
+                   0,
+                   problem.mutable_program(),
+                   &error));
   EXPECT_EQ(current_residual_blocks.size(), residual_blocks.size());
   for (int i = 0; i < current_residual_blocks.size(); ++i) {
     EXPECT_EQ(current_residual_blocks[i], residual_blocks[i]);
@@ -337,9 +338,10 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   program->SetParameterOffsetsAndIndex();
 
   string error;
-  EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
-                                                     problem.mutable_program(),
-                                                     &error));
+  EXPECT_TRUE(SolverImpl::LexicographicallyOrderResidualBlocks(
+                  2,
+                  problem.mutable_program(),
+                  &error));
   EXPECT_EQ(residual_blocks.size(), expected_residual_blocks.size());
   for (int i = 0; i < expected_residual_blocks.size(); ++i) {
     EXPECT_EQ(residual_blocks[i], expected_residual_blocks[i]);
@@ -407,9 +409,10 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   expected_residual_blocks.push_back(residual_blocks[3]);
   expected_residual_blocks.push_back(residual_blocks[2]);
 
-  EXPECT_TRUE(SolverImpl::MaybeReorderResidualBlocks(options,
-                                                     reduced_program.get(),
-                                                     &error));
+  EXPECT_TRUE(SolverImpl::LexicographicallyOrderResidualBlocks(
+                  2,
+                  reduced_program.get(),
+                  &error));
 
   EXPECT_EQ(reduced_program->residual_blocks().size(),
             expected_residual_blocks.size());
@@ -435,7 +438,7 @@ TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
 
   Program program(problem.program());
   string error;
-  EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem,
+  EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
                                              &ordering,
                                              &program,
                                              &error));
@@ -459,7 +462,7 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
   Program* program = problem.mutable_program();
   string error;
 
-  EXPECT_TRUE(SolverImpl::ApplyUserOrdering(problem,
+  EXPECT_TRUE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
                                             &ordering,
                                             program,
                                             &error));
