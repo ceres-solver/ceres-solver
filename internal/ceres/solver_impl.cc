@@ -898,6 +898,7 @@ Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
                                        string* error) {
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
+  evaluator_options.optimize_e_blocks = options.use_inner_iterations;
 
   evaluator_options.num_eliminate_blocks =
       (options.ordering->NumGroups() > 0 &&

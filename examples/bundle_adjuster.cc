@@ -68,6 +68,7 @@
 DEFINE_string(input, "", "Input File name");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
               "Options are: levenberg_marquardt, dogleg.");
+DEFINE_bool(inner_iterations, false, "Inner Iterations");
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
               "dense_qr, dense_normal_cholesky and cgnr.");
@@ -181,6 +182,7 @@ void SetMinimizerOptions(Solver::Options* options) {
   CHECK(StringToTrustRegionStrategyType(FLAGS_trust_region_strategy,
                                         &options->trust_region_strategy_type));
   CHECK(StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
+  options->use_inner_iterations = FLAGS_inner_iterations;
 }
 
 void SetSolverOptionsFromFlags(BALProblem* bal_problem,
@@ -267,8 +269,8 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.solver_log = FLAGS_solver_log;
-  options.gradient_tolerance = 1e-12;
-  options.function_tolerance = 1e-12;
+  options.gradient_tolerance = 0.0;
+  options.function_tolerance = 1e-16;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

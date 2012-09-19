@@ -62,6 +62,7 @@ SET(CERES_INTERNAL_SRC
     linear_solver.cc
     local_parameterization.cc
     loss_function.cc
+    minimal_solver.cc
     normal_prior.cc
     ordering.cc
     partitioned_matrix_view.cc

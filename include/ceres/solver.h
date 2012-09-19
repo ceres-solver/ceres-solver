@@ -97,6 +97,7 @@ class Solver {
       use_block_amd = true;
 #endif
       ordering = NULL;
+      use_inner_iterations = false;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -233,6 +234,8 @@ class Solver {
     // same group and the solver is free to decide the best
     // ordering. (See ordering.h for more details).
     Ordering* ordering;
+
+    bool use_inner_iterations;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When
