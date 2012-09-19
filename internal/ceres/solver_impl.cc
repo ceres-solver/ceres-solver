@@ -733,7 +733,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
     linear_solver_options.elimination_groups.push_back(it->second.size());
   }
   // Schur type solvers, expect at least two elimination groups. If
-  // there is only one elimination group, then CreateReducedProblem
+  // there is only one elimination group, then CreateReducedProgram
   // guarantees that this group only contains e_blocks. Thus we add a
   // dummy elimination group with zero blocks in it.
   if (IsSchurType(linear_solver_options.type) &&
