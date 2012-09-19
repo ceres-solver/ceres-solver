@@ -646,19 +646,19 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
     return NULL;
   }
 
-  if (linear_solver_options.preconditioner_type == SCHUR_JACOBI) {
+  if (options->preconditioner_type == SCHUR_JACOBI) {
     *error =  "SCHUR_JACOBI preconditioner not suppored. Please build Ceres "
         "with SuiteSparse support.";
     return NULL;
   }
 
-  if (linear_solver_options.preconditioner_type == CLUSTER_JACOBI) {
+  if (options->preconditioner_type == CLUSTER_JACOBI) {
     *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
         "with SuiteSparse support.";
     return NULL;
   }
 
-  if (linear_solver_options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+  if (options->preconditioner_type == CLUSTER_TRIDIAGONAL) {
     *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
         "Ceres with SuiteSparse support.";
     return NULL;
@@ -761,7 +761,7 @@ bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const ProblemImpl::ProblemImpl::ParameterMap& parameter_map =
+  const ProblemImpl::ParameterMap& parameter_map =
       problem_impl.parameter_map();
   const map<int, set<double*> >& groups =
       ordering->group_id_to_parameter_blocks();
