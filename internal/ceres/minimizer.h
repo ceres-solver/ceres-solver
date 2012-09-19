@@ -59,6 +59,7 @@ class Minimizer {
     }
 
     void Init(const Solver::Options& options) {
+      num_threads = options.num_threads;
       max_num_iterations = options.max_num_iterations;
       max_solver_time_in_seconds = options.max_solver_time_in_seconds;
       max_step_solver_retries = 5;
@@ -81,6 +82,7 @@ class Minimizer {
       trust_region_strategy = NULL;
       jacobian = NULL;
       callbacks = options.callbacks;
+      inner_iteration_minimizer = NULL;
     }
 
     int max_num_iterations;
@@ -91,6 +93,7 @@ class Minimizer {
     // mu at each retry. This leads to stronger and stronger
     // regularization making the linear least squares problem better
     // conditioned at each retry.
+    int num_threads;
     int max_step_solver_retries;
     double gradient_tolerance;
     double parameter_tolerance;
@@ -126,6 +129,8 @@ class Minimizer {
     // and will remain constant for the life time of the
     // optimization. The Options struct does not own this pointer.
     SparseMatrix* jacobian;
+
+    Minimizer* inner_iteration_minimizer;
   };
 
   virtual ~Minimizer() {}

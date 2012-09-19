@@ -129,10 +129,13 @@ void Program::SetParameterOffsetsAndIndex() {
     }
   }
   // For parameters that appear in the program, set their position and offset.
+  int state_offset = 0;
   int delta_offset = 0;
   for (int i = 0; i < parameter_blocks_.size(); ++i) {
     parameter_blocks_[i]->set_index(i);
+    parameter_blocks_[i]->set_state_offset(state_offset);
     parameter_blocks_[i]->set_delta_offset(delta_offset);
+    state_offset += parameter_blocks_[i]->Size();
     delta_offset += parameter_blocks_[i]->LocalSize();
   }
 }
