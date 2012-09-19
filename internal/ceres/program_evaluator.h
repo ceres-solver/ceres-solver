@@ -88,6 +88,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/minimal_solver.h"
 
 namespace ceres {
 namespace internal {
@@ -129,7 +130,7 @@ class ProgramEvaluator : public Evaluator {
 
     if (residuals != NULL) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
-    } 
+    }
 
     if (jacobian != NULL) {
       jacobian->SetZero();
@@ -248,7 +249,94 @@ class ProgramEvaluator : public Evaluator {
   bool Plus(const double* state,
             const double* delta,
             double* state_plus_delta) const {
-    return program_->Plus(state, delta, state_plus_delta);
+    if (!program_->Plus(state, delta, state_plus_delta)) {
+      return false;
+    }
+
+    if (options_.optimize_e_blocks) {
+      vector<int> residual_blocks_per_e_block(options_.num_eliminate_blocks, 0);
+      const vector<ResidualBlock*>& residual_blocks =
+          program_->residual_blocks();
+
+      for (int i = 0; i < residual_blocks.size(); ++i) {
+        ResidualBlock* residual_block = residual_blocks[i];
+        const int num_parameter_blocks = residual_block->NumParameterBlocks();
+        for (int j = 0; j < num_parameter_blocks; ++j) {
+          ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
+          if (!parameter_block->IsConstant() &&
+              parameter_block->index() < options_.num_eliminate_blocks) {
+            residual_blocks_per_e_block[parameter_block->index()] += 1;
+          }
+        }
+      }
+
+      vector<int> old_index(options_.num_eliminate_blocks, 0);
+      int start_parameter_block = 0;
+      const vector<ParameterBlock*>& parameter_blocks =
+          program_->parameter_blocks();
+      for (int i = 0; i < parameter_blocks.size(); ++i) {
+        if (i >= options_.num_eliminate_blocks) {
+           parameter_blocks[i]->SetState(state_plus_delta + start_parameter_block);
+           parameter_blocks[i]->SetConstant();
+        }
+        start_parameter_block += parameter_blocks[i]->Size();
+      }
+
+      int start_residual_blocks = 0;
+      start_parameter_block = 0;
+      double total_initial_cost = 0.0;
+      double total_final_cost = 0.0;
+      LOG(INFO) << "num_eliminate_blocks " << options_.num_eliminate_blocks;
+      for (int i = 0; i < options_.num_eliminate_blocks; ++i) {
+        ParameterBlock* parameter_block = parameter_blocks[i];
+        const int old_index = parameter_block->index();
+        const int old_delta_offset = parameter_block->delta_offset();
+        parameter_block->set_index(0);
+        parameter_block->set_delta_offset(0);
+
+
+        Program program;
+        program.mutable_parameter_blocks()->push_back(parameter_block);
+        const int end_residual_blocks = start_residual_blocks +  residual_blocks_per_e_block[i];
+        copy(residual_blocks.begin() + start_residual_blocks,
+             residual_blocks.begin() + end_residual_blocks,
+             back_inserter(*program.mutable_residual_blocks()));
+
+        LOG(INFO) << "inner iteration " << i << " " << residual_blocks_per_e_block[i]
+                  << *(state_plus_delta + start_parameter_block) << "  "
+                  << *(state_plus_delta + start_parameter_block+1) << "  "
+                  << *(state_plus_delta + start_parameter_block+2);
+
+        Solver::Options options;
+        Solver::Summary summary =
+            MinimalSolver::Solve(options, &program, state_plus_delta + start_parameter_block);
+
+        LOG(INFO) << "final "
+                  << *(state_plus_delta + start_parameter_block) << "  "
+                  << *(state_plus_delta + start_parameter_block+1) << "  "
+                  << *(state_plus_delta + start_parameter_block+2)
+                  << " initial cost " << summary.iterations.front().cost
+                  << " " << summary.iterations.back().cost;
+
+        CHECK_GE(summary.iterations.front().cost, summary.iterations.back().cost);
+        total_initial_cost += summary.iterations.front().cost;
+        total_final_cost += summary.iterations.back().cost;
+
+        start_parameter_block += parameter_block->Size();
+        start_residual_blocks += residual_blocks_per_e_block[i];
+        parameter_block->set_index(old_index);
+        parameter_block->set_delta_offset(old_delta_offset);
+      }
+
+
+      for (int i = options_.num_eliminate_blocks; i < parameter_blocks.size(); ++i) {
+        parameter_blocks[i]->SetVarying();
+      }
+      LOG(INFO) << "total " << total_initial_cost << " " << total_final_cost;
+    }
+
+
+    return true;
   }
 
   int NumParameters() const {
