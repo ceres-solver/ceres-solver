@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJQX//+/E\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-20T01:09:45Z",
+      "side": 1,
+      "message": "Please follow the git commit message convention:\n\nFirst line is a \u003c66 character summary.\n\nThen a blank, followed by a longer paragraph\nlike this one that describes the change in detail.\n\nFor more details:\nhttp://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html",
+      "revId": "7c2d8c93abc117caa020585fe964c0441fc061b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJQX//+/A\u003d",
+        "filename": "examples/snavely_reprojection_error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-20T01:09:45Z",
+      "side": 1,
+      "message": "Wow, after all this time.",
+      "revId": "7c2d8c93abc117caa020585fe964c0441fc061b6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
