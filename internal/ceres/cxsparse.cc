@@ -39,7 +39,7 @@
 namespace ceres {
 namespace internal {
 
-CXSparse::CXSparse() : scratch_size_(0), scratch_(NULL) {
+CXSparse::CXSparse() : scratch_(NULL), scratch_size_(0) {
 }
 
 CXSparse::~CXSparse() {

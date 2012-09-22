@@ -37,20 +37,21 @@
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 
 Solver::~Solver() {}
 
-// TODO(sameeragarwal): Use subsecond timers.
 void Solver::Solve(const Solver::Options& options,
                    Problem* problem,
                    Solver::Summary* summary) {
-  time_t start_time_seconds = time(NULL);
+  double start_time_seconds = internal::WallTimeInSeconds();
   internal::ProblemImpl* problem_impl =
       CHECK_NOTNULL(problem)->problem_impl_.get();
   internal::SolverImpl::Solve(options, problem_impl, summary);
-  summary->total_time_in_seconds =  time(NULL) - start_time_seconds;
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
 }
 
 void Solve(const Solver::Options& options,
@@ -81,8 +82,6 @@ Solver::Summary::Summary()
       num_parameters_reduced(-1),
       num_residual_blocks_reduced(-1),
       num_residuals_reduced(-1),
-      num_eliminate_blocks_given(-1),
-      num_eliminate_blocks_used(-1),
       num_threads_given(-1),
       num_threads_used(-1),
       num_linear_solver_threads_given(-1),
@@ -90,7 +89,6 @@ Solver::Summary::Summary()
       linear_solver_type_given(SPARSE_NORMAL_CHOLESKY),
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
       preconditioner_type(IDENTITY),
-      ordering_type(NATURAL),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
       sparse_linear_algebra_library(SUITE_SPARSE) {
 }
@@ -164,22 +162,7 @@ string Solver::Summary::FullReport() const {
                             "N/A", "N/A");
   }
 
-  internal::StringAppendF(&report, "Ordering            %25s%25s\n",
-                          OrderingTypeToString(ordering_type),
-                          OrderingTypeToString(ordering_type));
-
-  if (IsSchurType(linear_solver_type_given)) {
-    if (ordering_type == SCHUR) {
-      internal::StringAppendF(&report, "num_eliminate_blocks%25s% 25d\n",
-                              "N/A",
-                              num_eliminate_blocks_used);
-    } else {
-      internal::StringAppendF(&report, "num_eliminate_blocks% 25d% 25d\n",
-                              num_eliminate_blocks_given,
-                              num_eliminate_blocks_used);
-    }
-  }
-
+  // TODO(sameeragarwal): Add support for logging the ordering object.
   internal::StringAppendF(&report, "Threads:            % 25d% 25d\n",
                           num_threads_given, num_threads_used);
   internal::StringAppendF(&report, "Linear solver threads % 23d% 25d\n",

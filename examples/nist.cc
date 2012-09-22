@@ -63,6 +63,7 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
 DEFINE_int32(num_iterations, 10000, "Number of iterations");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps");
+DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
 
 using Eigen::Dynamic;
 using Eigen::RowMajor;
@@ -82,6 +83,14 @@ void SkipLines(std::ifstream& ifs, int num_lines) {
   for (int i = 0; i < num_lines; ++i) {
     ifs.getline(buf, 256);
   }
+}
+
+bool IsSuccessfulTermination(ceres::SolverTerminationType status) {
+  return
+      (status == ceres::FUNCTION_TOLERANCE) ||
+      (status == ceres::GRADIENT_TOLERANCE) ||
+      (status == ceres::PARAMETER_TOLERANCE) ||
+      (status == ceres::USER_SUCCESS);
 }
 
 class NISTProblem {
@@ -367,23 +376,26 @@ int RegressionDriver(const std::string& filename,
     const ceres::Solver::Summary& summary = summaries[start];
 
     int num_matching_digits = 0;
-    if (summary.final_cost < certified_cost) {
+    if (IsSuccessfulTermination(summary.termination_type)
+        && summary.final_cost < certified_cost) {
       num_matching_digits = kMinNumMatchingDigits + 1;
     } else {
       num_matching_digits =
           -std::log10(fabs(summary.final_cost - certified_cost) / certified_cost);
     }
 
+    std::cerr << "start " << start + 1 << " " ;
     if (num_matching_digits <= kMinNumMatchingDigits) {
-      std::cerr << "start " << start + 1 << " " ;
       std::cerr <<  "FAILURE";
-      std::cerr << " summary: "
-                << summary.BriefReport()
-                << " Certified cost: " << certified_cost
-                << std::endl;
     } else {
+      std::cerr <<  "SUCCESS";
       ++num_success;
     }
+    std::cerr << " summary: "
+              << summary.BriefReport()
+              << " Certified cost: " << certified_cost
+              << std::endl;
+
   }
 
   return num_success;
@@ -401,6 +413,7 @@ void SetMinimizerOptions(ceres::Solver::Options* options) {
 
   options->max_num_iterations = FLAGS_num_iterations;
   options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
+  options->initial_trust_region_radius = FLAGS_initial_trust_region_radius;
   options->function_tolerance = 1e-18;
   options->gradient_tolerance = 1e-18;
   options->parameter_tolerance = 1e-18;

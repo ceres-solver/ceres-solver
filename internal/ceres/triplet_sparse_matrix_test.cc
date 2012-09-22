@@ -67,9 +67,7 @@ TEST(TripletSparseMatrix, SimpleConstructorAndBasicOperations) {
   ASSERT_TRUE(m.AllTripletsWithinBounds());
 
   // We should never be able resize and lose data
-#ifndef _MSC_VER
-  ASSERT_DEATH(m.Reserve(1), "Reallocation will cause data loss");
-#endif
+  EXPECT_DEATH_IF_SUPPORTED(m.Reserve(1), "Reallocation will cause data loss");
 
   // We should be able to resize while preserving data
   m.Reserve(50);

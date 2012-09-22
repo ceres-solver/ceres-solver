@@ -159,8 +159,7 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
   BalanceCompanionMatrix(&companion_matrix);
 
   // Find its (complex) eigenvalues.
-  Eigen::EigenSolver<Matrix> solver(companion_matrix,
-                                    Eigen::EigenvaluesOnly);
+  Eigen::EigenSolver<Matrix> solver(companion_matrix, false);
   if (solver.info() != Eigen::Success) {
     LOG(ERROR) << "Failed to extract eigenvalues from companion matrix.";
     return false;

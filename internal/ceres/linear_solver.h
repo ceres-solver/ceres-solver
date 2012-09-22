@@ -35,6 +35,7 @@
 #define CERES_INTERNAL_LINEAR_SOLVER_H_
 
 #include <cstddef>
+#include <vector>
 
 #include <glog/logging.h>
 #include "ceres/block_sparse_matrix.h"
@@ -76,7 +77,6 @@ class LinearSolver {
           min_num_iterations(1),
           max_num_iterations(1),
           num_threads(1),
-          num_eliminate_blocks(0),
           residual_reset_period(10),
           row_block_size(Dynamic),
           e_block_size(Dynamic),
@@ -100,15 +100,23 @@ class LinearSolver {
     // If possible, how many threads can the solver use.
     int num_threads;
 
-    // Eliminate 0 to num_eliminate_blocks - 1 from the Normal
-    // equations to form a schur complement. Only used by the Schur
-    // complement based solver. The most common use for this parameter
-    // is in the case of structure from motion problems where we have
-    // camera blocks and point blocks. Then setting the
-    // num_eliminate_blocks to the number of points allows the solver
-    // to use the Schur complement trick. For more details see the
-    // description of this parameter in solver.h.
-    int num_eliminate_blocks;
+    // Hints about the order in which the parameter blocks should be
+    // eliminated by the linear solver.
+    //
+    // For example if elimination_groups is a vector of size k, then
+    // the linear solver is informed that it should eliminate the
+    // parameter blocks 0 - elimination_groups[0] - 1 first, and then
+    // elimination_groups[0] - elimination_groups[1] and so on. Within
+    // each elimination group, the linear solver is free to choose how
+    // the parameter blocks are ordered. Different linear solvers have
+    // differing requirements on elimination_groups.
+    //
+    // The most common use is for Schur type solvers, where there
+    // should be at least two elimination groups and the first
+    // elimination group must form an independent set in the normal
+    // equations. The first elimination group corresponds to the
+    // num_eliminate_blocks in the Schur type solvers.
+    vector<int> elimination_groups;
 
     // Iterative solvers, e.g. Preconditioned Conjugate Gradients
     // maintain a cheap estimate of the residual which may become

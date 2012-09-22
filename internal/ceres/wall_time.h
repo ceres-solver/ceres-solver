@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,19 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: strandmark@google.com (Petter Strandmark)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
+#ifndef CERES_INTERNAL_WALL_TIME_H_
+#define CERES_INTERNAL_WALL_TIME_H_
 
-#define CERES_VERSION 1.3.0
-#define CERES_ABI_VERSION 1.3.0
+namespace ceres {
+namespace internal {
 
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/cost_function.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordering.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
+// Returns time, in seconds, from some arbitrary starting point. Has very
+// high precision if OpenMP is available, otherwise only second granularity.
+double WallTimeInSeconds();
 
-#endif  // CERES_PUBLIC_CERES_H_
+}  // namespace internal
+}  // namespace ceres
+
+#endif  // CERES_INTERNAL_WALL_TIME_H_

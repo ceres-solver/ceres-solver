@@ -67,44 +67,44 @@
 
 DEFINE_string(input, "", "Input File name");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
-              "Options are: levenberg_marquardt, dogleg");
+              "Options are: levenberg_marquardt, dogleg.");
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
-              "dense_qr, dense_normal_cholesky and cgnr");
+              "dense_qr, dense_normal_cholesky and cgnr.");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
-              "cluster_tridiagonal");
+              "cluster_tridiagonal.");
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse and cx_sparse");
-DEFINE_string(ordering, "schur", "Options are: schur, user, natural");
+              "Options are: suite_sparse and cx_sparse.");
+DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
 DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
-              "subspace_dogleg");
+              "subspace_dogleg.");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
-            "rotations. If false, angle axis is used");
+            "rotations. If false, angle axis is used.");
 DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
             "parameterization.");
-DEFINE_bool(robustify, false, "Use a robust loss function");
+DEFINE_bool(robustify, false, "Use a robust loss function.");
 
 DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
              "accuracy of each linear solve of the truncated newton step. "
-             "Changing this parameter can affect solve performance ");
+             "Changing this parameter can affect solve performance.");
 
 DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
             "ordering.");
 
-DEFINE_int32(num_threads, 1, "Number of threads");
-DEFINE_int32(num_iterations, 5, "Number of iterations");
+DEFINE_int32(num_threads, 1, "Number of threads.");
+DEFINE_int32(num_iterations, 5, "Number of iterations.");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
-            " nonmonotic steps");
+            " nonmonotic steps.");
 
 DEFINE_double(rotation_sigma, 0.0, "Standard deviation of camera rotation "
               "perturbation.");
 DEFINE_double(translation_sigma, 0.0, "Standard deviation of the camera "
               "translation perturbation.");
 DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
-              "perturbation");
+              "perturbation.");
 DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
              "the pertubations.");
@@ -126,27 +126,22 @@ void SetLinearSolver(Solver::Options* options) {
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   options->use_block_amd = FLAGS_use_block_amd;
-  CHECK(StringToOrderingType(FLAGS_ordering, &options->ordering_type));
 
   // Bundle adjustment problems have a sparsity structure that makes
   // them amenable to more specialized and much more efficient
   // solution strategies. The SPARSE_SCHUR, DENSE_SCHUR and
   // ITERATIVE_SCHUR solvers make use of this specialized
-  // structure. Using them however requires that the ParameterBlocks
-  // are in a particular order (points before cameras) and
-  // Solver::Options::num_eliminate_blocks is set to the number of
-  // points.
+  // structure.
   //
   // This can either be done by specifying Options::ordering_type =
   // ceres::SCHUR, in which case Ceres will automatically determine
   // the right ParameterBlock ordering, or by manually specifying a
   // suitable ordering vector and defining
   // Options::num_eliminate_blocks.
-  if (options->ordering_type == ceres::SCHUR) {
+  if (FLAGS_ordering == "automatic") {
     return;
   }
 
-  options->ordering_type = ceres::USER;
   const int num_points = bal_problem->num_points();
   const int point_block_size = bal_problem->point_block_size();
   double* points = bal_problem->mutable_points();
@@ -154,24 +149,26 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   const int camera_block_size = bal_problem->camera_block_size();
   double* cameras = bal_problem->mutable_cameras();
 
+  ceres::Ordering* ordering = new ceres::Ordering;
+
   // The points come before the cameras.
   for (int i = 0; i < num_points; ++i) {
-    options->ordering.push_back(points + point_block_size * i);
+    ordering->AddParameterBlockToGroup(points + point_block_size * i, 0);
   }
 
   for (int i = 0; i < num_cameras; ++i) {
     // When using axis-angle, there is a single parameter block for
     // the entire camera.
-    options->ordering.push_back(cameras + camera_block_size * i);
-
+    ordering->AddParameterBlockToGroup(cameras + camera_block_size * i, 1);
     // If quaternions are used, there are two blocks, so add the
     // second block to the ordering.
     if (FLAGS_use_quaternions) {
-      options->ordering.push_back(cameras + camera_block_size * i + 4);
+      ordering->AddParameterBlockToGroup(
+          cameras + camera_block_size * i + 4, 1);
     }
   }
 
-  options->num_eliminate_blocks = num_points;
+  options->ordering = ordering;
 }
 
 void SetMinimizerOptions(Solver::Options* options) {
@@ -270,8 +267,8 @@ void SolveProblem(const char* filename) {
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.solver_log = FLAGS_solver_log;
-  options.gradient_tolerance *= 1e-3;
-
+  options.gradient_tolerance = 1e-12;
+  options.function_tolerance = 1e-12;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";

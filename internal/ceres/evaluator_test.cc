@@ -818,8 +818,8 @@ class StaticEvaluateTest : public ::testing::Test {
                        expected_gradient,
                        expected_jacobian,
                        cost,
-                       &residuals[0],
-                       &gradient[0],
+                       residuals.size() > 0 ? &residuals[0] : NULL,
+                       gradient.size() > 0 ? &gradient[0] : NULL,
                        dense_jacobian.data());
   }
 

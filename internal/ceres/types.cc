@@ -112,24 +112,6 @@ bool StringToSparseLinearAlgebraLibraryType(
   return false;
 }
 
-const char* OrderingTypeToString(OrderingType ordering_type) {
-  switch (ordering_type) {
-    CASESTR(NATURAL);
-    CASESTR(USER);
-    CASESTR(SCHUR);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-bool StringToOrderingType(string value, OrderingType* type) {
-  UpperCase(&value);
-  STRENUM(NATURAL);
-  STRENUM(USER);
-  STRENUM(SCHUR);
-  return false;
-}
-
 const char* TrustRegionStrategyTypeToString(
     TrustRegionStrategyType trust_region_strategy_type) {
   switch (trust_region_strategy_type) {
@@ -199,6 +181,28 @@ bool IsSchurType(LinearSolverType type) {
   return ((type == SPARSE_SCHUR) ||
           (type == DENSE_SCHUR)  ||
           (type == ITERATIVE_SCHUR));
+}
+
+bool IsSparseLinearAlgebraLibraryTypeAvailable(
+    SparseLinearAlgebraLibraryType type) {
+  if (type == SUITE_SPARSE) {
+#ifdef CERES_NO_SUITESPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  if (type == CX_SPARSE) {
+#ifdef CERES_NO_CXSPARSE
+    return false;
+#else
+    return true;
+#endif
+  }
+
+  LOG(WARNING) << "Unknown sparse linear algebra library " << type;
+  return false;
 }
 
 }  // namespace ceres

@@ -42,6 +42,7 @@
 
 namespace ceres {
 
+class Ordering;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -89,15 +90,13 @@ class Solver {
 #endif
 
       num_linear_solver_threads = 1;
-      num_eliminate_blocks = 0;
-      ordering_type = NATURAL;
 
 #if defined(CERES_NO_SUITESPARSE)
       use_block_amd = false;
 #else
       use_block_amd = true;
 #endif
-
+      ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -118,6 +117,7 @@ class Solver {
       update_state_every_iteration = false;
     }
 
+    ~Options();
     // Minimizer options ----------------------------------------
 
     TrustRegionStrategyType trust_region_strategy_type;
@@ -229,29 +229,10 @@ class Solver {
     // using this setting.
     int num_linear_solver_threads;
 
-    // For Schur reduction based methods, the first 0 to num blocks are
-    // eliminated using the Schur reduction. For example, when solving
-    // traditional structure from motion problems where the parameters are in
-    // two classes (cameras and points) then num_eliminate_blocks would be the
-    // number of points.
-    //
-    // This parameter is used in conjunction with the ordering.
-    // Applies to: Preprocessor and linear least squares solver.
-    int num_eliminate_blocks;
-
-    // Internally Ceres reorders the parameter blocks to help the
-    // various linear solvers. This parameter allows the user to
-    // influence the re-ordering strategy used. For structure from
-    // motion problems use SCHUR, for other problems NATURAL (default)
-    // is a good choice. In case you wish to specify your own ordering
-    // scheme, for example in conjunction with num_eliminate_blocks,
-    // use USER.
-    OrderingType ordering_type;
-
-    // The ordering of the parameter blocks. The solver pays attention
-    // to it if the ordering_type is set to USER and the vector is
-    // non-empty.
-    vector<double*> ordering;
+    // If NULL, then all parameter blocks are assumed to be in the
+    // same group and the solver is free to decide the best
+    // ordering. (See ordering.h for more details).
+    Ordering* ordering;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When
@@ -508,7 +489,6 @@ class Solver {
     LinearSolverType linear_solver_type_used;
 
     PreconditionerType preconditioner_type;
-    OrderingType ordering_type;
 
     TrustRegionStrategyType trust_region_strategy_type;
     DoglegType dogleg_type;

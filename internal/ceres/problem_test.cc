@@ -106,9 +106,6 @@ class TernaryCostFunction: public CostFunction {
   }
 };
 
-// TODO(keir): Figure out how to enable death tests on Windows.
-#ifndef _WIN32
-
 TEST(Problem, AddResidualWithNullCostFunctionDies) {
   double x[3], y[4], z[5];
 
@@ -117,8 +114,8 @@ TEST(Problem, AddResidualWithNullCostFunctionDies) {
   problem.AddParameterBlock(y, 4);
   problem.AddParameterBlock(z, 5);
 
-  ASSERT_DEATH(problem.AddResidualBlock(NULL, NULL, x),
-               "'cost_function' Must be non NULL");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(NULL, NULL, x),
+                            "'cost_function' Must be non NULL");
 }
 
 TEST(Problem, AddResidualWithIncorrectNumberOfParameterBlocksDies) {
@@ -130,7 +127,7 @@ TEST(Problem, AddResidualWithIncorrectNumberOfParameterBlocksDies) {
   problem.AddParameterBlock(z, 5);
 
   // UnaryCostFunction takes only one parameter, but two are passed.
-  ASSERT_DEATH(
+  EXPECT_DEATH_IF_SUPPORTED(
       problem.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x, y),
       "parameter_blocks.size()");
 }
@@ -140,21 +137,23 @@ TEST(Problem, AddResidualWithDifferentSizesOnTheSameVariableDies) {
 
   Problem problem;
   problem.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x);
-  ASSERT_DEATH(problem.AddResidualBlock(
-      new UnaryCostFunction(2, 4 /* 4 != 3 */), NULL, x),
-               "different block sizes");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
+                                new UnaryCostFunction(
+                                    2, 4 /* 4 != 3 */), NULL, x),
+                            "different block sizes");
 }
 
 TEST(Problem, AddResidualWithDuplicateParametersDies) {
   double x[3], z[5];
 
   Problem problem;
-  ASSERT_DEATH(problem.AddResidualBlock(
-      new BinaryCostFunction(2, 3, 3), NULL, x, x),
-               "Duplicate parameter blocks");
-  ASSERT_DEATH(problem.AddResidualBlock(
-      new TernaryCostFunction(1, 5, 3, 5), NULL, z, x, z),
-               "Duplicate parameter blocks");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
+                                new BinaryCostFunction(2, 3, 3), NULL, x, x),
+                            "Duplicate parameter blocks");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
+                                new TernaryCostFunction(1, 5, 3, 5),
+                                NULL, z, x, z),
+                            "Duplicate parameter blocks");
 }
 
 TEST(Problem, AddResidualWithIncorrectSizesOfParameterBlockDies) {
@@ -167,12 +166,10 @@ TEST(Problem, AddResidualWithIncorrectSizesOfParameterBlockDies) {
 
   // The cost function expects the size of the second parameter, z, to be 4
   // instead of 5 as declared above. This is fatal.
-  ASSERT_DEATH(problem.AddResidualBlock(
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddResidualBlock(
       new BinaryCostFunction(2, 3, 4), NULL, x, z),
                "different block sizes");
 }
-
-#endif  // _WIN32
 
 TEST(Problem, AddResidualAddsDuplicatedParametersOnlyOnce) {
   double x[3], y[4], z[5];
@@ -187,8 +184,6 @@ TEST(Problem, AddResidualAddsDuplicatedParametersOnlyOnce) {
   EXPECT_EQ(12, problem.NumParameters());
 }
 
-#ifndef _WIN32
-
 TEST(Problem, AddParameterWithDifferentSizesOnTheSameVariableDies) {
   double x[3], y[4];
 
@@ -196,7 +191,8 @@ TEST(Problem, AddParameterWithDifferentSizesOnTheSameVariableDies) {
   problem.AddParameterBlock(x, 3);
   problem.AddParameterBlock(y, 4);
 
-  ASSERT_DEATH(problem.AddParameterBlock(x, 4), "different block sizes");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(x, 4),
+                            "different block sizes");
 }
 
 static double *IntToPtr(int i) {
@@ -218,12 +214,18 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
   problem.AddParameterBlock(IntToPtr(5),  5);  // x
   problem.AddParameterBlock(IntToPtr(13), 3);  // y
 
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr( 4), 2), "Aliasing detected");
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr( 4), 3), "Aliasing detected");
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr( 4), 9), "Aliasing detected");
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr( 8), 3), "Aliasing detected");
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr(12), 2), "Aliasing detected");
-  ASSERT_DEATH(problem.AddParameterBlock(IntToPtr(14), 3), "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 2),
+                            "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 3),
+                            "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 9),
+                            "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 8), 3),
+                            "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(12), 2),
+                            "Aliasing detected");
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(14), 3),
+                            "Aliasing detected");
 
   // These ones should work.
   problem.AddParameterBlock(IntToPtr( 2), 3);
@@ -232,8 +234,6 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
 
   ASSERT_EQ(5, problem.NumParameterBlocks());
 }
-
-#endif  // _WIN32
 
 TEST(Problem, AddParameterIgnoresDuplicateCalls) {
   double x[3], y[4];

@@ -47,6 +47,7 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -96,29 +97,21 @@ bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
   // moved inside TrustRegionStrategy, its not clear how we dump the
   // regularization vector/matrix anymore.
   //
-  // Doing this right requires either an API change to the
-  // TrustRegionStrategy and/or how LinearLeastSquares problems are
-  // stored on disk.
+  // Also num_eliminate_blocks is not visible to the trust region
+  // minimizer either.
   //
-  // For now, we will just not dump the regularizer.
-  return (!binary_search(options_.lsqp_iterations_to_dump.begin(),
-                         options_.lsqp_iterations_to_dump.end(),
-                         iteration) ||
-          DumpLinearLeastSquaresProblem(options_.lsqp_dump_directory,
-                                        iteration,
-                                        options_.lsqp_dump_format_type,
-                                        jacobian,
-                                        NULL,
-                                        residuals,
-                                        step,
-                                        options_.num_eliminate_blocks));
+  // Both of these indicate that this is the wrong place for this
+  // code, and going forward this should needs fixing/refactoring.
+  LOG(WARNING) << "Dumping linear least squares problem to disk is "
+               << "currently broken.";
+  return true;
 }
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
                                     Solver::Summary* summary) {
-  time_t start_time = time(NULL);
-  time_t iteration_start_time =  start_time;
+  double start_time = WallTimeInSeconds();
+  double iteration_start_time =  start_time;
   Init(options);
 
   summary->termination_type = NO_CONVERGENCE;
@@ -204,9 +197,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   }
 
   iteration_summary.iteration_time_in_seconds =
-      time(NULL) - iteration_start_time;
-  iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
-        summary->preprocessor_time_in_seconds;
+      WallTimeInSeconds() - iteration_start_time;
+  iteration_summary.cumulative_time_in_seconds =
+      WallTimeInSeconds() - start_time
+      + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
   // Call the various callbacks.
@@ -227,7 +221,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   int num_consecutive_invalid_steps = 0;
   while (true) {
-    iteration_start_time = time(NULL);
+    iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
       summary->termination_type = NO_CONVERGENCE;
       VLOG(1) << "Terminating: Maximum number of iterations reached.";
@@ -248,7 +242,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_is_valid = false;
     iteration_summary.step_is_successful = false;
 
-    const time_t strategy_start_time = time(NULL);
+    const double strategy_start_time = WallTimeInSeconds();
     TrustRegionStrategy::PerSolveOptions per_solve_options;
     per_solve_options.eta = options_.eta;
     TrustRegionStrategy::Summary strategy_summary =
@@ -258,7 +252,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                               trust_region_step.data());
 
     iteration_summary.step_solver_time_in_seconds =
-        time(NULL) - strategy_start_time;
+        WallTimeInSeconds() - strategy_start_time;
     iteration_summary.linear_solver_iterations =
         strategy_summary.num_iterations;
 
@@ -270,23 +264,24 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                  << options.lsqp_dump_directory << "but failed.";
     }
 
-    double new_model_cost = 0.0;
+    double model_cost_change = 0.0;
     if (strategy_summary.termination_type != FAILURE) {
-      // new_model_cost = 1/2 |f + J * step|^2
-      model_residuals = residuals;
+      // new_model_cost
+      //  = 1/2 [f + J * step]^2
+      //  = 1/2 [ f'f + 2f'J * step + step' * J' * J * step ]
+      // model_cost_change
+      //  = cost - new_model_cost
+      //  = f'f/2  - 1/2 [ f'f + 2f'J * step + step' * J' * J * step]
+      //  = -f'J * step - step' * J' * J * step / 2
+      model_residuals.setZero();
       jacobian->RightMultiply(trust_region_step.data(), model_residuals.data());
-      new_model_cost = model_residuals.squaredNorm() / 2.0;
+      model_cost_change = -(residuals.dot(model_residuals) +
+                            model_residuals.squaredNorm() / 2.0);
 
-      // In exact arithmetic, this would never be the case. But poorly
-      // conditioned matrices can give rise to situations where the
-      // new_model_cost can actually be larger than half the squared
-      // norm of the residual vector. We allow for small tolerance
-      // around cost and beyond that declare the step to be invalid.
-      if ((1.0 - new_model_cost / cost) < -kEpsilon) {
+      if (model_cost_change < 0.0) {
         VLOG(1) << "Invalid step: current_cost: " << cost
-                << " new_model_cost " << new_model_cost
-                << " absolute difference " << (cost - new_model_cost)
-                << " relative difference " << (1.0 - new_model_cost/cost);
+                << " absolute difference " << model_cost_change
+                << " relative difference " << (model_cost_change / cost);
       } else {
         iteration_summary.step_is_valid = true;
       }
@@ -321,25 +316,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     } else {
       // The step is numerically valid, so now we can judge its quality.
       num_consecutive_invalid_steps = 0;
-
-      // We allow some slop around 0, and clamp the model_cost_change
-      // at kEpsilon * min(1.0, cost) from below.
-      //
-      // In exact arithmetic this should never be needed, as we are
-      // guaranteed to new_model_cost <= cost. However, due to various
-      // numerical issues, it is possible that new_model_cost is
-      // nearly equal to cost, and the difference is a small negative
-      // number. To make sure that the relative_decrease computation
-      // remains sane, as clamp the difference (cost - new_model_cost)
-      // from below at a small positive number.
-      //
-      // This number is the minimum of kEpsilon * (cost, 1.0), which
-      // ensures that it will never get too large in absolute value,
-      // while scaling down proportionally with the magnitude of the
-      // cost. This is important for problems where the minimum of the
-      // objective function is near zero.
-      const double model_cost_change =
-          max(kEpsilon * min(1.0, cost), cost - new_model_cost);
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
@@ -523,9 +499,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     iteration_summary.iteration_time_in_seconds =
-        time(NULL) - iteration_start_time;
-    iteration_summary.cumulative_time_in_seconds = time(NULL) - start_time +
-        summary->preprocessor_time_in_seconds;
+        WallTimeInSeconds() - iteration_start_time;
+    iteration_summary.cumulative_time_in_seconds =
+        WallTimeInSeconds() - start_time
+        + summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
 
     switch (RunCallbacks(iteration_summary)) {
