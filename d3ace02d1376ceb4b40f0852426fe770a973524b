@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJUn//+rA\u003d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:02:09Z",
+      "side": 1,
+      "message": "Please make multiline.",
+      "revId": "d3ace02d1376ceb4b40f0852426fe770a973524b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
