@@ -37,7 +37,7 @@
 namespace ceres {
 namespace internal {
 
-class CompressedRowBlockStructure;
+struct CompressedRowBlockStructure;
 class LinearOperator;
 class SparseMatrix;
 

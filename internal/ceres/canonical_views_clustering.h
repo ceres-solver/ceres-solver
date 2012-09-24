@@ -52,7 +52,7 @@
 namespace ceres {
 namespace internal {
 
-class CanonicalViewsClusteringOptions;
+struct CanonicalViewsClusteringOptions;
 
 // Compute a partitioning of the vertices of the graph using the
 // canonical views clustering algorithm.

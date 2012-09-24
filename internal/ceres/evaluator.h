@@ -39,7 +39,7 @@
 
 namespace ceres {
 
-class CRSMatrix;
+struct CRSMatrix;
 
 namespace internal {
 
