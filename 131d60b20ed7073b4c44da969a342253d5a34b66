@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJUn//+q0\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Real commit message please.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qo\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Make a sentence to be consistent with the other options. It\u0027s ok to make this say something useful.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qc\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Blank after here.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qU\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Check for \"automatic\", give an error if it\u0027s anything else.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qM\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qE\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this comment go in a separate CL?",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+qA\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Missing description. This should be \"use_inner_iterations\".",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+os\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "It\u0027s weird to me that this would be anything other than \"return\" for the \u003d\u003d 0 case.\n\nShould this be \"automatic\"? At least comment.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+oo\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "This is too clever. Use a ?:. The comment should say something like \"Split into groups 0 and 1, with 0 becoming the automatically determined inner iteration group.\"",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+o0\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+oY\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Do we require these to be an independent set? If so, check, and propagate error to the user.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+oQ\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Ouch. Can we work around this? The public interface now takes a non-const program; why should this not do so as well?",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+oM\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "TODO() OpenMP. Consider trying it this CL, since it\u0027s an easy addition.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+n4\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Before we go down this road, I\u0027d like to do some profiling to see how bad the per-parameter overhead is.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+n0\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Needs comment saying that the residuals for this block are already next to each other.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+p0\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "hmmm\n\nthis should be an option, and can be either DENSE_QR or DENSE_NORMAL_CHOLESKY.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+ns\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "The linear solver can stick around (e.g. make it a member).",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+no\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "This can stick around and be part of the init.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+nk\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "I think this can stick around as well.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+nc\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "This can stick around.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+m8\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "The name of this function doesn\u0027t reflect what it does, or rather, what it accomplishes.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+m0\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "This is what the function is really computing.\n\nIn either case, use STL\u0027s partial_sum instead.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+o4\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Header comment",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+pk\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Consider stacking these arguments as we usually do in Ceres.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+pg\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Stack arguments.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+pY\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Nice.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+pU\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "These errors are user facing. num_eliminate_blocks is no longer in the API. Please make this a more meaningful error a user could take action on.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+pM\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Can we include this in the error string as well? This \"NUMERICAL_FAILURE\" is non-specific.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJUn//+o8\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-24T18:46:50Z",
+      "side": 1,
+      "message": "Put a comment above this line describing the inner iteration idea.",
+      "revId": "131d60b20ed7073b4c44da969a342253d5a34b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
