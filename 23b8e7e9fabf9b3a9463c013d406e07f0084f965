@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJb3///8w\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-25T11:24:29Z",
+      "side": 1,
+      "message": "nitpick: Wiberg",
+      "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJb3///40\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-25T11:24:29Z",
+      "side": 1,
+      "message": "Isn\u0027t algorithm II the VP algorithm and algorithm III the simplification?\n(I am reading \"Algorithms for Separable Nonlinear Least Squares Problems\", A. Ruhe and P. A. Wedin, SIAM Review, Vol 22, No 3, 1980)\n\nIf I read their paper correctly, algorithm III seems to perform rather poorly? (worst convergence rate, most often linear?)\nAlso, how well does all this fit into trust-region theory? They seem to use the algorithm exclusively in a global unconstrained way.",
+      "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
