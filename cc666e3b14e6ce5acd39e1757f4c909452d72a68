@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJaX///kw\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-25T17:09:02Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "cc666e3b14e6ce5acd39e1757f4c909452d72a68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
