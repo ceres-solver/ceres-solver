@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJaX///lM\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-25T17:05:55Z",
+      "side": 1,
+      "message": "I think the entire block should be indented 1 more space.\n\nWhy is this now in the header?",
+      "revId": "5e07acaf96ad23fa686f43e2524787eaf636b8c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///k8\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-25T17:05:55Z",
+      "side": 1,
+      "message": "\"... by the non-monotonic.\" ... sledgehammer? firehose? asparagus? :)",
+      "revId": "5e07acaf96ad23fa686f43e2524787eaf636b8c7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
