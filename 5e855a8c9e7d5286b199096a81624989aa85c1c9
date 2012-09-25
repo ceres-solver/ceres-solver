@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///wU\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T05:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///3g\u003d",
+      "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///3U\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-25T02:42:55Z",
       "side": 1,
       "message": "The structure here is odd, since the previous sentence is \"two choices\" but then the paragraph doesn\u0027t talk about the second. Consider:\n\nIf inner_iterations is true, then the user has two choices:  provide a set of variables to perform inner iterations on, or have Ceres select a set via heuristics.\n\nThen talk about the requirements on the inner iteration set.",
+      "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///wQ\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T05:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///3U\u003d",
       "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///vg\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T05:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///3M\u003d",
+      "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///3Q\u003d",
         "filename": "internal/ceres/inner_iteration_minimizer.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2012-09-25T02:42:55Z",
       "side": 1,
       "message": "Leave a TODO() to promote this and reuse to check the user orderings.",
+      "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///vk\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T05:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///3Q\u003d",
       "revId": "5e855a8c9e7d5286b199096a81624989aa85c1c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
