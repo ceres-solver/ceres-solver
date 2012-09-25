@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///8k\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Ugh, this was meant to be log(fatal) not error.",
+      "parentUuid": "AAAJYX///kc\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJYX///kY\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 6
@@ -64,6 +82,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "\"the\"? Rework first sentence.",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///4s\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJYX///kY\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///4k\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan////0\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan////g\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 6
@@ -98,6 +152,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "Drop \"bit\"",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///4c\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan////g\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///4I\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan////U\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///+8\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 6
@@ -132,6 +222,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "no -\u003e on",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///4E\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+8\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///4A\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+o\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///+g\u003d",
         "filename": "internal/ceres/inner_iteration_minimizer.cc",
         "patchSetId": 6
@@ -166,6 +292,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "// For now, use approximate ...",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///5s\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+g\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///5o\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+c\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///+U\u003d",
         "filename": "internal/ceres/inner_iteration_minimizer.cc",
         "patchSetId": 6
@@ -200,6 +362,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "Please do this now. It\u0027s a user-level correctness issue that I don\u0027t want forgotten. It shouldn\u0027t be hard.",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///5E\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+U\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///44\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+M\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///+A\u003d",
         "filename": "internal/ceres/inner_iteration_minimizer.h",
         "patchSetId": 6
@@ -234,6 +432,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///6E\u003d",
+        "filename": "internal/ceres/inner_iteration_minimizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///+A\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///54\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///98\u003d",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJan///94\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 6
@@ -268,6 +502,24 @@
       "writtenOn": "2012-09-25T00:35:29Z",
       "side": 1,
       "message": "Weird line breaking.",
+      "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///50\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T01:33:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJan///94\u003d",
       "revId": "51e18e2256d18eba00c3457ba3bd611d77c15e41",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
