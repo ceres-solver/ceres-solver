@@ -69,6 +69,24 @@
       "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJb3///1M\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-09-25T14:41:36Z",
+      "side": 1,
+      "message": "I thought (I) is a Newton modification (including second derivatives) and (II) is Gauss-Newton... however, I really haven\u0027t read the paper carefully enough.\n\nDoes the extra optimization stay within the original trust-region? I guess in this case things work fine. If it leaves it, I\u0027m not sure what happens to the convergence guarantees (most of which depend on the step being at least as good as the Cauchy step... but now the Cauchy step for the enlarged trust-region might be better than the step for the original, small trust region + the extra step optimizing the subset of parameters).\n\nI will give it a try when I find the time though.",
+      "parentUuid": "AAAJaX///pI\u003d",
+      "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
