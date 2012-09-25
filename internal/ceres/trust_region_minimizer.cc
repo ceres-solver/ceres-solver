@@ -397,6 +397,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         accumulated_candidate_model_cost_change += model_cost_change;
         accumulated_reference_model_cost_change += model_cost_change;
         if (relative_decrease <= options_.min_relative_decrease) {
+          iteration_summary.step_is_nonmonotonic = true;
           VLOG(2) << "Non-monotonic step! "
                   << " relative_decrease: " << relative_decrease
                   << " historical_relative_decrease: "
