@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX///pQ\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T14:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJb3///8w\u003d",
+      "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJb3///40\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-25T11:24:29Z",
       "side": 1,
       "message": "Isn\u0027t algorithm II the VP algorithm and algorithm III the simplification?\n(I am reading \"Algorithms for Separable Nonlinear Least Squares Problems\", A. Ruhe and P. A. Wedin, SIAM Review, Vol 22, No 3, 1980)\n\nIf I read their paper correctly, algorithm III seems to perform rather poorly? (worst convergence rate, most often linear?)\nAlso, how well does all this fit into trust-region theory? They seem to use the algorithm exclusively in a global unconstrained way.",
+      "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX///pI\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-25T14:10:04Z",
+      "side": 1,
+      "message": "Hi Markus,\nActually its Algorithm I which is VP, algorithm III is just alternating minimization.\n\nAs for fitting into the trust region algorithm, you are right the way the algorithm is stated, there is no globalization. So I modified the trust region loop to only try the coordinate descent in the case that the step is successful.\n\nIf I do it on every step, then the trust region sizing breaks down, because it can be that the linear model is a bad predictor, but the coordinate descent improves the convergence, in which case  the trust region gets the credit and things go haywire -- (that was my first implementation). \n\nIf you get a chance, try this on one of your SfM problems, with the cameras as the inner_iteration parameter blocks. setting num_threads \u003e 1 helps tremendously.",
+      "parentUuid": "AAAJb3///40\u003d",
       "revId": "23b8e7e9fabf9b3a9463c013d406e07f0084f965",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
