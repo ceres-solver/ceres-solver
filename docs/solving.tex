@@ -116,8 +116,69 @@ The key advantage of the Dogleg over Levenberg Marquardt is that if the step com
 
 The Dogleg method can only be used with the exact factorization based linear solvers.
 
+\subsection{Inner Iterations}
+\label{sec:inner}
+Some non-linear least squares problems have additional structure in
+the way the parameter blocks interact that it is beneficial to modify
+the way the trust region step is computed. e.g., consider the
+following regression problem
+
+\begin{equation}
+  y = a_1 e^{b_1 x} + a_2 e^{b_3 x^2 + c_1}
+\end{equation}
+
+Given a set of pairs $\{(x_i, y_i)\}$, the user wishes to estimate
+$a_1, a_2, b_1, b_2$, and $c_1$.
+
+Notice that the expression on the left is linear in $a_1$ and $a_2$,
+and given any value for $b_1$, $b_2$ and $c_1$, it is possible to use
+linear regression to estimate the optimal values of $a_1$ and
+$a_2$. It's possible to analytically eliminate the variables
+$a_1$ and $a_2$ from the problem entirely. Problems like these are
+known as separable least squares problem and the most famous algorithm
+for solving them is the Variable Projection algorithm invented by
+Golub \& Pereyra~\cite{golub-pereyra-73}.
+
+Similar structure can be found in the matrix factorization with
+missing data problem. There the corresponding algorithm is
+known as Wiberg's algorithm~\cite{wiberg}.
+
+Ruhe \& Wedin  present an analysis of
+various algorithms for solving separable non-linear least
+squares problems and refer to {\em Variable Projection} as
+Algorithm I in their paper~\cite{ruhe-wedin}.
+
+Implementing Variable Projection is tedious and expensive. Ruhe \&
+Wedin present a simpler algorithm with comparable comparable
+convergence properties, which they refer to as Algorithm II. In this
+algorithm, once the Newton/Trust Region step has been computed for the
+whole problem $(a_1, a_2, b_1, b_2, c_1)$ an additional optimization
+step is performed to estimate $a_1$ and $a_2$ exactly.
+
+This idea can be generalized to cases where the residual is not
+linear in $a_1$ and $a_2$, i.e.,
+
+\begin{equation}
+  y = f_1(a_1, e^{b_1 x}) + f_2(a_2, e^{b_3 x^2 + c_1})
+\end{equation}
+
+In this case, we solve for the trust region step for the full problem,
+and then use it as the starting point to further optimize just $a_1$
+and $a_2$. For the linear case, this amounts to doing a single linear
+least squares solve. For non-linear problems, any method for solving
+the $a_1$ and $a_2$ optimization problems will do. The only constraint
+on $a_1$ and $a_2$ (if they are two different parameter block) is that
+they do not co-occur in a residual block.
+
+Setting \texttt{Solver::Options::use\_inner\_iterations} to true
+enables (and optionally setting
+\texttt{Solver::Options::parameter\_blocks\_for\_inner\_iterations}
+the use of this non-linear generalization of Ruhe \& Wedin's Algorithm
+II.  This version of Ceres has a higher iteration complexity, but also
+displays better convergence behavior per iteration.
+
 \subsection{Non-monotonic Steps}
-\label{sec:non-monotic}
+\label{sec:non-monotonic}
 Note that the basic trust-region algorithm described in
 Algorithm~\ref{alg:trust-region} is a descent algorithm  in that they
 only accepts a point if it strictly reduces the value of the objective
@@ -258,9 +319,6 @@ For general sparse problems, if the problem is too large for \texttt{CHOLMOD} or
 \end{align}
 When the user chooses \texttt{ITERATIVE\_SCHUR} as the linear solver, Ceres automatically switches from the exact step algorithm to an inexact step algorithm.
 
-%Currently only the \texttt{JACOBI} preconditioner is available for use with this solver. It uses the block diagonal of $H$ as a preconditioner.
-
-
 \subsection{\texttt{ITERATIVE\_SCHUR}}
 Another option for bundle adjustment problems is to apply PCG to the reduced camera matrix $S$ instead of $H$. One reason to do this is that $S$ is a much smaller matrix than $H$, but more importantly, it can be shown that $\kappa(S)\leq \kappa(H)$.  Ceres implements PCG on $S$ as the \texttt{ITERATIVE\_SCHUR} solver. When the user chooses \texttt{ITERATIVE\_SCHUR} as the linear solver, Ceres automatically switches from the exact step algorithm to an inexact step algorithm.
 
@@ -291,23 +349,74 @@ For \texttt{ITERATIVE\_SCHUR} there are two obvious choices for block diagonal p
 For bundle adjustment problems arising in reconstruction from community photo collections, more effective preconditioners can be constructed by analyzing and exploiting the camera-point visibility structure of the scene~\cite{kushal2012}. Ceres implements the two visibility based preconditioners described by Kushal \& Agarwal as \texttt{CLUSTER\_JACOBI} and \texttt{CLUSTER\_TRIDIAGONAL}. These are fairly new preconditioners and Ceres' implementation of them is in its early stages and is not as mature as the other preconditioners described above.
 
 \section{Ordering}
-TBD - re-write this section once the ordering API is complete.
+\label{sec:ordering}
+The order in which variables are eliminated in a linear solver can
+have a significant of impact on the efficiency and accuracy of the
+method. e.g., when doing sparse Cholesky factorization, there are
+matrices for which a good ordering will give a Cholesky factor with
+O(n) storage, where as a bad ordering will result in an completely
+dense factor.
 
-All three of the Schur based solvers depend on the user indicating to the solver, which of the parameter blocks correspond to the points and which correspond to the cameras. Ceres refers to them as \texttt{e\_block}s and \texttt{f\_blocks}. The only constraint on \texttt{e\_block}s is that there should be no term in the objective function with two or more \texttt{e\_block}s.
+Ceres allows the user to provide varying amounts of hints to the
+solver about the variable elimination ordering to use. This can range
+from no hints, where the solver is free to decide the best ordering
+based on the user's choices like the linear solver being used, to an
+exact order in which the variables should be eliminated, and a variety
+of possibilities in between.
 
-As we saw in Section~\ref{chapter:tutorial:bundleadjustment}, there are two ways to indicate \texttt{e\_block}s to Ceres. The first is to explicitly create an ordering vector \texttt{Solver::Options::ordering} containing the parameter blocks such that all the \texttt{e\_block}s/points occur before the \texttt{f\_blocks}, and setting \texttt{Solver::Options::num\_eliminate\_blocks} to the number \texttt{e\_block}s.
+Instances of the \texttt{Ordering} class are used to communicate this
+information to Ceres.
 
-For some problems this is an easy thing to do and we recommend its use. In some problems though, this is onerous and it would be better if Ceres could automatically determine \texttt{e\_block}s. Setting \texttt{Solver::Options::ordering\_type} to \texttt{SCHUR} achieves this.
+Formally an ordering is an ordered partitioning of the parameter
+blocks, i.e, each parameter block belongs to exactly one group, and
+each group has a unique integer associated with it, that determines
+its order in the set of groups. We call these groups {\em elimination
+  groups}.
 
-The \texttt{SCHUR} ordering algorithm is based on the observation that
-the constraint that no two \texttt{e\_block} co-occur in a residual
-block means that if we were to treat the sparsity structure of the
-block matrix $H$ as a graph, then the set of \texttt{e\_block}s is an
-independent set in this graph. The larger the number of
-\texttt{e\_block}, the smaller is the size of the Schur complement $S$. Indeed the reason Schur based solvers are so efficient at solving bundle adjustment problems is because the number of points in a bundle adjustment problem is usually an order of magnitude or two larger than the number of cameras.
+Given such an ordering, Ceres ensures that the parameter blocks in the
+lowest numbered elimination group are eliminated first, and then the
+parameter blocks in the next lowest numbered elimination group and so
+on. Within each elimination group, Ceres is free to order the
+parameter blocks as it chooses. e.g. Consider the linear system
 
-Thus, the aim of the \texttt{SCHUR} ordering algorithm is to identify the largest independent set in the graph of $H$. Unfortunately this is an NP-Hard problem. But there is a  greedy approximation algorithm that performs well~\cite{li2007miqr} and we use it to identify \texttt{e\_block}s in Ceres.
+\begin{align}
+x + y &= 3\\
+   2x + 3y &= 7
+\end{align}
 
+There are two ways in which it can be solved. First eliminating $x$
+from the two equations, solving for y and then back substituting
+for $x$, or first eliminating $y$, solving for $x$ and back substituting
+for $y$. The user can construct three orderings here.
+
+\begin{enumerate}
+\item   $\{0: x\}, \{1: y\}$: Eliminate $x$ first.
+\item  $\{0: y\}, \{1: x\}$: Eliminate $y$ first.
+\item   $\{0: x, y\}$: Solver gets to decide the elimination order.
+\end{enumerate}
+
+Thus, to have Ceres determine the ordering automatically using
+heuristics, put all the variables in the same elimination group. The
+identity of the group does not matter. This is the same as not
+specifying an ordering at all. To control the ordering for every
+variable, create an elimination group per variable, ordering them in
+the desired order.
+
+If the user is using one of the Schur solvers (\texttt{DENSE\_SCHUR},
+\texttt{SPARSE\_SCHUR},\ \texttt{ITERATIVE\_SCHUR}) and chooses to
+specify an ordering, it must have one important property. The lowest
+numbered elimination group must form an independent set in the graph
+corresponding to the Hessian, or in other words, no two parameter
+blocks in in the first elimination group should co-occur in the same
+residual block. For the best performance, this elimination group
+should be as large as possible. For standard bundle adjustment
+problems, this corresponds to the first elimination group containing
+all the 3d points, and the second containing the all the cameras
+parameter blocks.
+
+If the user leaves the choice upto Ceres, then the solver uses an
+approximate maximum independent set algorithm to identify the first
+elimination group~\cite{li2007miqr} .
 \section{\texttt{Solver::Options}}
 
 \texttt{Solver::Options} controls the overall behavior of the
@@ -428,40 +537,47 @@ where $\Delta x$ is the step computed by the linear solver in the current iterat
 \item{\texttt{num\_linear\_solver\_threads }}(\texttt{1}) Number of
   threads used by the linear solver.
 
-%\item{\texttt{num\_eliminate\_blocks }}(\texttt{0})
-%For Schur reduction based methods, the first 0 to num blocks are
-%eliminated using the Schur reduction. For example, when solving
-%traditional structure from motion problems where the parameters are in
-%two classes (cameras and points) then \texttt{num\_eliminate\_blocks}
-%would be the number of points.
-%
-%\item{\texttt{ordering\_type }}(\texttt{NATURAL}) Internally Ceres
-%  reorders the parameter blocks to help the various linear
-%  solvers. This parameter allows the user to influence the re-ordering
-%  strategy used. For structure from motion problems use
-%  \texttt{SCHUR}, for other problems \texttt{NATURAL} (default) is a
-%  good choice. In case you wish to specify your own ordering scheme,
-%  for example in conjunction with \texttt{num\_eliminate\_blocks}, use
-%  \texttt{USER}.
-%
-%\item{\texttt{ordering }} The ordering of the parameter blocks. The
-%  solver pays attention to it if the \texttt{ordering\_type} is set to
-%  \texttt{USER} and the ordering vector is non-empty.
+\item{\texttt{use\_inner\_iterations} (\texttt{false}) } Use a
+  non-linear version of a simplified variable projection
+  algorithm. Essentially this amounts to doing a further optimization
+  on each Newton/Trust region step using a coordinate descent
+  algorithm.  For more details, see the discussion in ~\ref{sec:inner}
+
+\item{\texttt{parameter\_blocks\_for\_inner\_iterations} } The set of
+  parameter blocks that should be used for coordinate descent when
+  doing the inner iterations. The set of parameter blocks should form
+  an independent set in the Hessian of the optimization problem, i.e.,
+  no two parameter blocks in this list should co-occur in the same
+  residual block.
+
+  If this vector is left empty and \texttt{use\_inner\_iterations} is
+  set to true, Ceres will use a heuristic to choose a set of parameter
+  blocks for you.
+
+\item{\texttt{ordering} (NULL)} An instance of the ordering object
+  informs the solver, about the desired order in which parameter
+  blocks should be eliminated by the linear solvers. See
+  section~\ref{sec:ordering} for more details.
+
+  If \texttt{NULL}, the solver is free to choose an ordering that it
+  thinks is best. Note: currently, this option only has an effect on
+  the Schur type solvers, support for the
+  \texttt{SPARSE\_NORMAL\_CHOLESKY} solver is forth coming.
 
 \item{\texttt{use\_block\_amd } (\texttt{true})} By virtue of the
   modeling layer in Ceres being block oriented, all the matrices used
-  by Ceres are also block oriented.
-When doing sparse direct factorization of these matrices, the
-fill-reducing ordering algorithms can either be run on the
-block or the scalar form of these matrices. Running it on the
-block form exposes more of the super-nodal structure of the
-matrix to the Cholesky factorization routines. This leads to
-substantial gains in factorization performance. Setting this parameter
-to true, enables the use of a block oriented Approximate Minimum
-Degree ordering algorithm. Settings it to \texttt{false}, uses a
-scalar AMD algorithm. This option only makes sense when using
-\texttt{sparse\_linear\_algebra\_library = SUITE\_SPARSE} as it uses
-the \texttt{AMD} package that is part of \texttt{SuiteSparse}.
+  by Ceres are also block oriented.  When doing sparse direct
+  factorization of these matrices, the fill-reducing ordering
+  algorithms can either be run on the block or the scalar form of
+  these matrices. Running it on the block form exposes more of the
+  super-nodal structure of the matrix to the Cholesky factorization
+  routines. This leads to substantial gains in factorization
+  performance. Setting this parameter to true, enables the use of a
+  block oriented Approximate Minimum Degree ordering
+  algorithm. Settings it to \texttt{false}, uses a scalar AMD
+  algorithm. This option only makes sense when using
+  \texttt{sparse\_linear\_algebra\_library = SUITE\_SPARSE} as it uses
+  the \texttt{AMD} package that is part of \texttt{SuiteSparse}.
 
 \item{\texttt{linear\_solver\_min\_num\_iterations }}(\texttt{1})
   Minimum number of iterations used by the linear solver. This only
