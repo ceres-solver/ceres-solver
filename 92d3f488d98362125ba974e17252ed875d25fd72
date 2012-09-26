@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//9zI\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//918\u003d",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//91w\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-26T21:35:20Z",
       "side": 1,
       "message": "Split at the ,\n\n.. convergence properties, Algorithm II. Algorithm II performs an additional optimization step to estimate a1 and a2 exactly after computing a successful newton step.",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//9y8\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//91w\u003d",
       "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//9yc\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//91o\u003d",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//91I\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-09-26T21:35:20Z",
       "side": 1,
       "message": ", -\u003e .\n\ni.e., -\u003e \u0027\u0027\n\nEach parameter block ...",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//9y4\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//91I\u003d",
       "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//9yw\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//908\u003d",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//90o\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-09-26T21:35:20Z",
       "side": 1,
       "message": "Remove ,",
+      "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//9yk\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//90o\u003d",
       "revId": "92d3f488d98362125ba974e17252ed875d25fd72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
