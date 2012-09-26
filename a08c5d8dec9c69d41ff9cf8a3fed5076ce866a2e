@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJaX//9tE\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-26T22:26:51Z",
+      "side": 1,
+      "message": "No, this does not describe how to update the API. This is a very important section. It must be explicit; the user does not care why (\"richer, expressive\" does not belong in this section), they just need to know how to update their code.\n\nBefore:\noptions.linear_solver_type \u003d ceres::DENSE_SCHUR\noptions.ordering_type \u003d ceres::SCHUR\n\nAfter:\noptions.linear_solver_type \u003d ceres::DENSE_SCHUR\n\nIf you were specifying num_eliminate_blocks:\n\nBefore:\noptions.linear_solver_type \u003d ceres::DENSE_SCHUR;\noptions.ordering_type \u003d ceres::USER;\noptions.num_eliminate_blocks \u003d num_points;\n\nAfter:\noptions.ordering \u003d new ceres::Ordering;\nfor (int i \u003d 0; i \u003c num_points; ++i) {\n  options.ordering.AddParameterToGroup(my_points[i], 0);\n}\n...",
+      "revId": "a08c5d8dec9c69d41ff9cf8a3fed5076ce866a2e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
