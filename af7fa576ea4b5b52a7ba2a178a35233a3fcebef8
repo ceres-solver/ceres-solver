@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//95s\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "I am negative on this. Because then its not clear what goes into a new feature and what goes into a new API.\n\nMost new features are API changing.",
+      "parentUuid": "AAAJaX//+K0\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//+Kw\u003d",
         "filename": "docs/changes.tex",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Makefile",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//95o\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//+Kw\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//95g\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//+Kg\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//+Ho\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Remove \"Indeed\"\n\nits -\u003e It\u0027s",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//95U\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//+Ho\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//95Q\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//+Hk\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//974\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Consider splitting this one-sentence paragraph into two at the ,.",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//95I\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//974\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//948\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97g\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//97Y\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//944\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97Y\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//940\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97o\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//97U\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Remove \"possible\"",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//94w\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97U\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//94s\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97k\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//97Q\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2012-09-26T20:53:38Z",
       "side": 1,
       "message": "Shouldn\u0027t be indented.",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJaX//94o\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-09-26T21:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJaX//97Q\u003d",
       "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
