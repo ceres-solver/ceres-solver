@@ -1,6 +1,31 @@
 %!TEX root = ceres-solver.tex
 
 \chapter{Version History}
+\section*{1.4.0}
+\subsection{New Features}
+\begin{itemize}
+\item A non-linear generalization of Ruhe \& Wedin's Algorithm II. This allows the user to use variable projection on separable and non-separable non-linear least squares problems. With multithreading, this results in significant improvements to the convergence behavior of the solver at a small increase in run time.
+\item A new richer, more expressive and consistent API for ordering parameter blocks.
+\item An image denoising example using fields of experts. (Petter Strandmark)
+\item Defines for Ceres version and ABI version.
+\item Higher precision timer code where available. (Petter Strandmark)
+\item Example makefile for users of Ceres.
+\item IterationSummary now informs the user when the step is a non-monotonic step.
+\end{itemize}
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Various fixes to \texttt{nist.cc} (Markus Moll)
+\item Fixed a jacobian scaling bug. 
+\item Numerically robust computation of \texttt{model\_cost\_change}.
+\item Signed comparison compiler warning fixes (Ricardo Martin)
+\item Various compiler warning fixes all over.
+\item Inclusion guard fixes (Petter Strandmark)
+\item Segfault in test code (Sergey Popov)
+\item Replaced EXPECT/ASSERT\_DEATH with the more portable EXPECT\_DEATH\_IF]\_SUPPORTED macros.
+\item Fixed the camera projection model in Ceres' implementation of Snavely's camera model. (Ricardo Martin)
+\end{itemize}
+
+
 \section*{1.3.0}
 \subsection{New Features}
 \begin{itemize}
