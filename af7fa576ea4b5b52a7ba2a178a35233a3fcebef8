@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJaX//92Q\u003d",
+        "filename": "docs/changes.tex",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-09-26T21:35:38Z",
+      "side": 1,
+      "message": "It\u0027s an API change (not addition) if users must update their code vs simply recompile to have it work with the new Ceres. This is a case where we break existing customers, and it belongs in an \"API change\" section. The section must explain what existing use will break, and describe how they should update their existing use to the new API.",
+      "parentUuid": "AAAJaX//95s\u003d",
+      "revId": "af7fa576ea4b5b52a7ba2a178a35233a3fcebef8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJaX//+Kw\u003d",
         "filename": "docs/changes.tex",
         "patchSetId": 1
