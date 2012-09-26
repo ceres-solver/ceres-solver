@@ -256,42 +256,6 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
   EXPECT_DOUBLE_EQ(fixed_cost, expected_fixed_cost);
 }
 
-TEST(SolverImpl, ReorderResidualBlockNonSchurSolver) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-
-  Ordering ordering;
-  ordering.AddParameterBlockToGroup(&x, 0);
-  ordering.AddParameterBlockToGroup(&y, 0);
-  ordering.AddParameterBlockToGroup(&z, 0);
-
-  const vector<ResidualBlock*>& residual_blocks =
-      problem.program().residual_blocks();
-  vector<ResidualBlock*> current_residual_blocks(residual_blocks);
-
-  Solver::Options options;
-  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-  string error;
-
-  EXPECT_FALSE(SolverImpl::LexicographicallyOrderResidualBlocks(
-                   0,
-                   problem.mutable_program(),
-                   &error));
-  EXPECT_EQ(current_residual_blocks.size(), residual_blocks.size());
-  for (int i = 0; i < current_residual_blocks.size(); ++i) {
-    EXPECT_EQ(current_residual_blocks[i], residual_blocks[i]);
-  }
-}
-
 TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   ProblemImpl problem;
   double x;
