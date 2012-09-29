@@ -30,6 +30,7 @@
 
 #include "ceres/inner_iteration_minimizer.h"
 
+#include <iterator>
 #include <numeric>
 #include <vector>
 #include "ceres/evaluator.h"
