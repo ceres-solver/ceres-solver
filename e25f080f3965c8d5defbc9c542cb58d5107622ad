@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJuX///SQ\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "I don\u0027t think the brevity adds much, but the entire name will make callsites more readable.",
+      "parentUuid": "AAAJuH//+6Y\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJuX///Uc\u003d",
         "filename": "include/ceres/ordered_groups.h",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "err bail where, there is code shared after this block.",
       "parentUuid": "AAAJuX///Uc\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///SY\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "If the element is already in the right group, don\u0027t erase it and re-add it, simply bail. e.g. inside the block, add an if:\n\nif (it-\u003esecond \u003d\u003d group) {\n  // Already the right group; don\u0027t bother erasing and re-adding.\n  return;\n}",
+      "parentUuid": "AAAJuH//+6Q\u003d",
       "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJuX///SI\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "My error; I didn\u0027t read closely enough. Perhaps a commen line above\n\n// Prune any groups that become empty after a removal.",
+      "parentUuid": "AAAJuH//+6I\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJuX///T8\u003d",
         "filename": "include/ceres/ordered_groups.h",
         "patchSetId": 1
@@ -153,6 +207,24 @@
       "side": 1,
       "message": "-1 is a valid group id..",
       "parentUuid": "AAAJuX///T8\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///SE\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "Is there a good reason to support that?",
+      "parentUuid": "AAAJuH//+6E\u003d",
       "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -194,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJuX///R8\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "The map, since then you\u0027d be able to omit the typename. I don\u0027t feel strongly though.",
+      "parentUuid": "AAAJuH//+6A\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJuX///Tw\u003d",
         "filename": "include/ceres/ordered_groups.h",
         "patchSetId": 1
@@ -223,6 +313,41 @@
       "side": 1,
       "message": "This makes things much more consistent. I needed this when doing some Ordering stuff, but right now I do not remember exactly what was going on.",
       "parentUuid": "AAAJuX///Tw\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///R4\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "I think this is a bit weird. Now there is no meaningful answer to \"NumGroups()\" I suppose it\u0027s never needed? What about iterating over the groups?",
+      "parentUuid": "AAAJuH//+54\u003d",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///R0\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:04:40Z",
+      "side": 1,
+      "message": "I\u0027m still not excited about exposing this. What is the contract on the contents? Is the contract that groups with no entry are size 0 but present?",
       "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
