@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJuX///Us\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///Uk\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "AddElementToGroup? Then the parameter ordering is less weird.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///Uc\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "If the groups match, bail early.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///UM\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "How could this branch ever fire? The set is cleared in the previous line.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///T8\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "We may want to consider a -1 return instead, since the current pattern necessitates two map lookups (one to check if it\u0027s there, another to fetch).",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///T0\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "Consider typedefing the map type.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///Tw\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "The semantics of this are interesting. Is it truly the case that we want to return 0 for not-present groups? What\u0027s the reason?",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///To\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "Finish this sentence.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///Ts\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T21:45:41Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "e25f080f3965c8d5defbc9c542cb58d5107622ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
