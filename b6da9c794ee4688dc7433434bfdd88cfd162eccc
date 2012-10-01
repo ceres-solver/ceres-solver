@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJuX///Qc\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T22:30:24Z",
+      "side": 1,
+      "message": "Consider instead:\n\nGeneralize Ordering class to OrderedGroups.",
+      "revId": "b6da9c794ee4688dc7433434bfdd88cfd162eccc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
