@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJuX///LM\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T23:38:18Z",
+      "side": 1,
+      "message": "Can we fix this in this CL?",
+      "revId": "a54e6fa8f0036c7d5f4acd0195a4a28e7f179004",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJuX///LQ\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-01T23:38:18Z",
+      "side": 1,
+      "message": "This is oddly placed. Please document.",
+      "revId": "a54e6fa8f0036c7d5f4acd0195a4a28e7f179004",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
