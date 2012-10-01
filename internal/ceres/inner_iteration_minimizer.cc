@@ -35,7 +35,7 @@
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
-#include "ceres/ordering.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -58,7 +58,7 @@ bool InnerIterationMinimizer::Init(const Program& outer_program,
                                    string* error) {
   program_.reset(new Program(outer_program));
 
-  Ordering ordering;
+  ParameterBlockOrdering ordering;
   int num_inner_iteration_parameter_blocks = 0;
 
   if (parameter_blocks_for_inner_iterations.size() == 0) {
@@ -79,9 +79,9 @@ bool InnerIterationMinimizer::Init(const Program& outer_program,
     for (int i = 0; i < parameter_block_ordering.size(); ++i) {
       double* ptr = parameter_block_ordering[i]->mutable_user_state();
       if (i < num_inner_iteration_parameter_blocks) {
-        ordering.AddParameterBlockToGroup(ptr, 0);
+        ordering.AddElementToGroup(ptr, 0);
       } else {
-        ordering.AddParameterBlockToGroup(ptr, 1);
+        ordering.AddElementToGroup(ptr, 1);
       }
     }
   } else {
@@ -95,18 +95,18 @@ bool InnerIterationMinimizer::Init(const Program& outer_program,
     for (int i = 0; i < parameter_blocks.size(); ++i) {
       double* ptr = parameter_blocks[i]->mutable_user_state();
       if (parameter_block_ptrs.count(ptr) != 0) {
-        ordering.AddParameterBlockToGroup(ptr, 0);
+        ordering.AddElementToGroup(ptr, 0);
       } else {
-        ordering.AddParameterBlockToGroup(ptr, 1);
+        ordering.AddElementToGroup(ptr, 1);
       }
     }
 
     num_inner_iteration_parameter_blocks = ordering.GroupSize(0);
     if (num_inner_iteration_parameter_blocks > 0) {
-      const map<int, set<double*> >& group_id_to_parameter_blocks =
-          ordering.group_id_to_parameter_blocks();
+      const map<int, set<double*> >& group_to_elements =
+          ordering.group_to_elements();
       if (!SolverImpl::IsParameterBlockSetIndependent(
-              group_id_to_parameter_blocks.begin()->second,
+              group_to_elements.begin()->second,
               program_->residual_blocks())) {
         *error = "The user provided parameter_blocks_for_inner_iterations "
             "does not form an independent set";

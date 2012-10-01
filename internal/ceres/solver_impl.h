@@ -34,12 +34,11 @@
 #include <string>
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/solver.h"
 #include "ceres/problem_impl.h"
 
 namespace ceres {
-class Ordering;
-
 namespace internal {
 
 class Evaluator;
@@ -79,7 +78,7 @@ class SolverImpl {
   // return value of true indicates success and false indicates an
   // error was encountered whose cause is logged to LOG(ERROR).
   static bool ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
-                                const Ordering* ordering,
+                                const ParameterBlockOrdering* ordering,
                                 Program* program,
                                 string* error);
 
@@ -116,7 +115,7 @@ class SolverImpl {
   // NULL, the residual blocks that are removed are evaluated and the
   // sum of their cost is returned in fixed_cost.
   static bool RemoveFixedBlocksFromProgram(Program* program,
-                                           Ordering* ordering,
+                                           ParameterBlockOrdering* ordering,
                                            double* fixed_cost,
                                            string* error);
 

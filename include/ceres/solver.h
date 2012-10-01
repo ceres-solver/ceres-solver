@@ -38,11 +38,11 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
 namespace ceres {
 
-class Ordering;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -97,6 +97,7 @@ class Solver {
       use_block_amd = true;
 #endif
       ordering = NULL;
+      inner_iteration_ordering = NULL;
       use_inner_iterations = false;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
@@ -230,6 +231,8 @@ class Solver {
     // using this setting.
     int num_linear_solver_threads;
 
+    // TODO(sameeragarwal): Update the documentation.
+    //
     // The order in which variables are eliminated in a linear solver
     // can have a significant of impact on the efficiency and accuracy
     // of the method. e.g., when doing sparse Cholesky factorization,
@@ -262,8 +265,9 @@ class Solver {
     // If NULL, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
     // ordering. (See ordering.h for more details).
-    Ordering* ordering;
+    ParameterBlockOrdering* ordering;
 
+    ParameterBlockOrdering* inner_iteration_ordering;
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
     // beneficial to modify the way the trust region step is computed.

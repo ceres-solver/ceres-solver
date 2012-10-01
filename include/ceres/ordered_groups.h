@@ -28,6 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#ifndef CERES_PUBLIC_ORDERED_GROUPS_H_
+#define CERES_PUBLIC_ORDERED_GROUPS_H_
+
 #include <map>
 #include <set>
 #include "ceres/collections_port.h"
@@ -144,3 +147,5 @@ class OrderedGroups {
 typedef OrderedGroups<double*> ParameterBlockOrdering;
 
 }  // namespace ceres
+
+#endif  // CERES_PUBLIC_ORDERED_GROUP_H_

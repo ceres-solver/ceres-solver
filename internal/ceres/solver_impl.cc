@@ -41,7 +41,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
-#include "ceres/ordering.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
@@ -260,15 +260,15 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       LOG(WARNING) << summary->error;
       return;
     }
-    options.ordering = new Ordering(*original_options.ordering);
+    options.ordering = new ParameterBlockOrdering(*original_options.ordering);
   } else {
-    options.ordering = new Ordering;
+    options.ordering = new ParameterBlockOrdering;
     const ProblemImpl::ParameterMap& parameter_map =
         problem_impl->parameter_map();
     for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
          it != parameter_map.end();
          ++it) {
-      options.ordering->AddParameterBlockToGroup(it->first, 0);
+      options.ordering->AddElementToGroup(it->first, 0);
     }
   }
 
@@ -334,7 +334,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Only Schur types require the lexicographic reordering.
   if (IsSchurType(options.linear_solver_type)) {
     const int num_eliminate_blocks =
-        options.ordering->group_id_to_parameter_blocks().begin()->second.size();
+        options.ordering->group_to_elements().begin()->second.size();
     if (!LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
                                               reduced_program.get(),
                                               &summary->error)) {
@@ -415,7 +415,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
                                  const ProblemImpl* problem_impl,
                                  string* error) {
-  if (options.ordering->NumParameterBlocks() !=
+  if (options.ordering->NumElements() !=
       problem_impl->NumParameterBlocks()) {
       *error = "Number of parameter blocks in user supplied ordering "
           "does not match the number of parameter blocks in the problem";
@@ -428,8 +428,7 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   for (vector<ParameterBlock*>::const_iterator it = parameter_blocks.begin();
        it != parameter_blocks.end();
        ++it) {
-    if (!options.ordering->ContainsParameterBlock(
-            const_cast<double*>((*it)->user_state()))) {
+    if (!options.ordering->IsMember(const_cast<double*>((*it)->user_state()))) {
       *error = "Problem contains a parameter block that is not in "
           "the user specified ordering.";
       return false;
@@ -439,7 +438,7 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   if (IsSchurType(options.linear_solver_type) &&
       options.ordering->NumGroups() > 1) {
     const set<double*>& e_blocks  =
-        options.ordering->group_id_to_parameter_blocks().begin()->second;
+        options.ordering->group_to_elements().begin()->second;
     if (!IsParameterBlockSetIndependent(e_blocks, residual_blocks)) {
       *error = "The user requested the use of a Schur type solver. "
           "But the first elimination group in the ordering is not an "
@@ -478,7 +477,7 @@ bool SolverImpl::IsParameterBlockSetIndependent(const set<double*> parameter_blo
 // Strips varying parameters and residuals, maintaining order, and updating
 // num_eliminate_blocks.
 bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
-                                              Ordering* ordering,
+                                              ParameterBlockOrdering* ordering,
                                               double* fixed_cost,
                                               string* error) {
   vector<ParameterBlock*>* parameter_blocks =
@@ -547,7 +546,7 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
       if (parameter_block->index() == 1) {
         (*parameter_blocks)[j++] = parameter_block;
       } else {
-        ordering->RemoveParameterBlock(parameter_block->mutable_user_state());
+        ordering->Remove(parameter_block->mutable_user_state());
       }
     }
     parameter_blocks->resize(j);
@@ -568,10 +567,10 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   CHECK_NOTNULL(options->ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
-  Ordering* ordering = options->ordering;
+  ParameterBlockOrdering* ordering = options->ordering;
 
   const int min_group_id =
-      ordering->group_id_to_parameter_blocks().begin()->first;
+      ordering->group_to_elements().begin()->first;
   const int original_num_groups = ordering->NumGroups();
 
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
@@ -603,7 +602,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
         << "to the developers.";
 
     for (int i = 0; i < schur_ordering.size(); ++i) {
-      ordering->AddParameterBlockToGroup(schur_ordering[i]->mutable_user_state(),
+      ordering->AddElementToGroup(schur_ordering[i]->mutable_user_state(),
                                          (i < num_eliminate_blocks) ? 0 : 1);
     }
   }
@@ -764,7 +763,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
   linear_solver_options.use_block_amd = options->use_block_amd;
   const map<int, set<double*> >& groups =
-      options->ordering->group_id_to_parameter_blocks();
+      options->ordering->group_to_elements();
   for (map<int, set<double*> >::const_iterator it = groups.begin();
        it != groups.end();
        ++it) {
@@ -783,15 +782,15 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 }
 
 bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
-                                   const Ordering* ordering,
+                                   const ParameterBlockOrdering* ordering,
                                    Program* program,
                                    string* error) {
-  if (ordering->NumParameterBlocks() != program->NumParameterBlocks()) {
+  if (ordering->NumElements() != program->NumParameterBlocks()) {
     *error = StringPrintf("User specified ordering does not have the same "
                           "number of parameters as the problem. The problem"
                           "has %d blocks while the ordering has %d blocks.",
                           program->NumParameterBlocks(),
-                          ordering->NumParameterBlocks());
+                          ordering->NumElements());
     return false;
   }
 
@@ -800,7 +799,7 @@ bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_ma
   parameter_blocks->clear();
 
   const map<int, set<double*> >& groups =
-      ordering->group_id_to_parameter_blocks();
+      ordering->group_to_elements();
 
   for (map<int, set<double*> >::const_iterator group_it = groups.begin();
        group_it != groups.end();
@@ -934,7 +933,7 @@ Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
   evaluator_options.num_eliminate_blocks =
       (options.ordering->NumGroups() > 0 &&
        IsSchurType(options.linear_solver_type))
-      ? options.ordering->group_id_to_parameter_blocks().begin()->second.size()
+      ? options.ordering->group_to_elements().begin()->second.size()
       : 0;
   evaluator_options.num_threads = options.num_threads;
   return Evaluator::Create(evaluator_options, program, error);
