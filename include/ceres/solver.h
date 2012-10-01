@@ -38,11 +38,11 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
 namespace ceres {
 
-class Ordering;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -245,13 +245,14 @@ class Solver {
     // variables should be eliminated, and a variety of possibilities
     // in between.
     //
-    // Instances of the Ordering class are used to communicate this
-    // infornation to Ceres.
+    // Instances of the ParameterBlockOrdering class are used to
+    // communicate this information to Ceres.
     //
-    // Formally an ordering is an ordered partitioning of the parameter
-    // blocks, i.e, each parameter block belongs to exactly one group, and
-    // each group has a unique integer associated with it, that determines
-    // its order in the set of groups.
+    // Formally an ordering is an ordered partitioning of the
+    // parameter blocks, i.e, each parameter block belongs to exactly
+    // one group, and each group has a unique non-negative integer
+    // associated with it, that determines its order in the set of
+    // groups.
     //
     // Given such an ordering, Ceres ensures that the parameter blocks in
     // the lowest numbered group are eliminated first, and then the
@@ -261,8 +262,41 @@ class Solver {
     //
     // If NULL, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
-    // ordering. (See ordering.h for more details).
-    Ordering* ordering;
+    // ordering.
+    //
+    // e.g. Consider the linear system
+    //
+    //   x + y = 3
+    //   2x + 3y = 7
+    //
+    // There are two ways in which it can be solved. First eliminating x
+    // from the two equations, solving for y and then back substituting
+    // for x, or first eliminating y, solving for x and back substituting
+    // for y. The user can construct three orderings here.
+    //
+    //   {0: x}, {1: y} - eliminate x first.
+    //   {0: y}, {1: x} - eliminate y first.
+    //   {0: x, y}      - Solver gets to decide the elimination order.
+    //
+    // Thus, to have Ceres determine the ordering automatically using
+    // heuristics, put all the variables in group 0 and to control the
+    // ordering for every variable, create groups 0..N-1, one per
+    // variable, in the desired order.
+    //
+    // Bundle Adjustment
+    // -----------------
+    //
+    // A particular case of interest is bundle adjustment, where the user
+    // has two options. The default is to not specify an ordering at all,
+    // the solver will see that the user wants to use a Schur type solver
+    // and figure out the right elimination ordering.
+    //
+    // But if the user already knows what parameter blocks are points and
+    // what are cameras, they can save preprocessing time by partitioning
+    // the parameter blocks into two groups, one for the points and one
+    // for the cameras, where the group containing the points has an id
+    // smaller than the group containing cameras.
+    ParameterBlockOrdering* ordering;
 
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is

@@ -176,22 +176,22 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     return;
   }
 
-  ceres::Ordering* ordering = new ceres::Ordering;
+  ceres::ParameterBlockOrdering* ordering =
+      new ceres::ParameterBlockOrdering;
 
   // The points come before the cameras.
   for (int i = 0; i < num_points; ++i) {
-    ordering->AddParameterBlockToGroup(points + point_block_size * i, 0);
+    ordering->AddElementToGroup(points + point_block_size * i, 0);
   }
 
   for (int i = 0; i < num_cameras; ++i) {
     // When using axis-angle, there is a single parameter block for
     // the entire camera.
-    ordering->AddParameterBlockToGroup(cameras + camera_block_size * i, 1);
+    ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
     // If quaternions are used, there are two blocks, so add the
     // second block to the ordering.
     if (FLAGS_use_quaternions) {
-      ordering->AddParameterBlockToGroup(
-          cameras + camera_block_size * i + 4, 1);
+      ordering->AddElementToGroup(cameras + camera_block_size * i + 4, 1);
     }
   }
 
