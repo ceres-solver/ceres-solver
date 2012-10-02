@@ -138,6 +138,7 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
     options.return_final_residuals = true;
 
     if (config.use_automatic_ordering) {
+      LOG(INFO) << "Deleting";
       delete options.ordering;
       options.ordering = NULL;
     }
@@ -484,16 +485,16 @@ TEST(SystemTest, BundleAdjustmentProblem) {
                                  preconditioner))
 
 #ifndef CERES_NO_SUITESPARSE
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
-  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kUserOrdering,      IDENTITY);
+  //  CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
+  //CONFIGURE(SPARSE_NORMAL_CHOLESKY, SUITE_SPARSE, kUserOrdering,      IDENTITY);
 
-  CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
+  //CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
   CONFIGURE(SPARSE_SCHUR,           SUITE_SPARSE, kUserOrdering,      IDENTITY);
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
-  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kAutomaticOrdering, IDENTITY);
-  CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kUserOrdering,      IDENTITY);
+  //CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kAutomaticOrdering, IDENTITY);
+  //CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kUserOrdering,      IDENTITY);
 #endif  // CERES_NO_CXSPARSE
 
   CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kAutomaticOrdering, IDENTITY);

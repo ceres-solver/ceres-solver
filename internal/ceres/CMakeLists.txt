@@ -55,7 +55,7 @@ SET(CERES_INTERNAL_SRC
     file.cc
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
-    inner_iteration_minimizer.cc
+    coordinate_descent_minimizer.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     linear_least_squares_problems.cc
@@ -64,6 +64,7 @@ SET(CERES_INTERNAL_SRC
     local_parameterization.cc
     loss_function.cc
     normal_prior.cc
+    parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial_solver.cc
     problem.cc
@@ -74,7 +75,6 @@ SET(CERES_INTERNAL_SRC
     runtime_numeric_diff_cost_function.cc
     schur_complement_solver.cc
     schur_eliminator.cc
-    schur_ordering.cc
     scratch_evaluate_preparer.cc
     solver.cc
     solver_impl.cc
@@ -235,6 +235,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(numeric_diff_cost_function)
   CERES_TEST(ordered_groups)
   CERES_TEST(parameter_block)
+  CERES_TEST(parameter_block_ordering)
   CERES_TEST(partitioned_matrix_view)
   CERES_TEST(polynomial_solver)
   CERES_TEST(problem)
@@ -244,7 +245,6 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
-  CERES_TEST(schur_ordering)
   CERES_TEST(solver_impl)
 
   IF (${SUITESPARSE_FOUND})
