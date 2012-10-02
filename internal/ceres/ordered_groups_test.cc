@@ -133,5 +133,31 @@ TEST(OrderedGroup, AddAndRemoveEveryThingFromOneGroup) {
   EXPECT_EQ(ordering.GroupId(x + 2), 5);
 }
 
+TEST(OrderedGroup, ReverseOrdering) {
+  ParameterBlockOrdering ordering;
+  double x[3];
+  ordering.AddElementToGroup(x, 1);
+  ordering.AddElementToGroup(x + 1, 2);
+  ordering.AddElementToGroup(x + 2, 2);
+
+  EXPECT_EQ(ordering.NumGroups(), 2);
+  EXPECT_EQ(ordering.NumElements(), 3);
+  EXPECT_EQ(ordering.GroupSize(1), 1);
+  EXPECT_EQ(ordering.GroupSize(2), 2);
+  EXPECT_EQ(ordering.GroupId(x), 1);
+  EXPECT_EQ(ordering.GroupId(x + 1), 2);
+  EXPECT_EQ(ordering.GroupId(x + 2), 2);
+
+  ordering.Reverse();
+
+  EXPECT_EQ(ordering.NumGroups(), 2);
+  EXPECT_EQ(ordering.NumElements(), 3);
+  EXPECT_EQ(ordering.GroupSize(3), 1);
+  EXPECT_EQ(ordering.GroupSize(2), 2);
+  EXPECT_EQ(ordering.GroupId(x), 3);
+  EXPECT_EQ(ordering.GroupId(x + 1), 2);
+  //EXPECT_EQ(ordering.GroupId(x + 2), 2);
+}
+
 }  // namespace internal
 }  // namespace ceres
