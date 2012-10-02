@@ -43,7 +43,7 @@ namespace internal {
 
 class Evaluator;
 class LinearSolver;
-class InnerIterationMinimizer;
+class CoordinateDescentMinimizer;
 class Program;
 
 class SolverImpl {
@@ -86,7 +86,7 @@ class SolverImpl {
   // Reorder the residuals for program, if necessary, so that the
   // residuals involving e block (i.e., the first num_eliminate_block
   // parameter blocks) occur together. This is a necessary condition
-  // for the Schur eliminator as well as the InnerIterationMinimizer.
+  // for the Schur eliminator.
   static bool LexicographicallyOrderResidualBlocks(
       const int num_eliminate_blocks,
       Program* program,
@@ -102,7 +102,7 @@ class SolverImpl {
   // Run the minimization for the given evaluator and configuration.
   static void Minimize(const Solver::Options &options,
                        Program* program,
-                       InnerIterationMinimizer* inner_iteration_minimizer,
+                       CoordinateDescentMinimizer* inner_iteration_minimizer,
                        Evaluator* evaluator,
                        LinearSolver* linear_solver,
                        double* parameters,

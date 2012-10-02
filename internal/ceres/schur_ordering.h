@@ -35,6 +35,7 @@
 #define CERES_INTERNAL_SCHUR_ORDERING_H_
 
 #include <vector>
+#include "ceres/ordered_groups.h"
 #include "ceres/graph.h"
 #include "ceres/types.h"
 
@@ -60,6 +61,12 @@ class ParameterBlock;
 int ComputeSchurOrdering(const Program& program,
                          vector<ParameterBlock* >* ordering);
 
+// Use an approximate independent set ordering to decompose the
+// parameter blocks of a problem in a sequence of independent
+// sets. The ordering covers all the non-constant parameter blocks in
+// the program.
+void ComputeRecursiveIndependentSetOrdering(const Program& program,
+                                            ParameterBlockOrdering* ordering);
 
 // Builds a graph on the parameter blocks of a Problem, whose
 // structure reflects the sparsity structure of the Hessian. Each

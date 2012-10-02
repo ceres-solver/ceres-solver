@@ -55,7 +55,7 @@ SET(CERES_INTERNAL_SRC
     file.cc
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
-    inner_iteration_minimizer.cc
+    coordinate_descent_minimizer.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     linear_least_squares_problems.cc

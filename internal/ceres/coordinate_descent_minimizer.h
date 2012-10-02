@@ -28,60 +28,55 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include <vector>
-#include "ceres/internal/scoped_ptr.h"
+#ifndef CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
+#define CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
+
 #include "ceres/minimizer.h"
 #include "ceres/problem_impl.h"
-#include "ceres/solver.h"
-#include "ceres/trust_region_strategy.h"
 #include "ceres/evaluator.h"
-#include "ceres/linear_solver.h"
+#include "ceres/program.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-class Program;
-
-// The InnerIterationMinimizer performs coordinate descent on a user
-// specified set of parameter blocks. The user can either specify the
-// set of parameter blocks for coordinate descent or have the
-// minimizer choose on its own.
+// Given a Program, and a ParameterBlockOrdering which partitions
+// (non-exhaustively) the Hessian matrix into independent sets,
+// perform coordinate descent on the parameter blocks in the
+// ordering. The independent set structure allows for all parameter
+// blocks in the same independent set to be optimized in parallel, and
+// the order of the independent set determines the order in which the
+// parameter blocks are optimized.
 //
-// This Minimizer when used in combination with the
-// TrustRegionMinimizer is used to implement a non-linear
-// generalization of Ruhe & Wedin's Algorithm II for separable
-// non-linear least squares problems.
-class InnerIterationMinimizer : public Minimizer {
+// The minimizer assumes that none of the parameter blocks in the
+// program are constant.
+class CoordinateDescentMinimizer : public Minimizer {
  public:
-  // Initialize the minimizer. The return value indicates success or
-  // failure, and the error string contains a description of the
-  // error.
-  //
-  // The parameter blocks for inner iterations must form an
-  // independent set in the Hessian for the optimization problem.
-  //
-  // If this vector is empty, the minimizer will attempt to find a set
-  // of parameter blocks to optimize.
   bool Init(const Program& program,
             const ProblemImpl::ParameterMap& parameter_map,
-            const vector<double*>& parameter_blocks_for_inner_iterations,
+            const ParameterBlockOrdering& ordering,
             string* error);
 
   // Minimizer interface.
-  virtual ~InnerIterationMinimizer();
+  virtual ~CoordinateDescentMinimizer();
   virtual void Minimize(const Minimizer::Options& options,
                         double* parameters,
                         Solver::Summary* summary);
 
  private:
-  void MinimalSolve(Program* program, double* parameters, Solver::Summary* summary);
-  void ComputeResidualBlockOffsets(const int num_eliminate_blocks);
+  void Solve(Program* program,
+             double* parameters,
+             Solver::Summary* summary);
 
-  scoped_ptr<Program> program_;
-  vector<int> residual_block_offsets_;
+  vector<ParameterBlock*> parameter_blocks_;
+  vector<vector<ResidualBlock*> > residual_blocks_;
+  vector<int> independent_set_offsets_;
+
   Evaluator::Options evaluator_options_;
   scoped_ptr<LinearSolver> linear_solver_;
 };
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
