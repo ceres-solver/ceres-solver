@@ -98,6 +98,7 @@ class Solver {
 #endif
       ordering = NULL;
       use_inner_iterations = false;
+      inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -296,7 +297,24 @@ class Solver {
     // the parameter blocks into two groups, one for the points and one
     // for the cameras, where the group containing the points has an id
     // smaller than the group containing cameras.
+    //
+    // Once assigned, Solver::Options owns this pointer and will
+    // deallocate the memory when destroyed.
     ParameterBlockOrdering* ordering;
+
+    // By virtue of the modeling layer in Ceres being block oriented,
+    // all the matrices used by Ceres are also block oriented. When
+    // doing sparse direct factorization of these matrices (for
+    // SPARSE_NORMAL_CHOLESKY, SPARSE_SCHUR and ITERATIVE in
+    // conjunction with CLUSTER_TRIDIAGONAL AND CLUSTER_JACOBI
+    // preconditioners), the fill-reducing ordering algorithms can
+    // either be run on the block or the scalar form of these matrices.
+    // Running it on the block form exposes more of the super-nodal
+    // structure of the matrix to the factorization routines. Setting
+    // this parameter to true runs the ordering algorithms in block
+    // form. Currently this option only makes sense with
+    // sparse_linear_algebra_library = SUITE_SPARSE.
+    bool use_block_amd;
 
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
@@ -345,38 +363,31 @@ class Solver {
     // optimization problems will do. The only constraint on a_1 and
     // a_2 is that they do not co-occur in any residual block.
     //
+    // This idea can be further generalized, by not just optimizing
+    // (a_1, a_2), but decomposing the graph corresponding to the
+    // Hessian matrix's sparsity structure in a collection of
+    // non-overlapping independent sets and optimizing each of them.
+    //
     // Setting "use_inner_iterations" to true enables the use of this
     // non-linear generalization of Ruhe & Wedin's Algorithm II.  This
     // version of Ceres has a higher iteration complexity, but also
-    // displays better convergence behaviour per iteration.
+    // displays better convergence behaviour per iteration. Setting
+    // Solver::Options::num_threads to the maximum number possible is
+    // highly recommended.
     bool use_inner_iterations;
 
     // If inner_iterations is true, then the user has two choices.
     //
-    // 1. Provide a list of parameter blocks, which should be subject
-    // to inner iterations. The only requirement on the set of
-    // parameter blocks is that they form an independent set in the
-    // Hessian matrix, much like the first elimination group in
-    // Solver::Options::ordering.
+    // 1. Let the solver heuristically decide which parameter blocks
+    // to optimize in each inner iteration. To do this leave
+    // Solver::Options::inner_iteration_ordering untouched (or set to
+    // NULL).
     //
-    // 2. The second is to leave it empty, in which case, Ceres will
-    // use a heuristic to automatically choose a set of parameter
-    // blocks.
-    vector<double*> parameter_blocks_for_inner_iterations;
-
-    // By virtue of the modeling layer in Ceres being block oriented,
-    // all the matrices used by Ceres are also block oriented. When
-    // doing sparse direct factorization of these matrices (for
-    // SPARSE_NORMAL_CHOLESKY, SPARSE_SCHUR and ITERATIVE in
-    // conjunction with CLUSTER_TRIDIAGONAL AND CLUSTER_JACOBI
-    // preconditioners), the fill-reducing ordering algorithms can
-    // either be run on the block or the scalar form of these matrices.
-    // Running it on the block form exposes more of the super-nodal
-    // structure of the matrix to the factorization routines. Setting
-    // this parameter to true runs the ordering algorithms in block
-    // form. Currently this option only makes sense with
-    // sparse_linear_algebra_library = SUITE_SPARSE.
-    bool use_block_amd;
+    // 2. Specify a collection of of ordered independent sets. Where
+    // the lower numbered groups are optimized before the higher
+    // number groups. The only requirement on each group is that it
+    // should be an independent set.
+    ParameterBlockOrdering* inner_iteration_ordering;
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.

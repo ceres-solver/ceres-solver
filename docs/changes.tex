@@ -30,10 +30,10 @@ options.num_eliminate_blocks = num_points;
 options.linear_solver_type = ceres::DENSE_SCHUR;
 options.ordering = new ceres::Ordering;
 for (int i = 0; i < num_points; ++i) {
-  options.ordering.AddParameterToGroup(my_points[i], 0);
+  options.ordering.AddElementToGroup(my_points[i], 0);
 }
 for (int i = 0; i < num_cameras; ++i) {
-  options.ordering.AddParameterToGroup(my_cameras[i], 1);
+  options.ordering.AddElementToGroup(my_cameras[i], 1);
 }
 \end{minted}
 \subsection{New Features}
