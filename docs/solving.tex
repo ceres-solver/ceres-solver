@@ -170,12 +170,19 @@ the $a_1$ and $a_2$ optimization problems will do. The only constraint
 on $a_1$ and $a_2$ (if they are two different parameter block) is that
 they do not co-occur in a residual block.
 
+This idea can be further generalized, by not just optimizing $(a_1,
+a_2)$, but decomposing the graph corresponding to the Hessian matrix's
+sparsity structure into a collection of non-overlapping independent sets
+and optimizing each of them.
+
 Setting \texttt{Solver::Options::use\_inner\_iterations} to true
-enables (and optionally setting
-\texttt{Solver::Options::parameter\_blocks\_for\_inner\_iterations}
+enables
 the use of this non-linear generalization of Ruhe \& Wedin's Algorithm
 II.  This version of Ceres has a higher iteration complexity, but also
 displays better convergence behavior per iteration.
+
+Setting \texttt{Solver::Options::num\_threads} to the maximum number
+possible is highly recommended.
 
 \subsection{Non-monotonic Steps}
 \label{sec:non-monotonic}
@@ -543,19 +550,23 @@ where $\Delta x$ is the step computed by the linear solver in the current iterat
   on each Newton/Trust region step using a coordinate descent
   algorithm.  For more details, see the discussion in ~\ref{sec:inner}
 
-\item{\texttt{parameter\_blocks\_for\_inner\_iterations} } The set of
-  parameter blocks that should be used for coordinate descent when
-  doing the inner iterations. The set of parameter blocks should form
-  an independent set in the Hessian of the optimization problem, i.e.,
-  no two parameter blocks in this list should co-occur in the same
-  residual block.
+\item{\texttt{inner\_iteration\_ordering} (\texttt{NULL})} If
+  \texttt{Solver::Options::inner\_iterations} is true, then the user
+  has two choices.
 
-  If this vector is left empty and \texttt{use\_inner\_iterations} is
-  set to true, Ceres will use a heuristic to choose a set of parameter
-  blocks for you.
+\begin{enumerate}
+\item Let the solver heuristically decide which parameter blocks to
+  optimize in each inner iteration. To do this set, this
+  \texttt{inner\_iteration\_ordering} to
+  {\texttt{NULL}}.
 
-\item{\texttt{ordering} (NULL)} An instance of the ordering object
-  informs the solver about the desired order in which parameter
+\item Specify a collection of of ordered independent sets. The lower
+  numbered groups are optimized before the higher number groups during
+  the inner optimization phase. Each group must be an independent set.
+\end{enumerate}
+
+\item{\texttt{ordering} (\texttt{NULL})} An instance of the ordering
+  object informs the solver about the desired order in which parameter
   blocks should be eliminated by the linear solvers. See
   section~\ref{sec:ordering} for more details.
 
