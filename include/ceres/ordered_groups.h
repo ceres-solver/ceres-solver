@@ -34,7 +34,6 @@
 #include <map>
 #include <set>
 #include "ceres/collections_port.h"
-#include "glog/logging.h"
 
 namespace ceres {
 
@@ -80,6 +79,11 @@ class OrderedGroups {
     return true;
   }
 
+  void Clear() {
+    group_to_elements_.clear();
+    element_to_group_.clear();
+  }
+
   // Remove the element, no matter what group it is in. If the element
   // is not a member of any group, calling this method will result in
   // a crash.
@@ -100,6 +104,27 @@ class OrderedGroups {
 
     element_to_group_.erase(element);
     return true;
+  }
+
+  // Reverse the order of the groups in place.
+  void Reverse() {
+    typename map<int, set<T> >::reverse_iterator it =
+        group_to_elements_.rbegin();
+    map<int, set<T> > new_group_to_elements;
+    new_group_to_elements[it->first] = it->second;
+
+    int new_group_id = it->first + 1;
+    for (++it; it != group_to_elements_.rend(); ++it) {
+      for (typename set<T>::const_iterator element_it = it->second.begin();
+           element_it != it->second.end();
+           ++element_it) {
+        element_to_group_[*element_it] = new_group_id;
+      }
+      new_group_to_elements[new_group_id] = it->second;
+      new_group_id++;
+    }
+
+    group_to_elements_ = new_group_to_elements;
   }
 
   // Return the group id for the element. If the element is not a
