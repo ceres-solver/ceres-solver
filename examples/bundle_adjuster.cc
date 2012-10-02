@@ -74,8 +74,8 @@ DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
 DEFINE_bool(inner_iterations, false, "Use inner iterations to non-linearly "
             "refine each successful trust region step.");
 
-DEFINE_string(blocks_for_inner_iterations, "cameras", "Options are: "
-            "automatic, cameras, points");
+DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
+            "automatic, cameras, points, camerasandpoints, pointsandcameras");
 
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
@@ -145,13 +145,33 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   if (options->use_inner_iterations) {
     if (FLAGS_blocks_for_inner_iterations == "cameras") {
       LOG(INFO) << "Camera blocks for inner iterations";
+      options->inner_iteration_ordering = new ParameterBlockOrdering;
       for (int i = 0; i < num_cameras; ++i) {
-        options->parameter_blocks_for_inner_iterations.push_back(cameras + camera_block_size * i);
+        options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 0);
       }
     } else if (FLAGS_blocks_for_inner_iterations == "points") {
       LOG(INFO) << "Point blocks for inner iterations";
+      options->inner_iteration_ordering = new ParameterBlockOrdering;
       for (int i = 0; i < num_points; ++i) {
-        options->parameter_blocks_for_inner_iterations.push_back(points + point_block_size * i);
+        options->inner_iteration_ordering->AddElementToGroup(points + point_block_size * i, 0);
+      }
+    } else if (FLAGS_blocks_for_inner_iterations == "camerasandpoints") {
+      LOG(INFO) << "Camera followed by point blocks for inner iterations";
+      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      for (int i = 0; i < num_cameras; ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 0);
+      }
+      for (int i = 0; i < num_points; ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(points + point_block_size * i, 1);
+      }
+    } else if (FLAGS_blocks_for_inner_iterations == "pointsandcameras") {
+      LOG(INFO) << "Point followed by camera blocks for inner iterations";
+      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      for (int i = 0; i < num_cameras; ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
+      }
+      for (int i = 0; i < num_points; ++i) {
+        options->inner_iteration_ordering->AddElementToGroup(points + point_block_size * i, 0);
       }
     } else if (FLAGS_blocks_for_inner_iterations == "automatic") {
       LOG(INFO) << "Choosing automatic blocks for inner iterations";
