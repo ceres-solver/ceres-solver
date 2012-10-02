@@ -65,6 +65,29 @@ class Graph {
     AddVertex(vertex, 1.0);
   }
 
+  bool RemoveVertex(const Vertex& vertex) {
+    if (vertices_.find(vertex) == vertices_.end()) {
+      return false;
+    }
+
+    vertices_.erase(vertex);
+    vertex_weights_.erase(vertex);
+    const HashSet<Vertex>& sinks = edges_[vertex];
+    for (typename HashSet<Vertex>::const_iterator it = sinks.begin();
+         it != sinks.end();
+         ++it) {
+      if (vertex < *it) {
+        edge_weights_.erase(make_pair(vertex, *it));
+      } else {
+        edge_weights_.erase(make_pair(*it, vertex));
+      }
+      edges_[*it].erase(vertex);
+    }
+
+    edges_.erase(vertex);
+    return true;
+  }
+
   // Add a weighted edge between the vertex1 and vertex2. Calling
   // AddEdge on a pair of vertices which do not exist in the graph yet
   // will result in undefined behavior.

@@ -33,21 +33,21 @@
 #include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
+#include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
-#include "ceres/inner_iteration_minimizer.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
+#include "ceres/parameter_block_ordering.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/schur_ordering.h"
 #include "ceres/stringprintf.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/wall_time.h"
@@ -57,6 +57,9 @@ namespace ceres {
 Solver::Options::~Options() {
   if (ordering != NULL) {
     delete ordering;
+  }
+  if (inner_iteration_ordering != NULL) {
+    delete inner_iteration_ordering;
   }
 }
 
@@ -151,7 +154,7 @@ class FileLoggingCallback : public IterationCallback {
 
 void SolverImpl::Minimize(const Solver::Options& options,
                           Program* program,
-                          InnerIterationMinimizer* inner_iteration_minimizer,
+                          CoordinateDescentMinimizer* inner_iteration_minimizer,
                           Evaluator* evaluator,
                           LinearSolver* linear_solver,
                           double* parameters,
@@ -212,6 +215,10 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        Solver::Summary* summary) {
   double solver_start_time = WallTimeInSeconds();
   Solver::Options options(original_options);
+
+  options.ordering = NULL;
+  options.inner_iteration_ordering = NULL;
+
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
   // Reset the summary object to its default values.
@@ -226,14 +233,14 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   if (options.num_threads > 1) {
     LOG(WARNING)
         << "OpenMP support is not compiled into this binary; "
-        << "only options.num_threads=1 is supported. Switching"
+        << "only options.num_threads=1 is supported. Switching "
         << "to single threaded mode.";
     options.num_threads = 1;
   }
   if (options.num_linear_solver_threads > 1) {
     LOG(WARNING)
-        << "OpenMP support is not compiled into this binary"
-        << "only options.num_linear_solver_threads=1 is supported. Switching"
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_linear_solver_threads=1 is supported. Switching "
         << "to single threaded mode.";
     options.num_linear_solver_threads = 1;
   }
@@ -350,14 +357,50 @@ void SolverImpl::Solve(const Solver::Options& original_options,
     return;
   }
 
-  scoped_ptr<InnerIterationMinimizer> inner_iteration_minimizer;
+  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
   if (options.use_inner_iterations) {
-    inner_iteration_minimizer.reset(new InnerIterationMinimizer);
-    if (!inner_iteration_minimizer->Init(
-            *reduced_program,
-            problem_impl->parameter_map(),
-            options.parameter_blocks_for_inner_iterations,
-            &summary->error)) {
+    inner_iteration_minimizer.reset(new CoordinateDescentMinimizer);
+
+    scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
+    ParameterBlockOrdering* ordering_ptr  = NULL;
+    if (original_options.inner_iteration_ordering == NULL) {
+      // Find a recursive decomposition of the Hessian matrix as a set
+      // of independent sets of decreasing size and invert it. This
+      // seems to work better in practice, i.e., Cameras before
+      // points.
+      inner_iteration_ordering.reset(new ParameterBlockOrdering);
+      ComputeRecursiveIndependentSetOrdering(*reduced_program,
+                                             inner_iteration_ordering.get());
+      inner_iteration_ordering->Reverse();
+      ordering_ptr = inner_iteration_ordering.get();
+    } else {
+      const map<int, set<double*> >& group_to_elements =
+          original_options.inner_iteration_ordering->group_to_elements();
+      map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+
+      // Iterate over each group and verify that it is an independent
+      // set.
+      for ( ;it != group_to_elements.end(); ++it) {
+        if (!IsParameterBlockSetIndependent(
+                it->second,
+                reduced_program->residual_blocks())) {
+          summary->error =
+              StringPrintf(
+                  "The user provided "
+                  "parameter_blocks_for_inner_iterations does not form an "
+                  "independent set. Group Id: %d", it->first);
+          LOG(ERROR) << summary->error;
+          return;
+        }
+      }
+      ordering_ptr = original_options.inner_iteration_ordering;
+    }
+
+    if (!inner_iteration_minimizer->Init(*reduced_program,
+                                         problem_impl->parameter_map(),
+                                         *ordering_ptr,
+                                         &summary->error)) {
+      LOG(ERROR) << summary->error;
       return;
     }
   }
@@ -592,8 +635,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   // fit. For Schur type solvers, this means that the user wishes for
   // Ceres to identify the e_blocks, which we do by computing a
   // maximal independent set.
-  if (original_num_groups == 1 &&
-      IsSchurType(options->linear_solver_type)) {
+  if (original_num_groups == 1 && IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
     const int num_eliminate_blocks = ComputeSchurOrdering(*original_program,
                                                           &schur_ordering);
