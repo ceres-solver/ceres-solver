@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,48 +27,56 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Compute a parameter block ordering for use with the Schur
-// complement based algorithms.
 
-#ifndef CERES_INTERNAL_SCHUR_ORDERING_H_
-#define CERES_INTERNAL_SCHUR_ORDERING_H_
+#ifndef CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
+#define CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
 
-#include <vector>
-#include "ceres/graph.h"
-#include "ceres/types.h"
+#include "ceres/evaluator.h"
+#include "ceres/minimizer.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-class Program;
-class ParameterBlock;
-
-// Uses an approximate independent set ordering to order the parameter
-// blocks of a problem so that it is suitable for use with Schur
-// complement based solvers. The output variable ordering contains an
-// ordering of the parameter blocks and the return value is size of
-// the independent set or the number of e_blocks (see
-// schur_complement_solver.h for an explanation). Constant parameters
-// are added to the end.
+// Given a Program, and a ParameterBlockOrdering which partitions
+// (non-exhaustively) the Hessian matrix into independent sets,
+// perform coordinate descent on the parameter blocks in the
+// ordering. The independent set structure allows for all parameter
+// blocks in the same independent set to be optimized in parallel, and
+// the order of the independent set determines the order in which the
+// parameter block groups are optimized.
 //
-// The ordering vector has the structure
-//
-// ordering = [independent set,
-//             complement of the independent set,
-//             fixed blocks]
-int ComputeSchurOrdering(const Program& program,
-                         vector<ParameterBlock* >* ordering);
+// The minimizer assumes that none of the parameter blocks in the
+// program are constant.
+class CoordinateDescentMinimizer : public Minimizer {
+ public:
+  bool Init(const Program& program,
+            const ProblemImpl::ParameterMap& parameter_map,
+            const ParameterBlockOrdering& ordering,
+            string* error);
 
+  // Minimizer interface.
+  virtual ~CoordinateDescentMinimizer();
+  virtual void Minimize(const Minimizer::Options& options,
+                        double* parameters,
+                        Solver::Summary* summary);
 
-// Builds a graph on the parameter blocks of a Problem, whose
-// structure reflects the sparsity structure of the Hessian. Each
-// vertex corresponds to a parameter block in the Problem except for
-// parameter blocks that are marked constant. An edge connects two
-// parameter blocks, if they co-occur in a residual block.
-Graph<ParameterBlock*>* CreateHessianGraph(const Program& program);
+ private:
+  void Solve(Program* program,
+             double* parameters,
+             Solver::Summary* summary);
+
+  vector<ParameterBlock*> parameter_blocks_;
+  vector<vector<ResidualBlock*> > residual_blocks_;
+  vector<int> independent_set_offsets_;
+
+  Evaluator::Options evaluator_options_;
+  scoped_ptr<LinearSolver> linear_solver_;
+};
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SCHUR_ORDERING_H_
+#endif  // CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_

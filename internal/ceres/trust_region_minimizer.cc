@@ -330,6 +330,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
+
       // Try this step.
       double new_cost = numeric_limits<double>::max();
       if (!evaluator->Evaluate(x_plus_delta.data(),
@@ -340,11 +341,30 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         LOG(WARNING) << "Step failed to evaluate. "
                      << "Treating it as step with infinite cost";
         new_cost = numeric_limits<double>::max();
-      } else if (new_cost < cost && options.inner_iteration_minimizer != NULL) {
-        Solver::Summary inner_iteration_summary;
-        options.inner_iteration_minimizer->Minimize(options,
-                                                    x_plus_delta.data(),
-                                                    &inner_iteration_summary);
+      } else {
+        // Check if performing an inner iteration will make it better.
+        if (options.inner_iteration_minimizer != NULL) {
+          const double x_plus_delta_cost = new_cost;
+          Vector inner_iteration_x = x_plus_delta;
+          Solver::Summary inner_iteration_summary;
+          options.inner_iteration_minimizer->Minimize(options,
+                                                      inner_iteration_x.data(),
+                                                      &inner_iteration_summary);
+          if(!evaluator->Evaluate(inner_iteration_x.data(),
+                                  &new_cost,
+                                  NULL, NULL, NULL)) {
+            VLOG(2) << "Inner iteration failed.";
+            new_cost = x_plus_delta_cost;
+          } else {
+            x_plus_delta = inner_iteration_x;
+            // Bost the model_cost_change, since the inner iteration
+            // improvements are not accounted for by the trust region.
+            model_cost_change +=  x_plus_delta_cost - new_cost;
+            VLOG(1) << "current cost:" << cost
+                    << "x_plus_delta_cost: " << x_plus_delta_cost
+                    << "new_cost: " << new_cost;
+          }
+        }
       }
 
       iteration_summary.step_norm = (x - x_plus_delta).norm();
