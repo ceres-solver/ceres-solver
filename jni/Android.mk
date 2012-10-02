@@ -105,6 +105,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/compressed_row_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/conditioned_cost_function.cc \
                    $(CERES_SRC_PATH)/conjugate_gradients_solver.cc \
+                   $(CERES_SRC_PATH)/coordinate_descent_minimizer.cc \
                    $(CERES_SRC_PATH)/corrector.cc \
                    $(CERES_SRC_PATH)/dense_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/dense_qr_solver.cc \
@@ -124,6 +125,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
                    $(CERES_SRC_PATH)/ordering.cc \
+                   $(CERES_SRC_PATH)/parmeter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial_solver.cc \
                    $(CERES_SRC_PATH)/problem.cc \
@@ -134,7 +136,6 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/runtime_numeric_diff_cost_function.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/schur_eliminator.cc \
-                   $(CERES_SRC_PATH)/schur_ordering.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
                    $(CERES_SRC_PATH)/solver_impl.cc \

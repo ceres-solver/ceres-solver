@@ -41,6 +41,18 @@
 
 namespace ceres {
 
+Solver::Options::~Options() {
+  if (ordering != NULL) {
+    delete ordering;
+    ordering = NULL;
+  }
+  if (inner_iteration_ordering != NULL) {
+    delete inner_iteration_ordering;
+    inner_iteration_ordering = NULL;
+  }
+}
+
+
 Solver::~Solver() {}
 
 void Solver::Solve(const Solver::Options& options,
