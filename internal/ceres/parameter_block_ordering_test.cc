@@ -28,7 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/schur_ordering.h"
+#include "ceres/parameter_block_ordering.h"
 
 #include <cstddef>
 #include <vector>
