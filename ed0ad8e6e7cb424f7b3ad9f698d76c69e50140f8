@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ0H///8k\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJxn///G4\u003d",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJxn///Gs\u003d",
         "filename": "internal/ceres/ordered_groups_test.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-10-03T01:07:06Z",
       "side": 1,
       "message": "Commented out ocde.",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ0H///8g\u003d",
+        "filename": "internal/ceres/ordered_groups_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJxn///Gs\u003d",
       "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ0H///8c\u003d",
+        "filename": "internal/ceres/schur_ordering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Good idea, I have added a remove vertex method and simplified this bit.\n\nAs for moving this into graph_algorithms, I disagree. This function is very much along the line of ComputeSchurOrdering, which instantiates a concrete graph and runs a graph algorithm on it. \n\nIn this case the basic algorithm is run multiple times.\n\nI am inclined to rename schur_ordering.cc/h to just parameter_block_ordering.h/cc in another CL.",
+      "parentUuid": "AAAJxn///GU\u003d",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJxn///GM\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-10-03T01:07:06Z",
       "side": 1,
       "message": "Ordering.",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ0H///8Y\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJxn///GM\u003d",
       "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ0H///8Q\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "thanks for catching this, this needed fixed as I was doing some cleanup earlier.",
+      "parentUuid": "AAAJxn///Fw\u003d",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJxn///F8\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-10-03T01:07:06Z",
       "side": 1,
       "message": "This loop is separate and should get it\u0027s own loop nest comment (check each set is independent).",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ0H///8M\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJxn///F8\u003d",
       "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ0H///8I\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "actually at this point there is nothing that triggers false in Init. But yes if there is something it will log upstream.\n\nOne question is should the independent set checking be moved inside the CoordinateDescentMinimizer, since it requires it.\n\nOn the other hand, it saves us checking if we do it in solver_impl.cc in the case of automatic ordering since it is independent by construction.",
+      "parentUuid": "AAAJxn///Fs\u003d",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJxn///Fo\u003d",
         "filename": "internal/ceres/solver_impl.h",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2012-10-03T01:07:06Z",
       "side": 1,
       "message": "Sorting",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ0H///8U\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-03T03:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJxn///Fo\u003d",
       "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
