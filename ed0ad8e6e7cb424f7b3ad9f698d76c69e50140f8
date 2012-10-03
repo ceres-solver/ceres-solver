@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJxn///G4\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "groups of parameter blocks",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///Gs\u003d",
+        "filename": "internal/ceres/ordered_groups_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "Commented out ocde.",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///GU\u003d",
+        "filename": "internal/ceres/schur_ordering.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "It seems odd to recreate a complete graph each time. Consider adding support for removing vertices from the Graph\u003cT\u003e code. Furthermore, this is something that should probably live in graph_algorithms.h instead of here, and not depend on the parameter block abstractions.",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///GM\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "Ordering.",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///Fw\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///F8\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "This loop is separate and should get it\u0027s own loop nest comment (check each set is independent).",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///Fs\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "I guess logging is handled upstream?",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJxn///Fo\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-03T01:07:06Z",
+      "side": 1,
+      "message": "Sorting",
+      "revId": "ed0ad8e6e7cb424f7b3ad9f698d76c69e50140f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
