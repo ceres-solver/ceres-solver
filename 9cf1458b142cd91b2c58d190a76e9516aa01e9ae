@@ -1,0 +1,480 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ23///NM\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "in -\u003e into",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Mw\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "I still want an \"auto\" setting. For another day...",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Ms\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Don\u0027t make an \"either\" condition; just say set it to NULL.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Mg\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "remove \"where\"",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Mc\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "groups. -\u003e\n\ngroups during the inner optimization phase.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///MY\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "cameras,points\npoints,cameras\n\nthe \"and\" is confusing.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///MQ\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Use swap instead, it avoids a copy and deallocate.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///MI\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Consider aligning the lines under the \"Let\" (and in #2)",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///ME\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Last sentence -\u003e \"Each group must be an independent set.\"",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///MA\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Alignment.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///J0\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Serialize the OrderedGroups into a vector of parameter block offsets for parallel access.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Jg\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Should we check for existence?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///JY\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "What are these offsets of?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///JQ\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Why is mutable necessary here?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Ik\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Not cholesky? We may want to add this as an upstream option; inner_iteration_linear_solver.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///IE\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Do we care about errors? Should we? Some thinking is needed here. At least a comment explaining the error handling rationale is needed.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///IA\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "parameter",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Jc\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Comment about what the offset is into. The parameter vector?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///H8\u003d",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "I\u0027d prefer if we put the ++it on the previous line if it fits. The extra line doesn\u0027t add much to the already-unwieldly hashset iteration.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Ho\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Any reason not to check?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Hk\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///HI\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "We might want to do nothing for 1-residual or 1-parameter problems and warn the user that this makes no sense.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///HY\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Move this into the for(); no reason to split it out.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///HQ\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Put this on the previous line.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///HU\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "user-provided",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///HE\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "This can\u0027t happen currently, right?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///Gw\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "I wonder if we want to monitor inner iteration improvements to see if it\u0027s worthwhile. Right now it certainly is, but I can imagine there might be problems where every iteration would not help. Maybe in dense problems?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23///G4\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T19:37:13Z",
+      "side": 1,
+      "message": "Expand this log statement so it\u0027s more meaningful.\n\n\"Inner iteration succeeded; current cost: ...",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
