@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///5k\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T23:08:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///NM\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Mw\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 9
@@ -492,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///5g\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T23:08:56Z",
+      "side": 1,
+      "message": "I am not sure this adds much.. since we are asking the user to give us pointers to mutate anyways... this is not something which is const anywhere else in the API.",
+      "parentUuid": "AAAJ23//+7c\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Ik\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -539,6 +575,24 @@
       "side": 1,
       "message": "On our only optimization problem, sigh.",
       "parentUuid": "AAAJ5X///8M\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///5c\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T23:08:56Z",
+      "side": 1,
+      "message": "well we know that QR is fundamentally better behaved than cholesky.. so its not really a surprise.",
+      "parentUuid": "AAAJ23//+7Y\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -732,6 +786,24 @@
       "side": 1,
       "message": "It seems like it is to me; it\u0027s mutating the parameter block constancy.",
       "parentUuid": "AAAJ5X///7s\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///5Y\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T23:08:56Z",
+      "side": 1,
+      "message": "oh that is actually broken code!\nI can delete it.",
+      "parentUuid": "AAAJ23//+7E\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -995,6 +1067,24 @@
       "side": 1,
       "message": "Perhaps drop a TODO()?",
       "parentUuid": "AAAJ5X///7Q\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///5U\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T23:08:56Z",
+      "side": 1,
+      "message": "not worth it, its not a concrete task, more like a general improvement. I leave todos for things which are a concrete fixit and I am just being lazy or I know how to do, but it can be done in another CL.\nHere this is just pie in the sky.",
+      "parentUuid": "AAAJ23//+5o\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
