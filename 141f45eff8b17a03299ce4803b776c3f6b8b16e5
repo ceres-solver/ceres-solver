@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ23//+7w\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "Generalize the inner iterations algorithm.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7s\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "These aren\u0027t sentences. Consider making this a proper paragraph.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7o\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "To do this, set inner_iteration_ordering \u003d NULL.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7k\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 12
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "Each group must be an independent set. (instead of the wordy sentence)",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7U\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "Make the first sentence full:\n\n// TODO(sameeragarwal): Add better error handling. ...",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7A\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "I think this should get removed.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+68\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "I think this should get removed.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+6Q\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "This entire block should be simply\n\ndelete ordering;\ndelete inner_iteration_ordering;\n\ndelete of NULL is a no-op, and assigning NULL is unnecessary.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+6o\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "This is unnecessary.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+6k\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "This is unnecessary.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+6s\u003d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+54\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "I don\u0027t think the extra variable adds anything here.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+5s\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:00:54Z",
+      "side": 1,
+      "message": "I should have caught this.",
+      "revId": "141f45eff8b17a03299ce4803b776c3f6b8b16e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
