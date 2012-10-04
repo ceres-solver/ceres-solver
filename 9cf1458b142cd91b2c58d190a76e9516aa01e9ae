@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///9A\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "maybe we can set it to 0 for auto in the future..",
+      "parentUuid": "AAAJ23///Mw\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Ms\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 9
@@ -47,6 +65,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Don\u0027t make an \"either\" condition; just say set it to NULL.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///88\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///Ms\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///84\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///Mg\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Mc\u003d",
         "filename": "docs/solving.tex",
         "patchSetId": 9
@@ -81,6 +135,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "groups. -\u003e\n\ngroups during the inner optimization phase.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///80\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 9
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///Mc\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8w\u003d",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///MY\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///MQ\u003d",
         "filename": "include/ceres/ordered_groups.h",
         "patchSetId": 9
@@ -115,6 +205,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Use swap instead, it avoids a copy and deallocate.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///8s\u003d",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///MQ\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8o\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///MI\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///ME\u003d",
         "filename": "include/ceres/solver.h",
         "patchSetId": 9
@@ -149,6 +275,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Last sentence -\u003e \"Each group must be an independent set.\"",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///8k\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///ME\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8g\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///MA\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///J0\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -183,6 +345,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Serialize the OrderedGroups into a vector of parameter block offsets for parallel access.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///8c\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///J0\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8Y\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "at this point no, otherwise we should be pushing a whole bunch of error checking into init..",
+      "parentUuid": "AAAJ23///Jg\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///JY\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -217,6 +415,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "What are these offsets of?",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///8U\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Each independent set offset is one round of optimization.",
+      "parentUuid": "AAAJ23///JY\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8Q\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "because everywhere we use double* rather than const double*",
+      "parentUuid": "AAAJ23///JQ\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Ik\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -251,6 +485,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Not cholesky? We may want to add this as an upstream option; inner_iteration_linear_solver.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///8M\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "it does not work as well, I tested.",
+      "parentUuid": "AAAJ23///Ik\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///8I\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "technically yes, we should I will add a todo for now.",
+      "parentUuid": "AAAJ23///IE\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///IA\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -285,6 +555,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "parameter",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///74\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///IA\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -308,6 +596,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///70\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///Jc\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///H8\u003d",
         "filename": "internal/ceres/graph.h",
         "patchSetId": 9
@@ -319,6 +625,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "I\u0027d prefer if we put the ++it on the previous line if it fits. The extra line doesn\u0027t add much to the already-unwieldly hashset iteration.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///7w\u003d",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///H8\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -342,6 +666,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///7s\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Actually this is not true anymore. This comment is outdated.",
+      "parentUuid": "AAAJ23///Ho\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Hk\u003d",
         "filename": "internal/ceres/parameter_block_ordering.cc",
         "patchSetId": 9
@@ -353,6 +695,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///7o\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///Hk\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -376,6 +736,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///7k\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Added a todo for now.",
+      "parentUuid": "AAAJ23///HI\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///HY\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 9
@@ -387,6 +765,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Move this into the for(); no reason to split it out.",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///7g\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "it was too long..",
+      "parentUuid": "AAAJ23///HY\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -410,6 +806,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///7c\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///HQ\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///HU\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 9
@@ -421,6 +835,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "user-provided",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///7Y\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///HU\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -444,6 +876,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///7U\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "strictly speaking, no. But I do not want to take a risk. also it keeps the semantics symmetric.\n\nI Imagine as we refine the inner iterations stuff, this can be cleaned up a bit.",
+      "parentUuid": "AAAJ23///HE\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Gw\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 9
@@ -461,6 +911,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ5X///7Q\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "This is a good point. I think in later iterations the inner iterations do not add much. Much of the bang for the buck comes in the early iterations. But since I do not have much experience with this yet, and I do not have a good rule of thumb handy to control it, I am going to start out by keeping this expensive the way it is, and optimize it as we understand the behaviour better.",
+      "parentUuid": "AAAJ23///Gw\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///G4\u003d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 9
@@ -472,6 +940,24 @@
       "writtenOn": "2012-10-04T19:37:13Z",
       "side": 1,
       "message": "Expand this log statement so it\u0027s more meaningful.\n\n\"Inner iteration succeeded; current cost: ...",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ5X///7M\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-04T22:46:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAJ23///G4\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
