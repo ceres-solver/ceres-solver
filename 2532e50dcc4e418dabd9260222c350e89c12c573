@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ23//+20\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 13
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:20:20Z",
+      "side": 1,
+      "message": "Grammo remains.",
+      "revId": "2532e50dcc4e418dabd9260222c350e89c12c573",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
