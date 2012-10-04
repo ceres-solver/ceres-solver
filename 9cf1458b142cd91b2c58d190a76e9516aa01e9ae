@@ -474,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "AAAJ23//+7c\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:01:10Z",
+      "side": 1,
+      "message": "This raises an interesting point. The ordering should probably store const double* instead of double*. I know it involves some plumbing, but it\u0027s the right thing to do.",
+      "parentUuid": "AAAJ5X///8Q\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAJ23///Ik\u003d",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 9
@@ -503,6 +521,24 @@
       "side": 1,
       "message": "it does not work as well, I tested.",
       "parentUuid": "AAAJ23///Ik\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7Y\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:01:10Z",
+      "side": 1,
+      "message": "On our only optimization problem, sigh.",
+      "parentUuid": "AAAJ5X///8M\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -678,6 +714,24 @@
       "side": 1,
       "message": "Actually this is not true anymore. This comment is outdated.",
       "parentUuid": "AAAJ23///Ho\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+7E\u003d",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:01:10Z",
+      "side": 1,
+      "message": "It seems like it is to me; it\u0027s mutating the parameter block constancy.",
+      "parentUuid": "AAAJ5X///7s\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -923,6 +977,24 @@
       "side": 1,
       "message": "This is a good point. I think in later iterations the inner iterations do not add much. Much of the bang for the buck comes in the early iterations. But since I do not have much experience with this yet, and I do not have a good rule of thumb handy to control it, I am going to start out by keeping this expensive the way it is, and optimize it as we understand the behaviour better.",
       "parentUuid": "AAAJ23///Gw\u003d",
+      "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ23//+5o\u003d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-04T23:01:10Z",
+      "side": 1,
+      "message": "Perhaps drop a TODO()?",
+      "parentUuid": "AAAJ5X///7Q\u003d",
       "revId": "9cf1458b142cd91b2c58d190a76e9516aa01e9ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
