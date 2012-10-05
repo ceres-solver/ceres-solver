@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ9H///jk\u003d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T20:46:58Z",
+      "side": 1,
+      "message": "Now we\u0027re creating a new one with each call to minimize?",
+      "revId": "b7180c3de22910cea037debb41056f149165b4fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///jI\u003d",
+        "filename": "internal/ceres/dense_qr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T20:46:58Z",
+      "side": 1,
+      "message": "Isn\u0027t this already done?",
+      "revId": "b7180c3de22910cea037debb41056f149165b4fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///jY\u003d",
+        "filename": "internal/ceres/dense_qr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T20:46:58Z",
+      "side": 1,
+      "message": "Commented out code.",
+      "revId": "b7180c3de22910cea037debb41056f149165b4fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///io\u003d",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T20:46:58Z",
+      "side": 1,
+      "message": "Consider an enum for reserve_diagonal instead.",
+      "revId": "b7180c3de22910cea037debb41056f149165b4fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///i8\u003d",
+        "filename": "internal/ceres/dense_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T20:46:58Z",
+      "side": 1,
+      "message": "Only one space around +.",
+      "revId": "b7180c3de22910cea037debb41056f149165b4fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
