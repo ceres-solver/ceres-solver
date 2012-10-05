@@ -106,11 +106,6 @@ bool CoordinateDescentMinimizer::Init(
     }
   }
 
-  LinearSolver::Options linear_solver_options;
-  linear_solver_options.type = DENSE_QR;
-  linear_solver_.reset(LinearSolver::Create(linear_solver_options));
-  CHECK_NOTNULL(linear_solver_.get());
-
   evaluator_options_.linear_solver_type = DENSE_QR;
   evaluator_options_.num_eliminate_blocks = 0;
   evaluator_options_.num_threads = 1;
@@ -129,6 +124,15 @@ void CoordinateDescentMinimizer::Minimize(
     parameter_block->SetConstant();
   }
 
+  scoped_array<LinearSolver*> linear_solvers(new LinearSolver*[options.num_threads]);
+
+  LinearSolver::Options linear_solver_options;
+  linear_solver_options.type = DENSE_QR;
+
+  for (int i = 0; i < options.num_threads; ++i) {
+    linear_solvers[i] = LinearSolver::Create(linear_solver_options);
+  }
+
   for (int i = 0; i < independent_set_offsets_.size() - 1; ++i) {
     // No point paying the price for an OpemMP call if the set if of
     // size zero.
@@ -142,6 +146,11 @@ void CoordinateDescentMinimizer::Minimize(
     for (int j = independent_set_offsets_[i];
          j < independent_set_offsets_[i + 1];
          ++j) {
+#ifdef CERES_USE_OPENMP
+      int thread_id = omp_get_thread_num();
+#else
+      int thread_id = 0;
+#endif
 
       ParameterBlock* parameter_block = parameter_blocks_[j];
       const int old_index = parameter_block->index();
@@ -164,6 +173,7 @@ void CoordinateDescentMinimizer::Minimize(
       // we are fine.
       Solver::Summary inner_summary;
       Solve(&inner_program,
+            linear_solvers[thread_id],
             parameters + parameter_block->state_offset(),
             &inner_summary);
 
@@ -177,10 +187,15 @@ void CoordinateDescentMinimizer::Minimize(
   for (int i =  0; i < parameter_blocks_.size(); ++i) {
     parameter_blocks_[i]->SetVarying();
   }
+
+  for (int i = 0; i < options.num_threads; ++i) {
+    delete linear_solvers[i];
+  }
 }
 
 // Solve the optimization problem for one parameter block.
 void CoordinateDescentMinimizer::Solve(Program* program,
+                                       LinearSolver* linear_solver,
                                        double* parameter,
                                        Solver::Summary* summary) {
   *summary = Solver::Summary();
@@ -196,11 +211,11 @@ void CoordinateDescentMinimizer::Solve(Program* program,
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   CHECK_NOTNULL(jacobian.get());
 
-  TrustRegionStrategy::Options trust_region_strategy_options;
-  trust_region_strategy_options.linear_solver = linear_solver_.get();
+  TrustRegionStrategy::Options trs_options;
+  trs_options.linear_solver = linear_solver;
+
   scoped_ptr<TrustRegionStrategy>trust_region_strategy(
-      TrustRegionStrategy::Create(trust_region_strategy_options));
-  CHECK_NOTNULL(trust_region_strategy.get());
+      CHECK_NOTNULL(TrustRegionStrategy::Create(trs_options)));
 
   Minimizer::Options minimizer_options;
   minimizer_options.evaluator = evaluator.get();

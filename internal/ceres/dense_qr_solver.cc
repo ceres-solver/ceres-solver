@@ -62,17 +62,20 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   }
 
   // rhs = [b;0] to account for the additional rows in the lhs.
-  Vector rhs(num_rows + ((per_solve_options.D != NULL) ? num_cols : 0));
-  rhs.setZero();
-  rhs.head(num_rows) = ConstVectorRef(b, num_rows);
+  const int augmented_num_rows = num_rows + ((per_solve_options.D != NULL) ? num_cols : 0);
+  if (rhs_.rows() != augmented_num_rows) {
+    rhs_.resize(augmented_num_rows);
+    rhs_.setZero();
+  }
+  rhs_.head(num_rows) = ConstVectorRef(b, num_rows);
 
   // Solve the system.
-  VectorRef(x, num_cols) = A->matrix().colPivHouseholderQr().solve(rhs);
+  VectorRef(x, num_cols) = A->matrix().colPivHouseholderQr().solve(rhs_);
 
   VLOG(3) << "A:\n" << A->matrix();
   VLOG(3) << "x:\n" << VectorRef(x, num_cols);
-  VLOG(3) << "b:\n" << rhs;
-  VLOG(3) << "error: " << (A->matrix() * VectorRef(x, num_cols) - rhs).norm();
+  VLOG(3) << "b:\n" << rhs_;
+  VLOG(3) << "error: " << (A->matrix() * VectorRef(x, num_cols) - rhs_).norm();
 
 
   if (per_solve_options.D != NULL) {

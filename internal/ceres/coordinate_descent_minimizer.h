@@ -65,6 +65,7 @@ class CoordinateDescentMinimizer : public Minimizer {
 
  private:
   void Solve(Program* program,
+             LinearSolver* linear_solver,
              double* parameters,
              Solver::Summary* summary);
 
@@ -77,7 +78,6 @@ class CoordinateDescentMinimizer : public Minimizer {
   vector<int> independent_set_offsets_;
 
   Evaluator::Options evaluator_options_;
-  scoped_ptr<LinearSolver> linear_solver_;
 };
 
 }  // namespace internal
