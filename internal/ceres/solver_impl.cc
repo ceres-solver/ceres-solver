@@ -627,7 +627,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   // maximal independent set.
   if (original_num_groups == 1 && IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
-    const int num_eliminate_blocks = ComputeSchurOrdering(*original_program,
+    const int num_eliminate_blocks = ComputeSchurOrdering(*transformed_program,
                                                           &schur_ordering);
     CHECK_EQ(schur_ordering.size(), transformed_program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "
