@@ -33,6 +33,24 @@
       "revId": "50b8cb519b379d59d0a7bff4ca45971aee2a0da8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///N8\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T23:50:50Z",
+      "side": 1,
+      "message": "The implication of my comment was that this test should actually check what the comment says.",
+      "parentUuid": "AAAJ9H///OQ\u003d",
+      "revId": "50b8cb519b379d59d0a7bff4ca45971aee2a0da8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
