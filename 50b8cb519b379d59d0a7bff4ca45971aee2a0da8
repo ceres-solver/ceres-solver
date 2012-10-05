@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ9H///Og\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T23:48:00Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "50b8cb519b379d59d0a7bff4ca45971aee2a0da8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAJ9H///OQ\u003d",
+        "filename": "internal/ceres/solver_impl_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T23:48:00Z",
+      "side": 1,
+      "message": "This is not checked below.",
+      "revId": "50b8cb519b379d59d0a7bff4ca45971aee2a0da8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
