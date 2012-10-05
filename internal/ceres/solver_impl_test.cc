@@ -386,6 +386,63 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   }
 }
 
+TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
+  ProblemImpl problem;
+  double x;
+  double y;
+  double z;
+
+  problem.AddParameterBlock(&x, 1);
+  problem.AddParameterBlock(&y, 1);
+  problem.AddParameterBlock(&z, 1);
+
+  // Set one parameter block constant.
+  problem.SetParameterBlockConstant(&z);
+
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
+
+  ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
+  ordering->AddElementToGroup(&x, 0);
+  ordering->AddElementToGroup(&z, 0);
+  ordering->AddElementToGroup(&y, 0);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_SCHUR;
+  options.ordering = ordering;
+
+  string error;
+  scoped_ptr<Program> reduced_program(
+      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &error));
+
+  const vector<ResidualBlock*>& residual_blocks =
+      reduced_program->residual_blocks();
+  const vector<ParameterBlock*>& parameter_blocks =
+      reduced_program->parameter_blocks();
+
+  const vector<ResidualBlock*>& original_residual_blocks =
+      problem.program().residual_blocks();
+
+  EXPECT_EQ(residual_blocks.size(), 8);
+  EXPECT_EQ(reduced_program->parameter_blocks().size(), 2);
+
+  // Verify that right parmeter block and the residual blocks have
+  // been removed.
+  for (int i = 0; i < 8; ++i) {
+    EXPECT_NE(residual_blocks[i], original_residual_blocks.back());
+  }
+  for (int i = 0; i < 2; ++i) {
+    EXPECT_NE(parameter_blocks[i]->mutable_user_state(), &z);
+  }
+}
+
 TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
   ProblemImpl problem;
   double x;
