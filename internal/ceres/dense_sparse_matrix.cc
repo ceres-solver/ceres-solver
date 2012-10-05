@@ -47,6 +47,18 @@ DenseSparseMatrix::DenseSparseMatrix(int num_rows, int num_cols)
   m_.setZero();
 }
 
+DenseSparseMatrix::DenseSparseMatrix(int num_rows, int num_cols, bool reserve_diagonal)
+    : has_diagonal_appended_(false),
+      has_diagonal_reserved_(reserve_diagonal) {
+  // Allocate enough space for the diagonal.
+  if (reserve_diagonal) {
+    m_.resize(num_rows +  num_cols, num_cols);
+  } else {
+    m_.resize(num_rows, num_cols);
+  }
+  m_.setZero();
+}
+
 DenseSparseMatrix::DenseSparseMatrix(const TripletSparseMatrix& m)
     : m_(Eigen::MatrixXd::Zero(m.num_rows(), m.num_cols())),
       has_diagonal_appended_(false),

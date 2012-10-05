@@ -106,11 +106,6 @@ bool CoordinateDescentMinimizer::Init(
     }
   }
 
-  LinearSolver::Options linear_solver_options;
-  linear_solver_options.type = DENSE_QR;
-  linear_solver_.reset(LinearSolver::Create(linear_solver_options));
-  CHECK_NOTNULL(linear_solver_.get());
-
   evaluator_options_.linear_solver_type = DENSE_QR;
   evaluator_options_.num_eliminate_blocks = 0;
   evaluator_options_.num_threads = 1;
@@ -196,11 +191,16 @@ void CoordinateDescentMinimizer::Solve(Program* program,
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   CHECK_NOTNULL(jacobian.get());
 
-  TrustRegionStrategy::Options trust_region_strategy_options;
-  trust_region_strategy_options.linear_solver = linear_solver_.get();
+  LinearSolver::Options linear_solver_options;
+  linear_solver_options.type = DENSE_QR;
+  scoped_ptr<LinearSolver>linear_solver(
+      CHECK_NOTNULL(LinearSolver::Create(linear_solver_options)));
+
+  TrustRegionStrategy::Options trs_options;
+  trs_options.linear_solver = linear_solver.get();
+
   scoped_ptr<TrustRegionStrategy>trust_region_strategy(
-      TrustRegionStrategy::Create(trust_region_strategy_options));
-  CHECK_NOTNULL(trust_region_strategy.get());
+      CHECK_NOTNULL(TrustRegionStrategy::Create(trs_options)));
 
   Minimizer::Options minimizer_options;
   minimizer_options.evaluator = evaluator.get();
