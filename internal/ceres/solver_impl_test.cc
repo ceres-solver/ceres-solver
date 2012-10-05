@@ -312,6 +312,7 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   }
 }
 
+
 TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   ProblemImpl problem;
   double x;
@@ -384,6 +385,48 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
     EXPECT_EQ(reduced_program->residual_blocks()[i],
               expected_residual_blocks[i]);
   }
+}
+
+TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
+  ProblemImpl problem;
+  double x;
+  double y;
+  double z;
+
+  problem.AddParameterBlock(&x, 1);
+  problem.AddParameterBlock(&y, 1);
+  problem.AddParameterBlock(&z, 1);
+
+  // Set one parameter block constant.
+  problem.SetParameterBlockConstant(&z);
+
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &x);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &z, &y);
+  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
+  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
+
+  ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
+  ordering->AddElementToGroup(&x, 0);
+  ordering->AddElementToGroup(&z, 0);
+  ordering->AddElementToGroup(&y, 0);
+
+  Solver::Options options;
+  options.linear_solver_type = DENSE_SCHUR;
+  options.ordering = ordering;
+
+  // Create the reduced program. This should remove the fixed block "z",
+  // marking the index to -1 at the same time. x and y also get indices.
+  string error;
+  scoped_ptr<Program> reduced_program(
+      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &error));
+
+  EXPECT_EQ(reduced_program->residual_blocks().size(), 8);
+  EXPECT_EQ(reduced_program->parameter_blocks().size(), 2);
 }
 
 TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
