@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ23//+to\u003d",
+        "filename": "docs/solving.tex",
+        "patchSetId": 14
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-05T01:23:31Z",
+      "side": 1,
+      "message": "Gravy set?",
+      "revId": "e41a9e39e3cc8d81fa56178aaeb5ec0cbbde157f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
