@@ -42,7 +42,7 @@
 namespace ceres {
 
 Solver::Options::~Options() {
-  delete ordering;
+  delete linear_solver_ordering;
   delete inner_iteration_ordering;
 }
 

@@ -96,7 +96,7 @@ class Solver {
 #else
       use_block_amd = true;
 #endif
-      ordering = NULL;
+      linear_solver_ordering = NULL;
       use_inner_iterations = false;
       inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
@@ -300,7 +300,7 @@ class Solver {
     //
     // Once assigned, Solver::Options owns this pointer and will
     // deallocate the memory when destroyed.
-    ParameterBlockOrdering* ordering;
+    ParameterBlockOrdering* linear_solver_ordering;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When

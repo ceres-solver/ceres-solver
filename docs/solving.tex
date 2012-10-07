@@ -371,7 +371,7 @@ based on the user's choices like the linear solver being used, to an
 exact order in which the variables should be eliminated, and a variety
 of possibilities in between.
 
-Instances of the \texttt{Ordering} class are used to communicate this
+Instances of the \texttt{ParameterBlockOrdering} class are used to communicate this
 information to Ceres.
 
 Formally an ordering is an ordered partitioning of the parameter
@@ -564,10 +564,10 @@ where $\Delta x$ is the step computed by the linear solver in the current iterat
   the inner optimization phase. Each group must be an independent set.
 \end{enumerate}
 
-\item{\texttt{ordering} (\texttt{NULL})} An instance of the ordering
-  object informs the solver about the desired order in which parameter
-  blocks should be eliminated by the linear solvers. See
-  section~\ref{sec:ordering} for more details.
+\item{\texttt{linear\_solver\_ordering} (\texttt{NULL})} An instance
+  of the ordering object informs the solver about the desired order in
+  which parameter blocks should be eliminated by the linear
+  solvers. See section~\ref{sec:ordering} for more details.
 
   If \texttt{NULL}, the solver is free to choose an ordering that it
   thinks is best. Note: currently, this option only has an effect on

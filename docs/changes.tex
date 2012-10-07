@@ -28,12 +28,12 @@ options.num_eliminate_blocks = num_points;
 \subsubsection{After}
 \begin{minted}[mathescape]{c++}
 options.linear_solver_type = ceres::DENSE_SCHUR;
-options.ordering = new ceres::Ordering;
+options.ordering = new ceres::ParameterBlockOrdering;
 for (int i = 0; i < num_points; ++i) {
-  options.ordering.AddElementToGroup(my_points[i], 0);
+  options.linear_solver_ordering->AddElementToGroup(my_points[i], 0);
 }
 for (int i = 0; i < num_cameras; ++i) {
-  options.ordering.AddElementToGroup(my_cameras[i], 1);
+  options.linear_solver_ordering->AddElementToGroup(my_cameras[i], 1);
 }
 \end{minted}
 \subsection{New Features}
