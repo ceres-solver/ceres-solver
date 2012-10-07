@@ -206,7 +206,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   double solver_start_time = WallTimeInSeconds();
   Solver::Options options(original_options);
 
-  options.ordering = NULL;
+  options.linear_solver_ordering = NULL;
   options.inner_iteration_ordering = NULL;
 
   Program* original_program = original_problem_impl->mutable_program();
@@ -252,20 +252,21 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
   summary->dogleg_type = options.dogleg_type;
 
-  if (original_options.ordering != NULL) {
+  if (original_options.linear_solver_ordering != NULL) {
     if (!IsOrderingValid(original_options, problem_impl, &summary->error)) {
       LOG(WARNING) << summary->error;
       return;
     }
-    options.ordering = new ParameterBlockOrdering(*original_options.ordering);
+    options.linear_solver_ordering =
+        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
   } else {
-    options.ordering = new ParameterBlockOrdering;
+    options.linear_solver_ordering = new ParameterBlockOrdering;
     const ProblemImpl::ParameterMap& parameter_map =
         problem_impl->parameter_map();
     for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
          it != parameter_map.end();
          ++it) {
-      options.ordering->AddElementToGroup(it->first, 0);
+      options.linear_solver_ordering->AddElementToGroup(it->first, 0);
     }
   }
 
@@ -331,7 +332,9 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Only Schur types require the lexicographic reordering.
   if (IsSchurType(options.linear_solver_type)) {
     const int num_eliminate_blocks =
-        options.ordering->group_to_elements().begin()->second.size();
+        options.linear_solver_ordering
+        ->group_to_elements().begin()
+        ->second.size();
     if (!LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
                                               reduced_program.get(),
                                               &summary->error)) {
@@ -449,7 +452,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
                                  const ProblemImpl* problem_impl,
                                  string* error) {
-  if (options.ordering->NumElements() !=
+  if (options.linear_solver_ordering->NumElements() !=
       problem_impl->NumParameterBlocks()) {
       *error = "Number of parameter blocks in user supplied ordering "
           "does not match the number of parameter blocks in the problem";
@@ -461,7 +464,8 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   for (vector<ParameterBlock*>::const_iterator it = parameter_blocks.begin();
        it != parameter_blocks.end();
        ++it) {
-    if (!options.ordering->IsMember(const_cast<double*>((*it)->user_state()))) {
+    if (!options.linear_solver_ordering
+        ->IsMember(const_cast<double*>((*it)->user_state()))) {
       *error = "Problem contains a parameter block that is not in "
           "the user specified ordering.";
       return false;
@@ -469,10 +473,10 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   }
 
   if (IsSchurType(options.linear_solver_type) &&
-      options.ordering->NumGroups() > 1) {
+      options.linear_solver_ordering->NumGroups() > 1) {
     const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
     const set<double*>& e_blocks  =
-        options.ordering->group_to_elements().begin()->second;
+        options.linear_solver_ordering->group_to_elements().begin()->second;
     if (!IsParameterBlockSetIndependent(e_blocks, residual_blocks)) {
       *error = "The user requested the use of a Schur type solver. "
           "But the first elimination group in the ordering is not an "
@@ -597,17 +601,18 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
-  CHECK_NOTNULL(options->ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
-  ParameterBlockOrdering* ordering = options->ordering;
+  ParameterBlockOrdering* linear_solver_ordering =
+      options->linear_solver_ordering;
 
   const int min_group_id =
-      ordering->group_to_elements().begin()->first;
-  const int original_num_groups = ordering->NumGroups();
+      linear_solver_ordering->group_to_elements().begin()->first;
+  const int original_num_groups = linear_solver_ordering->NumGroups();
 
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
-                                    ordering,
+                                    linear_solver_ordering,
                                     fixed_cost,
                                     error)) {
     return NULL;
@@ -619,12 +624,12 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
-  // If the user supplied an ordering with just one group, it is
-  // equivalent to the user supplying NULL as ordering. Ceres is
-  // completely free to choose the parameter block ordering as it sees
-  // fit. For Schur type solvers, this means that the user wishes for
-  // Ceres to identify the e_blocks, which we do by computing a
-  // maximal independent set.
+  // If the user supplied an linear_solver_ordering with just one
+  // group, it is equivalent to the user supplying NULL as
+  // ordering. Ceres is completely free to choose the parameter block
+  // ordering as it sees fit. For Schur type solvers, this means that
+  // the user wishes for Ceres to identify the e_blocks, which we do
+  // by computing a maximal independent set.
   if (original_num_groups == 1 && IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
     const int num_eliminate_blocks = ComputeSchurOrdering(*transformed_program,
@@ -634,21 +639,22 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
         << "to the developers.";
 
     for (int i = 0; i < schur_ordering.size(); ++i) {
-      ordering->AddElementToGroup(schur_ordering[i]->mutable_user_state(),
-                                         (i < num_eliminate_blocks) ? 0 : 1);
+      linear_solver_ordering->AddElementToGroup(
+          schur_ordering[i]->mutable_user_state(),
+          (i < num_eliminate_blocks) ? 0 : 1);
     }
   }
 
   if (!ApplyUserOrdering(problem_impl->parameter_map(),
-                         ordering,
+                         linear_solver_ordering,
                          transformed_program.get(),
                          error)) {
     return NULL;
   }
 
   // If the user requested the use of a Schur type solver, and
-  // supplied a non-NULL ordering object with more than one
-  // elimimation group, then it can happen that after all the
+  // supplied a non-NULL linear_solver_ordering object with more than
+  // one elimimation group, then it can happen that after all the
   // parameter blocks which are fixed or unused have been removed from
   // the program and the ordering, there are no more parameter blocks
   // in the first elimination group.
@@ -659,7 +665,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   // the user's indicated preferences.
   if (IsSchurType(options->linear_solver_type) &&
       original_num_groups > 1 &&
-      ordering->GroupSize(min_group_id) == 0) {
+      linear_solver_ordering->GroupSize(min_group_id) == 0) {
     string msg = "No e_blocks remaining. Switching from ";
     if (options->linear_solver_type == SPARSE_SCHUR) {
       options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -694,7 +700,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
   CHECK_NOTNULL(options);
-  CHECK_NOTNULL(options->ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering);
   CHECK_NOTNULL(error);
 
   if (options->trust_region_strategy_type == DOGLEG) {
@@ -795,7 +801,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
   linear_solver_options.use_block_amd = options->use_block_amd;
   const map<int, set<double*> >& groups =
-      options->ordering->group_to_elements();
+      options->linear_solver_ordering->group_to_elements();
   for (map<int, set<double*> >::const_iterator it = groups.begin();
        it != groups.end();
        ++it) {
@@ -963,9 +969,11 @@ Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
   evaluator_options.num_eliminate_blocks =
-      (options.ordering->NumGroups() > 0 &&
+      (options.linear_solver_ordering->NumGroups() > 0 &&
        IsSchurType(options.linear_solver_type))
-      ? options.ordering->group_to_elements().begin()->second.size()
+      ? (options.linear_solver_ordering
+         ->group_to_elements().begin()
+         ->second.size())
       : 0;
   evaluator_options.num_threads = options.num_threads;
   return Evaluator::Create(evaluator_options, program, error);

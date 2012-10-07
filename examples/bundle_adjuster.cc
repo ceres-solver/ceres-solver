@@ -215,7 +215,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     }
   }
 
-  options->ordering = ordering;
+  options->linear_solver_ordering = ordering;
 }
 
 void SetMinimizerOptions(Solver::Options* options) {

@@ -280,7 +280,7 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.ordering = ordering;
+  options.linear_solver_ordering = ordering;
 
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
@@ -342,7 +342,7 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.ordering = ordering;
+  options.linear_solver_ordering = ordering;
 
   // Create the reduced program. This should remove the fixed block "z",
   // marking the index to -1 at the same time. x and y also get indices.
@@ -416,7 +416,7 @@ TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.ordering = ordering;
+  options.linear_solver_ordering = ordering;
 
   string error;
   scoped_ptr<Program> reduced_program(
@@ -509,7 +509,7 @@ TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_max_num_iterations = -1;
   // CreateLinearSolver assumes a non-empty ordering.
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
@@ -520,7 +520,7 @@ TEST(SolverImpl, CreateLinearSolverNegativeMinNumIterations) {
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_min_num_iterations = -1;
   // CreateLinearSolver assumes a non-empty ordering.
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
@@ -531,7 +531,7 @@ TEST(SolverImpl, CreateLinearSolverMaxLessThanMinIterations) {
   options.linear_solver_type = DENSE_QR;
   options.linear_solver_min_num_iterations = 10;
   options.linear_solver_max_num_iterations = 5;
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
             static_cast<LinearSolver*>(NULL));
@@ -543,11 +543,11 @@ TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
   options.num_linear_solver_threads = 2;
   // The Schur type solvers can only be created with the Ordering
   // contains at least one elimination group.
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   double x;
   double y;
-  options.ordering->AddElementToGroup(&x, 0);
-  options.ordering->AddElementToGroup(&y, 0);
+  options.linear_solver_ordering->AddElementToGroup(&x, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y, 0);
 
   string error;
   scoped_ptr<LinearSolver> solver(
@@ -561,7 +561,7 @@ TEST(SolverImpl, CreateIterativeLinearSolverForDogleg) {
   Solver::Options options;
   options.trust_region_strategy_type = DOGLEG;
   // CreateLinearSolver assumes a non-empty ordering.
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   options.linear_solver_type = ITERATIVE_SCHUR;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
@@ -577,7 +577,7 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
   scoped_ptr<LinearSolver> solver;
   options.linear_solver_type = DENSE_QR;
   // CreateLinearSolver assumes a non-empty ordering.
-  options.ordering = new ParameterBlockOrdering;
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_EQ(options.linear_solver_type, DENSE_QR);
@@ -606,8 +606,8 @@ TEST(SolverImpl, CreateLinearSolverNormalOperation) {
 
   double x;
   double y;
-  options.ordering->AddElementToGroup(&x, 0);
-  options.ordering->AddElementToGroup(&y, 0);
+  options.linear_solver_ordering->AddElementToGroup(&x, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y, 0);
 
   options.linear_solver_type = DENSE_SCHUR;
   solver.reset(SolverImpl::CreateLinearSolver(&options, &error));
