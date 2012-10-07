@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAJ9H//+88\u003d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-07T18:23:17Z",
+      "side": 1,
+      "message": "Consider instead:\n\nRename \u0027ordering\u0027 to \u0027linear_solver_ordering\u0027.",
+      "revId": "68b32a941c4ed3427fcaeca24034294069133e8e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
