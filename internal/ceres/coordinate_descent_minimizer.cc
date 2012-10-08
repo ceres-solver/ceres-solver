@@ -30,6 +30,10 @@
 
 #include "ceres/coordinate_descent_minimizer.h"
 
+#ifdef CERES_USE_OPENMP
+#include <omp.h>
+#endif
+
 #include <iterator>
 #include <numeric>
 #include <vector>
