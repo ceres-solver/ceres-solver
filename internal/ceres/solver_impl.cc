@@ -319,6 +319,34 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
   summary->num_residuals_reduced = reduced_program->NumResiduals();
 
+  if (summary->num_parameter_blocks_reduced == 0) {
+    // Nothing to do here, do the post processing that needs done and
+    // return to the user.
+    summary->termination_type = PARAMETER_TOLERANCE;
+
+    summary->preprocessor_time_in_seconds =
+        WallTimeInSeconds() - solver_start_time;
+
+    double post_process_start_time = WallTimeInSeconds();
+    // Evaluate the final cost, residual vector and the jacobian
+    // matrix if requested by the user.
+    Evaluator::Evaluate(
+        original_program,
+        options.num_threads,
+        &summary->final_cost,
+        options.return_final_residuals ? &summary->final_residuals : NULL,
+        options.return_final_gradient ? &summary->final_gradient : NULL,
+        options.return_final_jacobian ? &summary->final_jacobian : NULL);
+
+    // Ensure the program state is set to the user parameters on the way out.
+    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+    // Stick a fork in it, we're done.
+    summary->postprocessor_time_in_seconds =
+        WallTimeInSeconds() - post_process_start_time;
+
+    return;
+  }
+
   scoped_ptr<LinearSolver>
       linear_solver(CreateLinearSolver(&options, &summary->error));
   summary->linear_solver_type_used = options.linear_solver_type;
