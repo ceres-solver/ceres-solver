@@ -366,6 +366,10 @@ TEST(TrustRegionMinimizer, JacobiScalingTest) {
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   EXPECT_LE(summary.final_cost, 1e-10);
+
+  for (int i = 0; i < N; i++) {
+    delete y[i];
+  }
 }
 
 }  // namespace internal
