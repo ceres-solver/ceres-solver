@@ -33,7 +33,7 @@
 
 #include <map>
 #include <set>
-#include "ceres/collections_port.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 
