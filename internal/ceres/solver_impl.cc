@@ -621,7 +621,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   if (transformed_program->NumParameterBlocks() == 0) {
     LOG(WARNING) << "No varying parameter blocks to optimize; "
                  << "bailing early.";
-    return transformed_program.release();
+    return NULL;
   }
 
   // If the user supplied an linear_solver_ordering with just one
