@@ -204,20 +204,34 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        ProblemImpl* original_problem_impl,
                        Solver::Summary* summary) {
   double solver_start_time = WallTimeInSeconds();
-  Solver::Options options(original_options);
-
-  options.linear_solver_ordering = NULL;
-  options.inner_iteration_ordering = NULL;
 
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
+
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
-  if (options.lsqp_iterations_to_dump.size() > 0) {
-    LOG(WARNING) << "Dumping linear least squares problems to disk is"
-        " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
+  summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
+  summary->num_parameters = problem_impl->NumParameters();
+  summary->num_residual_blocks = problem_impl->NumResidualBlocks();
+  summary->num_residuals = problem_impl->NumResiduals();
+
+  // Empty programs are usually a user error.
+  if (summary->num_parameter_blocks == 0) {
+    summary->error = "Problem contains no parameter blocks.";
+    LOG(ERROR) << summary->error;
+    return;
   }
+
+  if (summary->num_residual_blocks == 0) {
+    summary->error = "Problem contains no residual blocks.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  Solver::Options options(original_options);
+  options.linear_solver_ordering = NULL;
+  options.inner_iteration_ordering = NULL;
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -236,21 +250,56 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 #endif
 
-  summary->linear_solver_type_given = options.linear_solver_type;
   summary->num_threads_given = original_options.num_threads;
-  summary->num_linear_solver_threads_given =
-      original_options.num_linear_solver_threads;
-
-  summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
-  summary->num_parameters = problem_impl->NumParameters();
-  summary->num_residual_blocks = problem_impl->NumResidualBlocks();
-  summary->num_residuals = problem_impl->NumResiduals();
-
   summary->num_threads_used = options.num_threads;
-  summary->sparse_linear_algebra_library =
-      options.sparse_linear_algebra_library;
-  summary->trust_region_strategy_type = options.trust_region_strategy_type;
-  summary->dogleg_type = options.dogleg_type;
+
+  if (options.lsqp_iterations_to_dump.size() > 0) {
+    LOG(WARNING) << "Dumping linear least squares problems to disk is"
+        " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
+  }
+
+  // Evaluate the initial cost, residual vector and the jacobian
+  // matrix if requested by the user. The initial cost needs to be
+  // computed on the original unpreprocessed problem, as it is used to
+  // determine the value of the "fixed" part of the objective function
+  // after the problem has undergone reduction.
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &(summary->initial_cost),
+                           options.return_initial_residuals
+                           ? &summary->initial_residuals
+                           : NULL,
+                           options.return_initial_gradient
+                           ? &summary->initial_gradient
+                           : NULL,
+                           options.return_initial_jacobian
+                           ? &summary->initial_jacobian
+                           : NULL)) {
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the initial cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+  // If the user requests gradient checking, construct a new
+  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
+  // GradientCheckingCostFunction and replacing problem_impl with
+  // gradient_checking_problem_impl.
+  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
+  if (options.check_gradients) {
+    VLOG(1) << "Checking Gradients";
+    gradient_checking_problem_impl.reset(
+        CreateGradientCheckingProblemImpl(
+            problem_impl,
+            options.numeric_derivative_relative_step_size,
+            options.gradient_check_relative_precision));
+
+    // From here on, problem_impl will point to the gradient checking
+    // version.
+    problem_impl = gradient_checking_problem_impl.get();
+  }
 
   if (original_options.linear_solver_ordering != NULL) {
     if (!IsOrderingValid(original_options, problem_impl, &summary->error)) {
@@ -270,40 +319,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
     }
   }
 
-  // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user. The initial cost needs to be
-  // computed on the original unpreprocessed problem, as it is used to
-  // determine the value of the "fixed" part of the objective function
-  // after the problem has undergone reduction.
-  Evaluator::Evaluate(
-      original_program,
-      options.num_threads,
-      &(summary->initial_cost),
-      options.return_initial_residuals ? &summary->initial_residuals : NULL,
-      options.return_initial_gradient ? &summary->initial_gradient : NULL,
-      options.return_initial_jacobian ? &summary->initial_jacobian : NULL);
-  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-
-  // If the user requests gradient checking, construct a new
-  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
-  // GradientCheckingCostFunction and replacing problem_impl with
-  // gradient_checking_problem_impl.
-  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
-
-  // Save the original problem impl so we don't use the gradient
-  // checking one when computing the residuals.
-  if (options.check_gradients) {
-    VLOG(1) << "Checking Gradients";
-    gradient_checking_problem_impl.reset(
-        CreateGradientCheckingProblemImpl(
-            problem_impl,
-            options.numeric_derivative_relative_step_size,
-            options.gradient_check_relative_precision));
-
-    // From here on, problem_impl will point to the GradientChecking version.
-    problem_impl = gradient_checking_problem_impl.get();
-  }
-
   // Create the three objects needed to minimize: the transformed program, the
   // evaluator, and the linear solver.
   scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
@@ -319,15 +334,66 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
   summary->num_residuals_reduced = reduced_program->NumResiduals();
 
+  if (summary->num_parameter_blocks_reduced == 0) {
+    summary->preprocessor_time_in_seconds =
+        WallTimeInSeconds() - solver_start_time;
+
+    LOG(INFO) << "Terminating: No non-constant parameter blocks found.";
+
+    // FUNCTION_TOLERANCE is the right convergence here, as we know
+    // that the objective function is constant and cannot be changed
+    // any further.
+    summary->termination_type = FUNCTION_TOLERANCE;
+
+    double post_process_start_time = WallTimeInSeconds();
+    // Evaluate the final cost, residual vector and the jacobian
+    // matrix if requested by the user.
+    if (!Evaluator::Evaluate(original_program,
+                             options.num_threads,
+                             &summary->final_cost,
+                             options.return_final_residuals
+                             ? &summary->final_residuals
+                             : NULL,
+                             options.return_final_gradient
+                             ? &summary->final_gradient
+                             : NULL,
+                             options.return_final_jacobian
+                             ? &summary->final_jacobian
+                             : NULL)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
+
+    // Ensure the program state is set to the user parameters on the way out.
+    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+    summary->postprocessor_time_in_seconds =
+        WallTimeInSeconds() - post_process_start_time;
+    return;
+  }
+
   scoped_ptr<LinearSolver>
       linear_solver(CreateLinearSolver(&options, &summary->error));
-  summary->linear_solver_type_used = options.linear_solver_type;
-  summary->preconditioner_type = options.preconditioner_type;
-  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
-
   if (linear_solver == NULL) {
     return;
   }
+
+  summary->linear_solver_type_given = original_options.linear_solver_type;
+  summary->linear_solver_type_used = options.linear_solver_type;
+
+  summary->preconditioner_type = options.preconditioner_type;
+
+  summary->num_linear_solver_threads_given =
+      original_options.num_linear_solver_threads;
+  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
+
+  summary->sparse_linear_algebra_library =
+      options.sparse_linear_algebra_library;
+
+  summary->trust_region_strategy_type = options.trust_region_strategy_type;
+  summary->dogleg_type = options.dogleg_type;
 
   // Only Schur types require the lexicographic reordering.
   if (IsSchurType(options.linear_solver_type)) {
@@ -351,51 +417,55 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   }
 
   scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
-  // TODO(sameeragarwal): Detect when the problem just contains one
-  // parameter block and the inner iterations are redundant.
   if (options.use_inner_iterations) {
-    inner_iteration_minimizer.reset(new CoordinateDescentMinimizer);
+    if (reduced_program->parameter_blocks().size() > 1) {
+      inner_iteration_minimizer.reset(new CoordinateDescentMinimizer);
 
-    scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
-    ParameterBlockOrdering* ordering_ptr  = NULL;
-    if (original_options.inner_iteration_ordering == NULL) {
-      // Find a recursive decomposition of the Hessian matrix as a set
-      // of independent sets of decreasing size and invert it. This
-      // seems to work better in practice, i.e., Cameras before
-      // points.
-      inner_iteration_ordering.reset(new ParameterBlockOrdering);
-      ComputeRecursiveIndependentSetOrdering(*reduced_program,
-                                             inner_iteration_ordering.get());
-      inner_iteration_ordering->Reverse();
-      ordering_ptr = inner_iteration_ordering.get();
-    } else {
-      const map<int, set<double*> >& group_to_elements =
-          original_options.inner_iteration_ordering->group_to_elements();
+      scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
+      ParameterBlockOrdering* ordering_ptr  = NULL;
+      if (original_options.inner_iteration_ordering == NULL) {
+        // Find a recursive decomposition of the Hessian matrix as a set
+        // of independent sets of decreasing size and invert it. This
+        // seems to work better in practice, i.e., Cameras before
+        // points.
+        inner_iteration_ordering.reset(new ParameterBlockOrdering);
+        ComputeRecursiveIndependentSetOrdering(*reduced_program,
+                                               inner_iteration_ordering.get());
+        inner_iteration_ordering->Reverse();
+        ordering_ptr = inner_iteration_ordering.get();
+      } else {
+        const map<int, set<double*> >& group_to_elements =
+            original_options.inner_iteration_ordering->group_to_elements();
 
-      // Iterate over each group and verify that it is an independent
-      // set.
-      map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-      for ( ;it != group_to_elements.end(); ++it) {
-        if (!IsParameterBlockSetIndependent(
-                it->second,
-                reduced_program->residual_blocks())) {
-          summary->error =
-              StringPrintf("The user-provided "
-                           "parameter_blocks_for_inner_iterations does not "
-                           "form an independent set. Group Id: %d", it->first);
-          LOG(ERROR) << summary->error;
-          return;
+        // Iterate over each group and verify that it is an independent
+        // set.
+        map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+        for ( ;it != group_to_elements.end(); ++it) {
+          if (!IsParameterBlockSetIndependent(
+                  it->second,
+                  reduced_program->residual_blocks())) {
+            summary->error =
+                StringPrintf("The user-provided "
+                             "parameter_blocks_for_inner_iterations does not "
+                             "form an independent set. Group Id: %d", it->first);
+            LOG(ERROR) << summary->error;
+            return;
+          }
         }
+        ordering_ptr = original_options.inner_iteration_ordering;
       }
-      ordering_ptr = original_options.inner_iteration_ordering;
-    }
 
-    if (!inner_iteration_minimizer->Init(*reduced_program,
-                                         problem_impl->parameter_map(),
-                                         *ordering_ptr,
-                                         &summary->error)) {
-      LOG(ERROR) << summary->error;
-      return;
+      if (!inner_iteration_minimizer->Init(*reduced_program,
+                                           problem_impl->parameter_map(),
+                                           *ordering_ptr,
+                                           &summary->error)) {
+        LOG(ERROR) << summary->error;
+        return;
+      }
+    } else {
+      LOG(WARNING) << "Reduced problem only contains one parameter block."
+                   << "Disabling inner iterations.";
+
     }
   }
 
@@ -434,16 +504,27 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  Evaluator::Evaluate(
-      original_program,
-      options.num_threads,
-      &summary->final_cost,
-      options.return_final_residuals ? &summary->final_residuals : NULL,
-      options.return_final_gradient ? &summary->final_gradient : NULL,
-      options.return_final_jacobian ? &summary->final_jacobian : NULL);
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &summary->final_cost,
+                           options.return_final_residuals
+                           ? &summary->final_residuals
+                           : NULL,
+                           options.return_final_gradient
+                           ? &summary->final_gradient
+                           : NULL,
+                           options.return_final_jacobian
+                           ? &summary->final_jacobian
+                           : NULL)) {
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the final cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
@@ -619,6 +700,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   }
 
   if (transformed_program->NumParameterBlocks() == 0) {
+    if (transformed_program->NumResidualBlocks() > 0) {
+      *error = "Zero parameter blocks but non-zero residual blocks"
+          " in the reduced program. Congratulations, you found a "
+          "Ceres bug! Please report this error to the developers.";
+      return NULL;
+    }
+
     LOG(WARNING) << "No varying parameter blocks to optimize; "
                  << "bailing early.";
     return transformed_program.release();
@@ -654,7 +742,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
   // If the user requested the use of a Schur type solver, and
   // supplied a non-NULL linear_solver_ordering object with more than
-  // one elimimation group, then it can happen that after all the
+  // one elimination group, then it can happen that after all the
   // parameter blocks which are fixed or unused have been removed from
   // the program and the ordering, there are no more parameter blocks
   // in the first elimination group.
