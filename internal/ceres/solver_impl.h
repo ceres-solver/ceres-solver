@@ -126,6 +126,12 @@ class SolverImpl {
   static bool IsParameterBlockSetIndependent(
       const set<double*>& parameter_block_ptrs,
       const vector<ResidualBlock*>& residual_blocks);
+
+  static CoordinateDescentMinimizer* CreateInnerIterationMinimizer(
+      const Solver::Options& options,
+      const Program& program,
+      const ProblemImpl::ParameterMap& parameter_map,
+      string* error);
 };
 
 }  // namespace internal
