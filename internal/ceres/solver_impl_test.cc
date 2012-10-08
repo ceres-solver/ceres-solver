@@ -823,5 +823,58 @@ TEST(SolverImpl, InitialAndFinalResidualsGradientAndJacobian) {
   }
 }
 
+TEST(SolverImpl, NoParameterBlocks) {
+  ProblemImpl problem_impl;
+  Solver::Options options;
+  Solver::Summary summary;
+  SolverImpl::Solve(options, &problem_impl, &summary);
+  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
+  EXPECT_EQ(summary.error, "Problem contains no parameter blocks.");
+}
+
+TEST(SolverImpl, NoResiduals) {
+  ProblemImpl problem_impl;
+  Solver::Options options;
+  Solver::Summary summary;
+  double x = 1;
+  problem_impl.AddParameterBlock(&x, 1);
+  SolverImpl::Solve(options, &problem_impl, &summary);
+  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
+  EXPECT_EQ(summary.error, "Problem contains no residual blocks.");
+}
+
+class FailingCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return false;
+  }
+};
+
+TEST(SolverImpl, InitialCostEvaluationFails) {
+  ProblemImpl problem_impl;
+  Solver::Options options;
+  Solver::Summary summary;
+  double x;
+  problem_impl.AddResidualBlock(new FailingCostFunction, NULL, &x);
+  SolverImpl::Solve(options, &problem_impl, &summary);
+  EXPECT_EQ(summary.termination_type, NUMERICAL_FAILURE);
+  EXPECT_EQ(summary.error, "Unable to evaluate the initial cost.");
+}
+
+TEST(SolverImpl, ProblemIsConstant) {
+  ProblemImpl problem_impl;
+  Solver::Options options;
+  Solver::Summary summary;
+  double x = 1;
+  problem_impl.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
+  problem_impl.SetParameterBlockConstant(&x);
+  SolverImpl::Solve(options, &problem_impl, &summary);
+  EXPECT_EQ(summary.termination_type, FUNCTION_TOLERANCE);
+  EXPECT_EQ(summary.initial_cost, 1.0 / 2.0);
+  EXPECT_EQ(summary.final_cost, 1.0 / 2.0);
+}
+
 }  // namespace internal
 }  // namespace ceres
