@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKA3///4I\u003d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-11T13:48:15Z",
+      "side": 1,
+      "message": "Is it a good idea to expose an Eigen enum in our interface?\nisn\u0027t it better for this to be a bool and then do a conditional in the implementation?",
+      "revId": "a4ccce344dfd4b7911ac883c6a603ed903cc12a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
