@@ -52,9 +52,18 @@ for (int i = 0; i < num_cameras; ++i) {
 \item Example Makefile for users of Ceres.
 \item IterationSummary now informs the user when the step is a
   non-monotonic step.
+\item \texttt{Jet} now exposes a template parameter that allows
+  aligned memory allocations.
+\item Fewer memory allocations when using \texttt{DenseQRSolver}.
 \end{itemize}
+
 \subsection{Bug Fixes}
 \begin{itemize}
+\item Better handling of empty and constant Problems.
+\item Remove an internal header that was leaking into the public API.
+\item Memory leak in \texttt{trust\_region\_minimizer.cc}
+\item Schur ordering was operating on the wrong object (Ricardo Martin)
+\item MSVC fixes (Petter Strandmark)
 \item Various fixes to \texttt{nist.cc} (Markus Moll)
 \item Fixed a jacobian scaling bug.
 \item Numerically robust computation of \texttt{model\_cost\_change}.
