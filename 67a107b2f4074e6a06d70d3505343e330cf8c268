@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKHX///58\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-12T18:34:15Z",
+      "side": 1,
+      "message": "Yes that is the default status of the Summary, here and till Minimize is called.",
+      "parentUuid": "AAAKF3///qc\u003d",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKF3///qk\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "AAAKHX///54\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-12T18:34:15Z",
+      "side": 1,
+      "message": "I tried, the last line does not fit involving the jacobian.",
+      "parentUuid": "AAAKF3///qk\u003d",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAKKX///14\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2012-10-12T18:31:38Z",
       "side": 1,
       "message": "Consider breaking to the next line if it makes stuff stay on one line.",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKHX///50\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-10-12T18:34:15Z",
+      "side": 1,
+      "message": "no it doesn\u0027t. also I would like the same pattern here and everywhere else this call is made. Easier to read it in parallel.",
+      "parentUuid": "AAAKKX///14\u003d",
       "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
