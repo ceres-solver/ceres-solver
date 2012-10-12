@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAKF3///qc\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-12T18:31:38Z",
+      "side": 1,
+      "message": "There is no return code set here; is the implied DID_NOT_RUN expected?",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKF3///qk\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-12T18:31:38Z",
+      "side": 1,
+      "message": "Consider putting the arguments on the next line; see if that makes it possible to have the other arguments fit on one line.",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAKKX///14\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-10-12T18:31:38Z",
+      "side": 1,
+      "message": "Consider breaking to the next line if it makes stuff stay on one line.",
+      "revId": "67a107b2f4074e6a06d70d3505343e330cf8c268",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
