@@ -154,6 +154,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/types.cc \
                    $(CERES_SRC_PATH)/visibility_based_preconditioner.cc \
                    $(CERES_SRC_PATH)/visibility.cc \
+                   $(CERES_SRC_PATH)/wall_time.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_d_d_d.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_2_2.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_2_3.cc \
