@@ -123,6 +123,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/linear_solver.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
+                   $(CERES_SRC_PATH)/miniglog/glog/logging.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
                    $(CERES_SRC_PATH)/ordering.cc \
                    $(CERES_SRC_PATH)/parmeter_block_ordering.cc \
