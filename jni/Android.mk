@@ -90,6 +90,10 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_TR1 \
                 -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 
+# On Android NDK 8b, GCC gives spurrious warnings about ABI incompatibility for
+# which there is no solution. Hide the warning instead.
+LOCAL_CFLAGS += -Wno-psabi
+
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/block_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/block_jacobian_writer.cc \
@@ -125,8 +129,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
                    $(CERES_SRC_PATH)/miniglog/glog/logging.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
-                   $(CERES_SRC_PATH)/ordering.cc \
-                   $(CERES_SRC_PATH)/parmeter_block_ordering.cc \
+                   $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial_solver.cc \
                    $(CERES_SRC_PATH)/problem.cc \
