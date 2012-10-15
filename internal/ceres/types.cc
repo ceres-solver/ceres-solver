@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <algorithm>
+#include <cctype>
 #include <string>
 #include "ceres/types.h"
 #include "glog/logging.h"

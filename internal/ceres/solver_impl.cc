@@ -817,7 +817,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 #endif
 
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-  if (linear_solver_options.type == SPARSE_SCHUR) {
+  if (options->linear_solver_type == SPARSE_SCHUR) {
     *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
         "CXSparse was enabled when Ceres was compiled.";
     return NULL;
