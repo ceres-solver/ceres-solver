@@ -72,12 +72,6 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   // Solve the system.
   VectorRef(x, num_cols) = A->matrix().colPivHouseholderQr().solve(rhs_);
 
-  VLOG(3) << "A:\n" << A->matrix();
-  VLOG(3) << "x:\n" << VectorRef(x, num_cols);
-  VLOG(3) << "b:\n" << rhs_;
-  VLOG(3) << "error: " << (A->matrix() * VectorRef(x, num_cols) - rhs_).norm();
-
-
   if (per_solve_options.D != NULL) {
     // Undo the modifications to the matrix A.
     A->RemoveDiagonal();
