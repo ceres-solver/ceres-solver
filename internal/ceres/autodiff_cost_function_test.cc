@@ -51,7 +51,7 @@ class BinaryScalarCost {
   double a_;
 };
 
-TEST(AutoDiffResidualAndJacobian, BilinearDifferentiationTest) {
+TEST(AutodiffCostFunction, BilinearDifferentiationTest) {
   CostFunction* cost_function  =
     new AutoDiffCostFunction<BinaryScalarCost, 1, 2, 2>(
         new BinaryScalarCost(1.0));
@@ -73,20 +73,72 @@ TEST(AutoDiffResidualAndJacobian, BilinearDifferentiationTest) {
   double residuals = 0.0;
 
   cost_function->Evaluate(parameters, &residuals, NULL);
-  EXPECT_EQ(residuals, 10);
+  EXPECT_EQ(10.0, residuals);
   cost_function->Evaluate(parameters, &residuals, jacobians);
 
-  EXPECT_EQ(jacobians[0][0], 3);
-  EXPECT_EQ(jacobians[0][1], 4);
-  EXPECT_EQ(jacobians[1][0], 1);
-  EXPECT_EQ(jacobians[1][1], 2);
+  EXPECT_EQ(3, jacobians[0][0]);
+  EXPECT_EQ(4, jacobians[0][1]);
+  EXPECT_EQ(1, jacobians[1][0]);
+  EXPECT_EQ(2, jacobians[1][1]);
 
-  delete []jacobians[0];
-  delete []jacobians[1];
-  delete []parameters[0];
-  delete []parameters[1];
-  delete []jacobians;
-  delete []parameters;
+  delete[] jacobians[0];
+  delete[] jacobians[1];
+  delete[] parameters[0];
+  delete[] parameters[1];
+  delete[] jacobians;
+  delete[] parameters;
+  delete cost_function;
+}
+
+struct TenParameterCost {
+  template <typename T>
+  bool operator()(const T* const x0,
+                  const T* const x1,
+                  const T* const x2,
+                  const T* const x3,
+                  const T* const x4,
+                  const T* const x5,
+                  const T* const x6,
+                  const T* const x7,
+                  const T* const x8,
+                  const T* const x9,
+                  T* cost) const {
+    cost[0] = *x0 + *x1 + *x2 + *x3 + *x4 + *x5 + *x6 + *x7 + *x8 + *x9;
+    return true;
+  }
+};
+
+TEST(AutodiffCostFunction, ManyParameterAutodiffInstantiates) {
+  CostFunction* cost_function  =
+      new AutoDiffCostFunction<
+          TenParameterCost, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1>(
+              new TenParameterCost);
+
+  double** parameters = new double*[10];
+  double** jacobians = new double*[10];
+  for (int i = 0; i < 10; ++i) {
+    parameters[i] = new double[1];
+    parameters[i][0] = i;
+    jacobians[i] = new double[1];
+  }
+
+  double residuals = 0.0;
+
+  cost_function->Evaluate(parameters, &residuals, NULL);
+  EXPECT_EQ(45.0, residuals);
+
+  cost_function->Evaluate(parameters, &residuals, jacobians);
+  EXPECT_EQ(residuals, 45.0);
+  for (int i = 0; i < 10; ++i) {
+    EXPECT_EQ(1.0, jacobians[i][0]);
+  }
+
+  for (int i = 0; i < 10; ++i) {
+    delete[] jacobians[i];
+    delete[] parameters[i];
+  }
+  delete[] jacobians;
+  delete[] parameters;
   delete cost_function;
 }
 
