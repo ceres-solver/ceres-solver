@@ -93,6 +93,27 @@ class ProblemImpl {
                                    LossFunction* loss_function,
                                    double* x0, double* x1, double* x2,
                                    double* x3, double* x4, double* x5);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9);
   void AddParameterBlock(double* values, int size);
   void AddParameterBlock(double* values,
                          int size,

@@ -301,6 +301,75 @@ const ResidualBlock* ProblemImpl::AddResidualBlock(
   return AddResidualBlock(cost_function, loss_function, residual_parameters);
 }
 
+const ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+const ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+const ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+const ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
 
 void ProblemImpl::AddParameterBlock(double* values, int size) {
   InternalAddParameterBlock(values,
