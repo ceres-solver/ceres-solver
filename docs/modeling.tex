@@ -2,10 +2,12 @@
 \chapter{Modeling}
 \label{chapter:api}
 \section{\texttt{CostFunction}}
-Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a \texttt{CostFunction} is responsible for computing
-a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{k_i}\right)$ and the matrices
+Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a
+\texttt{CostFunction} is responsible for computing
+a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{i_k}\right)$ and the matrices
+
 \begin{equation}
-J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},\hdots,x_{k_i}\right),\quad \forall j = i_1,\hdots, i_k
+J_{ij} = \frac{\partial}{\partial x_{j}}f_i\left(x_{i_1},\hdots,x_{i_k}\right),\quad \forall j \in \{i_1,\hdots, i_k\}
 \end{equation}
 \begin{minted}{c++}
 class CostFunction {
@@ -90,8 +92,8 @@ class MyScalarCostFunction {
   MyScalarCostFunction(double k): k_(k) {}
   template <typename T>
   bool operator()(const T* const x , const T* const y, T* e) const {
-    e[0] = T(k_) - x[0] * y[0] + x[1] * y[1]
-     return true;
+    e[0] = T(k_) - x[0] * y[0] - x[1] * y[1];
+    return true;
   }
 
  private:
@@ -265,12 +267,12 @@ block.
 Then, the robustified gradient and the Gauss-Newton Hessian are
 \begin{align}
 	g(x) &= \rho'J^\top(x)f(x)\\
-	H(x) &= J^\top(x)\left(\rho' + 2 \rho''f(x)f^\top(x)\right)J(x) 
+	H(x) &= J^\top(x)\left(\rho' + 2 \rho''f(x)f^\top(x)\right)J(x)
 \end{align}
-where the terms involving the second derivatives of $f(x)$ have been ignored. Note that $H(x)$ is indefinite if $\rho''f(x)^\top f(x) + \frac{1}{2}\rho' < 0$. If this is not the case, then its possible to re-weight the residual and the Jacobian matrix such that the corresponding linear least squares problem for the robustified Gauss-Newton step. 
+where the terms involving the second derivatives of $f(x)$ have been ignored. Note that $H(x)$ is indefinite if $\rho''f(x)^\top f(x) + \frac{1}{2}\rho' < 0$. If this is not the case, then its possible to re-weight the residual and the Jacobian matrix such that the corresponding linear least squares problem for the robustified Gauss-Newton step.
 
 
-Let $\alpha$ be a root of 
+Let $\alpha$ be a root of
 \begin{equation}
 	\frac{1}{2}\alpha^2 - \alpha - \frac{\rho''}{\rho'}\|f(x)\|^2 = 0.
 \end{equation}
