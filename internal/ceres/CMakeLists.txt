@@ -44,6 +44,7 @@ SET(CERES_INTERNAL_SRC
     compressed_row_sparse_matrix.cc
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
+    coordinate_descent_minimizer.cc
     corrector.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
@@ -55,7 +56,6 @@ SET(CERES_INTERNAL_SRC
     file.cc
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
-    coordinate_descent_minimizer.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     linear_least_squares_problems.cc
@@ -83,12 +83,12 @@ SET(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    triplet_sparse_matrix.cc
     trust_region_minimizer.cc
     trust_region_strategy.cc
-    triplet_sparse_matrix.cc
     types.cc
-    visibility_based_preconditioner.cc
     visibility.cc
+    visibility_based_preconditioner.cc
     wall_time.cc
 )
 
