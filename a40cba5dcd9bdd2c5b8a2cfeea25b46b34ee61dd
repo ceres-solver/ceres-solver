@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALR3//96Y\u003d",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "We should support the same number of arguments everywhere. This reminds me, we may need to update the numeric def implementation to work with 10 parameters.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96s\u003d",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96Q\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this. Why should this get shipped with all the binaries?",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96M\u003d",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed. Please delete the entire file.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96I\u003d",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "Blank line around the equations to be consistent with equations in the rest of Ceres.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96E\u003d",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "Comment adds no value.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALR3//96A\u003d",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-08T02:33:33Z",
+      "side": 1,
+      "message": "There is no reverse test; the gradient checker could always return true and this test would still pass.",
+      "revId": "a40cba5dcd9bdd2c5b8a2cfeea25b46b34ee61dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
