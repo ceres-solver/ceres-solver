@@ -54,6 +54,7 @@ SET(CERES_INTERNAL_SRC
     dogleg_strategy.cc
     evaluator.cc
     file.cc
+    gradient_checker.cc
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
@@ -220,6 +221,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(corrector)
   CERES_TEST(dense_sparse_matrix)
   CERES_TEST(evaluator)
+  CERES_TEST(gradient_checker)
   CERES_TEST(gradient_checking_cost_function)
   CERES_TEST(graph)
   CERES_TEST(graph_algorithms)
