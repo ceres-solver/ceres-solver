@@ -53,10 +53,18 @@ for (int i = 0; i < num_cameras; ++i) {
 \item IterationSummary now informs the user when the step is a
   non-monotonic step.
 \item Fewer memory allocations when using \texttt{DenseQRSolver}.
+\item GradientChecker for testing CostFunctions (William Rucklidge)
+\item Add support for cost functions with 10 parameter blocks in
+  Problem. (Fisher)
+\item Add support for 10 parameter blocks in AutoDiffCostFunction.
 \end{itemize}
 
 \subsection{Bug Fixes}
 \begin{itemize}
+\item static cast to force Eigen::Index to long conversion
+\item Change LOG(ERROR) to LOG(WARNING) in \texttt{schur\_complement\_solver.cc}.
+\item Remove verbose logging from \texttt{DenseQRSolve}.
+\item Fix the Android NDK build.
 \item Better handling of empty and constant Problems.
 \item Remove an internal header that was leaking into the public API.
 \item Memory leak in \texttt{trust\_region\_minimizer.cc}
@@ -70,7 +78,7 @@ for (int i = 0; i < num_cameras; ++i) {
 \item Inclusion guard fixes (Petter Strandmark)
 \item Segfault in test code (Sergey Popov)
 \item Replaced EXPECT/ASSERT\_DEATH with the more portable
-  EXPECT\_DEATH\_IF]\_SUPPORTED macros.
+  EXPECT\_DEATH\_IF\_SUPPORTED macros.
 \item Fixed the camera projection model in Ceres' implementation of
   Snavely's camera model. (Ricardo Martin)
 \end{itemize}
