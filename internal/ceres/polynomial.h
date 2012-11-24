@@ -27,18 +27,35 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: moll.markus@arcor.de (Markus Moll)
+//         sameeragarwal@google.com (Sameer Agarwal)
 
 #ifndef CERES_INTERNAL_POLYNOMIAL_SOLVER_H_
 #define CERES_INTERNAL_POLYNOMIAL_SOLVER_H_
 
+#include <vector>
 #include "ceres/internal/eigen.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
 
-// Use the companion matrix eigenvalues to determine the roots of the polynomial
+// All polynomials are assumed to be the form
 //
 //   sum_{i=0}^N polynomial(i) x^{N-i}.
+//
+// and are given by a vector of coefficients of size N.
+
+// Evaluate the polynomial at x using the Horner scheme.
+inline double EvaluatePolynomial(const Vector& polynomial, double x) {
+  double v = 0.0;
+  for (int i = 0; i < polynomial.size(); ++i) {
+    v = v * x + polynomial(i);
+  }
+  return v;
+}
+
+// Use the companion matrix eigenvalues to determine the roots of the
+// polynomial.
 //
 // This function returns true on success, false otherwise.
 // Failure indicates that the polynomial is invalid (of size 0) or
@@ -50,14 +67,63 @@ bool FindPolynomialRoots(const Vector& polynomial,
                          Vector* real,
                          Vector* imaginary);
 
-// Evaluate the polynomial at x using the Horner scheme.
-inline double EvaluatePolynomial(const Vector& polynomial, double x) {
-  double v = 0.0;
-  for (int i = 0; i < polynomial.size(); ++i) {
-    v = v * x + polynomial(i);
+// Return the derivative polynomial. It is assumed that the input
+// polynomial is at least of degree zero.
+Vector DifferentiatePolynomial(const Vector& polynomial);
+
+// Find the minimum value of the polynomial in the interval [x_min,
+// x_max].
+void MinimizePolynomial(const Vector& polynomial,
+                        double x_min,
+                        double x_max,
+                        double* optimal_x,
+                        double* optimal_value);
+
+// Structure for storing sample values of a function.
+//
+// Clients can use this struct to communicate the value of the
+// function and or its gradient at a given point x.
+struct FunctionSample {
+  FunctionSample()
+      : x(0.0),
+        value(0.0),
+        gradient(0.0),
+        value_is_valid(false),
+        gradient_is_valid(false) {
   }
-  return v;
-}
+
+  double x;
+
+  double value;      // value = f(x)
+  bool value_is_valid;
+
+  double gradient;   // gradient = f'(x)
+  bool gradient_is_valid;
+};
+
+// Given a set of function value and/or gradient samples, find a
+// polynomial whose value and gradients are exactly equal to the ones
+// in samples.
+//
+// Generally speaking,
+//
+// degree = # values + # gradients - 1
+//
+// Of course its possible to sample a polynomial any number of times,
+// in which case, generally speaking the spurious higher order
+// coefficients will be zero. We depend on the QR factorization
+// algorithm to ensure this, but if this is a problem this can be
+// enforced explicitly in the future by adding a regularization term
+// to the solve.
+Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples);
+
+// Compute the interpolating polynomial and find its minimum in the
+// interval [x_min, x_max].
+void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
+                                     double x_min,
+                                     double x_max,
+                                     double* optimal_x,
+                                     double* optimal_value);
 
 }  // namespace internal
 }  // namespace ceres

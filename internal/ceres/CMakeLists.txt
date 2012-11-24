@@ -66,7 +66,7 @@ SET(CERES_INTERNAL_SRC
     normal_prior.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
-    polynomial_solver.cc
+    polynomial.cc
     problem.cc
     problem_impl.cc
     program.cc
@@ -238,7 +238,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(parameter_block)
   CERES_TEST(parameter_block_ordering)
   CERES_TEST(partitioned_matrix_view)
-  CERES_TEST(polynomial_solver)
+  CERES_TEST(polynomial)
   CERES_TEST(problem)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
