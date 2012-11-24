@@ -131,7 +131,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
-                   $(CERES_SRC_PATH)/polynomial_solver.cc \
+                   $(CERES_SRC_PATH)/polynomial.cc \
                    $(CERES_SRC_PATH)/problem.cc \
                    $(CERES_SRC_PATH)/problem_impl.cc \
                    $(CERES_SRC_PATH)/program.cc \

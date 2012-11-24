@@ -35,7 +35,7 @@
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_solver.h"
-#include "ceres/polynomial_solver.h"
+#include "ceres/polynomial.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
