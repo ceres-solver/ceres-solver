@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///IU\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Jo\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Jk\u003d",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "I wonder if it is time to create an actual Polynomial class.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///IQ\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "vectors work. I am not sure what we are going to gain with it.",
+      "parentUuid": "AAALu3///Jk\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///IM\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "actually its not the degree of the derivative, it is actually the degree of the input polynomial.  so this is correct.",
+      "parentUuid": "AAALu3///Jg\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///I0\u003d",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "Consider describing the approach. Why start in the middle?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///II\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "strictly speaking this is not needed. I am just trying to replicate minFunc\u0027s behaviour here.",
+      "parentUuid": "AAALu3///I0\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///IE\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "there are tests for all this.",
+      "parentUuid": "AAALu3///I4\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///JA\u003d",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "No error? No log? No tests? And no way to return failure?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Hg\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "there is no failure mode. \nI can add logging.",
+      "parentUuid": "AAALu3///JA\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///IA\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "doesn\u0027t matter, thats why we evaluate on the end points.",
+      "parentUuid": "AAALu3///I8\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Io\u003d",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "I wonder if we might be better served with some regularization. Probably for a followup CL.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///H8\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "yes I was thinking about that, I am going to wait on it though.",
+      "parentUuid": "AAALu3///Io\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///H4\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///JY\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///JU\u003d",
         "filename": "internal/ceres/polynomial.h",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "No tolerances? Seems fishy.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///H0\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "no tolerances needed, they are implicit in the eigen value computation.",
+      "parentUuid": "AAALu3///JU\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Hw\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///JQ\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///JM\u003d",
         "filename": "internal/ceres/polynomial.h",
         "patchSetId": 1
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Hs\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "the interval takes care of unbounded ness. all real roots are checked.\n\nI have expanded the comments.",
+      "parentUuid": "AAALu3///JM\u003d",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///JI\u003d",
         "filename": "internal/ceres/polynomial.h",
         "patchSetId": 1
@@ -217,6 +433,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "I object to having this inside polynomial.h. This has nothing to do with polynomials.\n\nThe name is ok; in my code I had \"FunctionEvaluation\". I\u0027m for either one. What do you think?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Ho\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "The only place it is used is the MinimizeInterpolatingPolynomial and FindInterpolatingPolynomial.\n\nI am happy to move this out if needed, but the only clients are going to be the line searches which will be using this struct to do polynomial minimization.",
+      "parentUuid": "AAALu3///JI\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -251,6 +485,24 @@
       "writtenOn": "2012-11-25T10:13:16Z",
       "side": 1,
       "message": "This can fail.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Hk\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-25T20:11:17Z",
+      "side": 1,
+      "message": "nope. because we always evaluate on the end points, even if the polynomial interpolation gives garbage, we are guaranteed to return an answer.",
+      "parentUuid": "AAALu3///Is\u003d",
       "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
