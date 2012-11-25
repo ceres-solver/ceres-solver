@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///Jo\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Please update the Android.mk as well.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Jk\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "I wonder if it is time to create an actual Polynomial class.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Jg\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Consider renaming derivative_degree?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///I0\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Consider describing the approach. Why start in the middle?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///I4\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Tests?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JA\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "No error? No log? No tests? And no way to return failure?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///I8\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "And if this condition is never met?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Io\u003d",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "I wonder if we might be better served with some regularization. Probably for a followup CL.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JY\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "The size should be N+1, since e.g. for a degree 2 polynomial, there are 3 coefficients. Also, the loop above would go out of bounds at polynomial(i) for i\u003dN if the size of the vector is N with zero indexing.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JU\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "No tolerances? Seems fishy.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JQ\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Return the derivative of the given polynomial.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JM\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Consider expanding this; are all the roots checked?\n\nCan this fail? What about polynomials unbounded below?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JI\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "I object to having this inside polynomial.h. This has nothing to do with polynomials.\n\nThe name is ok; in my code I had \"FunctionEvaluation\". I\u0027m for either one. What do you think?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///JE\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "Consider rewording this slightly; it is not as clear as it could be. Something along the lines of \"Interpolate the function described by samples with a polynomial, and minimize it.\" Also describe what the interpolating polynomial is (is it degree 2? 6? N?).\n\nCan this fail? What about polynomials unbounded below?",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Is\u003d",
+        "filename": "internal/ceres/polynomial.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-25T10:13:16Z",
+      "side": 1,
+      "message": "This can fail.",
+      "revId": "b14c7d7a201bd3c47e1fb019f41e3d38a8ac863b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
