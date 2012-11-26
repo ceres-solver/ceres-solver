@@ -58,6 +58,10 @@ class Solver {
   struct Options {
     // Default constructor that sets up a generic sparse problem.
     Options() {
+      minimizer_type = TRUST_REGION;
+      line_search_direction_type = STEEPEST_DESCENT;
+      line_search_type = ARMIJO;
+      nonlinear_conjugate_gradient_type = FLETCHER_REEVES;
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
@@ -121,6 +125,35 @@ class Solver {
 
     ~Options();
     // Minimizer options ----------------------------------------
+
+    // Ceres supports the two major families of optimization strategies -
+    // Trust Region and Line Search.
+    //
+    // 1. The line search approach first finds a descent direction
+    // along which the objective function will be reduced and then
+    // computes a step size that decides how far should move along
+    // that direction. The descent direction can be computed by
+    // various methods, such as gradient descent, Newton's method and
+    // Quasi-Newton method. The step size can be determined either
+    // exactly or inexactly.
+    //
+    // 2. The trust region approach approximates the objective
+    // function using using a model function (often a quadratic) over
+    // a subset of the search space known as the trust region. If the
+    // model function succeeds in minimizing the true objective
+    // function the trust region is expanded; conversely, otherwise it
+    // is contracted and the model optimization problem is solved
+    // again.
+    //
+    // Trust region methods are in some sense dual to line search methods:
+    // trust region methods first choose a step size (the size of the
+    // trust region) and then a step direction while line search methods
+    // first choose a step direction and then a step size.
+    MinimizerType minimizer_type;
+
+    LineSearchDirectionType line_search_direction_type;
+    LineSearchType line_search_type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
 
     TrustRegionStrategyType trust_region_strategy_type;
 
