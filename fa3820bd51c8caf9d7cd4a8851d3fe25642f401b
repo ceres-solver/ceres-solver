@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///Go\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T02:36:24Z",
+      "side": 1,
+      "message": "Sorry, my bad, this will not crash if gradient is null, but this is a waste of time. No point in initializing this if the output gradient is null.",
+      "revId": "fa3820bd51c8caf9d7cd4a8851d3fe25642f401b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
