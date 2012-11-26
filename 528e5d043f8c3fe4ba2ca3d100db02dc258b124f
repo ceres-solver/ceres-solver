@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///A4\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///EU\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///EQ\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Blank after.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/0\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///EQ\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/w\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///EM\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///EE\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "I don\u0027t think inline will do anything here.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/s\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///EE\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/o\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "its a gerrit bug. alignment is fine.",
+      "parentUuid": "AAALu3///EI\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///C0\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Alignment.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/k\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///C0\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/g\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Cw\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Cs\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "We may want to think about the error handling. Should we propagate an error message?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/c\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "too deep..  but worth thinking about as we make this more robust.",
+      "parentUuid": "AAALu3///Cs\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/Y\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CA\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Co\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "No indication of failure is returned. Is this good?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/U\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Summary::success \u003d false at this point.",
+      "parentUuid": "AAALu3///Co\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/Q\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Ck\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Cg\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "previous_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/M\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Cg\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/I\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Cc\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///CY\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "previous_x_is_valid",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/E\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CY\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/A\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CU\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///CQ\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -268,6 +538,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "new_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++8\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CQ\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++4\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CM\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///CI\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -302,6 +608,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "new_x_is_valid",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++0\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CI\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++w\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///CE\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///B8\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -336,6 +678,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "current_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++s\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///B8\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++Q\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///B4\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bw\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -370,6 +748,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Expand on this. Interpolate based on what?\n\nThis is also somewhat hairy. Consider abstracting the interpolation part from the sample selection.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++U\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "interpolation is abstracted away, all I am doing is collecting the samples here.",
+      "parentUuid": "AAALu3///Bw\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -393,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++Y\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "that gets more and more expensive, also its not clear that is actually useful.\nalso you probably want to control the degree and not just go higher and higher degree.",
+      "parentUuid": "AAALu3///Bk\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bs\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -404,6 +818,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "I guess supporting e.g. interpolation_degree\u003d3 after 4 samples are taken is not implemented correctly currently? Document.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++c\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "we only use 2 or 3 samples.",
+      "parentUuid": "AAALu3///Bs\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++g\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///BY\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bc\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -438,6 +888,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "++?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//++o\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Bc\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -461,6 +929,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++k\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "I am not sure if this will be simpler.",
+      "parentUuid": "AAALu3///Bo\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///D8\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -472,6 +958,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Blank after.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///A0\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///D8\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -495,6 +999,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Aw\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "let me put a todo for now, I will do this, once I do the integration CL, and the types and configuration is exposed. I\u0027d rather not poke around types.h in this CL.\n\nThere is also the issue that these numbers mean different things for armijo and wolfe, so lets keep this for now, and as that code gets hashed out, I will figure out the right enums.",
+      "parentUuid": "AAALu3///D4\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///D0\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -506,6 +1028,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Comma is strange. \"of of\"\n\nI still don\u0027t understand what this is doing.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///As\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "override the degree specified above and use a higher degree polynomial when its possible.",
+      "parentUuid": "AAALu3///D0\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -546,6 +1086,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Ak\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Ds\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Do\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -557,6 +1115,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "This is also a strange sentence.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Ao\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Do\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -580,6 +1156,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///Ag\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Dk\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Dg\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -591,6 +1185,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Ac\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Dg\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -631,6 +1243,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///AI\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "there are too many gradients floating around. f and g in this case are pretty unambiguous..",
+      "parentUuid": "AAALu3///DY\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bg\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -642,6 +1272,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Document. optimal_step_size perhaps?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///AA\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///Bg\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -665,6 +1313,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///AE\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "its the same.",
+      "parentUuid": "AAALu3///DU\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DI\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -676,6 +1342,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Should this be const?\n\nAlso, since evaluation can fail so can the search. Should we handle that? I think yes, and that means all the usual error plumbing.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+/8\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "thats why summary has success.",
+      "parentUuid": "AAALu3///DI\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -699,6 +1383,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///AM\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "dropped.",
+      "parentUuid": "AAALu3///DQ\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DM\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -716,6 +1418,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+/4\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "dropped reference_cost, the evaluator I guess can go into the options.",
+      "parentUuid": "AAALu3///DM\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DE\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -727,6 +1447,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Document.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///AQ\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///DE\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -767,6 +1505,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3///AU\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3///C4\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///B0\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -778,6 +1534,24 @@
       "writtenOn": "2012-11-26T05:49:45Z",
       "side": 1,
       "message": "Consider explaining the conditions around validity; e.g. that this guarantees an answer, even if it is simply 0.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///AY\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T08:20:17Z",
+      "side": 1,
+      "message": "explained above in the base class.",
+      "parentUuid": "AAALu3///B0\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
