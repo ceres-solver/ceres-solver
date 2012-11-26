@@ -95,17 +95,11 @@ bool LineSearchFunction::Evaluate(const double x, double* f, double* g) {
 
 void ArmijoLineSearch::Search(const LineSearch::Options& options,
                               double initial_step_size,
+                              const double initial_cost,
+                              const double initial_gradient,
                               Summary* summary) {
   *CHECK_NOTNULL(summary) = LineSearch::Summary();
   Function* function = options.function;
-  double initial_cost = 0.0;
-  double initial_gradient = 0.0;
-  summary->num_evaluations = 1;
-  if (!function->Evaluate(0.0, &initial_cost, &initial_gradient)) {
-    LOG(WARNING) << "Line search failed. "
-                 << "Evaluation at the initial point failed.";
-    return;
-  }
 
   double previous_step_size = 0.0;
   double previous_cost = 0.0;
@@ -148,7 +142,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
         samples.push_back(ValueSample(step_size, cost));
 
         if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 2 &&
+            summary->num_evaluations > 1 &&
             previous_step_size_is_valid) {
           // Three point interpolation, using function values and the
           // initial gradient.
@@ -161,7 +155,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
                                                  gradient));
 
         if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 2 &&
+            summary->num_evaluations > 1 &&
             previous_step_size_is_valid) {
           // Three point interpolation using the function values and
           // the gradients.
