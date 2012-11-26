@@ -16,6 +16,24 @@
       "revId": "3271760a679f2794b0b188fc72bb3cb70f8e1fc3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+vg\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T19:01:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALu3//++A\u003d",
+      "revId": "3271760a679f2794b0b188fc72bb3cb70f8e1fc3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
