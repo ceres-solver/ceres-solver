@@ -843,6 +843,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+wE\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T18:59:26Z",
+      "side": 1,
+      "message": "yes, punt till later?",
+      "parentUuid": "AAALu3//+98\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bs\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -1262,6 +1280,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+wA\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T18:59:26Z",
+      "side": 1,
+      "message": "what do you think now?",
+      "parentUuid": "AAALu3///Dc\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DY\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -1455,6 +1491,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+v8\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T18:59:26Z",
+      "side": 1,
+      "message": "I published before exporting.",
+      "parentUuid": "AAALu3//+9w\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DM\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -1502,6 +1556,24 @@
       "side": 1,
       "message": "To align with the other minimize functions, it makes sense to pass the evaluator as a separate parameter. I don\u0027t feel strongly though.",
       "parentUuid": "AAALu3//+/4\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+v0\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-26T18:59:26Z",
+      "side": 1,
+      "message": "we pass evaluator as part of the options struct for the Minimizer objects too.",
+      "parentUuid": "AAALu3//+90\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
