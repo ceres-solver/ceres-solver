@@ -52,6 +52,8 @@ struct IterationSummary {
         gradient_max_norm(0.0),
         step_norm(0.0),
         eta(0.0),
+        step_size(0.0),
+        line_search_function_evaluations(0),
         linear_solver_iterations(0),
         iteration_time_in_seconds(0.0),
         step_solver_time_in_seconds(0.0),
@@ -115,6 +117,12 @@ struct IterationSummary {
   // linear systems inexactly. Factorization-based exact solvers
   // ignore it.
   double eta;
+
+  // Step sized computed by the line search algorithm.
+  double step_size;
+
+  // Number of function evaluations used by the line search algorithm.
+  int line_search_function_evaluations;
 
   // Number of iterations taken by the linear solver to solve for the
   // Newton step.

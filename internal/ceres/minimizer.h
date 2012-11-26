@@ -83,6 +83,9 @@ class Minimizer {
       jacobian = NULL;
       callbacks = options.callbacks;
       inner_iteration_minimizer = NULL;
+      line_search_direction_type = options.line_search_direction_type;
+      line_search_type = options.line_search_type;
+      nonlinear_conjugate_gradient_type = options.nonlinear_conjugate_gradient_type;
     }
 
     int max_num_iterations;
@@ -131,6 +134,10 @@ class Minimizer {
     SparseMatrix* jacobian;
 
     Minimizer* inner_iteration_minimizer;
+
+    LineSearchDirectionType line_search_direction_type;
+    LineSearchType line_search_type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
   };
 
   virtual ~Minimizer() {}

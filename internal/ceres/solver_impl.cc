@@ -39,6 +39,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/linear_solver.h"
+#include "ceres/line_search_minimizer.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
 #include "ceres/ordered_groups.h"
@@ -78,12 +79,12 @@ class StateUpdatingCallback : public IterationCallback {
 
 // Callback for logging the state of the minimizer to STDERR or STDOUT
 // depending on the user's preferences and logging level.
-class LoggingCallback : public IterationCallback {
+class TrustRegionLoggingCallback : public IterationCallback {
  public:
-  explicit LoggingCallback(bool log_to_stdout)
+  explicit TrustRegionLoggingCallback(bool log_to_stdout)
       : log_to_stdout_(log_to_stdout) {}
 
-  ~LoggingCallback() {}
+  ~TrustRegionLoggingCallback() {}
 
   CallbackReturnType operator()(const IterationSummary& summary) {
     const char* kReportRowFormat =
@@ -111,6 +112,42 @@ class LoggingCallback : public IterationCallback {
  private:
   const bool log_to_stdout_;
 };
+
+// Callback for logging the state of the minimizer to STDERR or STDOUT
+// depending on the user's preferences and logging level.
+class LineSearchLoggingCallback : public IterationCallback {
+ public:
+  explicit LineSearchLoggingCallback(bool log_to_stdout)
+      : log_to_stdout_(log_to_stdout) {}
+
+  ~LineSearchLoggingCallback() {}
+
+  CallbackReturnType operator()(const IterationSummary& summary) {
+    const char* kReportRowFormat =
+        "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
+        "s:% 3.2e e:% 3d it:% 3.2e tt:% 3.2e";
+    string output = StringPrintf(kReportRowFormat,
+                                 summary.iteration,
+                                 summary.cost,
+                                 summary.cost_change,
+                                 summary.gradient_max_norm,
+                                 summary.step_norm,
+                                 summary.step_size,
+                                 summary.line_search_function_evaluations,
+                                 summary.iteration_time_in_seconds,
+                                 summary.cumulative_time_in_seconds);
+    if (log_to_stdout_) {
+      cout << output << endl;
+    } else {
+      VLOG(1) << output;
+    }
+    return SOLVER_CONTINUE;
+  }
+
+ private:
+  const bool log_to_stdout_;
+};
+
 
 // Basic callback to record the execution of the solver to a file for
 // offline analysis.
@@ -142,13 +179,14 @@ class FileLoggingCallback : public IterationCallback {
 
 }  // namespace
 
-void SolverImpl::Minimize(const Solver::Options& options,
-                          Program* program,
-                          CoordinateDescentMinimizer* inner_iteration_minimizer,
-                          Evaluator* evaluator,
-                          LinearSolver* linear_solver,
-                          double* parameters,
-                          Solver::Summary* summary) {
+void SolverImpl::TrustRegionMinimize(
+    const Solver::Options& options,
+    Program* program,
+    CoordinateDescentMinimizer* inner_iteration_minimizer,
+    Evaluator* evaluator,
+    LinearSolver* linear_solver,
+    double* parameters,
+    Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
 
   // TODO(sameeragarwal): Add support for logging the configuration
@@ -160,7 +198,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
                                        file_logging_callback.get());
   }
 
-  LoggingCallback logging_callback(options.minimizer_progress_to_stdout);
+  TrustRegionLoggingCallback logging_callback(options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        &logging_callback);
@@ -200,9 +238,60 @@ void SolverImpl::Minimize(const Solver::Options& options,
       WallTimeInSeconds() - minimizer_start_time;
 }
 
-void SolverImpl::Solve(const Solver::Options& original_options,
-                       ProblemImpl* original_problem_impl,
+
+void SolverImpl::LineSearchMinimize(
+    const Solver::Options& options,
+    Program* program,
+    Evaluator* evaluator,
+    double* parameters,
+    Solver::Summary* summary) {
+  Minimizer::Options minimizer_options(options);
+
+  // TODO(sameeragarwal): Add support for logging the configuration
+  // and more detailed stats.
+  scoped_ptr<IterationCallback> file_logging_callback;
+  if (!options.solver_log.empty()) {
+    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       file_logging_callback.get());
+  }
+
+  LineSearchLoggingCallback logging_callback(options.minimizer_progress_to_stdout);
+  if (options.logging_type != SILENT) {
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &logging_callback);
+  }
+
+  StateUpdatingCallback updating_callback(program, parameters);
+  if (options.update_state_every_iteration) {
+    // This must get pushed to the front of the callbacks so that it is run
+    // before any of the user callbacks.
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &updating_callback);
+  }
+
+  minimizer_options.evaluator = evaluator;
+
+  LineSearchMinimizer minimizer;
+  double minimizer_start_time = WallTimeInSeconds();
+  minimizer.Minimize(minimizer_options, parameters, summary);
+  summary->minimizer_time_in_seconds =
+      WallTimeInSeconds() - minimizer_start_time;
+}
+
+void SolverImpl::Solve(const Solver::Options& options,
+                       ProblemImpl* problem_impl,
                        Solver::Summary* summary) {
+  if (options.minimizer_type == TRUST_REGION) {
+    TrustRegionSolve(options, problem_impl, summary);
+  } else {
+    LineSearchSolve(options, problem_impl, summary);
+  }
+}
+
+void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
+                                  ProblemImpl* original_problem_impl,
+                                  Solver::Summary* summary) {
   double solver_start_time = WallTimeInSeconds();
 
   Program* original_program = original_problem_impl->mutable_program();
@@ -448,13 +537,13 @@ void SolverImpl::Solve(const Solver::Options& original_options,
       minimizer_start_time - solver_start_time;
 
   // Run the optimization.
-  Minimize(options,
-           reduced_program.get(),
-           inner_iteration_minimizer.get(),
-           evaluator.get(),
-           linear_solver.get(),
-           parameters.data(),
-           summary);
+  TrustRegionMinimize(options,
+                      reduced_program.get(),
+                      inner_iteration_minimizer.get(),
+                      evaluator.get(),
+                      linear_solver.get(),
+                      parameters.data(),
+                      summary);
 
   // If the user aborted mid-optimization or the optimization
   // terminated because of a numerical failure, then return without
@@ -508,6 +597,259 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
 }
+
+void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
+                                 ProblemImpl* original_problem_impl,
+                                 Solver::Summary* summary) {
+  double solver_start_time = WallTimeInSeconds();
+
+  Program* original_program = original_problem_impl->mutable_program();
+  ProblemImpl* problem_impl = original_problem_impl;
+
+  // Reset the summary object to its default values.
+  *CHECK_NOTNULL(summary) = Solver::Summary();
+
+  summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
+  summary->num_parameters = problem_impl->NumParameters();
+  summary->num_residual_blocks = problem_impl->NumResidualBlocks();
+  summary->num_residuals = problem_impl->NumResiduals();
+
+  // Empty programs are usually a user error.
+  if (summary->num_parameter_blocks == 0) {
+    summary->error = "Problem contains no parameter blocks.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  if (summary->num_residual_blocks == 0) {
+    summary->error = "Problem contains no residual blocks.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  Solver::Options options(original_options);
+  options.linear_solver_type = CGNR; // This ensures that we get a
+                                     // Block Jacobian Evaluator along
+                                     // with none of the Schur
+                                     // nonsense. This file will have
+                                     // to be extensively refactored
+                                     // to deal with the various bits
+                                     // of cleanups related line
+                                     // search.
+
+  options.linear_solver_ordering = NULL;
+  options.inner_iteration_ordering = NULL;
+
+#ifndef CERES_USE_OPENMP
+  if (options.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+    options.num_threads = 1;
+  }
+#endif
+
+  summary->num_threads_given = original_options.num_threads;
+  summary->num_threads_used = options.num_threads;
+
+  if (original_options.linear_solver_ordering != NULL) {
+    if (!IsOrderingValid(original_options, problem_impl, &summary->error)) {
+      LOG(ERROR) << summary->error;
+      return;
+    }
+    options.linear_solver_ordering =
+        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
+  } else {
+    options.linear_solver_ordering = new ParameterBlockOrdering;
+    const ProblemImpl::ParameterMap& parameter_map =
+        problem_impl->parameter_map();
+    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
+         it != parameter_map.end();
+         ++it) {
+      options.linear_solver_ordering->AddElementToGroup(it->first, 0);
+    }
+  }
+
+  // Evaluate the initial cost, residual vector and the jacobian
+  // matrix if requested by the user. The initial cost needs to be
+  // computed on the original unpreprocessed problem, as it is used to
+  // determine the value of the "fixed" part of the objective function
+  // after the problem has undergone reduction.
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &(summary->initial_cost),
+                           options.return_initial_residuals
+                           ? &summary->initial_residuals
+                           : NULL,
+                           options.return_initial_gradient
+                           ? &summary->initial_gradient
+                           : NULL,
+                           options.return_initial_jacobian
+                           ? &summary->initial_jacobian
+                           : NULL)) {
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the initial cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+  // If the user requests gradient checking, construct a new
+  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
+  // GradientCheckingCostFunction and replacing problem_impl with
+  // gradient_checking_problem_impl.
+  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
+  if (options.check_gradients) {
+    VLOG(1) << "Checking Gradients";
+    gradient_checking_problem_impl.reset(
+        CreateGradientCheckingProblemImpl(
+            problem_impl,
+            options.numeric_derivative_relative_step_size,
+            options.gradient_check_relative_precision));
+
+    // From here on, problem_impl will point to the gradient checking
+    // version.
+    problem_impl = gradient_checking_problem_impl.get();
+  }
+
+  // Create the three objects needed to minimize: the transformed program, the
+  // evaluator, and the linear solver.
+  scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
+                                                           problem_impl,
+                                                           &summary->fixed_cost,
+                                                           &summary->error));
+  if (reduced_program == NULL) {
+    return;
+  }
+
+  summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
+  summary->num_parameters_reduced = reduced_program->NumParameters();
+  summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
+  summary->num_residuals_reduced = reduced_program->NumResiduals();
+
+  if (summary->num_parameter_blocks_reduced == 0) {
+    summary->preprocessor_time_in_seconds =
+        WallTimeInSeconds() - solver_start_time;
+
+    LOG(INFO) << "Terminating: FUNCTION_TOLERANCE reached. "
+              << "No non-constant parameter blocks found.";
+
+    // FUNCTION_TOLERANCE is the right convergence here, as we know
+    // that the objective function is constant and cannot be changed
+    // any further.
+    summary->termination_type = FUNCTION_TOLERANCE;
+
+    double post_process_start_time = WallTimeInSeconds();
+    // Evaluate the final cost, residual vector and the jacobian
+    // matrix if requested by the user.
+    if (!Evaluator::Evaluate(original_program,
+                             options.num_threads,
+                             &summary->final_cost,
+                             options.return_final_residuals
+                             ? &summary->final_residuals
+                             : NULL,
+                             options.return_final_gradient
+                             ? &summary->final_gradient
+                             : NULL,
+                             options.return_final_jacobian
+                             ? &summary->final_jacobian
+                             : NULL)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
+
+    // Ensure the program state is set to the user parameters on the way out.
+    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+    summary->postprocessor_time_in_seconds =
+        WallTimeInSeconds() - post_process_start_time;
+    return;
+  }
+
+  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+                                                  problem_impl->parameter_map(),
+                                                  reduced_program.get(),
+                                                  &summary->error));
+  if (evaluator == NULL) {
+    return;
+  }
+
+  // The optimizer works on contiguous parameter vectors; allocate some.
+  Vector parameters(reduced_program->NumParameters());
+
+  // Collect the discontiguous parameters into a contiguous state vector.
+  reduced_program->ParameterBlocksToStateVector(parameters.data());
+
+  Vector original_parameters = parameters;
+
+  double minimizer_start_time = WallTimeInSeconds();
+  summary->preprocessor_time_in_seconds =
+      minimizer_start_time - solver_start_time;
+
+  // Run the optimization.
+  LineSearchMinimize(options,
+                     reduced_program.get(),
+                     evaluator.get(),
+                     parameters.data(),
+                     summary);
+
+  // If the user aborted mid-optimization or the optimization
+  // terminated because of a numerical failure, then return without
+  // updating user state.
+  if (summary->termination_type == USER_ABORT ||
+      summary->termination_type == NUMERICAL_FAILURE) {
+    return;
+  }
+
+  double post_process_start_time = WallTimeInSeconds();
+
+  // Push the contiguous optimized parameters back to the user's parameters.
+  reduced_program->StateVectorToParameterBlocks(parameters.data());
+  reduced_program->CopyParameterBlockStateToUserState();
+
+  // Evaluate the final cost, residual vector and the jacobian
+  // matrix if requested by the user.
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &summary->final_cost,
+                           options.return_final_residuals
+                           ? &summary->final_residuals
+                           : NULL,
+                           options.return_final_gradient
+                           ? &summary->final_gradient
+                           : NULL,
+                           options.return_final_jacobian
+                           ? &summary->final_jacobian
+                           : NULL)) {
+    // This failure requires careful handling.
+    //
+    // At this point, we have modified the user's state, but the
+    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+    // guarantees that user's state is not modified if the solver
+    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+    // user's state to their original values.
+
+    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+    reduced_program->CopyParameterBlockStateToUserState();
+
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the final cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  // Ensure the program state is set to the user parameters on the way out.
+  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+  // Stick a fork in it, we're done.
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
+}
+
 
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
                                  const ProblemImpl* problem_impl,
