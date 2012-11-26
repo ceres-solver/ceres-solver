@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3//++A\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T10:24:25Z",
+      "side": 1,
+      "message": "Remove comma.\n\nMove \"not\" -- \"is not large enough to satisfy the sufficient decrease condition.\"",
+      "revId": "3271760a679f2794b0b188fc72bb3cb70f8e1fc3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
