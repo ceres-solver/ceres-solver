@@ -136,7 +136,7 @@ class LineSearch {
     //
     // g is the gradient f'(x) at x.
     //
-    // Both f and g must not be NULL;
+    // f must not be null. The gradient is computed only if g is not null.
     virtual bool Evaluate(double x, double* f, double* g) = 0;
   };
 
@@ -156,12 +156,18 @@ class LineSearch {
 
   // Perform the line search.
   //
-  // initial_step_size must be a positive number.  summary must not be
-  // null and will contain the result of the line search.
+  // initial_step_size must be a positive number.
+  //
+  // initial_cost and initial_gradient are the values and gradient of
+  // the function at zero.
+  // summary must not be null and will contain the result of the line
+  // search.
   //
   // Summary::success is true if a non-zero step size is found.
   virtual void Search(const LineSearch::Options& options,
                       double initial_step_size,
+                      double initial_cost,
+                      double initial_gradient,
                       Summary* summary) = 0;
 };
 
@@ -195,6 +201,8 @@ class ArmijoLineSearch : public LineSearch {
   virtual ~ArmijoLineSearch() {}
   virtual void Search(const LineSearch::Options& options,
                       double initial_step_size,
+                      double initial_cost,
+                      double initial_gradient,
                       Summary* summary);
 };
 

@@ -267,7 +267,6 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
   for (int i = 0; i < num_samples; ++i) {
     const FunctionSample& sample = samples[i];
     if (sample.value_is_valid) {
-      LOG(INFO) << "value constraint";
       for (int j = 0; j <= degree; ++j) {
         lhs(row, j) = pow(sample.x, degree - j);
       }
@@ -277,7 +276,6 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
 
     if (sample.gradient_is_valid) {
       for (int j = 0; j < degree; ++j) {
-        LOG(INFO) << "gradient constraint";
         lhs(row, j) = (degree - j) * pow(sample.x, degree - j - 1);
       }
       rhs(row) = sample.gradient;

@@ -152,6 +152,39 @@ enum LoggingType {
   PER_MINIMIZER_ITERATION
 };
 
+enum MinimizerType {
+  LINE_SEARCH,
+  TRUST_REGION
+};
+
+enum LineSearchDirectionType {
+  // Negative of the gradient.
+  STEEPEST_DESCENT,
+
+  // A generalization of the Conjugate Gradient method to non-linear
+  // functions. The generalization can be performed in a number of
+  // different ways, resulting in a variety of search directions. The
+  // precise choice of the non-linear conjugate gradient algorithm
+  // used is determined by NonlineConjuateGradientType.
+  NONLINEAR_CONJUGATE_GRADIENT,
+
+  // A limited Memory BFGS approximation to the Hessian is constructed
+  // and used to compute the search direction.
+  LBFGS    // Not implemented yet.
+};
+
+enum NonlinearConjugateGradientType {
+  FLETCHER_REEVES,
+  POLAK_RIBIRERE,
+  HESTENES_STIEFEL
+};
+
+enum LineSearchType {
+  // Backtracking line search with polynomial interpolation or
+  // bisection.
+  ARMIJO
+};
+
 // Ceres supports different strategies for computing the trust region
 // step.
 enum TrustRegionStrategyType {

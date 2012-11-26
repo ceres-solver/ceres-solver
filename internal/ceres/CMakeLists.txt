@@ -59,6 +59,7 @@ SET(CERES_INTERNAL_SRC
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     line_search.cc
+    line_search_minimizer.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
