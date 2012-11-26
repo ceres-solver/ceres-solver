@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//++E\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T10:24:43Z",
+      "side": 1,
+      "message": "It was off due to the \"inline\" keyword; it\u0027s fixed in the new rev :)",
+      "parentUuid": "AAALu3//+/o\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///C0\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -807,6 +825,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+98\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T10:24:43Z",
+      "side": 1,
+      "message": "It\u0027s an interesting tradeoff. I wonder if a regularized fit with multiple points (not just 2 or 3) would do better. In most bundling problems, the cost of interpolating or doing a least square fit of a polynomial is trivial compared to the evaluation cost.",
+      "parentUuid": "AAALu3//++Y\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///Bs\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -1401,6 +1437,24 @@
     },
     {
       "key": {
+        "uuid": "AAALu3//+9w\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T10:24:43Z",
+      "side": 1,
+      "message": "I\u0027m not seeing this.",
+      "parentUuid": "AAALu3///AM\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALu3///DM\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 2
@@ -1430,6 +1484,24 @@
       "side": 1,
       "message": "dropped reference_cost, the evaluator I guess can go into the options.",
       "parentUuid": "AAALu3///DM\u003d",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3//+90\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T10:24:43Z",
+      "side": 1,
+      "message": "To align with the other minimize functions, it makes sense to pass the evaluator as a separate parameter. I don\u0027t feel strongly though.",
+      "parentUuid": "AAALu3//+/4\u003d",
       "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
