@@ -122,6 +122,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/implicit_schur_complement.cc \
                    $(CERES_SRC_PATH)/iterative_schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/levenberg_marquardt_strategy.cc \
+                   $(CERES_SRC_PATH)/line_search.cc \
                    $(CERES_SRC_PATH)/linear_least_squares_problems.cc \
                    $(CERES_SRC_PATH)/linear_operator.cc \
                    $(CERES_SRC_PATH)/linear_solver.cc \
