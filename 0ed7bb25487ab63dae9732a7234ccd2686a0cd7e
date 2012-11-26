@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///Gw\u003d",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T02:34:37Z",
+      "side": 1,
+      "message": "This is wrong; if gradient \u003d\u003d NULL, it will crash. Please check for null gradient.\n\nAlso add a test for this where the gradient is non-null.",
+      "revId": "0ed7bb25487ab63dae9732a7234ccd2686a0cd7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
