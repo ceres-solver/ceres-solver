@@ -78,6 +78,9 @@ class Minimizer {
       max_num_consecutive_invalid_steps =
           options.max_num_consecutive_invalid_steps;
       min_trust_region_radius = options.min_trust_region_radius;
+      line_search_direction_type = options.line_search_direction_type;
+      line_search_type = options.line_search_type;
+      nonlinear_conjugate_gradient_type = options.nonlinear_conjugate_gradient_type;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -87,13 +90,13 @@ class Minimizer {
 
     int max_num_iterations;
     double max_solver_time_in_seconds;
+    int num_threads;
 
     // Number of times the linear solver should be retried in case of
     // numerical failure. The retries are done by exponentially scaling up
     // mu at each retry. This leads to stronger and stronger
     // regularization making the linear least squares problem better
     // conditioned at each retry.
-    int num_threads;
     int max_step_solver_retries;
     double gradient_tolerance;
     double parameter_tolerance;
@@ -108,6 +111,10 @@ class Minimizer {
     string lsqp_dump_directory;
     int max_num_consecutive_invalid_steps;
     int min_trust_region_radius;
+    LineSearchDirectionType line_search_direction_type;
+    LineSearchType line_search_type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
+
 
     // List of callbacks that are executed by the Minimizer at the end
     // of each iteration.

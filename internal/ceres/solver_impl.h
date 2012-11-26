@@ -54,6 +54,14 @@ class SolverImpl {
                     ProblemImpl* problem_impl,
                     Solver::Summary* summary);
 
+  static void TrustRegionSolve(const Solver::Options& options,
+                               ProblemImpl* problem_impl,
+                               Solver::Summary* summary);
+
+  static void LineSearchSolve(const Solver::Options& options,
+                              ProblemImpl* problem_impl,
+                              Solver::Summary* summary);
+
   // Create the transformed Program, which has all the fixed blocks
   // and residuals eliminated, and in the case of automatic schur
   // ordering, has the E blocks first in the resulting program, with
@@ -99,14 +107,23 @@ class SolverImpl {
       Program* program,
       string* error);
 
-  // Run the minimization for the given evaluator and configuration.
-  static void Minimize(const Solver::Options &options,
-                       Program* program,
-                       CoordinateDescentMinimizer* inner_iteration_minimizer,
-                       Evaluator* evaluator,
-                       LinearSolver* linear_solver,
-                       double* parameters,
-                       Solver::Summary* summary);
+  // Run the TrustRegionMinimizer for the given evaluator and configuration.
+  static void TrustRegionMinimize(
+      const Solver::Options &options,
+      Program* program,
+      CoordinateDescentMinimizer* inner_iteration_minimizer,
+      Evaluator* evaluator,
+      LinearSolver* linear_solver,
+      double* parameters,
+      Solver::Summary* summary);
+
+  // Run the LineSearchMinimizer for the given evaluator and configuration.
+  static void LineSearchMinimize(
+      const Solver::Options &options,
+      Program* program,
+      Evaluator* evaluator,
+      double* parameters,
+      Solver::Summary* summary);
 
   // Remove the fixed or unused parameter blocks and residuals
   // depending only on fixed parameters from the problem. Also updates
