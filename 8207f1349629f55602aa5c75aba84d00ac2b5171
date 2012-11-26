@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALvH///D8\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T20:11:01Z",
+      "side": 1,
+      "message": "Leave a short comment to make it explicit that this is the function we\u0027re minimizing.",
+      "revId": "8207f1349629f55602aa5c75aba84d00ac2b5171",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
