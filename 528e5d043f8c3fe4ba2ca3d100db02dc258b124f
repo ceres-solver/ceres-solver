@@ -1,0 +1,786 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALu3///EU\u003d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Please update Android.mk as well.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///EQ\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///EM\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Does \"inline\" actually change anything? I doubt it will make a difference. Take a look at the assembly.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///EE\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "I don\u0027t think inline will do anything here.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///EI\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Alignment.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///C0\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Alignment.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Cw\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Alignment.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Cs\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "We may want to think about the error handling. Should we propagate an error message?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CA\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "It\u0027s not immediately obvious what these are. Consider naming instead initial_cost and initial_gradient. Wordier, but makes the code below easier to read if you don\u0027t read the upper parts carefully.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Co\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "No indication of failure is returned. Is this good?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Ck\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "previous_cost",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Cg\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "previous_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Cc\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "previous_gradient",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CY\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "previous_x_is_valid",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CU\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "new_cost",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CQ\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "new_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CM\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "new_gradient",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CI\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "new_x_is_valid",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///CE\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "++?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///B8\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "current_step_size",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///B4\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Consider expanding this a bit. Why do bisection if the new x is invalid?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bw\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Expand on this. Interpolate based on what?\n\nThis is also somewhat hairy. Consider abstracting the interpolation part from the sample selection.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bk\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you want to have all the previous samples?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bs\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "I guess supporting e.g. interpolation_degree\u003d3 after 4 samples are taken is not implemented correctly currently? Document.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///BY\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Output the too-small step size.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bc\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "++?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bo\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Any reason not to always push the evaluations at this point? I think it would make the earlier code simpler, instead of the weird dance of constructing a new vector of samples each time.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///D8\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///D4\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Please use an enum instead. It will probably need to go into types.h since eventually this will be configurable.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///D0\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Comma is strange. \"of of\"\n\nI still don\u0027t understand what this is doing.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Dw\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Sufficient decrease for what? Please expand comment to explain what this is sufficient decrease for.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Ds\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Sentence is odd. \"I accidentally the comment...\" :)",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Do\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "This is also a strange sentence.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Dk\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Consider expanding the comment, and renaming to \"minimum_step_size\". I had to read the comment a couple of times. Consider:\n\n  // If during the search the step size is made \n  // smaller than this minimum, the step size is\n  // truncated to zero.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Dg\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Dc\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "In my version, I named this simply Function.\n\nI\u0027m also not sure we want the \"Init\" method on the base class, but I\u0027ll come back to this comment after I\u0027ve read the rest.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DY\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Consider explaining the conditions on x; in particular, that negative values are not allowed. Are f or g optional? Document.\n\nAlso, rename f to function_value and g to gradient (maybe function_gradient)?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///Bg\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Document. optimal_step_size perhaps?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DU\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Consider splitting between function and gradient evaluations.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DI\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Should this be const?\n\nAlso, since evaluation can fail so can the search. Should we handle that? I think yes, and that means all the usual error plumbing.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DQ\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Any reason this should be here and not in LineSearch::Options?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DM\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Any reason this should be here and not in LineSearch::Options?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DE\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///DA\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Document. Scaled by what?",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///C4\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALu3///B0\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-26T05:49:45Z",
+      "side": 1,
+      "message": "Consider explaining the conditions around validity; e.g. that this guarantees an answer, even if it is simply 0.",
+      "revId": "528e5d043f8c3fe4ba2ca3d100db02dc258b124f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
