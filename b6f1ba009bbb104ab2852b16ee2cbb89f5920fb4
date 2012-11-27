@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX//9/U\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-27T02:01:01Z",
+      "side": 1,
+      "message": "related TO line ...",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
