@@ -39,8 +39,7 @@ namespace ceres {
 namespace internal {
 
 // Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as one of the
-// arguments to the Minimize method.
+// done by a TrustRegionStrategy object passed in as part of options.
 //
 // For example usage, see SolverImpl::Minimize.
 class TrustRegionMinimizer : public Minimizer {
