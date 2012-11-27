@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX//+A4\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-27T01:55:21Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "a03c1fbcd0f44dec34c7a1eefdc5bd8eb558be1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX//+Ak\u003d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-27T01:55:21Z",
+      "side": 1,
+      "message": "Consider adding numbering to these two\n\n1. Line search first finds a ....",
+      "revId": "a03c1fbcd0f44dec34c7a1eefdc5bd8eb558be1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
