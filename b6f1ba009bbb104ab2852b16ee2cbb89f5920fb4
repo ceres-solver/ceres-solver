@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/H//++Q\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:27:43Z",
+      "side": 1,
+      "message": "Sorry, the #1 comment was stale and I forgot to zap it on my 2nd pass.\n\nOk on TODO.",
+      "parentUuid": "AAAL/X///kg\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///kQ\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -451,6 +469,24 @@
       "side": 1,
       "message": "there is no previous cost at iteration 1.",
       "parentUuid": "AAAL/H///j8\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H//++I\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:27:43Z",
+      "side": 1,
+      "message": "That doesn\u0027t explain why you are taking the inverse of the max value of the derivative for the cost. Please comment to that effect.",
+      "parentUuid": "AAAL/X///kY\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
