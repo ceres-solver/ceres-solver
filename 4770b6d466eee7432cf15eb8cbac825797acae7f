@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL/H//+xM\u003d",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T23:12:32Z",
+      "side": 1,
+      "message": "Space around +",
+      "revId": "4770b6d466eee7432cf15eb8cbac825797acae7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
