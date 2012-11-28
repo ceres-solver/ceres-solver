@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL/H//+/0\u003d",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:21:09Z",
+      "side": 1,
+      "message": "Facepalm. Move * next to JetT.",
+      "revId": "01d2beb03fdceb4ce288498f93825be44bbf20bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H//+/c\u003d",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:21:09Z",
+      "side": 1,
+      "message": "This test isn\u0027t that convincing since we could also end up swapping parameters and that wouldn\u0027t be evident.\n\nConsider pow(x_i, i)\u0027ing each argument in the cost functions above.",
+      "revId": "01d2beb03fdceb4ce288498f93825be44bbf20bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H//+/w\u003d",
+        "filename": "internal/ceres/autodiff_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:21:09Z",
+      "side": 1,
+      "message": "80 columns (and above).",
+      "revId": "01d2beb03fdceb4ce288498f93825be44bbf20bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
