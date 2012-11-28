@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAALuX//9/g\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T02:02:42Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "2edef60bb7034917ded47347607ab9228a38957c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX//9/0\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T02:02:42Z",
+      "side": 1,
+      "message": "Delete this until it\u0027s implemented; no point in adding it now.",
+      "revId": "2edef60bb7034917ded47347607ab9228a38957c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX//9/4\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T02:02:42Z",
+      "side": 1,
+      "message": "Describe.",
+      "revId": "2edef60bb7034917ded47347607ab9228a38957c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX//+AA\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T02:02:42Z",
+      "side": 1,
+      "message": "Include a header comment about the approach; references, etc.",
+      "revId": "2edef60bb7034917ded47347607ab9228a38957c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAALuX//+AE\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T02:02:42Z",
+      "side": 1,
+      "message": "80 columns.",
+      "revId": "2edef60bb7034917ded47347607ab9228a38957c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
