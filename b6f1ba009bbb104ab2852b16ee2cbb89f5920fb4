@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///lI\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "I am not sure its worth it at this level.",
+      "parentUuid": "AAAL/H///nQ\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///nA\u003d",
         "filename": "include/ceres/types.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "Are you going to add LBFGS to this CL?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///lE\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "nope next time. removed for now.",
+      "parentUuid": "AAAL/H///nA\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///lA\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "I have added a generic comment here and pointed to nocedal and wright.",
+      "parentUuid": "AAAL/H///l0\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///lw\u003d",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "We may want to log if !IsFinite.\n\nAlso, the semantics of the return value are strange. The return is false if the evaluate fails or if the function is not finite? Perhaps that determination should live elsewhere.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///k8\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "semantics are, if evaluation was successful, i.e. if it did not fail and was finite then we return true.\n\nAs for logging isfinite, it just means the value is not feasible, and thats fine, the line search can generate values which are numerically senseless, in which case we treat it as infinite cost.",
+      "parentUuid": "AAAL/H///lw\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///k4\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "because I am a doofus :)",
+      "parentUuid": "AAAL/H///lU\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///lQ\u003d",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "These are const in the .cc.\n\nWhy put these here instead of options?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///k0\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "google3 actually recommends const in cc, technically it makes no difference for primitive types, the const in CC only ensures that it does not change in the impl, in terms ofthe interface it adds nothing.\n\nI generally keep stuff which is constant across iterations in options, but yes technically this can go into the options struct.\n\nThis makes the call site look more explicit and saves us on three assignments.",
+      "parentUuid": "AAAL/H///lQ\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kw\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "not really.\nwe have the same thing in trust region.",
+      "parentUuid": "AAAL/H///lM\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///lA\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "I wonder if we should always run all the callbacks, since otherwise the order of callbacks suddenly matters.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///ks\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "no, we document this. we tell people the order matters, which is why it is a vector.",
+      "parentUuid": "AAAL/H///lA\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kg\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "I am not sure I understand 1. This is the callback for iteration zero.\n\nas for making a function out of this, lets wait on that since it is shared with trust region minimizer, and I will do that cleanup in one shot. I will drop a todo for now.",
+      "parentUuid": "AAAL/H///kY\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///kQ\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "Drop a TODO() for supporting other line searches.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///ko\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "its not like I am going to forget this :)",
+      "parentUuid": "AAAL/H///kQ\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kk\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "emacs screws up the indentation.\n\nalso I am going to refactor this shortly.",
+      "parentUuid": "AAAL/H///kM\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///k4\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "80 columns.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///kc\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL/H///k4\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kY\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "there is no previous cost at iteration 1.",
+      "parentUuid": "AAAL/H///j8\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///j4\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -234,6 +468,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": ", on wrong side of space. Spaces around /.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///kQ\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL/H///j4\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kI\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "not really, I was keeping it simple.",
+      "parentUuid": "AAAL/H///jo\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///jg\u003d",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -268,6 +538,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "No checking the results of evaluate here?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///kE\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "not yet, technically this should never fail.. but ofcourse it can.\nI need to sort out the logic of what to do with a bad step here.\n\nfor now I am going to make it stall and converge.\njust like if the line search fails.",
+      "parentUuid": "AAAL/H///jg\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///kA\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "moved up. there is already a comment up above pointing to solver.h",
+      "parentUuid": "AAAL/H///jQ\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALuX//9/U\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 3
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "AAAL/X///j8\u003d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAALuX//9/U\u003d",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAL/H///jA\u003d",
         "filename": "internal/ceres/solver_impl.h",
         "patchSetId": 3
@@ -319,6 +643,24 @@
       "writtenOn": "2012-11-28T03:24:06Z",
       "side": 1,
       "message": "Double space.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/X///j4\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-11-28T08:21:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "AAAL/H///jA\u003d",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
