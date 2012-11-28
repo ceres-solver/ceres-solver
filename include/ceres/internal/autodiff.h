@@ -390,7 +390,7 @@ struct AutoDiff {
         x.get() + jet8,
         x.get() + jet9,
     };
-    JetT *output = x.get() + jet6;
+    JetT *output = x.get() + jet9;
 
 #define CERES_MAKE_1ST_ORDER_PERTURBATION(i) \
     if (N ## i) { \
