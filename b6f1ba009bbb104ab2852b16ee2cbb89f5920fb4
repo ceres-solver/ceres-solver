@@ -2,6 +2,295 @@
   "comments": [
     {
       "key": {
+        "uuid": "AAAL/H///nQ\u003d",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Split into gradient and function evals?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///nA\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Are you going to add LBFGS to this CL?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///l0\u003d",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Document \u0026 reference",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///lw\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "We may want to log if !IsFinite.\n\nAlso, the semantics of the return value are strange. The return is false if the evaluate fails or if the function is not finite? Perhaps that determination should live elsewhere.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///lU\u003d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Why is this not const but the other arguments are?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///lQ\u003d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "These are const in the .cc.\n\nWhy put these here instead of options?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///lM\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Expand. Should this not be configurable?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///lA\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "I wonder if we should always run all the callbacks, since otherwise the order of callbacks suddenly matters.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///kY\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "1. Callbacks are not run inside the minimization.\n2. Stick this in a function, since it\u0027s replicated.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///kQ\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Drop a TODO() for supporting other line searches.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///kM\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "On previous line.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///k4\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "80 columns.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///j8\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Space around /.\n\nComment on why the computation is different for the first step.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///j4\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": ", on wrong side of space. Spaces around /.",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///jo\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Is there a reason that line_search_function should not simply alias search_direction instead of copying?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///jg\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "No checking the results of evaluate here?",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///jQ\u003d",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Comment or refer to Options",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAALuX//9/U\u003d",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 3
@@ -13,6 +302,23 @@
       "writtenOn": "2012-11-27T02:01:01Z",
       "side": 1,
       "message": "related TO line ...",
+      "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H///jA\u003d",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T03:24:06Z",
+      "side": 1,
+      "message": "Double space.",
       "revId": "b6f1ba009bbb104ab2852b16ee2cbb89f5920fb4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
