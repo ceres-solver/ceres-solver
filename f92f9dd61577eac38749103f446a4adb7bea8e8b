@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAL/H//++o\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:27:28Z",
+      "side": 1,
+      "message": "I would say \"inspired\" since it\u0027s not a code copy, we just examined their algorithms.",
+      "revId": "f92f9dd61577eac38749103f446a4adb7bea8e8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAL/H//+9U\u003d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-28T22:27:28Z",
+      "side": 1,
+      "message": "I wonder if we should count these.",
+      "revId": "f92f9dd61577eac38749103f446a4adb7bea8e8b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
