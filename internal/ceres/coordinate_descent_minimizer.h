@@ -28,39 +28,59 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#ifndef CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
+#define CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_
 
+#include "ceres/evaluator.h"
 #include "ceres/minimizer.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
 #include "ceres/solver.h"
-#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
+// Given a Program, and a ParameterBlockOrdering which partitions
+// (non-exhaustively) the Hessian matrix into independent sets,
+// perform coordinate descent on the parameter blocks in the
+// ordering. The independent set structure allows for all parameter
+// blocks in the same independent set to be optimized in parallel, and
+// the order of the independent set determines the order in which the
+// parameter block groups are optimized.
 //
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+// The minimizer assumes that none of the parameter blocks in the
+// program are constant.
+class CoordinateDescentMinimizer : public Minimizer {
  public:
-  ~TrustRegionMinimizer() {}
+  bool Init(const Program& program,
+            const ProblemImpl::ParameterMap& parameter_map,
+            const ParameterBlockOrdering& ordering,
+            string* error);
+
+  // Minimizer interface.
+  virtual ~CoordinateDescentMinimizer();
   virtual void Minimize(const Minimizer::Options& options,
                         double* parameters,
                         Solver::Summary* summary);
 
  private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  CallbackReturnType RunCallbacks(const IterationSummary& iteration_summary);
-  bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
-                                           const SparseMatrix* jacobian,
-                                           const double* residuals,
-                                           const double* step) const;
+  void Solve(Program* program,
+             LinearSolver* linear_solver,
+             double* parameters,
+             Solver::Summary* summary);
 
-  Minimizer::Options options_;
+  vector<ParameterBlock*> parameter_blocks_;
+  vector<vector<ResidualBlock*> > residual_blocks_;
+  // The optimization is performed in rounds. In each round all the
+  // parameter blocks that form one independent set are optimized in
+  // parallel. This array, marks the boundaries of the independent
+  // sets in parameter_blocks_.
+  vector<int> independent_set_offsets_;
+
+  Evaluator::Options evaluator_options_;
 };
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+
+#endif  // CERES_INTERNAL_COORDINATE_DESCENT_MINIMIZER_H_

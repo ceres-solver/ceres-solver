@@ -33,6 +33,7 @@
 #include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
+#include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
@@ -40,25 +41,18 @@
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
-#include "ceres/ordering.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
+#include "ceres/parameter_block_ordering.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/schur_ordering.h"
 #include "ceres/stringprintf.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
-
-Solver::Options::~Options() {
-  if (ordering != NULL) {
-    delete ordering;
-  }
-}
-
 namespace internal {
 namespace {
 
@@ -150,6 +144,7 @@ class FileLoggingCallback : public IterationCallback {
 
 void SolverImpl::Minimize(const Solver::Options& options,
                           Program* program,
+                          CoordinateDescentMinimizer* inner_iteration_minimizer,
                           Evaluator* evaluator,
                           LinearSolver* linear_solver,
                           double* parameters,
@@ -182,6 +177,7 @@ void SolverImpl::Minimize(const Solver::Options& options,
   minimizer_options.evaluator = evaluator;
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
   minimizer_options.jacobian = jacobian.get();
+  minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
   TrustRegionStrategy::Options trust_region_strategy_options;
   trust_region_strategy_options.linear_solver = linear_solver;
@@ -208,60 +204,58 @@ void SolverImpl::Solve(const Solver::Options& original_options,
                        ProblemImpl* original_problem_impl,
                        Solver::Summary* summary) {
   double solver_start_time = WallTimeInSeconds();
-  Solver::Options options(original_options);
+
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
+
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
-
-#ifndef CERES_USE_OPENMP
-  if (options.num_threads > 1) {
-    LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
-        << "only options.num_threads=1 is supported. Switching"
-        << "to single threaded mode.";
-    options.num_threads = 1;
-  }
-  if (options.num_linear_solver_threads > 1) {
-    LOG(WARNING)
-        << "OpenMP support is not compiled into this binary"
-        << "only options.num_linear_solver_threads=1 is supported. Switching"
-        << "to single threaded mode.";
-    options.num_linear_solver_threads = 1;
-  }
-#endif
-
-  summary->linear_solver_type_given = options.linear_solver_type;
-  summary->num_threads_given = original_options.num_threads;
-  summary->num_linear_solver_threads_given =
-      original_options.num_linear_solver_threads;
 
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
   summary->num_residual_blocks = problem_impl->NumResidualBlocks();
   summary->num_residuals = problem_impl->NumResiduals();
 
-  summary->num_threads_used = options.num_threads;
-  summary->sparse_linear_algebra_library =
-      options.sparse_linear_algebra_library;
-  summary->trust_region_strategy_type = options.trust_region_strategy_type;
-  summary->dogleg_type = options.dogleg_type;
+  // Empty programs are usually a user error.
+  if (summary->num_parameter_blocks == 0) {
+    summary->error = "Problem contains no parameter blocks.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
 
-  if (original_options.ordering != NULL) {
-    if (!IsOrderingValid(original_options, problem_impl, &summary->error)) {
-      LOG(WARNING) << summary->error;
-      return;
-    }
-    options.ordering = new Ordering(*original_options.ordering);
-  } else {
-    options.ordering = new Ordering;
-    const ProblemImpl::ParameterMap& parameter_map =
-        problem_impl->parameter_map();
-    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
-         it != parameter_map.end();
-         ++it) {
-      options.ordering->AddParameterBlockToGroup(it->first, 0);
-    }
+  if (summary->num_residual_blocks == 0) {
+    summary->error = "Problem contains no residual blocks.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
+  Solver::Options options(original_options);
+  options.linear_solver_ordering = NULL;
+  options.inner_iteration_ordering = NULL;
+
+#ifndef CERES_USE_OPENMP
+  if (options.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+    options.num_threads = 1;
+  }
+  if (options.num_linear_solver_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_linear_solver_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+    options.num_linear_solver_threads = 1;
+  }
+#endif
+
+  summary->num_threads_given = original_options.num_threads;
+  summary->num_threads_used = options.num_threads;
+
+  if (options.lsqp_iterations_to_dump.size() > 0) {
+    LOG(WARNING) << "Dumping linear least squares problems to disk is"
+        " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
   }
 
   // Evaluate the initial cost, residual vector and the jacobian
@@ -269,13 +263,24 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // computed on the original unpreprocessed problem, as it is used to
   // determine the value of the "fixed" part of the objective function
   // after the problem has undergone reduction.
-  Evaluator::Evaluate(
-      original_program,
-      options.num_threads,
-      &(summary->initial_cost),
-      options.return_initial_residuals ? &summary->initial_residuals : NULL,
-      options.return_initial_gradient ? &summary->initial_gradient : NULL,
-      options.return_initial_jacobian ? &summary->initial_jacobian : NULL);
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &(summary->initial_cost),
+                           options.return_initial_residuals
+                           ? &summary->initial_residuals
+                           : NULL,
+                           options.return_initial_gradient
+                           ? &summary->initial_gradient
+                           : NULL,
+                           options.return_initial_jacobian
+                           ? &summary->initial_jacobian
+                           : NULL)) {
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the initial cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
   // If the user requests gradient checking, construct a new
@@ -283,9 +288,6 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // GradientCheckingCostFunction and replacing problem_impl with
   // gradient_checking_problem_impl.
   scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
-
-  // Save the original problem impl so we don't use the gradient
-  // checking one when computing the residuals.
   if (options.check_gradients) {
     VLOG(1) << "Checking Gradients";
     gradient_checking_problem_impl.reset(
@@ -294,8 +296,27 @@ void SolverImpl::Solve(const Solver::Options& original_options,
             options.numeric_derivative_relative_step_size,
             options.gradient_check_relative_precision));
 
-    // From here on, problem_impl will point to the GradientChecking version.
+    // From here on, problem_impl will point to the gradient checking
+    // version.
     problem_impl = gradient_checking_problem_impl.get();
+  }
+
+  if (original_options.linear_solver_ordering != NULL) {
+    if (!IsOrderingValid(original_options, problem_impl, &summary->error)) {
+      LOG(ERROR) << summary->error;
+      return;
+    }
+    options.linear_solver_ordering =
+        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
+  } else {
+    options.linear_solver_ordering = new ParameterBlockOrdering;
+    const ProblemImpl::ParameterMap& parameter_map =
+        problem_impl->parameter_map();
+    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
+         it != parameter_map.end();
+         ++it) {
+      options.linear_solver_ordering->AddElementToGroup(it->first, 0);
+    }
   }
 
   // Create the three objects needed to minimize: the transformed program, the
@@ -313,26 +334,105 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
   summary->num_residuals_reduced = reduced_program->NumResiduals();
 
+  if (summary->num_parameter_blocks_reduced == 0) {
+    summary->preprocessor_time_in_seconds =
+        WallTimeInSeconds() - solver_start_time;
+
+    LOG(INFO) << "Terminating: FUNCTION_TOLERANCE reached. "
+              << "No non-constant parameter blocks found.";
+
+    // FUNCTION_TOLERANCE is the right convergence here, as we know
+    // that the objective function is constant and cannot be changed
+    // any further.
+    summary->termination_type = FUNCTION_TOLERANCE;
+
+    double post_process_start_time = WallTimeInSeconds();
+    // Evaluate the final cost, residual vector and the jacobian
+    // matrix if requested by the user.
+    if (!Evaluator::Evaluate(original_program,
+                             options.num_threads,
+                             &summary->final_cost,
+                             options.return_final_residuals
+                             ? &summary->final_residuals
+                             : NULL,
+                             options.return_final_gradient
+                             ? &summary->final_gradient
+                             : NULL,
+                             options.return_final_jacobian
+                             ? &summary->final_jacobian
+                             : NULL)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
+
+    // Ensure the program state is set to the user parameters on the way out.
+    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+    summary->postprocessor_time_in_seconds =
+        WallTimeInSeconds() - post_process_start_time;
+    return;
+  }
+
   scoped_ptr<LinearSolver>
       linear_solver(CreateLinearSolver(&options, &summary->error));
-  summary->linear_solver_type_used = options.linear_solver_type;
-  summary->preconditioner_type = options.preconditioner_type;
-  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
-
   if (linear_solver == NULL) {
     return;
   }
 
-  if (!MaybeReorderResidualBlocks(options,
-                                  reduced_program.get(),
-                                  &summary->error)) {
+  summary->linear_solver_type_given = original_options.linear_solver_type;
+  summary->linear_solver_type_used = options.linear_solver_type;
+
+  summary->preconditioner_type = options.preconditioner_type;
+
+  summary->num_linear_solver_threads_given =
+      original_options.num_linear_solver_threads;
+  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
+
+  summary->sparse_linear_algebra_library =
+      options.sparse_linear_algebra_library;
+
+  summary->trust_region_strategy_type = options.trust_region_strategy_type;
+  summary->dogleg_type = options.dogleg_type;
+
+  // Only Schur types require the lexicographic reordering.
+  if (IsSchurType(options.linear_solver_type)) {
+    const int num_eliminate_blocks =
+        options.linear_solver_ordering
+        ->group_to_elements().begin()
+        ->second.size();
+    if (!LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
+                                              reduced_program.get(),
+                                              &summary->error)) {
+      return;
+    }
+  }
+
+  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+                                                  problem_impl->parameter_map(),
+                                                  reduced_program.get(),
+                                                  &summary->error));
+  if (evaluator == NULL) {
     return;
   }
 
-  scoped_ptr<Evaluator> evaluator(
-      CreateEvaluator(options, reduced_program.get(), &summary->error));
-  if (evaluator == NULL) {
-    return;
+  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+  if (options.use_inner_iterations) {
+    if (reduced_program->parameter_blocks().size() < 2) {
+      LOG(WARNING) << "Reduced problem only contains one parameter block."
+                   << "Disabling inner iterations.";
+    } else {
+      inner_iteration_minimizer.reset(
+          CreateInnerIterationMinimizer(original_options,
+                                        *reduced_program,
+                                        problem_impl->parameter_map(),
+                                        &summary->error));
+      if (inner_iteration_minimizer == NULL) {
+        LOG(ERROR) << summary->error;
+        return;
+      }
+    }
   }
 
   // The optimizer works on contiguous parameter vectors; allocate some.
@@ -341,6 +441,8 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Collect the discontiguous parameters into a contiguous state vector.
   reduced_program->ParameterBlocksToStateVector(parameters.data());
 
+  Vector original_parameters = parameters;
+
   double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
@@ -348,6 +450,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
   // Run the optimization.
   Minimize(options,
            reduced_program.get(),
+           inner_iteration_minimizer.get(),
            evaluator.get(),
            linear_solver.get(),
            parameters.data(),
@@ -369,16 +472,38 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  Evaluator::Evaluate(
-      original_program,
-      options.num_threads,
-      &summary->final_cost,
-      options.return_final_residuals ? &summary->final_residuals : NULL,
-      options.return_final_gradient ? &summary->final_gradient : NULL,
-      options.return_final_jacobian ? &summary->final_jacobian : NULL);
+  if (!Evaluator::Evaluate(original_program,
+                           options.num_threads,
+                           &summary->final_cost,
+                           options.return_final_residuals
+                           ? &summary->final_residuals
+                           : NULL,
+                           options.return_final_gradient
+                           ? &summary->final_gradient
+                           : NULL,
+                           options.return_final_jacobian
+                           ? &summary->final_jacobian
+                           : NULL)) {
+    // This failure requires careful handling.
+    //
+    // At this point, we have modified the user's state, but the
+    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+    // guarantees that user's state is not modified if the solver
+    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+    // user's state to their original values.
+
+    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+    reduced_program->CopyParameterBlockStateToUserState();
+
+    summary->termination_type = NUMERICAL_FAILURE;
+    summary->error = "Unable to evaluate the final cost.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
@@ -387,7 +512,7 @@ void SolverImpl::Solve(const Solver::Options& original_options,
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
                                  const ProblemImpl* problem_impl,
                                  string* error) {
-  if (options.ordering->NumParameterBlocks() !=
+  if (options.linear_solver_ordering->NumElements() !=
       problem_impl->NumParameterBlocks()) {
       *error = "Number of parameter blocks in user supplied ordering "
           "does not match the number of parameter blocks in the problem";
@@ -396,12 +521,11 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
 
   const Program& program = problem_impl->program();
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
   for (vector<ParameterBlock*>::const_iterator it = parameter_blocks.begin();
        it != parameter_blocks.end();
        ++it) {
-    if (!options.ordering->ContainsParameterBlock(
-            const_cast<double*>((*it)->user_state()))) {
+    if (!options.linear_solver_ordering
+        ->IsMember(const_cast<double*>((*it)->user_state()))) {
       *error = "Problem contains a parameter block that is not in "
           "the user specified ordering.";
       return false;
@@ -409,40 +533,48 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   }
 
   if (IsSchurType(options.linear_solver_type) &&
-      options.ordering->NumGroups() > 1) {
+      options.linear_solver_ordering->NumGroups() > 1) {
+    const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
     const set<double*>& e_blocks  =
-        options.ordering->group_id_to_parameter_blocks().begin()->second;
-
-    // Loop over each residual block and ensure that no two parameter
-    // blocks in the same residual block are part of the first
-    // elimination group, as that would violate the assumption that it
-    // is an independent set in the Hessian matrix.
-    for (vector<ResidualBlock*>::const_iterator it = residual_blocks.begin();
-         it != residual_blocks.end();
-         ++it) {
-      ParameterBlock* const* parameter_blocks = (*it)->parameter_blocks();
-      const int num_parameter_blocks = (*it)->NumParameterBlocks();
-      int count = 0;
-      for (int i = 0; i < num_parameter_blocks; ++i) {
-        count += e_blocks.count(const_cast<double*>(
-                                    parameter_blocks[i]->user_state()));
-      }
-
-      if (count > 1) {
-        *error = "The user requested the use of a Schur type solver. "
-            "But the first elimination group in the ordering is not an "
-            "independent set.";
-        return false;
-      }
+        options.linear_solver_ordering->group_to_elements().begin()->second;
+    if (!IsParameterBlockSetIndependent(e_blocks, residual_blocks)) {
+      *error = "The user requested the use of a Schur type solver. "
+          "But the first elimination group in the ordering is not an "
+          "independent set.";
+      return false;
     }
   }
   return true;
 }
 
+bool SolverImpl::IsParameterBlockSetIndependent(const set<double*>& parameter_block_ptrs,
+                                                const vector<ResidualBlock*>& residual_blocks) {
+  // Loop over each residual block and ensure that no two parameter
+  // blocks in the same residual block are part of
+  // parameter_block_ptrs as that would violate the assumption that it
+  // is an independent set in the Hessian matrix.
+  for (vector<ResidualBlock*>::const_iterator it = residual_blocks.begin();
+       it != residual_blocks.end();
+       ++it) {
+    ParameterBlock* const* parameter_blocks = (*it)->parameter_blocks();
+    const int num_parameter_blocks = (*it)->NumParameterBlocks();
+    int count = 0;
+    for (int i = 0; i < num_parameter_blocks; ++i) {
+      count += parameter_block_ptrs.count(
+          parameter_blocks[i]->mutable_user_state());
+    }
+    if (count > 1) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
 // Strips varying parameters and residuals, maintaining order, and updating
 // num_eliminate_blocks.
 bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
-                                              Ordering* ordering,
+                                              ParameterBlockOrdering* ordering,
                                               double* fixed_cost,
                                               string* error) {
   vector<ParameterBlock*>* parameter_blocks =
@@ -511,7 +643,7 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
       if (parameter_block->index() == 1) {
         (*parameter_blocks)[j++] = parameter_block;
       } else {
-        ordering->RemoveParameterBlock(parameter_block->mutable_user_state());
+        ordering->Remove(parameter_block->mutable_user_state());
       }
     }
     parameter_blocks->resize(j);
@@ -529,57 +661,67 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
-  CHECK_NOTNULL(options->ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
-  Ordering* ordering = options->ordering;
+  ParameterBlockOrdering* linear_solver_ordering =
+      options->linear_solver_ordering;
 
   const int min_group_id =
-      ordering->group_id_to_parameter_blocks().begin()->first;
-  const int original_num_groups = ordering->NumGroups();
+      linear_solver_ordering->group_to_elements().begin()->first;
+  const int original_num_groups = linear_solver_ordering->NumGroups();
 
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
-                                    ordering,
+                                    linear_solver_ordering,
                                     fixed_cost,
                                     error)) {
     return NULL;
   }
 
   if (transformed_program->NumParameterBlocks() == 0) {
+    if (transformed_program->NumResidualBlocks() > 0) {
+      *error = "Zero parameter blocks but non-zero residual blocks"
+          " in the reduced program. Congratulations, you found a "
+          "Ceres bug! Please report this error to the developers.";
+      return NULL;
+    }
+
     LOG(WARNING) << "No varying parameter blocks to optimize; "
                  << "bailing early.";
     return transformed_program.release();
   }
 
-  // If the user supplied an ordering with just one group, it is
-  // equivalent to the user supplying NULL as ordering. Ceres is
-  // completely free to choose the parameter block ordering as it sees
-  // fit. For Schur type solvers, this means that the user wishes for
-  // Ceres to identify the e_blocks, which we do by computing a
-  // maximal independent set.
-  if (original_num_groups == 1 &&
-      IsSchurType(options->linear_solver_type)) {
+  // If the user supplied an linear_solver_ordering with just one
+  // group, it is equivalent to the user supplying NULL as
+  // ordering. Ceres is completely free to choose the parameter block
+  // ordering as it sees fit. For Schur type solvers, this means that
+  // the user wishes for Ceres to identify the e_blocks, which we do
+  // by computing a maximal independent set.
+  if (original_num_groups == 1 && IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
-    const int num_eliminate_blocks = ComputeSchurOrdering(*original_program,
+    const int num_eliminate_blocks = ComputeSchurOrdering(*transformed_program,
                                                           &schur_ordering);
     CHECK_EQ(schur_ordering.size(), transformed_program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
 
     for (int i = 0; i < schur_ordering.size(); ++i) {
-      ordering->AddParameterBlockToGroup(schur_ordering[i]->mutable_user_state(),
-                                         (i < num_eliminate_blocks) ? 0 : 1);
+      linear_solver_ordering->AddElementToGroup(
+          schur_ordering[i]->mutable_user_state(),
+          (i < num_eliminate_blocks) ? 0 : 1);
     }
   }
 
-  if (!ApplyUserOrdering(
-          *problem_impl, ordering, transformed_program.get(), error)) {
+  if (!ApplyUserOrdering(problem_impl->parameter_map(),
+                         linear_solver_ordering,
+                         transformed_program.get(),
+                         error)) {
     return NULL;
   }
 
   // If the user requested the use of a Schur type solver, and
-  // supplied a non-NULL ordering object with more than one
-  // elimimation group, then it can happen that after all the
+  // supplied a non-NULL linear_solver_ordering object with more than
+  // one elimination group, then it can happen that after all the
   // parameter blocks which are fixed or unused have been removed from
   // the program and the ordering, there are no more parameter blocks
   // in the first elimination group.
@@ -590,7 +732,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   // the user's indicated preferences.
   if (IsSchurType(options->linear_solver_type) &&
       original_num_groups > 1 &&
-      ordering->GroupSize(min_group_id) == 0) {
+      linear_solver_ordering->GroupSize(min_group_id) == 0) {
     string msg = "No e_blocks remaining. Switching from ";
     if (options->linear_solver_type == SPARSE_SCHUR) {
       options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -625,7 +767,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
   CHECK_NOTNULL(options);
-  CHECK_NOTNULL(options->ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering);
   CHECK_NOTNULL(error);
 
   if (options->trust_region_strategy_type == DOGLEG) {
@@ -675,7 +817,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 #endif
 
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
-  if (linear_solver_options.type == SPARSE_SCHUR) {
+  if (options->linear_solver_type == SPARSE_SCHUR) {
     *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
         "CXSparse was enabled when Ceres was compiled.";
     return NULL;
@@ -726,7 +868,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
   linear_solver_options.use_block_amd = options->use_block_amd;
   const map<int, set<double*> >& groups =
-      options->ordering->group_id_to_parameter_blocks();
+      options->linear_solver_ordering->group_to_elements();
   for (map<int, set<double*> >::const_iterator it = groups.begin();
        it != groups.end();
        ++it) {
@@ -744,16 +886,16 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   return LinearSolver::Create(linear_solver_options);
 }
 
-bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
-                                   const Ordering* ordering,
+bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
+                                   const ParameterBlockOrdering* ordering,
                                    Program* program,
                                    string* error) {
-  if (ordering->NumParameterBlocks() != program->NumParameterBlocks()) {
+  if (ordering->NumElements() != program->NumParameterBlocks()) {
     *error = StringPrintf("User specified ordering does not have the same "
                           "number of parameters as the problem. The problem"
                           "has %d blocks while the ordering has %d blocks.",
                           program->NumParameterBlocks(),
-                          ordering->NumParameterBlocks());
+                          ordering->NumElements());
     return false;
   }
 
@@ -761,10 +903,8 @@ bool SolverImpl::ApplyUserOrdering(const ProblemImpl& problem_impl,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const ProblemImpl::ParameterMap& parameter_map =
-      problem_impl.parameter_map();
   const map<int, set<double*> >& groups =
-      ordering->group_id_to_parameter_blocks();
+      ordering->group_to_elements();
 
   for (map<int, set<double*> >::const_iterator group_it = groups.begin();
        group_it != groups.end();
@@ -810,16 +950,12 @@ int MinParameterBlock(const ResidualBlock* residual_block,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
-                                            Program* program,
-                                            string* error) {
-  // Only Schur types require the lexicographic reordering.
-  if (!IsSchurType(options.linear_solver_type)) {
-    return true;
-  }
-
-  const int num_eliminate_blocks =
-      options.ordering->group_id_to_parameter_blocks().begin()->second.size();
+bool SolverImpl::LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
+                                                      Program* program,
+                                                      string* error) {
+  CHECK_GE(num_eliminate_blocks, 1)
+      << "Congratulations, you found a Ceres bug! Please report this error "
+      << "to the developers.";
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
@@ -894,18 +1030,70 @@ bool SolverImpl::MaybeReorderResidualBlocks(const Solver::Options& options,
 }
 
 Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
+                                       const ProblemImpl::ParameterMap& parameter_map,
                                        Program* program,
                                        string* error) {
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
-
   evaluator_options.num_eliminate_blocks =
-      (options.ordering->NumGroups() > 0 &&
+      (options.linear_solver_ordering->NumGroups() > 0 &&
        IsSchurType(options.linear_solver_type))
-       ? options.ordering->group_id_to_parameter_blocks().begin()->second.size()
-       : 0;
+      ? (options.linear_solver_ordering
+         ->group_to_elements().begin()
+         ->second.size())
+      : 0;
   evaluator_options.num_threads = options.num_threads;
   return Evaluator::Create(evaluator_options, program, error);
+}
+
+CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
+    const Solver::Options& options,
+    const Program& program,
+    const ProblemImpl::ParameterMap& parameter_map,
+    string* error) {
+  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer(
+      new CoordinateDescentMinimizer);
+  scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
+  ParameterBlockOrdering* ordering_ptr  = NULL;
+
+  if (options.inner_iteration_ordering == NULL) {
+    // Find a recursive decomposition of the Hessian matrix as a set
+    // of independent sets of decreasing size and invert it. This
+    // seems to work better in practice, i.e., Cameras before
+    // points.
+    inner_iteration_ordering.reset(new ParameterBlockOrdering);
+    ComputeRecursiveIndependentSetOrdering(program,
+                                           inner_iteration_ordering.get());
+    inner_iteration_ordering->Reverse();
+    ordering_ptr = inner_iteration_ordering.get();
+  } else {
+    const map<int, set<double*> >& group_to_elements =
+        options.inner_iteration_ordering->group_to_elements();
+
+    // Iterate over each group and verify that it is an independent
+    // set.
+    map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+    for ( ;it != group_to_elements.end(); ++it) {
+      if (!IsParameterBlockSetIndependent(it->second,
+                                          program.residual_blocks())) {
+        *error =
+            StringPrintf("The user-provided "
+                         "parameter_blocks_for_inner_iterations does not "
+                         "form an independent set. Group Id: %d", it->first);
+        return NULL;
+      }
+    }
+    ordering_ptr = options.inner_iteration_ordering;
+  }
+
+  if (!inner_iteration_minimizer->Init(program,
+                                       parameter_map,
+                                       *ordering_ptr,
+                                       error)) {
+    return NULL;
+  }
+
+  return inner_iteration_minimizer.release();
 }
 
 }  // namespace internal

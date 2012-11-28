@@ -44,7 +44,7 @@
 #include <string>
 
 #include "ceres/autodiff_cost_function.h"
-#include "ceres/ordering.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/rotation.h"
 #include "ceres/solver.h"
@@ -138,8 +138,8 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
     options.return_final_residuals = true;
 
     if (config.use_automatic_ordering) {
-      delete options.ordering;
-      options.ordering = NULL;
+      delete options.linear_solver_ordering;
+      options.linear_solver_ordering = NULL;
     }
 
     LOG(INFO) << "Running solver configuration: "
@@ -387,15 +387,15 @@ class BundleAdjustmentProblem {
       problem_.AddResidualBlock(cost_function, NULL, camera, point);
     }
 
-    options_.ordering = new Ordering;
+    options_.linear_solver_ordering = new ParameterBlockOrdering;
 
     // The points come before the cameras.
     for (int i = 0; i < num_points_; ++i) {
-      options_.ordering->AddParameterBlockToGroup(points + 3 * i, 0);
+      options_.linear_solver_ordering->AddElementToGroup(points + 3 * i, 0);
     }
 
     for (int i = 0; i < num_cameras_; ++i) {
-      options_.ordering->AddParameterBlockToGroup(cameras + 9 * i, 1);
+      options_.linear_solver_ordering->AddElementToGroup(cameras + 9 * i, 1);
     }
 
     options_.max_num_iterations = 25;

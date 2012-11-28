@@ -69,7 +69,7 @@ namespace internal {
 
 class BlockRandomAccessSparseMatrix;
 class BlockSparseMatrixBase;
-class CompressedRowBlockStructure;
+struct CompressedRowBlockStructure;
 class SchurEliminatorBase;
 
 // This class implements three preconditioners for Structure from

@@ -44,6 +44,7 @@ SET(CERES_INTERNAL_SRC
     compressed_row_sparse_matrix.cc
     conditioned_cost_function.cc
     conjugate_gradients_solver.cc
+    coordinate_descent_minimizer.cc
     corrector.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
@@ -57,15 +58,16 @@ SET(CERES_INTERNAL_SRC
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
+    line_search.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
     local_parameterization.cc
     loss_function.cc
     normal_prior.cc
-    ordering.cc
+    parameter_block_ordering.cc
     partitioned_matrix_view.cc
-    polynomial_solver.cc
+    polynomial.cc
     problem.cc
     problem_impl.cc
     program.cc
@@ -74,7 +76,6 @@ SET(CERES_INTERNAL_SRC
     runtime_numeric_diff_cost_function.cc
     schur_complement_solver.cc
     schur_eliminator.cc
-    schur_ordering.cc
     scratch_evaluate_preparer.cc
     solver.cc
     solver_impl.cc
@@ -83,12 +84,12 @@ SET(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    triplet_sparse_matrix.cc
     trust_region_minimizer.cc
     trust_region_strategy.cc
-    triplet_sparse_matrix.cc
     types.cc
-    visibility_based_preconditioner.cc
     visibility.cc
+    visibility_based_preconditioner.cc
     wall_time.cc
 )
 
@@ -220,6 +221,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(corrector)
   CERES_TEST(dense_sparse_matrix)
   CERES_TEST(evaluator)
+  CERES_TEST(gradient_checker)
   CERES_TEST(gradient_checking_cost_function)
   CERES_TEST(graph)
   CERES_TEST(graph_algorithms)
@@ -233,10 +235,11 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(minimizer)
   CERES_TEST(normal_prior)
   CERES_TEST(numeric_diff_cost_function)
-  CERES_TEST(ordering)
+  CERES_TEST(ordered_groups)
   CERES_TEST(parameter_block)
+  CERES_TEST(parameter_block_ordering)
   CERES_TEST(partitioned_matrix_view)
-  CERES_TEST(polynomial_solver)
+  CERES_TEST(polynomial)
   CERES_TEST(problem)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
@@ -244,7 +247,6 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
-  CERES_TEST(schur_ordering)
   CERES_TEST(solver_impl)
 
   IF (${SUITESPARSE_FOUND})

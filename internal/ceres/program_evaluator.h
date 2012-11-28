@@ -129,7 +129,7 @@ class ProgramEvaluator : public Evaluator {
 
     if (residuals != NULL) {
       VectorRef(residuals, program_->NumResiduals()).setZero();
-    } 
+    }
 
     if (jacobian != NULL) {
       jacobian->SetZero();
@@ -138,6 +138,10 @@ class ProgramEvaluator : public Evaluator {
     // Each thread gets it's own cost and evaluate scratch space.
     for (int i = 0; i < options_.num_threads; ++i) {
       evaluate_scratch_[i].cost = 0.0;
+      if (gradient != NULL) {
+        VectorRef(evaluate_scratch_[i].gradient.get(),
+                  program_->NumEffectiveParameters()).setZero();
+      }
     }
 
     // This bool is used to disable the loop if an error is encountered

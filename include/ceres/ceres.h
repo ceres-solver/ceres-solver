@@ -34,8 +34,8 @@
 #ifndef CERES_PUBLIC_CERES_H_
 #define CERES_PUBLIC_CERES_H_
 
-#define CERES_VERSION 1.3.0
-#define CERES_ABI_VERSION 1.3.0
+#define CERES_VERSION 1.4.0
+#define CERES_ABI_VERSION 1.4.0
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/cost_function.h"
@@ -43,7 +43,7 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordering.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"

@@ -34,16 +34,16 @@
 #include <string>
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/ordered_groups.h"
+#include "ceres/problem_impl.h"
 #include "ceres/solver.h"
 
 namespace ceres {
-class Ordering;
-
 namespace internal {
 
+class CoordinateDescentMinimizer;
 class Evaluator;
 class LinearSolver;
-class ProblemImpl;
 class Program;
 
 class SolverImpl {
@@ -58,6 +58,7 @@ class SolverImpl {
   // and residuals eliminated, and in the case of automatic schur
   // ordering, has the E blocks first in the resulting program, with
   // options.num_eliminate_blocks set appropriately.
+  //
   // If fixed_cost is not NULL, the residual blocks that are removed
   // are evaluated and the sum of their cost is returned in fixed_cost.
   static Program* CreateReducedProgram(Solver::Options* options,
@@ -73,31 +74,35 @@ class SolverImpl {
   static LinearSolver* CreateLinearSolver(Solver::Options* options,
                                           string* error);
 
-  // Reorder the parameter blocks in program using the vector
-  // ordering. A return value of true indicates success and false
-  // indicates an error was encountered whose cause is logged to
-  // LOG(ERROR).
-  static bool ApplyUserOrdering(const ProblemImpl& problem_impl,
-                                const Ordering* ordering,
+  // Reorder the parameter blocks in program using the ordering. A
+  // return value of true indicates success and false indicates an
+  // error was encountered whose cause is logged to LOG(ERROR).
+  static bool ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
+                                const ParameterBlockOrdering* ordering,
                                 Program* program,
                                 string* error);
 
+
   // Reorder the residuals for program, if necessary, so that the
-  // residuals involving each E block occur together. This is a
-  // necessary condition for the Schur eliminator, which works on
-  // these "row blocks" in the jacobian.
-  static bool MaybeReorderResidualBlocks(const Solver::Options& options,
-                                         Program* program,
-                                         string* error);
+  // residuals involving e block (i.e., the first num_eliminate_block
+  // parameter blocks) occur together. This is a necessary condition
+  // for the Schur eliminator.
+  static bool LexicographicallyOrderResidualBlocks(
+      const int num_eliminate_blocks,
+      Program* program,
+      string* error);
 
   // Create the appropriate evaluator for the transformed program.
-  static Evaluator* CreateEvaluator(const Solver::Options& options,
-                                    Program* program,
-                                    string* error);
+  static Evaluator* CreateEvaluator(
+      const Solver::Options& options,
+      const ProblemImpl::ParameterMap& parameter_map,
+      Program* program,
+      string* error);
 
   // Run the minimization for the given evaluator and configuration.
   static void Minimize(const Solver::Options &options,
                        Program* program,
+                       CoordinateDescentMinimizer* inner_iteration_minimizer,
                        Evaluator* evaluator,
                        LinearSolver* linear_solver,
                        double* parameters,
@@ -106,17 +111,27 @@ class SolverImpl {
   // Remove the fixed or unused parameter blocks and residuals
   // depending only on fixed parameters from the problem. Also updates
   // num_eliminate_blocks, since removed parameters changes the point
-  // at which the eliminated blocks is valid.
-  // If fixed_cost is not NULL, the residual blocks that are removed
-  // are evaluated and the sum of their cost is returned in fixed_cost.
+  // at which the eliminated blocks is valid.  If fixed_cost is not
+  // NULL, the residual blocks that are removed are evaluated and the
+  // sum of their cost is returned in fixed_cost.
   static bool RemoveFixedBlocksFromProgram(Program* program,
-                                           Ordering* ordering,
+                                           ParameterBlockOrdering* ordering,
                                            double* fixed_cost,
                                            string* error);
 
   static bool IsOrderingValid(const Solver::Options& options,
                               const ProblemImpl* problem_impl,
                               string* error);
+
+  static bool IsParameterBlockSetIndependent(
+      const set<double*>& parameter_block_ptrs,
+      const vector<ResidualBlock*>& residual_blocks);
+
+  static CoordinateDescentMinimizer* CreateInnerIterationMinimizer(
+      const Solver::Options& options,
+      const Program& program,
+      const ProblemImpl::ParameterMap& parameter_map,
+      string* error);
 };
 
 }  // namespace internal

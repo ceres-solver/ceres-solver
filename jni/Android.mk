@@ -90,6 +90,10 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_TR1 \
                 -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 
+# On Android NDK 8b, GCC gives spurrious warnings about ABI incompatibility for
+# which there is no solution. Hide the warning instead.
+LOCAL_CFLAGS += -Wno-psabi
+
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/block_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/block_jacobian_writer.cc \
@@ -105,6 +109,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/compressed_row_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/conditioned_cost_function.cc \
                    $(CERES_SRC_PATH)/conjugate_gradients_solver.cc \
+                   $(CERES_SRC_PATH)/coordinate_descent_minimizer.cc \
                    $(CERES_SRC_PATH)/corrector.cc \
                    $(CERES_SRC_PATH)/dense_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/dense_qr_solver.cc \
@@ -117,15 +122,17 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/implicit_schur_complement.cc \
                    $(CERES_SRC_PATH)/iterative_schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/levenberg_marquardt_strategy.cc \
+                   $(CERES_SRC_PATH)/line_search.cc \
                    $(CERES_SRC_PATH)/linear_least_squares_problems.cc \
                    $(CERES_SRC_PATH)/linear_operator.cc \
                    $(CERES_SRC_PATH)/linear_solver.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
+                   $(CERES_SRC_PATH)/miniglog/glog/logging.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
-                   $(CERES_SRC_PATH)/ordering.cc \
+                   $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
-                   $(CERES_SRC_PATH)/polynomial_solver.cc \
+                   $(CERES_SRC_PATH)/polynomial.cc \
                    $(CERES_SRC_PATH)/problem.cc \
                    $(CERES_SRC_PATH)/problem_impl.cc \
                    $(CERES_SRC_PATH)/program.cc \
@@ -134,7 +141,6 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/runtime_numeric_diff_cost_function.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/schur_eliminator.cc \
-                   $(CERES_SRC_PATH)/schur_ordering.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
                    $(CERES_SRC_PATH)/solver_impl.cc \
@@ -149,6 +155,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/types.cc \
                    $(CERES_SRC_PATH)/visibility_based_preconditioner.cc \
                    $(CERES_SRC_PATH)/visibility.cc \
+                   $(CERES_SRC_PATH)/wall_time.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_d_d_d.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_2_2.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_2_3.cc \

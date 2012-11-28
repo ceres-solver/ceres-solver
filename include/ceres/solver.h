@@ -38,11 +38,11 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
 namespace ceres {
 
-class Ordering;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -96,7 +96,9 @@ class Solver {
 #else
       use_block_amd = true;
 #endif
-      ordering = NULL;
+      linear_solver_ordering = NULL;
+      use_inner_iterations = false;
+      inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
@@ -229,10 +231,76 @@ class Solver {
     // using this setting.
     int num_linear_solver_threads;
 
+    // The order in which variables are eliminated in a linear solver
+    // can have a significant of impact on the efficiency and accuracy
+    // of the method. e.g., when doing sparse Cholesky factorization,
+    // there are matrices for which a good ordering will give a
+    // Cholesky factor with O(n) storage, where as a bad ordering will
+    // result in an completely dense factor.
+    //
+    // Ceres allows the user to provide varying amounts of hints to
+    // the solver about the variable elimination ordering to use. This
+    // can range from no hints, where the solver is free to decide the
+    // best possible ordering based on the user's choices like the
+    // linear solver being used, to an exact order in which the
+    // variables should be eliminated, and a variety of possibilities
+    // in between.
+    //
+    // Instances of the ParameterBlockOrdering class are used to
+    // communicate this information to Ceres.
+    //
+    // Formally an ordering is an ordered partitioning of the
+    // parameter blocks, i.e, each parameter block belongs to exactly
+    // one group, and each group has a unique non-negative integer
+    // associated with it, that determines its order in the set of
+    // groups.
+    //
+    // Given such an ordering, Ceres ensures that the parameter blocks in
+    // the lowest numbered group are eliminated first, and then the
+    // parmeter blocks in the next lowest numbered group and so on. Within
+    // each group, Ceres is free to order the parameter blocks as it
+    // chooses.
+    //
     // If NULL, then all parameter blocks are assumed to be in the
     // same group and the solver is free to decide the best
-    // ordering. (See ordering.h for more details).
-    Ordering* ordering;
+    // ordering.
+    //
+    // e.g. Consider the linear system
+    //
+    //   x + y = 3
+    //   2x + 3y = 7
+    //
+    // There are two ways in which it can be solved. First eliminating x
+    // from the two equations, solving for y and then back substituting
+    // for x, or first eliminating y, solving for x and back substituting
+    // for y. The user can construct three orderings here.
+    //
+    //   {0: x}, {1: y} - eliminate x first.
+    //   {0: y}, {1: x} - eliminate y first.
+    //   {0: x, y}      - Solver gets to decide the elimination order.
+    //
+    // Thus, to have Ceres determine the ordering automatically using
+    // heuristics, put all the variables in group 0 and to control the
+    // ordering for every variable, create groups 0..N-1, one per
+    // variable, in the desired order.
+    //
+    // Bundle Adjustment
+    // -----------------
+    //
+    // A particular case of interest is bundle adjustment, where the user
+    // has two options. The default is to not specify an ordering at all,
+    // the solver will see that the user wants to use a Schur type solver
+    // and figure out the right elimination ordering.
+    //
+    // But if the user already knows what parameter blocks are points and
+    // what are cameras, they can save preprocessing time by partitioning
+    // the parameter blocks into two groups, one for the points and one
+    // for the cameras, where the group containing the points has an id
+    // smaller than the group containing cameras.
+    //
+    // Once assigned, Solver::Options owns this pointer and will
+    // deallocate the memory when destroyed.
+    ParameterBlockOrdering* linear_solver_ordering;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When
@@ -247,6 +315,77 @@ class Solver {
     // form. Currently this option only makes sense with
     // sparse_linear_algebra_library = SUITE_SPARSE.
     bool use_block_amd;
+
+    // Some non-linear least squares problems have additional
+    // structure in the way the parameter blocks interact that it is
+    // beneficial to modify the way the trust region step is computed.
+    //
+    // e.g., consider the following regression problem
+    //
+    //   y = a_1 exp(b_1 x) + a_2 exp(b_3 x^2 + c_1)
+    //
+    // Given a set of pairs{(x_i, y_i)}, the user wishes to estimate
+    // a_1, a_2, b_1, b_2, and c_1.
+    //
+    // Notice here that the expression on the left is linear in a_1
+    // and a_2, and given any value for b_1, b_2 and c_1, it is
+    // possible to use linear regression to estimate the optimal
+    // values of a_1 and a_2. Indeed, its possible to analytically
+    // eliminate the variables a_1 and a_2 from the problem all
+    // together. Problems like these are known as separable least
+    // squares problem and the most famous algorithm for solving them
+    // is the Variable Projection algorithm invented by Golub &
+    // Pereyra.
+    //
+    // Similar structure can be found in the matrix factorization with
+    // missing data problem. There the corresponding algorithm is
+    // known as Wiberg's algorithm.
+    //
+    // Ruhe & Wedin (Algorithms for Separable Nonlinear Least Squares
+    // Problems, SIAM Reviews, 22(3), 1980) present an analyis of
+    // various algorithms for solving separable non-linear least
+    // squares problems and refer to "Variable Projection" as
+    // Algorithm I in their paper.
+    //
+    // Implementing Variable Projection is tedious and expensive, and
+    // they present a simpler algorithm, which they refer to as
+    // Algorithm II, where once the Newton/Trust Region step has been
+    // computed for the whole problem (a_1, a_2, b_1, b_2, c_1) and
+    // additional optimization step is performed to estimate a_1 and
+    // a_2 exactly.
+    //
+    // This idea can be generalized to cases where the residual is not
+    // linear in a_1 and a_2, i.e., Solve for the trust region step
+    // for the full problem, and then use it as the starting point to
+    // further optimize just a_1 and a_2. For the linear case, this
+    // amounts to doing a single linear least squares solve. For
+    // non-linear problems, any method for solving the a_1 and a_2
+    // optimization problems will do. The only constraint on a_1 and
+    // a_2 is that they do not co-occur in any residual block.
+    //
+    // This idea can be further generalized, by not just optimizing
+    // (a_1, a_2), but decomposing the graph corresponding to the
+    // Hessian matrix's sparsity structure in a collection of
+    // non-overlapping independent sets and optimizing each of them.
+    //
+    // Setting "use_inner_iterations" to true enables the use of this
+    // non-linear generalization of Ruhe & Wedin's Algorithm II.  This
+    // version of Ceres has a higher iteration complexity, but also
+    // displays better convergence behaviour per iteration. Setting
+    // Solver::Options::num_threads to the maximum number possible is
+    // highly recommended.
+    bool use_inner_iterations;
+
+    // If inner_iterations is true, then the user has two choices.
+    //
+    // 1. Let the solver heuristically decide which parameter blocks
+    //    to optimize in each inner iteration. To do this leave
+    //    Solver::Options::inner_iteration_ordering untouched.
+    //
+    // 2. Specify a collection of of ordered independent sets. Where
+    //    the lower numbered groups are optimized before the higher
+    //    number groups. Each group must be an independent set.
+    ParameterBlockOrdering* inner_iteration_ordering;
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.

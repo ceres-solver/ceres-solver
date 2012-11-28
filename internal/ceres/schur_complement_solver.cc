@@ -318,7 +318,7 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   cholmod_rhs = NULL;
 
   if (cholmod_solution == NULL) {
-    LOG(ERROR) << "CHOLMOD solve failed.";
+    LOG(WARNING) << "CHOLMOD solve failed.";
     return false;
   }
 
