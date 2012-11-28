@@ -377,6 +377,276 @@ TEST(AutoDiff, VaryingNumberOfResidualsForOneCostFunctorType) {
   }
 }
 
+struct Residual1Param {
+  template <typename T>
+  bool operator()(const T* x0, T* y) const {
+    y[0] = *x0;
+    return true;
+  }
+};
+
+struct Residual2Param {
+  template <typename T>
+  bool operator()(const T* x0, const T* x1, T* y) const {
+    y[0] = *x0 + pow(*x1, 2);
+    return true;
+  }
+};
+
+struct Residual3Param {
+  template <typename T>
+  bool operator()(const T* x0, const T* x1, const T* x2, T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3);
+    return true;
+  }
+};
+
+struct Residual4Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4);
+    return true;
+  }
+};
+
+struct Residual5Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5);
+    return true;
+  }
+};
+
+struct Residual6Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5) +
+        pow(*x5, 6);
+    return true;
+  }
+};
+
+struct Residual7Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5) +
+        pow(*x5, 6) + pow(*x6, 7);
+    return true;
+  }
+};
+
+struct Residual8Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5) +
+        pow(*x5, 6) + pow(*x6, 7) + pow(*x7, 8);
+    return true;
+  }
+};
+
+struct Residual9Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5) +
+        pow(*x5, 6) + pow(*x6, 7) + pow(*x7, 8) + pow(*x8, 9);
+    return true;
+  }
+};
+
+struct Residual10Param {
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  T* y) const {
+    y[0] = *x0 + pow(*x1, 2) + pow(*x2, 3) + pow(*x3, 4) + pow(*x4, 5) +
+        pow(*x5, 6) + pow(*x6, 7) + pow(*x7, 8) + pow(*x8, 9) + pow(*x9, 10);
+    return true;
+  }
+};
+
+TEST(AutoDiff, VariadicAutoDiff) {
+  double x[10];
+  double residual = 0;
+  double* parameters[10];
+  double jacobian_values[10];
+  double* jacobians[10];
+
+  for (int i = 0; i < 10; ++i) {
+    x[i] = 2.0;
+    parameters[i] = x + i;
+    jacobians[i] = jacobian_values + i;
+  }
+
+  {
+    Residual1Param functor;
+    int num_variables = 1;
+    EXPECT_TRUE((AutoDiff<Residual1Param, double, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual2Param functor;
+    int num_variables = 2;
+    EXPECT_TRUE((AutoDiff<Residual2Param, double, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual3Param functor;
+    int num_variables = 3;
+    EXPECT_TRUE((AutoDiff<Residual3Param, double, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual4Param functor;
+    int num_variables = 4;
+    EXPECT_TRUE((AutoDiff<Residual4Param, double, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual5Param functor;
+    int num_variables = 5;
+    EXPECT_TRUE((AutoDiff<Residual5Param, double, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual6Param functor;
+    int num_variables = 6;
+    EXPECT_TRUE((AutoDiff<Residual6Param,
+                 double,
+                 1, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual7Param functor;
+    int num_variables = 7;
+    EXPECT_TRUE((AutoDiff<Residual7Param,
+                 double,
+                 1, 1, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual8Param functor;
+    int num_variables = 8;
+    EXPECT_TRUE((AutoDiff<
+                 Residual8Param,
+                 double, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual9Param functor;
+    int num_variables = 9;
+    EXPECT_TRUE((AutoDiff<
+                 Residual9Param,
+                 double,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+
+  {
+    Residual10Param functor;
+    int num_variables = 10;
+    EXPECT_TRUE((AutoDiff<
+                 Residual10Param,
+                 double,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1>::Differentiate(
+                     functor, parameters, 1, &residual, jacobians)));
+    EXPECT_EQ(residual, pow(2, num_variables + 1) - 2);
+    for (int i = 0; i < num_variables; ++i) {
+      EXPECT_EQ(jacobian_values[i], (i + 1) * pow(2, i));
+    }
+  }
+}
+
 // This is fragile test that triggers the alignment bug on
 // i686-apple-darwin10-llvm-g++-4.2 (GCC) 4.2.1. It is quite possible,
 // that other combinations of operating system + compiler will
