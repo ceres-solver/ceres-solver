@@ -37,15 +37,14 @@
 namespace ceres {
 
 #define CASESTR(x) case x: return #x
-
 #define STRENUM(x) if (value == #x) { *type = x; return true;}
 
 void UpperCase(string* input) {
   std::transform(input->begin(), input->end(), input->begin(), ::toupper);
 }
 
-const char* LinearSolverTypeToString(LinearSolverType solver_type) {
-  switch (solver_type) {
+const char* LinearSolverTypeToString(LinearSolverType type) {
+  switch (type) {
     CASESTR(DENSE_NORMAL_CHOLESKY);
     CASESTR(DENSE_QR);
     CASESTR(SPARSE_NORMAL_CHOLESKY);
@@ -70,9 +69,8 @@ bool StringToLinearSolverType(string value, LinearSolverType* type) {
   return false;
 }
 
-const char* PreconditionerTypeToString(
-    PreconditionerType preconditioner_type) {
-  switch (preconditioner_type) {
+const char* PreconditionerTypeToString(PreconditionerType type) {
+  switch (type) {
     CASESTR(IDENTITY);
     CASESTR(JACOBI);
     CASESTR(SCHUR_JACOBI);
@@ -94,8 +92,8 @@ bool StringToPreconditionerType(string value, PreconditionerType* type) {
 }
 
 const char* SparseLinearAlgebraLibraryTypeToString(
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
-  switch (sparse_linear_algebra_library_type) {
+    SparseLinearAlgebraLibraryType type) {
+  switch (type) {
     CASESTR(SUITE_SPARSE);
     CASESTR(CX_SPARSE);
     default:
@@ -113,9 +111,8 @@ bool StringToSparseLinearAlgebraLibraryType(
   return false;
 }
 
-const char* TrustRegionStrategyTypeToString(
-    TrustRegionStrategyType trust_region_strategy_type) {
-  switch (trust_region_strategy_type) {
+const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type) {
+  switch (type) {
     CASESTR(LEVENBERG_MARQUARDT);
     CASESTR(DOGLEG);
     default:
@@ -131,8 +128,8 @@ bool StringToTrustRegionStrategyType(string value,
   return false;
 }
 
-const char* DoglegTypeToString(DoglegType dogleg_type) {
-  switch (dogleg_type) {
+const char* DoglegTypeToString(DoglegType type) {
+  switch (type) {
     CASESTR(TRADITIONAL_DOGLEG);
     CASESTR(SUBSPACE_DOGLEG);
     default:
@@ -147,9 +144,78 @@ bool StringToDoglegType(string value, DoglegType* type) {
   return false;
 }
 
-const char* SolverTerminationTypeToString(
-    SolverTerminationType termination_type) {
-  switch (termination_type) {
+const char* MinimizerTypeToString(MinimizerType type) {
+  switch (type) {
+    CASESTR(TRUST_REGION);
+    CASESTR(LINE_SEARCH);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToMinimizerType(string value, MinimizerType* type) {
+  UpperCase(&value);
+  STRENUM(TRUST_REGION);
+  STRENUM(LINE_SEARCH);
+  return false;
+}
+
+const char* LineSearchDirectionTypeToString(LineSearchDirectionType type) {
+  switch (type) {
+    CASESTR(STEEPEST_DESCENT);
+    CASESTR(NONLINEAR_CONJUGATE_GRADIENT);
+    CASESTR(LBFGS);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToLineSearchDirectionType(string value,
+                                     LineSearchDirectionType* type) {
+  UpperCase(&value);
+  STRENUM(STEEPEST_DESCENT);
+  STRENUM(NONLINEAR_CONJUGATE_GRADIENT);
+  STRENUM(LBFGS);
+  return false;
+}
+
+const char* LineSearchTypeToString(LineSearchType type) {
+  switch (type) {
+    CASESTR(ARMIJO);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToLineSearchType(string value, LineSearchType* type) {
+  UpperCase(&value);
+  STRENUM(ARMIJO);
+  return false;
+}
+
+const char* NonlinearConjugateGradientTypeToString(
+    NonlinearConjugateGradientType type) {
+  switch (type) {
+    CASESTR(FLETCHER_REEVES);
+    CASESTR(POLAK_RIBIRERE);
+    CASESTR(HESTENES_STIEFEL);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToNonlinearConjugateGradientType(
+    string value,
+    NonlinearConjugateGradientType* type) {
+  UpperCase(&value);
+  STRENUM(FLETCHER_REEVES);
+  STRENUM(POLAK_RIBIRERE);
+  STRENUM(HESTENES_STIEFEL);
+  return false;
+}
+
+const char* SolverTerminationTypeToString(SolverTerminationType type) {
+  switch (type) {
     CASESTR(NO_CONVERGENCE);
     CASESTR(FUNCTION_TOLERANCE);
     CASESTR(GRADIENT_TOLERANCE);
@@ -164,8 +230,8 @@ const char* SolverTerminationTypeToString(
 }
 
 const char* LinearSolverTerminationTypeToString(
-    LinearSolverTerminationType termination_type) {
-  switch (termination_type) {
+    LinearSolverTerminationType type) {
+  switch (type) {
     CASESTR(TOLERANCE);
     CASESTR(MAX_ITERATIONS);
     CASESTR(STAGNATION);
