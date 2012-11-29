@@ -57,6 +57,7 @@ SET(CERES_INTERNAL_SRC
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
+    lbfgs.cc
     levenberg_marquardt_strategy.cc
     line_search.cc
     line_search_minimizer.cc

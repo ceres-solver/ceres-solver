@@ -73,7 +73,7 @@ LineSearchFunction::LineSearchFunction(Evaluator* evaluator)
 }
 
 void LineSearchFunction::Init(const Vector& position,
-                               const Vector& direction) {
+                              const Vector& direction) {
   position_ = position;
   direction_ = direction;
 }
