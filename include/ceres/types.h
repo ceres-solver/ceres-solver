@@ -192,13 +192,13 @@ enum LineSearchDirectionType {
 enum NonlinearConjugateGradientType {
   FLETCHER_REEVES,
   POLAK_RIBIRERE,
-  HESTENES_STIEFEL
+  HESTENES_STIEFEL,
 };
 
 enum LineSearchType {
   // Backtracking line search with polynomial interpolation or
   // bisection.
-  ARMIJO
+  ARMIJO,
 };
 
 // Ceres supports different strategies for computing the trust region
@@ -353,6 +353,21 @@ bool StringToTrustRegionStrategyType(string value,
 
 const char* DoglegTypeToString(DoglegType type);
 bool StringToDoglegType(string value, DoglegType* type);
+
+const char* MinimizerTypeToString(MinimizerType type);
+bool StringToMinimizerType(string value, MinimizerType* type);
+
+const char* LineSearchDirectionTypeToString(LineSearchDirectionType type);
+bool StringToLineSearchDirectionType(string value,
+                                     LineSearchDirectionType* type);
+
+const char* LineSearchTypeToString(LineSearchType type);
+bool StringToLineSearchType(string value, LineSearchType* type);
+
+const char* NonlinearConjugateGradientTypeToString(
+    NonlinearConjugateGradientType type);
+bool StringToNonlinearConjugateGradientType(
+    string value, NonlinearConjugateGradientType* type);
 
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
