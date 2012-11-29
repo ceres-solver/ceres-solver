@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAMFn///5E\u003d",
+        "filename": "internal/ceres/lbfgs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "Does this compile? The _ is on the next line.",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAMFn///5c\u003d",
+        "filename": "internal/ceres/lbfgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAMFn///5I\u003d",
+        "filename": "internal/ceres/lbfgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "How about:\n\nLBFGSInverseHessianApproximation {} and\n\nlbfgs_inverse_hessian_approximation.cc/h\n\ninstead? Typically LBFGS is a minimization method, but what you have here is only one part of \"LBFGS\".",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAMFn///5Q\u003d",
+        "filename": "internal/ceres/lbfgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAMFn///5U\u003d",
+        "filename": "internal/ceres/lbfgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAMFn///5M\u003d",
+        "filename": "internal/ceres/lbfgs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-11-29T02:19:03Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "424076f55e6a421b645d110df0532a92bd488830",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
