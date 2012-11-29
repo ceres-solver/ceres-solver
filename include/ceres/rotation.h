@@ -51,6 +51,27 @@
 
 namespace ceres {
 
+template<typename T, bool RowMajor>
+struct MatrixAdapter;
+
+template<typename T>
+MatrixAdapter<T, false> columnMajorAdapter(T* pointer, int rows, int cols);
+
+template<typename T>
+MatrixAdapter<T, true> rowMajorAdapter(T* pointer, int rows, int cols);
+
+template<typename T>
+MatrixAdapter<T, false> columnMajorAdapter3x3(T* pointer);
+
+template<typename T>
+MatrixAdapter<T, true> rowMajorAdapter3x3(T* pointer);
+
+template<bool b, typename T>
+struct Conditional;
+
+template<typename T>
+struct MatrixTraits;
+
 // Convert a value in combined axis-angle representation to a quaternion.
 // The value angle_axis is a triple whose norm is an angle in radians,
 // and whose direction is aligned with the axis of rotation,
@@ -74,8 +95,15 @@ void QuaternionToAngleAxis(T const* quaternion, T* angle_axis);
 // autodifferentiation.
 template <typename T>
 void RotationMatrixToAngleAxis(T const * R, T * angle_axis);
+
+template <typename T, typename Adapter>
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type RotationMatrixToAngleAxis(const Adapter R, T * angle_axis);
+
 template <typename T>
 void AngleAxisToRotationMatrix(T const * angle_axis, T * R);
+
+template <typename T, typename Adapter>
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type AngleAxisToRotationMatrix(T const * angle_axis, Adapter R);
 
 // Conversions between 3x3 rotation matrix (in row major order) and
 // Euler angle (in degrees) rotation representations.
@@ -85,6 +113,9 @@ void AngleAxisToRotationMatrix(T const * angle_axis, T * R);
 // total rotation R is Rz * Ry * Rx.
 template <typename T>
 void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R);
+
+template <typename T, typename Adapter>
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type EulerAnglesToRotationMatrix(const T* euler, int row_stride, Adapter R);
 
 // Convert a 4-vector to a 3x3 scaled rotation matrix.
 //
@@ -108,10 +139,16 @@ void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R);
 template <typename T> inline
 void QuaternionToScaledRotation(const T q[4], T R[3 * 3]);
 
+template <typename T, typename Adapter> inline
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type QuaternionToScaledRotation(const T q[4], Adapter R);
+
 // Same as above except that the rotation matrix is normalized by the
 // Frobenius norm, so that R * R' = I (and det(R) = 1).
 template <typename T> inline
 void QuaternionToRotation(const T q[4], T R[3 * 3]);
+
+template <typename T, typename Adapter> inline
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type QuaternionToRotation(const T q[4], Adapter R);
 
 // Rotates a point pt by a quaternion q:
 //
@@ -145,6 +182,108 @@ template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]);
 
 // --- IMPLEMENTATION
+
+template<typename T>
+struct MatrixAdapter<T, false>
+{
+  T* pointer_;
+  int rows_;
+  int cols_;
+  MatrixAdapter(T* pointer, int rows, int cols)
+    : pointer_(pointer), rows_(rows), cols_(cols)
+  {}
+
+  T& operator()(int r, int c)
+  {
+    return pointer_[c*rows_ + r];
+  }
+
+  const T& operator()(int r, int c) const
+  {
+    return pointer_[c*rows_ + r];
+  }
+
+  MatrixAdapter& operator*= (T v)
+  {
+    for(int i = 0; i < rows_*cols_; ++i)
+      pointer_[i] *= v;
+    return *this;
+  }
+};
+
+template<typename T>
+struct MatrixAdapter<T, true>
+{
+  T* pointer_;
+  int rows_;
+  int cols_;
+  MatrixAdapter(T* pointer, int rows, int cols)
+    : pointer_(pointer), rows_(rows), cols_(cols)
+  {}
+
+  T& operator()(int r, int c)
+  {
+    return pointer_[r*cols_ + c];
+  }
+
+  const T& operator()(int r, int c) const
+  {
+    return pointer_[r*cols_ + c];
+  }
+
+  MatrixAdapter& operator*= (T v)
+  {
+    for(int i = 0; i < rows_*cols_; ++i)
+      pointer_[i] *= v;
+    return *this;
+  }
+};
+
+template <typename T>
+MatrixAdapter<T,false> columnMajorAdapter(T* pointer, int rows, int cols)
+{
+  return MatrixAdapter<T,false>(pointer, rows, cols);
+}
+
+template <typename T>
+MatrixAdapter<T,true> rowMajorAdapter(T* pointer, int rows, int cols)
+{
+  return MatrixAdapter<T,true>(pointer, rows, cols);
+}
+
+template <typename T>
+MatrixAdapter<T,false> columnMajorAdapter3x3(T* pointer)
+{
+  return MatrixAdapter<T,false>(pointer, 3, 3);
+}
+
+template <typename T>
+MatrixAdapter<T,true> rowMajorAdapter3x3(T* pointer)
+{
+  return MatrixAdapter<T,true>(pointer, 3, 3);
+}
+
+template <typename T>
+struct MatrixTraits
+{
+	enum { IsMatrix = 0 };
+};
+
+template <typename T, bool b>
+struct MatrixTraits<MatrixAdapter<T, b> >
+{
+	enum { IsMatrix = 1 };
+};
+
+template <bool b, typename T>
+struct Conditional;
+
+template <typename T>
+struct Conditional<true, T>
+{
+	typedef T type;
+};
+
 
 template<typename T>
 inline void AngleAxisToQuaternion(const T* angle_axis, T* quaternion) {
@@ -228,17 +367,22 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
 // to not perform division by a small number.
 template <typename T>
 inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
+  RotationMatrixToAngleAxis(columnMajorAdapter3x3(R), angle_axis);
+}
+
+template <typename T, typename Adapter>
+inline typename Conditional<MatrixTraits<Adapter>::IsMatrix,void>::type RotationMatrixToAngleAxis(const Adapter R, T * angle_axis) {
   // x = k * 2 * sin(theta), where k is the axis of rotation.
-  angle_axis[0] = R[5] - R[7];
-  angle_axis[1] = R[6] - R[2];
-  angle_axis[2] = R[1] - R[3];
+  angle_axis[0] = R(2,1) - R(1,2);
+  angle_axis[1] = R(0,2) - R(2,0);
+  angle_axis[2] = R(1,0) - R(0,1);
 
   static const T kOne = T(1.0);
   static const T kTwo = T(2.0);
 
   // Since the right hand side may give numbers just above 1.0 or
   // below -1.0 leading to atan misbehaving, we threshold.
-  T costheta = std::min(std::max((R[0] + R[4] + R[8] - kOne) / kTwo,
+  T costheta = std::min(std::max((R(0,0) + R(1,1) + R(2,2) - kOne) / kTwo,
                                  T(-1.0)),
                         kOne);
 
@@ -296,7 +440,7 @@ inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
   // with the sign of sin(theta). If they are the same, then
   // angle_axis[i] should be positive, otherwise negative.
   for (int i = 0; i < 3; ++i) {
-    angle_axis[i] = theta * sqrt((R[i*4] - costheta) * inv_one_minus_costheta);
+    angle_axis[i] = theta * sqrt((R(i,i) - costheta) * inv_one_minus_costheta);
     if (((sintheta < 0.0) && (angle_axis[i] > 0.0)) ||
         ((sintheta > 0.0) && (angle_axis[i] < 0.0))) {
       angle_axis[i] = -angle_axis[i];
@@ -306,6 +450,11 @@ inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
 
 template <typename T>
 inline void AngleAxisToRotationMatrix(const T * angle_axis, T * R) {
+  AngleAxisToRotationMatrix(angle_axis, columnMajorAdapter3x3(R));
+}
+
+template <typename T, typename Adapter>
+inline typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type AngleAxisToRotationMatrix(const T * angle_axis, Adapter R) {
   static const T kOne = T(1.0);
   const T theta2 = DotProduct(angle_axis, angle_axis);
   if (theta2 > 0.0) {
@@ -320,26 +469,26 @@ inline void AngleAxisToRotationMatrix(const T * angle_axis, T * R) {
     const T costheta = cos(theta);
     const T sintheta = sin(theta);
 
-    R[0] =     costheta   + wx*wx*(kOne -    costheta);
-    R[1] =  wz*sintheta   + wx*wy*(kOne -    costheta);
-    R[2] = -wy*sintheta   + wx*wz*(kOne -    costheta);
-    R[3] =  wx*wy*(kOne - costheta)     - wz*sintheta;
-    R[4] =     costheta   + wy*wy*(kOne -    costheta);
-    R[5] =  wx*sintheta   + wy*wz*(kOne -    costheta);
-    R[6] =  wy*sintheta   + wx*wz*(kOne -    costheta);
-    R[7] = -wx*sintheta   + wy*wz*(kOne -    costheta);
-    R[8] =     costheta   + wz*wz*(kOne -    costheta);
+    R(0,0) =     costheta   + wx*wx*(kOne -    costheta);
+    R(1,0) =  wz*sintheta   + wx*wy*(kOne -    costheta);
+    R(2,0) = -wy*sintheta   + wx*wz*(kOne -    costheta);
+    R(0,1) =  wx*wy*(kOne - costheta)     - wz*sintheta;
+    R(1,1) =     costheta   + wy*wy*(kOne -    costheta);
+    R(2,1) =  wx*sintheta   + wy*wz*(kOne -    costheta);
+    R(0,2) =  wy*sintheta   + wx*wz*(kOne -    costheta);
+    R(1,2) = -wx*sintheta   + wy*wz*(kOne -    costheta);
+    R(2,2) =     costheta   + wz*wz*(kOne -    costheta);
   } else {
     // At zero, we switch to using the first order Taylor expansion.
-    R[0] =  kOne;
-    R[1] = -angle_axis[2];
-    R[2] =  angle_axis[1];
-    R[3] =  angle_axis[2];
-    R[4] =  kOne;
-    R[5] = -angle_axis[0];
-    R[6] = -angle_axis[1];
-    R[7] =  angle_axis[0];
-    R[8] = kOne;
+    R(0,0) =  kOne;
+    R(1,0) = -angle_axis[2];
+    R(2,0) =  angle_axis[1];
+    R(0,1) =  angle_axis[2];
+    R(1,1) =  kOne;
+    R(2,1) = -angle_axis[0];
+    R(0,2) = -angle_axis[1];
+    R(1,2) =  angle_axis[0];
+    R(2,2) = kOne;
   }
 }
 
@@ -347,6 +496,13 @@ template <typename T>
 inline void EulerAnglesToRotationMatrix(const T* euler,
                                         const int row_stride,
                                         T* R) {
+  EulerAnglesToRotationMatrix(euler, rowMajorAdapter(R, 3, row_stride));
+}
+
+template <typename T, typename Adapter>
+inline typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type 
+EulerAnglesToRotationMatrix(const T* euler,
+                            Adapter R) {
   const double kPi = 3.14159265358979323846;
   const T degrees_to_radians(kPi / 180.0);
 
@@ -361,26 +517,27 @@ inline void EulerAnglesToRotationMatrix(const T* euler,
   const T c3 = cos(pitch);
   const T s3 = sin(pitch);
 
-  // Rows of the rotation matrix.
-  T* R1 = R;
-  T* R2 = R1 + row_stride;
-  T* R3 = R2 + row_stride;
+  R(0,0) = c1*c2;
+  R(0,1) = -s1*c3 + c1*s2*s3;
+  R(0,2) = s1*s3 + c1*s2*c3;
 
-  R1[0] = c1*c2;
-  R1[1] = -s1*c3 + c1*s2*s3;
-  R1[2] = s1*s3 + c1*s2*c3;
+  R(1,0) = s1*c2;
+  R(1,1) = c1*c3 + s1*s2*s3;
+  R(1,2) = -c1*s3 + s1*s2*c3;
 
-  R2[0] = s1*c2;
-  R2[1] = c1*c3 + s1*s2*s3;
-  R2[2] = -c1*s3 + s1*s2*c3;
-
-  R3[0] = -s2;
-  R3[1] = c2*s3;
-  R3[2] = c2*c3;
+  R(2,0) = -s2;
+  R(2,1) = c2*s3;
+  R(2,2) = c2*c3;
 }
 
 template <typename T> inline
 void QuaternionToScaledRotation(const T q[4], T R[3 * 3]) {
+  QuaternionToScaledRotation(q, rowMajorAdapter3x3(R));
+}
+
+template <typename T, typename Adapter> inline
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type
+QuaternionToScaledRotation(const T q[4], Adapter R) {
   // Make convenient names for elements of q.
   T a = q[0];
   T b = q[1];
@@ -399,22 +556,26 @@ void QuaternionToScaledRotation(const T q[4], T R[3 * 3]) {
   T cd = c * d;
   T dd = d * d;
 
-  R[0] =  aa + bb - cc - dd; R[1] = T(2) * (bc - ad); R[2] = T(2) * (ac + bd);  // NOLINT
-  R[3] = T(2) * (ad + bc); R[4] =  aa - bb + cc - dd; R[5] = T(2) * (cd - ab);  // NOLINT
-  R[6] = T(2) * (bd - ac); R[7] = T(2) * (ab + cd); R[8] =  aa - bb - cc + dd;  // NOLINT
+  R(0,0) =  aa + bb - cc - dd; R(0,1) = T(2) * (bc - ad); R(0,2) = T(2) * (ac + bd);  // NOLINT
+  R(1,0) = T(2) * (ad + bc); R(1,1) =  aa - bb + cc - dd; R(1,2) = T(2) * (cd - ab);  // NOLINT
+  R(2,0) = T(2) * (bd - ac); R(2,1) = T(2) * (ab + cd); R(2,2) =  aa - bb - cc + dd;  // NOLINT
 }
 
 template <typename T> inline
 void QuaternionToRotation(const T q[4], T R[3 * 3]) {
+  QuaternionToRotation(q, rowMajorAdapter3x3(R));
+}
+
+template <typename T, typename Adapter> inline
+typename Conditional<MatrixTraits<Adapter>::IsMatrix, void>::type
+QuaternionToRotation(const T q[4], Adapter R) {
   QuaternionToScaledRotation(q, R);
 
   T normalizer = q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3];
   CHECK_NE(normalizer, T(0));
   normalizer = T(1) / normalizer;
 
-  for (int i = 0; i < 9; ++i) {
-    R[i] *= normalizer;
-  }
+  R *= normalizer;
 }
 
 template <typename T> inline
@@ -432,7 +593,6 @@ void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
   result[1] = T(2) * ((t4 + t6) * pt[0] + (t5 + t1) * pt[1] + (t9 - t2) * pt[2]) + pt[1];  // NOLINT
   result[2] = T(2) * ((t7 - t3) * pt[0] + (t2 + t9) * pt[1] + (t5 + t8) * pt[2]) + pt[2];  // NOLINT
 }
-
 
 template <typename T> inline
 void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]) {
