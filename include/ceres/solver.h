@@ -155,6 +155,9 @@ class Solver {
     LineSearchType line_search_type;
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
 
+    // N
+    int num_lbfgs_corrections;
+
     TrustRegionStrategyType trust_region_strategy_type;
 
     // Type of dogleg strategy to use.
