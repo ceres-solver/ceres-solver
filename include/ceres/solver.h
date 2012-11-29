@@ -62,6 +62,7 @@ class Solver {
       line_search_direction_type = STEEPEST_DESCENT;
       line_search_type = ARMIJO;
       nonlinear_conjugate_gradient_type = FLETCHER_REEVES;
+      max_lbfgs_rank = 20;
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
@@ -155,8 +156,16 @@ class Solver {
     LineSearchType line_search_type;
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
 
-    // N
-    int num_lbfgs_corrections;
+    // The LBFGS hessian approximation is a low rank approximation to
+    // the inverse of the Hessian matrix. The rank of the
+    // approximation determines (linearly) the space and time
+    // complexity of using the approximation. Higher the rank, the
+    // better is the quality of the approximation.  For more details,
+    // please see:
+    //
+    // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with
+    // Limited Storage". Mathematics of Computation 35 (151): 773–782.
+    int max_lbfgs_rank;
 
     TrustRegionStrategyType trust_region_strategy_type;
 

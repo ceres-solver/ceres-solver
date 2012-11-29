@@ -32,8 +32,9 @@
 #define CERES_INTERNAL_MINIMIZER_H_
 
 #include <vector>
-#include "ceres/solver.h"
+#include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
@@ -80,7 +81,9 @@ class Minimizer {
       min_trust_region_radius = options.min_trust_region_radius;
       line_search_direction_type = options.line_search_direction_type;
       line_search_type = options.line_search_type;
-      nonlinear_conjugate_gradient_type = options.nonlinear_conjugate_gradient_type;
+      nonlinear_conjugate_gradient_type =
+          options.nonlinear_conjugate_gradient_type;
+      max_lbfgs_rank = options.max_lbfgs_rank;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -114,7 +117,7 @@ class Minimizer {
     LineSearchDirectionType line_search_direction_type;
     LineSearchType line_search_type;
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
-
+    int max_lbfgs_rank;
 
     // List of callbacks that are executed by the Minimizer at the end
     // of each iteration.
