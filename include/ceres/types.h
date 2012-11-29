@@ -167,6 +167,20 @@ enum LineSearchDirectionType {
   // precise choice of the non-linear conjugate gradient algorithm
   // used is determined by NonlineConjuateGradientType.
   NONLINEAR_CONJUGATE_GRADIENT,
+
+  // A limited memory approximation to the inverse Hessian is
+  // maintained and used to compute a quasi-Newton step.
+  //
+  // For more details see
+  //
+  // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
+  // Storage". Mathematics of Computation 35 (151): 773–782.
+  //
+  // Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
+  // "Representations of Quasi-Newton Matrices and their use in
+  // Limited Memory Methods". Mathematical Programming 63 (4):
+  // 129–156.
+  LBFGS,
 };
 
 // Nonliner conjugate gradient methods are a generalization of the

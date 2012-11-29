@@ -51,6 +51,7 @@
 
 #include "Eigen/Dense"
 #include "ceres/array_utils.h"
+#include "ceres/lbfgs.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -191,6 +192,11 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   ArmijoLineSearch line_search;
   LineSearch::Summary line_search_summary;
 
+  scoped_ptr<LBFGS> lbfgs;
+  if (options_.line_search_direction_type == ceres::LBFGS) {
+    lbfgs.reset(new LBFGS(num_effective_parameters, 20));
+  }
+
   while (true) {
     iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
@@ -218,6 +224,11 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       search_direction = -gradient;
       directional_derivative = -gradient_squared_norm;
     } else {
+
+      if (lbfgs.get() != NULL) {
+        lbfgs->Update(delta, gradient_change);
+      }
+
       // TODO(sameeragarwal): This should probably be refactored into
       // a set of functions. But we will do that once things settle
       // down in this solver.
@@ -264,6 +275,13 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
             search_direction = -gradient;
             directional_derivative = -gradient_squared_norm;
           }
+          break;
+
+        case ceres::LBFGS:
+          search_direction.setZero();
+          lbfgs->RightMultiply(gradient.data(), search_direction.data());
+          search_direction *= -1.0;
+          directional_derivative =  gradient.dot(search_direction);
           break;
 
         default:
