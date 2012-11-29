@@ -47,7 +47,6 @@
 #include <limits>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include "Eigen/Dense"
 #include "ceres/array_utils.h"
@@ -194,7 +193,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
   scoped_ptr<LBFGS> lbfgs;
   if (options_.line_search_direction_type == ceres::LBFGS) {
-    lbfgs.reset(new LBFGS(num_effective_parameters, 20));
+    lbfgs.reset(new LBFGS(num_effective_parameters, options_.max_lbfgs_rank));
   }
 
   while (true) {
@@ -224,7 +223,6 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       search_direction = -gradient;
       directional_derivative = -gradient_squared_norm;
     } else {
-
       if (lbfgs.get() != NULL) {
         lbfgs->Update(delta, gradient_change);
       }
