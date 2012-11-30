@@ -160,8 +160,23 @@ class Solver {
     // the inverse of the Hessian matrix. The rank of the
     // approximation determines (linearly) the space and time
     // complexity of using the approximation. Higher the rank, the
-    // better is the quality of the approximation.  For more details,
-    // please see:
+    // better is the quality of the approximation. The increase in
+    // quality is however is bounded for a number of reasons.
+    //
+    // 1. The method only uses secant information and not actual
+    // derivatives.
+    //
+    // 2. The Hessian approximation is constrained to be positive
+    // definite.
+    //
+    // So increasing this rank to a large number will cost time and
+    // space complexity without the corresponding increase in solution
+    // quality. There are no hard and fast rules for choosing the
+    // maximum rank. The best choice usually requires some problem
+    // specific experimentation.
+    //
+    // For more theoretical and implementation details of the LBFGS
+    // method, please see:
     //
     // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with
     // Limited Storage". Mathematics of Computation 35 (151): 773–782.
