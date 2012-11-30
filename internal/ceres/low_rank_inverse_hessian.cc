@@ -28,14 +28,15 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "glog/logging.h"
-#include "ceres/lbfgs.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/low_rank_inverse_hessian.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-LBFGS::LBFGS(int num_parameters, int max_num_corrections)
+LowRankInverseHessian::LowRankInverseHessian(int num_parameters,
+                                             int max_num_corrections)
     : num_parameters_(num_parameters),
       max_num_corrections_(max_num_corrections),
       num_corrections_(0),
@@ -45,7 +46,8 @@ LBFGS::LBFGS(int num_parameters, int max_num_corrections)
       delta_x_dot_delta_gradient_(max_num_corrections) {
 }
 
-bool LBFGS::Update(const Vector& delta_x, const Vector& delta_gradient) {
+bool LowRankInverseHessian::Update(const Vector& delta_x,
+                                   const Vector& delta_gradient) {
   const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
   if (delta_x_dot_delta_gradient <= 1e-10) {
     VLOG(2) << "Skipping LBFGS Update. " << delta_x_dot_delta_gradient;
@@ -79,7 +81,8 @@ bool LBFGS::Update(const Vector& delta_x, const Vector& delta_gradient) {
   return true;
 }
 
-void LBFGS::RightMultiply(const double* x_ptr, double* y_ptr) const {
+void LowRankInverseHessian::RightMultiply(const double* x_ptr,
+                                          double* y_ptr) const {
   ConstVectorRef gradient(x_ptr, num_parameters_);
   VectorRef search_direction(y_ptr, num_parameters_);
 

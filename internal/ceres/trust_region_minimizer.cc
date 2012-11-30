@@ -58,21 +58,6 @@ namespace {
 const double kEpsilon = 1e-12;
 }  // namespace
 
-// Execute the list of IterationCallbacks sequentially. If any one of
-// the callbacks does not return SOLVER_CONTINUE, then stop and return
-// its status.
-CallbackReturnType TrustRegionMinimizer::RunCallbacks(
-    const IterationSummary& iteration_summary) {
-  for (int i = 0; i < options_.callbacks.size(); ++i) {
-    const CallbackReturnType status =
-        (*options_.callbacks[i])(iteration_summary);
-    if (status != SOLVER_CONTINUE) {
-      return status;
-    }
-  }
-  return SOLVER_CONTINUE;
-}
-
 // Compute a scaling vector that is used to improve the conditioning
 // of the Jacobian.
 void TrustRegionMinimizer::EstimateScale(const SparseMatrix& jacobian,
@@ -203,24 +188,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
-  // Call the various callbacks.
-  switch (RunCallbacks(iteration_summary)) {
-    case SOLVER_TERMINATE_SUCCESSFULLY:
-      summary->termination_type = USER_SUCCESS;
-      VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
-      return;
-    case SOLVER_ABORT:
-      summary->termination_type = USER_ABORT;
-      VLOG(1) << "Terminating: User callback returned  USER_ABORT.";
-      return;
-    case SOLVER_CONTINUE:
-      break;
-    default:
-      LOG(FATAL) << "Unknown type of user callback status";
-  }
-
-  int num_consecutive_invalid_steps = 0;
+   int num_consecutive_invalid_steps = 0;
   while (true) {
+    if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
+      return;
+    }
+
     iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
       summary->termination_type = NO_CONVERGENCE;
@@ -356,7 +329,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
             new_cost = x_plus_delta_cost;
           } else {
             x_plus_delta = inner_iteration_x;
-            // Bost the model_cost_change, since the inner iteration
+            // Boost the model_cost_change, since the inner iteration
             // improvements are not accounted for by the trust region.
             model_cost_change +=  x_plus_delta_cost - new_cost;
             VLOG(2) << "Inner iteration succeeded; current cost: " << cost
@@ -534,21 +507,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
     summary->iterations.push_back(iteration_summary);
-
-    switch (RunCallbacks(iteration_summary)) {
-      case SOLVER_TERMINATE_SUCCESSFULLY:
-        summary->termination_type = USER_SUCCESS;
-        VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
-        return;
-      case SOLVER_ABORT:
-        summary->termination_type = USER_ABORT;
-        VLOG(1) << "Terminating: User callback returned  USER_ABORT.";
-        return;
-      case SOLVER_CONTINUE:
-        break;
-      default:
-        LOG(FATAL) << "Unknown type of user callback status";
-    }
   }
 }
 

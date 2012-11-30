@@ -34,6 +34,8 @@
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"
+#include "ceres/internal/eigen.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -43,17 +45,33 @@ namespace internal {
 // For example usage, see SolverImpl::Minimize.
 class LineSearchMinimizer : public Minimizer {
  public:
+  struct State {
+    State(int num_parameters,
+          int num_effective_parameters)
+        : cost(0.0),
+          gradient(num_effective_parameters),
+          gradient_squared_norm(0.0),
+          search_direction(num_effective_parameters),
+          directional_derivative(0.0),
+          step_size(0.0) {
+    }
+
+    double cost;
+    Vector gradient;
+    double gradient_squared_norm;
+    double gradient_max_norm;
+    Vector search_direction;
+    double directional_derivative;
+    double step_size;
+  };
+
   ~LineSearchMinimizer() {}
   virtual void Minimize(const Minimizer::Options& options,
                         double* parameters,
                         Solver::Summary* summary);
-
- private:
-  void Init(const Minimizer::Options& options);
-  CallbackReturnType RunCallbacks(const IterationSummary& iteration_summary);
-  Minimizer::Options options_;
 };
 
 }  // namespace internal
 }  // namespace ceres
+
 #endif  // CERES_INTERNAL_LINE_SEARCH_MINIMIZER_H_

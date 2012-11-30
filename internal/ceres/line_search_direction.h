@@ -27,58 +27,51 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Limited memory positive definite approximation to the inverse
-// Hessian, using the work of
-//
-// Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
-// Storage". Mathematics of Computation 35 (151): 773–782.
-//
-// Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
-// "Representations of Quasi-Newton Matrices and their use in
-// Limited Memory Methods". Mathematical Programming 63 (4):
+
+#ifndef CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
+#define CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
 
 #include "ceres/internal/eigen.h"
-#include "ceres/linear_operator.h"
+#include "ceres/line_search_minimizer.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Right multiplying with an LBFGS operator is equivalent to
-// multiplying by the inverse Hessian.
-class LBFGS : public LinearOperator {
+class LineSearchDirection {
  public:
-  // num_parameters is the row/column size of the Hessian.
-  // max_num_corrections is the rank of the Hessian approximation.
-  // The approximation uses:
-  // 2 * max_num_corrections * num_parameters + max_num_corrections
-  // doubles.
-  LBFGS(int num_parameters, int max_num_corrections);
-  virtual ~LBFGS() {}
+  struct Options {
+    Options()
+        : num_parameters(0),
+          type(LBFGS),
+          nonlinear_conjugate_gradient_type(FLETCHER_REEVES),
+          function_tolerance(1e-12),
+          max_lbfgs_rank(20) {
+    }
 
-  // Update the low rank approximation, i.e. store delta_x and
-  // delta_gradient, and get rid of the oldest delta_x and
-  // delta_gradient vectors if the number of corrections is already
-  // equal to max_num_corrections.
-  bool Update(const Vector& delta_x, const Vector& delta_gradient);
+    int num_parameters;
+    LineSearchDirectionType type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
+    double function_tolerance;
+    int max_lbfgs_rank;
+  };
 
-  // LinearOperator interface
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual void LeftMultiply(const double* x, double* y) const {
-    RightMultiply(x,y);
+  static LineSearchDirection* Create(Options& options);
+
+  virtual ~LineSearchDirection() {}
+  virtual bool InitialDirection(const LineSearchMinimizer::State& current,
+                                Vector* search_direction) {
+    *search_direction = -current.gradient;
+    return true;
   }
-  virtual int num_rows() const { return num_parameters_; }
-  virtual int num_cols() const { return num_parameters_; }
 
- private:
-  const int num_parameters_;
-  const int max_num_corrections_;
-  int num_corrections_;
-  double diagonal_;
-  Matrix delta_x_history_;
-  Matrix delta_gradient_history_;
-  Vector delta_x_dot_delta_gradient_;
+  virtual bool NextDirection(const LineSearchMinimizer::State& previous,
+                             const LineSearchMinimizer::State& current,
+                             Vector* search_direction) = 0;
+
 };
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif // CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_

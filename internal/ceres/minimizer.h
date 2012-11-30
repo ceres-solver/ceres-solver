@@ -143,8 +143,11 @@ class Minimizer {
     Minimizer* inner_iteration_minimizer;
   };
 
-  virtual ~Minimizer() {}
+  static bool RunCallbacks(const vector<IterationCallback*> callbacks,
+                           const IterationSummary& iteration_summary,
+                           Solver::Summary* summary);
 
+  virtual ~Minimizer();
   // Note: The minimizer is expected to update the state of the
   // parameters array every iteration. This is required for the
   // StateUpdatingCallback to work.
@@ -152,6 +155,7 @@ class Minimizer {
                         double* parameters,
                         Solver::Summary* summary) = 0;
 };
+
 
 }  // namespace internal
 }  // namespace ceres
