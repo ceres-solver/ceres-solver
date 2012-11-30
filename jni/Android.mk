@@ -123,13 +123,16 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/iterative_schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/levenberg_marquardt_strategy.cc \
                    $(CERES_SRC_PATH)/line_search.cc \
+                   $(CERES_SRC_PATH)/line_search_direction.cc \
                    $(CERES_SRC_PATH)/line_search_minimizer.cc \
                    $(CERES_SRC_PATH)/linear_least_squares_problems.cc \
                    $(CERES_SRC_PATH)/linear_operator.cc \
                    $(CERES_SRC_PATH)/linear_solver.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
+                   $(CERES_SRC_PATH)/low_rank_inverse_hessian.cc \
                    $(CERES_SRC_PATH)/miniglog/glog/logging.cc \
+                   $(CERES_SRC_PATH)/minimizer.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \

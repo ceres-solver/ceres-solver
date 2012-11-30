@@ -29,14 +29,10 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
 // Limited memory positive definite approximation to the inverse
-// Hessian, using the work of
-//
-// Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
-// Storage". Mathematics of Computation 35 (151): 773–782.
-//
-// Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
-// "Representations of Quasi-Newton Matrices and their use in
-// Limited Memory Methods". Mathematical Programming 63 (4):
+// Hessian, using the LBFGS algorithm
+
+#ifndef CERES_INTERNAL_LOW_RANK_INVERSE_HESSIAN_H_
+#define CERES_INTERNAL_LOW_RANK_INVERSE_HESSIAN_H_
 
 #include "ceres/internal/eigen.h"
 #include "ceres/linear_operator.h"
@@ -44,22 +40,39 @@
 namespace ceres {
 namespace internal {
 
-// Right multiplying with an LBFGS operator is equivalent to
-// multiplying by the inverse Hessian.
-class LBFGS : public LinearOperator {
+// LowRankInverseHessian is a positive definite approximation to the
+// Hessian using the limited memory variant of the
+// Broyden-Fletcher-Goldfarb-Shanno (BFGS)secant formula for
+// approximating the Hessian.
+//
+// Other update rules like the Davidon-Fletcher-Powell (DFP) are
+// possible, but the BFGS rule is considered the best performing one.
+//
+// The limited memory variant was developed by Nocedal and further
+// enhanced with scaling rule by Byrd, Nocedal and Schanbel.
+//
+// Nocedal, J. (1980). "Updating Quasi-Newton Matrices with Limited
+// Storage". Mathematics of Computation 35 (151): 773–782.
+//
+// Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
+// "Representations of Quasi-Newton Matrices and their use in
+// Limited Memory Methods". Mathematical Programming 63 (4):
+class LowRankInverseHessian : public LinearOperator {
  public:
   // num_parameters is the row/column size of the Hessian.
   // max_num_corrections is the rank of the Hessian approximation.
   // The approximation uses:
   // 2 * max_num_corrections * num_parameters + max_num_corrections
   // doubles.
-  LBFGS(int num_parameters, int max_num_corrections);
-  virtual ~LBFGS() {}
+  LowRankInverseHessian(int num_parameters, int max_num_corrections);
+  virtual ~LowRankInverseHessian() {}
 
-  // Update the low rank approximation, i.e. store delta_x and
-  // delta_gradient, and get rid of the oldest delta_x and
-  // delta_gradient vectors if the number of corrections is already
-  // equal to max_num_corrections.
+  // Update the low rank approximation. delta_x is the change in the
+  // domain of Hessian, and delta_gradient is the change in the
+  // gradient.  The update copies the delta_x and delta_gradient
+  // vectors, and gets rid of the oldest delta_x and delta_gradient
+  // vectors if the number of corrections is already equal to
+  // max_num_corrections.
   bool Update(const Vector& delta_x, const Vector& delta_gradient);
 
   // LinearOperator interface
@@ -82,3 +95,5 @@ class LBFGS : public LinearOperator {
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_LOW_RANK_INVERSE_HESSIAN_H_

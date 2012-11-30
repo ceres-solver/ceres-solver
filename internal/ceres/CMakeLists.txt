@@ -57,15 +57,17 @@ SET(CERES_INTERNAL_SRC
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
-    lbfgs.cc
     levenberg_marquardt_strategy.cc
     line_search.cc
+    line_search_direction.cc
     line_search_minimizer.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
     local_parameterization.cc
     loss_function.cc
+    low_rank_inverse_hessian.cc
+    minimizer.cc
     normal_prior.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
