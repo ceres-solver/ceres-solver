@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "MZR3MU7o",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-12-01T12:45:39Z",
+      "side": 1,
+      "message": "I will do that, but\n1) I saw that EulerAnglesToRotationMatrix takes a variable row_stride, which would be impossible to convert\n2) I thought that any modern compiler would propagate compile-time constants, making the code equivalent to the templated variant",
+      "parentUuid": "MXodliD8",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "MXudyfAU",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-01T02:42:45Z",
       "side": 1,
       "message": "T*, not T *.\n\nPlease check 80 column adherence throughout.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MZT3RD1M",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-12-01T12:45:39Z",
+      "side": 1,
+      "message": "I literally copied that. Should I fix all of these in the file? Or should this go into a separate patch set?",
+      "parentUuid": "MXudyfAU",
       "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "MZZ2-gwE",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-12-01T12:45:39Z",
+      "side": 1,
+      "message": "Is it always 3x3 with a stride of 3? I can easily imagine someone would want to fill a 3x4 projection matrix (row-major) by calling the conversion functions with a stride of 4.",
+      "parentUuid": "MXudEPLY",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "MXqdP5Lo",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 4
@@ -98,6 +152,24 @@
       "writtenOn": "2012-12-01T02:42:45Z",
       "side": 1,
       "message": "I think you need a const variant; do all the instantiations compile?",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MZV3G25k",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-12-01T12:45:39Z",
+      "side": 1,
+      "message": "Yes, they do. Logically, a MatrixAdapter being const is different from the underlying data being const. This is much like a const Eigen::Map\u003c Eigen::Matrix3d \u003e vs. Eigen::Map\u003c const Eigen::Matrix3d \u003e\n\nTherefore, operator() is always const but returns a T\u0026 (depending on the instantiation this can be a const double\u0026, double\u0026, or alike)",
+      "parentUuid": "MXqdP5Lo",
       "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -132,6 +204,24 @@
       "writtenOn": "2012-12-01T02:42:45Z",
       "side": 1,
       "message": "No point in having two loops; we assume dense. Read the pointer directly.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MZX3Ll6A",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 5015
+      },
+      "writtenOn": "2012-12-01T12:45:39Z",
+      "side": 1,
+      "message": "With arbitrary strides it became necessary.",
+      "parentUuid": "MXgd6OOQ",
       "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
