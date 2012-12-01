@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "MXiRvcvU",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:22:31Z",
+      "side": 1,
+      "message": "Please update android.mk.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXkR.7qc",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:22:31Z",
+      "side": 1,
+      "message": "What\u0027s the point in making these functions instead of simply inlining them? It doesn\u0027t add much clarity to split them out.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXofBCCc",
+        "filename": "internal/ceres/line_search_direction.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:22:31Z",
+      "side": 1,
+      "message": "What\u0027s the reason to have a default implementation?",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXmfyDJQ",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:22:31Z",
+      "side": 1,
+      "message": "gradient_max_norm_0 -\u003e initial_gradient_max_norm.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXuflXMU",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:22:31Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
