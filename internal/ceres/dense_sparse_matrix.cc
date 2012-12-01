@@ -117,7 +117,14 @@ void DenseSparseMatrix::ScaleColumns(const double* scale) {
 }
 
 void DenseSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
-  *dense_matrix = m_;
+  if (has_diagonal_appended_ || !has_diagonal_reserved_) {
+    // Easy case; the result is simply the backing dense matrix.
+    *dense_matrix = m_;
+  } else {
+    CHECK(has_diagonal_reserved_);
+    CHECK(!has_diagonal_appended_);
+    *dense_matrix = m_.block(0, 0, num_rows(), num_cols());
+  }
 }
 
 #ifndef CERES_NO_PROTOCOL_BUFFERS
