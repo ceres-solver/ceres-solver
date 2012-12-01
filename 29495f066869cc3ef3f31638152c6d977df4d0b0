@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "MXUsZ2YA",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-01T02:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "MXiRvcvU",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "MXkR.7qc",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-01T02:22:31Z",
       "side": 1,
       "message": "What\u0027s the point in making these functions instead of simply inlining them? It doesn\u0027t add much clarity to split them out.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXast7Zg",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-01T02:37:14Z",
+      "side": 1,
+      "message": "I thought about it, and went back forth.. I will go ahead an inline.",
+      "parentUuid": "MXkR.7qc",
       "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "MXesn5bI",
+        "filename": "internal/ceres/line_search_direction.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-01T02:37:14Z",
+      "side": 1,
+      "message": "what I could also do is to use this directly in the line_search_minimizer and delete this function entirely.",
+      "parentUuid": "MXofBCCc",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "MXmfyDJQ",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "MXcskqbE",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-01T02:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "MXmfyDJQ",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "MXuflXMU",
         "filename": "internal/ceres/minimizer.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2012-12-01T02:22:31Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXWtL9Vk",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-01T02:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "MXuflXMU",
       "revId": "29495f066869cc3ef3f31638152c6d977df4d0b0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
