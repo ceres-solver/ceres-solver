@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "MXodliD8",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "Please make the sizing for the adapter compile time (e.g. template parameters).",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXudyfAU",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "T*, not T *.\n\nPlease check 80 column adherence throughout.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXgdhmCw",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "Consider instead:\n\ntemplate\u003ctypename T, int col_stride, int row_stride\u003e\nstruct MatrixAdapter { ... }\n\nWe don\u0027t want to have any runtime overhead from the adapter, and the current code might leave some.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXmdWjFw",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "Brace on previous line.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXudEPLY",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "Since our only use cases are fixed size 3x3, either make these constants or make these template parameters. No point in paying a runtime penalty.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXqdP5Lo",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "I think you need a const variant; do all the instantiations compile?",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXkdbkII",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "Brace on previous line.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "MXgd6OOQ",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-01T02:42:45Z",
+      "side": 1,
+      "message": "No point in having two loops; we assume dense. Read the pointer directly.",
+      "revId": "5f81be61271141fb15b55e389f3e9598f917f038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
