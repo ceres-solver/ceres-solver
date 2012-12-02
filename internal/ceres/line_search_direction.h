@@ -28,38 +28,44 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#ifndef CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
+#define CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
 
-#include "ceres/minimizer.h"
-#include "ceres/solver.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/line_search_minimizer.h"
 #include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class LineSearchDirection {
  public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+  struct Options {
+    Options()
+        : num_parameters(0),
+          type(LBFGS),
+          nonlinear_conjugate_gradient_type(FLETCHER_REEVES),
+          function_tolerance(1e-12),
+          max_lbfgs_rank(20) {
+    }
 
- private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
-                                           const SparseMatrix* jacobian,
-                                           const double* residuals,
-                                           const double* step) const;
+    int num_parameters;
+    LineSearchDirectionType type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
+    double function_tolerance;
+    int max_lbfgs_rank;
+  };
 
-  Minimizer::Options options_;
+  static LineSearchDirection* Create(Options& options);
+
+  virtual ~LineSearchDirection() {}
+  virtual bool NextDirection(const LineSearchMinimizer::State& previous,
+                             const LineSearchMinimizer::State& current,
+                             Vector* search_direction) = 0;
+
 };
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+
+#endif // CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_

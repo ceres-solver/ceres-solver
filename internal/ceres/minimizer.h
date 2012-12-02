@@ -32,8 +32,9 @@
 #define CERES_INTERNAL_MINIMIZER_H_
 
 #include <vector>
-#include "ceres/solver.h"
+#include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
@@ -78,6 +79,11 @@ class Minimizer {
       max_num_consecutive_invalid_steps =
           options.max_num_consecutive_invalid_steps;
       min_trust_region_radius = options.min_trust_region_radius;
+      line_search_direction_type = options.line_search_direction_type;
+      line_search_type = options.line_search_type;
+      nonlinear_conjugate_gradient_type =
+          options.nonlinear_conjugate_gradient_type;
+      max_lbfgs_rank = options.max_lbfgs_rank;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -87,13 +93,13 @@ class Minimizer {
 
     int max_num_iterations;
     double max_solver_time_in_seconds;
+    int num_threads;
 
     // Number of times the linear solver should be retried in case of
     // numerical failure. The retries are done by exponentially scaling up
     // mu at each retry. This leads to stronger and stronger
     // regularization making the linear least squares problem better
     // conditioned at each retry.
-    int num_threads;
     int max_step_solver_retries;
     double gradient_tolerance;
     double parameter_tolerance;
@@ -108,6 +114,10 @@ class Minimizer {
     string lsqp_dump_directory;
     int max_num_consecutive_invalid_steps;
     int min_trust_region_radius;
+    LineSearchDirectionType line_search_direction_type;
+    LineSearchType line_search_type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
+    int max_lbfgs_rank;
 
     // List of callbacks that are executed by the Minimizer at the end
     // of each iteration.
@@ -133,8 +143,11 @@ class Minimizer {
     Minimizer* inner_iteration_minimizer;
   };
 
-  virtual ~Minimizer() {}
+  static bool RunCallbacks(const vector<IterationCallback*> callbacks,
+                           const IterationSummary& iteration_summary,
+                           Solver::Summary* summary);
 
+  virtual ~Minimizer();
   // Note: The minimizer is expected to update the state of the
   // parameters array every iteration. This is required for the
   // StateUpdatingCallback to work.

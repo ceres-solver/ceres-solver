@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,38 +28,40 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-
 #include "ceres/minimizer.h"
-#include "ceres/solver.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
- public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+Minimizer::~Minimizer() {};
 
- private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem( const int iteration,
-                                           const SparseMatrix* jacobian,
-                                           const double* residuals,
-                                           const double* step) const;
-
-  Minimizer::Options options_;
-};
+bool Minimizer::RunCallbacks(const vector<IterationCallback*> callbacks,
+                             const IterationSummary& iteration_summary,
+                             Solver::Summary* summary) {
+  CallbackReturnType status = SOLVER_CONTINUE;
+  int i = 0;
+  while (status == SOLVER_CONTINUE && i < callbacks.size()) {
+    status = (*callbacks[i])(iteration_summary);
+    ++i;
+  }
+  switch (status) {
+    case SOLVER_CONTINUE:
+      return true;
+    case SOLVER_TERMINATE_SUCCESSFULLY:
+      summary->termination_type = USER_SUCCESS;
+      VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
+      return false;
+    case SOLVER_ABORT:
+      summary->termination_type = USER_ABORT;
+      VLOG(1) << "Terminating: User callback returned  USER_ABORT.";
+      return false;
+    default:
+      LOG(FATAL) << "Unknown type of user callback status";
+  }
+  return false;
+}
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_

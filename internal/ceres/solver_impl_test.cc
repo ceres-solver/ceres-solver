@@ -499,6 +499,8 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
 TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
   Solver::Options options;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  // CreateLinearSolver assumes a non-empty ordering.
+  options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   EXPECT_FALSE(SolverImpl::CreateLinearSolver(&options, &error));
 }

@@ -117,7 +117,7 @@ void DenseSparseMatrix::ScaleColumns(const double* scale) {
 }
 
 void DenseSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
-  *dense_matrix = m_;
+  *dense_matrix = m_.block(0, 0, num_rows(), num_cols());
 }
 
 #ifndef CERES_NO_PROTOCOL_BUFFERS

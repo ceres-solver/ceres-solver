@@ -73,39 +73,43 @@ LineSearchFunction::LineSearchFunction(Evaluator* evaluator)
 }
 
 void LineSearchFunction::Init(const Vector& position,
-                               const Vector& direction) {
+                              const Vector& direction) {
   position_ = position;
   direction_ = direction;
 }
 
 bool LineSearchFunction::Evaluate(const double x, double* f, double* g) {
   scaled_direction_ = x * direction_;
-  if (evaluator_->Plus(position_.data(),
-                       scaled_direction_.data(),
-                       evaluation_point_.data()) &&
-      evaluator_->Evaluate(evaluation_point_.data(),
-                           f,
-                           NULL,
-                           gradient_.data(), NULL)) {
-    *g = direction_.dot(gradient_);
-    return IsFinite(*f) && IsFinite(*g);
+  if (!evaluator_->Plus(position_.data(),
+                        scaled_direction_.data(),
+                        evaluation_point_.data())) {
+    return false;
   }
-  return false;
+
+  if (g == NULL) {
+    return (evaluator_->Evaluate(evaluation_point_.data(),
+                                  f, NULL, NULL, NULL) &&
+            IsFinite(*f));
+  }
+
+  if (!evaluator_->Evaluate(evaluation_point_.data(),
+                            f,
+                            NULL,
+                            gradient_.data(), NULL)) {
+    return false;
+  }
+
+  *g = direction_.dot(gradient_);
+  return IsFinite(*f) && IsFinite(*g);
 }
 
 void ArmijoLineSearch::Search(const LineSearch::Options& options,
-                              double initial_step_size,
+                              const double initial_step_size,
+                              const double initial_cost,
+                              const double initial_gradient,
                               Summary* summary) {
   *CHECK_NOTNULL(summary) = LineSearch::Summary();
   Function* function = options.function;
-  double initial_cost = 0.0;
-  double initial_gradient = 0.0;
-  summary->num_evaluations = 1;
-  if (!function->Evaluate(0.0, &initial_cost, &initial_gradient)) {
-    LOG(WARNING) << "Line search failed. "
-                 << "Evaluation at the initial point failed.";
-    return;
-  }
 
   double previous_step_size = 0.0;
   double previous_cost = 0.0;
@@ -118,7 +122,10 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
   bool step_size_is_valid = false;
 
   ++summary->num_evaluations;
-  step_size_is_valid = function->Evaluate(step_size, &cost, &gradient);
+  step_size_is_valid =
+      function->Evaluate(step_size,
+                         &cost,
+                         options.interpolation_degree < 2 ? NULL : &gradient);
   while (!step_size_is_valid || cost > (initial_cost
                                         + options.sufficient_decrease
                                         * initial_gradient
@@ -148,7 +155,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
         samples.push_back(ValueSample(step_size, cost));
 
         if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 2 &&
+            summary->num_evaluations > 1 &&
             previous_step_size_is_valid) {
           // Three point interpolation, using function values and the
           // initial gradient.
@@ -161,7 +168,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
                                                  gradient));
 
         if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 2 &&
+            summary->num_evaluations > 1 &&
             previous_step_size_is_valid) {
           // Three point interpolation using the function values and
           // the gradients.
@@ -190,7 +197,10 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
     }
 
     ++summary->num_evaluations;
-    step_size_is_valid = function->Evaluate(step_size, &cost, &gradient);
+    step_size_is_valid =
+        function->Evaluate(step_size,
+                           &cost,
+                           options.interpolation_degree < 2 ? NULL : &gradient);
   }
 
   summary->optimal_step_size = step_size;
