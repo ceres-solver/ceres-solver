@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "MXA8OzfI",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2012-12-03T18:05:36Z",
+      "side": 1,
+      "message": "default parameters? for row and column stride and having specializations corresponding to them?\n\nRowMajor3x3Adapter?\nColMajor3x3Adapter?",
+      "revId": "ed377aaa88e0f2b6af583133f6085bbc5e394459",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
