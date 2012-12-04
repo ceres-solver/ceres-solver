@@ -169,6 +169,7 @@ namespace ceres {
 template <typename T, int N>
 struct Jet {
   enum { DIMENSION = N };
+  typedef T Scalar;
 
   // Default-construct "a" because otherwise this can lead to false errors about
   // uninitialized uses when other classes relying on default constructed T
