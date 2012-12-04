@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Meo51f1o",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Use JetT instead of Jet_",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mei4OU-M",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Add documentation on how to use this, and consider briefly describing the approach.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mek4qpzI",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Document the interface of CostFunctor. Note that typically CostFunctor is N-ary, but in this case it is dynamically sized; thus it must be something different.\n\nYes, upon inspection of the tests I see that a \"ResidualEmmitter\" is passed into the cost functor. Please both\n\n1. Document the CostFunctor and implied ResidualEmitter in this header.\n\n2. Add an example use in examples/; maybe a trivial 2-layer NN? Shouldn\u0027t be too hard to code I don\u0027t think. This would go a long way to make sure this actually gets used :)",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meo78n64",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Document. Is there a reason to have AddParameterBlock instead of creating the parameters in one shot? I\u0027m fine with how this is now, but some discussion on why this deviates from how the other residual types work would be nice.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mem4YSzY",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Log a useful error message (imagine someone trying to use the class).",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mek4Thxo",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "It seems weird that a function named \"CountResiduals\" would allocate a new jacobian evaluator. Perhaps this belongs somewhere else, or the member name should change.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meu5sO5I",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Is there a file missing in this change?",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meu4DW8E",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "We probably don\u0027t want this.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meg4Jj.o",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Interesting. Why the two names for Jet_?",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mem4va0E",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Public before private.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meq4gg00",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Public before private.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mes4dtxw",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Blank before (but this should be private:)",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meg7fzzo",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Describe.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mei7kkwQ",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "I think these data members should be private. If not, then they should not end with _\u0027s. If they all truly need to be public, then make the class a struct.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meu4aeyE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Stack arguments instead of putting on a new line.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mei7Ls3M",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Some top-level implementation comments about why there is all this cursor-type functionality would be informative. For example, why not simply iterate over the parameters chunks in a regular for loop? It\u0027s not obvious why the code is so complicated.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Mek7A50s",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Is this used above? Document.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meo7y38Y",
+        "filename": "internal/ceres/dynamic_size_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "This is kinda wacky! This isn\u0027t just dynamic sized autodiff, it\u0027s dynamic number of residuals. Very interesting.\n\nI forget again, why is it difficult to know the number of residuals before the cost function is created?",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Meq7vo90",
+        "filename": "internal/ceres/dynamic_size_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-04T05:45:15Z",
+      "side": 1,
+      "message": "Consider using a more convincing function e.g. a square or something.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
