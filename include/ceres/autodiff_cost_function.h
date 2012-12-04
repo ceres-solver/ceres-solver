@@ -57,8 +57,8 @@
 // To write an auto-differentiable cost function for the above model, first
 // define the object
 //
-//   class MyScalarCostFunction {
-//     MyScalarCostFunction(double k): k_(k) {}
+//   class MyScalarCostFunctor {
+//     MyScalarCostFunctor(double k): k_(k) {}
 //
 //     template <typename T>
 //     bool operator()(const T* const x , const T* const y, T* e) const {
@@ -80,32 +80,32 @@
 // it can be constructed as follows.
 //
 //   CostFunction* cost_function
-//       = new AutoDiffCostFunction<MyScalarCostFunction, 1, 2, 2>(
-//           new MyScalarCostFunction(1.0));              ^  ^  ^
-//                                                        |  |  |
-//                            Dimension of residual ------+  |  |
-//                            Dimension of x ----------------+  |
-//                            Dimension of y -------------------+
+//       = new AutoDiffCostFunction<MyScalarCostFunctor, 1, 2, 2>(
+//           new MyScalarCostFunctor(1.0));              ^  ^  ^
+//                                                       |  |  |
+//                            Dimension of residual -----+  |  |
+//                            Dimension of x ---------------+  |
+//                            Dimension of y ------------------+
 //
 // In this example, there is usually an instance for each measumerent of k.
 //
 // In the instantiation above, the template parameters following
-// "MyScalarCostFunction", "1, 2, 2", describe the functor as computing a
+// "MyScalarCostFunctor", "1, 2, 2", describe the functor as computing a
 // 1-dimensional output from two arguments, both 2-dimensional.
 //
 // The autodiff cost function also supports cost functions with a
 // runtime-determined number of residuals. For example:
 //
 //   CostFunction* cost_function
-//       = new AutoDiffCostFunction<MyScalarCostFunction, DYNAMIC, 2, 2>(
-//           new CostFunctionWithDynamicNumResiduals(1.0),   ^     ^  ^
-//           runtime_number_of_residuals); <----+            |     |  |
-//                                              |            |     |  |
-//                                              |            |     |  |
-//             Actual number of residuals ------+            |     |  |
-//             Indicate dynamic number of residuals ---------+     |  |
-//             Dimension of x -------------------------------------+  |
-//             Dimension of y ----------------------------------------+
+//       = new AutoDiffCostFunction<MyScalarCostFunctor, DYNAMIC, 2, 2>(
+//           new CostFunctionWithDynamicNumResiduals(1.0),   ^    ^  ^
+//           runtime_number_of_residuals); <----+            |    |  |
+//                                              |            |    |  |
+//                                              |            |    |  |
+//             Actual number of residuals ------+            |    |  |
+//             Indicate dynamic number of residuals ---------+    |  |
+//             Dimension of x ------------------------------------+  |
+//             Dimension of y ---------------------------------------+
 //
 // The framework can currently accommodate cost functions of up to 6 independent
 // variables, and there is no limit on the dimensionality of each of them.
@@ -119,7 +119,7 @@
 // functions is to get the sizing wrong. In particular, there is a tendency to
 // set the template parameters to (dimension of residual, number of parameters)
 // instead of passing a dimension parameter for *every parameter*. In the
-// example above, that would be <MyScalarCostFunction, 1, 2>, which is missing
+// example above, that would be <MyScalarCostFunctor, 1, 2>, which is missing
 // the last '2' argument. Please be careful when setting the size parameters.
 
 #ifndef CERES_PUBLIC_AUTODIFF_COST_FUNCTION_H_
