@@ -456,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "M17q-bWQ",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-08T02:22:57Z",
+      "side": 1,
+      "message": "Public members should not end in _. I think you want to make this a struct.",
+      "parentUuid": "M1NfKFpw",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meu4aeyE",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -520,6 +538,24 @@
       "side": 1,
       "message": "Yep, there\u0027s complexity here.\n\nRemember that this class is one of the 3 types that get sent to the user\u0027s CostFunctor (it\u0027s the 3rd of ResidualCounter, ResidualEvaluator, JacobianEvaluator), so it\u0027s effectively a callback.\n\nFor the Jacobian computation, the workflow is:\n\nFor each stripe (aka \"derivative block\"):\n\n1. SetDerivativeBlockActive(1.0)\n\n2. Invoke the user\u0027s CostFunctor, passing this JacobianEvaluator.\n\n2a. As the user\u0027s CostFunctor emits residuals into this object via EmitResidual, we need to place them into the correct spots inside Ceres\u0027 Jacobian.\n\n3. SetDerivativeBlockActive(0.0)",
       "parentUuid": "Mei7Ls3M",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M19p9Gas",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-08T02:22:57Z",
+      "side": 1,
+      "message": "I still don\u0027t entirely understand. Please document the user-level API, then we can go from there.",
+      "parentUuid": "M1NdJdjE",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
