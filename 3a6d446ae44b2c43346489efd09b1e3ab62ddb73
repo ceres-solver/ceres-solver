@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "M15qdURo",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-08T02:22:31Z",
+      "side": 1,
+      "message": "Blank before.",
+      "revId": "3a6d446ae44b2c43346489efd09b1e3ab62ddb73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1xqKAcs",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-08T02:22:31Z",
+      "side": 1,
+      "message": "Document.",
+      "revId": "3a6d446ae44b2c43346489efd09b1e3ab62ddb73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
