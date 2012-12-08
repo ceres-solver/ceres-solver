@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "M1Bcy3u8",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Meo51f1o",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Mei4OU-M",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Add documentation on how to use this, and consider briefly describing the approach.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1Hc-4rc",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Will do once I\u0027m sure you like it :)",
+      "parentUuid": "Mei4OU-M",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "M1DdcOhg",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "For the 2 reasons mentioned in the test file, this class needs to invoke the user\u0027s CostFunctor once to count the number of residuals, so it needs to know about the initial values of the parameters so it can pass them to the CostFunctor (as the first argument to CostFunctor::operator()).  Does that make sense to you?  It mostly makes sense to me, but it feels a bit awkward.",
+      "parentUuid": "Meo78n64",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Mem4YSzY",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Log a useful error message (imagine someone trying to use the class).",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1BdZPig",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Mem4YSzY",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "M1Dermt0",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Another design would be to:\n* Pass the parameter blocks that the CostFunctor needs directly to the DynamicSizeAutodiffCostFunction constructor.  Then, the constructor could call:\n(super::)mutable_parameter_block_sizes()-\u003epush_back(size);\nfor each parameter block, and also run CountResiduals once and for all.\n\nThe only slight annoyance about that is that the parameter block sizes would need to be specified as something like:\n  vector\u003cpair\u003cconst double*, int\u003e \u003e block_and_size;\n\nI have no strong preference.  The design I just summarized makes it clear that this thing needs to know about all the parameter blocks, and eliminates the need for the user to call CountResiduals() before telling Ceres about this CostFunction.",
+      "parentUuid": "Mek4Thxo",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meu5sO5I",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -115,6 +205,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Is there a file missing in this change?",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1BeoHt0",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Nope, it\u0027s an inner class.",
+      "parentUuid": "Meu5sO5I",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "M1He1IjU",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Meu4DW8E",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meg4Jj.o",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -149,6 +275,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Interesting. Why the two names for Jet_?",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1Feypk4",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Can\u0027t remember, probably left-overs :)",
+      "parentUuid": "Meg4Jj.o",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "M1JeCTlw",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Mem4va0E",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meq4gg00",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "M1Pd3UoA",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Meq4gg00",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Mes4dtxw",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -200,6 +380,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Blank before (but this should be private:)",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1BfWXk8",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "All these classes are private inner classes of DynamicSizeAutodiffCostFunction, so this is effectively private.  DynamicSizeAutodiffCostFunction does look at this, though, which is why its public.  Happy to make an inspector method if you like, though.",
+      "parentUuid": "Mes4dtxw",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -240,6 +438,24 @@
     },
     {
       "key": {
+        "uuid": "M1NfKFpw",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Same explanation applies: All these classes are private inner classes of DynamicSizeAutodiffCostFunction...\n\nLet me know if you still want me to remove the _s.",
+      "parentUuid": "Mei7kkwQ",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meu4aeyE",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -251,6 +467,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Stack arguments instead of putting on a new line.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1DfAunk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Meu4aeyE",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -274,6 +508,24 @@
     },
     {
       "key": {
+        "uuid": "M1NdJdjE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Yep, there\u0027s complexity here.\n\nRemember that this class is one of the 3 types that get sent to the user\u0027s CostFunctor (it\u0027s the 3rd of ResidualCounter, ResidualEvaluator, JacobianEvaluator), so it\u0027s effectively a callback.\n\nFor the Jacobian computation, the workflow is:\n\nFor each stripe (aka \"derivative block\"):\n\n1. SetDerivativeBlockActive(1.0)\n\n2. Invoke the user\u0027s CostFunctor, passing this JacobianEvaluator.\n\n2a. As the user\u0027s CostFunctor emits residuals into this object via EmitResidual, we need to place them into the correct spots inside Ceres\u0027 Jacobian.\n\n3. SetDerivativeBlockActive(0.0)",
+      "parentUuid": "Mei7Ls3M",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Mek7A50s",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 1
@@ -285,6 +537,23 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Is this used above? Document.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1NdgVpk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "see above comment.",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -308,6 +577,24 @@
     },
     {
       "key": {
+        "uuid": "M1Pf8cgA",
+        "filename": "internal/ceres/dynamic_size_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Yeah, there are 2 things that are a bit conflated here, but with somewhat good reason.  Here are the 2 reasons:\n\n1. In my case, I might weight certain RNN timesteps differently than others.  Some timesteps have a weight of 0, which means they don\u0027t need to \"emit\" a residual (the residual would always be zero).  Combine that with my \"residual aggregation\" scheme, and figuring out the number of residuals ahead of time is tricky, so why not just run the code that computes the residuals once to count them?  (This is not necessarily a good reason to conflate the residual counting with dynamic autodiff, but the next one is....)\n\n2.  The Ceres interface to CostFunction provides a pre-allocated chunk of memory into which the implementer is supposed to dump the Jacobian.  If I wanted to follow a similar API convention, I\u0027d have to pre-allocate an entire \"stripe\" of the Jacobian (it would be (#residuals)*(jet_size)), and let the implementer of the cost function fill it in.  I\u0027d rather not do that, since it would waste memory.  This way, instead of directly writing to the Jacobian matrix, the implementer of the cost function just emits residuals, and my code copies the derivatives into the correct place inside Ceres\u0027 pre-allocated Jacobian (because it knows which derivatives it was computing for this stripe).  I think this is a good reason to do it this way.\n\nTogether, 1 and 2 make a pretty easy-to-implement CostFunction API.",
+      "parentUuid": "Meo7y38Y",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Meq7vo90",
         "filename": "internal/ceres/dynamic_size_autodiff_cost_function_test.cc",
         "patchSetId": 1
@@ -319,6 +606,24 @@
       "writtenOn": "2012-12-04T05:45:15Z",
       "side": 1,
       "message": "Consider using a more convincing function e.g. a square or something.",
+      "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1Dc1Wtg",
+        "filename": "internal/ceres/dynamic_size_autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5065
+      },
+      "writtenOn": "2012-12-08T00:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Meq7vo90",
       "revId": "f3ce9aaea1aead08d86fee96603e9882740229c9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
