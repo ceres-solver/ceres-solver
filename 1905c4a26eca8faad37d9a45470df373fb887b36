@@ -16,6 +16,23 @@
       "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "M1w8pCYk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2012-12-13T19:10:16Z",
+      "side": 1,
+      "message": "This isn\u0027t quite the same, since the parameters are an array of parameters rather than each parameter passed individually.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
