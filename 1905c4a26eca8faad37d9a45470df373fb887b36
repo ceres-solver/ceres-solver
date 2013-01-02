@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "NYg0whAc",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "The top level comment makes it sound like this is some auxilliary file. I would start with a simple statement about how this allows for runtime/dynamic automatic differentiation.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYi0tSK0",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "autodiff_cost_function.h",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYi0WKGE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "This paragraph is a better opening comment than what you have above.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "M1w8pCYk",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 3
@@ -48,6 +99,414 @@
       "side": 1,
       "message": "Yes, you\u0027re right, it\u0027s the same as the standard CostFunction interface, I guess.",
       "parentUuid": "M1w8pCYk",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYogbons",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "an example here will help a lot.\n\nsomething as simple as the sum of quadratics will do the trick.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYshj6tM",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "I do not understand the purpose of this. I think you should have the constructor take the number of residuals, why should you have to execute the CostFunctor to just figure out the size.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYqhuprs",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "How about simply RuntimeAutoDiffCostFunction, dynamic does not communicate much.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYqOEB2s",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "I think you are combining two very different things in this one class.\n\ndynamic autodiff + evaluation of various parts of residuals.\nI do not think this is a great idea. \n\nIt obscures the implementation of the dynamic autodiff.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYgiTErI",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "Init(), CountResiduals sounds like a innocuous method which should just count and should infact be const, instead of doing what amounts to an initialization.\n\nIndeed this should also signal that without calling Init this cost function is not ready for use.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYiiQ1qI",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "right now you can call this function without calling Init, and that is not a good idea.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYojNYrg",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "Init",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYkjieiY",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "how about simply Done() and with Next()\nyou can write this as a for(;!jacobian_evaluator-\u003eDone(); jacobian_evaluator-\u003eNext()) {\n}\n\nmuch easier to read and less bug prone.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYgiM8uQ",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "why are we doing this one parameter block at a time?\nis it because you do not want to deal with the assembly and disassembly of the large jets involved in this case?",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYmidfmA",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "this logic is stateful and the double argument is very confusing.\n\nHow about\n\nJacobianEvaluator::SetCurrentBlockActive()\nJacobianEvaluator::SetCurrentBlockInactive()\n\nso that the statefulness of the loop is evident, and there is no need for the double argument.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYmi2Xtw",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "I do not understand this comment. also the member name is confusingly named.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYoironU",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "Next()",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYgi-krE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "This should not be needed, the user should be able to tell you about the number of residuals when constructing the cost function.\n\nIf not, then why not?",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYsjHapQ",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "class documentation",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYmi4HhU",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "const int",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYii8Vro",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "How about simply Emit",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYshEyhs",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "have a detailed message documenting the failure here.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYqjSJlY",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "class documentation.\nexplain at a high level how this class works.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYkhYuvk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "methods before data members.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYogPIpY",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "very similar and confusingly named member names.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYqjVxuk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "use more descriptive member names, or better documentation, its not clear whats going on here.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYmhVfsE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "Done()",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYqhoZoE",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "I do not understand this function. Why does it accept a double argument?",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "NYihlNj4",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-02T19:48:36Z",
+      "side": 1,
+      "message": "more informative message.",
       "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
