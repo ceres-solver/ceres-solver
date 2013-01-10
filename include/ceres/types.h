@@ -165,7 +165,7 @@ enum LineSearchDirectionType {
   // functions. The generalization can be performed in a number of
   // different ways, resulting in a variety of search directions. The
   // precise choice of the non-linear conjugate gradient algorithm
-  // used is determined by NonlineConjuateGradientType.
+  // used is determined by NonlinerConjuateGradientType.
   NONLINEAR_CONJUGATE_GRADIENT,
 
   // A limited memory approximation to the inverse Hessian is

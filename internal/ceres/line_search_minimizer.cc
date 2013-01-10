@@ -63,7 +63,10 @@ namespace ceres {
 namespace internal {
 namespace {
 // Small constant for various floating point issues.
+// TODO(sameeragarwal): Change to a better name if this has only one
+// use.
 const double kEpsilon = 1e-12;
+
 bool Evaluate(Evaluator* evaluator,
               const Vector& x,
               LineSearchMinimizer::State* state) {
