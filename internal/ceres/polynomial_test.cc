@@ -225,7 +225,8 @@ TEST(Polynomial, DifferentiateConstantPolynomial) {
   Vector polynomial(1);
   polynomial(0) = 1.0;
   const Vector derivative = DifferentiatePolynomial(polynomial);
-  EXPECT_EQ(derivative.rows(), 0);
+  EXPECT_EQ(derivative.rows(), 1);
+  EXPECT_EQ(derivative(0), 0);
 }
 
 TEST(Polynomial, DifferentiateQuadraticPolynomial) {
