@@ -34,7 +34,6 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "ceres/cost_function.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
@@ -50,48 +49,65 @@ namespace internal {
 // y1 = x1'x2      -> dy1/dx1 = x2,               dy1/dx2 = x1
 // y2 = (x1'x2)^2  -> dy2/dx1 = 2 * x2 * (x1'x2), dy2/dx2 = 2 * x1 * (x1'x2)
 // y3 = x2'x2      -> dy3/dx1 = 0,                dy3/dx2 = 2 * x2
-class TestCostFunction : public CostFunction {
- public:
-  TestCostFunction() {
-    set_num_residuals(3);
-    mutable_parameter_block_sizes()->push_back(5);  // x1.
-    mutable_parameter_block_sizes()->push_back(5);  // x2.
-  }
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored.
-
+struct EasyFunctor {
+  bool operator()(const double* x1, const double* x2, double* residuals) const {
     residuals[0] = residuals[1] = residuals[2] = 0;
     for (int i = 0; i < 5; ++i) {
-      residuals[0] += parameters[0][i] * parameters[1][i];
-      residuals[2] += parameters[1][i] * parameters[1][i];
+      residuals[0] += x1[i] * x2[i];
+      residuals[2] += x2[i] * x2[i];
     }
     residuals[1] = residuals[0] * residuals[0];
     return true;
   }
 };
 
+class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    (void) jacobians;  // Ignored.
+    return EasyFunctor()(parameters[0], parameters[1], residuals);
+  }
+};
+
 TEST(NumericDiffCostFunction, EasyCase) {
   // Try both central and forward difference.
-  internal::scoped_ptr<CostFunction> cfs[2];
+  internal::scoped_ptr<CostFunction> cfs[4];
   cfs[0].reset(
-      new NumericDiffCostFunction<TestCostFunction,
+      new NumericDiffCostFunction<EasyCostFunction,
                                   CENTRAL,
                                   3,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
-          new TestCostFunction, TAKE_OWNERSHIP));
+          new EasyCostFunction, TAKE_OWNERSHIP));
 
   cfs[1].reset(
-      new NumericDiffCostFunction<TestCostFunction,
+      new NumericDiffCostFunction<EasyCostFunction,
                                   FORWARD,
                                   3,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
-          new TestCostFunction, TAKE_OWNERSHIP));
+          new EasyCostFunction, TAKE_OWNERSHIP));
 
-  for (int c = 0; c < 2; ++c) {
+    cfs[2].reset(
+        new NumericDiffCostFunction< EasyFunctor,
+                                     CENTRAL,
+                                     3,  /* number of residuals */
+                                     5,  /* size of x1 */
+                                     5   /* size of x2 */>(
+                                         new EasyFunctor));
+
+    cfs[3].reset(
+        new NumericDiffCostFunction< EasyFunctor,
+                                     FORWARD,
+                                     3,  /* number of residuals */
+                                     5,  /* size of x1 */
+                                     5   /* size of x2 */>(
+                                         new EasyFunctor));
+
+
+  for (int c = 0; c < 4; ++c) {
     CostFunction *cost_function = cfs[c].get();
 
     double x1[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
@@ -131,21 +147,11 @@ TEST(NumericDiffCostFunction, EasyCase) {
 //
 // dy1/dx1 =  x2 * cos(x1'x2),            dy1/dx2 =  x1 * cos(x1'x2)
 // dy2/dx1 = -x2 * exp(-x1'x2 / 10) / 10, dy2/dx2 = -x2 * exp(-x1'x2 / 10) / 10
-class TranscendentalTestCostFunction : public CostFunction {
- public:
-  TranscendentalTestCostFunction() {
-    set_num_residuals(2);
-    mutable_parameter_block_sizes()->push_back(5);  // x1.
-    mutable_parameter_block_sizes()->push_back(5);  // x2.
-  }
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored.
-
+struct TranscendentalFunctor {
+  bool operator()(const double* x1, const double* x2, double* residuals) const {
     double x1x2 = 0;
     for (int i = 0; i < 5; ++i) {
-      x1x2 += parameters[0][i] * parameters[1][i];
+      x1x2 += x1[i] * x2[i];
     }
     residuals[0] = sin(x1x2);
     residuals[1] = exp(-x1x2 / 10);
@@ -153,9 +159,19 @@ class TranscendentalTestCostFunction : public CostFunction {
   }
 };
 
+class TranscendentalTestCostFunction : public SizedCostFunction<2, 5, 5> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    (void) jacobians;  // Ignored.
+    return TranscendentalFunctor()(parameters[0], parameters[1], residuals);
+  }
+};
+
 TEST(NumericDiffCostFunction, TransendentalOperationsInCostFunction) {
   // Try both central and forward difference.
-  internal::scoped_ptr<CostFunction> cfs[2];
+  internal::scoped_ptr<CostFunction> cfs[4];
   cfs[0].reset(
       new NumericDiffCostFunction<TranscendentalTestCostFunction,
                                   CENTRAL,
@@ -172,7 +188,23 @@ TEST(NumericDiffCostFunction, TransendentalOperationsInCostFunction) {
                                   5   /* size of x2 */>(
           new TranscendentalTestCostFunction, TAKE_OWNERSHIP));
 
-  for (int c = 0; c < 2; ++c) {
+  cfs[2].reset(
+      new NumericDiffCostFunction<TranscendentalFunctor,
+                                  CENTRAL,
+                                  2,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+                                      new TranscendentalFunctor));
+
+  cfs[3].reset(
+      new NumericDiffCostFunction<TranscendentalFunctor,
+                                  FORWARD,
+                                  2,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+                                      new TranscendentalFunctor));
+
+  for (int c = 0; c < 4; ++c) {
     CostFunction *cost_function = cfs[c].get();
 
     struct {
