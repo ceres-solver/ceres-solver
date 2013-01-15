@@ -335,6 +335,11 @@ enum DimensionType {
   DYNAMIC = -1
 };
 
+enum NumericDiffMethod {
+  CENTRAL,
+  FORWARD
+};
+
 const char* LinearSolverTypeToString(LinearSolverType type);
 bool StringToLinearSolverType(string value, LinearSolverType* type);
 
