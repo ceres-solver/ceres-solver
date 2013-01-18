@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "OhlyzHZo",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T20:00:28Z",
+      "side": 1,
+      "message": "Put the first + on the previous line for nicer vertical alignment.",
+      "revId": "5e142ea8cd86dfc8b9635bf084f32da469fe10a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OhjywUYs",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T20:00:28Z",
+      "side": 1,
+      "message": "The \"best\" way to do this is to omit the name in the argument\n\n  void foo(int x, double** /* jacobians */) { ... }",
+      "revId": "5e142ea8cd86dfc8b9635bf084f32da469fe10a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OhhytlTU",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T20:00:28Z",
+      "side": 1,
+      "message": "See comment above about unused parameterts.",
+      "revId": "5e142ea8cd86dfc8b9635bf084f32da469fe10a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
