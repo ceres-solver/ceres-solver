@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ObrfUYg4",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T02:02:59Z",
+      "side": 1,
+      "message": "I think this comment block is out of date.",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Obhev1p4",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T02:02:59Z",
+      "side": 1,
+      "message": "Weird spacing around ,\u0027s.",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ObtfR3hw",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T02:02:59Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ObvfO2n0",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T02:02:59Z",
+      "side": 1,
+      "message": "Weird spacing around ,\u0027s.",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Oble5TuM",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T02:02:59Z",
+      "side": 1,
+      "message": "This was both of us :)",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
