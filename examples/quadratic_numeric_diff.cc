@@ -38,24 +38,16 @@
 
 using ceres::NumericDiffCostFunction;
 using ceres::CENTRAL;
-using ceres::SizedCostFunction;
 using ceres::CostFunction;
 using ceres::Problem;
 using ceres::Solver;
 using ceres::Solve;
 
-class ResidualWithNoDerivative
-  : public SizedCostFunction<1 /* number of residuals */,
-                             1 /* size of first parameter */> {
+// A cost functor that implements the residual r = 10 - x.
+class QuadraticCostFunctor {
  public:
-  virtual ~ResidualWithNoDerivative() {}
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored; filled in by numeric differentiation.
-
-    // f(x) = 10 - x.
-    residuals[0] = 10 - parameters[0][0];
+  bool operator()(const double* const x, double* residual) const {
+    residual[0] = 10.0 - x[0];
     return true;
   }
 };
@@ -71,8 +63,8 @@ int main(int argc, char** argv) {
   // Set up the only cost function (also known as residual). This uses
   // numeric differentiation to obtain the derivative (jacobian).
   CostFunction* cost =
-      new NumericDiffCostFunction<ResidualWithNoDerivative, CENTRAL, 1, 1> (
-          new ResidualWithNoDerivative, ceres::TAKE_OWNERSHIP);
+      new NumericDiffCostFunction<QuadraticCostFunctor, CENTRAL, 1, 1> (
+          new QuadraticCostFunctor);
 
   // Build the problem.
   Problem problem;

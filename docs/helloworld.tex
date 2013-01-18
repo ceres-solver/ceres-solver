@@ -5,7 +5,7 @@ To get started, let us consider the problem of finding the minimum of the functi
 \begin{equation}
  \frac{1}{2}(10 -x)^2.
 \end{equation}
-This is a trivial problem, whose minimum is easy to see is located at $x = 10$, but it is a good place to start to illustrate the basics of solving a problem with Ceres\footnote{Full working code for this and other examples in this manual can be found in the \texttt{examples} directory. Code for this example can be found in \texttt{examples/quadratic.cc}}. 
+This is a trivial problem, whose minimum is located at $x = 10$, but it is a good place to start to illustrate the basics of solving a problem with Ceres\footnote{Full working code for this and other examples in this manual can be found in the \texttt{examples} directory. Code for this example can be found in \texttt{examples/quadratic.cc}}. 
 
 
 Let us write this problem as a non-linear least squares problem by defining the scalar residual function $f_1(x) = 10 - x$. Then $F(x) = [f_1(x)]$ is a residual vector with exactly one component.
