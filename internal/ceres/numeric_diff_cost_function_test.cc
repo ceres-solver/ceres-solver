@@ -36,8 +36,7 @@
 #include <vector>
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/stringprintf.h"
+#include "ceres/numeric_diff_test_utils.h"
 #include "ceres/test_util.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -46,223 +45,109 @@
 namespace ceres {
 namespace internal {
 
-// y1 = x1'x2      -> dy1/dx1 = x2,               dy1/dx2 = x1
-// y2 = (x1'x2)^2  -> dy2/dx1 = 2 * x2 * (x1'x2), dy2/dx2 = 2 * x1 * (x1'x2)
-// y3 = x2'x2      -> dy3/dx1 = 0,                dy3/dx2 = 2 * x2
-struct EasyFunctor {
-  bool operator()(const double* x1, const double* x2, double* residuals) const {
-    residuals[0] = residuals[1] = residuals[2] = 0;
-    for (int i = 0; i < 5; ++i) {
-      residuals[0] += x1[i] * x2[i];
-      residuals[2] += x2[i] * x2[i];
-    }
-    residuals[1] = residuals[0] * residuals[0];
-    return true;
-  }
-};
+TEST(NumericDiffCostFunction, EasyCaseFunctorCentralDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
+      new NumericDiffCostFunction<EasyFunctor,
+                                  CENTRAL,
+                                  3,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+          new EasyFunctor));
+  EasyFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
+}
 
-class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
- public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored.
-    return EasyFunctor()(parameters[0], parameters[1], residuals);
-  }
-};
+TEST(NumericDiffCostFunction, EasyCaseFunctorForwardDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
+      new NumericDiffCostFunction<EasyFunctor,
+                                  FORWARD,
+                                  3,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+          new EasyFunctor));
+  EasyFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
+}
 
-TEST(NumericDiffCostFunction, EasyCase) {
-  // Try both central and forward difference.
-  internal::scoped_ptr<CostFunction> cfs[4];
-  cfs[0].reset(
+TEST(NumericDiffCostFunction, EasyCaseCostFunctionCentralDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
       new NumericDiffCostFunction<EasyCostFunction,
                                   CENTRAL,
                                   3,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
           new EasyCostFunction, TAKE_OWNERSHIP));
+  EasyFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
+}
 
-  cfs[1].reset(
+TEST(NumericDiffCostFunction, EasyCaseCostFunctionForwardDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
       new NumericDiffCostFunction<EasyCostFunction,
                                   FORWARD,
                                   3,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
           new EasyCostFunction, TAKE_OWNERSHIP));
-
-    cfs[2].reset(
-        new NumericDiffCostFunction< EasyFunctor,
-                                     CENTRAL,
-                                     3,  /* number of residuals */
-                                     5,  /* size of x1 */
-                                     5   /* size of x2 */>(
-                                         new EasyFunctor));
-
-    cfs[3].reset(
-        new NumericDiffCostFunction< EasyFunctor,
-                                     FORWARD,
-                                     3,  /* number of residuals */
-                                     5,  /* size of x1 */
-                                     5   /* size of x2 */>(
-                                         new EasyFunctor));
-
-
-  for (int c = 0; c < 4; ++c) {
-    CostFunction *cost_function = cfs[c].get();
-
-    double x1[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
-    double x2[] = { 9.0, 9.0, 5.0, 5.0, 1.0 };
-    double *parameters[] = { &x1[0], &x2[0] };
-
-    double dydx1[15];  // 3 x 5, row major.
-    double dydx2[15];  // 3 x 5, row major.
-    double *jacobians[2] = { &dydx1[0], &dydx2[0] };
-
-    double residuals[3] = {-1e-100, -2e-100, -3e-100 };
-
-    ASSERT_TRUE(cost_function->Evaluate(&parameters[0],
-                                        &residuals[0],
-                                        &jacobians[0]));
-
-    EXPECT_EQ(residuals[0], 67);
-    EXPECT_EQ(residuals[1], 4489);
-    EXPECT_EQ(residuals[2], 213);
-
-    for (int i = 0; i < 5; ++i) {
-      LOG(INFO) << "c = " << c << " i = " << i;
-      const double kEps = c == 0 ? /* central */ 3e-9 : /* forward */ 2e-5;
-
-      ExpectClose(x2[i],                    dydx1[5 * 0 + i], kEps);  // y1
-      ExpectClose(x1[i],                    dydx2[5 * 0 + i], kEps);
-      ExpectClose(2 * x2[i] * residuals[0], dydx1[5 * 1 + i], kEps);  // y2
-      ExpectClose(2 * x1[i] * residuals[0], dydx2[5 * 1 + i], kEps);
-      ExpectClose(0.0,                      dydx1[5 * 2 + i], kEps);  // y3
-      ExpectClose(2 * x2[i],                dydx2[5 * 2 + i], kEps);
-    }
-  }
+  EasyFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
 
-// y1 = sin(x1'x2)
-// y2 = exp(-x1'x2 / 10)
-//
-// dy1/dx1 =  x2 * cos(x1'x2),            dy1/dx2 =  x1 * cos(x1'x2)
-// dy2/dx1 = -x2 * exp(-x1'x2 / 10) / 10, dy2/dx2 = -x2 * exp(-x1'x2 / 10) / 10
-struct TranscendentalFunctor {
-  bool operator()(const double* x1, const double* x2, double* residuals) const {
-    double x1x2 = 0;
-    for (int i = 0; i < 5; ++i) {
-      x1x2 += x1[i] * x2[i];
-    }
-    residuals[0] = sin(x1x2);
-    residuals[1] = exp(-x1x2 / 10);
-    return true;
-  }
-};
-
-class TranscendentalTestCostFunction : public SizedCostFunction<2, 5, 5> {
- public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored.
-    return TranscendentalFunctor()(parameters[0], parameters[1], residuals);
-  }
-};
-
-TEST(NumericDiffCostFunction, TransendentalOperationsInCostFunction) {
-  // Try both central and forward difference.
-  internal::scoped_ptr<CostFunction> cfs[4];
-  cfs[0].reset(
-      new NumericDiffCostFunction<TranscendentalTestCostFunction,
-                                  CENTRAL,
-                                  2,  /* number of residuals */
-                                  5,  /* size of x1 */
-                                  5   /* size of x2 */>(
-          new TranscendentalTestCostFunction, TAKE_OWNERSHIP));
-
-  cfs[1].reset(
-      new NumericDiffCostFunction<TranscendentalTestCostFunction,
-                                  FORWARD,
-                                  2,  /* number of residuals */
-                                  5,  /* size of x1 */
-                                  5   /* size of x2 */>(
-          new TranscendentalTestCostFunction, TAKE_OWNERSHIP));
-
-  cfs[2].reset(
+TEST(NumericDiffCostFunction, TranscendentalCaseFunctorCentralDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
       new NumericDiffCostFunction<TranscendentalFunctor,
                                   CENTRAL,
                                   2,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
-                                      new TranscendentalFunctor));
+          new TranscendentalFunctor));
+  TranscendentalFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
+}
 
-  cfs[3].reset(
+TEST(NumericDiffCostFunction, TranscendentalCaseFunctorForwardDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
       new NumericDiffCostFunction<TranscendentalFunctor,
                                   FORWARD,
                                   2,  /* number of residuals */
                                   5,  /* size of x1 */
                                   5   /* size of x2 */>(
-                                      new TranscendentalFunctor));
-
-  for (int c = 0; c < 4; ++c) {
-    CostFunction *cost_function = cfs[c].get();
-
-    struct {
-      double x1[5];
-      double x2[5];
-    } kTests[] = {
-      { { 1.0, 2.0, 3.0, 4.0, 5.0 },  // No zeros.
-        { 9.0, 9.0, 5.0, 5.0, 1.0 },
-      },
-      { { 0.0, 2.0, 3.0, 0.0, 5.0 },  // Some zeros x1.
-        { 9.0, 9.0, 5.0, 5.0, 1.0 },
-      },
-      { { 1.0, 2.0, 3.0, 1.0, 5.0 },  // Some zeros x2.
-        { 0.0, 9.0, 0.0, 5.0, 0.0 },
-      },
-      { { 0.0, 0.0, 0.0, 0.0, 0.0 },  // All zeros x1.
-        { 9.0, 9.0, 5.0, 5.0, 1.0 },
-      },
-      { { 1.0, 2.0, 3.0, 4.0, 5.0 },  // All zeros x2.
-        { 0.0, 0.0, 0.0, 0.0, 0.0 },
-      },
-      { { 0.0, 0.0, 0.0, 0.0, 0.0 },  // All zeros.
-        { 0.0, 0.0, 0.0, 0.0, 0.0 },
-      },
-    };
-    for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
-      double *x1 = &(kTests[k].x1[0]);
-      double *x2 = &(kTests[k].x2[0]);
-      double *parameters[] = { x1, x2 };
-
-      double dydx1[10];
-      double dydx2[10];
-      double *jacobians[2] = { &dydx1[0], &dydx2[0] };
-
-      double residuals[2];
-
-      ASSERT_TRUE(cost_function->Evaluate(&parameters[0],
-                                          &residuals[0],
-                                          &jacobians[0]));
-      LOG(INFO) << "Ran evaluate for test k=" << k << " c=" << c;
-
-      double x1x2 = 0;
-      for (int i = 0; i < 5; ++i) {
-        x1x2 += x1[i] * x2[i];
-      }
-
-      for (int i = 0; i < 5; ++i) {
-        const double kEps = c == 0 ? /* central */ 3e-9 : /* forward */ 2e-5;
-
-        ExpectClose( x2[i] * cos(x1x2),              dydx1[5 * 0 + i], kEps);
-        ExpectClose( x1[i] * cos(x1x2),              dydx2[5 * 0 + i], kEps);
-        ExpectClose(-x2[i] * exp(-x1x2 / 10.) / 10., dydx1[5 * 1 + i], kEps);
-        ExpectClose(-x1[i] * exp(-x1x2 / 10.) / 10., dydx2[5 * 1 + i], kEps);
-      }
-    }
-  }
+          new TranscendentalFunctor));
+  TranscendentalFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
 }
 
+TEST(NumericDiffCostFunction, TranscendentalCaseCostFunctionCentralDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
+      new NumericDiffCostFunction<TranscendentalCostFunction,
+                                  CENTRAL,
+                                  2,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+          new TranscendentalCostFunction, TAKE_OWNERSHIP));
+  TranscendentalFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
+}
+
+TEST(NumericDiffCostFunction, TranscendentalCaseCostFunctionForwardDifferences) {
+  internal::scoped_ptr<CostFunction> cost_function;
+  cost_function.reset(
+      new NumericDiffCostFunction<TranscendentalCostFunction,
+                                  FORWARD,
+                                  2,  /* number of residuals */
+                                  5,  /* size of x1 */
+                                  5   /* size of x2 */>(
+          new TranscendentalCostFunction, TAKE_OWNERSHIP));
+  TranscendentalFunctor functor;
+  functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, FORWARD);
+}
 
 template<int num_rows, int num_cols>
 class SizeTestingCostFunction : public SizedCostFunction<num_rows, num_cols> {
