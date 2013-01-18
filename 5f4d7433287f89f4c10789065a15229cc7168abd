@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Oblfnjgo",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "I don\u0027t think residual is supposed to be const?",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Obnfsiu4",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Consider putting a comment in this example above this line pointing out that you call the function like any other. It\u0027s cool!",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ObrftQuo",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Add a comment above this block explaining roughly what it\u0027s doing; e.g. convert from jets to the format needed by the cost function.",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Obtf6vpw",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Add a comment above here describing that this is applying the chain rule to produce the output jets.",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Obvf3urE",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Android",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ObjfJMnw",
+        "filename": "internal/ceres/cost_function_to_functor_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Nice hack.",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Oble.rtY",
+        "filename": "internal/ceres/cost_function_to_functor_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-18T01:47:48Z",
+      "side": 1,
+      "message": "Fix \\ alignment.",
+      "revId": "5f4d7433287f89f4c10789065a15229cc7168abd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
