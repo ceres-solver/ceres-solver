@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "OZ-ArPIM",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-18T06:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ObrfUYg4",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Obhev1p4",
         "filename": "include/ceres/internal/numeric_diff.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-18T02:02:59Z",
       "side": 1,
       "message": "Weird spacing around ,\u0027s.",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OZxApiIs",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-18T06:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Obhev1p4",
       "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "OZzAmhLs",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-18T06:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ObvfO2n0",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Oble5TuM",
         "filename": "include/ceres/internal/variadic_evaluate.h",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2013-01-18T02:02:59Z",
       "side": 1,
       "message": "This was both of us :)",
+      "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "OZ3BqzK4",
+        "filename": "include/ceres/internal/variadic_evaluate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-18T06:37:47Z",
+      "side": 1,
+      "message": "sorry, I do not know how to write the new authorship comments. Should I be crediting mierle@gmail.com at this point or go back to the historic keir@google.com. Not trying to steal credit, just not sure what the right way to credit these files which are a consequence of refactoring are.",
+      "parentUuid": "Oble5TuM",
       "revId": "a00806676c651a2a48cde6504695b3ca921c8e70",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
