@@ -17,7 +17,8 @@ class ExponentialResidual {
   template <typename T> bool operator()(const T* const m,
                                         const T* const c,
                                         T* residual) const {
-    residual[0] = T(y_) - exp(m[0] * T(x_) + c[0]);  // $y - e^{mx + c}$
+    // $y - e^{mx + c}$
+    residual[0] = T(y_) - exp(m[0] * T(x_) + c[0]);
     return true;
   }
 
