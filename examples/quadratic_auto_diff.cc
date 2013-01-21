@@ -44,10 +44,11 @@ using ceres::Problem;
 using ceres::Solver;
 using ceres::Solve;
 
-// A templated cost function that implements the residual r = 10 - x. The method
-// Map is templated so that we can then use an automatic differentiation wrapper
-// around it to generate its derivatives.
-class QuadraticCostFunction {
+// A templated cost functor that implements the residual r = 10 -
+// x. The method operator() is templated so that we can then use an
+// automatic differentiation wrapper around it to generate its
+// derivatives.
+class QuadraticCostFunctor {
  public:
   template <typename T> bool operator()(const T* const x, T* residual) const {
     residual[0] = T(10.0) - x[0];
@@ -69,8 +70,8 @@ int main(int argc, char** argv) {
   // Set up the only cost function (also known as residual). This uses
   // auto-differentiation to obtain the derivative (jacobian).
   problem.AddResidualBlock(
-      new AutoDiffCostFunction<QuadraticCostFunction, 1, 1>(
-          new QuadraticCostFunction),
+      new AutoDiffCostFunction<QuadraticCostFunctor, 1, 1>(
+          new QuadraticCostFunctor),
       NULL,
       &x);
 

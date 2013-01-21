@@ -1,13 +1,33 @@
 %!TEX root = ceres-solver.tex
 \chapter{Modeling}
 \label{chapter:api}
+
+\section{Introduction}
+Ceres solves robustified non-linear least squares problems of the form
+\begin{equation}
+\frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1},\hdots,x_{i_k}\right)\right\|^2\right).
+\label{eq:ceresproblem}
+\end{equation}
+The term
+$\rho_i\left(\left\|f_i\left(x_{i_1},\hdots,x_{i_k}\right)\right\|^2\right)$
+is known as a Residual Block, where $f_i(\cdot)$ is a cost function
+that depends on the parameter blocks $\left[x_{i_1}, \hdots ,
+  x_{i_k}\right]$ and $\rho_i$ is a loss function. In most
+optimization problems small groups of scalars occur together. For
+example the three components of a translation vector and the four
+components of the quaternion that define the pose of a camera. We
+refer to such a group of small scalars as a
+\texttt{ParameterBlock}. Of course a \texttt{ParameterBlock} can just
+have a single parameter.
+
 \section{\texttt{CostFunction}}
+\label{sec:costfunction}
 Given parameter blocks $\left[x_{i_1}, \hdots , x_{i_k}\right]$, a
 \texttt{CostFunction} is responsible for computing
 a vector of residuals and if asked a vector of Jacobian matrices, i.e., given $\left[x_{i_1}, \hdots , x_{i_k}\right]$, compute the vector $f_i\left(x_{i_1},\hdots,x_{i_k}\right)$ and the matrices
 
 \begin{equation}
-J_{ij} = \frac{\partial}{\partial x_{j}}f_i\left(x_{i_1},\hdots,x_{i_k}\right),\quad \forall j \in \{i_1,\hdots, i_k\}
+J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},\hdots,x_{i_k}\right),\quad \forall j \in \{i_1,\hdots, i_k\}
 \end{equation}
 \begin{minted}{c++}
 class CostFunction {
@@ -460,19 +480,16 @@ The cost
 \texttt{AddParameterBlock} explicitly adds a parameter block to the \texttt{Problem}. Optionally it allows the user to associate a LocalParameterization object with the parameter block too. Repeated calls with the same arguments are ignored. Repeated
 calls with the same double pointer but a different size results in undefined behaviour.
 
-You can set any parameter block to be constant using
-
-\texttt{Problem::SetParameterBlockConstant}
-
-and undo this using
-
-\texttt{Problem::SetParameterBlockVariable}.
+You can set any parameter block to be constant using \texttt{SetParameterBlockConstant} and undo this using \texttt{SetParameterBlockVariable}.
 
 In fact you can set any number of parameter blocks to be constant, and Ceres is smart enough to figure out what part of the problem you have constructed depends on the parameter blocks that are free to change and only spends time solving it. So for example if you constructed a problem with a million parameter blocks and 2 million residual blocks, but then set all but one parameter blocks to be constant and say only 10 residual blocks depend on this one non-constant parameter block. Then the computational effort Ceres spends in solving this problem will be the same if you had defined a problem with one parameter block and 10 residual blocks.
 
+\subsubsection{Ownership}
   \texttt{Problem} by default takes ownership of the
   \texttt{cost\_function}, \texttt{loss\_function} and \\ \texttt{local\_parameterization} pointers. These objects remain
    live for the life of the \texttt{Problem} object. If the user wishes to
   keep control over the destruction of these objects, then they can
-  do this by setting the corresponding enums in the \texttt{Options} struct. Even though \texttt{Problem} takes ownership of these pointers,  it does not preclude the user from re-using them in another residual or parameter block. The destructor takes care to call
+  do this by setting the corresponding enums in the \texttt{Options} struct.
+
+Even though \texttt{Problem} takes ownership of these pointers,  it does not preclude the user from re-using them in another residual or parameter block. The destructor takes care to call
   delete on each  pointer only once.
