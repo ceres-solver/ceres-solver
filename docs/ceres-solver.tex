@@ -1,7 +1,7 @@
 %%% Build instructions
 %%% pdflatex -shell-escape ceres && bibtex ceres && pdflatex -shell-escape ceres && pdflatex -shell-escape ceres
 
-\documentclass[11pt,letterpaper,oneside]{memoir}
+\documentclass[10pt,letterpaper,oneside]{memoir}
 \usepackage{fouriernc}
 \usepackage[T1]{fontenc}
 \usepackage{minted,amsmath,amssymb,amsthm,url,booktabs}
@@ -63,9 +63,9 @@
 \MakeLowercase{Ceres Solver:  Tutorial \& Reference}
 }
 \author{
-\scshape\MakeLowercase{Sameer Agarwal} \\ \texttt{sameeragarwal@google.com} 
-\and 
-\scshape\MakeLowercase{Keir Mierle} \\  \texttt{ keir@google.com}
+\scshape\MakeLowercase{Sameer Agarwal} \\ \texttt{sameeragarwal@google.com}
+\and
+\scshape\MakeLowercase{Keir Mierle} \\  \texttt{ mierle@gmail.com}
 }
 \checkandfixthelayout
 
@@ -104,9 +104,9 @@
 Building this pdf from source requires a relatively recent installation of \texttt{LaTeX}~\footnote{\url{http://www.tug.org/texlive/}}, \texttt{minted.sty}\footnote{\url{http://code.google.com/p/minted/}} and \texttt{pygments}\footnote{\url{http://pygments.org/}}.
 
 Despite our best efforts, this manual remains a work in progress and the source code for Ceres Solver remains the ultimate reference.
-
 \input{changes}
 \input{introduction}
+\input{license}
 \input{build}
 
 %% Tutorial

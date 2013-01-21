@@ -1,6 +1,23 @@
 %!TEX root = ceres-solver.tex
 
 \chapter{Version History}
+\section*{1.5.0}
+\subsection{New Features}
+\begin{itemize}
+\item Ceres now supports Line search based optimization algorithms in addition to trust region algorithms. Currently there is support for  gradient descent, non-linear conjugate gradient and LBFGS search directions.
+\item Speedup the robust loss function correction logic when residual is one dimensional.
+\item Changed \texttt{NumericDiffCostFunction} to take functors like \texttt{AutoDiffCostFunction}.
+\item Added support for mixing automatic, analytic and numeric differentiation. This is done by adding \texttt{CostFunctionToFunctor} and \texttt{NumericDiffFunctor} objects.
+\end{itemize}
+
+\subsection{Bug Fixes}
+\begin{itemize}
+\item Fixed varidic evaluation bug in \texttt{AutoDiff}.
+\item Fixed \texttt{SolverImpl} tests.
+\item Fixed a bug in \texttt{DenseSparseMatrix::ToDenseMatrix()}.
+\item Fixed an initialization bug in \texttt{ProgramEvaluator}.
+\end{itemize}
+
 \section*{1.4.0}
 \subsection{API Changes}
 The new ordering API breaks existing code. Here the common case fixes.
