@@ -39,7 +39,7 @@ But this can get painful very quickly, especially for residuals involving compli
 \section{Automatic Differentiation}
 \label{sec:tutorial:autodiff}
 With its automatic differentiation support, Ceres allows you to define templated objects/functors that will compute the residual and it takes care of computing the Jacobians as needed and filling the \texttt{jacobians} arrays with them. For example, for $f_4(x)$ we define
-\begin{minted}[frame=lines,mathescape]{c++}
+\begin{minted}[mathescape]{c++}
 class F4 {
  public:
   template <typename T> bool operator()(const T* const x1,
@@ -63,7 +63,7 @@ and \texttt{F4}.  Then let us consider the construction and solution of the prob
 \begin{minted}[mathescape]{c++}
 double x1 =  3.0; double x2 = -1.0; double x3 =  0.0; double x4 =  1.0;
 // Add residual terms to the problem using the using the autodiff
-// wrapper to get the derivatives automatically. 
+// wrapper to get the derivatives automatically.
 problem.AddResidualBlock(
   new ceres::AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x1, &x2);
 problem.AddResidualBlock(
@@ -100,9 +100,30 @@ Final x1 = 0.000583994, x2 = -5.83994e-05, x3 = 9.55401e-05, x4 = 9.55401e-05
 It is easy to see that the  optimal solution to this problem is at $x_1=0, x_2=0, x_3=0, x_4=0$ with an objective function value of $0$. In 10 iterations, Ceres finds a solution with an objective function value of $4\times 10^{-12}$.
 
 \section{Numeric Differentiation}
-If a templated implementation is not possible then a \texttt{NumericDiffCostFunction} object can be used. The user defines a \texttt{CostFunction} object whose \texttt{Evaluate} method is only computes the residuals. A wrapper object \texttt{NumericDiffCostFunction} then uses it to compute the residuals and the Jacobian using finite differencing.  \texttt{examples/quadratic\_numeric\_diff.cc} shows a numerically differentiated implementation of \texttt{examples/quadratic.cc}.
+In some cases, its not possible to define a templated cost functor. In such a situation, numerical differentiation can be used. The user defines a functor which computes the residual value and construct a \texttt{NumericDiffCostFunction} using it. e.g., for \texttt{F4}, the corresponding functor would be
+\begin{minted}[mathescape]{c++}
+class F4 {
+ public:
+  bool operator()(const double* const x1,
+                  const double* const x4,
+                  double* residual) const {
+    // $f_4 = \sqrt{10} * (x_1 - x_4)^2$
+    residual[0] = sqrt(10.0) * (x1[0] - x4[0]) * (x1[0] - x4[0]);
+    return true;
+  }
+};
+\end{minted}
 
-We recommend that if possible,  automatic differentiation should be used. The use of
-C++ templates makes automatic differentiation extremely efficient,
+Which can then be wrapped \texttt{NumericDiffCostFunction} and added to the \texttt{Problem} object as follows
+
+\begin{minted}[mathescape]{c++}
+problem.AddResidualBlock(
+  new ceres::NumericDiffCostFunction<F4, ceres::CENTRAL, 1, 1, 1>(new F4), NULL, &x1, &x4);
+\end{minted}
+
+The construction looks almost identical to the used for automatic differentiation, except for an extra template parameter that indicates the kind of finite differencing scheme to be used for computing the numerical derivatives. \texttt{examples/quadratic\_numeric\_diff.cc} shows a numerically differentiated implementation of \texttt{examples/quadratic.cc}.
+
+\textbf{We recommend that if possible,  automatic differentiation should be used. The use of
+\texttt{C++} templates makes automatic differentiation extremely efficient,
 whereas numeric differentiation can be quite expensive, prone to
-numeric errors and leads to slower convergence.
+numeric errors and leads to slower convergence.}
