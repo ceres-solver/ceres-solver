@@ -133,7 +133,7 @@ class NumericDiffFunctor {
   }
 
   bool operator()(const double* x0, double* residuals) const {
-    functor_(x0, residuals);
+    return functor_(x0, residuals);
   }
 
   bool operator()(const double* x0,
@@ -228,7 +228,7 @@ class NumericDiffFunctor {
 
   template <typename T>
   bool operator()(const T* x0, T* residuals) const {
-    functor_(x0, residuals);
+    return functor_(x0, residuals);
   }
 
   template <typename T>

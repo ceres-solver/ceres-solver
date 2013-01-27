@@ -177,6 +177,22 @@ class FileLoggingCallback : public IterationCallback {
     FILE* fptr_;
 };
 
+void SummarizeOrdering(ParameterBlockOrdering* ordering,
+                       vector<int>* summary) {
+  CHECK_NOTNULL(summary)->clear();
+  if (ordering == NULL) {
+    return;
+  }
+
+  const map<int, set<double*> >& group_to_elements =
+      ordering->group_to_elements();
+  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+       it != group_to_elements.end();
+       ++it) {
+    summary->push_back(it->second.size());
+  }
+}
+
 }  // namespace
 
 void SolverImpl::TrustRegionMinimize(
@@ -318,6 +334,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
+  SummarizeOrdering(original_options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_given));
+
+  SummarizeOrdering(original_options.inner_iteration_ordering,
+                    &(summary->inner_iteration_ordering_given));
+
   Solver::Options options(original_options);
   options.linear_solver_ordering = NULL;
   options.inner_iteration_ordering = NULL;
@@ -418,6 +440,9 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
+  SummarizeOrdering(options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_used));
+
   summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
   summary->num_parameters_reduced = reduced_program->NumParameters();
   summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
@@ -516,7 +541,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
           CreateInnerIterationMinimizer(original_options,
                                         *reduced_program,
                                         problem_impl->parameter_map(),
-                                        &summary->error));
+                                        summary));
       if (inner_iteration_minimizer == NULL) {
         LOG(ERROR) << summary->error;
         return;
@@ -1390,7 +1415,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     const Solver::Options& options,
     const Program& program,
     const ProblemImpl::ParameterMap& parameter_map,
-    string* error) {
+    Solver::Summary* summary) {
   scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer(
       new CoordinateDescentMinimizer);
   scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
@@ -1416,7 +1441,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     for ( ;it != group_to_elements.end(); ++it) {
       if (!IsParameterBlockSetIndependent(it->second,
                                           program.residual_blocks())) {
-        *error =
+        summary->error =
             StringPrintf("The user-provided "
                          "parameter_blocks_for_inner_iterations does not "
                          "form an independent set. Group Id: %d", it->first);
@@ -1429,9 +1454,12 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
   if (!inner_iteration_minimizer->Init(program,
                                        parameter_map,
                                        *ordering_ptr,
-                                       error)) {
+                                       &summary->error)) {
     return NULL;
   }
+
+  summary->inner_iterations = true;
+  SummarizeOrdering(ordering_ptr, &(summary->inner_iteration_ordering_used));
 
   return inner_iteration_minimizer.release();
 }
