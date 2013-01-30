@@ -83,6 +83,10 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
  public:
   explicit DenseQRSolver(const LinearSolver::Options& options);
 
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
+
  private:
   virtual LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,
@@ -92,6 +96,7 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
 
   const LinearSolver::Options options_;
   Vector rhs_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
   CERES_DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
 };
 

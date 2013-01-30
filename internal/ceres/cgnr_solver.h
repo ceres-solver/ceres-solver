@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_CGNR_SOLVER_H_
 #define CERES_INTERNAL_CGNR_SOLVER_H_
 
+#include "ceres/execution_summary.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 
@@ -53,10 +54,14 @@ class CgnrSolver : public LinearSolver {
                         const double* b,
                         const LinearSolver::PerSolveOptions& per_solve_options,
                         double* x);
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
 
  private:
   const LinearSolver::Options options_;
   scoped_ptr<BlockJacobiPreconditioner> jacobi_preconditioner_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
   CERES_DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
 };
 

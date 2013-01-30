@@ -30,11 +30,12 @@
 
 #include "ceres/cgnr_solver.h"
 
-#include "glog/logging.h"
-#include "ceres/linear_solver.h"
+#include "ceres/block_jacobi_preconditioner.h"
 #include "ceres/cgnr_linear_operator.h"
 #include "ceres/conjugate_gradients_solver.h"
-#include "ceres/block_jacobi_preconditioner.h"
+#include "ceres/linear_solver.h"
+#include "ceres/wall_time.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -49,6 +50,8 @@ LinearSolver::Summary CgnrSolver::Solve(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
+  EventTimer event_timer(&execution_summary_.times);
+
   // Form z = Atb.
   scoped_array<double> z(new double[A->num_cols()]);
   std::fill(z.get(), z.get() + A->num_cols(), 0.0);
@@ -69,11 +72,16 @@ LinearSolver::Summary CgnrSolver::Solve(
   // Solve (AtA + DtD)x = z (= Atb).
   std::fill(x, x + A->num_cols(), 0.0);
   CgnrLinearOperator lhs(*A, per_solve_options.D);
+
+  event_timer.AddRelativeEvent("LinearSolver::Setup");
+
   ConjugateGradientsSolver conjugate_gradient_solver(options_);
-  return conjugate_gradient_solver.Solve(&lhs,
-                                         z.get(),
-                                         cg_per_solve_options,
-                                         x);
+  LinearSolver::Summary summary =
+      conjugate_gradient_solver.Solve(&lhs, z.get(), cg_per_solve_options, x);
+
+  event_timer.AddRelativeEvent("LinearSolver::Solve");
+  event_timer.AddAbsoluteEvent("LinearSolver::Total");
+  return summary;
 }
 
 }  // namespace internal

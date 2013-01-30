@@ -88,6 +88,8 @@
 #include "ceres/residual_block.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/wall_time.h"
+#include "ceres/execution_summary.h"
 
 namespace ceres {
 namespace internal {
@@ -122,6 +124,8 @@ class ProgramEvaluator : public Evaluator {
                 double* residuals,
                 double* gradient,
                 SparseMatrix* jacobian) {
+    EventTimer event_timer(&execution_summary_.times);
+
     // The parameters are stateful, so set the state before evaluating.
     if (!program_->StateVectorToParameterBlocks(state)) {
       return false;
@@ -246,6 +250,14 @@ class ProgramEvaluator : public Evaluator {
         }
       }
     }
+
+    if (gradient == NULL && jacobian == NULL) {
+      event_timer.AddRelativeEvent("Evaluator::Residual");
+    } else {
+      event_timer.AddRelativeEvent("Evaluator::Jacobian");
+    }
+
+    event_timer.AddAbsoluteEvent("Evaluator::Total");
     return !abort;
   }
 
@@ -264,6 +276,10 @@ class ProgramEvaluator : public Evaluator {
 
   int NumResiduals() const {
     return program_->NumResiduals();
+  }
+
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
   }
 
  private:
@@ -331,6 +347,7 @@ class ProgramEvaluator : public Evaluator {
   scoped_array<EvaluatePreparer> evaluate_preparers_;
   scoped_array<EvaluateScratch> evaluate_scratch_;
   vector<int> residual_layout_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
 };
 
 }  // namespace internal
