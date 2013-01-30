@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "PDcq2r9k",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-30T16:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "PH6OxWko",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "PH4OuXug",
         "filename": "include/ceres/crs_matrix.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-30T16:47:30Z",
       "side": 1,
       "message": "Don\u0027t need the comma here.",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDYrS9-0",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-30T16:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "PH4OuXug",
       "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "PDWrXm.8",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-30T16:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "PH2N9omE",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "PH0OCpmE",
         "filename": "include/ceres/crs_matrix.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2013-01-30T16:47:30Z",
       "side": 1,
       "message": "The \"7]\" should align up with the subsequent rows.",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDSrho8U",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-01-30T16:50:47Z",
+      "side": 1,
+      "message": "7 falls outside the other two arrays, it is supposed to, which is why its not aligned with any of the entries.\n\nNotice that the end of the first row lies outside the first row and so on",
+      "parentUuid": "PH0OCpmE",
       "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
