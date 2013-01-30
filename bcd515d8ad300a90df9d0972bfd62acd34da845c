@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PDXV9SGE",
+        "filename": "internal/ceres/execution_summary.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:08:18Z",
+      "side": 1,
+      "message": "I assume increment is in decaseconds?",
+      "revId": "bcd515d8ad300a90df9d0972bfd62acd34da845c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDRV81GE",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:08:18Z",
+      "side": 1,
+      "message": "Gross, our first member on the interface. Grimmace.",
+      "revId": "bcd515d8ad300a90df9d0972bfd62acd34da845c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDfWQOKQ",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:08:18Z",
+      "side": 1,
+      "message": "In my experience manual time subtraction is error prone. What about a better API similar to the trace timer?",
+      "revId": "bcd515d8ad300a90df9d0972bfd62acd34da845c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
