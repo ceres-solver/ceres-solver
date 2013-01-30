@@ -35,6 +35,7 @@
 #include <string>
 
 #include "ceres/internal/port.h"
+#include "ceres/map_util.h"
 
 namespace ceres {
 namespace internal {
@@ -43,6 +44,11 @@ namespace internal {
 // information about their execution. e.g., ExecutionSummary::times
 // can be used for reporting times associated with various activities.
 struct ExecutionSummary {
+  void IncrementTimeBy(const string& key, double increment) {
+    const double current_time = FindWithDefault(times, key, 0.0);
+    times[key] = current_time + increment;
+  }
+
   map<string, double> times;
 };
 
