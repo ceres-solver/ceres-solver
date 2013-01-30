@@ -78,6 +78,10 @@ class DenseNormalCholeskySolver: public DenseSparseMatrixSolver {
  public:
   explicit DenseNormalCholeskySolver(const LinearSolver::Options& options);
 
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
+
  private:
   virtual LinearSolver::Summary SolveImpl(
       DenseSparseMatrix* A,
@@ -86,6 +90,7 @@ class DenseNormalCholeskySolver: public DenseSparseMatrixSolver {
       double* x);
 
   const LinearSolver::Options options_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
   CERES_DISALLOW_COPY_AND_ASSIGN(DenseNormalCholeskySolver);
 };
 

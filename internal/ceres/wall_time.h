@@ -31,12 +31,61 @@
 #ifndef CERES_INTERNAL_WALL_TIME_H_
 #define CERES_INTERNAL_WALL_TIME_H_
 
+#include <map>
+#include "glog/logging.h"
+#include "ceres/internal/port.h"
+#include "ceres/stringprintf.h"
+
 namespace ceres {
 namespace internal {
 
 // Returns time, in seconds, from some arbitrary starting point. Has very
 // high precision if OpenMP is available, otherwise only second granularity.
 double WallTimeInSeconds();
+
+class EventTimer {
+ public:
+  explicit EventTimer(map<string, double>* aggregate_times,
+                      bool print_event_log_at_destruction = true)
+      : start_time_(WallTimeInSeconds()),
+        last_event_time_(start_time_),
+        print_event_log_at_destruction_(print_event_log_at_destruction),
+        events_("\n"),
+        times_(aggregate_times) {}
+
+  ~EventTimer() {
+    if (print_event_log_at_destruction_) {
+      VLOG(2) << events_;
+    }
+  }
+
+  void AddRelativeEvent(const string& event_name) {
+    const double current_time = WallTimeInSeconds();
+    const double time_delta = current_time - last_event_time_;
+    last_event_time_ = current_time;
+    Update(event_name, time_delta);
+  }
+
+  void AddAbsoluteEvent(const string& event_name) {
+    last_event_time_ = WallTimeInSeconds();
+    const double time_delta =  last_event_time_ - start_time_;
+    Update(event_name, time_delta);
+  }
+
+ private:
+  void Update(const string& event_name, const double time_delta) {
+    (*times_)[event_name] += time_delta;
+    if (print_event_log_at_destruction_) {
+      StringAppendF(&events_, "%s : %e\n", event_name.c_str(), time_delta);
+    }
+  }
+
+  const double start_time_;
+  double last_event_time_;
+  const bool print_event_log_at_destruction_;
+  string events_;
+  map<string, double>* times_;
+};
 
 }  // namespace internal
 }  // namespace ceres

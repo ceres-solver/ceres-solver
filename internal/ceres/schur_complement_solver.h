@@ -115,6 +115,9 @@ class SchurComplementSolver : public BlockSparseMatrixBaseSolver {
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x);
 
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
  protected:
   const LinearSolver::Options& options() const { return options_; }
 
@@ -132,7 +135,7 @@ class SchurComplementSolver : public BlockSparseMatrixBaseSolver {
   scoped_ptr<SchurEliminatorBase> eliminator_;
   scoped_ptr<BlockRandomAccessMatrix> lhs_;
   scoped_array<double> rhs_;
-
+  ::ceres::internal::ExecutionSummary execution_summary_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SchurComplementSolver);
 };
 

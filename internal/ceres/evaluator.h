@@ -35,7 +35,6 @@
 #include <string>
 #include <vector>
 
-#include "ceres/execution_summary.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 
@@ -47,6 +46,7 @@ namespace internal {
 
 class Program;
 class SparseMatrix;
+struct ExecutionSummary;
 
 // The Evaluator interface offers a way to interact with a least squares cost
 // function that is useful for an optimizer that wants to minimize the least
@@ -154,8 +154,6 @@ class Evaluator {
 
   // The number of residuals in the optimization problem.
   virtual int NumResiduals() const = 0;
-
-  virtual ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
 };
 
 }  // namespace internal

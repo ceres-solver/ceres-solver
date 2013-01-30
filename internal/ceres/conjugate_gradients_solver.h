@@ -63,8 +63,13 @@ class ConjugateGradientsSolver : public LinearSolver {
                         const LinearSolver::PerSolveOptions& per_solve_options,
                         double* x);
 
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
+
  private:
   const LinearSolver::Options options_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
   CERES_DISALLOW_COPY_AND_ASSIGN(ConjugateGradientsSolver);
 };
 
