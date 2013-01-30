@@ -94,6 +94,9 @@ Solver::Summary::Summary()
       minimizer_time_in_seconds(-1.0),
       postprocessor_time_in_seconds(-1.0),
       total_time_in_seconds(-1.0),
+      linear_solver_time_in_seconds(-1.0),
+      residual_evaluation_time_in_seconds(-1.0),
+      jacobian_evaluation_time_in_seconds(-1.0),
       num_parameter_blocks(-1),
       num_parameters(-1),
       num_residual_blocks(-1),
@@ -266,9 +269,17 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "\nTime (in seconds):\n");
   StringAppendF(&report, "Preprocessor        % 25e\n",
                 preprocessor_time_in_seconds);
-  StringAppendF(&report, "Minimizer           % 25e\n",
+
+  StringAppendF(&report, "\n  Evaluator::Residuals % 22e\n",
+                residual_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Evaluator::Jacobians % 22e\n",
+                jacobian_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Linear Solver       % 23e\n",
+                linear_solver_time_in_seconds);
+  StringAppendF(&report, "Minimizer           % 25e\n\n",
                 minimizer_time_in_seconds);
-  StringAppendF(&report, "Total               % 25e\n",
+
+  StringAppendF(&report, "Total               % 25e\n\n",
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s\n",

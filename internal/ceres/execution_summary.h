@@ -35,6 +35,7 @@
 #include <string>
 
 #include "ceres/internal/port.h"
+#include "ceres/map_util.h"
 
 namespace ceres {
 namespace internal {
@@ -44,6 +45,7 @@ namespace internal {
 // can be used for reporting times associated with various activities.
 struct ExecutionSummary {
   map<string, double> times;
+  map<string, int> calls;
 };
 
 }  // namespace internal

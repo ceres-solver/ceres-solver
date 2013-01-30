@@ -35,8 +35,9 @@
 #define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 
 #include "ceres/cxsparse.h"
-#include "ceres/linear_solver.h"
+#include "ceres/execution_summary.h"
 #include "ceres/internal/macros.h"
+#include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 
 namespace ceres {
@@ -50,6 +51,9 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
  public:
   explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
   virtual ~SparseNormalCholeskySolver();
+  virtual ::ceres::internal::ExecutionSummary ExecutionSummary() const {
+    return execution_summary_;
+  }
 
  private:
   virtual LinearSolver::Summary SolveImpl(
@@ -84,6 +88,8 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 #endif  // CERES_NO_CXSPARSE
 
   const LinearSolver::Options options_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
+
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 

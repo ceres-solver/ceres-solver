@@ -28,10 +28,18 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
+#include "ceres/wall_time.h"
+
 #ifdef CERES_USE_OPENMP
 #include <omp.h>
 #else
 #include <ctime>
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/time.h>
 #endif
 
 namespace ceres {
@@ -41,8 +49,48 @@ double WallTimeInSeconds() {
 #ifdef CERES_USE_OPENMP
   return omp_get_wtime();
 #else
+#ifdef _WIN32
   return static_cast<double>(std::time(NULL));
+#else
+  timeval time_val;
+  gettimeofday(&time_val, NULL);
+  return (time_val.tv_sec + time_val.tv_usec * 1e-6);
 #endif
+#endif
+}
+
+EventTimer::EventTimer(map<string, double>* aggregate_times,
+                       bool print_event_log_at_destruction)
+    : start_time_(WallTimeInSeconds()),
+      last_event_time_(start_time_),
+      print_event_log_at_destruction_(print_event_log_at_destruction),
+      events_("\n"),
+      times_(aggregate_times) {}
+
+EventTimer::~EventTimer() {
+  if (print_event_log_at_destruction_) {
+    VLOG(2) << "\n" << events_ << "\n";
+  }
+}
+
+void EventTimer::AddRelativeEvent(const string& event_name) {
+  const double current_time = WallTimeInSeconds();
+  const double time_delta = current_time - last_event_time_;
+  last_event_time_ = current_time;
+  Update(event_name, time_delta);
+}
+
+void EventTimer::AddAbsoluteEvent(const string& event_name) {
+  last_event_time_ = WallTimeInSeconds();
+  const double time_delta =  last_event_time_ - start_time_;
+  Update(event_name, time_delta);
+}
+
+void EventTimer::Update(const string& event_name, const double time_delta) {
+  (*times_)[event_name] += time_delta;
+  if (print_event_log_at_destruction_) {
+    StringAppendF(&events_, "%30s : %5.2e\n", event_name.c_str(), time_delta);
+  }
 }
 
 }  // namespace internal
