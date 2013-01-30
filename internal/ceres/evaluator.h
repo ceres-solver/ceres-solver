@@ -34,6 +34,8 @@
 
 #include <string>
 #include <vector>
+
+#include "ceres/execution_summary.h"
 #include "ceres/internal/port.h"
 #include "ceres/types.h"
 
@@ -152,6 +154,8 @@ class Evaluator {
 
   // The number of residuals in the optimization problem.
   virtual int NumResiduals() const = 0;
+
+  virtual ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
 };
 
 }  // namespace internal

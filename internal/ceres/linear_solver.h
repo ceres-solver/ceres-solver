@@ -42,6 +42,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/dense_sparse_matrix.h"
+#include "ceres/execution_summary.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
@@ -254,6 +255,8 @@ class LinearSolver {
                         const double* b,
                         const PerSolveOptions& per_solve_options,
                         double* x) = 0;
+
+  virtual const ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
 
   // Factory
   static LinearSolver* Create(const Options& options);
