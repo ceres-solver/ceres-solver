@@ -39,12 +39,13 @@
 #endif
 
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace internal {
@@ -103,6 +104,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double * x) {
+  const double start_time = WallTimeInSeconds();
+
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   const int num_cols = A->num_cols();
@@ -136,10 +139,13 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     A->DeleteRows(num_cols);
   }
 
+  const double setup_time = WallTimeInSeconds();
+
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
     cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.AnalyzeCholesky(AtA));
   }
+  const double analysis_time = WallTimeInSeconds();
 
   // Solve the linear system.
   if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
@@ -147,7 +153,34 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     summary.termination_type = TOLERANCE;
   }
 
+  const double solve_time = WallTimeInSeconds();
+
+
   cxsparse_.Free(AtA);
+  const double teardown_time = WallTimeInSeconds();
+
+  ExecutionSummary* execution_summary = mutable_execution_summary();
+  execution_summary->IncrementTimeBy("LinearSolver::Setup",
+                                     setup_time - start_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::Analysis",
+                                     analysis_time - setup_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::Solve",
+                                     solve_time - analysis_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::TearDown",
+                                     teardown_time - solve_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::TotalTime",
+                                     teardown_time - start_time);
+
+  VLOG(2) << "time (sec) total: " << (teardown_time - start_time)
+          << " setup: " << (setup_time - start_time)
+          << " analysis: " << (analysis_time - setup_time)
+          << " solve: " << (solve_time - analysis_time)
+          << " teardown: " << (teardown_time - solve_time);
+
   return summary;
 }
 #else
@@ -169,7 +202,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double * x) {
-  const time_t start_time = time(NULL);
+  const double start_time = WallTimeInSeconds();
   const int num_cols = A->num_cols();
 
   LinearSolver::Summary summary;
@@ -189,7 +222,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   CHECK_NOTNULL(lhs.get());
 
   cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
-  const time_t init_time = time(NULL);
+  const double setup_time = WallTimeInSeconds();
 
   if (factor_ == NULL) {
     if (options_.use_block_amd) {
@@ -207,10 +240,10 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
   CHECK_NOTNULL(factor_);
 
-  const time_t symbolic_time = time(NULL);
+  const double analysis_time = WallTimeInSeconds();
 
   cholmod_dense* sol = ss_.SolveCholesky(lhs.get(), factor_, rhs);
-  const time_t solve_time = time(NULL);
+  const double solve_time = WallTimeInSeconds();
 
   ss_.Free(rhs);
   rhs = NULL;
@@ -228,12 +261,29 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     summary.termination_type = TOLERANCE;
   }
 
-  const time_t cleanup_time = time(NULL);
-  VLOG(2) << "time (sec) total: " << (cleanup_time - start_time)
-          << " init: " << (init_time - start_time)
-          << " symbolic: " << (symbolic_time - init_time)
-          << " solve: " << (solve_time - symbolic_time)
-          << " cleanup: " << (cleanup_time - solve_time);
+  const double teardown_time = WallTimeInSeconds();
+
+  ExecutionSummary* execution_summary = mutable_execution_summary();
+  execution_summary->IncrementTimeBy("LinearSolver::Setup",
+                                     setup_time - start_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::Analysis",
+                                     analysis_time - setup_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::Solve",
+                                     solve_time - analysis_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::TearDown",
+                                     teardown_time - solve_time);
+
+  execution_summary->IncrementTimeBy("LinearSolver::TotalTime",
+                                     teardown_time - start_time);
+
+  VLOG(2) << "time (sec) total: " << (teardown_time - start_time)
+          << " setup: " << (setup_time - start_time)
+          << " analysis: " << (analysis_time - setup_time)
+          << " solve: " << (solve_time - analysis_time)
+          << " teardown: " << (teardown_time - solve_time);
   return summary;
 }
 #else

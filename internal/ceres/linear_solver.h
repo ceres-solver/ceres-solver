@@ -256,10 +256,18 @@ class LinearSolver {
                         const PerSolveOptions& per_solve_options,
                         double* x) = 0;
 
-  virtual const ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
+  virtual const ExecutionSummary& execution_summary() const {
+    return execution_summary_;
+  }
 
   // Factory
   static LinearSolver* Create(const Options& options);
+
+ protected:
+  ExecutionSummary* mutable_execution_summary() { return &execution_summary_; }
+
+ private:
+  ExecutionSummary execution_summary_;
 };
 
 // This templated subclass of LinearSolver serves as a base class for
