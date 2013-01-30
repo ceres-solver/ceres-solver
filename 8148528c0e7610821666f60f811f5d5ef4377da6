@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PH6OxWko",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2013-01-30T16:47:30Z",
+      "side": 1,
+      "message": "Period should be a comma.",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PH4OuXug",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2013-01-30T16:47:30Z",
+      "side": 1,
+      "message": "Don\u0027t need the comma here.",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PH2N9omE",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2013-01-30T16:47:30Z",
+      "side": 1,
+      "message": "How about:\n\"cols[rows[i]] ... cols[rows[i + 1] - 1] are the indices of the non-zero columns\"",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PH0OCpmE",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2013-01-30T16:47:30Z",
+      "side": 1,
+      "message": "The \"7]\" should align up with the subsequent rows.",
+      "revId": "8148528c0e7610821666f60f811f5d5ef4377da6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
