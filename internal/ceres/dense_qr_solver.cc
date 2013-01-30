@@ -34,10 +34,11 @@
 
 #include "Eigen/Dense"
 #include "ceres/dense_sparse_matrix.h"
-#include "ceres/linear_solver.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/linear_solver.h"
 #include "ceres/types.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace internal {
@@ -50,10 +51,10 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
+  EventLogger event_logger;
+
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
-  VLOG(2) << "DenseQRSolver: "
-          << num_rows << " x " << num_cols << " system.";
 
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
@@ -68,9 +69,11 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
     rhs_.setZero();
   }
   rhs_.head(num_rows) = ConstVectorRef(b, num_rows);
+  event_logger.AddRelativeEvent("LinearSolver::Setup");
 
   // Solve the system.
   VectorRef(x, num_cols) = A->matrix().colPivHouseholderQr().solve(rhs_);
+  event_logger.AddRelativeEvent("LinearSolver::Solve");
 
   if (per_solve_options.D != NULL) {
     // Undo the modifications to the matrix A.
@@ -83,6 +86,10 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
+  event_logger.AddRelativeEvent("LinearSolver::TearDown");
+
+  event_logger.AddAbsoluteEvent("LinearSolver::Total");
+
   return summary;
 }
 

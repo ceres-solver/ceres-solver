@@ -31,12 +31,36 @@
 #ifndef CERES_INTERNAL_WALL_TIME_H_
 #define CERES_INTERNAL_WALL_TIME_H_
 
+#include <map>
+
+#include "ceres/internal/port.h"
+#include "ceres/stringprintf.h"
+#include "glog/logging.h"
+
 namespace ceres {
 namespace internal {
 
-// Returns time, in seconds, from some arbitrary starting point. Has very
-// high precision if OpenMP is available, otherwise only second granularity.
+// Returns time, in seconds, from some arbitrary starting point. If
+// OpenMP is available then the high precision openmp_get_wtime()
+// function is used. Otherwise on unixes, gettimeofday is used. The
+// granularity is in seconds on windows systems.
 double WallTimeInSeconds();
+
+class EventLogger {
+ public:
+  EventLogger();
+  ~EventLogger();
+
+  void AddRelativeEvent(const string& name);
+  void AddAbsoluteEvent(const string& name);
+
+ private:
+  void Update(const string& name, const double time_delta);
+
+  const double start_time_;
+  double last_event_time_;
+  string events_;
+};
 
 }  // namespace internal
 }  // namespace ceres

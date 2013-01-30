@@ -177,6 +177,8 @@ class FileLoggingCallback : public IterationCallback {
     FILE* fptr_;
 };
 
+// Iterate over each of the groups in order of their priority and fill
+// summary with their sizes.
 void SummarizeOrdering(ParameterBlockOrdering* ordering,
                        vector<int>* summary) {
   CHECK_NOTNULL(summary)->clear();
@@ -618,6 +620,19 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+  const map<string, double>& linear_solver_time_statistics =
+      linear_solver->TimeStatistics();
+  summary->linear_solver_time_in_seconds =
+      FindOrDie(linear_solver_time_statistics, "LinearSolver::Solve");
+
+  const map<string, double>& evaluator_time_statistics =
+      evaluator->TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindOrDie(evaluator_time_statistics, "Evaluator::Residual");
+  summary->jacobian_evaluation_time_in_seconds =
+      FindOrDie(evaluator_time_statistics, "Evaluator::Jacobian");
+
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
@@ -764,7 +779,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     // any further.
     summary->termination_type = FUNCTION_TOLERANCE;
 
-    double post_process_start_time = WallTimeInSeconds();
+    const double post_process_start_time = WallTimeInSeconds();
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
     if (!Evaluator::Evaluate(original_program,
@@ -809,7 +824,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   Vector original_parameters = parameters;
 
-  double minimizer_start_time = WallTimeInSeconds();
+  const double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
@@ -828,7 +843,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  double post_process_start_time = WallTimeInSeconds();
+  const double post_process_start_time = WallTimeInSeconds();
 
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());

@@ -28,10 +28,18 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
+#include "ceres/wall_time.h"
+
 #ifdef CERES_USE_OPENMP
 #include <omp.h>
 #else
 #include <ctime>
+#endif
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <sys/time.h>
 #endif
 
 namespace ceres {
@@ -41,8 +49,48 @@ double WallTimeInSeconds() {
 #ifdef CERES_USE_OPENMP
   return omp_get_wtime();
 #else
+#ifdef _WIN32
   return static_cast<double>(std::time(NULL));
+#else
+  timeval time_val;
+  gettimeofday(&time_val, NULL);
+  return (time_val.tv_sec + time_val.tv_usec * 1e-6);
 #endif
+#endif
+}
+
+EventLogger::EventLogger()
+    : start_time_(WallTimeInSeconds()),
+      last_event_time_(start_time_),
+      events_("\n") {}
+
+EventLogger::~EventLogger() {
+  VLOG(2) << "\n" << events_ << "\n";
+}
+
+void EventLogger::AddRelativeEvent(const string& name) {
+  if (!VLOG_IS_ON(2)) {
+    return;
+  }
+
+  const double current_time = WallTimeInSeconds();
+  const double time_delta = current_time - last_event_time_;
+  last_event_time_ = current_time;
+  Update(name, time_delta);
+}
+
+void EventLogger::AddAbsoluteEvent(const string& name) {
+  if (!VLOG_IS_ON(2)) {
+    return;
+  }
+
+  last_event_time_ = WallTimeInSeconds();
+  const double time_delta =  last_event_time_ - start_time_;
+  Update(name, time_delta);
+}
+
+void EventLogger::Update(const string& name, const double time_delta) {
+  StringAppendF(&events_, "%30s : %5.2e\n", name.c_str(), time_delta);
 }
 
 }  // namespace internal

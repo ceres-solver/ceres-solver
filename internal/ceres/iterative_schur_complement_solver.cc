@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <cstring>
 #include <vector>
+
 #include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -44,6 +45,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/visibility_based_preconditioner.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -62,6 +64,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
+  EventLogger event_logger;
+
   CHECK_NOTNULL(A->block_structure());
 
   // Initialize a ImplicitSchurComplement object.
@@ -121,6 +125,7 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     default:
       LOG(FATAL) << "Unknown Preconditioner Type";
   }
+  event_logger.AddRelativeEvent("LinearSolver::Setup");
 
   LinearSolver::Summary cg_summary;
   cg_summary.num_iterations = 0;
@@ -136,6 +141,9 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
           reduced_linear_system_solution_.data(), x);
     }
   }
+
+  event_logger.AddRelativeEvent("LinearSolver::Solve");
+  event_logger.AddAbsoluteEvent("LinearSolver::Total");
 
   VLOG(2) << "CG Iterations : " << cg_summary.num_iterations;
   return cg_summary;

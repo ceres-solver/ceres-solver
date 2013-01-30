@@ -664,6 +664,10 @@ class Solver {
     // Some total of all time spent inside Ceres when Solve is called.
     double total_time_in_seconds;
 
+    double linear_solver_time_in_seconds;
+    double residual_evaluation_time_in_seconds;
+    double jacobian_evaluation_time_in_seconds;
+
     // Preprocessor summary.
     int num_parameter_blocks;
     int num_parameters;
