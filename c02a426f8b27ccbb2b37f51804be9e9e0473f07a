@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PDTWREFk",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:30:44Z",
+      "side": 1,
+      "message": "which -\u003e that",
+      "revId": "c02a426f8b27ccbb2b37f51804be9e9e0473f07a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDVWcjHA",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:30:44Z",
+      "side": 1,
+      "message": "Spaces around -",
+      "revId": "c02a426f8b27ccbb2b37f51804be9e9e0473f07a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PDRWWFFE",
+        "filename": "include/ceres/crs_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-01-30T01:30:44Z",
+      "side": 1,
+      "message": "Spacing is non-obvious; consider putting under-markers like in jet.h.",
+      "revId": "c02a426f8b27ccbb2b37f51804be9e9e0473f07a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
