@@ -177,6 +177,8 @@ class FileLoggingCallback : public IterationCallback {
     FILE* fptr_;
 };
 
+// Iterate over each of the groups in order of their priority and fill
+// summary with their sizes.
 void SummarizeOrdering(ParameterBlockOrdering* ordering,
                        vector<int>* summary) {
   CHECK_NOTNULL(summary)->clear();
@@ -308,6 +310,7 @@ void SolverImpl::Solve(const Solver::Options& options,
 void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                   ProblemImpl* original_problem_impl,
                                   Solver::Summary* summary) {
+  EventLogger event_logger("Solve");
   double solver_start_time = WallTimeInSeconds();
 
   Program* original_program = original_problem_impl->mutable_program();
@@ -369,6 +372,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
         " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
   }
 
+  event_logger.AddEvent("Solver::Init");
   // Evaluate the initial cost, residual vector and the jacobian
   // matrix if requested by the user. The initial cost needs to be
   // computed on the original unpreprocessed problem, as it is used to
@@ -391,6 +395,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     LOG(ERROR) << summary->error;
     return;
   }
+
+  event_logger.AddEvent("Solver::InitialEvaluate");
 
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
@@ -430,12 +436,15 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     }
   }
 
+  event_logger.AddEvent("Solver::ConstructOrdering");
+
   // Create the three objects needed to minimize: the transformed program, the
   // evaluator, and the linear solver.
   scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
                                                            problem_impl,
                                                            &summary->fixed_cost,
                                                            &summary->error));
+  event_logger.AddEvent("Solver::CreateReducedProgram");
   if (reduced_program == NULL) {
     return;
   }
@@ -484,6 +493,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+    event_logger.AddEvent("Solver::FinalEvaluate");
     summary->postprocessor_time_in_seconds =
         WallTimeInSeconds() - post_process_start_time;
     return;
@@ -491,6 +501,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   scoped_ptr<LinearSolver>
       linear_solver(CreateLinearSolver(&options, &summary->error));
+  event_logger.AddEvent("Solver::CreateLinearSolver");
   if (linear_solver == NULL) {
     return;
   }
@@ -527,6 +538,9 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                                   problem_impl->parameter_map(),
                                                   reduced_program.get(),
                                                   &summary->error));
+
+  event_logger.AddEvent("Solver::CreateEvaluator");
+
   if (evaluator == NULL) {
     return;
   }
@@ -549,6 +563,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     }
   }
 
+  event_logger.AddEvent("Solver::CreateIIM");
+
   // The optimizer works on contiguous parameter vectors; allocate some.
   Vector parameters(reduced_program->NumParameters());
 
@@ -561,6 +577,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
+  event_logger.AddEvent("Solver::FinalInit");
   // Run the optimization.
   TrustRegionMinimize(options,
                       reduced_program.get(),
@@ -569,6 +586,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                       linear_solver.get(),
                       parameters.data(),
                       summary);
+  event_logger.AddEvent("Solver::Minimize");
 
   // If the user aborted mid-optimization or the optimization
   // terminated because of a numerical failure, then return without
@@ -612,15 +630,31 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     summary->termination_type = NUMERICAL_FAILURE;
     summary->error = "Unable to evaluate the final cost.";
     LOG(ERROR) << summary->error;
+
+    event_logger.AddEvent("Solver::PostProcess");
     return;
   }
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+  const map<string, double>& linear_solver_time_statistics =
+      linear_solver->TimeStatistics();
+  summary->linear_solver_time_in_seconds =
+      FindWithDefault(linear_solver_time_statistics, "LinearSolver::Solve", 0.0);
+
+  const map<string, double>& evaluator_time_statistics =
+      evaluator->TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
+  event_logger.AddEvent("Solver::PostProcess");
 }
 
 void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
@@ -764,7 +798,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     // any further.
     summary->termination_type = FUNCTION_TOLERANCE;
 
-    double post_process_start_time = WallTimeInSeconds();
+    const double post_process_start_time = WallTimeInSeconds();
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
     if (!Evaluator::Evaluate(original_program,
@@ -809,7 +843,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   Vector original_parameters = parameters;
 
-  double minimizer_start_time = WallTimeInSeconds();
+  const double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
@@ -828,7 +862,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  double post_process_start_time = WallTimeInSeconds();
+  const double post_process_start_time = WallTimeInSeconds();
 
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
@@ -1026,9 +1060,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
+  EventLogger event_logger("CRP");
+
   CHECK_NOTNULL(options->linear_solver_ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
+  event_logger.AddEvent("CRP::TransformedProgram");
+
   ParameterBlockOrdering* linear_solver_ordering =
       options->linear_solver_ordering;
 
@@ -1042,6 +1080,8 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                     error)) {
     return NULL;
   }
+
+  event_logger.AddEvent("CRP::RemovedFixedBlocks");
 
   if (transformed_program->NumParameterBlocks() == 0) {
     if (transformed_program->NumResidualBlocks() > 0) {
@@ -1076,6 +1116,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
           (i < num_eliminate_blocks) ? 0 : 1);
     }
   }
+  event_logger.AddEvent("CRP::SchurOrdering");
 
   if (!ApplyUserOrdering(problem_impl->parameter_map(),
                          linear_solver_ordering,
@@ -1083,6 +1124,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                          error)) {
     return NULL;
   }
+  event_logger.AddEvent("CRP::ApplyOrdering");
 
   // If the user requested the use of a Schur type solver, and
   // supplied a non-NULL linear_solver_ordering object with more than
@@ -1123,9 +1165,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     LOG(WARNING) << msg;
   }
 
+  event_logger.AddEvent("CRP::AlternateSolver");
+
   // Since the transformed program is the "active" program, and it is mutated,
   // update the parameter offsets and indices.
   transformed_program->SetParameterOffsetsAndIndex();
+
+  event_logger.AddEvent("CRP::SetOffsets");
   return transformed_program.release();
 }
 
