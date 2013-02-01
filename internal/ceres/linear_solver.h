@@ -43,6 +43,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/execution_summary.h"
+#include "ceres/execution_summary.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 
@@ -256,6 +257,14 @@ class LinearSolver {
                         const PerSolveOptions& per_solve_options,
                         double* x) = 0;
 
+  virtual map<string, int> CallStatistics() const {
+    return map<string, int>();
+  }
+
+  virtual map<string, double> TimeStatistics() const {
+    return map<string, double>();
+  }
+
   // Factory
   static LinearSolver* Create(const Options& options);
 };
@@ -276,10 +285,19 @@ class TypedLinearSolver : public LinearSolver {
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) {
+    ScopedExecutionTimer total_time("LinearSolver::Solve", &execution_summary_);
     CHECK_NOTNULL(A);
     CHECK_NOTNULL(b);
     CHECK_NOTNULL(x);
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
+  }
+
+  virtual map<string, int> CallStatistics() const {
+    return execution_summary_.calls();
+  }
+
+  virtual map<string, double> TimeStatistics() const {
+    return execution_summary_.times();
   }
 
  private:
@@ -288,6 +306,8 @@ class TypedLinearSolver : public LinearSolver {
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x) = 0;
+
+  ExecutionSummary execution_summary_;
 };
 
 // Linear solvers that depend on acccess to the low level structure of

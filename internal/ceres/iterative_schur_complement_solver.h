@@ -86,6 +86,7 @@ class IterativeSchurComplementSolver : public BlockSparseMatrixBaseSolver {
   scoped_ptr<internal::ImplicitSchurComplement> schur_complement_;
   scoped_ptr<VisibilityBasedPreconditioner> visibility_based_preconditioner_;
   Vector reduced_linear_system_solution_;
+  CERES_DISALLOW_COPY_AND_ASSIGN(IterativeSchurComplementSolver);
 };
 
 }  // namespace internal
