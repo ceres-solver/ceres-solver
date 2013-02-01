@@ -155,6 +155,13 @@ class Evaluator {
   // The number of residuals in the optimization problem.
   virtual int NumResiduals() const = 0;
 
+  virtual map<string, int> CallStatistics() const {
+    return map<string, int>();
+  }
+
+  virtual map<string, double> TimeStatistics() const {
+    return map<string, double>();
+  }
 };
 
 }  // namespace internal
