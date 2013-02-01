@@ -35,6 +35,8 @@
 #include <string>
 
 #include "ceres/internal/port.h"
+#include "ceres/wall_time.h"
+#include "ceres/mutex.h"
 
 namespace ceres {
 namespace internal {
@@ -42,8 +44,44 @@ namespace internal {
 // Struct used by various objects to report statistics and other
 // information about their execution. e.g., ExecutionSummary::times
 // can be used for reporting times associated with various activities.
-struct ExecutionSummary {
-  map<string, double> times;
+class ExecutionSummary {
+ public:
+  void IncrementTimeBy(const string& name, const double value) {
+    CeresMutexLock l(&times_mutex_);
+    times_[name] += value;
+  }
+
+  void IncrementCall(const string& name) {
+    CeresMutexLock l(&calls_mutex_);
+    calls_[name] += 1;
+  }
+
+  const map<string, double>& times() const { return times_; };
+  const map<string, int>& calls() const { return calls_; };
+
+ private:
+  Mutex times_mutex_;
+  map<string, double> times_;
+
+  Mutex calls_mutex_;
+  map<string, int> calls_;
+};
+
+class ScopedExecutionTimer {
+ public:
+  ScopedExecutionTimer(const string& name, ExecutionSummary* summary)
+      : start_time_(WallTimeInSeconds()),
+        name_(name),
+        summary_(summary) {}
+
+  ~ScopedExecutionTimer() {
+    summary_->IncrementTimeBy(name_, WallTimeInSeconds() - start_time_);
+  }
+
+ private:
+  const double start_time_;
+  const string name_;
+  ExecutionSummary* summary_;
 };
 
 }  // namespace internal
