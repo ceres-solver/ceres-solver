@@ -88,6 +88,7 @@
 #include "ceres/residual_block.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/execution_summary.h"
 
 namespace ceres {
 namespace internal {
@@ -122,6 +123,12 @@ class ProgramEvaluator : public Evaluator {
                 double* residuals,
                 double* gradient,
                 SparseMatrix* jacobian) {
+    ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
+    ScopedExecutionTimer call_type_timer(gradient == NULL && jacobian == NULL
+                                         ? "Evaluator::Residual"
+                                         : "Evaluator::Jacobian",
+                                         &execution_summary_);
+
     // The parameters are stateful, so set the state before evaluating.
     if (!program_->StateVectorToParameterBlocks(state)) {
       return false;
@@ -266,6 +273,14 @@ class ProgramEvaluator : public Evaluator {
     return program_->NumResiduals();
   }
 
+  virtual map<string, int> CallStatistics() const {
+    return execution_summary_.calls();
+  }
+
+  virtual map<string, double> TimeStatistics() const {
+    return execution_summary_.times();
+  }
+
  private:
   // Per-thread scratch space needed to evaluate and store each residual block.
   struct EvaluateScratch {
@@ -331,6 +346,7 @@ class ProgramEvaluator : public Evaluator {
   scoped_array<EvaluatePreparer> evaluate_preparers_;
   scoped_array<EvaluateScratch> evaluate_scratch_;
   vector<int> residual_layout_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
 };
 
 }  // namespace internal
