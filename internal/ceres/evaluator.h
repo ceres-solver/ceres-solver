@@ -155,7 +155,6 @@ class Evaluator {
   // The number of residuals in the optimization problem.
   virtual int NumResiduals() const = 0;
 
-  virtual ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
 };
 
 }  // namespace internal

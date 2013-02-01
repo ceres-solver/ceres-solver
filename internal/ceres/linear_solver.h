@@ -256,8 +256,6 @@ class LinearSolver {
                         const PerSolveOptions& per_solve_options,
                         double* x) = 0;
 
-  virtual const ExecutionSummary ExecutionSummary() const { return ExecutionSummary(); }
-
   // Factory
   static LinearSolver* Create(const Options& options);
 };
