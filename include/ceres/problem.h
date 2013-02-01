@@ -259,6 +259,30 @@ class Problem {
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
 
+  // The following two functions allow the user to evaluate the
+  // residual blocks.
+  //
+  // Residuals are evaluated if residual != NULL.
+  //
+  // Jacobians of the CostFunction w.r.t to the i^th parameter block
+  // are evaluated if jacobians[i] is not null.
+  //
+  // It is the user's responsibility that if jacobians[i] is not null,
+  // then it points to enough memory to store the corresponding
+  // jacobian matrix. Each jacobian is stored as a row-major matrix.
+  //
+  // Two variants are provided, evaluate with or without applying the
+  // LossFunction to the output of the CostFunction object. The latter
+  // is useful when characterizing the distribution of errors before
+  // and after optimization.
+  bool Evaluate(const ResidualBlockId residual_block_id,
+                double* const residuals,
+                const vector<double* const>& jacobians);
+
+  bool EvaluateWithoutLossFunction(const ResidualBlockId residual_block_id,
+                                   double* const residuals,
+                                   vector<double* const> jacobians);
+
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
   int NumParameterBlocks() const;
