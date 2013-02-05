@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PWku9Wc4",
+        "filename": "docs/source/license.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-05T00:59:52Z",
+      "side": 1,
+      "message": "Weirdness here.",
+      "revId": "0f0ae81015b72f58d7aef24074a1416ed27ed009",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
