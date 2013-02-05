@@ -1,0 +1,75 @@
+.. _chapter-introduction:
+
+============
+Introduction
+============
+
+Solving nonlinear least squares problems [#f1]_ comes up in a broad
+range of areas across science and engineering - from fitting curves in
+statistics, to constructing 3D models from photographs in computer
+vision. Ceres Solver [#f2]_ [#f3]_ is a portable C++ library for
+solving non-linear least squares problems. It is designed to solve
+small and large sparse problems accurately and efficiently.
+
+At Google, Ceres Solver has been used for solving a variety of
+problems in computer vision and machine learning. e.g., it is used to
+to estimate the pose of Street View cars, aircrafts, and satellites;
+to build 3D models for PhotoTours; to estimate satellite image sensor
+characteristics, and more.
+
+
+Features:
+
+#. A friendly :ref:`chapter-modeling`.
+
+#. Automatic and numeric differentiation.
+
+#. Robust loss functions and Local parameterizations.
+
+#. Multithreading.
+
+#. Trust-Region (Levenberg-Marquardt and Dogleg) and Line Search
+   (Nonlinear CG and L-BFGS) solvers.
+
+#. Variety of linear solvers.
+
+   a. Dense QR and Cholesky factorization (using `Eigen
+      <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_) for
+      small problems.
+
+   b. Sparse Cholesky factorization (using `SuiteSparse
+      <http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_ and
+      `CXSparse <http://www.cise.ufl.edu/research/sparse/CSparse/>`_) for
+      large sparse problems.
+
+   c. Specialized solvers for bundle adjustment problems in computer
+      vision.
+
+   d. Iterative linear solvers with perconditioners for general sparse
+      and bundle adjustment problems.
+
+#. Portable: Runs on Linux, Windows, Mac OS X and Android. An iOS port is
+   underway.
+
+
+
+.. rubric:: Footnotes
+
+.. [#f1] For a gentle but brief introduction to non-linear least
+         squares problems, please start by reading the
+         :ref:`chapter-tutorial`.
+
+.. [#f2] While there is some debate as to who invented of the method
+         of Least Squares [Stigler]_. There is no debate that it was
+         Carl Friedrich Gauss's prediction of the orbit of the newly
+         discovered asteroid Ceres based on just 41 days of
+         observations that brought it to the attention of the world
+         [TenenbaumDirector]_. We named our solver after Ceres to
+         celebrate this seminal event in the history of astronomy,
+         statistics and optimization.
+
+.. [#f3] For brevity, in the rest of this document we will just use
+         the term Ceres.
+
+
+

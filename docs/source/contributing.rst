@@ -23,6 +23,8 @@ Gerrit Instructions
 ===================
 
 TBD
+
+
 .. rubric:: Footnotes
 
 .. [#f1] http://groups.google.com/group/ceres-solver
