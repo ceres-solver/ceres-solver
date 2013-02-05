@@ -21,5 +21,3 @@ Contents
    version_history
    bibliography
    license
-
-
