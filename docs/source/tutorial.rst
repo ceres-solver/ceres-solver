@@ -314,9 +314,8 @@ expensive, prone to numeric errors and leads to slower convergence.**
 
 .. _section-fitting:
 
-Fitting a Curve to Data
-=======================
-
+Curve Fitting
+=============
 
 The examples we have seen until now are simple optimization problems
 with no data. The original purpose of least squares and non-linear
@@ -356,7 +355,7 @@ the problem construction is a simple matter of creating a
 ``CostFunction`` for every observation.
 
 
-.. code-block: c++
+.. code-block:: c++
 
  double m = 0.0;
  double c = 0.0;

@@ -62,73 +62,41 @@ depdendency and without it some of the tests will be disabled.
 
 Building on Linux
 =================
-We will use `Ubuntu <http://www.ubuntu.com>`_ as our example platform.
+We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
+platform. Start by installing all the dependencies.
 
-#. ``CMake``
+.. code-block:: bash
 
-   .. code-block:: bash
-
-      sudo apt-get install cmake
-
-#. ``gflags`` can either be installed from source via the ``autoconf``
-   invocation
-
-   .. code-block:: bash
-
+     # CMake
+     sudo apt-hey install cmake
+     # gflags
      tar -xvzf gflags-2.0.tar.gz
      cd gflags-2.0
      ./configure --prefix=/usr/local
      make
      sudo make install.
-
-
-   or via the ``deb`` or ``rpm`` packages available on the ``gflags`` website.
-
-#. ``google-glog`` must be configured to use the previously installed
-   ``gflags``, rather than the stripped down version that is bundled
-   with ``google-glog``. Assuming you have it installed in ``/usr/local`` the
-   following ``autoconf`` invocation installs it.
-
-   .. code-block:: bash
-
+     # google-glog must be configured to use the previously installed gflags
      tar -xvzf glog-0.3.2.tar.gz
      cd glog-0.3.2
      ./configure --with-gflags=/usr/local/
      make
      sudo make install
-
-#. ``Eigen``
-
-   .. code-block:: bash
-
-      sudo apt-get install libeigen3-dev
-
-#. ``SuiteSparse`` and ``CXSparse``
-
-   .. code-block:: bash
-
-      sudo apt-get install libsuitesparse-dev
-
-   This should automatically bring in the necessary ``BLAS`` and
-   ``LAPACK`` dependencies. By co-incidence on Ubuntu, this also
-   installs ``CXSparse``.
-
-#. ``protobuf``
-
-   .. code-block:: bash
-
-      sudo apt-get install libprotobuf-dev
-
+     # Eigen3
+     sudo apt-get install libeigen3-dev
+     # SuiteSparse and CXSparse
+     sudo apt-get install libsuitesparse-dev
+     # protobuf
+     sudo apt-get install libprotobuf-dev
 
 We are now ready to build and test Ceres. Note that ``CMake`` requires
 the exact path to the ``libglog.a`` and ``libgflag.a``.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.2.1.tar.gz
+ tar zxf ceres-solver-1.5.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.2.1
+ cmake ../ceres-solver-1.5.0
  make -j3
  make test
 
@@ -139,7 +107,7 @@ dataset [Agarwal]_.
 .. code-block:: bash
 
  bin/simple_bundle_adjuster \
-   ../ceres-solver-1.2.1/data/problem-16-22106-pre.txt \
+   ../ceres-solver-1.5.0/data/problem-16-22106-pre.txt \
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -200,39 +168,20 @@ Building on Mac OS X
 ====================
 
 On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager.
+<http://mxcl.github.com/homebrew/>`_ package manager. Start by
+installing all the dependencies.
 
+.. code-block:: bash
 
-#. ``CMake``
-
-   .. code-block:: bash
-
+      # CMake
       brew install cmake
-
-#. ``google-glog`` and ``gflags``
-
-Installing ``google-glog`` takes also brings in ``gflags`` as a dependency.
-
-   .. code-block:: bash
-
+      # google-glog and gflags
       brew install glog
-
-#. ``Eigen3``
-
-   .. code-block:: bash
-
+      # Eigen2
       brew install eigen
-
-#. ``SuiteSparse`` and ``CXSparse``
-
-   .. code-block:: bash
-
+      # SuiteSparse and CXSparse
       brew install suite-sparse
-
-#. ``protobuf``
-
-   .. code-block:: bash
-
+      # protobuf
       brew install protobuf
 
 
@@ -240,10 +189,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.2.1.tar.gz
+   tar zxf ceres-solver-1.5.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.2.1
+   cmake ../ceres-solver-1.5.0
    make -j3
    make test
 
@@ -371,4 +320,3 @@ customize the build process by passing appropriate flags to
 #. ``-DOPENMP=OFF`` : On certain platforms like Android,
    multithreading with ``OpenMP`` is not supported. Use this flag to
    disable multithreading.
-
