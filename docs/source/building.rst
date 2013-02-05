@@ -4,8 +4,8 @@
 Building
 ========
 
-Ceres source code and documentation are hosted at
-http://code.google.com/p/ceres-solver/ .
+Ceres source code and documentation are hosted at `code.google.com
+<http://code.google.com/p/ceres-solver/>`_.
 
 .. _section-dependencies:
 
@@ -62,73 +62,41 @@ depdendency and without it some of the tests will be disabled.
 
 Building on Linux
 =================
-We will use `Ubuntu <http://www.ubuntu.com>`_ as our example platform.
+We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
+platform. Start by installing all the dependencies.
 
-#. ``CMake``
+.. code-block:: bash
 
-   .. code-block:: bash
-
-      sudo apt-get install cmake
-
-#. ``gflags`` can either be installed from source via the ``autoconf``
-   invocation
-
-   .. code-block:: bash
-
+     # CMake
+     sudo apt-hey install cmake
+     # gflags
      tar -xvzf gflags-2.0.tar.gz
      cd gflags-2.0
      ./configure --prefix=/usr/local
      make
      sudo make install.
-
-
-   or via the ``deb`` or ``rpm`` packages available on the ``gflags`` website.
-
-#. ``google-glog`` must be configured to use the previously installed
-   ``gflags``, rather than the stripped down version that is bundled
-   with ``google-glog``. Assuming you have it installed in ``/usr/local`` the
-   following ``autoconf`` invocation installs it.
-
-   .. code-block:: bash
-
+     # google-glog must be configured to use the previously installed gflags
      tar -xvzf glog-0.3.2.tar.gz
      cd glog-0.3.2
      ./configure --with-gflags=/usr/local/
      make
      sudo make install
-
-#. ``Eigen``
-
-   .. code-block:: bash
-
-      sudo apt-get install libeigen3-dev
-
-#. ``SuiteSparse`` and ``CXSparse``
-
-   .. code-block:: bash
-
-      sudo apt-get install libsuitesparse-dev
-
-   This should automatically bring in the necessary ``BLAS`` and
-   ``LAPACK`` dependencies. By co-incidence on Ubuntu, this also
-   installs ``CXSparse``.
-
-#. ``protobuf``
-
-   .. code-block:: bash
-
-      sudo apt-get install libprotobuf-dev
-
+     # Eigen3
+     sudo apt-get install libeigen3-dev
+     # SuiteSparse and CXSparse
+     sudo apt-get install libsuitesparse-dev
+     # protobuf
+     sudo apt-get install libprotobuf-dev
 
 We are now ready to build and test Ceres. Note that ``CMake`` requires
 the exact path to the ``libglog.a`` and ``libgflag.a``.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.2.1.tar.gz
+ tar zxf ceres-solver-1.5.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.2.1
+ cmake ../ceres-solver-1.5.0
  make -j3
  make test
 
@@ -139,7 +107,7 @@ dataset [Agarwal]_.
 .. code-block:: bash
 
  bin/simple_bundle_adjuster \
-   ../ceres-solver-1.2.1/data/problem-16-22106-pre.txt \
+   ../ceres-solver-1.5.0/data/problem-16-22106-pre.txt \
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -200,39 +168,20 @@ Building on Mac OS X
 ====================
 
 On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager.
+<http://mxcl.github.com/homebrew/>`_ package manager. Start by
+installing all the dependencies.
 
+.. code-block:: bash
 
-#. ``CMake``
-
-   .. code-block:: bash
-
+      # CMake
       brew install cmake
-
-#. ``google-glog`` and ``gflags``
-
-Installing ``google-glog`` takes also brings in ``gflags`` as a dependency.
-
-   .. code-block:: bash
-
+      # google-glog and gflags
       brew install glog
-
-#. ``Eigen3``
-
-   .. code-block:: bash
-
+      # Eigen2
       brew install eigen
-
-#. ``SuiteSparse`` and ``CXSparse``
-
-   .. code-block:: bash
-
+      # SuiteSparse and CXSparse
       brew install suite-sparse
-
-#. ``protobuf``
-
-   .. code-block:: bash
-
+      # protobuf
       brew install protobuf
 
 
@@ -240,10 +189,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.2.1.tar.gz
+   tar zxf ceres-solver-1.5.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.2.1
+   cmake ../ceres-solver-1.5.0
    make -j3
    make test
 
@@ -267,7 +216,7 @@ automated way to install the dependencies.
    (``ceres/eigen``, ``ceres/glog``, etc)
 
    #. ``Eigen`` 3.1 (needed on Windows; 3.0.x will not work). There is
-       no need to build anything; just unpack the source tarball.
+      no need to build anything; just unpack the source tarball.
 
    #. ``google-glog`` Open up the Visual Studio solution and build it.
    #. ``gflags`` Open up the Visual Studio solution and build it.
@@ -285,7 +234,7 @@ automated way to install the dependencies.
    ``ceres-solver.git`` directory for the CMake file. Then select the
    ``ceres-bin`` for the build dir.
 
-#. Try running "Configure". It won't work. It'll show a bunch of options.
+#. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
    #. ``GLOG_INCLUDE``
@@ -339,36 +288,36 @@ It is possible to reduce the libraries needed to build Ceres and
 customize the build process by passing appropriate flags to
 ``CMake``. Use these flags only if you really know what you are doing.
 
-#. ``-DPROTOBUF=OFF`` : ``protobuf`` is a big dependency and if you do not
-   care for the tests that depend on it and the logging support it
-   enables, you can use this flag to turn it off.
+#. ``-DPROTOBUF=OFF``: ``protobuf`` is a large and complicated
+   dependency. If you do not care for the tests that depend on it and
+   the logging support it enables, you can use this flag to turn it
+   off.
 
-#. ``-DSUITESPARSE=OFF`` : By default, Ceres will link to
+#. ``-DSUITESPARSE=OFF``: By default, Ceres will link to
    ``SuiteSparse`` if all its dependencies are present. Use this flag
-   to buils Ceres without ``SuiteSparse``. This will also disable
-   dependency checking for ``LAPACK`` and ``BLAS`` This saves on
+   to build Ceres without ``SuiteSparse``. This will also disable
+   dependency checking for ``LAPACK`` and ``BLAS``. This saves on
    binary size, but the resulting version of Ceres is not suited to
    large scale problems due to the lack of a sparse Cholesky solver.
    This will reduce Ceres' dependencies down to ``Eigen``, ``gflags``
    and ``google-glog``.
 
-#. ``-DCXSPARSE=OFF`` : By default, Ceres will link to ``CXSparse`` if all
+#. ``-DCXSPARSE=OFF``: By default, Ceres will link to ``CXSparse`` if all
    its dependencies are present. Use this flag to buils Ceres without
    ``CXSparse``. This saves on binary size, but the resulting version
    of Ceres is not suited to large scale problems due to the lack of a
    sparse Cholesky solver.  This will reduce Ceres' dependencies down
    to ``Eigen``, ``gflags`` and ``google-glog``.
 
-#. ``-DGFLAGS=OFF`` : Use this flag to build Ceres without
+#. ``-DGFLAGS=OFF``: Use this flag to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.
 
-#. ``-DSCHUR_SPECIALIZATIONS=OFF`` : If you are concerned about binary
+#. ``-DSCHUR_SPECIALIZATIONS=OFF``: If you are concerned about binary
    size/compilation time over some small (10-20%) performance gains in
    the ``SPARSE_SCHUR`` solver, you can disable some of the template
    specializations by using this flag.
 
-#. ``-DOPENMP=OFF`` : On certain platforms like Android,
-   multithreading with ``OpenMP`` is not supported. Use this flag to
+#. ``-DOPENMP=OFF``: On certain platforms like Android,
+   multi-threading with ``OpenMP`` is not supported. Use this flag to
    disable multithreading.
-

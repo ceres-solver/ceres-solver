@@ -1018,7 +1018,7 @@ quaternion and matrix) we provide a handy set of templated
 functions. These functions are templated so that the user can use them
 within Ceres Solver's automatic differentiation framework.
 
-.. function:: template<typename T> void AngleAxisToQuaternion(T const* angle_axis, T* quaternion);
+.. function:: void AngleAxisToQuaternion<T>(T const* angle_axis, T* quaternion)
 
    Convert a value in combined axis-angle representation to a
    quaternion.
@@ -1027,7 +1027,7 @@ within Ceres Solver's automatic differentiation framework.
    and whose direction is aligned with the axis of rotation, and
    ``quaternion`` is a 4-tuple that will contain the resulting quaternion.
 
-.. function:: template<typename T> void QuaternionToAngleAxis(T const* quaternion, T* angle_axis);
+.. function:: void QuaternionToAngleAxis<T>(T const* quaternion, T* angle_axis)
 
    Convert a quaternion to the equivalent combined axis-angle
    representation.
@@ -1037,13 +1037,13 @@ within Ceres Solver's automatic differentiation framework.
    whose norm is the angle of rotation in radians, and whose direction
    is the axis of rotation.
 
-.. function:: template <typename T> void RotationMatrixToAngleAxis(T const * R, T * angle_axis);
-.. function:: template <typename T> void AngleAxisToRotationMatrix(T const * angle_axis, T * R);
+.. function:: void RotationMatrixToAngleAxis<T>(T const * R, T * angle_axis)
+.. function:: void AngleAxisToRotationMatrix<T>(T const * angle_axis, T * R)
 
    Conversions between 3x3 rotation matrix (in column major order) and
    axis-angle rotation representations.
 
-.. function:: template <typename T> void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R);
+.. function:: void EulerAnglesToRotationMatrix<T>(const T* euler, int row_stride, T* R)
 
    Conversions between 3x3 rotation matrix (in row major order) and
    Euler angle (in degrees) rotation representations.
@@ -1052,7 +1052,7 @@ within Ceres Solver's automatic differentiation framework.
    axes, respectively.  They are applied in that same order, so the
    total rotation R is Rz * Ry * Rx.
 
-.. function:: template <typename T> inline void QuaternionToScaledRotation(const T q[4], T R[3 * 3]);
+.. function:: void QuaternionToScaledRotation<T>(const T q[4], T R[3 * 3])
 
    Convert a 4-vector to a 3x3 scaled rotation matrix.
 
@@ -1079,12 +1079,12 @@ within Ceres Solver's automatic differentiation framework.
    such that :math:`\det(Q) = 1` and :math:`Q*Q' = I`.
 
 
-.. function:: template <typename T> inline void QuaternionToRotation(const T q[4], T R[3 * 3]);
+.. function:: void QuaternionToRotation<T>(const T q[4], T R[3 * 3])
 
    Same as above except that the rotation matrix is normalized by the
    Frobenius norm, so that :math:`R R' = I` (and :math:`\det(R) = 1`).
 
-.. function:: template <typename T> inline void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
+.. function:: void UnitQuaternionRotatePoint<T>(const T q[4], const T pt[3], T result[3])
 
    Rotates a point pt by a quaternion q:
 
@@ -1095,22 +1095,22 @@ within Ceres Solver's automatic differentiation framework.
    result you get for a unit quaternion.
 
 
-.. function:: template <typename T> inline void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3]);
+.. function:: void QuaternionRotatePoint<T>(const T q[4], const T pt[3], T result[3])
 
    With this function you do not need to assume that q has unit norm.
    It does assume that the norm is non-zero.
 
-.. function:: template<typename T> inline void QuaternionProduct(const T z[4], const T w[4], T zw[4]);
+.. function:: void QuaternionProduct<T>(const T z[4], const T w[4], T zw[4])
 
    .. math:: zw = z * w
 
-   where :math`*` is the Quaternion product between 4-vectors.
+   where :math:`*` is the Quaternion product between 4-vectors.
 
 
-.. function:: template<typename T> inline void CrossProduct(const T x[3], const T y[3], T x_cross_y[3]);
+.. function:: void CrossProduct<T>(const T x[3], const T y[3], T x_cross_y[3])
 
    .. math:: \text{x_cross_y} = x \times y
 
-.. function:: template<typename T> inline void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]);
+.. function:: void AngleAxisRotatePoint<T>(const T angle_axis[3], const T pt[3], T result[3])
 
    .. math:: y = R(\text{angle_axis}) x

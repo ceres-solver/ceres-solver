@@ -26,7 +26,7 @@ defining the scalar residual function :math:`f_1(x) = 10 - x`. Then
 component.
 
 When solving a problem with Ceres, the first thing to do is to define
-a subclass of CostFunction. It is responsible for computing
+a subclass of :class:`CostFunction`. It is responsible for computing
 the value of the residual function and its derivative (also known as
 the Jacobian) with respect to :math:`x`.
 
@@ -42,7 +42,7 @@ the Jacobian) with respect to :math:`x`.
      residuals[0] = 10 - x;
 
      // Compute the Jacobian if asked for.
-     if (jacobians != NULL && jacobians[0] != NULL) {
+     if (jacobians != NULL) {
        jacobians[0][0] = -1;
      }
      return true;
@@ -50,21 +50,22 @@ the Jacobian) with respect to :math:`x`.
  };
 
 
-SimpleCostFunction is provided with an input array of
-parameters, an output array for residuals and an optional output array
-for Jacobians. In our example, there is just one parameter and one
-residual and this is known at compile time, therefore we can save some
-code and instead of inheriting from CostFunction, we can
-instaed inherit from the templated SizedCostFunction class.
+``SimpleCostFunction`` is provided with an input array of
+``parameters``, an output array for ``residuals`` and an optional
+output array for ``jacobians``. In our example, there is just one
+parameter and one residual and this is known at compile time,
+therefore we can save some code and instead of inheriting from
+:class:`CostFunction`, we can instead inherit from the templated
+:class:`SizedCostFunction` class.
 
 
-The jacobians array is optional, Evaluate is expected to check when it
-is non-null, and if it is the case then fill it with the values of the
-derivative of the residual function. In this case since the residual
-function is linear, the Jacobian is constant.
+The ``jacobians`` array is optional, ``Evaluate`` is expected to check
+when it is non-null, and if it is the case then fill it with the
+values of the derivative of the residual function. In this case since
+the residual function is linear, the Jacobian is constant.
 
 Once we have a way of computing the residual vector, it is now time to
-construct a Non-linear least squares problem using it and have Ceres
+construct a non-linear least squares problem using it and have Ceres
 solve it.
 
 .. code-block:: c++
@@ -114,9 +115,10 @@ and parameter settings for Ceres.
 
 .. rubric:: Footnotes
 
-.. [#f1] Full working code for this and other
-   examples in this manual can be found in the examples directory. Code
-   for this example can be found in ``examples/quadratic.cc``.
+.. [#f1] Full working code for this and other examples in this manual
+   can be found in the examples directory. Code for this example can
+   be found in `examples/quadratic.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/quadratic.cc>`_
 
 .. [#f2] Actually the solver ran for three iterations, and it was
    by looking at the value returned by the linear solver in the third
@@ -165,7 +167,7 @@ following code shows the implementation for :math:`f_4(x)`.
 
      residuals[0] = sqrt(10.0) * (x1 - x4) * (x1 - x4)
 
-     if (jacobians != NULL) {
+     if (jacobians != NULL && jacobians[0] != NULL) {
        jacobians[0][0] = 2.0 * sqrt(10.0) * (x1 - x4);
        jacobians[0][1] = 0.0;
        jacobians[0][2] = 0.0;
@@ -211,10 +213,10 @@ needed.
 
 Note also that the parameters are not packed
 into a single array, they are instead passed as separate arguments to
-``operator()``. Similarly we can define classes ``F1``,``F2``
+``operator()``. Similarly we can define classes ``F1``, ``F2``
 and ``F4``.  Then let us consider the construction and solution
 of the problem. For brevity we only describe the relevant bits of
-code [#f3]_ .
+code [#f3]_.
 
 
 .. code-block:: c++
@@ -302,21 +304,22 @@ numerical derivatives. ``examples/quadratic_numeric_diff.cc`` shows a
 numerically differentiated implementation of
 ``examples/quadratic.cc``.
 
-**We recommend that if possible, automatic differentiation should be
-used. The use of C++ templates makes automatic differentiation
-extremely efficient, whereas numeric differentiation can be quite
-expensive, prone to numeric errors and leads to slower convergence.**
+**We recommend automatic differentiation if possible. The use of C++
+templates makes automatic differentiation extremely efficient, whereas
+numeric differentiation can be quite expensive, prone to numeric
+errors and leads to slower convergence.**
 
 
 .. rubric:: Footnotes
 
-.. [#f3] The full source code for this example can be found in ``examples/powell.cc``.
+.. [#f3] The full source code for this example can be found in
+.. `examples/powell.cc
+.. <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_.
 
 .. _section-fitting:
 
-Fitting a Curve to Data
-=======================
-
+Curve Fitting
+=============
 
 The examples we have seen until now are simple optimization problems
 with no data. The original purpose of least squares and non-linear
@@ -324,7 +327,7 @@ least squares analysis was fitting curves to data. It is only
 appropriate that we now consider an example of such a problem
 [#f4]_. It contains data generated by sampling the curve :math:`y =
 e^{0.3x + 0.1}` and adding Gaussian noise with standard deviation
-:math:`\sigma = 0.2`.}. Let us fit some data to the curve
+:math:`\sigma = 0.2`. Let us fit some data to the curve
 
 .. math::  y = e^{mx + c}.
 
@@ -356,7 +359,7 @@ the problem construction is a simple matter of creating a
 ``CostFunction`` for every observation.
 
 
-.. code-block: c++
+.. code-block:: c++
 
  double m = 0.0;
  double c = 0.0;
@@ -531,7 +534,7 @@ One way to solve this problem is to set
 this is a reasonable thing to do, bundle adjustment problems have a
 special sparsity structure that can be exploited to solve them much
 more efficiently. Ceres provides three specialized solvers
-(collectively known as Schur based solvers) for this task. The example
+(collectively known as Schur-based solvers) for this task. The example
 code uses the simplest of them ``DENSE_SCHUR``.
 
 .. code-block:: c++

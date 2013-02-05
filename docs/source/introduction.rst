@@ -24,7 +24,7 @@ Features:
 
 #. Automatic and numeric differentiation.
 
-#. Robust loss functions and Local parameterizations.
+#. Robust loss functions and local parameterizations.
 
 #. Multithreading.
 
@@ -59,7 +59,7 @@ Features:
          squares problems, please start by reading the
          :ref:`chapter-tutorial`.
 
-.. [#f2] While there is some debate as to who invented of the method
+.. [#f2] While there is some debate as to who invented the method
          of Least Squares [Stigler]_. There is no debate that it was
          Carl Friedrich Gauss's prediction of the orbit of the newly
          discovered asteroid Ceres based on just 41 days of
