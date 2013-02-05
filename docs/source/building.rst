@@ -62,63 +62,31 @@ depdendency and without it some of the tests will be disabled.
 
 Building on Linux
 =================
-We will use `Ubuntu <http://www.ubuntu.com>`_ as our example platform.
+We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
+platform. Let us begin by installing all the dependencies.
 
-#. ``CMake``
+.. code-block:: bash
 
-   .. code-block:: bash
-
-      sudo apt-get install cmake
-
-#. ``gflags`` can either be installed from source via the ``autoconf``
-   invocation
-
-   .. code-block:: bash
-
+     # CMake
+     sudo apt-hey install cmake
+     # gflags
      tar -xvzf gflags-2.0.tar.gz
      cd gflags-2.0
      ./configure --prefix=/usr/local
      make
      sudo make install.
-
-
-   or via the ``deb`` or ``rpm`` packages available on the ``gflags`` website.
-
-#. ``google-glog`` must be configured to use the previously installed
-   ``gflags``, rather than the stripped down version that is bundled
-   with ``google-glog``. Assuming you have it installed in ``/usr/local`` the
-   following ``autoconf`` invocation installs it.
-
-   .. code-block:: bash
-
+     # google-glog must be configured to use the previously installed gflags
      tar -xvzf glog-0.3.2.tar.gz
      cd glog-0.3.2
      ./configure --with-gflags=/usr/local/
      make
      sudo make install
-
-#. ``Eigen``
-
-   .. code-block:: bash
-
-      sudo apt-get install libeigen3-dev
-
-#. ``SuiteSparse`` and ``CXSparse``
-
-   .. code-block:: bash
-
-      sudo apt-get install libsuitesparse-dev
-
-   This should automatically bring in the necessary ``BLAS`` and
-   ``LAPACK`` dependencies. By co-incidence on Ubuntu, this also
-   installs ``CXSparse``.
-
-#. ``protobuf``
-
-   .. code-block:: bash
-
-      sudo apt-get install libprotobuf-dev
-
+     # Eigen3
+     sudo apt-get install libeigen3-dev
+     # SuiteSparse and CXSparse
+     sudo apt-get install libsuitesparse-dev
+     # protobuf
+     sudo apt-get install libprotobuf-dev
 
 We are now ready to build and test Ceres. Note that ``CMake`` requires
 the exact path to the ``libglog.a`` and ``libgflag.a``.
