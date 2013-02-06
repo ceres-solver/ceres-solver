@@ -559,3 +559,30 @@ solvers, robust loss functions and local parameterizations see
 .. rubric:: Footnotes
 
 .. [#f5] The full source code for this example can be found in ``examples/simple_bundle_adjuster.cc``.
+
+
+Other Examples
+==============
+
+Besides the examples in this chapter, the  `example
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
+directory contains a number of other examples:
+
+#. `circle_fit.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/circle_fit.cc>`_
+   shows how to fit data to a circle.
+
+#. `nist.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
+   implements and attempts to solves the `NIST
+   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
+   non-linear regression problems.
+
+#. `denoising.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/denoising.cc>`_
+   implements image denoising using the `Fields of Experts
+   <http://www.gris.informatik.tu-darmstadt.de/~sroth/research/foe/index.html>`_
+   model.
+
+
+
