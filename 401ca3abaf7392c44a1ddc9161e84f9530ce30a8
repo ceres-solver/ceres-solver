@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PhYaAMJ4",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Return a copy? Hmm.",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhWZ9JKQ",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Return a copy? Hmm.",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhaZTLDg",
+        "filename": "internal/ceres/execution_summary.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "We need to consider disabling this somehow for latency-sensitive stuff.",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhUZjSAQ",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Random unneeded blank.",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhSZgPPU",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Copy?",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhQY.YN4",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Copy?",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PheZCVGA",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:55:42Z",
+      "side": 1,
+      "message": "Consider expanding this. It\u0027s not clear there is a big win in shortening it, and it makes the report harder to understand.",
+      "revId": "401ca3abaf7392c44a1ddc9161e84f9530ce30a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
