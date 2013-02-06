@@ -10,26 +10,26 @@
 Modeling API
 ============
 
-
-Introduction
-------------
-
-Ceres solves robustified non-linear least squares problems of the form
+Recall that Ceres solves robustified non-linear least squares problems
+of the form
 
 .. math:: \frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
-   :label: ceresproblem
+   :label: ceresproblem3
 
-The term
+The expression
 :math:`\rho_i\left(\left\|f_i\left(x_{i_1},...,x_{i_k}\right)\right\|^2\right)`
 is known as a ``ResidualBlock``, where :math:`f_i(\cdot)` is a
 :class:`CostFunction` that depends on the parameter blocks
-:math:`\left[x_{i_1},... , x_{i_k}\right]` and :math:`\rho_i` is a
-:class:`LossFunction`. In most optimization problems small groups of
-scalars occur together. For example the three components of a
-translation vector and the four components of the quaternion that
-define the pose of a camera. We refer to such a group of small scalars
-as a ``ParameterBlock``. Of course a ``ParameterBlock`` can just have
-a single parameter.
+:math:`\left[x_{i_1},... , x_{i_k}\right]`. In most optimization
+problems small groups of scalars occur together. For example the three
+components of a translation vector and the four components of the
+quaternion that define the pose of a camera. We refer to such a group
+of small scalars as a ``ParameterBlock``. Of course a
+``ParameterBlock`` can just be a single parameter. :math:`\rho_i` is a
+:class:`LossFunction`. A :class:`LossFunction` is a scalar function
+that is used to reduce the influence of outliers on the solution of
+non-linear least squares problems.
+
 
 :class:`CostFunction`
 ---------------------
@@ -99,7 +99,6 @@ a single parameter.
    ``NULL``, then the Jacobian matrix corresponding to the
    :math:`i^{\textrm{th}}` parameter block must not be returned, this
    is the case when the a parameter block is marked constant.
-
 
 
 :class:`SizedCostFunction`
