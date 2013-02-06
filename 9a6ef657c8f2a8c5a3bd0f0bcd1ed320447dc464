@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PhabvrHg",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:13:35Z",
+      "side": 1,
+      "message": "I wonder if there is some sort of variable substitution we could do for the version instead.",
+      "revId": "9a6ef657c8f2a8c5a3bd0f0bcd1ed320447dc464",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PhSb8vC0",
+        "filename": "docs/source/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-06T07:13:35Z",
+      "side": 1,
+      "message": "These are improperly split sentences.",
+      "revId": "9a6ef657c8f2a8c5a3bd0f0bcd1ed320447dc464",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
