@@ -10,27 +10,6 @@
 Modeling API
 ============
 
-
-Introduction
-------------
-
-Ceres solves robustified non-linear least squares problems of the form
-
-.. math:: \frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
-   :label: ceresproblem
-
-The term
-:math:`\rho_i\left(\left\|f_i\left(x_{i_1},...,x_{i_k}\right)\right\|^2\right)`
-is known as a ``ResidualBlock``, where :math:`f_i(\cdot)` is a
-:class:`CostFunction` that depends on the parameter blocks
-:math:`\left[x_{i_1},... , x_{i_k}\right]` and :math:`\rho_i` is a
-:class:`LossFunction`. In most optimization problems small groups of
-scalars occur together. For example the three components of a
-translation vector and the four components of the quaternion that
-define the pose of a camera. We refer to such a group of small scalars
-as a ``ParameterBlock``. Of course a ``ParameterBlock`` can just have
-a single parameter.
-
 :class:`CostFunction`
 ---------------------
 
@@ -125,6 +104,9 @@ a single parameter.
                             double** jacobians) const = 0;
     };
 
+
+
+.. _`section-auto_diff_cost_function`:
 
 :class:`AutoDiffCostFunction`
 -----------------------------
