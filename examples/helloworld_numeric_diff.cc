@@ -31,9 +31,7 @@
 // Minimize 0.5 (10 - x)^2 using jacobian matrix computed using
 // numeric differentiation.
 
-#include <vector>
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
 
 using ceres::NumericDiffCostFunction;
@@ -44,8 +42,7 @@ using ceres::Solver;
 using ceres::Solve;
 
 // A cost functor that implements the residual r = 10 - x.
-class QuadraticCostFunctor {
- public:
+struct CostFunctor {
   bool operator()(const double* const x, double* residual) const {
     residual[0] = 10.0 - x[0];
     return true;
@@ -53,30 +50,28 @@ class QuadraticCostFunctor {
 };
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  // The variable to solve for with its initial value.
-  double initial_x = 5.0;
-  double x = initial_x;
-
-  // Set up the only cost function (also known as residual). This uses
-  // numeric differentiation to obtain the derivative (jacobian).
-  CostFunction* cost =
-      new NumericDiffCostFunction<QuadraticCostFunctor, CENTRAL, 1, 1> (
-          new QuadraticCostFunctor);
+  // The variable to solve for with its initial value. It will be
+  // mutated in place by the solver.
+  double x = 0.5;
+  const double initial_x = x;
 
   // Build the problem.
   Problem problem;
-  problem.AddResidualBlock(cost, NULL, &x);
+
+  // Set up the only cost function (also known as residual). This uses
+  // numeric differentiation to obtain the derivative (jacobian).
+  CostFunction* cost_function =
+      new NumericDiffCostFunction<CostFunctor, CENTRAL, 1, 1> (new CostFunctor);
+  problem.AddResidualBlock(cost_function, NULL, &x);
 
   // Run the solver!
   Solver::Options options;
-  options.max_num_iterations = 10;
-  options.linear_solver_type = ceres::DENSE_QR;
   options.minimizer_progress_to_stdout = true;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
+
   std::cout << summary.BriefReport() << "\n";
   std::cout << "x : " << initial_x
             << " -> " << x << "\n";
