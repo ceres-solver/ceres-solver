@@ -348,10 +348,11 @@ int RegressionDriver(const std::string& filename,
   Matrix response = nist_problem.response();
   Matrix final_parameters = nist_problem.final_parameters();
   std::vector<ceres::Solver::Summary> summaries(nist_problem.num_starts() + 1);
-  std::cerr << filename << std::endl;
 
+  printf("%s\n", filename.c_str());
   // Each NIST problem comes with multiple starting points, so we
   // construct the problem from scratch for each case and solve it.
+  int num_success = 0;
   for (int start = 0; start < nist_problem.num_starts(); ++start) {
     Matrix initial_parameters = nist_problem.initial_parameters(start);
 
@@ -365,39 +366,32 @@ int RegressionDriver(const std::string& filename,
           initial_parameters.data());
     }
 
-    Solve(options, &problem, &summaries[start]);
-  }
-
-  const double certified_cost = nist_problem.certified_cost();
-
-  int num_success = 0;
-  const int kMinNumMatchingDigits = 4;
-  for (int start = 0; start < nist_problem.num_starts(); ++start) {
-    const ceres::Solver::Summary& summary = summaries[start];
-
-    int num_matching_digits = 0;
-    if (IsSuccessfulTermination(summary.termination_type)
-        && summary.final_cost < certified_cost) {
-      num_matching_digits = kMinNumMatchingDigits + 1;
-    } else {
-      num_matching_digits =
-          -std::log10(fabs(summary.final_cost - certified_cost) / certified_cost);
+    ceres::Solver::Summary summary;
+    Solve(options, &problem, &summary);
+    Matrix final_parameters = nist_problem.final_parameters();
+    const double kMaxNumSignificantDigits = 11;
+    double log_relative_error = kMaxNumSignificantDigits + 1;
+    for (int i = 0; i < num_parameters; ++i) {
+      const double tmp_lre = -std::log10(std::fabs(final_parameters(i) - initial_parameters(i)) /
+                                       std::fabs(final_parameters(i)));
+      log_relative_error = std::min(std::max(0.0, std::min(kMaxNumSignificantDigits, tmp_lre)),
+                                    log_relative_error);
     }
 
-    std::cerr << "start " << start + 1 << " " ;
-    if (num_matching_digits <= kMinNumMatchingDigits) {
-      std::cerr <<  "FAILURE";
-    } else {
-      std::cerr <<  "SUCCESS";
-      ++num_success;
-    }
-    std::cerr << " summary: "
-              << summary.BriefReport()
-              << " Certified cost: " << certified_cost
-              << std::endl;
+    const int kMinNumMatchingDigits = 4;
 
+    //const double certified_cost = nist_problem.certified_cost();
+
+    if (log_relative_error >= kMinNumMatchingDigits) ++num_success;
+
+    printf("start: %d status: %s lre: %4.1f initial cost: %e final cost:%e certified cost: %e\n",
+           start + 1,
+           log_relative_error < kMinNumMatchingDigits ? "FAILURE" : "SUCCESS",
+           log_relative_error,
+           summary.initial_cost,
+           summary.final_cost,
+           nist_problem.certified_cost());
   }
-
   return num_success;
 }
 
