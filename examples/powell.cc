@@ -46,7 +46,6 @@
 
 #include <vector>
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
 
 using ceres::AutoDiffCostFunction;
@@ -100,7 +99,6 @@ class F4 {
 };
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   double x1 =  3.0;

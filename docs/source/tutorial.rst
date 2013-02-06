@@ -1,23 +1,50 @@
+.. highlight:: c++
+
+.. default-domain:: cpp
+
 .. _chapter-tutorial:
 
 ========
 Tutorial
 ========
+Ceres solves robustified non-linear least squares problems of the form
 
-.. highlight:: c++
+.. math:: \frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
+   :label: ceresproblem
 
-.. _section-hello-world:
+The expression
+:math:`\rho_i\left(\left\|f_i\left(x_{i_1},...,x_{i_k}\right)\right\|^2\right)`
+is known as a ``ResidualBlock``, where :math:`f_i(\cdot)` is a
+:class:`CostFunction` that depends on the parameter blocks
+:math:`\left[x_{i_1},... , x_{i_k}\right]`. In most optimization
+problems small groups of scalars occur together. For example the three
+components of a translation vector and the four components of the
+quaternion that define the pose of a camera. We refer to such a group
+of small scalars as a ``ParameterBlock``. Of course a
+``ParameterBlock`` can just be a single parameter.
 
-Full working code for all the examples described in this chapter and
-more can be found in the `example
+:math:`\rho_i` is a :class:`LossFunction`. A :class:`LossFunction` is
+a scalar function that is used to reduce the influence of outliers on
+the solution of non-linear least squares problems. As a special case,
+When :math:`\rho_i(x) = x`, i.e., the identity function, we get the
+more familiar non-linear least squares problem:
+
+.. math:: \frac{1}{2}\sum_{i=1} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
+   :label: ceresproblem2
+
+In this chapter we will learn how to solve eq:`ceresproblem` using
+Ceres Solver. Full working code for all the examples described in this
+chapter and more can be found in the `examples
 <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
 directory.
+
+.. _section-hello-world:
 
 Hello World!
 ============
 
-To get started, let us consider the problem of finding the minimum of
-the function
+To get started, consider the problem of finding the minimum of the
+function
 
 .. math:: \frac{1}{2}(10 -x)^2.
 
@@ -25,87 +52,78 @@ This is a trivial problem, whose minimum is located at :math:`x = 10`,
 but it is a good place to start to illustrate the basics of solving a
 problem with Ceres [#f1]_.
 
-Let us write this problem as a non-linear least squares problem by
-defining the scalar residual function :math:`f_1(x) = 10 - x`. Then
-:math:`F(x) = [f_1(x)]` is a residual vector with exactly one
-component.
-
-When solving a problem with Ceres, the first thing to do is to define
-a subclass of :class:`CostFunction`. It is responsible for computing
-the value of the residual function and its derivative (also known as
-the Jacobian) with respect to :math:`x`.
+The first step is to write a functor that will evaluate this the
+function :math:`f(x) = 10 - x`:
 
 .. code-block:: c++
 
- class SimpleCostFunction : public ceres::SizedCostFunction<1, 1> {
-  public:
-   virtual ~SimpleCostFunction() {}
-   virtual bool Evaluate(double const* const* parameters,
-                         double* residuals,
-                         double** jacobians) const {
-     const double x = parameters[0][0];
-     residuals[0] = 10 - x;
+   class CostFunctor {
+     public:
+      template <typename T>
+      bool operator()(const T* const x, T* residual) const {
+        residual[0] = T(10.0) - x[0];
+        return true;
+      }
+   };
 
-     // Compute the Jacobian if asked for.
-     if (jacobians != NULL) {
-       jacobians[0][0] = -1;
-     }
-     return true;
+The important thing to note here is that ``operator()`` is a templated
+method, which assumes that all its inputs and outputs are of some type
+``T``. The reason for using templates here is because Ceres will call
+``CostFunctor::operator<T>()``, with ``T=double`` when just the
+residual is needed, and with a special type ``T=Jet`` when the
+Jacobians are needed. In :ref:`section-derivatives` we discuss the
+various ways of supplying derivatives to Ceres in more detail.
+
+Once we have a way of computing the residual function, it is now time
+to construct a non-linear least squares problem using it and have
+Ceres solve it.
+
+.. code-block:: c++
+
+   int main(int argc, char** argv) {
+     google::InitGoogleLogging(argv[0]);
+
+     // The variable to solve for with its initial value.
+     double initial_x = 5.0;
+     double x = initial_x;
+
+     // Build the problem.
+     Problem problem;
+
+     // Set up the only cost function (also known as residual). This uses
+     // auto-differentiation to obtain the derivative (jacobian).
+     CostFunction* cost_function =
+         new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+     problem.AddResidualBlock(cost_function, NULL, &x);
+
+     // Run the solver!
+     Solver::Options options;
+     options.linear_solver_type = ceres::DENSE_QR;
+     options.minimizer_progress_to_stdout = true;
+     Solver::Summary summary;
+     Solve(options, &problem, &summary);
+
+     std::cout << summary.BriefReport() << "\n";
+     std::cout << "x : " << initial_x
+               << " -> " << x << "\n";
+     return 0;
    }
- };
 
+:class:`AutoDiffCostFunction` takes a ``CostFunctor`` as input,
+automatically differentiates it and gives it a :class:`CostFunction`
+interface.
 
-``SimpleCostFunction`` is provided with an input array of
-``parameters``, an output array for ``residuals`` and an optional
-output array for ``jacobians``. In our example, there is just one
-parameter and one residual and this is known at compile time,
-therefore we can save some code and instead of inheriting from
-:class:`CostFunction`, we can instead inherit from the templated
-:class:`SizedCostFunction` class.
-
-
-The ``jacobians`` array is optional, ``Evaluate`` is expected to check
-when it is non-null, and if it is the case then fill it with the
-values of the derivative of the residual function. In this case since
-the residual function is linear, the Jacobian is constant.
-
-Once we have a way of computing the residual vector, it is now time to
-construct a non-linear least squares problem using it and have Ceres
-solve it.
-
-.. code-block:: c++
-
- int main(int argc, char** argv) {
-   double x = 5.0;
-   ceres::Problem problem;
-
-   // The problem object takes ownership of the newly allocated
-   // SimpleCostFunction and uses it to optimize the value of x.
-   problem.AddResidualBlock(new SimpleCostFunction, NULL, &x);
-
-   // Run the solver!
-   Solver::Options options;
-   options.max_num_iterations = 10;
-   options.linear_solver_type = ceres::DENSE_QR;
-   options.minimizer_progress_to_stdout = true;
-   Solver::Summary summary;
-   Solve(options, &problem, &summary);
-   std::cout << summary.BriefReport() << "\n";
-   std::cout << "x : 5.0 -> " << x << "\n";
-   return 0;
- }
-
-
-Compiling and running the program gives us
+Compiling and running `examples/helloworld.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+gives us
 
 .. code-block:: bash
 
-   0: f: 1.250000e+01 d: 0.00e+00 g: 5.00e+00 h: 0.00e+00 rho: 0.00e+00 mu: 1.00e+04 li:  0 it: 0.00e+00 tt: 0.00e+00
-   1: f: 1.249750e-07 d: 1.25e+01 g: 5.00e-04 h: 5.00e+00 rho: 1.00e+00 mu: 3.00e+04 li:  1 it: 0.00e+00 tt: 0.00e+00
-   2: f: 1.388518e-16 d: 1.25e-07 g: 1.67e-08 h: 5.00e-04 rho: 1.00e+00 mu: 9.00e+04 li:  1 it: 0.00e+00 tt: 0.00e+00
- Ceres Solver Report: Iterations: 2, Initial cost: 1.250000e+01, Final cost: 1.388518e-16, Termination: PARAMETER_TOLERANCE.
- x : 5.0 -> 10
-
+      0: f: 1.250000e+01 d: 0.00e+00 g: 5.00e+00 h: 0.00e+00 rho: 0.00e+00 mu: 1.00e+04 li:  0 it: 6.91e-06 tt: 1.91e-03
+      1: f: 1.249750e-07 d: 1.25e+01 g: 5.00e-04 h: 5.00e+00 rho: 1.00e+00 mu: 3.00e+04 li:  1 it: 2.81e-05 tt: 1.99e-03
+      2: f: 1.388518e-16 d: 1.25e-07 g: 1.67e-08 h: 5.00e-04 rho: 1.00e+00 mu: 9.00e+04 li:  1 it: 1.00e-05 tt: 2.01e-03
+   Ceres Solver Report: Iterations: 2, Initial cost: 1.250000e+01, Final cost: 1.388518e-16, Termination: PARAMETER_TOLERANCE.
+   x : 5 -> 10
 
 Starting from a :math:`x=5`, the solver in two iterations goes to 10
 [#f2]_. The careful reader will note that this is a linear problem and
@@ -120,9 +138,8 @@ and parameter settings for Ceres.
 
 .. rubric:: Footnotes
 
-.. [#f1] Full working code for this example can found in
-   `examples/quadratic.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/quadratic.cc>`_
+.. [#f1] `examples/helloworld.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
 
 .. [#f2] Actually the solver ran for three iterations, and it was
    by looking at the value returned by the linear solver in the third
@@ -131,6 +148,132 @@ and parameter settings for Ceres.
    the end of an iteration, and terminates as soon as it detects
    convergence, which is why you only see two iterations here and not
    three.
+
+.. _section-derivatives:
+
+
+Derivatives
+===========
+
+Ceres Solver like most optimization packages, depends on being able to
+evaluate the value and the derivatives of each term in the objective
+function at arbitrary parameter values. Doing so correctly and
+efficiently is essential to getting good results.  Ceres Solver
+provides a number of ways of doing so. You have already seen one of
+them in action --
+Automatic Differentiation in `examples/helloworld.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+
+We now consider the other two possibilities. Analytic and numeric
+derivatives.
+
+
+Numeric Derivatives
+-------------------
+
+In some cases, its not possible to define a templated cost functor,
+for example when the evaluation of the residual involves a call to a
+library function that you do not have control over.  In such a
+situation, numerical differentiation can be used. The user defines a
+functor which computes the residual value and construct a
+:class:`NumericDiffCostFunction` using it. e.g., for :math:`f(x) = 10 - x`
+the corresponding functor would be
+
+.. code-block:: c++
+
+  class NumericDiffCostFunctor {
+   public:
+    bool operator()(const double* const x, double* residual) const {
+      residual[0] = 10.0 - x[0];
+      return true;
+    }
+  };
+
+Which is added to the :class:`Problem` as:
+
+.. code-block:: c++
+
+  CostFunction* cost_function =
+    new NumericDiffCostFunction<F4, ceres::CENTRAL, 1, 1, 1>(
+        new NumericDiffCostFunctor)
+  problem.AddResidualBlock(cost_function, NULL, &x);
+
+Notice the parallel from when we were using automatic differentiation
+
+.. code-block:: c++
+
+  CostFunction* cost_function =
+      new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+  problem.AddResidualBlock(cost_function, NULL, &x);
+
+The construction looks almost identical to the used for automatic
+differentiation, except for an extra template parameter that indicates
+the kind of finite differencing scheme to be used for computing the
+numerical derivatives [#f3]_. For more details see the documentation
+for :class:`NumericDiffCostFunction`.
+
+**Generally speaking though, we recommend automatic differentiation if
+possible. The use of C++ templates makes automatic
+differentiation extremely efficient, whereas numeric differentiation
+can be quite expensive, prone to numeric errors and leads to slower
+convergence.**
+
+
+
+Analytic Derivatives
+--------------------
+
+In some cases, using automatic differentiation is not possible --
+dynamically sized cost functions or it is more efficient to compute
+the derivatives in closed form instead of relying on the chain rule
+used by the automatic differentition code.  In such cases, it is
+possible to supply your own residual and jacobian computation code. To
+do this, define a subclass of :class:`CostFunction` or
+:class:`SizedCostFunction` if you know the sizes of the parameters and
+residuals at compile time. Here for example is ``SimpleCostFunction``
+that implements :math:`f(x) = 10 - x`.
+
+.. code-block:: c++
+
+  class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
+   public:
+    virtual ~QuadraticCostFunction() {}
+    virtual bool Evaluate(double const* const* parameters,
+                          double* residuals,
+                          double** jacobians) const {
+      const double x = parameters[0][0];
+      residuals[0] = 10 - x;
+
+      // Compute the Jacobian if asked for.
+      if (jacobians != NULL) {
+        jacobians[0][0] = -1;
+      }
+      return true;
+    }
+  };
+
+
+``SimpleCostFunction::Evaluate`` is provided with an input array of
+``parameters``, an output array ``residuals`` for residuals and an
+output array ``jacobians`` for Jacobians. The ``jacobians`` array is
+optional, ``Evaluate`` is expected to check when it is non-null, and
+if it is the case then fill it with the values of the derivative of
+the residual function. In this case since the residual function is
+linear, the Jacobian is constant [#f4]_ .
+
+As can be seen from the above code fragments, implementing
+:class:`CostFunction` objects is a bit tedious. We recommend that
+unless you have a good reason to manage the jacobian computation
+yourself, you use :class:`AutoDiffCostFunction` or
+:class:`NumericDiffCostFunction` to construct your residual blocks.
+
+.. rubric:: Footnotes
+
+.. [#f3] `examples/helloworld_numeric_diff.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_numeric_diff.cc>`_.
+
+.. [#f4] `examples/helloworld_analytic_diff.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_analytic_diff.cc>`_.
 
 
 .. _section-powell:
@@ -142,6 +285,7 @@ Consider now a slightly more complicated example -- the minimization
 of Powell's function. Let :math:`x = \left[x_1, x_2, x_3, x_4 \right]`
 and
 
+
 .. math::
 
   \begin{align}
@@ -149,51 +293,17 @@ and
      f_2(x) &= \sqrt{5}  (x_3 - x_4)\\
      f_3(x) &= (x_2 - 2x_3)^2\\
      f_4(x) &= \sqrt{10}  (x_1 - x_4)^2\\
-     F(x) & = \left[f_1(x),\ f_2(x),\ f_3(x),\ f_4(x) \right]
+       F(x) &= \left[f_1(x),\ f_2(x),\ f_3(x),\ f_4(x) \right]
   \end{align}
 
 
-:math:`F(x)` is a function of four parameters, and has four
-residuals. Now, one way to solve this problem would be to define four
-CostFunction objects that compute the residual and Jacobians. e.g. the
-following code shows the implementation for :math:`f_4(x)`.
+:math:`F(x)` is a function of four parameters, has four residuals
+and we wish to find :math:`x` such that :math:`\frac{1}{2}\|F(x)\|^2`
+is minimized.
 
-.. code-block:: c++
-
- class F4 : public ceres::SizedCostFunction<1, 4> {
-  public:
-   virtual ~F4() {}
-   virtual bool Evaluate(double const* const* parameters,
-                         double* residuals,
-                         double** jacobians) const {
-     double x1 = parameters[0][0];
-     double x4 = parameters[0][3];
-
-     residuals[0] = sqrt(10.0) * (x1 - x4) * (x1 - x4)
-
-     if (jacobians != NULL && jacobians[0] != NULL) {
-       jacobians[0][0] = 2.0 * sqrt(10.0) * (x1 - x4);
-       jacobians[0][1] = 0.0;
-       jacobians[0][2] = 0.0;
-       jacobians[0][3] = -2.0 * sqrt(10.0) * (x1 - x4);
-     }
-     return true;
-   }
- };
-
-
-But this can get painful very quickly, especially for residuals
-involving complicated multi-variate terms. Ceres provides two ways
-around this problem. Numeric and automatic symbolic differentiation.
-
-Automatic Differentiation
--------------------------
-
-With its automatic differentiation support, Ceres allows you to define
-templated objects/functors that will compute the ``residual`` and it
-takes care of computing the Jacobians as needed and filling the
-``jacobians`` arrays with them. For example, for :math:`f_4(x)` we
-define
+Again, the first step is to define functors that evaluate of the terms
+in the objective functor. Here is the code for evaluating
+:math:`f_4(x_1, x_4)`:
 
 .. code-block:: c++
 
@@ -208,44 +318,36 @@ define
  };
 
 
-The important thing to note here is that ``operator()`` is a templated
-method, which assumes that all its inputs and outputs are of some type
-``T``. The reason for using templates here is because Ceres will call
-``F4::operator<T>()``, with ``T=double`` when just the residual is
-needed, and with a special type ``T=Jet`` when the Jacobians are
-needed.
-
-Note also that the parameters are not packed
-into a single array, they are instead passed as separate arguments to
-``operator()``. Similarly we can define classes ``F1``, ``F2``
-and ``F4``.  Then let us consider the construction and solution
-of the problem. For brevity we only describe the relevant bits of
-code [#f3]_.
+Similarly, we can define classes ``F1``, ``F2`` and ``F4`` to evaluate
+:math:`f_1(x_1, x_2)`, :math:`f_2(x_3, x_4)` and :math:`f_3(x_2, x_3)`
+respectively. Using these, the problem can be constructed as follows:
 
 
 .. code-block:: c++
 
-  double x1 =  3.0; double x2 = -1.0; double x3 =  0.0; double x4 =  1.0;
+  double x1 =  3.0; double x2 = -1.0; double x3 =  0.0; double x4 = 1.0;
+
+  Problem problem;
+
   // Add residual terms to the problem using the using the autodiff
   // wrapper to get the derivatives automatically.
   problem.AddResidualBlock(
-    new ceres::AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x1, &x2);
+    new AutoDiffCostFunction<F1, 1, 1, 1>(new F1), NULL, &x1, &x2);
   problem.AddResidualBlock(
-    new ceres::AutoDiffCostFunction<F2, 1, 1, 1>(new F2), NULL, &x3, &x4);
+    new AutoDiffCostFunction<F2, 1, 1, 1>(new F2), NULL, &x3, &x4);
   problem.AddResidualBlock(
-    new ceres::AutoDiffCostFunction<F3, 1, 1, 1>(new F3), NULL, &x2, &x3)
+    new AutoDiffCostFunction<F3, 1, 1, 1>(new F3), NULL, &x2, &x3)
   problem.AddResidualBlock(
-    new ceres::AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x1, &x4);
+    new AutoDiffCostFunction<F4, 1, 1, 1>(new F4), NULL, &x1, &x4);
 
 
-A few things are worth noting in the code above. First, the object
-being added to the ``Problem`` is an ``AutoDiffCostFunction`` with
-``F1``, ``F2``, ``F3`` and ``F4`` as template parameters. Second, each
-``ResidualBlock`` only depends on the two parameters that the
-corresponding residual object depends on and not on all four
+Note that each ``ResidualBlock`` only depends on the two parameters
+that the corresponding residual object depends on and not on all four
 parameters.
 
-Compiling and running ``powell.cc`` gives us:
+Compiling and running `examples/powell.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_
+gives us:
 
 .. code-block:: bash
 
@@ -270,55 +372,12 @@ It is easy to see that the optimal solution to this problem is at
 :math:`0`. In 10 iterations, Ceres finds a solution with an objective
 function value of :math:`4\times 10^{-12}`.
 
-Numeric Differentiation
------------------------
-
-In some cases, its not possible to define a templated cost functor. In
-such a situation, numerical differentiation can be used. The user
-defines a functor which computes the residual value and construct a
-``NumericDiffCostFunction`` using it. e.g., for ``F4``, the
-corresponding functor would be
-
-.. code-block:: c++
-
-  class F4 {
-   public:
-    bool operator()(const double* const x1,
-                    const double* const x4,
-                    double* residual) const {
-      residual[0] = sqrt(10.0) * (x1[0] - x4[0]) * (x1[0] - x4[0]);
-      return true;
-    }
-  };
-
-
-Which can then be wrapped ``NumericDiffCostFunction`` and added to the
-``Problem`` as follows
-
-.. code-block:: c++
-
-  problem.AddResidualBlock(
-    new ceres::NumericDiffCostFunction<F4, ceres::CENTRAL, 1, 1, 1>(new F4), NULL, &x1, &x4);
-
-
-The construction looks almost identical to the used for automatic
-differentiation, except for an extra template parameter that indicates
-the kind of finite differencing scheme to be used for computing the
-numerical derivatives. ``examples/quadratic_numeric_diff.cc`` shows a
-numerically differentiated implementation of
-``examples/quadratic.cc``.
-
-**We recommend automatic differentiation if possible. The use of C++
-templates makes automatic differentiation extremely efficient, whereas
-numeric differentiation can be quite expensive, prone to numeric
-errors and leads to slower convergence.**
-
 
 .. rubric:: Footnotes
 
-.. [#f3] The full source code for this example can be found in
-.. `examples/powell.cc
-.. <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_.
+.. [#f5] `examples/powell.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_.
+
 
 .. _section-fitting:
 
@@ -329,7 +388,7 @@ The examples we have seen until now are simple optimization problems
 with no data. The original purpose of least squares and non-linear
 least squares analysis was fitting curves to data. It is only
 appropriate that we now consider an example of such a problem
-[#f4]_. It contains data generated by sampling the curve :math:`y =
+[#f6]_. It contains data generated by sampling the curve :math:`y =
 e^{0.3x + 0.1}` and adding Gaussian noise with standard deviation
 :math:`\sigma = 0.2`. Let us fit some data to the curve
 
@@ -358,9 +417,9 @@ residual. There will be a residual for each observation.
    const double y_;
  };
 
-Assuming the observations are in a :math:`2n` sized array called ``data``
-the problem construction is a simple matter of creating a
-``CostFunction`` for every observation.
+Assuming the observations are in a :math:`2n` sized array called
+``data`` the problem construction is a simple matter of creating a
+:class:`CostFunction` for every observation.
 
 
 .. code-block:: c++
@@ -370,14 +429,15 @@ the problem construction is a simple matter of creating a
 
  Problem problem;
  for (int i = 0; i < kNumObservations; ++i) {
-   problem.AddResidualBlock(
-       new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
-           new ExponentialResidual(data[2 * i], data[2 * i + 1])),
-       NULL,
-       &m, &c);
+   CostFunction* cost_function =
+        new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
+            new ExponentialResidual(data[2 * i], data[2 * i + 1]));
+   problem.AddResidualBlock(cost_function, NULL, &m, &c);
  }
 
-Compiling and running ``data_fitting.cc`` gives us:
+Compiling and running `examples/curve_fitting.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/curve_fitting.cc>`_
+gives us:
 
 .. code-block:: bash
 
@@ -410,27 +470,73 @@ see such deviations. Indeed, if you were to evaluate the objective
 function for :math:`m=0.3, c=0.1`, the fit is worse with an objective
 function value of :math:`1.082425`.  The figure below illustrates the fit.
 
-.. figure:: fit.png
+.. figure:: least_squares_fit.png
    :figwidth: 500px
    :height: 400px
    :align: center
 
-   Least squares data fitting to the curve :math:`y = e^{0.3x +
-   0.1}`. Observations were generated by sampling this curve uniformly
-   in the interval :math:`x=(0,5)` and adding Gaussian noise with
-   :math:`\sigma = 0.2`.
+   Least squares curve fitting.
+
 
 .. rubric:: Footnotes
 
-.. [#f4] The full source code for this example can be found in ``examples/data_fitting.cc``.
+.. [#f6] `examples/curve_fitting.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/curve_fitting.cc>`_
+
+
+Robust Curve Fitting
+=====================
+
+Now suppose, the data we are given has some outliers. Points, that do
+not obey the noise model. If we were to use the code above to fit such
+data, we would get a fit that looks as below. Notice how the fitted
+curve deviates from the ground truth.
+
+.. figure:: non_robust_least_squares_fit.png
+   :figwidth: 500px
+   :height: 400px
+   :align: center
+
+To deal with outliers, a standard technique is to use a
+:class:`LossFunction`. Loss functions, reduce the influence of
+residual blocks with high residuals, usually the ones corresponding to
+outliers. To associate a loss function in a residual block, we change
+
+.. code-block:: c++
+
+   problem.AddResidualBlock(cost_function, NULL , &m, &c);
+
+to
+
+.. code-block:: c++
+
+   problem.AddResidualBlock(cost_function, new CauchyLoss(0.5) , &m, &c);
+
+:class:`CauchyLoss` is one of the loss functions that ships with Ceres
+Solver. The argument :math:`0.5` specifies the scale of the loss
+function. As a result, we get the fit below [#f7]_. Notice how the
+fitted curve moves back closer to the ground truth curve.
+
+.. figure:: robust_least_squares_fit.png
+   :figwidth: 500px
+   :height: 400px
+   :align: center
+
+   Using :class:`LossFunction` to reduce the effect of outliers on a
+   least squares fit.
+
+
+.. rubric:: Footnotes
+
+.. [#f7] `examples/robust_curve_fitting.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/robust_curve_fitting.cc>`_
 
 
 Bundle Adjustment
 =================
 
 One of the main reasons for writing Ceres was our need to solve large
-scale bundle adjustment
-problems [HartleyZisserman]_, [Triggs]_.
+scale bundle adjustment problems [HartleyZisserman]_, [Triggs]_.
 
 Given a set of measured image feature locations and correspondences,
 the goal of bundle adjustment is to find 3D point positions and camera
@@ -441,21 +547,21 @@ the observed feature location and the projection of the corresponding
 3D point on the image plane of the camera. Ceres has extensive support
 for solving bundle adjustment problems.
 
-Let us consider the solution of a problem from the `BAL <http://grail.cs.washington.edu/projects/bal/>`_ dataset [#f5]_.
+Let us solve a problem from the `BAL
+<http://grail.cs.washington.edu/projects/bal/>`_ dataset [#f8]_.
 
 The first step as usual is to define a templated functor that computes
 the reprojection error/residual. The structure of the functor is
 similar to the ``ExponentialResidual``, in that there is an
 instance of this object responsible for each image observation.
 
-
 Each residual in a BAL problem depends on a three dimensional point
 and a nine parameter camera. The nine parameters defining the camera
 can are: Three for rotation as a Rodriquez axis-angle vector, three
 for translation, one for focal length and two for radial distortion.
-The details of this camera model can be found on Noah Snavely's
-`Bundler homepage <http://phototour.cs.washington.edu/bundler/>`_
-and the `BAL homepage <http://grail.cs.washington.edu/projects/bal/>`_.
+The details of this camera model can be found the `Bundler homepage
+<http://phototour.cs.washington.edu/bundler/>`_ and the `BAL homepage
+<http://grail.cs.washington.edu/projects/bal/>`_.
 
 .. code-block:: c++
 
@@ -499,10 +605,10 @@ and the `BAL homepage <http://grail.cs.washington.edu/projects/bal/>`_.
  } ;
 
 
-Note that unlike the examples before this is a non-trivial function
+Note that unlike the examples before, this is a non-trivial function
 and computing its analytic Jacobian is a bit of a pain. Automatic
-differentiation makes our life very simple here. The function
-``AngleAxisRotatePoint`` and other functions for manipulating
+differentiation makes life much simpler. The function
+:func:`AngleAxisRotatePoint` and other functions for manipulating
 rotations can be found in ``include/ceres/rotation.h``.
 
 Given this functor, the bundle adjustment problem can be constructed
@@ -510,13 +616,8 @@ as follows:
 
 .. code-block:: c++
 
- // Create residuals for each observation in the bundle adjustment problem. The
- // parameters for cameras and points are added automatically.
  ceres::Problem problem;
  for (int i = 0; i < bal_problem.num_observations(); ++i) {
-   // Each Residual block takes a point and a camera as input and outputs a 2
-   // dimensional residual. Internally, the cost function stores the observed
-   // image location and compares the reprojection against the observation.
    ceres::CostFunction* cost_function =
        new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
            new SnavelyReprojectionError(
@@ -529,17 +630,19 @@ as follows:
  }
 
 
-Again note that that the problem construction for bundle adjustment is
-very similar to the curve fitting example.
+Notice that the problem construction for bundle adjustment is very
+similar to the curve fitting example -- one term is added to the
+objective function per observation.
 
-One way to solve this problem is to set
-``Solver::Options::linear_solver_type`` to
-``SPARSE_NORMAL_CHOLESKY`` and call ``Solve``. And while
-this is a reasonable thing to do, bundle adjustment problems have a
-special sparsity structure that can be exploited to solve them much
-more efficiently. Ceres provides three specialized solvers
-(collectively known as Schur-based solvers) for this task. The example
-code uses the simplest of them ``DENSE_SCHUR``.
+Since this large sparse problem (well large for ``DENSE_QR`` anyways),
+one way to solve this problem is to set
+:member:`Solver::Options::linear_solver_type` to
+``SPARSE_NORMAL_CHOLESKY`` and call :member:`Solve`. And while this is
+a reasonable thing to do, bundle adjustment problems have a special
+sparsity structure that can be exploited to solve them much more
+efficiently. Ceres provides three specialized solvers (collectively
+known as Schur-based solvers) for this task. The example code uses the
+simplest of them ``DENSE_SCHUR``.
 
 .. code-block:: c++
 
@@ -550,15 +653,17 @@ code uses the simplest of them ``DENSE_SCHUR``.
  ceres::Solve(options, &problem, &summary);
  std::cout << summary.FullReport() << "\n";
 
-
 For a more sophisticated bundle adjustment example which demonstrates
 the use of Ceres' more advanced features including its various linear
 solvers, robust loss functions and local parameterizations see
-``examples/bundle_adjuster.cc``.
+`examples/bundle_adjuster.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/bundle_adjuster.cc>`_
+
 
 .. rubric:: Footnotes
 
-.. [#f5] The full source code for this example can be found in ``examples/simple_bundle_adjuster.cc``.
+.. [#f8] `examples/simple_bundle_adjuster.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/simple_bundle_adjuster.cc>`_
 
 
 Other Examples
@@ -568,15 +673,14 @@ Besides the examples in this chapter, the  `example
 <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
 directory contains a number of other examples:
 
+#. `bundle_adjuster.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/bundle_adjuster.cc>`_
+   shows how to use the various features of Ceres to solve bundle
+   adjustment problems.
+
 #. `circle_fit.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/circle_fit.cc>`_
    shows how to fit data to a circle.
-
-#. `nist.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
-   implements and attempts to solves the `NIST
-   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
-   non-linear regression problems.
 
 #. `denoising.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/denoising.cc>`_
@@ -584,5 +688,10 @@ directory contains a number of other examples:
    <http://www.gris.informatik.tu-darmstadt.de/~sroth/research/foe/index.html>`_
    model.
 
+#. `nist.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
+   implements and attempts to solves the `NIST
+   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
+   non-linear regression problems.
 
 

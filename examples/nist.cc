@@ -28,18 +28,48 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
-// NIST non-linear regression problems solved using Ceres.
+// The National Institute of Standards and Technology has released a
+// set of problems to test non-linear least squares solvers.
 //
-// The data was obtained from
-// http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml, where more
-// background on these problems can also be found.
+// More information about the background on these problems and
+// suggested evaluation methodology can be found at:
 //
-// Currently not all problems are solved successfully. Some of the
-// failures are due to convergence to a local minimum, and some fail
-// because of numerical issues.
+//   http://www.itl.nist.gov/div898/strd/nls/nls_info.shtml
 //
-// TODO(sameeragarwal): Fix numerical issues so that all the problems
-// converge and then look at convergence to the wrong solution issues.
+// The problem data themselves can be found at
+//
+//   http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml
+//
+// The problems are divided into three levels of difficulty, Easy,
+// Medium and Hard. For each problem there are two starting guesses,
+// the first one far away from the global minimum and the second
+// closer to it.
+//
+// A problem is considered successfully solved, if every components of
+// the solution matches the globally optimal solution in at least 4
+// digits or more.
+//
+// This dataset was used for an evaluation of Non-linear least squares
+// solvers:
+//
+// P. F. Mondragon & B. Borchers, A Comparison of Nonlinear Regression
+// Codes, Journal of Modern Applied Statistical Methods, 4(1):343-351,
+// 2005.
+//
+// The results from Mondragon & Borchers can be summarized as
+//               Excel  Gnuplot  GaussFit  HBN  MinPack
+// Average LRE     2.3      4.3       4.0  6.8      4.4
+//      Winner       1        5        12   29       12
+//
+// Where the row Winner counts, the number of problems for which the
+// solver had the highest LRE.
+
+// In this file, we implement the same evaluation methodology using
+// Ceres. Currently using Levenberg-Marquard with DENSE_QR, we get
+//
+//               Excel  Gnuplot  GaussFit  HBN  MinPack  Ceres
+// Average LRE     2.3      4.3       4.0  6.8      4.4    9.4
+//      Winner       0        0         5   11        2     41
 
 #include <iostream>
 #include <fstream>
@@ -347,11 +377,12 @@ int RegressionDriver(const std::string& filename,
   Matrix predictor = nist_problem.predictor();
   Matrix response = nist_problem.response();
   Matrix final_parameters = nist_problem.final_parameters();
-  std::vector<ceres::Solver::Summary> summaries(nist_problem.num_starts() + 1);
-  std::cerr << filename << std::endl;
+
+  printf("%s\n", filename.c_str());
 
   // Each NIST problem comes with multiple starting points, so we
   // construct the problem from scratch for each case and solve it.
+  int num_success = 0;
   for (int start = 0; start < nist_problem.num_starts(); ++start) {
     Matrix initial_parameters = nist_problem.initial_parameters(start);
 
@@ -365,39 +396,41 @@ int RegressionDriver(const std::string& filename,
           initial_parameters.data());
     }
 
-    Solve(options, &problem, &summaries[start]);
-  }
+    ceres::Solver::Summary summary;
+    Solve(options, &problem, &summary);
 
-  const double certified_cost = nist_problem.certified_cost();
-
-  int num_success = 0;
-  const int kMinNumMatchingDigits = 4;
-  for (int start = 0; start < nist_problem.num_starts(); ++start) {
-    const ceres::Solver::Summary& summary = summaries[start];
-
-    int num_matching_digits = 0;
-    if (IsSuccessfulTermination(summary.termination_type)
-        && summary.final_cost < certified_cost) {
-      num_matching_digits = kMinNumMatchingDigits + 1;
-    } else {
-      num_matching_digits =
-          -std::log10(fabs(summary.final_cost - certified_cost) / certified_cost);
+    // Compute the LRE by comparing each component of the solution
+    // with the ground truth, and taking the minimum.
+    Matrix final_parameters = nist_problem.final_parameters();
+    const double kMaxNumSignificantDigits = 11;
+    double log_relative_error = kMaxNumSignificantDigits + 1;
+    for (int i = 0; i < num_parameters; ++i) {
+      const double tmp_lre =
+          -std::log10(std::fabs(final_parameters(i) - initial_parameters(i)) /
+                      std::fabs(final_parameters(i)));
+      // The maximum LRE is capped at 11 - the precision at which the
+      // ground truth is known.
+      //
+      // The minimum LRE is capped at 0 - no digits match between the
+      // computed solution and the ground truth.
+      log_relative_error =
+          std::min(log_relative_error,
+                   std::max(0.0, std::min(kMaxNumSignificantDigits, tmp_lre)));
     }
 
-    std::cerr << "start " << start + 1 << " " ;
-    if (num_matching_digits <= kMinNumMatchingDigits) {
-      std::cerr <<  "FAILURE";
-    } else {
-      std::cerr <<  "SUCCESS";
+    const int kMinNumMatchingDigits = 4;
+    if (log_relative_error >= kMinNumMatchingDigits) {
       ++num_success;
     }
-    std::cerr << " summary: "
-              << summary.BriefReport()
-              << " Certified cost: " << certified_cost
-              << std::endl;
 
+    printf("start: %d status: %s lre: %4.1f initial cost: %e final cost:%e certified cost: %e\n",
+           start + 1,
+           log_relative_error < kMinNumMatchingDigits ? "FAILURE" : "SUCCESS",
+           log_relative_error,
+           summary.initial_cost,
+           summary.final_cost,
+           nist_problem.certified_cost());
   }
-
   return num_success;
 }
 
@@ -427,7 +460,7 @@ void SolveNISTProblems() {
   ceres::Solver::Options options;
   SetMinimizerOptions(&options);
 
-  std::cerr << "Lower Difficulty\n";
+  std::cout << "Lower Difficulty\n";
   int easy_success = 0;
   easy_success += RegressionDriver<Misra1a,  1, 2>("Misra1a.dat",  options);
   easy_success += RegressionDriver<Chwirut,  1, 3>("Chwirut1.dat", options);
@@ -438,7 +471,7 @@ void SolveNISTProblems() {
   easy_success += RegressionDriver<DanWood,  1, 2>("DanWood.dat",  options);
   easy_success += RegressionDriver<Misra1b,  1, 2>("Misra1b.dat",  options);
 
-  std::cerr << "\nMedium Difficulty\n";
+  std::cout << "\nMedium Difficulty\n";
   int medium_success = 0;
   medium_success += RegressionDriver<Kirby2,   1, 5>("Kirby2.dat",   options);
   medium_success += RegressionDriver<Hahn1,    1, 7>("Hahn1.dat",    options);
@@ -452,7 +485,7 @@ void SolveNISTProblems() {
   medium_success += RegressionDriver<Roszman1, 1, 4>("Roszman1.dat", options);
   medium_success += RegressionDriver<ENSO,     1, 9>("ENSO.dat",     options);
 
-  std::cerr << "\nHigher Difficulty\n";
+  std::cout << "\nHigher Difficulty\n";
   int hard_success = 0;
   hard_success += RegressionDriver<MGH09,    1, 4>("MGH09.dat",    options);
   hard_success += RegressionDriver<Thurber,  1, 7>("Thurber.dat",  options);
@@ -464,11 +497,11 @@ void SolveNISTProblems() {
   hard_success += RegressionDriver<Rat43,    1, 4>("Rat43.dat",    options);
   hard_success += RegressionDriver<Bennet5,  1, 3>("Bennett5.dat", options);
 
-  std::cerr << "\n";
-  std::cerr << "Easy    : " << easy_success << "/16\n";
-  std::cerr << "Medium  : " << medium_success << "/22\n";
-  std::cerr << "Hard    : " << hard_success << "/16\n";
-  std::cerr << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
+  std::cout << "\n";
+  std::cout << "Easy    : " << easy_success << "/16\n";
+  std::cout << "Medium  : " << medium_success << "/22\n";
+  std::cout << "Hard    : " << hard_success << "/16\n";
+  std::cout << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
 }
 
 int main(int argc, char** argv) {
