@@ -86,10 +86,10 @@ void EventLogger::AddEvent(const string& event_name) {
   last_event_time_ = current_time;
 
   StringAppendF(&events_,
-                "  %25s : %5.3e   %5.3e\n",
+                "  %25s : %8.3f   %8.3f\n",
                 event_name.c_str(),
-                relative_time_delta,
-                absolute_time_delta);
+                1000 * relative_time_delta,
+                1000 * absolute_time_delta);
 }
 
 }  // namespace internal
