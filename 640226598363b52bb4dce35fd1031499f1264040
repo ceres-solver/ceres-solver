@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Pty1ChKw",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-11T23:11:36Z",
+      "side": 1,
+      "message": "Consider including a comment.",
+      "revId": "640226598363b52bb4dce35fd1031499f1264040",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Pt401uEc",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-11T23:11:36Z",
+      "side": 1,
+      "message": "Only do this for non-monotonic mode?\n\nAt least include a comment explaining why the loop is here.",
+      "revId": "640226598363b52bb4dce35fd1031499f1264040",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
