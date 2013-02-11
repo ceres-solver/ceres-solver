@@ -77,6 +77,15 @@ class StateUpdatingCallback : public IterationCallback {
   double* parameters_;
 };
 
+#define CERES_EVALUATE(which)                                           \
+  Evaluator::Evaluate(                                                  \
+      original_program,                                                 \
+      options.num_threads,                                              \
+      &summary->final_cost,                                             \
+      options.return_ ## which ## _residuals ? &summary->which ## _residuals : NULL, \
+      options.return_ ## which ## _gradient ? &summary->which ## _gradient : NULL, \
+      options.return_ ## which ## _jacobian ? &summary->which ## _jacobian : NULL)
+
 // Callback for logging the state of the minimizer to STDERR or STDOUT
 // depending on the user's preferences and logging level.
 class TrustRegionLoggingCallback : public IterationCallback {
@@ -373,27 +382,18 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   }
 
   event_logger.AddEvent("Init");
+
   // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user. The initial cost needs to be
-  // computed on the original unpreprocessed problem, as it is used to
-  // determine the value of the "fixed" part of the objective function
-  // after the problem has undergone reduction.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &(summary->initial_cost),
-                           options.return_initial_residuals
-                           ? &summary->initial_residuals
-                           : NULL,
-                           options.return_initial_gradient
-                           ? &summary->initial_gradient
-                           : NULL,
-                           options.return_initial_jacobian
-                           ? &summary->initial_jacobian
-                           : NULL)) {
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the initial cost.";
-    LOG(ERROR) << summary->error;
-    return;
+  // matrix if requested by the user.
+  if (options.return_initial_residuals ||
+      options.return_initial_gradient ||
+      options.return_initial_jacobian) {
+    if (!CERES_EVALUATE(initial)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the initial cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
   event_logger.AddEvent("InitialEvaluate");
@@ -470,24 +470,21 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     summary->termination_type = FUNCTION_TOLERANCE;
 
     double post_process_start_time = WallTimeInSeconds();
+
+
+
+
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
-    if (!Evaluator::Evaluate(original_program,
-                             options.num_threads,
-                             &summary->final_cost,
-                             options.return_final_residuals
-                             ? &summary->final_residuals
-                             : NULL,
-                             options.return_final_gradient
-                             ? &summary->final_gradient
-                             : NULL,
-                             options.return_final_jacobian
-                             ? &summary->final_jacobian
-                             : NULL)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-      return;
+    if (options.return_final_residuals ||
+        options.return_final_gradient ||
+        options.return_final_jacobian) {
+      if (!CERES_EVALUATE(final)) {
+        summary->termination_type = NUMERICAL_FAILURE;
+        summary->error = "Unable to evaluate the final cost.";
+        LOG(ERROR) << summary->error;
+        return;
+      }
     }
 
     // Ensure the program state is set to the user parameters on the way out.
@@ -588,6 +585,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                       summary);
   event_logger.AddEvent("Minimize");
 
+  summary->final_cost = summary->initial_cost;
+  for (int i = 0; i < summary->iterations.size(); ++i) {
+    const IterationSummary& iteration_summary = summary->iterations[i];
+    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
+  }
+
   // If the user aborted mid-optimization or the optimization
   // terminated because of a numerical failure, then return without
   // updating user state.
@@ -604,35 +607,27 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &summary->final_cost,
-                           options.return_final_residuals
-                           ? &summary->final_residuals
-                           : NULL,
-                           options.return_final_gradient
-                           ? &summary->final_gradient
-                           : NULL,
-                           options.return_final_jacobian
-                           ? &summary->final_jacobian
-                           : NULL)) {
-    // This failure requires careful handling.
-    //
-    // At this point, we have modified the user's state, but the
-    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-    // guarantees that user's state is not modified if the solver
-    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-    // user's state to their original values.
+  if (options.return_final_residuals ||
+      options.return_final_gradient ||
+      options.return_final_jacobian) {
+    if (!CERES_EVALUATE(final)) {
+      // This failure requires careful handling.
+      //
+      // At this point, we have modified the user's state, but the
+      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+      // guarantees that user's state is not modified if the solver
+      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+      // user's state to their original values.
+      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+      reduced_program->CopyParameterBlockStateToUserState();
 
-    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-    reduced_program->CopyParameterBlockStateToUserState();
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
 
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the final cost.";
-    LOG(ERROR) << summary->error;
-
-    event_logger.AddEvent("PostProcess");
-    return;
+      event_logger.AddEvent("PostProcess");
+      return;
+    }
   }
 
   // Ensure the program state is set to the user parameters on the way out.
@@ -729,26 +724,16 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   }
 
   // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user. The initial cost needs to be
-  // computed on the original unpreprocessed problem, as it is used to
-  // determine the value of the "fixed" part of the objective function
-  // after the problem has undergone reduction.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &(summary->initial_cost),
-                           options.return_initial_residuals
-                           ? &summary->initial_residuals
-                           : NULL,
-                           options.return_initial_gradient
-                           ? &summary->initial_gradient
-                           : NULL,
-                           options.return_initial_jacobian
-                           ? &summary->initial_jacobian
-                           : NULL)) {
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the initial cost.";
-    LOG(ERROR) << summary->error;
-    return;
+  // matrix if requested by the user.
+  if (options.return_initial_residuals ||
+      options.return_initial_gradient ||
+      options.return_initial_jacobian) {
+    if (!CERES_EVALUATE(initial)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the initial cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
@@ -799,24 +784,24 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     summary->termination_type = FUNCTION_TOLERANCE;
 
     const double post_process_start_time = WallTimeInSeconds();
+
+    summary->final_cost = summary->initial_cost;
+    for (int i = 0; i < summary->iterations.size(); ++i) {
+      const IterationSummary& iteration_summary = summary->iterations[i];
+      summary->final_cost = min(iteration_summary.cost, summary->final_cost);
+    }
+
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
-    if (!Evaluator::Evaluate(original_program,
-                             options.num_threads,
-                             &summary->final_cost,
-                             options.return_final_residuals
-                             ? &summary->final_residuals
-                             : NULL,
-                             options.return_final_gradient
-                             ? &summary->final_gradient
-                             : NULL,
-                             options.return_final_jacobian
-                             ? &summary->final_jacobian
-                             : NULL)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-      return;
+    if (options.return_final_residuals ||
+        options.return_final_gradient ||
+        options.return_final_jacobian) {
+      if (!CERES_EVALUATE(final)) {
+        summary->termination_type = NUMERICAL_FAILURE;
+        summary->error = "Unable to evaluate the final cost.";
+        LOG(ERROR) << summary->error;
+        return;
+      }
     }
 
     // Ensure the program state is set to the user parameters on the way out.
@@ -868,35 +853,34 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
 
+  summary->final_cost = summary->initial_cost;
+  for (int i = 0; i < summary->iterations.size(); ++i) {
+    const IterationSummary& iteration_summary = summary->iterations[i];
+    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
+  }
+
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &summary->final_cost,
-                           options.return_final_residuals
-                           ? &summary->final_residuals
-                           : NULL,
-                           options.return_final_gradient
-                           ? &summary->final_gradient
-                           : NULL,
-                           options.return_final_jacobian
-                           ? &summary->final_jacobian
-                           : NULL)) {
-    // This failure requires careful handling.
-    //
-    // At this point, we have modified the user's state, but the
-    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-    // guarantees that user's state is not modified if the solver
-    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-    // user's state to their original values.
+  if (options.return_final_residuals ||
+      options.return_final_gradient ||
+      options.return_final_jacobian) {
+    if (!CERES_EVALUATE(final)) {
+      // This failure requires careful handling.
+      //
+      // At this point, we have modified the user's state, but the
+      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+      // guarantees that user's state is not modified if the solver
+      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+      // user's state to their original values.
 
-    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-    reduced_program->CopyParameterBlockStateToUserState();
+      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+      reduced_program->CopyParameterBlockStateToUserState();
 
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the final cost.";
-    LOG(ERROR) << summary->error;
-    return;
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
   // Ensure the program state is set to the user parameters on the way out.

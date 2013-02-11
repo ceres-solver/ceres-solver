@@ -124,7 +124,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  summary->initial_cost = current_state.cost + summary->fixed_cost;
   iteration_summary.cost = current_state.cost + summary->fixed_cost;
+
   iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
 
   // The initial gradient max_norm is bounded from below so that we do
