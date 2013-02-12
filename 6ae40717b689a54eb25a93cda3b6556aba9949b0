@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PzJ-qfwI",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "explain the rational and the general structure of the strided evaluation.",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzJ.B314",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "Make is a verb.. and you are using it above declarations. which is odd.",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzP92E4Q",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "fits on one line?",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzF.I53g",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "odd comment, need better comment here.",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzH.yA08",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "odd space/blank.",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzL-luzY",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "Jacobians",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzB.lzwc",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:25:45Z",
+      "side": 1,
+      "message": "no need for this.",
+      "revId": "6ae40717b689a54eb25a93cda3b6556aba9949b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
