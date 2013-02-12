@@ -1036,21 +1036,30 @@ within Ceres Solver's automatic differentiation framework.
    whose norm is the angle of rotation in radians, and whose direction
    is the axis of rotation.
 
+.. function:: void RotationMatrixToAngleAxis<T, row_stride, col_stride>(const MatrixAdapter<const T, row_stride, col_stride>& R, T * angle_axis)
+.. function:: void AngleAxisToRotationMatrix<T, row_stride, col_stride>(T const * angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: void RotationMatrixToAngleAxis<T>(T const * R, T * angle_axis)
 .. function:: void AngleAxisToRotationMatrix<T>(T const * angle_axis, T * R)
 
-   Conversions between 3x3 rotation matrix (in column major order) and
-   axis-angle rotation representations.
+   Conversions between 3x3 rotation matrix with given column and row strides and
+   axis-angle rotation representations. The functions that take a pointer to T instead
+   of a MatrixAdapter assume a column major representation with unit row stride and a column stride of 3.
 
+.. function:: void EulerAnglesToRotationMatrix<T, row_stride, col_stride>(const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: void EulerAnglesToRotationMatrix<T>(const T* euler, int row_stride, T* R)
 
-   Conversions between 3x3 rotation matrix (in row major order) and
+   Conversions between 3x3 rotation matrix with given column and row strides and
    Euler angle (in degrees) rotation representations.
 
    The {pitch,roll,yaw} Euler angles are rotations around the {x,y,z}
    axes, respectively.  They are applied in that same order, so the
    total rotation R is Rz * Ry * Rx.
 
+   The function that takes a pointer to T as the rotation matrix assumes a row
+   major representation with unit column stride and a row stride of 3.
+   The additional parameter row_stride is required to be 3.
+
+.. function:: void QuaternionToScaledRotation<T, row_stride, col_stride>(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: void QuaternionToScaledRotation<T>(const T q[4], T R[3 * 3])
 
    Convert a 4-vector to a 3x3 scaled rotation matrix.
@@ -1071,13 +1080,16 @@ within Ceres Solver's automatic differentiation framework.
    = R(q1) * R(q2)` this uniquely defines the mapping from :math:`q` to
    :math:`R`.
 
-   The rotation matrix ``R`` is row-major.
+   In the function that accepts a pointer to T instead of a MatrixAdapter,
+   the rotation matrix ``R`` is a row-major matrix with unit column stride
+   and a row stride of 3.
 
    No normalization of the quaternion is performed, i.e.
    :math:`R = \|q\|^2  Q`, where :math:`Q` is an orthonormal matrix
    such that :math:`\det(Q) = 1` and :math:`Q*Q' = I`.
 
 
+.. function:: void QuaternionToRotation<T>(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
 .. function:: void QuaternionToRotation<T>(const T q[4], T R[3 * 3])
 
    Same as above except that the rotation matrix is normalized by the
