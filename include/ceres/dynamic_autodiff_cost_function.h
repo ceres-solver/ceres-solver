@@ -121,7 +121,7 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     vector<Jet<double, Stride> > output_jets(num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks);
+    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks, NULL);
     for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
       jet_parameters[i] = &input_jets[parameter_cursor];
       for (int j = 0; j < parameter_block_sizes()[i]; ++j, parameter_cursor++) {
@@ -132,6 +132,7 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     // Evaluate all of the strides. Each stride is a chunk of the derivative to
     // evaluate, typically some size proportional to the size of the SIMD
     // registers of the CPU.
+
     int num_strides = int(ceil(num_parameters / float(Stride)));
     for (int pass = 0; pass < num_strides; ++pass) {
       const int start_derivative_section = pass * Stride;
@@ -143,8 +144,9 @@ class DynamicAutoDiffCostFunction : public CostFunction {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           input_jets[parameter_cursor].v.setZero();
-          if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
+          if ((jacobians[i] != NULL) &&
+              (parameter_cursor >= start_derivative_section &&
+               parameter_cursor < end_derivative_section)) {
             input_jets[parameter_cursor]
                 .v[parameter_cursor - start_derivative_section] = 1.0;
           }
@@ -159,8 +161,9 @@ class DynamicAutoDiffCostFunction : public CostFunction {
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
-          if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
+          if ((jacobians[i] != NULL) &&
+              (parameter_cursor >= start_derivative_section &&
+               parameter_cursor < end_derivative_section)) {
             for (int k = 0; k < num_residuals(); ++k) {
               jacobians[i][k * parameter_block_sizes()[i] + j] =
                   output_jets[k].v[parameter_cursor - start_derivative_section];
