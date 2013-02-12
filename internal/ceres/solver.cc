@@ -266,23 +266,23 @@ string Solver::Summary::FullReport() const {
                 num_unsuccessful_steps);
   StringAppendF(&report, "Total                    % 20d\n",
                 num_successful_steps + num_unsuccessful_steps);
-  StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(&report, "Preprocessor        % 25.3e\n",
-                preprocessor_time_in_seconds);
 
-  StringAppendF(&report, "\n  Residual Evaluations % 22.3e\n",
+  StringAppendF(&report, "\nTime (in seconds):\n");
+  StringAppendF(&report, "Preprocessor        %25.3f\n",
+                preprocessor_time_in_seconds);
+  StringAppendF(&report, "\n  Residual Evaluations %22.3f\n",
                 residual_evaluation_time_in_seconds);
-  StringAppendF(&report, "  Jacobian Evaluations % 22.3e\n",
+  StringAppendF(&report, "  Jacobian Evaluations %22.3f\n",
                 jacobian_evaluation_time_in_seconds);
-  StringAppendF(&report, "  Linear Solver       % 23.3e\n",
+  StringAppendF(&report, "  Linear Solver       %23.3f\n",
                 linear_solver_time_in_seconds);
-  StringAppendF(&report, "Minimizer           % 25.3e\n\n",
+  StringAppendF(&report, "Minimizer           %25.3f\n\n",
                 minimizer_time_in_seconds);
 
-  StringAppendF(&report, "Postprocessor        % 24.3e\n",
+  StringAppendF(&report, "Postprocessor        %24.3f\n",
                 postprocessor_time_in_seconds);
 
-  StringAppendF(&report, "Total               % 25.3e\n\n",
+  StringAppendF(&report, "Total               %25.3f\n\n",
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s\n",

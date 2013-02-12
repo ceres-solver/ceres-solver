@@ -64,7 +64,7 @@ EventLogger::EventLogger(const string& logger_name)
       last_event_time_(start_time_),
       events_("") {
   StringAppendF(&events_,
-                "\n%s\n                                  Delta  Cumulative\n",
+                "\n%s\n                                   Delta   Cumulative\n",
                 logger_name.c_str());
 }
 
@@ -86,10 +86,10 @@ void EventLogger::AddEvent(const string& event_name) {
   last_event_time_ = current_time;
 
   StringAppendF(&events_,
-                "  %25s : %8.3f   %8.3f\n",
+                "  %25s : %10.5f   %10.5f\n",
                 event_name.c_str(),
-                1000 * relative_time_delta,
-                1000 * absolute_time_delta);
+                relative_time_delta,
+                absolute_time_delta);
 }
 
 }  // namespace internal
