@@ -121,7 +121,7 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     vector<Jet<double, Stride> > output_jets(num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks);
+    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks, NULL);
     for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
       jet_parameters[i] = &input_jets[parameter_cursor];
       for (int j = 0; j < parameter_block_sizes()[i]; ++j, parameter_cursor++) {
@@ -143,8 +143,21 @@ class DynamicAutoDiffCostFunction : public CostFunction {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           input_jets[parameter_cursor].v.setZero();
-          if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
+
+          // This is not the best possible implementation when some
+          // parameter blocks are constant. In this implementation its
+          // possible that in the worse case, an entire stride
+          // evaluation or more has no active parameters. This will
+          // lead to useless evaluations.
+          //
+          // However, the stride based logic here is simpler to read
+          // and understand, and should handle the common case.  If
+          // this becomes a performance penalty, we can come back and
+          // add the more complicated looping logic, which is not
+          // stride based.
+          if ((jacobians[i] != NULL) &&
+              (parameter_cursor >= start_derivative_section &&
+               parameter_cursor < end_derivative_section)) {
             input_jets[parameter_cursor]
                 .v[parameter_cursor - start_derivative_section] = 1.0;
           }
@@ -159,8 +172,9 @@ class DynamicAutoDiffCostFunction : public CostFunction {
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
-          if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
+          if ((jacobians[i] != NULL) &&
+              (parameter_cursor >= start_derivative_section &&
+               parameter_cursor < end_derivative_section)) {
             for (int k = 0; k < num_residuals(); ++k) {
               jacobians[i][k * parameter_block_sizes()[i] + j] =
                   output_jets[k].v[parameter_cursor - start_derivative_section];

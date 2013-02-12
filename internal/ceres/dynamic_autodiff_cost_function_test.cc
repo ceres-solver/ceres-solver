@@ -162,5 +162,113 @@ TEST(DynamicAutodiffCostFunctionTest, TestJacobian) {
   }
 }
 
+TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
+  // Test the residual counting.
+  vector<double> param_block_0(10, 0.0);
+  for (int i = 0; i < 10; ++i) {
+    param_block_0[i] = 2 * i;
+  }
+  vector<double> param_block_1(5, 0.0);
+  DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
+      new MyCostFunctor());
+  cost_function.AddParameterBlock(param_block_0.size());
+  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.SetNumResiduals(21);
+
+  // Prepare the residuals.
+  vector<double> residuals(21, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(2);
+  parameter_blocks[0] = &param_block_0[0];
+  parameter_blocks[1] = &param_block_1[0];
+
+  // Prepare the jacobian.
+  vector<vector<double> > jacobian_vect(2);
+  jacobian_vect[0].resize(21 * 10, -100000);
+  jacobian_vect[1].resize(21 * 5, -100000);
+  vector<double*> jacobian;
+  jacobian.push_back(NULL);
+  jacobian.push_back(jacobian_vect[1].data());
+
+  // Test jacobian computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     jacobian.data()));
+
+  for (int r = 0; r < 10; ++r) {
+    EXPECT_EQ(-1.0 * r, residuals.at(r * 2));
+    EXPECT_EQ(+1.0 * r, residuals.at(r * 2 + 1));
+  }
+  EXPECT_EQ(420, residuals.at(20));
+
+  // Check "C" Jacobian for second parameter block.
+  for (int p = 0; p < 5; ++p) {
+    EXPECT_EQ(1.0, jacobian_vect[1][20 * 5 + p]);
+    jacobian_vect[1][20 * 5 + p] = 0.0;
+  }
+  for (int i = 0; i < jacobian_vect[1].size(); ++i) {
+    EXPECT_EQ(0.0, jacobian_vect[1][i]);
+  }
+}
+
+TEST(DynamicAutodiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) {
+  // Test the residual counting.
+  vector<double> param_block_0(10, 0.0);
+  for (int i = 0; i < 10; ++i) {
+    param_block_0[i] = 2 * i;
+  }
+  vector<double> param_block_1(5, 0.0);
+  DynamicAutoDiffCostFunction<MyCostFunctor, 3> cost_function(
+      new MyCostFunctor());
+  cost_function.AddParameterBlock(param_block_0.size());
+  cost_function.AddParameterBlock(param_block_1.size());
+  cost_function.SetNumResiduals(21);
+
+  // Prepare the residuals.
+  vector<double> residuals(21, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(2);
+  parameter_blocks[0] = &param_block_0[0];
+  parameter_blocks[1] = &param_block_1[0];
+
+  // Prepare the jacobian.
+  vector<vector<double> > jacobian_vect(2);
+  jacobian_vect[0].resize(21 * 10, -100000);
+  jacobian_vect[1].resize(21 * 5, -100000);
+  vector<double*> jacobian;
+  jacobian.push_back(jacobian_vect[0].data());
+  jacobian.push_back(NULL);
+
+  // Test jacobian computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     jacobian.data()));
+
+  for (int r = 0; r < 10; ++r) {
+    EXPECT_EQ(-1.0 * r, residuals.at(r * 2));
+    EXPECT_EQ(+1.0 * r, residuals.at(r * 2 + 1));
+  }
+  EXPECT_EQ(420, residuals.at(20));
+  for (int p = 0; p < 10; ++p) {
+    // Check "A" Jacobian.
+    EXPECT_EQ(-1.0, jacobian_vect[0][2*p * 10 + p]);
+    // Check "B" Jacobian.
+    EXPECT_EQ(+1.0, jacobian_vect[0][(2*p+1) * 10 + p]);
+    jacobian_vect[0][2*p * 10 + p] = 0.0;
+    jacobian_vect[0][(2*p+1) * 10 + p] = 0.0;
+  }
+
+  // Check "C" Jacobian for first parameter block.
+  for (int p = 0; p < 10; ++p) {
+    EXPECT_EQ(4 * p - 8, jacobian_vect[0][20 * 10 + p]);
+    jacobian_vect[0][20 * 10 + p] = 0.0;
+  }
+  for (int i = 0; i < jacobian_vect[0].size(); ++i) {
+    EXPECT_EQ(0.0, jacobian_vect[0][i]);
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres
