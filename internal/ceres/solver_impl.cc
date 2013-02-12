@@ -256,6 +256,7 @@ void SolverImpl::TrustRegionMinimize(
 
   minimizer_options.evaluator = evaluator;
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+
   minimizer_options.jacobian = jacobian.get();
   minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
@@ -414,6 +415,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   event_logger.AddEvent("InitialEvaluate");
 
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  event_logger.AddEvent("SetParameterBlockPtrs");
 
   // If the user requests gradient checking, construct a new
   // ProblemImpl by wrapping the CostFunctions of problem_impl inside
@@ -438,8 +440,10 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       LOG(ERROR) << summary->error;
       return;
     }
+    event_logger.AddEvent("CheckOrdering");
     options.linear_solver_ordering =
         new ParameterBlockOrdering(*original_options.linear_solver_ordering);
+    event_logger.AddEvent("CopyOrdering");
   } else {
     options.linear_solver_ordering = new ParameterBlockOrdering;
     const ProblemImpl::ParameterMap& parameter_map =
@@ -449,9 +453,10 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
          ++it) {
       options.linear_solver_ordering->AddElementToGroup(it->first, 0);
     }
+    event_logger.AddEvent("ConstructOrdering");
   }
 
-  event_logger.AddEvent("ConstructOrdering");
+
 
   // Create the three objects needed to minimize: the transformed program, the
   // evaluator, and the linear solver.
@@ -589,7 +594,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
-  event_logger.AddEvent("FinalInit");
   // Run the optimization.
   TrustRegionMinimize(options,
                       reduced_program.get(),
