@@ -121,10 +121,22 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     vector<Jet<double, Stride> > output_jets(num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks);
+    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks, NULL);
+    int num_active_parameters = 0;
+    int start_derivative_section = -1;
     for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
       jet_parameters[i] = &input_jets[parameter_cursor];
-      for (int j = 0; j < parameter_block_sizes()[i]; ++j, parameter_cursor++) {
+
+      const int parameter_block_size = parameter_block_sizes()[i];
+      if (jacobians[i] != NULL) {
+        start_derivative_section =
+            (start_derivative_section == -1)
+            ? parameter_cursor
+            : start_derivative_section;
+        num_active_parameters += parameter_block_size;
+      }
+
+      for (int j = 0; j < parameter_block_size; ++j, parameter_cursor++) {
         input_jets[parameter_cursor].a = parameters[i][j];
       }
     }
@@ -132,21 +144,24 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     // Evaluate all of the strides. Each stride is a chunk of the derivative to
     // evaluate, typically some size proportional to the size of the SIMD
     // registers of the CPU.
-    int num_strides = int(ceil(num_parameters / float(Stride)));
+    int num_strides = int(ceil(num_active_parameters / float(Stride)));
     for (int pass = 0; pass < num_strides; ++pass) {
-      const int start_derivative_section = pass * Stride;
-      const int end_derivative_section = std::min((pass + 1) * Stride,
-                                                  num_parameters);
-      // Set most of the jet components to zero, except for the active
-      // parameters, which occur in a contiguos block of size Stride.
+      // Set most of the jet components to zero, except for
+      // non-constant #Stride parameters.
+      int active_parameter_count = 0;
+      int end_derivative_section = start_derivative_section;
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           input_jets[parameter_cursor].v.setZero();
           if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
-            input_jets[parameter_cursor]
-                .v[parameter_cursor - start_derivative_section] = 1.0;
+              active_parameter_count < Stride) {
+            if (jacobians[i] != NULL) {
+              input_jets[parameter_cursor]
+                  .v[parameter_cursor - start_derivative_section] = 1.0;
+              ++active_parameter_count;
+            }
+            ++end_derivative_section;
           }
         }
       }
@@ -156,14 +171,18 @@ class DynamicAutoDiffCostFunction : public CostFunction {
       }
 
       // Copy the pieces of the jacobians into their final place.
+      active_parameter_count = 0;
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           if (parameter_cursor >= start_derivative_section &&
-              parameter_cursor < end_derivative_section) {
-            for (int k = 0; k < num_residuals(); ++k) {
-              jacobians[i][k * parameter_block_sizes()[i] + j] =
-                  output_jets[k].v[parameter_cursor - start_derivative_section];
+              active_parameter_count < Stride) {
+            if (jacobians[i] != NULL) {
+              for (int k = 0; k < num_residuals(); ++k) {
+                jacobians[i][k * parameter_block_sizes()[i] + j] =
+                    output_jets[k].v[parameter_cursor - start_derivative_section];
+              }
+              ++active_parameter_count;
             }
           }
         }
@@ -176,6 +195,8 @@ class DynamicAutoDiffCostFunction : public CostFunction {
           residuals[k] = output_jets[k].a;
         }
       }
+
+      start_derivative_section = end_derivative_section;
     }
     return true;
   }
