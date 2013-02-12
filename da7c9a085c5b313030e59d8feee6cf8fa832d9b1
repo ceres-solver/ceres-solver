@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Pyo3QkfI",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-12T22:31:37Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "da7c9a085c5b313030e59d8feee6cf8fa832d9b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Pym3NPVg",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-12T22:31:37Z",
+      "side": 1,
+      "message": "Please leave a note about the simpler implementation for fixed blocks, trading off some time for code complexity.",
+      "revId": "da7c9a085c5b313030e59d8feee6cf8fa832d9b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
