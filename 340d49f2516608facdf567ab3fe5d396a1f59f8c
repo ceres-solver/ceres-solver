@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "PzF.6pww",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:38:52Z",
+      "side": 1,
+      "message": "functors",
+      "revId": "340d49f2516608facdf567ab3fe5d396a1f59f8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzL83e7I",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:38:52Z",
+      "side": 1,
+      "message": "who knows what parameter_block_0 is.. how about just using integers here.",
+      "revId": "340d49f2516608facdf567ab3fe5d396a1f59f8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzB9JTy8",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:38:52Z",
+      "side": 1,
+      "message": "This needs more documentation and a reference to the Stride parameter. Also mention how many passes this implementation will make.",
+      "revId": "340d49f2516608facdf567ab3fe5d396a1f59f8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "PzF9Tx9w",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-12T06:38:52Z",
+      "side": 1,
+      "message": "This only describes the difficulty, it doesn\u0027t actually say what we do to get around it.",
+      "revId": "340d49f2516608facdf567ab3fe5d396a1f59f8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
