@@ -55,10 +55,10 @@ template <typename T, int row_stride, int col_stride>
 struct MatrixAdapter;
 
 template <typename T>
-MatrixAdapter<T, 1, 3> ColumnMajorMatrix3x3(T* pointer);
+MatrixAdapter<T, 1, 3> ColumnMajorAdapter3x3(T* pointer);
 
 template <typename T>
-MatrixAdapter<T, 3, 1> RowMajorMatrix3x3(T* pointer);
+MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer);
 
 // Convert a value in combined axis-angle representation to a quaternion.
 // The value angle_axis is a triple whose norm is an angle in radians,
@@ -195,12 +195,12 @@ struct MatrixAdapter {
 };
 
 template <typename T>
-MatrixAdapter<T, 1, 3> ColumnMajorMatrix3x3(T* pointer) {
+MatrixAdapter<T, 1, 3> ColumnMajorAdapter3x3(T* pointer) {
   return MatrixAdapter<T, 1, 3>(pointer);
 }
 
 template <typename T>
-MatrixAdapter<T, 3, 1> RowMajorMatrix3x3(T* pointer) {
+MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer) {
   return MatrixAdapter<T, 3, 1>(pointer);
 }
 
@@ -314,7 +314,7 @@ inline void QuaternionToAngleAxis(const T* quaternion, T* angle_axis) {
 // to not perform division by a small number.
 template <typename T>
 inline void RotationMatrixToAngleAxis(const T * R, T * angle_axis) {
-  RotationMatrixToAngleAxis(ColumnMajorMatrix3x3(R), angle_axis);
+  RotationMatrixToAngleAxis(ColumnMajorAdapter3x3(R), angle_axis);
 }
 
 template <typename T, int row_stride, int col_stride>
@@ -399,7 +399,7 @@ void RotationMatrixToAngleAxis(
 
 template <typename T>
 inline void AngleAxisToRotationMatrix(const T * angle_axis, T * R) {
-  AngleAxisToRotationMatrix(angle_axis, ColumnMajorMatrix3x3(R));
+  AngleAxisToRotationMatrix(angle_axis, ColumnMajorAdapter3x3(R));
 }
 
 template <typename T, int row_stride, int col_stride>
@@ -448,7 +448,7 @@ inline void EulerAnglesToRotationMatrix(const T* euler,
                                         const int row_stride_parameter,
                                         T* R) {
   CHECK_EQ(row_stride_parameter, 3);
-  EulerAnglesToRotationMatrix(euler, RowMajorMatrix3x3(R));
+  EulerAnglesToRotationMatrix(euler, RowMajorAdapter3x3(R));
 }
 
 template <typename T, int row_stride, int col_stride>
@@ -484,7 +484,7 @@ void EulerAnglesToRotationMatrix(
 
 template <typename T> inline
 void QuaternionToScaledRotation(const T q[4], T R[3 * 3]) {
-  QuaternionToScaledRotation(q, RowMajorMatrix3x3(R));
+  QuaternionToScaledRotation(q, RowMajorAdapter3x3(R));
 }
 
 template <typename T, int row_stride, int col_stride> inline
@@ -516,7 +516,7 @@ void QuaternionToScaledRotation(
 
 template <typename T> inline
 void QuaternionToRotation(const T q[4], T R[3 * 3]) {
-  QuaternionToRotation(q, RowMajorMatrix3x3(R));
+  QuaternionToRotation(q, RowMajorAdapter3x3(R));
 }
 
 template <typename T, int row_stride, int col_stride> inline

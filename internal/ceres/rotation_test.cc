@@ -968,15 +968,15 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
 TEST(MatrixAdapter, RowMajor3x3ReturnTypeIsCorrect) {
   double array[9];
   const float const_array[9];
-  MatrixAdapter<double, 3, 1> A = RowMajorMatrix3x3(array);
-  MatrixAdapter<const float, 3, 1> B = RowMajorMatrix3x3(const_array);
+  MatrixAdapter<double, 3, 1> A = RowMajorAdapter3x3(array);
+  MatrixAdapter<const float, 3, 1> B = RowMajorAdapter3x3(const_array);
 }
 
 TEST(MatrixAdapter, ColumnMajor3x3ReturnTypeIsCorrect) {
   double array[9];
   const float const_array[9];
-  MatrixAdapter<double, 1, 3> A = ColumnMajorMatrix3x3(array);
-  MatrixAdapter<const float, 1, 3> B = ColumnMajorMatrix3x3(const_array);
+  MatrixAdapter<double, 1, 3> A = ColumnMajorAdapter3x3(array);
+  MatrixAdapter<const float, 1, 3> B = ColumnMajorAdapter3x3(const_array);
 }
 
 TEST(MatrixAdapter, RowMajor2x4IsCorrect) {
