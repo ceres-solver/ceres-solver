@@ -37,18 +37,10 @@ New Features
    speeds up the solver a bit.
 
 #. Automatic differenatiation with a dynamic number of parameter
-   blocks. (Based on an idea by Thad Hughes).
-
-#. Speeded up problem construction destruction.
-
-#. Added matrix adapters to ``rotation.h`` so that the rotation matrix
-   routines can work with row and column major matrices. (Markus Moll)
+   blocks. (Based on an initial implementation by Thad Hughes).
 
 Bug Fixes
 ---------
-
-#. Fixed a bug in ``solver_impl.cc`` residual evaluation. (Markus
-   Moll)
 
 #. Fixed varidic evaluation bug in ``AutoDiff``.
 
