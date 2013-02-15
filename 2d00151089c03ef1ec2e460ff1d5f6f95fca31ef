@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3fNBEj4",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-15T18:59:26Z",
+      "side": 1,
+      "message": "add documentation about the use of these adapters.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3dNvtrk",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-15T18:59:26Z",
+      "side": 1,
+      "message": "is this only a compile test? since this is not actually checking equality.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3TNlats",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-15T18:59:26Z",
+      "side": 1,
+      "message": "same as above.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
