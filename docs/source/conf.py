@@ -166,8 +166,6 @@ html_show_copyright = True
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'CeresSolverdoc'
 
-mathjax_path = "mathjax/MathJax.js?config=TeX-AMS_HTML"
-
 # -- Options for LaTeX output --------------------------------------------------
 
 latex_elements = {

@@ -15,7 +15,11 @@ Bibliography
    multiple station analytical stereo triangulation**,  Technical
    Report 43, Patrick Airforce Base, Florida, 1958.
 
-.. [Byrd] R.H. Byrd, R.B. Schnabel, and G.A. Shultz, **Approximate
+.. [ByrdNocedal] R. H. Byrd, J. Nocedal, R. B. Schanbel,
+   **Representations of Quasi-Newton Matrices and their use in Limited
+   Memory Methods**, *Mathematical Programming* 63(4):129–-156, 1994.
+
+.. [ByrdSchanbel] R.H. Byrd, R.B. Schnabel, and G.A. Shultz, **Approximate
    solution of the trust region problem by minimization over
    two dimensional subspaces**, *Mathematical programming*,
    40(1):247–263, 1988.
@@ -64,6 +68,9 @@ Bibliography
 .. [NashSofer] S.G. Nash and A. Sofer, **Assessing a search direction
    within a truncated newton method**, *Operations Research Letters*,
    9(4):219–221, 1990.
+
+.. [Nocedal] J. Nocedal, **Updating Quasi-Newton Matrices with Limited
+   Storage**, *Mathematics of Computation*, 35(151): 773--782, 1980.
 
 .. [NocedalWright] J. Nocedal & S. Wright, **Numerical Optimization**,
    Springer, 2004.
