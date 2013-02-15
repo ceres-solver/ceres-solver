@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3vYynqo",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-15T17:12:47Z",
+      "side": 1,
+      "message": "Perhaps put the ~5% in parenthesis? As it stands, this reads strange.",
+      "revId": "109d98cdb5384b266811b032876ab6f567e167b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3tY3opg",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-15T17:12:47Z",
+      "side": 1,
+      "message": "setting -\u003e set",
+      "revId": "109d98cdb5384b266811b032876ab6f567e167b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
