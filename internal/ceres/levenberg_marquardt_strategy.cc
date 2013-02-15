@@ -112,6 +112,7 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
     VectorRef(step, num_parameters) *= -1.0;
   }
 
+  VectorRef(step, num_parameters) *= -1;
   reuse_diagonal_ = true;
 
   TrustRegionStrategy::Summary summary;
