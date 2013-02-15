@@ -9,16 +9,16 @@
 Solver API
 ==========
 
+
+Introduction
+============
+
 Effective use of Ceres requires some familiarity with the basic
 components of a nonlinear least squares solver, so before we describe
 how to configure the solver, we will begin by taking a brief look at
 how some of the core optimization algorithms in Ceres work and the
 various linear solvers and preconditioners that power it.
 
-.. _section-trust-region-methods:
-
-Trust Region Methods
---------------------
 
 Let :math:`x \in \mathbb{R}^n` be an :math:`n`-dimensional vector of
 variables, and
@@ -32,10 +32,9 @@ solving the following optimization problem [#f1]_ .
 Here, the Jacobian :math:`J(x)` of :math:`F(x)` is an :math:`m\times
 n` matrix, where :math:`J_{ij}(x) = \partial_j f_i(x)` and the
 gradient vector :math:`g(x) = \nabla \frac{1}{2}\|F(x)\|^2 = J(x)^\top
-F(x)`. Since the efficient global minimization of :eq:`nonlinsq` for general
-:math:`F(x)` is an intractable problem, we will have to settle for
-finding a local minimum.
-
+F(x)`. Since the efficient global minimization of :eq:`nonlinsq` for
+general :math:`F(x)` is an intractable problem, we will have to settle
+for finding a local minimum.
 
 The general strategy when solving non-linear optimization problems is
 to solve a sequence of approximations to the original problem
@@ -43,31 +42,57 @@ to solve a sequence of approximations to the original problem
 determine a correction :math:`\Delta x` to the vector :math:`x`. For
 non-linear least squares, an approximation can be constructed by using
 the linearization :math:`F(x+\Delta x) \approx F(x) + J(x)\Delta x`,
-which leads to the following linear least squares  problem:
+which leads to the following linear least squares problem:
 
 .. math:: \min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2
    :label: linearapprox
 
 Unfortunately, naively solving a sequence of these problems and
-updating :math:`x \leftarrow x+ \Delta x` leads to an algorithm that may not
-converge.  To get a convergent algorithm, we need to control the size
-of the step :math:`\Delta x`. And this is where the idea of a trust-region
-comes in.
+updating :math:`x \leftarrow x+ \Delta x` leads to an algorithm that
+may not converge.  To get a convergent algorithm, we need to control
+the size of the step :math:`\Delta x`. Depending on how the size of
+the step :math:`\Delta x` is controlled, non-linear optimization
+algorithms can be divided into two major categories [NocedalWright]_.
 
-.. Algorithm~\ref{alg:trust-region} describes the basic trust-region
-.. loop for non-linear least squares problems.
+1. **Trust Region** The trust region approach approximates the
+   objective function using using a model function (often a quadratic)
+   over a subset of the search space known as the trust region. If the
+   model function succeeds in minimizing the true objective function
+   the trust region is expanded; conversely, otherwise it is
+   contracted and the model optimization problem is solved again.
 
-.. \begin{algorithm} \caption{The basic trust-region
-  algorithm.\label{alg:trust-region}} \begin{algorithmic} \REQUIRE
-  Initial point `x` and a trust region radius `\mu`.  \LOOP
-  \STATE{Solve `\arg \min_{\Delta x} \frac{1}{2}\|J(x)\Delta x +
-  F(x)\|^2` s.t. `\|D(x)\Delta x\|^2 \le \mu`} \STATE{`\rho =
-  \frac{\displaystyle \|F(x + \Delta x)\|^2 -
-  \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 - \|F(x)\|^2}`}
-  \IF {`\rho > \epsilon`} \STATE{`x = x + \Delta x`} \ENDIF \IF {`\rho
-  > \eta_1`} \STATE{`\rho = 2 * \rho`} \ELSE \IF {`\rho < \eta_2`}
-  \STATE {`\rho = 0.5 * \rho`} \ENDIF \ENDIF \ENDLOOP
-  \end{algorithmic} \end{algorithm}
+2. **Line Search** The line search approach first finds a descent
+   direction along which the objective function will be reduced and
+   then computes a step size that decides how far should move along
+   that direction. The descent direction can be computed by various
+   methods, such as gradient descent, Newton's method and Quasi-Newton
+   method. The step size can be determined either exactly or
+   inexactly.
+
+Trust region methods are in some sense dual to line search methods:
+trust region methods first choose a step size (the size of the trust
+region) and then a step direction while line search methods first
+choose a step direction and then a step size.
+
+Ceres implements multiple algorithms in both categories.
+
+.. _section-trust-region-methods:
+
+Trust Region Methods
+====================
+
+The basic trust region algorithm looks something like this.
+
+   1. Given an initial point :math:`x` and a trust region radius :math:`\mu`.
+   2. :math:`\arg \min_{\Delta x} \frac{1}{2}\|J(x)\Delta
+      x + F(x)\|^2` s.t. :math:`\|D(x)\Delta x\|^2 \le \mu`
+   3. :math:`\rho = \frac{\displaystyle \|F(x + \Delta x)\|^2 -
+      \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 -
+      \|F(x)\|^2}`
+   4. if :math:`\rho > \epsilon` then  :math:`x = x + \Delta x`.
+   5. if :math:`\rho > \eta_1` then :math:`\rho = 2  \rho`
+   6. else if :math:`\rho < \eta_2` then :math:`\rho = 0.5 * \rho`
+   7. Goto 2.
 
 Here, :math:`\mu` is the trust region radius, :math:`D(x)` is some
 matrix used to define a metric on the domain of :math:`F(x)` and
@@ -97,10 +122,11 @@ and Dogleg. The user can choose between them by setting
          in terms of an optimization problem defined over a state
          vector of size :math:`n`.
 
+
 .. _section-levenberg-marquardt:
 
 Levenberg-Marquardt
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 The Levenberg-Marquardt algorithm [Levenberg]_ [Marquardt]_ is the
 most popular algorithm for solving non-linear least squares problems.
@@ -176,7 +202,7 @@ algorithm is used.
 .. _section-dogleg:
 
 Dogleg
-^^^^^^
+------
 
 Another strategy for solving the trust region problem :eq:`trp` was
 introduced by M. J. D. Powell. The key idea there is to compute two
@@ -206,7 +232,7 @@ and computations, please see Madsen et al [Madsen]_.
 ``SUBSPACE_DOGLEG`` is a more sophisticated method that considers the
 entire two dimensional subspace spanned by these two vectors and finds
 the point that minimizes the trust region problem in this
-subspace [Byrd]_.
+subspace [ByrdSchanbel]_.
 
 The key advantage of the Dogleg over Levenberg Marquardt is that if
 the step computation for a particular choice of :math:`\mu` does not
@@ -222,7 +248,7 @@ linear solvers.
 .. _section-inner-iterations:
 
 Inner Iterations
-^^^^^^^^^^^^^^^^
+----------------
 
 Some non-linear least squares problems have additional structure in
 the way the parameter blocks interact that it is beneficial to modify
@@ -289,7 +315,7 @@ possible is highly recommended.
 .. _section-non-monotonic-steps:
 
 Non-monotonic Steps
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Note that the basic trust-region algorithm described in
 Algorithm~\ref{alg:trust-region} is a descent algorithm in that they
@@ -314,14 +340,66 @@ than the minimum value encountered over the course of the
 optimization, the final parameters returned to the user are the
 ones corresponding to the minimum cost over all iterations.
 
-The option to take non-monotonic is available for all trust region
-strategies.
+The option to take non-monotonic steps is available for all trust
+region strategies.
 
+
+.. _section-line-search-methods:
+
+Line Search Methods
+===================
+
+**The implementation of line search algorithms in Ceres Solver is
+fairly new and not very well tested, so for now this part of the
+solver should be considered beta quality. We welcome reports of your
+experiences both good and bad on the mailinglist.**
+
+Line search algorithms
+
+   1. Given an initial point :math:`x`
+   2. :math:`\Delta x = -H^{-1}(x) g(x)`
+   3. :math:`\arg \min_\mu \frac{1}{2} \| F(x + \mu \Delta x) \|^2`
+   4. :math:`x = x + \mu \Delta x`
+   5. Goto 2.
+
+Here :math:`H(x)` is some approximation to the Hessian of the
+objective function, and :math:`g(x)` is the gradient at
+:math:`x`. Depending on the choice of :math:`H(x)` we get a variety of
+different search directions -`\Delta x`.
+
+Step 4, which is a one dimensional optimization or `Line Search` along
+:math:`\Delta x` is what gives this class of methods its name.
+
+Different line search algorithms differ in their choice of the search
+direction :math:`\Delta x` and the method used for one dimensional
+optimization along :math:`\Delta x`. The choice of :math:`H(x)` is the
+primary source of computational complexity in these
+methods. Currently, Ceres Solver supports three choices of search
+directions, all aimed at large scale problems.
+
+1. ``STEEPEST_DESCENT`` This corresponds to choosing :math:`H(x)` to
+   be the identity matrix. This is not a good search direction for
+   anything but the simplest of the problems. It is only included here
+   for completeness.
+
+2. ``NONLINEAR_CONJUGATE_GRADIENT`` A generalization of the Conjugate
+   Gradient method to non-linear functions. The generalization can be
+   performed in a number of different ways, resulting in a variety of
+   search directions. Ceres Solver currently supports
+   ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and ``HESTENES_STIEFEL``
+   directions.
+
+3. ``LBFGS`` In this method, a limited memory approximation to the
+   inverse Hessian is maintained and used to compute a quasi-Newton
+   step [Nocedal]_, [ByrdNocedal]_.
+
+Currently Ceres Solver uses a backtracking and interpolation based
+Armijo line search algorithm.
 
 .. _section-linear-solver:
 
 LinearSolver
-------------
+============
 
 Recall that in both of the trust-region methods described above, the
 key computational cost is the solution of a linear least squares
@@ -343,7 +421,7 @@ Ceres provides a number of different options for solving :eq:`normal`.
 .. _section-qr:
 
 ``DENSE_QR``
-^^^^^^^^^^^^
+------------
 
 For small problems (a couple of hundred parameters and a few thousand
 residuals) with relatively dense Jacobians, ``DENSE_QR`` is the method
@@ -360,7 +438,7 @@ Ceres uses ``Eigen`` 's dense QR factorization routines.
 .. _section-cholesky:
 
 ``DENSE_NORMAL_CHOLESKY`` & ``SPARSE_NORMAL_CHOLESKY``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------------------
 
 Large non-linear least square problems are usually sparse. In such
 cases, using a dense QR factorization is inefficient. Let :math:`H =
@@ -393,7 +471,7 @@ Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_.
 .. _section-schur:
 
 ``DENSE_SCHUR`` & ``SPARSE_SCHUR``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------
 
 While it is possible to use ``SPARSE_NORMAL_CHOLESKY`` to solve bundle
 adjustment problems, bundle adjustment problem have a special
@@ -493,7 +571,7 @@ strategy as the ``SPARSE_SCHUR`` solver.
 .. _section-cgnr:
 
 ``CGNR``
-^^^^^^^^
+--------
 
 For general sparse problems, if the problem is too large for
 ``CHOLMOD`` or a sparse linear algebra library is not linked into
@@ -512,7 +590,7 @@ step algorithm.
 .. _section-iterative_schur:
 
 ``ITERATIVE_SCHUR``
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Another option for bundle adjustment problems is to apply PCG to the
 reduced camera matrix :math:`S` instead of :math:`H`. One reason to do
@@ -692,6 +770,58 @@ elimination group [LiSaad]_.
   :class:`Solver::Options` controls the overall behavior of the
   solver. We list the various settings and their default values below.
 
+
+.. member:: MinimizerType Solver::Options::minimizer_type
+
+   Default: ``TRUST_REGION``
+
+   Choose between ``LINE_SEARCH`` and ``TRUST_REGION`` algorithms. See
+   :ref:`section-trust-region-methods` and
+   :ref:`section-line-search-methods` for more details.
+
+.. member:: LineSearchDirectionType Solver::Options::line_search_direction_type
+
+   Default: ``LBFGS``
+
+   Choices are ``STEEPEST_DESCENT``, ``NONLINEAR_CONJUGATE_GRADIENT``
+   and ``LBFGS``.
+
+.. member:: LineSearchType Solver::Options::line_search_type
+
+   Default: ``ARMIJO``
+
+   ``ARMIJO`` is the only choice right now.
+
+.. member:: NonlinearConjugateGradientType Solver::Options::nonlinear conjugate_gradient_type
+
+   Default: ``FLETCHER_REEVES``
+
+   Choices are ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and
+   ``HESTENES_STIEFEL``.
+
+.. member:: int Solver::Options::max_lbfs_rank
+
+   Default: 20
+
+   The LBFGS hessian approximation is a low rank approximation to the
+   inverse of the Hessian matrix. The rank of the approximation
+   determines (linearly) the space and time complexity of using the
+   approximation. Higher the rank, the better is the quality of the
+   approximation. The increase in quality is however is bounded for a
+   number of reasons.
+
+     1. The method only uses secant information and not actual
+        derivatives.
+
+     2. The Hessian approximation is constrained to be positive
+        definite.
+
+   So increasing this rank to a large number will cost time and space
+   complexity without the corresponding increase in solution
+   quality. There are no hard and fast rules for choosing the maximum
+   rank. The best choice usually requires some problem specific
+   experimentation.
+
 .. member:: TrustRegionStrategyType Solver::Options::trust_region_strategy_type
 
    Default: ``LEVENBERG_MARQUARDT``
@@ -707,7 +837,7 @@ elimination group [LiSaad]_.
 
    Ceres supports two different dogleg strategies.
    ``TRADITIONAL_DOGLEG`` method by Powell and the ``SUBSPACE_DOGLEG``
-   method described by [Byrd]_.  See :ref:`section-dogleg` for more
+   method described by [ByrdSchnabel]_.  See :ref:`section-dogleg` for more
    details.
 
 .. member:: bool Solver::Options::use_nonmonotonic_steps
