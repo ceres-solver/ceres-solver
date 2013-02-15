@@ -133,6 +133,8 @@ class ProblemImpl {
   const ParameterMap& parameter_map() const { return parameter_block_map_; }
 
  private:
+  ParameterBlock* InternalAddParameterBlock(double* values, int size);
+
   const Problem::Options options_;
 
   // The mapping from user pointers to parameter blocks.
