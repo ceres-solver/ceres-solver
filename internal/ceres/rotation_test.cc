@@ -966,15 +966,15 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
 }
 
 TEST(MatrixAdapter, RowMajor3x3ReturnTypeIsCorrect) {
-  double array[9];
-  const float const_array[9];
+  double array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+  const float const_array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
   MatrixAdapter<double, 3, 1> A = RowMajorAdapter3x3(array);
   MatrixAdapter<const float, 3, 1> B = RowMajorAdapter3x3(const_array);
 }
 
 TEST(MatrixAdapter, ColumnMajor3x3ReturnTypeIsCorrect) {
-  double array[9];
-  const float const_array[9];
+  double array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+  const float const_array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
   MatrixAdapter<double, 1, 3> A = ColumnMajorAdapter3x3(array);
   MatrixAdapter<const float, 1, 3> B = ColumnMajorAdapter3x3(const_array);
 }
@@ -985,7 +985,9 @@ TEST(MatrixAdapter, RowMajor2x4IsCorrect) {
   MatrixAdapter<int, 4, 1> M(array);
   M(0, 0) = 1; M(0, 1) = 2; M(0, 2) = 3; M(0, 3) = 4;
   M(1, 0) = 5; M(1, 1) = 6; M(1, 2) = 7; M(1, 3) = 8;
-  EXPECT_EQUAL(array, expected);
+  for (int k = 0; k < 8; ++k) {
+    EXPECT_EQ(array[k], expected[k]);
+  }
 }
 
 TEST(MatrixAdapter, ColumnMajor2x4IsCorrect) {
@@ -994,7 +996,9 @@ TEST(MatrixAdapter, ColumnMajor2x4IsCorrect) {
   MatrixAdapter<int, 1, 2> M(array);
   M(0, 0) = 1; M(0, 1) = 2; M(0, 2) = 3; M(0, 3) = 4;
   M(1, 0) = 5; M(1, 1) = 6; M(1, 2) = 7; M(1, 3) = 8;
-  EXPECT_EQUAL(array, expected);
+  for (int k = 0; k < 8; ++k) {
+    EXPECT_EQ(array[k], expected[k]);
+  }
 }
 
 }  // namespace internal
