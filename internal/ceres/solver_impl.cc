@@ -344,6 +344,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
+  summary->minimizer_type = TRUST_REGION;
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
   summary->num_residual_blocks = problem_impl->NumResidualBlocks();
@@ -676,6 +677,10 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
+  summary->minimizer_type = LINE_SEARCH;
+  summary->line_search_direction_type = original_options.line_search_direction_type;
+  summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
+  summary->line_search_type = original_options.line_search_type;
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
   summary->num_residual_blocks = problem_impl->NumResidualBlocks();
@@ -815,9 +820,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-
-    summary->postprocessor_time_in_seconds =
-        WallTimeInSeconds() - post_process_start_time;
     return;
   }
 
@@ -890,6 +892,17 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+
+  const map<string, double>& evaluator_time_statistics =
+      evaluator->TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
 
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =

@@ -57,6 +57,8 @@ DEFINE_string(foe_file, "", "FoE file to use");
 DEFINE_string(output, "", "File to which the output image should be written");
 DEFINE_double(sigma, 20.0, "Standard deviation of noise");
 DEFINE_bool(verbose, false, "Prints information about the solver progress.");
+DEFINE_bool(line_search, false, "Use a line search instead of trust region "
+            "algorithm.");
 
 namespace ceres {
 namespace examples {
@@ -143,7 +145,11 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
   if (FLAGS_verbose) {
     options.minimizer_progress_to_stdout = true;
   }
-  options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
+
+  if (FLAGS_line_search) {
+    options.minimizer_type = ceres::LINE_SEARCH;
+  }
+
   options.linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
   options.function_tolerance = 1e-3;  // Enough for denoising.
 
