@@ -53,6 +53,18 @@ void STLDeleteContainerPointers(ForwardIterator begin,
   }
 }
 
+template <class ForwardIterator>
+void STLDeleteUniqueContainerPointers(ForwardIterator begin,
+                                      ForwardIterator end) {
+  sort(begin, end);
+  ForwardIterator new_end = unique(begin, end);
+  while (begin != new_end) {
+    ForwardIterator temp = begin;
+    ++begin;
+    delete *temp;
+  }
+}
+
 // STLDeleteElements() deletes all the elements in an STL container and clears
 // the container.  This function is suitable for use with a vector, set,
 // hash_set, or any other STL container which defines sensible begin(), end(),

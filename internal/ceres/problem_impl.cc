@@ -73,51 +73,54 @@ static void CheckForNoAliasing(double* existing_block,
       << "size " << new_block_size << ".";
 }
 
-static ParameterBlock* InternalAddParameterBlock(
-    double* values,
-    int size,
-    ParameterMap* parameter_map,
-    vector<ParameterBlock*>* parameter_blocks) {
-  CHECK(values) << "Null pointer passed to AddParameterBlock for a parameter "
-                << "with size " << size;
+ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
+                                                       int size) {
+  CHECK(values != NULL) << "Null pointer passed to AddParameterBlock "
+                        << "for a parameter with size " << size;
 
   // Ignore the request if there is a block for the given pointer already.
-  ParameterMap::iterator it = parameter_map->find(values);
-  if (it != parameter_map->end()) {
-    int existing_size = it->second->Size();
-    CHECK(size == existing_size)
-        << "Tried adding a parameter block with the same double pointer, "
-        << values << ", twice, but with different block sizes. Original "
-        << "size was " << existing_size << " but new size is "
-        << size;
+  ParameterMap::iterator it = parameter_block_map_.find(values);
+  if (it != parameter_block_map_.end()) {
+    if (!options_.disable_all_safety_checks) {
+      int existing_size = it->second->Size();
+      CHECK(size == existing_size)
+          << "Tried adding a parameter block with the same double pointer, "
+          << values << ", twice, but with different block sizes. Original "
+          << "size was " << existing_size << " but new size is "
+          << size;
+    }
     return it->second;
   }
-  // Before adding the parameter block, also check that it doesn't alias any
-  // other parameter blocks.
-  if (!parameter_map->empty()) {
-    ParameterMap::iterator lb = parameter_map->lower_bound(values);
 
-    // If lb is not the first block, check the previous block for aliasing.
-    if (lb != parameter_map->begin()) {
-      ParameterMap::iterator previous = lb;
-      --previous;
-      CheckForNoAliasing(previous->first,
-                         previous->second->Size(),
-                         values,
-                         size);
-    }
+  if (!options_.disable_all_safety_checks) {
+    // Before adding the parameter block, also check that it doesn't alias any
+    // other parameter blocks.
+    if (!parameter_block_map_.empty()) {
+      ParameterMap::iterator lb = parameter_block_map_.lower_bound(values);
 
-    // If lb is not off the end, check lb for aliasing.
-    if (lb != parameter_map->end()) {
-      CheckForNoAliasing(lb->first,
-                         lb->second->Size(),
-                         values,
-                         size);
+      // If lb is not the first block, check the previous block for aliasing.
+      if (lb != parameter_block_map_.begin()) {
+        ParameterMap::iterator previous = lb;
+        --previous;
+        CheckForNoAliasing(previous->first,
+                           previous->second->Size(),
+                           values,
+                           size);
+      }
+
+      // If lb is not off the end, check lb for aliasing.
+      if (lb != parameter_block_map_.end()) {
+        CheckForNoAliasing(lb->first,
+                           lb->second->Size(),
+                           values,
+                           size);
+      }
     }
   }
+
   ParameterBlock* new_parameter_block = new ParameterBlock(values, size);
-  (*parameter_map)[values] = new_parameter_block;
-  parameter_blocks->push_back(new_parameter_block);
+  parameter_block_map_[values] = new_parameter_block;
+  program_->parameter_blocks_.push_back(new_parameter_block);
   return new_parameter_block;
 }
 
@@ -128,8 +131,14 @@ ProblemImpl::ProblemImpl(const Problem::Options& options)
 
 ProblemImpl::~ProblemImpl() {
   // Collect the unique cost/loss functions and delete the residuals.
-  set<CostFunction*> cost_functions;
-  set<LossFunction*> loss_functions;
+  const int num_residual_blocks =  program_->residual_blocks_.size();
+
+  vector<CostFunction*> cost_functions;
+  cost_functions.reserve(num_residual_blocks);
+
+  vector<LossFunction*> loss_functions;
+  loss_functions.reserve(num_residual_blocks);
+
   for (int i = 0; i < program_->residual_blocks_.size(); ++i) {
     ResidualBlock* residual_block = program_->residual_blocks_[i];
 
@@ -137,11 +146,11 @@ ProblemImpl::~ProblemImpl() {
     // pointers as const pointers but we have ownership of them and
     // have the right to destroy them when the destructor is called.
     if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
-      cost_functions.insert(
+      cost_functions.push_back(
           const_cast<CostFunction*>(residual_block->cost_function()));
     }
     if (options_.loss_function_ownership == TAKE_OWNERSHIP) {
-      loss_functions.insert(
+      loss_functions.push_back(
           const_cast<LossFunction*>(residual_block->loss_function()));
     }
 
@@ -149,24 +158,25 @@ ProblemImpl::~ProblemImpl() {
   }
 
   // Collect the unique parameterizations and delete the parameters.
-  set<LocalParameterization*> local_parameterizations;
+  vector<LocalParameterization*> local_parameterizations;
   for (int i = 0; i < program_->parameter_blocks_.size(); ++i) {
     ParameterBlock* parameter_block = program_->parameter_blocks_[i];
 
     if (options_.local_parameterization_ownership == TAKE_OWNERSHIP) {
-      local_parameterizations.insert(parameter_block->local_parameterization_);
+      local_parameterizations.push_back(
+          parameter_block->local_parameterization_);
     }
 
     delete parameter_block;
   }
 
   // Delete the owned cost/loss functions and parameterizations.
-  STLDeleteContainerPointers(local_parameterizations.begin(),
-                             local_parameterizations.end());
-  STLDeleteContainerPointers(cost_functions.begin(),
-                             cost_functions.end());
-  STLDeleteContainerPointers(loss_functions.begin(),
-                             loss_functions.end());
+  STLDeleteUniqueContainerPointers(local_parameterizations.begin(),
+                                   local_parameterizations.end());
+  STLDeleteUniqueContainerPointers(cost_functions.begin(),
+                                   cost_functions.end());
+  STLDeleteUniqueContainerPointers(loss_functions.begin(),
+                                   loss_functions.end());
 }
 
 const ResidualBlock* ProblemImpl::AddResidualBlock(
@@ -180,25 +190,28 @@ const ResidualBlock* ProblemImpl::AddResidualBlock(
   // Check the sizes match.
   const vector<int16>& parameter_block_sizes =
       cost_function->parameter_block_sizes();
-  CHECK_EQ(parameter_block_sizes.size(), parameter_blocks.size())
-      << "Number of blocks input is different than the number of blocks "
-      << "that the cost function expects.";
 
-  // Check for duplicate parameter blocks.
-  vector<double*> sorted_parameter_blocks(parameter_blocks);
-  sort(sorted_parameter_blocks.begin(), sorted_parameter_blocks.end());
-  vector<double*>::const_iterator duplicate_items =
-      unique(sorted_parameter_blocks.begin(),
-             sorted_parameter_blocks.end());
-  if (duplicate_items != sorted_parameter_blocks.end()) {
-    string blocks;
-    for (int i = 0; i < parameter_blocks.size(); ++i) {
-      blocks += internal::StringPrintf(" %p ", parameter_blocks[i]);
+  if (!options_.disable_all_safety_checks) {
+    CHECK_EQ(parameter_block_sizes.size(), parameter_blocks.size())
+        << "Number of blocks input is different than the number of blocks "
+        << "that the cost function expects.";
+
+    // Check for duplicate parameter blocks.
+    vector<double*> sorted_parameter_blocks(parameter_blocks);
+    sort(sorted_parameter_blocks.begin(), sorted_parameter_blocks.end());
+    vector<double*>::const_iterator duplicate_items =
+        unique(sorted_parameter_blocks.begin(),
+               sorted_parameter_blocks.end());
+    if (duplicate_items != sorted_parameter_blocks.end()) {
+      string blocks;
+      for (int i = 0; i < parameter_blocks.size(); ++i) {
+        blocks += internal::StringPrintf(" %p ", parameter_blocks[i]);
+      }
+
+      LOG(FATAL) << "Duplicate parameter blocks in a residual parameter "
+                 << "are not allowed. Parameter block pointers: ["
+                 << blocks << "]";
     }
-
-    LOG(FATAL) << "Duplicate parameter blocks in a residual parameter "
-               << "are not allowed. Parameter block pointers: ["
-               << blocks << "]";
   }
 
   // Add parameter blocks and convert the double*'s to parameter blocks.
@@ -206,20 +219,20 @@ const ResidualBlock* ProblemImpl::AddResidualBlock(
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     parameter_block_ptrs[i] =
         InternalAddParameterBlock(parameter_blocks[i],
-                                  parameter_block_sizes[i],
-                                  &parameter_block_map_,
-                                  &program_->parameter_blocks_);
+                                  parameter_block_sizes[i]);
   }
 
-  // Check that the block sizes match the block sizes expected by the
-  // cost_function.
-  for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
-    CHECK_EQ(cost_function->parameter_block_sizes()[i],
-             parameter_block_ptrs[i]->Size())
-        << "The cost function expects parameter block " << i
-        << " of size " << cost_function->parameter_block_sizes()[i]
-        << " but was given a block of size "
-        << parameter_block_ptrs[i]->Size();
+  if (!options_.disable_all_safety_checks) {
+    // Check that the block sizes match the block sizes expected by the
+    // cost_function.
+    for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
+      CHECK_EQ(cost_function->parameter_block_sizes()[i],
+               parameter_block_ptrs[i]->Size())
+          << "The cost function expects parameter block " << i
+          << " of size " << cost_function->parameter_block_sizes()[i]
+          << " but was given a block of size "
+          << parameter_block_ptrs[i]->Size();
+    }
   }
 
   ResidualBlock* new_residual_block =
@@ -372,10 +385,7 @@ const ResidualBlock* ProblemImpl::AddResidualBlock(
 }
 
 void ProblemImpl::AddParameterBlock(double* values, int size) {
-  InternalAddParameterBlock(values,
-                            size,
-                            &parameter_block_map_,
-                            &program_->parameter_blocks_);
+  InternalAddParameterBlock(values, size);
 }
 
 void ProblemImpl::AddParameterBlock(
@@ -383,10 +393,7 @@ void ProblemImpl::AddParameterBlock(
     int size,
     LocalParameterization* local_parameterization) {
   ParameterBlock* parameter_block =
-      InternalAddParameterBlock(values,
-                                size,
-                                &parameter_block_map_,
-                                &program_->parameter_blocks_);
+      InternalAddParameterBlock(values, size);
   if (local_parameterization != NULL) {
     parameter_block->SetParameterization(local_parameterization);
   }
