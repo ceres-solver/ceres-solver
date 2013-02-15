@@ -27,7 +27,8 @@ of small scalars as a ``ParameterBlock``. Of course a
 a scalar function that is used to reduce the influence of outliers on
 the solution of non-linear least squares problems. As a special case,
 when :math:`\rho_i(x) = x`, i.e., the identity function, we get the
-more familiar `non-linear least squares problem` <http:
+more familiar `non-linear least squares problem
+<http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
 .. math:: \frac{1}{2}\sum_{i=1} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
    :label: ceresproblem2
