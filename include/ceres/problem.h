@@ -122,7 +122,8 @@ class Problem {
     Options()
         : cost_function_ownership(TAKE_OWNERSHIP),
           loss_function_ownership(TAKE_OWNERSHIP),
-          local_parameterization_ownership(TAKE_OWNERSHIP) {}
+          local_parameterization_ownership(TAKE_OWNERSHIP),
+          disable_all_safety_checks(false) {}
 
     // These flags control whether the Problem object owns the cost
     // functions, loss functions, and parameterizations passed into
@@ -134,6 +135,18 @@ class Problem {
     Ownership cost_function_ownership;
     Ownership loss_function_ownership;
     Ownership local_parameterization_ownership;
+
+    // By default, Ceres performs a variety of safety checks when
+    // constructing the problem. There is a small but measurable
+    // performance penalty to these checks ~5%. If you are sure of
+    // your problem construction, and 5% of the problem construction
+    // time is truly an overhead you want to avoid, then you can set
+    // disable_all_safety_checks to true.
+    //
+    // WARNING:
+    // Do not set this to true, unless you are absolutely sure of what
+    // you are doing.
+    bool disable_all_safety_checks;
   };
 
   // The default constructor is equivalent to the
