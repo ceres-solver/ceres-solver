@@ -46,7 +46,6 @@
 
 #include <vector>
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
 
 using ceres::AutoDiffCostFunction;
@@ -55,8 +54,7 @@ using ceres::Problem;
 using ceres::Solver;
 using ceres::Solve;
 
-class F1 {
- public:
+struct F1 {
   template <typename T> bool operator()(const T* const x1,
                                         const T* const x2,
                                         T* residual) const {
@@ -66,8 +64,7 @@ class F1 {
   }
 };
 
-class F2 {
- public:
+struct F2 {
   template <typename T> bool operator()(const T* const x3,
                                         const T* const x4,
                                         T* residual) const {
@@ -77,8 +74,7 @@ class F2 {
   }
 };
 
-class F3 {
- public:
+struct F3 {
   template <typename T> bool operator()(const T* const x2,
                                         const T* const x4,
                                         T* residual) const {
@@ -88,8 +84,7 @@ class F3 {
   }
 };
 
-class F4 {
- public:
+struct F4 {
   template <typename T> bool operator()(const T* const x1,
                                         const T* const x4,
                                         T* residual) const {
@@ -100,7 +95,6 @@ class F4 {
 };
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   double x1 =  3.0;

@@ -28,63 +28,54 @@
 //
 // Author: keir@google.com (Keir Mierle)
 //
+// A simple example of using the Ceres minimizer.
+//
 // Minimize 0.5 (10 - x)^2 using jacobian matrix computed using
-// numeric differentiation.
+// automatic differentiation.
 
-#include <vector>
 #include "ceres/ceres.h"
-#include "gflags/gflags.h"
 #include "glog/logging.h"
 
-using ceres::NumericDiffCostFunction;
-using ceres::CENTRAL;
-using ceres::SizedCostFunction;
+using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;
 using ceres::Problem;
 using ceres::Solver;
 using ceres::Solve;
 
-class ResidualWithNoDerivative
-  : public SizedCostFunction<1 /* number of residuals */,
-                             1 /* size of first parameter */> {
- public:
-  virtual ~ResidualWithNoDerivative() {}
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    (void) jacobians;  // Ignored; filled in by numeric differentiation.
-
-    // f(x) = 10 - x.
-    residuals[0] = 10 - parameters[0][0];
+// A templated cost functor that implements the residual r = 10 -
+// x. The method operator() is templated so that we can then use an
+// automatic differentiation wrapper around it to generate its
+// derivatives.
+struct CostFunctor {
+  template <typename T> bool operator()(const T* const x, T* residual) const {
+    residual[0] = T(10.0) - x[0];
     return true;
   }
 };
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  // The variable to solve for with its initial value.
-  double initial_x = 5.0;
-  double x = initial_x;
-
-  // Set up the only cost function (also known as residual). This uses
-  // numeric differentiation to obtain the derivative (jacobian).
-  CostFunction* cost =
-      new NumericDiffCostFunction<ResidualWithNoDerivative, CENTRAL, 1, 1> (
-          new ResidualWithNoDerivative, ceres::TAKE_OWNERSHIP);
+  // The variable to solve for with its initial value. It will be
+  // mutated in place by the solver.
+  double x = 0.5;
+  const double initial_x = x;
 
   // Build the problem.
   Problem problem;
-  problem.AddResidualBlock(cost, NULL, &x);
+
+  // Set up the only cost function (also known as residual). This uses
+  // auto-differentiation to obtain the derivative (jacobian).
+  CostFunction* cost_function =
+      new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
+  problem.AddResidualBlock(cost_function, NULL, &x);
 
   // Run the solver!
   Solver::Options options;
-  options.max_num_iterations = 10;
-  options.linear_solver_type = ceres::DENSE_QR;
   options.minimizer_progress_to_stdout = true;
   Solver::Summary summary;
   Solve(options, &problem, &summary);
+
   std::cout << summary.BriefReport() << "\n";
   std::cout << "x : " << initial_x
             << " -> " << x << "\n";

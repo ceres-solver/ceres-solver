@@ -145,6 +145,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  summary->initial_cost = cost + summary->fixed_cost;
   iteration_summary.cost = cost + summary->fixed_cost;
 
   int num_consecutive_nonmonotonic_steps = 0;

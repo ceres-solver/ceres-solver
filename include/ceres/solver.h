@@ -664,6 +664,10 @@ class Solver {
     // Some total of all time spent inside Ceres when Solve is called.
     double total_time_in_seconds;
 
+    double linear_solver_time_in_seconds;
+    double residual_evaluation_time_in_seconds;
+    double jacobian_evaluation_time_in_seconds;
+
     // Preprocessor summary.
     int num_parameter_blocks;
     int num_parameters;
@@ -687,11 +691,18 @@ class Solver {
     LinearSolverType linear_solver_type_given;
     LinearSolverType linear_solver_type_used;
 
+    vector<int> linear_solver_ordering_given;
+    vector<int> linear_solver_ordering_used;
+
     PreconditionerType preconditioner_type;
 
     TrustRegionStrategyType trust_region_strategy_type;
     DoglegType dogleg_type;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+
+    bool inner_iterations;
+    vector<int> inner_iteration_ordering_given;
+    vector<int> inner_iteration_ordering_used;
   };
 
   // Once a least squares problem has been built, this function takes

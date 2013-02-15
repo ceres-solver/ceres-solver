@@ -148,7 +148,7 @@ class SolverImpl {
       const Solver::Options& options,
       const Program& program,
       const ProblemImpl::ParameterMap& parameter_map,
-      string* error);
+      Solver::Summary* summary);
 };
 
 }  // namespace internal

@@ -63,7 +63,10 @@ namespace ceres {
 namespace internal {
 namespace {
 // Small constant for various floating point issues.
+// TODO(sameeragarwal): Change to a better name if this has only one
+// use.
 const double kEpsilon = 1e-12;
+
 bool Evaluate(Evaluator* evaluator,
               const Vector& x,
               LineSearchMinimizer::State* state) {
@@ -121,7 +124,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  summary->initial_cost = current_state.cost + summary->fixed_cost;
   iteration_summary.cost = current_state.cost + summary->fixed_cost;
+
   iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
 
   // The initial gradient max_norm is bounded from below so that we do

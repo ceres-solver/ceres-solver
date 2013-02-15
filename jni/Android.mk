@@ -70,10 +70,10 @@ LOCAL_PATH := $(call my-dir)
 
 EIGEN_PATH := $(EIGEN_PATH)
 
-CERES_INCLUDE_PATHS := ../internal
-CERES_INCLUDE_PATHS += ../internal/ceres
-CERES_INCLUDE_PATHS += ../include
-CERES_INCLUDE_PATHS += ../internal/ceres/miniglog
+CERES_INCLUDE_PATHS := $(LOCAL_PATH)/../internal
+CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres
+CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../include
+CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres/miniglog
 CERES_SRC_PATH := ../internal/ceres
 
 include $(CLEAR_VARS)

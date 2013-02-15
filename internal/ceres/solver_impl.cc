@@ -77,6 +77,30 @@ class StateUpdatingCallback : public IterationCallback {
   double* parameters_;
 };
 
+// Macro used to evaluate initial and final residuals, gradient and
+// jacobian if requested by the user.
+//
+// We need a macro here, instead of a simple function call, since the
+// multiplexing happens on variable names.
+#define CERES_EVALUATE(which)                                           \
+  Evaluator::Evaluate(                                                  \
+      original_program,                                                 \
+      options.num_threads,                                              \
+      &summary->final_cost,                                             \
+      options.return_ ## which ## _residuals ? &summary->which ## _residuals : NULL, \
+      options.return_ ## which ## _gradient ? &summary->which ## _gradient : NULL, \
+      options.return_ ## which ## _jacobian ? &summary->which ## _jacobian : NULL)
+
+void SetSummaryFinalCost(Solver::Summary* summary) {
+  summary->final_cost = summary->initial_cost;
+  // We need the loop here, instead of just looking at the last
+  // iteration because the minimizer maybe making non-monotonic steps.
+  for (int i = 0; i < summary->iterations.size(); ++i) {
+    const IterationSummary& iteration_summary = summary->iterations[i];
+    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
+  }
+}
+
 // Callback for logging the state of the minimizer to STDERR or STDOUT
 // depending on the user's preferences and logging level.
 class TrustRegionLoggingCallback : public IterationCallback {
@@ -177,6 +201,24 @@ class FileLoggingCallback : public IterationCallback {
     FILE* fptr_;
 };
 
+// Iterate over each of the groups in order of their priority and fill
+// summary with their sizes.
+void SummarizeOrdering(ParameterBlockOrdering* ordering,
+                       vector<int>* summary) {
+  CHECK_NOTNULL(summary)->clear();
+  if (ordering == NULL) {
+    return;
+  }
+
+  const map<int, set<double*> >& group_to_elements =
+      ordering->group_to_elements();
+  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+       it != group_to_elements.end();
+       ++it) {
+    summary->push_back(it->second.size());
+  }
+}
+
 }  // namespace
 
 void SolverImpl::TrustRegionMinimize(
@@ -214,6 +256,7 @@ void SolverImpl::TrustRegionMinimize(
 
   minimizer_options.evaluator = evaluator;
   scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+
   minimizer_options.jacobian = jacobian.get();
   minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
@@ -292,6 +335,7 @@ void SolverImpl::Solve(const Solver::Options& options,
 void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                   ProblemImpl* original_problem_impl,
                                   Solver::Summary* summary) {
+  EventLogger event_logger("TrustRegionSolve");
   double solver_start_time = WallTimeInSeconds();
 
   Program* original_program = original_problem_impl->mutable_program();
@@ -317,6 +361,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     LOG(ERROR) << summary->error;
     return;
   }
+
+  SummarizeOrdering(original_options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_given));
+
+  SummarizeOrdering(original_options.inner_iteration_ordering,
+                    &(summary->inner_iteration_ordering_given));
 
   Solver::Options options(original_options);
   options.linear_solver_ordering = NULL;
@@ -347,30 +397,25 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
         " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
   }
 
+  event_logger.AddEvent("Init");
+
   // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user. The initial cost needs to be
-  // computed on the original unpreprocessed problem, as it is used to
-  // determine the value of the "fixed" part of the objective function
-  // after the problem has undergone reduction.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &(summary->initial_cost),
-                           options.return_initial_residuals
-                           ? &summary->initial_residuals
-                           : NULL,
-                           options.return_initial_gradient
-                           ? &summary->initial_gradient
-                           : NULL,
-                           options.return_initial_jacobian
-                           ? &summary->initial_jacobian
-                           : NULL)) {
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the initial cost.";
-    LOG(ERROR) << summary->error;
-    return;
+  // matrix if requested by the user.
+  if (options.return_initial_residuals ||
+      options.return_initial_gradient ||
+      options.return_initial_jacobian) {
+    if (!CERES_EVALUATE(initial)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the initial cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
+  event_logger.AddEvent("InitialEvaluate");
+
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  event_logger.AddEvent("SetParameterBlockPtrs");
 
   // If the user requests gradient checking, construct a new
   // ProblemImpl by wrapping the CostFunctions of problem_impl inside
@@ -395,8 +440,10 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       LOG(ERROR) << summary->error;
       return;
     }
+    event_logger.AddEvent("CheckOrdering");
     options.linear_solver_ordering =
         new ParameterBlockOrdering(*original_options.linear_solver_ordering);
+    event_logger.AddEvent("CopyOrdering");
   } else {
     options.linear_solver_ordering = new ParameterBlockOrdering;
     const ProblemImpl::ParameterMap& parameter_map =
@@ -406,6 +453,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
          ++it) {
       options.linear_solver_ordering->AddElementToGroup(it->first, 0);
     }
+    event_logger.AddEvent("ConstructOrdering");
   }
 
   // Create the three objects needed to minimize: the transformed program, the
@@ -414,9 +462,13 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                                            problem_impl,
                                                            &summary->fixed_cost,
                                                            &summary->error));
+  event_logger.AddEvent("CreateReducedProgram");
   if (reduced_program == NULL) {
     return;
   }
+
+  SummarizeOrdering(options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_used));
 
   summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
   summary->num_parameters_reduced = reduced_program->NumParameters();
@@ -436,29 +488,27 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     summary->termination_type = FUNCTION_TOLERANCE;
 
     double post_process_start_time = WallTimeInSeconds();
+
+
+
+
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
-    if (!Evaluator::Evaluate(original_program,
-                             options.num_threads,
-                             &summary->final_cost,
-                             options.return_final_residuals
-                             ? &summary->final_residuals
-                             : NULL,
-                             options.return_final_gradient
-                             ? &summary->final_gradient
-                             : NULL,
-                             options.return_final_jacobian
-                             ? &summary->final_jacobian
-                             : NULL)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-      return;
+    if (options.return_final_residuals ||
+        options.return_final_gradient ||
+        options.return_final_jacobian) {
+      if (!CERES_EVALUATE(final)) {
+        summary->termination_type = NUMERICAL_FAILURE;
+        summary->error = "Unable to evaluate the final cost.";
+        LOG(ERROR) << summary->error;
+        return;
+      }
     }
 
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+    event_logger.AddEvent("FinalEvaluate");
     summary->postprocessor_time_in_seconds =
         WallTimeInSeconds() - post_process_start_time;
     return;
@@ -466,6 +516,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   scoped_ptr<LinearSolver>
       linear_solver(CreateLinearSolver(&options, &summary->error));
+  event_logger.AddEvent("CreateLinearSolver");
   if (linear_solver == NULL) {
     return;
   }
@@ -502,6 +553,9 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                                   problem_impl->parameter_map(),
                                                   reduced_program.get(),
                                                   &summary->error));
+
+  event_logger.AddEvent("CreateEvaluator");
+
   if (evaluator == NULL) {
     return;
   }
@@ -516,13 +570,15 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
           CreateInnerIterationMinimizer(original_options,
                                         *reduced_program,
                                         problem_impl->parameter_map(),
-                                        &summary->error));
+                                        summary));
       if (inner_iteration_minimizer == NULL) {
         LOG(ERROR) << summary->error;
         return;
       }
     }
   }
+
+  event_logger.AddEvent("CreateIIM");
 
   // The optimizer works on contiguous parameter vectors; allocate some.
   Vector parameters(reduced_program->NumParameters());
@@ -544,6 +600,9 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                       linear_solver.get(),
                       parameters.data(),
                       summary);
+  event_logger.AddEvent("Minimize");
+
+  SetSummaryFinalCost(summary);
 
   // If the user aborted mid-optimization or the optimization
   // terminated because of a numerical failure, then return without
@@ -561,41 +620,49 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &summary->final_cost,
-                           options.return_final_residuals
-                           ? &summary->final_residuals
-                           : NULL,
-                           options.return_final_gradient
-                           ? &summary->final_gradient
-                           : NULL,
-                           options.return_final_jacobian
-                           ? &summary->final_jacobian
-                           : NULL)) {
-    // This failure requires careful handling.
-    //
-    // At this point, we have modified the user's state, but the
-    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-    // guarantees that user's state is not modified if the solver
-    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-    // user's state to their original values.
+  if (options.return_final_residuals ||
+      options.return_final_gradient ||
+      options.return_final_jacobian) {
+    if (!CERES_EVALUATE(final)) {
+      // This failure requires careful handling.
+      //
+      // At this point, we have modified the user's state, but the
+      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+      // guarantees that user's state is not modified if the solver
+      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+      // user's state to their original values.
+      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+      reduced_program->CopyParameterBlockStateToUserState();
 
-    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-    reduced_program->CopyParameterBlockStateToUserState();
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
 
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the final cost.";
-    LOG(ERROR) << summary->error;
-    return;
+      event_logger.AddEvent("PostProcess");
+      return;
+    }
   }
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+  const map<string, double>& linear_solver_time_statistics =
+      linear_solver->TimeStatistics();
+  summary->linear_solver_time_in_seconds =
+      FindWithDefault(linear_solver_time_statistics, "LinearSolver::Solve", 0.0);
+
+  const map<string, double>& evaluator_time_statistics =
+      evaluator->TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
   // Stick a fork in it, we're done.
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
+  event_logger.AddEvent("PostProcess");
 }
 
 void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
@@ -670,26 +737,16 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   }
 
   // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user. The initial cost needs to be
-  // computed on the original unpreprocessed problem, as it is used to
-  // determine the value of the "fixed" part of the objective function
-  // after the problem has undergone reduction.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &(summary->initial_cost),
-                           options.return_initial_residuals
-                           ? &summary->initial_residuals
-                           : NULL,
-                           options.return_initial_gradient
-                           ? &summary->initial_gradient
-                           : NULL,
-                           options.return_initial_jacobian
-                           ? &summary->initial_jacobian
-                           : NULL)) {
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the initial cost.";
-    LOG(ERROR) << summary->error;
-    return;
+  // matrix if requested by the user.
+  if (options.return_initial_residuals ||
+      options.return_initial_gradient ||
+      options.return_initial_jacobian) {
+    if (!CERES_EVALUATE(initial)) {
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the initial cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
@@ -739,25 +796,21 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     // any further.
     summary->termination_type = FUNCTION_TOLERANCE;
 
-    double post_process_start_time = WallTimeInSeconds();
+    const double post_process_start_time = WallTimeInSeconds();
+
+    SetSummaryFinalCost(summary);
+
     // Evaluate the final cost, residual vector and the jacobian
     // matrix if requested by the user.
-    if (!Evaluator::Evaluate(original_program,
-                             options.num_threads,
-                             &summary->final_cost,
-                             options.return_final_residuals
-                             ? &summary->final_residuals
-                             : NULL,
-                             options.return_final_gradient
-                             ? &summary->final_gradient
-                             : NULL,
-                             options.return_final_jacobian
-                             ? &summary->final_jacobian
-                             : NULL)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-      return;
+    if (options.return_final_residuals ||
+        options.return_final_gradient ||
+        options.return_final_jacobian) {
+      if (!CERES_EVALUATE(final)) {
+        summary->termination_type = NUMERICAL_FAILURE;
+        summary->error = "Unable to evaluate the final cost.";
+        LOG(ERROR) << summary->error;
+        return;
+      }
     }
 
     // Ensure the program state is set to the user parameters on the way out.
@@ -784,7 +837,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   Vector original_parameters = parameters;
 
-  double minimizer_start_time = WallTimeInSeconds();
+  const double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
@@ -803,41 +856,36 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  double post_process_start_time = WallTimeInSeconds();
+  const double post_process_start_time = WallTimeInSeconds();
 
   // Push the contiguous optimized parameters back to the user's parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
 
+  SetSummaryFinalCost(summary);
+
   // Evaluate the final cost, residual vector and the jacobian
   // matrix if requested by the user.
-  if (!Evaluator::Evaluate(original_program,
-                           options.num_threads,
-                           &summary->final_cost,
-                           options.return_final_residuals
-                           ? &summary->final_residuals
-                           : NULL,
-                           options.return_final_gradient
-                           ? &summary->final_gradient
-                           : NULL,
-                           options.return_final_jacobian
-                           ? &summary->final_jacobian
-                           : NULL)) {
-    // This failure requires careful handling.
-    //
-    // At this point, we have modified the user's state, but the
-    // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-    // guarantees that user's state is not modified if the solver
-    // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-    // user's state to their original values.
+  if (options.return_final_residuals ||
+      options.return_final_gradient ||
+      options.return_final_jacobian) {
+    if (!CERES_EVALUATE(final)) {
+      // This failure requires careful handling.
+      //
+      // At this point, we have modified the user's state, but the
+      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
+      // guarantees that user's state is not modified if the solver
+      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
+      // user's state to their original values.
 
-    reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-    reduced_program->CopyParameterBlockStateToUserState();
+      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
+      reduced_program->CopyParameterBlockStateToUserState();
 
-    summary->termination_type = NUMERICAL_FAILURE;
-    summary->error = "Unable to evaluate the final cost.";
-    LOG(ERROR) << summary->error;
-    return;
+      summary->termination_type = NUMERICAL_FAILURE;
+      summary->error = "Unable to evaluate the final cost.";
+      LOG(ERROR) << summary->error;
+      return;
+    }
   }
 
   // Ensure the program state is set to the user parameters on the way out.
@@ -1001,9 +1049,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
+  EventLogger event_logger("CreateReducedProgram");
+
   CHECK_NOTNULL(options->linear_solver_ordering);
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
+  event_logger.AddEvent("TransformedProgram");
+
   ParameterBlockOrdering* linear_solver_ordering =
       options->linear_solver_ordering;
 
@@ -1017,6 +1069,8 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                     error)) {
     return NULL;
   }
+
+  event_logger.AddEvent("RemoveFixedBlocks");
 
   if (transformed_program->NumParameterBlocks() == 0) {
     if (transformed_program->NumResidualBlocks() > 0) {
@@ -1051,6 +1105,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
           (i < num_eliminate_blocks) ? 0 : 1);
     }
   }
+  event_logger.AddEvent("SchurOrdering");
 
   if (!ApplyUserOrdering(problem_impl->parameter_map(),
                          linear_solver_ordering,
@@ -1058,6 +1113,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                          error)) {
     return NULL;
   }
+  event_logger.AddEvent("ApplyOrdering");
 
   // If the user requested the use of a Schur type solver, and
   // supplied a non-NULL linear_solver_ordering object with more than
@@ -1098,9 +1154,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     LOG(WARNING) << msg;
   }
 
+  event_logger.AddEvent("AlternateSolver");
+
   // Since the transformed program is the "active" program, and it is mutated,
   // update the parameter offsets and indices.
   transformed_program->SetParameterOffsetsAndIndex();
+
+  event_logger.AddEvent("SetOffsets");
   return transformed_program.release();
 }
 
@@ -1390,7 +1450,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     const Solver::Options& options,
     const Program& program,
     const ProblemImpl::ParameterMap& parameter_map,
-    string* error) {
+    Solver::Summary* summary) {
   scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer(
       new CoordinateDescentMinimizer);
   scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
@@ -1416,7 +1476,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     for ( ;it != group_to_elements.end(); ++it) {
       if (!IsParameterBlockSetIndependent(it->second,
                                           program.residual_blocks())) {
-        *error =
+        summary->error =
             StringPrintf("The user-provided "
                          "parameter_blocks_for_inner_iterations does not "
                          "form an independent set. Group Id: %d", it->first);
@@ -1429,9 +1489,12 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
   if (!inner_iteration_minimizer->Init(program,
                                        parameter_map,
                                        *ordering_ptr,
-                                       error)) {
+                                       &summary->error)) {
     return NULL;
   }
+
+  summary->inner_iterations = true;
+  SummarizeOrdering(ordering_ptr, &(summary->inner_iteration_ordering_used));
 
   return inner_iteration_minimizer.release();
 }
