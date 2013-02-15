@@ -99,6 +99,18 @@ SET(CERES_INTERNAL_SRC
     wall_time.cc
 )
 
+# Heuristic for determining LIB_SUFFIX. FHS recommends that 64-bit systems
+# install native libraries to lib64 rather than lib. Most distros seem to
+# follow this convention with a couple notable exceptions (Debian-based and
+# Arch-based distros) which we try to detect here.
+IF (NOT DEFINED LIB_SUFFIX AND
+    NOT CMAKE_CROSSCOMPILING AND
+    ${CMAKE_SIZEOF_VOID_P} EQUAL "8" AND
+    NOT EXISTS "/etc/debian_version" AND
+    NOT EXISTS "/etc/arch-release")
+  SET(LIB_SUFFIX "64")
+ENDIF()
+
 If (${PROTOBUF_FOUND})
   PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS matrix.proto)
 ENDIF (${PROTOBUF_FOUND})
@@ -125,8 +137,8 @@ IF (${BUILD_ANDROID})
 
   INSTALL(TARGETS miniglog
           RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib)
+          LIBRARY DESTINATION lib${LIB_SUFFIX}
+          ARCHIVE DESTINATION lib${LIB_SUFFIX})
 ENDIF (${BUILD_ANDROID})
 
 SET(CERES_LIBRARY_DEPENDENCIES ${GLOG_LIB})
@@ -182,8 +194,8 @@ TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
 INSTALL(TARGETS ceres
         RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
+        LIBRARY DESTINATION lib${LIB_SUFFIX}
+        ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
 # Don't build a DLL on MSVC. Supporting Ceres as a DLL on Windows involves
 # nontrivial changes that we haven't made yet.
@@ -196,8 +208,8 @@ IF (NOT MSVC AND NOT ${BUILD_ANDROID})
 
   INSTALL(TARGETS ceres_shared
           RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib)
+          LIBRARY DESTINATION lib${LIB_SUFFIX}
+          ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
 ENDIF (NOT MSVC AND NOT ${BUILD_ANDROID})
 
