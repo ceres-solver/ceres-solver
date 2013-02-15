@@ -109,7 +109,6 @@ void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R);
 template <typename T, int row_stride, int col_stride>
 void EulerAnglesToRotationMatrix(
     const T* euler,
-    int row_stride_parameter,
     const MatrixAdapter<T, row_stride, col_stride>& R);
 
 // Convert a 4-vector to a 3x3 scaled rotation matrix.
@@ -202,34 +201,6 @@ MatrixAdapter<T, 1, 3> ColumnMajorAdapter3x3(T* pointer) {
 template <typename T>
 MatrixAdapter<T, 3, 1> RowMajorAdapter3x3(T* pointer) {
   return MatrixAdapter<T, 3, 1>(pointer);
-}
-
-template<typename T>
-struct MatrixAdapter
-{
-  T* pointer_;
-  int row_stride_;
-  int col_stride_;
-  MatrixAdapter(T* pointer, int row_stride, int col_stride)
-    : pointer_(pointer), row_stride_(row_stride), col_stride_(col_stride)
-  {}
-
-  T& operator()(int r, int c) const
-  {
-    return pointer_[r * row_stride_ + c * col_stride_];
-  }
-};
-
-template <typename T>
-MatrixAdapter<T> ColumnMajorAdapter(T* pointer, int rows, int /* cols */)
-{
-  return MatrixAdapter<T>(pointer, 1, rows);
-}
-
-template <typename T>
-MatrixAdapter<T> RowMajorAdapter(T* pointer, int /* rows */, int cols)
-{
-  return MatrixAdapter<T>(pointer, cols, 1);
 }
 
 template<typename T>
