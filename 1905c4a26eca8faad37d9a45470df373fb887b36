@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "N8zgwyAg",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-15T19:01:20Z",
+      "side": 1,
+      "message": "only the parameters need to be compile time constants in autodiff_cost_function now.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "NYi0WKGE",
         "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
         "patchSetId": 3
@@ -456,6 +473,23 @@
       "writtenOn": "2013-01-02T19:48:36Z",
       "side": 1,
       "message": "use more descriptive member names, or better documentation, its not clear whats going on here.",
+      "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "N85s7bsk",
+        "filename": "include/ceres/dynamic_size_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-15T19:01:20Z",
+      "side": 1,
+      "message": "residual_count_ \u003d 0 ?",
       "revId": "1905c4a26eca8faad37d9a45470df373fb887b36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
