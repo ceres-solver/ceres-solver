@@ -19,3 +19,4 @@ ceres-solver.pdf
 docs/minted.sty
 obj/
 jni/libs/
+.buildinfo
