@@ -15,6 +15,8 @@ New Features
    gradient descent, non-linear conjugate gradient and LBFGS search
    directions.
 
+#. New, much improved HTML documentation using Sphinx.
+
 #. Speedup the robust loss function correction logic when residual is
    one dimensional.
 
@@ -23,8 +25,19 @@ New Features
 
 #. Added support for mixing automatic, analytic and numeric
    differentiation. This is done by adding ``CostFunctionToFunctor``
-   and ``NumericDiffFunctor`` objects.
+   and ``NumericDiffFunctor`` objects to the API.
 
+#. ``Summary::FullReport`` now reports the structure of the ordering
+   used by the ``LinearSolver`` and inner iterations.
+
+#. Ceres when run at the ``VLOG`` level 3 or higher will report
+   detailed timing information about its internals.
+
+#. Remove extraneous initial and final residual evaluations. This
+   speeds up the solver a bit.
+
+#. Automatic differenatiation with a dynamic number of parameter
+   blocks. (Based on an initial implementation by Thad Hughes).
 
 Bug Fixes
 ---------
@@ -36,6 +49,13 @@ Bug Fixes
 #. Fixed a bug in ``DenseSparseMatrix::ToDenseMatrix()``.
 
 #. Fixed an initialization bug in ``ProgramEvaluator``.
+
+#. Fixes to Android.mk paths (Carlos Hernandez)
+
+#. Modify ``nist.cc`` to compute accuracy based on ground truth
+   solution rather than the ground truth function value.
+
+#. Fixed a memory leak in ``cxsparse.cc``. (Alexander Mordvintsev).
 
 
 1.4.0

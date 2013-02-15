@@ -1,8 +1,6 @@
 .. default-domain:: cpp
 
-
 .. cpp:namespace:: ceres
-
 
 .. _`chapter-modeling`:
 
@@ -30,6 +28,15 @@ of small scalars as a ``ParameterBlock``. Of course a
 that is used to reduce the influence of outliers on the solution of
 non-linear least squares problems.
 
+In this chapter we will describe the various classes that are part of
+Ceres Solver's modeling API, and how they can be used to construct
+optimization.
+
+Once a problem has been constructed, various methods for solving them
+will be discussed in :ref:`chapter-solving`. It is by design that the
+modeling and the solving APIs are orthogonal to each other. This
+enables easy switching/tweaking of various solver parameters without
+having to touch the problem once it has been successfuly modeling.
 
 :class:`CostFunction`
 ---------------------

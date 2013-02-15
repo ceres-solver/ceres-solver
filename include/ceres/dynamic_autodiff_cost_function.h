@@ -41,7 +41,7 @@
 //
 //   struct MyCostFunctor {
 //     template<typename T>
-//     bool operator()(const* const* T parameters, T* residuals) const {
+//     bool operator()(T const* const* parameters, T* residuals) const {
 //       // Use parameters[i] to access the i'th parameter block.
 //     }
 //   }
