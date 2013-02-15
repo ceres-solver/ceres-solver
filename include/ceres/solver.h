@@ -59,7 +59,7 @@ class Solver {
     // Default constructor that sets up a generic sparse problem.
     Options() {
       minimizer_type = TRUST_REGION;
-      line_search_direction_type = STEEPEST_DESCENT;
+      line_search_direction_type = LBFGS;
       line_search_type = ARMIJO;
       nonlinear_conjugate_gradient_type = FLETCHER_REEVES;
       max_lbfgs_rank = 20;
@@ -578,6 +578,8 @@ class Solver {
     string FullReport() const;
 
     // Minimizer summary -------------------------------------------------
+    MinimizerType minimizer_type;
+
     SolverTerminationType termination_type;
 
     // If the solver did not run, or there was a failure, a
@@ -698,9 +700,14 @@ class Solver {
 
     TrustRegionStrategyType trust_region_strategy_type;
     DoglegType dogleg_type;
+    bool inner_iterations;
+
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
 
-    bool inner_iterations;
+    LineSearchDirectionType line_search_direction_type;
+    LineSearchType line_search_type;
+    int max_lbfgs_rank;
+
     vector<int> inner_iteration_ordering_given;
     vector<int> inner_iteration_ordering_used;
   };
