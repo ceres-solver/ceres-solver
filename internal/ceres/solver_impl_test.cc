@@ -859,6 +859,7 @@ TEST(SolverImpl, InitialCostEvaluationFails) {
   Solver::Options options;
   Solver::Summary summary;
   double x;
+  options.return_initial_residuals = true;
   problem_impl.AddResidualBlock(new FailingCostFunction, NULL, &x);
   SolverImpl::Solve(options, &problem_impl, &summary);
   EXPECT_EQ(summary.termination_type, NUMERICAL_FAILURE);
@@ -870,6 +871,8 @@ TEST(SolverImpl, ProblemIsConstant) {
   Solver::Options options;
   Solver::Summary summary;
   double x = 1;
+  options.return_initial_residuals = true;
+  options.return_final_residuals = true;
   problem_impl.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
   problem_impl.SetParameterBlockConstant(&x);
   SolverImpl::Solve(options, &problem_impl, &summary);

@@ -86,7 +86,7 @@ class StateUpdatingCallback : public IterationCallback {
   Evaluator::Evaluate(                                                  \
       original_program,                                                 \
       options.num_threads,                                              \
-      &summary->final_cost,                                             \
+      &summary->which ## _cost,                                         \
       options.return_ ## which ## _residuals ? &summary->which ## _residuals : NULL, \
       options.return_ ## which ## _gradient ? &summary->which ## _gradient : NULL, \
       options.return_ ## which ## _jacobian ? &summary->which ## _jacobian : NULL)
