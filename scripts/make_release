@@ -51,6 +51,8 @@ VERSION_IN_HEADER=$(grep '#define CERES_VERSION' include/ceres/ceres.h | \
 ABI_VERSION_IN_HEADER=$(grep '#define CERES_ABI_VERSION' \
                               include/ceres/ceres.h | \
                         sed -e 's/#define CERES_ABI_VERSION //')
+VERSION_IN_SPEC=$(grep '^Version:' scripts/ceres-solver.spec | \
+                  sed -e 's/Version: *//')
 GIT_COMMIT=$(git log -1 HEAD |grep commit)
 
 if [[ $1 != $VERSION ]] ; then
@@ -72,6 +74,15 @@ fi
 if [[ $ABI_VERSION_IN_HEADER != $ABI_VERSION ]] ; then
   echo "ERROR: CERES_ABI_VERSION from include/ceres/ceres.h, which is"
   echo "       $ABI_VERSION_IN_HEADER, does not match the ABI version"
+  echo "       from the toplevel CMakeLists.txt, which is $ABI_VERSION."
+  echo "       You may not be in the toplevel source directory, or the"
+  echo "       versions are out of sync."
+  exit 1
+fi
+
+if [[ $VERSION_IN_SPEC != $VERSION ]] ; then
+  echo "ERROR: Version string from scripts/ceres-solver.spec, which is"
+  echo "       $VERSION_IN_SPEC, does not match the version"
   echo "       from the toplevel CMakeLists.txt, which is $ABI_VERSION."
   echo "       You may not be in the toplevel source directory, or the"
   echo "       versions are out of sync."
@@ -101,6 +112,14 @@ rm -rf $TMP
 rm -rf $DOCS_TMP
 
 # Reminder to upload.
-echo
-echo "TODO: upload /tmp/ceres-solver-$1.tar.gz"
-echo
+cat <<EOF 
+
+TODO:
+  - Upload /tmp/ceres-solver-$1.tar.gz
+
+  - Update the release string in scripts/ceres-solver.spec if this is a RC
+    release or the first release after a RC release.
+
+  - Build and upload RPM package.
+
+EOF
