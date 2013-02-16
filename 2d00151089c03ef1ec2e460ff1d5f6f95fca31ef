@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "P34oLOS0",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-16T01:50:26Z",
+      "side": 1,
+      "message": "For new code, let\u0027s do \"T*\" instead of \"T *\". Eventually, in a separate commit, let\u0027s fix the whitespace in this file.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3.oY7X8",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-16T01:50:26Z",
+      "side": 1,
+      "message": "Please fix alignment.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3dNvtrk",
         "filename": "internal/ceres/rotation_test.cc",
         "patchSetId": 8
@@ -30,6 +64,24 @@
       "writtenOn": "2013-02-15T18:59:26Z",
       "side": 1,
       "message": "is this only a compile test? since this is not actually checking equality.",
+      "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P38odMW4",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-16T01:50:26Z",
+      "side": 1,
+      "message": "+1 Please enhance test.",
+      "parentUuid": "P3dNvtrk",
       "revId": "2d00151089c03ef1ec2e460ff1d5f6f95fca31ef",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
