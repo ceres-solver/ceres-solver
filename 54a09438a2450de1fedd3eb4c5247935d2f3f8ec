@@ -1,0 +1,446 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3QlOLb4",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "Its nice of you to warn, but I think the warning is not of much use as the whole situation is pointless, we need a better solution for this. so I would say just drop the warning and we will deal with it this week itself.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3YnSHcw",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "message about this being a Ceres bug?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3WnX4bw",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "message about this being a ceres bug, as it should never happen.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3cncFeA",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "same as above.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3anZ2e4",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "I think you mean delete/remove instead of insert here.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3enj0Zg",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "I am fine with mutable_residual_blocks()",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Sn2iVY",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "this comment should be closer to the typedef perhaps?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Ymk3V8",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "modify the constructor to start with the index always? so that its always valid.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3QmZDSQ",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "since there is no documentation for this in the header, documentation here?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3SnISQY",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "only add when its non-null?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Ym9-Wk",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "BTW I Like the delete methods.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3UnDBe4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "since the bulk of these are NULL, no point adding a sequence of NULLs, only add when its non-null.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3alm.RE",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "update parameter_block_map",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3WnCQeg",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "modify the constructor to always take the index, instead of setting it afterwards.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Ulspf8",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "any sanity checks on this residual_block being non-null? or that it actually exists..",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3cm39YU",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "residual_block-\u003eindex();",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Wl7YbQ",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "so another option is that we can make the remove and add dependencies no-ops, instead of constantly checking for the bool. I think it will lead to simpler code",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3cmAlZ8",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "why not just iterate over the set, why make another copy into a vector? not sure why this is worth it?\n\nalso do you think its worth writing a bulk delete method for residual blocks ? which takes a whole iterator full of this stuff?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3elg8fc",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "const int",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Uk.Zd8",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "use stl find here?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3UlVxR0",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "I think you can make a templated method for doing the swap method delete on residual and parameter block vectors.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3SlaCU4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "DeleteParameterBlock(values);",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3QlkbQk",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "pop_back here instead of resize?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3ckFNVY",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "what is the difference between Remove and Delete?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3WnwgVg",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "I think owned_ is not the right prefix. Since technically we own everything by default. How about\ncost_function_to_delete ?\nloss_functions_to_delete\n\nthat makes the intent clear, that these are only being stored here for the purposes of deletion.\n\netc?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Uma5R8",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-17T23:18:28Z",
+      "side": 1,
+      "message": "default value on construction?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
