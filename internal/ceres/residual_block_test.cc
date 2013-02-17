@@ -77,13 +77,13 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
 
   // Prepare the parameter blocks.
   double values_x[2];
-  ParameterBlock x(values_x, 2);
+  ParameterBlock x(values_x, 2, -1);
 
   double values_y[3];
-  ParameterBlock y(values_y, 3);
+  ParameterBlock y(values_y, 3, -1);
 
   double values_z[4];
-  ParameterBlock z(values_z, 4);
+  ParameterBlock z(values_z, 4, -1);
 
   vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
@@ -93,7 +93,7 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
   TernaryCostFunction cost_function(3, 2, 3, 4);
 
   // Create the object under tests.
-  ResidualBlock residual_block(&cost_function, NULL, parameters);
+  ResidualBlock residual_block(&cost_function, NULL, parameters, -1);
 
   // Verify getters.
   EXPECT_EQ(&cost_function, residual_block.cost_function());
@@ -204,13 +204,13 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
 
   // Prepare the parameter blocks.
   double values_x[2];
-  ParameterBlock x(values_x, 2);
+  ParameterBlock x(values_x, 2, -1);
 
   double values_y[3];
-  ParameterBlock y(values_y, 3);
+  ParameterBlock y(values_y, 3, -1);
 
   double values_z[4];
-  ParameterBlock z(values_z, 4);
+  ParameterBlock z(values_z, 4, -1);
 
   vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
@@ -232,7 +232,7 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   LocallyParameterizedCostFunction cost_function;
 
   // Create the object under tests.
-  ResidualBlock residual_block(&cost_function, NULL, parameters);
+  ResidualBlock residual_block(&cost_function, NULL, parameters, -1);
 
   // Verify getters.
   EXPECT_EQ(&cost_function, residual_block.cost_function());

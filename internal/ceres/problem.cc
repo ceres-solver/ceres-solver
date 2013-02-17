@@ -36,8 +36,6 @@
 
 namespace ceres {
 
-class ResidualBlock;
-
 Problem::Problem() : problem_impl_(new internal::ProblemImpl) {}
 Problem::Problem(const Problem::Options& options)
     : problem_impl_(new internal::ProblemImpl(options)) {}
@@ -154,6 +152,14 @@ void Problem::AddParameterBlock(double* values,
                                 int size,
                                 LocalParameterization* local_parameterization) {
   problem_impl_->AddParameterBlock(values, size, local_parameterization);
+}
+
+void Problem::RemoveResidualBlock(ResidualBlockId residual_block) {
+  problem_impl_->RemoveResidualBlock(residual_block);
+}
+
+void Problem::RemoveParameterBlock(double* values) {
+  problem_impl_->RemoveParameterBlock(values);
 }
 
 void Problem::SetParameterBlockConstant(double* values) {
