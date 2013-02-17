@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2010, 2011, 2012, 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <string>
 #include "ceres/array_utils.h"
+#include "ceres/collections_port.h"
 #include "ceres/integral_types.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
@@ -46,6 +47,7 @@ namespace ceres {
 namespace internal {
 
 class ProblemImpl;
+class ResidualBlock;
 
 // The parameter block encodes the location of the user's original value, and
 // also the "current state" of the parameter. The evaluator uses whatever is in
@@ -58,13 +60,25 @@ class ProblemImpl;
 // responsible for the proper disposal of the local parameterization.
 class ParameterBlock {
  public:
-  ParameterBlock(double* user_state, int size) {
-    Init(user_state, size, NULL);
+  // TODO(keir): Decide what data structure is best here. Should this be a set?
+  // Probably not, because sets are memory inefficient. However, if it's a
+  // vector, you can get into pathological linear performance when removing a
+  // residual block from a problem where all the residual blocks depend on one
+  // parameter; for example, shared focal length in a bundle adjustment
+  // problem. It might be worth making a custom structure that is just an array
+  // when it is small, but transitions to a hash set when it has more elements.
+  //
+  // For now, use a hash set.
+  typedef HashSet<ResidualBlock*> ResidualBlockSet;
+
+  ParameterBlock(double* user_state, int size, int index) {
+    Init(user_state, size, index, NULL);
   }
   ParameterBlock(double* user_state,
                  int size,
+                 int index,
                  LocalParameterization* local_parameterization) {
-    Init(user_state, size, local_parameterization);
+    Init(user_state, size, index, local_parameterization);
   }
 
   // The size of the parameter block.
@@ -187,12 +201,43 @@ class ParameterBlock {
                         delta_offset_);
   }
 
+  void EnableResidualBlockDependencies() {
+    CHECK(residual_blocks_ == NULL)
+        << "Ceres bug: There is already a residual block collection "
+        << "for parameter block: " << ToString();
+    residual_blocks_ = new ResidualBlockSet;
+  }
+
+  void AddResidualBlockDependency(ResidualBlock* residual_block) {
+    CHECK(residual_blocks_ != NULL)
+        << "Ceres bug: The residual block collection is null for parameter "
+        << "block: " << ToString();
+    residual_blocks_->insert(residual_block);
+  }
+
+  void RemoveResidualBlockDependency(ResidualBlock* residual_block) {
+    CHECK(residual_blocks_ != NULL)
+        << "Ceres bug: The residual block collection is null for parameter "
+        << "block: " << ToString();
+    CHECK(residual_blocks_->find(residual_block) != residual_blocks_->end())
+        << "Ceres bug: Missing residual for parameter block: " << ToString();
+    residual_blocks_->erase(residual_block);
+  }
+
+  // This is only intended for iterating; perhaps this should only expose
+  // .begin() and .end().
+  ResidualBlockSet* residual_blocks() {
+    return residual_blocks_;
+  }
+
  private:
   void Init(double* user_state,
             int size,
+            int index,
             LocalParameterization* local_parameterization) {
     user_state_ = user_state;
     size_ = size;
+    index_ = index;
     is_constant_ = false;
     state_ = user_state_;
 
@@ -204,6 +249,8 @@ class ParameterBlock {
     index_ = -1;
     state_offset_ = -1;
     delta_offset_ = -1;
+
+    residual_blocks_ = NULL;
   }
 
   bool UpdateLocalParameterizationJacobian() {
@@ -260,6 +307,9 @@ class ParameterBlock {
 
   // The offset of this parameter block inside a larger delta vector.
   int32 delta_offset_;
+
+  // If non-null, contains the residual blocks this parameter block is in.
+  ResidualBlockSet* residual_blocks_;
 
   // Necessary so ProblemImpl can clean up the parameterizations.
   friend class ProblemImpl;
