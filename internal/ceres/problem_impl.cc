@@ -119,9 +119,41 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
   }
 
   ParameterBlock* new_parameter_block = new ParameterBlock(values, size);
+  // Keep the index in sync with the position of the parameter in the program's
+  // parameter vector.
+  new_parameter_block.set_index(program_->parameter_blocks_.size());
+
+  // For dynamic problems, add the list of dependent residual blocks, which is
+  // empty to start.
+  if (options_.enable_fast_parameter_block_removal) {
+    new_parameter_block->EnableResidualBlockDependencies();
+  }
   parameter_block_map_[values] = new_parameter_block;
   program_->parameter_blocks_.push_back(new_parameter_block);
   return new_parameter_block;
+}
+
+void ProblemImpl::DeleteResidualBlock(ResidualBlock* residual_block) {
+  // The const casts here are legit, since ResidualBlock holds these
+  // pointers as const pointers but we have ownership of them and
+  // have the right to destroy them when the destructor is called.
+  if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
+    owned_cost_functions_.push_back(
+        const_cast<CostFunction*>(residual_block->cost_function()));
+  }
+  if (options_.loss_function_ownership == TAKE_OWNERSHIP) {
+    owned_loss_functions_.push_back(
+        const_cast<LossFunction*>(residual_block->loss_function()));
+  }
+  delete residual_block;
+}
+
+void ProblemImpl::DeleteParameterBlock(ParameterBlock* parameter_block) {
+  if (options_.local_parameterization_ownership == TAKE_OWNERSHIP) {
+    owned_local_parameterizations_.push_back(
+        parameter_block->local_parameterization_);
+  }
+  delete parameter_block;
 }
 
 ProblemImpl::ProblemImpl() : program_(new internal::Program) {}
@@ -132,51 +164,24 @@ ProblemImpl::ProblemImpl(const Problem::Options& options)
 ProblemImpl::~ProblemImpl() {
   // Collect the unique cost/loss functions and delete the residuals.
   const int num_residual_blocks =  program_->residual_blocks_.size();
-
-  vector<CostFunction*> cost_functions;
-  cost_functions.reserve(num_residual_blocks);
-
-  vector<LossFunction*> loss_functions;
-  loss_functions.reserve(num_residual_blocks);
-
+  owned_cost_functions_.reserve(num_residual_blocks);
+  owned_loss_functions_.reserve(num_residual_blocks);
   for (int i = 0; i < program_->residual_blocks_.size(); ++i) {
-    ResidualBlock* residual_block = program_->residual_blocks_[i];
-
-    // The const casts here are legit, since ResidualBlock holds these
-    // pointers as const pointers but we have ownership of them and
-    // have the right to destroy them when the destructor is called.
-    if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
-      cost_functions.push_back(
-          const_cast<CostFunction*>(residual_block->cost_function()));
-    }
-    if (options_.loss_function_ownership == TAKE_OWNERSHIP) {
-      loss_functions.push_back(
-          const_cast<LossFunction*>(residual_block->loss_function()));
-    }
-
-    delete residual_block;
+    DeleteResidualBlock(program_->residual_blocks_[i]);
   }
 
   // Collect the unique parameterizations and delete the parameters.
-  vector<LocalParameterization*> local_parameterizations;
   for (int i = 0; i < program_->parameter_blocks_.size(); ++i) {
-    ParameterBlock* parameter_block = program_->parameter_blocks_[i];
-
-    if (options_.local_parameterization_ownership == TAKE_OWNERSHIP) {
-      local_parameterizations.push_back(
-          parameter_block->local_parameterization_);
-    }
-
-    delete parameter_block;
+    DeleteParameterBlock(program_->parameter_blocks_[i]);
   }
 
   // Delete the owned cost/loss functions and parameterizations.
-  STLDeleteUniqueContainerPointers(local_parameterizations.begin(),
-                                   local_parameterizations.end());
-  STLDeleteUniqueContainerPointers(cost_functions.begin(),
-                                   cost_functions.end());
-  STLDeleteUniqueContainerPointers(loss_functions.begin(),
-                                   loss_functions.end());
+  STLDeleteUniqueContainerPointers(local_parameterizations_.begin(),
+                                   local_parameterizations_.end());
+  STLDeleteUniqueContainerPointers(owned_cost_functions_.begin(),
+                                   owned_cost_functions_.end());
+  STLDeleteUniqueContainerPointers(owned_loss_functions_.begin(),
+                                   owned_loss_functions_.end());
 }
 
 const ResidualBlock* ProblemImpl::AddResidualBlock(
@@ -239,6 +244,15 @@ const ResidualBlock* ProblemImpl::AddResidualBlock(
       new ResidualBlock(cost_function,
                         loss_function,
                         parameter_block_ptrs);
+
+  // Add dependencies on the residual to the parameter blocks.
+  if (options_.enable_fast_parameter_block_removal) {
+    for (int i = 0; i < parameter_blocks.size(); ++i) {
+      parameter_block_ptrs[i]->AddResidualBlockDependency(new_residual_block);
+    }
+  }
+
+  new_residual_block->set_index(program_->residual_blocks_.size());
   program_->residual_blocks_.push_back(new_residual_block);
   return new_residual_block;
 }
@@ -397,6 +411,79 @@ void ProblemImpl::AddParameterBlock(
   if (local_parameterization != NULL) {
     parameter_block->SetParameterization(local_parameterization);
   }
+}
+
+void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
+  vector<ResidualBlock*>* mutable_residual_blocks =
+      program_.mutable_residual_blocks();
+
+  // Prepare the to-be-swapped residual block for the lower position by setting
+  // the index to the blocks final location.
+  mutable_residual_blocks->back()->set_index(residual_block.index()),
+
+  // Swap the to-be-deleted residual block to the end of the residuals vector.
+  swap(mutable_residual_blocks[residual_block.index()],
+       mutable_residual_blocks->back());
+
+  // If needed, remove the parameter dependencies on this residual block.
+  if (options_.enable_fast_parameter_block_removal) {
+    int num_parameter_blocks_for_residual =
+        residual_block->NumParameterBlocks();
+    for (int i = 0; i < num_parameter_blocks_for_residual; ++i) {
+      (*residual_block->parameter_blocks())[i]
+          ->RemoveResidualBlockDependency(residual_block);
+    }
+  }
+
+  DeleteResidualBlock(residual_block);
+
+  // The block is gone so shrink the program's residual blocks accordingly.
+  mutable_residual_blocks->pop_back();
+}
+
+void ProblemImpl::RemoveParameterBlock(double* values) {
+  ParameterBlock* parameter_block = FindOrDie(parameter_block_map_, values);
+
+  if (options_.enable_fast_parameter_block_removal) {
+    // Copy the dependent residuals from the parameter block because the set of
+    // dependents will change after each call to RemoveResidualBlock().
+    vector<ResidualBlock*> residual_blocks_to_remove(
+        parameter_block->residual_blocks()->begin(),
+        parameter_block->residual_blocks()->end());
+    for (int i = 0; i < residual_blocks_to_remove.size(); ++i) {
+      RemoveResidualBlock(residual_blocks_to_remove[i]);
+    }
+  } else {
+    // Scan all the residual blocks to remove ones that depend on the parameter
+    // block. Do the scan backwards since the vector changes while iterating.
+    int num_residual_blocks = NumResidualBlocks();
+    for (int i = num_residual_blocks - 1; i >= 0; --i) {
+      ResidualBlock* residual_block = (*program_.mutable_residual_blocks())[i];
+      int num_parameter_blocks_for_residual =
+          residual_block->NumParameterBlocks();
+      for (int j = 0; j < num_parameter_blocks_for_residual; ++j) {
+        if ((*residual_block->parameter_blocks())[j] == parameter_block) {
+          RemoveResidualBlock(residual_block);
+        }
+      }
+    }
+  }
+  vector<ParameterBlock*>* mutable_parameter_blocks =
+      program_.mutable_parameter_blocks();
+
+  // Prepare the to-be-swapped parameter block for the lower position by setting
+  // the index to the blocks final location.
+  mutable_parameter_blocks->back()->set_index(parameter_block.index()),
+
+  // Swap the to-be-deleted residual block to the end of the residuals vector.
+  swap(mutable_parameter_blocks[parameter_block.index()],
+       mutable_parameter_blocks->back());
+
+  DeleteParameterBlock(residual_block);
+
+  // The block is gone so shrink the program's residual blocks accordingly.
+  mutable_parameter_blocks->pop_back();
+  
 }
 
 void ProblemImpl::SetParameterBlockConstant(double* values) {

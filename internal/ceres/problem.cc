@@ -156,6 +156,14 @@ void Problem::AddParameterBlock(double* values,
   problem_impl_->AddParameterBlock(values, size, local_parameterization);
 }
 
+void Problem::RemoveResidualBlock(ResidualBlockId residual_block) {
+  problem_impl_->RemoveResidualBlock(residual_block);
+}
+
+void Problem::RemoveParameterBlock(double* values) {
+  problem_impl_->RemoveParameterBlock(values);
+}
+
 void Problem::SetParameterBlockConstant(double* values) {
   problem_impl_->SetParameterBlockConstant(values);
 }

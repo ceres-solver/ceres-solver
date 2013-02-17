@@ -112,10 +112,19 @@ class ResidualBlock {
   // The minimum amount of scratch space needed to pass to Evaluate().
   int NumScratchDoublesForEvaluate() const;
 
+  // This residual block's index in an array.
+  int index() const { return index_; }
+  void set_index(int index) { index_ = index; }
+
  private:
   const CostFunction* cost_function_;
   const LossFunction* loss_function_;
   scoped_array<ParameterBlock*> parameter_blocks_;
+
+  // The index of the residual, typically in a Program. This is only 
+  // permit switching from a ResidualBlock* to an index in the Program's array,
+  // needed to do efficient removals.
+  int32 index_;
 };
 
 }  // namespace internal

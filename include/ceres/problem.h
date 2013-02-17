@@ -59,9 +59,8 @@ class ParameterBlock;
 class ResidualBlock;
 }  // namespace internal
 
-// A ResidualBlockId is a handle clients can use to delete residual
-// blocks after creating them. They are opaque for any purposes other
-// than that.
+// A ResidualBlockId is an opaque handle clients can use to remove residual
+// blocks from a Problem after adding them. 
 typedef const internal::ResidualBlock* ResidualBlockId;
 
 // A class to represent non-linear least squares problems. Such
@@ -123,6 +122,7 @@ class Problem {
         : cost_function_ownership(TAKE_OWNERSHIP),
           loss_function_ownership(TAKE_OWNERSHIP),
           local_parameterization_ownership(TAKE_OWNERSHIP),
+          trade_memory_for_fast_parameter_block_removals(false),
           disable_all_safety_checks(false) {}
 
     // These flags control whether the Problem object owns the cost
@@ -136,15 +136,27 @@ class Problem {
     Ownership loss_function_ownership;
     Ownership local_parameterization_ownership;
 
-    // By default, Ceres performs a variety of safety checks when
-    // constructing the problem. There is a small but measurable
-    // performance penalty to these checks ~5%. If you are sure of
-    // your problem construction, and 5% of the problem construction
+    // If true, trades memory for a faster RemoveParameterBlock() operation.
+    //
+    // The RemoveResidualBlock() operation takes time proportional to the
+    // number of dependent parameters; however, RemoveParameterBlock() takes
+    // time proportional to the size of the entire Problem. If you only remove
+    // parameter blocks from the Problem occassionaly, this may be acceptable.
+    // However, if you are modifying the Problem frequently, and have memory to
+    // spare, then flip this switch to make RemoveParameterBlock() take time
+    // proportional to the number of residual blocks that depend on it.  The
+    // increase in memory usage is an additonal hash set per parameter block
+    // containing all the residuals that depend on the parameter block.
+    bool enable_fast_parameter_block_removal;
+
+    // By default, Ceres performs a variety of safety checks when constructing
+    // the problem. There is a small but measurable performance penalty to
+    // these checks, typically around 5% of construction time. If you are sure
+    // your problem construction is correct, and 5% of the problem construction
     // time is truly an overhead you want to avoid, then you can set
     // disable_all_safety_checks to true.
     //
-    // WARNING:
-    // Do not set this to true, unless you are absolutely sure of what
+    // WARNING: Do not set this to true, unless you are absolutely sure of what
     // you are doing.
     bool disable_all_safety_checks;
   };
@@ -256,6 +268,34 @@ class Problem {
   void AddParameterBlock(double* values,
                          int size,
                          LocalParameterization* local_parameterization);
+
+  // Remove a residual block from the problem. Any parameters that the residual
+  // block depends on are not removed. The cost and loss functions for the
+  // residual block may get deleted immediately but this is not guaranteed;
+  // their deletion may not happen until the problem itself is deleted.
+  //
+  // WARNING: Removing a residual or parameter block will destroy the implicit
+  // ordering, rendering the jacobian or residuals returned from the solver
+  // uninterpretable. If you dependend on the evaluated jacobian, do not use
+  // remove! This may change in a future release.
+  void RemoveResidualBlock(ResidualBlockId residual_block);
+
+  // Remove a parameter block from the problem. The parameterization of the
+  // parameter block, if it exists, is not guaranteed to get deleted and may
+  // persist until the deletion of the problem (similar to cost/loss functions
+  // in residual block removal). Any residual blocks that depend on the
+  // parameter are also removed, as described above in RemoveResidualBlock().
+  //
+  // If Problem::Options::enable_fast_parameter_block_removal is true, then the
+  // removal is fast (almost constant time). Otherwise, removing a parameter
+  // block will incur a scan of the entire Problem object.
+  //
+  // WARNING: Removing a residual or parameter block will destroy the implicit
+  // ordering, rendering the jacobian or residuals returned from the solver
+  // uninterpretable. If you dependend on the evaluated jacobian, do not use
+  // remove! This may change in a future release.
+  void RemoveParameterBlock(double* values);
+
 
   // Hold the indicated parameter block constant during optimization.
   void SetParameterBlockConstant(double* values);

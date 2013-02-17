@@ -118,8 +118,13 @@ class ProblemImpl {
   void AddParameterBlock(double* values,
                          int size,
                          LocalParameterization* local_parameterization);
+
+  void RemoveResidualBlock(ResidualBlockId residual_block);
+  void RemoveParameterBlock(double* values);
+
   void SetParameterBlockConstant(double* values);
   void SetParameterBlockVariable(double* values);
+
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
   int NumParameterBlocks() const;
@@ -134,13 +139,27 @@ class ProblemImpl {
 
  private:
   ParameterBlock* InternalAddParameterBlock(double* values, int size);
+  void DeleteResidualBlock(ResidualBlock* residual_block);
+  void DeleteParameterBlock(ParameterBlock* parameter_block);
 
   const Problem::Options options_;
 
   // The mapping from user pointers to parameter blocks.
   map<double*, ParameterBlock*> parameter_block_map_;
 
+  // The actual parameter and residual blocks.
   internal::scoped_ptr<internal::Program> program_;
+
+  // When removing residual and parameter blocks, cost/loss functions and
+  // parameterizations have ambiguous ownership. Instead of scanning the entire
+  // problem to see if the cost/loss/parameterization is shared with other
+  // residual or parameter blocks, buffer them until destruction.
+  //
+  // TODO(keir): See if it makes sense to use sets instead.
+  vector<CostFunction*> owned_cost_functions_;
+  vector<LossFunction*> owned_loss_functions_;
+  vector<LocalParameterization*> owned_local_parameterizations_;
+
   CERES_DISALLOW_COPY_AND_ASSIGN(ProblemImpl);
 };
 
