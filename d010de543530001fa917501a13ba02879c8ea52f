@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "P3fJWGvM",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:11:44Z",
+      "side": 0,
+      "message": "nope, only cluster_jacobi and cluster_tridiagonal now.",
+      "parentUuid": "P3U-xRV4",
+      "revId": "d010de543530001fa917501a13ba02879c8ea52f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3S.fqQ4",
         "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2013-02-18T06:02:30Z",
       "side": 0,
       "message": "Are we losing this test? Can we have it back?",
+      "revId": "d010de543530001fa917501a13ba02879c8ea52f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3TKZ0tk",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:11:44Z",
+      "side": 0,
+      "message": "This only made sense when we were using the more general data structures, now the code for schur_jacobi is considerably simpler and these data structures are not even valid anymore. By its very construction, we will never have this test violated.",
+      "parentUuid": "P3S.fqQ4",
       "revId": "d010de543530001fa917501a13ba02879c8ea52f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
