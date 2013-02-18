@@ -231,8 +231,8 @@ and computations, please see Madsen et al [Madsen]_.
 
 ``SUBSPACE_DOGLEG`` is a more sophisticated method that considers the
 entire two dimensional subspace spanned by these two vectors and finds
-the point that minimizes the trust region problem in this
-subspace [ByrdSchanbel]_.
+the point that minimizes the trust region problem in this subspace
+[ByrdSchnabel]_.
 
 The key advantage of the Dogleg over Levenberg Marquardt is that if
 the step computation for a particular choice of :math:`\mu` does not
@@ -792,7 +792,7 @@ elimination group [LiSaad]_.
 
    ``ARMIJO`` is the only choice right now.
 
-.. member:: NonlinearConjugateGradientType Solver::Options::nonlinear conjugate_gradient_type
+.. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
    Default: ``FLETCHER_REEVES``
 
@@ -837,8 +837,8 @@ elimination group [LiSaad]_.
 
    Ceres supports two different dogleg strategies.
    ``TRADITIONAL_DOGLEG`` method by Powell and the ``SUBSPACE_DOGLEG``
-   method described by [ByrdSchnabel]_.  See :ref:`section-dogleg` for more
-   details.
+   method described by [ByrdSchnabel]_ .  See :ref:`section-dogleg`
+   for more details.
 
 .. member:: bool Solver::Options::use_nonmonotonic_steps
 
