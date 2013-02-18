@@ -19,7 +19,7 @@ Bibliography
    **Representations of Quasi-Newton Matrices and their use in Limited
    Memory Methods**, *Mathematical Programming* 63(4):129–-156, 1994.
 
-.. [ByrdSchanbel] R.H. Byrd, R.B. Schnabel, and G.A. Shultz, **Approximate
+.. [ByrdSchnabel] R.H. Byrd, R.B. Schnabel, and G.A. Shultz, **Approximate
    solution of the trust region problem by minimization over
    two dimensional subspaces**, *Mathematical programming*,
    40(1):247–263, 1988.

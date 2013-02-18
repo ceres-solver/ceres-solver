@@ -30,8 +30,7 @@
 #
 # Author: mierle@gmail.com (Keir Mierle)
 #
-# Note: you will need a fairly complete latex installation, along with
-# pygments, for this to work.
+# Note: You will need Sphinx and Pygments installed for this to work.
 
 if [ -z $1 ] ; then
   echo 'usage: scripts/make_release <version>'
@@ -90,26 +89,18 @@ echo "abi_version $VERSION" >> $VERSIONFILE
 echo "$GIT_COMMIT" >> $VERSIONFILE
 
 # Build the documentation.
-cp -pr "$TMP/docs" $DOCS_TMP
-cd $DOCS_TMP
-curl http://minted.googlecode.com/files/minted.sty > minted.sty
-pdflatex -shell-escape ceres-solver && \
-  bibtex ceres-solver && \
-  pdflatex -shell-escape ceres-solver && \
-  pdflatex -shell-escape ceres-solver
-cp $DOCS_TMP/ceres-solver.pdf "$TMP/docs/ceres-solver.pdf"
-cp $DOCS_TMP/ceres-solver.pdf "/tmp/ceres-solver-$1.pdf"
+python $TMP/scripts/make_docs.py $TMP $DOCS_TMP
+cp -pr $DOCS_TMP/html $TMP/docs
 
 # Build the tarball.
 cd /tmp
 tar -cvzf "ceres-solver-$1.tar.gz" "ceres-solver-$1"
 
 # Don't leave a mess behind.
-rm -rf $DOCS_TMP
 rm -rf $TMP
+rm -rf /tmp/sphinx-build/ceres-solver
 
 # Reminder to upload.
 echo
 echo "TODO: upload /tmp/ceres-solver-$1.tar.gz"
-echo "TODO: upload /tmp/ceres-solver-$1.pdf"
 echo
