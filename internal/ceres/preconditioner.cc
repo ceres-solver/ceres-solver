@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,43 +26,38 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_CGNR_SOLVER_H_
-#define CERES_INTERNAL_CGNR_SOLVER_H_
-
-#include "ceres/internal/scoped_ptr.h"
-#include "ceres/linear_solver.h"
+#include "ceres/preconditioner.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-class Preconditioner;
+Preconditioner::~Preconditioner() {
+}
 
-class BlockJacobiPreconditioner;
+SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
+    const SparseMatrix* matrix)
+    : matrix_(CHECK_NOTNULL(matrix)) {
+}
 
-// A conjugate gradients on the normal equations solver. This directly solves
-// for the solution to
-//
-//   (A^T A + D^T D)x = A^T b
-//
-// as required for solving for x in the least squares sense. Currently only
-// block diagonal preconditioning is supported.
-class CgnrSolver : public BlockSparseMatrixBaseSolver {
- public:
-  explicit CgnrSolver(const LinearSolver::Options& options);
-  virtual Summary SolveImpl(BlockSparseMatrixBase* A,
-                            const double* b,
-                            const LinearSolver::PerSolveOptions& per_solve_options,
-                            double* x);
+SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
+}
 
- private:
-  const LinearSolver::Options options_;
-  scoped_ptr<Preconditioner> preconditioner_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(CgnrSolver);
-};
+bool SparseMatrixPreconditionerWrapper::Update(const BlockSparseMatrixBase& A,
+                                               const double* D) {
+  return true;
+}
+
+void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
+                                                      double* y) const {
+  matrix_->RightMultiply(x, y);
+}
+
+int  SparseMatrixPreconditionerWrapper::num_rows() const {
+  return matrix_->num_rows();
+}
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_CGNR_SOLVER_H_

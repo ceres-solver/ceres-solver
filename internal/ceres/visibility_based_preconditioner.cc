@@ -65,17 +65,16 @@ static const double kSimilarityPenaltyWeight = 0.0;
 #ifndef CERES_NO_SUITESPARSE
 VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
     const CompressedRowBlockStructure& bs,
-    const LinearSolver::Options& options)
+    const Preconditioner::Options& options)
     : options_(options),
       num_blocks_(0),
       num_clusters_(0),
       factor_(NULL) {
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
-  CHECK(options_.preconditioner_type == SCHUR_JACOBI ||
-        options_.preconditioner_type == CLUSTER_JACOBI ||
-        options_.preconditioner_type == CLUSTER_TRIDIAGONAL)
-      << "Unknown preconditioner type: " << options_.preconditioner_type;
+  CHECK(options_.type == CLUSTER_JACOBI ||
+        options_.type == CLUSTER_TRIDIAGONAL)
+      << "Unknown preconditioner type: " << options_.type;
   num_blocks_ = bs.cols.size() - options_.elimination_groups[0];
   CHECK_GT(num_blocks_, 0)
       << "Jacobian should have atleast 1 f_block for "
@@ -88,10 +87,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   }
 
   const time_t start_time = time(NULL);
-  switch (options_.preconditioner_type) {
-    case SCHUR_JACOBI:
-      ComputeSchurJacobiSparsity(bs);
-      break;
+  switch (options_.type) {
     case CLUSTER_JACOBI:
       ComputeClusterJacobiSparsity(bs);
       break;
@@ -128,24 +124,6 @@ VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() {
   if (tmp_rhs_ != NULL) {
     ss_.Free(tmp_rhs_);
     tmp_rhs_ = NULL;
-  }
-}
-
-// Determine the sparsity structure of the SCHUR_JACOBI
-// preconditioner. SCHUR_JACOBI is an extreme case of a visibility
-// based preconditioner where each camera block corresponds to a
-// cluster and there is no interaction between clusters.
-void VisibilityBasedPreconditioner::ComputeSchurJacobiSparsity(
-    const CompressedRowBlockStructure& bs) {
-  num_clusters_ = num_blocks_;
-  cluster_membership_.resize(num_blocks_);
-  cluster_pairs_.clear();
-
-  // Each camea block is a member of its own cluster and the only
-  // cluster pairs are the self edges (i,i).
-  for (int i = 0; i < num_clusters_; ++i) {
-    cluster_membership_[i] = i;
-    cluster_pairs_.insert(make_pair(i, i));
   }
 }
 
@@ -332,7 +310,6 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
 void VisibilityBasedPreconditioner::InitEliminator(
     const CompressedRowBlockStructure& bs) {
   LinearSolver::Options eliminator_options;
-
   eliminator_options.elimination_groups = options_.elimination_groups;
   eliminator_options.num_threads = options_.num_threads;
 
@@ -366,13 +343,13 @@ bool VisibilityBasedPreconditioner::Update(const BlockSparseMatrixBase& A,
   // Compute a subset of the entries of the Schur complement.
   eliminator_->Eliminate(&A, b.data(), D, m_.get(), rhs.data());
 
-  // Try factorizing the matrix. For SCHUR_JACOBI and CLUSTER_JACOBI,
-  // this should always succeed modulo some numerical/conditioning
-  // problems. For CLUSTER_TRIDIAGONAL, in general the preconditioner
-  // matrix as constructed is not positive definite. However, we will
-  // go ahead and try factorizing it. If it works, great, otherwise we
-  // scale all the cells in the preconditioner corresponding to the
-  // edges in the degree-2 forest and that guarantees positive
+  // Try factorizing the matrix. For CLUSTER_JACOBI, this should
+  // always succeed modulo some numerical/conditioning problems. For
+  // CLUSTER_TRIDIAGONAL, in general the preconditioner matrix as
+  // constructed is not positive definite. However, we will go ahead
+  // and try factorizing it. If it works, great, otherwise we scale
+  // all the cells in the preconditioner corresponding to the edges in
+  // the degree-2 forest and that guarantees positive
   // definiteness. The proof of this fact can be found in Lemma 1 in
   // "Visibility Based Preconditioning for Bundle Adjustment".
   //
@@ -382,10 +359,10 @@ bool VisibilityBasedPreconditioner::Update(const BlockSparseMatrixBase& A,
 
   // The scaling only affects the tri-diagonal case, since
   // ScaleOffDiagonalBlocks only pays attenion to the cells that
-  // belong to the edges of the degree-2 forest. In the SCHUR_JACOBI
-  // and the CLUSTER_JACOBI cases, the preconditioner is guaranteed to
-  // be positive semidefinite.
-  if (!status && options_.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+  // belong to the edges of the degree-2 forest. In the CLUSTER_JACOBI
+  // case, the preconditioner is guaranteed to be positive
+  // semidefinite.
+  if (!status && options_.type == CLUSTER_TRIDIAGONAL) {
     VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
             << "scaling";
     ScaleOffDiagonalCells();

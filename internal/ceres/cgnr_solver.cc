@@ -42,11 +42,11 @@ namespace internal {
 
 CgnrSolver::CgnrSolver(const LinearSolver::Options& options)
   : options_(options),
-    jacobi_preconditioner_(NULL) {
+    preconditioner_(NULL) {
 }
 
-LinearSolver::Summary CgnrSolver::Solve(
-    LinearOperator* A,
+LinearSolver::Summary CgnrSolver::SolveImpl(
+    BlockSparseMatrixBase* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
@@ -60,11 +60,11 @@ LinearSolver::Summary CgnrSolver::Solve(
   // Precondition if necessary.
   LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
   if (options_.preconditioner_type == JACOBI) {
-    if (jacobi_preconditioner_.get() == NULL) {
-      jacobi_preconditioner_.reset(new BlockJacobiPreconditioner(*A));
+    if (preconditioner_.get() == NULL) {
+      preconditioner_.reset(new BlockJacobiPreconditioner(*A));
     }
-    jacobi_preconditioner_->Update(*A, per_solve_options.D);
-    cg_per_solve_options.preconditioner = jacobi_preconditioner_.get();
+    preconditioner_->Update(*A, per_solve_options.D);
+    cg_per_solve_options.preconditioner = preconditioner_.get();
   } else if (options_.preconditioner_type != IDENTITY) {
     LOG(FATAL) << "CGNR only supports IDENTITY and JACOBI preconditioners.";
   }

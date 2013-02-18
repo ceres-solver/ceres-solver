@@ -72,6 +72,7 @@ SET(CERES_INTERNAL_SRC
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
+    preconditioner.cc
     problem.cc
     problem_impl.cc
     program.cc
@@ -80,6 +81,7 @@ SET(CERES_INTERNAL_SRC
     runtime_numeric_diff_cost_function.cc
     schur_complement_solver.cc
     schur_eliminator.cc
+    schur_jacobi_preconditioner.cc
     scratch_evaluate_preparer.cc
     solver.cc
     solver_impl.cc
