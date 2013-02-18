@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3c.LdSc",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Sweet :)",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3a.IuSs",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Also Android.mk.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e.CsQk",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Also Android.mk.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3W.P4S0",
+        "filename": "internal/ceres/block_jacobi_preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Comment is outdated.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e.b0Wk",
+        "filename": "internal/ceres/cgnr_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Is this comment now outdated?",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3U.pRX8",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Consider adding a comment. It\u0027s not obvious what the preconditioner being \"good\" means.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3a.6ebs",
+        "filename": "internal/ceres/iterative_schur_complement_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "I don\u0027t think this belongs here.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e.0cdE",
+        "filename": "internal/ceres/iterative_schur_complement_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3U-S5QA",
+        "filename": "internal/ceres/iterative_schur_complement_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "bi-partitte -- old typo",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e-NkVk",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3c-v9aY",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "how many threads the solver can use.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e8-USE",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Q8cbco",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "2013",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3W.FId0",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Y.k3V8",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Please port the lone test from visibility based preconditioner into schur_jacobi_preconditioner_test.cc",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3c-cFeA",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 1,
+      "message": "Comment is out of date (or needs adjusting).",
+      "revId": "aac32f51e68d9fbf2ffc3fc45f782a12796e8f81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

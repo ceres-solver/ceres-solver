@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3e-j0Zg",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 0,
+      "message": "Sweet :)",
+      "revId": "d010de543530001fa917501a13ba02879c8ea52f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3U-xRV4",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 0,
+      "message": "Is this mode of operation no longer supported?",
+      "revId": "d010de543530001fa917501a13ba02879c8ea52f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3S.fqQ4",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T06:02:30Z",
+      "side": 0,
+      "message": "Are we losing this test? Can we have it back?",
+      "revId": "d010de543530001fa917501a13ba02879c8ea52f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
