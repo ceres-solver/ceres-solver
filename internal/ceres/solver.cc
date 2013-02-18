@@ -185,8 +185,7 @@ string Solver::Summary::FullReport() const {
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
-         (preconditioner_type == SCHUR_JACOBI ||
-          preconditioner_type == CLUSTER_JACOBI ||
+         (preconditioner_type == CLUSTER_JACOBI ||
           preconditioner_type == CLUSTER_TRIDIAGONAL))) {
       StringAppendF(&report, "\nSparse Linear Algebra Library %15s\n",
                     SparseLinearAlgebraLibraryTypeToString(

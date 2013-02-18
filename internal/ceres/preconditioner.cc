@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,54 +26,38 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_
-#define CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_
-
-#include <vector>
 #include "ceres/preconditioner.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 
-class BlockSparseMatrixBase;
-struct CompressedRowBlockStructure;
-class LinearOperator;
+Preconditioner::~Preconditioner() {
+}
 
-// A block Jacobi preconditioner. This is intended for use with
-// conjugate gradients, or other iterative symmetric solvers. To use
-// the preconditioner, create one by passing a BlockSparseMatrix "A"
-// to the constructor. This fixes the sparsity pattern to the pattern
-// of the matrix A^TA.
-//
-// Before each use of the preconditioner in a solve with conjugate gradients,
-// update the matrix by running Update(A, D). The values of the matrix A are
-// inspected to construct the preconditioner. The vector D is applied as the
-// D^TD diagonal term.
-class BlockJacobiPreconditioner : public Preconditioner {
- public:
-  // A must remain valid while the BlockJacobiPreconditioner is.
-  BlockJacobiPreconditioner(const BlockSparseMatrixBase& A);
-  virtual ~BlockJacobiPreconditioner();
+SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
+    const SparseMatrix* matrix)
+    : matrix_(CHECK_NOTNULL(matrix)) {
+}
 
-  // Preconditioner interface
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D);
-  virtual void RightMultiply(const double* x, double* y) const;
-  virtual void LeftMultiply(const double* x, double* y) const;
-  virtual int num_rows() const { return num_rows_; }
-  virtual int num_cols() const { return num_rows_; }
+SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
+}
 
- private:
-  std::vector<double*> blocks_;
-  std::vector<double> block_storage_;
-  int num_rows_;
+bool SparseMatrixPreconditionerWrapper::Update(const BlockSparseMatrixBase& A,
+                                               const double* D) {
+  return true;
+}
 
-  // The block structure of the matrix this preconditioner is for (e.g. J).
-  const CompressedRowBlockStructure& block_structure_;
-};
+void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
+                                                      double* y) const {
+  matrix_->RightMultiply(x, y);
+}
+
+int  SparseMatrixPreconditionerWrapper::num_rows() const {
+  return matrix_->num_rows();
+}
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_BLOCK_JACOBI_PRECONDITIONER_H_
