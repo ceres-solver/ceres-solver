@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3TLUMkE",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "This comment is a bit confusing. Since this flag does not affect RemoveResidualBlock, why talk about it at all? I think its better to start with what the issue is rather than what is not an issue.",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3ZLJpqw",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "depend",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3dLDHog",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "2013 ?",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3bLAIn0",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "document the constructor, now that its a bit more involved than before.",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3TIPEvE",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "I do not think the dependency suffix is adding much. Add and Remove ResidualBlock is fine.",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3bJy4mw",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "mutable_residual_blocks()",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3RIJNuY",
+        "filename": "internal/ceres/problem.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:35:20Z",
+      "side": 1,
+      "message": "Is this actually needed?",
+      "revId": "8aafde49fe2368e2c61240c4f599996904af73c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
