@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P33z-me8",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "nice comment.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3zwewWk",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "Thinking more carefully about this, I think we should actually guarantee that the cost and loss functions will not be deleted till the problem is destroyed, since the user may wish to re-use them and having non-determinism about when they will be destroyed makes that complicated.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P39wEzSI",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "move RemoveResidualBlock before the AddParameterBlock call to go with the AddResidualBlock call.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P37wqsX0",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "same comment as above about lifetimes.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P31xrvbA",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "const int",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3zyCQWE",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "not sure what this function is doing based on its name.\n\nwhy the suffix Only?",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P35x39YA",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "now that I see the pattern below, I think its worth moving this down to be with its like minded bretheren,  and add a single comment about what this block of functions is doing.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P35zwlfI",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "nice test!",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3-wkKbM",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "update constructor documentation about index",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3zyZodk",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "I just read the code using it\nand find(residual_block-\u003ebegin(), residual_block-\u003eend(), )\nis very confusing, as its not at all clear what you are iterating over.\n\nyou are already exposing the array, above with parameter_blocks(), and the user also has access to NumParameterBlocks(),\n\nI do not see the point of these two rather confusing methods",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3xwoJYU",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T15:57:11Z",
+      "side": 1,
+      "message": "expand this a bit more with a signature of some sort? index is not really interpretable by the user.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
