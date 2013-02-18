@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "P31P-K.8",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T22:46:05Z",
+      "side": 1,
+      "message": "I wasn\u0027t arguing for a fixture, just reordering the functions.",
+      "parentUuid": "P3-Cx7ZE",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P35zwlfI",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 3
@@ -334,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "P37MEnyE",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T22:46:05Z",
+      "side": 1,
+      "message": "now you have two methods back to back which are doing exactly the same thing\n\nparameter_blocks()\nparameter_blocks_begin() ???\nright after each other too.",
+      "parentUuid": "P3-A8TeE",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3xwoJYU",
         "filename": "internal/ceres/residual_block.h",
         "patchSetId": 3
@@ -363,6 +399,24 @@
       "side": 1,
       "message": "It\u0027s not user-facing.",
       "parentUuid": "P3xwoJYU",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P35MBoxI",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T22:46:05Z",
+      "side": 1,
+      "message": "you use it log user facing errors.",
+      "parentUuid": "P3-CKjbk",
       "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
