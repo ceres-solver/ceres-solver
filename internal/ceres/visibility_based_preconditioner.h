@@ -29,25 +29,19 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
 // Preconditioners for linear systems that arise in Structure from
-// Motion problems. VisibilityBasedPreconditioner implements three
-// preconditioners:
+// Motion problems. VisibilityBasedPreconditioner implements:
 //
-//  SCHUR_JACOBI
 //  CLUSTER_JACOBI
 //  CLUSTER_TRIDIAGONAL
 //
 // Detailed descriptions of these preconditions beyond what is
 // documented here can be found in
 //
-// Bundle Adjustment in the Large
-// S. Agarwal, N. Snavely, S. Seitz & R. Szeliski, ECCV 2010
-// http://www.cs.washington.edu/homes/sagarwal/bal.pdf
-//
 // Visibility Based Preconditioning for Bundle Adjustment
 // A. Kushal & S. Agarwal, submitted to CVPR 2012
 // http://www.cs.washington.edu/homes/sagarwal/vbp.pdf
 //
-// The three preconditioners share enough code that its most efficient
+// The two preconditioners share enough code that its most efficient
 // to implement them as part of the same code base.
 
 #ifndef CERES_INTERNAL_VISIBILITY_BASED_PRECONDITIONER_H_
@@ -72,21 +66,12 @@ class BlockSparseMatrixBase;
 struct CompressedRowBlockStructure;
 class SchurEliminatorBase;
 
-// This class implements three preconditioners for Structure from
-// Motion/Bundle Adjustment problems. The name
+// This class implements visibility based preconditioners for
+// Structure from Motion/Bundle Adjustment problems. The name
 // VisibilityBasedPreconditioner comes from the fact that the sparsity
 // structure of the preconditioner matrix is determined by analyzing
 // the visibility structure of the scene, i.e. which cameras see which
 // points.
-//
-// Strictly speaking, SCHUR_JACOBI is not a visibility based
-// preconditioner but it is an extreme case of CLUSTER_JACOBI, where
-// every cluster contains exactly one camera block. Treating it as a
-// special case of CLUSTER_JACOBI makes it easy to implement as part
-// of the same code base with no significant loss of performance.
-//
-// In the following, we will only discuss CLUSTER_JACOBI and
-// CLUSTER_TRIDIAGONAL.
 //
 // The key idea of visibility based preconditioning is to identify
 // cameras that we expect have strong interactions, and then using the
@@ -130,13 +115,13 @@ class SchurEliminatorBase;
 //
 //   LinearSolver::Options options;
 //   options.preconditioner_type = CLUSTER_JACOBI;
-//   options.num_eliminate_blocks = num_points;
+//   options.elimination_groups.push_back(num_points);
+//   options.elimination_groups.push_back(num_cameras);
 //   VisibilityBasedPreconditioner preconditioner(
 //      *A.block_structure(), options);
 //   preconditioner.Update(A, NULL);
 //   preconditioner.RightMultiply(x, y);
 //
-
 #ifndef CERES_NO_SUITESPARSE
 class VisibilityBasedPreconditioner : public LinearOperator {
  public:
@@ -187,7 +172,6 @@ class VisibilityBasedPreconditioner : public LinearOperator {
 
   friend class VisibilityBasedPreconditionerTest;
  private:
-  void ComputeSchurJacobiSparsity(const CompressedRowBlockStructure& bs);
   void ComputeClusterJacobiSparsity(const CompressedRowBlockStructure& bs);
   void ComputeClusterTridiagonalSparsity(const CompressedRowBlockStructure& bs);
   void InitStorage(const CompressedRowBlockStructure& bs);

@@ -101,8 +101,7 @@ enum PreconditionerType {
   JACOBI,
 
   // Block diagonal of the Schur complement. This preconditioner may
-  // only be used with the ITERATIVE_SCHUR solver. Requires
-  // SuiteSparse/CHOLMOD.
+  // only be used with the ITERATIVE_SCHUR solver.
   SCHUR_JACOBI,
 
   // Visibility clustering based preconditioners.

@@ -80,6 +80,7 @@ SET(CERES_INTERNAL_SRC
     runtime_numeric_diff_cost_function.cc
     schur_complement_solver.cc
     schur_eliminator.cc
+    schur_jacobi_preconditioner.cc
     scratch_evaluate_preparer.cc
     solver.cc
     solver_impl.cc
