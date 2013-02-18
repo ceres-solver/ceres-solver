@@ -137,6 +137,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial.cc \
+                   $(CERES_SRC_PATH)/preconditioner.cc \
                    $(CERES_SRC_PATH)/problem.cc \
                    $(CERES_SRC_PATH)/problem_impl.cc \
                    $(CERES_SRC_PATH)/program.cc \
@@ -145,6 +146,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/runtime_numeric_diff_cost_function.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/schur_eliminator.cc \
+                   $(CERES_SRC_PATH)/schur_jacobi_preconditioner.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
                    $(CERES_SRC_PATH)/solver_impl.cc \
