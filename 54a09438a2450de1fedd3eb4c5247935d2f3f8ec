@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "P3Wwmz88",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "But why leave trunk with this issue? Let\u0027s leave the warning until we fix it. I vote for the \"continuous deployment\" we usually go for.",
+      "parentUuid": "P3QlOLb4",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3YnSHcw",
         "filename": "internal/ceres/parameter_block.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "message about this being a Ceres bug?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Y.enb4",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3YnSHcw",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "P3Y93vYA",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3WnX4bw",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3cncFeA",
         "filename": "internal/ceres/parameter_block.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "same as above.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3W98AWM",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3cncFeA",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "P3c.Rtag",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3anZ2e4",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3enj0Zg",
         "filename": "internal/ceres/parameter_block.h",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "I am fine with mutable_residual_blocks()",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3cwbg4U",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "I thought about it but decided against it. At no point will we use non-mutable residual blocks, so what\u0027s the value? It makes the code longer and doesn\u0027t add much clarity.",
+      "parentUuid": "P3enj0Zg",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "P3U-mZUI",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3Sn2iVY",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3Ymk3V8",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "modify the constructor to start with the index always? so that its always valid.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Q-ljS4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3Ymk3V8",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "P3e-hESM",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3QmZDSQ",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3SnISQY",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "only add when its non-null?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Y-Jfaw",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3SnISQY",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "P3W-OwbI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "P3Ym9-Wk",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3UnDBe4",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "since the bulk of these are NULL, no point adding a sequence of NULLs, only add when its non-null.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3c-DdYg",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3UnDBe4",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "P3a-AuXw",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "P3alm.RE",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3WnCQeg",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -234,6 +468,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "modify the constructor to always take the index, instead of setting it afterwards.",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Y9CHQ4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3WnCQeg",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "P3c91NVg",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3Ulspf8",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3cm39YU",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -268,6 +538,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "residual_block-\u003eindex();",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3a9yeWw",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3cm39YU",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "P3U-wJSM",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "That won\u0027t work here since we\u0027ll needlessly loop over the parameter blocks for no reason.",
+      "parentUuid": "P3Wl7YbQ",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3cmAlZ8",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -302,6 +608,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "why not just iterate over the set, why make another copy into a vector? not sure why this is worth it?\n\nalso do you think its worth writing a bulk delete method for residual blocks ? which takes a whole iterator full of this stuff?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3W--4e8",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "RemoveResidualBlock will modify the set of dependent residual blocks of the parameter block under deletion. You can\u0027t iterate over a hash-set that is under modification. This is described in the comment above, but maybe it needs to be moved down?",
+      "parentUuid": "P3cmAlZ8",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "P3e9scZI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3elg8fc",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3Uk.Zd8",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -336,6 +678,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "use stl find here?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Q8JDeY",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3Uk.Zd8",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "P3c8EFSM",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "I thought about this but decided against it because then I need to make DeleteParemeterBlock and DeleteResidualBlock abstracted somehow... Ahah, I\u0027ll make an overloaded function DeleteBlock() which works with either.",
+      "parentUuid": "P3UlVxR0",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3SlaCU4",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -370,6 +748,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "DeleteParameterBlock(values);",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3e8Fkco",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "P3SlaCU4",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -393,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "P3a8B2RE",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "I\u0027m confused; this is doing pop_back?",
+      "parentUuid": "P3QlkbQk",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3ckFNVY",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 1
@@ -404,6 +818,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "what is the difference between Remove and Delete?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3a8kOWQ",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Commented; Remove* cleans up references, Delete* does not.",
+      "parentUuid": "P3ckFNVY",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "P3Q8irVc",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3WnwgVg",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3Uma5R8",
         "filename": "internal/ceres/residual_block.h",
         "patchSetId": 1
@@ -438,6 +888,24 @@
       "writtenOn": "2013-02-17T23:18:28Z",
       "side": 1,
       "message": "default value on construction?",
+      "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3Y-mnQ0",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-02-18T04:52:10Z",
+      "side": 1,
+      "message": "Value required on construction now.",
+      "parentUuid": "P3Uma5R8",
       "revId": "54a09438a2450de1fedd3eb4c5247935d2f3f8ec",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
