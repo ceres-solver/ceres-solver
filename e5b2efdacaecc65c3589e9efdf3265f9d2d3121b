@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P3-tgs-c",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T07:16:20Z",
+      "side": 1,
+      "message": "Indentation.",
+      "revId": "e5b2efdacaecc65c3589e9efdf3265f9d2d3121b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P37svW6Y",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T07:16:20Z",
+      "side": 1,
+      "message": "So no caching the factors?",
+      "revId": "e5b2efdacaecc65c3589e9efdf3265f9d2d3121b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
