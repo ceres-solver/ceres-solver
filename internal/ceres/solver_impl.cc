@@ -1201,12 +1201,6 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
     return NULL;
   }
 
-  if (options->preconditioner_type == SCHUR_JACOBI) {
-    *error =  "SCHUR_JACOBI preconditioner not suppored. Please build Ceres "
-        "with SuiteSparse support.";
-    return NULL;
-  }
-
   if (options->preconditioner_type == CLUSTER_JACOBI) {
     *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
         "with SuiteSparse support.";
