@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "P3bJJQjE",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3-tgs-c",
+      "revId": "e5b2efdacaecc65c3589e9efdf3265f9d2d3121b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P37svW6Y",
         "filename": "internal/ceres/schur_jacobi_preconditioner.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-18T07:16:20Z",
       "side": 1,
       "message": "So no caching the factors?",
+      "revId": "e5b2efdacaecc65c3589e9efdf3265f9d2d3121b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3fJTuto",
+        "filename": "internal/ceres/schur_jacobi_preconditioner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-18T07:20:38Z",
+      "side": 1,
+      "message": "turns out, this is the fastest. The caching factor code I had earlier has alignment issues. since I was storing the eigen matrix inside a vector, and that requires more eigen magic, so I did not go there. Either ways this is the fastest of all the various bits of code. I also tried storing the inverse and then using it, turns out not to be worth it.",
+      "parentUuid": "P37svW6Y",
       "revId": "e5b2efdacaecc65c3589e9efdf3265f9d2d3121b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
