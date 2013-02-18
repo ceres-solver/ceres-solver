@@ -43,6 +43,7 @@ class BlockSparseMatrix;
 class BlockSparseMatrixBase;
 class ImplicitSchurComplement;
 class VisibilityBasedPreconditioner;
+class SchurJacobiPreconditioner;
 
 // This class implements an iterative solver for the linear least
 // squares problems that have a bi-partitte sparsity structure common
@@ -85,6 +86,7 @@ class IterativeSchurComplementSolver : public BlockSparseMatrixBaseSolver {
   LinearSolver::Options options_;
   scoped_ptr<internal::ImplicitSchurComplement> schur_complement_;
   scoped_ptr<VisibilityBasedPreconditioner> visibility_based_preconditioner_;
+  scoped_ptr<SchurJacobiPreconditioner> schur_jacobi_preconditioner_;
   Vector reduced_linear_system_solution_;
   CERES_DISALLOW_COPY_AND_ASSIGN(IterativeSchurComplementSolver);
 };
