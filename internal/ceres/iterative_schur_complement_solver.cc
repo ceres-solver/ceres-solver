@@ -42,6 +42,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
+#include "ceres/schur_jacobi_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/visibility_based_preconditioner.h"
@@ -111,6 +112,15 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
       is_preconditioner_good = true;
       break;
     case SCHUR_JACOBI:
+      if (schur_jacobi_preconditioner_.get() == NULL) {
+        schur_jacobi_preconditioner_.reset(
+            new SchurJacobiPreconditioner(*A->block_structure(), options_));
+      }
+      is_preconditioner_good =
+          schur_jacobi_preconditioner_->Update(*A, per_solve_options.D);
+      cg_per_solve_options.preconditioner =
+          schur_jacobi_preconditioner_.get();
+      break;
     case CLUSTER_JACOBI:
     case CLUSTER_TRIDIAGONAL:
       if (visibility_based_preconditioner_.get() == NULL) {

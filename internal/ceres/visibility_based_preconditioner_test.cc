@@ -235,27 +235,6 @@ class VisibilityBasedPreconditionerTest : public ::testing::Test {
 };
 
 #ifndef CERES_NO_PROTOCOL_BUFFERS
-TEST_F(VisibilityBasedPreconditionerTest, SchurJacobiStructure) {
-  options_.preconditioner_type = SCHUR_JACOBI;
-  preconditioner_.reset(
-      new VisibilityBasedPreconditioner(*A_->block_structure(), options_));
-  EXPECT_EQ(get_num_blocks(), num_camera_blocks_);
-  EXPECT_EQ(get_num_clusters(), num_camera_blocks_);
-  for (int i = 0; i < num_camera_blocks_; ++i) {
-    for (int j = 0; j < num_camera_blocks_; ++j) {
-      const string msg = StringPrintf("Camera pair: %d %d", i, j);
-      SCOPED_TRACE(msg);
-      if (i == j) {
-        EXPECT_TRUE(IsBlockPairInPreconditioner(i, j));
-        EXPECT_FALSE(IsBlockPairOffDiagonal(i, j));
-      } else {
-        EXPECT_FALSE(IsBlockPairInPreconditioner(i, j));
-        EXPECT_TRUE(IsBlockPairOffDiagonal(i, j));
-      }
-    }
-  }
-}
-
 TEST_F(VisibilityBasedPreconditionerTest, OneClusterClusterJacobi) {
   options_.preconditioner_type = CLUSTER_JACOBI;
   preconditioner_.reset(
