@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "P3xD2SVY",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P33z-me8",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3zwewWk",
         "filename": "include/ceres/problem.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-18T15:57:11Z",
       "side": 1,
       "message": "Thinking more carefully about this, I think we should actually guarantee that the cost and loss functions will not be deleted till the problem is destroyed, since the user may wish to re-use them and having non-determinism about when they will be destroyed makes that complicated.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P33Ck3V4",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "I don\u0027t want to add a .flush() method but maybe we need one. For another patch.",
+      "parentUuid": "P3zwewWk",
       "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "P31DCgec",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P39wEzSI",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P37wqsX0",
         "filename": "include/ceres/problem.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-02-18T15:57:11Z",
       "side": 1,
       "message": "same comment as above about lifetimes.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P37C3dYY",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P37wqsX0",
       "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "P35C0.YI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P31xrvbA",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3zyCQWE",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "P39CucTA",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Because it doesn\u0027t enforce the size. Otherwise I couldn\u0027t reuse this function inside the others. Renamed.",
+      "parentUuid": "P3zyCQWE",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P35x39YA",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2013-02-18T15:57:11Z",
       "side": 1,
       "message": "now that I see the pattern below, I think its worth moving this down to be with its like minded bretheren,  and add a single comment about what this block of functions is doing.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3-Cx7ZE",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "I don\u0027t want to make a new fixture; seems unnecessary.",
+      "parentUuid": "P35x39YA",
       "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "P35B9Gac",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "P3-wkKbM",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3zyZodk",
         "filename": "internal/ceres/residual_block.h",
         "patchSetId": 3
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "P3-A8TeE",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "I reverted to the previous names. Having to explicitly add the NumParameterBlocks() to get the end in client code is too nasty for me.",
+      "parentUuid": "P3zyZodk",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "P3xwoJYU",
         "filename": "internal/ceres/residual_block.h",
         "patchSetId": 3
@@ -183,6 +345,24 @@
       "writtenOn": "2013-02-18T15:57:11Z",
       "side": 1,
       "message": "expand this a bit more with a signature of some sort? index is not really interpretable by the user.",
+      "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P3-CKjbk",
+        "filename": "internal/ceres/residual_block.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-18T22:32:24Z",
+      "side": 1,
+      "message": "It\u0027s not user-facing.",
+      "parentUuid": "P3xwoJYU",
       "revId": "f72374a24e63906027879a7d69267b329f3e99cf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
