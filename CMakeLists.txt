@@ -634,6 +634,9 @@ IF (MSVC)
   # which results in linker warnings. This is irrelevant for Ceres, so ignore
   # the warnings.
   SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
+
+  # Tuple sizes of 10 are used by Gtest.
+  ADD_DEFINITIONS("-D_VARIADIC_MAX=10")
 ENDIF (MSVC)
 
 # GCC is not strict enough by default, so enable most of the warnings.
