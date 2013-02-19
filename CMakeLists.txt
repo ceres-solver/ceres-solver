@@ -617,7 +617,7 @@ ENDIF (MSVC)
 # GCC is not strict enough by default, so enable most of the warnings.
 IF ("${UNIX}")
   SET(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused -Wno-unused-parameter")
+      "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-return-type-c-linkage")
 ENDIF ("${UNIX}")
 
 ADD_SUBDIRECTORY(internal/ceres)

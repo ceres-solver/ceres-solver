@@ -9,6 +9,8 @@ Version History
 
 New Features
 ------------
+#. Problem now supports removal of ParameterBlocks and
+   ResidualBlocks.
 
 #. Ceres now supports Line search based optimization algorithms in
    addition to trust region algorithms. Currently there is support for
@@ -39,10 +41,12 @@ New Features
 #. Automatic differenatiation with a dynamic number of parameter
    blocks. (Based on an idea by Thad Hughes).
 
-#. Speeded up problem construction destruction.
+#. Speeded up problem construction and destruction.
 
 #. Added matrix adapters to ``rotation.h`` so that the rotation matrix
    routines can work with row and column major matrices. (Markus Moll)
+
+#. ``SCHUR_JACOBI`` can now be used without ``SuiteSparse``.
 
 Bug Fixes
 ---------
