@@ -42,6 +42,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
+#include "ceres/preconditioner.h"
 #include "ceres/schur_jacobi_preconditioner.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"

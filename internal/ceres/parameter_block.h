@@ -77,6 +77,7 @@ class ParameterBlock {
   ParameterBlock(double* user_state, int size, int index) {
     Init(user_state, size, index, NULL);
   }
+
   ParameterBlock(double* user_state,
                  int size,
                  int index,
@@ -205,21 +206,21 @@ class ParameterBlock {
   }
 
   void EnableResidualBlockDependencies() {
-    CHECK(residual_blocks_ == NULL)
+    CHECK(residual_blocks_.get() == NULL)
         << "Ceres bug: There is already a residual block collection "
         << "for parameter block: " << ToString();
-    residual_blocks_ = new ResidualBlockSet;
+    residual_blocks_.reset(new ResidualBlockSet);
   }
 
   void AddResidualBlock(ResidualBlock* residual_block) {
-    CHECK(residual_blocks_ != NULL)
+    CHECK(residual_blocks_.get() != NULL)
         << "Ceres bug: The residual block collection is null for parameter "
         << "block: " << ToString();
     residual_blocks_->insert(residual_block);
   }
 
   void RemoveResidualBlock(ResidualBlock* residual_block) {
-    CHECK(residual_blocks_ != NULL)
+    CHECK(residual_blocks_.get() != NULL)
         << "Ceres bug: The residual block collection is null for parameter "
         << "block: " << ToString();
     CHECK(residual_blocks_->find(residual_block) != residual_blocks_->end())
@@ -230,7 +231,7 @@ class ParameterBlock {
   // This is only intended for iterating; perhaps this should only expose
   // .begin() and .end().
   ResidualBlockSet* mutable_residual_blocks() {
-    return residual_blocks_;
+    return residual_blocks_.get();
   }
 
  private:
@@ -251,8 +252,6 @@ class ParameterBlock {
 
     state_offset_ = -1;
     delta_offset_ = -1;
-
-    residual_blocks_ = NULL;
   }
 
   bool UpdateLocalParameterizationJacobian() {
@@ -311,7 +310,7 @@ class ParameterBlock {
   int32 delta_offset_;
 
   // If non-null, contains the residual blocks this parameter block is in.
-  ResidualBlockSet* residual_blocks_;
+  scoped_ptr<ResidualBlockSet> residual_blocks_;
 
   // Necessary so ProblemImpl can clean up the parameterizations.
   friend class ProblemImpl;
