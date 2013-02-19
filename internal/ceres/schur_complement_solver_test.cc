@@ -75,20 +75,12 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     // Gold standard solutions using dense QR factorization.
     DenseSparseMatrix dense_A(triplet_A);
-    LinearSolver::Summary summary1 =
-        qr->Solve(&dense_A,
-                  b.get(),
-                  LinearSolver::PerSolveOptions(),
-                  sol.get());
+    qr->Solve(&dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.get());
 
     // Gold standard solution with appended diagonal.
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D.get();
-    LinearSolver::Summary summary2 =
-        qr->Solve(&dense_A,
-                  b.get(),
-                  per_solve_options,
-                  sol_d.get());
+    qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.get());
   }
 
   void ComputeAndCompareSolutions(

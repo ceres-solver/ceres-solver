@@ -206,10 +206,7 @@ TEST_F(DoglegStrategyFixtureEllipse, ValidSubspaceBasis) {
   DoglegStrategy strategy(options_);
   TrustRegionStrategy::PerSolveOptions pso;
 
-  TrustRegionStrategy::Summary summary = strategy.ComputeStep(pso,
-                                                              jacobian_.get(),
-                                                              residual_.data(),
-                                                              x_.data());
+  strategy.ComputeStep(pso, jacobian_.get(), residual_.data(), x_.data());
 
   // Check if the basis is orthonormal.
   const Matrix basis = strategy.subspace_basis();
@@ -288,4 +285,3 @@ TEST_F(DoglegStrategyFixtureValley, CorrectStepGlobalOptimumAlongGradient) {
 
 }  // namespace internal
 }  // namespace ceres
-

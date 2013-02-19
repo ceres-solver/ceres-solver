@@ -60,11 +60,14 @@ Features:
          :ref:`chapter-tutorial`.
 
 .. [#f2] While there is some debate as to who invented the method of
-         Least Squares [Stigler]_, there is no debate that it was Carl
-         Friedrich brought it to the attention of the world. Using
-         just 22 observations of the newly discovered asteroid Ceres,
-         Gauss used the method of least squares to correctly predict
-         when and where the asteroid will emerge from behind the Sun
+         Least Squares [Stigler]_, there is no debate that it was
+         `Carl Friedrich Gauss
+         <http://en.wikipedia.org/wiki/Carl_Friedrich_Gauss>`_ who
+         brought it to the attention of the world. Using just 22
+         observations of the newly discovered asteroid `Ceres
+         <http://en.wikipedia.org/wiki/Ceres_(dwarf_planet)>`_, Gauss
+         used the method of least squares to correctly predict when
+         and where the asteroid will emerge from behind the Sun
          [TenenbaumDirector]_. We named our solver after Ceres to
          celebrate this seminal event in the history of astronomy,
          statistics and optimization.

@@ -988,30 +988,127 @@ Instances
 
 .. function:: ResidualBlockId Problem::AddResidualBlock(CostFunction* cost_function, LossFunction* loss_function, const vector<double*> parameter_blocks)
 
+   Add a residual block to the overall cost function. The cost
+   function carries with it information about the sizes of the
+   parameter blocks it expects. The function checks that these match
+   the sizes of the parameter blocks listed in parameter_blocks. The
+   program aborts if a mismatch is detected. loss_function can be
+   NULL, in which case the cost of the term is just the squared norm
+   of the residuals.
+
+   The user has the option of explicitly adding the parameter blocks
+   using AddParameterBlock. This causes additional correctness
+   checking; however, AddResidualBlock implicitly adds the parameter
+   blocks if they are not present, so calling AddParameterBlock
+   explicitly is not required.
+
+   The Problem object by default takes ownership of the
+   cost_function and loss_function pointers. These objects remain
+   live for the life of the Problem object. If the user wishes to
+   keep control over the destruction of these objects, then they can
+   do this by setting the corresponding enums in the Options struct.
+
+   Note: Even though the Problem takes ownership of cost_function
+   and loss_function, it does not preclude the user from re-using
+   them in another residual block. The destructor takes care to call
+   delete on each cost_function or loss_function pointer only once,
+   regardless of how many residual blocks refer to them.
+
+   Example usage:
+
+   .. code-block:: c++
+
+      double x1[] = {1.0, 2.0, 3.0};
+      double x2[] = {1.0, 2.0, 5.0, 6.0};
+      double x3[] = {3.0, 6.0, 2.0, 5.0, 1.0};
+
+      Problem problem;
+
+      problem.AddResidualBlock(new MyUnaryCostFunction(...), NULL, x1);
+      problem.AddResidualBlock(new MyBinaryCostFunction(...), NULL, x2, x1);
+
 
 .. function:: void Problem::AddParameterBlock(double* values, int size, LocalParameterization* local_parameterization)
-              void Problem::AddParameterBlock(double* values, int size)
+
+   Add a parameter block with appropriate size to the problem.
+   Repeated calls with the same arguments are ignored. Repeated calls
+   with the same double pointer but a different size results in
+   undefined behaviour.
+
+.. function:: void Problem::AddParameterBlock(double* values, int size)
+
+   Add a parameter block with appropriate size and parameterization to
+   the problem. Repeated calls with the same arguments are
+   ignored. Repeated calls with the same double pointer but a
+   different size results in undefined behaviour.
+
+.. function:: void Problem::RemoveResidualBlock(ResidualBlockId residual_block)
+
+   Remove a parameter block from the problem. The parameterization of
+   the parameter block, if it exists, will persist until the deletion
+   of the problem (similar to cost/loss functions in residual block
+   removal). Any residual blocks that depend on the parameter are also
+   removed, as described above in RemoveResidualBlock().  If
+   Problem::Options::enable_fast_parameter_block_removal is true, then
+   the removal is fast (almost constant time). Otherwise, removing a
+   parameter block will incur a scan of the entire Problem object.
+
+   WARNING: Removing a residual or parameter block will destroy the
+   implicit ordering, rendering the jacobian or residuals returned
+   from the solver uninterpretable. If you depend on the evaluated
+   jacobian, do not use remove! This may change in a future release.
+
+.. function:: void Problem::RemoveResidualBlock(ResidualBlockId residual_block)
+
+   Remove a residual block from the problem. Any parameters that the residual
+   block depends on are not removed. The cost and loss functions for the
+   residual block will not get deleted immediately; won't happen until the
+   problem itself is deleted.
+
+   WARNING: Removing a residual or parameter block will destroy the implicit
+   ordering, rendering the jacobian or residuals returned from the solver
+   uninterpretable. If you depend on the evaluated jacobian, do not use
+   remove! This may change in a future release.
+   Hold the indicated parameter block constant during optimization.
 
 
 .. function:: void Problem::SetParameterBlockConstant(double* values)
 
+   Hold the indicated parameter block constant during optimization.
+
 .. function:: void Problem::SetParameterBlockVariable(double* values)
+
+   Allow the indicated parameter to vary during optimization.
 
 
 .. function:: void Problem::SetParameterization(double* values, LocalParameterization* local_parameterization)
 
+   Set the local parameterization for one of the parameter blocks.
+   The local_parameterization is owned by the Problem by default. It
+   is acceptable to set the same parameterization for multiple
+   parameters; the destructor is careful to delete local
+   parameterizations only once. The local parameterization can only be
+   set once per parameter, and cannot be changed once set.
 
 .. function:: int Problem::NumParameterBlocks() const
 
+   Number of parameter blocks in the problem. Always equals
+   parameter_blocks().size() and parameter_block_sizes().size().
 
 .. function:: int Problem::NumParameters() const
 
+   The size of the parameter vector obtained by summing over the sizes
+   of all the parameter blocks.
 
 .. function:: int Problem::NumResidualBlocks() const
 
+   Number of residual blocks in the problem. Always equals
+   residual_blocks().size().
 
 .. function:: int Problem::NumResiduals() const
 
+   The size of the residual vector obtained by summing over the sizes
+   of all of the residual blocks.
 
 
 ``rotation.h``
