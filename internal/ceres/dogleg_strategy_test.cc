@@ -129,9 +129,9 @@ TEST_F(DoglegStrategyFixtureEllipse, TrustRegionObeyedTraditional) {
   scoped_ptr<LinearSolver> linear_solver(
       new DenseQRSolver(LinearSolver::Options()));
   options_.linear_solver = linear_solver.get();
-  // The global minimum is at (1, 1, ..., 1), so the distance to it is sqrt(6.0).
-  // By restricting the trust region to a radius of 2.0, we test if the trust
-  // region is actually obeyed.
+  // The global minimum is at (1, 1, ..., 1), so the distance to it is
+  // sqrt(6.0).  By restricting the trust region to a radius of 2.0,
+  // we test if the trust region is actually obeyed.
   options_.dogleg_type = TRADITIONAL_DOGLEG;
   options_.initial_radius = 2.0;
   options_.max_radius = 2.0;

@@ -967,7 +967,8 @@ TEST(AngleAxis, NearZeroRotatePointGivesSameAnswerAsRotationMatrix) {
 
 TEST(MatrixAdapter, RowMajor3x3ReturnTypeAndAccessIsCorrect) {
   double array[9] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
-  const float const_array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+  const float const_array[9] =
+      { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
   MatrixAdapter<double, 3, 1> A = RowMajorAdapter3x3(array);
   MatrixAdapter<const float, 3, 1> B = RowMajorAdapter3x3(const_array);
 
@@ -975,24 +976,25 @@ TEST(MatrixAdapter, RowMajor3x3ReturnTypeAndAccessIsCorrect) {
     for (int j = 0; j < 3; ++j) {
       // The values are integers from 1 to 9, so equality tests are appropriate
       // even for float and double values.
-      EXPECT_EQ(A(i,j), array[3*i+j]);
-      EXPECT_EQ(B(i,j), const_array[3*i+j]);
+      EXPECT_EQ(A(i, j), array[3*i+j]);
+      EXPECT_EQ(B(i, j), const_array[3*i+j]);
     }
   }
 }
 
 TEST(MatrixAdapter, ColumnMajor3x3ReturnTypeAndAccessIsCorrect) {
   double array[9] = { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0 };
-  const float const_array[9] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+  const float const_array[9] =
+      { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
   MatrixAdapter<double, 1, 3> A = ColumnMajorAdapter3x3(array);
   MatrixAdapter<const float, 1, 3> B = ColumnMajorAdapter3x3(const_array);
 
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < 3; ++j) {
-      // The values are integers from 1 to 9, so equality tests are appropriate
-      // even for float and double values.
-      EXPECT_EQ(A(i,j), array[3*j+i]);
-      EXPECT_EQ(B(i,j), const_array[3*j+i]);
+      // The values are integers from 1 to 9, so equality tests are
+      // appropriate even for float and double values.
+      EXPECT_EQ(A(i, j), array[3*j+i]);
+      EXPECT_EQ(B(i, j), const_array[3*j+i]);
     }
   }
 }

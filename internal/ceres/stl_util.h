@@ -31,6 +31,8 @@
 #ifndef CERES_INTERNAL_STL_UTIL_H_
 #define CERES_INTERNAL_STL_UTIL_H_
 
+#include <algorithm>
+
 namespace ceres {
 
 // STLDeleteContainerPointers()

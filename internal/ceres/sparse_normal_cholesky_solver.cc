@@ -132,7 +132,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // off of Jt to compute the Cholesky factorization of the normal
   // equations.
   cs_di* A2 = cs_transpose(&At, 1);
-  cs_di* AtA = cs_multiply(&At,A2);
+  cs_di* AtA = cs_multiply(&At, A2);
 
   cxsparse_.Free(A2);
   if (per_solve_options.D != NULL) {

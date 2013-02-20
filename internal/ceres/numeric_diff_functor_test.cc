@@ -46,7 +46,8 @@ namespace ceres {
 namespace internal {
 
 TEST(NumericDiffCostFunction, EasyCaseCentralDifferences) {
-  typedef NumericDiffFunctor<EasyFunctor, CENTRAL, 3, 5, 5> NumericDiffEasyFunctor;
+  typedef NumericDiffFunctor<EasyFunctor, CENTRAL, 3, 5, 5>
+      NumericDiffEasyFunctor;
 
   internal::scoped_ptr<CostFunction> cost_function;
   EasyFunctor functor;
@@ -64,7 +65,8 @@ TEST(NumericDiffCostFunction, EasyCaseCentralDifferences) {
 }
 
 TEST(NumericDiffCostFunction, EasyCaseForwardDifferences) {
-  typedef NumericDiffFunctor<EasyFunctor, FORWARD, 3, 5, 5> NumericDiffEasyFunctor;
+  typedef NumericDiffFunctor<EasyFunctor, FORWARD, 3, 5, 5>
+      NumericDiffEasyFunctor;
 
   internal::scoped_ptr<CostFunction> cost_function;
   EasyFunctor functor;

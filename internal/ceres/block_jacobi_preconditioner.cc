@@ -40,7 +40,8 @@
 namespace ceres {
 namespace internal {
 
-BlockJacobiPreconditioner::BlockJacobiPreconditioner(const BlockSparseMatrixBase& A)
+BlockJacobiPreconditioner::BlockJacobiPreconditioner(
+    const BlockSparseMatrixBase& A)
     : num_rows_(A.num_rows()),
       block_structure_(*A.block_structure()) {
   // Calculate the amount of storage needed.
@@ -65,7 +66,8 @@ BlockJacobiPreconditioner::BlockJacobiPreconditioner(const BlockSparseMatrixBase
 
 BlockJacobiPreconditioner::~BlockJacobiPreconditioner() {}
 
-bool BlockJacobiPreconditioner::Update(const BlockSparseMatrixBase& A, const double* D) {
+bool BlockJacobiPreconditioner::Update(const BlockSparseMatrixBase& A,
+                                       const double* D) {
   const CompressedRowBlockStructure* bs = A.block_structure();
 
   // Compute the diagonal blocks by block inner products.
@@ -104,7 +106,8 @@ bool BlockJacobiPreconditioner::Update(const BlockSparseMatrixBase& A, const dou
     MatrixRef block(blocks_[c], size, size);
 
     if (D != NULL) {
-      block.diagonal() += ConstVectorRef(D + position, size).array().square().matrix();
+      block.diagonal() +=
+          ConstVectorRef(D + position, size).array().square().matrix();
     }
 
     block = block.selfadjointView<Eigen::Upper>()
@@ -114,7 +117,8 @@ bool BlockJacobiPreconditioner::Update(const BlockSparseMatrixBase& A, const dou
   return true;
 }
 
-void BlockJacobiPreconditioner::RightMultiply(const double* x, double* y) const {
+void BlockJacobiPreconditioner::RightMultiply(const double* x,
+                                              double* y) const {
   for (int c = 0; c < block_structure_.cols.size(); ++c) {
     const int size = block_structure_.cols[c].size;
     const int position = block_structure_.cols[c].position;

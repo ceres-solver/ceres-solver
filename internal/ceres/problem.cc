@@ -32,6 +32,7 @@
 #include "ceres/problem.h"
 
 #include <vector>
+#include "ceres/crs_matrix.h"
 #include "ceres/problem_impl.h"
 
 namespace ceres {
@@ -139,9 +140,10 @@ ResidualBlockId Problem::AddResidualBlock(
     LossFunction* loss_function,
     double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
     double* x6, double* x7, double* x8, double* x9) {
-  return problem_impl_->AddResidualBlock(cost_function,
-                                         loss_function,
-                                         x0, x1, x2, x3, x4, x5, x6, x7, x8, x9);
+  return problem_impl_->AddResidualBlock(
+      cost_function,
+      loss_function,
+      x0, x1, x2, x3, x4, x5, x6, x7, x8, x9);
 }
 
 void Problem::AddParameterBlock(double* values, int size) {
@@ -174,6 +176,18 @@ void Problem::SetParameterization(
     double* values,
     LocalParameterization* local_parameterization) {
   problem_impl_->SetParameterization(values, local_parameterization);
+}
+
+bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
+                       double* cost,
+                       vector<double>* residuals,
+                       vector<double>* gradient,
+                       CRSMatrix* jacobian) {
+  return problem_impl_->Evaluate(evaluate_options,
+                                 cost,
+                                 residuals,
+                                 gradient,
+                                 jacobian);
 }
 
 int Problem::NumParameterBlocks() const {

@@ -63,7 +63,8 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   }
 
   // rhs = [b;0] to account for the additional rows in the lhs.
-  const int augmented_num_rows = num_rows + ((per_solve_options.D != NULL) ? num_cols : 0);
+  const int augmented_num_rows =
+      num_rows + ((per_solve_options.D != NULL) ? num_cols : 0);
   if (rhs_.rows() != augmented_num_rows) {
     rhs_.resize(augmented_num_rows);
     rhs_.setZero();

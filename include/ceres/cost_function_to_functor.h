@@ -64,7 +64,8 @@
 // struct CameraProjection {
 //   CameraProjection(double* observation) {
 //     intrinsic_projection_.reset(
-//         new CostFunctionToFunctor<2, 5, 3>(new IntrinsicProjection(observation_)));
+//         new CostFunctionToFunctor<2, 5, 3>(
+//             new IntrinsicProjection(observation_)));
 //   }
 //   template <typename T>
 //   bool operator(const T* rotation,
@@ -78,7 +79,8 @@
 //     // Note that we call intrinsic_projection_, just like it was
 //     // any other templated functor.
 //
-//     return (*intrinsic_projection_)(intrinsics, transformed_point, residual); }
+//     return (*intrinsic_projection_)(intrinsics, transformed_point, residual);
+//   }
 //
 //  private:
 //   scoped_ptr<CostFunctionToFunctor<2,5,3> > intrinsic_projection_;
@@ -102,11 +104,11 @@ template <int kNumResiduals,
           int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
 class CostFunctionToFunctor {
  public:
-  CostFunctionToFunctor(CostFunction* cost_function)
+  explicit CostFunctionToFunctor(CostFunction* cost_function)
   : cost_function_(cost_function) {
     CHECK_NOTNULL(cost_function);
 
-    CHECK(kNumResiduals > 0);
+    CHECK_GE(kNumResiduals, 0);
     CHECK_EQ(cost_function->num_residuals(), kNumResiduals);
 
     // This block breaks the 80 column rule to keep it somewhat readable.
@@ -125,24 +127,26 @@ class CostFunctionToFunctor {
         << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
         << N8 << ", " << N9;
 
-    const vector<int16>& parameter_block_sizes = cost_function->parameter_block_sizes();
+    const vector<int16>& parameter_block_sizes =
+        cost_function->parameter_block_sizes();
     const int num_parameter_blocks =
         (N0 > 0) + (N1 > 0) + (N2 > 0) + (N3 > 0) + (N4 > 0) +
         (N5 > 0) + (N6 > 0) + (N7 > 0) + (N8 > 0) + (N9 > 0);
     CHECK_EQ(parameter_block_sizes.size(), num_parameter_blocks);
 
     CHECK_EQ(N0, parameter_block_sizes[0]);
-    if (parameter_block_sizes.size() > 1) CHECK_EQ(N1, parameter_block_sizes[1]);
-    if (parameter_block_sizes.size() > 2) CHECK_EQ(N2, parameter_block_sizes[2]);
-    if (parameter_block_sizes.size() > 3) CHECK_EQ(N3, parameter_block_sizes[3]);
-    if (parameter_block_sizes.size() > 4) CHECK_EQ(N4, parameter_block_sizes[4]);
-    if (parameter_block_sizes.size() > 5) CHECK_EQ(N5, parameter_block_sizes[5]);
-    if (parameter_block_sizes.size() > 6) CHECK_EQ(N6, parameter_block_sizes[6]);
-    if (parameter_block_sizes.size() > 7) CHECK_EQ(N7, parameter_block_sizes[7]);
-    if (parameter_block_sizes.size() > 8) CHECK_EQ(N8, parameter_block_sizes[8]);
-    if (parameter_block_sizes.size() > 9) CHECK_EQ(N9, parameter_block_sizes[9]);
+    if (parameter_block_sizes.size() > 1) CHECK_EQ(N1, parameter_block_sizes[1]);  // NOLINT
+    if (parameter_block_sizes.size() > 2) CHECK_EQ(N2, parameter_block_sizes[2]);  // NOLINT
+    if (parameter_block_sizes.size() > 3) CHECK_EQ(N3, parameter_block_sizes[3]);  // NOLINT
+    if (parameter_block_sizes.size() > 4) CHECK_EQ(N4, parameter_block_sizes[4]);  // NOLINT
+    if (parameter_block_sizes.size() > 5) CHECK_EQ(N5, parameter_block_sizes[5]);  // NOLINT
+    if (parameter_block_sizes.size() > 6) CHECK_EQ(N6, parameter_block_sizes[6]);  // NOLINT
+    if (parameter_block_sizes.size() > 7) CHECK_EQ(N7, parameter_block_sizes[7]);  // NOLINT
+    if (parameter_block_sizes.size() > 8) CHECK_EQ(N8, parameter_block_sizes[8]);  // NOLINT
+    if (parameter_block_sizes.size() > 9) CHECK_EQ(N9, parameter_block_sizes[9]);  // NOLINT
 
-    CHECK_EQ(accumulate(parameter_block_sizes.begin(), parameter_block_sizes.end(), 0),
+    CHECK_EQ(accumulate(parameter_block_sizes.begin(),
+                        parameter_block_sizes.end(), 0),
              N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9);
   }
 
@@ -675,7 +679,8 @@ class CostFunctionToFunctor {
   template <typename JetT>
   bool EvaluateWithJets(const JetT** inputs, JetT* output) const {
     const int kNumParameters =  N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
-    const vector<int16>& parameter_block_sizes = cost_function_->parameter_block_sizes();
+    const vector<int16>& parameter_block_sizes =
+        cost_function_->parameter_block_sizes();
     const int num_parameter_blocks = parameter_block_sizes.size();
     const int num_residuals = cost_function_->num_residuals();
 
@@ -729,7 +734,8 @@ class CostFunctionToFunctor {
       for (int j = 0; j < num_parameter_blocks; ++j) {
         const int16 block_size = parameter_block_sizes[j];
         for (int k = 0; k < parameter_block_sizes[j]; ++k) {
-          output[i].v += jacobian_blocks[j][i * block_size + k] * inputs[j][k].v;
+          output[i].v +=
+              jacobian_blocks[j][i * block_size + k] * inputs[j][k].v;
         }
       }
     }
