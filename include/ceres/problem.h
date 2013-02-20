@@ -51,6 +51,7 @@ class CostFunction;
 class LossFunction;
 class LocalParameterization;
 class Solver;
+struct CRSMatrix;
 
 namespace internal {
 class Preprocessor;
@@ -309,6 +310,24 @@ class Problem {
   // be set once per parameter, and cannot be changed once set.
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
+
+  struct EvaluateOptions {
+    EvaluateOptions()
+        : num_threads(1),
+          apply_loss_function(true) {
+    }
+
+    vector<double*> parameter_blocks;
+    vector<ResidualBlockId> residual_blocks;
+    int num_threads;
+    bool apply_loss_function;
+  };
+
+  bool Evaluate(const EvaluateOptions& options,
+                double* cost,
+                vector<double>* residuals,
+                vector<double>* gradient,
+                CRSMatrix* jacobian);
 
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().

@@ -37,6 +37,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "ceres/crs_matrix.h"
 #include "ceres/cost_function.h"
 #include "ceres/loss_function.h"
 #include "ceres/map_util.h"
@@ -46,6 +47,10 @@
 #include "ceres/stl_util.h"
 #include "ceres/stringprintf.h"
 #include "glog/logging.h"
+#include "ceres/evaluator.h"
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/map_util.h"
+#include "ceres/casts.h"
 
 namespace ceres {
 namespace internal {
@@ -511,6 +516,138 @@ void ProblemImpl::SetParameterization(
     LocalParameterization* local_parameterization) {
   FindOrDie(parameter_block_map_, values)
       ->SetParameterization(local_parameterization);
+}
+
+bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
+                           double* cost,
+                           vector<double>* residuals,
+                           vector<double>* gradient,
+                           CRSMatrix* jacobian) {
+  if (cost == NULL &&
+      residuals == NULL &&
+      gradient == NULL &&
+      jacobian == NULL) {
+    LOG(INFO) << "Nothing to do.";
+    return true;
+  }
+
+  Program program;
+  *program.mutable_residual_blocks() =
+      ((evaluate_options.residual_blocks.size() > 0)
+       ? evaluate_options.residual_blocks : program_->residual_blocks());
+
+  const vector<double*>& parameter_block_ptrs =
+      evaluate_options.parameter_blocks;
+
+  vector<ParameterBlock*> variable_parameter_blocks;
+  if (parameter_block_ptrs.size() == 0) {
+    *program.mutable_parameter_blocks() =
+        program_->parameter_blocks();
+  } else {
+    vector<ParameterBlock*>& parameter_blocks =
+        *program.mutable_parameter_blocks();
+    program.mutable_parameter_blocks()->resize(parameter_block_ptrs.size());
+    for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
+      parameter_blocks[i] =
+          FindOrDie(parameter_block_map_, parameter_block_ptrs[i]);
+    }
+
+    vector<ParameterBlock*> all_parameter_blocks(program_->parameter_blocks());
+    vector<ParameterBlock*> included_parameter_blocks(program.parameter_blocks());
+
+    vector<ParameterBlock*> excluded_parameter_blocks;
+    sort(all_parameter_blocks.begin(), all_parameter_blocks.end());
+    sort(included_parameter_blocks.begin(), included_parameter_blocks.end());
+    set_difference(all_parameter_blocks.begin(),
+                   all_parameter_blocks.end(),
+                   included_parameter_blocks.begin(),
+                   included_parameter_blocks.end(),
+                   excluded_parameter_blocks.begin());
+
+    variable_parameter_blocks.reserve(excluded_parameter_blocks.size());
+    for (int i = 0; i < excluded_parameter_blocks.size(); ++i) {
+      ParameterBlock* parameter_block = excluded_parameter_blocks[i];
+      if (!parameter_block->IsConstant()) {
+        variable_parameter_blocks.push_back(parameter_block);
+        parameter_block->SetConstant();
+      }
+    }
+  }
+
+  // Setup the Parameter indices and offsets before an evaluator can
+  // be constructed and used.
+  program.SetParameterOffsetsAndIndex();
+
+  Evaluator::Options evaluator_options;
+  evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  evaluator_options.num_threads = evaluate_options.num_threads;
+
+  string error;
+  scoped_ptr<Evaluator> evaluator(
+      Evaluator::Create(evaluator_options, &program, &error));
+  if (evaluator.get() == NULL) {
+    LOG(ERROR) << "Unable to create an Evaluator object. "
+               << "Error: " << error
+               << "This is a Ceres bug; please contact the developers!";
+
+    for (int i = 0; i < variable_parameter_blocks.size(); ++i) {
+      ParameterBlock* parameter_block = variable_parameter_blocks[i];
+      parameter_block->SetVarying();
+    }
+    return false;
+  }
+
+  if (residuals !=NULL) {
+    residuals->resize(evaluator->NumResiduals());
+  }
+
+  if (gradient != NULL) {
+    gradient->resize(evaluator->NumEffectiveParameters());
+  }
+
+  scoped_ptr<CompressedRowSparseMatrix> tmp_jacobian;
+  if (jacobian != NULL) {
+    tmp_jacobian.reset(
+        down_cast<CompressedRowSparseMatrix*>(evaluator->CreateJacobian()));
+  }
+
+  // Point the state pointers to the user state pointers. This is
+  // needed so that we can extract a parameter vector which is then
+  // passed to Evaluator::Evaluate.
+  program.SetParameterBlockStatePtrsToUserStatePtrs();
+
+  // Copy the value of the parameter blocks into a vector, since the
+  // Evaluate::Evaluate method needs its input as such. The previous
+  // call to SetParameterBlockStatePtrsToUserStatePtrs ensures that
+  // these values are the ones corresponding to the actual state of
+  // the parameter blocks, rather than the temporary state pointer
+  // used for evaluation.
+  Vector parameters(program.NumParameters());
+  program.ParameterBlocksToStateVector(parameters.data());
+
+  double tmp_cost;
+  bool status = evaluator->Evaluate(parameters.data(),
+                                    &tmp_cost,
+                                    residuals != NULL ? &(*residuals)[0] : NULL,
+                                    gradient != NULL ? &(*gradient)[0] : NULL,
+                                    tmp_jacobian.get());
+
+  for (int i = 0; i < variable_parameter_blocks.size(); ++i) {
+    ParameterBlock* parameter_block = variable_parameter_blocks[i];
+    parameter_block->SetVarying();
+  }
+
+
+  if (status) {
+    if (cost != NULL) {
+      *cost = tmp_cost;
+    }
+    if (jacobian != NULL) {
+      tmp_jacobian->ToCRSMatrix(jacobian);
+    }
+  }
+
+  return status;
 }
 
 int ProblemImpl::NumParameterBlocks() const {
