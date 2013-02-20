@@ -7,6 +7,7 @@ CMakeLists.txt.user*
 build/
 build-release/
 build-debug/
+docs/html
 *.aux
 *.blg
 *.toc

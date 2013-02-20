@@ -32,6 +32,7 @@
 #include "ceres/problem.h"
 
 #include <vector>
+#include "ceres/crs_matrix.h"
 #include "ceres/problem_impl.h"
 
 namespace ceres {
@@ -174,6 +175,18 @@ void Problem::SetParameterization(
     double* values,
     LocalParameterization* local_parameterization) {
   problem_impl_->SetParameterization(values, local_parameterization);
+}
+
+bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
+                       double* cost,
+                       vector<double>* residuals,
+                       vector<double>* gradient,
+                       CRSMatrix* jacobian) {
+  return problem_impl_->Evaluate(evaluate_options,
+                                 cost,
+                                 residuals,
+                                 gradient,
+                                 jacobian);
 }
 
 int Problem::NumParameterBlocks() const {
