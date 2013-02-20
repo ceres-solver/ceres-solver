@@ -35,17 +35,16 @@
 #define CERES_INTERNAL_LINEAR_SOLVER_H_
 
 #include <cstddef>
+#include <map>
 #include <vector>
-
-#include <glog/logging.h>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/execution_summary.h"
-#include "ceres/execution_summary.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

@@ -35,13 +35,14 @@
 #define CERES_PUBLIC_INTERNAL_NUMERIC_DIFF_H_
 
 #include <cstring>
-#include <glog/logging.h>
+
 #include "Eigen/Dense"
-#include "ceres/internal/scoped_ptr.h"
 #include "ceres/cost_function.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/internal/variadic_evaluate.h"
 #include "ceres/types.h"
-#include "ceres/cost_function.h"
+#include "glog/logging.h"
+
 
 namespace ceres {
 namespace internal {

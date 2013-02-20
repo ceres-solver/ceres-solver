@@ -72,7 +72,7 @@ double WallTimeInSeconds();
 //     Total:  time3  time1 + time2 + time3;
 class EventLogger {
  public:
-  EventLogger(const string& logger_name);
+  explicit EventLogger(const string& logger_name);
   ~EventLogger();
   void AddEvent(const string& event_name);
 

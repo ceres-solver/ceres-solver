@@ -189,7 +189,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
-   int num_consecutive_invalid_steps = 0;
+  int num_consecutive_invalid_steps = 0;
   while (true) {
     if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
       return;
@@ -323,9 +323,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           options.inner_iteration_minimizer->Minimize(options,
                                                       inner_iteration_x.data(),
                                                       &inner_iteration_summary);
-          if(!evaluator->Evaluate(inner_iteration_x.data(),
-                                  &new_cost,
-                                  NULL, NULL, NULL)) {
+          if (!evaluator->Evaluate(inner_iteration_x.data(),
+                                   &new_cost,
+                                   NULL, NULL, NULL)) {
             VLOG(2) << "Inner iteration failed.";
             new_cost = x_plus_delta_cost;
           } else {
@@ -422,7 +422,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                NULL,
                                jacobian)) {
         summary->termination_type = NUMERICAL_FAILURE;
-        summary->error = "Terminating: Residual and Jacobian evaluation failed.";
+        summary->error =
+            "Terminating: Residual and Jacobian evaluation failed.";
         LOG(WARNING) << summary->error;
         return;
       }
@@ -435,7 +436,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         summary->termination_type = GRADIENT_TOLERANCE;
         VLOG(1) << "Terminating: Gradient tolerance reached."
                 << "Relative gradient max norm: "
-                << iteration_summary.gradient_max_norm / initial_gradient_max_norm
+                << (iteration_summary.gradient_max_norm /
+                    initial_gradient_max_norm)
                 << " <= " << options_.gradient_tolerance;
         return;
       }

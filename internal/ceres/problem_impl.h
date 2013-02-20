@@ -53,6 +53,7 @@ namespace ceres {
 class CostFunction;
 class LossFunction;
 class LocalParameterization;
+struct CRSMatrix;
 
 namespace internal {
 
@@ -126,6 +127,13 @@ class ProblemImpl {
   void SetParameterBlockVariable(double* values);
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
+
+  bool Evaluate(const Problem::EvaluateOptions& options,
+                double* cost,
+                vector<double>* residuals,
+                vector<double>* gradient,
+                CRSMatrix* jacobian);
+
   int NumParameterBlocks() const;
   int NumParameters() const;
   int NumResidualBlocks() const;
@@ -138,6 +146,12 @@ class ProblemImpl {
 
  private:
   ParameterBlock* InternalAddParameterBlock(double* values, int size);
+
+  bool InternalEvaluate(Program* program,
+                        double* cost,
+                        vector<double>* residuals,
+                        vector<double>* gradient,
+                        CRSMatrix* jacobian);
 
   // Delete the arguments in question. These differ from the Remove* functions
   // in that they do not clean up references to the block to delete; they

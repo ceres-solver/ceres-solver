@@ -159,8 +159,9 @@ template <typename CostFunctor,
           int N7 = 0,   // Number of parameters in block 7.
           int N8 = 0,   // Number of parameters in block 8.
           int N9 = 0>   // Number of parameters in block 9.
-class AutoDiffCostFunction :
-  public SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+class AutoDiffCostFunction : public SizedCostFunction<M,
+                                                      N0, N1, N2, N3, N4,
+                                                      N5, N6, N7, N8, N9> {
  public:
   // Takes ownership of functor. Uses the template-provided value for the
   // number of residuals ("M").

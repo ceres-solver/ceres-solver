@@ -7,17 +7,64 @@ Version History
 1.5.0
 =====
 
+Backward Incompatible API Changes
+---------------------------------
+
+#. Added ``Problem::Evaluate``. Now you can evaluate a problem or any
+   part of it without calling the solver. In light of this,
+   ``Solver::Options::return_initial_residuals``,
+   ``Solver::Options::return_initial_gradient``,
+   ``Solver::Options::return_initial_jacobian``,
+   ``Solver::Options::return_final_residuals``,
+   ``Solver::Options::return_final_gradient`` and
+   ``Solver::Options::return_final_jacobian`` have been deprecated and
+   removed from the API.
+
+   .. code-block:: c++
+
+     Problem problem;
+     // Build problem
+
+     vector<double> initial_residuals;
+     problem.Evaluate(Problem::EvaluateOptions(),
+                      NULL, /* No cost */
+                      &initial_residuals,
+                      NULL, /* No gradient */
+                      NULL  /* No jacobian */ );
+
+     Solver::Options options;
+     Solver::Summary summary;
+     Solver::Solve(options, &problem, &summary);
+
+     vector<double> final_residuals;
+     problem.Evaluate(Problem::EvaluateOptions(),
+                      NULL
+                      &final_residuals,
+                      NULL,
+                      NULL);
+
+
 New Features
 ------------
 #. Problem now supports removal of ParameterBlocks and
    ResidualBlocks. There is a space/time tradeoff in doing this which
    is controlled by
-   ``Problem::Options::enable_fast_parameter_block_removal`.
+   ``Problem::Options::enable_fast_parameter_block_removal``.
 
 #. Ceres now supports Line search based optimization algorithms in
    addition to trust region algorithms. Currently there is support for
    gradient descent, non-linear conjugate gradient and LBFGS search
    directions.
+
+#. Added ``Problem::Evaluate``. Now you can evaluate a problem or any
+   part of it without calling the solver. In light of this,
+   ``Solver::Options::return_initial_residuals``,
+   ``Solver::Options::return_initial_gradient``,
+   ``Solver::Options::return_initial_jacobian``,
+   ``Solver::Options::return_final_residuals``,
+   ``Solver::Options::return_final_gradient`` and
+   ``Solver::Options::return_final_jacobian`` have been deprecated and
+   removed from the API.
 
 #. New, much improved HTML documentation using Sphinx.
 
@@ -75,9 +122,8 @@ Bug Fixes
 1.4.0
 =====
 
-
-API Changes
------------
+Backward Incompatible API Changes
+---------------------------------
 
 The new ordering API breaks existing code. Here the common case fixes.
 

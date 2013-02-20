@@ -33,6 +33,7 @@
 
 #include <set>
 #include <utility>
+#include <vector>
 
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"

@@ -32,6 +32,7 @@
 #ifndef CERES_INTERNAL_EVALUATOR_H_
 #define CERES_INTERNAL_EVALUATOR_H_
 
+#include <map>
 #include <string>
 #include <vector>
 

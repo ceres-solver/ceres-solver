@@ -734,7 +734,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& directory,
 }
 
 bool DumpLinearLeastSquaresProblem(const string& directory,
-                              	   int iteration,
+                                   int iteration,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
                                    const double* D,
@@ -742,18 +742,18 @@ bool DumpLinearLeastSquaresProblem(const string& directory,
                                    const double* x,
                                    int num_eliminate_blocks) {
   switch (dump_format_type) {
-    case (CONSOLE):
+    case CONSOLE:
       return DumpLinearLeastSquaresProblemToConsole(directory,
                                                     iteration,
                                                     A, D, b, x,
                                                     num_eliminate_blocks);
-    case (PROTOBUF):
+    case PROTOBUF:
       return DumpLinearLeastSquaresProblemToProtocolBuffer(
           directory,
           iteration,
           A, D, b, x,
           num_eliminate_blocks);
-    case (TEXTFILE):
+    case TEXTFILE:
       return DumpLinearLeastSquaresProblemToTextFile(directory,
                                                      iteration,
                                                      A, D, b, x,

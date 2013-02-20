@@ -51,10 +51,11 @@ class BlockJacobiPreconditioner;
 class CgnrSolver : public BlockSparseMatrixBaseSolver {
  public:
   explicit CgnrSolver(const LinearSolver::Options& options);
-  virtual Summary SolveImpl(BlockSparseMatrixBase* A,
-                            const double* b,
-                            const LinearSolver::PerSolveOptions& per_solve_options,
-                            double* x);
+  virtual Summary SolveImpl(
+      BlockSparseMatrixBase* A,
+      const double* b,
+      const LinearSolver::PerSolveOptions& per_solve_options,
+      double* x);
 
  private:
   const LinearSolver::Options options_;

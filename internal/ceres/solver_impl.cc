@@ -77,20 +77,6 @@ class StateUpdatingCallback : public IterationCallback {
   double* parameters_;
 };
 
-// Macro used to evaluate initial and final residuals, gradient and
-// jacobian if requested by the user.
-//
-// We need a macro here, instead of a simple function call, since the
-// multiplexing happens on variable names.
-#define CERES_EVALUATE(which)                                           \
-  Evaluator::Evaluate(                                                  \
-      original_program,                                                 \
-      options.num_threads,                                              \
-      &summary->which ## _cost,                                         \
-      options.return_ ## which ## _residuals ? &summary->which ## _residuals : NULL, \
-      options.return_ ## which ## _gradient ? &summary->which ## _gradient : NULL, \
-      options.return_ ## which ## _jacobian ? &summary->which ## _jacobian : NULL)
-
 void SetSummaryFinalCost(Solver::Summary* summary) {
   summary->final_cost = summary->initial_cost;
   // We need the loop here, instead of just looking at the last
@@ -240,7 +226,8 @@ void SolverImpl::TrustRegionMinimize(
                                        file_logging_callback.get());
   }
 
-  TrustRegionLoggingCallback logging_callback(options.minimizer_progress_to_stdout);
+  TrustRegionLoggingCallback logging_callback(
+      options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        &logging_callback);
@@ -299,7 +286,8 @@ void SolverImpl::LineSearchMinimize(
                                        file_logging_callback.get());
   }
 
-  LineSearchLoggingCallback logging_callback(options.minimizer_progress_to_stdout);
+  LineSearchLoggingCallback logging_callback(
+      options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        &logging_callback);
@@ -400,21 +388,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   event_logger.AddEvent("Init");
 
-  // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user.
-  if (options.return_initial_residuals ||
-      options.return_initial_gradient ||
-      options.return_initial_jacobian) {
-    if (!CERES_EVALUATE(initial)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the initial cost.";
-      LOG(ERROR) << summary->error;
-      return;
-    }
-  }
-
-  event_logger.AddEvent("InitialEvaluate");
-
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
   event_logger.AddEvent("SetParameterBlockPtrs");
 
@@ -463,6 +436,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                                            problem_impl,
                                                            &summary->fixed_cost,
                                                            &summary->error));
+
   event_logger.AddEvent("CreateReducedProgram");
   if (reduced_program == NULL) {
     return;
@@ -480,33 +454,21 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     summary->preprocessor_time_in_seconds =
         WallTimeInSeconds() - solver_start_time;
 
+    double post_process_start_time = WallTimeInSeconds();
     LOG(INFO) << "Terminating: FUNCTION_TOLERANCE reached. "
               << "No non-constant parameter blocks found.";
+
+    summary->initial_cost = summary->fixed_cost;
+    summary->final_cost = summary->fixed_cost;
 
     // FUNCTION_TOLERANCE is the right convergence here, as we know
     // that the objective function is constant and cannot be changed
     // any further.
     summary->termination_type = FUNCTION_TOLERANCE;
 
-    double post_process_start_time = WallTimeInSeconds();
-
-    // Evaluate the final cost, residual vector and the jacobian
-    // matrix if requested by the user.
-    if (options.return_final_residuals ||
-        options.return_final_gradient ||
-        options.return_final_jacobian) {
-      if (!CERES_EVALUATE(final)) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        summary->error = "Unable to evaluate the final cost.";
-        LOG(ERROR) << summary->error;
-        return;
-      }
-    }
-
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
-    event_logger.AddEvent("FinalEvaluate");
     summary->postprocessor_time_in_seconds =
         WallTimeInSeconds() - post_process_start_time;
     return;
@@ -612,42 +574,21 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   double post_process_start_time = WallTimeInSeconds();
 
-  // Push the contiguous optimized parameters back to the user's parameters.
+  // Push the contiguous optimized parameters back to the user's
+  // parameters.
   reduced_program->StateVectorToParameterBlocks(parameters.data());
   reduced_program->CopyParameterBlockStateToUserState();
 
-  // Evaluate the final cost, residual vector and the jacobian
-  // matrix if requested by the user.
-  if (options.return_final_residuals ||
-      options.return_final_gradient ||
-      options.return_final_jacobian) {
-    if (!CERES_EVALUATE(final)) {
-      // This failure requires careful handling.
-      //
-      // At this point, we have modified the user's state, but the
-      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-      // guarantees that user's state is not modified if the solver
-      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-      // user's state to their original values.
-      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-      reduced_program->CopyParameterBlockStateToUserState();
-
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-
-      event_logger.AddEvent("PostProcess");
-      return;
-    }
-  }
-
-  // Ensure the program state is set to the user parameters on the way out.
+  // Ensure the program state is set to the user parameters on the way
+  // out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
   const map<string, double>& linear_solver_time_statistics =
       linear_solver->TimeStatistics();
   summary->linear_solver_time_in_seconds =
-      FindWithDefault(linear_solver_time_statistics, "LinearSolver::Solve", 0.0);
+      FindWithDefault(linear_solver_time_statistics,
+                      "LinearSolver::Solve",
+                      0.0);
 
   const map<string, double>& evaluator_time_statistics =
       evaluator->TimeStatistics();
@@ -675,7 +616,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
   summary->minimizer_type = LINE_SEARCH;
-  summary->line_search_direction_type = original_options.line_search_direction_type;
+  summary->line_search_direction_type =
+      original_options.line_search_direction_type;
   summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
   summary->line_search_type = original_options.line_search_type;
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
@@ -738,19 +680,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     }
   }
 
-  // Evaluate the initial cost, residual vector and the jacobian
-  // matrix if requested by the user.
-  if (options.return_initial_residuals ||
-      options.return_initial_gradient ||
-      options.return_initial_jacobian) {
-    if (!CERES_EVALUATE(initial)) {
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the initial cost.";
-      LOG(ERROR) << summary->error;
-      return;
-    }
-  }
-
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
   // If the user requests gradient checking, construct a new
@@ -802,19 +731,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
     SetSummaryFinalCost(summary);
 
-    // Evaluate the final cost, residual vector and the jacobian
-    // matrix if requested by the user.
-    if (options.return_final_residuals ||
-        options.return_final_gradient ||
-        options.return_final_jacobian) {
-      if (!CERES_EVALUATE(final)) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        summary->error = "Unable to evaluate the final cost.";
-        LOG(ERROR) << summary->error;
-        return;
-      }
-    }
-
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
     summary->postprocessor_time_in_seconds =
@@ -864,33 +780,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   reduced_program->CopyParameterBlockStateToUserState();
 
   SetSummaryFinalCost(summary);
-
-  // Evaluate the final cost, residual vector and the jacobian
-  // matrix if requested by the user.
-  if (options.return_final_residuals ||
-      options.return_final_gradient ||
-      options.return_final_jacobian) {
-    if (!CERES_EVALUATE(final)) {
-      // This failure requires careful handling.
-      //
-      // At this point, we have modified the user's state, but the
-      // evaluation failed and we inform him of NUMERICAL_FAILURE. Ceres
-      // guarantees that user's state is not modified if the solver
-      // returns with NUMERICAL_FAILURE. Thus, we need to restore the
-      // user's state to their original values.
-
-      reduced_program->StateVectorToParameterBlocks(original_parameters.data());
-      reduced_program->CopyParameterBlockStateToUserState();
-
-      summary->termination_type = NUMERICAL_FAILURE;
-      summary->error = "Unable to evaluate the final cost.";
-      LOG(ERROR) << summary->error;
-
-      summary->postprocessor_time_in_seconds =
-          WallTimeInSeconds() - post_process_start_time;
-      return;
-    }
-  }
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
@@ -947,8 +836,9 @@ bool SolverImpl::IsOrderingValid(const Solver::Options& options,
   return true;
 }
 
-bool SolverImpl::IsParameterBlockSetIndependent(const set<double*>& parameter_block_ptrs,
-                                                const vector<ResidualBlock*>& residual_blocks) {
+bool SolverImpl::IsParameterBlockSetIndependent(
+    const set<double*>& parameter_block_ptrs,
+    const vector<ResidualBlock*>& residual_blocks) {
   // Loop over each residual block and ensure that no two parameter
   // blocks in the same residual block are part of
   // parameter_block_ptrs as that would violate the assumption that it
@@ -1168,8 +1058,8 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
   event_logger.AddEvent("AlternateSolver");
 
-  // Since the transformed program is the "active" program, and it is mutated,
-  // update the parameter offsets and indices.
+  // Since the transformed program is the "active" program, and it is
+  // mutated, update the parameter offsets and indices.
   transformed_program->SetParameterOffsetsAndIndex();
 
   event_logger.AddEvent("SetOffsets");
@@ -1292,10 +1182,11 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   return LinearSolver::Create(linear_solver_options);
 }
 
-bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
-                                   const ParameterBlockOrdering* ordering,
-                                   Program* program,
-                                   string* error) {
+bool SolverImpl::ApplyUserOrdering(
+    const ProblemImpl::ParameterMap& parameter_map,
+    const ParameterBlockOrdering* ordering,
+    Program* program,
+    string* error) {
   if (ordering->NumElements() != program->NumParameterBlocks()) {
     *error = StringPrintf("User specified ordering does not have the same "
                           "number of parameters as the problem. The problem"
@@ -1323,8 +1214,8 @@ bool SolverImpl::ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_ma
           parameter_map.find(*parameter_block_ptr_it);
       if (parameter_block_it == parameter_map.end()) {
         *error = StringPrintf("User specified ordering contains a pointer "
-                              "to a double that is not a parameter block in the "
-                              "problem. The invalid double is in group: %d",
+                              "to a double that is not a parameter block in "
+                              "the problem. The invalid double is in group: %d",
                               group_it->first);
         return false;
       }
@@ -1356,9 +1247,10 @@ int MinParameterBlock(const ResidualBlock* residual_block,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool SolverImpl::LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
-                                                      Program* program,
-                                                      string* error) {
+bool SolverImpl::LexicographicallyOrderResidualBlocks(
+    const int num_eliminate_blocks,
+    Program* program,
+    string* error) {
   CHECK_GE(num_eliminate_blocks, 1)
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
@@ -1435,10 +1327,11 @@ bool SolverImpl::LexicographicallyOrderResidualBlocks(const int num_eliminate_bl
   return true;
 }
 
-Evaluator* SolverImpl::CreateEvaluator(const Solver::Options& options,
-                                       const ProblemImpl::ParameterMap& parameter_map,
-                                       Program* program,
-                                       string* error) {
+Evaluator* SolverImpl::CreateEvaluator(
+    const Solver::Options& options,
+    const ProblemImpl::ParameterMap& parameter_map,
+    Program* program,
+    string* error) {
   Evaluator::Options evaluator_options;
   evaluator_options.linear_solver_type = options.linear_solver_type;
   evaluator_options.num_eliminate_blocks =
@@ -1479,7 +1372,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     // Iterate over each group and verify that it is an independent
     // set.
     map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-    for ( ;it != group_to_elements.end(); ++it) {
+    for ( ; it != group_to_elements.end(); ++it) {
       if (!IsParameterBlockSetIndependent(it->second,
                                           program.residual_blocks())) {
         summary->error =

@@ -258,7 +258,8 @@ TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
 }
 
 TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingDogleg) {
-  // The following two cases are excluded because they encounter a local minimum.
+  // The following two cases are excluded because they encounter a
+  // local minimum.
   //
   //  IsTrustRegionSolveSuccessful<true, true, false, true >(kStrategy);
   //  IsTrustRegionSolveSuccessful<true,  true,  true,  true >(kStrategy);

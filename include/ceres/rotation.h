@@ -67,8 +67,9 @@ namespace ceres {
 template <typename T, int row_stride, int col_stride>
 struct MatrixAdapter;
 
-// Convenience functions to create a MatrixAdapter that treats the array pointed to
-// by "pointer" as a 3x3 (contiguous) column-major or row-major matrix.
+// Convenience functions to create a MatrixAdapter that treats the
+// array pointed to by "pointer" as a 3x3 (contiguous) column-major or
+// row-major matrix.
 template <typename T>
 MatrixAdapter<T, 1, 3> ColumnMajorAdapter3x3(T* pointer);
 
@@ -101,8 +102,8 @@ void RotationMatrixToAngleAxis(T const* R, T* angle_axis);
 
 template <typename T, int row_stride, int col_stride>
 void RotationMatrixToAngleAxis(
-   const MatrixAdapter<const T, row_stride, col_stride>& R,
-   T* angle_axis);
+    const MatrixAdapter<const T, row_stride, col_stride>& R,
+    T* angle_axis);
 
 template <typename T>
 void AngleAxisToRotationMatrix(T const* angle_axis, T* R);

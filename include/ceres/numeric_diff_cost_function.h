@@ -158,7 +158,7 @@ namespace ceres {
 
 template <typename CostFunctor,
           NumericDiffMethod method = CENTRAL,
-          int kNumResiduals = 0, // Number of residuals, or ceres::DYNAMIC
+          int kNumResiduals = 0,  // Number of residuals, or ceres::DYNAMIC
           int N0 = 0,   // Number of parameters in block 0.
           int N1 = 0,   // Number of parameters in block 1.
           int N2 = 0,   // Number of parameters in block 2.
@@ -170,7 +170,9 @@ template <typename CostFunctor,
           int N8 = 0,   // Number of parameters in block 8.
           int N9 = 0>   // Number of parameters in block 9.
 class NumericDiffCostFunction
-    : public SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+    : public SizedCostFunction<kNumResiduals,
+                               N0, N1, N2, N3, N4,
+                               N5, N6, N7, N8, N9> {
  public:
   NumericDiffCostFunction(CostFunctor* functor,
                           const double relative_step_size = 1e-6)
