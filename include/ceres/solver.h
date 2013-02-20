@@ -110,12 +110,6 @@ class Solver {
       jacobi_scaling = true;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
-      return_initial_residuals = false;
-      return_initial_gradient = false;
-      return_initial_jacobian = false;
-      return_final_residuals = false;
-      return_final_gradient = false;
-      return_final_jacobian = false;
       lsqp_dump_directory = "/tmp";
       lsqp_dump_format_type = TEXTFILE;
       check_gradients = false;
@@ -481,14 +475,6 @@ class Solver {
     // is sent to STDOUT.
     bool minimizer_progress_to_stdout;
 
-    bool return_initial_residuals;
-    bool return_initial_gradient;
-    bool return_initial_jacobian;
-
-    bool return_final_residuals;
-    bool return_final_gradient;
-    bool return_final_jacobian;
-
     // List of iterations at which the optimizer should dump the
     // linear least squares problem to disk. Useful for testing and
     // benchmarking. If empty (default), no problems are dumped.
@@ -595,54 +581,6 @@ class Solver {
     // were held fixed by the preprocessor because all the parameter
     // blocks that they depend on were fixed.
     double fixed_cost;
-
-    // Vectors of residuals before and after the optimization. The
-    // entries of these vectors are in the order in which
-    // ResidualBlocks were added to the Problem object.
-    //
-    // Whether the residual vectors are populated with values is
-    // controlled by Solver::Options::return_initial_residuals and
-    // Solver::Options::return_final_residuals respectively.
-    vector<double> initial_residuals;
-    vector<double> final_residuals;
-
-    // Gradient vectors, before and after the optimization.  The rows
-    // are in the same order in which the ParameterBlocks were added
-    // to the Problem object.
-    //
-    // NOTE: Since AddResidualBlock adds ParameterBlocks to the
-    // Problem automatically if they do not already exist, if you wish
-    // to have explicit control over the ordering of the vectors, then
-    // use Problem::AddParameterBlock to explicitly add the
-    // ParameterBlocks in the order desired.
-    //
-    // Whether the vectors are populated with values is controlled by
-    // Solver::Options::return_initial_gradient and
-    // Solver::Options::return_final_gradient respectively.
-    vector<double> initial_gradient;
-    vector<double> final_gradient;
-
-    // Jacobian matrices before and after the optimization. The rows
-    // of these matrices are in the same order in which the
-    // ResidualBlocks were added to the Problem object. The columns
-    // are in the same order in which the ParameterBlocks were added
-    // to the Problem object.
-    //
-    // NOTE: Since AddResidualBlock adds ParameterBlocks to the
-    // Problem automatically if they do not already exist, if you wish
-    // to have explicit control over the column ordering of the
-    // matrix, then use Problem::AddParameterBlock to explicitly add
-    // the ParameterBlocks in the order desired.
-    //
-    // The Jacobian matrices are stored as compressed row sparse
-    // matrices. Please see ceres/crs_matrix.h for more details of the
-    // format.
-    //
-    // Whether the Jacboan matrices are populated with values is
-    // controlled by Solver::Options::return_initial_jacobian and
-    // Solver::Options::return_final_jacobian respectively.
-    CRSMatrix initial_jacobian;
-    CRSMatrix final_jacobian;
 
     vector<IterationSummary> iterations;
 

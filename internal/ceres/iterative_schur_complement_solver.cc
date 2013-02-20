@@ -117,14 +117,16 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     case SCHUR_JACOBI:
       if (preconditioner_.get() == NULL) {
         preconditioner_.reset(
-            new SchurJacobiPreconditioner(*A->block_structure(), preconditioner_options));
+            new SchurJacobiPreconditioner(
+                *A->block_structure(), preconditioner_options));
       }
       break;
     case CLUSTER_JACOBI:
     case CLUSTER_TRIDIAGONAL:
       if (preconditioner_.get() == NULL) {
         preconditioner_.reset(
-            new VisibilityBasedPreconditioner(*A->block_structure(), preconditioner_options));
+            new VisibilityBasedPreconditioner(
+                *A->block_structure(), preconditioner_options));
       }
       break;
     default:

@@ -833,7 +833,11 @@ class StaticEvaluateTest : public ::testing::Test {
                          (i & 4) ? expected.jacobian  : NULL);
     }
 
-
+    // The Evaluate call should only depend on the parameter block
+    // values in the user provided pointers, and the current state of
+    // the parameter block should not matter. So, create a new
+    // parameters vector, and update the parameter block states with
+    // it. The results from the Evaluate call should not change.
     double new_parameters[6];
     for (int i = 0; i < 6; ++i) {
       new_parameters[i] = 0.0;

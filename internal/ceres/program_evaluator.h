@@ -83,12 +83,14 @@
 #include <omp.h>
 #endif
 
+#include <map>
+#include <vector>
+#include "ceres/execution_summary.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
-#include "ceres/execution_summary.h"
 
 namespace ceres {
 namespace internal {

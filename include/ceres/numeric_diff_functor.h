@@ -99,6 +99,9 @@
 // of RotateAndTranslatePoint with a numerically differentiated
 // version of IntrinsicProjection.
 
+#ifndef CERES_PUBLIC_NUMERIC_DIFF_FUNCTOR_H_
+#define CERES_PUBLIC_NUMERIC_DIFF_FUNCTOR_H_
+
 #include "ceres/numeric_diff_cost_function.h"
 #include "ceres/types.h"
 #include "ceres/cost_function_to_functor.h"
@@ -114,13 +117,14 @@ class NumericDiffFunctor {
  public:
   // relative_step_size controls the step size used by the numeric
   // differentiation process.
-  NumericDiffFunctor(double relative_step_size = 1e-6)
-      : functor_(new NumericDiffCostFunction<Functor,
-                                             kMethod,
-                                             kNumResiduals,
-                                             N0, N1, N2, N3, N4,
-                                             N5, N6, N7, N8, N9>(
-                                                 new Functor, relative_step_size)) {
+  explicit NumericDiffFunctor(double relative_step_size = 1e-6)
+      : functor_(
+          new NumericDiffCostFunction<Functor,
+                                      kMethod,
+                                      kNumResiduals,
+                                      N0, N1, N2, N3, N4,
+                                      N5, N6, N7, N8, N9>(new Functor,
+                                                          relative_step_size)) {
   }
 
   NumericDiffFunctor(Functor* functor, double relative_step_size = 1e-6)
@@ -335,7 +339,8 @@ class NumericDiffFunctor {
   CostFunctionToFunctor<kNumResiduals,
                         N0, N1, N2, N3, N4,
                         N5, N6, N7, N8, N9> functor_;
-
 };
 
 }  // namespace ceres
+
+#endif  // CERES_PUBLIC_NUMERIC_DIFF_FUNCTOR_H_

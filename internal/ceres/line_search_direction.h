@@ -56,16 +56,15 @@ class LineSearchDirection {
     int max_lbfgs_rank;
   };
 
-  static LineSearchDirection* Create(Options& options);
+  static LineSearchDirection* Create(const Options& options);
 
   virtual ~LineSearchDirection() {}
   virtual bool NextDirection(const LineSearchMinimizer::State& previous,
                              const LineSearchMinimizer::State& current,
                              Vector* search_direction) = 0;
-
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_
+#endif  // CERES_INTERNAL_LINE_SEARCH_DIRECTION_H_

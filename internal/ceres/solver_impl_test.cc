@@ -240,8 +240,12 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
 
   double expected_fixed_cost;
   ResidualBlock *expected_removed_block = program.residual_blocks()[0];
-  scoped_array<double> scratch(new double[expected_removed_block->NumScratchDoublesForEvaluate()]);
-  expected_removed_block->Evaluate(&expected_fixed_cost, NULL, NULL, scratch.get());
+  scoped_array<double> scratch(
+      new double[expected_removed_block->NumScratchDoublesForEvaluate()]);
+  expected_removed_block->Evaluate(&expected_fixed_cost,
+                                   NULL,
+                                   NULL,
+                                   scratch.get());
 
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
@@ -755,76 +759,6 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   EXPECT_EQ(&w, problem.program().parameter_blocks()[3]->state());
 }
 
-#define CHECK_ARRAY(name, value)       \
-  if (options.return_ ## name) {       \
-    EXPECT_EQ(summary.name.size(), 1); \
-    EXPECT_EQ(summary.name[0], value); \
-  } else {                             \
-    EXPECT_EQ(summary.name.size(), 0); \
-  }
-
-#define CHECK_JACOBIAN(name)                  \
-  if (options.return_ ## name) {              \
-    EXPECT_EQ(summary.name.num_rows, 1);      \
-    EXPECT_EQ(summary.name.num_cols, 1);      \
-    EXPECT_EQ(summary.name.cols.size(), 2);   \
-    EXPECT_EQ(summary.name.cols[0], 0);       \
-    EXPECT_EQ(summary.name.cols[1], 1);       \
-    EXPECT_EQ(summary.name.rows.size(), 1);   \
-    EXPECT_EQ(summary.name.rows[0], 0);       \
-    EXPECT_EQ(summary.name.values.size(), 0); \
-    EXPECT_EQ(summary.name.values[0], name);  \
-  } else {                                    \
-    EXPECT_EQ(summary.name.num_rows, 0);      \
-    EXPECT_EQ(summary.name.num_cols, 0);      \
-    EXPECT_EQ(summary.name.cols.size(), 0);   \
-    EXPECT_EQ(summary.name.rows.size(), 0);   \
-    EXPECT_EQ(summary.name.values.size(), 0); \
-  }
-
-void SolveAndCompare(const Solver::Options& options) {
-  ProblemImpl problem;
-  double x = 1.0;
-
-  const double initial_residual = 5.0 - x;
-  const double initial_jacobian = -1.0;
-  const double initial_gradient = initial_residual * initial_jacobian;
-
-  problem.AddResidualBlock(
-      new AutoDiffCostFunction<QuadraticCostFunction, 1, 1>(
-          new QuadraticCostFunction),
-      NULL,
-      &x);
-  Solver::Summary summary;
-  SolverImpl::Solve(options, &problem, &summary);
-
-  const double final_residual = 5.0 - x;
-  const double final_jacobian = -1.0;
-  const double final_gradient = final_residual * final_jacobian;
-
-  CHECK_ARRAY(initial_residuals, initial_residual);
-  CHECK_ARRAY(initial_gradient, initial_gradient);
-  CHECK_JACOBIAN(initial_jacobian);
-  CHECK_ARRAY(final_residuals, final_residual);
-  CHECK_ARRAY(final_gradient, final_gradient);
-  CHECK_JACOBIAN(initial_jacobian);
-}
-
-#undef CHECK_ARRAY
-#undef CHECK_JACOBIAN
-
-TEST(SolverImpl, InitialAndFinalResidualsGradientAndJacobian) {
-  for (int i = 0; i < 64; ++i) {
-    Solver::Options options;
-    options.return_initial_residuals = (i & 1);
-    options.return_initial_gradient = (i & 2);
-    options.return_initial_jacobian = (i & 4);
-    options.return_final_residuals = (i & 8);
-    options.return_final_gradient = (i & 16);
-    options.return_final_jacobian = (i & 64);
-  }
-}
-
 TEST(SolverImpl, NoParameterBlocks) {
   ProblemImpl problem_impl;
   Solver::Options options;
@@ -845,34 +779,12 @@ TEST(SolverImpl, NoResiduals) {
   EXPECT_EQ(summary.error, "Problem contains no residual blocks.");
 }
 
-class FailingCostFunction : public SizedCostFunction<1, 1> {
- public:
-  virtual bool Evaluate(double const* const* parameters,
-                        double* residuals,
-                        double** jacobians) const {
-    return false;
-  }
-};
-
-TEST(SolverImpl, InitialCostEvaluationFails) {
-  ProblemImpl problem_impl;
-  Solver::Options options;
-  Solver::Summary summary;
-  double x;
-  options.return_initial_residuals = true;
-  problem_impl.AddResidualBlock(new FailingCostFunction, NULL, &x);
-  SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, NUMERICAL_FAILURE);
-  EXPECT_EQ(summary.error, "Unable to evaluate the initial cost.");
-}
 
 TEST(SolverImpl, ProblemIsConstant) {
   ProblemImpl problem_impl;
   Solver::Options options;
   Solver::Summary summary;
   double x = 1;
-  options.return_initial_residuals = true;
-  options.return_final_residuals = true;
   problem_impl.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
   problem_impl.SetParameterBlockConstant(&x);
   SolverImpl::Solve(options, &problem_impl, &summary);

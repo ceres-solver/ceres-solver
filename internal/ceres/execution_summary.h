@@ -56,8 +56,8 @@ class ExecutionSummary {
     calls_[name] += 1;
   }
 
-  const map<string, double>& times() const { return times_; };
-  const map<string, int>& calls() const { return calls_; };
+  const map<string, double>& times() const { return times_; }
+  const map<string, int>& calls() const { return calls_; }
 
  private:
   Mutex times_mutex_;

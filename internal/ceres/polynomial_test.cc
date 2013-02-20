@@ -342,8 +342,8 @@ TEST(Polynomial, LinearInterpolatingPolynomial) {
 
 TEST(Polynomial, QuadraticInterpolatingPolynomial) {
   // p(x) = 2x^2 + 3x + 2
-   Vector true_polynomial(3);
-   true_polynomial << 2.0, 3.0, 2.0;
+  Vector true_polynomial(3);
+  true_polynomial << 2.0, 3.0, 2.0;
 
   vector<FunctionSample> samples;
   {
@@ -401,10 +401,10 @@ TEST(Polynomial, DeficientCubicInterpolatingPolynomial) {
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValues) {
   // p(x) = x^3 + 2x^2 + 3x + 2
- Vector true_polynomial(4);
- true_polynomial << 1.0, 2.0, 3.0, 2.0;
+  Vector true_polynomial(4);
+  true_polynomial << 1.0, 2.0, 3.0, 2.0;
 
- vector<FunctionSample> samples;
+  vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -443,11 +443,11 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValues) {
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndOneGradient) {
   // p(x) = x^3 + 2x^2 + 3x + 2
- Vector true_polynomial(4);
- true_polynomial << 1.0, 2.0, 3.0, 2.0;
- Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
+  Vector true_polynomial(4);
+  true_polynomial << 1.0, 2.0, 3.0, 2.0;
+  Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
 
- vector<FunctionSample> samples;
+  vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = 1.0;
@@ -480,11 +480,11 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndOneGradient) {
 
 TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
   // p(x) = x^3 + 2x^2 + 3x + 2
- Vector true_polynomial(4);
- true_polynomial << 1.0, 2.0, 3.0, 2.0;
- Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
+  Vector true_polynomial(4);
+  true_polynomial << 1.0, 2.0, 3.0, 2.0;
+  Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
 
- vector<FunctionSample> samples;
+  vector<FunctionSample> samples;
   {
     FunctionSample sample;
     sample.x = -3.0;

@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_SOLVER_IMPL_H_
 #define CERES_INTERNAL_SOLVER_IMPL_H_
 
+#include <set>
 #include <string>
 #include <vector>
 #include "ceres/internal/port.h"

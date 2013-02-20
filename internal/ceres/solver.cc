@@ -149,8 +149,6 @@ string Solver::Summary::BriefReport() const {
 using internal::StringAppendF;
 
 string Solver::Summary::FullReport() const {
-
-
   string report =
       "\n"
       "Ceres Solver Report\n"
@@ -181,7 +179,8 @@ string Solver::Summary::FullReport() const {
   // TODO(sameeragarwal): Refactor this into separate functions.
 
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report, "\nMinimizer                 %19s\n", "TRUST_REGION");
+    StringAppendF(&report, "\nMinimizer                 %19s\n",
+                  "TRUST_REGION");
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
@@ -261,7 +260,8 @@ string Solver::Summary::FullReport() const {
 
     StringAppendF(&report, "\nCost:\n");
     StringAppendF(&report, "Initial        % 30e\n", initial_cost);
-    if (termination_type != NUMERICAL_FAILURE && termination_type != USER_ABORT) {
+    if (termination_type != NUMERICAL_FAILURE &&
+        termination_type != USER_ABORT) {
       StringAppendF(&report, "Final          % 30e\n", final_cost);
       StringAppendF(&report, "Change         % 30e\n",
                     initial_cost - final_cost);
@@ -304,7 +304,8 @@ string Solver::Summary::FullReport() const {
                     max_lbfgs_rank);
     } else {
       StringAppendF(&report,   "Line search direction     %19s\n",
-                    LineSearchDirectionTypeToString(line_search_direction_type));
+                    LineSearchDirectionTypeToString(
+                        line_search_direction_type));
     }
     StringAppendF(&report,   "Line search type          %19s\n",
                   LineSearchTypeToString(line_search_type));
@@ -328,13 +329,15 @@ string Solver::Summary::FullReport() const {
 
     StringAppendF(&report, "\nCost:\n");
     StringAppendF(&report, "Initial        % 30e\n", initial_cost);
-    if (termination_type != NUMERICAL_FAILURE && termination_type != USER_ABORT) {
+    if (termination_type != NUMERICAL_FAILURE &&
+        termination_type != USER_ABORT) {
       StringAppendF(&report, "Final          % 30e\n", final_cost);
       StringAppendF(&report, "Change         % 30e\n",
                     initial_cost - final_cost);
     }
 
-    StringAppendF(&report, "\nNumber of iterations:    % 20ld\n", iterations.size() - 1);
+    StringAppendF(&report, "\nNumber of iterations:    % 20ld\n",
+                  iterations.size() - 1);
 
     StringAppendF(&report, "\nTime (in seconds):\n");
     StringAppendF(&report, "Preprocessor        %25.3f\n",

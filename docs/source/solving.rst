@@ -1110,68 +1110,6 @@ elimination group [LiSaad]_.
    :member:`Solver::Options::logging_type` is not ``SILENT``, the logging
    output is sent to ``STDOUT``.
 
-.. member:: bool Solver::Options::return_initial_residuals
-
-   Default: ``false``
-
-.. member:: bool Solver::Options::return_final_residuals
-
-   Default: ``false``
-
-   If true, the vectors :member:`Solver::Summary::initial_residuals` and
-   :member:`Solver::Summary::final_residuals` are filled with the residuals
-   before and after the optimization. The entries of these vectors are
-   in the order in which ResidualBlocks were added to the Problem
-   object.
-
-.. member:: bool Solver::Options::return_initial_gradient
-
-   Default: ``false``
-
-.. member:: bool Solver::Options::return_final_gradient
-
-   Default: ``false``
-
-   If true, the vectors :member:`Solver::Summary::initial_gradient` and
-   :member:`Solver::Summary::final_gradient` are filled with the gradient
-   before and after the optimization. The entries of these vectors are
-   in the order in which ParameterBlocks were added to the Problem
-   object.
-
-   Since :member:`Problem::AddResidualBlock` adds ParameterBlocks to
-   the :class:`Problem` automatically if they do not already exist,
-   if you wish to have explicit control over the ordering of the
-   vectors, then use :member:`Problem::AddParameterBlock` to
-   explicitly add the ParameterBlocks in the order desired.
-
-.. member:: bool Solver::Options::return_initial_jacobian
-
-   Default: ``false``
-
-.. member:: bool Solver::Options::return_initial_jacobian
-
-   Default: ``false``
-
-   If ``true``, the Jacobian matrices before and after the
-   optimization are returned in
-   :member:`Solver::Summary::initial_jacobian` and
-   :member:`Solver::Summary::final_jacobian` respectively.
-
-   The rows of these matrices are in the same order in which the
-   ResidualBlocks were added to the Problem object. The columns are in
-   the same order in which the ParameterBlocks were added to the
-   Problem object.
-
-   Since :member:`Problem::AddResidualBlock` adds ParameterBlocks to
-   the :class:`Problem` automatically if they do not already exist,
-   if you wish to have explicit control over the ordering of the
-   vectors, then use :member:`Problem::AddParameterBlock` to
-   explicitly add the ParameterBlocks in the order desired.
-
-   The Jacobian matrices are stored as compressed row sparse
-   matrices. Please see ``include/ceres/crs_matrix.h`` for more
-   details of the format.
-
 .. member:: vector<int> Solver::Options::lsqp_iterations_to_dump
 
    Default: ``empty``

@@ -43,11 +43,11 @@
 
 #include <vector>
 
-#include <glog/logging.h>
 #include "ceres/collections_port.h"
 #include "ceres/graph.h"
-#include "ceres/map_util.h"
 #include "ceres/internal/macros.h"
+#include "ceres/map_util.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

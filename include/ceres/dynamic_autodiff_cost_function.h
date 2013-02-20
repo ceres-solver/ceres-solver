@@ -65,18 +65,20 @@
 
 #include <cmath>
 #include <numeric>
-#include <glog/logging.h>
+#include <vector>
+
 #include "ceres/cost_function.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/jet.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
 template <typename CostFunctor, int Stride = 4>
 class DynamicAutoDiffCostFunction : public CostFunction {
  public:
-  DynamicAutoDiffCostFunction(CostFunctor* functor)
-    : functor_(functor) {}
+  explicit DynamicAutoDiffCostFunction(CostFunctor* functor)
+  : functor_(functor) {}
 
   virtual ~DynamicAutoDiffCostFunction() {}
 
@@ -144,7 +146,9 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     // Evaluate all of the strides. Each stride is a chunk of the derivative to
     // evaluate, typically some size proportional to the size of the SIMD
     // registers of the CPU.
-    int num_strides = int(ceil(num_active_parameters / float(Stride)));
+    int num_strides = static_cast<int>(ceil(num_active_parameters /
+                                            static_cast<float>(Stride)));
+
     for (int pass = 0; pass < num_strides; ++pass) {
       // Set most of the jet components to zero, except for
       // non-constant #Stride parameters.
@@ -180,7 +184,8 @@ class DynamicAutoDiffCostFunction : public CostFunction {
             if (jacobians[i] != NULL) {
               for (int k = 0; k < num_residuals(); ++k) {
                 jacobians[i][k * parameter_block_sizes()[i] + j] =
-                    output_jets[k].v[parameter_cursor - start_derivative_section];
+                    output_jets[k].v[parameter_cursor -
+                                     start_derivative_section];
               }
               ++active_parameter_count;
             }
