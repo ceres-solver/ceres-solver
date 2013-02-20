@@ -51,6 +51,7 @@ class CostFunction;
 class LossFunction;
 class LocalParameterization;
 class Solver;
+struct CRSMatrix;
 
 namespace internal {
 class Preprocessor;
@@ -325,6 +326,61 @@ class Problem {
   // The size of the residual vector obtained by summing over the
   // sizes of all of the residual blocks.
   int NumResiduals() const;
+
+  // Options struct to control Problem::Evaluate.
+  struct EvaluateOptions {
+    EvaluateOptions()
+        : num_threads(1) {
+    }
+
+    // The set of parameter blocks for which evaluation should be
+    // performed. This vector determines the order in which parameter
+    // blocks occur in the gradient vector and in the columns of the
+    // jacobian matrix. If parameter_blocks is empty, then it is
+    // assumed to be equal to vector containing ALL the parameter
+    // blocks.
+    //
+    // NOTE: This vector should contain the same pointers as the ones
+    // used to add parameter blocks to the Problem. These parmeter
+    // block should NOT point to new memory locations.
+    vector<double*> parameter_blocks;
+
+    // The set of residual blocks for which evaluation should be
+    // performed. This vector determines the order in which the
+    // residuals occur, and how the rows of the jacobian are
+    // ordered. If residual_blocks is empty, then it is assumed to be
+    // equal to the vector containing all the parameter blocks.
+    vector<ResidualBlockId> residual_blocks;
+    int num_threads;
+  };
+
+  // Evaluate Problem. Any of the output pointers can be NULL. Which
+  // residual blocks and parameter blocks are used is controlled by
+  // the EvaluateOptions struct above.
+  //
+  // Note: The evaluation will be performed using the values stored in
+  // the memory locations pointed to by the parameter block pointers
+  // used at the time of the construction of the problem. i.e.,
+  //
+  //   Problem problem;
+  //   double x = 1;
+  //   problem.Add(new MyCostFunction, NULL, &x);
+  //
+  //  double cost = 0.0;
+  //  problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+  //
+  //  The cost is evaluated at x = 1. If you wish to evaluate the
+  //  problem at x = 2, then
+  //
+  //    x = 2;
+  //    problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+  //
+  // is the way to do so.
+  bool Evaluate(const EvaluateOptions& options,
+                double* cost,
+                vector<double>* residuals,
+                vector<double>* gradient,
+                CRSMatrix* jacobian);
 
  private:
   friend class Solver;
