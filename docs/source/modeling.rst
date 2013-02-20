@@ -1110,6 +1110,60 @@ Instances
    The size of the residual vector obtained by summing over the sizes
    of all of the residual blocks.
 
+.. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
+
+   Evaluate a :class:`Problem`. Any of the output pointers can be
+   `NULL`. Which residual blocks and parameter blocks are used is
+   controlled by the :class:`Problem::EvaluateOptions` struct below.
+
+   **Note** The evaluation will be performed using the values stored
+   in the memory locations pointed to by the parameter block pointers
+   used at the time of the construction of the problem. i.e.,
+
+   .. code-block:: c++
+
+     Problem problem;
+     double x = 1;
+     problem.Add(new MyCostFunction, NULL, &x);
+
+     double cost = 0.0;
+     problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+
+
+   The cost is evaluated at `x = 1`. If you wish to evaluate the
+   problem at `x = 2`, then
+
+   .. code-block:: c++
+
+      x = 2;
+      problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+
+   is the way to do so.
+
+.. class:: Problem::EvaluateOptions
+
+   Options struct that is used to control :func:`Problem::Evaluate`.
+
+.. member:: vector<double*> Problem::EvaluateOptions::parameter_blocks
+
+     The set of parameter blocks for which evaluation should be
+     performed. This vector determines the order in which parameter
+     blocks occur in the gradient vector and in the columns of the
+     jacobian matrix. If parameter_blocks is empty, then it is
+     assumed to be equal to vector containing ALL the parameter
+     blocks.
+
+     **NOTE** This vector should contain the same pointers as the ones
+     used to add parameter blocks to the Problem. These parmeter
+     block should NOT point to new memory locations.
+
+.. member:: vector<ResidualBlockId> Problem::EvaluateOptions::residual_blocks
+
+     The set of residual blocks for which evaluation should be
+     performed. This vector determines the order in which the
+     residuals occur, and how the rows of the jacobian are
+     ordered. If residual_blocks is empty, then it is assumed to be
+     equal to the vector containing all the parameter blocks.
 
 ``rotation.h``
 --------------
