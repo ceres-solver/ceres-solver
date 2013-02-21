@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "P.4rOy7I",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "Document all the things.\n\nIn other news, Phabricator, the code review tool we use at work has memes. I want to use one here but cannot.",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P.wrDu4o",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "Put this beneath the other methods (and the struct).",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P-.b04OU",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "Ordering",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P-2bh0CE",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "Maybe include a block comment for this section.",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P-4bOzLI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "See about springing my vector_set.h from google3. It\u0027s really fast and perfect for this case. Same interface.",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "P-0bk1DI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-21T18:10:53Z",
+      "side": 1,
+      "message": "Comment above explaining why you are doing this.",
+      "revId": "13364e017e86544d58fdc63b4985b29745105751",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
