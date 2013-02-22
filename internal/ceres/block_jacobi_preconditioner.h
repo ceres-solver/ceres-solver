@@ -54,7 +54,7 @@ class LinearOperator;
 class BlockJacobiPreconditioner : public Preconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
-  BlockJacobiPreconditioner(const BlockSparseMatrixBase& A);
+  explicit BlockJacobiPreconditioner(const BlockSparseMatrixBase& A);
   virtual ~BlockJacobiPreconditioner();
 
   // Preconditioner interface

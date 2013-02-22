@@ -177,7 +177,7 @@ ProblemImpl::ProblemImpl(const Problem::Options& options)
 
 ProblemImpl::~ProblemImpl() {
   // Collect the unique cost/loss functions and delete the residuals.
-  const int num_residual_blocks =  program_->residual_blocks_.size();
+  const int num_residual_blocks = program_->residual_blocks_.size();
   cost_functions_to_delete_.reserve(num_residual_blocks);
   loss_functions_to_delete_.reserve(num_residual_blocks);
   for (int i = 0; i < program_->residual_blocks_.size(); ++i) {
@@ -486,8 +486,8 @@ void ProblemImpl::RemoveParameterBlock(double* values) {
       ResidualBlock* residual_block =
           (*(program_->mutable_residual_blocks()))[i];
       const int num_parameter_blocks = residual_block->NumParameterBlocks();
-      for (int i = 0; i < num_parameter_blocks; ++i) {
-        if (residual_block->parameter_blocks()[i] == parameter_block) {
+      for (int j = 0; j < num_parameter_blocks; ++j) {
+        if (residual_block->parameter_blocks()[j] == parameter_block) {
           RemoveResidualBlock(residual_block);
           // The parameter blocks are guaranteed unique.
           break;

@@ -53,6 +53,8 @@ void STLDeleteContainerPointers(ForwardIterator begin,
   }
 }
 
+// Variant of STLDeleteContainerPointers which allows the container to
+// contain duplicates.
 template <class ForwardIterator>
 void STLDeleteUniqueContainerPointers(ForwardIterator begin,
                                       ForwardIterator end) {

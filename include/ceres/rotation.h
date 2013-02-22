@@ -51,13 +51,19 @@
 
 namespace ceres {
 
-// Trivial wrapper to index linear arrays as matrices, given a fixed column and
-// row stride. When an array "T* arr" is wrapped by a
-// "(const) MatrixAdapter<T, row_stride, col_stride> M", the expression "M(i, j)" is
-// equivalent to "arr[i * row_stride + j * col_stride]".
-// Conversion functions to and from rotation matrices accept MatrixAdapters to
-// permit using row-major and column-major layouts, and rotation matrices embedded in
-// larger matrices (such as a 3x4 projection matrix).
+// Trivial wrapper to index linear arrays as matrices, given a fixed
+// column and row stride. When an array "T* array" is wrapped by a
+//
+//   (const) MatrixAdapter<T, row_stride, col_stride> M"
+//
+// the expression  M(i, j) is equivalent to
+//
+//   arrary[i * row_stride + j * col_stride]
+//
+// Conversion functions to and from rotation matrices accept
+// MatrixAdapters to permit using row-major and column-major layouts,
+// and rotation matrices embedded in larger matrices (such as a 3x4
+// projection matrix).
 template <typename T, int row_stride, int col_stride>
 struct MatrixAdapter;
 

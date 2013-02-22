@@ -311,7 +311,7 @@ string Solver::Summary::FullReport() const {
 
     StringAppendF(&report, "\n");
 
-    StringAppendF(&report,   "%45s    %21s\n", "Given",  "Used");
+    StringAppendF(&report, "%45s    %21s\n", "Given",  "Used");
     StringAppendF(&report, "Threads:            % 25d% 25d\n",
                   num_threads_given, num_threads_used);
 

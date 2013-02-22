@@ -110,12 +110,6 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     case IDENTITY:
       break;
     case JACOBI:
-      // We need to strip the constness of the block_diagonal_FtF_inverse
-      // matrix here because the only other way to initialize the struct
-      // cg_solve_options would be to add a constructor to it. We know
-      // that the only method ever called on the preconditioner is the
-      // RightMultiply which is a const method so we don't need to worry
-      // about the object getting modified.
       preconditioner_.reset(
           new SparseMatrixPreconditionerWrapper(
               schur_complement_->block_diagonal_FtF_inverse()));

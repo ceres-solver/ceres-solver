@@ -73,7 +73,7 @@ class ParameterBlock {
 
   // Create a parameter block with the user state, size, and index specified.
   // The size is the size of the parameter block and the index is the position
-  // if the parameter block inside a Program (if any).
+  // of the parameter block inside a Program (if any).
   ParameterBlock(double* user_state, int size, int index) {
     Init(user_state, size, index, NULL);
   }

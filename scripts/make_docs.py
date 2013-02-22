@@ -38,7 +38,7 @@ import glob
 
 if len(sys.argv) < 3:
   print "make_docs.py src_root destination_root"
-  sys.exit(1);
+  sys.exit(1)
 
 src_dir =  sys.argv[1] + "/docs/source"
 build_root = sys.argv[2]
@@ -58,8 +58,10 @@ output_pattern = """config=TeX-AMS_HTML">
 </script>"""
 
 # By default MathJax uses does not use TeX fonts. This simple search
-# an replace fixes that.
+# and replace fixes that.
 for name in glob.glob("%s/*.html" % html_dir):
   print "Postprocessing: ", name
-  out = open(name).read().replace(input_pattern, output_pattern)
+  fptr = open(name)
+  out = fptr.read().replace(input_pattern, output_pattern)
   open(name, "w").write(out)
+  fptr.close();
