@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOJnyZ9E",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:05:13Z",
+      "side": 1,
+      "message": "This should get read from the header include/ceres/ceres.h. If you look at our release script (scripts/make_release), it reads the version from there. Perhaps the release script should generate the spec as well?\n\nWe want to make sure the versions don\u0027t get out of sync. An alternate solution might be to make the release script check the version here and make sure it all matches.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOPnlowk",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:05:13Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOLnvK.g",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:05:13Z",
+      "side": 1,
+      "message": "We may want to include ATLAS if possible. It has a much faster tuned BLAS. I am unsure if there is an easy way to get the platform-specific ATLAS installed without shenanigans.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFkc7yg",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:05:13Z",
+      "side": 1,
+      "message": "Consider adding a line to mention that this is used for image alignment in Google Maps and vehicle pose in Street View.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOHkhs18",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:05:13Z",
+      "side": 1,
+      "message": "This needs updating.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
