@@ -1,0 +1,582 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOLkGS84",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "the \"used\" makes this a bit confusing; is Ceres copying the values?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFnDj1Y",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Is this paragraph indented too far?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QODnSWyI",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "mention what order the default returns.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOHnI03E",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Is this paragraph indented too far?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QONnWnxQ",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "parmeter!",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOPnTYyE",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Warn that cataclysmic universe implosion is the result if you do.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOBnNF4E",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Is this paragraph indented too far?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOJngJ.k",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "I am -1 on removing these in this release. I feel pretty strongly that users should get 1 release of grace. Also, I am unconvinced the new API is better, in that it adds a bunch of boilerplate to the easy case.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOLnd6y8",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Tab/space mix",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFmqr4A",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOHmvc48",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOBmkN68",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QODmp.4c",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QONm9P8Y",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOPm6g8s",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Arguably there should be a section above in API changes about this, that points out the new API calls.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOJm3x.I",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "in which -\u003e that",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOLm0C94",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Mention in what order.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFmRT0Y",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "The set of residual blocks to evaluate.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOHmWk0E",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "parameter -\u003e residual. Mention what order you get if this is empty.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOBmb12g",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Evaluate a problem.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QODmgG5I",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "\"will be performed using the\" -\u003e \"will use the\"",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QONmEXwQ",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOPmBI-E",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Remove blank",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFmfD0Y",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Can we do a shortcut version that scans to see if there is no need for all this crazyness? For example, if it\u0027s all the parameter blocks and everything is variable (likely a common case).\n\nMaybe it\u0027s not worth it.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOBmpl3A",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Ping re: vector set",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QONmyH9w",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Perhaps mention that this works even without suite sparse?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOPmv43A",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "temporaririrararirirly",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QODmu23k",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Not sure making a local is useful here.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOJm8p7A",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Ah this does raise the issue of documenting the behaviour with respect to local parameterizations. This is not mentioned in the docs. Please update the docs describing what the effect of local parameterizations is on evaluate.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOLm5a78",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Local adds no value.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOFnGL0A",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Delete blank.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOHnL80Y",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "We don\u0027t do big block comments like this elsewhere in ceres; let\u0027s not start now.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOBnAtx4",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Isn\u0027t this already done in this CL? I am still not sure want that.\n\nI am not comfortable with so much code duplication. Can we instead expend the effort to share it properly? This is a ton of code that is getting copied, and it\u0027s not clear what has changed.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QODnFey8",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-23T18:58:55Z",
+      "side": 1,
+      "message": "Yep these need to go in. Also we need to check that the varying status is kept for those parameters we modify.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
