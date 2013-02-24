@@ -39,8 +39,10 @@ namespace ceres {
 #define CASESTR(x) case x: return #x
 #define STRENUM(x) if (value == #x) { *type = x; return true;}
 
+namespace {
 void UpperCase(string* input) {
   std::transform(input->begin(), input->end(), input->begin(), ::toupper);
+}
 }
 
 const char* LinearSolverTypeToString(LinearSolverType type) {

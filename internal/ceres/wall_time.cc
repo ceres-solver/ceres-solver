@@ -42,6 +42,8 @@
 #include <sys/time.h>
 #endif
 
+#include "wall_time.h"
+
 namespace ceres {
 namespace internal {
 

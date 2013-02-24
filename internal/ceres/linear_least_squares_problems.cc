@@ -573,6 +573,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem3() {
   return problem;
 }
 
+namespace {
 bool DumpLinearLeastSquaresProblemToConsole(const string& directory,
                                             int iteration,
                                             const SparseMatrix* A,
@@ -731,6 +732,7 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& directory,
   string matlab_filename = filename_prefix + ".m";
   WriteStringToFileOrDie(matlab_script, matlab_filename);
   return true;
+}
 }
 
 bool DumpLinearLeastSquaresProblem(const string& directory,
