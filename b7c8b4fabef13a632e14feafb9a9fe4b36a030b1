@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOP.bQ7I",
+        "filename": "internal/ceres/file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "This header should go above all the others; e.g.\n\n  #include \"ceres/file.h\"\n  \n  #include \u003cstring\u003e\n  #include \u003cvector\u003e\n  ...\n\nThe reason is that we want headers to compile on their own, without depending on other symbols.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOP9UowQ",
+        "filename": "internal/ceres/linear_least_squares_problems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "Add \n\n  }  // namespace\n\nto indicate the closed namespace. Two spaces before the //\u0027s.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOJ9R5xM",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "Add // namespace\n\nAlternately, since this is just one function, use \"static\" instead.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOL9OK28",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "Just use static for a single function (instead of anonymous namespace).",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOF.Lb2c",
+        "filename": "internal/ceres/split.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "This header should go above all the others; e.g.\n\n  #include \"ceres/split.h\"\n  \n  #include \u003cstring\u003e\n  #include \u003cvector\u003e\n  ...\n\nThe reason is that we want headers to compile on their own, without depending on other symbols.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOH.Qs5I",
+        "filename": "internal/ceres/stringprintf.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "This header should go above all the others; e.g.\n\n  #include \"ceres/stringprintf.h\"\n  \n  #include \u003cstring\u003e\n  #include \u003cvector\u003e\n  ...\n\nThe reason is that we want headers to compile on their own, without depending on other symbols.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOB.V94E",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "Use static instead for single functions.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOD.aO7M",
+        "filename": "internal/ceres/visibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "This header should go above all the others; e.g.\n\n  #include \"ceres/visibility.h\"\n  \n  #include \u003cstring\u003e\n  #include \u003cvector\u003e\n  ...\n\nThe reason is that we want headers to compile on their own, without depending on other symbols.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QON.ef6U",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T19:22:01Z",
+      "side": 1,
+      "message": "This header should go above all the others; e.g.\n\n  #include \"ceres/wall_time.h\"\n  \n  #include \u003cstring\u003e\n  #include \u003cvector\u003e\n  ...\n\nThe reason is that we want headers to compile on their own, without depending on other symbols.",
+      "revId": "b7c8b4fabef13a632e14feafb9a9fe4b36a030b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
