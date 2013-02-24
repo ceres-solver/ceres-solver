@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "QOAQZKpM",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOETLovQ",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOOS-Nkw",
         "filename": "include/ceres/autodiff_cost_function.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-24T18:30:37Z",
       "side": 1,
       "message": "I believe this should still get indented?",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOOQbtos",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "emacs says no.",
+      "parentUuid": "QOOS-Nkw",
       "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "QOEQnItQ",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOKS5Pmg",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOMS2snU",
         "filename": "include/ceres/internal/scoped_ptr.h",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2013-02-24T18:30:37Z",
       "side": 1,
       "message": "Insert teeth gnashing about 70 col vs 80 col comments.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOCQiLsU",
+        "filename": "include/ceres/internal/scoped_ptr.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "QOMS2snU",
       "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "QOIQtGrg",
+        "filename": "include/ceres/numeric_diff_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "no one was using it but tests?",
+      "parentUuid": "QOGRzRv0",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOIR4utg",
         "filename": "include/ceres/problem.h",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2013-02-24T18:30:37Z",
       "side": 1,
       "message": "And columns to the jacobian.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOGQoJqc",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOIR4utg",
       "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "QOAQyihs",
+        "filename": "internal/ceres/cost_function_to_functor_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "nope, new code from this year.",
+      "parentUuid": "QOGTMpg8",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOCR9Tsc",
         "filename": "internal/ceres/numeric_diff_test_utils.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2013-02-24T18:30:37Z",
       "side": 1,
       "message": "Should include older dates.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOOQ0Fgo",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "this is from this year.",
+      "parentUuid": "QOCR9Tsc",
       "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "QOERQgjg",
+        "filename": "internal/ceres/numeric_diff_test_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "This one is from this year actually.",
+      "parentUuid": "QOESCwog",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOASEyo8",
         "filename": "internal/ceres/trust_region_strategy.cc",
         "patchSetId": 7
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "QOIRGeoQ",
+        "filename": "internal/ceres/trust_region_strategy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOASEyo8",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOKSQXs4",
         "filename": "internal/ceres/trust_region_strategy.cc",
         "patchSetId": 7
@@ -183,6 +363,24 @@
       "writtenOn": "2013-02-24T18:30:37Z",
       "side": 1,
       "message": "I wrote some of this, but your name should be first :)",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOCRLDo8",
+        "filename": "internal/ceres/trust_region_strategy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T18:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOKSQXs4",
       "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
