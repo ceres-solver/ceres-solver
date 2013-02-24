@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOETLovQ",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Please rename this backwards-incompatible API changes",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOOS-Nkw",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "I believe this should still get indented?",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOKS5Pmg",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Please don\u0027t make this change. Instead add a // NOLINT. It\u0027s much harder to read this code now.\n\nAlternately, macrofiy.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOMS2snU",
+        "filename": "include/ceres/internal/scoped_ptr.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Insert teeth gnashing about 70 col vs 80 col comments.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOGRzRv0",
+        "filename": "include/ceres/numeric_diff_functor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Wow how did this work before.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOIR4utg",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "And columns to the jacobian.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOGTMpg8",
+        "filename": "internal/ceres/cost_function_to_functor_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "This should go back a bit older.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOCR9Tsc",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Should include older dates.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOESCwog",
+        "filename": "internal/ceres/numeric_diff_test_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Include other years too.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOASEyo8",
+        "filename": "internal/ceres/trust_region_strategy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "Update the years.",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOKSQXs4",
+        "filename": "internal/ceres/trust_region_strategy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T18:30:37Z",
+      "side": 1,
+      "message": "I wrote some of this, but your name should be first :)",
+      "revId": "cfa14b5f5e97a7a95913d87b89f3726554a0980b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
