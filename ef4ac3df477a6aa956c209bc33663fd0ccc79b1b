@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOB-N94A",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-24T23:10:02Z",
+      "side": 1,
+      "message": "Don\u0027t use numbers here; it\u0027s weird. Just bullets.",
+      "revId": "ef4ac3df477a6aa956c209bc33663fd0ccc79b1b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
