@@ -11,14 +11,19 @@ Backward Incompatible API Changes
 ---------------------------------
 
 #. Added ``Problem::Evaluate``. Now you can evaluate a problem or any
-   part of it without calling the solver. In light of this,
-   ``Solver::Options::return_initial_residuals``,
-   ``Solver::Options::return_initial_gradient``,
-   ``Solver::Options::return_initial_jacobian``,
-   ``Solver::Options::return_final_residuals``,
-   ``Solver::Options::return_final_gradient`` and
-   ``Solver::Options::return_final_jacobian`` have been deprecated and
+   part of it without calling the solver.
+
+   In light of this the following settings have been deprecated and
    removed from the API.
+
+   - ``Solver::Options::return_initial_residuals``
+   - ``Solver::Options::return_initial_gradient``
+   - ``Solver::Options::return_initial_jacobian``
+   - ``Solver::Options::return_final_residuals``
+   - ``Solver::Options::return_final_gradient``
+   - ``Solver::Options::return_final_jacobian``
+
+   Instead we recommend using something like this.
 
    .. code-block:: c++
 
@@ -99,6 +104,11 @@ New Features
 
 Bug Fixes
 ---------
+#. Fix ``No previous prototype`` warnings. (Sergey Sharybin)
+
+#. MinGW build fixes. (Sergey Sharybin)
+
+#. Lots of minor code and lint fixes reported by William Rucklidge.
 
 #. Fixed a bug in ``solver_impl.cc`` residual evaluation. (Markus
    Moll)
