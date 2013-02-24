@@ -16,6 +16,24 @@
       "revId": "9a88bd7c4b40e2a1e0cd9b0dc09a3517c467e04e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOMS0ct8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 0,
+      "message": "offline conversation.",
+      "parentUuid": "QOBn3V4g",
+      "revId": "9a88bd7c4b40e2a1e0cd9b0dc09a3517c467e04e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

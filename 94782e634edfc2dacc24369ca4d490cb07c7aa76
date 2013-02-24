@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "QOMTTElA",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "hmm this is not really well phrased. going to get rid of it for now.",
+      "parentUuid": "QOLkGS84",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOFnDj1Y",
         "filename": "docs/source/modeling.rst",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Is this paragraph indented too far?",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOGTAJnI",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOFnDj1Y",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "QOES-Iu8",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "very hard to define that order.",
+      "parentUuid": "QODnSWyI",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOHnI03E",
         "filename": "docs/source/modeling.rst",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "QOITFGoM",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOHnI03E",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QONnWnxQ",
         "filename": "docs/source/modeling.rst",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "parmeter!",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOCS6LgA",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QONnWnxQ",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "QOOSztiY",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOBnNF4E",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOJngJ.k",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 5
@@ -132,6 +240,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "I am -1 on removing these in this release. I feel pretty strongly that users should get 1 release of grace. Also, I am unconvinced the new API is better, in that it adds a bunch of boilerplate to the easy case.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOASxKh4",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "based on offline discussion going ahead with this.",
+      "parentUuid": "QOJngJ.k",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "QOKStvsI",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOLnd6y8",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOFmqr4A",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 5
@@ -166,6 +310,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOMSqMqg",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOFmqr4A",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "QOGQnxo8",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOHmvc48",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOBmkN68",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 5
@@ -200,6 +380,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOIQsOnM",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOBmkN68",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "QOCQxzsk",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QODmp.4c",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QONm9P8Y",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 5
@@ -234,6 +450,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Tabs",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOEQ2QsM",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QONm9P8Y",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "QOOQ61qQ",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "We are only doing API changes which affect existing code. Not new api stuff.",
+      "parentUuid": "QOPm6g8s",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOJm3x.I",
         "filename": "include/ceres/problem.h",
         "patchSetId": 5
@@ -268,6 +520,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "in which -\u003e that",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOAQ4Sqo",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOJm3x.I",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "QOKRE3ig",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOLm0C94",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOFmRT0Y",
         "filename": "include/ceres/problem.h",
         "patchSetId": 5
@@ -302,6 +590,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "The set of residual blocks to evaluate.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOMRB0hc",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOFmRT0Y",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -376,6 +682,24 @@
     },
     {
       "key": {
+        "uuid": "QOGRO5kk",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QONmEXwQ",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOPmBI-E",
         "filename": "internal/ceres/evaluator_test.cc",
         "patchSetId": 5
@@ -387,6 +711,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Remove blank",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOIRT2u4",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOPmBI-E",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -410,6 +752,24 @@
     },
     {
       "key": {
+        "uuid": "QOOToluQ",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "I do not think its worth it.",
+      "parentUuid": "QOFmfD0Y",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOBmpl3A",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 5
@@ -421,6 +781,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Ping re: vector set",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOEQEAtM",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "that requires lifting code, not sure its worth it yet. also I will need to get permission.",
+      "parentUuid": "QOBmpl3A",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -461,6 +839,24 @@
     },
     {
       "key": {
+        "uuid": "QOATmChY",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOPmv43A",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QODmu23k",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 5
@@ -472,6 +868,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Not sure making a local is useful here.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOKTyntA",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QODmu23k",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -495,6 +909,24 @@
     },
     {
       "key": {
+        "uuid": "QOITIunI",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOJm8p7A",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOLm5a78",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 5
@@ -506,6 +938,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Local adds no value.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOMTvkuc",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOLm5a78",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -529,6 +979,24 @@
     },
     {
       "key": {
+        "uuid": "QOGQcpik",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOFnGL0A",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOHnL80Y",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 5
@@ -540,6 +1008,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "We don\u0027t do big block comments like this elsewhere in ceres; let\u0027s not start now.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOOS99sU",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOHnL80Y",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -563,6 +1049,24 @@
     },
     {
       "key": {
+        "uuid": "QOAS7atE",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "no this is not done in this CL, but this is already a rather large CL, I\u0027d rather not make this grow farther. As I mention in the todo, I will fix this.",
+      "parentUuid": "QOBnAtx4",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QODnFey8",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 5
@@ -574,6 +1078,24 @@
       "writtenOn": "2013-02-23T18:58:55Z",
       "side": 1,
       "message": "Yep these need to go in. Also we need to check that the varying status is kept for those parameters we modify.",
+      "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QOKS3-uE",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-24T17:30:25Z",
+      "side": 1,
+      "message": "old comment, I have already added all these tests.\n\nI tried coming up with a test for the varying status test, but did not have a good idea about how to do it, since problem or problem_impl do not support a query operation on the constant/varying status of a parameter block.",
+      "parentUuid": "QODnFey8",
       "revId": "94782e634edfc2dacc24369ca4d490cb07c7aa76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
