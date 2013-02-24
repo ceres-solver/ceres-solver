@@ -98,7 +98,7 @@ tar -cvzf "ceres-solver-$1.tar.gz" "ceres-solver-$1"
 
 # Don't leave a mess behind.
 rm -rf $TMP
-rm -rf /tmp/sphinx-build/ceres-solver
+rm -rf $DOCS_TMP
 
 # Reminder to upload.
 echo
