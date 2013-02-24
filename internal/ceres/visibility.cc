@@ -28,6 +28,8 @@
 //
 // Author: kushalav@google.com (Avanish Kushal)
 
+#include "ceres/visibility.h"
+
 #include <cmath>
 #include <ctime>
 #include <algorithm>

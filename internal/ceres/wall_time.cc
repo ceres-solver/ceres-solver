@@ -28,6 +28,8 @@
 //
 // Author: strandmark@google.com (Petter Strandmark)
 
+#include "wall_time.h"
+
 #include "ceres/wall_time.h"
 
 #ifdef CERES_USE_OPENMP
