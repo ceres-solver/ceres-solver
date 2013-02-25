@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QOGdzRf0",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-25T22:08:42Z",
+      "side": 0,
+      "message": "Instead of deleting this, please comment it out and put a // TODO(keir): We removed this to fix the unused private variable issue; remove this once upstream has the patch.",
+      "revId": "9a88bd7c4b40e2a1e0cd9b0dc09a3517c467e04e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
