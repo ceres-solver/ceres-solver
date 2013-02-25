@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "QSli0-Xg",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-02-25T08:00:47Z",
+      "side": 1,
+      "message": "Between RC release strings and changelog entries that must be added to the .spec file things get messy. Unfortunately I think it\u0027s just one more manual step that must be done for releases. I added a check to the make_release script and a TODO reminder to bump the Release string in the RPM spec file and build an RPM.",
+      "parentUuid": "QOJnyZ9E",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOPnlowk",
         "filename": "scripts/ceres-solver.spec",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-23T18:05:13Z",
       "side": 1,
       "message": "Trailing space.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QSnivQSY",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-02-25T08:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOPnlowk",
       "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "QSjjMqQ4",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-02-25T08:00:47Z",
+      "side": 1,
+      "message": "I added the atlas-devel package which I think gets reasonable good SIMD optimizations for the for 64-bit package at least.\n\nSlightly off topic, but Is there any reason you are not using the FindLAPACK and FindBLAS modules that ship with cmake? I think it would be helpful to specify which BLAS library to build against (e.g. using -DBLA_VENDOR:STRING\u003dATLAS)",
+      "parentUuid": "QOLnvK.g",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOFkc7yg",
         "filename": "scripts/ceres-solver.spec",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "QSriYuQk",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-02-25T08:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOFkc7yg",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QOHkhs18",
         "filename": "scripts/ceres-solver.spec",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2013-02-23T18:05:13Z",
       "side": 1,
       "message": "This needs updating.",
+      "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QSpiV9dE",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-02-25T08:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QOHkhs18",
       "revId": "da9e9eef396c58b07cd5d0c35775a89ba0194635",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
