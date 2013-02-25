@@ -336,8 +336,8 @@ string Solver::Summary::FullReport() const {
                     initial_cost - final_cost);
     }
 
-    StringAppendF(&report, "\nNumber of iterations:    % 20ld\n",
-                  iterations.size() - 1);
+    StringAppendF(&report, "\nNumber of iterations:    % 20d\n",
+                  static_cast<int>(iterations.size() - 1));
 
     StringAppendF(&report, "\nTime (in seconds):\n");
     StringAppendF(&report, "Preprocessor        %25.3f\n",
