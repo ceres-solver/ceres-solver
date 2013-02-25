@@ -657,8 +657,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                                     gradient != NULL ? &(*gradient)[0] : NULL,
                                     tmp_jacobian.get());
 
-  // Make the parameter blocks that were temporarirly marked
-  // constant, variable again.
+  // Make the parameter blocks that were temporarily marked constant,
+  // variable again.
   for (int i = 0; i < variable_parameter_blocks.size(); ++i) {
     variable_parameter_blocks[i]->SetVarying();
   }

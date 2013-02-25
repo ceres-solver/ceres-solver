@@ -769,7 +769,7 @@ void CompareEvaluations(int expected_num_rows,
 // Simple cost function used for testing Problem::Evaluate.
 //
 // r_i = i - (j + 1) * x_ij^2
-template <int kNumResiduals, int kNumParameterBlocks >
+template <int kNumResiduals, int kNumParameterBlocks>
 class QuadraticCostFunction : public CostFunction {
  public:
   QuadraticCostFunction() {

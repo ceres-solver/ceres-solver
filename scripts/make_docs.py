@@ -32,9 +32,9 @@
 #
 # Note: You will need Sphinx and Pygments installed for this to work.
 
-import sys
-import os
 import glob
+import os
+import sys
 
 if len(sys.argv) < 3:
   print "make_docs.py src_root destination_root"
@@ -63,5 +63,8 @@ for name in glob.glob("%s/*.html" % html_dir):
   print "Postprocessing: ", name
   fptr = open(name)
   out = fptr.read().replace(input_pattern, output_pattern)
-  open(name, "w").write(out)
-  fptr.close();
+  fptr.close()
+
+  fptr = open(name, "w")
+  fptr.write(out)
+  fptr.close()
