@@ -204,7 +204,7 @@ string Solver::Summary::FullReport() const {
     StringAppendF(&report, "\n");
     StringAppendF(&report, "\n");
 
-    StringAppendF(&report,   "%45s    %21s\n", "Given",  "Used");
+    StringAppendF(&report, "%45s    %21s\n", "Given",  "Used");
     StringAppendF(&report, "Linear solver       %25s%25s\n",
                   LinearSolverTypeToString(linear_solver_type_given),
                   LinearSolverTypeToString(linear_solver_type_used));
@@ -299,15 +299,15 @@ string Solver::Summary::FullReport() const {
     // LINE_SEARCH
     StringAppendF(&report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
     if (line_search_direction_type == LBFGS) {
-      StringAppendF(&report,   "Line search direction     %19s(%d)\n",
+      StringAppendF(&report, "Line search direction     %19s(%d)\n",
                     LineSearchDirectionTypeToString(line_search_direction_type),
                     max_lbfgs_rank);
     } else {
-      StringAppendF(&report,   "Line search direction     %19s\n",
+      StringAppendF(&report, "Line search direction     %19s\n",
                     LineSearchDirectionTypeToString(
                         line_search_direction_type));
     }
-    StringAppendF(&report,   "Line search type          %19s\n",
+    StringAppendF(&report, "Line search type          %19s\n",
                   LineSearchTypeToString(line_search_type));
 
     StringAppendF(&report, "\n");

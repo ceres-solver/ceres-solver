@@ -70,7 +70,7 @@ class Preconditioner : public LinearOperator {
     // For example if elimination_groups is a vector of size k, then
     // the linear solver is informed that it should eliminate the
     // parameter blocks 0 ... elimination_groups[0] - 1 first, and
-    // then elimination_groups[0] ... elimination_groups[1] and so
+    // then elimination_groups[0] ... elimination_groups[1] - 1 and so
     // on. Within each elimination group, the linear solver is free to
     // choose how the parameter blocks are ordered. Different linear
     // solvers have differing requirements on elimination_groups.

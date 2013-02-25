@@ -345,7 +345,7 @@ class Problem {
     // problem.
     //
     // NOTE: This vector should contain the same pointers as the ones
-    // used to add parameter blocks to the Problem. These parmeter
+    // used to add parameter blocks to the Problem. These parameter
     // block should NOT point to new memory locations. Bad things will
     // happen otherwise.
     vector<double*> parameter_blocks;
@@ -390,7 +390,7 @@ class Problem {
   // the gradient vector (and the number of columns in the jacobian)
   // is the sum of the sizes of all the parameter blocks. If a
   // parameter block has a local parameterization, then it contributes
-  // "LocalSize" entries to the gradient vecto (and the number of
+  // "LocalSize" entries to the gradient vector (and the number of
   // columns in the jacobian).
   bool Evaluate(const EvaluateOptions& options,
                 double* cost,
