@@ -102,6 +102,8 @@ New Features
 
 #. ``SCHUR_JACOBI`` can now be used without ``SuiteSparse``.
 
+#. A ``.spec`` file for producing RPMs. (Taylor Braun-Jones)
+
 Bug Fixes
 ---------
 #. Fix ``No previous prototype`` warnings. (Sergey Sharybin)
@@ -127,6 +129,9 @@ Bug Fixes
    solution rather than the ground truth function value.
 
 #. Fixed a memory leak in ``cxsparse.cc``. (Alexander Mordvintsev).
+
+#. Fixed the install directory for libraries by correctly handling
+   ``LIB_SUFFIX``. (Taylor Braun-Jones)
 
 
 1.4.0
