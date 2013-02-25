@@ -617,8 +617,13 @@ ENDIF (MSVC)
 # GCC is not strict enough by default, so enable most of the warnings.
 IF ("${UNIX}")
   SET(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-return-type-c-linkage")
+      "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter")
 ENDIF ("${UNIX}")
+
+# We can be even stricter when using CLang
+IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
+ENDIF()
 
 ADD_SUBDIRECTORY(internal/ceres)
 
