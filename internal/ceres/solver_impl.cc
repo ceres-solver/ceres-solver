@@ -335,6 +335,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->minimizer_type = TRUST_REGION;
   summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
   summary->num_parameters = problem_impl->NumParameters();
+  summary->num_effective_parameters =
+      original_program->NumEffectiveParameters();
   summary->num_residual_blocks = problem_impl->NumResidualBlocks();
   summary->num_residuals = problem_impl->NumResiduals();
 
@@ -447,6 +449,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
   summary->num_parameters_reduced = reduced_program->NumParameters();
+  summary->num_effective_parameters_reduced =
+      reduced_program->NumEffectiveParameters();
   summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
   summary->num_residuals_reduced = reduced_program->NumResiduals();
 

@@ -100,10 +100,12 @@ Solver::Summary::Summary()
       jacobian_evaluation_time_in_seconds(-1.0),
       num_parameter_blocks(-1),
       num_parameters(-1),
+      num_effective_parameters(-1),
       num_residual_blocks(-1),
       num_residuals(-1),
       num_parameter_blocks_reduced(-1),
       num_parameters_reduced(-1),
+      num_effective_parameters_reduced(-1),
       num_residual_blocks_reduced(-1),
       num_residuals_reduced(-1),
       num_threads_given(-1),
@@ -156,10 +158,12 @@ string Solver::Summary::FullReport() const {
 
   if (termination_type == DID_NOT_RUN) {
     StringAppendF(&report, "                      Original\n");
-    StringAppendF(&report, "Parameter blocks    % 10d\n",
-                  num_parameter_blocks);
-    StringAppendF(&report, "Parameters          % 10d\n",
-                  num_parameters);
+    StringAppendF(&report, "Parameter blocks    % 10d\n", num_parameter_blocks);
+    StringAppendF(&report, "Parameters          % 10d\n", num_parameters);
+    if (num_effective_parameters != num_parameters) {
+      StringAppendF(&report, "Effective parameters% 10d\n", num_parameters);
+    }
+
     StringAppendF(&report, "Residual blocks     % 10d\n",
                   num_residual_blocks);
     StringAppendF(&report, "Residuals           % 10d\n\n",
@@ -170,6 +174,10 @@ string Solver::Summary::FullReport() const {
                   num_parameter_blocks, num_parameter_blocks_reduced);
     StringAppendF(&report, "Parameters          % 25d% 25d\n",
                   num_parameters, num_parameters_reduced);
+    if (num_effective_parameters_reduced != num_parameters_reduced) {
+      StringAppendF(&report, "Effective parameters% 25d% 25d\n",
+                    num_effective_parameters, num_effective_parameters_reduced);
+    }
     StringAppendF(&report, "Residual blocks     % 25d% 25d\n",
                   num_residual_blocks, num_residual_blocks_reduced);
     StringAppendF(&report, "Residual            % 25d% 25d\n",
