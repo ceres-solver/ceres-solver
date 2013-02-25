@@ -38,8 +38,8 @@
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/levenberg_marquardt_strategy.h"
-#include "ceres/linear_solver.h"
 #include "ceres/line_search_minimizer.h"
+#include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
 #include "ceres/ordered_groups.h"
@@ -1000,6 +1000,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   if (original_num_groups == 1 && IsSchurType(options->linear_solver_type)) {
     vector<ParameterBlock*> schur_ordering;
     const int num_eliminate_blocks = ComputeSchurOrdering(*transformed_program,
+                                                          options->use_supernodes,
                                                           &schur_ordering);
     CHECK_EQ(schur_ordering.size(), transformed_program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "

@@ -116,6 +116,7 @@ DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
              "the pertubations.");
 DEFINE_string(solver_log, "", "File to record the solver execution to.");
+DEFINE_bool(use_supernodes, false, "Super nodes in automatic ordering.");
 
 namespace ceres {
 namespace examples {
@@ -141,6 +142,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   double* cameras = bal_problem->mutable_cameras();
 
   options->use_block_amd = FLAGS_use_block_amd;
+  options->use_supernodes = FLAGS_use_supernodes;
 
   if (options->use_inner_iterations) {
     if (FLAGS_blocks_for_inner_iterations == "cameras") {

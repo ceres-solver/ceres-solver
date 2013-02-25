@@ -143,6 +143,130 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
   return independent_set_size;
 }
 
+template <typename Vertex>
+bool VerticesAreEquivalent(const Vertex& lhs,
+                           const HashSet<Vertex>& lhs_neighbors,
+                           const Vertex& rhs,
+                           const HashSet<Vertex>& rhs_neighbors) {
+  if (lhs_neighbors.size() != rhs_neighbors.size()) {
+    return false;
+  }
+
+  for (typename HashSet<Vertex>::const_iterator it = lhs_neighbors.begin();
+       it != lhs_neighbors.end();
+       ++it) {
+    if (*it != rhs && rhs_neighbors.count(*it) == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+template <typename Vertex>
+int SuperNodalIndependentSetOrdering(const Graph<Vertex>& graph,
+                                     vector<Vertex>* ordering) {
+  const HashSet<Vertex>& vertices = graph.vertices();
+  const int num_vertices = vertices.size();
+
+  CHECK_NOTNULL(ordering);
+  ordering->clear();
+  ordering->reserve(num_vertices);
+
+  // Colors for labeling the graph during the BFS.
+  const char kWhite = 0;
+  const char kGrey = 1;
+  const char kBlack = 2;
+
+  // Mark all vertices white.
+  HashMap<Vertex, char> vertex_color;
+  vector<Vertex> vertex_queue;
+  for (typename HashSet<Vertex>::const_iterator it = vertices.begin();
+       it != vertices.end();
+       ++it) {
+    vertex_color[*it] = kWhite;
+    vertex_queue.push_back(*it);
+  }
+
+  sort(vertex_queue.begin(),
+       vertex_queue.end(),
+       VertexDegreeLessThan<Vertex>(graph));
+
+  int num_collapsed_edges = 0;
+  int degree_block_begin = 0;
+  int degree = graph.Neighbors(vertex_queue[0]).size();
+  for (int i = 1; i < vertex_queue.size(); ++i) {
+    const Vertex vertex = vertex_queue[i];
+    const HashSet<Vertex>& neighbors = graph.Neighbors(vertex);
+    if (neighbors.size() != degree) {
+      degree = neighbors.size();
+      degree_block_begin = i;
+      continue;
+    }
+
+    for (int j = degree_block_begin; j < i; ++j) {
+      const Vertex previous_vertex = vertex_queue[j];
+      const HashSet<Vertex>& previous_neighbors =
+          graph.Neighbors(previous_vertex);
+      if (neighbors.count(previous_vertex) == 0) {
+        continue;
+      }
+
+      if (VerticesAreEquivalent(vertex,
+                                neighbors,
+                                previous_vertex,
+                                previous_neighbors)) {
+        vertex_color[vertex] = kGrey;
+        vertex_color[previous_vertex] = kGrey;
+        ++num_collapsed_edges;
+
+        // LOG(INFO) << "collapsing "
+        //           << i << " " << j << " "
+        //           << neighbors.size() << " "
+        //           << previous_neighbors.size();
+      }
+    }
+  }
+
+  LOG(INFO) << "Collapsed edges: " << num_collapsed_edges;
+
+  // Iterate over vertex_queue. Pick the first white vertex, add it
+  // to the independent set. Mark it black and its neighbors grey.
+  for (int i = 0; i < vertex_queue.size(); ++i) {
+    const Vertex& vertex = vertex_queue[i];
+    if (vertex_color[vertex] != kWhite) {
+      continue;
+    }
+
+    ordering->push_back(vertex);
+    vertex_color[vertex] = kBlack;
+    const HashSet<Vertex>& neighbors = graph.Neighbors(vertex);
+    for (typename HashSet<Vertex>::const_iterator it = neighbors.begin();
+         it != neighbors.end();
+         ++it) {
+      vertex_color[*it] = kGrey;
+    }
+  }
+
+  int independent_set_size = ordering->size();
+
+  // Iterate over the vertices and add all the grey vertices to the
+  // ordering. At this stage there should only be black or grey
+  // vertices in the graph.
+  for (typename vector<Vertex>::const_iterator it = vertex_queue.begin();
+       it != vertex_queue.end();
+       ++it) {
+    const Vertex vertex = *it;
+    DCHECK(vertex_color[vertex] != kWhite);
+    if (vertex_color[vertex] != kBlack) {
+      ordering->push_back(vertex);
+    }
+  }
+
+  CHECK_EQ(ordering->size(), num_vertices);
+  return independent_set_size;
+}
+
+
 // Find the connected component for a vertex implemented using the
 // find and update operation for disjoint-set. Recursively traverse
 // the disjoint set structure till you reach a vertex whose connected

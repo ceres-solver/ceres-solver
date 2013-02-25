@@ -169,7 +169,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
 
   // The constant parameter block is at the end.
   vector<ParameterBlock*> ordering;
-  ComputeSchurOrdering(program, &ordering);
+  ComputeSchurOrdering(program, false, &ordering);
   EXPECT_EQ(ordering.back(), parameter_blocks[0]);
 }
 

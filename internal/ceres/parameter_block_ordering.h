@@ -56,6 +56,7 @@ class ParameterBlock;
 //             complement of the independent set,
 //             fixed blocks]
 int ComputeSchurOrdering(const Program& program,
+                         bool use_supernodes,
                          vector<ParameterBlock* >* ordering);
 
 // Use an approximate independent set ordering to decompose the

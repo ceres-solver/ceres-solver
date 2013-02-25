@@ -95,6 +95,7 @@ class Solver {
 #endif
 
       num_linear_solver_threads = 1;
+      use_supernodes = false;
 
 #if defined(CERES_NO_SUITESPARSE)
       use_block_amd = false;
@@ -355,6 +356,8 @@ class Solver {
     // Once assigned, Solver::Options owns this pointer and will
     // deallocate the memory when destroyed.
     ParameterBlockOrdering* linear_solver_ordering;
+
+    bool use_supernodes;
 
     // By virtue of the modeling layer in Ceres being block oriented,
     // all the matrices used by Ceres are also block oriented. When

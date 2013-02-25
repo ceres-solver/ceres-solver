@@ -43,11 +43,16 @@ namespace ceres {
 namespace internal {
 
 int ComputeSchurOrdering(const Program& program,
+                         bool use_supernodes,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
 
   scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
-  int independent_set_size = IndependentSetOrdering(*graph, ordering);
+  int independent_set_size =
+      use_supernodes
+      ? SuperNodalIndependentSetOrdering(*graph, ordering)
+      : IndependentSetOrdering(*graph, ordering);
+
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
 
   // Add the excluded blocks to back of the ordering vector.
