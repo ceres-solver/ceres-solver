@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,50 +27,34 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: keir@google.com (Keir Mierle)
-
-#include <vector>
-#include "ceres/block_evaluate_preparer.h"
-#include "ceres/block_jacobian_writer.h"
-#include "ceres/compressed_row_jacobian_writer.h"
-#include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dense_jacobian_writer.h"
-#include "ceres/evaluator.h"
-#include "ceres/internal/port.h"
-#include "ceres/program_evaluator.h"
-#include "ceres/scratch_evaluate_preparer.h"
-#include "glog/logging.h"
+//         sameeragarwal@google.com (Sameer Agarwal)
+//
+// Test utils used for evaluation testing.
 
 namespace ceres {
 namespace internal {
 
-Evaluator::~Evaluator() {}
+// Fixed sized struct for storing an evaluation.
+struct ExpectedEvaluation {
+  int num_rows;
+  int num_cols;
+  double cost;
+  const double residuals[50];
+  const double gradient[50];
+  const double jacobian[200];
+};
 
-Evaluator* Evaluator::Create(const Evaluator::Options& options,
-                             Program* program,
-                             string* error) {
-  switch (options.linear_solver_type) {
-    case DENSE_QR:
-    case DENSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  DenseJacobianWriter>(options,
-                                                       program);
-    case DENSE_SCHUR:
-    case SPARSE_SCHUR:
-    case ITERATIVE_SCHUR:
-    case CGNR:
-      return new ProgramEvaluator<BlockEvaluatePreparer,
-                                  BlockJacobianWriter>(options,
-                                                       program);
-    case SPARSE_NORMAL_CHOLESKY:
-      return new ProgramEvaluator<ScratchEvaluatePreparer,
-                                  CompressedRowJacobianWriter>(options,
-                                                               program);
-    default:
-      *error = "Invalid Linear Solver Type. Unable to create evaluator.";
-      return NULL;
-  }
-}
+// Compare two evaluations.
+void CompareEvaluations(int expected_num_rows,
+                        int expected_num_cols,
+                        double expected_cost,
+                        const double* expected_residuals,
+                        const double* expected_gradient,
+                        const double* expected_jacobian,
+                        const double actual_cost,
+                        const double* actual_residuals,
+                        const double* actual_gradient,
+                        const double* actual_jacobian);
 
 }  // namespace internal
 }  // namespace ceres

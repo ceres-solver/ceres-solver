@@ -62,7 +62,8 @@ void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   double jacobian;
   double* jacobians[] = { &jacobian };
 
-  EXPECT_EQ(residual_block.Evaluate(&cost,
+  EXPECT_EQ(residual_block.Evaluate(true,
+                                    &cost,
                                     &residuals,
                                     jacobians,
                                     scratch.get()), is_good);
