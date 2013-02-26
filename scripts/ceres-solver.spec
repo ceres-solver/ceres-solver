@@ -12,7 +12,7 @@ URL:            http://code.google.com/p/ceres-solver/
 Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc1.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-%if (0%{?rhel} <= 6)
+%if (0%{?rhel} == 06)
 BuildRequires:  cmake28
 %else
 BuildRequires:  cmake
@@ -65,7 +65,7 @@ pushd build
 # Disable the compilation flags that rpmbuild macros try to apply to all
 # packages because it breaks the build since release 1.5.0rc1
 %define optflags ""
-%if (0%{?rhel} <= 6)
+%if (0%{?rhel} == 06)
 %{cmake28} .. \
 %else
 %{cmake} .. \
