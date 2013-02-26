@@ -82,7 +82,8 @@ class PowellEvaluator2 : public Evaluator {
     return dense_jacobian;
   }
 
-  virtual bool Evaluate(const double* state,
+  virtual bool Evaluate(const Evaluator::EvaluateOptions& evaluate_options,
+                        const double* state,
                         double* cost,
                         double* residuals,
                         double* /* gradient */,
