@@ -331,7 +331,8 @@ class Problem {
   // Options struct to control Problem::Evaluate.
   struct EvaluateOptions {
     EvaluateOptions()
-        : num_threads(1) {
+        : apply_loss_function(true),
+          num_threads(1) {
     }
 
     // The set of parameter blocks for which evaluation should be
@@ -360,6 +361,7 @@ class Problem {
     // they were added to the problem. But, this may change if the
     // user removes any residual blocks from the problem.
     vector<ResidualBlockId> residual_blocks;
+    bool apply_loss_function;
     int num_threads;
   };
 
