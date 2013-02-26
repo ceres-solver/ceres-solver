@@ -35,6 +35,7 @@
 #include "ceres/casts.h"
 #include "ceres/cost_function.h"
 #include "ceres/crs_matrix.h"
+#include "ceres/evaluator_test_utils.cc"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/local_parameterization.h"
@@ -45,7 +46,6 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
-
 
 namespace ceres {
 namespace internal {
@@ -703,71 +703,6 @@ INSTANTIATE_TEST_CASE_P(OptionsInstantiation,
 
 // Test for Problem::Evaluate
 
-// TODO(sameeragarwal): The following struct and function are shared
-// with evaluator_test.cc. Once things settle down, do an
-// evaluate_utils.h or some such thing to reduce code duplication. The
-// best time is perhaps when we remove the support for
-// Solver::Summary::initial_*
-struct ExpectedEvaluation {
-  int num_rows;
-  int num_cols;
-  double cost;
-  const double residuals[50];
-  const double gradient[50];
-  const double jacobian[200];
-};
-
-void CompareEvaluations(int expected_num_rows,
-                        int expected_num_cols,
-                        double expected_cost,
-                        const double* expected_residuals,
-                        const double* expected_gradient,
-                        const double* expected_jacobian,
-                        const double actual_cost,
-                        const double* actual_residuals,
-                        const double* actual_gradient,
-                        const double* actual_jacobian) {
-  EXPECT_EQ(expected_cost, actual_cost);
-
-  if (expected_residuals != NULL) {
-    ConstVectorRef expected_residuals_vector(expected_residuals,
-                                             expected_num_rows);
-    ConstVectorRef actual_residuals_vector(actual_residuals,
-                                           expected_num_rows);
-    EXPECT_TRUE((actual_residuals_vector.array() ==
-                 expected_residuals_vector.array()).all())
-        << "Actual:\n" << actual_residuals_vector
-        << "\nExpected:\n" << expected_residuals_vector;
-  }
-
-  if (expected_gradient != NULL) {
-    ConstVectorRef expected_gradient_vector(expected_gradient,
-                                            expected_num_cols);
-    ConstVectorRef actual_gradient_vector(actual_gradient,
-                                            expected_num_cols);
-
-    EXPECT_TRUE((actual_gradient_vector.array() ==
-                 expected_gradient_vector.array()).all())
-        << "Actual:\n" << actual_gradient_vector.transpose()
-        << "\nExpected:\n" << expected_gradient_vector.transpose();
-  }
-
-  if (expected_jacobian != NULL) {
-    ConstMatrixRef expected_jacobian_matrix(expected_jacobian,
-                                            expected_num_rows,
-                                            expected_num_cols);
-    ConstMatrixRef actual_jacobian_matrix(actual_jacobian,
-                                          expected_num_rows,
-                                          expected_num_cols);
-    EXPECT_TRUE((actual_jacobian_matrix.array() ==
-                 expected_jacobian_matrix.array()).all())
-        << "Actual:\n" << actual_jacobian_matrix
-        << "\nExpected:\n" << expected_jacobian_matrix;
-  }
-}
-
-// Simple cost function used for testing Problem::Evaluate.
-//
 // r_i = i - (j + 1) * x_ij^2
 template <int kNumResiduals, int kNumParameterBlocks>
 class QuadraticCostFunction : public CostFunction {

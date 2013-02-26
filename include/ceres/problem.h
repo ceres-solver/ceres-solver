@@ -331,7 +331,8 @@ class Problem {
   // Options struct to control Problem::Evaluate.
   struct EvaluateOptions {
     EvaluateOptions()
-        : num_threads(1) {
+        : apply_loss_function(true),
+          num_threads(1) {
     }
 
     // The set of parameter blocks for which evaluation should be
@@ -360,6 +361,15 @@ class Problem {
     // they were added to the problem. But, this may change if the
     // user removes any residual blocks from the problem.
     vector<ResidualBlockId> residual_blocks;
+
+    // Even though the residual blocks in the problem may contain loss
+    // functions, setting apply_loss_function to false will turn off
+    // the application of the loss function to the output of the cost
+    // function. This is of use for example if the user wishes to
+    // analyse the solution quality by studying the distribution of
+    // residuals before and after the solve.
+    bool apply_loss_function;
+
     int num_threads;
   };
 
