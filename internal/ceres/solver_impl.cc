@@ -914,8 +914,11 @@ bool SolverImpl::RemoveFixedBlocksFromProgram(Program* program,
         // The residual is constant and will be removed, so its cost is
         // added to the variable fixed_cost.
         double cost = 0.0;
-        if (!residual_block->Evaluate(
-              &cost, NULL, NULL, residual_block_evaluate_scratch.get())) {
+        if (!residual_block->Evaluate(true,
+                                      &cost,
+                                      NULL,
+                                      NULL,
+                                      residual_block_evaluate_scratch.get())) {
           *error = StringPrintf("Evaluation of the residual %d failed during "
                                 "removal of fixed residual blocks.", i);
           return false;

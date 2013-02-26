@@ -105,12 +105,12 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(&cost, NULL, NULL, scratch);
+  residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(&cost, residuals, NULL, scratch);
+  residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -134,7 +134,7 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
     jacobian_rz.data()
   };
 
-  residual_block.Evaluate(&cost, residuals, jacobian_ptrs, scratch);
+  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -153,7 +153,7 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
 
   jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
 
-  residual_block.Evaluate(&cost, residuals, jacobian_ptrs, scratch);
+  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -244,12 +244,12 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
 
   // Verify cost-only evaluation.
   double cost;
-  residual_block.Evaluate(&cost, NULL, NULL, scratch);
+  residual_block.Evaluate(true, &cost, NULL, NULL, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
 
   // Verify cost and residual evaluation.
   double residuals[3];
-  residual_block.Evaluate(&cost, residuals, NULL, scratch);
+  residual_block.Evaluate(true, &cost, residuals, NULL, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -273,7 +273,7 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
     jacobian_rz.data()
   };
 
-  residual_block.Evaluate(&cost, residuals, jacobian_ptrs, scratch);
+  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
@@ -311,7 +311,7 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
 
   jacobian_ptrs[1] = NULL;  // Don't compute the jacobian for y.
 
-  residual_block.Evaluate(&cost, residuals, jacobian_ptrs, scratch);
+  residual_block.Evaluate(true, &cost, residuals, jacobian_ptrs, scratch);
   EXPECT_EQ(0.5 * (0*0 + 1*1 + 2*2), cost);
   EXPECT_EQ(0.0, residuals[0]);
   EXPECT_EQ(1.0, residuals[1]);
