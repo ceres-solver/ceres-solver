@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QVtVYzgc",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 1,
+      "message": "Hard tab.",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVrXoouM",
+        "filename": "internal/ceres/evaluator_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 1,
+      "message": "Perhaps mention that the jacobian is dense.",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVnX-WqA",
+        "filename": "internal/ceres/evaluator_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 1,
+      "message": "Maybe mention that this is for a dense jacobian?",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVpXlpgs",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 1,
+      "message": "Part of me wants to put EvaluateOptions here. Passing in a struct opens the possibility of passing in a thunk of preallocated memory. For another CL though.",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVtXvLuc",
+        "filename": "internal/ceres/residual_block_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 1,
+      "message": "Yuck. Mysterious boolean options everywhere :(",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
