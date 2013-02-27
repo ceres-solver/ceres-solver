@@ -146,11 +146,11 @@ class Evaluator {
   // Variant of Evaluator::Evaluate where the user wishes to use the
   // default EvaluateOptions struct. This is mostly here as a
   // convenience method.
-  virtual bool Evaluate(const double* state,
-                        double* cost,
-                        double* residuals,
-                        double* gradient,
-                        SparseMatrix* jacobian) {
+  bool Evaluate(const double* state,
+                double* cost,
+                double* residuals,
+                double* gradient,
+                SparseMatrix* jacobian) {
     return Evaluate(EvaluateOptions(),
                     state,
                     cost,
