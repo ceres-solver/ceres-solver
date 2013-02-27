@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QVjX10sA",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-02-27T03:53:21Z",
+      "side": 0,
+      "message": "I don\u0027t think removing these blanks is good. Perhaps leave 1 of them?",
+      "revId": "b73148b9f38fe41032e696436566b78043a368db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
