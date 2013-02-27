@@ -43,10 +43,10 @@ Backward Incompatible API Changes
 
      vector<double> final_residuals;
      problem.Evaluate(Problem::EvaluateOptions(),
-                      NULL
+                      NULL, /* No cost */
                       &final_residuals,
-                      NULL,
-                      NULL);
+                      NULL, /* No gradient */
+                      NULL  /* No jacobian */ );
 
 
 New Features
@@ -62,14 +62,15 @@ New Features
    directions.
 
 #. Added ``Problem::Evaluate``. Now you can evaluate a problem or any
-   part of it without calling the solver. In light of this,
-   ``Solver::Options::return_initial_residuals``,
-   ``Solver::Options::return_initial_gradient``,
-   ``Solver::Options::return_initial_jacobian``,
-   ``Solver::Options::return_final_residuals``,
-   ``Solver::Options::return_final_gradient`` and
-   ``Solver::Options::return_final_jacobian`` have been deprecated and
-   removed from the API.
+   part of it without calling the solver. In light of this the
+   following settings have been deprecated and removed from the API.
+
+   - ``Solver::Options::return_initial_residuals``
+   - ``Solver::Options::return_initial_gradient``
+   - ``Solver::Options::return_initial_jacobian``
+   - ``Solver::Options::return_final_residuals``
+   - ``Solver::Options::return_final_gradient``
+   - ``Solver::Options::return_final_jacobian``
 
 #. New, much improved HTML documentation using Sphinx.
 
@@ -83,8 +84,14 @@ New Features
    differentiation. This is done by adding ``CostFunctionToFunctor``
    and ``NumericDiffFunctor`` objects to the API.
 
-#. ``Summary::FullReport`` now reports the structure of the ordering
-   used by the ``LinearSolver`` and inner iterations.
+#. Greatly expanded ``Summary::FullReport``:
+
+   - Report the ordering used by the ``LinearSolver``.
+   - Report the ordering used by the inner iterations.
+   - Execution timing breakdown into evaluations and linear solves.
+   - Effective size of the problem solved by the solver, which now
+     accounts for the size of the tangent space when using a
+     ``LocalParameterization``.
 
 #. Ceres when run at the ``VLOG`` level 3 or higher will report
    detailed timing information about its internals.
@@ -95,7 +102,7 @@ New Features
 #. Automatic differenatiation with a dynamic number of parameter
    blocks. (Based on an idea by Thad Hughes).
 
-#. Speeded up problem construction and destruction.
+#. Sped up problem construction and destruction.
 
 #. Added matrix adapters to ``rotation.h`` so that the rotation matrix
    routines can work with row and column major matrices. (Markus Moll)
@@ -106,11 +113,20 @@ New Features
 
 Bug Fixes
 ---------
+#. Pass the correct flags to the linker when using
+   ``pthreads``. (Taylor Braun-Jones)
+
+#. Only use ``cmake28`` macro when building on RHEL6. (Taylor
+   Braun-Jones)
+
+#. Remove ``-Wno-return-type-c-linkage`` when compiling with
+   GCC. (Taylor Braun-Jones)
+
 #. Fix ``No previous prototype`` warnings. (Sergey Sharybin)
 
 #. MinGW build fixes. (Sergey Sharybin)
 
-#. Lots of minor code and lint fixes reported by William Rucklidge.
+#. Lots of minor code and lint fixes. (William Rucklidge)
 
 #. Fixed a bug in ``solver_impl.cc`` residual evaluation. (Markus
    Moll)
@@ -132,7 +148,6 @@ Bug Fixes
 
 #. Fixed the install directory for libraries by correctly handling
    ``LIB_SUFFIX``. (Taylor Braun-Jones)
-
 
 1.4.0
 =====
