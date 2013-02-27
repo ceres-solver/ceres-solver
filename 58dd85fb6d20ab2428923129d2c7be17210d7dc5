@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "QVnXNmoA",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-27T05:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "QVtVYzgc",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QVrXoouM",
         "filename": "internal/ceres/evaluator_test_utils.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-02-27T03:53:21Z",
       "side": 1,
       "message": "Perhaps mention that the jacobian is dense.",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVrXW4hI",
+        "filename": "internal/ceres/evaluator_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-27T05:16:19Z",
+      "side": 1,
+      "message": "keepign it like this .. since its a single array.",
+      "parentUuid": "QVrXoouM",
       "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "QVpXT5iI",
+        "filename": "internal/ceres/residual_block.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-27T05:16:19Z",
+      "side": 1,
+      "message": "based on offline conversation.. keeping it like this for now.",
+      "parentUuid": "QVpXlpgs",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "QVtXvLuc",
         "filename": "internal/ceres/residual_block_test.cc",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2013-02-27T03:53:21Z",
       "side": 1,
       "message": "Yuck. Mysterious boolean options everywhere :(",
+      "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVvXgauk",
+        "filename": "internal/ceres/residual_block_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-27T05:16:19Z",
+      "side": 1,
+      "message": "I could overload it.. but I think thats a bit worse.",
+      "parentUuid": "QVtXvLuc",
       "revId": "58dd85fb6d20ab2428923129d2c7be17210d7dc5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
