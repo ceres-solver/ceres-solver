@@ -16,6 +16,24 @@
       "revId": "b73148b9f38fe41032e696436566b78043a368db",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QVlXSHiI",
+        "filename": "internal/ceres/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-02-27T05:16:19Z",
+      "side": 0,
+      "message": "accidental removal.",
+      "parentUuid": "QVjX10sA",
+      "revId": "b73148b9f38fe41032e696436566b78043a368db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
