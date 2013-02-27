@@ -111,8 +111,13 @@ New Features
 
 #. A ``.spec`` file for producing RPMs. (Taylor Braun-Jones)
 
+
 Bug Fixes
 ---------
+
+#. Disable unused member in ``gtest`` which results in build error on
+   OS X with latest Xcode. (Taylor Braun-Jones)
+
 #. Pass the correct flags to the linker when using
    ``pthreads``. (Taylor Braun-Jones)
 
