@@ -126,7 +126,7 @@ class PowellEvaluator2 : public Evaluator {
       dense_jacobian = down_cast<DenseSparseMatrix*>(jacobian);
       dense_jacobian->SetZero();
 
-      AlignedMatrixRef jacobian_matrix = dense_jacobian->mutable_matrix();
+      MatrixCRef jacobian_matrix = dense_jacobian->mutable_matrix();
       CHECK_EQ(jacobian_matrix.cols(), num_active_cols_);
 
       int column_index = 0;
