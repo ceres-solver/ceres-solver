@@ -195,11 +195,15 @@ TEST_F(DenseSparseMatrixTest, AppendDiagonal) {
 
   DenseSparseMatrix dsm(outer_proto);
 
+  LOG(INFO) << "before \n" << dsm.matrix();
   double diagonal[] = { 10, 11, 12 };
   dsm.AppendDiagonal(diagonal);
 
+
   // Verify the diagonal got added.
   Matrix m = dsm.matrix();
+
+  LOG(INFO) << "after \n" << dsm.matrix();
   EXPECT_EQ(6, m.rows());
   EXPECT_EQ(3, m.cols());
   for (int i = 0; i < 3; ++i) {
@@ -215,6 +219,8 @@ TEST_F(DenseSparseMatrixTest, AppendDiagonal) {
 
   // Verify the diagonal gets removed.
   dsm.RemoveDiagonal();
+
+  LOG(INFO) << "AGAIN \n" << dsm.matrix();
   m = dsm.matrix();
 
   EXPECT_EQ(3, m.rows());
