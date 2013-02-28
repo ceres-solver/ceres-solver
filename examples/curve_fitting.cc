@@ -159,5 +159,6 @@ int main(int argc, char** argv) {
   std::cout << summary.BriefReport() << "\n";
   std::cout << "Initial m: " << 0.0 << " c: " << 0.0 << "\n";
   std::cout << "Final   m: " << m << " c: " << c << "\n";
+  std::cout << summary.FullReport() << "\n";
   return 0;
 }
