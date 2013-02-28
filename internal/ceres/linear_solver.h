@@ -79,9 +79,9 @@ class LinearSolver {
           max_num_iterations(1),
           num_threads(1),
           residual_reset_period(10),
-          row_block_size(Dynamic),
-          e_block_size(Dynamic),
-          f_block_size(Dynamic) {
+          row_block_size(Eigen::Dynamic),
+          e_block_size(Eigen::Dynamic),
+          f_block_size(Eigen::Dynamic) {
     }
 
     LinearSolverType type;
