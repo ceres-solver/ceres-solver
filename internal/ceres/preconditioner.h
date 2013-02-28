@@ -49,9 +49,9 @@ class Preconditioner : public LinearOperator {
           sparse_linear_algebra_library(SUITE_SPARSE),
           use_block_amd(true),
           num_threads(1),
-          row_block_size(Dynamic),
-          e_block_size(Dynamic),
-          f_block_size(Dynamic) {
+          row_block_size(Eigen::Dynamic),
+          e_block_size(Eigen::Dynamic),
+          f_block_size(Eigen::Dynamic) {
     }
 
     PreconditionerType type;

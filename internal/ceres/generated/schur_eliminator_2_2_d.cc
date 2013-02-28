@@ -46,7 +46,7 @@
 namespace ceres {
 namespace internal {
 
-template class SchurEliminator<2, 2, Dynamic>;
+template class SchurEliminator<2, 2, Eigen::Dynamic>;
 
 }  // namespace internal
 }  // namespace ceres
