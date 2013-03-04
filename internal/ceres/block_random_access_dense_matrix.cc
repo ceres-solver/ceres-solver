@@ -48,14 +48,25 @@ BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
   }
 
   values_.reset(new double[num_rows_ * num_rows_]);
-  CHECK_NOTNULL(values_.get());
-  cell_info_.values = values_.get();
+
+  cell_infos_.resize(blocks.size() * blocks.size(), NULL);
+  for (int i = 0, cursor = 0; i < blocks.size(); ++i) {
+    for (int j = 0; j < blocks.size(); ++j, ++cursor) {
+      CellInfo* cell_info = new CellInfo;
+      cell_info->values = values_.get();
+      cell_infos_[cursor] = cell_info;
+    }
+  }
+
   SetZero();
 }
 
 // Assume that the user does not hold any locks on any cell blocks
 // when they are calling SetZero.
 BlockRandomAccessDenseMatrix::~BlockRandomAccessDenseMatrix() {
+  for (int i = 0; i < cell_infos_.size(); ++i) {
+    delete cell_infos_[i];
+  }
 }
 
 CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
@@ -68,7 +79,7 @@ CellInfo* BlockRandomAccessDenseMatrix::GetCell(const int row_block_id,
   *col = block_layout_[col_block_id];
   *row_stride = num_rows_;
   *col_stride = num_rows_;
-  return &cell_info_;
+  return cell_infos_[row_block_id * block_layout_.size() + col_block_id];
 }
 
 // Assume that the user does not hold any locks on any cell blocks

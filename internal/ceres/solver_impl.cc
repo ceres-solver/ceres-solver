@@ -1153,20 +1153,6 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
       options->sparse_linear_algebra_library;
 
   linear_solver_options.num_threads = options->num_linear_solver_threads;
-  // The matrix used for storing the dense Schur complement has a
-  // single lock guarding the whole matrix. Running the
-  // SchurComplementSolver with multiple threads leads to maximum
-  // contention and slowdown. If the problem is large enough to
-  // benefit from a multithreaded schur eliminator, you should be
-  // using a SPARSE_SCHUR solver anyways.
-  if ((linear_solver_options.num_threads > 1) &&
-      (linear_solver_options.type == DENSE_SCHUR)) {
-    LOG(WARNING) << "Warning: Solver::Options::num_linear_solver_threads = "
-                 << options->num_linear_solver_threads
-                 << " with DENSE_SCHUR will result in poor performance; "
-                 << "switching to single-threaded.";
-    linear_solver_options.num_threads = 1;
-  }
   options->num_linear_solver_threads = linear_solver_options.num_threads;
 
   linear_solver_options.use_block_amd = options->use_block_amd;
