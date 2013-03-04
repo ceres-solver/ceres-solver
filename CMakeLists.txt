@@ -689,8 +689,15 @@ FILE(RELATIVE_PATH relInstallDir ${CMAKE_INSTALL_PREFIX}/${CMAKECONFIG_INSTALL_D
 CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfig.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake" @ONLY )
 
+# Additionally, when cmake has found a CeresConfig.cmake, it can check for a CeresConfigVersion.cmake
+# in the same directory when figuring out the version of the package when a version
+# has been specified in the find_package() call, e.g. find_package(Ceres 1.0)
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
+	       "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY )
+
 # Install these two files into the same directory as the generated exports-file.
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
               "${CMAKE_SOURCE_DIR}/cmake/depend.cmake"
         DESTINATION ${CMAKECONFIG_INSTALL_DIR} )
 
