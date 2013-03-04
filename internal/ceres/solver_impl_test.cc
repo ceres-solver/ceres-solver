@@ -561,7 +561,7 @@ TEST(SolverImpl, CreateLinearSolverDenseSchurMultipleThreads) {
       SolverImpl::CreateLinearSolver(&options, &error));
   EXPECT_TRUE(solver != NULL);
   EXPECT_EQ(options.linear_solver_type, DENSE_SCHUR);
-  EXPECT_EQ(options.num_linear_solver_threads, 1);
+  EXPECT_EQ(options.num_linear_solver_threads, 2);
 }
 
 TEST(SolverImpl, CreateIterativeLinearSolverForDogleg) {
