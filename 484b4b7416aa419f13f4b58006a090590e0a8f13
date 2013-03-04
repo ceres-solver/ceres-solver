@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Qo8X97vY",
+        "filename": "docs/source/contributing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T05:19:01Z",
+      "side": 1,
+      "message": "Link is broken",
+      "revId": "484b4b7416aa419f13f4b58006a090590e0a8f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QowX0NhE",
+        "filename": "docs/source/contributing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T05:19:01Z",
+      "side": 1,
+      "message": "Indentation got messed up, throwing off the rest of the sections. Check out the generated HTML.",
+      "revId": "484b4b7416aa419f13f4b58006a090590e0a8f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Qo6X46gc",
+        "filename": "docs/source/contributing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T05:19:01Z",
+      "side": 1,
+      "message": "Link is messed up in generated HTML. This could be written clearer also.",
+      "revId": "484b4b7416aa419f13f4b58006a090590e0a8f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Qo.Xu8kI",
+        "filename": "docs/source/contributing.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T05:19:01Z",
+      "side": 1,
+      "message": "Is the extra blank needed?",
+      "revId": "484b4b7416aa419f13f4b58006a090590e0a8f13",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
