@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "QocT8EDQ",
+        "filename": "internal/ceres/dense_sparse_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T01:05:39Z",
+      "side": 1,
+      "message": "These log statements are a bit terse; either expand or remove.",
+      "revId": "ffdcfc951b139591570d39301835601a6d837c21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QoWQS5KI",
+        "filename": "internal/ceres/generate_eliminator_specialization.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-04T01:05:39Z",
+      "side": 1,
+      "message": "2013",
+      "revId": "ffdcfc951b139591570d39301835601a6d837c21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
