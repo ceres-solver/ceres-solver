@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Qo4IyfBo",
+        "filename": "internal/ceres/block_random_access_dense_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-03-04T02:09:39Z",
+      "side": 1,
+      "message": "scoped_array? We don\u0027t dynamically size, and it obviates the destructor bit.",
+      "revId": "2c482dcc3162898bf2d1821c36a408602143d45c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
