@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Qo.LW6Lc",
+        "filename": "internal/ceres/generate_eliminator_specialization.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-03-04T00:14:04Z",
+      "side": 0,
+      "message": "Missing license.",
+      "revId": "f8e43f7f2724c5413015e1f113ce860ee8b30428",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Qo0JbFJM",
+        "filename": "internal/ceres/generated/schur_eliminator_2_2_d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-03-04T00:14:04Z",
+      "side": 0,
+      "message": "umm?",
+      "revId": "f8e43f7f2724c5413015e1f113ce860ee8b30428",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "QowLcLNY",
+        "filename": "internal/ceres/schur_eliminator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-03-04T00:14:04Z",
+      "side": 0,
+      "message": "license",
+      "revId": "f8e43f7f2724c5413015e1f113ce860ee8b30428",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
