@@ -74,15 +74,21 @@ New Features
 
 #. New, much improved HTML documentation using Sphinx.
 
-#. Speedup the robust loss function correction logic when residual is
-   one dimensional.
-
 #. Changed ``NumericDiffCostFunction`` to take functors like
    ``AutoDiffCostFunction``.
 
 #. Added support for mixing automatic, analytic and numeric
    differentiation. This is done by adding ``CostFunctionToFunctor``
    and ``NumericDiffFunctor`` objects to the API.
+
+#. Spedup the robust loss function correction logic when residual is
+   one dimensional.
+
+#. Spedup ``DenseQRSolver`` by changing the way dense jacobians are
+   stored. This is a 200-500% improvement in linear solver performance
+   depending on the size of the problem.
+
+#. ``DENSE_SCHUR`` now supports multi-threading.
 
 #. Greatly expanded ``Summary::FullReport``:
 
