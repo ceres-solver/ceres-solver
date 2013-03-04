@@ -1,8 +1,8 @@
 .. _chapter-building:
 
-========
-Building
-========
+=====================
+Building Ceres Solver
+=====================
 
 Ceres source code and documentation are hosted at `code.google.com
 <http://code.google.com/p/ceres-solver/>`_.
