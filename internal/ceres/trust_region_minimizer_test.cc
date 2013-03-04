@@ -370,7 +370,7 @@ TEST(TrustRegionMinimizer, JacobiScalingTest) {
   EXPECT_LE(summary.final_cost, 1e-10);
 
   for (int i = 0; i < N; i++) {
-    delete y[i];
+    delete []y[i];
   }
 }
 
