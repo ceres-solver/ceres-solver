@@ -74,7 +74,6 @@
 #include <iostream>
 #include <fstream>
 #include "ceres/ceres.h"
-#include "ceres/split.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "Eigen/Core"
@@ -95,16 +94,39 @@ DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps");
 DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
 
+namespace ceres {
+namespace examples {
+
 using Eigen::Dynamic;
 using Eigen::RowMajor;
 typedef Eigen::Matrix<double, Dynamic, 1> Vector;
 typedef Eigen::Matrix<double, Dynamic, Dynamic, RowMajor> Matrix;
 
+void SplitStringUsingChar(const string& full,
+                          const char delim,
+                          vector<string>* result) {
+  back_insert_iterator< vector<string> > it(*result);
+
+  const char* p = full.data();
+  const char* end = p + full.size();
+  while (p != end) {
+    if (*p == delim) {
+      ++p;
+    } else {
+      const char* start = p;
+      while (++p != end && *p != delim) {
+        // Skip to the next occurence of the delimiter.
+      }
+      *it++ = string(start, p - start);
+    }
+  }
+}
+
 bool GetAndSplitLine(std::ifstream& ifs, std::vector<std::string>* pieces) {
   pieces->clear();
   char buf[256];
   ifs.getline(buf, 256);
-  ceres::SplitStringUsing(std::string(buf), " ", pieces);
+  SplitStringUsingChar(std::string(buf), ' ', pieces);
   return true;
 }
 
@@ -504,9 +526,12 @@ void SolveNISTProblems() {
   std::cout << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
 }
 
+}  // namespace examples
+}  // namespace ceres
+
 int main(int argc, char** argv) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
-  SolveNISTProblems();
+  ceres::examples::SolveNISTProblems();
   return 0;
 };
