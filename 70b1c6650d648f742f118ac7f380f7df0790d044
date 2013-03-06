@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Q5.F84sw",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-06T05:20:49Z",
+      "side": 1,
+      "message": "Please reflow lines at 80 columns. Instead of \"cmake\" use \"CMake\".",
+      "revId": "70b1c6650d648f742f118ac7f380f7df0790d044",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Q58F35uU",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-06T05:20:49Z",
+      "side": 1,
+      "message": "Please remove the hard tab; use spaces instead.",
+      "revId": "70b1c6650d648f742f118ac7f380f7df0790d044",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Q5wGCroc",
+        "filename": "cmake/CeresConfigVersion.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-06T05:20:49Z",
+      "side": 1,
+      "message": "Instead of doing\n\n  if( x ...\n\ndo\n\n  if (x\n\nPlease fix this for if, endif, else.",
+      "revId": "70b1c6650d648f742f118ac7f380f7df0790d044",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
