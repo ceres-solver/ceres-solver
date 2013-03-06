@@ -503,11 +503,11 @@ having to touch the problem once it has been successfuly modeling.
             new CostFunctionToFunctor<2, 5, 3>(new IntrinsicProjection(observation_)));
       }
       template <typename T>
-      bool operator(const T* rotation,
-                    const T* translation,
-                    const T* intrinsics,
-                    const T* point,
-                    T* residual) const {
+      bool operator()(const T* rotation,
+                      const T* translation,
+                      const T* intrinsics,
+                      const T* point,
+                      T* residual) const {
         T transformed_point[3];
         RotateAndTranslatePoint(rotation, translation, point, transformed_point);
 
@@ -573,11 +573,11 @@ having to touch the problem once it has been successfuly modeling.
       }
 
       template <typename T>
-      bool operator(const T* rotation,
-                    const T* translation,
-                    const T* intrinsics,
-                    const T* point,
-                    T* residuals) const {
+      bool operator()(const T* rotation,
+                      const T* translation,
+                      const T* intrinsics,
+                      const T* point,
+                      T* residuals) const {
         T transformed_point[3];
         RotateAndTranslatePoint(rotation, translation, point, transformed_point);
         return (*intrinsic_projection_)(intrinsics, transformed_point, residual);
