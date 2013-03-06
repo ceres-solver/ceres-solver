@@ -33,6 +33,24 @@
       "revId": "bb01f44aaa9dc13dadfebfc5240db525f218851b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Q5qVjxPE",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-06T07:05:14Z",
+      "side": 1,
+      "message": "Yes, this is a error, it won\u0027t be possible to find \"internal/ceres/miniglog\" after installation, since it is not installed with \"make install\".",
+      "parentUuid": "Q5.FTAk0",
+      "revId": "bb01f44aaa9dc13dadfebfc5240db525f218851b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
