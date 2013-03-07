@@ -56,6 +56,15 @@ namespace internal {
 
 typedef map<double*, internal::ParameterBlock*> ParameterMap;
 
+internal::ParameterBlock* FindParameterBlockOrDie(
+    const ParameterMap& parameter_map,
+    double* parameter_block) {
+  ParameterMap::const_iterator it = parameter_map.find(parameter_block);
+  CHECK(it != parameter_map.end())
+      << "Parameter block not found: " << parameter_block;
+  return it->second;
+}
+
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
 // respectively, overlap.
 static bool RegionsAlias(const double* a, int size_a,
@@ -471,7 +480,8 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
 }
 
 void ProblemImpl::RemoveParameterBlock(double* values) {
-  ParameterBlock* parameter_block = FindOrDie(parameter_block_map_, values);
+  ParameterBlock* parameter_block =
+      FindParameterBlockOrDie(parameter_block_map_, values);
 
   if (options_.enable_fast_parameter_block_removal) {
     // Copy the dependent residuals from the parameter block because the set of
@@ -503,17 +513,17 @@ void ProblemImpl::RemoveParameterBlock(double* values) {
 }
 
 void ProblemImpl::SetParameterBlockConstant(double* values) {
-  FindOrDie(parameter_block_map_, values)->SetConstant();
+  FindParameterBlockOrDie(parameter_block_map_, values)->SetConstant();
 }
 
 void ProblemImpl::SetParameterBlockVariable(double* values) {
-  FindOrDie(parameter_block_map_, values)->SetVarying();
+  FindParameterBlockOrDie(parameter_block_map_, values)->SetVarying();
 }
 
 void ProblemImpl::SetParameterization(
     double* values,
     LocalParameterization* local_parameterization) {
-  FindOrDie(parameter_block_map_, values)
+  FindParameterBlockOrDie(parameter_block_map_, values)
       ->SetParameterization(local_parameterization);
 }
 
@@ -557,7 +567,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     parameter_blocks.resize(parameter_block_ptrs.size());
     for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
       parameter_blocks[i] =
-          FindOrDie(parameter_block_map_, parameter_block_ptrs[i]);
+          FindParameterBlockOrDie(parameter_block_map_,
+                                  parameter_block_ptrs[i]);
     }
 
     // 2. The user may have only supplied a subset of parameter

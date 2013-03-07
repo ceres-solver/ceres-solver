@@ -457,6 +457,51 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
   double y[4], z[5], w[3];
 };
 
+TEST(Problem, SetParameterBlockConstantWithUnknownPtrDies) {
+  double x[3];
+  double y[2];
+
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+
+  EXPECT_DEATH_IF_SUPPORTED(problem.SetParameterBlockConstant(y),
+                            "Parameter block not found:");
+}
+
+TEST(Problem, SetParameterBlockVariableWithUnknownPtrDies) {
+  double x[3];
+  double y[2];
+
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+
+  EXPECT_DEATH_IF_SUPPORTED(problem.SetParameterBlockVariable(y),
+                            "Parameter block not found:");
+}
+
+TEST(Problem, SetLocalParameterizationWithUnknownPtrDies) {
+  double x[3];
+  double y[2];
+
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.SetParameterization(y, new IdentityParameterization(3)),
+      "Parameter block not found:");
+}
+
+TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
+  double x[3];
+  double y[2];
+
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+
+  EXPECT_DEATH_IF_SUPPORTED(
+      problem.RemoveParameterBlock(y), "Parameter block not found:");
+}
+
 TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   problem->AddParameterBlock(y, 4);
   problem->AddParameterBlock(z, 5);
