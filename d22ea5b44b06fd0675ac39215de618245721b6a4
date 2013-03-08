@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RWek5td4",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-08T14:53:47Z",
+      "side": 1,
+      "message": "and goes on the first line to match the rest of the conditionals.",
+      "revId": "d22ea5b44b06fd0675ac39215de618245721b6a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
