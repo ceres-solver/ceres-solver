@@ -103,7 +103,8 @@ SET(CERES_INTERNAL_SRC
 # install native libraries to lib64 rather than lib. Most distros seem to
 # follow this convention with a couple notable exceptions (Debian-based and
 # Arch-based distros) which we try to detect here.
-IF (NOT DEFINED LIB_SUFFIX AND
+IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux"
+    AND NOT DEFINED LIB_SUFFIX AND
     NOT CMAKE_CROSSCOMPILING AND
     ${CMAKE_SIZEOF_VOID_P} EQUAL "8" AND
     NOT EXISTS "/etc/debian_version" AND
