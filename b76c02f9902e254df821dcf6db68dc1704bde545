@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RYyX-Oio",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-11T21:56:27Z",
+      "side": 1,
+      "message": "The only problem I see is with these lines, should \"internal/ceres/miniglog\" be installed as well?",
+      "revId": "b76c02f9902e254df821dcf6db68dc1704bde545",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
