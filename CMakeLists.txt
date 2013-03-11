@@ -415,12 +415,12 @@ ELSE (NOT ${BUILD_ANDROID})
 ENDIF (NOT ${BUILD_ANDROID})
 
 # Eigen
-MESSAGE("-- Check for Eigen 3.0")
+MESSAGE("-- Check for Eigen 3.x")
 FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS ${EIGEN_SEARCH_HEADERS})
 IF (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
-MESSAGE("-- Found Eigen 3.0: ${EIGEN_INCLUDE}")
+MESSAGE("-- Found Eigen 3.x: ${EIGEN_INCLUDE}")
 
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
@@ -656,3 +656,47 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
 
 ADD_CUSTOM_TARGET(uninstall
                   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)
+
+# Set up install directories. INCLUDE_INSTALL_DIR and LIB_INSTALL_DIR
+# must not be absolute paths.
+SET(LIB_INSTALL_DIR_SUFFIX "" CACHE
+    STRING "The directories where to install libraries to")
+SET(LIB_INSTALL_DIR lib${LIB_INSTALL_DIR_SUFFIX} )
+SET(CMAKECONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/Ceres)
+SET(INCLUDE_INSTALL_DIR include)
+
+# This "exports" all targets which have been put into the export set
+# "CeresExport". This means that CMake generates a file with the given
+# filename, which can later on be loaded by projects using this package.
+# This file contains ADD_LIBRARY(bar IMPORTED) statements for each target
+# in the export set, so when loaded later on CMake will create "imported"
+# library targets from these, which can be used in many ways in the same way
+# as a normal library target created via a normal ADD_LIBRARY().
+INSTALL(EXPORT CeresExport
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
+
+# Figure out the relative path from the installed Config.cmake file to the
+# install prefix (which may be at runtime different from the chosen
+# CMAKE_INSTALL_PREFIX if under Windows the package was installed anywhere)
+# This relative path will be configured into the CeresConfig.cmake.
+FILE(RELATIVE_PATH relInstallDir
+     ${CMAKE_INSTALL_PREFIX}/${CMAKECONFIG_INSTALL_DIR} ${CMAKE_INSTALL_PREFIX})
+
+# Create a CeresConfig.cmake file. <name>Config.cmake files are searched by
+# FIND_PACKAGE() automatically. We configure that file so that we can put any
+# information we want in it, e.g. version numbers, include directories, etc.
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfig.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake" @ONLY)
+
+# Additionally, when CMake has found a CeresConfig.cmake, it can check for a
+# CeresConfigVersion.cmake in the same directory when figuring out the version
+# of the package when a version has been specified in the FIND_PACKAGE() call,
+# e.g. FIND_PACKAGE(Ceres [1.4.2] REQUIRED). The version argument is optional.
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY)
+
+# Install these two files into the same directory as the generated exports-file.
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
+              "${CMAKE_SOURCE_DIR}/cmake/depend.cmake"
+        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
