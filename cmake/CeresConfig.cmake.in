@@ -1,0 +1,18 @@
+# Get the directory
+GET_FILENAME_COMPONENT(currentDir ${CMAKE_CURRENT_LIST_FILE} PATH)
+
+# Get the chosen install prefix
+GET_FILENAME_COMPONENT(rootDir ${currentDir}/@relInstallDir@ ABSOLUTE)
+
+# Set the version
+SET(CERES_VERSION @CERES_VERSION@ )
+
+# What is my include directory
+SET(CERES_INCLUDES "${rootDir}/@INCLUDE_INSTALL_DIR@")
+
+# Import the exported targets
+INCLUDE(${currentDir}/CeresTargets.cmake)
+INCLUDE(${currentDir}/depend.cmake)
+
+# Set the expected library variable
+SET(CERES_LIBRARIES ceres)
