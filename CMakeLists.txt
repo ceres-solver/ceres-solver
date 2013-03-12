@@ -73,7 +73,11 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 #
 # For versions without ABI changes, bump the smallest number in CERES_VERSION,
 # but leave the CERES_ABI_VERSION unchanged.
-SET(CERES_VERSION 1.5.0)
+SET(CERES_VERSION_MAJOR 1)
+SET(CERES_VERSION_MINOR 5)
+SET(CERES_VERSION_PATCH 0)
+SET(CERES_VERSION
+    ${CERES_VERSION_MAJOR}.${CERES_VERSION_MINOR}.${CERES_VERSION_PATCH})
 SET(CERES_ABI_VERSION 1.5.0)
 
 ENABLE_TESTING()
@@ -629,13 +633,16 @@ ENDIF()
 ADD_SUBDIRECTORY(internal/ceres)
 
 OPTION(BUILD_DOCUMENTATION
-       "Build User's Guide (pdf)"
+       "Build User's Guide (html)"
        OFF)
 
 IF (${BUILD_DOCUMENTATION})
   MESSAGE("-- Documentation building is enabled")
 
-  # Generate the User's Guide (pdf).
+  # Make CMake aware of the cmake folder, in order to find 'FindSphinx.cmake'
+  SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+  # Generate the User's Guide (html).
   # The corresponding target is UserGuide, but is included in ALL.
   ADD_SUBDIRECTORY(docs)
 ENDIF (${BUILD_DOCUMENTATION})
