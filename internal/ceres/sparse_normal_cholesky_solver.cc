@@ -28,6 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
+
 #include "ceres/sparse_normal_cholesky_solver.h"
 
 #include <algorithm>
@@ -257,3 +259,5 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
 }   // namespace internal
 }   // namespace ceres
+
+#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)

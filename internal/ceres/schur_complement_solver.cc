@@ -141,6 +141,7 @@ bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   return true;
 }
 
+#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
 
 SparseSchurComplementSolver::SparseSchurComplementSolver(
     const LinearSolver::Options& options)
@@ -365,5 +366,6 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 }
 #endif  // CERES_NO_CXPARSE
 
+#endif // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
 }  // namespace internal
 }  // namespace ceres
