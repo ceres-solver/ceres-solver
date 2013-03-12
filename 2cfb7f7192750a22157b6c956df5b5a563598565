@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RgRDY0nI",
+        "filename": "docs/source/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-12T22:23:12Z",
+      "side": 1,
+      "message": "These lines will install the documentation as well when \u0027make install\u0027",
+      "revId": "2cfb7f7192750a22157b6c956df5b5a563598565",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
