@@ -16,6 +16,23 @@
       "revId": "2cfb7f7192750a22157b6c956df5b5a563598565",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RgVBdOvQ",
+        "filename": "docs/source/conf.py.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-12T22:26:13Z",
+      "side": 1,
+      "message": "Based on the comment, here shouldn\u0027t be the full version, maybe I should split the CERES_VERSION variable into small parts... but here before was \u00271.5.0\u0027. So I\u0027ve got confused",
+      "revId": "2cfb7f7192750a22157b6c956df5b5a563598565",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
