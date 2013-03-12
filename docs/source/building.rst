@@ -320,6 +320,11 @@ customize the build process by passing appropriate flags to
    the ``SPARSE_SCHUR`` solver, you can disable some of the template
    specializations by using this flag.
 
+#. ``-DLINE_SEARCH_MINIMIZER=OFF``: The line search based minimizer is
+   mostly suitable for large scale optimization problems, or when sparse
+   linear algebra libraries are not available. You can further save on
+   some compile time and binary size by using this flag.
+
 #. ``-DOPENMP=OFF``: On certain platforms like Android,
    multi-threading with ``OpenMP`` is not supported. Use this flag to
    disable multithreading.

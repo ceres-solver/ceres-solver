@@ -122,6 +122,7 @@ SET(CXSPARSE_SEARCH_LIBS ${SEARCH_LIBS})
 SET(CXSPARSE_SEARCH_HEADERS ${SEARCH_HEADERS})
 LIST(APPEND CXSPARSE_SEARCH_HEADERS /usr/include/suitesparse) # Ubuntu
 
+IF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # Check for SuiteSparse dependencies
 MESSAGE("-- Check for AMD")
 SET(AMD_FOUND TRUE)
@@ -300,6 +301,7 @@ SET(SUITESPARSE_FOUND
     (${SUITESPARSE_CONFIG_FOUND} OR ${UFCONFIG_FOUND}) AND
     ${BLAS_AND_LAPACK_FOUND})
 
+ENDIF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # By default, if all of SuiteSparse's dependencies are found, Ceres is
 # built with SuiteSparse support. -DSUITESPARSE=ON/OFF can be used to
 # enable/disable SuiteSparse explicitly.
@@ -325,6 +327,7 @@ ENDIF (DEFINED SUITESPARSE)
 # By default, if all of CXSparse's dependencies are found, Ceres is
 # built with CXSparse support. -DCXSPARSE=ON/OFF can be used to
 # enable/disable CXSparse explicitly.
+IF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
 MESSAGE("-- Check for CXSparse")
 SET(CXSPARSE_FOUND ON)
 
@@ -343,6 +346,7 @@ ELSE (EXISTS ${CXSPARSE_INCLUDE})
   MESSAGE("-- Did not find CXSparse header")
   SET(CXSPARSE_FOUND FALSE)
 ENDIF (EXISTS ${CXSPARSE_INCLUDE})
+ENDIF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
 
 IF (DEFINED CXSPARSE)
   IF (${CXSPARSE})
@@ -433,6 +437,19 @@ IF (NOT ${SCHUR_SPECIALIZATIONS})
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
 ENDIF (NOT ${SCHUR_SPECIALIZATIONS})
+
+# Line search minimizer is useful for large scale problems or when
+# sparse linear algebra libraries are not available. If compile time,
+# binary size or compiler performance is an issue, consider disabling
+# this.
+OPTION(LINE_SEARCH_MINIMIZER
+       "Enable the line search minimizer."
+       ON)
+
+IF (NOT ${LINE_SEARCH_MINIMIZER})
+ ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
+ MESSAGE("-- Disabling line search minimizer")
+ENDIF (NOT ${LINE_SEARCH_MINIMIZER})
 
 # Multithreading using OpenMP
 OPTION(OPENMP
