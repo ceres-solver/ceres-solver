@@ -36,17 +36,28 @@ import glob
 import os
 import sys
 
-if len(sys.argv) < 3:
+# Number of arguments
+N = len(sys.argv)
+
+if N < 3:
   print "make_docs.py src_root destination_root"
   sys.exit(1)
 
-src_dir =  sys.argv[1] + "/docs/source"
+src_dir    = sys.argv[1] + "/docs/source"
 build_root = sys.argv[2]
-doctrees_dir = build_root + "/doctrees"
-html_dir =  build_root + "/html"
+cache_dir  = build_root + "/doctrees"
+html_dir   = build_root + "/html"
+
+# Called from Command Line
+if N == 3:
+  sphinx_exe = "sphinx-build"
+
+# Called from CMake (using the SPHINX_EXECUTABLE found)
+elif N == 4:
+  sphinx_exe = sys.argv[3]
 
 # Run Sphinx to build the documentation.
-os.system("sphinx-build -b html -d %s %s %s" %(doctrees_dir, src_dir, html_dir))
+os.system("%s -b html -d %s %s %s" %(sphinx_exe, cache_dir, src_dir, html_dir))
 
 input_pattern = """config=TeX-AMS-MML_HTMLorMML"></script>"""
 output_pattern = """config=TeX-AMS_HTML">

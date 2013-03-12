@@ -40,9 +40,9 @@ fi
 
 TMP="/tmp/ceres-solver-$1"
 DOCS_TMP="/tmp/ceres-solver-docs-$1"
-VERSION=$(grep 'SET(CERES_VERSION' CMakeLists.txt | \
-          sed -e 's/SET(CERES_VERSION //' | \
-          sed -e 's/)//')
+VERSION=$(grep 'SET(CERES_VERSION_' CMakeLists.txt | \
+          sed -e 's/\(.*\) \(.*\))/\2/' | \
+          tr '\n' '.' | sed -e 's/.$//')
 ABI_VERSION=$(grep 'SET(CERES_ABI_VERSION' CMakeLists.txt | \
               sed -e 's/SET(CERES_ABI_VERSION //' | \
               sed -e 's/)//')
@@ -89,9 +89,8 @@ if [[ $VERSION_IN_SPEC != $VERSION ]] ; then
   exit 1
 fi
 
-# Clone the repository and clean out the git extras.
-git clone . $TMP
-rm -rf "$TMP/.git"
+# Export repository.
+git checkout-index -f -a --prefix=$TMP/
 
 # Build the VERSION file.
 VERSIONFILE=$TMP/VERSION
