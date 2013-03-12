@@ -80,7 +80,7 @@ class SolverImpl {
                                  Evaluator* evaluator,
                                  double* parameters,
                                  Solver::Summary* summary);
-#endif // CERES_NO_LINE_SEARCH_MINIMIZER
+#endif  // CERES_NO_LINE_SEARCH_MINIMIZER
 
   // Create the transformed Program, which has all the fixed blocks
   // and residuals eliminated, and in the case of automatic schur

@@ -807,7 +807,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
 }
-#endif // CERES_NO_LINE_SEARCH_MINIMIZER
+#endif  // CERES_NO_LINE_SEARCH_MINIMIZER
 
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
                                  const ProblemImpl* problem_impl,

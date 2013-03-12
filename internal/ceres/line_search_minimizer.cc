@@ -284,4 +284,4 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_NO_LINE_SEARCH_MINIMIZER
+#endif  // CERES_NO_LINE_SEARCH_MINIMIZER

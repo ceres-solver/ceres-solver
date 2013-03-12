@@ -366,6 +366,6 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 }
 #endif  // CERES_NO_CXPARSE
 
-#endif // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
+#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
 }  // namespace internal
 }  // namespace ceres
