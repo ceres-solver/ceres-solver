@@ -36,17 +36,17 @@ import glob
 import os
 import sys
 
-if len(sys.argv) < 3:
-  print "make_docs.py src_root destination_root"
+if len(sys.argv) < 5:
+  print "make_docs.py src_dir binary_dir cache_dir html_dir"
   sys.exit(1)
 
-src_dir =  sys.argv[1] + "/docs/source"
-build_root = sys.argv[2]
-doctrees_dir = build_root + "/doctrees"
-html_dir =  build_root + "/html"
+src_dir    = sys.argv[1]
+binary_dir = sys.argv[2]
+cache_dir  = sys.argv[3]
+html_dir   = sys.argv[4]
 
 # Run Sphinx to build the documentation.
-os.system("sphinx-build -b html -d %s %s %s" %(doctrees_dir, src_dir, html_dir))
+os.system("sphinx-build -q -b html -c %s -d %s %s %s" %(binary_dir, cache_dir, src_dir, html_dir))
 
 input_pattern = """config=TeX-AMS-MML_HTMLorMML"></script>"""
 output_pattern = """config=TeX-AMS_HTML">
