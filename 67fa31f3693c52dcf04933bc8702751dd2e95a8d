@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "RjjQlELk",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t IF (SUITESPARSE) do the trick?",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjhQiFLE",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t IF (CXSPARSE) do the trick?",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjvQ7GNs",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "\u0027you may\u0027 -\u003e \u0027\u0027",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjtRAHEw",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef? We use ifndef pretty consistently. We use defined(...) when there are compound statements (e.g. multiple defineds with an \u0026\u0026).",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjpRKpGY",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjnQwKPU",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjlQtLJc",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjjQ6sNM",
+        "filename": "internal/ceres/line_search_direction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjhQ3tOs",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjvRkOPw",
+        "filename": "internal/ceres/line_search_minimizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjpRjxPA",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjlRWTA0",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifdef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjjRT0B0",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifdef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjvSJ2G4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifdef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RjtSO3HQ",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-12T17:47:55Z",
+      "side": 1,
+      "message": "ifndef",
+      "revId": "67fa31f3693c52dcf04933bc8702751dd2e95a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
