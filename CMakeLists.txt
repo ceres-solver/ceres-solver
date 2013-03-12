@@ -635,6 +635,9 @@ OPTION(BUILD_DOCUMENTATION
 IF (${BUILD_DOCUMENTATION})
   MESSAGE("-- Documentation building is enabled")
 
+  # Make CMake aware of the cmake folder, in order to find 'FindSphinx.cmake'
+  SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
   # Generate the User's Guide (pdf).
   # The corresponding target is UserGuide, but is included in ALL.
   ADD_SUBDIRECTORY(docs)
