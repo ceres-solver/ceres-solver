@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Rf8m79bQ",
+        "filename": "docs/source/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-12T14:41:32Z",
+      "side": 1,
+      "message": "There is a quirck in the way we use sphinx, which requires that we only the 1.1 series of Sphinx for now. Could you add a version check?",
+      "revId": "3fa5fd05e82e7cf7cba0835492e07c0d325df14c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Rf.m4sbo",
+        "filename": "docs/source/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-12T14:41:32Z",
+      "side": 1,
+      "message": "please have a look at the make_docs.py script in the scripts folder, which does some textual post processing to ensure that the math fonts are properly rendered.",
+      "revId": "3fa5fd05e82e7cf7cba0835492e07c0d325df14c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
