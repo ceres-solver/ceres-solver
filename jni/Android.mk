@@ -65,6 +65,10 @@
 #
 # to the LOCAL_CFLAGS variable below, and commenting out all the
 # generated/schur_eliminator_2_2_2.cc-alike files, leaving only the _d_d_d one.
+#
+# Similarly if you do not need the line search minimizer, consider adding
+#
+#   -DCERES_NO_LINE_SEARCH_MINIMIZER
 
 LOCAL_PATH := $(call my-dir)
 
