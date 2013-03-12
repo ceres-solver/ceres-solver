@@ -16,6 +16,24 @@
       "revId": "b76c02f9902e254df821dcf6db68dc1704bde545",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Rf0nBxSM",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-12T14:43:10Z",
+      "side": 1,
+      "message": "Are we actually supporting a cmake based android build? Since the ndk system is so utterly complicated and the android related builds require a bunch of other stuff I am not sure its worth dealing with the android intricacies in CMake. The stuff in the jni directory deals with it explicitly.",
+      "parentUuid": "RYyX-Oio",
+      "revId": "b76c02f9902e254df821dcf6db68dc1704bde545",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
