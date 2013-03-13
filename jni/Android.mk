@@ -69,15 +69,28 @@
 # Similarly if you do not need the line search minimizer, consider adding
 #
 #   -DCERES_NO_LINE_SEARCH_MINIMIZER
+#
+# Changing the logging library:
+#
+# Ceres Solver ships with a replacement for glog that provides a
+# simple and small implementation that builds on Android. However, if
+# you wish to supply a header only version yourself, then you may
+# define CERES_GLOG_DIR to point to it.
 
 LOCAL_PATH := $(call my-dir)
 
 EIGEN_PATH := $(EIGEN_PATH)
-
-CERES_INCLUDE_PATHS := $(LOCAL_PATH)/../internal
+CERES_INCLUDE_PATHS := $(CERES_EXTRA_INCLUDES)
+CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../include
-CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres/miniglog
+
+# Use the alternate glog implementation if provided by the user.
+ifdef CERES_GLOG_DIR
+  CERES_INCLUDE_PATHS += $(CERES_GLOG_DIR)
+else
+  CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres/miniglog
+endif
 CERES_SRC_PATH := ../internal/ceres
 
 include $(CLEAR_VARS)
@@ -135,7 +148,6 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
                    $(CERES_SRC_PATH)/low_rank_inverse_hessian.cc \
-                   $(CERES_SRC_PATH)/miniglog/glog/logging.cc \
                    $(CERES_SRC_PATH)/minimizer.cc \
                    $(CERES_SRC_PATH)/normal_prior.cc \
                    $(CERES_SRC_PATH)/parameter_block_ordering.cc \
@@ -182,6 +194,10 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_3.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_4.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_d.cc
+
+ifndef CERES_GLOG_DIR
+LOCAL_SRC_FILES += $(CERES_SRC_PATH)/miniglog/glog/logging.cc
+endif
 
 LOCAL_MODULE := ceres
 include $(BUILD_STATIC_LIBRARY)
