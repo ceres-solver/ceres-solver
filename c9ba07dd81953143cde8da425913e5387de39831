@@ -16,6 +16,24 @@
       "revId": "c9ba07dd81953143cde8da425913e5387de39831",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RqF3MT7E",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-13T23:49:49Z",
+      "side": 1,
+      "message": "ok, it is the last patch set only.\n\nOne question, does the release script use the \"CERES_VERSION\" variable? Because I added below (line 79-80). In which way does it break the script?",
+      "parentUuid": "RqNo-Bec",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
