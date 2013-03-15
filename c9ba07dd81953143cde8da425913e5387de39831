@@ -34,6 +34,92 @@
       "revId": "c9ba07dd81953143cde8da425913e5387de39831",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ryph3NaA",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-15T23:47:27Z",
+      "side": 1,
+      "message": "have a look at scripts/make_release\n it looks for the string CERES_VERSION and extracts the number next to it.",
+      "parentUuid": "RqF3MT7E",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Rythxras",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-15T23:47:27Z",
+      "side": 1,
+      "message": "add paths for homebrew, or I can add it once this is checked in.",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RyjiHCVE",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-15T23:47:27Z",
+      "side": 1,
+      "message": "no space after ( and before )",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "RyhiExUg",
+        "filename": "cmake/FindSphinx.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-15T23:47:27Z",
+      "side": 1,
+      "message": "can you also verify that the sphinx version is the 1.1 series, since the documentation actually breaks with higher versions.",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Rylilne4",
+        "filename": "scripts/make_docs.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-15T23:47:27Z",
+      "side": 1,
+      "message": "please modify the build_release script too, since this breaks that.\n\nbasically with this CL in you should be able to go into the ceres directory and run\n\nbash scripts/make_release 1.5.0 and it should produce a tar.gz with the latest version.",
+      "revId": "c9ba07dd81953143cde8da425913e5387de39831",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
