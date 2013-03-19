@@ -293,7 +293,7 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
     }
 
     if (VLOG_IS_ON(2)) {
-      cholmod_print_common("Symbolic Analysis", ss_.mutable_cc());
+      cholmod_print_common(const_cast<char*>("Symbolic Analysis"), ss_.mutable_cc());
     }
   }
 
