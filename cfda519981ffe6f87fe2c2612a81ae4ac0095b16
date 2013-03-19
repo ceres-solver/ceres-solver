@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "SAoAUFk8",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-19T20:55:36Z",
+      "side": 1,
+      "message": "oh, yes, \u0027build/docs/source/html\u0027 was created because I was setting the \u0027html_dir\u0027 (setting in make_docs.py) to that folder, but I\u0027ve changed already. Let me know if you want to delete this file, but I think it follows the CMake \"conventions\"",
+      "parentUuid": "R-KYthrY",
+      "revId": "cfda519981ffe6f87fe2c2612a81ae4ac0095b16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "R-OlK8WY",
         "filename": "scripts/make_release",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-03-19T16:50:02Z",
       "side": 1,
       "message": "The last statement should be\n\nsed -e \u0027s/.$//\u0027",
+      "revId": "cfda519981ffe6f87fe2c2612a81ae4ac0095b16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAuAkAsE",
+        "filename": "scripts/make_release",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-19T20:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "R-OlK8WY",
       "revId": "cfda519981ffe6f87fe2c2612a81ae4ac0095b16",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
