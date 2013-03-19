@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "R-KYthrY",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-19T16:50:02Z",
+      "side": 1,
+      "message": "I suggest that you move the lower level CMake file up here. \nIn the build directory, currently the documents are created in build/docs/source/html\n\ninstead they should be created in\n\nbuild/docs/html",
+      "revId": "cfda519981ffe6f87fe2c2612a81ae4ac0095b16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "R-OlK8WY",
+        "filename": "scripts/make_release",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-19T16:50:02Z",
+      "side": 1,
+      "message": "The last statement should be\n\nsed -e \u0027s/.$//\u0027",
+      "revId": "cfda519981ffe6f87fe2c2612a81ae4ac0095b16",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
