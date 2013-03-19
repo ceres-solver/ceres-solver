@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SAqA92uk",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Comments should end with a period.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAkBN7qE",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Can you put example directories in the comments? To show what it would look like for e.g. 1.5.0 in a typical install.\n\nAlso, comments should end in a period.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAuCBooM",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAmAv0rE",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "cmake -\u003e CMake",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAuAawoU",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "cmake -\u003e CMake",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAsCOnrM",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAqAUulc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "It\u0027d be rad if we could test this on windows.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAuP9LPM",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Please include the copyright boilerplate.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAqMHJCU",
+        "filename": "cmake/CeresConfigVersion.cmake.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Please include the copyright boilerplate.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAiOYtLY",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "Please include copyright boilerplate.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SAsOmqP4",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-19T22:15:26Z",
+      "side": 1,
+      "message": "3.x",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
