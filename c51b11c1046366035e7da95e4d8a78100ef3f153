@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SGMpcY-w",
+        "filename": "docs/source/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-20T19:32:22Z",
+      "side": 1,
+      "message": "I\u0027ve just realized that I should installed in a different folder?\n\nBut not sure which one, there are two better options:\n   * share/ceres/doc\n   * share/doc/ceres\n\nI think the last one, at least for Ubuntu, is the standard.",
+      "revId": "c51b11c1046366035e7da95e4d8a78100ef3f153",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
