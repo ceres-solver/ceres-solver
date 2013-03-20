@@ -16,6 +16,24 @@
       "revId": "c721a5901e0d7eb837c5142bc86986ff8b017153",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SGKrYD20",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-20T18:56:56Z",
+      "side": 1,
+      "message": "Add support for creating a CMake config file during build to make embedding Ceres in other CMake-using projects easier.",
+      "parentUuid": "SGGrbN3A",
+      "revId": "c721a5901e0d7eb837c5142bc86986ff8b017153",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
