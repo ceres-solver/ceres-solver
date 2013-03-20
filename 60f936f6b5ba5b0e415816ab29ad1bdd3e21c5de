@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "SG41iBRg",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-20T06:35:52Z",
+      "side": 1,
+      "message": "This was a suggestion from the example, but I think it is not the best way to use different versions.\n\nI can explain how to use different versions in the documentation without compromising the system, I mean, locally.\n\nMore or less the idea is (when you compile):\n   mkdir build \u0026 cd build\n   cmake -DCMAKE_INSTALL_PREFIX\u003d/some/where/local/\n   make -j install\n\nAnd then (in the user CMakeLists.txt):\n   FIND_PACKAGE(Ceres REQUIRED PATHS \"/some/where/local/\")\n\n\nNote: \"local\" is optional :P",
+      "parentUuid": "SAkBN7qE",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "SAuCBooM",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -115,6 +133,24 @@
       "writtenOn": "2013-03-19T22:15:26Z",
       "side": 1,
       "message": "It\u0027d be rad if we could test this on windows.",
+      "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SG00vbbE",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-20T06:35:52Z",
+      "side": 1,
+      "message": "It would be painful for me to try it on Windows :P\nI would need to install it! :P\nIs there any chance for someone else to prove it?",
+      "parentUuid": "SAqAUulc",
       "revId": "60f936f6b5ba5b0e415816ab29ad1bdd3e21c5de",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
