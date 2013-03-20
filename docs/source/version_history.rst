@@ -117,9 +117,32 @@ New Features
 
 #. A ``.spec`` file for producing RPMs. (Taylor Braun-Jones)
 
+#. ``CMake`` can now build the sphinx documentation (Pablo Speciale)
+
+#. Add support for creating a CMake config file during build to make
+   embedding Ceres in other CMake-using projects easier. (Pablo
+   Speciale).
+
+#. Better error reporting in ``Problem`` for missing parameter blocks.
+
+#. A more flexible ``Android.mk`` and a more modular build. If binary
+   size and/or compile time is a concern, larger parts of the solver
+   can be disabled at compile time.
 
 Bug Fixes
 ---------
+
+#. Fixed "deprecated conversion from string constant to char*"
+   warnings. (Pablo Speciale)
+
+#. Correctly propagate ifdefs when building without Schur eliminator
+   template specializations.
+
+#. Correct handling of ``LIB_SUFFIX`` on Linux. (Yuliy Schwartzburg).
+
+#. Code and signature cleanup in ``rotation.h``.
+
+#. Make examples independent of internal code.
 
 #. Disable unused member in ``gtest`` which results in build error on
    OS X with latest Xcode. (Taylor Braun-Jones)
