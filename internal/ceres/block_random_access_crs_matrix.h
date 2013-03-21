@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,16 +28,16 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
-#define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
+#ifndef CERES_INTERNAL_BLOCK_RANDOM_ACCESS_CRS_MATRIX_H_
+#define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_CRS_MATRIX_H_
 
 #include <set>
 #include <vector>
 #include <utility>
 #include "ceres/mutex.h"
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/collections_port.h"
-#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/integral_types.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
@@ -47,21 +47,17 @@
 namespace ceres {
 namespace internal {
 
-// A threaf safe square block sparse implementation of
-// BlockRandomAccessMatrix. Internally a TripletSparseMatrix is used
-// for doing the actual storage. This class augments this matrix with
-// an unordered_map that allows random read/write access.
-class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
+class BlockRandomAccessCRSMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes. block_pairs is a set of
   // <row_block_id, col_block_id> pairs to identify the non-zero cells
   // of this matrix.
-  BlockRandomAccessSparseMatrix(const vector<int>& blocks,
-                                const set<pair<int, int> >& block_pairs);
+  BlockRandomAccessCRSMatrix(const vector<int>& blocks,
+                             const set<pair<int, int> >& block_pairs);
 
   // The destructor is not thread safe. It assumes that no one is
   // modifying any cells when the matrix is being destroyed.
-  virtual ~BlockRandomAccessSparseMatrix();
+  virtual ~BlockRandomAccessCRSMatrix();
 
   // BlockRandomAccessMatrix Interface.
   virtual CellInfo* GetCell(int row_block_id,
@@ -76,12 +72,12 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   virtual void SetZero();
 
   // Since the matrix is square, num_rows() == num_cols().
-  virtual int num_rows() const { return tsm_->num_rows(); }
-  virtual int num_cols() const { return tsm_->num_cols(); }
+  virtual int num_rows() const { return crsm_->num_rows(); }
+  virtual int num_cols() const { return crsm_->num_cols(); }
 
-  // Access to the underlying matrix object.
-  const TripletSparseMatrix* matrix() const { return tsm_.get(); }
-  TripletSparseMatrix* mutable_matrix() { return tsm_.get(); }
+    // Access to the underlying matrix object.
+  const CompressedRowSparseMatrix* matrix() const { return crsm_.get(); }
+  CompressedRowSparseMatrix* mutable_matrix() { return crsm_.get(); }
 
  private:
   int64 IntPairToLong(int a, int b) {
@@ -91,20 +87,20 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   const int64 kMaxRowBlocks;
   // row/column block sizes.
   const vector<int> blocks_;
+  vector<int> col_layout_;
+  vector<int> row_strides_;
 
   // A mapping from <row_block_id, col_block_id> to the position in
   // the values array of tsm_ where the block is stored.
   typedef HashMap<long int, CellInfo* > LayoutType;
   LayoutType layout_;
 
-  // The underlying matrix object which actually stores the cells.
-  scoped_ptr<TripletSparseMatrix> tsm_;
-
-  friend class BlockRandomAccessSparseMatrixTest;
-  CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessSparseMatrix);
+  scoped_ptr<CompressedRowSparseMatrix> crsm_;
+  friend class BlockRandomAccessCRSMatrixTest;
+  CERES_DISALLOW_COPY_AND_ASSIGN(BlockRandomAccessCRSMatrix);
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_BLOCK_RANDOM_ACCESS_SPARSE_MATRIX_H_
+#endif  // CERES_INTERNAL_BLOCK_RANDOM_ACCESS_CRS_MATRIX_H_
