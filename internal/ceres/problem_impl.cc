@@ -33,6 +33,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <set>
 #include <string>
 #include <utility>
