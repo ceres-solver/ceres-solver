@@ -77,23 +77,23 @@ cholmod_sparse* SuiteSparse::CreateSparseMatrixTranspose(
   return cholmod_triplet_to_sparse(&triplet, triplet.nnz, &cc_);
 }
 
-cholmod_sparse* SuiteSparse::CreateSparseMatrixTransposeView(
+cholmod_sparse SuiteSparse::CreateSparseMatrixTransposeView(
     CompressedRowSparseMatrix* A) {
-  cholmod_sparse* m = new cholmod_sparse_struct;
-  m->nrow = A->num_cols();
-  m->ncol = A->num_rows();
-  m->nzmax = A->num_nonzeros();
+  cholmod_sparse m;
+  m.nrow = A->num_cols();
+  m.ncol = A->num_rows();
+  m.nzmax = A->num_nonzeros();
 
-  m->p = reinterpret_cast<void*>(A->mutable_rows());
-  m->i = reinterpret_cast<void*>(A->mutable_cols());
-  m->x = reinterpret_cast<void*>(A->mutable_values());
+  m.p = reinterpret_cast<void*>(A->mutable_rows());
+  m.i = reinterpret_cast<void*>(A->mutable_cols());
+  m.x = reinterpret_cast<void*>(A->mutable_values());
 
-  m->stype = 0;  // Matrix is not symmetric.
-  m->itype = CHOLMOD_INT;
-  m->xtype = CHOLMOD_REAL;
-  m->dtype = CHOLMOD_DOUBLE;
-  m->sorted = 1;
-  m->packed = 1;
+  m.stype = 0;  // Matrix is not symmetric.
+  m.itype = CHOLMOD_INT;
+  m.xtype = CHOLMOD_REAL;
+  m.dtype = CHOLMOD_DOUBLE;
+  m.sorted = 1;
+  m.packed = 1;
 
   return m;
 }

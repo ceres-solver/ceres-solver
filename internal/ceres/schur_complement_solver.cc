@@ -40,6 +40,7 @@
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
+#include "ceres/block_random_access_crs_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -120,20 +121,20 @@ void DenseSchurComplementSolver::InitStorage(
 // BlockRandomAccessDenseMatrix. The linear system is solved using
 // Eigen's Cholesky factorization.
 bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
-  const BlockRandomAccessDenseMatrix* m =
-      down_cast<const BlockRandomAccessDenseMatrix*>(lhs());
-  const int num_rows = m->num_rows();
-
+  const int num_rows = lhs()->num_rows();
   // The case where there are no f blocks, and the system is block
   // diagonal.
   if (num_rows == 0) {
     return true;
   }
 
+  const double* values =
+      down_cast<const BlockRandomAccessDenseMatrix*>(lhs())->values();
+
   // TODO(sameeragarwal): Add proper error handling; this completely ignores
   // the quality of the solution to the solve.
   VectorRef(solution, num_rows) =
-      ConstMatrixRef(m->values(), num_rows, num_rows)
+      ConstMatrixRef(values, num_rows, num_rows)
       .selfadjointView<Eigen::Upper>()
       .ldlt()
       .solve(ConstVectorRef(rhs(), num_rows));
@@ -238,11 +239,18 @@ void SparseSchurComplementSolver::InitStorage(
     }
   }
 
-  set_lhs(new BlockRandomAccessSparseMatrix(blocks_, block_pairs));
+  set_lhs(new BlockRandomAccessCRSMatrix(blocks_, block_pairs));
   set_rhs(new double[lhs()->num_rows()]);
 }
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
+  const int num_rows = lhs()->num_rows();
+  // The case where there are no f blocks, and the system is block
+  // diagonal.
+  if (num_rows == 0) {
+    return true;
+  }
+
   switch (options().sparse_linear_algebra_library) {
     case SUITE_SPARSE:
       return SolveReducedLinearSystemUsingSuiteSparse(solution);
@@ -264,48 +272,38 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
 // CHOLMOD's sparse cholesky factorization routines.
 bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
     double* solution) {
-  TripletSparseMatrix* tsm =
-      const_cast<TripletSparseMatrix*>(
-          down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());
+  CompressedRowSparseMatrix* crsm =
+      const_cast<CompressedRowSparseMatrix*>(
+          down_cast<const BlockRandomAccessCRSMatrix*>(lhs())->matrix());
+  const int num_rows = crsm->num_rows();
 
-  const int num_rows = tsm->num_rows();
-
-  // The case where there are no f blocks, and the system is block
-  // diagonal.
-  if (num_rows == 0) {
-    return true;
-  }
-
-  cholmod_sparse* cholmod_lhs = ss_.CreateSparseMatrix(tsm);
-  // The matrix is symmetric, and the upper triangular part of the
+  cholmod_sparse lhs = ss_.CreateSparseMatrixTransposeView(crsm);
+  // The matrix is symmetric, and the lower triangular part of the
   // matrix contains the values.
-  cholmod_lhs->stype = 1;
+  lhs.stype = -1;
 
-  cholmod_dense*  cholmod_rhs =
+  cholmod_dense* cholmod_rhs =
       ss_.CreateDenseVector(const_cast<double*>(rhs()), num_rows, num_rows);
 
   // Symbolic factorization is computed if we don't already have one handy.
   if (factor_ == NULL) {
     if (options().use_block_amd) {
-      factor_ = ss_.BlockAnalyzeCholesky(cholmod_lhs, blocks_, blocks_);
+      factor_ = ss_.BlockAnalyzeCholesky(&lhs, blocks_, blocks_);
     } else {
-      factor_ = ss_.AnalyzeCholesky(cholmod_lhs);
+      factor_ = ss_.AnalyzeCholesky(&lhs);
     }
 
     if (VLOG_IS_ON(2)) {
-      cholmod_print_common(const_cast<char*>("Symbolic Analysis"), ss_.mutable_cc());
+      cholmod_print_common(const_cast<char*>("Symbolic Analysis"),
+                           ss_.mutable_cc());
     }
   }
 
   CHECK_NOTNULL(factor_);
 
   cholmod_dense* cholmod_solution =
-      ss_.SolveCholesky(cholmod_lhs, factor_, cholmod_rhs);
-
-  ss_.Free(cholmod_lhs);
-  cholmod_lhs = NULL;
+      ss_.SolveCholesky(&lhs, factor_, cholmod_rhs);
   ss_.Free(cholmod_rhs);
-  cholmod_rhs = NULL;
 
   if (cholmod_solution == NULL) {
     LOG(WARNING) << "CHOLMOD solve failed.";
@@ -331,32 +329,21 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
 // CXSparse's sparse cholesky factorization routines.
 bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
     double* solution) {
-  // Extract the TripletSparseMatrix that is used for actually storing S.
-  TripletSparseMatrix* tsm =
-      const_cast<TripletSparseMatrix*>(
-          down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());
+  CompressedRowSparseMatrix* crsm =
+      const_cast<CompressedRowSparseMatrix*>(
+          down_cast<const BlockRandomAccessCRSMatrix*>(lhs())->matrix());
+  const int num_rows = crsm->num_rows();
 
-  const int num_rows = tsm->num_rows();
-
-  // The case where there are no f blocks, and the system is block
-  // diagonal.
-  if (num_rows == 0) {
-    return true;
-  }
-
-  cs_di* lhs = CHECK_NOTNULL(cxsparse_.CreateSparseMatrix(tsm));
-  VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
-
+  cs_di lhs_transpose = cxsparse_.CreateSparseMatrixTransposeView(crsm);
+  cs_di* lhs = cs_transpose(&lhs_transpose, 1);
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
     cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.AnalyzeCholesky(lhs));
   }
 
+  VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
   // Solve the linear system.
-  bool ok = cxsparse_.SolveCholesky(lhs, cxsparse_factor_, solution);
-
-  cxsparse_.Free(lhs);
-  return ok;
+  return cxsparse_.SolveCholesky(lhs, cxsparse_factor_, solution);
 }
 #else
 bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
