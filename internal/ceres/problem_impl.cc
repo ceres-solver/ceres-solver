@@ -57,6 +57,7 @@ namespace internal {
 
 typedef map<double*, internal::ParameterBlock*> ParameterMap;
 
+namespace {
 internal::ParameterBlock* FindParameterBlockOrDie(
     const ParameterMap& parameter_map,
     double* parameter_block) {
@@ -68,16 +69,16 @@ internal::ParameterBlock* FindParameterBlockOrDie(
 
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
 // respectively, overlap.
-static bool RegionsAlias(const double* a, int size_a,
-                         const double* b, int size_b) {
+bool RegionsAlias(const double* a, int size_a,
+                  const double* b, int size_b) {
   return (a < b) ? b < (a + size_a)
                  : a < (b + size_b);
 }
 
-static void CheckForNoAliasing(double* existing_block,
-                               int existing_block_size,
-                               double* new_block,
-                               int new_block_size) {
+void CheckForNoAliasing(double* existing_block,
+                        int existing_block_size,
+                        double* new_block,
+                        int new_block_size) {
   CHECK(!RegionsAlias(existing_block, existing_block_size,
                       new_block, new_block_size))
       << "Aliasing detected between existing parameter block at memory "
@@ -86,6 +87,8 @@ static void CheckForNoAliasing(double* existing_block,
       << "block that has memory adderss " << new_block << " and would have "
       << "size " << new_block_size << ".";
 }
+
+}  // namespace
 
 ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
                                                        int size) {
