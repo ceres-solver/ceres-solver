@@ -16,6 +16,24 @@
       "revId": "2874859104fd92da6509b3484fe4820fb69715be",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SO2drUs0",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-03-21T15:50:54Z",
+      "side": 1,
+      "message": "Woops, small typo in comment. It shall be \"no previous declaration\",\n\nit is a GCC warning -Wmissing-declarations which us generating for function when they\u0027re available for external usage (like not statis and not in anonymous context and which will be put to global symbol table) but which doesn\u0027t have a declaration.\n\nI\u0027ll amend comment in a while.",
+      "parentUuid": "SM2.tcZc",
+      "revId": "2874859104fd92da6509b3484fe4820fb69715be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
