@@ -23,7 +23,7 @@ system. Ceres needs a relatively recent version of CMake (version
 2. `eigen3 <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ is
 used for doing all the low level matrix and linear algebra operations.
 
-3. `google-glog <http://http://code.google.com/p/google-glog>`_ is
+3. `google-glog <http://code.google.com/p/google-glog>`_ is
 used for error checking and logging. Ceres needs glog version 0.3.1 or
 later. Version 0.3 (which ships with Fedora 16) has a namespace bug
 which prevents Ceres from building.
