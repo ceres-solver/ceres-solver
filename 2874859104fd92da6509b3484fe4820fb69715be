@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SM2.tcZc",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-21T15:42:20Z",
+      "side": 1,
+      "message": "why is the static needed here? I do not understand.\nwho is complaining about a previous declaration?",
+      "revId": "2874859104fd92da6509b3484fe4820fb69715be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
