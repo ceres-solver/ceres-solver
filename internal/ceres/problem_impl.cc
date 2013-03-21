@@ -57,7 +57,7 @@ namespace internal {
 
 typedef map<double*, internal::ParameterBlock*> ParameterMap;
 
-internal::ParameterBlock* FindParameterBlockOrDie(
+static internal::ParameterBlock* FindParameterBlockOrDie(
     const ParameterMap& parameter_map,
     double* parameter_block) {
   ParameterMap::const_iterator it = parameter_map.find(parameter_block);
