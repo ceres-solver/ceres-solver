@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SkLLkgDI",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "general high level comment, no need to add * to the commit message. Just simple plain text is good.",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkJLpfAw",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "Isn\u0027t it the case that if -DBUILD_DOCUMENTATION\u003dON is true, then running make will always build the documentation?",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkHLPOKo",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "\"it would be\" - \u003e \"it is\"",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkBLWrD8",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "How about\n\nFor example, for `examples/helloworld.cc\u003c..\u003e the following CMakeList.txt can be used:",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkLK7YAE",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "do we necessarily need a project name? I would like this file to as small as possible.",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkHK2GBg",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T15:01:44Z",
+      "side": 1,
+      "message": "how about dropping the example of installation, and just saying\n\nIf Ceres was installed in a non-standard path by specifying -DCMAKE_INSTALL_PREFIX\u003d\"/some/where/local\", then the user should add the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g., \n\n.. code-block:: cmake\n   FIND_PACKAGE(Ceres REQUIRED PATHS \"/some/where/local/\")\n\nNote that this can be used to have multiple versions of Ceres installed locally.",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
