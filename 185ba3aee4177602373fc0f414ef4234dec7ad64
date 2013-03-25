@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SkFuzLyY",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T19:47:10Z",
+      "side": 1,
+      "message": "Use this flag to enable building the documentation.",
+      "revId": "185ba3aee4177602373fc0f414ef4234dec7ad64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ScvO3ysU",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T19:47:10Z",
+      "side": 1,
+      "message": "is uppercase C in ceres needed?",
+      "revId": "185ba3aee4177602373fc0f414ef4234dec7ad64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Sjtd0npo",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T19:47:10Z",
+      "side": 1,
+      "message": "locally -\u003e concurrently.",
+      "revId": "185ba3aee4177602373fc0f414ef4234dec7ad64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
