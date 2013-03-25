@@ -131,6 +131,7 @@ New Features
 
 Bug Fixes
 ---------
+#. Compilation fixes for MSVC2010 (Sergey Sharybin)
 
 #. Fixed "deprecated conversion from string constant to char*"
    warnings. (Pablo Speciale)
