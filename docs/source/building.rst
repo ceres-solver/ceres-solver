@@ -384,3 +384,18 @@ If Ceres was installed in a non-standard path by specifying
    FIND_PACKAGE(Ceres REQUIRED PATHS "/some/where/local/")
 
 Note that this can be used to have multiple versions of Ceres installed.
+
+Compiling against static or shared library
+------------------------------------------
+
+.. code-block:: cmake
+
+    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES})
+
+will result in a statically linked binary. Changing this line to
+
+.. code-block:: cmake
+
+    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES_SHARED})
+
+will result in a dynamically linked binary.

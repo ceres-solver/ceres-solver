@@ -47,3 +47,4 @@ INCLUDE(${currentDir}/depend.cmake)
 
 # Set the expected library variable
 SET(CERES_LIBRARIES ceres)
+SET(CERES_LIBRARIES_SHARED ceres_shared)
