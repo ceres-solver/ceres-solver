@@ -68,6 +68,24 @@
       "revId": "185ba3aee4177602373fc0f414ef4234dec7ad64",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkjBayP4",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-25T20:11:34Z",
+      "side": 1,
+      "message": "Or just drop \"locally\" entirely.",
+      "parentUuid": "Sjtd0npo",
+      "revId": "185ba3aee4177602373fc0f414ef4234dec7ad64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
