@@ -328,3 +328,69 @@ customize the build process by passing appropriate flags to
 #. ``-DOPENMP=OFF``: On certain platforms like Android,
    multi-threading with ``OpenMP`` is not supported. Use this flag to
    disable multithreading.
+
+#. ``-DBUILD_DOCUMENTATION=ON``: Use this flag to build Ceres documentation. The
+   tag ``ceres_docs`` will be activated, and ``make ceres_docs`` could be used
+   to build the documentation.
+
+.. _section-using-ceres:
+
+Using Ceres with CMake
+======================
+
+Once the library is installed with ``make install``, it would be possible to use
+CMake with `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ in
+order to compile **user code** against Ceres. Considere the `examples/helloworld.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_,
+the following CMakeList.txt could be used:
+
+.. code-block:: cmake
+
+    CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+    PROJECT(ceres_examples)
+
+    FIND_PACKAGE(Ceres REQUIRED)
+    INCLUDE_DIRECTORIES(${CERES_INCLUDES})
+
+    # helloworld
+    ADD_EXECUTABLE(helloworld helloworld.cc)
+    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES})
+
+Specify Ceres version
+---------------------
+
+Additionally, when CMake has found Ceres it can check the package version, if it
+has been specified in the `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ call.
+For example:
+
+.. code-block:: cmake
+
+    FIND_PACKAGE(Ceres 1.2.3 REQUIRED)
+
+The version is an optional argument.
+
+Local installations
+-------------------
+
+If a non-standard `CMAKE_INSTALL_PREFIX
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ is
+used, for example in a Ceres local installation like:
+
+.. code-block:: bash
+
+    mkdir ceres-bin
+    cd ceres-bin
+    cmake -DCMAKE_INSTALL_PREFIX=/some/where/local ../ceres-solver
+    make -j3 install
+
+CMake wouldn't be able to find Ceres, and the user should add **PATHS** inside
+FIND_PACKAGE(). In our example, it would be:
+
+.. code-block:: cmake
+
+    FIND_PACKAGE(Ceres REQUIRED PATHS "/some/where/local/")
+
+Notice this could be used to have multiple Ceres versions installed locally.
