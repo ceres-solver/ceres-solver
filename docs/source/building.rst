@@ -328,3 +328,59 @@ customize the build process by passing appropriate flags to
 #. ``-DOPENMP=OFF``: On certain platforms like Android,
    multi-threading with ``OpenMP`` is not supported. Use this flag to
    disable multithreading.
+
+#. ``-DBUILD_DOCUMENTATION=ON``: Use this flag to enable building the
+   documentation. In addition, ``make ceres_docs`` can be used to build only the
+   documentation.
+
+.. _section-using-ceres:
+
+Using Ceres with CMake
+======================
+
+Once the library is installed with ``make install``, it is possible to use
+CMake with `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ in
+order to compile **user code** against Ceres. For example, for `examples/helloworld.cc
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
+the following CMakeList.txt can be used:
+
+.. code-block:: cmake
+
+    CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+    PROJECT(helloworld)
+
+    FIND_PACKAGE(Ceres REQUIRED)
+    INCLUDE_DIRECTORIES(${CERES_INCLUDES})
+
+    # helloworld
+    ADD_EXECUTABLE(helloworld helloworld.cc)
+    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES})
+
+Specify Ceres version
+---------------------
+
+Additionally, when CMake has found Ceres it can check the package version, if it
+has been specified in the `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ call.
+For example:
+
+.. code-block:: cmake
+
+    FIND_PACKAGE(Ceres 1.2.3 REQUIRED)
+
+The version is an optional argument.
+
+Local installations
+-------------------
+
+If Ceres was installed in a non-standard path by specifying
+-DCMAKE_INSTALL_PREFIX="/some/where/local", then the user should add the
+**PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
+
+.. code-block:: cmake
+
+   FIND_PACKAGE(Ceres REQUIRED PATHS "/some/where/local/")
+
+Note that this can be used to have multiple versions of Ceres installed.
