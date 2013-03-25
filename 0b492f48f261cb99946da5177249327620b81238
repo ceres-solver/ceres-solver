@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "SkPuIo24",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SkLLkgDI",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "SkJLpfAw",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-03-25T15:01:44Z",
       "side": 1,
       "message": "Isn\u0027t it the case that if -DBUILD_DOCUMENTATION\u003dON is true, then running make will always build the documentation?",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkNgARU0",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "Yes, it is true. In addition, you can compile only the documentation using \u0027make ceres_docs\u0027. I didn\u0027t explain it correctly.",
+      "parentUuid": "SkJLpfAw",
       "revId": "0b492f48f261cb99946da5177249327620b81238",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "SkbHkgDI",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SkHLPOKo",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "SkBLWrD8",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-03-25T15:01:44Z",
       "side": 1,
       "message": "How about\n\nFor example, for `examples/helloworld.cc\u003c..\u003e the following CMakeList.txt can be used:",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkJi1HXU",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "I changed already, but it says \u0027for example\u0027 twice:\n    \"For example, for examples/helloworld.cc...\"",
+      "parentUuid": "SkBLWrD8",
       "revId": "0b492f48f261cb99946da5177249327620b81238",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "SkJh-Xbw",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "I think it is a mandatory command (I mean, you always need to specify a name), but let me check. So far I will change it for \u0027PROJECT(helloworld)\u0027 to avoid distractions.",
+      "parentUuid": "SkLK7YAE",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "SkHK2GBg",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-03-25T15:01:44Z",
       "side": 1,
       "message": "how about dropping the example of installation, and just saying\n\nIf Ceres was installed in a non-standard path by specifying -DCMAKE_INSTALL_PREFIX\u003d\"/some/where/local\", then the user should add the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g., \n\n.. code-block:: cmake\n   FIND_PACKAGE(Ceres REQUIRED PATHS \"/some/where/local/\")\n\nNote that this can be used to have multiple versions of Ceres installed locally.",
+      "revId": "0b492f48f261cb99946da5177249327620b81238",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkDhBkWo",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-25T19:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "SkHK2GBg",
       "revId": "0b492f48f261cb99946da5177249327620b81238",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
