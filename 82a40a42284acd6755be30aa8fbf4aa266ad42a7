@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "SkiQBank",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T23:51:52Z",
+      "side": 1,
+      "message": "How about moving the code above the sentence, and saying\n.. code-block:: cmake\t393\n394\n    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES})\n\nwill result in a statically linked binary. Changing this line to \n\n TARGET_LINK_LIBRARIES(helloworld ceres_shared)    \n\nwill result in a dynamically linked binary.",
+      "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkoRNtvI",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-25T23:51:52Z",
+      "side": 1,
+      "message": "you are using a variable name above, but an actual library name here, why?",
+      "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
