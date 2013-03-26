@@ -51,6 +51,24 @@
       "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Skt-xRyI",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-03-26T00:00:33Z",
+      "side": 1,
+      "message": "Ok, usually with CMake there is only one variable for this. Actually, this is a hack to allow the user to use the share lib. I will add another variable in CeresConfig.cmake.in file.\n\nCould you help me to choose the name of the new variable? is ${CERES_LIBRARIES_SHARED} ok?",
+      "parentUuid": "SkkSljkA",
+      "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
