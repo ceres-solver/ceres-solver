@@ -69,6 +69,24 @@
       "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Skj8LszU",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-03-26T00:02:17Z",
+      "side": 1,
+      "message": "+1 on CERES_LIBRARIES_SHARED",
+      "parentUuid": "Skt-xRyI",
+      "revId": "82a40a42284acd6755be30aa8fbf4aa266ad42a7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
