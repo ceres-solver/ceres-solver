@@ -12,7 +12,7 @@ Recall that Ceres solves robustified non-linear least squares problems
 of the form
 
 .. math:: \frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
-   :label: ceresproblem3
+   :label: ceresproblem
 
 The expression
 :math:`\rho_i\left(\left\|f_i\left(x_{i_1},...,x_{i_k}\right)\right\|^2\right)`
@@ -918,7 +918,7 @@ Instances
      problem.AddResidualBlock(new MyBinaryCostFunction(...), x2, x3);
 
    :func:`Problem::AddResidualBlock` as the name implies, adds a
-   residual block to the problem. It adds a :class:`CostFunction` , an
+   residual block to the problem. It adds a :class:`CostFunction`, an
    optional :class:`LossFunction` and connects the
    :class:`CostFunction` to a set of parameter block.
 
