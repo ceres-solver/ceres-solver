@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Skroejso",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-26T18:26:09Z",
+      "side": 1,
+      "message": "Blank line after",
+      "revId": "448303bba7a18863243d9af00b3d0e884da7e2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkvqPduI",
+        "filename": "docs/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-26T18:26:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t cut it. Needs full boilerplate, or just omit.",
+      "revId": "448303bba7a18863243d9af00b3d0e884da7e2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkhpyOh8",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-26T18:26:09Z",
+      "side": 1,
+      "message": "buils?",
+      "revId": "448303bba7a18863243d9af00b3d0e884da7e2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "SkppmKl8",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-03-26T18:26:09Z",
+      "side": 1,
+      "message": "This is not true! You can solve many systems with CGNR or with iterative schur. The performance won\u0027t be as good, but it still works fine.",
+      "revId": "448303bba7a18863243d9af00b3d0e884da7e2ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
