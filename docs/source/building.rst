@@ -298,18 +298,14 @@ customize the build process by passing appropriate flags to
 #. ``-DSUITESPARSE=OFF``: By default, Ceres will link to
    ``SuiteSparse`` if all its dependencies are present. Use this flag
    to build Ceres without ``SuiteSparse``. This will also disable
-   dependency checking for ``LAPACK`` and ``BLAS``. This saves on
-   binary size, but the resulting version of Ceres is not suited to
-   large scale problems due to the lack of a sparse Cholesky solver.
-   This will reduce Ceres' dependencies down to ``Eigen``, ``gflags``
-   and ``google-glog``.
+   dependency checking for ``LAPACK`` and ``BLAS``. This will reduce
+   Ceres' dependencies down to ``Eigen``, ``gflags`` and
+   ``google-glog``.
 
-#. ``-DCXSPARSE=OFF``: By default, Ceres will link to ``CXSparse`` if all
-   its dependencies are present. Use this flag to buils Ceres without
-   ``CXSparse``. This saves on binary size, but the resulting version
-   of Ceres is not suited to large scale problems due to the lack of a
-   sparse Cholesky solver.  This will reduce Ceres' dependencies down
-   to ``Eigen``, ``gflags`` and ``google-glog``.
+#. ``-DCXSPARSE=OFF``: By default, Ceres will link to ``CXSparse`` if
+   all its dependencies are present. Use this flag to builds Ceres
+   without ``CXSparse``. This will reduce Ceres' dependencies down to
+   ``Eigen``, ``gflags`` and ``google-glog``.
 
 #. ``-DGFLAGS=OFF``: Use this flag to build Ceres without
    ``gflags``. This will also prevent some of the example code from
@@ -330,18 +326,19 @@ customize the build process by passing appropriate flags to
    disable multithreading.
 
 #. ``-DBUILD_DOCUMENTATION=ON``: Use this flag to enable building the
-   documentation. In addition, ``make ceres_docs`` can be used to build only the
-   documentation.
+   documentation. In addition, ``make ceres_docs`` can be used to
+   build only the documentation.
 
 .. _section-using-ceres:
 
 Using Ceres with CMake
 ======================
 
-Once the library is installed with ``make install``, it is possible to use
-CMake with `FIND_PACKAGE()
-<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ in
-order to compile **user code** against Ceres. For example, for `examples/helloworld.cc
+Once the library is installed with ``make install``, it is possible to
+use CMake with `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_
+in order to compile **user code** against Ceres. For example, for
+`examples/helloworld.cc
 <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
 the following CMakeList.txt can be used:
 
@@ -361,10 +358,10 @@ the following CMakeList.txt can be used:
 Specify Ceres version
 ---------------------
 
-Additionally, when CMake has found Ceres it can check the package version, if it
-has been specified in the `FIND_PACKAGE()
-<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_ call.
-For example:
+Additionally, when CMake has found Ceres it can check the package
+version, if it has been specified in the `FIND_PACKAGE()
+<http://www.cmake.org/cmake/help/v2.8.10/cmake.html#command:find_package>`_
+call.  For example:
 
 .. code-block:: cmake
 
@@ -376,8 +373,8 @@ Local installations
 -------------------
 
 If Ceres was installed in a non-standard path by specifying
--DCMAKE_INSTALL_PREFIX="/some/where/local", then the user should add the
-**PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
+-DCMAKE_INSTALL_PREFIX="/some/where/local", then the user should add
+the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
 
 .. code-block:: cmake
 
