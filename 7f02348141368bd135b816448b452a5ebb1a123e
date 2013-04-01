@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S64Ct3MM",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-01T18:34:08Z",
+      "side": 1,
+      "message": "So the TODO is to add an enum? Perhaps mention this.",
+      "revId": "7f02348141368bd135b816448b452a5ebb1a123e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S6.C7.P8",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-01T18:34:08Z",
+      "side": 1,
+      "message": "warnings",
+      "revId": "7f02348141368bd135b816448b452a5ebb1a123e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
