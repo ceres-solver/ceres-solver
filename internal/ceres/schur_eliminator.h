@@ -324,6 +324,7 @@ class SchurEliminator : public SchurEliminatorBase {
   // Buffer to store the products of the y and z blocks generated
   // during the elimination phase.
   scoped_array<double> buffer_;
+  scoped_array<double> buffer2_;
   int buffer_size_;
   int num_threads_;
   int uneliminated_row_begins_;

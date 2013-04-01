@@ -64,6 +64,108 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+template<int kRowA,
+         int kColA,
+         int kRowB,
+         int kColB,
+         int plus_minus>
+inline void GEMM(const double* A,
+                 const int num_row_a,
+                 const int num_col_a,
+                 const double* B,
+                 const int num_row_b,
+                 const int num_col_b,
+                 double* C,
+                 const int r_c,
+                 const int c_c,
+                 const int row_stride_c,
+                 const int col_stride_c) {
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+
+
+  for (int r = 0; r < NUM_ROW_A; ++r) {
+    for (int c = 0; c < NUM_COL_B; ++c) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_COL_A; ++k) {
+        tmp += A[r * NUM_COL_A + k] * B[k * NUM_COL_B + c];
+      }
+
+      if (plus_minus > 0) {
+        C[(r + r_c) * row_stride_c + c_c + c] += tmp;
+      } else {
+        C[(r + r_c) * row_stride_c + c_c + c] -= tmp;
+      }
+    }
+  }
+}
+
+template<int kRowA,
+         int kColA,
+         int kRowB,
+         int kColB,
+         int plus_minus>
+inline void GEMTM(const double* A,
+                 const int num_row_a,
+                 const int num_col_a,
+                 const double* B,
+                 const int num_row_b,
+                 const int num_col_b,
+                 double* C,
+                 const int r_c,
+                 const int c_c,
+                 const int row_stride_c,
+                 const int col_stride_c) {
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+
+  for (int r = 0; r < NUM_COL_A; ++r) {
+    for (int c = 0; c < NUM_COL_B; ++c) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_ROW_A; ++k) {
+        tmp += A[k * NUM_COL_A + r] * B[k * NUM_COL_B + c];
+      }
+
+      if (plus_minus > 0) {
+        C[(r + r_c) * row_stride_c + c_c + c] += tmp;
+      } else {
+        C[(r + r_c) * row_stride_c + c_c + c] -= tmp;
+      }
+    }
+  }
+}
+
+template<int kRowA,
+         int kColA,
+         int kRowB,
+         int kColB>
+inline void GEMTMZ(const double* A,
+                   const int num_row_a,
+                   const int num_col_a,
+                   const double* B,
+                   const int num_row_b,
+                   const int num_col_b,
+                   double* C) {
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+
+  for (int r = 0; r < NUM_COL_A; ++r) {
+    for (int c = 0; c < NUM_COL_B; ++c) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_ROW_A; ++k) {
+        tmp += A[k * NUM_COL_A + r] * B[c * NUM_COL_B + k];
+      }
+      C[r * NUM_COL_B + c] = tmp;
+    }
+  }
+}
+
+} // namespace
+
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::~SchurEliminator() {
   STLDeleteElements(&rhs_locks_);
@@ -148,6 +250,7 @@ Init(int num_eliminate_blocks, const CompressedRowBlockStructure* bs) {
   }
 
   buffer_.reset(new double[buffer_size_ * num_threads_]);
+  buffer2_.reset(new double[10 * buffer_size_ * num_threads_]);
 
   STLDeleteElements(&rhs_locks_);
   rhs_locks_.resize(num_col_blocks - num_eliminate_blocks_);
@@ -261,7 +364,7 @@ Eliminate(const BlockSparseMatrixBase* A,
     typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
         ete
         .template selfadjointView<Eigen::Upper>()
-        .ldlt()
+        .llt()
         .solve(Matrix::Identity(e_block_size, e_block_size));
 
     // For the current chunk compute and update the rhs of the reduced
@@ -344,7 +447,7 @@ BackSubstitute(const BlockSparseMatrixBase* A,
     y_block =
         ete
         .template selfadjointView<Eigen::Upper>()
-        .ldlt()
+        .llt()
         .solve(y_block);
   }
 }
@@ -497,15 +600,31 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
   // references to the left hand side.
   const int e_block_size = inverse_ete.rows();
   BufferLayoutType::const_iterator it1 = buffer_layout.begin();
+#ifdef CERES_USE_OPENMP
+  int thread_id = omp_get_thread_num();
+#else
+  int thread_id = 0;
+#endif
+  double* b1_transpose_inverse_ete = buffer2_.get() + thread_id * 10 * buffer_size_;
+
   // S(i,j) -= bi' * ete^{-1} b_j
   for (; it1 != buffer_layout.end(); ++it1) {
     const int block1 = it1->first - num_eliminate_blocks_;
     const int block1_size = bs->cols[it1->first].size;
-
+    /*
     const typename EigenTypes<kEBlockSize, kFBlockSize>::ConstMatrixRef
         b1(buffer + it1->second, e_block_size, block1_size);
+
     const typename EigenTypes<kFBlockSize, kEBlockSize>::Matrix
-        b1_transpose_inverse_ete = b1.transpose() * inverse_ete;
+       b1_transpose_inverse_ete = b1.transpose() * inverse_ete;
+
+    */
+    GEMTMZ<kEBlockSize, kFBlockSize,
+           kEBlockSize, kEBlockSize>(
+        buffer + it1->second, e_block_size, block1_size,
+        inverse_ete.data(), e_block_size, e_block_size,
+        b1_transpose_inverse_ete);
+
 
     BufferLayoutType::const_iterator it2 = it1;
     for (; it2 != buffer_layout.end(); ++it2) {
@@ -515,23 +634,25 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       CellInfo* cell_info = lhs->GetCell(block1, block2,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
-      }
+      //if (cell_info == NULL) {
+      // continue;
+      // }
 
       const int block2_size = bs->cols[it2->first].size;
+      /*
       const typename EigenTypes<kEBlockSize, kFBlockSize>::ConstMatrixRef
           b2(buffer + it2->second, e_block_size, block2_size);
+      */
 
       CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
+      //MatrixRef m(cell_info->values, row_stride, col_stride);
 
       // We explicitly construct a block object here instead of using
       // m.block(), as m.block() variant of the constructor does not
       // allow mixing of template sizing and runtime sizing parameters
       // like the Matrix class does.
-      Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
-          block(m, r, c,  block1_size, block2_size);
+      //Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
+      //    block(m, r, c,  block1_size, block2_size);
 #ifdef CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
       // Removing the ".noalias()" annotation on the following statement is
       // necessary to produce a correct build with the Android NDK, including
@@ -553,7 +674,20 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       // TODO(keir): Make a reproduction case for this and send it upstream.
       block -= b1_transpose_inverse_ete * b2;
 #else
-      block.noalias() -= b1_transpose_inverse_ete * b2;
+      GEMM<kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
+          b1_transpose_inverse_ete,
+          block1_size,
+          e_block_size,
+          buffer  + it2->second,
+          e_block_size,
+          block2_size,
+          cell_info->values,
+          r,
+          c,
+          row_stride,
+          col_stride);
+
+      // block.noalias() -= b1_transpose_inverse_ete * b2;
 #endif  // CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
     }
   }
@@ -678,10 +812,6 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CellInfo* cell_info = lhs->GetCell(block1, block1,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
-      }
-
       CeresMutexLock l(&cell_info->m);
       MatrixRef m(cell_info->values, row_stride, col_stride);
 
@@ -700,8 +830,9 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CellInfo* cell_info = lhs->GetCell(block1, block2,
                                          &r, &c,
                                          &row_stride, &col_stride);
+      /*
       if (cell_info == NULL) {
-        continue;
+       continue;
       }
 
       const typename EigenTypes<kRowBlockSize, kFBlockSize>::ConstMatrixRef
@@ -713,7 +844,18 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       MatrixRef m(cell_info->values, row_stride, col_stride);
       Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
           block(m, r, c,  block1_size, block2_size);
+
       block.noalias() += b1.transpose() * b2;
+      */
+      GEMTM<kRowBlockSize, kFBlockSize,
+            kRowBlockSize, kFBlockSize, 1>(row_values + row.cells[i].position,
+                                           row.block.size, block1_size,
+                                           row_values + row.cells[j].position,
+                                           row.block.size,
+                                           block2_size,
+                                           cell_info->values,
+                                           r, c, row_stride, col_stride);
+
     }
   }
 }

@@ -135,7 +135,7 @@ bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   VectorRef(solution, num_rows) =
       ConstMatrixRef(m->values(), num_rows, num_rows)
       .selfadjointView<Eigen::Upper>()
-      .ldlt()
+      .llt()
       .solve(ConstVectorRef(rhs(), num_rows));
 
   return true;
