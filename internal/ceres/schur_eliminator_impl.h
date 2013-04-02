@@ -596,7 +596,7 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
 
 #ifdef CERES_CUSTOM_GEMM
       GEMM<kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
-          b1_transpose_inverse_ete,
+          b1_transpose_inverse_ete.data(),
           block1_size,
           e_block_size,
           buffer  + it2->second,
