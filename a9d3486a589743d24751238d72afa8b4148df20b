@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "S7h3VtwU",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T00:55:23Z",
+      "side": 1,
+      "message": "DCHECK() that sizing matches template parameters? Only if we make this production code.",
+      "revId": "a9d3486a589743d24751238d72afa8b4148df20b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S7n0JS.E",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T00:55:23Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "a9d3486a589743d24751238d72afa8b4148df20b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "S7j3os.M",
         "filename": "internal/ceres/schur_eliminator_impl.h",
         "patchSetId": 1
