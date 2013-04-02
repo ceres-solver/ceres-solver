@@ -38,27 +38,18 @@
 #include <omp.h>
 #endif
 
-// Eigen has an internal threshold switching between different matrix
-// multiplication algorithms. In particular for matrices larger than
-// EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD it uses a cache friendly
-// matrix matrix product algorithm that has a higher setup cost. For
-// matrix sizes close to this threshold, especially when the matrices
-// are thin and long, the default choice may not be optimal. This is
-// the case for us, as the default choice causes a 30% performance
-// regression when we moved from Eigen2 to Eigen3.
-#define EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD 10
-
 #include <algorithm>
 #include <map>
 #include "Eigen/Dense"
+#include "ceres/blas.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/map_util.h"
 #include "ceres/schur_eliminator.h"
 #include "ceres/stl_util.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/scoped_ptr.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -148,6 +139,11 @@ Init(int num_eliminate_blocks, const CompressedRowBlockStructure* bs) {
   }
 
   buffer_.reset(new double[buffer_size_ * num_threads_]);
+
+  // buffer2 only needs to store e_block_size * f_block_size, which is
+  // always less than buffer_size_, so we just allocate buffer_size_
+  // per thread.
+  buffer2_.reset(new double[buffer_size_ * num_threads_]);
 
   STLDeleteElements(&rhs_locks_);
   rhs_locks_.resize(num_col_blocks - num_eliminate_blocks_);
@@ -382,15 +378,12 @@ UpdateRhs(const Chunk& chunk,
     for (int c = 1; c < row.cells.size(); ++c) {
       const int block_id = row.cells[c].block_id;
       const int block_size = bs->cols[block_id].size;
-      const typename EigenTypes<kRowBlockSize, kFBlockSize>::ConstMatrixRef
-          b(row_values + row.cells[c].position,
-            row.block.size, block_size);
-
       const int block = block_id - num_eliminate_blocks_;
       CeresMutexLock l(rhs_locks_[block]);
-      typename EigenTypes<kFBlockSize>::VectorRef
-          (rhs + lhs_row_layout_[block], block_size).noalias()
-          += b.transpose() * sj;
+      MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
+          row_values + row.cells[c].position,
+          row.block.size, block_size,
+          sj.data(), rhs + lhs_row_layout_[block]);
     }
     b_pos += row.block.size;
   }
@@ -446,34 +439,31 @@ ChunkDiagonalBlockAndGradient(
 
     // Extract the e_block, ETE += E_i' E_i
     const Cell& e_cell = row.cells.front();
-    const typename EigenTypes<kRowBlockSize, kEBlockSize>::ConstMatrixRef
-        e_block(row_values + e_cell.position,
-                row.block.size,
-                e_block_size);
-
-    ete->template selfadjointView<Eigen::Upper>()
-        .rankUpdate(e_block.transpose(), 1.0);
+    MatrixTransposeMatrixMultiply
+        <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
+            row_values + e_cell.position, row.block.size, e_block_size,
+            row_values + e_cell.position, row.block.size, e_block_size,
+            ete->data(), 0, 0, e_block_size, e_block_size);
 
     // g += E_i' b_i
-    g->noalias() += e_block.transpose() *
-        typename EigenTypes<kRowBlockSize>::ConstVectorRef
-        (b + b_pos, row.block.size);
+    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+        row_values + e_cell.position, row.block.size, e_block_size,
+        b + b_pos,
+        g->data());
+
 
     // buffer = E'F. This computation is done by iterating over the
     // f_blocks for each row in the chunk.
     for (int c = 1; c < row.cells.size(); ++c) {
       const int f_block_id = row.cells[c].block_id;
       const int f_block_size = bs->cols[f_block_id].size;
-      const typename EigenTypes<kRowBlockSize, kFBlockSize>::ConstMatrixRef
-          f_block(row_values + row.cells[c].position,
-                  row.block.size, f_block_size);
-
       double* buffer_ptr =
           buffer +  FindOrDie(chunk.buffer_layout, f_block_id);
-
-      typename EigenTypes<kEBlockSize, kFBlockSize>::MatrixRef
-          (buffer_ptr,  e_block_size, f_block_size).noalias()
-          += e_block.transpose() * f_block;
+      MatrixTransposeMatrixMultiply
+          <kRowBlockSize, kEBlockSize, kRowBlockSize, kFBlockSize, 1>(
+          row_values + e_cell.position, row.block.size, e_block_size,
+          row_values + row.cells[c].position, row.block.size, f_block_size,
+          buffer_ptr, 0, 0, e_block_size, f_block_size);
     }
     b_pos += row.block.size;
   }
@@ -497,15 +487,23 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
   // references to the left hand side.
   const int e_block_size = inverse_ete.rows();
   BufferLayoutType::const_iterator it1 = buffer_layout.begin();
+
+#ifdef CERES_USE_OPENMP
+  int thread_id = omp_get_thread_num();
+#else
+  int thread_id = 0;
+#endif
+  double* b1_transpose_inverse_ete = buffer2_.get() + thread_id * 10 * buffer_size_;
+
   // S(i,j) -= bi' * ete^{-1} b_j
   for (; it1 != buffer_layout.end(); ++it1) {
     const int block1 = it1->first - num_eliminate_blocks_;
     const int block1_size = bs->cols[it1->first].size;
-
-    const typename EigenTypes<kEBlockSize, kFBlockSize>::ConstMatrixRef
-        b1(buffer + it1->second, e_block_size, block1_size);
-    const typename EigenTypes<kFBlockSize, kEBlockSize>::Matrix
-        b1_transpose_inverse_ete = b1.transpose() * inverse_ete;
+    MatrixTransposeMatrixMultiply
+        <kEBlockSize, kFBlockSize, kEBlockSize, kEBlockSize, 0>(
+        buffer + it1->second, e_block_size, block1_size,
+        inverse_ete.data(), e_block_size, e_block_size,
+        b1_transpose_inverse_ete, 0, 0, block1_size, e_block_size);
 
     BufferLayoutType::const_iterator it2 = it1;
     for (; it2 != buffer_layout.end(); ++it2) {
@@ -515,46 +513,15 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       CellInfo* cell_info = lhs->GetCell(block1, block2,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
+      if (cell_info != NULL) {
+        const int block2_size = bs->cols[it2->first].size;
+        CeresMutexLock l(&cell_info->m);
+        MatrixMatrixMultiply
+            <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
+                b1_transpose_inverse_ete, block1_size, e_block_size,
+                buffer  + it2->second, e_block_size, block2_size,
+                cell_info->values, r, c, row_stride, col_stride);
       }
-
-      const int block2_size = bs->cols[it2->first].size;
-      const typename EigenTypes<kEBlockSize, kFBlockSize>::ConstMatrixRef
-          b2(buffer + it2->second, e_block_size, block2_size);
-
-      CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
-
-      // We explicitly construct a block object here instead of using
-      // m.block(), as m.block() variant of the constructor does not
-      // allow mixing of template sizing and runtime sizing parameters
-      // like the Matrix class does.
-      Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
-          block(m, r, c,  block1_size, block2_size);
-#ifdef CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
-      // Removing the ".noalias()" annotation on the following statement is
-      // necessary to produce a correct build with the Android NDK, including
-      // versions 6, 7, 8, and 8b, when built with STLPort and the
-      // non-standalone toolchain (i.e. ndk-build). This appears to be a
-      // compiler bug; if the workaround is not in place, the line
-      //
-      //   block.noalias() -= b1_transpose_inverse_ete * b2;
-      //
-      // gets compiled to
-      //
-      //   block.noalias() += b1_transpose_inverse_ete * b2;
-      //
-      // which breaks schur elimination. Introducing a temporary by removing the
-      // .noalias() annotation causes the issue to disappear. Tracking this
-      // issue down was tricky, since the test suite doesn't run when built with
-      // the non-standalone toolchain.
-      //
-      // TODO(keir): Make a reproduction case for this and send it upstream.
-      block -= b1_transpose_inverse_ete * b2;
-#else
-      block.noalias() -= b1_transpose_inverse_ete * b2;
-#endif  // CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
     }
   }
 }
@@ -624,10 +591,11 @@ NoEBlockRowOuterProduct(const BlockSparseMatrixBase* A,
                                        &row_stride, &col_stride);
     if (cell_info != NULL) {
       CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
-      m.block(r, c, block1_size, block1_size)
-          .selfadjointView<Eigen::Upper>()
-          .rankUpdate(b1.transpose(), 1.0);
+      MatrixTransposeMatrixMultiply
+          <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
+              row_values + row.cells[i].position, row.block.size, block1_size,
+              row_values + row.cells[i].position, row.block.size, block1_size,
+              cell_info->values, r, c, row_stride, col_stride);
     }
 
     for (int j = i + 1; j < row.cells.size(); ++j) {
@@ -638,17 +606,15 @@ NoEBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CellInfo* cell_info = lhs->GetCell(block1, block2,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
+      if (cell_info != NULL) {
+        const int block2_size = bs->cols[row.cells[j].block_id].size;
+        CeresMutexLock l(&cell_info->m);
+        MatrixTransposeMatrixMultiply
+            <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
+                row_values + row.cells[i].position, row.block.size, block1_size,
+                row_values + row.cells[j].position, row.block.size, block2_size,
+                cell_info->values, r, c, row_stride, col_stride);
       }
-
-      const int block2_size = bs->cols[row.cells[j].block_id].size;
-      CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
-      m.block(r, c, block1_size, block2_size).noalias() +=
-          b1.transpose() * ConstMatrixRef(row_values + row.cells[j].position,
-                                          row.block.size,
-                                          block2_size);
     }
   }
 }
@@ -670,25 +636,18 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
     DCHECK_GE(block1, 0);
 
     const int block1_size = bs->cols[row.cells[i].block_id].size;
-    const typename EigenTypes<kRowBlockSize, kFBlockSize>::ConstMatrixRef
-        b1(row_values + row.cells[i].position,
-           row.block.size, block1_size);
-    {
-      int r, c, row_stride, col_stride;
-      CellInfo* cell_info = lhs->GetCell(block1, block1,
-                                         &r, &c,
-                                         &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
-      }
-
+    int r, c, row_stride, col_stride;
+    CellInfo* cell_info = lhs->GetCell(block1, block1,
+                                       &r, &c,
+                                       &row_stride, &col_stride);
+    if (cell_info != NULL) {
       CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
-
-      Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
-          block(m, r, c,  block1_size, block1_size);
-      block.template selfadjointView<Eigen::Upper>()
-          .rankUpdate(b1.transpose(), 1.0);
+      // block += b1.transpose() * b1;
+      MatrixTransposeMatrixMultiply
+          <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
+          row_values + row.cells[i].position, row.block.size, block1_size,
+          row_values + row.cells[i].position, row.block.size, block1_size,
+          cell_info->values, r, c, row_stride, col_stride);
     }
 
     for (int j = i + 1; j < row.cells.size(); ++j) {
@@ -700,20 +659,14 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CellInfo* cell_info = lhs->GetCell(block1, block2,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      if (cell_info == NULL) {
-        continue;
+      if (cell_info != NULL) {
+        // block += b1.transpose() * b2;
+        MatrixTransposeMatrixMultiply
+            <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
+                row_values + row.cells[i].position, row.block.size, block1_size,
+                row_values + row.cells[j].position, row.block.size, block2_size,
+                cell_info->values, r, c, row_stride, col_stride);
       }
-
-      const typename EigenTypes<kRowBlockSize, kFBlockSize>::ConstMatrixRef
-          b2(row_values + row.cells[j].position,
-             row.block.size,
-             block2_size);
-
-      CeresMutexLock l(&cell_info->m);
-      MatrixRef m(cell_info->values, row_stride, col_stride);
-      Eigen::Block<MatrixRef, kFBlockSize, kFBlockSize>
-          block(m, r, c,  block1_size, block2_size);
-      block.noalias() += b1.transpose() * b2;
     }
   }
 }
