@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S8WXfDiY",
+        "filename": "include/ceres/internal/eigen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:43Z",
+      "side": 1,
+      "message": "Delete blank.",
+      "revId": "bc9203558276cbd31c6210bb9fa88f8b67ef039b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
