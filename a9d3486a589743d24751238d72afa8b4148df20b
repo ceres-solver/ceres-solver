@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "S7r0AQ0w",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T01:43:05Z",
+      "side": 1,
+      "message": "r_c and c_c are uninformative names.",
+      "revId": "a9d3486a589743d24751238d72afa8b4148df20b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "S7h3VtwU",
         "filename": "internal/ceres/schur_eliminator_impl.h",
         "patchSetId": 1
