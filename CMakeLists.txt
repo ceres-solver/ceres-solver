@@ -451,9 +451,18 @@ OPTION(LINE_SEARCH_MINIMIZER
        ON)
 
 IF (NOT ${LINE_SEARCH_MINIMIZER})
- ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
- MESSAGE("-- Disabling line search minimizer")
+  ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
+  MESSAGE("-- Disabling line search minimizer")
 ENDIF (NOT ${LINE_SEARCH_MINIMIZER})
+
+OPTION(CUSTOM_BLAS
+       "Use handcoded BLAS routines (usually faster) instead of Eigen."
+       ON)
+
+IF (NOT ${CUSTOM_BLAS})
+  ADD_DEFINITIONS(-DCERES_NO_CUSTOM_BLAS)
+  MESSAGE("-- Disabling custom blas")
+ENDIF (NOT ${CUSTOM_BLAS})
 
 # Multithreading using OpenMP
 OPTION(OPENMP
