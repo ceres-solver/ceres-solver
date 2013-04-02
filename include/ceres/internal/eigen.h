@@ -33,6 +33,17 @@
 
 #include "Eigen/Core"
 
+// Eigen has an internal threshold switching between different matrix
+// multiplication algorithms. In particular for matrices larger than
+// EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD it uses a cache friendly
+// matrix matrix product algorithm that has a higher setup cost. For
+// matrix sizes close to this threshold, especially when the matrices
+// are thin and long, the default choice may not be optimal. This is
+// the case for us, as the default choice causes a 30% performance
+// regression when we moved from Eigen2 to Eigen3.
+
+#define EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD 10
+
 namespace ceres {
 
 typedef Eigen::Matrix<double, Eigen::Dynamic, 1> Vector;
