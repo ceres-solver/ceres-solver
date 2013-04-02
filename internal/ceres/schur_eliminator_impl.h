@@ -64,6 +64,46 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+template<int kRowA,
+         int kColA,
+         int kRowB,
+         int kColB,
+         int plus_minus>
+inline void GEMM(const double* A,
+                 const int num_row_a,
+                 const int num_col_a,
+                 const double* B,
+                 const int num_row_b,
+                 const int num_col_b,
+                 double* C,
+                 const int r_c,
+                 const int c_c,
+                 const int row_stride_c,
+                 const int col_stride_c) {
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+
+
+  for (int r = 0; r < NUM_ROW_A; ++r) {
+    for (int c = 0; c < NUM_COL_B; ++c) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_COL_A; ++k) {
+        tmp += A[r * NUM_COL_A + k] * B[k * NUM_COL_B + c];
+      }
+
+      if (plus_minus > 0) {
+        C[(r + r_c) * row_stride_c + c_c + c] += tmp;
+      } else {
+        C[(r + r_c) * row_stride_c + c_c + c] -= tmp;
+      }
+    }
+  }
+}
+
+} // namespace
+
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::~SchurEliminator() {
   STLDeleteElements(&rhs_locks_);
@@ -553,7 +593,24 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       // TODO(keir): Make a reproduction case for this and send it upstream.
       block -= b1_transpose_inverse_ete * b2;
 #else
+
+#ifdef CERES_CUSTOM_GEMM
+      GEMM<kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
+          b1_transpose_inverse_ete.data(),
+          block1_size,
+          e_block_size,
+          buffer  + it2->second,
+          e_block_size,
+          block2_size,
+          cell_info->values,
+          r,
+          c,
+          row_stride,
+          col_stride);
+#else
       block.noalias() -= b1_transpose_inverse_ete * b2;
+#endif  // CERES_CUSTOM_GEMM
+
 #endif  // CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
     }
   }

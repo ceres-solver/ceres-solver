@@ -471,6 +471,15 @@ IF (${OPENMP})
   ENDIF(${OPENMP_FOUND})
 ENDIF (${OPENMP})
 
+# Native GEMM
+OPTION(CUSTOM_GEMM
+       "Enable Custom GEMM"
+       OFF)
+
+IF (${CUSTOM_GEMM})
+  ADD_DEFINITIONS(-DCERES_CUSTOM_GEMM)
+ENDIF (${CUSTOM_GEMM})
+
 # Protocol buffers
 OPTION(PROTOBUF
        "Enable protocol buffers support."
