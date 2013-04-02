@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S8drHueg",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Two space indents.",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8XqiTTs",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Remove extra blank",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8RoeoXs",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Remove \"we\"",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8Xq5bWM",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "We use CERES_prefixes for all our macros that are in headers. Should we start violating that now? I suggest instead:\n\n  CERES_MAYBE_NOALIAS",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8ZpX8Tk",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Indent two",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8dpReUU",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Extra comment-blank after",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8dojOck",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8dpMGak",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "matrices",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8Ro3gQs",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Comment blank after.\n\nConsider suggesting to look at the above docs instead of repeating this here?",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8boudbI",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8aXslk0",
+        "filename": "internal/ceres/blas_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-02T23:42:04Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "e0a69956e908e15fd9942957617d9ab8ea72dc89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
