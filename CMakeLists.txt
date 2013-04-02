@@ -535,7 +535,6 @@ INCLUDE_DIRECTORIES(
   internal/ceres
   ${GLOG_INCLUDE}
   ${EIGEN_INCLUDE}
-  /Users/sameeragarwal/local/include
   )
 
 FILE(GLOB CERES_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/*.h)

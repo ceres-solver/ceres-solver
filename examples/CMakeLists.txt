@@ -66,10 +66,5 @@ IF (${GFLAGS})
                  denoising.cc
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres)
-
-  ADD_EXECUTABLE(ba
-                 bundleadjuster.cc)
-
-  TARGET_LINK_LIBRARIES(ba ceres)
 ENDIF (${GFLAGS})
 
