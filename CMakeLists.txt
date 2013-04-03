@@ -654,9 +654,13 @@ IF ("${UNIX}")
       "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter")
 ENDIF ("${UNIX}")
 
-# We can be even stricter when using CLang
+#Use a larger inlining threshold for Clang, since it hobbles Eigen,
+#resulting in an unreasonably slow version of the blas routines. The
+#-Qunused-arguments is needed because CMake passes the inline
+#threshold to the linker and clang complains about it and dies.
 IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
+  SET(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600 -Wno-return-type-c-linkage")
 ENDIF()
 
 ADD_SUBDIRECTORY(internal/ceres)
