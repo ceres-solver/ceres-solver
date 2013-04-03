@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S8eBFrCI",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T01:03:03Z",
+      "side": 1,
+      "message": "Comment blank after",
+      "revId": "27fa9276b9cc963a1e3ee4a385f70b28685be8e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8QBLkDc",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T01:03:03Z",
+      "side": 1,
+      "message": "Comment blank after",
+      "revId": "27fa9276b9cc963a1e3ee4a385f70b28685be8e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
