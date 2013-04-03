@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TA67wJ8g",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T22:56:24Z",
+      "side": 1,
+      "message": "Clang\n\nThis sentence could use some reworking; maybe\n\n  Use a larger inlining threshold for Clang, since it hobbles Eigen, resulting in an unreasonably slow version of the blas routines. \n  The -Qunused....",
+      "revId": "b3ae1a80e4723caf092637951d5420577c6c45cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
