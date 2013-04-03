@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "S8eBfbB8",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T00:47:46Z",
+      "side": 1,
+      "message": "Name needs work. chunk_outer_product_scratch_? Describe the layout.",
+      "revId": "fe3cfca65af0a6d4e14d12b0532fae0e375f1c22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8SBaVDA",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T00:47:46Z",
+      "side": 1,
+      "message": "I saw you moved this into eigen.h",
+      "revId": "fe3cfca65af0a6d4e14d12b0532fae0e375f1c22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8YBRQBE",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T00:47:46Z",
+      "side": 1,
+      "message": "Please use a better name than \"buffer2\" :)",
+      "revId": "fe3cfca65af0a6d4e14d12b0532fae0e375f1c22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "S8QCY8LY",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-03T00:47:46Z",
+      "side": 1,
+      "message": "Mention that this ignores the self-adjoint nature of the matrix?",
+      "revId": "fe3cfca65af0a6d4e14d12b0532fae0e375f1c22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
