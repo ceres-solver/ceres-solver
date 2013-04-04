@@ -65,6 +65,19 @@ namespace internal {
 #define CERES_MAYBE_NOALIAS .noalias()
 #endif
 
+// For the matrix-matrix functions below, there are three functions
+// for each functionality. Foo, FooNaive and FooEigen. Foo is the one
+// to be called by the user. FooNaive is a basic loop based
+// implementation and FooEigen uses Eigen's implementation. Foo
+// chooses between FooNaive and FooEigen depending on how many of the
+// template arguments are fixed at compile time. Currently, FooEigen
+// is called if all matrix dimenions are compile time
+// constants. FooNaive is called otherwise. This leads to the best
+// performance currently.
+//
+// TODO(sameeragarwal): Benchmark and simplify the matrix-vector
+// functions.
+
 // C op A * B;
 //
 // where op can be +=, -=, or =.
@@ -98,25 +111,23 @@ namespace internal {
 //   ------------
 //
 template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiply(const double* A,
-                                 const int num_row_a,
-                                 const int num_col_a,
-                                 const double* B,
-                                 const int num_row_b,
-                                 const int num_col_b,
-                                 double* C,
-                                 const int start_row_c,
-                                 const int start_col_c,
-                                 const int row_stride_c,
-                                 const int col_stride_c) {
-#ifdef CERES_NO_CUSTOM_BLAS
+inline void MatrixMatrixMultiplyEigen(const double* A,
+                                      const int num_row_a,
+                                      const int num_col_a,
+                                      const double* B,
+                                      const int num_row_b,
+                                      const int num_col_b,
+                                      double* C,
+                                      const int start_row_c,
+                                      const int start_col_c,
+                                      const int row_stride_c,
+                                      const int col_stride_c) {
   const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
   const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
   MatrixRef Cref(C, row_stride_c, col_stride_c);
   Eigen::Block<MatrixRef, kRowA, kColB> block(Cref,
                                               start_row_c, start_col_c,
                                               num_row_a, num_col_b);
-
   if (kOperation > 0) {
     block CERES_MAYBE_NOALIAS += Aref * Bref;
   } else if (kOperation < 0) {
@@ -124,9 +135,20 @@ inline void MatrixMatrixMultiply(const double* A,
   } else {
     block CERES_MAYBE_NOALIAS = Aref * Bref;
   }
+}
 
-#else
-
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixMatrixMultiplyNaive(const double* A,
+                                      const int num_row_a,
+                                      const int num_col_a,
+                                      const double* B,
+                                      const int num_row_b,
+                                      const int num_col_b,
+                                      double* C,
+                                      const int start_row_c,
+                                      const int start_col_c,
+                                      const int row_stride_c,
+                                      const int col_stride_c) {
   DCHECK_GT(num_row_a, 0);
   DCHECK_GT(num_col_a, 0);
   DCHECK_GT(num_row_b, 0);
@@ -169,8 +191,45 @@ inline void MatrixMatrixMultiply(const double* A,
       }
     }
   }
-#endif  // CERES_NO_CUSTOM_BLAS
 }
+
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixMatrixMultiply(const double* A,
+                                 const int num_row_a,
+                                 const int num_col_a,
+                                 const double* B,
+                                 const int num_row_b,
+                                 const int num_col_b,
+                                 double* C,
+                                 const int start_row_c,
+                                 const int start_col_c,
+                                 const int row_stride_c,
+                                 const int col_stride_c) {
+#ifdef CERES_NO_CUSTOM_BLAS
+  MatrixMatrixMultiplyEigen<kRowA, kColA, kRowB, kColB, kOperation>(
+      A, num_row_a, num_col_a,
+      B, num_row_b, num_col_b,
+      C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  return;
+
+#else
+
+  if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
+      kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
+    MatrixMatrixMultiplyEigen<kRowA, kColA, kRowB, kColB, kOperation>(
+        A, num_row_a, num_col_a,
+        B, num_row_b, num_col_b,
+        C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  } else {
+    MatrixMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, kOperation>(
+        A, num_row_a, num_col_a,
+        B, num_row_b, num_col_b,
+        C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  }
+
+#endif
+}
+
 
 // C op A' * B;
 //
@@ -205,25 +264,23 @@ inline void MatrixMatrixMultiply(const double* A,
 //   ------------
 //
 template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiply(const double* A,
-                                          const int num_row_a,
-                                          const int num_col_a,
-                                          const double* B,
-                                          const int num_row_b,
-                                          const int num_col_b,
-                                          double* C,
-                                          const int start_row_c,
-                                          const int start_col_c,
-                                          const int row_stride_c,
-                                          const int col_stride_c) {
-#ifdef CERES_NO_CUSTOM_BLAS
+inline void MatrixTransposeMatrixMultiplyEigen(const double* A,
+                                               const int num_row_a,
+                                               const int num_col_a,
+                                               const double* B,
+                                               const int num_row_b,
+                                               const int num_col_b,
+                                               double* C,
+                                               const int start_row_c,
+                                               const int start_col_c,
+                                               const int row_stride_c,
+                                               const int col_stride_c) {
   const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
   const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
   MatrixRef Cref(C, row_stride_c, col_stride_c);
   Eigen::Block<MatrixRef, kColA, kColB> block(Cref,
                                               start_row_c, start_col_c,
                                               num_col_a, num_col_b);
-
   if (kOperation > 0) {
     block CERES_MAYBE_NOALIAS += Aref.transpose() * Bref;
   } else if (kOperation < 0) {
@@ -231,9 +288,20 @@ inline void MatrixTransposeMatrixMultiply(const double* A,
   } else {
     block CERES_MAYBE_NOALIAS = Aref.transpose() * Bref;
   }
+}
 
-#else
-
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixTransposeMatrixMultiplyNaive(const double* A,
+                                               const int num_row_a,
+                                               const int num_col_a,
+                                               const double* B,
+                                               const int num_row_b,
+                                               const int num_col_b,
+                                               double* C,
+                                               const int start_row_c,
+                                               const int start_col_c,
+                                               const int row_stride_c,
+                                               const int col_stride_c) {
   DCHECK_GT(num_row_a, 0);
   DCHECK_GT(num_col_a, 0);
   DCHECK_GT(num_row_b, 0);
@@ -276,7 +344,43 @@ inline void MatrixTransposeMatrixMultiply(const double* A,
       }
     }
   }
-#endif  // CERES_NO_CUSTOM_BLAS
+}
+
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixTransposeMatrixMultiply(const double* A,
+                                          const int num_row_a,
+                                          const int num_col_a,
+                                          const double* B,
+                                          const int num_row_b,
+                                          const int num_col_b,
+                                          double* C,
+                                          const int start_row_c,
+                                          const int start_col_c,
+                                          const int row_stride_c,
+                                          const int col_stride_c) {
+#ifdef CERES_NO_CUSTOM_BLAS
+  MatrixTransposeMatrixMultiplyEigen<kRowA, kColA, kRowB, kColB, kOperation>(
+      A, num_row_a, num_col_a,
+      B, num_row_b, num_col_b,
+      C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  return;
+
+#else
+
+  if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
+      kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
+    MatrixTransposeMatrixMultiplyEigen<kRowA, kColA, kRowB, kColB, kOperation>(
+        A, num_row_a, num_col_a,
+        B, num_row_b, num_col_b,
+        C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  } else {
+    MatrixTransposeMatrixMultiplyNaive<kRowA, kColA, kRowB, kColB, kOperation>(
+        A, num_row_a, num_col_a,
+        B, num_row_b, num_col_b,
+        C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+  }
+
+#endif
 }
 
 template<int kRowA, int kColA, int kOperation>
@@ -290,14 +394,15 @@ inline void MatrixVectorMultiply(const double* A,
   const typename EigenTypes<kColA>::ConstVectorRef bref(b, num_col_a);
   typename EigenTypes<kRowA>::VectorRef cref(c, num_row_a);
 
+  // lazyProduct works better than .noalias() for matrix-vector
+  // products.
   if (kOperation > 0) {
-    cref.noalias() += Aref * bref;
+    cref += Aref.lazyProduct(bref);
   } else if (kOperation < 0) {
-    cref.noalias() -= Aref * bref;
+    cref -= Aref.lazyProduct(bref);
   } else {
-    cref.noalias() = Aref * bref;
+    cref -= Aref.lazyProduct(bref);
   }
-
 #else
 
   DCHECK_GT(num_row_a, 0);
@@ -347,14 +452,15 @@ inline void MatrixTransposeVectorMultiply(const double* A,
   const typename EigenTypes<kRowA>::ConstVectorRef bref(b, num_row_a);
   typename EigenTypes<kColA>::VectorRef cref(c, num_col_a);
 
+  // lazyProduct works better than .noalias() for matrix-vector
+  // products.
   if (kOperation > 0) {
-    cref.noalias() += Aref.transpose() * bref;
+    cref += Aref.transpose().lazyProduct(bref);
   } else if (kOperation < 0) {
-    cref.noalias() -= Aref.transpose() * bref;
+    cref -= Aref.transpose().lazyProduct(bref);
   } else {
-    cref.noalias() = Aref.transpose() * bref;
+    cref -= Aref.transpose().lazyProduct(bref);
   }
-
 #else
 
   DCHECK_GT(num_row_a, 0);
