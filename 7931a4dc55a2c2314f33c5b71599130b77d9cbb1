@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TBH4whg0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-05T01:05:50Z",
+      "side": 1,
+      "message": "Alignment",
+      "revId": "7931a4dc55a2c2314f33c5b71599130b77d9cbb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TBB4fQng",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-05T01:05:50Z",
+      "side": 1,
+      "message": "Naive blas is faster for full dynamic operations? I thought this would only be the case for mixed static/dynamic operations.",
+      "revId": "7931a4dc55a2c2314f33c5b71599130b77d9cbb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TBFn7pP8",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-05T01:05:50Z",
+      "side": 1,
+      "message": "I suggest importing Dynamic into the Ceres namespace.",
+      "revId": "7931a4dc55a2c2314f33c5b71599130b77d9cbb1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
