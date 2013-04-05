@@ -35,6 +35,7 @@
 #include <cstddef>
 #include <vector>
 
+#include "ceres/blas.h"
 #include "ceres/corrector.h"
 #include "ceres/parameter_block.h"
 #include "ceres/residual_block_utils.h"
@@ -139,17 +140,15 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
 
         // Apply local reparameterization to the jacobians.
         if (parameter_block->LocalParameterizationJacobian() != NULL) {
-          ConstMatrixRef local_to_global(
+          MatrixMatrixMultiply
+              <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 0>(
+              global_jacobians[i],
+              num_residuals,
+              parameter_block->Size(),
               parameter_block->LocalParameterizationJacobian(),
               parameter_block->Size(),
-              parameter_block->LocalSize());
-          MatrixRef global_jacobian(global_jacobians[i],
-                                    num_residuals,
-                                    parameter_block->Size());
-          MatrixRef local_jacobian(jacobians[i],
-                                   num_residuals,
-                                   parameter_block->LocalSize());
-          local_jacobian.noalias() = global_jacobian * local_to_global;
+              parameter_block->LocalSize(),
+              jacobians[i], 0, 0,  num_residuals, parameter_block->LocalSize());
         }
       }
     }
