@@ -231,6 +231,63 @@ inline void MatrixMatrixMultiply(const double* A,
 }
 
 
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixMatrixMultiplyUpperNaive(const double* A,
+                                      const int num_row_a,
+                                      const int num_col_a,
+                                      const double* B,
+                                      const int num_row_b,
+                                      const int num_col_b,
+                                      double* C,
+                                      const int start_row_c,
+                                      const int start_col_c,
+                                      const int row_stride_c,
+                                      const int col_stride_c) {
+  DCHECK_GT(num_row_a, 0);
+  DCHECK_GT(num_col_a, 0);
+  DCHECK_GT(num_row_b, 0);
+  DCHECK_GT(num_col_b, 0);
+  DCHECK_GE(start_row_c, 0);
+  DCHECK_GE(start_col_c, 0);
+  DCHECK_GT(row_stride_c, 0);
+  DCHECK_GT(col_stride_c, 0);
+
+  DCHECK((kRowA == Eigen::Dynamic) || (kRowA == num_row_a));
+  DCHECK((kColA == Eigen::Dynamic) || (kColA == num_col_a));
+  DCHECK((kRowB == Eigen::Dynamic) || (kRowB == num_row_b));
+  DCHECK((kColB == Eigen::Dynamic) || (kColB == num_col_b));
+
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_ROW_B = (kColB != Eigen::Dynamic ? kRowB : num_row_b);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+  DCHECK_EQ(NUM_COL_A, NUM_ROW_B);
+
+  const int NUM_ROW_C = NUM_ROW_A;
+  const int NUM_COL_C = NUM_COL_B;
+  DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
+  DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
+
+  for (int row = 0; row < NUM_ROW_C; ++row) {
+    for (int col = row; col < NUM_COL_C; ++col) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_COL_A; ++k) {
+        tmp += A[row * NUM_COL_A + k] * B[k * NUM_COL_B + col];
+      }
+
+      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
+      if (kOperation > 0) {
+        C[index] += tmp;
+      } else if (kOperation < 0) {
+        C[index] -= tmp;
+      } else {
+        C[index] = tmp;
+      }
+    }
+  }
+}
+
+
 // C op A' * B;
 //
 // where op can be +=, -=, or =.
@@ -329,6 +386,62 @@ inline void MatrixTransposeMatrixMultiplyNaive(const double* A,
 
   for (int row = 0; row < NUM_ROW_C; ++row) {
     for (int col = 0; col < NUM_COL_C; ++col) {
+      double tmp = 0.0;
+      for (int k = 0; k < NUM_ROW_A; ++k) {
+        tmp += A[k * NUM_COL_A + row] * B[k * NUM_COL_B + col];
+      }
+
+      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
+      if (kOperation > 0) {
+        C[index]+= tmp;
+      } else if (kOperation < 0) {
+        C[index]-= tmp;
+      } else {
+        C[index]= tmp;
+      }
+    }
+  }
+}
+
+template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
+inline void MatrixTransposeMatrixMultiplyUpperNaive(const double* A,
+                                               const int num_row_a,
+                                               const int num_col_a,
+                                               const double* B,
+                                               const int num_row_b,
+                                               const int num_col_b,
+                                               double* C,
+                                               const int start_row_c,
+                                               const int start_col_c,
+                                               const int row_stride_c,
+                                               const int col_stride_c) {
+  DCHECK_GT(num_row_a, 0);
+  DCHECK_GT(num_col_a, 0);
+  DCHECK_GT(num_row_b, 0);
+  DCHECK_GT(num_col_b, 0);
+  DCHECK_GE(start_row_c, 0);
+  DCHECK_GE(start_col_c, 0);
+  DCHECK_GT(row_stride_c, 0);
+  DCHECK_GT(col_stride_c, 0);
+
+  DCHECK((kRowA == Eigen::Dynamic) || (kRowA == num_row_a));
+  DCHECK((kColA == Eigen::Dynamic) || (kColA == num_col_a));
+  DCHECK((kRowB == Eigen::Dynamic) || (kRowB == num_row_b));
+  DCHECK((kColB == Eigen::Dynamic) || (kColB == num_col_b));
+
+  const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
+  const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
+  const int NUM_ROW_B = (kColB != Eigen::Dynamic ? kRowB : num_row_b);
+  const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
+  DCHECK_EQ(NUM_ROW_A, NUM_ROW_B);
+
+  const int NUM_ROW_C = NUM_COL_A;
+  const int NUM_COL_C = NUM_COL_B;
+  DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
+  DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
+
+  for (int row = 0; row < NUM_ROW_C; ++row) {
+    for (int col = row; col < NUM_COL_C; ++col) {
       double tmp = 0.0;
       for (int k = 0; k < NUM_ROW_A; ++k) {
         tmp += A[k * NUM_COL_A + row] * B[k * NUM_COL_B + col];

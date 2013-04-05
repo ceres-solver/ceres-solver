@@ -277,7 +277,7 @@ class SchurEliminator : public SchurEliminatorBase {
       const double* b,
       int row_block_counter,
       typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix* eet,
-      typename EigenTypes<kEBlockSize>::Vector* g,
+      double* g,
       double* buffer,
       BlockRandomAccessMatrix* lhs);
 
@@ -285,7 +285,7 @@ class SchurEliminator : public SchurEliminatorBase {
                  const BlockSparseMatrixBase* A,
                  const double* b,
                  int row_block_counter,
-                 const Vector& inverse_ete_g,
+                 const double* inverse_ete_g,
                  double* rhs);
 
   void ChunkOuterProduct(const CompressedRowBlockStructure* bs,
