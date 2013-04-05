@@ -123,7 +123,7 @@ void BlockSparseMatrix::RightMultiply(const double* x,  double* y) const {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
           values_.get() + cells[j].position, row_block_size, col_block_size,
           x + col_block_pos,
           y + row_block_pos);
@@ -143,7 +143,7 @@ void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
           values_.get() + cells[j].position, row_block_size, col_block_size,
           x + row_block_pos,
           y + col_block_pos);
