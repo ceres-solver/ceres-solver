@@ -72,6 +72,7 @@
 //      Winner       0        0         5   11        2     41
 
 #include <iostream>
+#include <iterator>
 #include <fstream>
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
