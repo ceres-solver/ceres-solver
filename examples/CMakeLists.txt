@@ -62,6 +62,11 @@ IF (${GFLAGS})
                  bal_problem.cc)
   TARGET_LINK_LIBRARIES(bundle_adjuster ceres)
 
+  ADD_EXECUTABLE(libmv_bundle_adjuster
+                 libmv_bundle_adjuster.cc)
+
+  TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres)
+
   ADD_EXECUTABLE(denoising
                  denoising.cc
                  fields_of_experts.cc)
