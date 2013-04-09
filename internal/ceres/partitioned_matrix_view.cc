@@ -104,7 +104,7 @@ void PartitionedMatrixView::RightMultiplyE(const double* x, double* y) const {
     const int col_block_id = cell.block_id;
     const int col_block_pos = bs->cols[col_block_id].position;
     const int col_block_size = bs->cols[col_block_id].size;
-    MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
+    MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
         row_values + cell.position, row_block_size, col_block_size,
         x + col_block_pos,
         y + row_block_pos);
@@ -128,7 +128,7 @@ void PartitionedMatrixView::RightMultiplyF(const double* x, double* y) const {
       const int col_block_id = cells[c].block_id;
       const int col_block_pos = bs->cols[col_block_id].position;
       const int col_block_size = bs->cols[col_block_id].size;
-      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
+      MatrixVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
           row_values + cells[c].position, row_block_size, col_block_size,
           x + col_block_pos - num_cols_e(),
           y + row_block_pos);
@@ -149,7 +149,7 @@ void PartitionedMatrixView::LeftMultiplyE(const double* x, double* y) const {
     const int col_block_id = cell.block_id;
     const int col_block_pos = bs->cols[col_block_id].position;
     const int col_block_size = bs->cols[col_block_id].size;
-    MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
+    MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
         row_values + cell.position, row_block_size, col_block_size,
         x + row_block_pos,
         y + col_block_pos);
@@ -173,7 +173,7 @@ void PartitionedMatrixView::LeftMultiplyF(const double* x, double* y) const {
       const int col_block_id = cells[c].block_id;
       const int col_block_pos = bs->cols[col_block_id].position;
       const int col_block_size = bs->cols[col_block_id].size;
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor, 1>(
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
         row_values + cells[c].position, row_block_size, col_block_size,
         x + row_block_pos,
         y + col_block_pos - num_cols_e());
@@ -259,9 +259,7 @@ void PartitionedMatrixView::UpdateBlockDiagonalEtE(
         block_diagonal_structure->rows[block_id].cells[0].position;
 
     MatrixTransposeMatrixMultiply
-        <Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-         Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-         1, Eigen::RowMajor>(
+        <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
             row_values + cell.position, row_block_size, col_block_size,
             row_values + cell.position, row_block_size, col_block_size,
             block_diagonal->mutable_values() + cell_position,
@@ -293,9 +291,7 @@ void PartitionedMatrixView::UpdateBlockDiagonalFtF(
           block_diagonal_structure->rows[diagonal_block_id].cells[0].position;
 
       MatrixTransposeMatrixMultiply
-          <Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-           Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-           1, Eigen::RowMajor>(
+          <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
               row_values + cells[c].position, row_block_size, col_block_size,
               row_values + cells[c].position, row_block_size, col_block_size,
               block_diagonal->mutable_values() + cell_position,

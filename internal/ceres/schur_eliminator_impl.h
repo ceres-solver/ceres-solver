@@ -242,7 +242,6 @@ Eliminate(const BlockSparseMatrixBase* A,
     }
 
     FixedArray<double> g(e_block_size);
-    //typename EigenTypes<kEBlockSize>::Vector g(e_block_size);
     typename EigenTypes<kEBlockSize>::VectorRef gref(g.get(), e_block_size);
     gref.setZero();
 
@@ -278,7 +277,7 @@ Eliminate(const BlockSparseMatrixBase* A,
     //   rhs = F'b - F'E(E'E)^(-1) E'b
 
     FixedArray<double> inverse_ete_g(e_block_size);
-    MatrixVectorMultiply<kEBlockSize, kEBlockSize, Eigen::RowMajor, 0>(
+    MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
         inverse_ete.data(), e_block_size, e_block_size, g.get(), inverse_ete_g.get());
 
     UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
@@ -335,21 +334,19 @@ BackSubstitute(const BlockSparseMatrixBase* A,
         const int f_block_size = bs->cols[f_block_id].size;
         const int r_block = f_block_id - num_eliminate_blocks_;
 
-        MatrixVectorMultiply<kRowBlockSize, kFBlockSize, Eigen::RowMajor, -1>(
+        MatrixVectorMultiply<kRowBlockSize, kFBlockSize, -1>(
             row_values + row.cells[c].position, row.block.size, f_block_size,
             z + lhs_row_layout_[r_block],
             sj.data());
       }
 
-      MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, Eigen::RowMajor, 1>(
+      MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
           row_values + e_cell.position, row.block.size, e_block_size,
           sj.data(),
           y_ptr);
 
       MatrixTransposeMatrixMultiply
-          <kRowBlockSize, kEBlockSize, Eigen::RowMajor,
-           kRowBlockSize, kEBlockSize, Eigen::RowMajor,
-           1, Eigen::RowMajor>(
+          <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
               row_values + e_cell.position, row.block.size, e_block_size,
               row_values + e_cell.position, row.block.size, e_block_size,
               ete.data(), 0, 0, e_block_size, e_block_size);
@@ -385,7 +382,7 @@ UpdateRhs(const Chunk& chunk,
         typename EigenTypes<kRowBlockSize>::ConstVectorRef
         (b + b_pos, row.block.size);
 
-    MatrixVectorMultiply<kRowBlockSize, kEBlockSize, Eigen::RowMajor, -1>(
+    MatrixVectorMultiply<kRowBlockSize, kEBlockSize, -1>(
         row_values + e_cell.position, row.block.size, e_block_size,
         inverse_ete_g, sj.data());
 
@@ -394,7 +391,7 @@ UpdateRhs(const Chunk& chunk,
       const int block_size = bs->cols[block_id].size;
       const int block = block_id - num_eliminate_blocks_;
       CeresMutexLock l(rhs_locks_[block]);
-      MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, Eigen::RowMajor, 1>(
+      MatrixTransposeVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
           row_values + row.cells[c].position,
           row.block.size, block_size,
           sj.data(), rhs + lhs_row_layout_[block]);
@@ -454,15 +451,13 @@ ChunkDiagonalBlockAndGradient(
     // Extract the e_block, ETE += E_i' E_i
     const Cell& e_cell = row.cells.front();
     MatrixTransposeMatrixMultiply
-        <kRowBlockSize, kEBlockSize, Eigen::RowMajor,
-         kRowBlockSize, kEBlockSize, Eigen::RowMajor,
-         1, Eigen::RowMajor>(
+        <kRowBlockSize, kEBlockSize, kRowBlockSize, kEBlockSize, 1>(
             row_values + e_cell.position, row.block.size, e_block_size,
             row_values + e_cell.position, row.block.size, e_block_size,
             ete->data(), 0, 0, e_block_size, e_block_size);
 
     // g += E_i' b_i
-    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, Eigen::RowMajor, 1>(
+    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
         row_values + e_cell.position, row.block.size, e_block_size,
         b + b_pos,
         g);
@@ -476,9 +471,7 @@ ChunkDiagonalBlockAndGradient(
       double* buffer_ptr =
           buffer +  FindOrDie(chunk.buffer_layout, f_block_id);
       MatrixTransposeMatrixMultiply
-          <kRowBlockSize, kEBlockSize, Eigen::RowMajor,
-           kRowBlockSize, kFBlockSize, Eigen::RowMajor,
-           1, Eigen::RowMajor>(
+          <kRowBlockSize, kEBlockSize, kRowBlockSize, kFBlockSize, 1>(
           row_values + e_cell.position, row.block.size, e_block_size,
           row_values + row.cells[c].position, row.block.size, f_block_size,
           buffer_ptr, 0, 0, e_block_size, f_block_size);
@@ -519,9 +512,7 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
     const int block1 = it1->first - num_eliminate_blocks_;
     const int block1_size = bs->cols[it1->first].size;
     MatrixTransposeMatrixMultiply
-        <kEBlockSize, kFBlockSize, Eigen::RowMajor,
-         kEBlockSize, kEBlockSize, Eigen::RowMajor,
-         0, Eigen::RowMajor>(
+        <kEBlockSize, kFBlockSize, kEBlockSize, kEBlockSize, 0>(
         buffer + it1->second, e_block_size, block1_size,
         inverse_ete.data(), e_block_size, e_block_size,
         b1_transpose_inverse_ete, 0, 0, block1_size, e_block_size);
@@ -531,14 +522,15 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
       CellInfo* cell_info = lhs->GetCell(block1, block1,
                                          &r, &c,
                                          &row_stride, &col_stride);
-      CeresMutexLock l(&cell_info->m);
-      MatrixMatrixMultiply
-          <kFBlockSize, kEBlockSize, Eigen::RowMajor,
-           kEBlockSize, kFBlockSize, Eigen::RowMajor,
-           -1, Eigen::RowMajor>(
-              b1_transpose_inverse_ete, block1_size, e_block_size,
-              buffer  + it1->second, e_block_size, block1_size,
-              cell_info->values, r, c, row_stride, col_stride);
+      if (cell_info != NULL) {
+        CeresMutexLock l(&cell_info->m);
+        MatrixMatrixMultiplyUpperNaive
+            <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
+                b1_transpose_inverse_ete, block1_size, e_block_size,
+                buffer  + it1->second, e_block_size, block1_size,
+                cell_info->values, r, c, row_stride, col_stride);
+      }
+
     }
 
 
@@ -555,9 +547,7 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
         const int block2_size = bs->cols[it2->first].size;
         CeresMutexLock l(&cell_info->m);
         MatrixMatrixMultiply
-            <kFBlockSize, kEBlockSize, Eigen::RowMajor,
-             kEBlockSize, kFBlockSize, Eigen::RowMajor,
-             -1, Eigen::RowMajor>(
+            <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
                 b1_transpose_inverse_ete, block1_size, e_block_size,
                 buffer  + it2->second, e_block_size, block2_size,
                 cell_info->values, r, c, row_stride, col_stride);
@@ -633,10 +623,8 @@ NoEBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CeresMutexLock l(&cell_info->m);
       // This multiply currently ignores the fact that this is a
       // symmetric outer product.
-      MatrixTransposeMatrixMultiply
-          <Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-           Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-           1, Eigen::RowMajor>(
+      MatrixTransposeMatrixMultiplyUpperNaive
+          <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
               row_values + row.cells[i].position, row.block.size, block1_size,
               row_values + row.cells[i].position, row.block.size, block1_size,
               cell_info->values, r, c, row_stride, col_stride);
@@ -654,9 +642,7 @@ NoEBlockRowOuterProduct(const BlockSparseMatrixBase* A,
         const int block2_size = bs->cols[row.cells[j].block_id].size;
         CeresMutexLock l(&cell_info->m);
         MatrixTransposeMatrixMultiply
-            <Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-             Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor,
-             1, Eigen::RowMajor>(
+            <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
                 row_values + row.cells[i].position, row.block.size, block1_size,
                 row_values + row.cells[j].position, row.block.size, block2_size,
                 cell_info->values, r, c, row_stride, col_stride);
@@ -689,10 +675,8 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
     if (cell_info != NULL) {
       CeresMutexLock l(&cell_info->m);
       // block += b1.transpose() * b1;
-      MatrixTransposeMatrixMultiply
-          <kRowBlockSize, kFBlockSize, Eigen::RowMajor,
-           kRowBlockSize, kFBlockSize, Eigen::RowMajor,
-           1, Eigen::RowMajor>(
+      MatrixTransposeMatrixMultiplyUpperNaive
+          <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
           row_values + row.cells[i].position, row.block.size, block1_size,
           row_values + row.cells[i].position, row.block.size, block1_size,
           cell_info->values, r, c, row_stride, col_stride);
@@ -710,9 +694,7 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       if (cell_info != NULL) {
         // block += b1.transpose() * b2;
         MatrixTransposeMatrixMultiply
-            <kRowBlockSize, kFBlockSize, Eigen::RowMajor,
-             kRowBlockSize, kFBlockSize, Eigen::RowMajor,
-             1, Eigen::RowMajor>(
+            <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
                 row_values + row.cells[i].position, row.block.size, block1_size,
                 row_values + row.cells[j].position, row.block.size, block2_size,
                 cell_info->values, r, c, row_stride, col_stride);

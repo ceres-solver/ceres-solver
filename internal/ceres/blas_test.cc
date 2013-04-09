@@ -48,7 +48,7 @@ TEST(BLAS, MatrixMatrixMultiply) {
   Matrix B(kRowB, kColB);
   B.setOnes();
 
-  for (int row_stride_c = kRowA; row_stride_c < 2 * kRowA; ++row_stride_c) {
+  for (int row_stride_c = kRowA; row_stride_c < 3 * kRowA; ++row_stride_c) {
     for (int col_stride_c = kColB; col_stride_c < 3 * kColB; ++col_stride_c) {
       Matrix C(row_stride_c, col_stride_c);
       C.setOnes();
@@ -65,13 +65,10 @@ TEST(BLAS, MatrixMatrixMultiply) {
           C_plus_ref.block(start_row_c, start_col_c, kRowA, kColB) +=
               A * B;
 
-          MatrixMatrixMultiply
-              <kRowA, kColA, Eigen::RowMajor,
-               kRowB, kColB, Eigen::RowMajor,
-               1, Eigen::RowMajor>(
-                   A.data(), kRowA, kColA,
-                   B.data(), kRowB, kColB,
-                   C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+          MatrixMatrixMultiply<kRowA, kColA, kRowB, kColB, 1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
 
           EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
               << "C += A * B \n"
@@ -86,10 +83,7 @@ TEST(BLAS, MatrixMatrixMultiply) {
           C_minus_ref.block(start_row_c, start_col_c, kRowA, kColB) -=
               A * B;
 
-          MatrixMatrixMultiply
-              <kRowA, kColA, Eigen::RowMajor,
-               kRowB, kColB, Eigen::RowMajor,
-               -1, Eigen::RowMajor>(
+          MatrixMatrixMultiply<kRowA, kColA, kRowB, kColB, -1>(
               A.data(), kRowA, kColA,
               B.data(), kRowB, kColB,
               C_minus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
@@ -106,9 +100,7 @@ TEST(BLAS, MatrixMatrixMultiply) {
           C_assign_ref.block(start_row_c, start_col_c, kRowA, kColB) =
               A * B;
 
-          MatrixMatrixMultiply<kRowA, kColA, Eigen::RowMajor,
-                               kRowB, kColB, Eigen::RowMajor,
-                               0, Eigen::RowMajor>(
+          MatrixMatrixMultiply<kRowA, kColA, kRowB, kColB, 0>(
               A.data(), kRowA, kColA,
               B.data(), kRowB, kColB,
               C_assign.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
@@ -156,13 +148,10 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
           C_plus_ref.block(start_row_c, start_col_c, kColA, kColB) +=
               A.transpose() * B;
 
-          MatrixTransposeMatrixMultiply
-              <kRowA, kColA, Eigen::RowMajor,
-               kRowB, kColB, Eigen::RowMajor,
-               1, Eigen::RowMajor>(
-                   A.data(), kRowA, kColA,
-                   B.data(), kRowB, kColB,
-                   C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+          MatrixTransposeMatrixMultiply<kRowA, kColA, kRowB, kColB, 1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_plus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
 
           EXPECT_NEAR((C_plus_ref - C_plus).norm(), 0.0, kTolerance)
               << "C += A' * B \n"
@@ -176,13 +165,10 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
           C_minus_ref.block(start_row_c, start_col_c, kColA, kColB) -=
               A.transpose() * B;
 
-          MatrixTransposeMatrixMultiply
-              <kRowA, kColA, Eigen::RowMajor,
-               kRowB, kColB, Eigen::RowMajor,
-               -1, Eigen::RowMajor>(
-                   A.data(), kRowA, kColA,
-                   B.data(), kRowB, kColB,
-                   C_minus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+          MatrixTransposeMatrixMultiply<kRowA, kColA, kRowB, kColB, -1>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_minus.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
 
           EXPECT_NEAR((C_minus_ref - C_minus).norm(), 0.0, kTolerance)
               << "C -= A' * B \n"
@@ -196,13 +182,10 @@ TEST(BLAS, MatrixTransposeMatrixMultiply) {
           C_assign_ref.block(start_row_c, start_col_c, kColA, kColB) =
               A.transpose() * B;
 
-          MatrixTransposeMatrixMultiply
-              <kRowA, kColA, Eigen::RowMajor,
-               kRowB, kColB, Eigen::RowMajor,
-               0, Eigen::RowMajor>(
-                   A.data(), kRowA, kColA,
-                   B.data(), kRowB, kColB,
-                   C_assign.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
+          MatrixTransposeMatrixMultiply<kRowA, kColA, kRowB, kColB, 0>(
+              A.data(), kRowA, kColA,
+              B.data(), kRowB, kColB,
+              C_assign.data(), start_row_c, start_col_c, row_stride_c, col_stride_c);
 
           EXPECT_NEAR((C_assign_ref - C_assign).norm(), 0.0, kTolerance)
               << "C = A' * B \n"
@@ -240,30 +223,27 @@ TEST(BLAS, MatrixVectorMultiply) {
   Vector c_assign_ref = c;
 
   c_plus_ref += A * b;
-  MatrixVectorMultiply<kRowA, kColA, Eigen::RowMajor, 1>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_plus.data());
+  MatrixVectorMultiply<kRowA, kColA, 1>(A.data(), kRowA, kColA,
+                                        b.data(),
+                                        c_plus.data());
   EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
       << "c += A * b \n"
       << "c_ref : \n" << c_plus_ref << "\n"
       << "c: \n" << c_plus;
 
   c_minus_ref -= A * b;
-  MatrixVectorMultiply<kRowA, kColA, Eigen::RowMajor, -1>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_minus.data());
+  MatrixVectorMultiply<kRowA, kColA, -1>(A.data(), kRowA, kColA,
+                                                 b.data(),
+                                                 c_minus.data());
   EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
       << "c += A * b \n"
       << "c_ref : \n" << c_minus_ref << "\n"
       << "c: \n" << c_minus;
 
   c_assign_ref = A * b;
-  MatrixVectorMultiply<kRowA, kColA, Eigen::RowMajor, 0>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_assign.data());
+  MatrixVectorMultiply<kRowA, kColA, 0>(A.data(), kRowA, kColA,
+                                                  b.data(),
+                                                  c_assign.data());
   EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
       << "c += A * b \n"
       << "c_ref : \n" << c_assign_ref << "\n"
@@ -292,30 +272,27 @@ TEST(BLAS, MatrixTransposeVectorMultiply) {
   Vector c_assign_ref = c;
 
   c_plus_ref += A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, Eigen::RowMajor, 1>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_plus.data());
+  MatrixTransposeVectorMultiply<kRowA, kColA, 1>(A.data(), kRowA, kColA,
+                                                 b.data(),
+                                                 c_plus.data());
   EXPECT_NEAR((c_plus_ref - c_plus).norm(), 0.0, kTolerance)
       << "c += A' * b \n"
       << "c_ref : \n" << c_plus_ref << "\n"
       << "c: \n" << c_plus;
 
   c_minus_ref -= A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, Eigen::RowMajor, -1>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_minus.data());
+  MatrixTransposeVectorMultiply<kRowA, kColA, -1>(A.data(), kRowA, kColA,
+                                                 b.data(),
+                                                 c_minus.data());
   EXPECT_NEAR((c_minus_ref - c_minus).norm(), 0.0, kTolerance)
       << "c += A' * b \n"
       << "c_ref : \n" << c_minus_ref << "\n"
       << "c: \n" << c_minus;
 
   c_assign_ref = A.transpose() * b;
-  MatrixTransposeVectorMultiply<kRowA, kColA, Eigen::RowMajor, 0>(
-      A.data(), kRowA, kColA,
-      b.data(),
-      c_assign.data());
+  MatrixTransposeVectorMultiply<kRowA, kColA, 0>(A.data(), kRowA, kColA,
+                                                  b.data(),
+                                                  c_assign.data());
   EXPECT_NEAR((c_assign_ref - c_assign).norm(), 0.0, kTolerance)
       << "c += A' * b \n"
       << "c_ref : \n" << c_assign_ref << "\n"
