@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TRrzTgSI",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-10T21:00:59Z",
+      "side": 1,
+      "message": "It\u0027s",
+      "revId": "ad3bbafca707527772dd5e7b43f4f4aed3d507c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRvzdCS0",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-10T21:00:59Z",
+      "side": 1,
+      "message": "Missing closing )",
+      "revId": "ad3bbafca707527772dd5e7b43f4f4aed3d507c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRpy5Zdc",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-10T21:00:59Z",
+      "side": 1,
+      "message": "Indent this block by two more spaces.",
+      "revId": "ad3bbafca707527772dd5e7b43f4f4aed3d507c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRvy2qeQ",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-10T21:00:59Z",
+      "side": 1,
+      "message": "Drop the #1 since there is only one warning.",
+      "revId": "ad3bbafca707527772dd5e7b43f4f4aed3d507c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
