@@ -278,6 +278,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
+  CERES_TEST(so3)
   CERES_TEST(solver_impl)
 
   IF (${SUITESPARSE_FOUND})
