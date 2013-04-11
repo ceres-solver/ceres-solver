@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "TRnLD1YE",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-11T21:25:15Z",
+      "side": 1,
+      "message": "R_plus_delta \u003d R * RotationMatrixFromAngleAxis(delta)",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TRpfpMws",
         "filename": "include/ceres/so3_local_parameterization.h",
         "patchSetId": 1
@@ -88,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "TRtKY6bY",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-11T21:25:15Z",
+      "side": 1,
+      "message": "Delete this line",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TRrfkLzQ",
         "filename": "include/ceres/so3_local_parameterization.h",
         "patchSetId": 1
@@ -117,6 +151,57 @@
       "side": 1,
       "message": "Eek, you mean plank line before \"return\"?",
       "parentUuid": "TRrfkLzQ",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRpJwIaU",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-11T21:25:15Z",
+      "side": 1,
+      "message": "\"for Jacobian computation\" -\u003e \"to compute the Jacobian.\"",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRhJ8EXo",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-11T21:25:15Z",
+      "side": 1,
+      "message": "Replace paragraph with\n\nThis is useful when you need to optimize a rotation matrix in-place, and want to avoid re-parameterizing the problem with angle axis or another representation. To use a rotation matrix as a parameter block, set the parameterization:",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRtLKqZY",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-11T21:25:15Z",
+      "side": 1,
+      "message": "\"Note: the same parameterization object can be shared across different parameter blocks.\"\n\nthe \"residual blocks\" part of this sentence is wrong; residual blocks don\u0027t take parameterizations.",
       "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
