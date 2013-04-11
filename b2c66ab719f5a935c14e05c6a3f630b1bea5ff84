@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "TNG4mzy4",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-11T21:05:36Z",
+      "side": 1,
+      "message": "Good point. If i was GCC i would have blame on self actually.",
+      "parentUuid": "TRhd8A3o",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TRlffq1k",
         "filename": "include/ceres/so3_local_parameterization.h",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2013-04-11T20:53:27Z",
       "side": 1,
       "message": "no need for blank before.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TNA4bi90",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-11T21:05:36Z",
+      "side": 1,
+      "message": "Eek, you mean plank line before \"return\"?",
+      "parentUuid": "TRrfkLzQ",
       "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "TNK5Sd4o",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-11T21:05:36Z",
+      "side": 1,
+      "message": "Well, yes. But personally don\u0027t know how to compute jacobian for such parameterization algebraicly. If i knew this, i didn\u0027t use AutoDiffParameterization for jacobians then..",
+      "parentUuid": "TRrcAr8M",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TRhcKQ9U",
         "filename": "internal/ceres/so3_local_parameterization_test.cc",
         "patchSetId": 1
@@ -166,6 +220,24 @@
       "writtenOn": "2013-04-11T20:53:27Z",
       "side": 1,
       "message": "Instead of testing the autodiffed version, I would actually check the functor because if that is right then the autodiffed version will be right too, this function only checks the autodiffed version and only checks the plus operation.. checking the functor ensures that everything derived from the plus operation is correct too.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TNE4hkxM",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-11T21:05:36Z",
+      "side": 1,
+      "message": "This is actually how i understood Keir when talking in IRC. So i\u0027ll let you guys to discuss what to use here. Easy to change anyway.",
+      "parentUuid": "TRhcKQ9U",
       "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
