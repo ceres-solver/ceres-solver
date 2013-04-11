@@ -209,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "TNM40o1E",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-11T21:08:58Z",
+      "side": 1,
+      "message": "Forgot to mention. Apart from computing jacobian algebraicly, only having pre-computed jacobians appears in head.\n\nSo basically need your advice how to deal with such thing :)",
+      "parentUuid": "TNK5Sd4o",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TRhcKQ9U",
         "filename": "internal/ceres/so3_local_parameterization_test.cc",
         "patchSetId": 1
