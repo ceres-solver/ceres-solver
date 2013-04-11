@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TRpfpMws",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "product of R and delta.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRhfVIzQ",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "we follow the convention that its x, delta, and x_plus_delta",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRhd8A3o",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "you are already in the ceres namespace.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRlffq1k",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "already in ceres namespace.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRrfkLzQ",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "no need for blank before.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRpdwE6U",
+        "filename": "include/ceres/so3_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "The user does not care that its autodiffed. So just \n\nRotationMatrixLocalParameterization",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRrcu72g",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "Documentation for this struct, I don\u0027t really know what this is doing.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRrdHDys",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "how about just x, rotated_x ? expected seems to indicate that this is a golden value.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRrcAr8M",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "This is an interesting test, but I am worried that this is a bit fragile and brings in too much of the solver.\nI think the local_parameterization_test should just test the plus operation and the jacobian. the optimization should not be tested here.\n\nor rather testing the optimization here seems a bit odd.\n\nwhat do you think?\n\nin fact I\u0027d much rather we have a test like this as part of the system_test.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TRhcKQ9U",
+        "filename": "internal/ceres/so3_local_parameterization_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-11T20:53:27Z",
+      "side": 1,
+      "message": "Instead of testing the autodiffed version, I would actually check the functor because if that is right then the autodiffed version will be right too, this function only checks the autodiffed version and only checks the plus operation.. checking the functor ensures that everything derived from the plus operation is correct too.",
+      "revId": "b2c66ab719f5a935c14e05c6a3f630b1bea5ff84",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
