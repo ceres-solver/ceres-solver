@@ -51,6 +51,7 @@
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/so3_local_parameterization.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"
 
