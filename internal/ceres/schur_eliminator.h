@@ -336,7 +336,7 @@ class SchurEliminator : public SchurEliminatorBase {
   // ChunkOuterProduct. Like buffer_ it is of size num_threads *
   // buffer_size_. Each thread accesses the chunk
   //
-  //   [thread_id * buffer_size_ , (thread_id + 1) * buffer_size_]
+  //   [thread_id * buffer_size_ , (thread_id + 1) * buffer_size_)
   //
   scoped_array<double> chunk_outer_product_buffer_;
 

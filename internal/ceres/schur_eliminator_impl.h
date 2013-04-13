@@ -517,25 +517,7 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
         inverse_ete.data(), e_block_size, e_block_size,
         b1_transpose_inverse_ete, 0, 0, block1_size, e_block_size);
 
-    {
-      int r, c, row_stride, col_stride;
-      CellInfo* cell_info = lhs->GetCell(block1, block1,
-                                         &r, &c,
-                                         &row_stride, &col_stride);
-      if (cell_info != NULL) {
-        CeresMutexLock l(&cell_info->m);
-        MatrixMatrixMultiplyUpper
-            <kFBlockSize, kEBlockSize, kEBlockSize, kFBlockSize, -1>(
-                b1_transpose_inverse_ete, block1_size, e_block_size,
-                buffer  + it1->second, e_block_size, block1_size,
-                cell_info->values, r, c, row_stride, col_stride);
-      }
-
-    }
-
-
     BufferLayoutType::const_iterator it2 = it1;
-    ++it2;
     for (; it2 != buffer_layout.end(); ++it2) {
       const int block2 = it2->first - num_eliminate_blocks_;
 
@@ -623,7 +605,7 @@ NoEBlockRowOuterProduct(const BlockSparseMatrixBase* A,
       CeresMutexLock l(&cell_info->m);
       // This multiply currently ignores the fact that this is a
       // symmetric outer product.
-      MatrixTransposeMatrixMultiplyUpper
+      MatrixTransposeMatrixMultiply
           <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 1>(
               row_values + row.cells[i].position, row.block.size, block1_size,
               row_values + row.cells[i].position, row.block.size, block1_size,
@@ -675,7 +657,7 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
     if (cell_info != NULL) {
       CeresMutexLock l(&cell_info->m);
       // block += b1.transpose() * b1;
-      MatrixTransposeMatrixMultiplyUpper
+      MatrixTransposeMatrixMultiply
           <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
           row_values + row.cells[i].position, row.block.size, block1_size,
           row_values + row.cells[i].position, row.block.size, block1_size,

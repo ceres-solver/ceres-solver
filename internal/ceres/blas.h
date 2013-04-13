@@ -41,6 +41,9 @@
 namespace ceres {
 namespace internal {
 
+// Macros to reduce the template code duplication across the various
+// blas variants.
+
 // Remove the ".noalias()" annotation from the matrix matrix
 // mutliplies to produce a correct build with the Android NDK,
 // including versions 6, 7, 8, and 8b, when built with STLPort and the
@@ -62,16 +65,26 @@ namespace internal {
 #ifdef CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 #define CERES_MAYBE_NOALIAS
 #else
-#define CERES_MAYBE_NOALIAS .template noalias()
+#define CERES_MAYBE_NOALIAS .noalias()
 #endif
 
-#define CERES_GEMM(name) \
-  name<kRowA, kColA, kRowB, kColB, kOperation>(                         \
-      A, num_row_a, num_col_a,                                          \
-      B, num_row_b, num_col_b,                                          \
-      C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+#define CERES_GEMM_BEGIN(name)                                          \
+  template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>  \
+  inline void name(const double* A,                                     \
+                   const int num_row_a,                                 \
+                   const int num_col_a,                                 \
+                   const double* B,                                     \
+                   const int num_row_b,                                 \
+                   const int num_col_b,                                 \
+                   double* C,                                           \
+                   const int start_row_c,                               \
+                   const int start_col_c,                               \
+                   const int row_stride_c,                              \
+                   const int col_stride_c) {
 
-#define CERES_NAIVE_GEMM_HEADER                                         \
+#define CERES_GEMM_END }
+
+#define CERES_GEMM_NAIVE_HEADER                                         \
   DCHECK_GT(num_row_a, 0);                                              \
   DCHECK_GT(num_col_a, 0);                                              \
   DCHECK_GT(num_row_b, 0);                                              \
@@ -89,6 +102,19 @@ namespace internal {
   const int NUM_ROW_B = (kColB != Eigen::Dynamic ? kRowB : num_row_b);  \
   const int NUM_COL_B = (kColB != Eigen::Dynamic ? kColB : num_col_b);
 
+#define CERES_GEMM_EIGEN_HEADER                                         \
+  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef               \
+  Aref(A, num_row_a, num_col_a);                                        \
+  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef               \
+  Bref(B, num_row_b, num_col_b);                                        \
+  MatrixRef Cref(C, row_stride_c, col_stride_c);                        \
+
+#define CERES_CALL_GEMM(name)                                           \
+  name<kRowA, kColA, kRowB, kColB, kOperation>(                         \
+      A, num_row_a, num_col_a,                                          \
+      B, num_row_b, num_col_b,                                          \
+      C, start_row_c, start_col_c, row_stride_c, col_stride_c);
+
 
 // For the matrix-matrix functions below, there are three functions
 // for each functionality. Foo, FooNaive and FooEigen. Foo is the one
@@ -96,7 +122,7 @@ namespace internal {
 // implementation and FooEigen uses Eigen's implementation. Foo
 // chooses between FooNaive and FooEigen depending on how many of the
 // template arguments are fixed at compile time. Currently, FooEigen
-// is called if all matrix dimenions are compile time
+// is called if all matrix dimensions are compile time
 // constants. FooNaive is called otherwise. This leads to the best
 // performance currently.
 //
@@ -135,24 +161,11 @@ namespace internal {
 //   ------------
 //   ------------
 //
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiplyEigen(const double* A,
-                                      const int num_row_a,
-                                      const int num_col_a,
-                                      const double* B,
-                                      const int num_row_b,
-                                      const int num_col_b,
-                                      double* C,
-                                      const int start_row_c,
-                                      const int start_col_c,
-                                      const int row_stride_c,
-                                      const int col_stride_c) {
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
-  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
-  MatrixRef Cref(C, row_stride_c, col_stride_c);
-  Eigen::Block<MatrixRef, kRowA, kColB> block(Cref,
-                                              start_row_c, start_col_c,
-                                              num_row_a, num_col_b);
+CERES_GEMM_BEGIN(MatrixMatrixMultiplyEigen)
+  CERES_GEMM_EIGEN_HEADER
+  Eigen::Block<MatrixRef, kRowA, kColB>
+    block(Cref, start_row_c, start_col_c, num_row_a, num_col_b);
+
   if (kOperation > 0) {
     block CERES_MAYBE_NOALIAS += Aref * Bref;
   } else if (kOperation < 0) {
@@ -160,21 +173,10 @@ inline void MatrixMatrixMultiplyEigen(const double* A,
   } else {
     block CERES_MAYBE_NOALIAS = Aref * Bref;
   }
-}
+CERES_GEMM_END
 
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiplyNaive(const double* A,
-                                      const int num_row_a,
-                                      const int num_col_a,
-                                      const double* B,
-                                      const int num_row_b,
-                                      const int num_col_b,
-                                      double* C,
-                                      const int start_row_c,
-                                      const int start_col_c,
-                                      const int row_stride_c,
-                                      const int col_stride_c) {
-  CERES_NAIVE_GEMM_HEADER
+CERES_GEMM_BEGIN(MatrixMatrixMultiplyNaive)
+  CERES_GEMM_NAIVE_HEADER
   DCHECK_EQ(NUM_COL_A, NUM_ROW_B);
 
   const int NUM_ROW_C = NUM_ROW_A;
@@ -199,133 +201,25 @@ inline void MatrixMatrixMultiplyNaive(const double* A,
       }
     }
   }
-}
+CERES_GEMM_END
 
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiply(const double* A,
-                                 const int num_row_a,
-                                 const int num_col_a,
-                                 const double* B,
-                                 const int num_row_b,
-                                 const int num_col_b,
-                                 double* C,
-                                 const int start_row_c,
-                                 const int start_col_c,
-                                 const int row_stride_c,
-                                 const int col_stride_c) {
+CERES_GEMM_BEGIN(MatrixMatrixMultiply)
 #ifdef CERES_NO_CUSTOM_BLAS
 
-  CERES_GEMM(MatrixMatrixMultiplyEigen)
+  CERES_CALL_GEMM(MatrixMatrixMultiplyEigen)
   return;
 
 #else
 
   if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
       kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
-    CERES_GEMM(MatrixMatrixMultiplyEigen)
+    CERES_CALL_GEMM(MatrixMatrixMultiplyEigen)
   } else {
-    CERES_GEMM(MatrixMatrixMultiplyNaive)
+    CERES_CALL_GEMM(MatrixMatrixMultiplyNaive)
   }
 
 #endif
-}
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiplyUpperEigen(const double* A,
-                                           const int num_row_a,
-                                           const int num_col_a,
-                                           const double* B,
-                                           const int num_row_b,
-                                           const int num_col_b,
-                                           double* C,
-                                           const int start_row_c,
-                                           const int start_col_c,
-                                           const int row_stride_c,
-                                           const int col_stride_c) {
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
-  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
-  MatrixRef Cref(C, row_stride_c, col_stride_c);
-  Eigen::Block<MatrixRef, kRowA, kColB> block(Cref,
-                                              start_row_c, start_col_c,
-                                              num_row_a, num_col_b);
-  if (kOperation > 0) {
-    block.template triangularView<Eigen::Upper>() += Aref * Bref;
-  } else if (kOperation < 0) {
-    block.template triangularView<Eigen::Upper>() -= Aref * Bref;
-  } else {
-    block.template triangularView<Eigen::Upper>()  = Aref * Bref;
-  }
-}
-
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiplyUpperNaive(const double* A,
-                                      const int num_row_a,
-                                      const int num_col_a,
-                                      const double* B,
-                                      const int num_row_b,
-                                      const int num_col_b,
-                                      double* C,
-                                      const int start_row_c,
-                                      const int start_col_c,
-                                      const int row_stride_c,
-                                      const int col_stride_c) {
-  CERES_NAIVE_GEMM_HEADER
-  DCHECK_EQ(NUM_COL_A, NUM_ROW_B);
-
-  const int NUM_ROW_C = NUM_ROW_A;
-  const int NUM_COL_C = NUM_COL_B;
-  DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
-  DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
-
-  for (int row = 0; row < NUM_ROW_C; ++row) {
-    for (int col = row; col < NUM_COL_C; ++col) {
-      double tmp = 0.0;
-      for (int k = 0; k < NUM_COL_A; ++k) {
-        tmp += A[row * NUM_COL_A + k] * B[k * NUM_COL_B + col];
-      }
-
-      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
-      if (kOperation > 0) {
-        C[index] += tmp;
-      } else if (kOperation < 0) {
-        C[index] -= tmp;
-      } else {
-        C[index] = tmp;
-      }
-    }
-  }
-}
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixMatrixMultiplyUpper(const double* A,
-                                 const int num_row_a,
-                                 const int num_col_a,
-                                 const double* B,
-                                 const int num_row_b,
-                                 const int num_col_b,
-                                 double* C,
-                                 const int start_row_c,
-                                 const int start_col_c,
-                                 const int row_stride_c,
-                                 const int col_stride_c) {
-#ifdef CERES_NO_CUSTOM_BLAS
-
-  CERES_GEMM(MatrixMatrixMultiplyEigen)
-  return;
-
-#else
-
-  if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
-      kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
-    CERES_GEMM(MatrixMatrixMultiplyEigen)
-  } else {
-    CERES_GEMM(MatrixMatrixMultiplyNaive)
-  }
-
-#endif
-}
-
+CERES_GEMM_END
 
 // C op A' * B;
 //
@@ -359,21 +253,8 @@ inline void MatrixMatrixMultiplyUpper(const double* A,
 //   ------------
 //   ------------
 //
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiplyEigen(const double* A,
-                                               const int num_row_a,
-                                               const int num_col_a,
-                                               const double* B,
-                                               const int num_row_b,
-                                               const int num_col_b,
-                                               double* C,
-                                               const int start_row_c,
-                                               const int start_col_c,
-                                               const int row_stride_c,
-                                               const int col_stride_c) {
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
-  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
-  MatrixRef Cref(C, row_stride_c, col_stride_c);
+CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyEigen)
+  CERES_GEMM_EIGEN_HEADER
   Eigen::Block<MatrixRef, kColA, kColB> block(Cref,
                                               start_row_c, start_col_c,
                                               num_col_a, num_col_b);
@@ -384,21 +265,10 @@ inline void MatrixTransposeMatrixMultiplyEigen(const double* A,
   } else {
     block CERES_MAYBE_NOALIAS = Aref.transpose() * Bref;
   }
-}
+CERES_GEMM_END
 
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiplyNaive(const double* A,
-                                               const int num_row_a,
-                                               const int num_col_a,
-                                               const double* B,
-                                               const int num_row_b,
-                                               const int num_col_b,
-                                               double* C,
-                                               const int start_row_c,
-                                               const int start_col_c,
-                                               const int row_stride_c,
-                                               const int col_stride_c) {
-  CERES_NAIVE_GEMM_HEADER
+CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiplyNaive)
+  CERES_GEMM_NAIVE_HEADER
   DCHECK_EQ(NUM_ROW_A, NUM_ROW_B);
 
   const int NUM_ROW_C = NUM_COL_A;
@@ -423,133 +293,25 @@ inline void MatrixTransposeMatrixMultiplyNaive(const double* A,
       }
     }
   }
-}
+CERES_GEMM_END
 
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiply(const double* A,
-                                          const int num_row_a,
-                                          const int num_col_a,
-                                          const double* B,
-                                          const int num_row_b,
-                                          const int num_col_b,
-                                          double* C,
-                                          const int start_row_c,
-                                          const int start_col_c,
-                                          const int row_stride_c,
-                                          const int col_stride_c) {
+CERES_GEMM_BEGIN(MatrixTransposeMatrixMultiply)
 #ifdef CERES_NO_CUSTOM_BLAS
 
-  CERES_GEMM(MatrixTransposeMatrixMultiplyEigen)
+  CERES_CALL_GEMM(MatrixTransposeMatrixMultiplyEigen)
   return;
 
 #else
 
   if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
       kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
-    CERES_GEMM(MatrixTransposeMatrixMultiplyEigen)
+    CERES_CALL_GEMM(MatrixTransposeMatrixMultiplyEigen)
   } else {
-    CERES_GEMM(MatrixTransposeMatrixMultiplyNaive)
+    CERES_CALL_GEMM(MatrixTransposeMatrixMultiplyNaive)
   }
 
 #endif
-}
-
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiplyUpperEigen(const double* A,
-                                               const int num_row_a,
-                                               const int num_col_a,
-                                               const double* B,
-                                               const int num_row_b,
-                                               const int num_col_b,
-                                               double* C,
-                                               const int start_row_c,
-                                               const int start_col_c,
-                                               const int row_stride_c,
-                                               const int col_stride_c) {
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
-  const typename EigenTypes<kRowB, kColB>::ConstMatrixRef Bref(B, num_row_b, num_col_b);
-  MatrixRef Cref(C, row_stride_c, col_stride_c);
-  Eigen::Block<MatrixRef, kColA, kColB> block(Cref,
-                                              start_row_c, start_col_c,
-                                              num_col_a, num_col_b);
-  if (kOperation > 0) {
-    block.template triangularView<Eigen::Upper>() += Aref.transpose() * Bref;
-  } else if (kOperation < 0) {
-    block.template triangularView<Eigen::Upper>() -= Aref.transpose() * Bref;
-  } else {
-    block.template triangularView<Eigen::Upper>()  = Aref.transpose() * Bref;
-  }
-}
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiplyUpperNaive(const double* A,
-                                               const int num_row_a,
-                                               const int num_col_a,
-                                               const double* B,
-                                               const int num_row_b,
-                                               const int num_col_b,
-                                               double* C,
-                                               const int start_row_c,
-                                               const int start_col_c,
-                                               const int row_stride_c,
-                                               const int col_stride_c) {
-  CERES_NAIVE_GEMM_HEADER
-  DCHECK_EQ(NUM_ROW_A, NUM_ROW_B);
-
-  const int NUM_ROW_C = NUM_COL_A;
-  const int NUM_COL_C = NUM_COL_B;
-  DCHECK_LE(start_row_c + NUM_ROW_C, row_stride_c);
-  DCHECK_LE(start_col_c + NUM_COL_C, col_stride_c);
-
-  for (int row = 0; row < NUM_ROW_C; ++row) {
-    for (int col = row; col < NUM_COL_C; ++col) {
-      double tmp = 0.0;
-      for (int k = 0; k < NUM_ROW_A; ++k) {
-        tmp += A[k * NUM_COL_A + row] * B[k * NUM_COL_B + col];
-      }
-
-      const int index = (row + start_row_c) * col_stride_c + start_col_c + col;
-      if (kOperation > 0) {
-        C[index]+= tmp;
-      } else if (kOperation < 0) {
-        C[index]-= tmp;
-      } else {
-        C[index]= tmp;
-      }
-    }
-  }
-}
-
-
-template<int kRowA, int kColA, int kRowB, int kColB, int kOperation>
-inline void MatrixTransposeMatrixMultiplyUpper(const double* A,
-                                          const int num_row_a,
-                                          const int num_col_a,
-                                          const double* B,
-                                          const int num_row_b,
-                                          const int num_col_b,
-                                          double* C,
-                                          const int start_row_c,
-                                          const int start_col_c,
-                                          const int row_stride_c,
-                                          const int col_stride_c) {
-#ifdef CERES_NO_CUSTOM_BLAS
-
-  CERES_GEMM(MatrixTransposeMatrixMultiplyEigen)
-  return;
-
-#else
-
-  if (kRowA != Eigen::Dynamic && kColA != Eigen::Dynamic &&
-      kRowB != Eigen::Dynamic && kColB != Eigen::Dynamic) {
-    CERES_GEMM(MatrixTransposeMatrixMultiplyEigen)
-  } else {
-    CERES_GEMM(MatrixTransposeMatrixMultiplyNaive)
-  }
-
-#endif
-}
+CERES_GEMM_END
 
 template<int kRowA, int kColA, int kOperation>
 inline void MatrixVectorMultiply(const double* A,
@@ -558,7 +320,8 @@ inline void MatrixVectorMultiply(const double* A,
                                  const double* b,
                                  double* c) {
 #ifdef CERES_NO_CUSTOM_BLAS
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
+  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef
+      Aref(A, num_row_a, num_col_a);
   const typename EigenTypes<kColA>::ConstVectorRef bref(b, num_col_a);
   typename EigenTypes<kRowA>::VectorRef cref(c, num_row_a);
 
@@ -616,7 +379,8 @@ inline void MatrixTransposeVectorMultiply(const double* A,
                                           const double* b,
                                           double* c) {
 #ifdef CERES_NO_CUSTOM_BLAS
-  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef Aref(A, num_row_a, num_col_a);
+  const typename EigenTypes<kRowA, kColA>::ConstMatrixRef
+      Aref(A, num_row_a, num_col_a);
   const typename EigenTypes<kRowA>::ConstVectorRef bref(b, num_row_a);
   typename EigenTypes<kColA>::VectorRef cref(c, num_col_a);
 
@@ -658,7 +422,11 @@ inline void MatrixTransposeVectorMultiply(const double* A,
 
 
 #undef CERES_MAYBE_NOALIAS
-#undef CERES_GEMM
+#undef CERES_GEMM_BEGIN
+#undef CERES_GEMM_END
+#undef CERES_GEMM_EIGEN_HEADER
+#undef CERES_GEMM_NAIVE_HEADER
+#undef CERES_CALL_GEMM
 
 }  // namespace internal
 }  // namespace ceres
