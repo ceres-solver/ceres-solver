@@ -16,6 +16,24 @@
       "revId": "e25306142cd4d9620cb0f47467fc0d751f5d7569",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS9E3RLo",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-13T23:39:34Z",
+      "side": 0,
+      "message": "because this was a variant done to try the upper triangular multiplication. that turned out to be pointless, so sticking to the simpler loop.",
+      "parentUuid": "TS7GzsCU",
+      "revId": "e25306142cd4d9620cb0f47467fc0d751f5d7569",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

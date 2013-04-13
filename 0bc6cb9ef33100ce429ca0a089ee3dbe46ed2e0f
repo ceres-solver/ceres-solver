@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "TS1Ek1Iw",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-13T23:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TSzHIQJo",
+      "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TS3HCuHs",
         "filename": "internal/ceres/blas.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-13T23:30:38Z",
       "side": 1,
       "message": "I suggest omitting the opening {, and leaving it in the code\n\nCERES_GEMM_BEGIN(MatrixMatrixMultiplyEigen) {\n...\n}",
+      "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TSzEpYGM",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-13T23:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TS3HCuHs",
       "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "TS5EubGk",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-13T23:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TS5G9zPY",
+      "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TS9G2JBc",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-04-13T23:30:38Z",
       "side": 1,
       "message": "This is wrong. The matching bracket is a ]",
+      "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS3Ez2NA",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-13T23:39:34Z",
+      "side": 1,
+      "message": "wjr suggested this to indicate that the interval is an open interval rather than a closed one where the entry is used by thread_i I could also make it -1] if you like",
+      "parentUuid": "TS9G2JBc",
       "revId": "0bc6cb9ef33100ce429ca0a089ee3dbe46ed2e0f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
