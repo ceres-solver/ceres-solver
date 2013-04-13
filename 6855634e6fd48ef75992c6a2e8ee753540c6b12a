@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TS3FMeE0",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-13T23:54:33Z",
+      "side": 1,
+      "message": "EDIT: The below comment is mistaken in that I forgot about the Dynamic case for E block size. However, I think we could still do something smarter than FixedArray here in the compile time fixed case.\n\n--------\n\nI don\u0027t think this is what you want. I think you actually want\n\ndouble g[kEBlockSize];\n\nor possibly a custom object that allocates if kEBlockSize is \u003e some threshold (but determined at compile time rather than runtime, so there is no space overhead in the case that kEBlockSize is \u003e the threshold).\n\nThe e block size is compile-time fixed, so FixedArray is not needed. It actually allocates 256 doubles on the stack in this case, and then only uses the first e_block_size of them.\n\nFixedArray is a bad name; it should be SmallNumberOfInlineElementsArray, since it allows dynamic sized stuff, and works like a normal vector if the number of elements goes over some threshold (256 by default)\n\nI think you may want to re-examine the places you added FixedArray in the latest performance work.",
+      "revId": "6855634e6fd48ef75992c6a2e8ee753540c6b12a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
