@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TS7GzsCU",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-13T23:30:38Z",
+      "side": 0,
+      "message": "Code deleted why?",
+      "revId": "e25306142cd4d9620cb0f47467fc0d751f5d7569",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
