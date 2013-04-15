@@ -111,29 +111,33 @@ namespace ceres {
 template<typename Functor,
          NumericDiffMethod kMethod = CENTRAL,
          int kNumResiduals = 0,
-         int N0 = 0, int N1 = 0 , int N2 = 0, int N3 = 0, int N4 = 0,
-         int N5 = 0, int N6 = 0 , int N7 = 0, int N8 = 0, int N9 = 0>
+         int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0,
+         int N4 = 0, int N5 = 0, int N6 = 0, int N7 = 0,
+         int N8 = 0, int N9 = 0, int N10 = 0, int N11 = 0,
+         int N12 = 0, int N13 = 0, int N14 = 0, int N15 = 0>
 class NumericDiffFunctor {
  public:
   // relative_step_size controls the step size used by the numeric
   // differentiation process.
   explicit NumericDiffFunctor(double relative_step_size = 1e-6)
       : functor_(
-          new NumericDiffCostFunction<Functor,
-                                      kMethod,
-                                      kNumResiduals,
-                                      N0, N1, N2, N3, N4,
-                                      N5, N6, N7, N8, N9>(new Functor,
-                                                          relative_step_size)) {
+        new NumericDiffCostFunction<Functor,
+                                    kMethod,
+                                    kNumResiduals,
+                                    N0, N1, N2, N3, N4, N5, N6, N7,
+                                    N8, N9, N10, N11, N12, N13, N14, N15>(
+                                        new Functor, relative_step_size)) {
   }
 
   NumericDiffFunctor(Functor* functor, double relative_step_size = 1e-6)
       : functor_(new NumericDiffCostFunction<Functor,
                                              kMethod,
                                              kNumResiduals,
-                                             N0, N1, N2, N3, N4,
-                                             N5, N6, N7, N8, N9>(
-                                                 functor, relative_step_size)) {
+                                             N0, N1, N2, N3,
+                                             N4, N5, N6, N7,
+                                             N8, N9, N10, N11,
+                                             N12, N13, N14, N15>(
+                                               functor, relative_step_size)) {
   }
 
   bool operator()(const double* x0, double* residuals) const {
@@ -200,7 +204,7 @@ class NumericDiffFunctor {
                   const double* x6,
                   const double* x7,
                   double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,residuals);
   }
 
   bool operator()(const double* x0,
@@ -213,7 +217,7 @@ class NumericDiffFunctor {
                   const double* x7,
                   const double* x8,
                   double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,x8, residuals);
   }
 
   bool operator()(const double* x0,
@@ -227,7 +231,118 @@ class NumericDiffFunctor {
                   const double* x8,
                   const double* x9,
                   double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,x8, x9, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  const double* x14,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, x14, residuals);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  const double* x14,
+                  const double* x15,
+                  double* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, x14, x15, residuals);
   }
 
   template <typename T>
@@ -302,7 +417,7 @@ class NumericDiffFunctor {
                   const T* x6,
                   const T* x7,
                   T* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,residuals);
   }
 
   template <typename T>
@@ -316,7 +431,7 @@ class NumericDiffFunctor {
                   const T* x7,
                   const T* x8,
                   T* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,x8, residuals);
   }
 
   template <typename T>
@@ -331,14 +446,131 @@ class NumericDiffFunctor {
                   const T* x8,
                   const T* x9,
                   T* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, residuals);
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,x8, x9, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  const T* x11,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  const T* x11,
+                  const T* x12,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  const T* x11,
+                  const T* x12,
+                  const T* x13,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  const T* x11,
+                  const T* x12,
+                  const T* x13,
+                  const T* x14,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, x14, residuals);
+  }
+
+  template <typename T>
+  bool operator()(const T* x0,
+                  const T* x1,
+                  const T* x2,
+                  const T* x3,
+                  const T* x4,
+                  const T* x5,
+                  const T* x6,
+                  const T* x7,
+                  const T* x8,
+                  const T* x9,
+                  const T* x10,
+                  const T* x11,
+                  const T* x12,
+                  const T* x13,
+                  const T* x14,
+                  const T* x15,
+                  T* residuals) const {
+    return functor_(x0, x1, x2, x3, x4, x5, x6, x7,
+                    x8, x9, x10, x11, x12, x13, x14, x15, residuals);
   }
 
 
  private:
   CostFunctionToFunctor<kNumResiduals,
-                        N0, N1, N2, N3, N4,
-                        N5, N6, N7, N8, N9> functor_;
+                        N0, N1, N2, N3, N4, N5, N6, N7,
+                        N8, N9, N10, N11, N12, N13, N14, N15> functor_;
 };
 
 }  // namespace ceres

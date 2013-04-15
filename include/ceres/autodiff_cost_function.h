@@ -158,10 +158,18 @@ template <typename CostFunctor,
           int N6 = 0,   // Number of parameters in block 6.
           int N7 = 0,   // Number of parameters in block 7.
           int N8 = 0,   // Number of parameters in block 8.
-          int N9 = 0>   // Number of parameters in block 9.
+          int N9 = 0,   // Number of parameters in block 9.
+          int N10 = 0,  // Number of parameters in block 10.
+          int N11 = 0,  // Number of parameters in block 11.
+          int N12 = 0,  // Number of parameters in block 12.
+          int N13 = 0,  // Number of parameters in block 13.
+          int N14 = 0,  // Number of parameters in block 14.
+          int N15 = 0>  // Number of parameters in block 15.
 class AutoDiffCostFunction : public SizedCostFunction<M,
-                                                      N0, N1, N2, N3, N4,
-                                                      N5, N6, N7, N8, N9> {
+                                                      N0, N1, N2, N3,
+                                                      N4, N5, N6, N7,
+                                                      N8, N9, N10, N11,
+                                                      N12, N13, N14, N15> {
  public:
   // Takes ownership of functor. Uses the template-provided value for the
   // number of residuals ("M").
@@ -180,14 +188,18 @@ class AutoDiffCostFunction : public SizedCostFunction<M,
       : functor_(functor) {
     CHECK_EQ(M, DYNAMIC) << "Can't run the dynamic-size constructor if the "
                          << "number of residuals is not ceres::DYNAMIC.";
-    SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+    SizedCostFunction<M, 
+                      N0, N1, N2, N3,
+                      N4, N5, N6, N7,
+                      N8, N9, N10, N11,
+                      N12, N13, N14, N15>
         ::set_num_residuals(num_residuals);
   }
 
   virtual ~AutoDiffCostFunction() {}
 
-  // Implementation details follow; clients of the autodiff cost function should
-  // not have to examine below here.
+  // Implementation details follow; clients of the autodiff cost function
+  // should not have to examine below here.
   //
   // To handle varardic cost functions, some template magic is needed. It's
   // mostly hidden inside autodiff.h.
@@ -196,14 +208,21 @@ class AutoDiffCostFunction : public SizedCostFunction<M,
                         double** jacobians) const {
     if (!jacobians) {
       return internal::VariadicEvaluate<
-          CostFunctor, double, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+          CostFunctor, double, N0, N1, N2, N3,
+                               N4, N5, N6, N7,
+                               N8, N9, N10, N11,
+                               N12, N13, N14, N15>
           ::Call(*functor_, parameters, residuals);
     }
     return internal::AutoDiff<CostFunctor, double,
-           N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Differentiate(
+                              N0, N1, N2, N3,
+                              N4, N5, N6, N7,
+                              N8, N9, N10, N11,
+                              N12, N13, N14, N15>::Differentiate(
                *functor_,
                parameters,
-               SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+               SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7,
+                                 N8, N9, N10, N11, N12, N13, N14, N15>
                    ::num_residuals(),
                residuals,
                jacobians);

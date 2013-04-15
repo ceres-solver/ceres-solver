@@ -199,11 +199,13 @@ inline void Take1stOrderPart(const int M, const JetT *src, T *dst) {
 
 // This is in a struct because default template parameters on a
 // function are not supported in C++03 (though it is available in
-// C++0x). N0 through N5 are the dimension of the input arguments to
+// C++0x). N0 through N15 are the dimension of the input arguments to
 // the user supplied functor.
 template <typename Functor, typename T,
-          int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0, int N4 = 0,
-          int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
+          int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0,
+          int N4 = 0, int N5 = 0, int N6 = 0, int N7 = 0,
+          int N8 = 0, int N9 = 0, int N10 = 0, int N11 = 0,
+          int N12 = 0, int N13 = 0, int N14 = 0, int N15 = 0>
 struct AutoDiff {
   static bool Differentiate(const Functor& functor,
                             T const *const *parameters,
@@ -212,24 +214,30 @@ struct AutoDiff {
                             T **jacobians) {
     // This block breaks the 80 column rule to keep it somewhat readable.
     DCHECK_GT(num_outputs, 0);
-    CHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0)))
+    CHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && (N14 > 0) && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && (N14 > 0) && (N15 > 0)))
         << "Zero block cannot precede a non-zero block. Block sizes are "
         << "(ignore trailing 0s): " << N0 << ", " << N1 << ", " << N2 << ", "
         << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
-        << N8 << ", " << N9;
+        << N8 << ", " << N9 << ", " << N10 << ", " << N11 << ", " << N12 << ", " << N13 << ", " << N14 << ", " << N15;
 
-    typedef Jet<T, N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9> JetT;
+    typedef Jet<T, N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15> JetT;
     FixedArray<JetT, (256 * 7) / sizeof(JetT)> x(
-        N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + num_outputs);
+        N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15 + num_outputs);
 
     // These are the positions of the respective jets in the fixed array x.
     const int jet0  = 0;
@@ -242,8 +250,14 @@ struct AutoDiff {
     const int jet7  = N0 + N1 + N2 + N3 + N4 + N5 + N6;
     const int jet8  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7;
     const int jet9  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8;
+    const int jet10  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
+    const int jet11  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10;
+    const int jet12  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11;
+    const int jet13  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12;
+    const int jet14  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13;
+    const int jet15  = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14;
 
-    const JetT *unpacked_parameters[10] = {
+    const JetT *unpacked_parameters[16] = {
         x.get() + jet0,
         x.get() + jet1,
         x.get() + jet2,
@@ -254,9 +268,15 @@ struct AutoDiff {
         x.get() + jet7,
         x.get() + jet8,
         x.get() + jet9,
+        x.get() + jet10,
+        x.get() + jet11,
+        x.get() + jet12,
+        x.get() + jet13,
+        x.get() + jet14,
+        x.get() + jet15,
     };
 
-    JetT* output = x.get() + N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
+    JetT* output = x.get() + N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15;
 
 #define CERES_MAKE_1ST_ORDER_PERTURBATION(i) \
     if (N ## i) { \
@@ -275,10 +295,17 @@ struct AutoDiff {
     CERES_MAKE_1ST_ORDER_PERTURBATION(7);
     CERES_MAKE_1ST_ORDER_PERTURBATION(8);
     CERES_MAKE_1ST_ORDER_PERTURBATION(9);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(10);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(11);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(12);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(13);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(14);
+    CERES_MAKE_1ST_ORDER_PERTURBATION(15);
 #undef CERES_MAKE_1ST_ORDER_PERTURBATION
 
     if (!VariadicEvaluate<Functor, JetT,
-                          N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Call(
+                          N0, N1, N2, N3, N4, N5, N6, N7,
+                          N8, N9, N10, N11, N12, N13, N14, N15>::Call(
         functor, unpacked_parameters, output)) {
       return false;
     }
@@ -305,6 +332,12 @@ struct AutoDiff {
     CERES_TAKE_1ST_ORDER_PERTURBATION(7);
     CERES_TAKE_1ST_ORDER_PERTURBATION(8);
     CERES_TAKE_1ST_ORDER_PERTURBATION(9);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(10);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(11);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(12);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(13);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(14);
+    CERES_TAKE_1ST_ORDER_PERTURBATION(15);
 #undef CERES_TAKE_1ST_ORDER_PERTURBATION
     return true;
   }

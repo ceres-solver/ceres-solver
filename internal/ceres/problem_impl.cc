@@ -429,6 +429,145 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
   return AddResidualBlock(cost_function, loss_function, residual_parameters);
 }
 
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10, double* x11) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  residual_parameters.push_back(x11);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10, double* x11,
+    double* x12) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  residual_parameters.push_back(x11);
+  residual_parameters.push_back(x12);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10, double* x11,
+    double* x12, double* x13) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  residual_parameters.push_back(x11);
+  residual_parameters.push_back(x12);
+  residual_parameters.push_back(x13);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10, double* x11,
+    double* x12, double* x13, double* x14) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  residual_parameters.push_back(x11);
+  residual_parameters.push_back(x12);
+  residual_parameters.push_back(x13);
+  residual_parameters.push_back(x14);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
+ResidualBlock* ProblemImpl::AddResidualBlock(
+    CostFunction* cost_function,
+    LossFunction* loss_function,
+    double* x0, double* x1, double* x2, double* x3, double* x4, double* x5,
+    double* x6, double* x7, double* x8, double* x9, double* x10, double* x11,
+    double* x12, double* x13, double* x14, double* x15) {
+  vector<double*> residual_parameters;
+  residual_parameters.push_back(x0);
+  residual_parameters.push_back(x1);
+  residual_parameters.push_back(x2);
+  residual_parameters.push_back(x3);
+  residual_parameters.push_back(x4);
+  residual_parameters.push_back(x5);
+  residual_parameters.push_back(x6);
+  residual_parameters.push_back(x7);
+  residual_parameters.push_back(x8);
+  residual_parameters.push_back(x9);
+  residual_parameters.push_back(x10);
+  residual_parameters.push_back(x11);
+  residual_parameters.push_back(x12);
+  residual_parameters.push_back(x13);
+  residual_parameters.push_back(x14);
+  residual_parameters.push_back(x15);
+  return AddResidualBlock(cost_function, loss_function, residual_parameters);
+}
+
 void ProblemImpl::AddParameterBlock(double* values, int size) {
   InternalAddParameterBlock(values, size);
 }

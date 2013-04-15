@@ -47,8 +47,143 @@ namespace internal {
 // struct based on the size of the trailing parameters; parameters with 0 size
 // are assumed missing.
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
-         int N5, int N6, int N7, int N8, int N9>
+         int N5, int N6, int N7, int N8, int N9,
+         int N10, int N11, int N12, int N13, int N14, int N15>
 struct VariadicEvaluate {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   input[11],
+                   input[12],
+                   input[13],
+                   input[14],
+                   input[15],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9,
+         int N10, int N11, int N12, int N13, int N14>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, N12, N13, N14, 0> {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   input[11],
+                   input[12],
+                   input[13],
+                   input[14],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9,
+         int N10, int N11, int N12, int N13>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, N12, N13, 0, 0> {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   input[11],
+                   input[12],
+                   input[13],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9,
+         int N10, int N11, int N12>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, N12, 0, 0, 0> {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   input[11],
+                   input[12],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9,
+         int N10, int N11>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, N11, 0, 0, 0, 0> {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   input[11],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9,
+         int N10>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, N10, 0, 0, 0, 0, 0> {
+  static bool Call(const Functor& functor, T const *const *input, T* output) {
+    return functor(input[0],
+                   input[1],
+                   input[2],
+                   input[3],
+                   input[4],
+                   input[5],
+                   input[6],
+                   input[7],
+                   input[8],
+                   input[9],
+                   input[10],
+                   output);
+  }
+};
+
+template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
+         int N5, int N6, int N7, int N8, int N9>
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -66,7 +201,7 @@ struct VariadicEvaluate {
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
          int N5, int N6, int N7, int N8>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -83,7 +218,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, N8, 0> {
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
          int N5, int N6, int N7>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -99,7 +234,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, N7, 0, 0> {
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
          int N5, int N6>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -114,7 +249,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, N6, 0, 0, 0> {
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4,
          int N5>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -127,7 +262,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, N5, 0, 0, 0, 0> {
 };
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3, int N4>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, 0, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -139,7 +274,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, N4, 0, 0, 0, 0, 0> {
 };
 
 template<typename Functor, typename T, int N0, int N1, int N2, int N3>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, 0, 0, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -150,7 +285,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, N3, 0, 0, 0, 0, 0, 0> {
 };
 
 template<typename Functor, typename T, int N0, int N1, int N2>
-struct VariadicEvaluate<Functor, T, N0, N1, N2, 0, 0, 0, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, N2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -160,7 +295,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, N2, 0, 0, 0, 0, 0, 0, 0> {
 };
 
 template<typename Functor, typename T, int N0, int N1>
-struct VariadicEvaluate<Functor, T, N0, N1, 0, 0, 0, 0, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, N1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    input[1],
@@ -169,7 +304,7 @@ struct VariadicEvaluate<Functor, T, N0, N1, 0, 0, 0, 0, 0, 0, 0, 0> {
 };
 
 template<typename Functor, typename T, int N0>
-struct VariadicEvaluate<Functor, T, N0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
+struct VariadicEvaluate<Functor, T, N0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0> {
   static bool Call(const Functor& functor, T const *const *input, T* output) {
     return functor(input[0],
                    output);
