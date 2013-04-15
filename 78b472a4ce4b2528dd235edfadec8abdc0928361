@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TS3njupo",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "Add blank comment line after this (we try to have a blank surrounding equations in Ceres)",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS-nuqnw",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "Can we make the col major vs row major a template argument? \n\nAlso, I\u0027m not sure about SO3LocalParameterization. You could do the same thing for a quaternion, yet this is a rotation matrix. What about SO3ColMajorMatrixParameterization? (and SO3RowMajorMatrixParameterization)?\n\nSimply surrounding the conversions with an if on the template parameter would make it easy to support both modes.",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TSzkC4lQ",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "Comment blank after",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS3n8Wi8",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "Comments should be full sentences, including a period (throughout).",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS7kNUoE",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "No need for space after ()",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS3m1enM",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-15T18:57:24Z",
+      "side": 1,
+      "message": "This is oddly close to re-implementing the code under test in the test. I am not sure how I feel about this. Typically you would want to test other properties; for example, that \"plus\" maintains the rotation matrix invariant.\n\nSameer, what do you think?",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
