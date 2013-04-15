@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "TWmhrA7s",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-15T19:17:56Z",
+      "side": 1,
+      "message": "Eeh. This brings back discussion about how to call names.\n\nIf quaternion\u0027s parameteization is also considered SO3 manifold, then we shall not call files quaternion.h and so3.h, but rather call quaternion.h and rotaion_matrix.h (otherwise splitting stuff based on manifold doesn\u0027t work well).\n\nBut i\u0027m not so much sure quaternion is actually SO3. AFAIK, neither Plus() nor compute_jacobian() are explicitly using SO3.",
+      "parentUuid": "TS-nuqnw",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TSzkC4lQ",
         "filename": "internal/ceres/so3_test.cc",
         "patchSetId": 3
@@ -98,6 +116,24 @@
       "writtenOn": "2013-04-15T18:57:24Z",
       "side": 1,
       "message": "This is oddly close to re-implementing the code under test in the test. I am not sure how I feel about this. Typically you would want to test other properties; for example, that \"plus\" maintains the rotation matrix invariant.\n\nSameer, what do you think?",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TWkhwv6M",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-15T19:17:56Z",
+      "side": 1,
+      "message": "Could be replaced with pre-computed expected matrices. And in this case no need in additional check on whether Plus() returned rotation matrix or also included scale there or so. It\u0027ll be either correct or not.\n\nIMO, this would work better than trying to use some heuristics on checking whether matrix is correct or not.",
+      "parentUuid": "TS3m1enM",
       "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
