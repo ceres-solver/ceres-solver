@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TS2BZQ20",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "SO3Plus",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS6B6O8o",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "fits on one line?",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS4B-N7s",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "use the column major matrix adapter to make this immune to changes to the function calling conventions.",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS8CAD4I",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "matrix adapter.",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TSyCOK7M",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "\"the\" -\u003e \"The\"",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS0B1H90",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "do a forward declaration of this at the top of the file along with the documentation for it. So that the user is not distracted by the description of the Plus operator which he does not really care for.",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TU2.jEaw",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "SO3LocalParameterization",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TS2BwI.8",
+        "filename": "internal/ceres/so3_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-15T16:06:45Z",
+      "side": 1,
+      "message": "fits on one line?",
+      "revId": "0603dc349da4b073287c0e2ab908fd0988d436da",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
