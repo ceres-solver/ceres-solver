@@ -100,8 +100,10 @@
 namespace ceres {
 
 template <int kNumResiduals,
-          int N0, int N1 = 0, int N2 = 0, int N3 = 0, int N4 = 0,
-          int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
+          int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0,
+          int N4 = 0, int N5 = 0, int N6 = 0, int N7 = 0,
+          int N8 = 0, int N9 = 0, int N10 = 0, int N11 = 0,
+          int N12 = 0, int N13 = 0, int N14 = 0, int N15 = 0>
 class CostFunctionToFunctor {
  public:
   explicit CostFunctionToFunctor(CostFunction* cost_function)
@@ -112,20 +114,26 @@ class CostFunctionToFunctor {
     CHECK_EQ(cost_function->num_residuals(), kNumResiduals);
 
     // This block breaks the 80 column rule to keep it somewhat readable.
-    CHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0)))
+    CHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9 && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && !N10 && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && !N11 && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && !N12 && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && !N13 && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && !N14 && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && (N14 > 0) && !N15) ||
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0) && (N10 > 0) && (N11 > 0) && (N12 > 0) && (N13 > 0) && (N14 > 0) && (N15 > 0)))
         << "Zero block cannot precede a non-zero block. Block sizes are "
         << "(ignore trailing 0s): " << N0 << ", " << N1 << ", " << N2 << ", "
         << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
-        << N8 << ", " << N9;
+        << N8 << ", " << N9 << ", " << N10 << ", " << N11 << ", " << N12 << ", " << N13 << ", " << N14 << ", " << N15;
 
     const vector<int16>& parameter_block_sizes =
         cost_function->parameter_block_sizes();
@@ -144,10 +152,16 @@ class CostFunctionToFunctor {
     if (parameter_block_sizes.size() > 7) CHECK_EQ(N7, parameter_block_sizes[7]);  // NOLINT
     if (parameter_block_sizes.size() > 8) CHECK_EQ(N8, parameter_block_sizes[8]);  // NOLINT
     if (parameter_block_sizes.size() > 9) CHECK_EQ(N9, parameter_block_sizes[9]);  // NOLINT
+    if (parameter_block_sizes.size() > 10) CHECK_EQ(N10, parameter_block_sizes[10]);  // NOLINT
+    if (parameter_block_sizes.size() > 11) CHECK_EQ(N1, parameter_block_sizes[11]);  // NOLINT
+    if (parameter_block_sizes.size() > 12) CHECK_EQ(N1, parameter_block_sizes[12]);  // NOLINT
+    if (parameter_block_sizes.size() > 13) CHECK_EQ(N1, parameter_block_sizes[13]);  // NOLINT
+    if (parameter_block_sizes.size() > 14) CHECK_EQ(N1, parameter_block_sizes[14]);  // NOLINT
+    if (parameter_block_sizes.size() > 15) CHECK_EQ(N1, parameter_block_sizes[15]);  // NOLINT
 
     CHECK_EQ(accumulate(parameter_block_sizes.begin(),
                         parameter_block_sizes.end(), 0),
-             N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9);
+             N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15);
   }
 
   bool operator()(const double* x0, double* residuals) const {
@@ -161,6 +175,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
 
     return cost_function_->Evaluate(&x0, residuals, NULL);
   }
@@ -178,6 +198,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(2);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -198,6 +224,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(3);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -220,6 +252,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(4);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -244,6 +282,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(5);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -270,6 +314,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(6);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -298,6 +348,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(7);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -328,6 +384,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(8);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -360,6 +422,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_NE(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(9);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -394,6 +462,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_NE(N8, 0);
     CHECK_NE(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const double*> parameter_blocks(10);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
@@ -405,6 +479,294 @@ class CostFunctionToFunctor {
     parameter_blocks[7] = x7;
     parameter_blocks[8] = x8;
     parameter_blocks[9] = x9;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(11);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(12);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    parameter_blocks[11] = x11;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(13);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    parameter_blocks[11] = x11;
+    parameter_blocks[12] = x12;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(14);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    parameter_blocks[11] = x11;
+    parameter_blocks[12] = x12;
+    parameter_blocks[13] = x13;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  const double* x14,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_NE(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(15);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    parameter_blocks[11] = x11;
+    parameter_blocks[12] = x12;
+    parameter_blocks[13] = x13;
+    parameter_blocks[14] = x14;
+    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+  }
+
+  bool operator()(const double* x0,
+                  const double* x1,
+                  const double* x2,
+                  const double* x3,
+                  const double* x4,
+                  const double* x5,
+                  const double* x6,
+                  const double* x7,
+                  const double* x8,
+                  const double* x9,
+                  const double* x10,
+                  const double* x11,
+                  const double* x12,
+                  const double* x13,
+                  const double* x14,
+                  const double* x15,
+                  double* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_NE(N14, 0);
+    CHECK_NE(N15, 0);
+    internal::FixedArray<const double*> parameter_blocks(16);
+    parameter_blocks[0] = x0;
+    parameter_blocks[1] = x1;
+    parameter_blocks[2] = x2;
+    parameter_blocks[3] = x3;
+    parameter_blocks[4] = x4;
+    parameter_blocks[5] = x5;
+    parameter_blocks[6] = x6;
+    parameter_blocks[7] = x7;
+    parameter_blocks[8] = x8;
+    parameter_blocks[9] = x9;
+    parameter_blocks[10] = x10;
+    parameter_blocks[11] = x11;
+    parameter_blocks[12] = x12;
+    parameter_blocks[13] = x13;
+    parameter_blocks[14] = x14;
+    parameter_blocks[15] = x15;
     return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
   }
 
@@ -420,6 +782,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     return EvaluateWithJets(&x0, residuals);
   }
 
@@ -437,6 +805,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(2);
     jets[0] = x0;
     jets[1] = x1;
@@ -458,6 +832,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(3);
     jets[0] = x0;
     jets[1] = x1;
@@ -481,6 +861,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(4);
     jets[0] = x0;
     jets[1] = x1;
@@ -506,6 +892,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(5);
     jets[0] = x0;
     jets[1] = x1;
@@ -533,6 +925,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(6);
     jets[0] = x0;
     jets[1] = x1;
@@ -562,6 +960,12 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(7);
     jets[0] = x0;
     jets[1] = x1;
@@ -593,6 +997,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(8);
     jets[0] = x0;
     jets[1] = x1;
@@ -626,6 +1036,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_NE(N8, 0);
     CHECK_EQ(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(9);
     jets[0] = x0;
     jets[1] = x1;
@@ -661,6 +1077,12 @@ class CostFunctionToFunctor {
     CHECK_NE(N7, 0);
     CHECK_NE(N8, 0);
     CHECK_NE(N9, 0);
+    CHECK_EQ(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
     internal::FixedArray<const JetT*> jets(10);
     jets[0] = x0;
     jets[1] = x1;
@@ -675,10 +1097,305 @@ class CostFunctionToFunctor {
     return EvaluateWithJets(jets.get(), residuals);
   }
 
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_EQ(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const JetT*> jets(11);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  const JetT* x11,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_EQ(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const JetT*> jets(12);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    jets[11] = x11;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  const JetT* x11,
+                  const JetT* x12,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_EQ(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const JetT*> jets(13);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    jets[11] = x11;
+    jets[12] = x12;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  const JetT* x11,
+                  const JetT* x12,
+                  const JetT* x13,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_EQ(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const JetT*> jets(14);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    jets[11] = x11;
+    jets[12] = x12;
+    jets[13] = x13;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  const JetT* x11,
+                  const JetT* x12,
+                  const JetT* x13,
+                  const JetT* x14,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_NE(N14, 0);
+    CHECK_EQ(N15, 0);
+    internal::FixedArray<const JetT*> jets(15);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    jets[11] = x11;
+    jets[12] = x12;
+    jets[13] = x13;
+    jets[14] = x14;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
+  template <typename JetT>
+  bool operator()(const JetT* x0,
+                  const JetT* x1,
+                  const JetT* x2,
+                  const JetT* x3,
+                  const JetT* x4,
+                  const JetT* x5,
+                  const JetT* x6,
+                  const JetT* x7,
+                  const JetT* x8,
+                  const JetT* x9,
+                  const JetT* x10,
+                  const JetT* x11,
+                  const JetT* x12,
+                  const JetT* x13,
+                  const JetT* x14,
+                  const JetT* x15,
+                  JetT* residuals) const {
+    CHECK_NE(N0, 0);
+    CHECK_NE(N1, 0);
+    CHECK_NE(N2, 0);
+    CHECK_NE(N3, 0);
+    CHECK_NE(N4, 0);
+    CHECK_NE(N5, 0);
+    CHECK_NE(N6, 0);
+    CHECK_NE(N7, 0);
+    CHECK_NE(N8, 0);
+    CHECK_NE(N9, 0);
+    CHECK_NE(N10, 0);
+    CHECK_NE(N11, 0);
+    CHECK_NE(N12, 0);
+    CHECK_NE(N13, 0);
+    CHECK_NE(N14, 0);
+    CHECK_NE(N15, 0);
+    internal::FixedArray<const JetT*> jets(16);
+    jets[0] = x0;
+    jets[1] = x1;
+    jets[2] = x2;
+    jets[3] = x3;
+    jets[4] = x4;
+    jets[5] = x5;
+    jets[6] = x6;
+    jets[7] = x7;
+    jets[8] = x8;
+    jets[9] = x9;
+    jets[10] = x10;
+    jets[11] = x11;
+    jets[12] = x12;
+    jets[13] = x13;
+    jets[14] = x14;
+    jets[15] = x15;
+    return EvaluateWithJets(jets.get(), residuals);
+  }
+
  private:
   template <typename JetT>
   bool EvaluateWithJets(const JetT** inputs, JetT* output) const {
-    const int kNumParameters =  N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
+    const int kNumParameters = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 +
+                               N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15;
     const vector<int16>& parameter_block_sizes =
         cost_function_->parameter_block_sizes();
     const int num_parameter_blocks = parameter_block_sizes.size();

@@ -255,6 +255,47 @@ class Problem {
                                    double* x3, double* x4, double* x5,
                                    double* x6, double* x7, double* x8,
                                    double* x9);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10, double* x11);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10, double* x11,
+                                   double* x12);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10, double* x11,
+                                   double* x12, double* x13);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10, double* x11,
+                                   double* x12, double* x13, double* x14);
+  ResidualBlockId AddResidualBlock(CostFunction* cost_function,
+                                   LossFunction* loss_function,
+                                   double* x0, double* x1, double* x2,
+                                   double* x3, double* x4, double* x5,
+                                   double* x6, double* x7, double* x8,
+                                   double* x9, double* x10, double* x11,
+                                   double* x12, double* x13, double* x14,
+                                   double* x15);
 
   // Add a parameter block with appropriate size to the problem.
   // Repeated calls with the same arguments are ignored. Repeated

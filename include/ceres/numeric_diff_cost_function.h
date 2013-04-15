@@ -168,11 +168,17 @@ template <typename CostFunctor,
           int N6 = 0,   // Number of parameters in block 6.
           int N7 = 0,   // Number of parameters in block 7.
           int N8 = 0,   // Number of parameters in block 8.
-          int N9 = 0>   // Number of parameters in block 9.
+          int N9 = 0,   // Number of parameters in block 9.
+          int N10 = 0,   // Number of parameters in block 10.
+          int N11 = 0,   // Number of parameters in block 11.
+          int N12 = 0,   // Number of parameters in block 12.
+          int N13 = 0,   // Number of parameters in block 13.
+          int N14 = 0,   // Number of parameters in block 14.
+          int N15 = 0>   // Number of parameters in block 15.
 class NumericDiffCostFunction
     : public SizedCostFunction<kNumResiduals,
-                               N0, N1, N2, N3, N4,
-                               N5, N6, N7, N8, N9> {
+                               N0, N1, N2, N3, N4, N5, N6, N7, 
+                               N8, N9, N10, N11, N12, N13, N14, N15> {
  public:
   NumericDiffCostFunction(CostFunctor* functor,
                           const double relative_step_size = 1e-6)
@@ -199,14 +205,17 @@ class NumericDiffCostFunction
     using internal::FixedArray;
     using internal::NumericDiff;
 
-    const int kNumParameters = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
+    const int kNumParameters = N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9 + N10 + N11 + N12 + N13 + N14 + N15;
     const int kNumParameterBlocks =
-        (N0 > 0) + (N1 > 0) + (N2 > 0) + (N3 > 0) + (N4 > 0) +
-        (N5 > 0) + (N6 > 0) + (N7 > 0) + (N8 > 0) + (N9 > 0);
+        (N0 > 0) + (N1 > 0) + (N2 > 0) + (N3 > 0) +
+        (N4 > 0) + (N5 > 0) + (N6 > 0) + (N7 > 0) +
+        (N8 > 0) + (N9 > 0) + (N10 > 0) + (N11 > 0) +
+        (N12 > 0) + (N13 > 0) + (N14 > 0) + (N15 > 0);
 
     // Get the function value (residuals) at the the point to evaluate.
     if (!internal::EvaluateImpl<CostFunctor,
-                                N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>(
+                                N0, N1, N2, N3, N4, N5, N6, N7, 
+                                N8, N9, N10, N11, N12, N13, N14, N15>(
                                     functor_.get(),
                                     parameters,
                                     residuals,
@@ -230,8 +239,14 @@ class NumericDiffCostFunction
     if (N5) parameters_reference_copy[5] = parameters_reference_copy[4] + N4;
     if (N6) parameters_reference_copy[6] = parameters_reference_copy[5] + N5;
     if (N7) parameters_reference_copy[7] = parameters_reference_copy[6] + N6;
-    if (N7) parameters_reference_copy[8] = parameters_reference_copy[7] + N7;
-    if (N8) parameters_reference_copy[9] = parameters_reference_copy[8] + N8;
+    if (N8) parameters_reference_copy[8] = parameters_reference_copy[7] + N7;
+    if (N9) parameters_reference_copy[9] = parameters_reference_copy[8] + N8;
+    if (N10) parameters_reference_copy[10] = parameters_reference_copy[9] + N9;
+    if (N11) parameters_reference_copy[11] = parameters_reference_copy[10] + N10;
+    if (N12) parameters_reference_copy[12] = parameters_reference_copy[11] + N11;
+    if (N13) parameters_reference_copy[13] = parameters_reference_copy[12] + N12;
+    if (N14) parameters_reference_copy[14] = parameters_reference_copy[13] + N13;
+    if (N15) parameters_reference_copy[15] = parameters_reference_copy[14] + N14;
 
 #define COPY_PARAMETER_BLOCK(block)                                     \
   if (N ## block) memcpy(parameters_reference_copy[block],              \
@@ -248,6 +263,12 @@ class NumericDiffCostFunction
     COPY_PARAMETER_BLOCK(7);
     COPY_PARAMETER_BLOCK(8);
     COPY_PARAMETER_BLOCK(9);
+    COPY_PARAMETER_BLOCK(10);
+    COPY_PARAMETER_BLOCK(11);
+    COPY_PARAMETER_BLOCK(12);
+    COPY_PARAMETER_BLOCK(13);
+    COPY_PARAMETER_BLOCK(14);
+    COPY_PARAMETER_BLOCK(15);
 
 #undef COPY_PARAMETER_BLOCK
 
@@ -257,6 +278,7 @@ class NumericDiffCostFunction
                        method,                                          \
                        kNumResiduals,                                   \
                        N0, N1, N2, N3, N4, N5, N6, N7, N8, N9,          \
+                       N10, N11, N12, N13, N14, N15,                    \
                        block,                                           \
                        N ## block >::EvaluateJacobianForParameterBlock( \
                            functor_.get(),                              \
@@ -278,6 +300,12 @@ class NumericDiffCostFunction
     EVALUATE_JACOBIAN_FOR_BLOCK(7);
     EVALUATE_JACOBIAN_FOR_BLOCK(8);
     EVALUATE_JACOBIAN_FOR_BLOCK(9);
+    EVALUATE_JACOBIAN_FOR_BLOCK(10);
+    EVALUATE_JACOBIAN_FOR_BLOCK(11);
+    EVALUATE_JACOBIAN_FOR_BLOCK(12);
+    EVALUATE_JACOBIAN_FOR_BLOCK(13);
+    EVALUATE_JACOBIAN_FOR_BLOCK(14);
+    EVALUATE_JACOBIAN_FOR_BLOCK(15);
 
 #undef EVALUATE_JACOBIAN_FOR_BLOCK
 

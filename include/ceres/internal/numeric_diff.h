@@ -50,23 +50,28 @@ namespace internal {
 // Helper templates that allow evaluation of a variadic functor or a
 // CostFunction object.
 template <typename CostFunctor,
-          int N0, int N1, int N2, int N3, int N4,
-          int N5, int N6, int N7, int N8, int N9 >
+          int N0, int N1, int N2, int N3,
+          int N4, int N5, int N6, int N7,
+          int N8, int N9, int N10, int N11,
+          int N12, int N13, int N14, int N15>
 bool EvaluateImpl(const CostFunctor* functor,
                   double const* const* parameters,
                   double* residuals,
                   const void* /* NOT USED */) {
   return VariadicEvaluate<CostFunctor,
                           double,
-                          N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Call(
+                          N0, N1, N2, N3, N4, N5, N6, N7,
+                          N8, N9, N10, N11, N12, N13, N14, N15>::Call(
                               *functor,
                               parameters,
                               residuals);
 }
 
 template <typename CostFunctor,
-          int N0, int N1, int N2, int N3, int N4,
-          int N5, int N6, int N7, int N8, int N9 >
+          int N0, int N1, int N2, int N3,
+          int N4, int N5, int N6, int N7,
+          int N8, int N9, int N10, int N11,
+          int N12, int N13, int N14, int N15>
 bool EvaluateImpl(const CostFunctor* functor,
                   double const* const* parameters,
                   double* residuals,
@@ -80,8 +85,10 @@ bool EvaluateImpl(const CostFunctor* functor,
 template <typename CostFunctor,
           NumericDiffMethod kMethod,
           int kNumResiduals,
-          int N0, int N1, int N2, int N3, int N4,
-          int N5, int N6, int N7, int N8, int N9,
+          int N0, int N1, int N2, int N3,
+          int N4, int N5, int N6, int N7,
+          int N8, int N9, int N10, int N11,
+          int N12, int N13, int N14, int N15,
           int kParameterBlock,
           int kParameterBlockSize>
 struct NumericDiff {
@@ -133,7 +140,8 @@ struct NumericDiff {
 
       double residuals[kNumResiduals];  // NOLINT
 
-      if (!EvaluateImpl<CostFunctor, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>(
+      if (!EvaluateImpl<CostFunctor, N0, N1, N2, N3, N4, N5, N6, N7, 
+                                     N8, N9, N10, N11, N12, N13, N14, N15>(
               functor, parameters, residuals, functor)) {
         return false;
       }
@@ -150,7 +158,8 @@ struct NumericDiff {
         // Compute the function on the other side of x(j).
         x_plus_delta(j) = x(j) - delta;
 
-        if (!EvaluateImpl<CostFunctor, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>(
+      if (!EvaluateImpl<CostFunctor, N0, N1, N2, N3, N4, N5, N6, N7, 
+                                     N8, N9, N10, N11, N12, N13, N14, N15>(
                 functor, parameters, residuals, functor)) {
           return false;
         }
@@ -175,11 +184,14 @@ struct NumericDiff {
 template <typename CostFunctor,
           NumericDiffMethod kMethod,
           int kNumResiduals,
-          int N0, int N1, int N2, int N3, int N4,
-          int N5, int N6, int N7, int N8, int N9,
+          int N0, int N1, int N2, int N3,
+          int N4, int N5, int N6, int N7,
+          int N8, int N9, int N10, int N11,
+          int N12, int N13, int N14, int N15,
           int kParameterBlock>
 struct NumericDiff<CostFunctor, kMethod, kNumResiduals,
-                   N0, N1, N2, N3, N4, N5, N6, N7, N8, N9,
+                   N0, N1, N2, N3, N4, N5, N6, N7,
+                   N8, N9, N10, N11, N12, N13, N14, N15,
                    kParameterBlock, 0> {
   // Mutates parameters but must restore them before return.
   static bool EvaluateJacobianForParameterBlock(
