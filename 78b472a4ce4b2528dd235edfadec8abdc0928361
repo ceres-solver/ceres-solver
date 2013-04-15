@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "TWijaq2o",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-15T20:07:08Z",
+      "side": 1,
+      "message": "Forgot to mention here.\n\nI\u0027d say i don\u0027t actually thing SO3ColMajorMatrixParameterization/SO3RowMajorMatrixParameterization is the way to go. Not as if i don\u0027t like this particular way in this particular case. But it\u0027ll be just another way in comparison what we\u0027ve got in rotation.h.\n\nI think using adapters here is better idea from API usage point of view -- it\u0027ll be consistent with what we\u0027ve got already.\n\nAs an additional think it\u0027ll be nice to have rule like \"all the arrays are column-major\" so if your application is also col-major (and in case of CG i think it\u0027ll cover most of cases) you wouldn\u0027t worry about adopters. In other cases (or if you\u0027re col-major but paranoid :) you\u0027ll use adapters.\n\nAs opposite i\u0027d say don\u0027t use adapters in rotation.h and also make it different functions (maybe templated) to deal with col- vs. row- majority.",
+      "parentUuid": "TWmhrA7s",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TSzkC4lQ",
         "filename": "internal/ceres/so3_test.cc",
         "patchSetId": 3
