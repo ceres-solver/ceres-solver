@@ -676,6 +676,7 @@ EBlockRowOuterProduct(const BlockSparseMatrixBase* A,
                                          &row_stride, &col_stride);
       if (cell_info != NULL) {
         // block += b1.transpose() * b2;
+        CeresMutexLock l(&cell_info->m);
         MatrixTransposeMatrixMultiply
             <kRowBlockSize, kFBlockSize, kRowBlockSize, kFBlockSize, 1>(
                 row_values + row.cells[i].position, row.block.size, block1_size,
