@@ -124,7 +124,7 @@ class DynamicAutoDiffCostFunction : public CostFunction {
 
     // Make the parameter pack that is sent to the functor (reused).
     vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks,
-        static_cast<Jet<double, Stride>* >( NULL));
+        static_cast<Jet<double, Stride>* >(NULL));
     int num_active_parameters = 0;
     int start_derivative_section = -1;
     for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {

@@ -45,6 +45,8 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 
+using Eigen::Dynamic;
+
 namespace ceres {
 namespace internal {
 
@@ -140,8 +142,8 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
 
         // Apply local reparameterization to the jacobians.
         if (parameter_block->LocalParameterizationJacobian() != NULL) {
-          MatrixMatrixMultiply
-              <Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, Eigen::Dynamic, 0>(
+          // jacobians[i] = global_jacobians[i] * global_to_local_jacobian.
+          MatrixMatrixMultiply<Dynamic, Dynamic, Dynamic, Dynamic, 0>(
               global_jacobians[i],
               num_residuals,
               parameter_block->Size(),

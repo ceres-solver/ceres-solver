@@ -279,7 +279,11 @@ Eliminate(const BlockSparseMatrixBase* A,
 
     FixedArray<double, 8> inverse_ete_g(e_block_size);
     MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
-        inverse_ete.data(), e_block_size, e_block_size, g.get(), inverse_ete_g.get());
+        inverse_ete.data(),
+        e_block_size,
+        e_block_size,
+        g.get(),
+        inverse_ete_g.get());
 
     UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
 
