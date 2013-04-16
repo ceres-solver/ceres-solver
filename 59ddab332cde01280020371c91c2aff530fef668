@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TXXH9o2I",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-16T14:46:59Z",
+      "side": 1,
+      "message": "static_cast instead of reinterpret_cast as suggested by markus moll?",
+      "revId": "59ddab332cde01280020371c91c2aff530fef668",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
