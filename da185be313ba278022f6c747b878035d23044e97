@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Td0CNHHo",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "stack these horizontally to be 80char.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Td4CXBIg",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "stack horizontally in groups of 4.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Td6CbILE",
+        "filename": "include/ceres/autodiff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "same as above.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TdwCjFO8",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "N11 and so on. This is a bug.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tdxd8N3o",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "thanks for catching this.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Td-el6-M",
+        "filename": "include/ceres/numeric_diff_functor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "remove extra space at the end of x7, here and elsewhere.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Td3dru7o",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-04-17T21:55:24Z",
+      "side": 1,
+      "message": "I am not sure we should be adding these functions. At this point, a vector is probably better. I understand templated parameters need explicit functor, but there is no reason to increase the surface area of the problem api like this.",
+      "revId": "da185be313ba278022f6c747b878035d23044e97",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
