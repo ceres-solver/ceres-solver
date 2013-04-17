@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ThL4OmTw",
+        "filename": "include/ceres/so3.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-04-17T07:49:44Z",
+      "side": 1,
+      "message": "Ah, see the complexeity now. Could only suggest using Column, not Col in the name. Not sure about need of Matrix in the name tho.",
+      "parentUuid": "TdjKXiDw",
+      "revId": "78b472a4ce4b2528dd235edfadec8abdc0928361",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TSzkC4lQ",
         "filename": "internal/ceres/so3_test.cc",
         "patchSetId": 3
