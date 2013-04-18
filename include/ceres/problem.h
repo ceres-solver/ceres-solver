@@ -333,7 +333,7 @@ class Problem {
 
   // The size of local parameterization for the parameter block. If
   // there is no local parameterization associated with this parameter
-  // block, then ParmeterBlockLocalSize = ParameterBlockSize.
+  // block, then ParameterBlockLocalSize = ParameterBlockSize.
   int ParameterBlockLocalSize(double* values) const;
 
   // Fills the passed parameter_blocks vector with pointers to the
