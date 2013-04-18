@@ -502,6 +502,35 @@ TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
       problem.RemoveParameterBlock(y), "Parameter block not found:");
 }
 
+TEST(Problem, ParameterBlockQueryTest) {
+  double x[3];
+  double y[4];
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+  problem.AddParameterBlock(y, 4);
+
+  vector<int> constant_parameters;
+  constant_parameters.push_back(0);
+  problem.SetParameterization(
+      x,
+      new SubsetParameterization(3, constant_parameters));
+  EXPECT_EQ(problem.ParameterBlockSize(x), 3);
+  EXPECT_EQ(problem.ParameterBlockLocalSize(x), 2);
+  EXPECT_EQ(problem.ParameterBlockLocalSize(y), 4);
+
+  vector<double*> parameter_blocks;
+  problem.GetParameterBlocks(&parameter_blocks);
+  EXPECT_EQ(parameter_blocks.size(), 2);
+  EXPECT_NE(parameter_blocks[0], parameter_blocks[1]);
+  EXPECT_TRUE(parameter_blocks[0] == x || parameter_blocks[0] == y);
+  EXPECT_TRUE(parameter_blocks[1] == x || parameter_blocks[1] == y);
+
+  problem.RemoveParameterBlock(x);
+  problem.GetParameterBlocks(&parameter_blocks);
+  EXPECT_EQ(parameter_blocks.size(), 1);
+  EXPECT_TRUE(parameter_blocks[0] == y);
+}
+
 TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   problem->AddParameterBlock(y, 4);
   problem->AddParameterBlock(z, 5);
