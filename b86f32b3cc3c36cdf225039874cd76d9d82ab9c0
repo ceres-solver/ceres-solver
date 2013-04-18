@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Tmg6Fb70",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-18T22:10:49Z",
+      "side": 1,
+      "message": "Return 0 if it does not exist instead of undefined.",
+      "revId": "b86f32b3cc3c36cdf225039874cd76d9d82ab9c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tmm5nS14",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-18T22:10:49Z",
+      "side": 1,
+      "message": "Return 0 if it does not exist instead of undefined.",
+      "revId": "b86f32b3cc3c36cdf225039874cd76d9d82ab9c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tmq7dQ9E",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-18T22:10:49Z",
+      "side": 1,
+      "message": "Confusing; void methods return nothing. Consider instead:\n\nFills the passed parameter_blocks vector with pointers to the parameter blocks currently in the problem. After this call, parameter_block.size() \u003d\u003d NumParameterBlocks.",
+      "revId": "b86f32b3cc3c36cdf225039874cd76d9d82ab9c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tmo60v3g",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-18T22:10:49Z",
+      "side": 1,
+      "message": "I can\u0027t wait for c++11. Sadly it\u0027ll probably be years :(\n\nHave you seen this?\nhttp://blog.llvm.org/2013/04/status-of-c11-migrator.html",
+      "revId": "b86f32b3cc3c36cdf225039874cd76d9d82ab9c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tmi69008",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-18T22:10:49Z",
+      "side": 1,
+      "message": "Only one blank separator",
+      "revId": "b86f32b3cc3c36cdf225039874cd76d9d82ab9c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
