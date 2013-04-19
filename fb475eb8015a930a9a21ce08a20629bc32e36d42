@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "TvOnw8R8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-19T22:41:52Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "TvCY-FpE",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TvEZh8rc",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-19T22:12:52Z",
       "side": 1,
       "message": "TransposeD?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvKn6.fk",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-19T22:41:52Z",
+      "side": 1,
+      "message": "elsewhere we are just using the suffix transpose",
+      "parentUuid": "TvEZh8rc",
       "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "TvAkKLS8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-19T22:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "TvMYeQh4",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "TvEbqUt4",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 1
@@ -98,6 +152,24 @@
       "writtenOn": "2013-04-19T22:12:52Z",
       "side": 1,
       "message": "Shouldn\u0027t this be inside the ifdef too?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvKkT2WM",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-19T22:41:52Z",
+      "side": 1,
+      "message": "All reordering routines are expected to make sure offsets and indexes are set upon return. The schur stuff does the same.\n\nso even if suitesparse is not present, we need to make atleast one call to this.\n\nthe first call is inside the ifdef.",
+      "parentUuid": "TvEbqUt4",
       "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
