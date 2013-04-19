@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TnxgskQM",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T20:16:05Z",
+      "side": 1,
+      "message": "Perhaps CGNR? I mean, if you\u0027re using schur, you expect substantial sparsity. Dense QR is going to melt.",
+      "revId": "e15d9d4dd1bf9b25ca80770bbdbbb20c3a9af4b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tn-iJteA",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T20:16:05Z",
+      "side": 1,
+      "message": "It\u0027s not always the JACOBI preconditioner; you only change it if it was not identity",
+      "revId": "e15d9d4dd1bf9b25ca80770bbdbbb20c3a9af4b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tn5jNIQs",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T20:16:05Z",
+      "side": 1,
+      "message": "one",
+      "revId": "e15d9d4dd1bf9b25ca80770bbdbbb20c3a9af4b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Tn7hSHUg",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T20:16:05Z",
+      "side": 1,
+      "message": "I think you mean\n\nreturn LexicographicallyOrderResidualBlocks(...)",
+      "revId": "e15d9d4dd1bf9b25ca80770bbdbbb20c3a9af4b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
