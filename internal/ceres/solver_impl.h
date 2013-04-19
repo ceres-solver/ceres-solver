@@ -151,6 +151,32 @@ class SolverImpl {
       const Program& program,
       const ProblemImpl::ParameterMap& parameter_map,
       Solver::Summary* summary);
+
+  // If the linear solver is of Schur type, then replace it with the
+  // closest equivalent linear solver. This is done when the user
+  // requested a Schur type solver but the problem structure makes it
+  // impossible to use one.
+  //
+  // If the linear solver is not of Schur type, the function is a
+  // no-op.
+  static void AlternateLinearSolverForSchurTypeLinearSolver(
+      Solver::Options* options);
+
+  // Schur type solvers require that all parameter blocks eliminated
+  // by the Schur eliminator occur before others and the residuals be
+  // sorted in lexicographic order of their parameter blocks.
+  //
+  // If ordering has atleast two groups, then apply the ordering,
+  // otherwise compute a new ordering using a Maximal Independent Set
+  // algorithm and apply it.
+  //
+  // Upon return, ordering contains the parameter block ordering that
+  // was used to order the program.
+  static bool ReorderProgramForSchurTypeLinearSolver(
+      const ProblemImpl::ParameterMap& parameter_map,
+      ParameterBlockOrdering* ordering,
+      Program* program,
+      string* error);
 };
 
 }  // namespace internal
