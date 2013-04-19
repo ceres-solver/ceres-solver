@@ -378,11 +378,6 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   expected_residual_blocks.push_back(residual_blocks[3]);
   expected_residual_blocks.push_back(residual_blocks[2]);
 
-  EXPECT_TRUE(SolverImpl::LexicographicallyOrderResidualBlocks(
-                  2,
-                  reduced_program.get(),
-                  &error));
-
   EXPECT_EQ(reduced_program->residual_blocks().size(),
             expected_residual_blocks.size());
   for (int i = 0; i < expected_residual_blocks.size(); ++i) {
@@ -794,5 +789,62 @@ TEST(SolverImpl, ProblemIsConstant) {
   EXPECT_EQ(summary.final_cost, 1.0 / 2.0);
 }
 
+TEST(SolverImpl, AlternateLinearSolverForSchurTypeLinearSolver) {
+  Solver::Options options;
+
+  options.linear_solver_type = DENSE_QR;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, DENSE_QR);
+
+  options.linear_solver_type = DENSE_NORMAL_CHOLESKY;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, DENSE_NORMAL_CHOLESKY);
+
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
+
+  options.linear_solver_type = CGNR;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+
+  options.linear_solver_type = DENSE_SCHUR;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, DENSE_QR);
+
+  options.linear_solver_type = SPARSE_SCHUR;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, SPARSE_NORMAL_CHOLESKY);
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = IDENTITY;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+  EXPECT_EQ(options.preconditioner_type, IDENTITY);
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = JACOBI;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+  EXPECT_EQ(options.preconditioner_type, JACOBI);
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = SCHUR_JACOBI;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+  EXPECT_EQ(options.preconditioner_type, JACOBI);
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = CLUSTER_JACOBI;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+  EXPECT_EQ(options.preconditioner_type, JACOBI);
+
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  options.preconditioner_type = CLUSTER_TRIDIAGONAL;
+  SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(&options);
+  EXPECT_EQ(options.linear_solver_type, CGNR);
+  EXPECT_EQ(options.preconditioner_type, JACOBI);
+}
 }  // namespace internal
 }  // namespace ceres
