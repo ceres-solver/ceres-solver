@@ -50,8 +50,13 @@
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/stringprintf.h"
+#include "ceres/suitesparse.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/wall_time.h"
+
+#ifndef CERES_NO_SUITESPARSE
+#include "cholmod.h"
+#endif
 
 namespace ceres {
 namespace internal {
@@ -1003,6 +1008,11 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
+    ReorderProgramForSparseNormalCholesky(transformed_program.get());
+    return transformed_program.release();
+  }
+
   transformed_program->SetParameterOffsetsAndIndex();
   return transformed_program.release();
 }
@@ -1414,6 +1424,80 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
   return LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
                                               program,
                                               error);
+}
+
+TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
+    const Program* program) {
+
+  // Matrix to store the block sparsity structure of
+  TripletSparseMatrix* tsm =
+      new TripletSparseMatrix(program->NumParameterBlocks(),
+                              program->NumResidualBlocks(),
+                              10 * program->NumResidualBlocks());
+  int num_nonzeros = 0;
+  int* rows = tsm->mutable_rows();
+  int* cols = tsm->mutable_cols();
+  double* values = tsm->mutable_values();
+
+  const vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
+  for (int c = 0; c < residual_blocks.size(); ++c) {
+    const ResidualBlock* residual_block = residual_blocks[c];
+    const int num_parameter_blocks = residual_block->NumParameterBlocks();
+    ParameterBlock* const* parameter_blocks =
+        residual_block->parameter_blocks();
+
+    for (int j = 0; j < num_parameter_blocks; ++j) {
+      if (parameter_blocks[j]->IsConstant()) {
+        continue;
+      }
+
+      // Re-size the matrix if needed.
+      if (num_nonzeros >= tsm->max_num_nonzeros()) {
+        tsm->Reserve(2 * num_nonzeros);
+        rows = tsm->mutable_rows();
+        cols = tsm->mutable_cols();
+        values = tsm->mutable_values();
+      }
+      CHECK_LT(num_nonzeros,  tsm->max_num_nonzeros());
+
+      const int r = parameter_blocks[j]->index();
+      rows[num_nonzeros] = r;
+      cols[num_nonzeros] = c;
+      values[num_nonzeros] = 1.0;
+      ++num_nonzeros;
+    }
+  }
+
+  tsm->set_num_nonzeros(num_nonzeros);
+  return tsm;
+}
+
+void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
+#ifndef CERES_NO_SUITESPARSE
+  // Set the offsets and index for CreateJacobianSparsityTranspose.
+  program->SetParameterOffsetsAndIndex();
+
+  // Compute a block sparse presentation of J'.
+  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian(
+      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+
+  // Order rows using AMD.
+  SuiteSparse ss;
+  cholmod_sparse* block_jacobian = ss.CreateSparseMatrix(tsm_block_jacobian.get());
+  vector<int> ordering(program->NumResidualBlocks(),-1);
+  cholmod_amd(block_jacobian, NULL, 0, &ordering[0], ss.mutable_cc());
+  ss.Free(block_jacobian);
+
+  // Apply ordering.
+  vector<ParameterBlock*>& parameter_blocks =
+      *(program->mutable_parameter_blocks());
+  const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
+  for (int i = 0; i < program->NumParameterBlocks(); ++i) {
+    parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
+  }
+#endif
+
+  program->SetParameterOffsetsAndIndex();
 }
 
 }  // namespace internal
