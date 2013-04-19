@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TvCY-FpE",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "Can this not be inside suitesparse.h?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvEZh8rc",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "TransposeD?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvMb14r8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "Wouldn\u0027t a transpose swap these?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvCbxVsw",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "tsm_block_jacobian_transpose?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvMYeQh4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "Space after ,",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "TvEbqUt4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-19T22:12:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be inside the ifdef too?",
+      "revId": "fb475eb8015a930a9a21ce08a20629bc32e36d42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
