@@ -397,6 +397,11 @@ cholmod_dense* SuiteSparse::SolveCholesky(cholmod_sparse* A,
   return NULL;
 }
 
+void SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
+                                                   int* ordering) {
+  cholmod_amd(matrix, NULL, 0, ordering, &cc_);
+}
+
 }  // namespace internal
 }  // namespace ceres
 

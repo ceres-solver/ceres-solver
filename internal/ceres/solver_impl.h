@@ -46,6 +46,7 @@ class CoordinateDescentMinimizer;
 class Evaluator;
 class LinearSolver;
 class Program;
+class TripletSparseMatrix;
 
 class SolverImpl {
  public:
@@ -177,6 +178,21 @@ class SolverImpl {
       ParameterBlockOrdering* ordering,
       Program* program,
       string* error);
+
+  // CHOLMOD when doing the sparse cholesky factorization of the
+  // Jacobian matrix, reorders its columns to reduce the
+  // fill-in. Compute this permutation and re-order the parameter
+  // blocks.
+  //
+  static void ReorderProgramForSparseNormalCholesky(Program* program);
+
+  // Create a TripletSparseMatrix which contains the zero-one
+  // structure corresponding to the block sparsity of the transpose of
+  // the Jacobian matrix.
+  //
+  // Caller owns the result.
+  static TripletSparseMatrix* CreateJacobianBlockSparsityTranspose(
+      const Program* program);
 };
 
 }  // namespace internal

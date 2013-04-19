@@ -207,6 +207,11 @@ class SuiteSparse {
                                         vector<int>* block_rows,
                                         vector<int>* block_cols);
 
+  // Find a fill reducing approximate minimum degree
+  // ordering. ordering is expected to be large enough to hold the
+  // ordering.
+  void ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix, int* ordering);
+
   void Free(cholmod_sparse* m) { cholmod_free_sparse(&m, &cc_); }
   void Free(cholmod_dense* m)  { cholmod_free_dense(&m, &cc_);  }
   void Free(cholmod_factor* m) { cholmod_free_factor(&m, &cc_); }
