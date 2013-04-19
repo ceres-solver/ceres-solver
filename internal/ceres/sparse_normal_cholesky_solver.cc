@@ -205,11 +205,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
   if (factor_ == NULL) {
     if (options_.use_block_amd) {
-      factor_ = ss_.BlockAnalyzeCholesky(lhs.get(),
+      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
                                          A->col_blocks(),
                                          A->row_blocks());
     } else {
-      factor_ = ss_.AnalyzeCholesky(lhs.get());
+      factor_ = ss_.AnalyzeCholesky(&lhs);
     }
   }
   event_logger.AddEvent("Analysis");
