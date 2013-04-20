@@ -1482,7 +1482,7 @@ void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
   cholmod_sparse* block_jacobian_transpose =
       ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
 
-  vector<int> ordering(program->NumResidualBlocks(), -1);
+  vector<int> ordering(program->NumParameterBlocks(), -1);
   ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
   ss.Free(block_jacobian_transpose);
 
