@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <algorithm>
+#include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/internal/port.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -38,7 +39,7 @@
 namespace ceres {
 namespace internal {
 
-TEST(SuiteSparse, BlockPermutationToScalarPermutation) {
+TEST(_, BlockPermutationToScalarPermutation) {
   vector<int> blocks;
   //  Block structure
   //  0  --1-  ---2---  ---3---  4
@@ -73,9 +74,9 @@ TEST(SuiteSparse, BlockPermutationToScalarPermutation) {
   expected_scalar_ordering.push_back(8);
 
   vector<int> scalar_ordering;
-  SuiteSparse::BlockOrderingToScalarOrdering(blocks,
-                                             block_ordering,
-                                             &scalar_ordering);
+  BlockOrderingToScalarOrdering(blocks,
+                                block_ordering,
+                                &scalar_ordering);
   EXPECT_EQ(scalar_ordering.size(), expected_scalar_ordering.size());
   for (int i = 0; i < expected_scalar_ordering.size(); ++i) {
     EXPECT_EQ(scalar_ordering[i], expected_scalar_ordering[i]);
@@ -109,7 +110,7 @@ int FillBlock(const vector<int>& row_blocks,
   return offset;
 }
 
-TEST(SuiteSparse, ScalarMatrixToBlockMatrix) {
+TEST(_, ScalarMatrixToBlockMatrix) {
   // Block sparsity.
   //
   //     [1 2 3 2]
@@ -170,11 +171,12 @@ TEST(SuiteSparse, ScalarMatrixToBlockMatrix) {
 
   vector<int> block_rows;
   vector<int> block_cols;
-  SuiteSparse::ScalarMatrixToBlockMatrix(ccsm.get(),
-                                         row_blocks,
-                                         col_blocks,
-                                         &block_rows,
-                                         &block_cols);
+  CompressedColumnScalarMatrixToBlockMatrix(reinterpret_cast<const int*>(ccsm->i),
+                                            reinterpret_cast<const int*>(ccsm->p),
+                                            row_blocks,
+                                            col_blocks,
+                                            &block_rows,
+                                            &block_cols);
 
   EXPECT_EQ(block_cols.size(), expected_block_cols.size());
   EXPECT_EQ(block_rows.size(), expected_block_rows.size());

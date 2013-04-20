@@ -33,7 +33,9 @@
 
 #ifndef CERES_NO_CXSPARSE
 
+#include <vector>
 #include "cs.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
@@ -71,6 +73,10 @@ class CXSparse {
   // Computes a symbolic factorization of A that can be used in SolveCholesky.
   // The returned matrix should be deallocated with Free when not used anymore.
   cs_dis* AnalyzeCholesky(cs_di* A);
+
+  cs_dis* BlockAnalyzeCholesky(cs_di* A,
+                               const vector<int>& row_blocks,
+                               const vector<int>& col_blocks);
 
   void Free(cs_di* sparse_matrix);
   void Free(cs_dis* symbolic_factorization);

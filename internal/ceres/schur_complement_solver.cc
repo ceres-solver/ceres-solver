@@ -339,7 +339,7 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
-    cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.AnalyzeCholesky(lhs));
+    cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.BlockAnalyzeCholesky(lhs, blocks_, blocks_));
   }
 
   // Solve the linear system.
