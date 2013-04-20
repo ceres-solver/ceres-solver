@@ -204,14 +204,19 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   event_logger.AddEvent("Setup");
 
   if (factor_ == NULL) {
-    if (options_.use_block_amd) {
-      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
-                                         A->col_blocks(),
-                                         A->row_blocks());
+    if (options_.use_extra_ram) {
+      if (options_.use_block_amd) {
+        factor_ = ss_.BlockAnalyzeCholesky(&lhs,
+                                           A->col_blocks(),
+                                           A->row_blocks());
+      } else {
+        factor_ = ss_.AnalyzeCholesky(&lhs);
+      }
     } else {
-      factor_ = ss_.AnalyzeCholesky(&lhs);
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs);
     }
   }
+
   event_logger.AddEvent("Analysis");
 
   cholmod_dense* sol = ss_.SolveCholesky(&lhs, factor_, rhs);

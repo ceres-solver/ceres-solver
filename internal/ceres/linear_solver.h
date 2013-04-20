@@ -75,6 +75,7 @@ class LinearSolver {
           preconditioner_type(JACOBI),
           sparse_linear_algebra_library(SUITE_SPARSE),
           use_block_amd(true),
+          use_extra_ram(false),
           min_num_iterations(1),
           max_num_iterations(1),
           num_threads(1),
@@ -92,6 +93,9 @@ class LinearSolver {
 
     // See solver.h for explanation of this option.
     bool use_block_amd;
+
+    // TODO(sameeragarwal): Better variable name and explanation;
+    bool use_extra_ram;
 
     // Number of internal iterations that the solver uses. This
     // parameter only makes sense for iterative solvers like CG.
