@@ -96,9 +96,6 @@ DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
              "accuracy of each linear solve of the truncated newton step. "
              "Changing this parameter can affect solve performance.");
 
-DEFINE_bool(use_block_amd, true, "Use a block oriented fill reducing "
-            "ordering.");
-
 DEFINE_int32(num_threads, 1, "Number of threads.");
 DEFINE_int32(num_iterations, 5, "Number of iterations.");
 DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
@@ -138,8 +135,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   const int num_cameras = bal_problem->num_cameras();
   const int camera_block_size = bal_problem->camera_block_size();
   double* cameras = bal_problem->mutable_cameras();
-
-  options->use_block_amd = FLAGS_use_block_amd;
 
   if (options->use_inner_iterations) {
     if (FLAGS_blocks_for_inner_iterations == "cameras") {
