@@ -1004,7 +1004,8 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
-  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
+      options->sparse_linear_algebra_library == SUITE_SPARSE) {
     ReorderProgramForSparseNormalCholesky(transformed_program.get());
     return transformed_program.release();
   }
@@ -1091,11 +1092,10 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.preconditioner_type = options->preconditioner_type;
   linear_solver_options.sparse_linear_algebra_library =
       options->sparse_linear_algebra_library;
-
+  linear_solver_options.use_postordering = options->use_postordering;
   linear_solver_options.num_threads = options->num_linear_solver_threads;
   options->num_linear_solver_threads = linear_solver_options.num_threads;
 
-  linear_solver_options.use_block_amd = options->use_block_amd;
   const map<int, set<double*> >& groups =
       options->linear_solver_ordering->group_to_elements();
   for (map<int, set<double*> >::const_iterator it = groups.begin();
