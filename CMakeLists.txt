@@ -43,7 +43,7 @@ IF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
   # Git Bash (shipped with msysgit)
   SET (LOCAL_GIT_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
 ELSE (EXISTS ${CMAKE_SOURCE_DIR}/.git)
-  # TODO(keir) Add proper windows support
+  # TODO(keir) Add proper Windows support
 ENDIF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
 
 IF (EXISTS ${LOCAL_GIT_DIRECTORY})
@@ -471,14 +471,34 @@ OPTION(OPENMP
 
 IF (${OPENMP})
   FIND_PACKAGE(OpenMP)
-  IF(${OPENMP_FOUND})
-    MESSAGE("-- Found OpenMP.")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    ADD_DEFINITIONS(-DCERES_USE_OPENMP)
-  ELSE(${OPENMP_FOUND})
-    MESSAGE("-- Can't find OpenMP. Continuing without it.")
-  ENDIF(${OPENMP_FOUND})
 ENDIF (${OPENMP})
+
+IF(${OPENMP_FOUND})
+  MESSAGE("-- Found OpenMP.")
+  ADD_DEFINITIONS(-DCERES_USE_OPENMP)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  IF ("${UNIX}")
+    # At least on Linux, we need pthreads to be enabled for mutex to
+    # compile.  This may not work on Windows or Android.
+    FIND_PACKAGE(Threads REQUIRED)
+    SET(STATIC_LIBRARY_FLAGS
+        "${STATIC_LIBRARY_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
+    SET(CMAKE_SHARED_LINKER_FLAGS
+        "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
+    ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
+    ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
+  ENDIF ("${UNIX}")
+ELSE(${OPENMP_FOUND})
+  MESSAGE("-- Can't find OpenMP. Disabling multithreading.")
+  ADD_DEFINITIONS(-DCERES_NO_THREADS)
+ENDIF(${OPENMP_FOUND})
+
+# Disable threads in mutex.h. Someday, after there is OpenMP support in
+# Android, this can get removed. Also turn on a workaround for an NDK bug.
+IF (${BUILD_ANDROID})
+  ADD_DEFINITIONS(-DCERES_NO_THREADS)
+  ADD_DEFINITIONS(-DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG)
+ENDIF (${BUILD_ANDROID})
 
 # Protocol buffers
 OPTION(PROTOBUF
@@ -496,25 +516,6 @@ IF (${PROTOBUF})
 ELSE (${PROTOBUF})
   ADD_DEFINITIONS(-DCERES_NO_PROTOCOL_BUFFERS)
 ENDIF (${PROTOBUF})
-
-
-# Use threads but not on Android, where there is no support for OpenMP yet.
-IF ("${UNIX}" AND NOT ${BUILD_ANDROID})
-  # At least on Linux, we need pthreads to be enabled for mutex to compile.
-  # This may not work on windows or android.
-  FIND_PACKAGE(Threads REQUIRED)
-  SET(STATIC_LIBRARY_FLAGS "${STATIC_LIBRARY_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
-  SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
-  ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
-  ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-ENDIF ("${UNIX}" AND NOT ${BUILD_ANDROID})
-
-# Disable threads in mutex.h. Someday, after there is OpenMP support in
-# Android, this can get removed. Also turn on a workaround for an NDK bug.
-IF (${BUILD_ANDROID})
-  ADD_DEFINITIONS(-DCERES_NO_THREADS)
-  ADD_DEFINITIONS(-DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG)
-ENDIF (${BUILD_ANDROID})
 
 OPTION(DISABLE_TR1
        "Don't use TR1. This replaces some hash tables with sets. Slower."
