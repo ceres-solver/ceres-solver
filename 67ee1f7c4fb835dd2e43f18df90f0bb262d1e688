@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "TvLr7GTc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-21T20:23:26Z",
+      "side": 1,
+      "message": "Windows or Android",
+      "revId": "67ee1f7c4fb835dd2e43f18df90f0bb262d1e688",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
