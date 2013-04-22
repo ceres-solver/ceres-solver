@@ -1357,8 +1357,8 @@ void SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(
       // CGNR currently only supports the JACOBI preconditioner.
       options->preconditioner_type = JACOBI;
     } else {
-      msg += StringPrintf("ITERATIVE_SCHUR with IDENTITY preconditioner "
-                          "to CGNR with IDENTITY preconditioner.");
+      msg += "ITERATIVE_SCHUR with IDENTITY preconditioner"
+          "to CGNR with IDENTITY preconditioner.";
     }
   }
   LOG(WARNING) << msg;
@@ -1371,8 +1371,8 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
     string* error) {
   // At this point one of two things is true.
   //
-  //  1. The user did not specify an ordering - ordering has one
-  //  group containined all the parameter blocks.
+  //  1. The user did not specify an ordering - ordering has one group
+  //  containing all the parameter blocks.
 
   //  2. The user specified an ordering, and the first group has
   //  non-zero elements.
@@ -1425,7 +1425,7 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
 TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
     const Program* program) {
 
-  // Matrix to store the block sparsity structure of
+  // Matrix to store the block sparsity structure of the Jacobian.
   TripletSparseMatrix* tsm =
       new TripletSparseMatrix(program->NumParameterBlocks(),
                               program->NumResidualBlocks(),

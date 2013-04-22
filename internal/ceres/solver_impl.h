@@ -167,7 +167,7 @@ class SolverImpl {
   // by the Schur eliminator occur before others and the residuals be
   // sorted in lexicographic order of their parameter blocks.
   //
-  // If ordering has atleast two groups, then apply the ordering,
+  // If ordering has at least two groups, then apply the ordering,
   // otherwise compute a new ordering using a Maximal Independent Set
   // algorithm and apply it.
   //

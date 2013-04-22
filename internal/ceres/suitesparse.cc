@@ -172,7 +172,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
   return factor;
 }
 
-cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(cholmod_sparse* A) {
+cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
+    cholmod_sparse* A) {
   cc_.nmethods = 1;
   cc_.method[0].ordering = CHOLMOD_NATURAL;
   cc_.postorder = 0;

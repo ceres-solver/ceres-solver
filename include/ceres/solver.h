@@ -372,7 +372,7 @@ class Solver {
     // In some rare cases, it is worth using a more complicated
     // reordering algorithm which has slightly better runtime
     // performance at the expense of an extra copy of the Jacobian
-    // // matrix. Setting use_postordering to true enables this tradeoff.
+    // matrix. Setting use_postordering to true enables this tradeoff.
     bool use_postordering;
 
     // Some non-linear least squares problems have additional
