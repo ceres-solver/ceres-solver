@@ -50,7 +50,7 @@ namespace ceres {
 namespace internal {
 
 class BlockRandomAccessSparseMatrix;
-class BlockSparseMatrixBase;
+class BlockSparseMatrix;
 struct CompressedRowBlockStructure;
 class SchurEliminatorBase;
 
@@ -86,7 +86,7 @@ class SchurJacobiPreconditioner : public Preconditioner {
   virtual ~SchurJacobiPreconditioner();
 
   // Preconditioner interface.
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D);
+  virtual bool Update(const BlockSparseMatrix& A, const double* D);
   virtual void RightMultiply(const double* x, double* y) const;
   virtual int num_rows() const;
 

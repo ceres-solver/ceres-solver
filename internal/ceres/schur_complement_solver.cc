@@ -58,7 +58,7 @@ namespace ceres {
 namespace internal {
 
 LinearSolver::Summary SchurComplementSolver::SolveImpl(
-    BlockSparseMatrixBase* A,
+    BlockSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {

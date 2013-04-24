@@ -62,7 +62,7 @@ IterativeSchurComplementSolver::~IterativeSchurComplementSolver() {
 }
 
 LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
-    BlockSparseMatrixBase* A,
+    BlockSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {

@@ -62,7 +62,7 @@ namespace ceres {
 namespace internal {
 
 class BlockRandomAccessSparseMatrix;
-class BlockSparseMatrixBase;
+class BlockSparseMatrix;
 struct CompressedRowBlockStructure;
 class SchurEliminatorBase;
 
@@ -136,7 +136,7 @@ class VisibilityBasedPreconditioner : public Preconditioner {
   virtual ~VisibilityBasedPreconditioner();
 
   // Preconditioner interface
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D);
+  virtual bool Update(const BlockSparseMatrix& A, const double* D);
   virtual void RightMultiply(const double* x, double* y) const;
   virtual int num_rows() const;
 
@@ -215,7 +215,7 @@ class VisibilityBasedPreconditioner : public Preconditioner {
   virtual void LeftMultiply(const double* x, double* y) const {}
   virtual int num_rows() const { return -1; }
   virtual int num_cols() const { return -1; }
-  bool Update(const BlockSparseMatrixBase& A, const double* D) {
+  bool Update(const BlockSparseMatrix& A, const double* D) {
     return false;
   }
 };
