@@ -37,7 +37,7 @@
 namespace ceres {
 namespace internal {
 
-class BlockSparseMatrixBase;
+class BlockSparseMatrix;
 struct CompressedRowBlockStructure;
 class LinearOperator;
 
@@ -54,11 +54,11 @@ class LinearOperator;
 class BlockJacobiPreconditioner : public Preconditioner {
  public:
   // A must remain valid while the BlockJacobiPreconditioner is.
-  explicit BlockJacobiPreconditioner(const BlockSparseMatrixBase& A);
+  explicit BlockJacobiPreconditioner(const BlockSparseMatrix& A);
   virtual ~BlockJacobiPreconditioner();
 
   // Preconditioner interface
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D);
+  virtual bool Update(const BlockSparseMatrix& A, const double* D);
   virtual void RightMultiply(const double* x, double* y) const;
   virtual void LeftMultiply(const double* x, double* y) const;
   virtual int num_rows() const { return num_rows_; }

@@ -316,7 +316,6 @@ class TypedLinearSolver : public LinearSolver {
 // Linear solvers that depend on acccess to the low level structure of
 // a SparseMatrix.
 typedef TypedLinearSolver<BlockSparseMatrix>         BlockSparseMatrixSolver;          // NOLINT
-typedef TypedLinearSolver<BlockSparseMatrixBase>     BlockSparseMatrixBaseSolver;      // NOLINT
 typedef TypedLinearSolver<CompressedRowSparseMatrix> CompressedRowSparseMatrixSolver;  // NOLINT
 typedef TypedLinearSolver<DenseSparseMatrix>         DenseSparseMatrixSolver;          // NOLINT
 typedef TypedLinearSolver<TripletSparseMatrix>       TripletSparseMatrixSolver;        // NOLINT

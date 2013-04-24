@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-class BlockSparseMatrixBase;
+class BlockSparseMatrix;
 class SparseMatrix;
 
 class Preconditioner : public LinearOperator {
@@ -105,7 +105,7 @@ class Preconditioner : public LinearOperator {
   //
   // D can be NULL, in which case its interpreted as a diagonal matrix
   // of size zero.
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D) = 0;
+  virtual bool Update(const BlockSparseMatrix& A, const double* D) = 0;
 
   // LinearOperator interface. Since the operator is symmetric,
   // LeftMultiply and num_cols are just calls to RightMultiply and
@@ -130,7 +130,7 @@ class SparseMatrixPreconditionerWrapper : public Preconditioner {
   virtual ~SparseMatrixPreconditionerWrapper();
 
   // Preconditioner interface
-  virtual bool Update(const BlockSparseMatrixBase& A, const double* D);
+  virtual bool Update(const BlockSparseMatrix& A, const double* D);
   virtual void RightMultiply(const double* x, double* y) const;
   virtual int num_rows() const;
 
