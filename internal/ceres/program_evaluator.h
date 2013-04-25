@@ -85,6 +85,7 @@
 
 #include <map>
 #include <vector>
+#include "ceres/blas.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -230,14 +231,13 @@ class ProgramEvaluator : public Evaluator {
           if (parameter_block->IsConstant()) {
             continue;
           }
-          MatrixRef block_jacobian(block_jacobians[j],
-                                   num_residuals,
-                                   parameter_block->LocalSize());
-          VectorRef block_gradient(scratch->gradient.get() +
-                                   parameter_block->delta_offset(),
-                                   parameter_block->LocalSize());
-          VectorRef block_residual(block_residuals, num_residuals);
-          block_gradient += block_residual.transpose() * block_jacobian;
+
+          MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+              block_jacobians[j],
+              num_residuals,
+              parameter_block->LocalSize(),
+              block_residuals,
+              scratch->gradient.get() + parameter_block->delta_offset());
         }
       }
     }

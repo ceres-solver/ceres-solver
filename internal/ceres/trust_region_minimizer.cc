@@ -139,14 +139,15 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   // Do initial cost and Jacobian evaluation.
   double cost = 0.0;
-  if (!evaluator->Evaluate(x.data(), &cost, residuals.data(), NULL, jacobian)) {
+  if (!evaluator->Evaluate(x.data(),
+                           &cost,
+                           residuals.data(),
+                           gradient.data(),
+                           jacobian)) {
     LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
-
-  summary->initial_cost = cost + summary->fixed_cost;
-  iteration_summary.cost = cost + summary->fixed_cost;
 
   int num_consecutive_nonmonotonic_steps = 0;
   double minimum_cost = cost;
@@ -155,16 +156,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   double candidate_cost = cost;
   double accumulated_candidate_model_cost_change = 0.0;
 
-  gradient.setZero();
-  jacobian->LeftMultiply(residuals.data(), gradient.data());
+  summary->initial_cost = cost + summary->fixed_cost;
+  iteration_summary.cost = cost + summary->fixed_cost;
   iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
-
-  if (options_.jacobi_scaling) {
-    EstimateScale(*jacobian, scale.data());
-    jacobian->ScaleColumns(scale.data());
-  } else {
-    scale.setOnes();
-  }
 
   // The initial gradient max_norm is bounded from below so that we do
   // not divide by zero.
@@ -188,6 +182,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       WallTimeInSeconds() - start_time
       + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
+
+  if (options_.jacobi_scaling) {
+    EstimateScale(*jacobian, scale.data());
+    jacobian->ScaleColumns(scale.data());
+  } else {
+    scale.setOnes();
+  }
 
   int num_consecutive_invalid_steps = 0;
   while (true) {
@@ -419,7 +420,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (!evaluator->Evaluate(x.data(),
                                &cost,
                                residuals.data(),
-                               NULL,
+                               gradient.data(),
                                jacobian)) {
         summary->termination_type = NUMERICAL_FAILURE;
         summary->error =
@@ -428,8 +429,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
-      gradient.setZero();
-      jacobian->LeftMultiply(residuals.data(), gradient.data());
       iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
 
       if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {

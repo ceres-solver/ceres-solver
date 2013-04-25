@@ -86,12 +86,12 @@ class PowellEvaluator2 : public Evaluator {
                         const double* state,
                         double* cost,
                         double* residuals,
-                        double* /* gradient */,
+                        double* gradient,
                         SparseMatrix* jacobian) {
-    double x1 = state[0];
-    double x2 = state[1];
-    double x3 = state[2];
-    double x4 = state[3];
+    const double x1 = state[0];
+    const double x2 = state[1];
+    const double x3 = state[2];
+    const double x4 = state[3];
 
     VLOG(1) << "State: "
             << "x1=" << x1 << ", "
@@ -99,10 +99,10 @@ class PowellEvaluator2 : public Evaluator {
             << "x3=" << x3 << ", "
             << "x4=" << x4 << ".";
 
-    double f1 = x1 + 10.0 * x2;
-    double f2 = sqrt(5.0) * (x3 - x4);
-    double f3 = pow(x2 - 2.0 * x3, 2.0);
-    double f4 = sqrt(10.0) * pow(x1 - x4, 2.0);
+    const double f1 = x1 + 10.0 * x2;
+    const double f2 = sqrt(5.0) * (x3 - x4);
+    const double f3 = pow(x2 - 2.0 * x3, 2.0);
+    const double f4 = sqrt(10.0) * pow(x1 - x4, 2.0);
 
     VLOG(1) << "Function: "
             << "f1=" << f1 << ", "
@@ -162,6 +162,28 @@ class PowellEvaluator2 : public Evaluator {
       }
       VLOG(1) << "\n" << jacobian_matrix;
     }
+
+    if (gradient != NULL) {
+      int column_index = 0;
+      if (col1) {
+        gradient[column_index++] = f1  + f4 * sqrt(10.0) * 2.0 * (x1 - x4);
+      }
+
+      if (col2) {
+        gradient[column_index++] = f1 * 10.0 + f3 * 2.0 * (x2 - 2.0 * x3);
+      }
+
+      if (col3) {
+        gradient[column_index++] =
+            f2 * sqrt(5.0) + f3 * (2.0 * 2.0 * (2.0 * x3 - x2));
+      }
+
+      if (col4) {
+        gradient[column_index++] =
+            -f2 * sqrt(5.0) + f4 * sqrt(10.0) * 2.0 * (x4 - x1);
+      }
+    }
+
     return true;
   }
 
