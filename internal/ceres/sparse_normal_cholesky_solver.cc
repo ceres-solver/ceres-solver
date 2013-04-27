@@ -133,34 +133,37 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // factorized. CHOLMOD/SuiteSparse on the other hand can just work
   // off of Jt to compute the Cholesky factorization of the normal
   // equations.
-  cs_di* A2 = cs_transpose(&At, 1);
-  cs_di* AtA = cs_multiply(&At, A2);
+  cs_di* A2 = cxsparse_.TransposeMatrix(&At);
+  cs_di* AtA = cxsparse_.MatrixMatrixMultiply(&At, A2);
 
   cxsparse_.Free(A2);
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
-
   event_logger.AddEvent("Setup");
 
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
-    cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.AnalyzeCholesky(AtA));
+    if (options_.use_postordering) {
+      cxsparse_factor_ =
+          CHECK_NOTNULL(cxsparse_.BlockAnalyzeCholesky(AtA,
+                                                       A->col_blocks(),
+                                                       A->col_blocks()));
+    } else {
+      cxsparse_factor_ =
+          CHECK_NOTNULL(cxsparse_.AnalyzeCholeskyWithNaturalOrdering(AtA));
+    }
   }
-
   event_logger.AddEvent("Analysis");
-
 
   // Solve the linear system.
   if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
     summary.termination_type = TOLERANCE;
   }
-
   event_logger.AddEvent("Solve");
 
   cxsparse_.Free(AtA);
-
   event_logger.AddEvent("Teardown");
   return summary;
 }
@@ -205,11 +208,13 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
   if (factor_ == NULL) {
     if (options_.use_postordering) {
-      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
-                                         A->col_blocks(),
-                                         A->row_blocks());
+      factor_ =
+          CHECK_NOTNULL(ss_.BlockAnalyzeCholesky(&lhs,
+                                                 A->col_blocks(),
+                                                 A->row_blocks()));
     } else {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs);
+      factor_ =
+      CHECK_NOTNULL(ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs));
     }
   }
 

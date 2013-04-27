@@ -93,6 +93,11 @@ cs_dis* CXSparse::AnalyzeCholesky(cs_di* A) {
   return cs_schol(1, A);
 }
 
+cs_dis* CXSparse::AnalyzeCholeskyWithNaturalOrdering(cs_di* A) {
+  // order = 0 for Natural ordering.
+  return cs_schol(0, A);
+}
+
 cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
                                        const vector<int>& row_blocks,
                                        const vector<int>& col_blocks) {
@@ -171,6 +176,20 @@ cs_di* CXSparse::CreateSparseMatrix(TripletSparseMatrix* tsm) {
   tsm_wrapper.x = tsm->mutable_values();
 
   return cs_compress(&tsm_wrapper);
+}
+
+void CXSparse::ApproximateMinimumDegreeOrdering(cs_di* A, int* ordering) {
+  int* cs_ordering = cs_amd(1, A);
+  copy(cs_ordering, cs_ordering + A->m, ordering);
+  cs_free(cs_ordering);
+}
+
+cs_di* CXSparse::TransposeMatrix(cs_di* A) {
+  return cs_di_transpose(A, 1);
+}
+
+cs_di* CXSparse::MatrixMatrixMultiply(cs_di* A, cs_di* B) {
+  return cs_di_multiply(A, B);
 }
 
 void CXSparse::Free(cs_di* sparse_matrix) {

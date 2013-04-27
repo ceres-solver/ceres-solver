@@ -323,6 +323,22 @@ void SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
   cholmod_amd(matrix, NULL, 0, ordering, &cc_);
 }
 
+void SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
+    cholmod_sparse* matrix,
+    int* constraints,
+    int* ordering) {
+#ifndef CERES_NO_CAMD
+  cholmod_camd(matrix, NULL, 0, constraints, ordering, &cc_);
+#else
+  LOG(FATAL) << "Congratulations you have found a bug in Ceres."
+             << "Ceres Solver was compiled with SuiteSparse "
+             << "version 4.1.0 or less. Calling this function "
+             << "in that case is a bug. Please contact the"
+             << "the Ceres Solver developers".
+#endif
+}
+
+
 }  // namespace internal
 }  // namespace ceres
 
