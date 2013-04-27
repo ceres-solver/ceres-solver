@@ -323,6 +323,15 @@ void SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
   cholmod_amd(matrix, NULL, 0, ordering, &cc_);
 }
 
+#ifndef CERES_NO_CAMD
+void SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
+    cholmod_sparse* matrix,
+    int* constraints,
+    int* ordering) {
+  cholmod_camd(matrix, NULL, 0, constraints, ordering, &cc_);
+}
+#endif
+
 }  // namespace internal
 }  // namespace ceres
 
