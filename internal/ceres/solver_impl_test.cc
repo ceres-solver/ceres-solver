@@ -443,58 +443,6 @@ TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
   }
 }
 
-TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 1);
-
-  Program program(problem.program());
-  string error;
-  EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
-                                             &ordering,
-                                             &program,
-                                             &error));
-}
-
-TEST(SolverImpl, ApplyUserOrderingNormal) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 2);
-  ordering.AddElementToGroup(&z, 1);
-
-  Program* program = problem.mutable_program();
-  string error;
-
-  EXPECT_TRUE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
-                                            &ordering,
-                                            program,
-                                            &error));
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
-
-  EXPECT_EQ(parameter_blocks.size(), 3);
-  EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
-  EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
-  EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
-}
-
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
 TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
   Solver::Options options;

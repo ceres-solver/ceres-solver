@@ -103,15 +103,6 @@ class SolverImpl {
   static LinearSolver* CreateLinearSolver(Solver::Options* options,
                                           string* error);
 
-  // Reorder the parameter blocks in program using the ordering. A
-  // return value of true indicates success and false indicates an
-  // error was encountered whose cause is logged to LOG(ERROR).
-  static bool ApplyUserOrdering(const ProblemImpl::ParameterMap& parameter_map,
-                                const ParameterBlockOrdering* ordering,
-                                Program* program,
-                                string* error);
-
-
   // Reorder the residuals for program, if necessary, so that the
   // residuals involving e block (i.e., the first num_eliminate_block
   // parameter blocks) occur together. This is a necessary condition
@@ -163,29 +154,6 @@ class SolverImpl {
   static void AlternateLinearSolverForSchurTypeLinearSolver(
       Solver::Options* options);
 
-  // Schur type solvers require that all parameter blocks eliminated
-  // by the Schur eliminator occur before others and the residuals be
-  // sorted in lexicographic order of their parameter blocks.
-  //
-  // If ordering has at least two groups, then apply the ordering,
-  // otherwise compute a new ordering using a Maximal Independent Set
-  // algorithm and apply it.
-  //
-  // Upon return, ordering contains the parameter block ordering that
-  // was used to order the program.
-  static bool ReorderProgramForSchurTypeLinearSolver(
-      const ProblemImpl::ParameterMap& parameter_map,
-      ParameterBlockOrdering* ordering,
-      Program* program,
-      string* error);
-
-  // CHOLMOD when doing the sparse cholesky factorization of the
-  // Jacobian matrix, reorders its columns to reduce the
-  // fill-in. Compute this permutation and re-order the parameter
-  // blocks.
-  //
-  static void ReorderProgramForSparseNormalCholesky(Program* program);
-
   // Create a TripletSparseMatrix which contains the zero-one
   // structure corresponding to the block sparsity of the transpose of
   // the Jacobian matrix.
@@ -193,6 +161,46 @@ class SolverImpl {
   // Caller owns the result.
   static TripletSparseMatrix* CreateJacobianBlockSparsityTranspose(
       const Program* program);
+
+  // Sparse cholesky factorization routines when doing the sparse
+  // cholesky factorization of the Jacobian matrix, reorders its
+  // columns to reduce the fill-in. Compute this permutation and
+  // re-order the parameter blocks.
+  //
+  // If the parameter_block_ordering contains more than one
+  // elimination group and support for constrained fill-reducing
+  // ordering is available in the sparse linear algebra library
+  // (SuiteSparse version >= 4.2.0) then the fill reducing
+  // ordering will take it into account, otherwise it will be ignored.
+  static bool ReorderProgramForSparseNormalCholesky(
+      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+      const ParameterBlockOrdering* parameter_block_ordering,
+      Program* program,
+      string* error);
+
+  // Schur type solvers require that all parameter blocks eliminated
+  // by the Schur eliminator occur before others and the residuals be
+  // sorted in lexicographic order of their parameter blocks.
+  //
+  // If the parameter_block_ordering only contains one elimination
+  // group then a maximal independent set is computed and used as the
+  // first elimination group, otherwise the user's ordering is used.
+  //
+  // If the linear solver type is SPARSE_SCHUR and support for
+  // constrained fill-reducing ordering is available in the sparse
+  // linear algebra library (SuiteSparse version >= 4.2.0) then
+  // columns of the schur complement matrix are ordered to reduce the
+  // fill-in the Cholesky factorization.
+  //
+  // Upon return, ordering contains the parameter block ordering that
+  // was used to order the program.
+  static bool ReorderProgramForSchurTypeLinearSolver(
+      const LinearSolverType linear_solver_type,
+      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+      const ProblemImpl::ParameterMap& parameter_map,
+      ParameterBlockOrdering* parameter_block_ordering,
+      Program* program,
+      string* error);
 };
 
 }  // namespace internal
