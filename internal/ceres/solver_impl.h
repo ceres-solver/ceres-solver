@@ -184,7 +184,10 @@ class SolverImpl {
   // fill-in. Compute this permutation and re-order the parameter
   // blocks.
   //
-  static void ReorderProgramForSparseNormalCholesky(Program* program);
+  static bool ReorderProgramForSparseNormalCholesky(
+      SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+      Program* program,
+      string* error);
 
   // Create a TripletSparseMatrix which contains the zero-one
   // structure corresponding to the block sparsity of the transpose of
