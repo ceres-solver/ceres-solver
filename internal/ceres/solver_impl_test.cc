@@ -846,5 +846,11 @@ TEST(SolverImpl, AlternateLinearSolverForSchurTypeLinearSolver) {
   EXPECT_EQ(options.linear_solver_type, CGNR);
   EXPECT_EQ(options.preconditioner_type, JACOBI);
 }
+
+// TODO(sameeragarwal): Tests for
+// 1. CreateBlockJacobianSparsityTranspose
+// 2. ReorderProgramForSchurTypeSolver
+// 3. ReorderProgramForSparseNormalCholesky
+
 }  // namespace internal
 }  // namespace ceres
