@@ -189,6 +189,39 @@ class SuiteSparse {
   // ordering.
   void ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix, int* ordering);
 
+
+  // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
+  // if SuiteSparse was compiled with Metis support. This makes
+  // calling and linking into cholmod_camd problematic even though it
+  // has nothing to do with Metis. This has been fixed reliably in
+  // 4.2.0.
+  //
+  // The fix was actually committed in 4.1.0, but there is
+  // some confusion about a silent update to the tar ball, so we are
+  // being conservative and choosing the next minor version where
+  // things are stable.
+  static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
+    return (SUITESPARSE_VERSION>4001);
+  }
+
+  // Find a fill reducing approximate minimum degree
+  // ordering. constraints is an array which associates with each
+  // column of the matrix an elimination group. i.e., all columns in
+  // group 0 are eliminated first, all columns in group 1 are
+  // eliminated next etc. This function finds a fill reducing ordering
+  // that obeys these constraints.
+  //
+  // Calling ApproximateMinimumDegreeOrdering is equivalent to calling
+  // ConstrainedApproximateMinimumDegreeOrdering with a constraint
+  // array that puts all columns in the same elimination group.
+  //
+  // This function should only be called if
+  // IsConstrainedApproximateMinimumDegreeOrderingAvailable returns
+  // true. It will result in a crash otherwise.
+  void ConstrainedApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
+                                                   int* constraints,
+                                                   int* ordering);
+
   void Free(cholmod_sparse* m) { cholmod_free_sparse(&m, &cc_); }
   void Free(cholmod_dense* m)  { cholmod_free_dense(&m, &cc_);  }
   void Free(cholmod_factor* m) { cholmod_free_factor(&m, &cc_); }
