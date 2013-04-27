@@ -33,7 +33,9 @@
 #include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
+#include <string>
 #include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/cxsparse.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
@@ -995,7 +997,9 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   }
 
   if (IsSchurType(options->linear_solver_type)) {
-    if (!ReorderProgramForSchurTypeLinearSolver(problem_impl->parameter_map(),
+    if (!ReorderProgramForSchurTypeLinearSolver(options->linear_solver_type,
+                                                options->sparse_linear_algebra_library,
+                                                problem_impl->parameter_map(),
                                                 linear_solver_ordering,
                                                 transformed_program.get(),
                                                 error)) {
@@ -1004,9 +1008,15 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
-  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
-      options->sparse_linear_algebra_library == SUITE_SPARSE) {
-    ReorderProgramForSparseNormalCholesky(transformed_program.get());
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
+    if (!ReorderProgramForSparseNormalCholesky(
+            options->sparse_linear_algebra_library,
+            linear_solver_ordering,
+            transformed_program.get(),
+            error)) {
+      return NULL;
+    }
+
     return transformed_program.release();
   }
 
@@ -1093,6 +1103,18 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.sparse_linear_algebra_library =
       options->sparse_linear_algebra_library;
   linear_solver_options.use_postordering = options->use_postordering;
+
+  // Ignore user's postordering preferences and force it to be true if
+  // cholmod_camd is not available. This ensures that the linear
+  // solver does not assume that a fill-reducing pre-ordering has been
+  // done.
+#if !defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CAMD)
+  if (IsSchurType(linear_solver_options.type) &&
+      linear_solver_options.sparse_linear_algebra_library == SUITE_SPARSE) {
+    linear_solver_options.use_postordering = true;
+  }
+#endif
+
   linear_solver_options.num_threads = options->num_linear_solver_threads;
   options->num_linear_solver_threads = linear_solver_options.num_threads;
 
@@ -1115,48 +1137,6 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   return LinearSolver::Create(linear_solver_options);
 }
 
-bool SolverImpl::ApplyUserOrdering(
-    const ProblemImpl::ParameterMap& parameter_map,
-    const ParameterBlockOrdering* ordering,
-    Program* program,
-    string* error) {
-  if (ordering->NumElements() != program->NumParameterBlocks()) {
-    *error = StringPrintf("User specified ordering does not have the same "
-                          "number of parameters as the problem. The problem"
-                          "has %d blocks while the ordering has %d blocks.",
-                          program->NumParameterBlocks(),
-                          ordering->NumElements());
-    return false;
-  }
-
-  vector<ParameterBlock*>* parameter_blocks =
-      program->mutable_parameter_blocks();
-  parameter_blocks->clear();
-
-  const map<int, set<double*> >& groups =
-      ordering->group_to_elements();
-
-  for (map<int, set<double*> >::const_iterator group_it = groups.begin();
-       group_it != groups.end();
-       ++group_it) {
-    const set<double*>& group = group_it->second;
-    for (set<double*>::const_iterator parameter_block_ptr_it = group.begin();
-         parameter_block_ptr_it != group.end();
-         ++parameter_block_ptr_it) {
-      ProblemImpl::ParameterMap::const_iterator parameter_block_it =
-          parameter_map.find(*parameter_block_ptr_it);
-      if (parameter_block_it == parameter_map.end()) {
-        *error = StringPrintf("User specified ordering contains a pointer "
-                              "to a double that is not a parameter block in "
-                              "the problem. The invalid double is in group: %d",
-                              group_it->first);
-        return false;
-      }
-      parameter_blocks->push_back(parameter_block_it->second);
-    }
-  }
-  return true;
-}
 
 // Find the minimum index of any parameter block to the given residual.
 // Parameter blocks that have indices greater than num_eliminate_blocks are
@@ -1364,63 +1344,50 @@ void SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(
   LOG(WARNING) << msg;
 }
 
-bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
+bool SolverImpl::ApplyUserOrdering(
     const ProblemImpl::ParameterMap& parameter_map,
-    ParameterBlockOrdering* ordering,
+    const ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     string* error) {
-  // At this point one of two things is true.
-  //
-  //  1. The user did not specify an ordering - ordering has one group
-  //  containing all the parameter blocks.
-
-  //  2. The user specified an ordering, and the first group has
-  //  non-zero elements.
-  //
-  // We handle these two cases in turn.
-  if (ordering->NumGroups() == 1) {
-    // If the user supplied an ordering with just one
-    // group, it is equivalent to the user supplying NULL as an
-    // ordering. Ceres is completely free to choose the parameter
-    // block ordering as it sees fit. For Schur type solvers, this
-    // means that the user wishes for Ceres to identify the e_blocks,
-    // which we do by computing a maximal independent set.
-    vector<ParameterBlock*> schur_ordering;
-    const int num_eliminate_blocks = ComputeSchurOrdering(*program,
-                                                          &schur_ordering);
-
-    CHECK_EQ(schur_ordering.size(), program->NumParameterBlocks())
-        << "Congratulations, you found a Ceres bug! Please report this error "
-        << "to the developers.";
-
-    // Update the ordering object.
-    for (int i = 0; i < schur_ordering.size(); ++i) {
-      double* parameter_block = schur_ordering[i]->mutable_user_state();
-      const int group_id = (i < num_eliminate_blocks) ? 0 : 1;
-      ordering->AddElementToGroup(parameter_block, group_id);
-    }
-
-    // Apply the parameter block re-ordering. Technically we could
-    // call ApplyUserOrdering, but this is cheaper and simpler.
-    swap(*program->mutable_parameter_blocks(), schur_ordering);
-  } else {
-    // The user supplied an ordering.
-    if (!ApplyUserOrdering(parameter_map, ordering, program, error)) {
-      return false;
-    }
+  const int num_parameter_blocks =  program->NumParameterBlocks();
+  if (parameter_block_ordering->NumElements() != num_parameter_blocks) {
+    *error = StringPrintf("User specified ordering does not have the same "
+                          "number of parameters as the problem. The problem"
+                          "has %d blocks while the ordering has %d blocks.",
+                          num_parameter_blocks,
+                          parameter_block_ordering->NumElements());
+    return false;
   }
 
-  program->SetParameterOffsetsAndIndex();
+  vector<ParameterBlock*>* parameter_blocks =
+      program->mutable_parameter_blocks();
+  parameter_blocks->clear();
 
-  const int num_eliminate_blocks =
-      ordering->group_to_elements().begin()->second.size();
+  const map<int, set<double*> >& groups =
+      parameter_block_ordering->group_to_elements();
 
-  // Schur type solvers also require that their residual blocks be
-  // lexicographically ordered.
-  return LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
-                                              program,
-                                              error);
+  for (map<int, set<double*> >::const_iterator group_it = groups.begin();
+       group_it != groups.end();
+       ++group_it) {
+    const set<double*>& group = group_it->second;
+    for (set<double*>::const_iterator parameter_block_ptr_it = group.begin();
+         parameter_block_ptr_it != group.end();
+         ++parameter_block_ptr_it) {
+      ProblemImpl::ParameterMap::const_iterator parameter_block_it =
+          parameter_map.find(*parameter_block_ptr_it);
+      if (parameter_block_it == parameter_map.end()) {
+        *error = StringPrintf("User specified ordering contains a pointer "
+                              "to a double that is not a parameter block in "
+                              "the problem. The invalid double is in group: %d",
+                              group_it->first);
+        return false;
+      }
+      parameter_blocks->push_back(parameter_block_it->second);
+    }
+  }
+  return true;
 }
+
 
 TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
     const Program* program) {
@@ -1468,34 +1435,185 @@ TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
   return tsm;
 }
 
-void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
-#ifndef CERES_NO_SUITESPARSE
-  // Set the offsets and index for CreateJacobianSparsityTranspose.
-  program->SetParameterOffsetsAndIndex();
+bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
+    const LinearSolverType linear_solver_type,
+    const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const ProblemImpl::ParameterMap& parameter_map,
+    ParameterBlockOrdering* parameter_block_ordering,
+    Program* program,
+    string* error) {
+  if (parameter_block_ordering->NumGroups() == 1) {
+    // If the user supplied an parameter_block_ordering with just one
+    // group, it is equivalent to the user supplying NULL as an
+    // parameter_block_ordering. Ceres is completely free to choose the
+    // parameter block ordering as it sees fit. For Schur type solvers,
+    // this means that the user wishes for Ceres to identify the
+    // e_blocks, which we do by computing a maximal independent set.
+    vector<ParameterBlock*> schur_ordering;
+    const int num_eliminate_blocks = ComputeSchurOrdering(*program,
+                                                          &schur_ordering);
 
-  // Compute a block sparse presentation of J'.
-  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+    CHECK_EQ(schur_ordering.size(), program->NumParameterBlocks())
+        << "Congratulations, you found a Ceres bug! Please report this error "
+        << "to the developers.";
 
-  // Order rows using AMD.
-  SuiteSparse ss;
-  cholmod_sparse* block_jacobian_transpose =
-      ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+    // Update the parameter_block_ordering object.
+    for (int i = 0; i < schur_ordering.size(); ++i) {
+      double* parameter_block = schur_ordering[i]->mutable_user_state();
+      const int group_id = (i < num_eliminate_blocks) ? 0 : 1;
+      parameter_block_ordering->AddElementToGroup(parameter_block, group_id);
+    }
 
-  vector<int> ordering(program->NumParameterBlocks(), -1);
-  ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
-  ss.Free(block_jacobian_transpose);
+    // We could call ApplyUserOrdering but this is cheaper and
+    // simpler.
+    swap(*program->mutable_parameter_blocks(), schur_ordering);
+  } else {
+    // The user provided an ordering with more than one elimination
+    // group. Trust the user and apply the ordering.
+    if (!ApplyUserOrdering(parameter_map,
+                           parameter_block_ordering,
+                           program,
+                           error)) {
+      return false;
+    }
+  }
 
-  // Apply ordering.
-  vector<ParameterBlock*>& parameter_blocks =
-      *(program->mutable_parameter_blocks());
-  const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
-  for (int i = 0; i < program->NumParameterBlocks(); ++i) {
-    parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
+  // Pre-order the columns corresponding to the schur complement if
+  // possible.
+#if !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CAMD)
+  if (linear_solver_type == SPARSE_SCHUR &&
+      sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    vector<int> constraints;
+    vector<ParameterBlock*>& parameter_blocks =
+        *(program->mutable_parameter_blocks());
+
+    for (int i = 0; i < parameter_blocks.size(); ++i) {
+      constraints.push_back(
+          parameter_block_ordering->GroupId(
+              parameter_blocks[i]->mutable_user_state()));
+    }
+
+    // Set the offsets and index for CreateJacobianSparsityTranspose.
+    program->SetParameterOffsetsAndIndex();
+    // Compute a block sparse presentation of J'.
+    scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+        SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+
+    SuiteSparse ss;
+    cholmod_sparse* block_jacobian_transpose =
+        ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+
+    vector<int> ordering(parameter_blocks.size(), 0);
+    ss.ConstrainedApproximateMinimumDegreeOrdering(block_jacobian_transpose,
+                                                   &constraints[0],
+                                                   &ordering[0]);
+    ss.Free(block_jacobian_transpose);
+
+    const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
+    for (int i = 0; i < program->NumParameterBlocks(); ++i) {
+      parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
+    }
   }
 #endif
 
   program->SetParameterOffsetsAndIndex();
+  // Schur type solvers also require that their residual blocks be
+  // lexicographically ordered.
+  const int num_eliminate_blocks =
+      parameter_block_ordering->group_to_elements().begin()->second.size();
+  return LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
+                                              program,
+                                              error);
+}
+
+bool SolverImpl::ReorderProgramForSparseNormalCholesky(
+    const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    const ParameterBlockOrdering* parameter_block_ordering,
+    Program* program,
+    string* error) {
+  // Set the offsets and index for CreateJacobianSparsityTranspose.
+  program->SetParameterOffsetsAndIndex();
+  // Compute a block sparse presentation of J'.
+  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+
+  vector<int> ordering(program->NumParameterBlocks(), 0);
+  vector<ParameterBlock*>& parameter_blocks =
+      *(program->mutable_parameter_blocks());
+
+  if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+#ifdef CERES_NO_SUITESPARSE
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITE_SPARSE because "
+        "SuiteSparse was not enabled when Ceres was built.";
+    return false;
+#else
+    SuiteSparse ss;
+    cholmod_sparse* block_jacobian_transpose =
+        ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+
+#  ifdef CERES_NO_CAMD
+    // No cholmod_camd, so ignore user's parameter_block_ordering and
+    // use plain old AMD.
+    ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
+#  else
+    if (parameter_block_ordering->NumGroups() > 1) {
+      // If the user specified more than one elimination groups use them
+      // to constrain the ordering.
+      vector<int> constraints;
+      for (int i = 0; i < parameter_blocks.size(); ++i) {
+        constraints.push_back(
+            parameter_block_ordering->GroupId(
+                parameter_blocks[i]->mutable_user_state()));
+      }
+      ss.ConstrainedApproximateMinimumDegreeOrdering(
+          block_jacobian_transpose,
+          &constraints[0],
+          &ordering[0]);
+    } else {
+      ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose,
+                                          &ordering[0]);
+    }
+#  endif  // CERES_NO_CAMD
+
+    ss.Free(block_jacobian_transpose);
+#endif  // CERES_NO_SUITESPARSE
+
+  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
+#ifndef CERES_NO_CXSPARSE
+
+    // CXSparse works with J'J instead of J'. So compute the block
+    // sparsity for J'J and compute an approximate minimum degree
+    // ordering.
+    CXSparse cxsparse;
+    cs_di* block_jacobian_transpose;
+    block_jacobian_transpose =
+        cxsparse.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+    cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
+    cs_di* block_hessian =
+        cxsparse.MatrixMatrixMultiply(block_jacobian_transpose, block_jacobian);
+    cxsparse.Free(block_jacobian);
+    cxsparse.Free(block_jacobian_transpose);
+
+    cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, &ordering[0]);
+    cxsparse.Free(block_hessian);
+#else  // CERES_NO_CXSPARSE
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with CX_SPARSE because "
+        "CXSparse was not enabled when Ceres was built.";
+    return false;
+#endif  // CERES_NO_CXSPARSE
+  } else {
+    *error = "Unknown sparse linear algebra library.";
+    return false;
+  }
+
+  // Apply ordering.
+  const vector<ParameterBlock*> parameter_blocks_copy(parameter_blocks);
+  for (int i = 0; i < program->NumParameterBlocks(); ++i) {
+    parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
+  }
+
+  program->SetParameterOffsetsAndIndex();
+  return true;
 }
 
 }  // namespace internal
