@@ -323,6 +323,31 @@ void SuiteSparse::ApproximateMinimumDegreeOrdering(cholmod_sparse* matrix,
   cholmod_amd(matrix, NULL, 0, ordering, &cc_);
 }
 
+void SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
+    cholmod_sparse* matrix,
+    int* constraints,
+    int* ordering) {
+
+  // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
+  // if SuiteSparse was compiled with Metis support. This makes
+  // calling and linking into cholmod_camd problematic even though it
+  // has nothing to do with Metis. This has been fixed reliably in
+  // 4.2.0.
+  //
+  // The fix was actually committed in 4.1.0, but there is
+  // some confusion about a silent update to the tar ball, so we are
+  // being conservative and choosing the next minor version where
+  // things are stable.
+
+#if SUITESPARSE_VERSION>4001
+  cholmod_camd(matrix, NULL, 0, constraints, ordering, &cc_);
+#else
+  LOG(FATAL) << "Ceres was linked into SuiteSparse version : " << SUITESPARSE_VERSION
+             << "ConstrainedApproximateMinimumDegreeOrdering is not supported "
+             << "for versions < 4.2.0";
+#endif
+}
+
 }  // namespace internal
 }  // namespace ceres
 

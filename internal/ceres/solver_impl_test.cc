@@ -846,5 +846,83 @@ TEST(SolverImpl, AlternateLinearSolverForSchurTypeLinearSolver) {
   EXPECT_EQ(options.linear_solver_type, CGNR);
   EXPECT_EQ(options.preconditioner_type, JACOBI);
 }
+
+TEST(SolverImpl, CreateJacobianBlockSparsityTranspose) {
+  ProblemImpl problem;
+  double x[2];
+  double y[3];
+  double z;
+
+  problem.AddParameterBlock(x, 2);
+  problem.AddParameterBlock(y, 3);
+  problem.AddParameterBlock(&z, 1);
+
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 0, 0>(), NULL, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<3, 1, 2, 0>(), NULL, &z, x);
+  problem.AddResidualBlock(new MockCostFunctionBase<4, 1, 3, 0>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<5, 1, 3, 0>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 1, 0>(), NULL, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 1, 3, 0>(), NULL, &z, y);
+  problem.AddResidualBlock(new MockCostFunctionBase<2, 2, 1, 0>(), NULL, x, &z);
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 3, 0, 0>(), NULL, y);
+
+  TripletSparseMatrix expected_block_sparse_jacobian(3, 8, 14);
+  {
+    int* rows = expected_block_sparse_jacobian.mutable_rows();
+    int* cols = expected_block_sparse_jacobian.mutable_cols();
+    double* values = expected_block_sparse_jacobian.mutable_values();
+    rows[0] = 0;
+    cols[0] = 0;
+
+    rows[1] = 2;
+    cols[1] = 1;
+    rows[2] = 0;
+    cols[2] = 1;
+
+    rows[3] = 2;
+    cols[3] = 2;
+    rows[4] = 1;
+    cols[4] = 2;
+
+    rows[5] = 2;
+    cols[5] = 3;
+    rows[6] = 1;
+    cols[6] = 3;
+
+    rows[7] = 0;
+    cols[7] = 4;
+    rows[8] = 2;
+    cols[8] = 4;
+
+    rows[9] = 2;
+    cols[9] = 5;
+    rows[10] = 1;
+    cols[10] = 5;
+
+    rows[11] = 0;
+    cols[11] = 6;
+    rows[12] = 2;
+    cols[12] = 6;
+
+    rows[13] = 1;
+    cols[13] = 7;
+    fill(values, values + 14, 1.0);
+    expected_block_sparse_jacobian.set_num_nonzeros(14);
+  }
+
+  Program* program = problem.mutable_program();
+  program->SetParameterOffsetsAndIndex();
+
+  scoped_ptr<TripletSparseMatrix> actual_block_sparse_jacobian(
+      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+
+  Matrix expected_dense_jacobian;
+  expected_block_sparse_jacobian.ToDenseMatrix(&expected_dense_jacobian);
+
+  Matrix actual_dense_jacobian;
+  actual_block_sparse_jacobian->ToDenseMatrix(&actual_dense_jacobian);
+  EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
+}
+
 }  // namespace internal
 }  // namespace ceres
