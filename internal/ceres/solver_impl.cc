@@ -33,7 +33,9 @@
 #include <cstdio>
 #include <iostream>  // NOLINT
 #include <numeric>
+#include <string>
 #include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/cxsparse.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
@@ -1004,9 +1006,14 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return transformed_program.release();
   }
 
-  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
-      options->sparse_linear_algebra_library == SUITE_SPARSE) {
-    ReorderProgramForSparseNormalCholesky(transformed_program.get());
+  if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
+    if (!ReorderProgramForSparseNormalCholesky(
+            options->sparse_linear_algebra_library,
+            transformed_program.get(),
+            error)) {
+      return NULL;
+    }
+
     return transformed_program.release();
   }
 
@@ -1468,8 +1475,10 @@ TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
   return tsm;
 }
 
-void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
-#ifndef CERES_NO_SUITESPARSE
+bool SolverImpl::ReorderProgramForSparseNormalCholesky(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    Program* program,
+    string* error) {
   // Set the offsets and index for CreateJacobianSparsityTranspose.
   program->SetParameterOffsetsAndIndex();
 
@@ -1477,14 +1486,41 @@ void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       SolverImpl::CreateJacobianBlockSparsityTranspose(program));
 
-  // Order rows using AMD.
-  SuiteSparse ss;
-  cholmod_sparse* block_jacobian_transpose =
-      ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+  vector<int> ordering(program->NumParameterBlocks(), 0);
 
-  vector<int> ordering(program->NumParameterBlocks(), -1);
-  ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
-  ss.Free(block_jacobian_transpose);
+  if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+#ifndef CERES_NO_SUITESPARSE
+    SuiteSparse ss;
+    cholmod_sparse* block_jacobian_transpose =
+        ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+    ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
+    ss.Free(block_jacobian_transpose);
+#else
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITE_SPARSE because "
+        "SuiteSparse was not enabled when Ceres was built.";
+    return false;
+#endif
+  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
+#ifndef CERES_NO_CXSPARSE
+    CXSparse cxsparse;
+    cs_di* block_jacobian_transpose;
+    block_jacobian_transpose = cxsparse.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
+    cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
+    cs_di* block_hessian = cxsparse.MatrixMatrixMultiply(block_jacobian_transpose,
+                                                         block_jacobian);
+    cxsparse.Free(block_jacobian);
+    cxsparse.Free(block_jacobian_transpose);
+    cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, &ordering[0]);
+    cxsparse.Free(block_hessian);
+#else
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with CX_SPARSE because "
+        "CXSparse was not enabled when Ceres was built.";
+    return false;
+#endif
+  } else {
+    *error = "Unknown sparse linear algebra library.";
+    return false;
+  }
 
   // Apply ordering.
   vector<ParameterBlock*>& parameter_blocks =
@@ -1493,9 +1529,9 @@ void SolverImpl::ReorderProgramForSparseNormalCholesky(Program* program) {
   for (int i = 0; i < program->NumParameterBlocks(); ++i) {
     parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
   }
-#endif
 
   program->SetParameterOffsetsAndIndex();
+  return true;
 }
 
 }  // namespace internal

@@ -73,10 +73,16 @@ class CXSparse {
   // Computes a symbolic factorization of A that can be used in SolveCholesky.
   // The returned matrix should be deallocated with Free when not used anymore.
   cs_dis* AnalyzeCholesky(cs_di* A);
+  cs_dis* AnalyzeCholeskyWithNaturalOrdering(cs_di* A);
 
   cs_dis* BlockAnalyzeCholesky(cs_di* A,
                                const vector<int>& row_blocks,
                                const vector<int>& col_blocks);
+
+  void ApproximateMinimumDegreeOrdering(cs_di* A, int* ordering);
+
+  cs_di* TransposeMatrix(cs_di* A);
+  cs_di* MatrixMatrixMultiply(cs_di* A, cs_di* B);
 
   void Free(cs_di* sparse_matrix);
   void Free(cs_dis* symbolic_factorization);
