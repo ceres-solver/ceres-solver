@@ -276,26 +276,42 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
     return true;
   }
 
-  cholmod_sparse* cholmod_lhs = ss_.CreateSparseMatrix(tsm);
-  // The matrix is symmetric, and the upper triangular part of the
-  // matrix contains the values.
-  cholmod_lhs->stype = 1;
+  cholmod_sparse* cholmod_lhs = NULL;
+  if (options().use_postordering) {
+    // If we are going to do a full symbolic analysis of the schur
+    // complement matrix from scratch and not rely on the
+    // pre-ordering. Then the fastest path in cholmod_factorize is the
+    // one corresponding to upper triangular matrices.
+
+    // Create a upper triangular symmetric matrix.
+    cholmod_lhs = ss_.CreateSparseMatrix(tsm);
+    cholmod_lhs->stype = 1;
+
+    if (factor_ == NULL) {
+      factor_ = ss_.BlockAnalyzeCholesky(cholmod_lhs, blocks_, blocks_);
+    }
+  } else {
+    // If we are going to use the natural ordering (i.e. rely on the
+    //  pre-ordering computed by solver_impl.cc), then the fastest
+    //  path in cholmod_factorize is the one corresponding to lower
+    //  triangular matrices.
+
+    // Create a upper triangular symmetric matrix.
+    cholmod_lhs = ss_.CreateSparseMatrixTranspose(tsm);
+    cholmod_lhs->stype = -1;
+
+    if (factor_ == NULL) {
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(cholmod_lhs);
+    }
+  }
 
   cholmod_dense*  cholmod_rhs =
       ss_.CreateDenseVector(const_cast<double*>(rhs()), num_rows, num_rows);
-
-  // Symbolic factorization is computed if we don't already have one handy.
-  if (factor_ == NULL) {
-    factor_ = ss_.BlockAnalyzeCholesky(cholmod_lhs, blocks_, blocks_);
-  }
-
   cholmod_dense* cholmod_solution =
       ss_.SolveCholesky(cholmod_lhs, factor_, cholmod_rhs);
 
   ss_.Free(cholmod_lhs);
-  cholmod_lhs = NULL;
   ss_.Free(cholmod_rhs);
-  cholmod_rhs = NULL;
 
   if (cholmod_solution == NULL) {
     LOG(WARNING) << "CHOLMOD solve failed.";
@@ -339,7 +355,8 @@ bool SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
-    cxsparse_factor_ = CHECK_NOTNULL(cxsparse_.BlockAnalyzeCholesky(lhs, blocks_, blocks_));
+    cxsparse_factor_ =
+        CHECK_NOTNULL(cxsparse_.BlockAnalyzeCholesky(lhs, blocks_, blocks_));
   }
 
   // Solve the linear system.
