@@ -230,8 +230,8 @@ class NumericDiffCostFunction
     if (N5) parameters_reference_copy[5] = parameters_reference_copy[4] + N4;
     if (N6) parameters_reference_copy[6] = parameters_reference_copy[5] + N5;
     if (N7) parameters_reference_copy[7] = parameters_reference_copy[6] + N6;
-    if (N7) parameters_reference_copy[8] = parameters_reference_copy[7] + N7;
-    if (N8) parameters_reference_copy[9] = parameters_reference_copy[8] + N8;
+    if (N8) parameters_reference_copy[8] = parameters_reference_copy[7] + N7;
+    if (N9) parameters_reference_copy[9] = parameters_reference_copy[8] + N8;
 
 #define COPY_PARAMETER_BLOCK(block)                                     \
   if (N ## block) memcpy(parameters_reference_copy[block],              \
