@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UKG53l.U",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Drop blank.",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKO6Kx6I",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "These two sentences should be one.",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKAn81fI",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Weird indention",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKCkMOUg",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "#if defined(CERES_NO_CAMD) \u0026\u0026 !defined(CERES_NO_SUITESPARSE)",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKKkf6Wo",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Use compound if",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKGlg8eE",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "The ifdef logic is confusing. Can you do a error check block first instead?",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKElIjXM",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Indent\n\n  #  ifndef ...",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKOksAZ0",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Indent\n\n  #  else ...",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKAkqlX4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1578,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Indent\n\n  #  endif  // CERES_NO_CAMD",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKKk2Cek",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "#endif  // CERES_NO_CXSPARSE",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKKlNqXo",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "I wonder if we can detect this and warn in the CMakeFile.\n\nIn fact, I suggest adding a #warning",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKCmZmcI",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T17:00:49Z",
+      "side": 1,
+      "message": "Does this need to go here? Usually headers should compile without too much #ifdefery, then you hide that stuff in the implementation.",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
