@@ -4,6 +4,60 @@
 Version History
 ===============
 
+1.6.0
+=====
+
+New Features
+------------
+
+#. Major Performance improvements.
+
+   a. Schur type solvers (``SPARSE_SCHUR``, ``DENSE_SCHUR``,
+      ``ITERATIVE_SCHUR``) are significantly faster due to custom BLAS
+      routines and fewer heap allocations.
+
+   b. ``SPARSE_SCHUR`` when used with ``CX_SPARSE`` now uses a block
+      AMD for much improved factorization performance.
+
+   c. The jacobian matrix is pre-ordered so that
+      ``SPARSE_NORMAL_CHOLESKY`` and ``SPARSE_SCHUR`` do not have to
+      make copies inside ``CHOLMOD``.
+
+   d. Faster autodiff by replacing division by multplication by inverse.
+
+   e. When compiled without threads, the schur eliminator does not pay
+      the penalty for locking and unlocking mutexes.
+
+#. Users can now use ``linear_solver_ordering`` to affect the
+   fill-reducing ordering used by ``SUITE_SPARSE`` for
+   ``SPARSE_NORMAL_CHOLESKY``.
+
+#. ``Problem`` can now report the set of parameter blocks it knows about.
+
+#. ``TrustRegionMinimizer`` uses the evaluator to compute the gradient
+   instead of a matrix vector multiply.
+
+#. On ``Mac OS``, whole program optimization is enabled.
+
+#. Users can now use automatic differentiation to define new
+   ``LocalParameterization`` objects. (Sergey Sharybin)
+
+#. Enable larger tuple sizes for Visual Studio 2012. (Petter Strandmark)
+
+
+Bug Fixes
+---------
+
+#. Bugfix in ``NumericDiffCostFunction``. (Nicolas Brodu)
+#. Death to BlockSparseMatrixBase.
+#. Change Minimizer::Options::min_trust_region_radius to double.
+#. Update to compile with stricter gcc checks. (Joydeep Biswas)
+#. Do not modify cached CMAKE_CXX_FLAGS_RELEASE. (Sergey Sharybin)
+#. ``<iterator>`` needed for back_insert_iterator. (Petter Strandmark)
+#. Lint cleanup. (William Rucklidge)
+#. Documentation corrections. (Pablo Speciale)
+
+
 1.5.0
 =====
 

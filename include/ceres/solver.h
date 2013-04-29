@@ -351,9 +351,6 @@ class Solver {
     // deallocate the memory when destroyed.
     ParameterBlockOrdering* linear_solver_ordering;
 
-    // Note: This option only applies to the SPARSE_NORMAL_CHOLESKY
-    // solver when used with SUITE_SPARSE.
-
     // Sparse Cholesky factorization algorithms use a fill-reducing
     // ordering to permute the columns of the Jacobian matrix. There
     // are two ways of doing this.
