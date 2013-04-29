@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UKBe5S2M",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T22:40:56Z",
+      "side": 1,
+      "message": "Mention why; strength reduction of / to *",
+      "revId": "fae06aba92de9c5e45271142ee91a924e63781c9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
