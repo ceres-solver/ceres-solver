@@ -1,5 +1,5 @@
 Name:           ceres-solver
-Version:        1.5.0
+Version:        1.6.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
