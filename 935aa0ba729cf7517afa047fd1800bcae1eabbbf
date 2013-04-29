@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UKCn72bA",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKG53l.U",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKO6Kx6I",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2013-04-29T17:00:49Z",
       "side": 1,
       "message": "These two sentences should be one.",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKAnilf0",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKO6Kx6I",
       "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "UKOnkAQw",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKAn81fI",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKCkMOUg",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2013-04-29T17:00:49Z",
       "side": 1,
       "message": "#if defined(CERES_NO_CAMD) \u0026\u0026 !defined(CERES_NO_SUITESPARSE)",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKCkS.RY",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKCkMOUg",
       "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "UKKkFqck",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKKkf6Wo",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKGlg8eE",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2013-04-29T17:00:49Z",
       "side": 1,
       "message": "The ifdef logic is confusing. Can you do a error check block first instead?",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKOnawTw",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "what do you think now?",
+      "parentUuid": "UKGlg8eE",
       "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "UKCmouX8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKElIjXM",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKOksAZ0",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2013-04-29T17:00:49Z",
       "side": 1,
       "message": "Indent\n\n  #  else ...",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKEmt7Y4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKOksAZ0",
       "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "UKAm-9bk",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UKKk2Cek",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKKlNqXo",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 8
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "UKGmVUTc",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "I\u0027d rather add this in the cmake file rather than here. What do you think?",
+      "parentUuid": "UKKlNqXo",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UKCmZmcI",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 8
@@ -200,6 +380,24 @@
       "writtenOn": "2013-04-29T17:00:49Z",
       "side": 1,
       "message": "Does this need to go here? Usually headers should compile without too much #ifdefery, then you hide that stuff in the implementation.",
+      "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UKKm4Sbc",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-04-29T17:53:55Z",
+      "side": 1,
+      "message": "I wanted to prevent crash semantics.. but I can do that.",
+      "parentUuid": "UKCmZmcI",
       "revId": "935aa0ba729cf7517afa047fd1800bcae1eabbbf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
