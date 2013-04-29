@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UKPQluLY",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-04-29T18:17:21Z",
+      "side": 1,
+      "message": "Remove inserted blank.",
+      "revId": "6d3261b8b83ca0291e91038381bc9eed70940890",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
