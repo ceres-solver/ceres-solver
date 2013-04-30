@@ -334,7 +334,7 @@ void SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
              << "Ceres Solver was compiled with SuiteSparse "
              << "version 4.1.0 or less. Calling this function "
              << "in that case is a bug. Please contact the"
-             << "the Ceres Solver developers".
+             << "the Ceres Solver developers.";
 #endif
 }
 
