@@ -818,7 +818,7 @@ problems.
 
    .. math:: x' = \boxplus(x, \Delta x),
 
-   where :math:`x` has the same size as :math:`x`, and :math:`\Delta
+   where :math:`x'` has the same size as :math:`x`, and :math:`\Delta
    x` is of size less than or equal to :math:`x`. The function
    :math:`\boxplus`, generalizes the definition of vector
    addition. Thus it satisfies the identity
