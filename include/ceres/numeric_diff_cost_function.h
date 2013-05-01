@@ -36,8 +36,10 @@
 // To get an numerically differentiated cost function, you must define
 // a class with a operator() (a functor) that computes the residuals.
 //
-// The function must write the computed value in the last argument (the only
-// non-const one) and return true to indicate success.
+// The function must write the computed value in the last argument
+// (the only non-const one) and return true to indicate success.
+// Please see cost_function.h for details on how the return value
+// maybe used to impose simple constraints on the parameter block.
 //
 // For example, consider a scalar error e = k - x'y, where both x and y are
 // two-dimensional column vector parameters, the prime sign indicates

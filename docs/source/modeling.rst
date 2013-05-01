@@ -107,6 +107,24 @@ having to touch the problem once it has been successfuly modeling.
    :math:`i^{\textrm{th}}` parameter block must not be returned, this
    is the case when the a parameter block is marked constant.
 
+   **NOTE** The return value indicates whether the computation of the
+   residuals and/or jacobians was successful or not.
+
+   This can be used to communicate numerical failures in Jacobian
+   computations for instance.
+
+   A more interesting and common use is to impose constraints on the
+   parameters. If the initial values of the parameter blocks satisfy
+   the constraints, then returning false whenever the constraints are
+   not satisfied will prevent the solver from moving into the
+   infeasible region. This is not a very sophisticated mechanism for
+   enforcing constraints, but is often good enough for things like
+   non-negativity constraints.
+
+   Note that it is important that the initial values of the parameter
+   block must be feasible, otherwise the solver will declare a
+   numerical problem at iteration 0.
+
 
 :class:`SizedCostFunction`
 --------------------------
@@ -151,6 +169,9 @@ having to touch the problem once it has been successfuly modeling.
 
    The function must write the computed value in the last argument
    (the only non-``const`` one) and return true to indicate success.
+   Please see :class:`CostFunction` for details on how the return
+   value may be used to impose simple constraints on the parameter
+   block.
 
    For example, consider a scalar error :math:`e = k - x^\top y`,
    where both :math:`x` and :math:`y` are two-dimensional vector
@@ -257,7 +278,9 @@ having to touch the problem once it has been successfuly modeling.
    must define a class with a ``operator()`` (a functor) that computes
    the residuals. The functor must write the computed value in the
    last argument (the only non-``const`` one) and return ``true`` to
-   indicate success. e.g., an object of the form
+   indicate success.  Please see :class:`CostFunction` for details on
+   how the return value may be used to impose simple constraints on
+   the parameter block. e.g., an object of the form
 
    .. code-block:: c++
 
