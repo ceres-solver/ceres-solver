@@ -40,8 +40,11 @@
 // this is hidden, and you should write the function as if T were a scalar type
 // (e.g. a double-precision floating point number).
 //
-// The function must write the computed value in the last argument (the only
-// non-const one) and return true to indicate success.
+// The function must write the computed value in the last argument
+// (the only non-const one) and return true to indicate
+// success. Please see cost_function.h for details on how the return
+// value maybe used to impose simple constraints on the parameter
+// block.
 //
 // For example, consider a scalar error e = k - x'y, where both x and y are
 // two-dimensional column vector parameters, the prime sign indicates
