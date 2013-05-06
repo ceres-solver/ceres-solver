@@ -16,6 +16,41 @@
       "revId": "ac62696293063d71e097d7386efce211ce7fa19d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UShgoxVg",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-05-06T20:19:15Z",
+      "side": 1,
+      "message": "Recommend changing to:\n\n1%{?dist}",
+      "parentUuid": "USni.IfE",
+      "revId": "ac62696293063d71e097d7386efce211ce7fa19d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "USngtgWg",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-05-06T20:19:15Z",
+      "side": 1,
+      "message": "Update changelog comment line to match modified release string",
+      "revId": "ac62696293063d71e097d7386efce211ce7fa19d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
