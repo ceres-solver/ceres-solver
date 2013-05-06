@@ -997,12 +997,13 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   }
 
   if (IsSchurType(options->linear_solver_type)) {
-    if (!ReorderProgramForSchurTypeLinearSolver(options->linear_solver_type,
-                                                options->sparse_linear_algebra_library,
-                                                problem_impl->parameter_map(),
-                                                linear_solver_ordering,
-                                                transformed_program.get(),
-                                                error)) {
+    if (!ReorderProgramForSchurTypeLinearSolver(
+            options->linear_solver_type,
+            options->sparse_linear_algebra_library,
+            problem_impl->parameter_map(),
+            linear_solver_ordering,
+            transformed_program.get(),
+            error)) {
       return NULL;
     }
     return transformed_program.release();

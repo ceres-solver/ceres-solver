@@ -171,12 +171,13 @@ TEST(_, ScalarMatrixToBlockMatrix) {
 
   vector<int> block_rows;
   vector<int> block_cols;
-  CompressedColumnScalarMatrixToBlockMatrix(reinterpret_cast<const int*>(ccsm->i),
-                                            reinterpret_cast<const int*>(ccsm->p),
-                                            row_blocks,
-                                            col_blocks,
-                                            &block_rows,
-                                            &block_cols);
+  CompressedColumnScalarMatrixToBlockMatrix(
+      reinterpret_cast<const int*>(ccsm->i),
+      reinterpret_cast<const int*>(ccsm->p),
+      row_blocks,
+      col_blocks,
+      &block_rows,
+      &block_cols);
 
   EXPECT_EQ(block_cols.size(), expected_block_cols.size());
   EXPECT_EQ(block_rows.size(), expected_block_rows.size());

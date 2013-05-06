@@ -131,7 +131,8 @@ TEST_F(UnsymmetricLinearSolverTest, DenseNormalCholesky) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparsePreOrdering) {
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingSuiteSparsePreOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
@@ -139,7 +140,8 @@ TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparsePreOrder
   TestSolver(options);
 }
 
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparsePostOrdering) {
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingSuiteSparsePostOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
@@ -149,7 +151,8 @@ TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingSuiteSparsePostOrde
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparsePreOrdering) {
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingCXSparsePreOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
@@ -157,7 +160,8 @@ TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparsePreOrdering
   TestSolver(options);
 }
 
-TEST_F(UnsymmetricLinearSolverTest, SparseNormalCholeskyUsingCXSparsePostOrdering) {
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingCXSparsePostOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;

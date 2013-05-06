@@ -54,7 +54,7 @@
 // some confusion about a silent update to the tar ball, so we are
 // being conservative and choosing the next minor version where
 // things are stable.
-#if (SUITESPARSE_VERSION<4002)
+#if (SUITESPARSE_VERSION < 4002)
 #define CERES_NO_CAMD
 #endif
 

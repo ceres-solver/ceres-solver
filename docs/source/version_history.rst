@@ -48,6 +48,9 @@ New Features
 Bug Fixes
 ---------
 
+#. Update the documentation for ``CostFunction``.
+#. Fixed a typo in the documentation. (Pablo Speciale)
+#. Fix a typo in suitesparse.cc.
 #. Bugfix in ``NumericDiffCostFunction``. (Nicolas Brodu)
 #. Death to BlockSparseMatrixBase.
 #. Change Minimizer::Options::min_trust_region_radius to double.
