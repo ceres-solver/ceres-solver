@@ -142,34 +142,40 @@ TEST_F(SchurComplementSolverTest, DenseSchurWithLargeProblem) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseSmallProblemNoPostOrdering) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseSmallProblemNoPostOrdering) {
   ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITE_SPARSE, false);
   ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITE_SPARSE, false);
 }
 
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseSmallProblemPostOrdering) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseSmallProblemPostOrdering) {
   ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITE_SPARSE, true);
 }
 
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseLargeProblemNoPostOrdering) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseLargeProblemNoPostOrdering) {
   ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITE_SPARSE, false);
   ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITE_SPARSE, false);
 }
 
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseLargeProblemPostOrdering) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseLargeProblemPostOrdering) {
   ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITE_SPARSE, true);
 }
 #endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseSmallProblem) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseSmallProblem) {
   ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, SUITE_SPARSE, true);
 }
 
-TEST_F(SchurComplementSolverTest, SparseSchurWithSuiteSparseLargeProblem) {
+TEST_F(SchurComplementSolverTest,
+       SparseSchurWithSuiteSparseLargeProblem) {
   ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, SUITE_SPARSE, true);
 }

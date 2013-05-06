@@ -60,7 +60,8 @@ bool CXSparse::SolveCholesky(cs_di* A,
     if (scratch_size_ > 0) {
       cs_di_free(scratch_);
     }
-    scratch_ = reinterpret_cast<CS_ENTRY*>(cs_di_malloc(A->n, sizeof(CS_ENTRY)));
+    scratch_ =
+        reinterpret_cast<CS_ENTRY*>(cs_di_malloc(A->n, sizeof(CS_ENTRY)));
     scratch_size_ = A->n;
   }
 
@@ -71,8 +72,9 @@ bool CXSparse::SolveCholesky(cs_di* A,
     return false;
   }
 
-  // When the Cholesky factorization succeeded, these methods are guaranteed to
-  // succeeded as well. In the comments below, "x" refers to the scratch space.
+  // When the Cholesky factorization succeeded, these methods are
+  // guaranteed to succeeded as well. In the comments below, "x"
+  // refers to the scratch space.
   //
   // Set x = P * b.
   cs_di_ipvec(symbolic_factorization->pinv, b, scratch_, A->n);
@@ -129,18 +131,24 @@ cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
   vector<int> scalar_ordering;
   BlockOrderingToScalarOrdering(row_blocks, block_ordering, &scalar_ordering);
 
-  cs_dis* symbolic_factorization = reinterpret_cast<cs_dis*>(cs_calloc(1, sizeof(cs_dis)));
+  cs_dis* symbolic_factorization =
+      reinterpret_cast<cs_dis*>(cs_calloc(1, sizeof(cs_dis)));
   symbolic_factorization->pinv = cs_pinv(&scalar_ordering[0], A->n);
   cs* permuted_A = cs_symperm(A, symbolic_factorization->pinv, 0);
 
   symbolic_factorization->parent = cs_etree(permuted_A, 0);
   int* postordering = cs_post(symbolic_factorization->parent, A->n);
-  int* column_counts = cs_counts(permuted_A, symbolic_factorization->parent, postordering, 0);
+  int* column_counts = cs_counts(permuted_A,
+                                 symbolic_factorization->parent,
+                                 postordering,
+                                 0);
   cs_free(postordering);
   cs_spfree(permuted_A);
 
   symbolic_factorization->cp = (int*) cs_malloc(A->n+1, sizeof(int));
-  symbolic_factorization->lnz = cs_cumsum(symbolic_factorization->cp, column_counts, A->n);
+  symbolic_factorization->lnz = cs_cumsum(symbolic_factorization->cp,
+                                          column_counts,
+                                          A->n);
   symbolic_factorization->unz = symbolic_factorization->lnz;
 
   cs_free(column_counts);
