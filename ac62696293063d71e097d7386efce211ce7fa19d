@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "USni.IfE",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-05-06T19:25:33Z",
+      "side": 1,
+      "message": "This will work, but there\u0027s a strong convention for Release numbers to be integer numbers. The x.y.z is more of a hack to work around the non-lexical ordering of RC Version strings.",
+      "revId": "ac62696293063d71e097d7386efce211ce7fa19d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
