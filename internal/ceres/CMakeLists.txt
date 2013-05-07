@@ -38,6 +38,7 @@ SET(CERES_INTERNAL_SRC
     block_random_access_sparse_matrix.cc
     block_sparse_matrix.cc
     block_structure.cc
+    c_api.cc
     canonical_views_clustering.cc
     cgnr_solver.cc
     compressed_row_jacobian_writer.cc
