@@ -43,6 +43,10 @@ TARGET_LINK_LIBRARIES(powell ceres)
 ADD_EXECUTABLE(curve_fitting curve_fitting.cc)
 TARGET_LINK_LIBRARIES(curve_fitting ceres)
 
+ADD_EXECUTABLE(curve_fitting_c curve_fitting.c)
+TARGET_LINK_LIBRARIES(curve_fitting_c ceres)
+
+
 ADD_EXECUTABLE(robust_curve_fitting robust_curve_fitting.cc)
 TARGET_LINK_LIBRARIES(robust_curve_fitting ceres)
 
