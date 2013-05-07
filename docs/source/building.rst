@@ -50,10 +50,10 @@ significantly faster than ``CXSparse``.
 
 7. `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
 <http://www.netlib.org/lapack/>`_ routines are needed by
-SuiteSparse. We recommend either `GotoBlas2
-<http://www.tacc.utexas.edu/tacc- projects/gotoblas2>`_ or `ATLAS
-<http://math- atlas.sourceforge.net/>`_ , both of which ship with BLAS
-and LAPACK routines.
+SuiteSparse. We recommend either `OpenBLAS
+<http://xianyi.github.io/OpenBLAS/>`_ or `ATLAS <http://math-
+atlas.sourceforge.net/>`_, both of which ship with BLAS and LAPACK
+routines.
 
 8. `protobuf <http://code.google.com/p/protobuf/>`_ is used for
 serializing and deserializing linear least squares problems to
@@ -83,6 +83,8 @@ platform. Start by installing all the dependencies.
      ./configure --with-gflags=/usr/local/
      make
      sudo make install
+     # BLAS & LAPACK
+     sudo apt-get install libopenblas-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
      # SuiteSparse and CXSparse
@@ -95,10 +97,10 @@ the exact path to the ``libglog.a`` and ``libgflag.a``.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.5.0.tar.gz
+ tar zxf ceres-solver-1.6.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.5.0
+ cmake ../ceres-solver-1.6.0
  make -j3
  make test
 
@@ -109,7 +111,7 @@ dataset [Agarwal]_.
 .. code-block:: bash
 
  bin/simple_bundle_adjuster \
-   ../ceres-solver-1.5.0/data/problem-16-22106-pre.txt \
+   ../ceres-solver-1.6.0/data/problem-16-22106-pre.txt \
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -171,7 +173,10 @@ Building on Mac OS X
 
 On OS X, we recommend using the `homebrew
 <http://mxcl.github.com/homebrew/>`_ package manager. Start by
-installing all the dependencies.
+installing all the dependencies. OS X ships with well optimized BLAS
+and LAPACK routines as part of the `vecLib
+<https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
+framework.
 
 .. code-block:: bash
 
@@ -179,7 +184,7 @@ installing all the dependencies.
       brew install cmake
       # google-glog and gflags
       brew install glog
-      # Eigen2
+      # Eigen3
       brew install eigen
       # SuiteSparse and CXSparse
       brew install suite-sparse
@@ -191,10 +196,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.5.0.tar.gz
+   tar zxf ceres-solver-1.6.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.5.0
+   cmake ../ceres-solver-1.6.0
    make -j3
    make test
 
