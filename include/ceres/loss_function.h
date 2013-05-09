@@ -75,10 +75,10 @@
 #ifndef CERES_PUBLIC_LOSS_FUNCTION_H_
 #define CERES_PUBLIC_LOSS_FUNCTION_H_
 
-#include <glog/logging.h>
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
