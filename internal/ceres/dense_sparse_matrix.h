@@ -33,7 +33,6 @@
 #ifndef CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_DENSE_SPARSE_MATRIX_H_
 
-#include <glog/logging.h>
 #include "ceres/sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/macros.h"

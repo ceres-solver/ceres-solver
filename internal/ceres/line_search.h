@@ -35,7 +35,6 @@
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
 
-#include <glog/logging.h>
 #include <vector>
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"

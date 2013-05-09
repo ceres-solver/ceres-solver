@@ -34,13 +34,14 @@
 
 #include "ceres/dense_sparse_matrix.h"
 
-#include "gtest/gtest.h"
 #include "ceres/casts.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {

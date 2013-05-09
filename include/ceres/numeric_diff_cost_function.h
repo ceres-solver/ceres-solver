@@ -148,13 +148,13 @@
 #ifndef CERES_PUBLIC_NUMERIC_DIFF_COST_FUNCTION_H_
 #define CERES_PUBLIC_NUMERIC_DIFF_COST_FUNCTION_H_
 
-#include <glog/logging.h>
 #include "Eigen/Dense"
 #include "ceres/cost_function.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 

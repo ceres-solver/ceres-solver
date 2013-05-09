@@ -35,6 +35,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {

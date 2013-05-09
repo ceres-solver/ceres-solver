@@ -31,12 +31,11 @@
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
 #include "ceres/line_search.h"
 
-#include <glog/logging.h>
 #include "ceres/fpclassify.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/polynomial.h"
-
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
