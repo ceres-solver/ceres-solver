@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UaD0XRWM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "no use of scoped_ptr in this file.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaP0c7Yk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "It seems you should perhaps have a BundleProblem object? which carries various a bunch of this stuff relating to indexing and reasoning and constructing the ceres problem instead of spread out functions..\n\njust a thought.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaD1pBfg",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "see comment about const and non-const parameters and ordering in google style guide.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaH2SnRA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "all_markers should be const reference since it is not modified \nalso inputs come before outputs.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaN2ACbQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "const int for both arguments.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaP02rVI",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "consider adding the same flag support as there is in bundle_adjuster.cc so that different options can be played with.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaB00QUk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "what is a modal solver?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaD0xBVk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "constant_translation",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaF2N2e0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "constant_translation_parameterization",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaP19zfA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "explicit comparison to null.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaB2LYdY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "is it possible that this may actually happen?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaL1zVRw",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "confusingly named variables, where the \"s\" is hidden in the middle of the variable name.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaN2KyaI",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "how about camera_extrinsics instead of R_t to go with camera_intrinsics.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaP2HjZc",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "use braces",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaD2S5dk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "are being refined.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaL1dFWA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "why not have a parameter block of size 7 then?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaN1x6eQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "wow you are using all the advanced stuff :)",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaP1Pjeg",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "I would keep this simple and only have support for one problem at a time. Adding a loop does not add anything to the functionality of this binary.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaB1dIaM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "braces for the eff statement.\n\nbtw this way of enforcing no intrinsics is  both a bit odd and a bit fragile.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UaJ0gUQk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-10T16:38:29Z",
+      "side": 1,
+      "message": "why does this function take all these arguments if you are not doing anything with the resulting arguments? is it because the function itself is a copy from the original code and it has this signature?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
