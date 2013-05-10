@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UeugEM10",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "indeed in final version of bundler we don\u0027t need scoped_ptr. Will zap it from blender as well. Good catch :)",
+      "parentUuid": "UaD0XRWM",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaP0c7Yk",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-10T16:38:29Z",
       "side": 1,
       "message": "It seems you should perhaps have a BundleProblem object? which carries various a bunch of this stuff relating to indexing and reasoning and constructing the ceres problem instead of spread out functions..\n\njust a thought.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UegihhzU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "Well, in libmv it\u0027s a bit more complicated. We\u0027ve got class called Tracks to manage 2D tracks and do have Reconstruction class. They\u0027ve got quite a enough methods not used by this particular application.\n\nSo, could see three ways:\n- Wrapping all the functions into a Bundler class.\n- Using libmv\u0027s Tracks and Reconstruction classes.\n- Leave it as is.\n\nWhatever you\u0027ll think work best.",
+      "parentUuid": "UaP0c7Yk",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "UeiimS04",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "Modal solver is a common name for degenerate motion solver. Examples are tripod camera motion (which we support in blender) and kind of \"dolly\" motion when all the features on the same plane (also used in VFX, but wasn\u0027t so much important for us yet, so is not supported in blender/libmv).",
+      "parentUuid": "UaB00QUk",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaD0xBVk",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -183,6 +237,24 @@
       "writtenOn": "2013-05-10T16:38:29Z",
       "side": 1,
       "message": "is it possible that this may actually happen?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UekirfxU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "Yes if we\u0027ll ever add non-final problem (as in in the middle of resection process). In this case some cameras/points still could be not reconstructed and will no need to bundling them.\n\nAlso, if some points failed to be reconstructed (moved behind the camera because of bad motion or bad keyframe selection) such a NULL will happen.",
+      "parentUuid": "UaB2LYdY",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -274,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "UemiwQ4E",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "This is rather complex answer.\n\nBack to SSBA days we couldn\u0027t have been refine K3 distortion parameter, but it was possible to set it manually in the interface (using manual calibration). So you need K3 for correct point reprojection, but there\u0027s no option in the interface to refine K3 during bundling.\n\nCurrent parameter block/parameterization matches this. But it\u0027s possible to support K3 refining and that\u0027s what shall be done actually instead of shrinking parameter block. For now it was just harmless and not priority to implement K3 refining..",
+      "parentUuid": "UaL1dFWA",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaN1x6eQ",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -285,6 +375,24 @@
       "writtenOn": "2013-05-10T16:38:29Z",
       "side": 1,
       "message": "wow you are using all the advanced stuff :)",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UeoiUl9k",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "Yep, and it works just awesome :)",
+      "parentUuid": "UaN1x6eQ",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -325,6 +433,24 @@
     },
     {
       "key": {
+        "uuid": "UeqiRW.g",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "We could store a flag in the problem file about whether refining is needed instead of such a guess.",
+      "parentUuid": "UaB1dIaM",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaJ0gUQk",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -336,6 +462,24 @@
       "writtenOn": "2013-05-10T16:38:29Z",
       "side": 1,
       "message": "why does this function take all these arguments if you are not doing anything with the resulting arguments? is it because the function itself is a copy from the original code and it has this signature?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uesiej-c",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-10T19:21:29Z",
+      "side": 1,
+      "message": "Signature is a bit different in libmv. It uses Tracks and Reconstruction classes, as described above. And this function does change cameras and points vectors. We could add average reprojection error before/after bundling to show how it worked. Could also dump refined cameras/points to file/screen? Whatever we want. Just the thing is -- after EuclideanBundleCommonIntrinsics we\u0027ve got refined camera_intrinsics, cameras and points. Only all_markers are not changing, but used for reprojection error calculation.",
+      "parentUuid": "UaJ0gUQk",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
