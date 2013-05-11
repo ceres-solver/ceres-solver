@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "UaCjinv0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "2013 only",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaD0XRWM",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -66,6 +83,92 @@
       "side": 1,
       "message": "Well, in libmv it\u0027s a bit more complicated. We\u0027ve got class called Tracks to manage 2D tracks and do have Reconstruction class. They\u0027ve got quite a enough methods not used by this particular application.\n\nSo, could see three ways:\n- Wrapping all the functions into a Bundler class.\n- Using libmv\u0027s Tracks and Reconstruction classes.\n- Leave it as is.\n\nWhatever you\u0027ll think work best.",
       "parentUuid": "UaP0c7Yk",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiGzlIM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "I think the functions are not so bad; it\u0027s clear what is acting on what.",
+      "parentUuid": "UegihhzU",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UisGAWIY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Is this true anymore? Or is everything supported now?",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiqGFZJQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Probably should put a comment on tangential and radial that they are combined RADIAL_K1 and RADIAL_K2, etc.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UimGIbKo",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioGLgKc",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Braces everywhere",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -205,6 +308,24 @@
       "writtenOn": "2013-05-11T12:15:37Z",
       "side": 1,
       "message": "Oki, but rather do it when all the rest issues are solved.",
+      "parentUuid": "UaP02rVI",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiGctPw",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Let\u0027s not do that in this patch. If we want the equivalent of \"options from flags\" then let\u0027s make that a separate patch that splits out the fairly involved option parsing in bundle_adjuster, and makes it available as options_from_flags.cc or something.",
       "parentUuid": "UaP02rVI",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
@@ -457,6 +578,41 @@
     },
     {
       "key": {
+        "uuid": "UiuHMfBM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "I agree with Sergey here. R_t is pretty clear, no?",
+      "parentUuid": "UktBknPY",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UisHBeNk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Weird wrapping; reflow",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaP2HjZc",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -492,6 +648,24 @@
     },
     {
       "key": {
+        "uuid": "UiqHGhO0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "In libmv, and also ceres, the rule is to use braces always even if it is optional. e.g.\n\nNo:\n\n  if (x)\n    y()\n\nYes\n\n  if (x) {\n    y()\n  }",
+      "parentUuid": "UkrBZGEU",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaD2S5dk",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -521,6 +695,23 @@
       "side": 1,
       "message": "Oh, my english grammar which is always bad :) Done.",
       "parentUuid": "UaD2S5dk",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioG8oFU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "Set the camera intrinsics that are not to be bundled as constant using some macro trickery.",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -661,6 +852,24 @@
       "side": 1,
       "message": "We could store a flag in the problem file about whether refining is needed instead of such a guess.",
       "parentUuid": "UaB1dIaM",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UimG5jGM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T19:10:13Z",
+      "side": 1,
+      "message": "I suspect adding a flag for \"measurements_normalized\" or similar to the file is good. The code can chose to ignore it or not, but by default it can e.g. disable intrinsics refinement.",
+      "parentUuid": "UeqiRW.g",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
