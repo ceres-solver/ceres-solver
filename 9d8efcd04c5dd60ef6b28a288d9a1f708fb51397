@@ -1,0 +1,531 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UisHzuF0",
+        "filename": "data/libmv-ba-problems/Readme.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Capitalization",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiqH4xDo",
+        "filename": "data/libmv-ba-problems/Readme.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Maybe mention if they are camera or object tracks?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioEO4H0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Just 2013",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UimELzG8",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "The bundle problem file format is as follows:",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UikEIyHA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "if -\u003e is",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiEF1FY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Separated by a space? Or a comma?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UigGhsDU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Starting at zero, with no breaks?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiuGlnEE",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "point",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UisGqmBE",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Are some of the bundle problems in normalized coordinates?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioGVwNU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Put system headers first, then ceres",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiqGvpB8",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Alignment",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UikGfqPM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "80 columns\n\n\\a?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UigFeUF0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Indentation. If it doesn\u0027t fit on 80 cols, whrapped args are 4-space indented.",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiuFiPBk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Add braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UisFXOD0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioFyYOc",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "This appears to read in row major order?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UimFvTP8",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "the given file",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UisFOGKE",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiqFTJEk",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioE5QP8",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiFANGY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UigEsELU",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UimEdDIM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "There is some motivation to use if statements with checks for zero for e.g. any of k1k2k3, or any of p1p2.\n\nIf they\u0027re zero, a bunch of Jet eval time can get saved by skipping the distortion computation, which is fairly expensive.",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiEXFGM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "translation",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uiqz52wc",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Include braces in the if. Why are the braces outside the if?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uisz0DxA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "What is the void0 for?",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiiwG6ys",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "intrniisics? Spelling",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiqwQu10",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Indentation; should be 4 spaces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UigwSB2k",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UiowmF8E",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Indentation; should be 4 spaces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uimwjw7I",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-11T20:16:41Z",
+      "side": 1,
+      "message": "Braces",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
