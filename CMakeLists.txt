@@ -614,7 +614,17 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
     ENDIF (${BUILD_ANDROID})
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
   IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    SET(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -O4")
+    # Use of -O4 requires use of gold linker & LLVM-gold plugin, which might 
+    # well not be present / in use and without which files will compile, but 
+    # not link ('file not recognized') so explicitly check for support
+    INCLUDE(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("-O4" HAVE_LTO_SUPPORT)
+    IF (HAVE_LTO_SUPPORT)
+      MESSAGE(STATUS "Enabling link-time optimization (-O4)")
+      SET(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -O4")
+    ELSE()
+      MESSAGE(STATUS "Compiler/linker does not support link-time optimization (-O4), disabling.")
+    ENDIF (HAVE_LTO_SUPPORT)
   ENDIF()
 ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
 
