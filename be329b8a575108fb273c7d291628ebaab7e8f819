@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "UkjDvaOc",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "In blender this is still true. No way you could refine other combinations. No actual reason for this from math side, but didn\u0027t check on whether just passing any combination will work flawlessly.",
+      "parentUuid": "UisGAWIY",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UiqGFZJQ",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -135,6 +153,24 @@
       "writtenOn": "2013-05-11T19:10:13Z",
       "side": 1,
       "message": "Probably should put a comment on tangential and radial that they are combined RADIAL_K1 and RADIAL_K2, etc.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UkhDsZO4",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Yes. Code from libmv, belongs to one my friend from SF ;)",
+      "parentUuid": "UiqGFZJQ",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -158,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "UkvAXoAY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "UimGIbKo",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UioGLgKc",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -169,6 +223,24 @@
       "writtenOn": "2013-05-11T19:10:13Z",
       "side": 1,
       "message": "Braces everywhere",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UktAcnC0",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "UioGLgKc",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -327,6 +399,24 @@
       "side": 1,
       "message": "Let\u0027s not do that in this patch. If we want the equivalent of \"options from flags\" then let\u0027s make that a separate patch that splits out the fairly involved option parsing in bundle_adjuster, and makes it available as options_from_flags.cc or something.",
       "parentUuid": "UaP02rVI",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UkrARGBQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Agreed :)",
+      "parentUuid": "UiiGctPw",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -613,6 +703,24 @@
     },
     {
       "key": {
+        "uuid": "UklAJzOQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Aha, reflowed. Into single line since it\u0027s \u003c80 :)",
+      "parentUuid": "UisHBeNk",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaP2HjZc",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -666,6 +774,24 @@
     },
     {
       "key": {
+        "uuid": "UkpAWFAg",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Same as GNU style. Got it.",
+      "parentUuid": "UiqHGhO0",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaD2S5dk",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -712,6 +838,24 @@
       "writtenOn": "2013-05-11T19:10:13Z",
       "side": 1,
       "message": "Set the camera intrinsics that are not to be bundled as constant using some macro trickery.",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UknAM0PY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T07:39:00Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "UioG8oFU",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
