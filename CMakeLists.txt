@@ -614,7 +614,13 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
     ENDIF (${BUILD_ANDROID})
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
   IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    SET(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -O4")
+    # -O4 requires bitcode support, which requires the gold linker (with plugin
+    # support) and the LLVM gold plugin, without which linking will fail with
+    # 'file format not recognised', these options are not defaults on standard
+    # LLVM/Clang package installs for linux.
+    IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+      SET(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -O4")
+    ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   ENDIF()
 ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
 
