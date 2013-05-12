@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UigcjAIA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T10:06:45Z",
+      "side": 1,
+      "message": "normalized or image (pixels).",
+      "revId": "7086634dda9ed20db64543aaeae508368afa8306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uiucn7Ic",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T10:06:45Z",
+      "side": 1,
+      "message": "image space _the_ line after _the_ number of markers",
+      "revId": "7086634dda9ed20db64543aaeae508368afa8306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uiscs6G4",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T10:06:45Z",
+      "side": 1,
+      "message": "Incomplete sentence",
+      "revId": "7086634dda9ed20db64543aaeae508368afa8306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uimc0-LI",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T10:06:45Z",
+      "side": 1,
+      "message": "Fix column alignment",
+      "revId": "7086634dda9ed20db64543aaeae508368afa8306",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
