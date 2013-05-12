@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UkrB1mEM",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T19:23:16Z",
+      "side": 1,
+      "message": "Ouch, indeed. Guess will save lots of CPU ticks sending pointer here rather then duplicating objects on every call..\n\nmade it const T \u0026 for all inputs.",
+      "parentUuid": "UikeLONY",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Uikf.mFQ",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "UkpB6lDE",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T19:23:16Z",
+      "side": 1,
+      "message": "Oh, don\u0027t use copy-paste :)\n\nDone.",
+      "parentUuid": "Uikf.mFQ",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Uiif7pGQ",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2013-05-12T18:40:37Z",
       "side": 1,
       "message": "document the reasoning here.",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UknBwUFA",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T19:23:16Z",
+      "side": 1,
+      "message": "Added fuller explanation here.",
+      "parentUuid": "Uiif7pGQ",
       "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
