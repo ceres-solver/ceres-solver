@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UikeLONY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-12T18:40:37Z",
+      "side": 1,
+      "message": "const T\u0026 for all the input parameters?",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uikf.mFQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-12T18:40:37Z",
+      "side": 1,
+      "message": "blender_problem",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uiif7pGQ",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-12T18:40:37Z",
+      "side": 1,
+      "message": "document the reasoning here.",
+      "revId": "33e7464528cfc306f38ff39b429a83109cd58658",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
