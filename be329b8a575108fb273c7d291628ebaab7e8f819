@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UklC-jLg",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T10:30:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "UaCjinv0",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UaD0XRWM",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 1
@@ -1014,6 +1032,24 @@
       "side": 1,
       "message": "I suspect adding a flag for \"measurements_normalized\" or similar to the file is good. The code can chose to ignore it or not, but by default it can e.g. disable intrinsics refinement.",
       "parentUuid": "UeqiRW.g",
+      "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UkjC8CMI",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-12T10:30:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "UimG5jGM",
       "revId": "be329b8a575108fb273c7d291628ebaab7e8f819",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
