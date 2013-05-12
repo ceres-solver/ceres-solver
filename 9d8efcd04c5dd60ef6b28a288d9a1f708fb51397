@@ -526,6 +526,40 @@
       "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uisynb68",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T05:43:45Z",
+      "side": 1,
+      "message": "for -\u003e to",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uimy-Q7k",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T05:43:45Z",
+      "side": 1,
+      "message": "use braces {}\u0027s always",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
