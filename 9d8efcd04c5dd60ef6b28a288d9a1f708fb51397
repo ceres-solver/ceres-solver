@@ -912,6 +912,24 @@
     },
     {
       "key": {
+        "uuid": "UimdRnBY",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-12T07:50:07Z",
+      "side": 1,
+      "message": "Interesting; nice trick.",
+      "parentUuid": "UklBbDAk",
+      "revId": "9d8efcd04c5dd60ef6b28a288d9a1f708fb51397",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UiiwG6ys",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 2
