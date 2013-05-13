@@ -47,6 +47,8 @@ SET(CERES_INTERNAL_SRC
     conjugate_gradients_solver.cc
     coordinate_descent_minimizer.cc
     corrector.cc
+    covariance.cc
+    covariance_impl.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
@@ -249,6 +251,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(conditioned_cost_function)
   CERES_TEST(corrector)
   CERES_TEST(cost_function_to_functor)
+  CERES_TEST(covariance_impl)
   CERES_TEST(dense_sparse_matrix)
   CERES_TEST(dynamic_autodiff_cost_function)
   CERES_TEST(evaluator)
