@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Uil.2XHM",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "add a comment about the difference from curve_fitting.cc\n\nalso I am not a huge fan of having curve_fitting.cc and curve_fitting.c .. but I don\u0027t have a better suggestion.",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uit.ALIY",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "maybe worth refactoring into a separate file? and making the two curve_fitting.cc and curve_fitting.c files smaller?",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uih9epF0",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "function documentation.",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uiv9i0Bg",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "explicitly compare to NULL here and below.",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Uij9ASGY",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "will it be practical to do this with python embedding etc?",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UigKUC4k",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "blank before",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UioKgG94",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "do the problem cast first and then the rest of the stuff.",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UikKqA74",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-13T18:04:00Z",
+      "side": 1,
+      "message": "Returning summary may be an even bigger pain..",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
