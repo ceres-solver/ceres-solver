@@ -47,6 +47,7 @@ SET(CERES_INTERNAL_SRC
     conjugate_gradients_solver.cc
     coordinate_descent_minimizer.cc
     corrector.cc
+    covariance.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
@@ -86,6 +87,7 @@ SET(CERES_INTERNAL_SRC
     scratch_evaluate_preparer.cc
     solver.cc
     solver_impl.cc
+    sparse_covariance.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
     split.cc
@@ -279,6 +281,7 @@ IF (${BUILD_TESTING} AND ${GFLAGS})
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
+  CERES_TEST(sparse_covariance)
   CERES_TEST(solver_impl)
 
   # TODO(sameeragarwal): This test should ultimately be made

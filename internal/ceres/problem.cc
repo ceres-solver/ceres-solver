@@ -207,10 +207,12 @@ int Problem::NumResiduals() const {
 }
 
 int Problem::ParameterBlockSize(double* parameter_block) const {
+  CHECK_NOTNULL(problem_impl_.get());
   return problem_impl_->ParameterBlockSize(parameter_block);
 };
 
 int Problem::ParameterBlockLocalSize(double* parameter_block) const {
+  CHECK_NOTNULL(problem_impl_.get());
   return problem_impl_->ParameterBlockLocalSize(parameter_block);
 };
 
