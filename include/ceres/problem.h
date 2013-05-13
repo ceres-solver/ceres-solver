@@ -423,6 +423,7 @@ class Problem {
 
  private:
   friend class Solver;
+  friend class Covariance;
   internal::scoped_ptr<internal::ProblemImpl> problem_impl_;
   CERES_DISALLOW_COPY_AND_ASSIGN(Problem);
 };
