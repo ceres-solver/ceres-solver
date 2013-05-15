@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "Ut1FUVAc",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5195
+      },
+      "writtenOn": "2013-05-15T22:58:18Z",
+      "side": 1,
+      "message": "bool",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UprFXwj0",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 7
@@ -47,6 +64,23 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "No error message? Would we want one?\n\nDocument interface, state space of Covariance maybe.\n\nI wonder if it is the case that a class here provides value. Is there a good reason not to use:\n\n  bool ComputeCovarianceForBlocks(\n      const Options\u0026 options,\n      const vector\u003cpair\u003cdouble*, double*\u003e \u003e\u0026 covariance_blocks,\n      Problem* problem,\n      vector\u003cdouble*\u003e *covariance_blocks);",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut5GYfMA",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5195
+      },
+      "writtenOn": "2013-05-15T22:58:18Z",
+      "side": 1,
+      "message": "const for the first 2 arguments and for the function ?",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
