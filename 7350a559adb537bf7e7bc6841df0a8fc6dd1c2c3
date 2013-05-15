@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UpvFdSmE",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "Since this is the public API this should have real documentation.\n\nIt\u0027d be nice to discuss some of the mathematical details as well.",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UplGS-to",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "Code-in-comments should get indented 2 more",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UprFXwj0",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "No error message? Would we want one?\n\nDocument interface, state space of Covariance maybe.\n\nI wonder if it is the case that a class here provides value. Is there a good reason not to use:\n\n  bool ComputeCovarianceForBlocks(\n      const Options\u0026 options,\n      const vector\u003cpair\u003cdouble*, double*\u003e \u003e\u0026 covariance_blocks,\n      Problem* problem,\n      vector\u003cdouble*\u003e *covariance_blocks);",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpjFsEgg",
+        "filename": "internal/ceres/covariance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "ordering",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UplFpnvY",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "Do these need to be nonconst?",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpvFEaoM",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "Instead of this original stuff, just swap the parameters\n\n  if (parameter_block1 \u003e parameter_block2) {\n    std::swap(parameter_block1, parameter_block2);\n  }",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpsNZZUQ",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "\u003d on previous line",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpuNe4Sk",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "\u003d on previous line",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpoNUvQg",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "I believe constant parameter blocks should be excluded.",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpqNRuRg",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "To some extent, you\u0027re already friendly with the problemimpl; why not reach into the program itself? This adds a pile of map lookups that are avoidable.",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpkNOtXY",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "cute",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpmNLsWU",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "And? Incomplete, or at least less useful, comment.",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UpsOYhcE",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-15T10:30:10Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
