@@ -54,7 +54,7 @@ ADD_EXECUTABLE(simple_bundle_adjuster
                simple_bundle_adjuster.cc)
 TARGET_LINK_LIBRARIES(simple_bundle_adjuster ceres)
 
-IF (${GFLAGS})
+IF (GFLAGS)
   ADD_EXECUTABLE(nist nist.cc)
   TARGET_LINK_LIBRARIES(nist ceres)
 
@@ -70,5 +70,5 @@ IF (${GFLAGS})
                  denoising.cc
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres)
-ENDIF (${GFLAGS})
+ENDIF (GFLAGS)
 
