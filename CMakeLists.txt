@@ -473,7 +473,7 @@ IF (${OPENMP})
   FIND_PACKAGE(OpenMP)
 ENDIF (${OPENMP})
 
-IF(${OPENMP_FOUND})
+IF(OPENMP_FOUND)
   MESSAGE("-- Found OpenMP.")
   ADD_DEFINITIONS(-DCERES_USE_OPENMP)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
@@ -491,7 +491,7 @@ IF(${OPENMP_FOUND})
 ELSE(${OPENMP_FOUND})
   MESSAGE("-- Can't find OpenMP. Disabling multithreading.")
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
-ENDIF(${OPENMP_FOUND})
+ENDIF(OPENMP_FOUND)
 
 # Disable threads in mutex.h. Someday, after there is OpenMP support in
 # Android, this can get removed. Also turn on a workaround for an NDK bug.

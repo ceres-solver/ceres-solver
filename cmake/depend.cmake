@@ -52,7 +52,7 @@ OPTION(GFLAGS
        "Enable Google Flags."
        ON)
 
-IF (${GFLAGS})
+IF (GFLAGS)
   MESSAGE("-- Check for Google Flags")
   FIND_LIBRARY(GFLAGS_LIB NAMES gflags PATHS ${SEARCH_LIBS})
   IF (NOT EXISTS ${GFLAGS_LIB})
