@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "Utx8gE6M",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpvFdSmE",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UplGS-to",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "Code-in-comments should get indented 2 more",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Utz8dz3E",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UplGS-to",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "Ut984S98",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "oops.",
+      "parentUuid": "Ut1FUVAc",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UprFXwj0",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "No error message? Would we want one?\n\nDocument interface, state space of Covariance maybe.\n\nI wonder if it is the case that a class here provides value. Is there a good reason not to use:\n\n  bool ComputeCovarianceForBlocks(\n      const Options\u0026 options,\n      const vector\u003cpair\u003cdouble*, double*\u003e \u003e\u0026 covariance_blocks,\n      Problem* problem,\n      vector\u003cdouble*\u003e *covariance_blocks);",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut-89B8w",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "see documentation and usage above.",
+      "parentUuid": "UprFXwj0",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "Ut59Cw1M",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Ut5GYfMA",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpjFsEgg",
         "filename": "internal/ceres/covariance.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "ordering",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut18tO5U",
+        "filename": "internal/ceres/covariance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpjFsEgg",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "Ut38qd4A",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UplFpnvY",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpvFEaoM",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "Instead of this original stuff, just swap the parameters\n\n  if (parameter_block1 \u003e parameter_block2) {\n    std::swap(parameter_block1, parameter_block2);\n  }",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Utx83s.c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpvFEaoM",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "Ut99f6yc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpsNZZUQ",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpuNe4Sk",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 7
@@ -166,6 +328,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "\u003d on previous line",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut-9kJ-Y",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpuNe4Sk",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "Ut19UWwc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Good point. This is actually a bug, but it will require more complicated handling. Let me add a warning about this in the docs and a todo here. and then come back to it?",
+      "parentUuid": "UpoNUvQg",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpqNRuRg",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 7
@@ -200,6 +398,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "To some extent, you\u0027re already friendly with the problemimpl; why not reach into the program itself? This adds a pile of map lookups that are avoidable.",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut79enyg",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "I will still have to go from double* to parameterblock*",
+      "parentUuid": "UpqNRuRg",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "Utz9Lj2Y",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "UpkNOtXY",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpmNLsWU",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 7
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "Ut9.OC3s",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpmNLsWU",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UpsOYhcE",
         "filename": "internal/ceres/covariance_impl.h",
         "patchSetId": 7
@@ -251,6 +503,24 @@
       "writtenOn": "2013-05-15T10:30:10Z",
       "side": 1,
       "message": "Delete?",
+      "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut-.Tx6E",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-16T07:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UpsOYhcE",
       "revId": "7350a559adb537bf7e7bc6841df0a8fc6dd1c2c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
