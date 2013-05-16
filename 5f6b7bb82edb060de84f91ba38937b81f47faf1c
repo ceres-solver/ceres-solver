@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Ut9.gSzQ",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-16T17:30:30Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about calling this covariance, which to me suggests it can be used as an estimate of uncertainty in a statistical context.  I might think it lets me bound the uncertainty of the final solution, for example.\n\nAs far as I can tell this will only be covariance useful for statistical if f(x) is a dimensionless error, and even then only if the error distributions are all standard normals.   If the error distributions are not standard normal, then the resulting C(x*) will not be a covariance that can be used to derive uncertainty information.\n\nPossibly this class should be named to indicate that it computes the inverse-Jacobian-derivative, or cost-function-curvature, or whatever it is actually computing.  Then the comments can indicate how it can be used with an appropriately defined cost function to provide a covariance estimate.",
+      "revId": "5f6b7bb82edb060de84f91ba38937b81f47faf1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Utz.c7-w",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-16T17:30:30Z",
+      "side": 1,
+      "message": "I would like the user to have to worry less about getting the various block sizes all coordinated correctly and get more help and checks from the compiler.\n\nAny chance we can define these like\n  double covariance_xx[3][3];\n\nthen use templates to infer the dimensions of the arguments, and CHECK these dimensions against the runtime size of the parameter blocks to make sure the arguments supplied are consistent with the sizes of those blocks?\n\nThat failing, can we pass in an empty\n  vector\u003cvector\u003cdouble\u003e\u003e covariance_xx;\n\nand have the method size and fill in the data so that the client gets additional bounds checking?  I don\u0027t think the data structure management should be a performance critical piece here, so it should be okay to use something slower but safer.",
+      "revId": "5f6b7bb82edb060de84f91ba38937b81f47faf1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Utz9pT-g",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-16T17:30:30Z",
+      "side": 1,
+      "message": "I suppose you will change the parenthetical comment once the situation becomes clear.\n\nAs per my previous comments, I believe the computation can only be interpreted as a statistical covariance if the distributions of the error function components are standard normals.  They probably have to be uncorrelated as well, but let\u0027s start with first things first.\n\nAs far as I can tell a properly chosen loss function will result in a \"shaped error\" distribution which is normal.  If it is also scaled properly, the shaped error function after scaling and application of loss function should be standard normal.  Strictly speaking, correlations would also have to be removed, but at the least we need proper scaling and shaping to get started.  \n\nSo the covariance would be most meaningful applied to the values after the loss function is applied, not before.   A single, huge, outlier in otherwise good data will affect the covariance estimate and possibly dominate if it is computed using plain errors, which seems inappropriate, because as an outlier, we wish to discard it completely.  By computing covariance on errors after shaping with loss functions, the outlier will have a small or negligible effect, and the uncertainty arising from inliers will be allowed to dominate.",
+      "revId": "5f6b7bb82edb060de84f91ba38937b81f47faf1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut185u-s",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-16T17:30:30Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me if I have a lot of tightly coupled variables in my parameter space, but only compute the covariance block for a subset, is the result for any one block independent of the subset chosen?  In other words, am I peeking at a portion of the complete covariance matrix for the entire parameter space, or am I computing a reduced result by only allowing a subset of the parameters to actually vary? \n\nMore clarity in comments around this point would be helpful.",
+      "revId": "5f6b7bb82edb060de84f91ba38937b81f47faf1c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
