@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "Ut0i23nM",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Utwh0VgY",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Ut6hlAk4",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-17T18:13:05Z",
       "side": 1,
       "message": "x^*  -\u003e x* ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut2izmoI",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Ut6hlAk4",
       "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "Utwh3duU",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Utwj6FjY",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Ut8ht7jk",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-17T18:13:05Z",
       "side": 1,
       "message": "covariance of S -\u003e covariance of y ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut.iFSpM",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Ut8ht7jk",
       "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "Ut4iLZqc",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Ut4hoRig",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UtwihtjU",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2013-05-17T18:13:05Z",
       "side": 1,
       "message": "blocks. -\u003e blocks when the condition that the terms compute errors that are standard normal has been met.\n\u003cnew paragraph\u003e",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UtyhKco8",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-17T18:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UtwihtjU",
       "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
