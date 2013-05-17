@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UtwMS.Wg",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5195
+      },
+      "writtenOn": "2013-05-17T18:42:25Z",
+      "side": 1,
+      "message": "missing verb",
+      "revId": "8a0cd33146929163c605782785e6bf5bb08242d7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut2Md-XA",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5195
+      },
+      "writtenOn": "2013-05-17T18:42:25Z",
+      "side": 1,
+      "message": "missing verb",
+      "revId": "8a0cd33146929163c605782785e6bf5bb08242d7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut0OEgUs",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5195
+      },
+      "writtenOn": "2013-05-17T18:42:25Z",
+      "side": 1,
+      "message": "In the case where the user knows that the problem is over-parameterized, is there a way to work around the rank deficiency induced by the over-parameterization?\n\nIn my implementation, parameter blocks can be marked as \"redundant\", so they are not included in the jacobian (for computing the covariance, they are considered as constant, and do not have covariance). It works well",
+      "revId": "8a0cd33146929163c605782785e6bf5bb08242d7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
