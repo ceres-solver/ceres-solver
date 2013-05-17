@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "Utwh0VgY",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "duplicated \"min_x\" ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut6hlAk4",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "x^*  -\u003e x* ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Utwj6FjY",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "J(x\u0027*) -\u003e J(x*) ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut8ht7jk",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "covariance of S -\u003e covariance of y ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "Ut4hoRig",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "Duplicated \"min_x\" ?",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UtwihtjU",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-05-17T18:13:05Z",
+      "side": 1,
+      "message": "blocks. -\u003e blocks when the condition that the terms compute errors that are standard normal has been met.\n\u003cnew paragraph\u003e",
+      "revId": "455950001ebda8d2c07fa397d2092d0af53af95c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
