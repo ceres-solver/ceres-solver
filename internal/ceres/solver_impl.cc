@@ -1451,8 +1451,8 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
     // this means that the user wishes for Ceres to identify the
     // e_blocks, which we do by computing a maximal independent set.
     vector<ParameterBlock*> schur_ordering;
-    const int num_eliminate_blocks = ComputeSchurOrdering(*program,
-                                                          &schur_ordering);
+    const int num_eliminate_blocks = ComputeStableSchurOrdering(*program,
+                                                                &schur_ordering);
 
     CHECK_EQ(schur_ordering.size(), program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "
