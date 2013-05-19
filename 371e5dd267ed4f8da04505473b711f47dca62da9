@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UyF2Sr9o",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Uil.2XHM",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Uit.ALIY",
         "filename": "examples/curve_fitting.c",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-13T18:04:00Z",
       "side": 1,
       "message": "maybe worth refactoring into a separate file? and making the two curve_fitting.cc and curve_fitting.c files smaller?",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyL1dy2I",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "I\u0027d rather keep the examples independent.",
+      "parentUuid": "Uit.ALIY",
       "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "UyJ1ihxg",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Uih9epF0",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "Uiv9i0Bg",
         "filename": "examples/curve_fitting.c",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-13T18:04:00Z",
       "side": 1,
       "message": "explicitly compare to NULL here and below.",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN1c-2M",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "Uiv9i0Bg",
       "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "UyD1yW.k",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "It\u0027s probably fine, but for now I removed this and made it just ceres_init()",
+      "parentUuid": "Uij9ASGY",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UigKUC4k",
         "filename": "internal/ceres/c_api.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2013-05-13T18:04:00Z",
       "side": 1,
       "message": "blank before",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN1TX0g",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UigKUC4k",
       "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "UyB02dws",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UioKgG94",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UikKqA74",
         "filename": "internal/ceres/c_api.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2013-05-13T18:04:00Z",
       "side": 1,
       "message": "Returning summary may be an even bigger pain..",
+      "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH1DM3U",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T05:59:06Z",
+      "side": 1,
+      "message": "Yeah. We\u0027ll have to figure something out. Not in this patch.",
+      "parentUuid": "UikKqA74",
       "revId": "371e5dd267ed4f8da04505473b711f47dca62da9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
