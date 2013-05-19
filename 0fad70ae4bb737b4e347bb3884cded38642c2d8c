@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UyH1qE18",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T03:13:21Z",
+      "side": 1,
+      "message": "Should be \n\n  IF (OPENMP_FOUND)\n\ne.g. space after the IF (and also endif)",
+      "revId": "0fad70ae4bb737b4e347bb3884cded38642c2d8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF1nT5M",
+        "filename": "cmake/depend.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T03:13:21Z",
+      "side": 1,
+      "message": "I think this is wrong now?",
+      "revId": "0fad70ae4bb737b4e347bb3884cded38642c2d8c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
