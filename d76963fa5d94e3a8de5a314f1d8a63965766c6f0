@@ -393,6 +393,23 @@
     },
     {
       "key": {
+        "uuid": "UyP3zw1w",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:41:45Z",
+      "side": 1,
+      "message": "Indent equation",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyJ0UR8Q",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 17
