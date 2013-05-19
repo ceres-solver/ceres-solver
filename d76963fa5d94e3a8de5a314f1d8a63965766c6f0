@@ -492,6 +492,295 @@
       "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN0k-xw",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "suite_sparse_\n\nFor what it\u0027s worth, I think this change should be made everywhere in Ceres.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD06Wzo",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Ordering",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN2bXyk",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Initialize the vector the easy way in the initializer list (removing the copy). And for the other cost functions.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP2WIwE",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Use a vector",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF0xD1g",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Hmm; stale stack pointers? Is this a good idea?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD2Bu7Y",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Space around ,",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB1.d.w",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH2LM9Y",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Indent matrix 1 more space (and the next one)",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF2I79c",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Explain where this came from",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyJ14x-0",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP1tgzk",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Indent matrix 1 more space",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD1omyY",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Why the weird change in formatting?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB1l10w",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH1iE0Y",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Indent 1 more space (and matrix below)",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN3hn4w",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Blank after.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD3n.58",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Indent one more space",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB3kt5c",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:39:13Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
