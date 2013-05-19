@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UyOD5Vgc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T06:32:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want this.",
+      "revId": "957e4feda986e3766218a0f2e374b9589203db01",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
