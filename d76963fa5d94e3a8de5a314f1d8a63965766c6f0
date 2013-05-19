@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UyJ2fJ0g",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP2kY5U",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Strange sentence split",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN2pn20",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Consider expanding this paragraph with concrete details. While it\u0027d be nice to think our users will spend the time to examine the literature, let\u0027s just provide the punchline for the very common case of standard bundle adjustment: the gauge freedom is 7, and should be set in options. Consider putting in an example for this.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD2v.3A",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Comment blank after.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB2st3g",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Can you expand on some of the mathematical subtleties here?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN33338",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "What conditions are there on the double*\u0027s? What happens if I pass the same pair multiple times? Is there much potential for errors? If so, what about an error message?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH25c7o",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "I\u0027m tempted to output the size too.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF22L8o",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "ordering",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyJ1Dp8k",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Why pass problem? It\u0027s part of the object",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyN3AfyU",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "I suggest a comment above here explaining the logic; something like\n\n// If either parameter block is constant, than there is no covariance, so zero the block and return.\n\nSpace after 0",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD3W2-A",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Consider a small helper\n\n  FindParameterBlock()\n\nwhich does the cast. No need to put \"OrDie\" on the name; it\u0027ll be clear enough.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP27w60",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Comment adds no value",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB3TFwE",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Fits on one line.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF3Nj1Y",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Indent \n\nHow does this interact with gauge freedoms?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyL3oK6Q",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Maybe I\u0027m confused, but shouldn\u0027t parameter_block2 be parameter_block1?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyJ3tZ7Q",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Space after 0",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP3yo5E",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD3dOwU",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Add a high level description about what the loop is doing.\n\nWhat is i?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB3a9ww",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Put the comment above the two int decls.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH3ns8w",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Remove \"Actually\".",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyF3kb8Y",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Don\u0027t bother with else since it\u0027s a straight return.",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyL3BSyw",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "m-\u003e matrix? Or what about cholmod_jacobian?",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyJ3GB0A",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "how about ss_ -\u003e suite_sparse_?\n\nMaybe a comment above here; // Find a symbolic Cholesky factorization",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyJ0UR8Q",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "r + 1",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyL0Pi64",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "r, c",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyP0JA6o",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "1. / ( ...",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyB0BV30",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "r + 1",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyD0EG40",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "r, c",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyH3.k1Q",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T04:05:22Z",
+      "side": 1,
+      "message": "Drop blakn",
+      "revId": "d76963fa5d94e3a8de5a314f1d8a63965766c6f0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
