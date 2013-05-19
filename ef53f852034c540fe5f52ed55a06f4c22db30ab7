@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "UyMDDcoE",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Comment obove: // Count number of nonzero entries.",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyEDRIk8",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Blankety blank blank ... :)",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyCDOrq4",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Needs comment above; what is this doing?",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyIDbOm8",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Maybe comment above here too.",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyGDYpnI",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Comment above nest",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyKDI-p4",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this means",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyODC9no",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "It is? I thought each row was discontiguous relative to the next and needed strides.",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyAC.Cu8",
+        "filename": "internal/ceres/block_random_access_crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Needs to explain symmetric bit.",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyODrFvs",
+        "filename": "internal/ceres/block_random_access_crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-19T19:29:18Z",
+      "side": 1,
+      "message": "Er? It\u0027s square? Can you elaborate in the object comments?",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
