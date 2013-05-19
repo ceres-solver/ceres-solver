@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "UyKAnXog",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyMDDcoE",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyEDRIk8",
         "filename": "internal/ceres/block_random_access_crs_matrix.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-19T19:29:18Z",
       "side": 1,
       "message": "Blankety blank blank ... :)",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyAAtamg",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyEDRIk8",
       "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "UyOAxVsY",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyCDOrq4",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyIDbOm8",
         "filename": "internal/ceres/block_random_access_crs_matrix.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-19T19:29:18Z",
       "side": 1,
       "message": "Maybe comment above here too.",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyEA3Yrg",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyIDbOm8",
       "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "UyCA07rE",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyGDYpnI",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyKDI-p4",
         "filename": "internal/ceres/block_random_access_crs_matrix.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-05-19T19:29:18Z",
       "side": 1,
       "message": "I\u0027m not sure what this means",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyIBBeh4",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "we now have a layout object here and blockrandomaccessmatrix.. \nit should perhaps go into the base class.",
+      "parentUuid": "UyKDI-p4",
       "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "UyGA.5pM",
+        "filename": "internal/ceres/block_random_access_crs_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "old cut and paste comment.",
+      "parentUuid": "UyODC9no",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyAC.Cu8",
         "filename": "internal/ceres/block_random_access_crs_matrix.h",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "UyMAiUno",
+        "filename": "internal/ceres/block_random_access_crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyAC.Cu8",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "UyODrFvs",
         "filename": "internal/ceres/block_random_access_crs_matrix.h",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2013-05-19T19:29:18Z",
       "side": 1,
       "message": "Er? It\u0027s square? Can you elaborate in the object comments?",
+      "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "UyGCvBrU",
+        "filename": "internal/ceres/block_random_access_crs_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-19T19:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "UyODrFvs",
       "revId": "ef53f852034c540fe5f52ed55a06f4c22db30ab7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
