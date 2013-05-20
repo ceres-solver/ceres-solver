@@ -234,6 +234,7 @@ class Covariance {
   };
 
   explicit Covariance(const Options& options);
+  ~Covariance();
 
   // Compute a part of the covariance matrix.
   //
