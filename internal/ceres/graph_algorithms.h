@@ -43,7 +43,8 @@
 namespace ceres {
 namespace internal {
 
-// Compare two vertices of a graph by their degrees.
+// Compare two vertices of a graph by their degrees, if the degrees
+// are equal then order them by their ids.
 template <typename Vertex>
 class VertexTotalOrdering {
  public:

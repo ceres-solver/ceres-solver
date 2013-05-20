@@ -147,7 +147,8 @@ int main(int argc, char** argv) {
   ceres_init(argc, argv);
 
   /* Note: Typically it is better to compact m and c into one block,
-   * but in this case use separate blocks for illustration. */
+   * but in this case use separate blocks to illustrate the use of
+   * multiple parameter blocks. */
   double m = 0.0;
   double c = 0.0;
   double *parameter_pointers[] = { &m, &c };
