@@ -75,6 +75,8 @@ class CovarianceImpl {
   ProblemImpl* problem_;
   Covariance::Options options_;
   Problem::EvaluateOptions evaluate_options_;
+  bool is_computed_;
+  bool is_valid_;
   map<const double*, int> parameter_block_to_row_index_;
   set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
