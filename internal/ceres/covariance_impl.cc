@@ -42,6 +42,7 @@
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
 #include "ceres/suitesparse.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -206,6 +207,7 @@ bool CovarianceImpl::GetCovarianceBlock(const double* original_parameter_block1,
 bool CovarianceImpl::ComputeCovarianceSparsity(
     const CovarianceBlocks&  original_covariance_blocks,
     ProblemImpl* problem) {
+  EventLogger event_logger("CovarianceImpl::ComputeCovarianceSparsity");
 
   // Determine an ordering for the parameter block, by sorting the
   // parameter blocks by their pointers.
@@ -356,6 +358,8 @@ bool CovarianceImpl::ComputeCovarianceValues() {
 }
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse");
 #ifndef CERES_NO_SUITESPARSE
   if (covariance_matrix_.get() == NULL) {
     // Nothing to do, all zeros covariance matrix.
@@ -365,6 +369,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
   CRSMatrix jacobian;
   problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
 
+  event_logger.AddEvent("Evaluate");
   // m is a transposed view of the Jacobian.
   cholmod_sparse cholmod_jacobian_view;
   cholmod_jacobian_view.nrow = jacobian.num_cols;
@@ -383,7 +388,10 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
   cholmod_jacobian_view.packed = 1;
 
   cholmod_factor* factor = ss_.AnalyzeCholesky(&cholmod_jacobian_view);
-  if (!ss_.Cholesky(&cholmod_jacobian_view, factor)) {
+  event_logger.AddEvent("Symbolic Factorization");
+  bool status = ss_.Cholesky(&cholmod_jacobian_view, factor);
+  event_logger.AddEvent("Numeric Factorization");
+  if (!status) {
     ss_.Free(factor);
     LOG(WARNING) << "Cholesky factorization failed.";
     return false;
@@ -473,6 +481,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
 
   ss_.Free(rhs);
   ss_.Free(factor);
+  event_logger.AddEvent("Inversion");
   return true;
 #else
   return false;
@@ -480,6 +489,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
 };
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingEigen");
   if (covariance_matrix_.get() == NULL) {
     // Nothing to do, all zeros covariance matrix.
     return true;
@@ -487,6 +498,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
 
   CRSMatrix jacobian;
   problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
+  event_logger.AddEvent("Evaluate");
+
   Matrix dense_jacobian(jacobian.num_rows, jacobian.num_cols);
   dense_jacobian.setZero();
   for (int r = 0; r < jacobian.num_rows; ++r) {
@@ -495,10 +508,12 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
       dense_jacobian(r, c) = jacobian.values[idx];
     }
   }
+  event_logger.AddEvent("ConvertToDenseMatrix");
 
   Eigen::JacobiSVD<Matrix> svd(dense_jacobian,
                                Eigen::ComputeThinU | Eigen::ComputeThinV);
   Vector inverse_singular_values = svd.singularValues();
+  event_logger.AddEvent("SVD");
 
   for (int i = 0; i < inverse_singular_values.rows(); ++i) {
     if (inverse_singular_values[i] > options_.min_singular_value_threshold &&
@@ -514,6 +529,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
       svd.matrixV() *
       inverse_singular_values.asDiagonal() *
       svd.matrixV().transpose();
+  event_logger.AddEvent("PseudoInverse");
 
   const int num_rows = covariance_matrix_->num_rows();
   const int* rows = covariance_matrix_->rows();
@@ -526,6 +542,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
       values[idx] = dense_covariance(r, c);
     }
   }
+  event_logger.AddEvent("CopyToCovarianceMatrix");
   return true;
 };
 
