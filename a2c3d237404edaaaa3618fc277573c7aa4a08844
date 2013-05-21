@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U51tdg6E",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-21T21:54:28Z",
+      "side": 1,
+      "message": "Maybe for the sake of clarity, move this below the actual computation :)",
+      "revId": "a2c3d237404edaaaa3618fc277573c7aa4a08844",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U5zs311A",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-21T21:54:28Z",
+      "side": 1,
+      "message": "Perhaps extend the warning with \"; don\u0027t ignore the return value of Compute().\"",
+      "revId": "a2c3d237404edaaaa3618fc277573c7aa4a08844",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
