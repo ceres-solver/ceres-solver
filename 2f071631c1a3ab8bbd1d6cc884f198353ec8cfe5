@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U5-DmZjM",
+        "filename": "internal/ceres/corrector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-22T19:46:24Z",
+      "side": 1,
+      "message": "Can you leave a comment about how this is more efficient when written without eigen? Before some younger, eager version of us in the future handily replaces this with a more concise eigen expression.",
+      "revId": "2f071631c1a3ab8bbd1d6cc884f198353ec8cfe5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
