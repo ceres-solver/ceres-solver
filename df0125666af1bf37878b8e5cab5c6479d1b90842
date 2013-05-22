@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U5-D65qo",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-22T19:56:37Z",
+      "side": 0,
+      "message": "Is this removal intentional?",
+      "revId": "df0125666af1bf37878b8e5cab5c6479d1b90842",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
