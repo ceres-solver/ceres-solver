@@ -98,6 +98,7 @@ class Solver {
       linear_solver_ordering = NULL;
       use_postordering = false;
       use_inner_iterations = false;
+      inner_iteration_min_progress = 1e-3;
       inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
@@ -442,6 +443,16 @@ class Solver {
     //    the lower numbered groups are optimized before the higher
     //    number groups. Each group must be an independent set.
     ParameterBlockOrdering* inner_iteration_ordering;
+
+    // Generally speaking, inner iterations make significant progress
+    // in the early stages of the solve and then their contribution
+    // drops down sharply, at which point the time spent doing inner
+    // iterations is not worth it.
+    //
+    // Once the relative decrease in the objective function drops
+    // below inner_iteration_min_progress, the use of inner iterations
+    // in subsequent trust region minimizer iterations is disabled.
+    double inner_iteration_min_progress;
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.

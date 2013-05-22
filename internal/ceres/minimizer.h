@@ -89,6 +89,7 @@ class Minimizer {
       jacobian = NULL;
       callbacks = options.callbacks;
       inner_iteration_minimizer = NULL;
+      inner_iteration_min_progress = options.inner_iteration_min_progress;
     }
 
     int max_num_iterations;
@@ -141,6 +142,7 @@ class Minimizer {
     SparseMatrix* jacobian;
 
     Minimizer* inner_iteration_minimizer;
+    double inner_iteration_min_progress;
   };
 
   static bool RunCallbacks(const vector<IterationCallback*> callbacks,

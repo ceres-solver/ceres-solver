@@ -191,6 +191,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   }
 
   int num_consecutive_invalid_steps = 0;
+  bool inner_iterations_are_enabled = options.inner_iteration_minimizer != NULL;
   while (true) {
     if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
       return;
@@ -317,7 +318,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         new_cost = numeric_limits<double>::max();
       } else {
         // Check if performing an inner iteration will make it better.
-        if (options.inner_iteration_minimizer != NULL) {
+        if (inner_iterations_are_enabled) {
           const double x_plus_delta_cost = new_cost;
           Vector inner_iteration_x = x_plus_delta;
           Solver::Summary inner_iteration_summary;
@@ -337,6 +338,15 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
             VLOG(2) << "Inner iteration succeeded; current cost: " << cost
                     << " x_plus_delta_cost: " << x_plus_delta_cost
                     << " new_cost: " << new_cost;
+            const double inner_iteration_relative_progress =
+                (x_plus_delta_cost - new_cost) / x_plus_delta_cost;
+            inner_iterations_are_enabled =
+                (inner_iteration_relative_progress >
+                 options.inner_iteration_min_progress);
+            if (!inner_iterations_are_enabled) {
+              LOG(INFO) << "Disabling inner iterations. Progress : "
+                        << inner_iteration_relative_progress;
+            }
           }
         }
       }
@@ -356,7 +366,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
-      VLOG(2) << "old cost: " << cost << " new cost: " << new_cost;
       iteration_summary.cost_change =  cost - new_cost;
       const double absolute_function_tolerance =
           options_.function_tolerance * cost;
