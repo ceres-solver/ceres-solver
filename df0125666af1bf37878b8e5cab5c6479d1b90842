@@ -16,6 +16,24 @@
       "revId": "df0125666af1bf37878b8e5cab5c6479d1b90842",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U8lCfLPM",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-22T20:02:28Z",
+      "side": 0,
+      "message": "yes. This is an artifact of days gone by, it does nothing useful.",
+      "parentUuid": "U5-D65qo",
+      "revId": "df0125666af1bf37878b8e5cab5c6479d1b90842",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
