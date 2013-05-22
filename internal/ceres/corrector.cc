@@ -90,7 +90,7 @@ Corrector::Corrector(double sq_norm, const double rho[3]) {
   // 0.5 *  alpha^2 - alpha - rho'' / rho' *  z'z = 0.
   //
   // Start by calculating the discriminant D.
-  const double D = 1.0 + 2.0 * sq_norm*rho[2] / rho[1];
+  const double D = 1.0 + 2.0 * sq_norm * rho[2] / rho[1];
 
   // Since both rho[1] and rho[2] are guaranteed to be positive at
   // this point, we know that D > 1.0.
@@ -113,18 +113,18 @@ void Corrector::CorrectJacobian(int nrow, int ncol,
                                 double* residuals, double* jacobian) {
   DCHECK(residuals != NULL);
   DCHECK(jacobian != NULL);
+  // Equation 11 in BANS.
+  //  J = sqrt(rho) * (J - alpha^2 r * r' J)
+  for (int c = 0; c < ncol; ++c) {
+    double r_transpose_j = 0.0;
+    for (int r = 0; r < nrow; ++r) {
+      r_transpose_j += jacobian[r * ncol + c] * residuals[r];
+    }
 
-  if (nrow == 1) {
-    // Specialization for the case where the residual is a scalar.
-    VectorRef j_ref(jacobian, ncol);
-    j_ref *= sqrt_rho1_ * (1.0 - alpha_sq_norm_ * pow(*residuals, 2));
-  } else {
-    ConstVectorRef r_ref(residuals, nrow);
-    MatrixRef j_ref(jacobian, nrow, ncol);
-
-    // Equation 11 in BANS.
-    j_ref = sqrt_rho1_ * (j_ref - alpha_sq_norm_ *
-                          r_ref * (r_ref.transpose() * j_ref));
+    for (int r = 0; r < nrow; ++r) {
+      jacobian[r * ncol + c] =
+          sqrt_rho1_ * (jacobian[r * ncol + c] - alpha_sq_norm_ * residuals[r] * r_transpose_j);
+    }
   }
 }
 
