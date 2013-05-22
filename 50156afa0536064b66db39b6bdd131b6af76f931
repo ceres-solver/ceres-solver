@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U55BVItM",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-22T19:56:37Z",
+      "side": 1,
+      "message": "Put a comment above here mentioning that this disables inner iterations once the payback does not exceed the cost.\n\nAlso, call me crazy, but i\u0027d like to report this iteration in the summary and print it out. Too much?",
+      "revId": "50156afa0536064b66db39b6bdd131b6af76f931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
