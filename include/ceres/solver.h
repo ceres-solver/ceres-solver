@@ -599,6 +599,7 @@ class Solver {
 
     int num_successful_steps;
     int num_unsuccessful_steps;
+    int num_inner_iteration_steps;
 
     // When the user calls Solve, before the actual optimization
     // occurs, Ceres performs a number of preprocessing steps. These
@@ -620,6 +621,7 @@ class Solver {
     double linear_solver_time_in_seconds;
     double residual_evaluation_time_in_seconds;
     double jacobian_evaluation_time_in_seconds;
+    double inner_iteration_time_in_seconds;
 
     // Preprocessor summary.
     int num_parameter_blocks;
@@ -649,20 +651,22 @@ class Solver {
     vector<int> linear_solver_ordering_given;
     vector<int> linear_solver_ordering_used;
 
+    bool inner_iterations_given;
+    bool inner_iterations_used;
+
+    vector<int> inner_iteration_ordering_given;
+    vector<int> inner_iteration_ordering_used;
+
     PreconditionerType preconditioner_type;
 
     TrustRegionStrategyType trust_region_strategy_type;
     DoglegType dogleg_type;
-    bool inner_iterations;
 
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
 
     LineSearchDirectionType line_search_direction_type;
     LineSearchType line_search_type;
     int max_lbfgs_rank;
-
-    vector<int> inner_iteration_ordering_given;
-    vector<int> inner_iteration_ordering_used;
   };
 
   // Once a least squares problem has been built, this function takes

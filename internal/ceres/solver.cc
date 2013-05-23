@@ -91,6 +91,7 @@ Solver::Summary::Summary()
       fixed_cost(-1.0),
       num_successful_steps(-1),
       num_unsuccessful_steps(-1),
+      num_inner_iteration_steps(-1),
       preprocessor_time_in_seconds(-1.0),
       minimizer_time_in_seconds(-1.0),
       postprocessor_time_in_seconds(-1.0),
@@ -98,6 +99,7 @@ Solver::Summary::Summary()
       linear_solver_time_in_seconds(-1.0),
       residual_evaluation_time_in_seconds(-1.0),
       jacobian_evaluation_time_in_seconds(-1.0),
+      inner_iteration_time_in_seconds(-1.0),
       num_parameter_blocks(-1),
       num_parameters(-1),
       num_effective_parameters(-1),
@@ -114,9 +116,10 @@ Solver::Summary::Summary()
       num_linear_solver_threads_used(-1),
       linear_solver_type_given(SPARSE_NORMAL_CHOLESKY),
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
+      inner_iterations_given(false),
+      inner_iterations_used(false),
       preconditioner_type(IDENTITY),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
-      inner_iterations(false),
       sparse_linear_algebra_library(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
       line_search_type(ARMIJO) {
@@ -184,9 +187,8 @@ string Solver::Summary::FullReport() const {
                   num_residuals, num_residuals_reduced);
   }
 
-  // TODO(sameeragarwal): Refactor this into separate functions.
-
   if (minimizer_type == TRUST_REGION) {
+    // TRUST_SEARCH HEADER
     StringAppendF(&report, "\nMinimizer                 %19s\n",
                   "TRUST_REGION");
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
@@ -194,12 +196,12 @@ string Solver::Summary::FullReport() const {
         (linear_solver_type_used == ITERATIVE_SCHUR &&
          (preconditioner_type == CLUSTER_JACOBI ||
           preconditioner_type == CLUSTER_TRIDIAGONAL))) {
-      StringAppendF(&report, "\nSparse Linear Algebra Library %15s\n",
+      StringAppendF(&report, "\nSparse linear algebra library %15s\n",
                     SparseLinearAlgebraLibraryTypeToString(
                                 sparse_linear_algebra_library));
     }
 
-    StringAppendF(&report, "Trust Region Strategy     %19s",
+    StringAppendF(&report, "Trust region strategy     %19s",
                   TrustRegionStrategyTypeToString(
                       trust_region_strategy_type));
     if (trust_region_strategy_type == DOGLEG) {
@@ -227,7 +229,7 @@ string Solver::Summary::FullReport() const {
                     "N/A", "N/A");
     }
 
-    StringAppendF(&report, "Threads:            % 25d% 25d\n",
+    StringAppendF(&report, "Threads             % 25d% 25d\n",
                   num_threads_given, num_threads_used);
     StringAppendF(&report, "Linear solver threads % 23d% 25d\n",
                   num_linear_solver_threads_given,
@@ -244,7 +246,14 @@ string Solver::Summary::FullReport() const {
                     used.c_str());
     }
 
-    if (inner_iterations) {
+    if (inner_iterations_given) {
+      StringAppendF(&report,
+                    "Use inner iterations     %20s     %20s\n",
+                    inner_iterations_given ? "True" : "False",
+                    inner_iterations_used ? "True" : "False");
+    }
+
+    if (inner_iterations_used) {
       string given;
       StringifyOrdering(inner_iteration_ordering_given, &given);
       string used;
@@ -254,57 +263,8 @@ string Solver::Summary::FullReport() const {
                   given.c_str(),
                   used.c_str());
     }
-
-    if (termination_type == DID_NOT_RUN) {
-      CHECK(!error.empty())
-          << "Solver terminated with DID_NOT_RUN but the solver did not "
-          << "return a reason. This is a Ceres error. Please report this "
-          << "to the Ceres team";
-      StringAppendF(&report, "Termination:           %20s\n",
-                    "DID_NOT_RUN");
-      StringAppendF(&report, "Reason: %s\n", error.c_str());
-      return report;
-    }
-
-    StringAppendF(&report, "\nCost:\n");
-    StringAppendF(&report, "Initial        % 30e\n", initial_cost);
-    if (termination_type != NUMERICAL_FAILURE &&
-        termination_type != USER_ABORT) {
-      StringAppendF(&report, "Final          % 30e\n", final_cost);
-      StringAppendF(&report, "Change         % 30e\n",
-                    initial_cost - final_cost);
-    }
-
-    StringAppendF(&report, "\nNumber of iterations:\n");
-    StringAppendF(&report, "Successful               % 20d\n",
-                  num_successful_steps);
-    StringAppendF(&report, "Unsuccessful             % 20d\n",
-                  num_unsuccessful_steps);
-    StringAppendF(&report, "Total                    % 20d\n",
-                  num_successful_steps + num_unsuccessful_steps);
-
-    StringAppendF(&report, "\nTime (in seconds):\n");
-    StringAppendF(&report, "Preprocessor        %25.3f\n",
-                  preprocessor_time_in_seconds);
-    StringAppendF(&report, "\n  Residual Evaluations %22.3f\n",
-                  residual_evaluation_time_in_seconds);
-    StringAppendF(&report, "  Jacobian Evaluations %22.3f\n",
-                  jacobian_evaluation_time_in_seconds);
-    StringAppendF(&report, "  Linear Solver       %23.3f\n",
-                  linear_solver_time_in_seconds);
-    StringAppendF(&report, "Minimizer           %25.3f\n\n",
-                  minimizer_time_in_seconds);
-
-    StringAppendF(&report, "Postprocessor        %24.3f\n",
-                  postprocessor_time_in_seconds);
-
-    StringAppendF(&report, "Total               %25.3f\n\n",
-                  total_time_in_seconds);
-
-    StringAppendF(&report, "Termination:        %25s\n",
-                  SolverTerminationTypeToString(termination_type));
   } else {
-    // LINE_SEARCH
+    // LINE_SEARCH HEADER
     StringAppendF(&report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
     if (line_search_direction_type == LBFGS) {
       StringAppendF(&report, "Line search direction     %19s(%d)\n",
@@ -321,52 +281,72 @@ string Solver::Summary::FullReport() const {
     StringAppendF(&report, "\n");
 
     StringAppendF(&report, "%45s    %21s\n", "Given",  "Used");
-    StringAppendF(&report, "Threads:            % 25d% 25d\n",
+    StringAppendF(&report, "Threads             % 25d% 25d\n",
                   num_threads_given, num_threads_used);
 
-    if (termination_type == DID_NOT_RUN) {
-      CHECK(!error.empty())
-          << "Solver terminated with DID_NOT_RUN but the solver did not "
-          << "return a reason. This is a Ceres error. Please report this "
-          << "to the Ceres team";
-      StringAppendF(&report, "Termination:           %20s\n",
-                    "DID_NOT_RUN");
-      StringAppendF(&report, "Reason: %s\n", error.c_str());
-      return report;
-    }
-
-    StringAppendF(&report, "\nCost:\n");
-    StringAppendF(&report, "Initial        % 30e\n", initial_cost);
-    if (termination_type != NUMERICAL_FAILURE &&
-        termination_type != USER_ABORT) {
-      StringAppendF(&report, "Final          % 30e\n", final_cost);
-      StringAppendF(&report, "Change         % 30e\n",
-                    initial_cost - final_cost);
-    }
-
-    StringAppendF(&report, "\nNumber of iterations:    % 20d\n",
-                  static_cast<int>(iterations.size() - 1));
-
-    StringAppendF(&report, "\nTime (in seconds):\n");
-    StringAppendF(&report, "Preprocessor        %25.3f\n",
-                  preprocessor_time_in_seconds);
-    StringAppendF(&report, "\n  Residual Evaluations %22.3f\n",
-                  residual_evaluation_time_in_seconds);
-    StringAppendF(&report, "  Jacobian Evaluations %22.3f\n",
-                  jacobian_evaluation_time_in_seconds);
-    StringAppendF(&report, "Minimizer           %25.3f\n\n",
-                  minimizer_time_in_seconds);
-
-    StringAppendF(&report, "Postprocessor        %24.3f\n",
-                  postprocessor_time_in_seconds);
-
-    StringAppendF(&report, "Total               %25.3f\n\n",
-                  total_time_in_seconds);
-
-    StringAppendF(&report, "Termination:        %25s\n",
-                  SolverTerminationTypeToString(termination_type));
   }
 
+  if (termination_type == DID_NOT_RUN) {
+    CHECK(!error.empty())
+        << "Solver terminated with DID_NOT_RUN but the solver did not "
+        << "return a reason. This is a Ceres error. Please report this "
+        << "to the Ceres team";
+    StringAppendF(&report, "Termination:           %20s\n",
+                  "DID_NOT_RUN");
+    StringAppendF(&report, "Reason: %s\n", error.c_str());
+    return report;
+  }
+
+  StringAppendF(&report, "\nCost:\n");
+  StringAppendF(&report, "Initial        % 30e\n", initial_cost);
+  if (termination_type != NUMERICAL_FAILURE &&
+      termination_type != USER_ABORT) {
+    StringAppendF(&report, "Final          % 30e\n", final_cost);
+    StringAppendF(&report, "Change         % 30e\n",
+                  initial_cost - final_cost);
+  }
+
+  StringAppendF(&report, "\nMinimizer iterations         % 16d\n",
+                num_successful_steps + num_unsuccessful_steps);
+  StringAppendF(&report, "Successful steps               % 14d\n",
+                num_successful_steps);
+  StringAppendF(&report, "Unsuccessful steps             % 14d\n",
+                num_unsuccessful_steps);
+  if (inner_iterations_used) {
+    StringAppendF(&report, "Steps with inner iterations    % 14d\n",
+                  num_inner_iteration_steps);
+  }
+
+  StringAppendF(&report, "\nTime (in seconds):\n");
+  StringAppendF(&report, "Preprocessor        %25.3f\n",
+                preprocessor_time_in_seconds);
+
+  StringAppendF(&report, "\n  Residual evaluation %23.3f\n",
+                residual_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Jacobian evaluation %23.3f\n",
+                jacobian_evaluation_time_in_seconds);
+
+  if (minimizer_type == TRUST_REGION) {
+    StringAppendF(&report, "  Linear solver       %23.3f\n",
+                  linear_solver_time_in_seconds);
+  }
+
+  if (inner_iterations_used) {
+    StringAppendF(&report, "  Inner iterations    %23.3f\n",
+                  inner_iteration_time_in_seconds);
+  }
+
+  StringAppendF(&report, "Minimizer           %25.3f\n\n",
+                minimizer_time_in_seconds);
+
+  StringAppendF(&report, "Postprocessor        %24.3f\n",
+                postprocessor_time_in_seconds);
+
+  StringAppendF(&report, "Total               %25.3f\n\n",
+                total_time_in_seconds);
+
+  StringAppendF(&report, "Termination:        %25s\n",
+                SolverTerminationTypeToString(termination_type));
   return report;
 };
 
