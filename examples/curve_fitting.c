@@ -36,15 +36,18 @@
 #include <string.h>  // For NULL
 #include "ceres/c_api.h"
 
-// Data generated using the following octave code.
-//   randn('seed', 23497);
-//   m = 0.3;
-//   c = 0.1;
-//   x=[0:0.075:5];
-//   y = exp(m * x + c);
-//   noise = randn(size(x)) * 0.2;
-//   y_observed = y + noise;
-//   data = [x', y_observed'];
+/* Data generated using the following octave code.
+ *
+ *   randn('seed', 23497);
+ *   m = 0.3;
+ *   c = 0.1;
+ *   x=[0:0.075:5];
+ *   y = exp(m * x + c);
+ *   noise = randn(size(x)) * 0.2;
+ *   y_observed = y + noise;
+ *   data = [x', y_observed'];
+ *
+ */
 
 int num_observations = 67;
 double data[] = {
@@ -135,7 +138,7 @@ int exponential_residual(void* user_data,
     return 1;
   }
   if (jacobians[0] != NULL) {
-    jacobians[0][0] = - m * exp(m * x + c);  /* dr/dm */
+    jacobians[0][0] = - x * exp(m * x + c);  /* dr/dm */
   }
   if (jacobians[1] != NULL) {
     jacobians[1][0] =     - exp(m * x + c);  /* dr/dc */
@@ -156,21 +159,27 @@ int main(int argc, char** argv) {
   ceres_problem_t* problem;
   int i;
 
-  ceres_init(argc, argv);
+  /* Ceres has some internal stuff that needs to get initialized. */
+  ceres_init();
 
+  /* Create the problem. */
   problem = ceres_create_problem();
-  for (i = 0; i < num_observations; ++i) {
+
+  /* Add all the residuals. */
+  for (int i = 0; i < num_observations; ++i) {
     ceres_problem_add_residual_block(
         problem,
         exponential_residual,  /* Cost function */
-        NULL,                  /* No loss function */
         &data[2 * i],          /* Points to the (x,y) measurement */
+        NULL,                  /* No loss function */
+        NULL,                  /* No loss function user data */
         1,                     /* Number of residuals */
         2,                     /* Number of parameter blocks */
         parameter_sizes,
         parameter_pointers);
   }
 
+  /* Finally, actually solve the problem. */
   ceres_solve(problem);
 
   printf("Initial m: 0.0, c: 0.0\n");
