@@ -319,6 +319,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       } else {
         // Check if performing an inner iteration will make it better.
         if (inner_iterations_are_enabled) {
+          ++summary->num_inner_iteration_steps;
+          double inner_iteration_start_time = WallTimeInSeconds();
           const double x_plus_delta_cost = new_cost;
           Vector inner_iteration_x = x_plus_delta;
           Solver::Summary inner_iteration_summary;
@@ -347,10 +349,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
             // Disable inner iterations once the relative improvement
             // drops below tolerance.
             if (!inner_iterations_are_enabled) {
-              LOG(INFO) << "Disabling inner iterations. Progress : "
-                        << inner_iteration_relative_progress;
+              VLOG(2) << "Disabling inner iterations. Progress : "
+                      << inner_iteration_relative_progress;
             }
           }
+          summary->inner_iteration_time_in_seconds +=
+              WallTimeInSeconds() - inner_iteration_start_time;
         }
       }
 

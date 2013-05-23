@@ -536,8 +536,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       }
     }
   }
-
-  event_logger.AddEvent("CreateIIM");
+  event_logger.AddEvent("CreateInnerIterationMinimizer");
 
   // The optimizer works on contiguous parameter vectors; allocate some.
   Vector parameters(reduced_program->NumParameters());
@@ -1264,6 +1263,8 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     const Program& program,
     const ProblemImpl::ParameterMap& parameter_map,
     Solver::Summary* summary) {
+  summary->inner_iterations_given = true;
+
   scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer(
       new CoordinateDescentMinimizer);
   scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
@@ -1306,9 +1307,9 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
     return NULL;
   }
 
-  summary->inner_iterations = true;
+  summary->inner_iterations_used = true;
+  summary->inner_iteration_time_in_seconds = 0.0;
   SummarizeOrdering(ordering_ptr, &(summary->inner_iteration_ordering_used));
-
   return inner_iteration_minimizer.release();
 }
 
