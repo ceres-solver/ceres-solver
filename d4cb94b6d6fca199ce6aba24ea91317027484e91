@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U8jMJ0uY",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-23T20:56:25Z",
+      "side": 0,
+      "message": "This whole block is deleted but it looks like it is not replaced?",
+      "revId": "d4cb94b6d6fca199ce6aba24ea91317027484e91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
