@@ -193,7 +193,7 @@ Which is added to the :class:`Problem` as:
 .. code-block:: c++
 
   CostFunction* cost_function =
-    new NumericDiffCostFunction<F4, ceres::CENTRAL, 1, 1, 1>(
+    new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1, 1>(
         new NumericDiffCostFunctor)
   problem.AddResidualBlock(cost_function, NULL, &x);
 
