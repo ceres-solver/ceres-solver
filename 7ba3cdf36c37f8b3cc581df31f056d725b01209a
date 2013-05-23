@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "U8tPQhiA",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-23T21:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "U8lMGVtU",
+      "revId": "7ba3cdf36c37f8b3cc581df31f056d725b01209a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "U8nMDWsQ",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-23T20:56:25Z",
       "side": 1,
       "message": "Shouldn\u0027t the stopping point get recorded?",
+      "revId": "7ba3cdf36c37f8b3cc581df31f056d725b01209a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U8vPVig0",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-23T21:02:00Z",
+      "side": 1,
+      "message": "it is, we report the number of inner iterations in the full report. its always the first n iterations. once this bool becomes false, you never enter this if statement.",
+      "parentUuid": "U8nMDWsQ",
       "revId": "7ba3cdf36c37f8b3cc581df31f056d725b01209a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
