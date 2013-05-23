@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "VAmAscgU",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-23T19:39:35Z",
+      "side": 1,
+      "message": "Actually no; this is an error in our code. I will fix it.",
+      "revId": "ea370cb68455871b6a34b27f87c980aefa8c19aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
