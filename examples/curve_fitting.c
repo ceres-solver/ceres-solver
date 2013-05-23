@@ -135,7 +135,7 @@ int exponential_residual(void* user_data,
     return 1;
   }
   if (jacobians[0] != NULL) {
-    jacobians[0][0] = - m * exp(m * x + c);  /* dr/dm */
+    jacobians[0][0] = - x * exp(m * x + c);  /* dr/dm */
   }
   if (jacobians[1] != NULL) {
     jacobians[1][0] =     - exp(m * x + c);  /* dr/dc */
@@ -144,7 +144,8 @@ int exponential_residual(void* user_data,
 }
 
 int main(int argc, char** argv) {
-  ceres_init(argc, argv);
+  /* Ceres has some internal stuff that needs to get initialized. */
+  ceres_init();
 
   /* Note: Typically it is better to compact m and c into one block,
    * but in this case use separate blocks for illustration. */
@@ -153,13 +154,17 @@ int main(int argc, char** argv) {
   double *parameter_pointers[] = { &m, &c };
   int parameter_sizes[] = { 1, 1 };
 
+  /* Create the problem. */
   ceres_problem_t* problem = ceres_create_problem();
+ 
+  /* Add all the residuals. */
   for (int i = 0; i < num_observations; ++i) {
     ceres_problem_add_residual_block(
         problem,
         exponential_residual,  /* Cost function */
-        NULL,                  /* No loss function */
         &data[2 * i],          /* Points to the (x,y) measurement */
+        NULL,                  /* No loss function */
+        NULL,                  /* No loss function user data */
         1,                     /* Number of residuals */
         2,                     /* Number of parameter blocks */
         parameter_sizes,

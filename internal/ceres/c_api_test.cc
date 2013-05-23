@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,18 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: mierle@gmail.com (Keir Mierle)
 
-#include <glog/logging.h>
-#include "ceres/ceres.h"
+#include "ceres/c_api.h"
 
-using ceres::AutoDiffCostFunction;
-using ceres::CostFunction;
-using ceres::Problem;
-using ceres::Solver;
-using ceres::Solve;
+#include <cmath>
 
-// Data generated using the following octave code.
-//   randn('seed', 23497);
-//   m = 0.3;
-//   c = 0.1;
-//   x=[0:0.075:5];
-//   y = exp(m * x + c);
-//   noise = randn(size(x)) * 0.2;
-//   y_observed = y + noise;
-//   data = [x', y_observed'];
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
-const int kNumObservations = 67;
-const double data[] = {
+// Duplicated from curve_fitting.cc.
+int num_observations = 67;
+double data[] = {
   0.000000e+00, 1.133898e+00,
   7.500000e-02, 1.334902e+00,
   1.500000e-01, 1.213546e+00,
@@ -118,47 +107,113 @@ const double data[] = {
   4.950000e+00, 4.669206e+00,
 };
 
-struct ExponentialResidual {
-  ExponentialResidual(double x, double y)
-      : x_(x), y_(y) {}
+// A test cost function, similar to the one in curve_fitting.c.
+int exponential_residual(void* user_data,
+                         double** parameters,
+                         double* residuals,
+                         double** jacobians) {
+  double* measurement = (double*) user_data;
+  double x = measurement[0];
+  double y = measurement[1];
+  double m = parameters[0][0];
+  double c = parameters[1][0];
 
-  template <typename T> bool operator()(const T* const m,
-                                        const T* const c,
-                                        T* residual) const {
-    residual[0] = T(y_) - exp(m[0] * T(x_) + c[0]);
-    return true;
+  residuals[0] = y - exp(m * x + c);
+  if (jacobians == NULL) {
+    return 1;
+  }
+  if (jacobians[0] != NULL) {
+    jacobians[0][0] = - x * exp(m * x + c);  // dr/dm
+  }
+  if (jacobians[1] != NULL) {
+    jacobians[1][0] =     - exp(m * x + c);  // dr/dc
+  }
+  return 1;
+}
+
+namespace ceres {
+namespace internal {
+
+TEST(C_API, SimpleEndToEndTest) {
+  double m = 0.0;
+  double c = 0.0;
+  double *parameter_pointers[] = { &m, &c };
+  int parameter_sizes[] = { 1, 1 };
+  
+  ceres_problem_t* problem = ceres_create_problem();
+  for (int i = 0; i < num_observations; ++i) {
+    ceres_problem_add_residual_block(
+        problem,
+        exponential_residual,  // Cost function
+        &data[2 * i],          // Points to the (x,y) measurement
+        NULL,                  // Loss function
+        NULL,                  // Loss function user data
+        1,                     // Number of residuals
+        2,                     // Number of parameter blocks
+        parameter_sizes,
+        parameter_pointers);
+  }
+  
+  ceres_solve(problem);
+  
+  EXPECT_NEAR(0.3, m, 0.02);
+  // "c" is less accurately estimated due to the sensitivy of the parameter.
+  EXPECT_NEAR(0.1, c, 0.35);
+}
+
+template<typename T>
+class ScopedSetValue {
+ public:
+  ScopedSetValue(T* variable, T new_value)
+      : variable_(variable), old_value_(*variable) {
+    *variable = new_value;
+  }
+  ~ScopedSetValue() {
+    *variable_ = old_value_;
   }
 
  private:
-  const double x_;
-  const double y_;
+  T* variable_;
+  T old_value_;
 };
-
-int main(int argc, char** argv) {
-  google::InitGoogleLogging(argv[0]);
-
+  
+// TODO(keir): This doesn't pass yet!
+TEST(C_API, LossFunctions) {
   double m = 0.0;
   double c = 0.0;
-
-  Problem problem;
-  for (int i = 0; i < kNumObservations; ++i) {
-    problem.AddResidualBlock(
-        new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
-            new ExponentialResidual(data[2 * i], data[2 * i + 1])),
-        NULL,
-                             
-        &m, &c);
+  double *parameter_pointers[] = { &m, &c };
+  int parameter_sizes[] = { 1, 1 };
+  
+  // Create an outlier or two; but be careful to leave the data intact.
+  ScopedSetValue<double> outlier1x(&data[12], 10e3);
+  ScopedSetValue<double> outlier1y(&data[13], -10e3);
+  ScopedSetValue<double> outlier2x(&data[14], 20e3);
+  ScopedSetValue<double> outlier2y(&data[15], 30e3);
+  
+  // Create a cauchy cost function, and reuse it many times.
+  char cauchy[] = "cauchy";  // Avoid const issue.
+  void* cauchy_loss_data = ceres_create_stock_loss_function(cauchy, 1.0, 0.0);
+  
+  ceres_problem_t* problem = ceres_create_problem();
+  for (int i = 0; i < num_observations; ++i) {
+    ceres_problem_add_residual_block(
+        problem,
+        exponential_residual,  // Cost function
+        &data[2 * i],          // Points to the (x,y) measurement
+        ceres_stock_loss_function,
+        cauchy_loss_data,      // Loss function user data
+        1,                     // Number of residuals
+        2,                     // Number of parameter blocks
+        parameter_sizes,
+        parameter_pointers);
   }
-
-  Solver::Options options;
-  options.max_num_iterations = 25;
-  options.linear_solver_type = ceres::DENSE_QR;
-  options.minimizer_progress_to_stdout = true;
-
-  Solver::Summary summary;
-  Solve(options, &problem, &summary);
-  std::cout << summary.BriefReport() << "\n";
-  std::cout << "Initial m: " << 0.0 << " c: " << 0.0 << "\n";
-  std::cout << "Final   m: " << m << " c: " << c << "\n";
-  return 0;
+  
+  ceres_solve(problem);
+  
+  EXPECT_NEAR(0.3, m, 0.02);
+  // "c" is less accurately estimated due to the sensitivy of the parameter.
+  EXPECT_NEAR(0.1, c, 0.35);
 }
+
+}  // namespace internal
+}  // namespace ceres
