@@ -32,10 +32,13 @@
 //
 // TODO(keir): Figure out why logging does not seem to work.
 
-#include <vector>
-#include <iostream>  // XXX remove me
 #include "ceres/c_api.h"
+
+#include <vector>
+#include <iostream>
+#include <string>
 #include "ceres/cost_function.h"
+#include "ceres/loss_function.h"
 #include "ceres/problem.h"
 #include "ceres/solver.h"
 #include "ceres/types.h"  // for std
@@ -57,6 +60,8 @@ void ceres_free_problem(ceres_problem_t* problem) {
   delete reinterpret_cast<Problem*>(problem);
 }
 
+// This cost function wraps a C-level function pointer from the user, to bridge
+// between C and C++.
 class CallbackCostFunction : public ceres::CostFunction {
  public:
   CallbackCostFunction(ceres_cost_function_t cost_function,
@@ -88,11 +93,56 @@ class CallbackCostFunction : public ceres::CostFunction {
   void* user_data_;
 };
 
+// This loss function wraps a C-level function pointer from the user, to bridge
+// between C and C++.
+class CallbackLossFunction : public ceres::LossFunction {
+ public:
+  explicit CallbackLossFunction(ceres_loss_function_t loss_function,
+                                void* user_data)
+    : loss_function_(loss_function), user_data_(user_data) {}
+  virtual void Evaluate(double sq_norm, double* rho) const {
+    (*loss_function_)(user_data_, sq_norm, rho);
+  }
+
+ private:
+  ceres_loss_function_t loss_function_;
+  void* user_data_;
+};
+
+void* ceres_create_stock_loss_function(char* loss_function_type,
+                                       double arg1,
+                                       double arg2) {
+  // This lookup is inefficent, but since C API users will be doing other
+  // hilariously slow things anyway, don't bother optimizing.
+  ceres::string loss_type = loss_function_type;
+  if (loss_type == "huber"   ) { return new ceres::HuberLoss   (arg1);       }
+  if (loss_type == "softl1"  ) { return new ceres::SoftLOneLoss(arg1);       }
+  if (loss_type == "cauchy"  ) { return new ceres::CauchyLoss  (arg1);       }
+  if (loss_type == "arctan"  ) { return new ceres::ArctanLoss  (arg1);       }
+  if (loss_type == "tolerant") { return new ceres::TolerantLoss(arg1, arg2); }
+
+  // Don't crash, since this function might be invoked at, for example, an
+  // interactive Python prompt.
+  LOG(ERROR) << "Invalid loss function type: " << loss_type;
+  return NULL;
+}
+
+void ceres_stock_loss_function(void* user_data,
+                               double squared_norm,
+                               double out[3]) {
+  // Dummy function; never called! The address of this function is used as a
+  // sentinel value to detect when the user is passing a "stock" cost function
+  // into the C API.
+  LOG(FATAL) << "Congratulations; you've found a Ceres bug! Please report this "
+             << "to the mailing list. Thanks!";
+}
+
 ceres_residual_block_id_t* ceres_problem_add_residual_block(
     ceres_problem_t* problem,
     ceres_cost_function_t cost_function,
+    void* cost_function_user_data,
     ceres_loss_function_t loss_function,
-    void* user_data,
+    void* loss_function_user_data,
     int num_residuals,
     int num_parameter_blocks,
     int* parameter_block_sizes,
@@ -101,16 +151,29 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
 
   ceres::CostFunction* callback_cost_function =
       new CallbackCostFunction(cost_function,
-                               user_data,
+                               cost_function_user_data,
                                num_residuals,
                                num_parameter_blocks,
                                parameter_block_sizes);
+
+  ceres::LossFunction* callback_loss_function = NULL;
+  if (loss_function == ceres_stock_loss_function) {
+    // If the user is passing in the stock loss function as the callback, then
+    // don't bother making a pointless extra layer of wrapping; just pass the
+    // cost function directly to the problem.
+    callback_loss_function =
+        reinterpret_cast<ceres::LossFunction*>(loss_function_user_data);
+  } else if (loss_function != NULL) {
+    // Otherwise, the user is passing in a custom loss function, so wrap it.
+    callback_loss_function = new CallbackLossFunction(loss_function,
+                                                      loss_function_user_data);
+  }
 
   std::vector<double*> parameter_blocks(parameters,
                                         parameters + num_parameter_blocks);
   return reinterpret_cast<ceres_residual_block_id_t*>(
       ceres_problem->AddResidualBlock(callback_cost_function,
-                                      NULL, /* Ignore loss for now */
+                                      callback_loss_function,
                                       parameter_blocks));
 }
 
@@ -121,7 +184,7 @@ void ceres_solve(ceres_problem_t* c_problem) {
   // Instead, figure out a way to specify some of the options without
   // duplicating everything.
   ceres::Solver::Options options;
-  options.max_num_iterations = 25;
+  options.max_num_iterations = 100;
   options.linear_solver_type = ceres::DENSE_QR;
   options.minimizer_progress_to_stdout = true;
 
