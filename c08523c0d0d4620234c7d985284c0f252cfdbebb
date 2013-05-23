@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U53gBWHw",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "isn\u0027t the convention here to have these names be uppercase strings, to go with ENUM naming?",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U51gEnI0",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "no need to left indent the arguments?",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U57j74GE",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "I think these memory semantics are going to be trouble some. for example, cost function pointers are not taken ownership of, but loss functions are?\n\nwhat about the case where the user creates his own loss function, do you still take ownership? and destroy it?\n\nI think we are headed in the direction of \n\nceres_free() for stuff that ceres allocated for you, which you can consistently use on pointers ceres gives you. you are on your own for stuff you allocated yourself.",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U55j.JFI",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "don\u0027t use the word \"stock\"",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U5xhJNOk",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "won\u0027t your life is be simpler if you did not do special gymnastics with ceres_stock_loss_function and instead made it actually behave like the user\u0027s loss function, as in have it apply the LossFunction being carried around in the loss_function_user_data.\n\nThat way you always create a callbacklossfunction, and you always dispose off that memory. no memory special casing the one you have in the c_api documentation which would be very easy to screw up.\n\nThe loss_function_user_data should technically be disposed off by the user, since we don\u0027t normally take ownership of that data -- except in the case of stock loss function.",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U5-hDqMc",
+        "filename": "internal/ceres/c_api_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-23T13:27:23Z",
+      "side": 1,
+      "message": "err what? 0.35?? why not just hard code the values you get from curve_fitting.cc ?",
+      "revId": "c08523c0d0d4620234c7d985284c0f252cfdbebb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
