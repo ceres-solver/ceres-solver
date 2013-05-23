@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "U8lMGVtU",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-23T20:56:25Z",
+      "side": 1,
+      "message": "Drop blank.\n\nCreateIIM? Please fix the name",
+      "revId": "7ba3cdf36c37f8b3cc581df31f056d725b01209a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U8nMDWsQ",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-23T20:56:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the stopping point get recorded?",
+      "revId": "7ba3cdf36c37f8b3cc581df31f056d725b01209a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
