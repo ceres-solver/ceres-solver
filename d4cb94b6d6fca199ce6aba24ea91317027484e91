@@ -16,6 +16,24 @@
       "revId": "d4cb94b6d6fca199ce6aba24ea91317027484e91",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "U8rPLAnI",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-23T21:02:00Z",
+      "side": 0,
+      "message": "notice the if statement change above, it was overlapping with the trust region minimizer stuff, so now instead of repeating, we just reuse things.",
+      "parentUuid": "U8jMJ0uY",
+      "revId": "d4cb94b6d6fca199ce6aba24ea91317027484e91",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
