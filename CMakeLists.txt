@@ -615,8 +615,8 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
     ENDIF (BUILD_ANDROID)
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
   IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    # Use of -O4 requires use of gold linker & LLVM-gold plugin, which might 
-    # well not be present / in use and without which files will compile, but 
+    # Use of -O4 requires use of gold linker & LLVM-gold plugin, which might
+    # well not be present / in use and without which files will compile, but
     # not link ('file not recognized') so explicitly check for support
     INCLUDE(CheckCXXCompilerFlag)
     CHECK_CXX_COMPILER_FLAG("-O4" HAVE_LTO_SUPPORT)
@@ -663,10 +663,13 @@ IF (MSVC)
   ADD_DEFINITIONS("-D_VARIADIC_MAX=10")
 ENDIF (MSVC)
 
-# GCC is not strict enough by default, so enable most of the warnings.
 IF (UNIX)
+  # GCC is not strict enough by default, so enable most of the warnings.
   SET(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter")
+    "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter")
+
+  # GCC needs to be run in C99 mode to deal with loop variables correctly.
+  SET(CMAKE_CC_FLAGS "${CMAKE_CC_FLAGS} -std=c99")
 ENDIF (UNIX)
 
 # Use a larger inlining threshold for Clang, since it hobbles Eigen,
