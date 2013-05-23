@@ -378,7 +378,7 @@ having to touch the problem once it has been successfuly modeling.
    subclass of :class:`CostFunction` such that the
    :func:`CostFunction::Evaluate` function ignores the ``jacobians``
    parameter. The numeric differentiation wrapper will fill in the
-   jacobian parameter if nececssary by repeatedly calling the
+   jacobian parameter if necessary by repeatedly calling the
    :func:`CostFunction::Evaluate` with small changes to the
    appropriate parameters, and computing the slope. For performance,
    the numeric differentiation wrapper class is templated on the

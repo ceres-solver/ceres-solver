@@ -554,7 +554,7 @@ instance of this object responsible for each image observation.
 
 Each residual in a BAL problem depends on a three dimensional point
 and a nine parameter camera. The nine parameters defining the camera
-can are: Three for rotation as a Rodriquez axis-angle vector, three
+are: three for rotation as a Rodriques' axis-angle vector, three
 for translation, one for focal length and two for radial distortion.
 The details of this camera model can be found the `Bundler homepage
 <http://phototour.cs.washington.edu/bundler/>`_ and the `BAL homepage
