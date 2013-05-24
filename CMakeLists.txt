@@ -712,13 +712,11 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
 ADD_CUSTOM_TARGET(uninstall
                   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)
 
-# Set up install directories. INCLUDE_INSTALL_DIR and LIB_INSTALL_DIR
-# must not be absolute paths.
-SET(LIB_INSTALL_DIR_SUFFIX "" CACHE
-    STRING "The directories where to install libraries to")
-SET(LIB_INSTALL_DIR lib${LIB_INSTALL_DIR_SUFFIX} )
-SET(CMAKECONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/Ceres)
+# Set up install directories. INCLUDE_INSTALL_DIR, LIB_INSTALL_DIR and
+# CMAKECONFIG_INSTALL_DIR must not be absolute paths.
 SET(INCLUDE_INSTALL_DIR include)
+SET(LIB_INSTALL_DIR lib)
+SET(CMAKECONFIG_INSTALL_DIR share/Ceres)
 
 # This "exports" all targets which have been put into the export set
 # "CeresExport". This means that CMake generates a file with the given
