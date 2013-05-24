@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "VAtST-N0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-24T02:46:07Z",
+      "side": 1,
+      "message": "reorder the set commands,\n\ninclude, \nlib and the cmakeconfig\nalso get rid of the spurious blank lines.",
+      "revId": "c542003fbe4bb94f9c2d841174f44466d9a7126a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
