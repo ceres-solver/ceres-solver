@@ -16,6 +16,24 @@
       "revId": "c542003fbe4bb94f9c2d841174f44466d9a7126a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VAlRZLHA",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-05-24T02:56:10Z",
+      "side": 1,
+      "message": "This is strange I didn\u0027t add any blank line",
+      "parentUuid": "VAtST-N0",
+      "revId": "c542003fbe4bb94f9c2d841174f44466d9a7126a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
