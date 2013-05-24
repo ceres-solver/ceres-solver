@@ -155,7 +155,8 @@ int main(int argc, char** argv) {
   int parameter_sizes[] = { 1, 1 };
 
   ceres_problem_t* problem = ceres_create_problem();
-  for (int i = 0; i < num_observations; ++i) {
+  int i;
+  for (i = 0; i < num_observations; ++i) {
     ceres_problem_add_residual_block(
         problem,
         exponential_residual,  /* Cost function */
