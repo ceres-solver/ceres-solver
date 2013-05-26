@@ -29,17 +29,20 @@ that is used to reduce the influence of outliers on the solution of
 non-linear least squares problems.
 
 In this chapter we will describe the various classes that are part of
-Ceres Solver's modeling API, and how they can be used to construct
-optimization.
-
-Once a problem has been constructed, various methods for solving them
-will be discussed in :ref:`chapter-solving`. It is by design that the
-modeling and the solving APIs are orthogonal to each other. This
-enables easy switching/tweaking of various solver parameters without
-having to touch the problem once it has been successfuly modeling.
+Ceres Solver's modeling API, and how they can be used to construct an
+optimization problem. Once a problem has been constructed, various
+methods for solving them will be discussed in
+:ref:`chapter-solving`. It is by design that the modeling and the
+solving APIs are orthogonal to each other. This enables
+switching/tweaking of various solver parameters without having to
+touch the problem once it has been successfuly modeled.
 
 :class:`CostFunction`
 ---------------------
+
+The single biggest task when modeling a problem is specifying the
+residuals and their derivatives. This is done using
+:class:`CostFunction` objects.
 
 .. class:: CostFunction
 
@@ -66,7 +69,7 @@ having to touch the problem once it has been successfuly modeling.
 
    .. math:: J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},...,x_{i_k}\right),\quad \forall j \in \{i_1,..., i_k\}
 
-   The signature of the class:`CostFunction` (number and sizes of
+   The signature of the :class:`CostFunction` (number and sizes of
    input parameter blocks and number of outputs) is stored in
    :member:`CostFunction::parameter_block_sizes_` and
    :member:`CostFunction::num_residuals_` respectively. User code
@@ -77,17 +80,15 @@ having to touch the problem once it has been successfuly modeling.
 
 .. function:: bool CostFunction::Evaluate(double const* const* parameters, double* residuals, double** jacobians)
 
-   This is the key methods. It implements the residual and Jacobian
-   computation.
+   Compute the residual vector and the Jacobian matrices.
 
    ``parameters`` is an array of pointers to arrays containing the
-   various parameter blocks. parameters has the same number of
-   elements as :member:`CostFunction::parameter_block_sizes_`.
-   Parameter blocks are in the same order as
+   various parameter blocks. ``parameters`` has the same number of
+   elements as :member:`CostFunction::parameter_block_sizes_` and the
+   parameter blocks are in the same order as
    :member:`CostFunction::parameter_block_sizes_`.
 
    ``residuals`` is an array of size ``num_residuals_``.
-
 
    ``jacobians`` is an array of size
    :member:`CostFunction::parameter_block_sizes_` containing pointers
@@ -105,7 +106,7 @@ having to touch the problem once it has been successfuly modeling.
    this is the case when computing cost only. If ``jacobians[i]`` is
    ``NULL``, then the Jacobian matrix corresponding to the
    :math:`i^{\textrm{th}}` parameter block must not be returned, this
-   is the case when the a parameter block is marked constant.
+   is the case when a parameter block is marked constant.
 
    **NOTE** The return value indicates whether the computation of the
    residuals and/or jacobians was successful or not.
@@ -132,10 +133,10 @@ having to touch the problem once it has been successfuly modeling.
 .. class:: SizedCostFunction
 
    If the size of the parameter blocks and the size of the residual
-   vector is known at compile time (this is the common case), Ceres
-   provides :class:`SizedCostFunction`, where these values can be
-   specified as template parameters. In this case the user only needs
-   to implement the :func:`CostFunction::Evaluate`.
+   vector is known at compile time (this is the common case),
+   :class:`SizeCostFunction` can be used where these values can be
+   specified as template parameters and the user only needs to
+   implement :func:`CostFunction::Evaluate`.
 
    .. code-block:: c++
 
@@ -155,9 +156,28 @@ having to touch the problem once it has been successfuly modeling.
 
 .. class:: AutoDiffCostFunction
 
-   But even defining the :class:`SizedCostFunction` can be a tedious
-   affair if complicated derivative computations are involved. To this
-   end Ceres provides automatic differentiation.
+   Defining a :class:`CostFunction` or a :class:`SizedCostFunction`
+   can be a tedious and error prone especially when computing
+   derivatives.  To this end Ceres provides `automatic differentiation
+   <http://en.wikipedia.org/wiki/Automatic_differentiation>`_.
+
+   .. code-block:: c++
+
+     template <typename CostFunctor,
+            int M,        // Number of residuals, or ceres::DYNAMIC.
+            int N0,       // Number of parameters in block 0.
+            int N1 = 0,   // Number of parameters in block 1.
+            int N2 = 0,   // Number of parameters in block 2.
+            int N3 = 0,   // Number of parameters in block 3.
+            int N4 = 0,   // Number of parameters in block 4.
+            int N5 = 0,   // Number of parameters in block 5.
+            int N6 = 0,   // Number of parameters in block 6.
+            int N7 = 0,   // Number of parameters in block 7.
+            int N8 = 0,   // Number of parameters in block 8.
+            int N9 = 0>   // Number of parameters in block 9.
+     class AutoDiffCostFunction : public
+     SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+     };
 
    To get an auto differentiated cost function, you must define a
    class with a templated ``operator()`` (a functor) that computes the
@@ -234,9 +254,9 @@ having to touch the problem once it has been successfuly modeling.
    computing a 1-dimensional output from two arguments, both
    2-dimensional.
 
-   The framework can currently accommodate cost functions of up to 6
-   independent variables, and there is no limit on the dimensionality of
-   each of them.
+   The framework can currently accommodate cost functions of up to 10
+   independent variables, and there is no limit on the dimensionality
+   of each of them.
 
    **WARNING 1** Since the functor will get instantiated with
    different types for ``T``, you must convert from other numeric
@@ -253,12 +273,75 @@ having to touch the problem once it has been successfuly modeling.
    as the last template argument.
 
 
+:class:`DynamicAutoDiffCostFunction`
+------------------------------------
+
+.. class:: DynamicAutoDiffCostFunction
+
+   :class:`AutoDiffCostFunction` requires that the number of parameter
+   blocks and their sizes be known at compile time. It also has an
+   upper limit of 10 parameter blocks. In a number of applications,
+   this is not enough.
+
+     .. code-block:: c++
+
+      template <typename CostFunctor, int Stride = 4>
+      class DynamicAutoDiffCostFunction : public CostFunction {
+      };
+
+
+   In such cases :class:`DynamicAutoDiffCostFunction` can be
+   used. Like :class:`AutoDiffCostFunction` the user must define a
+   templated functor, but the signature of the functor differs
+   lightly. The expected interface for the cost functors is:
+
+
+     .. code-block:: c++
+
+       struct MyCostFunctor {
+         template<typename T>
+         bool operator()(T const* const* parameters, T* residuals) const {
+         }
+       }
+
+   Since the sizing of the parameters is done at runtime, you must
+   also specify the sizes after creating the dynamic autodiff cost
+   function. For example:
+
+     .. code-block:: c++
+
+       DynamicAutoDiffCostFunction<MyCostFunctor, 4> cost_function(
+           new MyCostFunctor());
+       cost_function.AddParameterBlock(5);
+       cost_function.AddParameterBlock(10);
+       cost_function.SetNumResiduals(21);
+
+   Under the hood, the implementation evaluates the cost function
+   multiple times, computing a small set of the derivatives (four by
+   default, controlled by the ``Stride`` template parameter) with each
+   pass. There is a performance tradeoff with the size of the passes;
+   Smaller sizes are more cache efficient but result in larger number
+   of passes, and larger stride lengths can destroy cache-locality
+   while reducing the number of passes over the cost function. The
+   optimal value depends on the number and sizes of the various
+   parameter blocks.
+
+   As a rule of thumb, try using :class:`AutoDiffCostFunction` before
+   you use :class:`DynamicAutoDiffCostFunction`.
+
 :class:`NumericDiffCostFunction`
 --------------------------------
 
 .. class:: NumericDiffCostFunction
 
-   .. code-block:: c++
+  In some cases, its not possible to define a templated cost functor,
+  for example when the evaluation of the residual involves a call to a
+  library function that you do not have control over.  In such a
+  situation, `numerical differentiation
+  <http://en.wikipedia.org/wiki/Numerical_differentiation>`_ can be
+  used.
+
+    .. code-block:: c++
 
       template <typename CostFunctionNoJacobian,
                 NumericDiffMethod method = CENTRAL, int M = 0,
@@ -267,12 +350,6 @@ having to touch the problem once it has been successfuly modeling.
       class NumericDiffCostFunction
         : public SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
       };
-
-
-   Create a :class:`CostFunction` as needed by the least squares
-   framework with jacobians computed via numeric (a.k.a. finite)
-   differentiation. For more details see
-   http://en.wikipedia.org/wiki/Numerical_differentiation.
 
    To get an numerically differentiated :class:`CostFunction`, you
    must define a class with a ``operator()`` (a functor) that computes
@@ -398,161 +475,18 @@ having to touch the problem once it has been successfuly modeling.
    sizes 4 and 8 respectively. Look at the tests for a more detailed
    example.
 
-
-:class:`NormalPrior`
---------------------
-
-.. class:: NormalPrior
-
-   .. code-block:: c++
-
-     class NormalPrior: public CostFunction {
-      public:
-       // Check that the number of rows in the vector b are the same as the
-       // number of columns in the matrix A, crash otherwise.
-       NormalPrior(const Matrix& A, const Vector& b);
-
-       virtual bool Evaluate(double const* const* parameters,
-                             double* residuals,
-                             double** jacobians) const;
-      };
-
-   Implements a cost function of the form
-
-   .. math::  cost(x) = ||A(x - b)||^2
-
-   where, the matrix A and the vector b are fixed and x is the
-   variable. In case the user is interested in implementing a cost
-   function of the form
-
-  .. math::  cost(x) = (x - \mu)^T S^{-1} (x - \mu)
-
-  where, :math:`\mu` is a vector and :math:`S` is a covariance matrix,
-  then, :math:`A = S^{-1/2}`, i.e the matrix :math:`A` is the square
-  root of the inverse of the covariance, also known as the stiffness
-  matrix. There are however no restrictions on the shape of
-  :math:`A`. It is free to be rectangular, which would be the case if
-  the covariance matrix :math:`S` is rank deficient.
-
-
-:class:`ConditionedCostFunction`
---------------------------------
-
-.. class:: ConditionedCostFunction
-
-   This class allows you to apply different conditioning to the residual
-   values of a wrapped cost function. An example where this is useful is
-   where you have an existing cost function that produces N values, but you
-   want the total cost to be something other than just the sum of these
-   squared values - maybe you want to apply a different scaling to some
-   values, to change their contribution to the cost.
-
-   Usage:
-
-   .. code-block:: c++
-
-       //  my_cost_function produces N residuals
-       CostFunction* my_cost_function = ...
-       CHECK_EQ(N, my_cost_function->num_residuals());
-       vector<CostFunction*> conditioners;
-
-       //  Make N 1x1 cost functions (1 parameter, 1 residual)
-       CostFunction* f_1 = ...
-       conditioners.push_back(f_1);
-
-       CostFunction* f_N = ...
-       conditioners.push_back(f_N);
-       ConditionedCostFunction* ccf =
-         new ConditionedCostFunction(my_cost_function, conditioners);
-
-
-   Now ``ccf`` 's ``residual[i]`` (i=0..N-1) will be passed though the
-   :math:`i^{\text{th}}` conditioner.
-
-   .. code-block:: c++
-
-      ccf_residual[i] = f_i(my_cost_function_residual[i])
-
-   and the Jacobian will be affected appropriately.
-
-:class:`CostFunctionToFunctor`
-------------------------------
-
-.. class:: CostFunctionToFunctor
-
-   :class:`CostFunctionToFunctor` is an adapter class that allows users to use
-   :class:`CostFunction` objects in templated functors which are to be used for
-   automatic differentiation.  This allows the user to seamlessly mix
-   analytic, numeric and automatic differentiation.
-
-   For example, let us assume that
-
-   .. code-block:: c++
-
-     class IntrinsicProjection : public SizedCostFunction<2, 5, 3> {
-       public:
-         IntrinsicProjection(const double* observations);
-         virtual bool Evaluate(double const* const* parameters,
-                               double* residuals,
-                               double** jacobians) const;
-     };
-
-   is a :class:`CostFunction` that implements the projection of a
-   point in its local coordinate system onto its image plane and
-   subtracts it from the observed point projection. It can compute its
-   residual and either via analytic or numerical differentiation can
-   compute its jacobians.
-
-   Now we would like to compose the action of this
-   :class:`CostFunction` with the action of camera extrinsics, i.e.,
-   rotation and translation. Say we have a templated function
-
-   .. code-block:: c++
-
-      template<typename T>
-      void RotateAndTranslatePoint(const T* rotation,
-                                   const T* translation,
-                                   const T* point,
-                                   T* result);
-
-
-   Then we can now do the following,
-
-   .. code-block:: c++
-
-    struct CameraProjection {
-      CameraProjection(double* observation) {
-        intrinsic_projection_.reset(
-            new CostFunctionToFunctor<2, 5, 3>(new IntrinsicProjection(observation_)));
-      }
-      template <typename T>
-      bool operator()(const T* rotation,
-                      const T* translation,
-                      const T* intrinsics,
-                      const T* point,
-                      T* residual) const {
-        T transformed_point[3];
-        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
-
-        //   Note that we call intrinsic_projection_, just like it was
-        //   any other templated functor.
-        return (*intrinsic_projection_)(intrinsics, transformed_point, residual);
-      }
-
-     private:
-      scoped_ptr<CostFunctionToFunctor<2,5,3> > intrinsic_projection_;
-    };
-
-
 :class:`NumericDiffFunctor`
 ---------------------------
 
 .. class:: NumericDiffFunctor
 
-   A wrapper class that takes a variadic functor evaluating a
-   function, numerically differentiates it and makes it available as a
-   templated functor so that it can be easily used as part of Ceres'
-   automatic differentiation framework.
+   Sometimes parts of a cost function can be differentiated
+   automatically or analytically but others require numeric
+   differentiation. :class:`NumericDiffFunctor` is a wrapper class
+   that takes a variadic functor evaluating a function, numerically
+   differentiates it and makes it available as a templated functor so
+   that it can be easily used as part of Ceres' automatic
+   differentiation framework.
 
    For example, let us assume that
 
@@ -625,6 +559,158 @@ having to touch the problem once it has been successfuly modeling.
    ``cost_function`` now seamlessly integrates automatic
    differentiation of ``RotateAndTranslatePoint`` with a numerically
    differentiated version of ``IntrinsicProjection``.
+
+
+:class:`CostFunctionToFunctor`
+------------------------------
+
+.. class:: CostFunctionToFunctor
+
+   Just like :class:`NumericDiffFunctor` allows numeric
+   differentiation to be mixed with automatic differentiation,
+   :class:`CostFunctionToFunctor` provides an even more general
+   mechanism.  :class:`CostFunctionToFunctor` is an adapter class that
+   allows users to use :class:`CostFunction` objects in templated
+   functors which are to be used for automatic differentiation.  This
+   allows the user to seamlessly mix analytic, numeric and automatic
+   differentiation.
+
+   For example, let us assume that
+
+   .. code-block:: c++
+
+     class IntrinsicProjection : public SizedCostFunction<2, 5, 3> {
+       public:
+         IntrinsicProjection(const double* observations);
+         virtual bool Evaluate(double const* const* parameters,
+                               double* residuals,
+                               double** jacobians) const;
+     };
+
+   is a :class:`CostFunction` that implements the projection of a
+   point in its local coordinate system onto its image plane and
+   subtracts it from the observed point projection. It can compute its
+   residual and either via analytic or numerical differentiation can
+   compute its jacobians.
+
+   Now we would like to compose the action of this
+   :class:`CostFunction` with the action of camera extrinsics, i.e.,
+   rotation and translation. Say we have a templated function
+
+   .. code-block:: c++
+
+      template<typename T>
+      void RotateAndTranslatePoint(const T* rotation,
+                                   const T* translation,
+                                   const T* point,
+                                   T* result);
+
+
+   Then we can now do the following,
+
+   .. code-block:: c++
+
+    struct CameraProjection {
+      CameraProjection(double* observation) {
+        intrinsic_projection_.reset(
+            new CostFunctionToFunctor<2, 5, 3>(new IntrinsicProjection(observation_)));
+      }
+      template <typename T>
+      bool operator()(const T* rotation,
+                      const T* translation,
+                      const T* intrinsics,
+                      const T* point,
+                      T* residual) const {
+        T transformed_point[3];
+        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
+
+        //   Note that we call intrinsic_projection_, just like it was
+        //   any other templated functor.
+        return (*intrinsic_projection_)(intrinsics, transformed_point, residual);
+      }
+
+     private:
+      scoped_ptr<CostFunctionToFunctor<2,5,3> > intrinsic_projection_;
+    };
+
+
+
+:class:`ConditionedCostFunction`
+--------------------------------
+
+.. class:: ConditionedCostFunction
+
+   This class allows you to apply different conditioning to the residual
+   values of a wrapped cost function. An example where this is useful is
+   where you have an existing cost function that produces N values, but you
+   want the total cost to be something other than just the sum of these
+   squared values - maybe you want to apply a different scaling to some
+   values, to change their contribution to the cost.
+
+   Usage:
+
+   .. code-block:: c++
+
+       //  my_cost_function produces N residuals
+       CostFunction* my_cost_function = ...
+       CHECK_EQ(N, my_cost_function->num_residuals());
+       vector<CostFunction*> conditioners;
+
+       //  Make N 1x1 cost functions (1 parameter, 1 residual)
+       CostFunction* f_1 = ...
+       conditioners.push_back(f_1);
+
+       CostFunction* f_N = ...
+       conditioners.push_back(f_N);
+       ConditionedCostFunction* ccf =
+         new ConditionedCostFunction(my_cost_function, conditioners);
+
+
+   Now ``ccf`` 's ``residual[i]`` (i=0..N-1) will be passed though the
+   :math:`i^{\text{th}}` conditioner.
+
+   .. code-block:: c++
+
+      ccf_residual[i] = f_i(my_cost_function_residual[i])
+
+   and the Jacobian will be affected appropriately.
+
+
+:class:`NormalPrior`
+--------------------
+
+.. class:: NormalPrior
+
+   .. code-block:: c++
+
+     class NormalPrior: public CostFunction {
+      public:
+       // Check that the number of rows in the vector b are the same as the
+       // number of columns in the matrix A, crash otherwise.
+       NormalPrior(const Matrix& A, const Vector& b);
+
+       virtual bool Evaluate(double const* const* parameters,
+                             double* residuals,
+                             double** jacobians) const;
+      };
+
+   Implements a cost function of the form
+
+   .. math::  cost(x) = ||A(x - b)||^2
+
+   where, the matrix A and the vector b are fixed and x is the
+   variable. In case the user is interested in implementing a cost
+   function of the form
+
+  .. math::  cost(x) = (x - \mu)^T S^{-1} (x - \mu)
+
+  where, :math:`\mu` is a vector and :math:`S` is a covariance matrix,
+  then, :math:`A = S^{-1/2}`, i.e the matrix :math:`A` is the square
+  root of the inverse of the covariance, also known as the stiffness
+  matrix. There are however no restrictions on the shape of
+  :math:`A`. It is free to be rectangular, which would be the case if
+  the covariance matrix :math:`S` is rank deficient.
+
 
 
 :class:`LossFunction`
