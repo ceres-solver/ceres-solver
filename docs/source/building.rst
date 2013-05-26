@@ -4,8 +4,10 @@
 Building Ceres Solver
 =====================
 
-Ceres source code and documentation are hosted at `code.google.com
-<http://code.google.com/p/ceres-solver/>`_.
+Stable Ceres Solver releases are available for download at
+`code.google.com <http://code.google.com/p/ceres-solver/>`_. For the
+more adventurous, the git repository is hosted on `Gerrit
+<https://ceres-solver-review.googlesource.com/>`_.
 
 .. _section-dependencies:
 
@@ -37,7 +39,7 @@ strongly recommend building the library with gflags.
 5. `SuiteSparse
 <http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_ is used for
 sparse matrix analysis, ordering and factorization. In particular
-Ceres uses the AMD, COLAMD and CHOLMOD libraries. This is an optional
+Ceres uses the AMD, CAMD, COLAMD and CHOLMOD libraries. This is an optional
 dependency.
 
 6. `CXSparse <http://www.cise.ufl.edu/research/sparse/CXSparse/>`_ is
@@ -92,8 +94,7 @@ platform. Start by installing all the dependencies.
      # protobuf
      sudo apt-get install libprotobuf-dev
 
-We are now ready to build and test Ceres. Note that ``CMake`` requires
-the exact path to the ``libglog.a`` and ``libgflag.a``.
+We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
@@ -110,8 +111,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster \
-   ../ceres-solver-1.6.0/data/problem-16-22106-pre.txt \
+ bin/simple_bundle_adjuster ../ceres-solver-1.6.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -172,9 +172,10 @@ Building on Mac OS X
 ====================
 
 On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager. Start by
-installing all the dependencies. OS X ships with well optimized BLAS
-and LAPACK routines as part of the `vecLib
+<http://mxcl.github.com/homebrew/>`_ package manager to install the
+dependencies. There is no need to install ``BLAS`` or ``LAPACK``
+separately as OS X ships with optimized ``BLAS`` and ``LAPACK``
+routines as part of the `vecLib
 <https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
 framework.
 
