@@ -29,14 +29,13 @@ that is used to reduce the influence of outliers on the solution of
 non-linear least squares problems.
 
 In this chapter we will describe the various classes that are part of
-Ceres Solver's modeling API, and how they can be used to construct
-optimization.
-
-Once a problem has been constructed, various methods for solving them
-will be discussed in :ref:`chapter-solving`. It is by design that the
-modeling and the solving APIs are orthogonal to each other. This
-enables easy switching/tweaking of various solver parameters without
-having to touch the problem once it has been successfuly modeling.
+Ceres Solver's modeling API, and how they can be used to construct an
+optimization problem. Once a problem has been constructed, various
+methods for solving them will be discussed in
+:ref:`chapter-solving`. It is by design that the modeling and the
+solving APIs are orthogonal to each other. This enables easy
+switching/tweaking of various solver parameters without having to
+touch the problem once it has been successfuly modeling.
 
 :class:`CostFunction`
 ---------------------
@@ -251,6 +250,14 @@ having to touch the problem once it has been successfuly modeling.
    parameter for *every parameter block*. In the example above, that
    would be ``<MyScalarCostFunction, 1, 2>``, which is missing the 2
    as the last template argument.
+
+
+:class:`DynamicAutoDiffCostFunction`
+------------------------------------
+
+:class:`DynamicAutoDiffCostFunction`
+
+TBD
 
 
 :class:`NumericDiffCostFunction`

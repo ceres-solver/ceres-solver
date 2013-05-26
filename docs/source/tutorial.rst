@@ -221,11 +221,9 @@ Analytic Derivatives
 --------------------
 
 In some cases, using automatic differentiation is not possible. For
-example, Ceres currently does not support automatic differentiation of
-functors with dynamically sized parameter blocks. Or it may be the
-case that it is more efficient to compute the derivatives in closed
-form instead of relying on the chain rule used by the automatic
-differentition code.
+example, it may be the case that it is more efficient to compute the
+derivatives in closed form instead of relying on the chain rule used
+by the automatic differentition code.
 
 In such cases, it is possible to supply your own residual and jacobian
 computation code. To do this, define a subclass of
@@ -268,6 +266,20 @@ unless you have a good reason to manage the jacobian computation
 yourself, you use :class:`AutoDiffCostFunction` or
 :class:`NumericDiffCostFunction` to construct your residual blocks.
 
+More About Derivatives
+----------------------
+
+Computing derivatives is by far the most complicated part of using
+Ceres, and depending on the circumstance the user may more
+sophisticated ways of computing derivatives. This section just
+scratches the surface of how derivatives can be supplied to
+Ceres. Once you are comfortable with using
+:class:`NumericDiffCostFunction` and :class:`AutoDiffCostFunction` we
+recommend taking a look at :class:`DynamicAutoDiffCostFunction`,
+:class:`CostFunctionToFunctor`, :class:`NumericDiffFunctor` and
+:class:`ConditionedCostFunction` for more advanced ways of
+constructing and computing cost functions.
+
 .. rubric:: Footnotes
 
 .. [#f3] `examples/helloworld_numeric_diff.cc
@@ -285,7 +297,6 @@ Powell's Function
 Consider now a slightly more complicated example -- the minimization
 of Powell's function. Let :math:`x = \left[x_1, x_2, x_3, x_4 \right]`
 and
-
 
 .. math::
 
@@ -342,9 +353,7 @@ respectively. Using these, the problem can be constructed as follows:
 
 Note that each ``ResidualBlock`` only depends on the two parameters
 that the corresponding residual object depends on and not on all four
-parameters.
-
-Compiling and running `examples/powell.cc
+parameters. Compiling and running `examples/powell.cc
 <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/powell.cc>`_
 gives us:
 
