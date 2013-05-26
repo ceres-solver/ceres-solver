@@ -5,9 +5,9 @@
 
 .. _chapter-solving:
 
-==========
-Solver API
-==========
+=======
+Solving
+=======
 
 
 Introduction
@@ -15,10 +15,8 @@ Introduction
 
 Effective use of Ceres requires some familiarity with the basic
 components of a nonlinear least squares solver, so before we describe
-how to configure the solver, we will begin by taking a brief look at
-how some of the core optimization algorithms in Ceres work and the
-various linear solvers and preconditioners that power it.
-
+how to configure and use the solver, we will take a brief look at how
+some of the core optimization algorithms in Ceres work.
 
 Let :math:`x \in \mathbb{R}^n` be an :math:`n`-dimensional vector of
 variables, and
@@ -72,9 +70,8 @@ algorithms can be divided into two major categories [NocedalWright]_.
 Trust region methods are in some sense dual to line search methods:
 trust region methods first choose a step size (the size of the trust
 region) and then a step direction while line search methods first
-choose a step direction and then a step size.
-
-Ceres implements multiple algorithms in both categories.
+choose a step direction and then a step size. Ceres implements
+multiple algorithms in both categories.
 
 .. _section-trust-region-methods:
 
@@ -117,7 +114,7 @@ and Dogleg. The user can choose between them by setting
 
 .. rubric:: Footnotes
 
-.. [#f1] At the level of the non-linear solver, the block and
+.. [#f1] At the level of the non-linear solver, the block
          structure is not relevant, therefore our discussion here is
          in terms of an optimization problem defined over a state
          vector of size :math:`n`.
@@ -327,7 +324,7 @@ the long term at the cost of some local increase in the value of the
 objective function.
 
 This is because allowing for non-decreasing objective function values
-in a princpled manner allows the algorithm to *jump over boulders* as
+in a principled manner allows the algorithm to *jump over boulders* as
 the method is not restricted to move into narrow valleys while
 preserving its convergence properties.
 
@@ -506,7 +503,7 @@ as the block structured linear system
 
 .. math:: \left[ \begin{matrix} B & E\\ E^\top & C \end{matrix}
                 \right]\left[ \begin{matrix} \Delta y \\ \Delta z
-            	    \end{matrix} \right] = \left[ \begin{matrix} v\\ w
+                    \end{matrix} \right] = \left[ \begin{matrix} v\\ w
                     \end{matrix} \right]\ ,
    :label: linear2
 
@@ -898,7 +895,7 @@ elimination group [LiSaad]_.
    Default: ``1e-3``
 
    Lower threshold for relative decrease before a trust-region step is
-   acceped.
+   accepted.
 
 .. member:: double Solver::Options::lm_min_diagonal
 
@@ -1242,30 +1239,326 @@ elimination group [LiSaad]_.
 :class:`IterationCallback`
 --------------------------
 
+.. class:: IterationSummary
+
+   :class:`IterationSummary` describes the state of the optimizer
+   after each iteration of the minimization.
+
+   .. code-block:: c++
+
+     struct IterationSummary {
+       // Current iteration number.
+       int32 iteration;
+
+       // Step was numerically valid, i.e., all values are finite and the
+       // step reduces the value of the linearized model.
+       //
+       // Note: step_is_valid is false when iteration = 0.
+       bool step_is_valid;
+
+       // Step did not reduce the value of the objective function
+       // sufficiently, but it was accepted because of the relaxed
+       // acceptance criterion used by the non-monotonic trust region
+       // algorithm.
+       //
+       // Note: step_is_nonmonotonic is false when iteration = 0;
+       bool step_is_nonmonotonic;
+
+       // Whether or not the minimizer accepted this step or not. If the
+       // ordinary trust region algorithm is used, this means that the
+       // relative reduction in the objective function value was greater
+       // than Solver::Options::min_relative_decrease. However, if the
+       // non-monotonic trust region algorithm is used
+       // (Solver::Options:use_nonmonotonic_steps = true), then even if the
+       // relative decrease is not sufficient, the algorithm may accept the
+       // step and the step is declared successful.
+       //
+       // Note: step_is_successful is false when iteration = 0.
+       bool step_is_successful;
+
+       // Value of the objective function.
+       double cost;
+
+       // Change in the value of the objective function in this
+       // iteration. This can be positive or negative.
+       double cost_change;
+
+       // Infinity norm of the gradient vector.
+       double gradient_max_norm;
+
+       // 2-norm of the size of the step computed by the optimization
+       // algorithm.
+       double step_norm;
+
+       // For trust region algorithms, the ratio of the actual change in
+       // cost and the change in the cost of the linearized approximation.
+       double relative_decrease;
+
+       // Size of the trust region at the end of the current iteration. For
+       // the Levenberg-Marquardt algorithm, the regularization parameter
+       // mu = 1.0 / trust_region_radius.
+       double trust_region_radius;
+
+       // For the inexact step Levenberg-Marquardt algorithm, this is the
+       // relative accuracy with which the Newton(LM) step is solved. This
+       // number affects only the iterative solvers capable of solving
+       // linear systems inexactly. Factorization-based exact solvers
+       // ignore it.
+       double eta;
+
+       // Step sized computed by the line search algorithm.
+       double step_size;
+
+       // Number of function evaluations used by the line search algorithm.
+       int line_search_function_evaluations;
+
+       // Number of iterations taken by the linear solver to solve for the
+       // Newton step.
+       int linear_solver_iterations;
+
+       // Time (in seconds) spent inside the minimizer loop in the current
+       // iteration.
+       double iteration_time_in_seconds;
+
+       // Time (in seconds) spent inside the trust region step solver.
+       double step_solver_time_in_seconds;
+
+       // Time (in seconds) since the user called Solve().
+       double cumulative_time_in_seconds;
+    };
+
 .. class:: IterationCallback
 
-   TBD
+   .. code-block:: c++
+
+      class IterationCallback {
+       public:
+        virtual ~IterationCallback() {}
+        virtual CallbackReturnType operator()(const IterationSummary& summary) = 0;
+      };
+
+  Interface for specifying callbacks that are executed at the end of
+  each iteration of the Minimizer. The solver uses the return value of
+  ``operator()`` to decide whether to continue solving or to
+  terminate. The user can return three values.
+
+  #. ``SOLVER_ABORT`` indicates that the callback detected an abnormal
+     situation. The solver returns without updating the parameter
+     blocks (unless ``Solver::Options::update_state_every_iteration`` is
+     set true). Solver returns with ``Solver::Summary::termination_type``
+     set to ``USER_ABORT``.
+
+  #. ``SOLVER_TERMINATE_SUCCESSFULLY`` indicates that there is no need
+     to optimize anymore (some user specified termination criterion
+     has been met). Solver returns with
+     ``Solver::Summary::termination_type``` set to ``USER_SUCCESS``.
+
+  #. ``SOLVER_CONTINUE`` indicates that the solver should continue
+     optimizing.
+
+  For example, the following ``IterationCallback`` is used internally
+  by Ceres to log the progress of the optimization.
+
+  .. code-block:: c++
+
+    class LoggingCallback : public IterationCallback {
+     public:
+      explicit LoggingCallback(bool log_to_stdout)
+          : log_to_stdout_(log_to_stdout) {}
+
+      ~LoggingCallback() {}
+
+      CallbackReturnType operator()(const IterationSummary& summary) {
+        const char* kReportRowFormat =
+            "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
+            "rho:% 3.2e mu:% 3.2e eta:% 3.2e li:% 3d";
+        string output = StringPrintf(kReportRowFormat,
+                                     summary.iteration,
+                                     summary.cost,
+                                     summary.cost_change,
+                                     summary.gradient_max_norm,
+                                     summary.step_norm,
+                                     summary.relative_decrease,
+                                     summary.trust_region_radius,
+                                     summary.eta,
+                                     summary.linear_solver_iterations);
+        if (log_to_stdout_) {
+          cout << output << endl;
+        } else {
+          VLOG(1) << output;
+        }
+        return SOLVER_CONTINUE;
+      }
+
+     private:
+      const bool log_to_stdout_;
+    };
+
+
 
 :class:`CRSMatrix`
 ------------------
 
 .. class:: CRSMatrix
 
-   TBD
+   .. code-block:: c++
+
+      struct CRSMatrix {
+        int num_rows;
+        int num_cols;
+        vector<int> cols;
+        vector<int> rows;
+        vector<double> values;
+      };
+
+   A compressed row sparse matrix used primarily for communicating the
+   Jacobian matrix to the user.
+
+   A compressed row matrix stores its contents in three arrays,
+   ``rows``, ``cols`` and ``values``.
+
+   ``rows`` is a ``num_rows + 1`` sized array that points into the ``cols`` and
+   ``values`` array. For each row ``i``:
+
+   ``cols[rows[i]]`` ... ``cols[rows[i + 1] - 1]`` are the indices of the
+   non-zero columns of row ``i``.
+
+   ``values[rows[i]]`` ... ``values[rows[i + 1] - 1]`` are the values of the
+   corresponding entries.
+
+   ``cols`` and ``values`` contain as many entries as there are
+   non-zeros in the matrix.
+
+   e.g, consider the 3x4 sparse matrix
+
+   .. code-block:: c++
+
+     0 10  0  4
+     0  2 -3  2
+     1  2  0  0
+
+   The three arrays will be:
+
+   .. code-block:: c++
+
+                 -row0-  ---row1---  -row2-
+       rows   = [ 0,      2,          5,     7]
+       cols   = [ 1,  3,  1,  2,  3,  0,  1]
+       values = [10,  4,  2, -3,  2,  1,  2]
+
 
 :class:`Solver::Summary`
 ------------------------
 
 .. class:: Solver::Summary
 
-   TBD
+  .. code-block:: c++
+
+     struct Summary {
+       // A brief one line description of the state of the solver after
+       // termination.
+       string BriefReport() const;
+
+       // A full multiline description of the state of the solver after
+       // termination.
+       string FullReport() const;
+
+       // Minimizer summary -------------------------------------------------
+       MinimizerType minimizer_type;
+
+       SolverTerminationType termination_type;
+
+       // If the solver did not run, or there was a failure, a
+       // description of the error.
+       string error;
+
+       // Cost of the problem before and after the optimization. See
+       // problem.h for definition of the cost of a problem.
+       double initial_cost;
+       double final_cost;
+
+       // The part of the total cost that comes from residual blocks that
+       // were held fixed by the preprocessor because all the parameter
+       // blocks that they depend on were fixed.
+       double fixed_cost;
+
+       vector<IterationSummary> iterations;
+
+       int num_successful_steps;
+       int num_unsuccessful_steps;
+       int num_inner_iteration_steps;
+
+       // When the user calls Solve, before the actual optimization
+       // occurs, Ceres performs a number of preprocessing steps. These
+       // include error checks, memory allocations, and reorderings. This
+       // time is accounted for as preprocessing time.
+       double preprocessor_time_in_seconds;
+
+       // Time spent in the TrustRegionMinimizer.
+       double minimizer_time_in_seconds;
+
+       // After the Minimizer is finished, some time is spent in
+       // re-evaluating residuals etc. This time is accounted for in the
+       // postprocessor time.
+       double postprocessor_time_in_seconds;
+
+       // Some total of all time spent inside Ceres when Solve is called.
+       double total_time_in_seconds;
+
+       double linear_solver_time_in_seconds;
+       double residual_evaluation_time_in_seconds;
+       double jacobian_evaluation_time_in_seconds;
+       double inner_iteration_time_in_seconds;
+
+       // Preprocessor summary.
+       int num_parameter_blocks;
+       int num_parameters;
+       int num_effective_parameters;
+       int num_residual_blocks;
+       int num_residuals;
+
+       int num_parameter_blocks_reduced;
+       int num_parameters_reduced;
+       int num_effective_parameters_reduced;
+       int num_residual_blocks_reduced;
+       int num_residuals_reduced;
+
+       int num_eliminate_blocks_given;
+       int num_eliminate_blocks_used;
+
+       int num_threads_given;
+       int num_threads_used;
+
+       int num_linear_solver_threads_given;
+       int num_linear_solver_threads_used;
+
+       LinearSolverType linear_solver_type_given;
+       LinearSolverType linear_solver_type_used;
+
+       vector<int> linear_solver_ordering_given;
+       vector<int> linear_solver_ordering_used;
+
+       bool inner_iterations_given;
+       bool inner_iterations_used;
+
+       vector<int> inner_iteration_ordering_given;
+       vector<int> inner_iteration_ordering_used;
+
+       PreconditionerType preconditioner_type;
+
+       TrustRegionStrategyType trust_region_strategy_type;
+       DoglegType dogleg_type;
+
+       SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+
+       LineSearchDirectionType line_search_direction_type;
+       LineSearchType line_search_type;
+       int max_lbfgs_rank;
+    };
+
+
 
 :class:`GradientChecker`
 ------------------------
 
 .. class:: GradientChecker
-
-
-
-
-

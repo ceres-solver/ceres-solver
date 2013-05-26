@@ -347,19 +347,20 @@ class ScaledLoss : public LossFunction {
 //
 //  CostFunction* cost_function =
 //    new AutoDiffCostFunction < UW_Camera_Mapper, 2, 9, 3>(
-//      new UW_Camera_Mapper(data->observations[2*i + 0],
-//                           data->observations[2*i + 1]));
+//      new UW_Camera_Mapper(feature_x, feature_y));
 //
 //  LossFunctionWrapper* loss_function(new HuberLoss(1.0), TAKE_OWNERSHIP);
 //
 //  problem.AddResidualBlock(cost_function, loss_function, parameters);
 //
 //  Solver::Options options;
-//  scoped_ptr<Solver::Summary> summary1(Solve(problem, options));
+//  Solger::Summary summary;
+//
+//  Solve(options, &problem, &summary)
 //
 //  loss_function->Reset(new HuberLoss(1.0), TAKE_OWNERSHIP);
 //
-//  scoped_ptr<Solver::Summary> summary2(Solve(problem, options));
+//  Solve(options, &problem, &summary)
 //
 class LossFunctionWrapper : public LossFunction {
  public:
