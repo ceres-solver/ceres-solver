@@ -253,6 +253,14 @@ having to touch the problem once it has been successfuly modeling.
    as the last template argument.
 
 
+:class:`DynamicAutoDiffCostFunction`
+------------------------------------
+
+:class:`DynamicAutoDiffCostFunction`
+
+TBD
+
+
 :class:`NumericDiffCostFunction`
 --------------------------------
 
