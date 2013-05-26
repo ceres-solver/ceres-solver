@@ -355,11 +355,13 @@ class ScaledLoss : public LossFunction {
 //  problem.AddResidualBlock(cost_function, loss_function, parameters);
 //
 //  Solver::Options options;
-//  scoped_ptr<Solver::Summary> summary1(Solve(problem, options));
+//  Solger::Summary summary;
+//
+//  Solve(options, &problem, &summary)
 //
 //  loss_function->Reset(new HuberLoss(1.0), TAKE_OWNERSHIP);
 //
-//  scoped_ptr<Solver::Summary> summary2(Solve(problem, options));
+//  Solve(options, &problem, &summary)
 //
 class LossFunctionWrapper : public LossFunction {
  public:
