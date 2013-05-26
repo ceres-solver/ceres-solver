@@ -60,7 +60,7 @@ routines.
 8. `protobuf <http://code.google.com/p/protobuf/>`_ is used for
 serializing and deserializing linear least squares problems to
 disk. This is useful for debugging and testing. It is an optional
-depdendency and without it some of the tests will be disabled.
+dependency and without it some of the tests will be disabled.
 
 .. _section-linux:
 
@@ -215,7 +215,7 @@ Building on Windows with Visual Studio
 
 On Windows, we support building with Visual Studio 2010 or newer. Note
 that the Windows port is less featureful and less tested than the
-Linux or Mac OS X versions due to the unavaliability of SuiteSparse
+Linux or Mac OS X versions due to the unavailability of SuiteSparse
 and ``CXSparse``. Building is also more involved since there is no
 automated way to install the dependencies.
 

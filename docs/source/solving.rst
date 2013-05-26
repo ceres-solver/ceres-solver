@@ -327,7 +327,7 @@ the long term at the cost of some local increase in the value of the
 objective function.
 
 This is because allowing for non-decreasing objective function values
-in a princpled manner allows the algorithm to *jump over boulders* as
+in a principled manner allows the algorithm to *jump over boulders* as
 the method is not restricted to move into narrow valleys while
 preserving its convergence properties.
 
@@ -898,7 +898,7 @@ elimination group [LiSaad]_.
    Default: ``1e-3``
 
    Lower threshold for relative decrease before a trust-region step is
-   acceped.
+   accepted.
 
 .. member:: double Solver::Options::lm_min_diagonal
 

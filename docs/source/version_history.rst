@@ -4,6 +4,36 @@
 Version History
 ===============
 
+HEAD
+====
+
+New Features
+------------
+
+#. Sparse and dense covariance estimation (EXPERIMENTAL).
+#. C API
+#. Speeded up the use of loss functions > 17x.
+#. Use of Inner iterations can now be adaptively stopped. Iteration
+   and runtime statistics for inner iterations are not reported in
+   ``Solver::Summary`` and ``Solver::Summary::FullReport``.
+#. Add BlockRandomAccessCRSMatrix.
+
+
+Bug Fixes
+---------
+
+#. Various corrections and cleanups in the documentation.
+#. Change the path where CeresConfig.cmake is installed (Pablo Speciale)
+#. Minor erros in documentation (Pablo Speciale)
+#. Updated depend.cmake to follow CMake IF convention. (Joydeep Biswas)
+#. Stablize the schur ordering algorithm.
+#. Update license header in split.h.
+#. Enabling -O4 (link-time optimization) only if compiler/linker support it. (Alex Stewart)
+#. Consistent glog path across files.
+#. ceres-solver.spec: Use cleaner, more conventional Release string (Taylor Braun-Jones)
+#. Fix compile bug on RHEL6 due to missing header (Taylor Braun-Jones 3 weeks ago)
+
+
 1.6.0
 =====
 

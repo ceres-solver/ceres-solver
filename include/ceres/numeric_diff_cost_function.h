@@ -89,7 +89,7 @@
 //                                   Dimension of x --------------------+  |
 //                                   Dimension of y -----------------------+
 //
-// In this example, there is usually an instance for each measumerent of k.
+// In this example, there is usually an instance for each measurement of k.
 //
 // In the instantiation above, the template parameters following
 // "MyScalarCostFunctor", "1, 2, 2", describe the functor as computing
@@ -126,7 +126,7 @@
 // To get a numerically differentiated cost function, define a
 // subclass of CostFunction such that the Evaluate() function ignores
 // the jacobian parameter. The numeric differentiation wrapper will
-// fill in the jacobian parameter if nececssary by repeatedly calling
+// fill in the jacobian parameter if necessary by repeatedly calling
 // the Evaluate() function with small changes to the appropriate
 // parameters, and computing the slope. For performance, the numeric
 // differentiation wrapper class is templated on the concrete cost

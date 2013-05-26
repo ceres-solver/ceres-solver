@@ -37,11 +37,10 @@ solving non-linear least squares problems accurately and efficiently.
    c. Specialized solvers for bundle adjustment problems in computer
       vision.
 
-   d. Iterative linear solvers with perconditioners for general sparse
+   d. Iterative linear solvers with preconditioners for general sparse
       and bundle adjustment problems.
 
-#. Portable: Runs on Linux, Windows, Mac OS X and Android. An iOS port is
-   underway.
+#. Portable: Runs on Linux, Windows, Mac OS X and Android.
 
 
 At Google, Ceres Solver has been used for solving a variety of
