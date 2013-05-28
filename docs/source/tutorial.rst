@@ -205,7 +205,7 @@ Notice the parallel from when we were using automatic differentiation
       new AutoDiffCostFunction<CostFunctor, 1, 1>(new CostFunctor);
   problem.AddResidualBlock(cost_function, NULL, &x);
 
-The construction looks almost identical to the used for automatic
+The construction looks almost identical to the one used for automatic
 differentiation, except for an extra template parameter that indicates
 the kind of finite differencing scheme to be used for computing the
 numerical derivatives [#f3]_. For more details see the documentation
