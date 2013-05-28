@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "VHavQDfM",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Give some examples; maybe bezier curve fitting, etc",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHevWBfE",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "I think only one blank is needed here.",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHWvo1aE",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "slightly",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHSvy3ZM",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHQv3IYQ",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "The arrow pointing to the scheme is a bit off. We may want to rearrange this slightly.",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHUsWOc4",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Strange spacing after //",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHesExZA",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "hard tabs",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHcsBCX8",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "hard tabs",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHav.zVA",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHYv7EWE",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHWs.lTo",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHStIneI",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Since this has \"i\", I think this block is supposed to be in a loop.",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHQtN4fI",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Hard tabs",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHQsmASU",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Hard tab",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHes6hTc",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Hard tab",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHas0jUs",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Alignment of last column.",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHUuRmQo",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Alignment of last column.",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHct8afU",
+        "filename": "docs/source/tutorial.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "\"may more\"?",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHauJLd0",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Good idea",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHUt6ufQ",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Maybe this should have been in a loop",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "VHQt0wQQ",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-28T17:23:17Z",
+      "side": 1,
+      "message": "Like in the other file, this is a bit unaligned. Should be under the \"T\" in CENTRAL",
+      "revId": "36a5171aca5fc22f5aba46bd9ea0bde666f45406",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
