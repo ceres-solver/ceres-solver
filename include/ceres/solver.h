@@ -97,13 +97,13 @@ class Solver {
       num_linear_solver_threads = 1;
       linear_solver_ordering = NULL;
       use_postordering = false;
-      use_inner_iterations = false;
-      inner_iteration_tolerance = 1e-3;
-      inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
       jacobi_scaling = true;
+      use_inner_iterations = false;
+      inner_iteration_tolerance = 1e-3;
+      inner_iteration_ordering = NULL;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
       lsqp_dump_directory = "/tmp";
