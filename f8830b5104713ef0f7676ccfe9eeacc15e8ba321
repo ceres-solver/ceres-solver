@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d7675c6_59a06332",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-29T05:42:43Z",
+      "side": 1,
+      "message": "it\u0027s",
+      "revId": "f8830b5104713ef0f7676ccfe9eeacc15e8ba321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d7675c6_79a51f41",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-29T05:42:43Z",
+      "side": 1,
+      "message": "Decrease due to inner iterations? Or decrease between overall iterations? Document.",
+      "revId": "f8830b5104713ef0f7676ccfe9eeacc15e8ba321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d7675c6_19aaeb10",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-29T05:42:43Z",
+      "side": 1,
+      "message": "Does every variable need to be present? Document either way.",
+      "revId": "f8830b5104713ef0f7676ccfe9eeacc15e8ba321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d7675c6_39afa721",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-29T05:42:43Z",
+      "side": 1,
+      "message": "IDs?",
+      "revId": "f8830b5104713ef0f7676ccfe9eeacc15e8ba321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d7675c6_d99313f0",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1270,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-29T05:42:43Z",
+      "side": 1,
+      "message": "bool?",
+      "revId": "f8830b5104713ef0f7676ccfe9eeacc15e8ba321",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
