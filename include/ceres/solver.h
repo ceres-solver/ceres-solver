@@ -97,13 +97,13 @@ class Solver {
       num_linear_solver_threads = 1;
       linear_solver_ordering = NULL;
       use_postordering = false;
-      use_inner_iterations = false;
-      inner_iteration_tolerance = 1e-3;
-      inner_iteration_ordering = NULL;
       linear_solver_min_num_iterations = 1;
       linear_solver_max_num_iterations = 500;
       eta = 1e-1;
       jacobi_scaling = true;
+      use_inner_iterations = false;
+      inner_iteration_tolerance = 1e-3;
+      inner_iteration_ordering = NULL;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
       lsqp_dump_directory = "/tmp";
@@ -441,7 +441,8 @@ class Solver {
     //
     // 2. Specify a collection of of ordered independent sets. Where
     //    the lower numbered groups are optimized before the higher
-    //    number groups. Each group must be an independent set.
+    //    number groups. Each group must be an independent set. Not
+    //    all parameter blocks need to be present in the ordering.
     ParameterBlockOrdering* inner_iteration_ordering;
 
     // Generally speaking, inner iterations make significant progress
@@ -449,9 +450,10 @@ class Solver {
     // drops down sharply, at which point the time spent doing inner
     // iterations is not worth it.
     //
-    // Once the relative decrease in the objective function drops
-    // below inner_iteration_tolerance, the use of inner iterations
-    // in subsequent trust region minimizer iterations is disabled.
+    // Once the relative decrease in the objective function due to
+    // inner iterations drops below inner_iteration_tolerance, the use
+    // of inner iterations in subsequent trust region minimizer
+    // iterations is disabled.
     double inner_iteration_tolerance;
 
     // Minimum number of iterations for which the linear solver should
