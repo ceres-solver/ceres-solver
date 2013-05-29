@@ -998,33 +998,6 @@ elimination group [LiSaad]_.
 
    Number of threads used by the linear solver.
 
-.. member:: bool Solver::Options::use_inner_iterations
-
-   Default: ``false``
-
-   Use a non-linear version of a simplified variable projection
-   algorithm. Essentially this amounts to doing a further optimization
-   on each Newton/Trust region step using a coordinate descent
-   algorithm.  For more details, see :ref:`section-inner-iterations`.
-
-.. member:: ParameterBlockOrdering*  Solver::Options::inner_iteration_ordering
-
-   Default: ``NULL``
-
-   If :member:`Solver::Options::use_inner_iterations` true, then the user has
-   two choices.
-
-   1. Let the solver heuristically decide which parameter blocks to
-      optimize in each inner iteration. To do this, set
-      :member:`Solver::Options::inner_iteration_ordering` to ``NULL``.
-
-   2. Specify a collection of of ordered independent sets. The lower
-      numbered groups are optimized before the higher number groups
-      during the inner optimization phase. Each group must be an
-      independent set.
-
-   See :ref:`section-ordering` for more details.
-
 .. member:: ParameterBlockOrdering* Solver::Options::linear_solver_ordering
 
    Default: ``NULL``
@@ -1034,29 +1007,33 @@ elimination group [LiSaad]_.
    linear solvers. See section~\ref{sec:ordering`` for more details.
 
    If ``NULL``, the solver is free to choose an ordering that it
-   thinks is best. Note: currently, this option only has an effect on
-   the Schur type solvers, support for the ``SPARSE_NORMAL_CHOLESKY``
-   solver is forth coming.
+   thinks is best.
 
    See :ref:`section-ordering` for more details.
 
-.. member:: bool Solver::Options::use_block_amd
+.. member:: bool Solver::Options::use_post_ordering
 
-   Default: ``true``
+   Default: ``false``
 
-   By virtue of the modeling layer in Ceres being block oriented, all
-   the matrices used by Ceres are also block oriented.  When doing
-   sparse direct factorization of these matrices, the fill-reducing
-   ordering algorithms can either be run on the block or the scalar
-   form of these matrices. Running it on the block form exposes more
-   of the super-nodal structure of the matrix to the Cholesky
-   factorization routines. This leads to substantial gains in
-   factorization performance. Setting this parameter to true, enables
-   the use of a block oriented Approximate Minimum Degree ordering
-   algorithm. Settings it to ``false``, uses a scalar AMD
-   algorithm. This option only makes sense when using
-   :member:`Solver::Options::sparse_linear_algebra_library` = ``SUITE_SPARSE``
-   as it uses the ``AMD`` package that is part of ``SuiteSparse``.
+   Sparse Cholesky factorization algorithms use a fill-reducing
+   ordering to permute the columns of the Jacobian matrix. There are
+   two ways of doing this.
+
+   1. Compute the Jacobian matrix in some order and then have the
+      factorization algorithm permute the columns of the Jacobian.
+
+   2. Compute the Jacobian with it's columns already permuted.
+
+   The first option incurs a significant memory penalty. The
+   factorization algorithm has to make a copy of the permuted Jacobian
+   matrix, thus Ceres pre-permutes the columns of the Jacobian matrix
+   and generally speaking, there is no performance penalty for doing
+   so.
+
+   In some rare cases, it is worth using a more complicated reordering
+   algorithm which has slightly better runtime performance at the
+   expense of an extra copy of the Jacobian matrix. Setting
+   ``use_postordering`` to ``true`` enables this tradeoff.
 
 .. member:: int Solver::Options::linear_solver_min_num_iterations
 
@@ -1093,6 +1070,48 @@ elimination group [LiSaad]_.
    ``true`` means that the Jacobian is scaled by the norm of its
    columns before being passed to the linear solver. This improves the
    numerical conditioning of the normal equations.
+
+.. member:: bool Solver::Options::use_inner_iterations
+
+   Default: ``false``
+
+   Use a non-linear version of a simplified variable projection
+   algorithm. Essentially this amounts to doing a further optimization
+   on each Newton/Trust region step using a coordinate descent
+   algorithm.  For more details, see :ref:`section-inner-iterations`.
+
+.. member:: double Solver::Options::inner_itearation_tolerance
+
+   Default: ``1e-3``
+
+   Generally speaking, inner iterations make significant progress in
+   the early stages of the solve and then their contribution drops
+   down sharply, at which point the time spent doing inner iterations
+   is not worth it.
+
+   Once the relative decrease in the objective function due to inner
+   iterations drops below ``inner_iteration_tolerance``, the use of
+   inner iterations in subsequent trust region minimizer iterations is
+   disabled.
+
+.. member:: ParameterBlockOrdering*  Solver::Options::inner_iteration_ordering
+
+   Default: ``NULL``
+
+   If :member:`Solver::Options::use_inner_iterations` true, then the user has
+   two choices.
+
+   1. Let the solver heuristically decide which parameter blocks to
+      optimize in each inner iteration. To do this, set
+      :member:`Solver::Options::inner_iteration_ordering` to ``NULL``.
+
+   2. Specify a collection of of ordered independent sets. The lower
+      numbered groups are optimized before the higher number groups
+      during the inner optimization phase. Each group must be an
+      independent set. Not all parameter blocks need to be included in
+      the ordering.
+
+   See :ref:`section-ordering` for more details.
 
 .. member:: LoggingType Solver::Options::logging_type
 
@@ -1234,7 +1253,60 @@ elimination group [LiSaad]_.
 
 .. class:: ParameterBlockOrdering
 
-   TBD
+   ``ParameterBlockOrdering`` is a class for storing and manipulating
+   an ordered collection of groups/sets with the following semantics:
+
+   Group IDs are non-negative integer values. Elements are any type
+   that can serve as a key in a map or an element of a set.
+
+   An element can only belong to one group at a time. A group may
+   contain an arbitrary number of elements.
+
+   Groups are ordered by their group id.
+
+.. function:: bool ParameterBlockOrdering::AddElementToGroup(const double* element, const int group)
+
+   Add an element to a group. If a group with this id does not exist,
+   one is created. This method can be called any number of times for
+   the same element. Group ids should be non-negative numbers.  Return
+   value indicates if adding the element was a success.
+
+.. function:: void ParameterBlockOrdering::Clear()
+
+   Clear the ordering.
+
+.. function:: bool ParameterBlockOrdering::Remove(const double* element)
+
+   Remove the element, no matter what group it is in. If the element
+   is not a member of any group, calling this method will result in a
+   crash.  Return value indicates if the element was actually removed.
+
+.. function:: void ParameterBlockOrdering::Reverse()
+
+   Reverse the order of the groups in place.
+
+.. function:: int ParameterBlockOrdering::GroupId(const double* element) const
+
+   Return the group id for the element. If the element is not a member
+   of any group, return -1.
+
+.. function:: bool ParameterBlockOrdering::IsMember(const double* element) const
+
+   True if there is a group containing the parameter block.
+
+.. function:: int ParameterBlockOrdering::GroupSize(const int group) const
+
+   This function always succeeds, i.e., implicitly there exists a
+   group for every integer.
+
+.. function:: int ParameterBlockOrdering::NumElements() const
+
+   Number of elements in the ordering.
+
+.. function:: int ParameterBlockOrdering::NumGroups() const
+
+   Number of groups with one or more elements.
+
 
 :class:`IterationCallback`
 --------------------------
