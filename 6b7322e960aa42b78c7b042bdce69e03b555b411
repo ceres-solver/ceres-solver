@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dfa5983_cccdef58",
+        "filename": "data/libmv-ba-problems/Readme.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-30T20:33:14Z",
+      "side": 1,
+      "message": "Woops. Missed that. Corrected.",
+      "parentUuid": "9d3f0de8_3c5008e7",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d3f0de8_7c4a9034",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-30T20:23:49Z",
       "side": 1,
       "message": "sort.",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dfa5983_0ced37b1",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-30T20:33:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9d3f0de8_7c4a9034",
       "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7dfa5983_6cf2fb94",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-30T20:33:14Z",
+      "side": 1,
+      "message": "Not sure what you mean.",
+      "parentUuid": "9d3f0de8_1c59cc0d",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d3f0de8_bc5b7806",
         "filename": "examples/libmv_bundle_adjuster.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2013-05-30T20:23:49Z",
       "side": 1,
       "message": "FILE",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7dfa5983_4cf73f83",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-30T20:33:14Z",
+      "side": 1,
+      "message": "Ah, now i do.\n\nopen() returns a file descriptor which is int. FILE is returning by fopen, and i\u0027m not sure how to read given amount of bytes into a buffer using fscanf. With read() that\u0027s a way simplier and more clear.\n\nfile_descriptor_ could be FILE*, but then there\u0027re only two ways imo:\n- use fileno() to get file descriptor which will be acceptable by read()\n- use fscanf() either n cycle with format \"%c\" or use mask of %c%c%c%c which is also stupid.\n\nDo we really want to use FILE/fopen/fscanf instead of int/open/read?",
+      "parentUuid": "9d3f0de8_bc5b7806",
       "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
