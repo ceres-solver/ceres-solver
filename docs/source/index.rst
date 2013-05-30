@@ -26,6 +26,13 @@ squares problems.
 * File bugs, feature requests in the `issue tracker
   <https://code.google.com/p/ceres-solver/issues/list>`_.
 
+* If you use Ceres Solver for a publication, you must cite it as::
+
+    @misc{ceres-solver,
+      author = "Sameer Agarwal and Keir Mierle",
+      title = "Ceres Solver",
+      howpublished = "\url{https://code.google.com/p/ceres-solver/}",
+    }
 
 .. toctree::
    :maxdepth: 1
@@ -42,4 +49,3 @@ squares problems.
    version_history
    bibliography
    license
-   citation
