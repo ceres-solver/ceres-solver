@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d3f0de8_3c5008e7",
+        "filename": "data/libmv-ba-problems/Readme.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-30T20:23:49Z",
+      "side": 1,
+      "message": "update this file. Since these are not txt files anymore.\n\nadd a note that the format is documented in the cc file.",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_7c4a9034",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-30T20:23:49Z",
+      "side": 1,
+      "message": "sort.",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_1c59cc0d",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-30T20:23:49Z",
+      "side": 1,
+      "message": "can you depend on the file descriptor being an int?",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_bc5b7806",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-05-30T20:23:49Z",
+      "side": 1,
+      "message": "FILE",
+      "revId": "6b7322e960aa42b78c7b042bdce69e03b555b411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
