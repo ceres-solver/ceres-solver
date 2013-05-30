@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d3f0de8_c9fa04f7",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-30T18:35:05Z",
+      "side": 1,
+      "message": "I think this paragraph should come before the description of the file. Since without knowing that it is a binary file the rest of it makes little sense.",
+      "revId": "dd2845ff864d995af5928e99612cc0f28b7511e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_698e507c",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-30T18:35:05Z",
+      "side": 1,
+      "message": "I am curious, why you need to worry about endianess? are you expecting to generate file across different endian machines?",
+      "revId": "dd2845ff864d995af5928e99612cc0f28b7511e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_4966f4ff",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-30T18:35:05Z",
+      "side": 1,
+      "message": "whats the point of introducing this enum? you are converting one constant into another?\nyou could just define\n\nconst long int kLittleEndian \u003d 0x03020100ul;\n\nand then pass that guy around instead of taking an integer and convering it into yet another integer.",
+      "revId": "dd2845ff864d995af5928e99612cc0f28b7511e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d3f0de8_89763c9d",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-05-30T18:35:05Z",
+      "side": 1,
+      "message": "if we are indeed going to deal with endian conversions, isn\u0027t it better to have a small object which just takes the file descriptor, and the host and file endianness, and provides ReadInt, ReadFloat and ReadDouble functions. instead of this very error prone way of making sure every invocation gets the conversion right.\n\nIt will also lead to much smaller code, and isolates the whole endianness business at the construction of the reader object and the rest of the code does not have to worry about it.",
+      "revId": "dd2845ff864d995af5928e99612cc0f28b7511e5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
