@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_6a9bd729",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:50:12Z",
+      "side": 1,
+      "message": "the Libmv library\n\nreads problems",
+      "revId": "5239be740ab94556e0855438f18d6fd56e6758fb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_aa7ceff3",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:50:12Z",
+      "side": 1,
+      "message": "the command line\n\nthe bundle adjuster",
+      "revId": "5239be740ab94556e0855438f18d6fd56e6758fb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_ea050759",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:50:12Z",
+      "side": 1,
+      "message": "I suggest putting the structure in one nested list instead of splitting it up:\n\nThe bundle adjustment problems are stored in binary files, with the structure as follows:\n\n- Four characters \u0027MVBP\u0027 as the magic constant\n- Single byte \u0027v\u0027 or \u0027V\u0027 indicating little or big endian encoding.\n- Single byte \u0027P\u0027 or \u0027N\u0027 indicating the coordinate space of the markers as either pixels or normalized, respectively.\n- float[8] of camera intrinsics\n    - Focal length f\n    - Principal point x, y\n    - Radial distortion coefficients k1, k2, k3\n    - Tangential distortion coefficients p1, p2\n- uint4 indicating the number of cameras\n- Cameras ...\n\nI also suggest making the first few characters \u0027MVBP\u0027 (for multi view bundle problem), which can serve as the magic characters.",
+      "revId": "5239be740ab94556e0855438f18d6fd56e6758fb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_6aaf5720",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:50:12Z",
+      "side": 1,
+      "message": "Oh windows.\n\nUse two-space indents inside the ifdef e.g.\n\n  #  include \u003cio.h\u003e",
+      "revId": "5239be740ab94556e0855438f18d6fd56e6758fb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_ea9a6700",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:50:12Z",
+      "side": 1,
+      "message": "Put a comment blank between paragraphs, or reflow everything together.",
+      "revId": "5239be740ab94556e0855438f18d6fd56e6758fb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
