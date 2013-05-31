@@ -17,7 +17,7 @@ squares problems.
 
 * Read the :ref:`chapter-tutorial`
 
-* Browse the :ref:`chapter-modeling` and :ref:`chapter-solving`
+* Browse the :ref:`chapter-modeling` API and :ref:`chapter-solving` API.
 
 * Join the `mailing list
   <https://groups.google.com/forum/?fromgroups#!forum/ceres-solver>`_

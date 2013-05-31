@@ -12,7 +12,7 @@ solving non-linear least squares problems accurately and efficiently.
 
 **Features**
 
-#. A friendly :ref:`chapter-modeling`.
+#. A friendly :ref:`chapter-modeling` API.
 
 #. Automatic and numeric differentiation.
 
