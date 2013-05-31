@@ -144,18 +144,21 @@ int exponential_residual(void* user_data,
 }
 
 int main(int argc, char** argv) {
-  ceres_init(argc, argv);
-
   /* Note: Typically it is better to compact m and c into one block,
    * but in this case use separate blocks to illustrate the use of
    * multiple parameter blocks. */
   double m = 0.0;
   double c = 0.0;
+
   double *parameter_pointers[] = { &m, &c };
   int parameter_sizes[] = { 1, 1 };
 
-  ceres_problem_t* problem = ceres_create_problem();
+  ceres_problem_t* problem;
   int i;
+
+  ceres_init(argc, argv);
+
+  problem = ceres_create_problem();
   for (i = 0; i < num_observations; ++i) {
     ceres_problem_add_residual_block(
         problem,
