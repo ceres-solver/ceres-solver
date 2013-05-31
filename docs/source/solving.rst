@@ -1022,7 +1022,7 @@ elimination group [LiSaad]_.
    1. Compute the Jacobian matrix in some order and then have the
       factorization algorithm permute the columns of the Jacobian.
 
-   2. Compute the Jacobian with it's columns already permuted.
+   2. Compute the Jacobian with its columns already permuted.
 
    The first option incurs a significant memory penalty. The
    factorization algorithm has to make a copy of the permuted Jacobian
@@ -1314,7 +1314,8 @@ elimination group [LiSaad]_.
 .. class:: IterationSummary
 
    :class:`IterationSummary` describes the state of the optimizer
-   after each iteration of the minimization.
+   after each iteration of the minimization. Note that all times are
+   wall times.
 
    .. code-block:: c++
 
@@ -1523,6 +1524,8 @@ elimination group [LiSaad]_.
 ------------------------
 
 .. class:: Solver::Summary
+
+  Note that all times reported in this struct are wall times.
 
   .. code-block:: c++
 

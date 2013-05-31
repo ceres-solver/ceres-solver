@@ -603,6 +603,8 @@ class Solver {
     int num_unsuccessful_steps;
     int num_inner_iteration_steps;
 
+    // All times reported below are wall times.
+
     // When the user calls Solve, before the actual optimization
     // occurs, Ceres performs a number of preprocessing steps. These
     // include error checks, memory allocations, and reorderings. This

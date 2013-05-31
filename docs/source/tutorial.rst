@@ -244,7 +244,7 @@ x`.
       residuals[0] = 10 - x;
 
       // Compute the Jacobian if asked for.
-      if (jacobians != NULL) {
+      if (jacobians != NULL && jacobians[0] != NULL) {
         jacobians[0][0] = -1;
       }
       return true;

@@ -350,10 +350,10 @@ residuals and their derivatives. This is done using
         : public SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
       };
 
-   To get an numerically differentiated :class:`CostFunction`, you
-   must define a class with a ``operator()`` (a functor) that computes
-   the residuals. The functor must write the computed value in the
-   last argument (the only non-``const`` one) and return ``true`` to
+   To get a numerically differentiated :class:`CostFunction`, you must
+   define a class with a ``operator()`` (a functor) that computes the
+   residuals. The functor must write the computed value in the last
+   argument (the only non-``const`` one) and return ``true`` to
    indicate success.  Please see :class:`CostFunction` for details on
    how the return value may be used to impose simple constraints on
    the parameter block. e.g., an object of the form

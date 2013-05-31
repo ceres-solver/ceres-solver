@@ -545,8 +545,8 @@ template <typename T, int N> inline
 Jet<T, N> tanh(const Jet<T, N>& f) {
   Jet<T, N> g;
   g.a = tanh(f.a);
-  double tanh_fa = tanh(f.a);
-  const T tmp = 1 - tanh_fa * tanh_fa;
+  double tanh_a = tanh(f.a);
+  const T tmp = T(1.0) - tanh_a * tanh_a;
   g.v = tmp * f.v;
   return g;
 }

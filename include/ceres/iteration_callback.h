@@ -128,6 +128,8 @@ struct IterationSummary {
   // Newton step.
   int linear_solver_iterations;
 
+  // All times reported below are wall times.
+
   // Time (in seconds) spent inside the minimizer loop in the current
   // iteration.
   double iteration_time_in_seconds;

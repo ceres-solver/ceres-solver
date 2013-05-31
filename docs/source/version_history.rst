@@ -31,7 +31,7 @@ Bug Fixes
 #. Enabling -O4 (link-time optimization) only if compiler/linker support it. (Alex Stewart)
 #. Consistent glog path across files.
 #. ceres-solver.spec: Use cleaner, more conventional Release string (Taylor Braun-Jones)
-#. Fix compile bug on RHEL6 due to missing header (Taylor Braun-Jones 3 weeks ago)
+#. Fix compile bug on RHEL6 due to missing header (Taylor Braun-Jones)
 
 
 1.6.0
