@@ -34,6 +34,24 @@
       "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc46d62_75ff289a",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-31T19:12:00Z",
+      "side": 1,
+      "message": "Alternative could be to either do:\nint main() {\n  ceres_init();\n  {\n    /* our code goes here */\n  }\n}\n\nor\n\nint main() {\n  ceres_init();\n  do_our_stuff();\n  return 0;\n}",
+      "parentUuid": "9dc46d62_35f5b0bc",
+      "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
