@@ -530,9 +530,15 @@ ELSE (DISABLE_TR1)
   # Use the std namespace for the hash<> and related templates. This may vary by
   # system.
   IF (MSVC)
-    # This is known to work with Visual Studio 2010 Express.
-    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
-    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
+    IF (MSVC90)
+      # This is known to work with Visual Studio 2008 Pro.
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
+    ELSE (MSVC90)
+      # This is known to work with Visual Studio 2010 Express.
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
+    ENDIF(MSVC90)
   ELSE (MSVC)
     # This is known to work with recent versions of Linux and Mac OS X.
     ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
