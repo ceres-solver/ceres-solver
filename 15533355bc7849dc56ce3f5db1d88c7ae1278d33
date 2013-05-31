@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9dc46d62_b55b8006",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-31T19:02:03Z",
+      "side": 1,
+      "message": "As per C standard you\u0027re not allowed to mix variables declarations. GCC supports this as an extension of standard, but msvc is much more strict on this.\n\nMaybe newer msvc (i\u0027m using 20008pro -- version blender is officially guaranteed to work with) also supports mixed declarations and code, but that\u0027s what we\u0027re forbidding to do in Blender for better code compatibility -- you\u0027ll always have someone blaming on compilation error as soon as someone violates this standard. We also do have this as Werror flag for this, afair.",
+      "parentUuid": "fdd48905_5a7a55f4",
+      "revId": "15533355bc7849dc56ce3f5db1d88c7ae1278d33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd48905_ba68c126",
         "filename": "internal/ceres/covariance_impl.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-05-31T18:51:38Z",
       "side": 1,
       "message": "There should be no need for this, as suitesparse.h becomes empty anyways if ceres_no_suitesparse is defined.\n\nalso it maybe wroth defining a dummy SuiteSparse object when CERES_NO_SUITESPARSE is defined, this will make for less crazy header files.",
+      "revId": "15533355bc7849dc56ce3f5db1d88c7ae1278d33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc46d62_d558fc0b",
+        "filename": "internal/ceres/covariance_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-31T19:02:03Z",
+      "side": 1,
+      "message": "Ah opos. You\u0027re right. Removed ifdef for now.\n\nDummy object could work as well, but shall it be a part of this change?",
+      "parentUuid": "fdd48905_ba68c126",
       "revId": "15533355bc7849dc56ce3f5db1d88c7ae1278d33",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
