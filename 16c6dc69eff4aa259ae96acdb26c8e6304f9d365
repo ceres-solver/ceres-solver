@@ -34,6 +34,24 @@
       "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_6a267726",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:35:47Z",
+      "side": 1,
+      "message": "Sergey, can you mention the specific MSVC editions that are expected to work on both sides of the if/else? It seems 2012 is not mentioned. Sorry to request more comments, but sameer and myself never deal with windows so having an overabundence of comments here is useful.",
+      "parentUuid": "9dc46d62_b5e0e0f6",
+      "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
