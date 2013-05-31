@@ -70,6 +70,24 @@
       "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_6a1037ce",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:33:58Z",
+      "side": 1,
+      "message": "Sergey is right. I am just rusty on C and always hated the crazy declarations-at-the-top-of-scopes nuttyness.",
+      "parentUuid": "9dc46d62_f5ea58d2",
+      "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
