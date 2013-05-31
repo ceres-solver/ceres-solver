@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_8adbab0f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-05-31T20:27:10Z",
+      "side": 1,
+      "message": "Argh, my bad for not catching this error. This actually worries me. The tests should have caught this. They first should not have compiled, and second should have failed. We\u0027ve had this mixed int/jet issue before.\n\nI\u0027m ok with merging this patch but maybe spend a minute or three playing with the tests for this?",
+      "revId": "f0b071bac4d4b5d28f8abfbaa181199e73474cc5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
