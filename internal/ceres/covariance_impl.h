@@ -38,7 +38,10 @@
 #include "ceres/covariance.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/problem_impl.h"
-#include "ceres/suitesparse.h"
+
+#ifndef CERES_NO_SUITESPARSE
+# include "ceres/suitesparse.h"
+#endif
 
 namespace ceres {
 
@@ -80,7 +83,9 @@ class CovarianceImpl {
   map<const double*, int> parameter_block_to_row_index_;
   set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
+#ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss_;
+#endif
 };
 
 }  // namespace internal
