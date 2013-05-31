@@ -52,6 +52,24 @@
       "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc46d62_f5ea58d2",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-31T19:22:15Z",
+      "side": 1,
+      "message": "And one more thing. Just double-checked. Msvc2010 is also not happy with mixing declarations and code in C.",
+      "parentUuid": "9dc46d62_75ff289a",
+      "revId": "eb7706307a047e4272d08a33d64b56c6ad4f8fd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
