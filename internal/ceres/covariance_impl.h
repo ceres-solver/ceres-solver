@@ -80,7 +80,9 @@ class CovarianceImpl {
   map<const double*, int> parameter_block_to_row_index_;
   set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
+#ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss_;
+#endif
 };
 
 }  // namespace internal
