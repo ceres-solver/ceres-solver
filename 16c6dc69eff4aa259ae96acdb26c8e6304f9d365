@@ -16,6 +16,24 @@
       "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9dc46d62_b5e0e0f6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-05-31T19:21:17Z",
+      "side": 1,
+      "message": "Yes i did :) Wirks finr with 2010 express and 2008 pro.\n\n2012 will work if it\u0027ll use the same namespace as 2010 does. Probably 2003/2005 would fail, but doubt someone really uses them.",
+      "parentUuid": "fdd48905_5ad7b5b8",
+      "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
