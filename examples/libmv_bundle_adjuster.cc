@@ -100,6 +100,11 @@
 typedef unsigned __int32 uint32_t;
 #else
 # include <stdint.h>
+
+// O_BINARY is not defined on unix like platforms, as there is no
+// difference between binary and text files.
+#define O_BINARY 0
+
 #endif
 
 #include "ceres/ceres.h"
@@ -755,12 +760,13 @@ void EuclideanBundleCommonIntrinsics(const vector<Marker> &all_markers,
   options.linear_solver_type = ceres::ITERATIVE_SCHUR;
   options.use_inner_iterations = true;
   options.max_num_iterations = 100;
+  options.minimizer_progress_to_stdout = true;
 
   // Solve!
   ceres::Solver::Summary summary;
   ceres::Solve(options, &problem, &summary);
 
-  LOG(INFO) << "Final report:\n" << summary.FullReport();
+  std::cout << "Final report:\n" << summary.FullReport();
 
   // Copy rotations and translations back.
   UnpackCamerasRotationAndTranslation(all_markers,
