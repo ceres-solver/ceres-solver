@@ -70,6 +70,24 @@
       "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_feb4e9c3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-01T10:36:53Z",
+      "side": 1,
+      "message": "Thanks for the great explanation. Can you work this into the comments in the file here? Poor me will never remember to look at this obscure gerrit comment a year from now when I\u0027m editing this code :)",
+      "parentUuid": "5d6cb547_03388eda",
+      "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
