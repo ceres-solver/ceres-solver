@@ -52,6 +52,24 @@
       "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d6cb547_03388eda",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-06-01T08:35:11Z",
+      "side": 1,
+      "message": "No prob :)\n\nTruth branch of the condition only used for msvc2008 (express/pro doesn\u0027t matter). All the rest versions (actually, both newer and older) will go to else branch.\n\nElse branch will for sure work with msvc2010 -- exactly the same namespace will be used as with non-patched HEAD. Confirmed by compiling patched Ceres with msvc2010 express.\n\nI don\u0027t have msvc2012 here (yet), but it\u0027ll also go to the Else branch and if msvc guys didn\u0027t break compatibility once again it\u0027ll be working.\n\nI\u0027ve got doubts msvc2005 and msvc2003 will work -- they probably shall go to the Truth branch as well, but i don\u0027t have this versions here to confirm.\n\nBut anyway, patch only changes behavior for msvc2008 and makes it working nice. Behavior for all the rest studios doesn\u0027t change and no regressions shall happen.\n\nI don\u0027t think we really need to worry about msvc2003 and msvc2005, only worth double-checking whether special tricks needed to support msvc2012.\n\nP.S. This is a bit confusing probably, but MSVC90 in CMake means msvc version 9.0, which is in human-readable version means msvc2008. Marketing tricks -- use normal versions for msvc internally, but sell them using year number to customers :)",
+      "parentUuid": "3d82a119_6a267726",
+      "revId": "16c6dc69eff4aa259ae96acdb26c8e6304f9d365",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
