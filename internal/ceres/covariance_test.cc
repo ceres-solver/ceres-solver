@@ -532,15 +532,23 @@ TEST_F(CovarianceTest, TruncatedRank) {
     -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02
   };
 
-  Covariance::Options options;
-  options.use_dense_linear_algebra = true;
-  options.null_space_rank = 1;
-  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 
-  options.use_dense_linear_algebra = true;
-  options.null_space_rank = 0;
-  options.min_singular_value_threshold = sqrt(3.5);
-  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+  {
+    Covariance::Options options;
+    options.use_dense_linear_algebra = true;
+    // Force dropping of the smallest eigenvector.
+    options.null_space_rank = 1;
+    ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+  }
+
+  {
+    Covariance::Options options;
+    options.use_dense_linear_algebra = true;
+    // Force dropping of the smallest eigenvector via the ratio but
+    // automatic truncation.
+    options.min_reciprocal_condition_number = 0.044494;
+    ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+  }
 }
 
 class RankDeficientCovarianceTest : public CovarianceTest {
@@ -598,7 +606,7 @@ class RankDeficientCovarianceTest : public CovarianceTest {
   }
 };
 
-TEST_F(RankDeficientCovarianceTest, MinSingularValueTolerance) {
+TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   // J
   //
   //   1  0  0  0  0  0
@@ -631,15 +639,6 @@ TEST_F(RankDeficientCovarianceTest, MinSingularValueTolerance) {
 
   Covariance::Options options;
   options.use_dense_linear_algebra = true;
-  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-
-  options.null_space_rank = 1;
-  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-
-  options.null_space_rank = 2;
-  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-
-  options.null_space_rank = 3;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 

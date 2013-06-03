@@ -397,9 +397,23 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
 
   cholmod_factor* factor = ss_.AnalyzeCholesky(&cholmod_jacobian_view);
   event_logger.AddEvent("Symbolic Factorization");
-  bool status = ss_.Cholesky(&cholmod_jacobian_view, factor);
+  bool factorization_status = ss_.Cholesky(&cholmod_jacobian_view, factor);
+  if (factorization_status) {
+    const double reciprocal_condition_number =
+        cholmod_rcond(factor, ss_.mutable_cc());
+    if (reciprocal_condition_number <
+        options_.min_reciprocal_condition_number) {
+      LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
+                   << "Reciprocal condition number: "
+                   << reciprocal_condition_number << " "
+                   << "min_reciprocal_condition_number : "
+                   << options_.min_reciprocal_condition_number;
+      factorization_status = false;
+    }
+  }
+
   event_logger.AddEvent("Numeric Factorization");
-  if (!status) {
+  if (!factorization_status) {
     ss_.Free(factor);
     LOG(WARNING) << "Cholesky factorization failed.";
     return false;
@@ -518,24 +532,49 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
   }
   event_logger.AddEvent("ConvertToDenseMatrix");
 
+  LOG(INFO) << "dense jacobian: \n" << dense_jacobian;
+
   Eigen::JacobiSVD<Matrix> svd(dense_jacobian,
                                Eigen::ComputeThinU | Eigen::ComputeThinV);
-  Vector inverse_singular_values = svd.singularValues();
-  event_logger.AddEvent("SVD");
+  event_logger.AddEvent("SingularValueDecomposition");
 
-  for (int i = 0; i < inverse_singular_values.rows(); ++i) {
-    if (inverse_singular_values[i] > options_.min_singular_value_threshold &&
-        i < (inverse_singular_values.rows() - options_.null_space_rank)) {
-      inverse_singular_values[i] =
-          1.0 / (inverse_singular_values[i] * inverse_singular_values[i]);
+  const Vector singular_values = svd.singularValues();
+  LOG(INFO) << singular_values.transpose();
+  const int num_singular_values = singular_values.rows();
+  Vector inverse_squared_singular_values(num_singular_values);
+  inverse_squared_singular_values.setZero();
+
+  const double max_singular_value = singular_values.maxCoeff();
+  const double min_singular_value_ratio =
+      sqrt(options_.min_reciprocal_condition_number);
+
+  const bool automatic_truncation = options_.null_space_rank < 0;
+  const int max_rank = min(num_singular_values,
+                           num_singular_values - options_.null_space_rank);
+
+  for (int i = 0; i < num_singular_values; ++i) {
+    const double singular_value_ratio = singular_values[i] / max_singular_value;
+
+    if (singular_value_ratio >= min_singular_value_ratio) {
+      if (i < max_rank) {
+        inverse_squared_singular_values[i] =
+            1.0 / (singular_values[i] * singular_values[i]);
+      }
     } else {
-      inverse_singular_values[i] = 0.0;
+      if (!automatic_truncation && i < max_rank) {
+        LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
+                     << "Reciprocal condition number: "
+                     << singular_value_ratio * singular_value_ratio << " "
+                     << "min_reciprocal_condition_number : "
+                     << options_.min_reciprocal_condition_number;
+        return false;
+      }
     }
   }
 
   Matrix dense_covariance =
       svd.matrixV() *
-      inverse_singular_values.asDiagonal() *
+      inverse_squared_singular_values.asDiagonal() *
       svd.matrixV().transpose();
   event_logger.AddEvent("PseudoInverse");
 
