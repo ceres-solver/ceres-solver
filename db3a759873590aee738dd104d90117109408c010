@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_8521d10e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 5196
+      },
+      "writtenOn": "2013-06-03T22:42:08Z",
+      "side": 1,
+      "message": "This will leave holes in the inverse_squared_singular_values if the singular values are not in order.   I realize they will be in order, but this code seems to imply they may not be.\n\nIt would be more clear to me if you break out of the loop instead:\n\nif (singluar_value_ratio \u003c min_singular_value_ratio)\nbreak;",
+      "revId": "db3a759873590aee738dd104d90117109408c010",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
