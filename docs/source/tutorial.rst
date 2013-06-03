@@ -710,4 +710,8 @@ directory contains a number of other examples:
    <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
    non-linear regression problems.
 
+#. `libmv_bundle_adjuster.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_bundle_adjuster.cc>`_
+   is the bundle adjustment algorithm used by `Blender <www.blender.org>`_/libmv.
+
 

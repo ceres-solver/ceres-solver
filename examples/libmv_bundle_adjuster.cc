@@ -254,10 +254,10 @@ EuclideanPoint *PointForTrack(vector<EuclideanPoint> *all_points,
 // Reader of binary file which makes sure possibly needed endian
 // conversion happens when loading values like floats and integers.
 //
-// File's endian type is reading from a first character of file,
-// which could either be V for big endian or v for little endian.
-// This means you need to design file format assuming first character
-// denotes file endianes in this way.
+// File's endian type is reading from a first character of file, which
+// could either be V for big endian or v for little endian.  This
+// means you need to design file format assuming first character
+// denotes file endianness in this way.
 class EndianAwareFileReader {
  public:
   EndianAwareFileReader(void) : file_descriptor_(-1) {
@@ -541,7 +541,7 @@ struct OpenCVReprojectionError {
   const double observed_y;
 };
 
-// Print a message to the log which camera intrinsics are gonna to be optimixed.
+// Print a message to the log which camera intrinsics are gonna to be optimized.
 void BundleIntrinsicsLogMessage(const int bundle_intrinsics) {
   if (bundle_intrinsics == BUNDLE_NO_INTRINSICS) {
     LOG(INFO) << "Bundling only camera positions.";

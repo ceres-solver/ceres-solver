@@ -4,8 +4,8 @@
 Version History
 ===============
 
-HEAD
-====
+HEAD (52c3d9a)
+==============
 
 New Features
 ------------
@@ -17,11 +17,14 @@ New Features
    and runtime statistics for inner iterations are not reported in
    ``Solver::Summary`` and ``Solver::Summary::FullReport``.
 #. Add BlockRandomAccessCRSMatrix.
-
+#. Bundle adjustment example from libmv/Blender (Sergey Sharybin)
 
 Bug Fixes
 ---------
 
+#. Add documentation for minimizer progress output.
+#. Lint and other cleanups (William Rucklidge)
+#. Collections port fix for MSC 2008 (Sergey Sharybin)
 #. Various corrections and cleanups in the documentation.
 #. Change the path where CeresConfig.cmake is installed (Pablo Speciale)
 #. Minor erros in documentation (Pablo Speciale)
