@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_849d5aaf",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T06:38:15Z",
+      "side": 1,
+      "message": "The how can you expect any of our users to understand when they should use this? At the very least we need to refer to the Kanade paper, since without it this option would not exist.",
+      "parentUuid": "3d82a119_84471a64",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_39a5bb42",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
