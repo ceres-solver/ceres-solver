@@ -159,8 +159,12 @@ class CovarianceImpl;
 // reconstruction is ambiguous upto a similarity transform. This is
 // known as a Gauge Ambiguity. Handling Gauges correctly requires the
 // use of SVD or custom inversion algorithms. For small problems the
-// user can use the dense algorithm. For more details see Morris,
-// Kanatani & Kanade's work the subject.
+// user can use the dense algorithm. For more details see
+//
+// Ken-ichi Kanatani, Daniel D. Morris: Gauges and gauge
+// transformations for uncertainty description of geometric structure
+// with indeterminacy. IEEE Transactions on Information Theory 47(5):
+// 2017-2028 (2001)
 //
 // Example Usage
 // =============
@@ -201,7 +205,7 @@ class Covariance {
 #else
           use_dense_linear_algebra(true),
 #endif
-          min_singular_value_threshold(1e-8),
+          min_reciprocal_condition_number(1e-14),
           null_space_rank(0),
           apply_loss_function(true) {
     }
@@ -210,18 +214,87 @@ class Covariance {
     // estimation of covariance.
     int num_threads;
 
-    // Use Eigen's JacobiSVD algorithm to compute the covariance. This
-    // is a very accurate but slow algorithm. The up side is that it
-    // can handle numerically rank deficient jacobians. This option
-    // only makes sense for small to moderate sized problems.
+    // Use Eigen's JacobiSVD algorithm to compute the covariance
+    // instead of SuiteSparse. This is a very accurate but slow
+    // algorithm. The up side is that it can handle numerically rank
+    // deficient jacobians. This option only makes sense for small to
+    // moderate sized problems.
     bool use_dense_linear_algebra;
 
-    // When use_dense_linear_algebra is true, singular values less
-    // than min_singular_value_threshold are set to zero.
-    double min_singular_value_threshold;
+    // If the Jacobian matrix is near singular, then inverting J'J
+    // will result in unreliable results, e.g,
+    //
+    //   J = [1.0 1.0         ]
+    //       [1.0 1.0000001   ]
+    //
+    // Which is essentially a rank deficient matrix
+    //
+    //   inv(J'J) = [ 2.0471e+14  -2.0471e+14]
+    //              [-2.0471e+14   2.0471e+14]
+    //
+    // The reciprocal condition number of a matrix is a measure of
+    // ill-conditioning or how close the matrix is to being
+    // singular/rank deficient. It is defined as the ratio of the
+    // smallest eigenvalue of the matrix to the largest eigenvalue. In
+    // the above case the reciprocal condition number is about
+    // 1e-16. Which is close to machine precision and even though the
+    // inverse exists, it is meaningless, and care should be taken to
+    // interpet the results of such an inversion.
+    //
+    // Matrices with condition number lower than
+    // min_reciprocal_condition_number are considered rank deficient.
+    //
+    // Depending on the value of use_dense_linear_algebra this may
+    // have further consequences on the covariance estimation process.
+    //
+    // 1. use_dense_linear_algebra = false
+    //
+    //    If the reciprocal_condition_number of J'J is less than
+    //    min_reciprocal_condition_number, Covariance::Compute() will
+    //    fail and return false.
+    //
+    // 2. use_dense_linear_algebra = true
+    //
+    //    When dense covariance estimation is being used, then rank
+    //    deficiency/singularity of the Jacobian can be handled in a
+    //    more sophisticated manner.
+    //
+    //    If null_space_rank = -1, then instead of computing the
+    //    inverse of J'J, the Moore-Penrose Pseudoinverse is computed. If
+    //    (lambda_i, e_i) are eigenvalue and eigenvector pairs of J'J.
+    //
+    //      pseudoinverse[J'J] = sum_i e_i e_i' / lambda_i
+    //
+    //    if lambda_i / lambda_max >= min_reciprocal_condition_number.
+    //
+    //    If null_space_rank is non-negative, then the smallest
+    //    null_space_rank eigenvalue/eigenvectors are dropped
+    //    irrespective of the magnitude of lambda_i. If the ratio of
+    //    the smallest non-zero eigenvalue to the largest eigenvalue
+    //    in the truncated matrix is still below
+    //    min_reciprocal_condition_number, then the
+    //    Covariance::Compute() will fail and return false.
+    double min_reciprocal_condition_number;
 
-    // When use_dense_linear_algebra is true, the bottom
-    // null_space_rank singular values are set to zero.
+    // When use_dense_linear_algebra is true, null_space_rank
+    // determines how many of the smallest eigenvectors of J'J are
+    // dropped when computing the pseudoinverse.
+    //
+    // If null_space_rank = -1, then instead of computing the inverse
+    // of J'J, the Moore-Penrose Pseudoinverse is computed. If
+    // (lambda_i, e_i) are eigenvalue and eigenvector pairs of J'J.
+    //
+    //   pseudoinverse[J'J] = sum_i e_i e_i' / lambda_i
+    //
+    //   if lambda_i / lambda_max >= min_reciprocal_condition_number.
+    //
+    // If null_space_rank is non-negative, then the smallest
+    // null_space_rank eigenvalue/eigenvectors are dropped
+    // irrespective of the magnitude of lambda_i. If the ratio of the
+    // smallest non-zero eigenvalue to the largest eigenvalue in the
+    // truncated matrix is still below
+    // min_reciprocal_condition_number, then the Covariance::Compute()
+    // will fail and return false.
     int null_space_rank;
 
     // Even though the residual blocks in the problem may contain loss
@@ -254,20 +327,28 @@ class Covariance {
   // what parts of the covariance matrix are computed. The full
   // Jacobian is used to do the computation, i.e. they do not have an
   // impact on what part of the Jacobian is used for computation.
+  //
+  // The return value indicates the success or failure of the
+  // covariance computation. Please see the documentation for
+  // Covariance::Options for more on the conditions under which this
+  // function returns false.
   bool Compute(
       const vector<pair<const double*, const double*> >& covariance_blocks,
       Problem* problem);
 
-  // Compute must be called before the first call to
-  // GetCovarianceBlock. covariance_block must point to a memory
-  // location that can store a parameter_block1_size x
-  // parameter_block2_size matrix. The returned covariance will be a
-  // row-major matrix.
+  // Return the block of the covariance matrix corresponding to
+  // parameter_block1 and parameter_block2.
   //
-  // The pair <parameter_block1, parameter_block2> OR the pair
-  // <parameter_block2, parameter_block1> must have been present in
-  // the vector covariance_blocks when Compute was called. Otherwise
+  // Compute must be called before the first call to
+  // GetCovarianceBlock and the pair <parameter_block1,
+  // parameter_block2> OR the pair <parameter_block2,
+  // parameter_block1> must have been present in the vector
+  // covariance_blocks when Compute was called. Otherwise
   // GetCovarianceBlock will return false.
+  //
+  // covariance_block must point to a memory location that can store a
+  // parameter_block1_size x parameter_block2_size matrix. The
+  // returned covariance will be a row-major matrix.
   bool GetCovarianceBlock(const double* parameter_block1,
                           const double* parameter_block2,
                           double* covariance_block) const;
