@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_449362a4",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T06:21:26Z",
+      "side": 1,
+      "message": "I expect the people reading this will know what a rank deficient matrix is. What I would expect less is that people understand *why* this happens in their estimation problem. I understand you are arguing against anecdotes, but that is exactly what\u0027s needed here.\n\nThis example is not as useful.",
+      "revId": "dd2f91aa22889557fcc67575d50c1b6a6bd31a9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_649866be",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T06:21:26Z",
+      "side": 1,
+      "message": "Strange indentation remains.",
+      "revId": "dd2f91aa22889557fcc67575d50c1b6a6bd31a9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_a4a17ee4",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T06:21:26Z",
+      "side": 1,
+      "message": "the -\u003e of the",
+      "revId": "dd2f91aa22889557fcc67575d50c1b6a6bd31a9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
