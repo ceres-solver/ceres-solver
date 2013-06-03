@@ -405,6 +405,50 @@ TEST_F(CovarianceTest, NormalBehavior) {
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
+#ifdef CERES_USE_OPENMP
+
+TEST_F(CovarianceTest, ThreadedNormalBehavior) {
+  // J
+  //
+  //   1  0  0  0  0  0
+  //   0  1  0  0  0  0
+  //   0  0  2  0  0  0
+  //   0  0  0  2  0  0
+  //   0  0  0  0  2  0
+  //   0  0  0  0  0  5
+  //  -5 -6  1  2  3  0
+  //   3 -2  0  0  0  2
+
+  // J'J
+  //
+  //   35  24 -5 -10 -15  6
+  //   24  41 -6 -12 -18 -4
+  //   -5  -6  5   2   3  0
+  //  -10 -12  2   8   6  0
+  //  -15 -18  3   6  13  0
+  //    6  -4  0   0   0 29
+
+  // inv(J'J) computed using octave.
+  double expected_covariance[] = {
+     7.0747e-02,  -8.4923e-03,   1.6821e-02,   3.3643e-02,   5.0464e-02,  -1.5809e-02,  // NOLINT
+    -8.4923e-03,   8.1352e-02,   2.4758e-02,   4.9517e-02,   7.4275e-02,   1.2978e-02,  // NOLINT
+     1.6821e-02,   2.4758e-02,   2.4904e-01,  -1.9271e-03,  -2.8906e-03,  -6.5325e-05,  // NOLINT
+     3.3643e-02,   4.9517e-02,  -1.9271e-03,   2.4615e-01,  -5.7813e-03,  -1.3065e-04,  // NOLINT
+     5.0464e-02,   7.4275e-02,  -2.8906e-03,  -5.7813e-03,   2.4133e-01,  -1.9598e-04,  // NOLINT
+    -1.5809e-02,   1.2978e-02,  -6.5325e-05,  -1.3065e-04,  -1.9598e-04,   3.9544e-02,  // NOLINT
+  };
+
+  Covariance::Options options;
+  options.num_threads = 4;
+
+  options.use_dense_linear_algebra = false;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.use_dense_linear_algebra = true;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+#endif  // CERES_USE_OPENMP
 
 TEST_F(CovarianceTest, ConstantParameterBlock) {
   problem_.SetParameterBlockConstant(parameters_);
@@ -643,6 +687,81 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   options.null_space_rank = -1;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
+
+class LargeScaleCovarianceTest : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+    num_parameter_blocks_ = 2000;
+    parameter_block_size_ = 5;
+    parameters_.reset(new double[parameter_block_size_ * num_parameter_blocks_]);
+
+    Matrix jacobian(parameter_block_size_, parameter_block_size_);
+    for (int i = 0; i < num_parameter_blocks_; ++i) {
+      jacobian.setIdentity();
+      jacobian *= (i + 1);
+
+      double* block_i = parameters_.get() + i * parameter_block_size_;
+      problem_.AddResidualBlock(new UnaryCostFunction(parameter_block_size_,
+                                                      parameter_block_size_,
+                                                      jacobian.data()),
+                                NULL,
+                                block_i );
+      for (int j = i; j < num_parameter_blocks_; ++j) {
+        double* block_j = parameters_.get() + j * parameter_block_size_;
+        all_covariance_blocks_.push_back(make_pair(block_i, block_j));
+      }
+    }
+  }
+
+  void ComputeAndCompare(int num_threads) {
+    Covariance::Options options;
+    options.use_dense_linear_algebra = false;
+    options.num_threads = num_threads;
+    Covariance covariance(options);
+    EXPECT_TRUE(covariance.Compute(all_covariance_blocks_, &problem_));
+
+    Matrix expected(parameter_block_size_, parameter_block_size_);
+    Matrix actual(parameter_block_size_, parameter_block_size_);
+    const double kTolerance = 1e-16;
+
+    for (int i = 0; i < num_parameter_blocks_; ++i) {
+      expected.setIdentity();
+      expected /= (i + 1.0) * (i + 1.0);
+
+      double* block_i = parameters_.get() + i * parameter_block_size_;
+      covariance.GetCovarianceBlock(block_i, block_i, actual.data());
+      EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
+          << "block: " << i << ", " << i << "\n"
+          << "expected: \n" << expected << "\n"
+          << "actual: \n" << actual;
+
+      expected.setZero();
+      for (int j = i + 1; j < num_parameter_blocks_; ++j) {
+        double* block_j = parameters_.get() + j * parameter_block_size_;
+        covariance.GetCovarianceBlock(block_i, block_j, actual.data());
+        EXPECT_NEAR((expected - actual).norm(), 0.0, kTolerance)
+            << "block: " << i << ", " << j << "\n"
+            << "expected: \n" << expected << "\n"
+            << "actual: \n" << actual;
+      }
+    }
+  }
+
+  scoped_array<double> parameters_;
+  int parameter_block_size_;
+  int num_parameter_blocks_;
+
+  Problem problem_;
+  vector<pair<const double*, const double*> > all_covariance_blocks_;
+};
+
+#if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+
+TEST_F(LargeScaleCovarianceTest, Parallel) {
+  ComputeAndCompare(4);
+}
+
+#endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
 
 }  // namespace internal
 }  // namespace ceres
