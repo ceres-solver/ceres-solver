@@ -113,7 +113,7 @@ class CovarianceImpl;
 // blocks. The computation assumes that the CostFunctions compute
 // residuals such that their covariance is identity.
 //
-// Since the computation of the covariance matrix involves computing
+// Since the computation of the covariance matrix requires computing
 // the inverse of a potentially large matrix, this can involve a
 // rather large amount of time and memory. However, it is usually the
 // case that the user is only interested in a small part of the
@@ -222,15 +222,17 @@ class Covariance {
     bool use_dense_linear_algebra;
 
     // If the Jacobian matrix is near singular, then inverting J'J
-    // will result in unreliable results, e.g,
+    // will result in unreliable results, e.g, if
     //
     //   J = [1.0 1.0         ]
     //       [1.0 1.0000001   ]
     //
-    // Which is essentially a rank deficient matrix
+    // which is essentially a rank deficient matrix, we have
     //
     //   inv(J'J) = [ 2.0471e+14  -2.0471e+14]
     //              [-2.0471e+14   2.0471e+14]
+    //
+    // This is not a useful result.
     //
     // The reciprocal condition number of a matrix is a measure of
     // ill-conditioning or how close the matrix is to being
@@ -242,51 +244,31 @@ class Covariance {
     // interpet the results of such an inversion.
     //
     // Matrices with condition number lower than
-    // min_reciprocal_condition_number are considered rank deficient.
+    // min_reciprocal_condition_number are considered rank deficient
+    // and by default Covariance::Compute will return false if it
+    // encounters such a matrix.
     //
-    // Depending on the value of use_dense_linear_algebra this may
-    // have further consequences on the covariance estimation process.
+    // use_dense_linear_algebra = true
+    // -------------------------------
     //
-    // 1. use_dense_linear_algebra = false
+    // When using dense linear algebra, the user has more control in
+    // dealing with singular and near singular covariance matrices.
     //
-    //    If the reciprocal_condition_number of J'J is less than
-    //    min_reciprocal_condition_number, Covariance::Compute() will
-    //    fail and return false.
+    // As mentioned above, when the covariance matrix is near
+    // singular, instead of computing the inverse of J'J, the
+    // Moore-Penrose pseudoinverse of J'J should be computed.
     //
-    // 2. use_dense_linear_algebra = true
+    // If J'J has the eigen decomposition (lambda_i, e_i), where
+    // lambda_i is the i^th eigenvalue and e_i is the corresponding
+    // eigenvector, then the inverse of J'J is
     //
-    //    When dense covariance estimation is being used, then rank
-    //    deficiency/singularity of the Jacobian can be handled in a
-    //    more sophisticated manner.
+    //   inverse[J'J] = sum_i e_i e_i' / lambda_i
     //
-    //    If null_space_rank = -1, then instead of computing the
-    //    inverse of J'J, the Moore-Penrose Pseudoinverse is computed. If
-    //    (lambda_i, e_i) are eigenvalue and eigenvector pairs of J'J.
+    // and computing the pseudo inverse involves dropping terms from
+    // this sum that correspond to small eigenvalues.
     //
-    //      pseudoinverse[J'J] = sum_i e_i e_i' / lambda_i
-    //
-    //    if lambda_i / lambda_max >= min_reciprocal_condition_number.
-    //
-    //    If null_space_rank is non-negative, then the smallest
-    //    null_space_rank eigenvalue/eigenvectors are dropped
-    //    irrespective of the magnitude of lambda_i. If the ratio of
-    //    the smallest non-zero eigenvalue to the largest eigenvalue
-    //    in the truncated matrix is still below
-    //    min_reciprocal_condition_number, then the
-    //    Covariance::Compute() will fail and return false.
-    double min_reciprocal_condition_number;
-
-    // When use_dense_linear_algebra is true, null_space_rank
-    // determines how many of the smallest eigenvectors of J'J are
-    // dropped when computing the pseudoinverse.
-    //
-    // If null_space_rank = -1, then instead of computing the inverse
-    // of J'J, the Moore-Penrose Pseudoinverse is computed. If
-    // (lambda_i, e_i) are eigenvalue and eigenvector pairs of J'J.
-    //
-    //   pseudoinverse[J'J] = sum_i e_i e_i' / lambda_i
-    //
-    //   if lambda_i / lambda_max >= min_reciprocal_condition_number.
+    // How terms are dropped is controlled by
+    // min_reciprocal_condition_number and null_space_rank.
     //
     // If null_space_rank is non-negative, then the smallest
     // null_space_rank eigenvalue/eigenvectors are dropped
@@ -295,6 +277,22 @@ class Covariance {
     // truncated matrix is still below
     // min_reciprocal_condition_number, then the Covariance::Compute()
     // will fail and return false.
+    //
+    // Setting null_space_rank = -1 drops all terms for which
+    //
+    //   lambda_i / lambda_max < min_reciprocal_condition_number.
+    //
+    double min_reciprocal_condition_number;
+
+    // Truncate the smallest "null_space_rank" eigenvectors when
+    // computing the pseudo inverse of J'J.
+    //
+    // If null_space_rank = -1, then all eigenvectors with eigenvalues s.t.
+    //
+    //   lambda_i / lambda_max < min_reciprocal_condition_number.
+    //
+    // are dropped. See the documentation for
+    // min_reciprocal_condition_number for more details.
     int null_space_rank;
 
     // Even though the residual blocks in the problem may contain loss
