@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_041eca6d",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "I have given an example. I am not inclined to give anecdotal examples here.",
+      "parentUuid": "3d82a119_59aa6f11",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_19a0f731",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "Funny indentation. Consider dedenting the number lines, then indenting the subsequent paragraphs under the first word on the numbered lines.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_24382edb",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_19a0f731",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_443d22ca",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_79af3320",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_999307f1",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_64422657",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_999307f1",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_f905e358",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "While I understand the desire to keep the documentation in pure mathematical language, I think this would be strictly more useful with some concrete examples, and maybe even a reference to Kanade\u0027s paper. Bundle adjustment being the classic example.\n\nIf you showed this to a random computer vision practitioner, they would have absolutely no idea what the point of this option is. It took me multiple readings of the Kanade paper about covariance in the face of gauge freedoms before I understood. How can we expect typical practitioners who have \"other problems\" to know about this? While it is not \"our job\" to educate our users on such topics, I think it is a nice touch.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_84471a64",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "The actual explantion of the kanade paper is complicated and requires differential geometry to explain. This is not the place for explaining it. In any case I do not understand it thoroughly enough to give an explanation that I would be comfortable standing behind.",
+      "parentUuid": "3d82a119_f905e358",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_a42b3e81",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "This is already mentioned up above with the use_dense_linear_algebra documentation.",
+      "parentUuid": "3d82a119_b90b6b6c",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_d9081f72",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "Mention to look at the options documentation to see what determines success or failure.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_c4283287",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_d9081f72",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_e43536e0",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_b990cbe4",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_d99d7ffb",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -166,6 +310,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "I suspect you don\u0027t want this log statement to go in.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_04332afb",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "err no :)",
+      "parentUuid": "3d82a119_d99d7ffb",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_24610ee7",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "err no.",
+      "parentUuid": "3d82a119_f99a4300",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_19c9d701",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -200,6 +380,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "You could skip this and instead set the element zero in the else branch of the if statement in the below loop.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_645b063b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "it leads to a simpler loop which only goes from 0 to max_rank this way. I tried a bunch of different permutations, this turned out to be the simplest.",
+      "parentUuid": "3d82a119_19c9d701",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_44660200",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_39ce9b0a",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_59c34fe1",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -234,6 +450,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "I\u0027m tempted to make the default for null_space_rank zero, since it transparently works (unlike -1). Also it\u0027s not clear that this subtraction is correct when null_space_rank is -1.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_a4541e0a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "I think its safer to have automatic truncation in the presence of a truncation tolerance, but I could be convinced otherwise. Perhaps stricter behaviour is better.. and automatic truncation should not happen.",
+      "parentUuid": "3d82a119_59c34fe1",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_044c0a7a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "I have cleaned up the code have another look.",
+      "parentUuid": "3d82a119_79c813fb",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_b9b9ab64",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_e44e1674",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "see the cleaned up code and let me know what you think.",
+      "parentUuid": "3d82a119_b9b9ab64",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_99bce755",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -285,6 +555,24 @@
       "writtenOn": "2013-06-03T03:37:49Z",
       "side": 1,
       "message": "This if could be combined into the else",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_c4511219",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-03T06:12:11Z",
+      "side": 1,
+      "message": "oh i have cleaned this up, I forgot to push it.",
+      "parentUuid": "3d82a119_99bce755",
       "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
