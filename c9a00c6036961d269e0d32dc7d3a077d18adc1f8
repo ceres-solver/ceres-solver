@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_59aa6f11",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Can you give concrete examples of how this happens in the comments? Again, I understand technically it is not our job, but I suspect we can save some people time by offering the high-level reasons why this typically happens.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_19a0f731",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Funny indentation. Consider dedenting the number lines, then indenting the subsequent paragraphs under the first word on the numbered lines.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_79af3320",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Dedent by one space",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_999307f1",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Indent by 3 more spaces (and following comments)",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_f905e358",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "While I understand the desire to keep the documentation in pure mathematical language, I think this would be strictly more useful with some concrete examples, and maybe even a reference to Kanade\u0027s paper. Bundle adjustment being the classic example.\n\nIf you showed this to a random computer vision practitioner, they would have absolutely no idea what the point of this option is. It took me multiple readings of the Kanade paper about covariance in the face of gauge freedoms before I understood. How can we expect typical practitioners who have \"other problems\" to know about this? While it is not \"our job\" to educate our users on such topics, I think it is a nice touch.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_39a5bb42",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Weird indentation here and below.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_b90b6b6c",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "While I understand that technically it is an implementation detail, consider mentioning that this is done by SVD or eigendecomposition for transparency.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_d9081f72",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Mention to look at the options documentation to see what determines success or failure.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_b990cbe4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "How about \"factorization_succeeded\"?",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_d99d7ffb",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "I suspect you don\u0027t want this log statement to go in.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_f99a4300",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Intended?",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_19c9d701",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "You could skip this and instead set the element zero in the else branch of the if statement in the below loop.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_39ce9b0a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "This is guaranteed to be singular_values[0]; no need to scan.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_59c34fe1",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "I\u0027m tempted to make the default for null_space_rank zero, since it transparently works (unlike -1). Also it\u0027s not clear that this subtraction is correct when null_space_rank is -1.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_79c813fb",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "Everything in this if/else block is actually hard to read because there are some important fallthroughs that are not documented. While I don\u0027t always advocate this, consider putting in empty else blocks with comments to explain what is happening in those cases.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_b9b9ab64",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me what the else branch is supposed to do. I see it\u0027s nothing in this code, but I\u0027m not convinced that is correct. I guess because the singular values are zeroed above. Consider removing the zeroing above and making it explicit here.",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_99bce755",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-03T03:37:49Z",
+      "side": 1,
+      "message": "This if could be combined into the else",
+      "revId": "c9a00c6036961d269e0d32dc7d3a077d18adc1f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
