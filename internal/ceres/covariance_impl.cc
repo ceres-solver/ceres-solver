@@ -30,6 +30,10 @@
 
 #include "ceres/covariance_impl.h"
 
+#ifdef CERES_USE_OPENMP
+#include <omp.h>
+#endif
+
 #include <algorithm>
 #include <utility>
 #include <vector>
@@ -47,6 +51,36 @@
 
 namespace ceres {
 namespace internal {
+namespace {
+
+// Per thread storage for SuiteSparse.
+struct PerThreadContext {
+  PerThreadContext(int num_rows)
+      : solution(NULL),
+        solution_set(NULL),
+        y_workspace(NULL),
+        e_workspace(NULL),
+        rhs(NULL) {
+    rhs = ss.CreateDenseVector(NULL, num_rows, num_rows);
+  }
+
+  ~PerThreadContext() {
+    ss.Free(solution);
+    ss.Free(solution_set);
+    ss.Free(y_workspace);
+    ss.Free(e_workspace);
+    ss.Free(rhs);
+  }
+
+  cholmod_dense* solution;
+  cholmod_sparse* solution_set;
+  cholmod_dense* y_workspace;
+  cholmod_dense* e_workspace;
+  cholmod_dense* rhs;
+  SuiteSparse ss;
+};
+
+} // namespace
 
 typedef vector<pair<const double*, const double*> > CovarianceBlocks;
 
@@ -424,9 +458,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
   const int* cols = covariance_matrix_->cols();
   double* values = covariance_matrix_->mutable_values();
 
-  cholmod_dense* rhs = ss_.CreateDenseVector(NULL, num_rows, num_rows);
-  double* rhs_x = reinterpret_cast<double*>(rhs->x);
-
   // The following loop exploits the fact that the i^th column of A^{-1}
   // is given by the solution to the linear system
   //
@@ -441,6 +472,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
   // versions of SuiteSparse have the cholmod_solve2 function which
   // re-uses memory across calls.
 #if (SUITESPARSE_VERSION < 4002)
+  cholmod_dense* rhs = ss_.CreateDenseVector(NULL, num_rows, num_rows);
+  double* rhs_x = reinterpret_cast<double*>(rhs->x);
+
   for (int r = 0; r < num_rows; ++r) {
     int row_begin = rows[r];
     int row_end = rows[r + 1];
@@ -458,15 +492,35 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
     ss_.Free(solution);
     rhs_x[r] = 0.0;
   }
-#else
-  // TODO(sameeragarwal) There should be a more efficient way
-  // involving the use of Bset but I am unable to make it work right
-  // now.
-  cholmod_dense* solution = NULL;
-  cholmod_sparse* solution_set = NULL;
-  cholmod_dense* y_workspace = NULL;
-  cholmod_dense* e_workspace = NULL;
 
+  ss_.Free(rhs);
+#else //  SUITESPARSE_VERSION < 4002
+
+  const int num_threads = options_.num_threads;
+  vector<PerThreadContext*> contexts(num_threads);
+  for (int i = 0; i < num_threads; ++i) {
+    contexts[i] = new PerThreadContext(num_rows);
+  }
+
+  // The first call to cholmod_solve2 is not thread safe, since it
+  // changes the factorization from supernodal to simplicial etc.
+  {
+    PerThreadContext* context = contexts[0];
+    double* context_rhs_x =  reinterpret_cast<double*>(context->rhs->x);
+    context_rhs_x[0] = 1.0;
+    cholmod_solve2(CHOLMOD_A,
+                   factor,
+                   context->rhs,
+                   NULL,
+                   &context->solution,
+                   &context->solution_set,
+                   &context->y_workspace,
+                   &context->e_workspace,
+                   context->ss.mutable_cc());
+    context_rhs_x[0] = 0.0;
+  }
+
+#pragma omp parallel for num_threads(num_threads) schedule(dynamic)
   for (int r = 0; r < num_rows; ++r) {
     int row_begin = rows[r];
     int row_end = rows[r + 1];
@@ -474,40 +528,52 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparse() {
       continue;
     }
 
-    rhs_x[r] = 1.0;
+  #ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+  #else
+    int thread_id = 0;
+  #endif
 
+    PerThreadContext* context = contexts[thread_id];
+    double* context_rhs_x =  reinterpret_cast<double*>(context->rhs->x);
+    context_rhs_x[r] = 1.0;
+
+    // TODO(sameeragarwal) There should be a more efficient way
+    // involving the use of Bset but I am unable to make it work right
+    // now.
     cholmod_solve2(CHOLMOD_A,
                    factor,
-                   rhs,
+                   context->rhs,
                    NULL,
-                   &solution,
-                   &solution_set,
-                   &y_workspace,
-                   &e_workspace,
-                   ss_.mutable_cc());
+                   &context->solution,
+                   &context->solution_set,
+                   &context->y_workspace,
+                   &context->e_workspace,
+                   context->ss.mutable_cc());
 
-    double* solution_x = reinterpret_cast<double*>(solution->x);
+    double* solution_x = reinterpret_cast<double*>(context->solution->x);
     for (int idx = row_begin; idx < row_end; ++idx) {
       const int c = cols[idx];
       values[idx] = solution_x[c];
     }
-    rhs_x[r] = 0.0;
+    context_rhs_x[r] = 0.0;
   }
 
-  ss_.Free(solution);
-  ss_.Free(solution_set);
-  ss_.Free(y_workspace);
-  ss_.Free(e_workspace);
+  for (int i = 0; i < num_threads; ++i) {
+    delete contexts[i];
+  }
 
-#endif
+#endif //  SUITESPARSE_VERSION < 4002
 
-  ss_.Free(rhs);
   ss_.Free(factor);
   event_logger.AddEvent("Inversion");
   return true;
-#else
+
+#else  // CERES_NO_SUITESPARSE
+
   return false;
-#endif
+
+#endif  // CERES_NO_SUITESPARSE
 };
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
@@ -549,19 +615,32 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
   const int max_rank = min(num_singular_values,
                            num_singular_values - options_.null_space_rank);
 
+  // Compute the squared inverse of the singular values. Truncate the
+  // computation based on min_singular_value_ratio and
+  // null_space_rank. When either of these two quantities are active,
+  // the resulting covariance matrix is a Moore-Penrose inverse
+  // instead of a regular inverse.
   for (int i = 0; i < max_rank; ++i) {
     const double singular_value_ratio = singular_values[i] / max_singular_value;
-    if (singular_value_ratio >= min_singular_value_ratio) {
-      inverse_squared_singular_values[i] =
-          1.0 / (singular_values[i] * singular_values[i]);
-    } else if (!automatic_truncation) {
-      LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
-                   << "Reciprocal condition number: "
-                   << singular_value_ratio * singular_value_ratio << " "
-                   << "min_reciprocal_condition_number : "
-                   << options_.min_reciprocal_condition_number;
-      return false;
+    if (singular_value_ratio < min_singular_value_ratio) {
+      // Since the singular values are in decreasing order, if
+      // automatic truncation is enabled, then from this point on
+      // all values will fail the ratio test and there is nothing to
+      // do in this loop.
+      if (automatic_truncation) {
+        break;
+      } else {
+        LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
+                     << "Reciprocal condition number: "
+                     << singular_value_ratio * singular_value_ratio << " "
+                     << "min_reciprocal_condition_number : "
+                     << options_.min_reciprocal_condition_number;
+        return false;
+      }
     }
+
+    inverse_squared_singular_values[i] =
+        1.0 / (singular_values[i] * singular_values[i]);
   }
 
   Matrix dense_covariance =
@@ -584,8 +663,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigen() {
   event_logger.AddEvent("CopyToCovarianceMatrix");
   return true;
 };
-
-
 
 }  // namespace internal
 }  // namespace ceres

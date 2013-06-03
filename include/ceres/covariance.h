@@ -51,7 +51,7 @@ class CovarianceImpl;
 // 1. This is experimental code and the API WILL CHANGE before
 //    release.
 //
-// 2. WARNING: It is very easy to use this class incorrectly without
+// 2. It is very easy to use this class incorrectly without
 //    understanding the underlying mathematics. Please read and
 //    understand the documentation completely before attempting to use
 //    this class.
@@ -166,6 +166,21 @@ class CovarianceImpl;
 // with indeterminacy. IEEE Transactions on Information Theory 47(5):
 // 2017-2028 (2001)
 //
+// Speed
+// -----
+//
+// When use_dense_linear_algebra = true, Eigen's JacobiSVD algorithm
+// is used to perform the computations. It is an accurate but slow
+// method and should only be used for small to moderate sized
+// problems.
+//
+// When use_dense_linear_algebra = false, SuiteSparse/CHOLMOD is used
+// to perform the computation. Recent versions of SuiteSparse (>=
+// 4.2.0) provide a much more efficient method for solving for rows of
+// the covariance matrix. Therefore, if you are doing large scale
+// covariance estimation, we strongly recommend using a recent version
+// of SuiteSparse.
+//
 // Example Usage
 // =============
 //
@@ -247,6 +262,27 @@ class Covariance {
     // min_reciprocal_condition_number are considered rank deficient
     // and by default Covariance::Compute will return false if it
     // encounters such a matrix.
+    //
+    // use_dense_linear_algebra = false
+    // --------------------------------
+    //
+    // When performing large scale sparse covariance estimation,
+    // computing the exact value of the reciprocal condition number is
+    // not possible as it would require computing the eigenvalues of
+    // J'J.
+    //
+    // In this case we use cholmod_rcond, which uses the ratio of the
+    // smallest to the largest diagonal entries of the Cholesky
+    // factorization as an approximation to the reciprocal condition
+    // number.
+    //
+    // However, care must be taken as this is a heuristic and can
+    // sometimes be a very crude estimate. The default value of
+    // min_reciprocal_condition_number has been set to a conservative
+    // value, and sometimes the Covariance::Compute may return false
+    // even if it is possible to estimate the covariance reliably. In
+    // such cases, the user should exercise their judgement before
+    // lowering the value of min_reciprocal_condition_number.
     //
     // use_dense_linear_algebra = true
     // -------------------------------
