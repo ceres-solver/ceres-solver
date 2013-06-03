@@ -248,6 +248,27 @@ class Covariance {
     // and by default Covariance::Compute will return false if it
     // encounters such a matrix.
     //
+    // use_dense_linear_algebra = false
+    // --------------------------------
+    //
+    // When performing large scale sparse covariance estimation,
+    // computing the exact value of the reciprocal condition number is
+    // not possible as it would require computing the eigenvalues of
+    // J'J.
+    //
+    // In this case we use cholmod_rcond, which uses the ratio of the
+    // smallest to the largest diagonal entries of the Cholesky
+    // factorization as an approximation to the reciprocal condition
+    // number.
+    //
+    // However, care must be taken as this is a heuristic and can
+    // sometimes be a very crude estimate. The default value of
+    // min_reciprocal_condition_number has been set to a conservative
+    // value, and sometimes the Covariance::Compute may return false
+    // even if it is possible to estimate the covariance reliably. In
+    // such cases, the user should exercise their judgement before
+    // lowering the value of min_reciprocal_condition_number.
+    //
     // use_dense_linear_algebra = true
     // -------------------------------
     //
