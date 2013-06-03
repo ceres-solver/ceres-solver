@@ -72,7 +72,7 @@ platform. Start by installing all the dependencies.
 .. code-block:: bash
 
      # CMake
-     sudo apt-hey install cmake
+     sudo apt-get install cmake
      # gflags
      tar -xvzf gflags-2.0.tar.gz
      cd gflags-2.0

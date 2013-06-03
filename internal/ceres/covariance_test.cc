@@ -405,6 +405,50 @@ TEST_F(CovarianceTest, NormalBehavior) {
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
+#ifdef CERES_USE_OPENMP
+
+TEST_F(CovarianceTest, ThreadedNormalBehavior) {
+  // J
+  //
+  //   1  0  0  0  0  0
+  //   0  1  0  0  0  0
+  //   0  0  2  0  0  0
+  //   0  0  0  2  0  0
+  //   0  0  0  0  2  0
+  //   0  0  0  0  0  5
+  //  -5 -6  1  2  3  0
+  //   3 -2  0  0  0  2
+
+  // J'J
+  //
+  //   35  24 -5 -10 -15  6
+  //   24  41 -6 -12 -18 -4
+  //   -5  -6  5   2   3  0
+  //  -10 -12  2   8   6  0
+  //  -15 -18  3   6  13  0
+  //    6  -4  0   0   0 29
+
+  // inv(J'J) computed using octave.
+  double expected_covariance[] = {
+     7.0747e-02,  -8.4923e-03,   1.6821e-02,   3.3643e-02,   5.0464e-02,  -1.5809e-02,  // NOLINT
+    -8.4923e-03,   8.1352e-02,   2.4758e-02,   4.9517e-02,   7.4275e-02,   1.2978e-02,  // NOLINT
+     1.6821e-02,   2.4758e-02,   2.4904e-01,  -1.9271e-03,  -2.8906e-03,  -6.5325e-05,  // NOLINT
+     3.3643e-02,   4.9517e-02,  -1.9271e-03,   2.4615e-01,  -5.7813e-03,  -1.3065e-04,  // NOLINT
+     5.0464e-02,   7.4275e-02,  -2.8906e-03,  -5.7813e-03,   2.4133e-01,  -1.9598e-04,  // NOLINT
+    -1.5809e-02,   1.2978e-02,  -6.5325e-05,  -1.3065e-04,  -1.9598e-04,   3.9544e-02,  // NOLINT
+  };
+
+  Covariance::Options options;
+  options.num_threads = 4;
+
+  options.use_dense_linear_algebra = false;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.use_dense_linear_algebra = true;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+#endif
 
 TEST_F(CovarianceTest, ConstantParameterBlock) {
   problem_.SetParameterBlockConstant(parameters_);
