@@ -55,7 +55,7 @@ namespace {
 
 // Per thread storage for SuiteSparse.
 struct PerThreadContext {
-  PerThreadContext(int num_rows)
+  explicit PerThreadContext(int num_rows)
       : solution(NULL),
         solution_set(NULL),
         y_workspace(NULL),
@@ -80,7 +80,7 @@ struct PerThreadContext {
   SuiteSparse ss;
 };
 
-} // namespace
+}  // namespace
 
 typedef vector<pair<const double*, const double*> > CovarianceBlocks;
 
