@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_aceb19fa",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "The chances of people looking at stderr outside google are pretty small. So I do not see the point of it. I\u0027d rather have that be in the documentation. I will add a comment in the header and eventually when we ship the documentation.",
+      "parentUuid": "3d82a119_81effe38",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_be2c23b4",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-06-04T20:01:39Z",
       "side": 1,
       "message": "Use a scoped array of scoped pointers instead.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_cccf6da9",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "I need to use a constructor, scoped array is not optimal here.",
+      "parentUuid": "3d82a119_be2c23b4",
       "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_4cc53d86",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_e1fd1af1",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_c112d665",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2013-06-04T20:01:39Z",
       "side": 1,
       "message": "Trailing comment to match",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_8cbf35ea",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_c112d665",
       "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_acc4f988",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_c1f9f605",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_a10de245",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3d82a119_ecb51109",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d82a119_a10de245",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82a119_0124eeb8",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2013-06-04T20:01:39Z",
       "side": 1,
       "message": "I suppose this is better than nothing but unfortunately I doubt the OpenMP will end up creating multiple work blocks and will just use 1 thread. Or prove me wrong.\n\nCan you make a larger example? Don\u0027t create the result manually; just check for properties maybe.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_cc3a0d38",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-04T22:17:46Z",
+      "side": 1,
+      "message": "added a test.",
+      "parentUuid": "3d82a119_0124eeb8",
       "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
