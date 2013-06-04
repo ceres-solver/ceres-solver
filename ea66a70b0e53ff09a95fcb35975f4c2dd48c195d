@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d82a119_81effe38",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "I\u0027m tempted to print out a warning that this is an old version of suitesparse, and that the user should upgrade since a suboptimal code path is used in this case.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_be2c23b4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "Use a scoped array of scoped pointers instead.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_e1fd1af1",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "Consider indenting the ifdefs since they are nested.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_c112d665",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "Trailing comment to match",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_c1f9f605",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "Can you put trailing comments on these so it\u0027s clear what they are matched to? It\u0027s a bit hard to read this code.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_a10de245",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "Trailing comment to match; sorry this is just hard to follow since the block is so huge.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d82a119_0124eeb8",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-04T20:01:39Z",
+      "side": 1,
+      "message": "I suppose this is better than nothing but unfortunately I doubt the OpenMP will end up creating multiple work blocks and will just use 1 thread. Or prove me wrong.\n\nCan you make a larger example? Don\u0027t create the result manually; just check for properties maybe.",
+      "revId": "ea66a70b0e53ff09a95fcb35975f4c2dd48c195d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
