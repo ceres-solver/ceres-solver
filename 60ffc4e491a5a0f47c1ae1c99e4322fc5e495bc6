@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdee4902_105904b5",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-04T23:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdee4902_1068e461",
+      "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdee4902_10cea453",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-06-04T23:10:18Z",
       "side": 1,
       "message": "Doesn\u0027t seem too awkward to me; and zaps the deletes.\n\n  scoped_array\u003cscoped_ptr\u003cPerThreadContext\u003e \u003e contexts(\n      new scoped_ptr\u003cPerThreadContext\u003e[num_threads]);\n  for (int i \u003d 0; i \u003c num_threads; ++i) {\n    contexts[i].reset(new PerThreadContext(num_rows));\n  }",
+      "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdee4902_9025f419",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-04T23:14:06Z",
+      "side": 1,
+      "message": "decidedly uglier. why do a scoped_array of scoped_ptrs? you are saving two lines of container deletion coed for much harder to read code.",
+      "parentUuid": "fdee4902_10cea453",
       "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fdee4902_d0901c0a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-04T23:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdee4902_d0ec9cb6",
+      "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdee4902_90f61485",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fdee4902_b09598f8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-04T23:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdee4902_90f61485",
+      "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdee4902_900f34ab",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2013-06-04T23:10:18Z",
       "side": 1,
       "message": "Drop blank.",
+      "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdee4902_909a9424",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-04T23:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdee4902_900f34ab",
       "revId": "60ffc4e491a5a0f47c1ae1c99e4322fc5e495bc6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
