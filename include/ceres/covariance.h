@@ -45,17 +45,19 @@ namespace internal {
 class CovarianceImpl;
 }  // namespace internal
 
-// WARNINGS
-// ========
+// WARNING
+// =======
+// It is very easy to use this class incorrectly without understanding
+// the underlying mathematics. Please read and understand the
+// documentation completely before attempting to use this class.
 //
-// 1. This is experimental code and the API WILL CHANGE before
-//    release.
 //
-// 2. It is very easy to use this class incorrectly without
-//    understanding the underlying mathematics. Please read and
-//    understand the documentation completely before attempting to use
-//    this class.
+// This class allows the user to evaluate the covariance for a
+// non-linear least squares problem and provides random access to its
+// blocks
 //
+// Background
+// ==========
 // One way to assess the quality of the solution returned by a
 // non-linear least squares solve is to analyze the covariance of the
 // solution.
@@ -82,9 +84,6 @@ class CovarianceImpl;
 // also rank deficient and is given by
 //
 //  C(x*) =  pseudoinverse[J'(x*)J(x*)]
-//
-// WARNING
-// =======
 //
 // Note that in the above, we assumed that the covariance
 // matrix for y was identity. This is an important assumption. If this
@@ -123,7 +122,7 @@ class CovarianceImpl;
 // and store those parts of the covariance matrix.
 //
 // Rank of the Jacobian
-// ====================
+// --------------------
 // As we noted above, if the jacobian is rank deficient, then the
 // inverse of J'J is not defined and instead a pseudo inverse needs to
 // be computed.
