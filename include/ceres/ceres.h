@@ -41,6 +41,7 @@
 #include "ceres/autodiff_local_parameterization.h"
 #include "ceres/cost_function.h"
 #include "ceres/cost_function_to_functor.h"
+#include "ceres/covariance.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/jet.h"

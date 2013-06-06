@@ -129,7 +129,9 @@ class CovarianceImpl;
 //
 // The rank deficiency in J can be structural -- columns which are
 // always known to be zero or numerical -- depending on the exact
-// values in the Jacobian. This happens when the problem contains
+// values in the Jacobian.
+//
+// Structural rank deficiency occurs when the problem contains
 // parameter blocks that are constant. This class correctly handles
 // structural rank deficiency like that.
 //
@@ -164,21 +166,6 @@ class CovarianceImpl;
 // transformations for uncertainty description of geometric structure
 // with indeterminacy. IEEE Transactions on Information Theory 47(5):
 // 2017-2028 (2001)
-//
-// Speed
-// -----
-//
-// When use_dense_linear_algebra = true, Eigen's JacobiSVD algorithm
-// is used to perform the computations. It is an accurate but slow
-// method and should only be used for small to moderate sized
-// problems.
-//
-// When use_dense_linear_algebra = false, SuiteSparse/CHOLMOD is used
-// to perform the computation. Recent versions of SuiteSparse (>=
-// 4.2.0) provide a much more efficient method for solving for rows of
-// the covariance matrix. Therefore, if you are doing large scale
-// covariance estimation, we strongly recommend using a recent version
-// of SuiteSparse.
 //
 // Example Usage
 // =============
@@ -228,11 +215,18 @@ class Covariance {
     // estimation of covariance.
     int num_threads;
 
-    // Use Eigen's JacobiSVD algorithm to compute the covariance
-    // instead of SuiteSparse. This is a very accurate but slow
-    // algorithm. The up side is that it can handle numerically rank
-    // deficient jacobians. This option only makes sense for small to
+
+    // When use_dense_linear_algebra = true, Eigen's JacobiSVD
+    // algorithm is used to perform the computations. It is an
+    // accurate but slow method and should only be used for small to
     // moderate sized problems.
+    //
+    // When use_dense_linear_algebra = false, SuiteSparse/CHOLMOD is
+    // used to perform the computation. Recent versions of SuiteSparse
+    // (>= 4.2.0) provide a much more efficient method for solving for
+    // rows of the covariance matrix. Therefore, if you are doing
+    // large scale covariance estimation, we strongly recommend using
+    // a recent version of SuiteSparse.
     bool use_dense_linear_algebra;
 
     // If the Jacobian matrix is near singular, then inverting J'J
