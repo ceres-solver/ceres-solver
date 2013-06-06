@@ -39,6 +39,11 @@ Bibliography
 .. [HartleyZisserman] R.I. Hartley & A. Zisserman, **Multiview
    Geometry in Computer Vision**, Cambridge University Press, 2004.
 
+.. [KanataniMorris] K. Kanatani and D. D. Morris, **Gauges and gauge
+   transformations for uncertainty description of geometric structure
+   with indeterminacy**, *IEEE Transactions on Information Theory*
+   47(5):2017-2028, 2001.
+
 .. [KushalAgarwal] A. Kushal and S. Agarwal, **Visibility based
    preconditioning for bundle adjustment**, *In Proceedings of the
    IEEE Conference on Computer Vision and Pattern Recognition*, 2012.
