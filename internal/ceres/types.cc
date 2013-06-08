@@ -235,6 +235,27 @@ bool StringToNonlinearConjugateGradientType(
   return false;
 }
 
+const char* CovarianceAlgorithmTypeToString(
+    CovarianceAlgorithmType type) {
+  switch (type) {
+    CASESTR(DENSE_SVD);
+    CASESTR(SPARSE_CHOLESKY);
+    CASESTR(SPARSE_QR);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToCovarianceAlgorithmType(
+    string value,
+    CovarianceAlgorithmType* type) {
+  UpperCase(&value);
+  STRENUM(DENSE_SVD);
+  STRENUM(SPARSE_CHOLESKY);
+  STRENUM(SPARSE_QR);
+  return false;
+}
+
 const char* SolverTerminationTypeToString(SolverTerminationType type) {
   switch (type) {
     CASESTR(NO_CONVERGENCE);
