@@ -65,6 +65,7 @@ class CovarianceImpl {
 
   bool ComputeCovarianceValues();
   bool ComputeCovarianceValuesUsingSuiteSparse();
+  bool ComputeCovarianceValuesUsingSuiteSparseQR();
   bool ComputeCovarianceValuesUsingEigen();
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
