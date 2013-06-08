@@ -249,7 +249,7 @@ class Covariance {
     // the above case the reciprocal condition number is about
     // 1e-16. Which is close to machine precision and even though the
     // inverse exists, it is meaningless, and care should be taken to
-    // interpet the results of such an inversion.
+    // interpret the results of such an inversion.
     //
     // Matrices with condition number lower than
     // min_reciprocal_condition_number are considered rank deficient
