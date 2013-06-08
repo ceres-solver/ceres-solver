@@ -338,6 +338,12 @@ enum LineSearchInterpolationType {
   CUBIC
 };
 
+enum CovarianceAlgorithmType {
+  DENSE_SVD,
+  SPARSE_CHOLESKY,
+  SPARSE_QR
+};
+
 const char* LinearSolverTypeToString(LinearSolverType type);
 bool StringToLinearSolverType(string value, LinearSolverType* type);
 
@@ -378,6 +384,12 @@ const char* LineSearchInterpolationTypeToString(
 bool StringToLineSearchInterpolationType(
     string value,
     LineSearchInterpolationType* type);
+
+const char* CovarianceAlgorithmTypeToString(
+    CovarianceAlgorithmType type);
+bool StringToCovarianceAlgorithmType(
+    string value,
+    CovarianceAlgorithmType* type);
 
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
