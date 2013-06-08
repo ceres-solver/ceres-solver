@@ -64,8 +64,9 @@ class CovarianceImpl {
       ProblemImpl* problem);
 
   bool ComputeCovarianceValues();
-  bool ComputeCovarianceValuesUsingSuiteSparse();
-  bool ComputeCovarianceValuesUsingEigen();
+  bool ComputeCovarianceValuesUsingSparseCholesky();
+  bool ComputeCovarianceValuesUsingSparseQR();
+  bool ComputeCovarianceValuesUsingDenseSVD();
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
     return covariance_matrix_.get();
@@ -80,9 +81,6 @@ class CovarianceImpl {
   map<const double*, int> parameter_block_to_row_index_;
   set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
-#ifndef CERES_NO_SUITESPARSE
-  SuiteSparse ss_;
-#endif
 };
 
 }  // namespace internal

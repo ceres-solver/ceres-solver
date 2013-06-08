@@ -400,11 +400,14 @@ TEST_F(CovarianceTest, NormalBehavior) {
   Covariance::Options options;
 
 #ifndef CERES_NO_SUITESPARSE
-  options.use_dense_linear_algebra = false;
+  options.algorithm_type = SPARSE_CHOLESKY;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
-  options.use_dense_linear_algebra = true;
+  options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -445,11 +448,14 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   options.num_threads = 4;
 
 #ifndef CERES_NO_SUITESPARSE
-  options.use_dense_linear_algebra = false;
+  options.algorithm_type = SPARSE_CHOLESKY;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
-  options.use_dense_linear_algebra = true;
+  options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -491,11 +497,11 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
   Covariance::Options options;
 
 #ifndef CERES_NO_SUITESPARSE
-  options.use_dense_linear_algebra = false;
+  options.algorithm_type = SPARSE_CHOLESKY;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
-  options.use_dense_linear_algebra = true;
+  options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -544,11 +550,11 @@ TEST_F(CovarianceTest, LocalParameterization) {
   Covariance::Options options;
 
 #ifndef CERES_NO_SUITESPARSE
-  options.use_dense_linear_algebra = false;
+  options.algorithm_type = SPARSE_CHOLESKY;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
-  options.use_dense_linear_algebra = true;
+  options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -589,7 +595,7 @@ TEST_F(CovarianceTest, TruncatedRank) {
 
   {
     Covariance::Options options;
-    options.use_dense_linear_algebra = true;
+    options.algorithm_type = DENSE_SVD;
     // Force dropping of the smallest eigenvector.
     options.null_space_rank = 1;
     ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -597,7 +603,7 @@ TEST_F(CovarianceTest, TruncatedRank) {
 
   {
     Covariance::Options options;
-    options.use_dense_linear_algebra = true;
+    options.algorithm_type = DENSE_SVD;
     // Force dropping of the smallest eigenvector via the ratio but
     // automatic truncation.
     options.min_reciprocal_condition_number = 0.044494;
@@ -693,7 +699,7 @@ TEST_F(RankDeficientCovarianceTest, AutomaticTruncation) {
   };
 
   Covariance::Options options;
-  options.use_dense_linear_algebra = true;
+  options.algorithm_type = DENSE_SVD;
   options.null_space_rank = -1;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
@@ -723,9 +729,10 @@ class LargeScaleCovarianceTest : public ::testing::Test {
     }
   }
 
-  void ComputeAndCompare(int num_threads) {
+  void ComputeAndCompare(CovarianceAlgorithmType algorithm_type,
+                         int num_threads) {
     Covariance::Options options;
-    options.use_dense_linear_algebra = false;
+    options.algorithm_type = algorithm_type;
     options.num_threads = num_threads;
     Covariance covariance(options);
     EXPECT_TRUE(covariance.Compute(all_covariance_blocks_, &problem_));
@@ -768,7 +775,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
 #if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
 
 TEST_F(LargeScaleCovarianceTest, Parallel) {
-  ComputeAndCompare(4);
+  ComputeAndCompare(SPARSE_CHOLESKY, 4);
 }
 
 #endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
