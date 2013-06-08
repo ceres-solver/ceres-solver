@@ -60,6 +60,7 @@
 
 #include "bal_problem.h"
 #include "ceres/ceres.h"
+#include "ceres/covariance.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "snavely_reprojection_error.h"
@@ -320,6 +321,30 @@ void SolveProblem(const char* filename) {
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
+
+  ceres::Covariance::Options covariance_options;
+  ceres::Covariance covariance(covariance_options);
+  vector<pair<const double*, const double*> > covariance_blocks;
+  problem.SetParameterBlockConstant(bal_problem.mutable_cameras());
+
+  for (int i = 0; i < bal_problem.num_cameras(); ++i) {
+    covariance_blocks.push_back(make_pair(bal_problem.mutable_cameras() + 9 * i,
+                                          bal_problem.mutable_cameras() + 9 * i));
+  }
+
+  CHECK(covariance.Compute(covariance_blocks, &problem));
+
+  double covariance_matrix[9 * 9];
+  for (int i = 0; i < covariance_blocks.size(); ++i) {
+    CHECK(covariance.GetCovarianceBlock(covariance_blocks[i].first,
+                                        covariance_blocks[i].second,
+                                        covariance_matrix));
+    double c = 0.0;
+    for (int j = 0; j < 9; ++j) {
+      c += covariance_matrix[9*j + j];
+    }
+    LOG(INFO) << i << " " <<  c;
+  }
 }
 
 }  // namespace examples
