@@ -64,8 +64,9 @@ class CovarianceImpl {
       ProblemImpl* problem);
 
   bool ComputeCovarianceValues();
-  bool ComputeCovarianceValuesUsingSuiteSparse();
-  bool ComputeCovarianceValuesUsingEigen();
+  bool ComputeCovarianceValuesUsingSparseCholesky();
+  bool ComputeCovarianceValuesUsingSparseQR();
+  bool ComputeCovarianceValuesUsingDenseSVD();
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
     return covariance_matrix_.get();
