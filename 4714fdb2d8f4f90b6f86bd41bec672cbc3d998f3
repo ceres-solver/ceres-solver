@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd01318a_007d3a2b",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-10T06:19:41Z",
+      "side": 1,
+      "message": "Align under \"The\" and below",
+      "revId": "4714fdb2d8f4f90b6f86bd41bec672cbc3d998f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ddf5556_6b5f41f5",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-10T06:19:41Z",
+      "side": 1,
+      "message": "alignment",
+      "revId": "4714fdb2d8f4f90b6f86bd41bec672cbc3d998f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
