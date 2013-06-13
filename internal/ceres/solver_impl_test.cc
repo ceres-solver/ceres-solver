@@ -924,5 +924,72 @@ TEST(SolverImpl, CreateJacobianBlockSparsityTranspose) {
   EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
 }
 
+template <int kNumResiduals, int kNumParameterBlocks>
+class NumParameterBlocksCostFunction : public CostFunction {
+ public:
+  NumParameterBlocksCostFunction() {
+    set_num_residuals(kNumResiduals);
+    for (int i = 0; i < kNumParameterBlocks; ++i) {
+      mutable_parameter_block_sizes()->push_back(1);
+    }
+  }
+
+  virtual ~NumParameterBlocksCostFunction() {
+  }
+
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    return true;
+  }
+};
+
+TEST(SolverImpl, ReallocationInCreateJacobianBlockSparsityTranspose) {
+  // CreateJacobianBlockSparsityTranspose starts with a conservative
+  // estimate of the size of the sparsity pattern. This test ensures
+  // that when those estimates are violated, the reallocation/resizing
+  // logic works correctly.
+
+  ProblemImpl problem;
+  double x[20];
+
+  vector<double*> parameter_blocks;
+  for (int i = 0; i < 20; ++i) {
+    problem.AddParameterBlock(x + i, 1);
+    parameter_blocks.push_back(x + i);
+  }
+
+  problem.AddResidualBlock(new NumParameterBlocksCostFunction<1, 20>(),
+                           NULL,
+                           parameter_blocks);
+
+  TripletSparseMatrix expected_block_sparse_jacobian(20, 1, 20);
+  {
+    int* rows = expected_block_sparse_jacobian.mutable_rows();
+    int* cols = expected_block_sparse_jacobian.mutable_cols();
+    for (int i = 0; i < 20; ++i) {
+      rows[i] = i;
+      cols[i] = 0;
+    }
+
+    double* values = expected_block_sparse_jacobian.mutable_values();
+    fill(values, values + 20, 1.0);
+    expected_block_sparse_jacobian.set_num_nonzeros(20);
+  }
+
+  Program* program = problem.mutable_program();
+  program->SetParameterOffsetsAndIndex();
+
+  scoped_ptr<TripletSparseMatrix> actual_block_sparse_jacobian(
+      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+
+  Matrix expected_dense_jacobian;
+  expected_block_sparse_jacobian.ToDenseMatrix(&expected_dense_jacobian);
+
+  Matrix actual_dense_jacobian;
+  actual_block_sparse_jacobian->ToDenseMatrix(&actual_dense_jacobian);
+  EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -1418,6 +1418,7 @@ TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
 
       // Re-size the matrix if needed.
       if (num_nonzeros >= tsm->max_num_nonzeros()) {
+        tsm->set_num_nonzeros(num_nonzeros);
         tsm->Reserve(2 * num_nonzeros);
         rows = tsm->mutable_rows();
         cols = tsm->mutable_cols();
