@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6335f3_0c23b716",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-14T06:40:30Z",
+      "side": 1,
+      "message": "Ordering",
+      "revId": "6fd963951c34cb6eb4a130d2b20b3cba0ff0f426",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_cc347f4b",
+        "filename": "internal/ceres/visibility_based_preconditioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-14T06:40:30Z",
+      "side": 1,
+      "message": "Move to next line (e.g. blank above)",
+      "revId": "6fd963951c34cb6eb4a130d2b20b3cba0ff0f426",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
