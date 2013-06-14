@@ -267,6 +267,7 @@ class EndianAwareFileReader {
       uint32_t value;
     } endian_test = { { 0, 1, 2, 3 } };
     host_endian_type_ = endian_test.value;
+    file_endian_type_ = host_endian_type_;
   }
 
   ~EndianAwareFileReader(void) {
