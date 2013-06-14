@@ -73,8 +73,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.
-bool DumpLinearLeastSquaresProblem(const string& directory,
-                                   int iteration,
+bool DumpLinearLeastSquaresProblem(const string& filename_base,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
                                    const double* D,

@@ -41,6 +41,7 @@
 #include "Eigen/Core"
 #include "ceres/array_utils.h"
 #include "ceres/evaluator.h"
+#include "ceres/file.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -70,25 +71,8 @@ void TrustRegionMinimizer::EstimateScale(const SparseMatrix& jacobian,
 
 void TrustRegionMinimizer::Init(const Minimizer::Options& options) {
   options_ = options;
-  sort(options_.lsqp_iterations_to_dump.begin(),
-       options_.lsqp_iterations_to_dump.end());
-}
-
-bool TrustRegionMinimizer::MaybeDumpLinearLeastSquaresProblem(
-    const int iteration,
-    const SparseMatrix* jacobian,
-    const double* residuals,
-    const double* step) const  {
-  // TODO(sameeragarwal): Since the use of trust_region_radius has
-  // moved inside TrustRegionStrategy, its not clear how we dump the
-  // regularization vector/matrix anymore.
-  //
-  // Also num_eliminate_blocks is not visible to the trust region
-  // minimizer either.
-  //
-  // Both of these indicate that this is the wrong place for this
-  // code, and going forward this should needs fixing/refactoring.
-  return true;
+  sort(options_.trust_region_minimizer_iterations_to_dump.begin(),
+       options_.trust_region_minimizer_iterations_to_dump.end());
 }
 
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
@@ -212,33 +196,38 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    iteration_summary = IterationSummary();
-    iteration_summary = summary->iterations.back();
-    iteration_summary.iteration = summary->iterations.back().iteration + 1;
-    iteration_summary.step_is_valid = false;
-    iteration_summary.step_is_successful = false;
-
     const double strategy_start_time = WallTimeInSeconds();
     TrustRegionStrategy::PerSolveOptions per_solve_options;
     per_solve_options.eta = options_.eta;
+    if (find(options_.trust_region_minimizer_iterations_to_dump.begin(),
+             options_.trust_region_minimizer_iterations_to_dump.end(),
+             iteration_summary.iteration) !=
+        options_.trust_region_minimizer_iterations_to_dump.end()) {
+      per_solve_options.dump_format_type =
+          options_.trust_region_problem_dump_format_type;
+      per_solve_options.dump_filename_base =
+          JoinPath(options_.trust_region_problem_dump_directory,
+                   StringPrintf("ceres_solver_iteration_%03d",
+                                iteration_summary.iteration));
+    } else {
+      per_solve_options.dump_format_type = TEXTFILE;
+      per_solve_options.dump_filename_base.clear();
+    }
+
     TrustRegionStrategy::Summary strategy_summary =
         strategy->ComputeStep(per_solve_options,
                               jacobian,
                               residuals.data(),
                               trust_region_step.data());
 
+    iteration_summary = IterationSummary();
+    iteration_summary.iteration = summary->iterations.back().iteration + 1;
     iteration_summary.step_solver_time_in_seconds =
         WallTimeInSeconds() - strategy_start_time;
     iteration_summary.linear_solver_iterations =
         strategy_summary.num_iterations;
-
-    if (!MaybeDumpLinearLeastSquaresProblem(iteration_summary.iteration,
-                                            jacobian,
-                                            residuals.data(),
-                                            trust_region_step.data())) {
-      LOG(FATAL) << "Tried writing linear least squares problem: "
-                 << options.lsqp_dump_directory << "but failed.";
-    }
+    iteration_summary.step_is_valid = false;
+    iteration_summary.step_is_successful = false;
 
     double model_cost_change = 0.0;
     if (strategy_summary.termination_type != FAILURE) {

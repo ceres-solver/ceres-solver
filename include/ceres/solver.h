@@ -106,8 +106,8 @@ class Solver {
       inner_iteration_ordering = NULL;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
-      lsqp_dump_directory = "/tmp";
-      lsqp_dump_format_type = TEXTFILE;
+      trust_region_problem_dump_directory = "/tmp";
+      trust_region_problem_dump_format_type = TEXTFILE;
       check_gradients = false;
       gradient_check_relative_precision = 1e-8;
       numeric_derivative_relative_step_size = 1e-6;
@@ -490,14 +490,17 @@ class Solver {
     // is sent to STDOUT.
     bool minimizer_progress_to_stdout;
 
-    // List of iterations at which the optimizer should dump the
-    // linear least squares problem to disk. Useful for testing and
-    // benchmarking. If empty (default), no problems are dumped.
-    //
-    // This is ignored if protocol buffers are disabled.
-    vector<int> lsqp_iterations_to_dump;
-    string lsqp_dump_directory;
-    DumpFormatType lsqp_dump_format_type;
+    // List of iterations at which the minimizer should dump the trust
+    // region problem. Useful for testing and benchmarking. If empty
+    // (default), no problems are dumped.
+    vector<int> trust_region_minimizer_iterations_to_dump;
+
+    // Directory to which the problems should be written to. Should be
+    // non-empty if trust_region_minimizer_iterations_to_dump is
+    // non-empty and trust_region_problem_dump_format_type is not
+    // CONSOLE.
+    string trust_region_problem_dump_directory;
+    DumpFormatType trust_region_problem_dump_format_type;
 
     // Finite differences options ----------------------------------------------
 

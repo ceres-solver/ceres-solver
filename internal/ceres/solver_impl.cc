@@ -391,9 +391,13 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->num_threads_given = original_options.num_threads;
   summary->num_threads_used = options.num_threads;
 
-  if (options.lsqp_iterations_to_dump.size() > 0) {
-    LOG(WARNING) << "Dumping linear least squares problems to disk is"
-        " currently broken. Ignoring Solver::Options::lsqp_iterations_to_dump";
+  if (options.trust_region_minimizer_iterations_to_dump.size() > 0 &&
+      options.trust_region_problem_dump_format_type != CONSOLE &&
+      options.trust_region_problem_dump_directory.empty()) {
+    summary->error =
+        "Solver::Options::trust_region_problem_dump_directory is empty.";
+    LOG(ERROR) << summary->error;
+    return;
   }
 
   event_logger.AddEvent("Init");

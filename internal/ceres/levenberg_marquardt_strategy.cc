@@ -34,6 +34,7 @@
 #include "Eigen/Core"
 #include "ceres/array_utils.h"
 #include "ceres/internal/eigen.h"
+#include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/trust_region_strategy.h"
@@ -111,8 +112,23 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
   } else {
     VectorRef(step, num_parameters) *= -1.0;
   }
-
   reuse_diagonal_ = true;
+
+  if (per_solve_options.dump_format_type == CONSOLE ||
+      (per_solve_options.dump_format_type != CONSOLE &&
+       !per_solve_options.dump_filename_base.empty())) {
+    if (!DumpLinearLeastSquaresProblem(per_solve_options.dump_filename_base,
+                                       per_solve_options.dump_format_type,
+                                       jacobian,
+                                       solve_options.D,
+                                       residuals,
+                                       step,
+                                       0)) {
+      LOG(ERROR) << "Unable to dump trust region problem."
+                 << " Filename base: " << per_solve_options.dump_filename_base;
+    }
+  }
+
 
   TrustRegionStrategy::Summary summary;
   summary.residual_norm = linear_solver_summary.residual_norm;

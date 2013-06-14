@@ -574,9 +574,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem3() {
 }
 
 namespace {
-bool DumpLinearLeastSquaresProblemToConsole(const string& directory,
-                                            int iteration,
-                                            const SparseMatrix* A,
+bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
                                             const double* D,
                                             const double* b,
                                             const double* x,
@@ -602,8 +600,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const string& directory,
 };
 
 #ifndef CERES_NO_PROTOCOL_BUFFERS
-bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& directory,
-                                                   int iteration,
+bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& filename_base,
                                                    const SparseMatrix* A,
                                                    const double* D,
                                                    const double* b,
@@ -632,18 +629,14 @@ bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& directory,
   }
 
   lsqp.set_num_eliminate_blocks(num_eliminate_blocks);
-  string format_string = JoinPath(directory,
-                                  "lm_iteration_%03d.lsqp");
-  string filename =
-      StringPrintf(format_string.c_str(),  iteration);
-  LOG(INFO) << "Dumping least squares problem for iteration " << iteration
-            << " to disk. File: " << filename;
+
+  const string filename = filename_base + ".bin";
+  LOG(INFO) << "Dumping least squares problem to disk. File: " << filename;
   WriteStringToFileOrDie(lsqp.SerializeAsString(), filename);
   return true;
 }
 #else
-bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& directory,
-                                                   int iteration,
+bool DumpLinearLeastSquaresProblemToProtocolBuffer(const string& filename_base,
                                                    const SparseMatrix* A,
                                                    const double* D,
                                                    const double* b,
@@ -669,31 +662,25 @@ void WriteArrayToFileOrDie(const string& filename,
   fclose(fptr);
 }
 
-bool DumpLinearLeastSquaresProblemToTextFile(const string& directory,
-                                             int iteration,
+bool DumpLinearLeastSquaresProblemToTextFile(const string& filename_base,
                                              const SparseMatrix* A,
                                              const double* D,
                                              const double* b,
                                              const double* x,
                                              int num_eliminate_blocks) {
   CHECK_NOTNULL(A);
-  string format_string = JoinPath(directory,
-                                  "lm_iteration_%03d");
-  string filename_prefix =
-      StringPrintf(format_string.c_str(), iteration);
-
-  LOG(INFO) << "writing to: " << filename_prefix << "*";
+  LOG(INFO) << "writing to: " << filename_base << "*";
 
   string matlab_script;
   StringAppendF(&matlab_script,
-                "function lsqp = lm_iteration_%03d()\n", iteration);
+                "function lsqp = load_trust_region_problem()\n");
   StringAppendF(&matlab_script,
                 "lsqp.num_rows = %d;\n", A->num_rows());
   StringAppendF(&matlab_script,
                 "lsqp.num_cols = %d;\n", A->num_cols());
 
   {
-    string filename = filename_prefix + "_A.txt";
+    string filename = filename_base + "_A.txt";
     FILE* fptr = fopen(filename.c_str(), "w");
     CHECK_NOTNULL(fptr);
     A->ToTextFile(fptr);
@@ -709,34 +696,33 @@ bool DumpLinearLeastSquaresProblemToTextFile(const string& directory,
 
 
   if (D != NULL) {
-    string filename = filename_prefix + "_D.txt";
+    string filename = filename_base + "_D.txt";
     WriteArrayToFileOrDie(filename, D, A->num_cols());
     StringAppendF(&matlab_script,
                   "lsqp.D = load('%s', '-ascii');\n", filename.c_str());
   }
 
   if (b != NULL) {
-    string filename = filename_prefix + "_b.txt";
+    string filename = filename_base + "_b.txt";
     WriteArrayToFileOrDie(filename, b, A->num_rows());
     StringAppendF(&matlab_script,
                   "lsqp.b = load('%s', '-ascii');\n", filename.c_str());
   }
 
   if (x != NULL) {
-    string filename = filename_prefix + "_x.txt";
+    string filename = filename_base + "_x.txt";
     WriteArrayToFileOrDie(filename, x, A->num_cols());
     StringAppendF(&matlab_script,
                   "lsqp.x = load('%s', '-ascii');\n", filename.c_str());
   }
 
-  string matlab_filename = filename_prefix + ".m";
+  string matlab_filename = filename_base + ".m";
   WriteStringToFileOrDie(matlab_script, matlab_filename);
   return true;
 }
 }  // namespace
 
-bool DumpLinearLeastSquaresProblem(const string& directory,
-                                   int iteration,
+bool DumpLinearLeastSquaresProblem(const string& filename_base,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
                                    const double* D,
@@ -745,19 +731,16 @@ bool DumpLinearLeastSquaresProblem(const string& directory,
                                    int num_eliminate_blocks) {
   switch (dump_format_type) {
     case CONSOLE:
-      return DumpLinearLeastSquaresProblemToConsole(directory,
-                                                    iteration,
-                                                    A, D, b, x,
+      return DumpLinearLeastSquaresProblemToConsole(A, D, b, x,
                                                     num_eliminate_blocks);
     case PROTOBUF:
       return DumpLinearLeastSquaresProblemToProtocolBuffer(
-          directory,
-          iteration,
+          filename_base,
           A, D, b, x,
           num_eliminate_blocks);
+
     case TEXTFILE:
-      return DumpLinearLeastSquaresProblemToTextFile(directory,
-                                                     iteration,
+      return DumpLinearLeastSquaresProblemToTextFile(filename_base,
                                                      A, D, b, x,
                                                      num_eliminate_blocks);
     default:

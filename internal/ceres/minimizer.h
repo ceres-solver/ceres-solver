@@ -73,9 +73,12 @@ class Minimizer {
       use_nonmonotonic_steps = options.use_nonmonotonic_steps;
       max_consecutive_nonmonotonic_steps =
           options.max_consecutive_nonmonotonic_steps;
-      lsqp_dump_directory = options.lsqp_dump_directory;
-      lsqp_iterations_to_dump = options.lsqp_iterations_to_dump;
-      lsqp_dump_format_type = options.lsqp_dump_format_type;
+      trust_region_problem_dump_directory =
+          options.trust_region_problem_dump_directory;
+      trust_region_minimizer_iterations_to_dump =
+          options.trust_region_minimizer_iterations_to_dump;
+      trust_region_problem_dump_format_type =
+          options.trust_region_problem_dump_format_type;
       max_num_consecutive_invalid_steps =
           options.max_num_consecutive_invalid_steps;
       min_trust_region_radius = options.min_trust_region_radius;
@@ -110,9 +113,9 @@ class Minimizer {
     bool jacobi_scaling;
     bool use_nonmonotonic_steps;
     int max_consecutive_nonmonotonic_steps;
-    vector<int> lsqp_iterations_to_dump;
-    DumpFormatType lsqp_dump_format_type;
-    string lsqp_dump_directory;
+    vector<int> trust_region_minimizer_iterations_to_dump;
+    DumpFormatType trust_region_problem_dump_format_type;
+    string trust_region_problem_dump_directory;
     int max_num_consecutive_invalid_steps;
     double min_trust_region_radius;
     LineSearchDirectionType line_search_direction_type;

@@ -1172,29 +1172,32 @@ elimination group [LiSaad]_.
    #. ``it`` is the time take by the current iteration.
    #. ``tt`` is the the total time taken by the minimizer.
 
-.. member:: vector<int> Solver::Options::lsqp_iterations_to_dump
+.. member:: vector<int> Solver::Options::trust_region_minimizer_iterations_to_dump
 
    Default: ``empty``
 
-   List of iterations at which the optimizer should dump the linear
-   least squares problem to disk. Useful for testing and
-   benchmarking. If ``empty``, no problems are dumped.
+   List of iterations at which the trust region minimizer should dump
+   the trust region problem. Useful for testing and benchmarking. If
+   ``empty``, no problems are dumped.
 
-.. member:: string Solver::Options::lsqp_dump_directory
+.. member:: string Solver::Options::trust_region_problem_dump_directory
 
    Default: ``/tmp``
 
-   If :member:`Solver::Options::lsqp_iterations_to_dump` is non-empty, then
-   this setting determines the directory to which the files containing
-   the linear least squares problems are written to.
+    Directory to which the problems should be written to. Should be
+    non-empty if
+    :member:`Solver::Options::trust_region_minimizer_iterations_to_dump` is
+    non-empty and
+    :member:`Solver::Options::trust_region_problem_dump_format_type` is not
+    ``CONSOLE``.
 
-.. member:: DumpFormatType Solver::Options::lsqp_dump_format
+.. member:: DumpFormatType Solver::Options::trust_region_problem_dump_format
 
    Default: ``TEXTFILE``
 
-   The format in which linear least squares problems should be logged
-   when :member:`Solver::Options::lsqp_iterations_to_dump` is non-empty.
-   There are three options:
+   The format in which trust region problems should be logged when
+   :member:`Solver::Options::trust_region_minimizer_iterations_to_dump`
+   is non-empty.  There are three options:
 
    * ``CONSOLE`` prints the linear least squares problem in a human
       readable format to ``stderr``. The Jacobian is printed as a
@@ -1203,22 +1206,25 @@ elimination group [LiSaad]_.
       problems.
 
    * ``PROTOBUF`` Write out the linear least squares problem to the
-     directory pointed to by :member:`Solver::Options::lsqp_dump_directory` as
+     directory pointed to by
+     :member:`Solver::Options::trust_region_problem_dump_directory` as
      a protocol buffer. ``linear_least_squares_problems.h/cc``
      contains routines for loading these problems. For details on the
      on disk format used, see ``matrix.proto``. The files are named
-     ``lm_iteration_???.lsqp``. This requires that ``protobuf`` be
+     ``ceres_solver_iteration_???.bin``. This requires that ``protobuf`` be
      linked into Ceres Solver.
 
    * ``TEXTFILE`` Write out the linear least squares problem to the
-     directory pointed to by member::`Solver::Options::lsqp_dump_directory` as
+     directory pointed to by
+     :member:`Solver::Options::trust_region_problem_dump_directory` as
      text files which can be read into ``MATLAB/Octave``. The Jacobian
      is dumped as a text file containing :math:`(i,j,s)` triplets, the
      vectors :math:`D`, `x` and `f` are dumped as text files
      containing a list of their values.
 
-   A ``MATLAB/Octave`` script called ``lm_iteration_???.m`` is also
-   output, which can be used to parse and load the problem into memory.
+     A ``MATLAB/Octave`` script called
+     ``ceres_solver_iteration_???.m`` is also output, which can be
+     used to parse and load the problem into memory.
 
 .. member:: bool Solver::Options::check_gradients
 
