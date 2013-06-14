@@ -574,7 +574,8 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
                                          gauss_newton_step_.data(),
                                          0)) {
         LOG(ERROR) << "Unable to dump trust region problem."
-                   << " Filename base: " << per_solve_options.dump_filename_base;
+                   << " Filename base: "
+                   << per_solve_options.dump_filename_base;
       }
     }
 
