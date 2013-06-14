@@ -51,6 +51,24 @@
       "revId": "6fd963951c34cb6eb4a130d2b20b3cba0ff0f426",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_8c89e7df",
+        "filename": "internal/ceres/visibility_based_preconditioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-14T06:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a6335f3_cc347f4b",
+      "revId": "6fd963951c34cb6eb4a130d2b20b3cba0ff0f426",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
