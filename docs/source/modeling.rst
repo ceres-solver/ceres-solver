@@ -1271,6 +1271,19 @@ Instances
 
 .. function:: void Problem::RemoveResidualBlock(ResidualBlockId residual_block)
 
+   Remove a residual block from the problem. Any parameters that the residual
+   block depends on are not removed. The cost and loss functions for the
+   residual block will not get deleted immediately; won't happen until the
+   problem itself is deleted.
+
+   **WARNING:** Removing a residual or parameter block will destroy
+   the implicit ordering, rendering the jacobian or residuals returned
+   from the solver uninterpretable. If you depend on the evaluated
+   jacobian, do not use remove! This may change in a future release.
+   Hold the indicated parameter block constant during optimization.
+
+.. function:: void Problem::RemoveParameterBlock(double* values)
+
    Remove a parameter block from the problem. The parameterization of
    the parameter block, if it exists, will persist until the deletion
    of the problem (similar to cost/loss functions in residual block
@@ -1284,20 +1297,6 @@ Instances
    the implicit ordering, rendering the jacobian or residuals returned
    from the solver uninterpretable. If you depend on the evaluated
    jacobian, do not use remove! This may change in a future release.
-
-.. function:: void Problem::RemoveResidualBlock(ResidualBlockId residual_block)
-
-   Remove a residual block from the problem. Any parameters that the residual
-   block depends on are not removed. The cost and loss functions for the
-   residual block will not get deleted immediately; won't happen until the
-   problem itself is deleted.
-
-   **WARNING:** Removing a residual or parameter block will destroy
-   the implicit ordering, rendering the jacobian or residuals returned
-   from the solver uninterpretable. If you depend on the evaluated
-   jacobian, do not use remove! This may change in a future release.
-   Hold the indicated parameter block constant during optimization.
-
 
 .. function:: void Problem::SetParameterBlockConstant(double* values)
 
