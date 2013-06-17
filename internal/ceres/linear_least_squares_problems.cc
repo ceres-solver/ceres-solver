@@ -36,7 +36,6 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/casts.h"
-#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/file.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/matrix_proto.h"
@@ -82,7 +81,7 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromFile(
   } else if (A.has_triplet_matrix()) {
     problem->A.reset(new TripletSparseMatrix(A));
   } else {
-    problem->A.reset(new CompressedRowSparseMatrix(A));
+    LOG(FATAL) << "Broken.";
   }
 
   if (problem_proto.b_size() > 0) {
