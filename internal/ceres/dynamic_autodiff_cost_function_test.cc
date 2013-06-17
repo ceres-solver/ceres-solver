@@ -270,5 +270,328 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) 
   }
 }
 
+// Takes 3 parameter blocks:
+//     parameters[0] (x) is size 1.
+//     parameters[1] (y) is size 2.
+//     parameters[2] (z) is size 3.
+// Emits 7 residuals:
+//     A: x[0] (= sum_x)
+//     B: y[0] + 2.0 * y[1] (= sum_y)
+//     C: z[0] + 3.0 * z[1] + 6.0 * z[2] (= sum_z)
+//     D: sum_x * sum_y
+//     E: sum_y * sum_z
+//     F: sum_x * sum_z
+//     G: sum_x * sum_y * sum_z
+class MyThreeParameterCostFunctor {
+ public:
+  template <typename T>
+  bool operator()(T const* const* parameters, T* residuals) const {
+    const T* x = parameters[0];
+    const T* y = parameters[1];
+    const T* z = parameters[2];
+
+    T sum_x = x[0];
+    T sum_y = y[0] + 2.0 * y[1];
+    T sum_z = z[0] + 3.0 * z[1] + 6.0 * z[2];
+
+    residuals[0] = sum_x;
+    residuals[1] = sum_y;
+    residuals[2] = sum_z;
+    residuals[3] = sum_x * sum_y;
+    residuals[4] = sum_y * sum_z;
+    residuals[5] = sum_x * sum_z;
+    residuals[6] = sum_x * sum_y * sum_z;
+    return true;
+  }
+};
+
+TEST(DynamicAutodiffCostFunctionTest, TestThreeParameterResiduals) {
+  vector<double> x(1, 0.0);
+  vector<double> y(2);
+  y[0] = 1.0;
+  y[1] = 3.0;
+  vector<double> z(3);
+  z[0] = 2.0;
+  z[1] = 4.0;
+  z[2] = 6.0;
+
+  DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3> cost_function(
+    new MyThreeParameterCostFunctor());
+  cost_function.AddParameterBlock(x.size());
+  cost_function.AddParameterBlock(y.size());
+  cost_function.AddParameterBlock(z.size());
+  cost_function.SetNumResiduals(7);
+
+  // Prepare the residuals.
+  vector<double> residuals(7, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(3);
+  parameter_blocks[0] = &x[0];
+  parameter_blocks[1] = &y[0];
+  parameter_blocks[2] = &z[0];
+
+  // Test residual computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     NULL));
+
+  const double sum_x = x[0];
+  const double sum_y = y[0] + 2.0 * y[1];
+  const double sum_z = z[0] + 3.0 * z[1] + 6.0 * z[2];
+  EXPECT_EQ(residuals[0], sum_x);
+  EXPECT_EQ(residuals[1], sum_y);
+  EXPECT_EQ(residuals[2], sum_z);
+  EXPECT_EQ(residuals[3], sum_x * sum_y);
+  EXPECT_EQ(residuals[4], sum_y * sum_z);
+  EXPECT_EQ(residuals[5], sum_x * sum_z);
+  EXPECT_EQ(residuals[6], sum_x * sum_y * sum_z);
+}
+
+TEST(DynamicAutodiffCostFunctionTest, TestThreeParameterJacobians) {
+  vector<double> x(1, 0.0);
+  vector<double> y(2);
+  y[0] = 1.0;
+  y[1] = 3.0;
+  vector<double> z(3);
+  z[0] = 2.0;
+  z[1] = 4.0;
+  z[2] = 6.0;
+
+  DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3> cost_function(
+    new MyThreeParameterCostFunctor());
+  cost_function.AddParameterBlock(x.size());
+  cost_function.AddParameterBlock(y.size());
+  cost_function.AddParameterBlock(z.size());
+  cost_function.SetNumResiduals(7);
+
+  // Prepare the residuals.
+  vector<double> residuals(7, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(3);
+  parameter_blocks[0] = &x[0];
+  parameter_blocks[1] = &y[0];
+  parameter_blocks[2] = &z[0];
+
+  // Prepare the jacobian.
+  vector<vector<double> > jacobian_vect(3);
+  jacobian_vect[0].resize(7 * x.size(), -100000);
+  jacobian_vect[1].resize(7 * y.size(), -100000);
+  jacobian_vect[2].resize(7 * z.size(), -100000);
+
+  vector<double*> jacobian;
+  jacobian.push_back(jacobian_vect[0].data());
+  jacobian.push_back(jacobian_vect[1].data());
+  jacobian.push_back(jacobian_vect[2].data());
+
+  // Test jacobian computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     jacobian.data()));
+
+  const double sum_x = x[0];
+  const double sum_y = y[0] + 2.0 * y[1];
+  const double sum_z = z[0] + 3.0 * z[1] + 6.0 * z[2];
+
+  EXPECT_EQ(residuals[0], sum_x);
+  EXPECT_EQ(residuals[1], sum_y);
+  EXPECT_EQ(residuals[2], sum_z);
+  EXPECT_EQ(residuals[3], sum_x * sum_y);
+  EXPECT_EQ(residuals[4], sum_y * sum_z);
+  EXPECT_EQ(residuals[5], sum_x * sum_z);
+  EXPECT_EQ(residuals[6], sum_x * sum_y * sum_z);
+
+  const double expected_jacobian_x[7] = {
+    1.0, 
+    0.0, 
+    0.0, 
+    sum_y,
+    0.0, 
+    sum_z,
+    sum_y * sum_z
+  };
+  for (int i = 0; i < 7; ++i) {
+    EXPECT_EQ(expected_jacobian_x[i], jacobian_vect[0][i]);
+  }
+
+  const double expected_jacobian_y[14] = {
+    0.0, 0.0,
+    1.0, 2.0,
+    0.0, 0.0,
+    sum_x, 2.0 * sum_x,
+    sum_z, 2.0 * sum_z,
+    0.0, 0.0,
+    sum_x * sum_z, 2.0 * sum_x * sum_z
+  };
+  for (int i = 0; i < 14; ++i) {
+    EXPECT_EQ(expected_jacobian_y[i], jacobian_vect[1][i]);
+  }
+
+  const double expected_jacobian_z[21] = {
+    0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0,
+    1.0, 3.0, 6.0,
+    0.0, 0.0, 0.0,
+    sum_y, 3.0 * sum_y, 6.0 * sum_y,
+    sum_x, 3.0 * sum_x, 6.0 * sum_x,
+    sum_x * sum_y, 3.0 * sum_x * sum_y, 6.0 * sum_x * sum_y
+  };
+  for (int i = 0; i < 21; ++i) {
+    EXPECT_EQ(expected_jacobian_z[i], jacobian_vect[2][i]);
+  }
+}
+
+TEST(DynamicAutodiffCostFunctionTest, 
+     ThreeParameterJacobianWithFirstAndLastParameterBlockConstant) {
+  vector<double> x(1, 0.0);
+  vector<double> y(2);
+  y[0] = 1.0;
+  y[1] = 3.0;
+  vector<double> z(3);
+  z[0] = 2.0;
+  z[1] = 4.0;
+  z[2] = 6.0;
+
+  DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3> cost_function(
+    new MyThreeParameterCostFunctor());
+  cost_function.AddParameterBlock(x.size());
+  cost_function.AddParameterBlock(y.size());
+  cost_function.AddParameterBlock(z.size());
+  cost_function.SetNumResiduals(7);
+
+  // Prepare the residuals.
+  vector<double> residuals(7, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(3);
+  parameter_blocks[0] = &x[0];
+  parameter_blocks[1] = &y[0];
+  parameter_blocks[2] = &z[0];
+
+  // Prepare the jacobian.
+  vector<vector<double> > jacobian_vect(3);
+  jacobian_vect[0].resize(7 * x.size(), -100000);
+  jacobian_vect[1].resize(7 * y.size(), -100000);
+  jacobian_vect[2].resize(7 * z.size(), -100000);
+
+  vector<double*> jacobian;
+  jacobian.push_back(NULL);
+  jacobian.push_back(jacobian_vect[1].data());
+  jacobian.push_back(NULL);
+
+  // Test jacobian computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     jacobian.data()));
+
+  const double sum_x = x[0];
+  const double sum_y = y[0] + 2.0 * y[1];
+  const double sum_z = z[0] + 3.0 * z[1] + 6.0 * z[2];
+
+  EXPECT_EQ(residuals[0], sum_x);
+  EXPECT_EQ(residuals[1], sum_y);
+  EXPECT_EQ(residuals[2], sum_z);
+  EXPECT_EQ(residuals[3], sum_x * sum_y);
+  EXPECT_EQ(residuals[4], sum_y * sum_z);
+  EXPECT_EQ(residuals[5], sum_x * sum_z);
+  EXPECT_EQ(residuals[6], sum_x * sum_y * sum_z);
+
+  const double expected_jacobian_y[14] = {
+    0.0, 0.0,
+    1.0, 2.0,
+    0.0, 0.0,
+    sum_x, 2.0 * sum_x,
+    sum_z, 2.0 * sum_z,
+    0.0, 0.0,
+    sum_x * sum_z, 2.0 * sum_x * sum_z
+  };
+  for (int i = 0; i < 14; ++i) {
+    EXPECT_EQ(expected_jacobian_y[i], jacobian_vect[1][i]);
+  }
+}
+
+TEST(DynamicAutodiffCostFunctionTest, 
+     ThreeParameterJacobianWithSecondParameterBlockConstant) {
+  vector<double> x(1, 0.0);
+  vector<double> y(2);
+  y[0] = 1.0;
+  y[1] = 3.0;
+  vector<double> z(3);
+  z[0] = 2.0;
+  z[1] = 4.0;
+  z[2] = 6.0;
+
+  DynamicAutoDiffCostFunction<MyThreeParameterCostFunctor, 3> cost_function(
+    new MyThreeParameterCostFunctor());
+  cost_function.AddParameterBlock(x.size());
+  cost_function.AddParameterBlock(y.size());
+  cost_function.AddParameterBlock(z.size());
+  cost_function.SetNumResiduals(7);
+
+  // Prepare the residuals.
+  vector<double> residuals(7, -100000);
+
+  // Prepare the parameters.
+  vector<double*> parameter_blocks(3);
+  parameter_blocks[0] = &x[0];
+  parameter_blocks[1] = &y[0];
+  parameter_blocks[2] = &z[0];
+
+  // Prepare the jacobian.
+  vector<vector<double> > jacobian_vect(3);
+  jacobian_vect[0].resize(7 * x.size(), -100000);
+  jacobian_vect[1].resize(7 * y.size(), -100000);
+  jacobian_vect[2].resize(7 * z.size(), -100000);
+
+  vector<double*> jacobian;
+  jacobian.push_back(jacobian_vect[0].data());
+  jacobian.push_back(NULL);
+  jacobian.push_back(jacobian_vect[2].data());
+
+  // Test jacobian computation.
+  EXPECT_TRUE(cost_function.Evaluate(parameter_blocks.data(),
+                                     residuals.data(),
+                                     jacobian.data()));
+
+  const double sum_x = x[0];
+  const double sum_y = y[0] + 2.0 * y[1];
+  const double sum_z = z[0] + 3.0 * z[1] + 6.0 * z[2];
+
+  EXPECT_EQ(residuals[0], sum_x);
+  EXPECT_EQ(residuals[1], sum_y);
+  EXPECT_EQ(residuals[2], sum_z);
+  EXPECT_EQ(residuals[3], sum_x * sum_y);
+  EXPECT_EQ(residuals[4], sum_y * sum_z);
+  EXPECT_EQ(residuals[5], sum_x * sum_z);
+  EXPECT_EQ(residuals[6], sum_x * sum_y * sum_z);
+
+  const double expected_jacobian_x[7] = {
+    1.0, 
+    0.0, 
+    0.0, 
+    sum_y,
+    0.0, 
+    sum_z,
+    sum_y * sum_z
+  };
+  for (int i = 0; i < 7; ++i) {
+    EXPECT_EQ(expected_jacobian_x[i], jacobian_vect[0][i]);
+  }
+
+  const double expected_jacobian_z[21] = {
+    0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0,
+    1.0, 3.0, 6.0,
+    0.0, 0.0, 0.0,
+    sum_y, 3.0 * sum_y, 6.0 * sum_y,
+    sum_x, 3.0 * sum_x, 6.0 * sum_x,
+    sum_x * sum_y, 3.0 * sum_x * sum_y, 6.0 * sum_x * sum_y
+  };
+  for (int i = 0; i < 21; ++i) {
+    EXPECT_EQ(expected_jacobian_z[i], jacobian_vect[2][i]);
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres
