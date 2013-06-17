@@ -35,8 +35,8 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -146,30 +146,6 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
   }
 }
 
-#ifndef CERES_NO_PROTOCOL_BUFFERS
-TEST_F(CompressedRowSparseMatrixTest, Serialization) {
-  SparseMatrixProto proto;
-  crsm->ToProto(&proto);
-
-  CompressedRowSparseMatrix n(proto);
-  ASSERT_EQ(n.num_rows(), crsm->num_rows());
-  ASSERT_EQ(n.num_cols(), crsm->num_cols());
-  ASSERT_EQ(n.num_nonzeros(), crsm->num_nonzeros());
-
-  for (int i = 0; i < n.num_rows() + 1; ++i) {
-    ASSERT_EQ(crsm->rows()[i], proto.compressed_row_matrix().rows(i));
-    ASSERT_EQ(crsm->rows()[i], n.rows()[i]);
-  }
-
-  for (int i = 0; i < crsm->num_nonzeros(); ++i) {
-    ASSERT_EQ(crsm->cols()[i], proto.compressed_row_matrix().cols(i));
-    ASSERT_EQ(crsm->cols()[i], n.cols()[i]);
-    ASSERT_EQ(crsm->values()[i], proto.compressed_row_matrix().values(i));
-    ASSERT_EQ(crsm->values()[i], n.values()[i]);
-  }
-}
-#endif
-
 TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
   Matrix tsm_dense;
   Matrix crsm_dense;
@@ -197,6 +173,48 @@ TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
     EXPECT_EQ(crsm->cols()[i], crs_matrix.cols[i]);
     EXPECT_EQ(crsm->values()[i], crs_matrix.values[i]);
   }
+}
+
+TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
+  vector<int> blocks;
+  blocks.push_back(1);
+  blocks.push_back(2);
+  blocks.push_back(2);
+
+  Vector diagonal(5);
+  for (int i = 0; i < 5; ++i) {
+    diagonal(i) = i + 1;
+  }
+
+  scoped_ptr<CompressedRowSparseMatrix> matrix(
+      CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
+          diagonal.data(), blocks));
+
+  EXPECT_EQ(matrix->num_rows(), 5);
+  EXPECT_EQ(matrix->num_cols(), 5);
+  EXPECT_EQ(matrix->num_nonzeros(), 9);
+  EXPECT_EQ(blocks, matrix->row_blocks());
+  EXPECT_EQ(blocks, matrix->col_blocks());
+
+  Vector x(5);
+  Vector y(5);
+
+  x.setOnes();
+  y.setZero();
+  matrix->RightMultiply(x.data(), y.data());
+  for (int i = 0; i < diagonal.size(); ++i) {
+    EXPECT_EQ(y[i], diagonal[i]);
+  }
+
+  y.setZero();
+  matrix->LeftMultiply(x.data(), y.data());
+  for (int i = 0; i < diagonal.size(); ++i) {
+    EXPECT_EQ(y[i], diagonal[i]);
+  };
+
+  Matrix dense;
+  matrix->ToDenseMatrix(&dense);
+  EXPECT_EQ((dense.diagonal() - diagonal).norm(), 0.0);
 }
 
 }  // namespace internal
