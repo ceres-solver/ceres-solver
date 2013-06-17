@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6335f3_0b06f498",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what this does? Also explain the units (e.g. is it in parameter blocks? or in raw parameters?)",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_eb028082",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Put a comment above here along the lines of \"discover the derivative sections\"",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_abfc8858",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Sorry if I\u0027m dense, but it\u0027s not obvious to me why this last guy needs to get added. Can you add a small comment?",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_2b11b8ce",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Remove trailing space",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_6b4210c9",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "For better or for worse, the convention we\u0027ve followed elsewhere in Ceres is to put the + on the previous line.",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_4b474cd7",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "+ on previous line",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_2b4c18f9",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Trailing spaces in this array",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_0b51548d",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_eb4de0f4",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_0b38343d",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Would you consider adding a test that has the following pattern\n\nC V V C C V V?\n\nWhere C is a constant block, and V is a variable block? This way we test having multiple consecutive constant and variable blocks.\n\nI know adding tests is not that exciting, but we want to keep the test coverage in Ceres high.",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_cb5a1ca9",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-17T15:55:53Z",
+      "side": 1,
+      "message": "Spaces in the array",
+      "revId": "9e9eb04c45462189f1a911ad1a7b6a4f0f05f7fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
