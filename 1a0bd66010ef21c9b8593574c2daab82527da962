@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6335f3_4ba18c94",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "else should be on the previous line and all if blocks use braces, even if they are one line.",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_6b9c5062",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "current_derivative_section_cursor in keeping with the naming conventions in this code.",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_0b8b941a",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "const int",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_eb87200a",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "const int",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_2ba658ae",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "move else to previous line.",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a6335f3_cb945c36",
+        "filename": "include/ceres/dynamic_autodiff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-17T13:18:22Z",
+      "side": 1,
+      "message": "move else to previous line.",
+      "revId": "1a0bd66010ef21c9b8593574c2daab82527da962",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
