@@ -123,21 +123,27 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     vector<Jet<double, Stride> > output_jets(num_residuals());
 
     // Make the parameter pack that is sent to the functor (reused).
-    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks,
-        static_cast<Jet<double, Stride>* >(NULL));
+    vector<Jet<double, Stride>* > jet_parameters(num_parameter_blocks, 
+                                                 (Jet<double, Stride>*)NULL);
     int num_active_parameters = 0;
-    int start_derivative_section = -1;
+
+    vector<int> start_derivative_section;
+    bool in_derivative_section = false;
+
     for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
       jet_parameters[i] = &input_jets[parameter_cursor];
 
       const int parameter_block_size = parameter_block_sizes()[i];
       if (jacobians[i] != NULL) {
-        start_derivative_section =
-            (start_derivative_section == -1)
-            ? parameter_cursor
-            : start_derivative_section;
+        if (!in_derivative_section) {
+          start_derivative_section.push_back(parameter_cursor);
+          in_derivative_section = true;
+        }
+
         num_active_parameters += parameter_block_size;
       }
+      else
+        in_derivative_section = false;
 
       for (int j = 0; j < parameter_block_size; ++j, parameter_cursor++) {
         input_jets[parameter_cursor].a = parameters[i][j];
@@ -150,23 +156,45 @@ class DynamicAutoDiffCostFunction : public CostFunction {
     int num_strides = static_cast<int>(ceil(num_active_parameters /
                                             static_cast<float>(Stride)));
 
+    int num_derivative_sections = start_derivative_section.size();
+    int current_derivative_section = 0;
+    int current_derivative_section_index = 0;
+
     for (int pass = 0; pass < num_strides; ++pass) {
       // Set most of the jet components to zero, except for
       // non-constant #Stride parameters.
+      if (current_derivative_section < num_derivative_sections)
+      {
+        start_derivative_section[current_derivative_section] +=
+          current_derivative_section_index;
+        current_derivative_section_index = 0;
+      }
+
+      int initial_current_derivative_section = current_derivative_section;
+      int initial_current_derivative_section_index = 0;
+
       int active_parameter_count = 0;
-      int end_derivative_section = start_derivative_section;
+
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
           input_jets[parameter_cursor].v.setZero();
-          if (parameter_cursor >= start_derivative_section &&
-              active_parameter_count < Stride) {
+          if (active_parameter_count < Stride &&
+              parameter_cursor >= (
+                start_derivative_section[current_derivative_section]
+                + current_derivative_section_index)) {
             if (jacobians[i] != NULL) {
               input_jets[parameter_cursor]
-                  .v[parameter_cursor - start_derivative_section] = 1.0;
+                  .v[parameter_cursor - 
+                     start_derivative_section[current_derivative_section]
+                    ] = 1.0;
               ++active_parameter_count;
+              ++current_derivative_section_index;
             }
-            ++end_derivative_section;
+            else {
+              ++current_derivative_section;
+              current_derivative_section_index = 0;
+            }
           }
         }
       }
@@ -177,18 +205,30 @@ class DynamicAutoDiffCostFunction : public CostFunction {
 
       // Copy the pieces of the jacobians into their final place.
       active_parameter_count = 0;
+
+      current_derivative_section = initial_current_derivative_section;
+      current_derivative_section_index = initial_current_derivative_section_index;
+
       for (int i = 0, parameter_cursor = 0; i < num_parameter_blocks; ++i) {
         for (int j = 0; j < parameter_block_sizes()[i];
              ++j, parameter_cursor++) {
-          if (parameter_cursor >= start_derivative_section &&
-              active_parameter_count < Stride) {
+          if (active_parameter_count < Stride &&
+              parameter_cursor >= (
+                start_derivative_section[current_derivative_section]
+                + current_derivative_section_index)) {
             if (jacobians[i] != NULL) {
               for (int k = 0; k < num_residuals(); ++k) {
                 jacobians[i][k * parameter_block_sizes()[i] + j] =
-                    output_jets[k].v[parameter_cursor -
-                                     start_derivative_section];
+                    output_jets[k].v[parameter_cursor - 
+                     start_derivative_section[current_derivative_section]
+                    ];
               }
               ++active_parameter_count;
+              ++current_derivative_section_index;
+            }
+            else {
+              ++current_derivative_section;
+              current_derivative_section_index = 0;
             }
           }
         }
@@ -201,8 +241,6 @@ class DynamicAutoDiffCostFunction : public CostFunction {
           residuals[k] = output_jets[k].a;
         }
       }
-
-      start_derivative_section = end_derivative_section;
     }
     return true;
   }
