@@ -35,8 +35,8 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
-#include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -145,30 +145,6 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
     CompareMatrices(tsm.get(), crsm.get());
   }
 }
-
-#ifndef CERES_NO_PROTOCOL_BUFFERS
-TEST_F(CompressedRowSparseMatrixTest, Serialization) {
-  SparseMatrixProto proto;
-  crsm->ToProto(&proto);
-
-  CompressedRowSparseMatrix n(proto);
-  ASSERT_EQ(n.num_rows(), crsm->num_rows());
-  ASSERT_EQ(n.num_cols(), crsm->num_cols());
-  ASSERT_EQ(n.num_nonzeros(), crsm->num_nonzeros());
-
-  for (int i = 0; i < n.num_rows() + 1; ++i) {
-    ASSERT_EQ(crsm->rows()[i], proto.compressed_row_matrix().rows(i));
-    ASSERT_EQ(crsm->rows()[i], n.rows()[i]);
-  }
-
-  for (int i = 0; i < crsm->num_nonzeros(); ++i) {
-    ASSERT_EQ(crsm->cols()[i], proto.compressed_row_matrix().cols(i));
-    ASSERT_EQ(crsm->cols()[i], n.cols()[i]);
-    ASSERT_EQ(crsm->values()[i], proto.compressed_row_matrix().values(i));
-    ASSERT_EQ(crsm->values()[i], n.values()[i]);
-  }
-}
-#endif
 
 TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
   Matrix tsm_dense;
