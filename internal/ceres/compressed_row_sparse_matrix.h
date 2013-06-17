@@ -32,14 +32,11 @@
 #define CERES_INTERNAL_COMPRESSED_ROW_SPARSE_MATRIX_H_
 
 #include <vector>
-
-#include "ceres/internal/eigen.h"
+#include "ceres/sparse_matrix_storage.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/sparse_matrix.h"
-#include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
 
 namespace ceres {
 
@@ -47,7 +44,7 @@ struct CRSMatrix;
 
 namespace internal {
 
-class SparseMatrixProto;
+class TripletSparseMatrix;
 
 class CompressedRowSparseMatrix : public SparseMatrix {
  public:
@@ -58,9 +55,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   //
   // We assume that m does not have any repeated entries.
   explicit CompressedRowSparseMatrix(const TripletSparseMatrix& m);
-#ifndef CERES_NO_PROTOCOL_BUFFERS
-  explicit CompressedRowSparseMatrix(const SparseMatrixProto& proto);
-#endif
 
   // Use this constructor only if you know what you are doing. This
   // creates a "blank" matrix with the appropriate amount of memory
@@ -91,15 +85,12 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual void ScaleColumns(const double* scale);
 
   virtual void ToDenseMatrix(Matrix* dense_matrix) const;
-#ifndef CERES_NO_PROTOCOL_BUFFERS
-  virtual void ToProto(SparseMatrixProto* proto) const;
-#endif
   virtual void ToTextFile(FILE* file) const;
-  virtual int num_rows() const { return num_rows_; }
-  virtual int num_cols() const { return num_cols_; }
-  virtual int num_nonzeros() const { return rows_[num_rows_]; }
-  virtual const double* values() const { return values_.get(); }
-  virtual double* mutable_values() { return values_.get(); }
+  virtual int num_rows() const { return storage_.num_rows; }
+  virtual int num_cols() const { return storage_.num_cols; }
+  virtual int num_nonzeros() const { return storage_.rows[storage_.num_rows]; }
+  virtual const double* values() const { return &storage_.values[0]; }
+  virtual double* mutable_values() { return &storage_.values[0]; }
 
   // Delete the bottom delta_rows.
   // num_rows -= delta_rows
@@ -112,11 +103,14 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   void ToCRSMatrix(CRSMatrix* matrix) const;
 
   // Low level access methods that expose the structure of the matrix.
-  const int* cols() const { return cols_.get(); }
-  int* mutable_cols() { return cols_.get(); }
+  const int* cols() const { return &storage_.cols[0]; }
+  int* mutable_cols() { return &storage_.cols[0]; }
 
-  const int* rows() const { return rows_.get(); }
-  int* mutable_rows() { return rows_.get(); }
+  const int* rows() const { return &storage_.rows[0]; }
+  int* mutable_rows() { return &storage_.rows[0]; }
+
+  const SparseMatrixStorage& storage() { return storage_; }
+  SparseMatrixStorage* mutable_storage() { return &storage_; }
 
   const vector<int>& row_blocks() const { return row_blocks_; }
   vector<int>* mutable_row_blocks() { return &row_blocks_; }
@@ -124,14 +118,17 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const vector<int>& col_blocks() const { return col_blocks_; }
   vector<int>* mutable_col_blocks() { return &col_blocks_; }
 
- private:
-  scoped_array<int> cols_;
-  scoped_array<int> rows_;
-  scoped_array<double> values_;
+  void SolveLowerTriangularInPlace(double* solution) const;
+  void SolveLowerTriangularTransposeInPlace(double* solution) const;
 
-  int num_rows_;
-  int num_cols_;
-  int max_num_nonzeros_;
+  CompressedRowSparseMatrix* Transpose() const;
+
+  static CompressedRowSparseMatrix* CreateBlockDiagonalMatrix(
+      const double* diagonal,
+      const vector<int>& blocks);
+
+ private:
+  SparseMatrixStorage storage_;
 
   // If the matrix has an underlying block structure, then it can also
   // carry with it row and column block sizes. This is auxilliary and
