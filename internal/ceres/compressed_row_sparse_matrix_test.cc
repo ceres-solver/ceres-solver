@@ -37,6 +37,7 @@
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/matrix_proto.h"
 #include "ceres/triplet_sparse_matrix.h"
+#include "glog/logging.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
