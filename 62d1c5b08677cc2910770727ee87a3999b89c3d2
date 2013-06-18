@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a65012c_141ff41f",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-18T16:44:03Z",
+      "side": 1,
+      "message": "Consider using a test fixture, an having the rest of the test that use the three parameter problem depend on it. It will save you the repetition of the problem construction code in each case.\nsame goes for setting up the reference jacobians, you can store them in the test fixture class and use them in each of the tests. This will reduce the verbosity and code repetition across the tests considerably.",
+      "revId": "62d1c5b08677cc2910770727ee87a3999b89c3d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a65012c_54196c36",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-06-18T16:44:03Z",
+      "side": 1,
+      "message": "same as above, use a test fixture for keeping track of the problem and the various jacobians.",
+      "revId": "62d1c5b08677cc2910770727ee87a3999b89c3d2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
