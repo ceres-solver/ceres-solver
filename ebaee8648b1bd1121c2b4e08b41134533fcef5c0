@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ad0950e_5b1fbb1e",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-19T01:08:36Z",
+      "side": 1,
+      "message": "don\u0027t need internal qualifier.\nalso you could just store \n\nscoped_ptr\u003cCostFunction\u003e cost_functor_ since all the tests just use the evaluate method.\n\nso do the construction before filling the scoped ptr, and after that its a regular cost function.",
+      "revId": "ebaee8648b1bd1121c2b4e08b41134533fcef5c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad0950e_fb07afd0",
+        "filename": "internal/ceres/dynamic_autodiff_cost_function_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-06-19T01:08:36Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "revId": "ebaee8648b1bd1121c2b4e08b41134533fcef5c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
