@@ -54,6 +54,7 @@ namespace internal {
 namespace {
 
 // Per thread storage for SuiteSparse.
+#ifndef CERES_NO_SUITESPARSE
 struct PerThreadContext {
   explicit PerThreadContext(int num_rows)
       : solution(NULL),
@@ -79,6 +80,7 @@ struct PerThreadContext {
   cholmod_dense* rhs;
   SuiteSparse ss;
 };
+#endif
 
 }  // namespace
 
