@@ -297,14 +297,27 @@ ELSE (EXISTS ${LAPACK_LIB})
   MESSAGE("-- Did not find LAPACK library")
 ENDIF (EXISTS ${LAPACK_LIB})
 
-SET(SUITESPARSE_FOUND
-    ${AMD_FOUND} AND
+# We don't use SET(SUITESPARSE_FOUND ${AMD_FOUND} ...) in order to
+# be able to check whether SuiteSparse is available withou expanding
+# SUITESPARSE_FOUND with ${}. This means further checks could be:
+#
+#   IF (SUITESPARSE_FOUND)
+#
+# and not:
+#
+#   IF (${SUITESPARSE_FOUND})
+#
+IF (${AMD_FOUND} AND
     ${CAMD_FOUND} AND
     ${COLAMD_FOUND} AND
     ${CCOLAMD_FOUND} AND
     ${CHOLMOD_FOUND} AND
     (${SUITESPARSE_CONFIG_FOUND} OR ${UFCONFIG_FOUND}) AND
     ${BLAS_AND_LAPACK_FOUND})
+  SET(SUITESPARSE_FOUND TRUE)
+ELSE ()
+  SET(SUITESPARSE_FOUND FALSE)
+ENDIF ()
 
 ENDIF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # By default, if all of SuiteSparse's dependencies are found, Ceres is
@@ -312,9 +325,9 @@ ENDIF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # enable/disable SuiteSparse explicitly.
 IF (DEFINED SUITESPARSE)
   IF (SUITESPARSE)
-    IF (NOT ${SUITESPARSE_FOUND})
+    IF (NOT SUITESPARSE_FOUND)
       MESSAGE(FATAL_ERROR "One or more of SuiteSparse's dependencies was not found")
-    ENDIF (NOT ${SUITESPARSE_FOUND})
+    ENDIF (NOT SUITESPARSE_FOUND)
   ELSE (SUITESPARSE)
     ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
   ENDIF (SUITESPARSE)
@@ -355,9 +368,9 @@ ENDIF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
 
 IF (DEFINED CXSPARSE)
   IF (CXSPARSE)
-    IF (NOT ${CXSPARSE_FOUND})
+    IF (NOT CXSPARSE_FOUND)
       MESSAGE(FATAL_ERROR "-- CXSparse not found.")
-    ENDIF (NOT ${CXSPARSE_FOUND})
+    ENDIF (NOT CXSPARSE_FOUND)
   ELSE (CXSPARSE)
     ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
   ENDIF (CXSPARSE)
@@ -399,7 +412,7 @@ ELSE (GFLAGS)
 ENDIF (GFLAGS)
 
 # Google Logging
-IF (NOT ${BUILD_ANDROID})
+IF (NOT BUILD_ANDROID)
   MESSAGE("-- Check for Google Log")
   FIND_LIBRARY(GLOG_LIB NAMES glog PATHS ${SEARCH_LIBS})
   IF (NOT EXISTS ${GLOG_LIB})
@@ -416,12 +429,12 @@ IF (NOT ${BUILD_ANDROID})
             "-DGLOG_INCLUDE=...")
   ENDIF (NOT EXISTS ${GLOG_INCLUDE})
   MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
-ELSE (NOT ${BUILD_ANDROID})
+ELSE (NOT BUILD_ANDROID)
   SET(GLOG_LIB miniglog)
   MESSAGE("-- Using minimal Glog substitute for Android (library): ${GLOG_LIB}")
   SET(GLOG_INCLUDE internal/ceres/miniglog)
   MESSAGE("-- Using minimal Glog substitute for Android (include): ${GLOG_INCLUDE}")
-ENDIF (NOT ${BUILD_ANDROID})
+ENDIF (NOT BUILD_ANDROID)
 
 # Eigen
 MESSAGE("-- Check for Eigen 3.x")
@@ -438,10 +451,10 @@ OPTION(SCHUR_SPECIALIZATIONS
        "Enable fixed-size schur specializations."
        ON)
 
-IF (NOT ${SCHUR_SPECIALIZATIONS})
+IF (NOT SCHUR_SPECIALIZATIONS)
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
-ENDIF (NOT ${SCHUR_SPECIALIZATIONS})
+ENDIF (NOT SCHUR_SPECIALIZATIONS)
 
 # Line search minimizer is useful for large scale problems or when
 # sparse linear algebra libraries are not available. If compile time,
@@ -451,19 +464,19 @@ OPTION(LINE_SEARCH_MINIMIZER
        "Enable the line search minimizer."
        ON)
 
-IF (NOT ${LINE_SEARCH_MINIMIZER})
+IF (NOT LINE_SEARCH_MINIMIZER)
   ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
   MESSAGE("-- Disabling line search minimizer")
-ENDIF (NOT ${LINE_SEARCH_MINIMIZER})
+ENDIF (NOT LINE_SEARCH_MINIMIZER)
 
 OPTION(CUSTOM_BLAS
        "Use handcoded BLAS routines (usually faster) instead of Eigen."
        ON)
 
-IF (NOT ${CUSTOM_BLAS})
+IF (NOT CUSTOM_BLAS)
   ADD_DEFINITIONS(-DCERES_NO_CUSTOM_BLAS)
   MESSAGE("-- Disabling custom blas")
-ENDIF (NOT ${CUSTOM_BLAS})
+ENDIF (NOT CUSTOM_BLAS)
 
 # Multithreading using OpenMP
 OPTION(OPENMP
@@ -478,7 +491,7 @@ IF (OPENMP_FOUND)
   MESSAGE("-- Found OpenMP.")
   ADD_DEFINITIONS(-DCERES_USE_OPENMP)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-  IF ("${UNIX}")
+  IF (UNIX)
     # At least on Linux, we need pthreads to be enabled for mutex to
     # compile.  This may not work on Windows or Android.
     FIND_PACKAGE(Threads REQUIRED)
@@ -488,7 +501,7 @@ IF (OPENMP_FOUND)
         "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
     ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
     ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-  ENDIF ("${UNIX}")
+  ENDIF (UNIX)
 ELSE (OPENMP_FOUND)
   MESSAGE("-- Can't find OpenMP. Disabling multithreading.")
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
@@ -619,16 +632,16 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
       # native ARM binary for Android.
     ELSE (BUILD_ANDROID)
       # Linux
-      IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+      IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
         SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
-      ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+      ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
       # Mac OS X
-      IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+      IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
         SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast -msse3")
-      ENDIF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+      ENDIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     ENDIF (BUILD_ANDROID)
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
-  IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # Use of -O4 requires use of gold linker & LLVM-gold plugin, which might
     # well not be present / in use and without which files will compile, but
     # not link ('file not recognized') so explicitly check for support
@@ -687,7 +700,7 @@ ENDIF (UNIX)
 # resulting in an unreasonably slow version of the blas routines. The
 # -Qunused-arguments is needed because CMake passes the inline
 # threshold to the linker and clang complains about it and dies.
-IF ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   SET(CMAKE_CXX_FLAGS
       "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600 -Wno-return-type-c-linkage")
 ENDIF ()
