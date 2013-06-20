@@ -297,7 +297,7 @@ class EndianAwareFileReader {
   template <typename T>
   T Read(void) const {
     T value;
-    read(file_descriptor_, &value, sizeof(value));
+    CHECK_GT(read(file_descriptor_, &value, sizeof(value)), 0);
     // Switch endian type if file contains data in different type
     // that current machine.
     if (file_endian_type_ != host_endian_type_) {
