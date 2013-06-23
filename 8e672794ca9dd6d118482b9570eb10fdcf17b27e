@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aad56534_10ec6a80",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "i - 1",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_f0f79e48",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "i - 1",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_109eaaf4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Just 2013 now",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_d0fca22f",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Good idea switching to vectors",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_f0c9de05",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "2013 only",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_b0f11656",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_90f61a4a",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "it\u0027s norm.",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_700cce88",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "int, double",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_d0a7024a",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Comment adds no valu.",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_f0a2fe3b",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Any reason not to use L and Q? We use \"A\" else where, and I think upper case would help here as well.",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_b0ac762f",
+        "filename": "internal/ceres/incomplete_lq_factorization.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "I understand that the algorithm is described elsewhere, but consider adding brief text explaining each step.",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_90b17a85",
+        "filename": "internal/ceres/incomplete_lq_factorization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "it -\u003e in",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_70972edb",
+        "filename": "internal/ceres/incomplete_lq_factorization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "\". Q\" -\u003e \", and Q\"",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_509432d4",
+        "filename": "internal/ceres/incomplete_lq_factorization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "Drop parenthesis; make a proper sentence.",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad56534_30a1a632",
+        "filename": "internal/ceres/incomplete_lq_factorization_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-23T21:26:26Z",
+      "side": 1,
+      "message": "2013",
+      "revId": "8e672794ca9dd6d118482b9570eb10fdcf17b27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
