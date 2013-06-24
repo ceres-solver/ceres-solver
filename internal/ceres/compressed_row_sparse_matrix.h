@@ -92,13 +92,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual const double* values() const { return &values_[0]; }
   virtual double* mutable_values() { return &values_[0]; }
 
-#ifndef CERES_NO_PROTOCOL_BUFFERS
-  // Dump the sparse matrix to a proto. Destroys the contents of proto.
-  virtual void ToProto(SparseMatrixProto* proto) const {
-    LOG(FATAL) << "Broken.;";
-  }
-#endif
-
   // Delete the bottom delta_rows.
   // num_rows -= delta_rows
   void DeleteRows(int delta_rows);

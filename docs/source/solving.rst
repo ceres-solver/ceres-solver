@@ -1205,15 +1205,6 @@ elimination group [LiSaad]_.
       printed as dense vectors. This should only be used for small
       problems.
 
-   * ``PROTOBUF`` Write out the linear least squares problem to the
-     directory pointed to by
-     :member:`Solver::Options::trust_region_problem_dump_directory` as
-     a protocol buffer. ``linear_least_squares_problems.h/cc``
-     contains routines for loading these problems. For details on the
-     on disk format used, see ``matrix.proto``. The files are named
-     ``ceres_solver_iteration_???.bin``. This requires that ``protobuf`` be
-     linked into Ceres Solver.
-
    * ``TEXTFILE`` Write out the linear least squares problem to the
      directory pointed to by
      :member:`Solver::Options::trust_region_problem_dump_directory` as

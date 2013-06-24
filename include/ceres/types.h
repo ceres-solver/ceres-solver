@@ -310,13 +310,6 @@ enum DumpFormatType {
   CONSOLE,
 
   // Write out the linear least squares problem to the directory
-  // pointed to by Solver::Options::lsqp_dump_directory as a protocol
-  // buffer. linear_least_squares_problems.h/cc contains routines for
-  // loading these problems. For details on the on disk format used,
-  // see matrix.proto. The files are named lm_iteration_???.lsqp.
-  PROTOBUF,
-
-  // Write out the linear least squares problem to the directory
   // pointed to by Solver::Options::lsqp_dump_directory as text files
   // which can be read into MATLAB/Octave. The Jacobian is dumped as a
   // text file containing (i,j,s) triplets, the vectors D, x and f are
