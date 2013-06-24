@@ -57,11 +57,6 @@ SuiteSparse. We recommend either `OpenBLAS
 atlas.sourceforge.net/>`_, both of which ship with BLAS and LAPACK
 routines.
 
-8. `protobuf <http://code.google.com/p/protobuf/>`_ is used for
-serializing and deserializing linear least squares problems to
-disk. This is useful for debugging and testing. It is an optional
-dependency and without it some of the tests will be disabled.
-
 .. _section-linux:
 
 Building on Linux
@@ -91,8 +86,6 @@ platform. Start by installing all the dependencies.
      sudo apt-get install libeigen3-dev
      # SuiteSparse and CXSparse
      sudo apt-get install libsuitesparse-dev
-     # protobuf
-     sudo apt-get install libprotobuf-dev
 
 We are now ready to build and test Ceres.
 
@@ -189,8 +182,6 @@ framework.
       brew install eigen
       # SuiteSparse and CXSparse
       brew install suite-sparse
-      # protobuf
-      brew install protobuf
 
 
 We are now ready to build and test Ceres.
@@ -295,11 +286,6 @@ Customizing the build
 It is possible to reduce the libraries needed to build Ceres and
 customize the build process by passing appropriate flags to
 ``CMake``. Use these flags only if you really know what you are doing.
-
-#. ``-DPROTOBUF=OFF``: ``protobuf`` is a large and complicated
-   dependency. If you do not care for the tests that depend on it and
-   the logging support it enables, you can use this flag to turn it
-   off.
 
 #. ``-DSUITESPARSE=OFF``: By default, Ceres will link to
    ``SuiteSparse`` if all its dependencies are present. Use this flag
