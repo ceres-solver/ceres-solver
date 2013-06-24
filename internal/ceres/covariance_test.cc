@@ -398,8 +398,11 @@ TEST_F(CovarianceTest, NormalBehavior) {
   };
 
   Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
   options.use_dense_linear_algebra = false;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
 
   options.use_dense_linear_algebra = true;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -441,8 +444,10 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   Covariance::Options options;
   options.num_threads = 4;
 
+#ifndef CERES_NO_SUITESPARSE
   options.use_dense_linear_algebra = false;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
 
   options.use_dense_linear_algebra = true;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -484,8 +489,11 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
   };
 
   Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
   options.use_dense_linear_algebra = false;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
 
   options.use_dense_linear_algebra = true;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -533,10 +541,12 @@ TEST_F(CovarianceTest, LocalParameterization) {
    -0.00122,  -0.00122,  -0.00149,  -0.00298,   0.00000,   0.03457
   };
 
-
   Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
   options.use_dense_linear_algebra = false;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
 
   options.use_dense_linear_algebra = true;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);

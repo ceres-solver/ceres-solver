@@ -36,6 +36,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
@@ -90,6 +91,13 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual int num_nonzeros() const { return rows_[num_rows_]; }
   virtual const double* values() const { return &values_[0]; }
   virtual double* mutable_values() { return &values_[0]; }
+
+#ifndef CERES_NO_PROTOCOL_BUFFERS
+  // Dump the sparse matrix to a proto. Destroys the contents of proto.
+  virtual void ToProto(SparseMatrixProto* proto) const {
+    LOG(FATAL) << "Broken.;";
+  }
+#endif
 
   // Delete the bottom delta_rows.
   // num_rows -= delta_rows
