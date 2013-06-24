@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa71e554_90e87a04",
+        "filename": "internal/ceres/visibility_based_preconditioner_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-06-24T21:26:34Z",
+      "side": 1,
+      "message": "We generally use if 0, no?",
+      "revId": "6c556f965cbec4d39c40702370efe5646ab958c0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
