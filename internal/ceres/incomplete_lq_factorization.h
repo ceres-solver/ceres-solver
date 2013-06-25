@@ -28,6 +28,11 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#ifndef CERES_INTERNAL_INCOMPLETE_LQ_FACTORIZATION_H_
+#define CERES_INTERNAL_INCOMPLETE_LQ_FACTORIZATION_H_
+
+#include <vector>
+#include <utility>
 #include "ceres/compressed_row_sparse_matrix.h"
 
 namespace ceres {
@@ -81,3 +86,5 @@ void DropEntriesAndAddRow(const Vector& dense_row,
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_INCOMPLETE_LQ_FACTORIZATION_H_

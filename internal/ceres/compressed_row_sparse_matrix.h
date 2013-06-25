@@ -116,8 +116,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   vector<int>* mutable_col_blocks() { return &col_blocks_; }
 
   // Non-destructive array resizing method.
-  void set_num_rows(const int num_rows) { num_rows_ = num_rows; };
-  void set_num_cols(const int num_cols) { num_cols_ = num_cols; };
+  void set_num_rows(const int num_rows) { num_rows_ = num_rows; }
+  void set_num_cols(const int num_cols) { num_cols_ = num_cols; }
 
   void SolveLowerTriangularInPlace(double* solution) const;
   void SolveLowerTriangularTransposeInPlace(double* solution) const;

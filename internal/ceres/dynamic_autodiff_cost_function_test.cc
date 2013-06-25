@@ -30,11 +30,10 @@
 //         mierle@gmail.com (Keir Mierle)
 //         sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
-
 #include <cstddef>
 
+#include "ceres/dynamic_autodiff_cost_function.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "gtest/gtest.h"
 
 namespace ceres {

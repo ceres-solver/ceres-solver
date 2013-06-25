@@ -36,6 +36,7 @@
 
 #include <cstddef>
 #include <map>
+#include <string>
 #include <vector>
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"

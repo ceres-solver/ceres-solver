@@ -210,7 +210,7 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
   matrix->LeftMultiply(x.data(), y.data());
   for (int i = 0; i < diagonal.size(); ++i) {
     EXPECT_EQ(y[i], diagonal[i]);
-  };
+  }
 
   Matrix dense;
   matrix->ToDenseMatrix(&dense);

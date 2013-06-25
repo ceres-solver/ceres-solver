@@ -717,8 +717,8 @@ int ProblemImpl::ParameterBlockSize(const double* parameter_block) const {
 };
 
 int ProblemImpl::ParameterBlockLocalSize(const double* parameter_block) const {
-  return FindParameterBlockOrDie(parameter_block_map_,
-                                 const_cast<double*>(parameter_block))->LocalSize();
+  return FindParameterBlockOrDie(
+      parameter_block_map_, const_cast<double*>(parameter_block))->LocalSize();
 };
 
 void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {

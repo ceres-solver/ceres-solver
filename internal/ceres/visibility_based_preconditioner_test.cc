@@ -129,7 +129,7 @@ namespace internal {
 //         } else {
 //           if (IsBlockPairInPreconditioner(i, j)) {
 //             return AssertionFailure()
-//                 << "block pair (" << i << "," << j << "should not be present";
+//                << "block pair (" << i << "," << j << "should not be present";
 //           }
 //         }
 //       }

@@ -110,14 +110,16 @@ TEST(IncompleteLQFactorization, CompleteFactorization) {
   lmatrix->ToDenseMatrix(&actual_l_matrix);
 
   EXPECT_NEAR((expected_l_matrix * expected_l_matrix.transpose() -
-               actual_l_matrix * actual_l_matrix.transpose()).norm(), 0.0, 1e-10)
+               actual_l_matrix * actual_l_matrix.transpose()).norm(),
+              0.0,
+              1e-10)
       << "expected: \n" << expected_l_matrix
       << "\actual: \n" << actual_l_matrix;
 }
 
 TEST(IncompleteLQFactorization, DropEntriesAndAddRow) {
   // Allocate space and then make it a zero sized matrix.
-  CompressedRowSparseMatrix matrix(10,10, 100);
+  CompressedRowSparseMatrix matrix(10, 10, 100);
   matrix.set_num_rows(0);
 
   vector<pair<int, double> > scratch(10);

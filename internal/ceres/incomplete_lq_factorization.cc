@@ -230,7 +230,7 @@ CompressedRowSparseMatrix* IncompleteLQFactorization(
     l_cols[l->num_nonzeros()] = i;
     l_values[l->num_nonzeros()] = NormalizeRow(i, &q);
     l_rows[l->num_rows()] += 1;
-  };
+  }
 
   return l;
 }

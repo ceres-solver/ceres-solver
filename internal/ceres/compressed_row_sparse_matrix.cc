@@ -275,7 +275,7 @@ void CompressedRowSparseMatrix::SolveLowerTriangularInPlace(
     }
     solution[r] /=  values_[rows_[r + 1] - 1];
   }
-};
+}
 
 void CompressedRowSparseMatrix::SolveLowerTriangularTransposeInPlace(
     double* solution) const {
@@ -285,7 +285,7 @@ void CompressedRowSparseMatrix::SolveLowerTriangularTransposeInPlace(
       solution[cols_[idx]] -= values_[idx] * solution[r];
     }
   }
-};
+}
 
 CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
     const double* diagonal,

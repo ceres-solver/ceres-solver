@@ -84,6 +84,7 @@
 #endif
 
 #include <map>
+#include <string>
 #include <vector>
 #include "ceres/blas.h"
 #include "ceres/execution_summary.h"

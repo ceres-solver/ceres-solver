@@ -31,6 +31,7 @@
 #ifndef CERES_INTERNAL_MINIMIZER_H_
 #define CERES_INTERNAL_MINIMIZER_H_
 
+#include <string>
 #include <vector>
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
