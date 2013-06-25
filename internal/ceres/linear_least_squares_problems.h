@@ -63,8 +63,6 @@ struct LinearLeastSquaresProblem {
 
 // Factories for linear least squares problem.
 LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id);
-LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromFile(
-    const string& filename);
 
 LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
 LinearLeastSquaresProblem* LinearLeastSquaresProblem1();

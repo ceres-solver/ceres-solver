@@ -59,13 +59,6 @@ class SchurEliminatorTest : public ::testing::Test {
     SetupHelper(problem.get());
   }
 
-  void SetUpFromFilename(const string& filename) {
-    scoped_ptr<LinearLeastSquaresProblem>
-        problem(CreateLinearLeastSquaresProblemFromFile(filename));
-    CHECK_NOTNULL(problem.get());
-    SetupHelper(problem.get());
-  }
-
   void SetupHelper(LinearLeastSquaresProblem* problem) {
     A.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
     b.reset(problem->b.release());
