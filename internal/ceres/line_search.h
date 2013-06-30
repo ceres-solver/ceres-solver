@@ -38,6 +38,7 @@
 #include <vector>
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
@@ -60,30 +61,16 @@ class LineSearch {
 
   struct Options {
     Options()
-        : interpolation_degree(1),
-          use_higher_degree_interpolation_when_possible(false),
+        : interpolation_type(CUBIC),
           sufficient_decrease(1e-4),
           min_relative_step_size_change(1e-3),
-          max_relative_step_size_change(0.6),
-          step_size_threshold(1e-9),
+          max_relative_step_size_change(0.9),
+          min_step_size(1e-9),
           function(NULL) {}
 
-    // TODO(sameeragarwal): Replace this with enums which are common
-    // across various line searches.
-    //
     // Degree of the polynomial used to approximate the objective
-    // function. Valid values are {0, 1, 2}.
-    //
-    // For Armijo line search
-    //
-    // 0: Bisection based backtracking search.
-    // 1: Quadratic interpolation.
-    // 2: Cubic interpolation.
-    int interpolation_degree;
-
-    // Usually its possible to increase the degree of the
-    // interpolation polynomial by storing and using an extra point.
-    bool use_higher_degree_interpolation_when_possible;
+    // function.
+    LineSearchInterpolationType interpolation_type;
 
     // Armijo line search parameters.
 
@@ -110,7 +97,7 @@ class LineSearch {
 
     // If during the line search, the step_size falls below this
     // value, it is truncated to zero.
-    double step_size_threshold;
+    double min_step_size;
 
     // The one dimensional function that the line search algorithm
     // minimizes.

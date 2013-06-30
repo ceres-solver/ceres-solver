@@ -164,11 +164,19 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       LineSearchDirection::Create(line_search_direction_options));
 
   LineSearchFunction line_search_function(evaluator);
+
   LineSearch::Options line_search_options;
+  line_search_options.interpolation_type =
+      options.line_search_interpolation_type;
+  line_search_options.min_step_size = options.min_line_search_step_size;
+  line_search_options.sufficient_decrease =
+      options.armijo_sufficient_decrease;
+  line_search_options.min_relative_step_size_change =
+      options.min_armijo_relative_step_size_change;
+  line_search_options.max_relative_step_size_change =
+      options.max_armijo_relative_step_size_change;
   line_search_options.function = &line_search_function;
 
-  // TODO(sameeragarwal): Make this parameterizable over different
-  // line searches.
   ArmijoLineSearch line_search;
   LineSearch::Summary line_search_summary;
 

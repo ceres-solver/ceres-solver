@@ -63,6 +63,12 @@ class Solver {
       line_search_type = ARMIJO;
       nonlinear_conjugate_gradient_type = FLETCHER_REEVES;
       max_lbfgs_rank = 20;
+      line_search_interpolation_type = CUBIC;
+      min_line_search_step_size = 1e-9;
+      armijo_sufficient_decrease = 1e-4;
+      min_armijo_relative_step_size_change = 1e-3;
+      max_armijo_relative_step_size_change = 0.6;
+
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
@@ -171,6 +177,43 @@ class Solver {
     // Nocedal, J. (1980). "Updating Quasi-Newton Matrices with
     // Limited Storage". Mathematics of Computation 35 (151): 773–782.
     int max_lbfgs_rank;
+
+    // Degree of the polynomial used to approximate the objective
+    // function. Valid values are BISECTION, QUADRATIC and CUBIC.
+    //
+    // BISECTION corresponds to pure backtracking search with no
+    // interpolation.
+    LineSearchInterpolationType line_search_interpolation_type;
+
+    // If during the line search, the step_size falls below this
+    // value, it is truncated to zero.
+    double min_line_search_step_size;
+
+    // Armijo line search parameters.
+
+    // Solving the line search problem exactly is computationally
+    // prohibitive. Fortunately, line search based optimization
+    // algorithms can still guarantee convergence if instead of an
+    // exact solution, the line search algorithm returns a solution
+    // which decreases the value of the objective function
+    // sufficiently. More precisely, we are looking for a step_size
+    // s.t.
+    //
+    //   f(step_size) <= f(0) + sufficient_decrease * f'(0) * step_size
+    //
+    double armijo_sufficient_decrease;
+
+    // In each iteration of the Armijo line search,
+    //
+    //  new_step_size >= min_relative_step_size_change * step_size
+    //
+    double min_armijo_relative_step_size_change;
+
+    // In each iteration of the Armijo line search,
+    //
+    //  new_step_size <= max_relative_step_size_change * step_size
+    //
+    double max_armijo_relative_step_size_change;
 
     TrustRegionStrategyType trust_region_strategy_type;
 
@@ -673,6 +716,7 @@ class Solver {
 
     LineSearchDirectionType line_search_direction_type;
     LineSearchType line_search_type;
+
     int max_lbfgs_rank;
   };
 

@@ -193,6 +193,27 @@ bool StringToLineSearchType(string value, LineSearchType* type) {
   return false;
 }
 
+const char* LineSearchInterpolationTypeToString(
+    LineSearchInterpolationType type) {
+  switch (type) {
+    CASESTR(BISECTION);
+    CASESTR(QUADRATIC);
+    CASESTR(CUBIC);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToLineSearchInterpolationType(
+    string value,
+    LineSearchInterpolationType* type) {
+  UpperCase(&value);
+  STRENUM(BISECTION);
+  STRENUM(QUADRATIC);
+  STRENUM(CUBIC);
+  return false;
+}
+
 const char* NonlinearConjugateGradientTypeToString(
     NonlinearConjugateGradientType type) {
   switch (type) {

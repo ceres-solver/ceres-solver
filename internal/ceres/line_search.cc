@@ -125,7 +125,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
   step_size_is_valid =
       function->Evaluate(step_size,
                          &cost,
-                         options.interpolation_degree < 2 ? NULL : &gradient);
+                         options.interpolation_type != CUBIC ? NULL : &gradient);
   while (!step_size_is_valid || cost > (initial_cost
                                         + options.sufficient_decrease
                                         * initial_gradient
@@ -137,26 +137,22 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
     const double current_step_size = step_size;
     // Backtracking search. Each iteration of this loop finds a new point
 
-    if ((options.interpolation_degree == 0) || !step_size_is_valid) {
-      // Backtrack by halving the step_size;
+    if ((options.interpolation_type == BISECTION) || !step_size_is_valid) {
       step_size *= 0.5;
     } else {
       // Backtrack by interpolating the function and gradient values
       // and minimizing the corresponding polynomial.
-
       vector<FunctionSample> samples;
       samples.push_back(ValueAndGradientSample(0.0,
                                                initial_cost,
                                                initial_gradient));
 
-      if (options.interpolation_degree == 1) {
+      if (options.interpolation_type == QUADRATIC) {
         // Two point interpolation using function values and the
         // initial gradient.
         samples.push_back(ValueSample(step_size, cost));
 
-        if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 1 &&
-            previous_step_size_is_valid) {
+        if (summary->num_evaluations > 1 && previous_step_size_is_valid) {
           // Three point interpolation, using function values and the
           // initial gradient.
           samples.push_back(ValueSample(previous_step_size, previous_cost));
@@ -167,9 +163,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
                                                  cost,
                                                  gradient));
 
-        if (options.use_higher_degree_interpolation_when_possible &&
-            summary->num_evaluations > 1 &&
-            previous_step_size_is_valid) {
+        if (summary->num_evaluations > 1 && previous_step_size_is_valid) {
           // Three point interpolation using the function values and
           // the gradients.
           samples.push_back(ValueAndGradientSample(previous_step_size,
@@ -191,7 +185,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
     previous_cost = cost;
     previous_gradient = gradient;
 
-    if (fabs(initial_gradient) * step_size < options.step_size_threshold) {
+    if (fabs(initial_gradient) * step_size < options.min_step_size) {
       LOG(WARNING) << "Line search failed: step_size too small: " << step_size;
       return;
     }
@@ -200,7 +194,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
     step_size_is_valid =
         function->Evaluate(step_size,
                            &cost,
-                           options.interpolation_degree < 2 ? NULL : &gradient);
+                           options.interpolation_type != CUBIC ? NULL : &gradient);
   }
 
   summary->optimal_step_size = step_size;

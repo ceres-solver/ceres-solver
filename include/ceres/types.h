@@ -332,6 +332,12 @@ enum NumericDiffMethod {
   FORWARD
 };
 
+enum LineSearchInterpolationType {
+  BISECTION,
+  QUADRATIC,
+  CUBIC
+};
+
 const char* LinearSolverTypeToString(LinearSolverType type);
 bool StringToLinearSolverType(string value, LinearSolverType* type);
 
@@ -364,7 +370,14 @@ bool StringToLineSearchType(string value, LineSearchType* type);
 const char* NonlinearConjugateGradientTypeToString(
     NonlinearConjugateGradientType type);
 bool StringToNonlinearConjugateGradientType(
-    string value, NonlinearConjugateGradientType* type);
+    string value,
+    NonlinearConjugateGradientType* type);
+
+const char* LineSearchInterpolationTypeToString(
+    LineSearchInterpolationType type);
+bool StringToLineSearchInterpolationType(
+    string value,
+    LineSearchInterpolationType* type);
 
 const char* LinearSolverTerminationTypeToString(
     LinearSolverTerminationType type);
