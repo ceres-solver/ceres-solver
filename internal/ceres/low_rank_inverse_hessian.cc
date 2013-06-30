@@ -58,16 +58,16 @@ bool LowRankInverseHessian::Update(const Vector& delta_x,
     // TODO(sameeragarwal): This can be done more efficiently using
     // a circular buffer/indexing scheme, but for simplicity we will
     // do the expensive copy for now.
-    delta_x_history_.block(0, 0, num_parameters_, max_num_corrections_ - 2) =
+    delta_x_history_.block(0, 0, num_parameters_, max_num_corrections_ - 1) =
         delta_x_history_
         .block(0, 1, num_parameters_, max_num_corrections_ - 1);
 
     delta_gradient_history_
-        .block(0, 0, num_parameters_, max_num_corrections_ - 2) =
+        .block(0, 0, num_parameters_, max_num_corrections_ - 1) =
         delta_gradient_history_
         .block(0, 1, num_parameters_, max_num_corrections_ - 1);
 
-    delta_x_dot_delta_gradient_.head(num_corrections_ - 2) =
+    delta_x_dot_delta_gradient_.head(num_corrections_ - 1) =
         delta_x_dot_delta_gradient_.tail(num_corrections_ - 1);
   } else {
     ++num_corrections_;
