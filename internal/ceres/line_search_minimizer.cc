@@ -194,6 +194,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_summary = IterationSummary();
     iteration_summary.iteration = summary->iterations.back().iteration + 1;
+    iteration_summary.step_is_valid = false;
+    iteration_summary.step_is_successful = false;
 
     bool line_search_status = true;
     if (iteration_summary.iteration == 1) {
@@ -232,6 +234,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     delta = current_state.step_size * current_state.search_direction;
 
     previous_state = current_state;
+    iteration_summary.step_solver_time_in_seconds =
+        WallTimeInSeconds() - iteration_start_time;
 
     // TODO(sameeragarwal): Collect stats.
     if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data()) ||
@@ -278,6 +282,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         + summary->preprocessor_time_in_seconds;
 
     summary->iterations.push_back(iteration_summary);
+    ++summary->num_successful_steps;
   }
 }
 
