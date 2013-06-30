@@ -64,8 +64,8 @@ class LineSearch {
           use_higher_degree_interpolation_when_possible(false),
           sufficient_decrease(1e-4),
           min_relative_step_size_change(1e-3),
-          max_relative_step_size_change(0.6),
-          step_size_threshold(1e-9),
+          max_relative_step_size_change(0.9),
+          min_step_size(1e-9),
           function(NULL) {}
 
     // TODO(sameeragarwal): Replace this with enums which are common
@@ -110,7 +110,7 @@ class LineSearch {
 
     // If during the line search, the step_size falls below this
     // value, it is truncated to zero.
-    double step_size_threshold;
+    double min_step_size;
 
     // The one dimensional function that the line search algorithm
     // minimizes.

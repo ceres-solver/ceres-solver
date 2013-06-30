@@ -819,6 +819,56 @@ elimination group [LiSaad]_.
    rank. The best choice usually requires some problem specific
    experimentation.
 
+.. member:: int Solver::Options::line_search_interpolation_degree
+
+   Default: 1
+
+   Degree of the polynomial used to approximate the objective
+   function. Valid values are {0, 1, 2}.
+
+   For Armijo line search
+
+   `0`: Bisection based backtracking search.
+
+   `1`: Quadratic interpolation.
+
+   `2`: Cubic interpolation.
+
+.. member:: bool Solver::Options::line_search_use_higher_degree_interpolation_when_possible
+
+   Default: `false`
+
+   Usually its possible to increase the degree of the interpolation
+   polynomial by storing and using an extra point.
+
+.. member:: double Solver::Options::min_line_search_step_size
+
+   If during the line search, the step size falls below this value, it
+   is truncated to zero.
+
+.. member:: double Solver::Options::armijo_sufficient_decrease
+
+   Solving the line search problem exactly is computationally
+   prohibitive. Fortunately, line search based optimization algorithms
+   can still guarantee convergence if instead of an exact solution,
+   the line search algorithm returns a solution which decreases the
+   value of the objective function sufficiently. More precisely, we
+   are looking for a step size s.t.
+
+   .. math:: f(\text{step_size}) \le f(0) + \text{sufficient_decrease} * [f'(0) * \text{step_size}]
+
+.. member:: double Solver::Options::min_armijo_relative_step_size_change
+
+   In each iteration of the Armijo line search,
+
+    .. math:: \text{new_step_size} \ge \text{min_relative_step_size_change} * \text{step_size}
+
+.. member:: double Solver::Options::max_armijo_relative_step_size_change
+
+   In each iteration of the Armijo line search,
+
+   .. math:: \text{new_step_size} \le \text{max_relative_step_size_change} * \text{step_size}
+
 .. member:: TrustRegionStrategyType Solver::Options::trust_region_strategy_type
 
    Default: ``LEVENBERG_MARQUARDT``

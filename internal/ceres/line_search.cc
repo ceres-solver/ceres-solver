@@ -191,7 +191,7 @@ void ArmijoLineSearch::Search(const LineSearch::Options& options,
     previous_cost = cost;
     previous_gradient = gradient;
 
-    if (fabs(initial_gradient) * step_size < options.step_size_threshold) {
+    if (fabs(initial_gradient) * step_size < options.min_step_size) {
       LOG(WARNING) << "Line search failed: step_size too small: " << step_size;
       return;
     }

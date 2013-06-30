@@ -88,6 +88,16 @@ class Minimizer {
       nonlinear_conjugate_gradient_type =
           options.nonlinear_conjugate_gradient_type;
       max_lbfgs_rank = options.max_lbfgs_rank;
+      line_search_interpolation_degree =
+          options.line_search_interpolation_degree;
+      line_search_use_higher_degree_interpolation_when_possible =
+          options.line_search_use_higher_degree_interpolation_when_possible;
+      min_line_search_step_size = options.min_line_search_step_size;
+      armijo_sufficient_decrease = options.armijo_sufficient_decrease;
+      min_armijo_relative_step_size_change =
+          options.min_armijo_relative_step_size_change;
+      max_armijo_relative_step_size_change =
+          options.max_armijo_relative_step_size_change;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -123,6 +133,13 @@ class Minimizer {
     LineSearchType line_search_type;
     NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
     int max_lbfgs_rank;
+    int line_search_interpolation_degree;
+    bool line_search_use_higher_degree_interpolation_when_possible;
+    double min_line_search_step_size;
+    double armijo_sufficient_decrease;
+    double min_armijo_relative_step_size_change;
+    double max_armijo_relative_step_size_change;
+
 
     // List of callbacks that are executed by the Minimizer at the end
     // of each iteration.
