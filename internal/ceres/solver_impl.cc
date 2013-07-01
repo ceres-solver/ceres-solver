@@ -624,6 +624,11 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
       original_options.line_search_direction_type;
   summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
   summary->line_search_type = original_options.line_search_type;
+  summary->line_search_interpolation_type =
+      original_options.line_search_interpolation_type;
+  summary->nonlinear_conjugate_gradient_type =
+      original_options.nonlinear_conjugate_gradient_type;
+
   summary->num_parameter_blocks = original_program->NumParameterBlocks();
   summary->num_parameters = original_program->NumParameters();
   summary->num_residual_blocks = original_program->NumResidualBlocks();
