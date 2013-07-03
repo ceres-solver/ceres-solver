@@ -717,7 +717,7 @@ class Solver {
     LineSearchDirectionType line_search_direction_type;
     LineSearchType line_search_type;
     LineSearchInterpolationType line_search_interpolation_type;
-    NonlinearConjugateGradient nonlinear_conjugate_gradient_type;
+    NonlinearConjugateGradientType nonlinear_conjugate_gradient_type;
 
     int max_lbfgs_rank;
   };
