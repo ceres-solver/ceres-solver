@@ -633,7 +633,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->num_parameters = original_program->NumParameters();
   summary->num_residual_blocks = original_program->NumResidualBlocks();
   summary->num_residuals = original_program->NumResiduals();
-  summary->num_effective_parameters = original_program->NumEffectiveParameters();
+  summary->num_effective_parameters =
+      original_program->NumEffectiveParameters();
 
   // Empty programs are usually a user error.
   if (summary->num_parameter_blocks == 0) {

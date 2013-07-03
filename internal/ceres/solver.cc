@@ -283,7 +283,8 @@ string Solver::Summary::FullReport() const {
 
     const string line_search_type_string =
         StringPrintf("%s %s",
-                     LineSearchInterpolationTypeToString(line_search_interpolation_type),
+                     LineSearchInterpolationTypeToString(
+                         line_search_interpolation_type),
                      LineSearchTypeToString(line_search_type));
     StringAppendF(&report, "Line search type          %19s\n",
                   line_search_type_string.c_str());
