@@ -100,14 +100,24 @@ class NonlinearConjugateGradient : public LineSearchDirection {
 
 class LBFGS : public LineSearchDirection {
  public:
-  LBFGS(const int num_parameters, const int max_lbfgs_rank)
-      : low_rank_inverse_hessian_(num_parameters, max_lbfgs_rank) {}
+  LBFGS(const int num_parameters,
+        const int max_lbfgs_rank,
+        const bool use_approximate_eigenvalue_bfgs_scaling)
+      : low_rank_inverse_hessian_(num_parameters,
+                                  max_lbfgs_rank,
+                                  use_approximate_eigenvalue_bfgs_scaling),
+        is_positive_definite_(true) {}
 
   virtual ~LBFGS() {}
 
   bool NextDirection(const LineSearchMinimizer::State& previous,
                      const LineSearchMinimizer::State& current,
                      Vector* search_direction) {
+    CHECK(is_positive_definite_)
+        << "Ceres bug: NextDirection() called on L-BFGS after inverse Hessian "
+        << "approximation has become indefinite, please contact the "
+        << "developers!";
+
     low_rank_inverse_hessian_.Update(
         previous.search_direction * previous.step_size,
         current.gradient - previous.gradient);
@@ -115,11 +125,128 @@ class LBFGS : public LineSearchDirection {
     low_rank_inverse_hessian_.RightMultiply(current.gradient.data(),
                                             search_direction->data());
     *search_direction *= -1.0;
+
+    if (search_direction->dot(current.gradient) >= 0.0) {
+      LOG(WARNING) << "Numerical failure in L-BFGS update: inverse Hessian "
+                   << "approximation is not positive definite, and thus "
+                   << "initial gradient for search direction is positive: "
+                   << search_direction->dot(current.gradient);
+      is_positive_definite_ = false;
+      return false;
+    }
+
     return true;
   }
 
  private:
   LowRankInverseHessian low_rank_inverse_hessian_;
+  bool is_positive_definite_;
+};
+
+class BFGS : public LineSearchDirection {
+ public:
+  BFGS(const int num_parameters,
+       const bool use_approximate_eigenvalue_scaling)
+      : num_parameters_(num_parameters),
+        use_approximate_eigenvalue_scaling_(use_approximate_eigenvalue_scaling),
+        initialized_(false),
+        is_positive_definite_(true) {
+    LOG_IF(WARNING, num_parameters_ >= 1e3)
+        << "BFGS line search being created with: " << num_parameters_
+        << " parameters, this will allocate a dense approximate inverse Hessian"
+        << " of size: " << num_parameters_ << " x " << num_parameters_
+        << ", consider using the L-BFGS memory-efficient line search direction "
+        << "instead.";
+    // Construct inverse_hessian_ after logging warning about size s.t. if the
+    // allocation crashes us, the log will highlight what the issue likely was.
+    inverse_hessian_ = Matrix::Identity(num_parameters, num_parameters);
+  }
+
+  virtual ~BFGS() {}
+
+  bool NextDirection(const LineSearchMinimizer::State& previous,
+                     const LineSearchMinimizer::State& current,
+                     Vector* search_direction) {
+    CHECK(is_positive_definite_)
+        << "Ceres bug: NextDirection() called on BFGS after inverse Hessian "
+        << "approximation has become indefinite, please contact the "
+        << "developers!";
+
+    const Vector delta_x = previous.search_direction * previous.step_size;
+    const Vector delta_gradient = current.gradient - previous.gradient;
+    const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
+
+    if (delta_x_dot_delta_gradient <= 1e-10) {
+      VLOG(2) << "Skipping BFGS Update, delta_x_dot_delta_gradient too "
+              << "small: " << delta_x_dot_delta_gradient;
+    } else {
+      // Update dense inverse Hessian approximation.
+
+      if (!initialized_ && use_approximate_eigenvalue_scaling_) {
+        // Rescale the initial inverse Hessian approximation (H_0) to be
+        // iteratively updated so that it is of similar 'size' to the true
+        // inverse Hessian at the start point.  As shown in [1]:
+        //
+        //   \gamma = (delta_gradient_{0}' * delta_x_{0}) /
+        //            (delta_gradient_{0}' * delta_gradient_{0})
+        //
+        // Satisfies:
+        //
+        //   (1 / \lambda_m) <= \gamma <= (1 / \lambda_1)
+        //
+        // Where \lambda_1 & \lambda_m are the smallest and largest eigenvalues
+        // of the true initial Hessian (not the inverse) respectively. Thus,
+        // \gamma is an approximate eigenvalue of the true inverse Hessian, and
+        // choosing: H_0 = I * \gamma will yield a starting point that has a
+        // similar scale to the true inverse Hessian.  This technique is widely
+        // reported to often improve convergence, however this is not
+        // universally true, particularly if there are errors in the initial
+        // jacobians.
+        //
+        // The original origin of this rescaling trick is somewhat unclear, the
+        // earliest reference appears to be Oren [1], however it is widely
+        // discussed without specific attributation in various texts including
+        // [2] (p143).
+        //
+        // [1] Oren S.S., Self-scaling variable metric (SSVM) algorithms
+        //     Part II: Implementation and experiments, Management Science,
+        //     20(5), 863-874, 1974.
+        // [2] Nocedal J., Wright S., Numerical Optimization, Springer, 1999.
+        inverse_hessian_ *=
+            delta_x_dot_delta_gradient / delta_gradient.dot(delta_gradient);
+      }
+      initialized_ = true;
+
+      // Perform (dense) BFGS update as detailed in Nocedal [2] p140/177.
+      const double rho_k = 1.0 / delta_x_dot_delta_gradient;
+      const Matrix V_k =
+          Matrix::Identity(num_parameters_, num_parameters_) -
+          (rho_k * delta_gradient * delta_x.transpose());
+      inverse_hessian_ =
+          (V_k.transpose() * inverse_hessian_ * V_k) +
+          (rho_k * delta_x * delta_x.transpose());
+    }
+
+    *search_direction = -inverse_hessian_ * current.gradient;
+
+    if (search_direction->dot(current.gradient) >= 0.0) {
+      LOG(WARNING) << "Numerical failure in BFGS update: inverse Hessian "
+                   << "approximation is not positive definite, and thus "
+                   << "initial gradient for search direction is positive: "
+                   << search_direction->dot(current.gradient);
+      is_positive_definite_ = false;
+      return false;
+    }
+
+    return true;
+  }
+
+ private:
+  const int num_parameters_;
+  const bool use_approximate_eigenvalue_scaling_;
+  Matrix inverse_hessian_;
+  bool initialized_;
+  bool is_positive_definite_;
 };
 
 LineSearchDirection*
@@ -135,8 +262,16 @@ LineSearchDirection::Create(const LineSearchDirection::Options& options) {
   }
 
   if (options.type == ceres::LBFGS) {
-    return new ceres::internal::LBFGS(options.num_parameters,
-                                      options.max_lbfgs_rank);
+    return new ceres::internal::LBFGS(
+        options.num_parameters,
+        options.max_lbfgs_rank,
+        options.use_approximate_eigenvalue_bfgs_scaling);
+  }
+
+  if (options.type == ceres::BFGS) {
+    return new ceres::internal::BFGS(
+        options.num_parameters,
+        options.use_approximate_eigenvalue_bfgs_scaling);
   }
 
   LOG(ERROR) << "Unknown line search direction type: " << options.type;

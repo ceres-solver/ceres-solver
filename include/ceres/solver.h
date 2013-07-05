@@ -63,11 +63,15 @@ class Solver {
       line_search_type = ARMIJO;
       nonlinear_conjugate_gradient_type = FLETCHER_REEVES;
       max_lbfgs_rank = 20;
+      use_approximate_eigenvalue_bfgs_scaling = false;
       line_search_interpolation_type = CUBIC;
       min_line_search_step_size = 1e-9;
-      armijo_sufficient_decrease = 1e-4;
-      min_armijo_relative_step_size_change = 1e-3;
-      max_armijo_relative_step_size_change = 0.6;
+      line_search_sufficient_function_decrease = 1e-4;
+      max_line_search_step_contraction = 1e-3;
+      min_line_search_step_contraction = 0.6;
+      max_num_line_search_step_size_iterations = 20;
+      line_search_sufficient_curvature_decrease = 0.9;
+      max_line_search_step_expansion = 10.0;
 
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
@@ -178,6 +182,18 @@ class Solver {
     // Limited Storage". Mathematics of Computation 35 (151): 773–782.
     int max_lbfgs_rank;
 
+    // As part of the (L)BFGS update step (BFGS) / right-multiply step (L-BFGS),
+    // the initial inverse Hessian approximation is taken to be the Identity.
+    // However, Oren showed that using instead I * \gamma, where \gamma is
+    // chosen to approximate an eigenvalue of the true inverse Hessian can
+    // result in improved convergence in a wide variety of cases. Setting
+    // use_approximate_eigenvalue_bfgs_scaling to true enables this scaling.
+    //
+    // Oren S.S., Self-scaling variable metric (SSVM) algorithms
+    // Part II: Implementation and experiments, Management Science,
+    // 20(5), 863-874, 1974.
+    bool use_approximate_eigenvalue_bfgs_scaling;
+
     // Degree of the polynomial used to approximate the objective
     // function. Valid values are BISECTION, QUADRATIC and CUBIC.
     //
@@ -189,7 +205,7 @@ class Solver {
     // value, it is truncated to zero.
     double min_line_search_step_size;
 
-    // Armijo line search parameters.
+    // Line search parameters.
 
     // Solving the line search problem exactly is computationally
     // prohibitive. Fortunately, line search based optimization
@@ -201,19 +217,56 @@ class Solver {
     //
     //   f(step_size) <= f(0) + sufficient_decrease * f'(0) * step_size
     //
-    double armijo_sufficient_decrease;
+    double line_search_sufficient_function_decrease;
 
-    // In each iteration of the Armijo line search,
+    // In each iteration of the line search,
     //
-    //  new_step_size >= min_relative_step_size_change * step_size
+    //  new_step_size >= max_line_search_step_contraction * step_size
     //
-    double min_armijo_relative_step_size_change;
+    // Note that by definition, for contraction:
+    //
+    //  0 < max_step_contraction < min_step_contraction < 1
+    //
+    double max_line_search_step_contraction;
 
-    // In each iteration of the Armijo line search,
+    // In each iteration of the line search,
     //
-    //  new_step_size <= max_relative_step_size_change * step_size
+    //  new_step_size <= min_line_search_step_contraction * step_size
     //
-    double max_armijo_relative_step_size_change;
+    // Note that by definition, for contraction:
+    //
+    //  0 < max_step_contraction < min_step_contraction < 1
+    //
+    double min_line_search_step_contraction;
+
+    // Maximum number of trial step size iterations during each line search,
+    // if a step size satisfying the search conditions cannot be found within
+    // this number of trials, the line search will terminate.
+    int max_num_line_search_step_size_iterations;
+
+    // The strong Wolfe conditions consist of the Armijo sufficient
+    // decrease condition, and an additional requirement that the
+    // step-size be chosen s.t. the _magnitude_ ('strong' Wolfe
+    // conditions) of the gradient along the search direction
+    // decreases sufficiently. Precisely, this second condition
+    // is that we seek a step_size s.t.
+    //
+    //   |f'(step_size)| <= sufficient_curvature_decrease * |f'(0)|
+    //
+    // Where f() is the line search objective and f'() is the derivative
+    // of f w.r.t step_size (d f / d step_size).
+    double line_search_sufficient_curvature_decrease;
+
+    // During the bracketing phase of the Wolfe search, the step size is
+    // increased until either a point satisfying the Wolfe conditions is
+    // found, or an upper bound for a bracket containing a point satisfying
+    // the conditions is found.  Precisely, at each iteration of the
+    // expansion:
+    //
+    //   new_step_size <= max_step_expansion * step_size.
+    //
+    // By definition for expansion, max_step_expansion > 1.0.
+    double max_line_search_step_expansion;
 
     TrustRegionStrategyType trust_region_strategy_type;
 
