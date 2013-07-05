@@ -81,6 +81,8 @@
 
 DEFINE_string(nist_data_dir, "", "Directory containing the NIST non-linear"
               "regression examples");
+DEFINE_string(minimizer_type, "trust_region",
+              "Minimizer type to use, choices are: line_search & trust_region");
 DEFINE_string(trust_region_strategy, "levenberg_marquardt",
               "Options are: levenberg_marquardt, dogleg");
 DEFINE_string(dogleg, "traditional_dogleg",
@@ -90,6 +92,18 @@ DEFINE_string(linear_solver, "dense_qr", "Options are: "
               "cgnr");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
               "identity, jacobi");
+DEFINE_string(line_search_type, "armijo",
+              "Line search algorithm to use, choices are: armijo and wolfe.");
+DEFINE_string(line_search_interpolation_type, "cubic",
+              "Degree of polynomial aproximation in line search, "
+              "choices are: bisection, quadratic & cubic.");
+DEFINE_int32(lbfgs_rank, 20,
+             "Rank of L-BFGS inverse Hessian approximation used in line search,"
+             " < 0 means 'full' BFGS, > 0 L-BFGS with specified rank.");
+DEFINE_double(sufficient_decrease, 1.0e-4,
+              "Line search Armijo sufficient (function) decrease factor.");
+DEFINE_double(sufficient_curvature_decrease, 0.9,
+              "Line search Wolfe sufficient curvature decrease factor.");
 DEFINE_int32(num_iterations, 10000, "Number of iterations");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps");
@@ -458,6 +472,8 @@ int RegressionDriver(const std::string& filename,
 }
 
 void SetMinimizerOptions(ceres::Solver::Options* options) {
+  CHECK(ceres::StringToMinimizerType(FLAGS_minimizer_type,
+                                     &options->minimizer_type));
   CHECK(ceres::StringToLinearSolverType(FLAGS_linear_solver,
                                         &options->linear_solver_type));
   CHECK(ceres::StringToPreconditionerType(FLAGS_preconditioner,
@@ -466,10 +482,19 @@ void SetMinimizerOptions(ceres::Solver::Options* options) {
             FLAGS_trust_region_strategy,
             &options->trust_region_strategy_type));
   CHECK(ceres::StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
+  CHECK(ceres::StringToLineSearchType(FLAGS_line_search_type,
+                                      &options->line_search_type));
+  CHECK(ceres::StringToLineSearchInterpolationType(
+      FLAGS_line_search_interpolation_type,
+      &options->line_search_interpolation_type));
 
   options->max_num_iterations = FLAGS_num_iterations;
   options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
   options->initial_trust_region_radius = FLAGS_initial_trust_region_radius;
+  options->max_lbfgs_rank = FLAGS_lbfgs_rank;
+  options->line_search_sufficient_function_decrease = FLAGS_sufficient_decrease;
+  options->line_search_sufficient_curvature_decrease =
+      FLAGS_sufficient_curvature_decrease;
   options->function_tolerance = 1e-18;
   options->gradient_tolerance = 1e-18;
   options->parameter_tolerance = 1e-18;
