@@ -165,6 +165,7 @@ const char* LineSearchDirectionTypeToString(LineSearchDirectionType type) {
     CASESTR(STEEPEST_DESCENT);
     CASESTR(NONLINEAR_CONJUGATE_GRADIENT);
     CASESTR(LBFGS);
+    CASESTR(BFGS);
     default:
       return "UNKNOWN";
   }
@@ -176,12 +177,14 @@ bool StringToLineSearchDirectionType(string value,
   STRENUM(STEEPEST_DESCENT);
   STRENUM(NONLINEAR_CONJUGATE_GRADIENT);
   STRENUM(LBFGS);
+  STRENUM(BFGS);
   return false;
 }
 
 const char* LineSearchTypeToString(LineSearchType type) {
   switch (type) {
     CASESTR(ARMIJO);
+    CASESTR(WOLFE);
     default:
       return "UNKNOWN";
   }
@@ -190,6 +193,7 @@ const char* LineSearchTypeToString(LineSearchType type) {
 bool StringToLineSearchType(string value, LineSearchType* type) {
   UpperCase(&value);
   STRENUM(ARMIJO);
+  STRENUM(WOLFE);
   return false;
 }
 

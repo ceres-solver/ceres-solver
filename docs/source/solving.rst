@@ -390,8 +390,9 @@ directions, all aimed at large scale problems.
    inverse Hessian is maintained and used to compute a quasi-Newton
    step [Nocedal]_, [ByrdNocedal]_.
 
-Currently Ceres Solver uses a backtracking and interpolation based
-Armijo line search algorithm.
+Currently Ceres Solver supports both a backtracking and interpolation 
+based Armijo line search algorithm, and a sectioning/zoom interpolation
+(strong) Wolfe condition line search algorithm.
 
 .. _section-linear-solver:
 
@@ -787,7 +788,7 @@ elimination group [LiSaad]_.
 
    Default: ``ARMIJO``
 
-   ``ARMIJO`` is the only choice right now.
+   Choices are ``ARMIJO`` and ``WOLFE``.
 
 .. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
