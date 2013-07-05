@@ -80,6 +80,10 @@ Bibliography
 .. [NocedalWright] J. Nocedal & S. Wright, **Numerical Optimization**,
    Springer, 2004.
 
+.. [Oren] S. S. Oren, **Self-scaling Variable Metric (SSVM) Algorithms
+   Part II: Implementation and Experiments**, Management Science,
+   20(5), 863-874, 1974.
+
 .. [RuheWedin] A. Ruhe and P.Å. Wedin, **Algorithms for separable
    nonlinear least squares problems**, Siam Review, 22(3):318–337,
    1980.

@@ -386,12 +386,20 @@ directions, all aimed at large scale problems.
    ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and ``HESTENES_STIEFEL``
    directions.
 
-3. ``LBFGS`` In this method, a limited memory approximation to the
-   inverse Hessian is maintained and used to compute a quasi-Newton
-   step [Nocedal]_, [ByrdNocedal]_.
+3. ``BFGS`` A generalization of the Secant method to multiple dimensions in
+   which a full, dense approximation to the inverse Hessian is maintained and
+   used to compute a quasi-Newton step [NocedalWright]_.  BFGS is currently the best
+   known general quasi-Newton algorithm.
 
-Currently Ceres Solver uses a backtracking and interpolation based
-Armijo line search algorithm.
+4. ``LBFGS`` A limited memory approximation to the full ``BFGS`` method in
+   which the last `M` iterations are used to approximate the inverse Hessian
+   used to compute a quasi-Newton step [Nocedal]_, [ByrdNocedal]_.
+
+Currently Ceres Solver supports both a backtracking and interpolation 
+based Armijo line search algorithm, and a sectioning / zoom interpolation
+(strong) Wolfe condition line search algorithm.  However, note that in order for
+the assumptions underlying the ``BFGS`` and ``LBFGS`` methods to be
+guaranteed to be satisfied the Wolfe line search algorithm should be used.
 
 .. _section-linear-solver:
 
@@ -780,14 +788,17 @@ elimination group [LiSaad]_.
 
    Default: ``LBFGS``
 
-   Choices are ``STEEPEST_DESCENT``, ``NONLINEAR_CONJUGATE_GRADIENT``
-   and ``LBFGS``.
+   Choices are ``STEEPEST_DESCENT``, ``NONLINEAR_CONJUGATE_GRADIENT``,
+   ``BFGS`` and ``LBFGS``.
 
 .. member:: LineSearchType Solver::Options::line_search_type
 
-   Default: ``ARMIJO``
+   Default: ``WOLFE``
 
-   ``ARMIJO`` is the only choice right now.
+   Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).  Note that in
+   order for the assumptions underlying the ``BFGS`` and ``LBFGS`` line search
+   direction algorithms to be guaranteed to be satisifed, the ``WOLFE`` line search
+   should be used.
 
 .. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
@@ -800,7 +811,7 @@ elimination group [LiSaad]_.
 
    Default: 20
 
-   The LBFGS hessian approximation is a low rank approximation to the
+   The L-BFGS hessian approximation is a low rank approximation to the
    inverse of the Hessian matrix. The rank of the approximation
    determines (linearly) the space and time complexity of using the
    approximation. Higher the rank, the better is the quality of the
@@ -819,6 +830,40 @@ elimination group [LiSaad]_.
    rank. The best choice usually requires some problem specific
    experimentation.
 
+.. member:: bool Solver::Options::use_approximate_eigenvalue_bfgs_scaling
+
+   Default: ``false``
+
+   As part of the ``BFGS`` update step / ``LBFGS`` right-multiply step,
+   the initial inverse Hessian approximation is taken to be the Identity.
+   However, [Oren]_ showed that using instead :math:`I * \gamma`, where
+   :math:`\gamma` is a scalar chosen to approximate an eigenvalue of the true
+   inverse Hessian can result in improved convergence in a wide variety of cases.
+   Setting ``use_approximate_eigenvalue_bfgs_scaling`` to true enables this
+   scaling in ``BFGS`` (before first iteration) and ``LBFGS`` (at each iteration).
+
+   Precisely, approximate eigenvalue scaling equates to
+
+   .. math:: \gamma = \frac{y_k' s_k}{y_k' y_k}
+
+   With:
+
+  .. math:: y_k = \nabla f_{k+1} - \nabla f_k
+  .. math:: s_k = x_{k+1} - x_k
+
+  Where :math:`f()` is the line search objective and :math:`x` the vector of
+  parameter values [NocedalWright]_.
+
+  It is important to note that approximate eigenvalue scaling does **not**
+  *always* improve convergence, and that it can in fact *significantly* degrade
+  performance for certain classes of problem, which is why it is disabled
+  by default.  In particular it can degrade performance when the
+  sensitivity of the problem to different parameters varies significantly,
+  as in this case a single scalar factor fails to capture this variation
+  and detrimentally downscales parts of the Jacobian approximation which
+  correspond to low-sensitivity parameters. It can also reduce the
+  robustness of the solution to errors in the Jacobians.
+
 .. member:: LineSearchIterpolationType Solver::Options::line_search_interpolation_type
 
    Default: ``CUBIC``
@@ -829,10 +874,16 @@ elimination group [LiSaad]_.
 
 .. member:: double Solver::Options::min_line_search_step_size
 
-   If during the line search, the step size falls below this value, it
-   is truncated to zero.
+   The line search terminates if:
 
-.. member:: double Solver::Options::armijo_sufficient_decrease
+   .. math:: \|\Delta x_k\|_\infty < \text{min_line_search_step_size}
+
+   where :math:`\|\cdot\|_\infty` refers to the max norm, and :math:`\Delta x_k` is
+   the step change in the parameter values at the :math:`k`-th iteration.
+
+.. member:: double Solver::Options::line_search_sufficient_function_decrease
+
+   Default: ``1e-4``
 
    Solving the line search problem exactly is computationally
    prohibitive. Fortunately, line search based optimization algorithms
@@ -843,17 +894,90 @@ elimination group [LiSaad]_.
 
    .. math:: f(\text{step_size}) \le f(0) + \text{sufficient_decrease} * [f'(0) * \text{step_size}]
 
-.. member:: double Solver::Options::min_armijo_relative_step_size_change
+   This condition is known as the Armijo condition.
 
-   In each iteration of the Armijo line search,
+.. member:: double Solver::Options::max_line_search_step_contraction
 
-    .. math:: \text{new_step_size} \ge \text{min_relative_step_size_change} * \text{step_size}
+   Default: ``1e-3``
 
-.. member:: double Solver::Options::max_armijo_relative_step_size_change
+   In each iteration of the line search,
 
-   In each iteration of the Armijo line search,
+   .. math:: \text{new_step_size} >= \text{max_line_search_step_contraction} * \text{step_size}
 
-   .. math:: \text{new_step_size} \le \text{max_relative_step_size_change} * \text{step_size}
+   Note that by definition, for contraction:
+
+   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+
+.. member:: double Solver::Options::min_line_search_step_contraction
+
+   Default: ``0.6``
+
+   In each iteration of the line search,
+
+   .. math:: \text{new_step_size} <= \text{min_line_search_step_contraction} * \text{step_size}
+
+   Note that by definition, for contraction:
+
+   .. math:: 0 < \text{max_step_contraction} < \text{min_step_contraction} < 1
+
+.. member:: int Solver::Options::max_num_line_search_step_size_iterations
+
+   Default: ``20``
+
+   Maximum number of trial step size iterations during each line search,
+   if a step size satisfying the search conditions cannot be found within
+   this number of trials, the line search will stop.
+
+   As this is an 'artificial' constraint (one imposed by the user, not the underlying math),
+   if ``WOLFE`` line search is being used, *and* points satisfying the Armijo sufficient
+   (function) decrease condition have been found during the current search
+   (in :math:`<=` ``max_num_line_search_step_size_iterations``).  Then, the step
+   size with the lowest function value which satisfies the Armijo condition will be
+   returned as the new valid step, even though it does *not* satisfy the strong Wolfe
+   conditions.  This behaviour protects against early termination of the optimizer at a
+   sub-optimal point.
+
+.. member:: int Solver::Options::max_num_line_search_direction_restarts
+
+   Default: ``5``
+
+   Maximum number of restarts of the line search direction algorithm before
+   terminating the optimization. Restarts of the line search direction
+   algorithm occur when the current algorithm fails to produce a new descent
+   direction. This typically indicates a numerical failure, or a breakdown
+   in the validity of the approximations used.
+
+.. member:: double Solver::Options::line_search_sufficient_curvature_decrease
+
+   Default: ``0.9``
+
+   The strong Wolfe conditions consist of the Armijo sufficient
+   decrease condition, and an additional requirement that the
+   step size be chosen s.t. the *magnitude* ('strong' Wolfe
+   conditions) of the gradient along the search direction
+   decreases sufficiently. Precisely, this second condition
+   is that we seek a step size s.t.
+
+   .. math:: \|f'(\text{step_size})\| <= \text{sufficient_curvature_decrease} * \|f'(0)\|
+
+   Where :math:`f()` is the line search objective and :math:`f'()` is the derivative
+   of :math:`f` with respect to the step size: :math:`\frac{d f}{d~\text{step size}}`.
+
+.. member:: double Solver::Options::max_line_search_step_expansion
+
+   Default: ``10.0``
+
+   During the bracketing phase of a Wolfe line search, the step size is
+   increased until either a point satisfying the Wolfe conditions is
+   found, or an upper bound for a bracket containing a point satisfying
+   the conditions is found.  Precisely, at each iteration of the
+   expansion:
+
+   .. math:: \text{new_step_size} <= \text{max_step_expansion} * \text{step_size}
+
+   By definition for expansion
+
+   .. math:: \text{max_step_expansion} > 1.0
 
 .. member:: TrustRegionStrategyType Solver::Options::trust_region_strategy_type
 
