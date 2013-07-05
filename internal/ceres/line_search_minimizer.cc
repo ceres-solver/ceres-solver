@@ -175,9 +175,28 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       options.min_armijo_relative_step_size_change;
   line_search_options.max_relative_step_size_change =
       options.max_armijo_relative_step_size_change;
+  line_search_options.sufficient_curvature_decrease =
+      options.wolfe_sufficient_curvature_decrease;
+  line_search_options.expansion_max_relative_step_size_change =
+      options.wolfe_expansion_max_relative_step_size_change;
   line_search_options.function = &line_search_function;
 
-  ArmijoLineSearch line_search;
+  scoped_ptr<LineSearch> line_search;
+  switch (options.line_search_type) {
+  case ceres::ARMIJO:
+    line_search.reset(new ArmijoLineSearch);
+    break;
+  case ceres::WOLFE:
+    line_search.reset(new WolfeLineSearch);
+    break;
+  default:
+    LOG(WARNING) << "Line search algorithm construction failed: "
+                 << "unknown line_search_type: "
+                 << LineSearchTypeToString(options.line_search_type);
+    summary->termination_type = DID_NOT_RUN;
+    return;
+  }
+
   LineSearch::Summary line_search_summary;
 
   while (true) {
@@ -232,7 +251,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         : min(1.0, 2.0 * (current_state.cost - previous_state.cost) /
               current_state.directional_derivative);
 
-    line_search.Search(line_search_options,
+    line_search->Search(line_search_options,
                        initial_step_size,
                        current_state.cost,
                        current_state.directional_derivative,

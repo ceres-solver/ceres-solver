@@ -198,6 +198,7 @@ enum LineSearchType {
   // Backtracking line search with polynomial interpolation or
   // bisection.
   ARMIJO,
+  WOLFE,
 };
 
 // Ceres supports different strategies for computing the trust region

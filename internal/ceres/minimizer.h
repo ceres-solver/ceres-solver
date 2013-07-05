@@ -96,6 +96,10 @@ class Minimizer {
           options.min_armijo_relative_step_size_change;
       max_armijo_relative_step_size_change =
           options.max_armijo_relative_step_size_change;
+      wolfe_sufficient_curvature_decrease =
+          options.wolfe_sufficient_curvature_decrease;
+      wolfe_expansion_max_relative_step_size_change =
+          options.wolfe_expansion_max_relative_step_size_change;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -136,6 +140,8 @@ class Minimizer {
     double armijo_sufficient_decrease;
     double min_armijo_relative_step_size_change;
     double max_armijo_relative_step_size_change;
+    double wolfe_sufficient_curvature_decrease;
+    double wolfe_expansion_max_relative_step_size_change;
 
 
     // List of callbacks that are executed by the Minimizer at the end

@@ -68,6 +68,8 @@ class Solver {
       armijo_sufficient_decrease = 1e-4;
       min_armijo_relative_step_size_change = 1e-3;
       max_armijo_relative_step_size_change = 0.6;
+      wolfe_sufficient_curvature_decrease = 0.9;
+      wolfe_expansion_max_relative_step_size_change = 10.0;
 
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
@@ -189,7 +191,7 @@ class Solver {
     // value, it is truncated to zero.
     double min_line_search_step_size;
 
-    // Armijo line search parameters.
+    // Armijo and Wolfe line search parameters.
 
     // Solving the line search problem exactly is computationally
     // prohibitive. Fortunately, line search based optimization
@@ -214,6 +216,29 @@ class Solver {
     //  new_step_size <= max_relative_step_size_change * step_size
     //
     double max_armijo_relative_step_size_change;
+
+    // The strong Wolfe conditions consist of the Armijo sufficient
+    // decrease condition, and an additional requirement that the
+    // step-size be chosen s.t. the _magnitude_ ('strong' Wolfe
+    // conditions) of the gradient along the search direction
+    // decreases sufficiently. Precisely, this second condition
+    // is that we seek a step_size s.t.
+    //
+    //   |f'(step_size)| <= sufficient_curvature_decrease * |f'(0)|
+    //
+    // Where f() is the line search objective and f'() is the derivative
+    // of f w.r.t step_size (d f / d step_size).
+    double wolfe_sufficient_curvature_decrease;
+
+    // During the bracketing phase of the Wolfe search, the step size is
+    // increased until either a point satisfying the Wolfe conditions is
+    // found, or an upper bound for a bracket containing a point satisfying
+    // the conditions is found.  Precisely, at each iteration of the
+    // expansion:
+    //
+    //   new_step_size <= expansion_max_relative_step_size_change * step_size.
+    //
+    double wolfe_expansion_max_relative_step_size_change;
 
     TrustRegionStrategyType trust_region_strategy_type;
 

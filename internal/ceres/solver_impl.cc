@@ -636,6 +636,50 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->num_effective_parameters =
       original_program->NumEffectiveParameters();
 
+  // Validate values for configuration parameters supplied by user.
+  if (original_options.min_line_search_step_size <= 0.0) {
+    summary->error = "Invalid configuration: min_line_search_step_size <= 0.0.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.armijo_sufficient_decrease <= 0.0) {
+    summary->error =
+        "Invalid configuration: armijo_sufficient_decrease <= 0.0.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.min_armijo_relative_step_size_change <= 0.0 ||
+      original_options.min_armijo_relative_step_size_change >= 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("0.0 < min_armijo_relative_step_size_change < 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.max_armijo_relative_step_size_change <=
+      original_options.min_armijo_relative_step_size_change ||
+      original_options.max_armijo_relative_step_size_change > 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("min_armijo_relative_step_size_change < ") +
+        string("max_armijo_relative_step_size_change <= 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.wolfe_sufficient_curvature_decrease <=
+      original_options.armijo_sufficient_decrease ||
+      original_options.wolfe_sufficient_curvature_decrease > 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("armijo_sufficient_decrease < ") +
+        string("wolfe_sufficient_curvature_decrease < 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.wolfe_expansion_max_relative_step_size_change <= 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("wolfe_expansion_max_relative_step_size_change > 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
   // Empty programs are usually a user error.
   if (summary->num_parameter_blocks == 0) {
     summary->error = "Problem contains no parameter blocks.";
