@@ -37,6 +37,8 @@
 #ifndef CERES_PUBLIC_TYPES_H_
 #define CERES_PUBLIC_TYPES_H_
 
+#include <string>
+
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -180,6 +182,24 @@ enum LineSearchDirectionType {
   // Limited Memory Methods". Mathematical Programming 63 (4):
   // 129–156.
   LBFGS,
+
+  // A dense approximation to the inverse Hessian is maintained and
+  // used to to compute a quasi-Newton step.
+  //
+  // For more details see:
+  //
+  // Broyden, C.G., "The Convergence of a Class of Double-rank Minimization
+  // Algorithms,"; J. Inst. Maths. Applics., Vol. 6, pp 76–90, 1970.
+  //
+  // Fletcher, R., "A New Approach to Variable Metric Algorithms,"
+  // Computer Journal, Vol. 13, pp 317–322, 1970.
+  //
+  // Goldfarb, D., "A Family of Variable Metric Updates Derived by Variational
+  // Means," Mathematics of Computing, Vol. 24, pp 23–26, 1970.
+  //
+  // Shanno, D.F., "Conditioning of Quasi-Newton Methods for Function
+  // Minimization," Mathematics of Computing, Vol. 24, pp 647–656, 1970.
+  BFGS,
 };
 
 // Nonliner conjugate gradient methods are a generalization of the
@@ -198,6 +218,7 @@ enum LineSearchType {
   // Backtracking line search with polynomial interpolation or
   // bisection.
   ARMIJO,
+  WOLFE,
 };
 
 // Ceres supports different strategies for computing the trust region

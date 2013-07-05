@@ -160,6 +160,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   line_search_direction_options.nonlinear_conjugate_gradient_type =
       options.nonlinear_conjugate_gradient_type;
   line_search_direction_options.max_lbfgs_rank = options.max_lbfgs_rank;
+  line_search_direction_options.use_approximate_eigenvalue_bfgs_scaling =
+      options.use_approximate_eigenvalue_bfgs_scaling;
   scoped_ptr<LineSearchDirection> line_search_direction(
       LineSearchDirection::Create(line_search_direction_options));
 
@@ -170,14 +172,30 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       options.line_search_interpolation_type;
   line_search_options.min_step_size = options.min_line_search_step_size;
   line_search_options.sufficient_decrease =
-      options.armijo_sufficient_decrease;
-  line_search_options.min_relative_step_size_change =
-      options.min_armijo_relative_step_size_change;
-  line_search_options.max_relative_step_size_change =
-      options.max_armijo_relative_step_size_change;
+      options.line_search_sufficient_function_decrease;
+  line_search_options.max_step_contraction =
+      options.max_line_search_step_contraction;
+  line_search_options.min_step_contraction =
+      options.min_line_search_step_contraction;
+  line_search_options.max_num_iterations =
+      options.max_num_line_search_step_size_iterations;
+  line_search_options.sufficient_curvature_decrease =
+      options.line_search_sufficient_curvature_decrease;
+  line_search_options.max_step_expansion =
+      options.max_line_search_step_expansion;
   line_search_options.function = &line_search_function;
 
-  ArmijoLineSearch line_search;
+  scoped_ptr<LineSearch>
+      line_search(LineSearch::Create(options.line_search_type,
+                                     line_search_options,
+                                     &summary->error));
+  if (line_search.get() == NULL) {
+    LOG(ERROR) << "Ceres bug: Unable to create a LineSearch object, please "
+               << "contact the developers!, error: " << summary->error;
+    summary->termination_type = DID_NOT_RUN;
+    return;
+  }
+
   LineSearch::Summary line_search_summary;
 
   while (true) {
@@ -216,9 +234,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     if (!line_search_status) {
-      LOG(WARNING) << "Line search direction computation failed. "
-          "Resorting to steepest descent.";
-      current_state.search_direction = -current_state.gradient;
+      LOG(WARNING) << "Line search direction computation failed.";
+      summary->termination_type = NUMERICAL_FAILURE;
+      break;
     }
 
     line_search_function.Init(x, current_state.search_direction);
@@ -231,12 +249,25 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         ? min(1.0, 1.0 / current_state.gradient_max_norm)
         : min(1.0, 2.0 * (current_state.cost - previous_state.cost) /
               current_state.directional_derivative);
+    // By definition, we should only ever go forwards along the specified search
+    // direction in a line search, most likely cause for this being violated
+    // would be a numerical failure in the line search direction calculation.
+    if (initial_step_size < 0.0) {
+      summary->error =
+          StringPrintf("Numerical failure in line search, initial_step_size is "
+                       "negative: %.5e, directional_derivative: %.5e, "
+                       "(current_cost - previous_cost): %.5e",
+                       initial_step_size, current_state.directional_derivative,
+                       (current_state.cost - previous_state.cost));
+      LOG(WARNING) << summary->error;
+      summary->termination_type = NUMERICAL_FAILURE;
+      break;
+    }
 
-    line_search.Search(line_search_options,
-                       initial_step_size,
-                       current_state.cost,
-                       current_state.directional_derivative,
-                       &line_search_summary);
+    line_search->Search(initial_step_size,
+                        current_state.cost,
+                        current_state.directional_derivative,
+                        &line_search_summary);
 
     current_state.step_size = line_search_summary.optimal_step_size;
     delta = current_state.step_size * current_state.search_direction;
@@ -282,7 +313,11 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_norm = delta.norm();
     iteration_summary.step_size =  current_state.step_size;
     iteration_summary.line_search_function_evaluations =
-        line_search_summary.num_evaluations;
+        line_search_summary.num_function_evaluations;
+    iteration_summary.line_search_gradient_evaluations =
+        line_search_summary.num_gradient_evaluations;
+    iteration_summary.line_search_iterations =
+        line_search_summary.num_iterations;
     iteration_summary.iteration_time_in_seconds =
         WallTimeInSeconds() - iteration_start_time;
     iteration_summary.cumulative_time_in_seconds =
