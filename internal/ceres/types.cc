@@ -182,6 +182,7 @@ bool StringToLineSearchDirectionType(string value,
 const char* LineSearchTypeToString(LineSearchType type) {
   switch (type) {
     CASESTR(ARMIJO);
+    CASESTR(WOLFE);
     default:
       return "UNKNOWN";
   }
@@ -190,6 +191,7 @@ const char* LineSearchTypeToString(LineSearchType type) {
 bool StringToLineSearchType(string value, LineSearchType* type) {
   UpperCase(&value);
   STRENUM(ARMIJO);
+  STRENUM(WOLFE);
   return false;
 }
 
