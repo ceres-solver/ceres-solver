@@ -74,5 +74,8 @@ IF (GFLAGS)
                  denoising.cc
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres)
+
+ADD_EXECUTABLE(powell_line_search powell_line_search.cc)
+TARGET_LINK_LIBRARIES(powell_line_search ceres)
 ENDIF (GFLAGS)
 

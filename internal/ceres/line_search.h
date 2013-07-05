@@ -66,13 +66,15 @@ class LineSearch {
           min_relative_step_size_change(1e-3),
           max_relative_step_size_change(0.9),
           min_step_size(1e-9),
+          sufficient_curvature_decrease(0.9),
+          expansion_max_relative_step_size_change(10.0),
           function(NULL) {}
 
     // Degree of the polynomial used to approximate the objective
     // function.
     LineSearchInterpolationType interpolation_type;
 
-    // Armijo line search parameters.
+    // Armijo / Wolfe line search parameters.
 
     // Solving the line search problem exactly is computationally
     // prohibitive. Fortunately, line search based optimization
@@ -85,12 +87,12 @@ class LineSearch {
     //  f(step_size) <= f(0) + sufficient_decrease * f'(0) * step_size
     double sufficient_decrease;
 
-    // In each iteration of the Armijo line search,
+    // In each iteration of the Armijo / Wolfe line search,
     //
     // new_step_size >= min_relative_step_size_change * step_size
     double min_relative_step_size_change;
 
-    // In each iteration of the Armijo line search,
+    // In each iteration of the Armijo / Wolfe line search,
     //
     // new_step_size <= max_relative_step_size_change * step_size
     double max_relative_step_size_change;
@@ -98,6 +100,28 @@ class LineSearch {
     // If during the line search, the step_size falls below this
     // value, it is truncated to zero.
     double min_step_size;
+
+    // Wolfe-specific line search parameters.
+
+    // The strong Wolfe conditions consist of the Armijo sufficient
+    // (value) decrease condition, and an additional requirement that the
+    // step-size be chosen s.t. the _magnitude_ of the gradient along the 
+    // search direction decreases sufficiently. Precisely, this second 
+    // condition is that we seek a step_size s.t.
+    // 
+    //   |f'(step_size)| <= sufficient_curvature_decrease * |f'(0)|
+    // 
+    // Where f() is the line search objective and f'() is the derivative
+    // of f w.r.t step_size (d f / d step_size).
+    double sufficient_curvature_decrease;
+
+    // During the Bracketing phase of the Wolfe search, the step size is
+    // increased until either a point satisfying the Wolfe conditions, or
+    // an upper bound for a bracket containing a point satisfying the
+    // conditions is found.  Precisely, at each iteration of the expansion:
+    // 
+    // new_step_size <= expansion_max_relative_step_size_change * step_size.
+    double expansion_max_relative_step_size_change;
 
     // The one dimensional function that the line search algorithm
     // minimizes.
@@ -187,6 +211,23 @@ class LineSearchFunction : public LineSearch::Function {
 class ArmijoLineSearch : public LineSearch {
  public:
   virtual ~ArmijoLineSearch() {}
+  virtual void Search(const LineSearch::Options& options,
+                      double initial_step_size,
+                      double initial_cost,
+                      double initial_gradient,
+                      Summary* summary);
+};
+
+// Bracketing / Zoom Strong Wolfe condition line search.  This implementation
+// is based on the pseudo-code algorithm presented in Nocedal & Wright [1]
+// (p60-61) with inspiration from the WolfeLineSearch which ships with the
+// minFunc package by Mark Schmidt [2].
+// 
+// [1] Nocedal J., Wright S., Numerical Optimization, 2nd Ed., Springer, 1999.
+// [2] http://www.di.ens.fr/~mschmidt/Software/minFunc.html.
+class WolfeLineSearch : public LineSearch {
+ public:
+  virtual ~WolfeLineSearch() {}
   virtual void Search(const LineSearch::Options& options,
                       double initial_step_size,
                       double initial_cost,
