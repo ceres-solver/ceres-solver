@@ -46,6 +46,7 @@
 
 #include <vector>
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
 #include "glog/logging.h"
 
 using ceres::AutoDiffCostFunction;
@@ -94,7 +95,30 @@ struct F4 {
   }
 };
 
+DEFINE_string(minimizer, "trust_region",
+              "Minimizer type to use, choices are: line_search & trust_region");
+DEFINE_string(line_search_direction, "lbfgs",
+              "Line search direction algorithm to use, choices: lbfgs, bfgs");
+DEFINE_string(line_search, "armijo",
+              "Line search algorithm to use, choices are: armijo and wolfe.");
+DEFINE_string(line_search_interpolation, "cubic",
+              "Degree of polynomial aproximation in line search, "
+              "choices are: bisection, quadratic & cubic.");
+DEFINE_double(sufficient_decrease, 1.0e-4,
+              "Line search Armijo sufficient (function) decrease factor.");
+DEFINE_double(sufficient_curvature_decrease, 0.9,
+              "Line search Wolfe sufficient curvature decrease factor.");
+DEFINE_int32(lbfgs_rank, 20,
+             "Rank of L-BFGS inverse Hessian approximation in line search.");
+DEFINE_bool(approximate_eigenvalue_bfgs_scaling, false,
+            "Use approximate eigenvalue scaling in (L)BFGS line search.");
+DEFINE_double(line_search_min_step_size, 1e-3,
+              "Minimum step size bound in any parameter for line search.");
+DEFINE_int32(max_iterations, 100,
+             "Maximum number of solver iterations allowed.");
+
 int main(int argc, char** argv) {
+  google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
   double x1 =  3.0;
@@ -119,13 +143,40 @@ int main(int argc, char** argv) {
                            NULL,
                            &x1, &x4);
 
-  // Run the solver!
   Solver::Options options;
-  options.max_num_iterations = 30;
+  LOG_IF(FATAL, !ceres::StringToMinimizerType(FLAGS_minimizer,
+                                              &options.minimizer_type))
+      << "Invalid minimizer: " << FLAGS_minimizer
+      << ", valid options are: TRUST_REGION and LINE_SEARCH.";
+
+  // Line search specific options (ignored if minimizer_type is TRUST_REGION).
+  LOG_IF(FATAL, !ceres::StringToLineSearchDirectionType(
+      FLAGS_line_search_direction, &options.line_search_direction_type))
+      << "Invalid line_search_direction: "
+      << FLAGS_line_search_direction << ", valid options are: "
+      << "lbfgs & bfgs.";
+  LOG_IF(FATAL, !ceres::StringToLineSearchType(FLAGS_line_search,
+                                               &options.line_search_type))
+      << "Invalid line_search: " << FLAGS_line_search
+      << ", valid options are: armijo and wolfe.";
+  LOG_IF(FATAL, !ceres::StringToLineSearchInterpolationType(
+      FLAGS_line_search_interpolation,
+      &options.line_search_interpolation_type))
+      << "Invalid line_search_interpolation: "
+      << FLAGS_line_search_interpolation
+      << ", valid options are: bisection, quadratic & cubic.";
+  options.max_lbfgs_rank = FLAGS_lbfgs_rank;
+  options.line_search_sufficient_function_decrease = FLAGS_sufficient_decrease;
+  options.line_search_sufficient_curvature_decrease =
+      FLAGS_sufficient_curvature_decrease;
+  options.min_line_search_step_size = FLAGS_line_search_min_step_size;
+  options.max_lbfgs_rank = FLAGS_lbfgs_rank;
+  options.use_approximate_eigenvalue_bfgs_scaling =
+      FLAGS_approximate_eigenvalue_bfgs_scaling;
+
+  options.max_num_iterations = FLAGS_max_iterations;
   options.linear_solver_type = ceres::DENSE_QR;
   options.minimizer_progress_to_stdout = true;
-
-  Solver::Summary summary;
 
   std::cout << "Initial x1 = " << x1
             << ", x2 = " << x2
@@ -133,9 +184,11 @@ int main(int argc, char** argv) {
             << ", x4 = " << x4
             << "\n";
 
+  // Run the solver!
+  Solver::Summary summary;
   Solve(options, &problem, &summary);
 
-  std::cout << summary.BriefReport() << "\n";
+  std::cout << summary.FullReport() << "\n";
   std::cout << "Final x1 = " << x1
             << ", x2 = " << x2
             << ", x3 = " << x3
