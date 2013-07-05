@@ -91,11 +91,18 @@ class Minimizer {
       line_search_interpolation_type =
           options.line_search_interpolation_type;
       min_line_search_step_size = options.min_line_search_step_size;
-      armijo_sufficient_decrease = options.armijo_sufficient_decrease;
-      min_armijo_relative_step_size_change =
-          options.min_armijo_relative_step_size_change;
-      max_armijo_relative_step_size_change =
-          options.max_armijo_relative_step_size_change;
+      line_search_sufficient_function_decrease =
+          options.line_search_sufficient_function_decrease;
+      max_line_search_step_contraction =
+          options.max_line_search_step_contraction;
+      min_line_search_step_contraction =
+          options.min_line_search_step_contraction;
+      max_num_line_search_step_size_iterations =
+          options.max_num_line_search_step_size_iterations;
+      line_search_sufficient_curvature_decrease =
+          options.line_search_sufficient_curvature_decrease;
+      max_line_search_step_expansion =
+          options.max_line_search_step_expansion;
       evaluator = NULL;
       trust_region_strategy = NULL;
       jacobian = NULL;
@@ -133,9 +140,12 @@ class Minimizer {
     int max_lbfgs_rank;
     LineSearchInterpolationType line_search_interpolation_type;
     double min_line_search_step_size;
-    double armijo_sufficient_decrease;
-    double min_armijo_relative_step_size_change;
-    double max_armijo_relative_step_size_change;
+    double line_search_sufficient_function_decrease;
+    double max_line_search_step_contraction;
+    double min_line_search_step_contraction;
+    int max_num_line_search_step_size_iterations;
+    double line_search_sufficient_curvature_decrease;
+    double max_line_search_step_expansion;
 
 
     // List of callbacks that are executed by the Minimizer at the end
