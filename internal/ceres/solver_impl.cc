@@ -636,6 +636,78 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->num_effective_parameters =
       original_program->NumEffectiveParameters();
 
+  // Validate values for configuration parameters supplied by user.
+  if (original_options.max_lbfgs_rank == 0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("max_lbfgs_rank != 0 (> 0 means L-BFGS with specified ") +
+        string("rank, < 0 means BFGS [L-BFGS with infinite rank]).");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.min_line_search_step_size <= 0.0) {
+    summary->error = "Invalid configuration: min_line_search_step_size <= 0.0.";
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.line_search_sufficient_function_decrease <= 0.0) {
+    summary->error =
+        string("Invalid configuration: require ") +
+        string("line_search_sufficient_function_decrease <= 0.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.max_line_search_step_contraction <= 0.0 ||
+      original_options.max_line_search_step_contraction >= 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("0.0 < max_line_search_step_contraction < 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.min_line_search_step_contraction <=
+      original_options.max_line_search_step_contraction ||
+      original_options.min_line_search_step_contraction > 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("max_line_search_step_contraction < ") +
+        string("min_line_search_step_contraction <= 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  // Warn user if they have requested BISECTION interpolation, but constraints
+  // on max/min step size change during line search prevent bisection scaling
+  // from occurring. Warn only, as this is likely a user mistake, but one which
+  // does not prevent us continuing.
+  LOG_IF(WARNING,
+         (original_options.line_search_interpolation_type == ceres::BISECTION &&
+          (original_options.max_line_search_step_contraction > 0.5 ||
+           original_options.min_line_search_step_contraction < 0.5)))
+      << "Line search interpolation type is BISECTION, but specified "
+      << "max_line_search_step_contraction: "
+      << original_options.max_line_search_step_contraction << ", and "
+      << "min_line_search_step_contraction: "
+      << original_options.min_line_search_step_contraction
+      << ", prevent bisection (0.5) scaling.";
+  if (original_options.max_num_line_search_step_size_iterations <= 0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("max_num_line_search_step_size_iterations > 0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.line_search_sufficient_curvature_decrease <=
+      original_options.line_search_sufficient_function_decrease ||
+      original_options.line_search_sufficient_curvature_decrease > 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("line_search_sufficient_function_decrease < ") +
+        string("line_search_sufficient_curvature_decrease < 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+  if (original_options.max_line_search_step_expansion <= 1.0) {
+    summary->error = string("Invalid configuration: require ") +
+        string("max_line_search_step_expansion > 1.0.");
+    LOG(ERROR) << summary->error;
+    return;
+  }
+
   // Empty programs are usually a user error.
   if (summary->num_parameter_blocks == 0) {
     summary->error = "Problem contains no parameter blocks.";
