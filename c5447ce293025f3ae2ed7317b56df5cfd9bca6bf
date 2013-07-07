@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c4542a_381fa6ce",
+        "filename": "examples/powell_line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-07T18:02:54Z",
+      "side": 1,
+      "message": "Indent 2 more",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_5824f21d",
+        "filename": "examples/powell_line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-07T18:02:54Z",
+      "side": 1,
+      "message": "Indent 2 more",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_f8383e3f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-07T18:02:54Z",
+      "side": 1,
+      "message": "Also consider returning the step size, since there is no \"failure\" case in this function (should there be?)",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_18366a53",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-07T18:02:54Z",
+      "side": 1,
+      "message": "Nice error checking!",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
