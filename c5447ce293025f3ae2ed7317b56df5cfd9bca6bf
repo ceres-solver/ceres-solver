@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7c4542a_d861c242",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "Thank you for updating the docs. Once this patch is finalized, it would be nice to update the documentation for all the line search parameters including new ones introduced for the wolfe line search.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_78d0cebe",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "I would recommend that you add a flag to the powell example that switches between the line search and the trust region example.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_98d57ab0",
+        "filename": "examples/powell_line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "please see my comments in the cmake file. Since the bulk of the code is the same. I prefer this code be merged into powell.cc with flags allowing for switching between the line search and trust region algorithm.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_381fa6ce",
         "filename": "examples/powell_line_search.cc",
         "patchSetId": 2
@@ -36,6 +87,108 @@
     },
     {
       "key": {
+        "uuid": "c7c4542a_58df12cc",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "Just \"Line search parameters\"",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_78f9ae3c",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "I think these parameter names should be simplified some.\nPerhaps we can drop the armijo/wolfe prefixes here? and just use\n\n\nmin_line_search_relative_step_size_change;\nmax_line_search_relative_step_size_change;\n\nsince they are common to both armijo as well as wolfe line searches?\n\nI am not sure what to do about bisection and how bisection interacts with them.. perhaps we should make sure that these parameters are upper and lower bounded by 0.5 ?",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_18e18a8b",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "not sure I like this parameter name all that much. \nin fact in light of this parameter name, it should be made clear that the other changes are contractions, and this is an expansion.. \n\nHow about \n\nmax_line_search_step_size_expansion\nmax_line_search_step_size_contraction\nmin_line_search_step_size_contraction\n\nThe word relative is nice, but I do not think its adding much. I like having min and max as the first words of the parameter name. Since it is the highest order bit in some sense.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_f8391efa",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "maybe its my browser but the indentation here looks funny.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_f8227ec0",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "ComputeStepSize is a very generic and uninformative name for this function. I suggest using something more specific and more informative. Something which talks about constructing an interpolating polynomial and minimizing it (unfortunately, the name MinimizeInterpolatingPolynomial) is already taken.\n\nI am also wondering if its worth making this function anonymous, and as you are testing line search, you would not want to test this function separately to make things simpler. \n\nLike below, the infix \"_line_\" adds nothing.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_3829e6a5",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "no need for reference for this and the next parameter.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_f8383e3f",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -53,6 +206,364 @@
     },
     {
       "key": {
+        "uuid": "c7c4542a_582e32af",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c7c4542a_f8383e3f",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_d840e26b",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "early return here. \n\nThe rest of the function can have one less level of nesting.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_782f6ead",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "log more information here about the interpolation point, since replicating it maybe hard.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_8bed2245",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "replace initial_step_size with\n\nstep_size_guess/step_size_estimate so that things are not confused with initial_cost and initial_gradient.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_18374a08",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "not sure what the word \"line\" here is adding, since we are already in the line search. I suggest dripping it from here and everywhere else.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_1820aab6",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "for ternary operators when they do not fit, we usually like to stack it as\n\ncondition\n? case1\n: case2;",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_6be8f633",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "I think initial_step_size is perhaps should be replace with step_size_estimate.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_d819c293",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "here and elsewhere \"_line_\" does not add anything.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_b81cf684",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "I do not understand this comment.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_2bf2ee21",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "do_zoom_search is smaller.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_4bf73a11",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "we do not use the f_ as a prefix for the other samples, why here? also no point using _line_.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_0bf93200",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "explain the cases where bracketing is needed and why.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_ab057e24",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "why not check for !value_is_valid and deal with it explicitly, that way the rest of the conditionals are easier to read and there is less repetition.\n\nSimilarly, if the point is valid, then deal with the easy case first where you have found a successful point and no zooming is needed.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_6b11d661",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "why is zoom not required?",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_cb024a1a",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "I agree with keir, if there are no failure modes on ComputeStepSize, then it should just return its result. It leads to simpler code.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_8b168259",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "Break this entire function into two functions? One which does bracketing and the other that does zooming and then call those two functions?\nI think it would lead to a much more readable function that way.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_4b109a5b",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "perform an early return for the case with\n\n!perform_zoom_search so that the nesting level is decreased for improved readability.\n\nThough that will happen automatically if you break this function into two pieces. That will also lead to better testability.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_0b2292b0",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "This check and the next two should happen somewhere else. Or rather they should be detected much earlier.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_cb1b2a7a",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "stack like suggested above. Otherwise these are very hard to read.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_180aea6b",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "This construction be moved into LineSearch and into a factory with \nstatic LineSearch::Create(const LineSearch::Options\u0026 options). \n\nThats the usual pattern we follow in ceres. I did not have it like this here till now because there was only one line search here uptil now. But now is a good time to move this into a factory.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_f80cbe89",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "This inspires me to add something similar for the trust region minimizer.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_18366a53",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 2
@@ -64,6 +575,24 @@
       "writtenOn": "2013-07-07T18:02:54Z",
       "side": 1,
       "message": "Nice error checking!",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_58f87236",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-08T05:50:42Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c7c4542a_18366a53",
       "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
