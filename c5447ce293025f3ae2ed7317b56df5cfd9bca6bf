@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "27bff08d_efb7150d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-08T09:38:22Z",
+      "side": 1,
+      "message": "Are you really sure about removing \u0027relative\u0027 from min/max_line_search_step_size_expansion/contraction?  You don\u0027t think it then becomes ambiguous as whether we\u0027re referring to absolute change in a euclidean sense in the parameter space?",
+      "parentUuid": "c7c4542a_78f9ae3c",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_18e18a8b",
         "filename": "include/ceres/solver.h",
         "patchSetId": 2
@@ -388,6 +406,24 @@
       "writtenOn": "2013-07-08T05:50:42Z",
       "side": 1,
       "message": "we do not use the f_ as a prefix for the other samples, why here? also no point using _line_.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27bff08d_afb11d19",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-08T09:38:22Z",
+      "side": 1,
+      "message": "This was just to try and be explicit that low/high refer to the function values, not the step size values.",
+      "parentUuid": "c7c4542a_4bf73a11",
       "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
