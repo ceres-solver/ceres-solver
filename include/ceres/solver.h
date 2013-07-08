@@ -80,8 +80,8 @@ class Solver {
       max_trust_region_radius = 1e16;
       min_trust_region_radius = 1e-32;
       min_relative_decrease = 1e-3;
-      lm_min_diagonal = 1e-6;
-      lm_max_diagonal = 1e32;
+      min_lm_diagonal = 1e-6;
+      max_lm_diagonal = 1e32;
       max_num_consecutive_invalid_steps = 5;
       function_tolerance = 1e-6;
       gradient_tolerance = 1e-10;
@@ -103,8 +103,8 @@ class Solver {
       num_linear_solver_threads = 1;
       linear_solver_ordering = NULL;
       use_postordering = false;
-      linear_solver_min_num_iterations = 1;
-      linear_solver_max_num_iterations = 500;
+      min_linear_solver_iterations = 1;
+      max_linear_solver_iterations = 500;
       eta = 1e-1;
       jacobi_scaling = true;
       use_inner_iterations = false;
@@ -274,11 +274,11 @@ class Solver {
     // the normal equations J'J is used to control the size of the
     // trust region. Extremely small and large values along the
     // diagonal can make this regularization scheme
-    // fail. lm_max_diagonal and lm_min_diagonal, clamp the values of
+    // fail. max_lm_diagonal and min_lm_diagonal, clamp the values of
     // diag(J'J) from above and below. In the normal course of
     // operation, the user should not have to modify these parameters.
-    double lm_min_diagonal;
-    double lm_max_diagonal;
+    double min_lm_diagonal;
+    double max_lm_diagonal;
 
     // Sometimes due to numerical conditioning problems or linear
     // solver flakiness, the trust region strategy may return a
@@ -501,13 +501,13 @@ class Solver {
 
     // Minimum number of iterations for which the linear solver should
     // run, even if the convergence criterion is satisfied.
-    int linear_solver_min_num_iterations;
+    int min_linear_solver_iterations;
 
     // Maximum number of iterations for which the linear solver should
     // run. If the solver does not converge in less than
-    // linear_solver_max_num_iterations, then it returns
-    // MAX_ITERATIONS, as its termination type.
-    int linear_solver_max_num_iterations;
+    // max_linear_solver_iterations, then it returns MAX_ITERATIONS,
+    // as its termination type.
+    int max_linear_solver_iterations;
 
     // Forcing sequence parameter. The truncated Newton solver uses
     // this number to control the relative accuracy with which the

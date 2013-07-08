@@ -255,8 +255,8 @@ void SolverImpl::TrustRegionMinimize(
   trust_region_strategy_options.initial_radius =
       options.initial_trust_region_radius;
   trust_region_strategy_options.max_radius = options.max_trust_region_radius;
-  trust_region_strategy_options.lm_min_diagonal = options.lm_min_diagonal;
-  trust_region_strategy_options.lm_max_diagonal = options.lm_max_diagonal;
+  trust_region_strategy_options.min_lm_diagonal = options.min_lm_diagonal;
+  trust_region_strategy_options.max_lm_diagonal = options.max_lm_diagonal;
   trust_region_strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
   trust_region_strategy_options.dogleg_type = options.dogleg_type;
@@ -1091,26 +1091,26 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   }
 #endif
 
-  if (options->linear_solver_max_num_iterations <= 0) {
-    *error = "Solver::Options::linear_solver_max_num_iterations is 0.";
+  if (options->max_linear_solver_iterations <= 0) {
+    *error = "Solver::Options::max_linear_solver_iterations is not positive.";
     return NULL;
   }
-  if (options->linear_solver_min_num_iterations <= 0) {
-    *error = "Solver::Options::linear_solver_min_num_iterations is 0.";
+  if (options->min_linear_solver_iterations <= 0) {
+    *error = "Solver::Options::min_linear_solver_iterations is not positive.";
     return NULL;
   }
-  if (options->linear_solver_min_num_iterations >
-      options->linear_solver_max_num_iterations) {
-    *error = "Solver::Options::linear_solver_min_num_iterations > "
-        "Solver::Options::linear_solver_max_num_iterations.";
+  if (options->min_linear_solver_iterations >
+      options->max_linear_solver_iterations) {
+    *error = "Solver::Options::min_linear_solver_iterations > "
+        "Solver::Options::max_linear_solver_iterations.";
     return NULL;
   }
 
   LinearSolver::Options linear_solver_options;
   linear_solver_options.min_num_iterations =
-        options->linear_solver_min_num_iterations;
+        options->min_linear_solver_iterations;
   linear_solver_options.max_num_iterations =
-      options->linear_solver_max_num_iterations;
+      options->max_linear_solver_iterations;
   linear_solver_options.type = options->linear_solver_type;
   linear_solver_options.preconditioner_type = options->preconditioner_type;
   linear_solver_options.sparse_linear_algebra_library =

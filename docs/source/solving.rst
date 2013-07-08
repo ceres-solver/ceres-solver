@@ -933,7 +933,7 @@ elimination group [LiSaad]_.
    Lower threshold for relative decrease before a trust-region step is
    accepted.
 
-.. member:: double Solver::Options::lm_min_diagonal
+.. member:: double Solver::Options::min_lm_diagonal
 
    Default: ``1e6``
 
@@ -941,7 +941,7 @@ elimination group [LiSaad]_.
    regularize the the trust region step. This is the lower bound on
    the values of this diagonal matrix.
 
-.. member:: double Solver::Options::lm_max_diagonal
+.. member:: double Solver::Options::max_lm_diagonal
 
    Default:  ``1e32``
 
@@ -1071,7 +1071,7 @@ elimination group [LiSaad]_.
    expense of an extra copy of the Jacobian matrix. Setting
    ``use_postordering`` to ``true`` enables this tradeoff.
 
-.. member:: int Solver::Options::linear_solver_min_num_iterations
+.. member:: int Solver::Options::min_linear_solver_iterations
 
    Default: ``1``
 
@@ -1079,7 +1079,7 @@ elimination group [LiSaad]_.
    makes sense when the linear solver is an iterative solver, e.g.,
    ``ITERATIVE_SCHUR`` or ``CGNR``.
 
-.. member:: int Solver::Options::linear_solver_max_num_iterations
+.. member:: int Solver::Options::max_linear_solver_iterations
 
    Default: ``500``
 

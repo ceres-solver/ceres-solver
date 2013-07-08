@@ -49,8 +49,8 @@ LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
     : linear_solver_(options.linear_solver),
       radius_(options.initial_radius),
       max_radius_(options.max_radius),
-      min_diagonal_(options.lm_min_diagonal),
-      max_diagonal_(options.lm_max_diagonal),
+      min_diagonal_(options.min_lm_diagonal),
+      max_diagonal_(options.max_lm_diagonal),
       decrease_factor_(2.0),
       reuse_diagonal_(false) {
   CHECK_NOTNULL(linear_solver_);

@@ -60,8 +60,8 @@ class TrustRegionStrategy {
         : trust_region_strategy_type(LEVENBERG_MARQUARDT),
           initial_radius(1e4),
           max_radius(1e32),
-          lm_min_diagonal(1e-6),
-          lm_max_diagonal(1e32),
+          min_lm_diagonal(1e-6),
+          max_lm_diagonal(1e32),
           dogleg_type(TRADITIONAL_DOGLEG) {
     }
 
@@ -75,8 +75,8 @@ class TrustRegionStrategy {
     // by LevenbergMarquardtStrategy. The DoglegStrategy also uses
     // these bounds to construct a regularizing diagonal to ensure
     // that the Gauss-Newton step computation is of full rank.
-    double lm_min_diagonal;
-    double lm_max_diagonal;
+    double min_lm_diagonal;
+    double max_lm_diagonal;
 
     // Further specify which dogleg method to use
     DoglegType dogleg_type;

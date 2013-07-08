@@ -509,7 +509,7 @@ TEST(SolverImpl, CreateLinearSolverNoSuiteSparse) {
 TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
-  options.linear_solver_max_num_iterations = -1;
+  options.max_linear_solver_iterations = -1;
   // CreateLinearSolver assumes a non-empty ordering.
   options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
@@ -520,7 +520,7 @@ TEST(SolverImpl, CreateLinearSolverNegativeMaxNumIterations) {
 TEST(SolverImpl, CreateLinearSolverNegativeMinNumIterations) {
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
-  options.linear_solver_min_num_iterations = -1;
+  options.min_linear_solver_iterations = -1;
   // CreateLinearSolver assumes a non-empty ordering.
   options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
@@ -531,8 +531,8 @@ TEST(SolverImpl, CreateLinearSolverNegativeMinNumIterations) {
 TEST(SolverImpl, CreateLinearSolverMaxLessThanMinIterations) {
   Solver::Options options;
   options.linear_solver_type = DENSE_QR;
-  options.linear_solver_min_num_iterations = 10;
-  options.linear_solver_max_num_iterations = 5;
+  options.min_linear_solver_iterations = 10;
+  options.max_linear_solver_iterations = 5;
   options.linear_solver_ordering = new ParameterBlockOrdering;
   string error;
   EXPECT_EQ(SolverImpl::CreateLinearSolver(&options, &error),
