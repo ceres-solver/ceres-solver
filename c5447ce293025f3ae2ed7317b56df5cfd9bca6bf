@@ -327,6 +327,24 @@
     },
     {
       "key": {
+        "uuid": "27bff08d_8f8bf9d5",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-08T13:18:08Z",
+      "side": 1,
+      "message": "Sameer can you please clarify what you mean here, there\u0027s no indication of where you want the break in your comment (presumably it got removed by gerrit?).",
+      "parentUuid": "c7c4542a_1820aab6",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_6be8f633",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -458,6 +476,24 @@
       "writtenOn": "2013-07-08T05:50:42Z",
       "side": 1,
       "message": "why not check for !value_is_valid and deal with it explicitly, that way the rest of the conditionals are easier to read and there is less repetition.\n\nSimilarly, if the point is valid, then deal with the easy case first where you have found a successful point and no zooming is needed.",
+      "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27bff08d_ef671557",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-08T13:18:08Z",
+      "side": 1,
+      "message": "Checking for !value_is_valid separately to the else() would lead to code duplication, as the same action is required whether the value is invalid (in which case we contract the search), or meets none of the conditions (in which case we expand the search), all of which is handled in ComputeStepSize() [name to be changed].\n\nSimilarly, if the check for a valid sample is moved to the top, it requires duplicating the Armjio check on sufficient cost decrease (but with \u003c\u003d instead of \u003e) - which doesn\u0027t seem clean.",
+      "parentUuid": "c7c4542a_ab057e24",
       "revId": "c5447ce293025f3ae2ed7317b56df5cfd9bca6bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
