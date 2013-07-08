@@ -214,7 +214,7 @@ IF (NOT MSVC AND NOT BUILD_ANDROID)
 ENDIF (NOT MSVC AND NOT BUILD_ANDROID)
 
 IF (BUILD_TESTING AND GFLAGS)
-  ADD_LIBRARY(gtest gmock_gtest_all.cc gmock_main.cc)
+  ADD_LIBRARY(gtest gmock-gtest-all.cc gmock_main.cc)
   ADD_LIBRARY(test_util
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
