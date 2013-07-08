@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c4542a_6b49d642",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-08T14:28:20Z",
+      "side": 1,
+      "message": "redundant?",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_cb3a4a9b",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-08T14:28:20Z",
+      "side": 1,
+      "message": "redundant?",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_8b4e824a",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-08T14:28:20Z",
+      "side": 1,
+      "message": "Now that the special handling code is gone, I would like to argue against this function for two reasons.\n\n1. It hides what loss functions are actually available in the API. The only way to know for reals is to go inside the implementation and look or actually write trial and error code.\n\n2. arg1 and arg2 should not be this opaque and optional at this point. \n\nhow about just\n\ncreate_cauchy_loss();\ncreate_huber_loss();\n\nand so on.\n\nIt leads to less documentation. You do not have to say what is not available. The user can explicitly see what IS available and we do not have to use an americanism like \"stock\".\n\nWhat do you think?",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c4542a_2b43ce24",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-08T14:28:20Z",
+      "side": 1,
+      "message": "seriously :). \n\nThis last comment adds no value to the docs except perhaps indicating your grief at the changes in this CL.",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
