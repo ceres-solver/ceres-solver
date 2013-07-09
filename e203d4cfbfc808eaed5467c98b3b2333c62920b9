@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4726a4f9_ade34994",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c4542a_6b49d642",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_cb3a4a9b",
         "filename": "examples/curve_fitting.c",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-08T14:28:20Z",
       "side": 1,
       "message": "redundant?",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_eded417f",
+        "filename": "examples/curve_fitting.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c4542a_cb3a4a9b",
       "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4726a4f9_8d092579",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c4542a_8b4e824a",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c4542a_2b43ce24",
         "filename": "internal/ceres/c_api.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2013-07-08T14:28:20Z",
       "side": 1,
       "message": "seriously :). \n\nThis last comment adds no value to the docs except perhaps indicating your grief at the changes in this CL.",
+      "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_cd031d55",
+        "filename": "internal/ceres/c_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:20:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c4542a_2b43ce24",
       "revId": "e203d4cfbfc808eaed5467c98b3b2333c62920b9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
