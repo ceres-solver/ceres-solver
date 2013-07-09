@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4726a4f9_2d77590d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "I find this name confusing. Why not simply ComputeStepSize()? The polynomial aspect is irrelevant.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_ed8b81d4",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "Use CHECK_GT",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_cd883ddb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "LOG(FATAL) \u003c\u003c\u003c ...",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_0d7c15ec",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "Invert if, put this block first with a return; drop the weird nested ifs above.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_8d676558",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "It might be nice to pass an error string back up the stack in summary.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_6d715114",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "This can go on the previous line.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_4d760d0e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:02:45Z",
+      "side": 1,
+      "message": "Can we put this in the error message?",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
