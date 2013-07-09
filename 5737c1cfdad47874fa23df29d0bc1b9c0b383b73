@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4726a4f9_0dd535ae",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-09T05:06:00Z",
+      "side": 1,
+      "message": "Can we stick to the current _ naming? I renamed the original -all- file to be _all_ intentionally so it would not stick out relative to our other code.",
+      "revId": "5737c1cfdad47874fa23df29d0bc1b9c0b383b73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
