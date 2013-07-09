@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "4726a4f9_90f81cfe",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "I recommend moving the documentation blocks into the wolfe line search function. That way the documentation for the two phases can be read together.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_8d676558",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -104,6 +121,40 @@
     },
     {
       "key": {
+        "uuid": "4726a4f9_ad3989fb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "how about just\n\nbracket_low\nbracket_high \n\nor just\n\nf_low\nand f_high ?\n\n[the documentation should use the same variable names, right now it uses low and high]\n\nthe suffix \"_sample\" does not add much.\n\nsimilarly initial_sample -\u003e initial_guess/initial_position/initial_step \n\nfinal_sample -\u003e solution",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_8d364509",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "should fit on the same line?\n\nif (summary-\u003enum_evaluations \u003e\u003d options.max_num_step_size_iterations) {",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_4d760d0e",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -115,6 +166,125 @@
       "writtenOn": "2013-07-09T05:02:45Z",
       "side": 1,
       "message": "Can we put this in the error message?",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_30e85033",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "continue and close the if? fewer levels of nesting.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_70f2c822",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "I think a lot of these multiline statements will be simpler with smaller variable names.. thus I recommend dropping bracket and sample here and elsewhere.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_ed438175",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "max_num_iterations",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_ed1c2186",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "Maybe pass LineSearch::Options into the factory and have the line search store a copy and use it, instead of passing it constantly in the Search function?\n\nThis is the pattern for much of the other objects in ceres, but this is a purely aesthetic thing and I am not wedded to it.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_4d2e0daf",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "indentation for the arguments.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_2d2f59ae",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "us from continuing.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_0d3415fd",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T06:58:05Z",
+      "side": 1,
+      "message": "The warning should mention that you are continuing nevertheless.",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
