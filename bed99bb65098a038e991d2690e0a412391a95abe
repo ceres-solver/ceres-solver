@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4726a4f9_edb8a15d",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T05:52:04Z",
+      "side": 1,
+      "message": "how about just cost_function_data  and loss_function_data ?",
+      "revId": "bed99bb65098a038e991d2690e0a412391a95abe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_0d79b5d4",
+        "filename": "internal/ceres/c_api_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T05:52:04Z",
+      "side": 1,
+      "message": "sensitivity",
+      "revId": "bed99bb65098a038e991d2690e0a412391a95abe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_6d7e71be",
+        "filename": "internal/ceres/c_api_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T05:52:04Z",
+      "side": 1,
+      "message": "see comment about nearness below.",
+      "revId": "bed99bb65098a038e991d2690e0a412391a95abe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_cdb5dd65",
+        "filename": "internal/ceres/c_api_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T05:52:04Z",
+      "side": 1,
+      "message": "sensitivity",
+      "revId": "bed99bb65098a038e991d2690e0a412391a95abe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4726a4f9_2d7479de",
+        "filename": "internal/ceres/c_api_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-09T05:52:04Z",
+      "side": 1,
+      "message": "these nearess numbers are very odd. I still do not understand them. since you have control over both what the value should be and how accurate it should be.. why not make one of them simpler? Especially since you are not using the \"true\" values of 0.2 and 0.03 anyways?",
+      "revId": "bed99bb65098a038e991d2690e0a412391a95abe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
