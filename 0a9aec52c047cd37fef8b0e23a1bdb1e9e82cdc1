@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_6079323b",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Keeping as per Sameer\u0027s preference.",
+      "parentUuid": "4726a4f9_2d77590d",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_ed8b81d4",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-09T05:02:45Z",
       "side": 1,
       "message": "Use CHECK_GT",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_003b06a0",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_ed8b81d4",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_2049ea43",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_cd883ddb",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_0d7c15ec",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-07-09T05:02:45Z",
       "side": 1,
       "message": "Invert if, put this block first with a return; drop the weird nested ifs above.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_6043f223",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_0d7c15ec",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_e05622dd",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_90f81cfe",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_8d676558",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2013-07-09T05:02:45Z",
       "side": 1,
       "message": "It might be nice to pass an error string back up the stack in summary.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_80ac7696",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_8d676558",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_20f2cad3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_6d715114",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_ad3989fb",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2013-07-09T06:58:05Z",
       "side": 1,
       "message": "how about just\n\nbracket_low\nbracket_high \n\nor just\n\nf_low\nand f_high ?\n\n[the documentation should use the same variable names, right now it uses low and high]\n\nthe suffix \"_sample\" does not add much.\n\nsimilarly initial_sample -\u003e initial_guess/initial_position/initial_step \n\nfinal_sample -\u003e solution",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_207f2a24",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_ad3989fb",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_c0bd9ebe",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_8d364509",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_4d760d0e",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2013-07-09T05:02:45Z",
       "side": 1,
       "message": "Can we put this in the error message?",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_a0c09a45",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_4d760d0e",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_00914643",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_30e85033",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_70f2c822",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2013-07-09T06:58:05Z",
       "side": 1,
       "message": "I think a lot of these multiline statements will be simpler with smaller variable names.. thus I recommend dropping bracket and sample here and elsewhere.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_c0867e10",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_70f2c822",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_006a265d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_ed438175",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_ed1c2186",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 3
@@ -234,6 +468,24 @@
       "writtenOn": "2013-07-09T06:58:05Z",
       "side": 1,
       "message": "Maybe pass LineSearch::Options into the factory and have the line search store a copy and use it, instead of passing it constantly in the Search function?\n\nThis is the pattern for much of the other objects in ceres, but this is a purely aesthetic thing and I am not wedded to it.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_20980a5d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_ed1c2186",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_409d0e4c",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_4d2e0daf",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_2d2f59ae",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 3
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "07d58cff_60a2128d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_2d2f59ae",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4726a4f9_0d3415fd",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 3
@@ -285,6 +573,24 @@
       "writtenOn": "2013-07-09T06:58:05Z",
       "side": 1,
       "message": "The warning should mention that you are continuing nevertheless.",
+      "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07d58cff_80a7169a",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-09T19:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4726a4f9_0d3415fd",
       "revId": "0a9aec52c047cd37fef8b0e23a1bdb1e9e82cdc1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
