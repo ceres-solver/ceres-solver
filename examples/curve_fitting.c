@@ -164,7 +164,8 @@ int main(int argc, char** argv) {
   problem = ceres_create_problem();
 
   /* Add all the residuals. */
-  for (int i = 0; i < num_observations; ++i) {
+  int i;
+  for (i = 0; i < num_observations; ++i) {
     ceres_problem_add_residual_block(
         problem,
         exponential_residual,  /* Cost function */
