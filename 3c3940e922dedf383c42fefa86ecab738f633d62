@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0764ac98_8845b7d0",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-10T21:02:50Z",
+      "side": 1,
+      "message": "Please include a discussion of OpenBLAS, since I imagine many people will think, \"I know, let\u0027s use OpenBLAS!\"",
+      "revId": "3c3940e922dedf383c42fefa86ecab738f633d62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
