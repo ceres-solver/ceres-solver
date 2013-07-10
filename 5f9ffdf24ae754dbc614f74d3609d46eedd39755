@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0764ac98_284e0b76",
+        "filename": "internal/ceres/dense_qr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-10T20:10:25Z",
+      "side": 1,
+      "message": "I\u0027m -1 on this. Please support both it the same binary and support switching between them. DENSE_QR_BACKEND or similar. Just abstract the internals of the overload.",
+      "revId": "5f9ffdf24ae754dbc614f74d3609d46eedd39755",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "276ff077_294e0d76",
+        "filename": "internal/ceres/dense_qr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-10T20:10:25Z",
+      "side": 1,
+      "message": "A bunch of this code is shared with the eigen implementation-- just share it! Abstract the core solve call only. I\u0027d suggest having\n\nSolveImpl code contains the shared bits (e.g. the removeDiagonal, etc).\n\nThen make SolveWithLapack and SolveWithEigen functions and call them depending on options.",
+      "revId": "5f9ffdf24ae754dbc614f74d3609d46eedd39755",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7687872_a761cae7",
+        "filename": "jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-10T20:10:25Z",
+      "side": 1,
+      "message": "Hard tabs?",
+      "revId": "5f9ffdf24ae754dbc614f74d3609d46eedd39755",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
