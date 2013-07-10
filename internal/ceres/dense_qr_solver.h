@@ -91,7 +91,9 @@ class DenseQRSolver: public DenseSparseMatrixSolver {
       double* x);
 
   const LinearSolver::Options options_;
+  ColMajorMatrix lhs_;
   Vector rhs_;
+  Vector work_;
   CERES_DISALLOW_COPY_AND_ASSIGN(DenseQRSolver);
 };
 

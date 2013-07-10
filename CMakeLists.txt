@@ -127,6 +127,38 @@ SET(CXSPARSE_SEARCH_LIBS ${SEARCH_LIBS})
 SET(CXSPARSE_SEARCH_HEADERS ${SEARCH_HEADERS})
 LIST(APPEND CXSPARSE_SEARCH_HEADERS /usr/include/suitesparse) # Ubuntu
 
+SET(BLAS_AND_LAPACK_FOUND TRUE)
+IF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
+  IF (APPLE)
+    # Mac OS X has LAPACK/BLAS bundled in a framework called
+    # "vecLib". Search for that instead of for the normal "lapack"
+    # library.
+    FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
+  ELSE (APPLE)
+    FIND_LIBRARY(BLAS_LIB NAMES blas)
+    IF (EXISTS ${BLAS_LIB})
+      MESSAGE("-- Found BLAS library: ${BLAS_LIB}")
+    ELSE (EXISTS ${BLAS_LIB})
+      MESSAGE("-- Did not find BLAS library")
+      SET(BLAS_AND_LAPACK_FOUND FALSE)
+    ENDIF (EXISTS ${BLAS_LIB})
+    FIND_LIBRARY(LAPACK_LIB NAMES lapack)
+  ENDIF (APPLE)
+ELSE ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
+  SET(BLAS_AND_LAPACK_FOUND FALSE)
+ENDIF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
+
+IF (EXISTS ${LAPACK_LIB})
+  MESSAGE("-- Found LAPACK library: ${LAPACK_LIB}")
+ELSE (EXISTS ${LAPACK_LIB})
+  SET(BLAS_AND_LAPACK_FOUND FALSE)
+  MESSAGE("-- Did not find LAPACK library")
+ENDIF (EXISTS ${LAPACK_LIB})
+
+IF (NOT BLAS_AND_LAPACK_FOUND)
+  ADD_DEFINITIONS(-DCERES_NO_LAPACK)
+ENDIF (NOT BLAS_AND_LAPACK_FOUND)
+
 IF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # Check for SuiteSparse dependencies
 
@@ -258,30 +290,6 @@ IF (EXISTS ${METIS_LIB})
 ELSE (EXISTS ${METIS_LIB})
   MESSAGE("-- Did not find METIS library")
 ENDIF (EXISTS ${METIS_LIB})
-
-SET(BLAS_AND_LAPACK_FOUND TRUE)
-IF (APPLE)
-  # Mac OS X has LAPACK/BLAS bundled in a framework called
-  # "vecLib". Search for that instead of for the normal "lapack"
-  # library.
-  FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
-ELSE (APPLE)
-  FIND_LIBRARY(BLAS_LIB NAMES blas)
-  IF (EXISTS ${BLAS_LIB})
-    MESSAGE("-- Found BLAS library: ${BLAS_LIB}")
-  ELSE (EXISTS ${BLAS_LIB})
-    MESSAGE("-- Did not find BLAS library")
-    SET(BLAS_AND_LAPACK_FOUND FALSE)
-  ENDIF (EXISTS ${BLAS_LIB})
-  FIND_LIBRARY(LAPACK_LIB NAMES lapack)
-ENDIF (APPLE)
-
-IF (EXISTS ${LAPACK_LIB})
-  MESSAGE("-- Found LAPACK library: ${LAPACK_LIB}")
-ELSE (EXISTS ${LAPACK_LIB})
-  SET(BLAS_AND_LAPACK_FOUND FALSE)
-  MESSAGE("-- Did not find LAPACK library")
-ENDIF (EXISTS ${LAPACK_LIB})
 
 # We don't use SET(SUITESPARSE_FOUND ${AMD_FOUND} ...) in order to
 # be able to check whether SuiteSparse is available withou expanding

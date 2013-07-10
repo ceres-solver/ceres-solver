@@ -30,8 +30,8 @@
 
 #include "ceres/dense_qr_solver.h"
 
-#include <cstddef>
 
+#include <cstddef>
 #include "Eigen/Dense"
 #include "ceres/dense_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
@@ -40,11 +40,28 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
+// C interface to the LAPACK linear least squares solver.
+extern "C" void dgels_(char *uplo,
+                       int* M,
+                       int* N,
+                       int* NRHS,
+                       double* A,
+                       int* LDA,
+                       double* B,
+                       int* LDB,
+                       double* work,
+                       int* lwork,
+                       int* info);
+
 namespace ceres {
 namespace internal {
 
 DenseQRSolver::DenseQRSolver(const LinearSolver::Options& options)
-    : options_(options) {}
+    : options_(options) {
+  work_.resize(1);
+}
+
+#if !defined(CERES_NO_LAPACK)
 
 LinearSolver::Summary DenseQRSolver::SolveImpl(
     DenseSparseMatrix* A,
@@ -55,6 +72,78 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
 
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
+
+  if (per_solve_options.D != NULL) {
+    // Temporarily append a diagonal block to the A matrix, but undo
+    // it before returning the matrix to the user.
+    A->AppendDiagonal(per_solve_options.D);
+  }
+
+  lhs_ =  A->matrix();
+
+  if (per_solve_options.D != NULL) {
+    // Undo the modifications to the matrix A.
+    A->RemoveDiagonal();
+  }
+
+  // rhs = [b;0] to account for the additional rows in the lhs.
+  const int augmented_num_rows =
+      num_rows + ((per_solve_options.D != NULL) ? num_cols : 0);
+  if (rhs_.rows() != augmented_num_rows) {
+    rhs_.resize(augmented_num_rows);
+  }
+  rhs_.setZero();
+  rhs_.head(num_rows) = ConstVectorRef(b, num_rows);
+
+  char TRANS = 'N';
+  int M = lhs_.rows();
+  int N = lhs_.cols();
+  int NRHS = 1;
+  int LDA = M;
+  int LDB = M;
+  int NB = 64;
+
+  int LWORK = N + M * NB;
+  if (work_.rows() == 1) {
+    work_.resize(LWORK);
+  } else {
+    LWORK = work_.rows();
+  }
+
+  int INFO = 0;
+  dgels_(&TRANS, &M, &N, &NRHS, lhs_.data(), &LDA, rhs_.data(), &LDB, work_.data(), &LWORK, &INFO);
+  if (work_.rows() < static_cast<int>(work_[0])) {
+    VLOG(2) << "Resizing work_ to : << " << work_[0];
+    work_.resize(static_cast<int>(work_[0]));
+  }
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+
+  if (INFO == 0) {
+    VectorRef(x, num_cols) = rhs_.head(num_cols);
+    event_logger.AddEvent("Solve");
+    summary.termination_type = TOLERANCE;
+  } else {
+    summary.termination_type = FAILURE;
+  }
+
+  event_logger.AddEvent("TearDown");
+  return summary;
+}
+
+#else
+
+LinearSolver::Summary DenseQRSolver::SolveImpl(
+    DenseSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  EventLogger event_logger("DenseQRSolver::Solve");
+
+  const int num_rows = A->num_rows();
+  const int num_cols = A->num_cols();
+
 
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
@@ -91,6 +180,8 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   event_logger.AddEvent("TearDown");
   return summary;
 }
+
+#endif  // CERES_NO_LAPACK
 
 }   // namespace internal
 }   // namespace ceres
