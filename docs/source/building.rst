@@ -49,13 +49,15 @@ build process and a smaller binary.  The simplicity comes at a cost --
 for all but the most trivial matrices, ``SuiteSparse`` is
 significantly faster than ``CXSparse``.
 
-
 7. `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
 <http://www.netlib.org/lapack/>`_ routines are needed by
-SuiteSparse. We recommend either `OpenBLAS
-<http://xianyi.github.io/OpenBLAS/>`_ or `ATLAS <http://math-
-atlas.sourceforge.net/>`_, both of which ship with BLAS and LAPACK
-routines.
+SuiteSparse. We recommend `ATLAS
+<http://math-atlas.sourceforge.net/>`_, which includes BLAS and LAPACK
+routines. It is also possible to use `OpenBLAS
+<https://github.com/xianyi/OpenBLAS>`_ . However, one needs to be
+careful to `turn off the threading
+<https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
+inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
 
 .. _section-linux:
 
@@ -81,7 +83,7 @@ platform. Start by installing all the dependencies.
      make
      sudo make install
      # BLAS & LAPACK
-     sudo apt-get install libopenblas-dev
+     sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
      # SuiteSparse and CXSparse
