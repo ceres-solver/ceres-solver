@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_f90c31f8",
+        "filename": "examples/nist.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_9b10eb60",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_eb612de7",
         "filename": "include/ceres/solver.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "didn\u0027t you recommend that this be false by default?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_f9d5510a",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Yes, I just wanted to confirm that with you before changing it as previously it was on by default - it\u0027s now off by default.",
+      "parentUuid": "27b2905c_eb612de7",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_794161c3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b74c4d_8494d635",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_1b2e9b94",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -149,6 +203,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "hard to tell what this case corresponds to.\nplease document.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_b9cab9f3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_1b2e9b94",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_f9855194",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "To confirm descent_direction_inf_norm --\u003e max_norm, not descent_direction_max_norm? [in which case done].",
+      "parentUuid": "679568bc_bb3e87c3",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_fb480f77",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -183,6 +273,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "braces with all if statements.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_193b0df4",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_fb480f77",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -206,6 +314,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_39424973",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_6ba7fdf6",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_cb742999",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -217,6 +343,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "one line instead of two?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_b92e39ab",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_cb742999",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -240,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_7c4e6f4c",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_3b2b5785",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_ab79e58e",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -251,6 +413,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "this should be where bracket_low and bracket_high are defined?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_391b698d",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_ab79e58e",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -274,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_9ce88b35",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_0b6f51c3",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b74c4d_a483dafb",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -285,6 +483,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "braces here and elsewhere",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_7cedcf41",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b74c4d_a483dafb",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -308,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_9c3a4bd1",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_eb73edaa",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_9b62abec",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -319,6 +553,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "This else is not really needed, since all the previous conditions will result in breaking out of the loop.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_7c682fcb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_9b62abec",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -342,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_dc5de32c",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_4b895967",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_2b869558",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -353,6 +623,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "braces",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_bc62a7e8",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_2b869558",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -376,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_1c581b39",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b74c4d_0479063c",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_db43535a",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 9
@@ -387,6 +693,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "This is not a great name for this method. Since this function object is nothing more than an one dimensional function. and indeed this interface has no notion of a direction. In many ways the documentation is actually wrong.. the base class is much more generic. Its actually the LineSearchFunction object which has the notion of a line search direction. I suggest moving this method over there.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_dc4683da",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_db43535a",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -410,6 +734,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_bc4bc7e0",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_8baa21bd",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b74c4d_448aee15",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 9
@@ -421,6 +763,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "called on L-BFGS after hessian approximation became indefinite.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_fc7fffe2",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07b74c4d_448aee15",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -444,6 +804,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_8e7fad21",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "So there is this alternative update: http://www.hamilton.ie/systemsmodelling/papers/leithead_bfgs_logdet.pdf which should be O(N^2) - I\u0027m working on doing it efficiently in Eigen.",
+      "parentUuid": "679568bc_9b39cbe0",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_7b1cff72",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 9
@@ -455,6 +833,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "bool initialized_  which is initially set to false is a better choice.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_7ca78f4c",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_7b1cff72",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -478,6 +874,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_dcacc32f",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Done, both here and in L-BFGS.",
+      "parentUuid": "07b74c4d_2487ea0d",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b74c4d_640612d8",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 9
@@ -495,6 +909,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_ff2b7181",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Because, currently there are no ways any of the methods can fail, and then subsequently recover.  Only (L)BFGS actually fail at all, and when they do, it means the Hessian is not positive definite so I don\u0027t think we would ever want to continue (as we could never recover back to using (L)BFGS).\n\nWe could add an additional method to LineSearchDirection along the lines of IsValid() but currently that would be equivalent to the return value of NextDirection().",
+      "parentUuid": "07b74c4d_640612d8",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_6b4edd76",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 9
@@ -506,6 +938,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "also include the case that initial_step_size \u003d 0.0 ?\nin fact shouldn\u0027t there be a tolerance here, below which there is no point doing a search?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_df2af551",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-14T20:15:18Z",
+      "side": 1,
+      "message": "Two things:\n\n1) We already do the step size checking in line_search.cc in Armijo/Wolfe against the max_norm of the direction when Search() is called, would you like that check replicated here?\n\n2) If we did replicate the check for (initial_step_size * max_norm) \u003c tolerance check here, I think it would have to be separate from checking initial_step_size \u003c 0.0, as that indicates NUMERICAL_FAILURE, but presumably the step becoming too small (but still valid) would output NO_CONVERGENCE?",
+      "parentUuid": "27b2905c_6b4edd76",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
