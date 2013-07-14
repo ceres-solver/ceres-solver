@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "27b2905c_6068bcf5",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-14T18:28:31Z",
+      "side": 1,
+      "message": "Consider adding a note that this does not always help, so caution is needed instead of blindly enabling this option.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_4b57990b",
         "filename": "include/ceres/solver.h",
         "patchSetId": 9
@@ -53,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "c7c9b4ea_951fee1c",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-14T18:28:31Z",
+      "side": 1,
+      "message": "I don\u0027t think this belongs in the header; why is this added?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_db0a732e",
         "filename": "include/ceres/types.h",
         "patchSetId": 9
@@ -64,6 +98,23 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "combine the documentation for BFGS and LBFGS perhaps and explain it better?",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7c9b4ea_f5146202",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-14T18:28:31Z",
+      "side": 1,
+      "message": "\u0026 next to ostream (no space)",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
