@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "679568bc_5b0903e5",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-15T05:31:18Z",
+      "side": 1,
+      "message": "sorry I should have been more clear, I  meant descent_direction_max_norm instead of descent_direction_inf_norm",
+      "revId": "532cdd083a80b11f24d418815d46451e75819090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07b74c4d_e4de82ce",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-07-15T05:31:18Z",
+      "side": 1,
+      "message": "why fail, why not issue a warning and then reset the approximation to a rank one update?",
+      "revId": "532cdd083a80b11f24d418815d46451e75819090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
