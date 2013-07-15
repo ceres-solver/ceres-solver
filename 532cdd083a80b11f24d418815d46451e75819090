@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_5f355344",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T09:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_5b0903e5",
+      "revId": "532cdd083a80b11f24d418815d46451e75819090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07b74c4d_e4de82ce",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-15T05:31:18Z",
       "side": 1,
       "message": "why fail, why not issue a warning and then reset the approximation to a rank one update?",
+      "revId": "532cdd083a80b11f24d418815d46451e75819090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_ff46bf8b",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T09:18:21Z",
+      "side": 1,
+      "message": "So, I\u0027ve had a look, and I can\u0027t find a reference that recommends / suggests this, there is this paper that talks about SNOPTs strategy: http://www.sciencedirect.com/science/article/pii/S0893965901001628 which is different to L-BFGS in that when the buffer fills up, it re-initialises with the diagonal of the current inverse hessian and drops _all_ history (and then keeps going until the buffer fills again).\n\nI could obviously add restarts, but I\u0027m wary as I think that it\u0027s really telling the user something important about the problem if we can\u0027t maintain a valid BFGS hessian (granted a log warning would alert them).  Also, a lot of the theoretical basis and published results are for \u0027pure\u0027 (L)BFGS which is still meant to be the best performing general algorithm.\n\nLastly it\u0027s not clear to me that for any general problem that if the solver has moved into an area where our hessian has become indefinite that restarting with steepest descent would actually get us out of it.\n\nThoughts?",
+      "parentUuid": "07b74c4d_e4de82ce",
       "revId": "532cdd083a80b11f24d418815d46451e75819090",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
