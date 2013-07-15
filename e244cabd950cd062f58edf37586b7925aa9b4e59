@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_8385b14d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_6068bcf5",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b2905c_4b57990b",
         "filename": "include/ceres/solver.h",
         "patchSetId": 9
@@ -100,6 +118,24 @@
       "writtenOn": "2013-07-14T06:55:09Z",
       "side": 1,
       "message": "update solving.rst with these parameters too.",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_e3846550",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b2905c_4b57990b",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_9a4d197b",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "To appease, cpplint - otherwise it complains: include/ceres/types.h:400:  Add #include \u003cstring\u003e for string  [build/include_what_you_use] [4]\n\nShould I remove it?",
+      "parentUuid": "c7c9b4ea_951fee1c",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_db0a732e",
         "filename": "include/ceres/types.h",
         "patchSetId": 9
@@ -140,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_372ebb65",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "679568bc_db0a732e",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c9b4ea_f5146202",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 9
@@ -151,6 +223,24 @@
       "writtenOn": "2013-07-14T18:28:31Z",
       "side": 1,
       "message": "\u0026 next to ostream (no space)",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_fa8c0d85",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c9b4ea_f5146202",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -822,6 +912,24 @@
     },
     {
       "key": {
+        "uuid": "67c008c0_c37fa969",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c008c0_8e7fad21",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679568bc_7b1cff72",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 9
@@ -920,6 +1028,24 @@
       "writtenOn": "2013-07-14T20:15:18Z",
       "side": 1,
       "message": "Because, currently there are no ways any of the methods can fail, and then subsequently recover.  Only (L)BFGS actually fail at all, and when they do, it means the Hessian is not positive definite so I don\u0027t think we would ever want to continue (as we could never recover back to using (L)BFGS).\n\nWe could add an additional method to LineSearchDirection along the lines of IsValid() but currently that would be equivalent to the return value of NextDirection().",
+      "parentUuid": "07b74c4d_640612d8",
+      "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c008c0_23df9d5f",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-15T19:46:48Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "07b74c4d_640612d8",
       "revId": "e244cabd950cd062f58edf37586b7925aa9b4e59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
