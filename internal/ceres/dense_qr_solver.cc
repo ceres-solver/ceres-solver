@@ -73,7 +73,7 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
   event_logger.AddEvent("Setup");
 
   // Solve the system.
-  VectorRef(x, num_cols) = A->matrix().householderQr().solve(rhs_);
+  VectorRef(x, num_cols) = A->matrix().colPivHouseholderQr().solve(rhs_);
   event_logger.AddEvent("Solve");
 
   if (per_solve_options.D != NULL) {
