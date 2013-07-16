@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87717c8e_d4f15c1e",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e6cfd_7b35dbda",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075e6cfd_bb905397",
         "filename": "docs/source/solving.rst",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2013-07-15T20:34:44Z",
       "side": 1,
       "message": "and return the best solution found uptil now?",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87717c8e_14fcb4f0",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 12
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e6cfd_bb905397",
       "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "87717c8e_34861059",
+        "filename": "examples/powell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "I have kept the minimizer selection option, but removed all the rest - so they get the defaults for either case - OK?",
+      "parentUuid": "075e6cfd_9bdd4f68",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075e6cfd_bbcbf39a",
         "filename": "include/ceres/types.h",
         "patchSetId": 12
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "87717c8e_54838c47",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e6cfd_9b1aaf2d",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075e6cfd_5b09f7e4",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 12
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "87717c8e_7480883a",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e6cfd_5b09f7e4",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075e6cfd_9bc38f5d",
         "filename": "internal/ceres/line_search_direction.cc",
         "patchSetId": 12
@@ -132,6 +222,24 @@
       "writtenOn": "2013-07-15T20:34:44Z",
       "side": 1,
       "message": "rho_k * (B - A_plus_A_transpose) ?\n\nalso since this is the only place you need A_plus_A_transpose, why compute it explicitly? why not write this out as\n\nrho_k * (B - A - A.transpose());\n\nand eigen will vectorize the whole expression I believe.",
+      "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87717c8e_94dd2468",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-07-16T15:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075e6cfd_9bc38f5d",
       "revId": "dfce9fb597c077b74ef6816621a257ebab5e528f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
