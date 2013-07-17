@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "333f37b7_f3696a97",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-17T08:19:45Z",
+      "side": 1,
+      "message": "\"How rank deficiency is detected depends on ...\"",
+      "revId": "1215f972c8cc1a35adbc6dc195294918101b706d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "333f37b7_9360dea7",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-17T08:19:45Z",
+      "side": 1,
+      "message": "Will everyone with suitesparse have suitesparseQR?",
+      "revId": "1215f972c8cc1a35adbc6dc195294918101b706d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
