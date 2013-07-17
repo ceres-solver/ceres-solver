@@ -647,7 +647,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     LOG(ERROR) << summary->error;
     return;
   }
-  if (original_options.max_lbfgs_rank == 0) {
+  if (original_options.max_lbfgs_rank <= 0) {
     summary->error =
         string("Invalid configuration: require max_lbfgs_rank > 0");
     LOG(ERROR) << summary->error;
