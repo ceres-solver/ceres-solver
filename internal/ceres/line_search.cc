@@ -62,6 +62,8 @@ FunctionSample ValueAndGradientSample(const double x,
   return sample;
 };
 
+}  // namespace
+
 // Convenience stream operator for pushing FunctionSamples into log messages.
 std::ostream& operator<<(std::ostream &os,
                          const FunctionSample& sample) {
@@ -71,8 +73,6 @@ std::ostream& operator<<(std::ostream &os,
      << std::boolalpha << sample.gradient_is_valid << "]";
   return os;
 };
-
-}  // namespace
 
 LineSearch::LineSearch(const LineSearch::Options& options)
     : options_(options) {}

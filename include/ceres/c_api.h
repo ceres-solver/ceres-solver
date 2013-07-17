@@ -47,8 +47,9 @@ void ceres_init();
 
 /* Equivalent to CostFunction::Evaluate() in the C++ API.
  *
- * The user is may keep private information inside the opaque user_data object.
- * The pointer here is the same one passed in the ceres_add_residual_block(). */
+ * The user may keep private information inside the opaque user_data object.
+ * The pointer here is the same one passed in the ceres_add_residual_block().
+ */
 typedef int (*ceres_cost_function_t)(void* user_data,
                                      double** parameters,
                                      double* residuals,
