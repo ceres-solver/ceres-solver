@@ -395,7 +395,7 @@ directions, all aimed at large scale problems.
    which the last `M` iterations are used to approximate the inverse Hessian
    used to compute a quasi-Newton step [Nocedal]_, [ByrdNocedal]_.
 
-Currently Ceres Solver supports both a backtracking and interpolation 
+Currently Ceres Solver supports both a backtracking and interpolation
 based Armijo line search algorithm, and a sectioning / zoom interpolation
 (strong) Wolfe condition line search algorithm.  However, note that in order for
 the assumptions underlying the ``BFGS`` and ``LBFGS`` methods to be
@@ -1968,23 +1968,68 @@ cases.
    Number of threads to be used for evaluating the Jacobian and
    estimation of covariance.
 
-.. member:: bool Covariance::Options::use_dense_linear_algebra
+.. member:: CovarianceAlgorithmType Covariance::Options::algorithm_type
 
-   Default: ``false``
+   Default: ``SPARSE_QR`` or ``DENSE_SVD``
 
-   When ``true``, ``Eigen``'s ``JacobiSVD`` algorithm is used to
-   perform the computations. It is an accurate but slow method and
-   should only be used for small to moderate sized problems.
+   Ceres supports three different algorithms for covariance
+   estimation, which represent different tradeoffs in speed, accuracy
+   and reliability.
 
-   When ``false``, ``SuiteSparse/CHOLMOD`` is used to perform the
-   computation. Recent versions of ``SuiteSparse`` (>= 4.2.0) provide
-   a much more efficient method for solving for rows of the covariance
-   matrix. Therefore, if you are doing large scale covariance
-   estimation, we strongly recommend using a recent version of
-   ``SuiteSparse``.
+   1. ``DENSE_SVD`` uses ``Eigen``'s ``JacobiSVD`` to perform the
+      computations. It computes the singular value decomposition
 
-   This setting also has an effect on how the following two options
-   are interpreted.
+      .. math::   U S V^\top = J
+
+      and then uses it to compute the pseudo inverse of J'J as
+
+      .. math::   (J'J)^{\dagger} = V  S^{\dagger}  V^\top
+
+      It is an accurate but slow method and should only be used for
+      small to moderate sized problems. It can handle full-rank as
+      well as rank deficient Jacobians.
+
+   2. ``SPARSE_CHOLESKY`` uses the ``CHOLMOD`` sparse Cholesky
+      factorization library to compute the decomposition :
+
+      .. math::   R^\top R = J^\top J
+
+      and then
+
+      .. math::   \left(J^\top J\right)^{-1}  = \left(R^\top R\right)^{-1}
+
+      It a fast algorithm for sparse matrices that should be used when
+      the Jacobian matrix J is well conditioned. For ill-conditioned
+      matrices, this algorithm can fail unpredictabily. This is
+      because Cholesky factorization is not a rank-revealing
+      factorization, i.e., it cannot reliably detect when the matrix
+      being factorized is not of full
+      rank. ``SuiteSparse``/``CHOLMOD`` supplies a heuristic for
+      checking if the matrix is rank deficient (cholmod_rcond), but it
+      is only a heuristic and can have both false positive and false
+      negatives.
+
+      Recent versions of ``SuiteSparse`` (>= 4.2.0) provide a much more
+      efficient method for solving for rows of the covariance
+      matrix. Therefore, if you are doing ``SPARSE_CHOLESKY``, we strongly
+      recommend using a recent version of ``SuiteSparse``.
+
+   3. ``SPARSE_QR`` uses the ``SuiteSparseQR`` sparse QR factorization
+      library to compute the decomposition
+
+       .. math::
+
+          QR &= J\\
+          \left(J^\top J\right)^{-1} &= \left(R^\top R\right)^{-1}
+
+      It is a moderately fast algorithm for sparse matrices, which at
+      the price of more time and memory than the ``SPARSE_CHOLESKY``
+      algorithm is numerically better behaved and is rank revealing,
+      i.e., it can reliably detect when the Jacobian matrix is rank
+      deficient.
+
+   Neither ``SPARSE_CHOLESKY`` or ``SPARSE_QR`` are capable of computing
+   the covariance if the Jacobian is rank deficient.
 
 .. member:: int Covariance::Options::min_reciprocal_condition_number
 
@@ -2009,89 +2054,79 @@ cases.
                   -2.0471e+14   2.0471e+14
                   \end{bmatrix}
 
-   This is not a useful result.
 
-   The reciprocal condition number of a matrix is a measure of
-   ill-conditioning or how close the matrix is to being singular/rank
-   deficient. It is defined as the ratio of the smallest eigenvalue of
-   the matrix to the largest eigenvalue. In the above case the
-   reciprocal condition number is about :math:`10^{-16}`. Which is
-   close to machine precision and even though the inverse exists, it
-   is meaningless, and care should be taken to interpet the results of
-   such an inversion.
+   This is not a useful result. Therefore, by default
+   :func:`Covariance::Compute` will return ``false`` if a rank
+   deficient Jacobian is encountered. How rank deficiency is detected
+   depends on the algorithm being used.
 
-   Matrices with condition number lower than
-   ``min_reciprocal_condition_number`` are considered rank deficient
-   and by default Covariance::Compute will return false if it
-   encounters such a matrix.
+   1. ``DENSE_SVD``
 
-   a. ``use_dense_linear_algebra = false``
+      .. math:: \frac{\sigma_{\text{min}}}{\sigma_{\text{max}}}  < \sqrt{\text{min_reciprocal_condition_number}}
 
-      When performing large scale sparse covariance estimation,
-      computing the exact value of the reciprocal condition number is
-      not possible as it would require computing the eigenvalues of
-      :math:`J'J`.
+      where :math:`\sigma_{\text{min}}` and
+      :math:`\sigma_{\text{max}}` are the minimum and maxiumum
+      singular values of :math:`J` respectively.
 
-      In this case we use cholmod_rcond, which uses the ratio of the
-      smallest to the largest diagonal entries of the Cholesky
-      factorization as an approximation to the reciprocal condition
-      number.
+    2. ``SPARSE_CHOLESKY``
 
+       .. math::  \text{cholmod_rcond} < \text{min_reciprocal_conditioner_number}
 
-      However, care must be taken as this is a heuristic and can
-      sometimes be a very crude estimate. The default value of
-      ``min_reciprocal_condition_number`` has been set to a conservative
-      value, and sometimes the ``Covariance::Compute`` may return false
-      even if it is possible to estimate the covariance reliably. In
-      such cases, the user should exercise their judgement before
-      lowering the value of ``min_reciprocal_condition_number``.
+      Here cholmod_rcond is a crude estimate of the reciprocal
+      condition number of :math:`J^\top J` by using the maximum and
+      minimum diagonal entries of the Cholesky factor :math:`R`. There
+      are no theoretical guarantees associated with this test. It can
+      give false positives and negatives. Use at your own risk. The
+      default value of ``min_reciprocal_condition_number`` has been
+      set to a conservative value, and sometimes the
+      :func:`Covariance::Compute` may return false even if it is
+      possible to estimate the covariance reliably. In such cases, the
+      user should exercise their judgement before lowering the value
+      of ``min_reciprocal_condition_number``.
 
-   b. ``use_dense_linear_algebra = true``
+    3. ``SPARSE_QR``
 
-      When using dense linear algebra, the user has more control in
-      dealing with singular and near singular covariance matrices.
+       .. math:: \operatorname{rank}(J) < \operatorname{num\_col}(J)
 
-      As mentioned above, when the covariance matrix is near singular,
-      instead of computing the inverse of :math:`J'J`, the
-      Moore-Penrose pseudoinverse of :math:`J'J` should be computed.
-
-      If :math:`J'J` has the eigen decomposition :math:`(\lambda_i,
-      e_i)`, where :math:`lambda_i` is the :math:`i^\textrm{th}`
-      eigenvalue and :math:`e_i` is the corresponding eigenvector,
-      then the inverse of :math:`J'J` is
-
-      .. math:: (J'J)^{-1} = \sum_i \frac{1}{\lambda_i} e_i e_i'
-
-      and computing the pseudo inverse involves dropping terms from
-      this sum that correspond to small eigenvalues.
-
-      How terms are dropped is controlled by
-      `min_reciprocal_condition_number` and `null_space_rank`.
-
-      If `null_space_rank` is non-negative, then the smallest
-      `null_space_rank` eigenvalue/eigenvectors are dropped
-      irrespective of the magnitude of :math:`\lambda_i`. If the ratio
-      of the smallest non-zero eigenvalue to the largest eigenvalue in
-      the truncated matrix is still below
-      min_reciprocal_condition_number, then the
-      `Covariance::Compute()` will fail and return `false`.
-
-      Setting `null_space_rank = -1` drops all terms for which
-
-      .. math::  \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min_reciprocal_condition_number}
+       Here :\math:`\operatorname{rank}(J)` is the estimate of the
+       rank of `J` returned by the ``SuiteSparseQR`` algorithm. It is
+       a fairly reliable indication of rank deficiency.
 
 .. member:: int Covariance::Options::null_space_rank
 
-   Truncate the smallest ``null_space_rank`` eigenvectors when
-   computing the pseudo inverse of :math:`J'J`.
+    When using ``DENSE_SVD``, the user has more control in dealing
+    with singular and near singular covariance matrices.
 
-   If ``null_space_rank = -1``, then all eigenvectors with eigenvalues
-   s.t.
+    As mentioned above, when the covariance matrix is near singular,
+    instead of computing the inverse of :math:`J'J`, the Moore-Penrose
+    pseudoinverse of :math:`J'J` should be computed.
 
-   :math:: \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min_reciprocal_condition_number}
+    If :math:`J'J` has the eigen decomposition :math:`(\lambda_i,
+    e_i)`, where :math:`lambda_i` is the :math:`i^\textrm{th}`
+    eigenvalue and :math:`e_i` is the corresponding eigenvector, then
+    the inverse of :math:`J'J` is
 
-   are dropped. See the documentation for
-   ``min_reciprocal_condition_number`` for more details.
+    .. math:: (J'J)^{-1} = \sum_i \frac{1}{\lambda_i} e_i e_i'
+
+    and computing the pseudo inverse involves dropping terms from this
+    sum that correspond to small eigenvalues.
+
+    How terms are dropped is controlled by
+    `min_reciprocal_condition_number` and `null_space_rank`.
+
+    If `null_space_rank` is non-negative, then the smallest
+    `null_space_rank` eigenvalue/eigenvectors are dropped irrespective
+    of the magnitude of :math:`\lambda_i`. If the ratio of the
+    smallest non-zero eigenvalue to the largest eigenvalue in the
+    truncated matrix is still below min_reciprocal_condition_number,
+    then the `Covariance::Compute()` will fail and return `false`.
+
+    Setting `null_space_rank = -1` drops all terms for which
+
+    .. math::  \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min_reciprocal_condition_number}
+
+    This option has no effect on ``SPARSE_QR`` and ``SPARSE_CHOLESKY``
+      algorithms.
 
 .. member:: bool Covariance::Options::apply_loss_function
 
