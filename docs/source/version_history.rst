@@ -4,37 +4,70 @@
 Version History
 ===============
 
-HEAD (52c3d9a)
-==============
+1.7.0
+=====
 
 New Features
 ------------
 
-#. Sparse and dense covariance estimation (EXPERIMENTAL).
+#. Sparse and dense covariance estimation.
+#. A new Wolfe line search. (Alex Stewart)
+#. ``BFGS`` line search direction. (Alex Stewart)
 #. C API
 #. Speeded up the use of loss functions > 17x.
 #. Use of Inner iterations can now be adaptively stopped. Iteration
    and runtime statistics for inner iterations are not reported in
    ``Solver::Summary`` and ``Solver::Summary::FullReport``.
 #. Add BlockRandomAccessCRSMatrix.
+#. Speeded up automatic differentiation by 7\%.
 #. Bundle adjustment example from libmv/Blender (Sergey Sharybin)
+#. Add the ability to turn shared library compilation on and off
+#. No more dependence on Protocol Buffers.
+#. Incomplete LQ factorization.
+#. Ability to write trust region problems to disk.
+#. Add sinh, cosh, tanh and tan functions to automatic differentiation
+   (Johannes Schönberger)
 
 Bug Fixes
 ---------
 
 #. Add documentation for minimizer progress output.
-#. Lint and other cleanups (William Rucklidge)
+#. Lint and other cleanups (William Rucklidge and James Roseborough)
 #. Collections port fix for MSC 2008 (Sergey Sharybin)
 #. Various corrections and cleanups in the documentation.
-#. Change the path where CeresConfig.cmake is installed (Pablo Speciale)
+#. Change the path where CeresConfig.cmake is installed (Pablo
+   Speciale)
 #. Minor erros in documentation (Pablo Speciale)
-#. Updated depend.cmake to follow CMake IF convention. (Joydeep Biswas)
+#. Updated depend.cmake to follow CMake IF convention. (Joydeep
+   Biswas)
 #. Stablize the schur ordering algorithm.
 #. Update license header in split.h.
-#. Enabling -O4 (link-time optimization) only if compiler/linker support it. (Alex Stewart)
+#. Enabling -O4 (link-time optimization) only if compiler/linker
+   support it. (Alex Stewart)
 #. Consistent glog path across files.
-#. ceres-solver.spec: Use cleaner, more conventional Release string (Taylor Braun-Jones)
+#. ceres-solver.spec: Use cleaner, more conventional Release string
+   (Taylor Braun-Jones)
 #. Fix compile bug on RHEL6 due to missing header (Taylor Braun-Jones)
+#. CMake file is less verbose.
+#. Use the latest upstream version of google-test and gmock.
+#. Rationalize some of the variable names in ``Solver::Options``.
+#. Improve Summary::FullReport when line search is used.
+#. Expose line search parameters in ``Solver::Options``.
+#. Fix update of L-BFGS history buffers after they become full. (Alex
+   Stewart)
+#. Fix configuration error on systems without SuiteSparse installed
+   (Sergey Sharybin)
+#. Enforce the read call returns correct value in ``curve_fitting_c.c``
+   (Arnaud Gelas)
+#. Fix DynamicAutoDiffCostFunction (Richard Stebbing)
+#. Fix Problem::RemoveParameterBlock documentation (Johannes
+   Schönberger)
+#. Fix a logging bug in parameter_block.h
+#. Refactor the preconditioner class structure.
+#. Fix an uninitialized variable warning when building with ``GCC``.
+#. Fix a reallocation bug in
+   ``CreateJacobianBlockSparsityTranspose``. (Yuliy Schwartzburg)
+#. Add a define for O_BINARY.
 
 
 1.6.0

@@ -29,7 +29,7 @@ squares problems.
 * If you use Ceres Solver for a publication, you must cite it as::
 
     @misc{ceres-solver,
-      author = "Sameer Agarwal and Keir Mierle",
+      author = "Sameer Agarwal and Keir Mierle and Others",
       title = "Ceres Solver",
       howpublished = "\url{https://code.google.com/p/ceres-solver/}",
     }

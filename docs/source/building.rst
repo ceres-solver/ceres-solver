@@ -93,10 +93,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.6.0.tar.gz
+ tar zxf ceres-solver-1.7.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.6.0
+ cmake ../ceres-solver-1.7.0
  make -j3
  make test
 
@@ -106,7 +106,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-1.6.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-1.7.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -190,10 +190,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.6.0.tar.gz
+   tar zxf ceres-solver-1.7.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.6.0
+   cmake ../ceres-solver-1.7.0
    make -j3
    make test
 

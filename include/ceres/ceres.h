@@ -34,8 +34,8 @@
 #ifndef CERES_PUBLIC_CERES_H_
 #define CERES_PUBLIC_CERES_H_
 
-#define CERES_VERSION 1.6.0
-#define CERES_ABI_VERSION 1.6.0
+#define CERES_VERSION 1.7.0
+#define CERES_ABI_VERSION 1.7.0
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/autodiff_local_parameterization.h"
