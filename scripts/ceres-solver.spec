@@ -1,15 +1,15 @@
 Name:           ceres-solver
-Version:        1.6.0
+Version:        1.7.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        1%{?dist}
+Release:        "0.1.0%{?dist}"
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Libraries
 License:        BSD
 URL:            http://code.google.com/p/ceres-solver/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}.tar.gz
+Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc1.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if (0%{?rhel} == 06)
@@ -21,7 +21,6 @@ BuildRequires:  eigen3-devel
 BuildRequires:  suitesparse-devel
 # Use atlas for BLAS and LAPACK
 BuildRequires:  atlas-devel
-BuildRequires:  protobuf-devel
 BuildRequires:  gflags-devel
 BuildRequires:  glog-devel
 
@@ -105,6 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon July 18 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.7.0-0
+- Bump version
+
 * Mon Apr 29 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.6.0-1
 - Bump version
 
