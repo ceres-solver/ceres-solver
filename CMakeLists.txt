@@ -91,6 +91,10 @@ OPTION(BUILD_ANDROID
        "Build for Android. Use build_android.sh instead of setting this."
        OFF)
 
+OPTION(BUILD_SHARED
+       "Build a dynamically linkable version of Ceres Solver."
+       ON)
+
 # To get a more static build, try the following line on Mac and Linux:
 # SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 
