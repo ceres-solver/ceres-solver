@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33665713_5b33777c",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-18T05:55:58Z",
+      "side": 1,
+      "message": "dropping this file from this CL.",
+      "parentUuid": "136b13de_dac46184",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37f5f95_19850f98",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "136b13de_bacbad8f",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-18T05:55:58Z",
+      "side": 1,
+      "message": "this was debugging code accidentally committed.\ndropping this file from this CL.",
+      "parentUuid": "f37f5f95_19850f98",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37f5f95_398a4ba9",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2013-07-18T05:53:09Z",
       "side": 1,
       "message": "SPARSE_SVD? Sounds cool, too bad I don\u0027t think it exists :)",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f37f5f95_99983f00",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-07-18T05:55:58Z",
+      "side": 1,
+      "message": "haha good catch.",
+      "parentUuid": "f37f5f95_398a4ba9",
       "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
