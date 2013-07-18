@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136b13de_dac46184",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-18T05:53:09Z",
+      "side": 1,
+      "message": "This should probably not run by default. You can happily run bundle adjuster with dense schur on some problems, but the covariance will explode on most of them.",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f37f5f95_19850f98",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-18T05:53:09Z",
+      "side": 1,
+      "message": "This needs some explanantion in the logs; the logs should say what they are displaying rather than cryptic pairs of numbers.",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f37f5f95_398a4ba9",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-07-18T05:53:09Z",
+      "side": 1,
+      "message": "SPARSE_SVD? Sounds cool, too bad I don\u0027t think it exists :)",
+      "revId": "cc675000180ed301e10bbebf1341e93384fc756a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
