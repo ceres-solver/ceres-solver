@@ -72,7 +72,7 @@ std::ostream& operator<<(std::ostream &os,
      << std::boolalpha << sample.value_is_valid << ", gradient_is_valid: "
      << std::boolalpha << sample.gradient_is_valid << "]";
   return os;
-};
+}
 
 LineSearch::LineSearch(const LineSearch::Options& options)
     : options_(options) {}

@@ -386,20 +386,23 @@ directions, all aimed at large scale problems.
    ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and ``HESTENES_STIEFEL``
    directions.
 
-3. ``BFGS`` A generalization of the Secant method to multiple dimensions in
-   which a full, dense approximation to the inverse Hessian is maintained and
-   used to compute a quasi-Newton step [NocedalWright]_.  BFGS is currently the best
-   known general quasi-Newton algorithm.
+3. ``BFGS`` A generalization of the Secant method to multiple
+   dimensions in which a full, dense approximation to the inverse
+   Hessian is maintained and used to compute a quasi-Newton step
+   [NocedalWright]_.  BFGS is currently the best known general
+   quasi-Newton algorithm.
 
-4. ``LBFGS`` A limited memory approximation to the full ``BFGS`` method in
-   which the last `M` iterations are used to approximate the inverse Hessian
-   used to compute a quasi-Newton step [Nocedal]_, [ByrdNocedal]_.
+4. ``LBFGS`` A limited memory approximation to the full ``BFGS``
+   method in which the last `M` iterations are used to approximate the
+   inverse Hessian used to compute a quasi-Newton step [Nocedal]_,
+   [ByrdNocedal]_.
 
 Currently Ceres Solver supports both a backtracking and interpolation
-based Armijo line search algorithm, and a sectioning / zoom interpolation
-(strong) Wolfe condition line search algorithm.  However, note that in order for
-the assumptions underlying the ``BFGS`` and ``LBFGS`` methods to be
-guaranteed to be satisfied the Wolfe line search algorithm should be used.
+based Armijo line search algorithm, and a sectioning / zoom
+interpolation (strong) Wolfe condition line search algorithm.
+However, note that in order for the assumptions underlying the
+``BFGS`` and ``LBFGS`` methods to be guaranteed to be satisfied the
+Wolfe line search algorithm should be used.
 
 .. _section-linear-solver:
 
@@ -795,10 +798,10 @@ elimination group [LiSaad]_.
 
    Default: ``WOLFE``
 
-   Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).  Note that in
-   order for the assumptions underlying the ``BFGS`` and ``LBFGS`` line search
-   direction algorithms to be guaranteed to be satisifed, the ``WOLFE`` line search
-   should be used.
+   Choices are ``ARMIJO`` and ``WOLFE`` (strong Wolfe conditions).
+   Note that in order for the assumptions underlying the ``BFGS`` and
+   ``LBFGS`` line search direction algorithms to be guaranteed to be
+   satisifed, the ``WOLFE`` line search should be used.
 
 .. member:: NonlinearConjugateGradientType Solver::Options::nonlinear_conjugate_gradient_type
 
@@ -834,13 +837,15 @@ elimination group [LiSaad]_.
 
    Default: ``false``
 
-   As part of the ``BFGS`` update step / ``LBFGS`` right-multiply step,
-   the initial inverse Hessian approximation is taken to be the Identity.
-   However, [Oren]_ showed that using instead :math:`I * \gamma`, where
-   :math:`\gamma` is a scalar chosen to approximate an eigenvalue of the true
-   inverse Hessian can result in improved convergence in a wide variety of cases.
-   Setting ``use_approximate_eigenvalue_bfgs_scaling`` to true enables this
-   scaling in ``BFGS`` (before first iteration) and ``LBFGS`` (at each iteration).
+   As part of the ``BFGS`` update step / ``LBFGS`` right-multiply
+   step, the initial inverse Hessian approximation is taken to be the
+   Identity.  However, [Oren]_ showed that using instead :math:`I *
+   \gamma`, where :math:`\gamma` is a scalar chosen to approximate an
+   eigenvalue of the true inverse Hessian can result in improved
+   convergence in a wide variety of cases.  Setting
+   ``use_approximate_eigenvalue_bfgs_scaling`` to true enables this
+   scaling in ``BFGS`` (before first iteration) and ``LBFGS`` (at each
+   iteration).
 
    Precisely, approximate eigenvalue scaling equates to
 
@@ -851,18 +856,19 @@ elimination group [LiSaad]_.
   .. math:: y_k = \nabla f_{k+1} - \nabla f_k
   .. math:: s_k = x_{k+1} - x_k
 
-  Where :math:`f()` is the line search objective and :math:`x` the vector of
-  parameter values [NocedalWright]_.
+  Where :math:`f()` is the line search objective and :math:`x` the
+  vector of parameter values [NocedalWright]_.
 
-  It is important to note that approximate eigenvalue scaling does **not**
-  *always* improve convergence, and that it can in fact *significantly* degrade
-  performance for certain classes of problem, which is why it is disabled
-  by default.  In particular it can degrade performance when the
-  sensitivity of the problem to different parameters varies significantly,
-  as in this case a single scalar factor fails to capture this variation
-  and detrimentally downscales parts of the Jacobian approximation which
-  correspond to low-sensitivity parameters. It can also reduce the
-  robustness of the solution to errors in the Jacobians.
+  It is important to note that approximate eigenvalue scaling does
+  **not** *always* improve convergence, and that it can in fact
+  *significantly* degrade performance for certain classes of problem,
+  which is why it is disabled by default.  In particular it can
+  degrade performance when the sensitivity of the problem to different
+  parameters varies significantly, as in this case a single scalar
+  factor fails to capture this variation and detrimentally downscales
+  parts of the Jacobian approximation which correspond to
+  low-sensitivity parameters. It can also reduce the robustness of the
+  solution to errors in the Jacobians.
 
 .. member:: LineSearchIterpolationType Solver::Options::line_search_interpolation_type
 
@@ -878,8 +884,9 @@ elimination group [LiSaad]_.
 
    .. math:: \|\Delta x_k\|_\infty < \text{min_line_search_step_size}
 
-   where :math:`\|\cdot\|_\infty` refers to the max norm, and :math:`\Delta x_k` is
-   the step change in the parameter values at the :math:`k`-th iteration.
+   where :math:`\|\cdot\|_\infty` refers to the max norm, and
+   :math:`\Delta x_k` is the step change in the parameter values at
+   the :math:`k`-th iteration.
 
 .. member:: double Solver::Options::line_search_sufficient_function_decrease
 
@@ -924,28 +931,30 @@ elimination group [LiSaad]_.
 
    Default: ``20``
 
-   Maximum number of trial step size iterations during each line search,
-   if a step size satisfying the search conditions cannot be found within
-   this number of trials, the line search will stop.
+   Maximum number of trial step size iterations during each line
+   search, if a step size satisfying the search conditions cannot be
+   found within this number of trials, the line search will stop.
 
-   As this is an 'artificial' constraint (one imposed by the user, not the underlying math),
-   if ``WOLFE`` line search is being used, *and* points satisfying the Armijo sufficient
-   (function) decrease condition have been found during the current search
-   (in :math:`<=` ``max_num_line_search_step_size_iterations``).  Then, the step
-   size with the lowest function value which satisfies the Armijo condition will be
-   returned as the new valid step, even though it does *not* satisfy the strong Wolfe
-   conditions.  This behaviour protects against early termination of the optimizer at a
-   sub-optimal point.
+   As this is an 'artificial' constraint (one imposed by the user, not
+   the underlying math), if ``WOLFE`` line search is being used, *and*
+   points satisfying the Armijo sufficient (function) decrease
+   condition have been found during the current search (in :math:`<=`
+   ``max_num_line_search_step_size_iterations``).  Then, the step size
+   with the lowest function value which satisfies the Armijo condition
+   will be returned as the new valid step, even though it does *not*
+   satisfy the strong Wolfe conditions.  This behaviour protects
+   against early termination of the optimizer at a sub-optimal point.
 
 .. member:: int Solver::Options::max_num_line_search_direction_restarts
 
    Default: ``5``
 
-   Maximum number of restarts of the line search direction algorithm before
-   terminating the optimization. Restarts of the line search direction
-   algorithm occur when the current algorithm fails to produce a new descent
-   direction. This typically indicates a numerical failure, or a breakdown
-   in the validity of the approximations used.
+   Maximum number of restarts of the line search direction algorithm
+   before terminating the optimization. Restarts of the line search
+   direction algorithm occur when the current algorithm fails to
+   produce a new descent direction. This typically indicates a
+   numerical failure, or a breakdown in the validity of the
+   approximations used.
 
 .. member:: double Solver::Options::line_search_sufficient_curvature_decrease
 
@@ -967,11 +976,11 @@ elimination group [LiSaad]_.
 
    Default: ``10.0``
 
-   During the bracketing phase of a Wolfe line search, the step size is
-   increased until either a point satisfying the Wolfe conditions is
-   found, or an upper bound for a bracket containing a point satisfying
-   the conditions is found.  Precisely, at each iteration of the
-   expansion:
+   During the bracketing phase of a Wolfe line search, the step size
+   is increased until either a point satisfying the Wolfe conditions
+   is found, or an upper bound for a bracket containinqg a point
+   satisfying the conditions is found.  Precisely, at each iteration
+   of the expansion:
 
    .. math:: \text{new_step_size} <= \text{max_step_expansion} * \text{step_size}
 
@@ -1092,8 +1101,9 @@ elimination group [LiSaad]_.
 
    .. math:: \frac{|\Delta \text{cost}|}{\text{cost} < \text{function_tolerance}}
 
-   where, :math:`\Delta \text{cost}` is the change in objective function
-   value (up or down) in the current iteration of Levenberg-Marquardt.
+   where, :math:`\Delta \text{cost}` is the change in objective
+   function value (up or down) in the current iteration of
+   Levenberg-Marquardt.
 
 .. member:: double Solver::Options::gradient_tolerance
 
@@ -1114,8 +1124,8 @@ elimination group [LiSaad]_.
 
    .. math:: \|\Delta x\| < (\|x\| + \text{parameter_tolerance}) * \text{parameter_tolerance}
 
-   where :math:`\Delta x` is the step computed by the linear solver in the
-   current iteration of Levenberg-Marquardt.
+   where :math:`\Delta x` is the step computed by the linear solver in
+   the current iteration of Levenberg-Marquardt.
 
 .. member:: LinearSolverType Solver::Options::linear_solver_type
 
@@ -1258,8 +1268,8 @@ elimination group [LiSaad]_.
 
    Default: ``NULL``
 
-   If :member:`Solver::Options::use_inner_iterations` true, then the user has
-   two choices.
+   If :member:`Solver::Options::use_inner_iterations` true, then the
+   user has two choices.
 
    1. Let the solver heuristically decide which parameter blocks to
       optimize in each inner iteration. To do this, set
@@ -1424,8 +1434,8 @@ elimination group [LiSaad]_.
    specified in this vector. By default, parameter blocks are updated
    only at the end of the optimization, i.e when the
    :class:`Minimizer` terminates. This behavior is controlled by
-   :member:`Solver::Options::update_state_every_variable`. If the user wishes
-   to have access to the update parameter blocks when his/her
+   :member:`Solver::Options::update_state_every_variable`. If the user
+   wishes to have access to the update parameter blocks when his/her
    callbacks are executed, then set
    :member:`Solver::Options::update_state_every_iteration` to true.
 

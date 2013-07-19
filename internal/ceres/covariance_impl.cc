@@ -726,7 +726,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   return false;
 
 #endif  // CERES_NO_SUITESPARSE
-};
+}
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   EventLogger event_logger(
