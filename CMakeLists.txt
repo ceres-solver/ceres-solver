@@ -647,7 +647,13 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
       ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
       # Mac OS X
       IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast -msse3")
+        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
+        # Use of -fast only applicable for Apple's GCC
+        # Assume this is being used if GCC version < 4.3 on OSX
+        EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+        IF (GCC_VERSION VERSION_LESS 4.3)
+          SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
+        ENDIF (GCC_VERSION VERSION_LESS 4.3)
       ENDIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     ENDIF (BUILD_ANDROID)
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
