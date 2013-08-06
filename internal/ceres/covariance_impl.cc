@@ -48,7 +48,10 @@
 #include "ceres/suitesparse.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
-#include "SuiteSparseQR.hpp"
+
+#ifndef CERES_NO_SUITESPARSE
+#  include "SuiteSparseQR.hpp"
+#endif
 
 namespace ceres {
 namespace internal {
