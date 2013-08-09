@@ -48,7 +48,7 @@ class Preconditioner : public LinearOperator {
   struct Options {
     Options()
         : type(JACOBI),
-          sparse_linear_algebra_library(SUITE_SPARSE),
+          sparse_linear_algebra_library_type(SUITE_SPARSE),
           num_threads(1),
           row_block_size(Eigen::Dynamic),
           e_block_size(Eigen::Dynamic),
@@ -57,7 +57,7 @@ class Preconditioner : public LinearOperator {
 
     PreconditionerType type;
 
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
     // If possible, how many threads the preconditioner can use.
     int num_threads;

@@ -54,6 +54,22 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
+// C interface to the LAPACK Cholesky factorization and triangular solve.
+extern "C" void dpotrf_(char *uplo,
+                       int* N,
+                       double* A,
+                       int* LDA,
+                       int* info);
+
+extern "C" void dpotrs_(char* uplo,
+                        int* N,
+                        int* NRHS,
+                        double* A,
+                        int* LDA,
+                        double* B,
+                        int* LDB,
+                        int* INFO);
+
 namespace ceres {
 namespace internal {
 
@@ -130,13 +146,32 @@ bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
     return true;
   }
 
-  // TODO(sameeragarwal): Add proper error handling; this completely ignores
-  // the quality of the solution to the solve.
-  VectorRef(solution, num_rows) =
-      ConstMatrixRef(m->values(), num_rows, num_rows)
-      .selfadjointView<Eigen::Upper>()
-      .ldlt()
-      .solve(ConstVectorRef(rhs(), num_rows));
+  if (options().dense_linear_algebra_library_type == EIGEN) {
+    // TODO(sameeragarwal): Add proper error handling; this completely ignores
+    // the quality of the solution to the solve.
+    VectorRef(solution, num_rows) =
+        ConstMatrixRef(m->values(), num_rows, num_rows)
+        .selfadjointView<Eigen::Upper>()
+        .ldlt()
+        .solve(ConstVectorRef(rhs(), num_rows));
+    return true;
+  }
+
+  char uplo = 'L';
+  int N = num_rows;
+  int info = 0;
+  dpotrf_(&uplo, &N, const_cast<double*>(m->values()), &N, &info);
+  if (info != 0) {
+    return false;
+  }
+  int nrhs = 1;
+  info = 0;
+  VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
+  dpotrs_(&uplo, &N, &nrhs, const_cast<double*>(m->values()), &N, solution, &N, &info);
+
+  if (info != 0) {
+    return false;
+  }
 
   return true;
 }
@@ -243,18 +278,18 @@ void SparseSchurComplementSolver::InitStorage(
 }
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
-  switch (options().sparse_linear_algebra_library) {
+  switch (options().sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
       return SolveReducedLinearSystemUsingSuiteSparse(solution);
     case CX_SPARSE:
       return SolveReducedLinearSystemUsingCXSparse(solution);
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library : "
-                 << options().sparse_linear_algebra_library;
+                 << options().sparse_linear_algebra_library_type;
   }
 
   LOG(FATAL) << "Unknown sparse linear algebra library : "
-             << options().sparse_linear_algebra_library;
+             << options().sparse_linear_algebra_library_type;
   return false;
 }
 

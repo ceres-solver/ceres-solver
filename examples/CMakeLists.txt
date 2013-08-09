@@ -37,6 +37,9 @@ TARGET_LINK_LIBRARIES(helloworld_numeric_diff ceres)
 ADD_EXECUTABLE(helloworld_analytic_diff helloworld_analytic_diff.cc)
 TARGET_LINK_LIBRARIES(helloworld_analytic_diff ceres)
 
+ADD_EXECUTABLE(large_dense_qr_test large_dense_qr_test.cc)
+TARGET_LINK_LIBRARIES(large_dense_qr_test ceres)
+
 ADD_EXECUTABLE(curve_fitting curve_fitting.cc)
 TARGET_LINK_LIBRARIES(curve_fitting ceres)
 

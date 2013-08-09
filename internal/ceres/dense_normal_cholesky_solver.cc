@@ -40,6 +40,33 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
+// C interface to the LAPACK Cholesky factorization and triangular solve.
+extern "C" void dpotrf_(char *uplo,
+                       int* N,
+                       double* A,
+                       int* LDA,
+                       int* info);
+
+extern "C" void dpotrs_(char* uplo,
+                        int* N,
+                        int* NRHS,
+                        double* A,
+                        int* LDA,
+                        double* B,
+                        int* LDB,
+                        int* INFO);
+
+extern "C" void dsyrk_(char* uplo,
+                       char* trans,
+                       int* N,
+                       int* K,
+                       double* alpha,
+                       double* A,
+                       int* LDA,
+                       double* BETA,
+                       double* C,
+                       int* LDC);
+
 namespace ceres {
 namespace internal {
 
@@ -48,6 +75,18 @@ DenseNormalCholeskySolver::DenseNormalCholeskySolver(
     : options_(options) {}
 
 LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
+    DenseSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+   if (options_.dense_linear_algebra_library_type == EIGEN) {
+     return SolveUsingEigen(A, b, per_solve_options, x);
+   } else {
+     return SolveUsingLAPACK(A, b, per_solve_options, x);
+   }
+}
+
+LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
     DenseSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
@@ -76,16 +115,87 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
     ConstVectorRef D(per_solve_options.D, num_cols);
     lhs += D.array().square().matrix().asDiagonal();
   }
+  event_logger.AddEvent("Product");
 
+  // Use dsyrk instead for the product.
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
   VectorRef(x, num_cols) =
       lhs.selfadjointView<Eigen::Upper>().ldlt().solve(rhs);
   event_logger.AddEvent("Solve");
-
   return summary;
 }
 
+LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingLAPACK(
+    DenseSparseMatrix* A,
+    const double* b,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double* x) {
+  EventLogger event_logger("DenseNormalCholeskySolver::Solve");
+
+  if (per_solve_options.D != NULL) {
+    // Temporarily append a diagonal block to the A matrix, but undo
+    // it before returning the matrix to the user.
+    A->AppendDiagonal(per_solve_options.D);
+  }
+
+  const int num_rows = A->num_rows();
+  const int num_cols = A->num_cols();
+
+  Matrix lhs(num_cols, num_cols);
+
+  event_logger.AddEvent("Setup");
+
+  {
+    char uplo = 'L';
+    char trans = 'T';
+    int N = num_cols;
+    int K = num_rows;
+    double alpha = 1.0;
+    double beta = 0.0;
+    int LDA = num_rows;
+    int LDC = num_cols;
+
+    // This is a bit hairy because of the underlying matrix size assumptions.
+    // we need to make sure that we know the layout of the underlying memory.
+    dsyrk_(&uplo, &trans, &N, &K, &alpha, A->mutable_values(), &LDA, &beta, lhs.data(), &LDC);
+  }
+
+  if (per_solve_options.D != NULL) {
+    // Undo the modifications to the matrix A.
+    A->RemoveDiagonal();
+  }
+
+  //   rhs = A'b
+  VectorRef(x, num_cols) =  A->matrix().transpose() * ConstVectorRef(b, num_rows);
+
+  if (per_solve_options.D != NULL) {
+    ConstVectorRef D(per_solve_options.D, num_cols);
+    lhs += D.array().square().matrix().asDiagonal();
+  }
+  event_logger.AddEvent("Product");
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = TOLERANCE;
+
+  char uplo = 'L';
+  int N = num_cols;
+  int info = 0;
+  int nrhs = 1;
+
+  dpotrf_(&uplo, &N, lhs.data(), &N, &info);
+  if (info == 0) {
+    dpotrs_(&uplo, &N, &nrhs, lhs.data(), &N, x, &N, &info);
+  }
+  event_logger.AddEvent("Solve");
+
+  if (info != 0) {
+    LOG(INFO) << "solve failed";
+  }
+
+  return summary;
+}
 }   // namespace internal
 }   // namespace ceres

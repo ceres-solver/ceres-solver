@@ -120,7 +120,7 @@ Solver::Summary::Summary()
       inner_iterations_used(false),
       preconditioner_type(IDENTITY),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
-      sparse_linear_algebra_library(SUITE_SPARSE),
+      sparse_linear_algebra_library_type(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
       line_search_type(ARMIJO) {
 }
@@ -199,7 +199,7 @@ string Solver::Summary::FullReport() const {
           preconditioner_type == CLUSTER_TRIDIAGONAL))) {
       StringAppendF(&report, "\nSparse linear algebra library %15s\n",
                     SparseLinearAlgebraLibraryTypeToString(
-                                sparse_linear_algebra_library));
+                        sparse_linear_algebra_library_type));
     }
 
     StringAppendF(&report, "Trust region strategy     %19s",

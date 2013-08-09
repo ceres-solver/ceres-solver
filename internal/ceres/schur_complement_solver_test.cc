@@ -87,7 +87,7 @@ class SchurComplementSolverTest : public ::testing::Test {
       int problem_id,
       bool regularization,
       ceres::LinearSolverType linear_solver_type,
-      ceres::SparseLinearAlgebraLibraryType sparse_linear_algebra_library,
+      ceres::SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
       bool use_postordering) {
     SetUpFromProblemId(problem_id);
     LinearSolver::Options options;
@@ -95,7 +95,8 @@ class SchurComplementSolverTest : public ::testing::Test {
     options.elimination_groups.push_back(
         A->block_structure()->cols.size() - num_eliminate_blocks);
     options.type = linear_solver_type;
-    options.sparse_linear_algebra_library = sparse_linear_algebra_library;
+    options.sparse_linear_algebra_library_type =
+        sparse_linear_algebra_library_type;
     options.use_postordering = use_postordering;
 
     scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));

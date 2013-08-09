@@ -125,8 +125,9 @@ void SetLinearSolver(Solver::Options* options) {
                                    &options->preconditioner_type));
   CHECK(StringToSparseLinearAlgebraLibraryType(
             FLAGS_sparse_linear_algebra_library,
-            &options->sparse_linear_algebra_library));
+            &options->sparse_linear_algebra_library_type));
   options->num_linear_solver_threads = FLAGS_num_threads;
+  options->dense_linear_algebra_library_type = EIGEN;
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

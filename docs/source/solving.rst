@@ -1147,7 +1147,7 @@ elimination group [LiSaad]_.
    ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. See
    :ref:`section-preconditioner` for more details.
 
-.. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library
+.. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
 
    Default:``SUITE_SPARSE``
 
@@ -1837,7 +1837,7 @@ elimination group [LiSaad]_.
        TrustRegionStrategyType trust_region_strategy_type;
        DoglegType dogleg_type;
 
-       SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+       SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
        LineSearchDirectionType line_search_direction_type;
        LineSearchType line_search_type;

@@ -506,8 +506,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       original_options.num_linear_solver_threads;
   summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
 
-  summary->sparse_linear_algebra_library =
-      options.sparse_linear_algebra_library;
+  summary->sparse_linear_algebra_library_type =
+      options.sparse_linear_algebra_library_type;
 
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
   summary->dogleg_type = options.dogleg_type;
@@ -1092,7 +1092,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   if (IsSchurType(options->linear_solver_type)) {
     if (!ReorderProgramForSchurTypeLinearSolver(
             options->linear_solver_type,
-            options->sparse_linear_algebra_library,
+            options->sparse_linear_algebra_library_type,
             problem_impl->parameter_map(),
             linear_solver_ordering,
             transformed_program.get(),
@@ -1104,7 +1104,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
     if (!ReorderProgramForSparseNormalCholesky(
-            options->sparse_linear_algebra_library,
+            options->sparse_linear_algebra_library_type,
             linear_solver_ordering,
             transformed_program.get(),
             error)) {
@@ -1136,7 +1136,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
 #ifdef CERES_NO_SUITESPARSE
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
-      options->sparse_linear_algebra_library == SUITE_SPARSE) {
+      options->sparse_linear_algebra_library_type == SUITE_SPARSE) {
     *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
              "SuiteSparse was not enabled when Ceres was built.";
     return NULL;
@@ -1157,7 +1157,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
 
 #ifdef CERES_NO_CXSPARSE
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
-      options->sparse_linear_algebra_library == CX_SPARSE) {
+      options->sparse_linear_algebra_library_type == CX_SPARSE) {
     *error = "Can't use SPARSE_NORMAL_CHOLESKY with CXSPARSE because "
              "CXSparse was not enabled when Ceres was built.";
     return NULL;
@@ -1194,8 +1194,10 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
       options->max_linear_solver_iterations;
   linear_solver_options.type = options->linear_solver_type;
   linear_solver_options.preconditioner_type = options->preconditioner_type;
-  linear_solver_options.sparse_linear_algebra_library =
-      options->sparse_linear_algebra_library;
+  linear_solver_options.sparse_linear_algebra_library_type =
+      options->sparse_linear_algebra_library_type;
+  linear_solver_options.dense_linear_algebra_library_type =
+      options->dense_linear_algebra_library_type;
   linear_solver_options.use_postordering = options->use_postordering;
 
   // Ignore user's postordering preferences and force it to be true if
@@ -1204,7 +1206,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   // done.
 #if !defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CAMD)
   if (IsSchurType(linear_solver_options.type) &&
-      linear_solver_options.sparse_linear_algebra_library == SUITE_SPARSE) {
+      linear_solver_options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
     linear_solver_options.use_postordering = true;
   }
 #endif
