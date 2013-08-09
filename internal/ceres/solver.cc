@@ -120,7 +120,8 @@ Solver::Summary::Summary()
       inner_iterations_used(false),
       preconditioner_type(IDENTITY),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
-      sparse_linear_algebra_library(SUITE_SPARSE),
+      dense_linear_algebra_library_type(EIGEN),
+      sparse_linear_algebra_library_type(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
       line_search_type(ARMIJO) {
 }
@@ -192,6 +193,15 @@ string Solver::Summary::FullReport() const {
     // TRUST_SEARCH HEADER
     StringAppendF(&report, "\nMinimizer                 %19s\n",
                   "TRUST_REGION");
+
+    if (linear_solver_type_used == DENSE_NORMAL_CHOLESKY ||
+        linear_solver_type_used == DENSE_SCHUR ||
+        linear_solver_type_used == DENSE_QR) {
+      StringAppendF(&report, "\nDense linear algebra library  %15s\n",
+                    DenseLinearAlgebraLibraryTypeToString(
+                        dense_linear_algebra_library_type));
+    }
+
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
@@ -199,7 +209,7 @@ string Solver::Summary::FullReport() const {
           preconditioner_type == CLUSTER_TRIDIAGONAL))) {
       StringAppendF(&report, "\nSparse linear algebra library %15s\n",
                     SparseLinearAlgebraLibraryTypeToString(
-                                sparse_linear_algebra_library));
+                        sparse_linear_algebra_library_type));
     }
 
     StringAppendF(&report, "Trust region strategy     %19s",
