@@ -27,29 +27,51 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Wrapper functions around BLAS functions.
 
-#ifndef CERES_INTERNAL_BLAS_H_
-#define CERES_INTERNAL_BLAS_H_
+#include "ceres/blas.h"
+
+extern "C" void dsyrk_(char* uplo,
+                       char* trans,
+                       int* n,
+                       int* k,
+                       double* alpha,
+                       double* a,
+                       int* lda,
+                       double* beta,
+                       double* c,
+                       int* ldc);
 
 namespace ceres {
 namespace internal {
 
-class BLAS {
- public:
-  // transpose = true  : c = alpha * a'a + beta * c;
-  // transpose = false : c = alpha * aa' + beta * c;
-  static void SymmetricRankKUpdate(int num_rows,
-                                   int num_cols,
-                                   const double* a,
-                                   bool transpose,
-                                   double alpha,
-                                   double beta,
-                                   double* c);
+void BLAS::SymmetricRankKUpdate(int num_rows,
+                                int num_cols,
+                                const double* a,
+                                bool transpose,
+                                double alpha,
+                                double beta,
+                                double* c) {
+#ifdef CERES_NO_LAPACK
+  LOG(FATAL) << "Ceres was built without a BLAS library.";
+#else
+  char uplo = 'L';
+  char trans = transpose ? 'T' : 'N';
+  int n = transpose ? num_cols : num_rows;
+  int k = transpose ? num_rows : num_cols;
+  int lda = k;
+  int ldc = n;
+  dsyrk_(&uplo,
+         &trans,
+         &n,
+         &k,
+         &alpha,
+         const_cast<double*>(a),
+         &lda,
+         &beta,
+         c,
+         &ldc);
+#endif
 };
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_BLAS_H_

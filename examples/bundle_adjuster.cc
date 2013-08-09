@@ -84,6 +84,8 @@ DEFINE_string(preconditioner, "jacobi", "Options are: "
               "cluster_tridiagonal.");
 DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
               "Options are: suite_sparse and cx_sparse.");
+DEFINE_string(dense_linear_algebra_library, "eigen",
+              "Options are: eigen and lapack.");
 DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
 
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
@@ -125,8 +127,12 @@ void SetLinearSolver(Solver::Options* options) {
                                    &options->preconditioner_type));
   CHECK(StringToSparseLinearAlgebraLibraryType(
             FLAGS_sparse_linear_algebra_library,
-            &options->sparse_linear_algebra_library));
+            &options->sparse_linear_algebra_library_type));
+  CHECK(StringToDenseLinearAlgebraLibraryType(
+            FLAGS_dense_linear_algebra_library,
+            &options->dense_linear_algebra_library_type));
   options->num_linear_solver_threads = FLAGS_num_threads;
+
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

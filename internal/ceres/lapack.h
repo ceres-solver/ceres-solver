@@ -27,29 +27,30 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Wrapper functions around BLAS functions.
 
-#ifndef CERES_INTERNAL_BLAS_H_
-#define CERES_INTERNAL_BLAS_H_
+#ifndef CERES_INTERNAL_LAPACK_H_
+#define CERES_INTERNAL_LAPACK_H_
 
 namespace ceres {
 namespace internal {
 
-class BLAS {
+class LAPACK {
  public:
-  // transpose = true  : c = alpha * a'a + beta * c;
-  // transpose = false : c = alpha * aa' + beta * c;
-  static void SymmetricRankKUpdate(int num_rows,
-                                   int num_cols,
-                                   const double* a,
-                                   bool transpose,
-                                   double alpha,
-                                   double beta,
-                                   double* c);
+  static int SolveInPlaceUsingCholesky(int num_rows,
+                                       const double* lhs,
+                                       double* rhs_and_solution);
+
+  static int EstimateWorkSizeForQR(int num_rows, int num_cols);
+
+  static int SolveUsingQR(int num_rows,
+                          int num_cols,
+                          const double* lhs,
+                          int work_size,
+                          double* work,
+                          double* rhs_and_solution);
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_BLAS_H_
+#endif  // CERES_INTERNAL_LAPACK_H_

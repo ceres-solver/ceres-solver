@@ -118,14 +118,30 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
   scoped_array<double> sol_regularized_;
 };
 
-TEST_F(UnsymmetricLinearSolverTest, DenseQR) {
+TEST_F(UnsymmetricLinearSolverTest, EigenDenseQR) {
   LinearSolver::Options options;
   options.type = DENSE_QR;
+  options.dense_linear_algebra_library_type = EIGEN;
   TestSolver(options);
 }
 
-TEST_F(UnsymmetricLinearSolverTest, DenseNormalCholesky) {
+TEST_F(UnsymmetricLinearSolverTest, LAPACKDenseQR) {
   LinearSolver::Options options;
+  options.type = DENSE_QR;
+  options.dense_linear_algebra_library_type = LAPACK;
+  TestSolver(options);
+}
+
+TEST_F(UnsymmetricLinearSolverTest, EigenDenseNormalCholesky) {
+  LinearSolver::Options options;
+  options.dense_linear_algebra_library_type = EIGEN;
+  options.type = DENSE_NORMAL_CHOLESKY;
+  TestSolver(options);
+}
+
+TEST_F(UnsymmetricLinearSolverTest, LAPACKDenseNormalCholesky) {
+  LinearSolver::Options options;
+  options.dense_linear_algebra_library_type = LAPACK;
   options.type = DENSE_NORMAL_CHOLESKY;
   TestSolver(options);
 }
@@ -134,7 +150,7 @@ TEST_F(UnsymmetricLinearSolverTest, DenseNormalCholesky) {
 TEST_F(UnsymmetricLinearSolverTest,
        SparseNormalCholeskyUsingSuiteSparsePreOrdering) {
   LinearSolver::Options options;
-  options.sparse_linear_algebra_library = SUITE_SPARSE;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = false;
   TestSolver(options);
@@ -143,7 +159,7 @@ TEST_F(UnsymmetricLinearSolverTest,
 TEST_F(UnsymmetricLinearSolverTest,
        SparseNormalCholeskyUsingSuiteSparsePostOrdering) {
   LinearSolver::Options options;
-  options.sparse_linear_algebra_library = SUITE_SPARSE;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
   TestSolver(options);
@@ -154,7 +170,7 @@ TEST_F(UnsymmetricLinearSolverTest,
 TEST_F(UnsymmetricLinearSolverTest,
        SparseNormalCholeskyUsingCXSparsePreOrdering) {
   LinearSolver::Options options;
-  options.sparse_linear_algebra_library = CX_SPARSE;
+  options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = false;
   TestSolver(options);
@@ -163,7 +179,7 @@ TEST_F(UnsymmetricLinearSolverTest,
 TEST_F(UnsymmetricLinearSolverTest,
        SparseNormalCholeskyUsingCXSparsePostOrdering) {
   LinearSolver::Options options;
-  options.sparse_linear_algebra_library = CX_SPARSE;
+  options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
   TestSolver(options);

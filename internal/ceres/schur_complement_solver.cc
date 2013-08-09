@@ -47,6 +47,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/lapack.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_complement_solver.h"
 #include "ceres/suitesparse.h"
@@ -130,15 +131,22 @@ bool DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
     return true;
   }
 
-  // TODO(sameeragarwal): Add proper error handling; this completely ignores
-  // the quality of the solution to the solve.
-  VectorRef(solution, num_rows) =
-      ConstMatrixRef(m->values(), num_rows, num_rows)
-      .selfadjointView<Eigen::Upper>()
-      .ldlt()
-      .solve(ConstVectorRef(rhs(), num_rows));
+  if (options().dense_linear_algebra_library_type == EIGEN) {
+    // TODO(sameeragarwal): Add proper error handling; this completely ignores
+    // the quality of the solution to the solve.
+    VectorRef(solution, num_rows) =
+        ConstMatrixRef(m->values(), num_rows, num_rows)
+        .selfadjointView<Eigen::Upper>()
+        .ldlt()
+        .solve(ConstVectorRef(rhs(), num_rows));
+    return true;
+  }
 
-  return true;
+  VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
+  const int info = LAPACK::SolveInPlaceUsingCholesky(num_rows,
+                                                     m->values(),
+                                                     solution);
+  return (info == 0);
 }
 
 #if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
@@ -243,18 +251,18 @@ void SparseSchurComplementSolver::InitStorage(
 }
 
 bool SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
-  switch (options().sparse_linear_algebra_library) {
+  switch (options().sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
       return SolveReducedLinearSystemUsingSuiteSparse(solution);
     case CX_SPARSE:
       return SolveReducedLinearSystemUsingCXSparse(solution);
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library : "
-                 << options().sparse_linear_algebra_library;
+                 << options().sparse_linear_algebra_library_type;
   }
 
   LOG(FATAL) << "Unknown sparse linear algebra library : "
-             << options().sparse_linear_algebra_library;
+             << options().sparse_linear_algebra_library_type;
   return false;
 }
 
