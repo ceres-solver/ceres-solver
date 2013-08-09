@@ -1147,7 +1147,23 @@ elimination group [LiSaad]_.
    ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. See
    :ref:`section-preconditioner` for more details.
 
-.. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library
+.. member:: DenseLinearAlgebraLibrary Solver::Options::dense_linear_algebra_library_type
+
+   Default:``EIGEN``
+
+   Ceres supports using multiple dense linear algebra libraries for
+   dense matrix factorizations. Currently ``EIGEN`` and ``LAPACK`` are
+   the valid choices. ``EIGEN`` is always available, ``LAPACK`` refers
+   to the system ``BLAS + LAPACK`` library which may or may not be
+   available.
+
+   This setting affects the ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY``
+   and ``DENSE_SCHUR`` solvers. For small to moderate sized probem
+   ``EIGEN`` is a fine choice but for large problems, an optimized
+   ``LAPACK + BLAS`` implementation can make a substantial difference
+   in performance.
+
+.. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
 
    Default:``SUITE_SPARSE``
 
@@ -1837,7 +1853,7 @@ elimination group [LiSaad]_.
        TrustRegionStrategyType trust_region_strategy_type;
        DoglegType dogleg_type;
 
-       SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+       SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
        LineSearchDirectionType line_search_direction_type;
        LineSearchType line_search_type;

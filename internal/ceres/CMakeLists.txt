@@ -30,6 +30,7 @@
 
 SET(CERES_INTERNAL_SRC
     array_utils.cc
+    blas.cc
     block_evaluate_preparer.cc
     block_jacobi_preconditioner.cc
     block_jacobian_writer.cc
@@ -64,6 +65,7 @@ SET(CERES_INTERNAL_SRC
     incomplete_lq_factorization.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
+    lapack.cc
     line_search.cc
     line_search_direction.cc
     line_search_minimizer.cc
@@ -166,22 +168,28 @@ IF (SUITESPARSE_FOUND)
     LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${METIS_LIB})
   ENDIF (EXISTS ${METIS_LIB})
 
-  LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${LAPACK_LIB})
-
-  IF (EXISTS ${BLAS_LIB})
-    LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${BLAS_LIB})
-  ENDIF (EXISTS ${BLAS_LIB})
-
   IF (TBB_FOUND)
     LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${TBB_LIB})
     LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${TBB_MALLOC_LIB})
   ENDIF (TBB_FOUND)
 ENDIF (SUITESPARSE_FOUND)
 
+IF (CXSPARSE_FOUND)
+  LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${CXSPARSE_LIB})
+ENDIF (CXSPARSE_FOUND)
+
+IF (BLAS_AND_LAPACK_FOUND)
+  LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${LAPACK_LIB})
+
+  IF (EXISTS ${BLAS_LIB})
+    LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${BLAS_LIB})
+  ENDIF (EXISTS ${BLAS_LIB})
+ENDIF (BLAS_AND_LAPACK_FOUND)
 
 IF (CXSPARSE_FOUND)
   LIST(APPEND CERES_LIBRARY_DEPENDENCIES ${CXSPARSE_LIB})
 ENDIF (CXSPARSE_FOUND)
+
 
 IF (OPENMP_FOUND)
   IF (NOT MSVC)
@@ -242,7 +250,6 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(autodiff)
   CERES_TEST(autodiff_cost_function)
   CERES_TEST(autodiff_local_parameterization)
-  CERES_TEST(blas)
   CERES_TEST(block_random_access_crs_matrix)
   CERES_TEST(block_random_access_dense_matrix)
   CERES_TEST(block_random_access_sparse_matrix)
@@ -285,6 +292,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
+  CERES_TEST(small_blas)
   CERES_TEST(solver_impl)
 
   # TODO(sameeragarwal): This test should ultimately be made

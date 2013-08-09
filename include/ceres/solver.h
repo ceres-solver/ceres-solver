@@ -73,7 +73,6 @@ class Solver {
       max_num_line_search_direction_restarts = 5;
       line_search_sufficient_curvature_decrease = 0.9;
       max_line_search_step_expansion = 10.0;
-
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
@@ -100,11 +99,12 @@ class Solver {
 
       preconditioner_type = JACOBI;
 
-      sparse_linear_algebra_library = SUITE_SPARSE;
+      sparse_linear_algebra_library_type = SUITE_SPARSE;
 #if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
-      sparse_linear_algebra_library = CX_SPARSE;
+      sparse_linear_algebra_library_type = CX_SPARSE;
 #endif
 
+      dense_linear_algebra_library_type = EIGEN;
       num_linear_solver_threads = 1;
       linear_solver_ordering = NULL;
       use_postordering = false;
@@ -388,7 +388,20 @@ class Solver {
     // for sparse matrix ordering and factorizations. Currently,
     // SUITE_SPARSE and CX_SPARSE are the valid choices, depending on
     // whether they are linked into Ceres at build time.
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
+
+    // Ceres supports using multiple dense linear algebra libraries
+    // for dense matrix factorizations. Currently EIGEN and LAPACK are
+    // the valid choices. EIGEN is always available, LAPACK refers to
+    // the system BLAS + LAPACK library which may or may not be
+    // available.
+    //
+    // This setting affects the DENSE_QR, DENSE_NORMAL_CHOLESKY and
+    // DENSE_SCHUR solvers. For small to moderate sized probem EIGEN
+    // is a fine choice but for large problems, an optimized LAPACK +
+    // BLAS implementation can make a substantial difference in
+    // performance.
+    DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
 
     // Number of threads used by Ceres to solve the Newton
     // step. Currently only the SPARSE_SCHUR solver is capable of
@@ -783,7 +796,8 @@ class Solver {
     TrustRegionStrategyType trust_region_strategy_type;
     DoglegType dogleg_type;
 
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library;
+    DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
     LineSearchDirectionType line_search_direction_type;
     LineSearchType line_search_type;
