@@ -27,32 +27,62 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Wrapper functions around BLAS functions.
 
-#ifndef CERES_INTERNAL_BLAS_H_
-#define CERES_INTERNAL_BLAS_H_
+#ifndef CERES_INTERNAL_LAPACK_H_
+#define CERES_INTERNAL_LAPACK_H_
 
 namespace ceres {
 namespace internal {
 
-class BLAS {
+class LAPACK {
  public:
-
-  // transpose = true  : c = alpha * a'a + beta * c;
-  // transpose = false : c = alpha * aa' + beta * c;
+  // Solve
   //
-  // Assumes column major matrices.
-  static void SymmetricRankKUpdate(int num_rows,
-                                   int num_cols,
-                                   const double* a,
-                                   bool transpose,
-                                   double alpha,
-                                   double beta,
-                                   double* c);
+  //  lhs * solution = rhs
+  //
+  // using a Cholesky factorization. Here
+  // lhs is a symmetric positive definite matrix. It is assumed to be
+  // column major and only the lower triangular part of the matrix is
+  // referenced.
+  //
+  // This function uses the LAPACK dpotrf and dpotrs routines.
+  //
+  // The return value is zero if the solve is successful.
+  static int SolveInPlaceUsingCholesky(int num_rows,
+                                       const double* lhs,
+                                       double* rhs_and_solution);
+
+  // The SolveUsingQR function requires a buffer for its temporary
+  // computation. This function given the size of the lhs matrix will
+  // return the size of the buffer needed.
+  static int EstimateWorkSizeForQR(int num_rows, int num_cols);
+
+  // Solve
+  //
+  //  lhs * solution = rhs
+  //
+  // using a dense QR factorization. lhs is an arbitrary (possibly
+  // rectangular) matrix with full column rank.
+  //
+  // work is an array of size work_size that this routine uses for its
+  // temporary storage. The optimal size of this array can be obtained
+  // by calling EstimateWorkSizeForQR.
+  //
+  // When calling, rhs_and_solution contains the rhs, and upon return
+  // the first num_col entries are the solution.
+  //
+  // This function uses the LAPACK dgels routine.
+  //
+  // The return value is zero if the solve is successful.
+  static int SolveUsingQR(int num_rows,
+                          int num_cols,
+                          const double* lhs,
+                          int work_size,
+                          double* work,
+                          double* rhs_and_solution);
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_BLAS_H_
+#endif  // CERES_INTERNAL_LAPACK_H_

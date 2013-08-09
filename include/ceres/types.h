@@ -126,6 +126,11 @@ enum SparseLinearAlgebraLibraryType {
   CX_SPARSE
 };
 
+enum DenseLinearAlgebraLibraryType {
+  EIGEN,
+  LAPACK
+};
+
 enum LinearSolverTerminationType {
   // Termination criterion was met. For factorization based solvers
   // the tolerance is assumed to be zero. Any user provided values are
@@ -401,6 +406,12 @@ bool StringToSparseLinearAlgebraLibraryType(
     string value,
     SparseLinearAlgebraLibraryType* type);
 
+const char* DenseLinearAlgebraLibraryTypeToString(
+    DenseLinearAlgebraLibraryType type);
+bool StringToDenseLinearAlgebraLibraryType(
+    string value,
+    DenseLinearAlgebraLibraryType* type);
+
 const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type);
 bool StringToTrustRegionStrategyType(string value,
                                      TrustRegionStrategyType* type);
@@ -444,7 +455,8 @@ const char* SolverTerminationTypeToString(SolverTerminationType type);
 bool IsSchurType(LinearSolverType type);
 bool IsSparseLinearAlgebraLibraryTypeAvailable(
     SparseLinearAlgebraLibraryType type);
-
+bool IsDenseLinearAlgebraLibraryTypeAvailable(
+    DenseLinearAlgebraLibraryType type);
 
 }  // namespace ceres
 

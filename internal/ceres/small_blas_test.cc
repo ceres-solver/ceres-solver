@@ -28,7 +28,7 @@
 //
 // Author: keir@google.com (Keir Mierle)
 
-#include "ceres/blas.h"
+#include "ceres/small_blas.h"
 
 #include "gtest/gtest.h"
 #include "ceres/internal/eigen.h"
