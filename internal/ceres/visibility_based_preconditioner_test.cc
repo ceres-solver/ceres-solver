@@ -279,7 +279,7 @@ namespace internal {
 //     preconditioner_->RightMultiply(x.data(), y.data());
 //     z = full_schur_complement
 //         .selfadjointView<Eigen::Upper>()
-//         .ldlt().solve(x);
+//         .llt().solve(x);
 //     double max_relative_difference =
 //         ((y - z).array() / z.array()).matrix().lpNorm<Eigen::Infinity>();
 //     EXPECT_NEAR(max_relative_difference, 0.0, kTolerance);

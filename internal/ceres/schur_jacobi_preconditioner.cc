@@ -128,7 +128,7 @@ void SchurJacobiPreconditioner::RightMultiply(const double* x,
     VectorRef(y, block_size) =
         block
         .selfadjointView<Eigen::Upper>()
-        .ldlt()
+        .llt()
         .solve(ConstVectorRef(x, block_size));
 
     x += block_size;

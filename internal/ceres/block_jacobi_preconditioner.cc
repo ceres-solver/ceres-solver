@@ -111,7 +111,7 @@ bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
     }
 
     block = block.selfadjointView<Eigen::Upper>()
-                 .ldlt()
+                 .llt()
                  .solve(Matrix::Identity(size, size));
   }
   return true;
