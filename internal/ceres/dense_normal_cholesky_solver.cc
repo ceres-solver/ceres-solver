@@ -81,7 +81,7 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
   VectorRef(x, num_cols) =
-      lhs.selfadjointView<Eigen::Upper>().ldlt().solve(rhs);
+      lhs.selfadjointView<Eigen::Upper>().llt().solve(rhs);
   event_logger.AddEvent("Solve");
 
   return summary;
