@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b815c4f5_37d392f7",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_97854604",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c4f5_f77aba2d",
         "filename": "internal/ceres/blas.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2013-08-13T21:37:25Z",
       "side": 1,
       "message": "Mention row/col major.",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815c4f5_d7bdfead",
+        "filename": "internal/ceres/blas.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_f77aba2d",
       "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b815c4f5_77cd0a4b",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "not really necessary.",
+      "parentUuid": "b815c4f5_d77fbe1b",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c4f5_576c4e72",
         "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2013-08-13T21:37:25Z",
       "side": 1,
       "message": "Maybe write out exactly what this is doing since it\u0027s not obvious from a bunch of 0/1/true/etc parameters. E.g. A +\u003d A * lhs",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815c4f5_b7e322c3",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "the expression is right at the top of this comment block.",
+      "parentUuid": "b815c4f5_576c4e72",
       "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b815c4f5_97e8a69e",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_3775523d",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c4f5_b795e22e",
         "filename": "internal/ceres/dense_qr_solver.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2013-08-13T21:37:25Z",
       "side": 1,
       "message": "Drop blank",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815c4f5_d7f21e8e",
+        "filename": "internal/ceres/dense_qr_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_b795e22e",
       "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b815c4f5_f7063a9c",
+        "filename": "internal/ceres/lapack.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_979a665a",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c4f5_f79f5a48",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2013-08-13T21:37:25Z",
       "side": 1,
       "message": "Drop unnecessary parens.",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815c4f5_d70b3ea2",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "I think this is actually clearer and less error prone.",
+      "parentUuid": "b815c4f5_f79f5a48",
       "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b815c4f5_3701d283",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_d7a4dea1",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c4f5_37aa726b",
         "filename": "jni/Android.mk",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2013-08-13T21:37:25Z",
       "side": 1,
       "message": "Hard tabs intended?",
+      "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b815c4f5_57f8ce60",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-13T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c4f5_37aa726b",
       "revId": "1a8f5d96c124d45b5cf5a12626ae34bf5696872e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
