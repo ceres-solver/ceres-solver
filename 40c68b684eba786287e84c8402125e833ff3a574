@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8773c7c_f942d347",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-15T17:02:58Z",
+      "side": 1,
+      "message": "class instead of struct to be consistent.",
+      "revId": "40c68b684eba786287e84c8402125e833ff3a574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8773c7c_f95bb32b",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-15T17:02:58Z",
+      "side": 1,
+      "message": "class",
+      "revId": "40c68b684eba786287e84c8402125e833ff3a574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
