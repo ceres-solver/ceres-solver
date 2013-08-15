@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "385e34fe_df9a4c5b",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-15T12:30:14Z",
+      "side": 1,
+      "message": "we are already including cholmod.h so no need for the comment or blank.",
+      "revId": "0fbe3a563c9d0be0c76a55924422db131736dad4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "385e34fe_bf95982e",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-15T12:30:14Z",
+      "side": 1,
+      "message": "put this inside a version ifdef, UF_long is about to go away.",
+      "revId": "0fbe3a563c9d0be0c76a55924422db131736dad4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
