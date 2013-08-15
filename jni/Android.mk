@@ -112,6 +112,7 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
 LOCAL_CFLAGS += -Wno-psabi
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
+                   $(CERES_SRC_PATH)/blas.cc \
                    $(CERES_SRC_PATH)/block_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/block_jacobian_writer.cc \
                    $(CERES_SRC_PATH)/block_jacobi_preconditioner.cc \
@@ -138,6 +139,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/gradient_checking_cost_function.cc \
                    $(CERES_SRC_PATH)/implicit_schur_complement.cc \
                    $(CERES_SRC_PATH)/iterative_schur_complement_solver.cc \
+                   $(CERES_SRC_PATH)/lapack.cc \
                    $(CERES_SRC_PATH)/levenberg_marquardt_strategy.cc \
                    $(CERES_SRC_PATH)/line_search.cc \
                    $(CERES_SRC_PATH)/line_search_direction.cc \
