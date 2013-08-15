@@ -44,6 +44,11 @@
 #include "cholmod.h"
 #include "glog/logging.h"
 
+// Include some other SuiteSparse headers as well,
+// so Ceres could always include suitesparse.h and
+// don't use additional ifdefs around include blocks.
+#include "SuiteSparseQR.hpp"
+
 // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
 // if SuiteSparse was compiled with Metis support. This makes
 // calling and linking into cholmod_camd problematic even though it
@@ -57,6 +62,10 @@
 #if (SUITESPARSE_VERSION < 4002)
 #define CERES_NO_CAMD
 #endif
+
+// UF_long is deprecated but SuiteSparse_long is only available in
+// newer versions of SuiteSparse.
+typedef UF_long SuiteSparse_long;
 
 namespace ceres {
 namespace internal {

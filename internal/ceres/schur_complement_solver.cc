@@ -33,16 +33,13 @@
 #include <set>
 #include <vector>
 
-#ifndef CERES_NO_CXSPARSE
-#include "cs.h"
-#endif  // CERES_NO_CXSPARSE
-
 #include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/cxsparse.h"
 #include "ceres/detect_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/port.h"

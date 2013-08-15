@@ -36,11 +36,8 @@
 #include <cstring>
 #include <ctime>
 
-#ifndef CERES_NO_CXSPARSE
-#include "cs.h"
-#endif
-
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/cxsparse.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
