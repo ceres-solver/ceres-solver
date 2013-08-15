@@ -49,10 +49,6 @@
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
 
-#ifndef CERES_NO_SUITESPARSE
-#  include "SuiteSparseQR.hpp"
-#endif
-
 namespace ceres {
 namespace internal {
 namespace {
@@ -607,15 +603,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   const int num_cols = jacobian.num_cols;
   const int num_nonzeros = jacobian.values.size();
 
-  // UF_long is deprecated but SuiteSparse_long is only available in
-  // newer versions of SuiteSparse.
-#if (SUITESPARSE_VERSION < 4002)
-  vector<UF_long> transpose_rows(num_cols + 1, 0);
-  vector<UF_long> transpose_cols(num_nonzeros, 0);
-#else
   vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
   vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
-#endif
 
   vector<double> transpose_values(num_nonzeros, 0);
 
