@@ -36,11 +36,8 @@
 #include <cstring>
 #include <ctime>
 
-#ifndef CERES_NO_CXSPARSE
-#include "cs.h"
-#endif
-
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/cxsparse.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
@@ -54,14 +51,9 @@ namespace internal {
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : options_(options) {
-#ifndef CERES_NO_SUITESPARSE
-  factor_ = NULL;
-#endif
-
-#ifndef CERES_NO_CXSPARSE
-  cxsparse_factor_ = NULL;
-#endif  // CERES_NO_CXSPARSE
+    : factor_(NULL),
+      cxsparse_factor_(NULL),
+      options_(options) {
 }
 
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
