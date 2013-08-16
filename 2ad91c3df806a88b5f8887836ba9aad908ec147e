@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f83c9ca4_547e44e7",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-16T19:19:29Z",
+      "side": 1,
+      "message": "this is odd, x is passed by value, having a const implementation should not matter. putting a const in the interface here is pointless. please modify the implementation instead.",
+      "revId": "2ad91c3df806a88b5f8887836ba9aad908ec147e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
