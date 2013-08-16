@@ -170,7 +170,7 @@ class LineSearch {
     // g is the gradient f'(x) at x.
     //
     // f must not be null. The gradient is computed only if g is not null.
-    virtual bool Evaluate(double x, double* f, double* g) = 0;
+    virtual bool Evaluate(const double x, double* f, double* g) = 0;
   };
 
   // Result of the line search.
