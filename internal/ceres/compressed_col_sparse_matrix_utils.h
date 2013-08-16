@@ -33,6 +33,7 @@
 
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/suitesparse.h"
 
 namespace ceres {
 namespace internal {
@@ -60,6 +61,39 @@ void CompressedColumnScalarMatrixToBlockMatrix(const int* scalar_rows,
 void BlockOrderingToScalarOrdering(const vector<int>& blocks,
                                    const vector<int>& block_ordering,
                                    vector<int>* scalar_ordering);
+
+template <typename IntegerType>
+void SolveUpperTriangularInPlace(IntegerType num_cols,
+                                 const IntegerType* rows,
+                                 const IntegerType* cols,
+                                 const double* values,
+                                 double* rhs_and_solution) {
+  for (IntegerType c = num_cols - 1; c >= 0; --c) {
+    rhs_and_solution[c] /= values[cols[c + 1] - 1];
+    for (IntegerType idx = cols[c]; idx < cols[c + 1] - 1; ++idx) {
+      const IntegerType r = rows[idx];
+      const double v = values[idx];
+      rhs_and_solution[r] -= v * rhs_and_solution[c];
+    }
+  }
+};
+
+template <typename IntegerType>
+void SolveUpperTriangularTransposeInPlace(IntegerType num_cols,
+                                          const IntegerType* rows,
+                                          const IntegerType* cols,
+                                          const double* values,
+                                          double* rhs_and_solution) {
+  for (IntegerType c = 0; c < num_cols; ++c) {
+    for (IntegerType idx = cols[c]; idx < cols[c + 1] - 1; ++idx) {
+      const IntegerType r = rows[idx];
+      const double v = values[idx];
+      rhs_and_solution[c] -= v * rhs_and_solution[r];
+    }
+    rhs_and_solution[c] =  rhs_and_solution[c] / values[cols[c + 1] - 1];
+  };
+};
+
 
 }  // namespace internal
 }  // namespace ceres

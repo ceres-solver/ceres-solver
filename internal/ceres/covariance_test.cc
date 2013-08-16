@@ -499,6 +499,9 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
 #ifndef CERES_NO_SUITESPARSE
   options.algorithm_type = SPARSE_CHOLESKY;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
   options.algorithm_type = DENSE_SVD;
@@ -551,6 +554,9 @@ TEST_F(CovarianceTest, LocalParameterization) {
 
 #ifndef CERES_NO_SUITESPARSE
   options.algorithm_type = SPARSE_CHOLESKY;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 #endif
 
@@ -776,6 +782,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
 
 TEST_F(LargeScaleCovarianceTest, Parallel) {
   ComputeAndCompare(SPARSE_CHOLESKY, 4);
+  ComputeAndCompare(SPARSE_QR, 4);
 }
 
 #endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
