@@ -38,6 +38,7 @@
 #include <utility>
 #include <vector>
 #include "Eigen/SVD"
+#include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
 #include "ceres/crs_matrix.h"
@@ -55,6 +56,7 @@ namespace {
 
 // Per thread storage for SuiteSparse.
 #ifndef CERES_NO_SUITESPARSE
+
 struct PerThreadContext {
   explicit PerThreadContext(int num_rows)
       : solution(NULL),
@@ -80,6 +82,7 @@ struct PerThreadContext {
   cholmod_dense* rhs;
   SuiteSparse ss;
 };
+
 #endif
 
 }  // namespace
@@ -605,7 +608,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
 
   vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
   vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
-
   vector<double> transpose_values(num_nonzeros, 0);
 
   for (int idx = 0; idx < num_nonzeros; ++idx) {
@@ -650,21 +652,38 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   cholmod_common cc;
   cholmod_l_start(&cc);
 
-  SuiteSparseQR_factorization<double>* factor =
-      SuiteSparseQR_factorize<double>(SPQR_ORDERING_BESTAMD,
-                                      SPQR_DEFAULT_TOL,
-                                      &cholmod_jacobian,
-                                      &cc);
-  event_logger.AddEvent("Numeric Factorization");
+  cholmod_sparse* R = NULL;
+  SuiteSparse_long* permutation = NULL;
 
-  const int rank = cc.SPQR_istat[4];
+  // Compute a Q-less QR factorization of the Jacobian. Since we are
+  // only interested in inverting J'J = R'R, we do not need Q. This
+  // saves memory and gives us R as a permuted compressed column
+  // sparse matrix.
+  const SuiteSparse_long rank =
+      SuiteSparseQR<double>(SPQR_ORDERING_BESTAMD,
+                            SPQR_DEFAULT_TOL,
+                            cholmod_jacobian.ncol,
+                            &cholmod_jacobian,
+                            &R,
+                            &permutation,
+                            &cc);
+  event_logger.AddEvent("Numeric Factorization");
+  CHECK_NOTNULL(permutation);
+  CHECK_NOTNULL(R);
+
   if (rank < cholmod_jacobian.ncol) {
     LOG(WARNING) << "Jacobian matrix is rank deficient."
                  << "Number of columns: " << cholmod_jacobian.ncol
                  << " rank: " << rank;
-    SuiteSparseQR_free(&factor, &cc);
+    delete []permutation;
+    cholmod_l_free_sparse(&R, &cc);
     cholmod_l_finish(&cc);
     return false;
+  }
+
+  vector<int> inverse_permutation(num_cols);
+  for (SuiteSparse_long i = 0; i < num_cols; ++i) {
+    inverse_permutation[permutation[i]] = i;
   }
 
   const int* rows = covariance_matrix_->rows();
@@ -680,35 +699,39 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   //
   // Since the covariance matrix is symmetric, the i^th row and column
   // are equal.
+  const int num_threads = options_.num_threads;
+  scoped_array<double> workspace(new double[num_threads * num_cols]);
 
-  cholmod_dense* rhs = cholmod_l_zeros(num_cols, 1, CHOLMOD_REAL, &cc);
-  double* rhs_x = reinterpret_cast<double*>(rhs->x);
-
+#pragma omp parallel for num_threads(num_threads) schedule(dynamic)
   for (int r = 0; r < num_cols; ++r) {
-    int row_begin = rows[r];
-    int row_end = rows[r + 1];
+    const int row_begin = rows[r];
+    const int row_end = rows[r + 1];
     if (row_end == row_begin) {
       continue;
     }
 
-    rhs_x[r] = 1.0;
+#  ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+#  else
+    int thread_id = 0;
+#  endif
 
-    cholmod_dense* y1 = SuiteSparseQR_solve<double>(SPQR_RTX_EQUALS_ETB, factor, rhs, &cc);
-    cholmod_dense* solution = SuiteSparseQR_solve<double>(SPQR_RETX_EQUALS_B, factor, y1, &cc);
-
-    double* solution_x = reinterpret_cast<double*>(solution->x);
+    double* solution = workspace.get() + thread_id * num_cols;
+    SolveRTRWithSparseRHS<SuiteSparse_long>(
+        num_cols,
+        static_cast<SuiteSparse_long*>(R->i),
+        static_cast<SuiteSparse_long*>(R->p),
+        static_cast<double*>(R->x),
+        inverse_permutation[r],
+        solution);
     for (int idx = row_begin; idx < row_end; ++idx) {
-      const int c = cols[idx];
-      values[idx] = solution_x[c];
+     const int c = cols[idx];
+     values[idx] = solution[inverse_permutation[c]];
     }
-
-    cholmod_l_free_dense(&y1, &cc);
-    cholmod_l_free_dense(&solution, &cc);
-    rhs_x[r] = 0.0;
   }
 
-  cholmod_l_free_dense(&rhs, &cc);
-  SuiteSparseQR_free(&factor, &cc);
+  delete []permutation;
+  cholmod_l_free_sparse(&R, &cc);
   cholmod_l_finish(&cc);
   event_logger.AddEvent("Inversion");
   return true;
