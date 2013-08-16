@@ -231,7 +231,7 @@ class LineSearchFunction : public LineSearch::Function {
   explicit LineSearchFunction(Evaluator* evaluator);
   virtual ~LineSearchFunction() {}
   void Init(const Vector& position, const Vector& direction);
-  virtual bool Evaluate(const double x, double* f, double* g);
+  virtual bool Evaluate(double x, double* f, double* g);
   double DirectionInfinityNorm() const;
 
  private:

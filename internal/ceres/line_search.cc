@@ -112,7 +112,7 @@ void LineSearchFunction::Init(const Vector& position,
   direction_ = direction;
 }
 
-bool LineSearchFunction::Evaluate(const double x, double* f, double* g) {
+bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
   scaled_direction_ = x * direction_;
   if (!evaluator_->Plus(position_.data(),
                         scaled_direction_.data(),
