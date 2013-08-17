@@ -1231,7 +1231,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   // done.
 #if !defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CAMD)
   if (IsSchurType(linear_solver_options.type) &&
-      linear_solver_options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
+      options->sparse_linear_algebra_library_type == SUITE_SPARSE) {
     linear_solver_options.use_postordering = true;
   }
 #endif

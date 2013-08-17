@@ -80,7 +80,7 @@ void SolveUpperTriangularInPlace(IntegerType num_cols,
       rhs_and_solution[r] -= v * rhs_and_solution[c];
     }
   }
-};
+}
 
 // Solve the linear system
 //
@@ -100,8 +100,8 @@ void SolveUpperTriangularTransposeInPlace(IntegerType num_cols,
       rhs_and_solution[c] -= v * rhs_and_solution[r];
     }
     rhs_and_solution[c] =  rhs_and_solution[c] / values[cols[c + 1] - 1];
-  };
-};
+  }
+}
 
 // Given a upper triangular matrix R in compressed column form, solve
 // the linear system,
@@ -131,10 +131,10 @@ void SolveRTRWithSparseRHS(IntegerType num_cols,
       solution[c] -= v * solution[r];
     }
     solution[c] =  solution[c] / values[cols[c + 1] - 1];
-  };
-  SolveUpperTriangularInPlace(num_cols, rows, cols, values, solution);
-};
+  }
 
+  SolveUpperTriangularInPlace(num_cols, rows, cols, values, solution);
+}
 
 }  // namespace internal
 }  // namespace ceres

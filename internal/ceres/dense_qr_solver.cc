@@ -76,6 +76,8 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
     A->AppendDiagonal(per_solve_options.D);
   }
 
+  // TODO(sameeragarwal): Since we are copying anyways, the diagonal
+  // can be appended to the matrix instead of doing it on A.
   lhs_ =  A->matrix();
 
   if (per_solve_options.D != NULL) {
@@ -91,7 +93,8 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
   rhs_.head(num_rows) = ConstVectorRef(b, num_rows);
 
   if (work_.rows() == 1) {
-    const int work_size = LAPACK::EstimateWorkSizeForQR(lhs_.rows(), lhs_.cols());
+    const int work_size =
+        LAPACK::EstimateWorkSizeForQR(lhs_.rows(), lhs_.cols());
     VLOG(3) << "Working memory for Dense QR factorization: "
             << work_size * sizeof(double);
     work_.resize(work_size);
@@ -127,7 +130,6 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
 
   const int num_rows = A->num_rows();
   const int num_cols = A->num_cols();
-
 
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo

@@ -160,7 +160,8 @@ TEST_F(SchurComplementSolverTest, LAPACKBasedDenseSchurWithLargeProblem) {
 #ifndef CERES_NO_SUITESPARSE
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithSuiteSparseSmallProblemNoPostOrdering) {
-  ComputeAndCompareSolutions(2, false, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
+  ComputeAndCompareSolutions(
+      2, false, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
   ComputeAndCompareSolutions(2, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
 }
 
@@ -172,7 +173,8 @@ TEST_F(SchurComplementSolverTest,
 
 TEST_F(SchurComplementSolverTest,
        SparseSchurWithSuiteSparseLargeProblemNoPostOrdering) {
-  ComputeAndCompareSolutions(3, false, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
+  ComputeAndCompareSolutions(
+      3, false, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
   ComputeAndCompareSolutions(3, true, SPARSE_SCHUR, EIGEN, SUITE_SPARSE, false);
 }
 

@@ -1853,6 +1853,7 @@ elimination group [LiSaad]_.
        TrustRegionStrategyType trust_region_strategy_type;
        DoglegType dogleg_type;
 
+       DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
        SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
        LineSearchDirectionType line_search_direction_type;

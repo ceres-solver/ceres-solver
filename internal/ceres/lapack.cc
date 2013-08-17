@@ -101,11 +101,22 @@ int LAPACK::EstimateWorkSizeForQR(int num_rows, int num_cols) {
   int lwork = -1;
   double work;
   int info = 0;
-  dgels_(&trans, &num_rows, &num_cols, &nrhs, NULL, &num_rows, NULL, &num_rows, &work, &lwork, &info);
+  dgels_(&trans,
+         &num_rows,
+         &num_cols,
+         &nrhs,
+         NULL,
+         &num_rows,
+         NULL,
+         &num_rows,
+         &work,
+         &lwork,
+         &info);
+
   CHECK_EQ(info, 0);
   return work;
 #endif
-};
+}
 
 int LAPACK::SolveUsingQR(int num_rows,
                          int num_cols,
@@ -126,10 +137,21 @@ int LAPACK::SolveUsingQR(int num_rows,
   int info = 0;
   double* lhs = const_cast<double*>(in_lhs);
 
-  dgels_(&trans, &m, &n, &nrhs, lhs, &lda, rhs_and_solution, &ldb, work, &work_size, &info);
+  dgels_(&trans,
+         &m,
+         &n,
+         &nrhs,
+         lhs,
+         &lda,
+         rhs_and_solution,
+         &ldb,
+         work,
+         &work_size,
+         &info);
+
   return info;
 #endif
-};
+}
 
 }  // namespace internal
 }  // namespace ceres

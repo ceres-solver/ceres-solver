@@ -38,7 +38,6 @@ namespace internal {
 
 class BLAS {
  public:
-
   // transpose = true  : c = alpha * a'a + beta * c;
   // transpose = false : c = alpha * aa' + beta * c;
   //

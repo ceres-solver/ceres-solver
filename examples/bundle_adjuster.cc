@@ -132,7 +132,6 @@ void SetLinearSolver(Solver::Options* options) {
             FLAGS_dense_linear_algebra_library,
             &options->dense_linear_algebra_library_type));
   options->num_linear_solver_threads = FLAGS_num_threads;
-
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {

@@ -268,7 +268,7 @@ class SuiteSparse {
 }  // namespace internal
 }  // namespace ceres
 
-#else // CERES_NO_SUITESPARSE
+#else  // CERES_NO_SUITESPARSE
 
 class SuiteSparse {};
 typedef void cholmod_factor;

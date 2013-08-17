@@ -54,11 +54,11 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
-   if (options_.dense_linear_algebra_library_type == EIGEN) {
-     return SolveUsingEigen(A, b, per_solve_options, x);
-   } else {
-     return SolveUsingLAPACK(A, b, per_solve_options, x);
-   }
+  if (options_.dense_linear_algebra_library_type == EIGEN) {
+    return SolveUsingEigen(A, b, per_solve_options, x);
+  } else {
+    return SolveUsingLAPACK(A, b, per_solve_options, x);
+  }
 }
 
 LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
@@ -93,7 +93,6 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
   }
   event_logger.AddEvent("Product");
 
-  // Use dsyrk instead for the product.
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
@@ -139,7 +138,8 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingLAPACK(
 
   // TODO(sameeragarwal): Replace this with a gemv call for true blasness.
   //   rhs = A'b
-  VectorRef(x, num_cols) =  A->matrix().transpose() * ConstVectorRef(b, A->num_rows());
+  VectorRef(x, num_cols) =
+      A->matrix().transpose() * ConstVectorRef(b, A->num_rows());
   event_logger.AddEvent("Product");
 
   const int info = LAPACK::SolveInPlaceUsingCholesky(num_cols, lhs.data(), x);

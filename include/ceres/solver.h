@@ -99,12 +99,13 @@ class Solver {
 
       preconditioner_type = JACOBI;
 
+      dense_linear_algebra_library_type = EIGEN;
       sparse_linear_algebra_library_type = SUITE_SPARSE;
 #if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
       sparse_linear_algebra_library_type = CX_SPARSE;
 #endif
 
-      dense_linear_algebra_library_type = EIGEN;
+
       num_linear_solver_threads = 1;
       linear_solver_ordering = NULL;
       use_postordering = false;
@@ -384,12 +385,6 @@ class Solver {
     // Type of preconditioner to use with the iterative linear solvers.
     PreconditionerType preconditioner_type;
 
-    // Ceres supports using multiple sparse linear algebra libraries
-    // for sparse matrix ordering and factorizations. Currently,
-    // SUITE_SPARSE and CX_SPARSE are the valid choices, depending on
-    // whether they are linked into Ceres at build time.
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
-
     // Ceres supports using multiple dense linear algebra libraries
     // for dense matrix factorizations. Currently EIGEN and LAPACK are
     // the valid choices. EIGEN is always available, LAPACK refers to
@@ -402,6 +397,12 @@ class Solver {
     // BLAS implementation can make a substantial difference in
     // performance.
     DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
+
+    // Ceres supports using multiple sparse linear algebra libraries
+    // for sparse matrix ordering and factorizations. Currently,
+    // SUITE_SPARSE and CX_SPARSE are the valid choices, depending on
+    // whether they are linked into Ceres at build time.
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
     // Number of threads used by Ceres to solve the Newton
     // step. Currently only the SPARSE_SCHUR solver is capable of

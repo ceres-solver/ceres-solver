@@ -72,7 +72,7 @@ void BLAS::SymmetricRankKUpdate(int num_rows,
          c,
          &ldc);
 #endif
-};
+}
 
 }  // namespace internal
 }  // namespace ceres
