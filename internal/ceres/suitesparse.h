@@ -60,9 +60,11 @@
 #endif
 
 // UF_long is deprecated but SuiteSparse_long is only available in
-// newer versions of SuiteSparse.
-#if (SUITESPARSE_VERSION < 4002)
-typedef UF_long SuiteSparse_long;
+// newer versions of SuiteSparse. So for older versions of
+// SuiteSparse, we define SuiteSparse_long to be the same as UF_long,
+// which is what recent versions of SuiteSparse do anyways.
+#ifndef SuiteSparse_long
+#define SuiteSparse_long UF_long;
 #endif
 
 namespace ceres {
