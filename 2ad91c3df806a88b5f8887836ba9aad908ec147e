@@ -16,6 +16,24 @@
       "revId": "2ad91c3df806a88b5f8887836ba9aad908ec147e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d838cc5_02926a9d",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5035
+      },
+      "writtenOn": "2013-08-18T12:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83c9ca4_547e44e7",
+      "revId": "2ad91c3df806a88b5f8887836ba9aad908ec147e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
