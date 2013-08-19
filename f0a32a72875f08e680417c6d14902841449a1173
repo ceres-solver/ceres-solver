@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed513c1f_0fb96d0f",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-08-19T14:34:28Z",
+      "side": 1,
+      "message": "Does \"#ifndef SuiteSparse_long\" mean you are using an old version? I just reverted back one of the last changed, since the old version the typedef was working, but I didn\u0027t update the comment.\n\nProbably it is not the solution, but at least for me it compiles and with the define it doesn\u0027t",
+      "revId": "f0a32a72875f08e680417c6d14902841449a1173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
