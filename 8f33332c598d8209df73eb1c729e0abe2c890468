@@ -16,6 +16,24 @@
       "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed513c1f_8f1c3d89",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-08-19T14:34:28Z",
+      "side": 0,
+      "message": "I am using the one which came with ubuntu 13.04:\n   3.4.0-3ubuntu1\n\nHere the package:\n   https://launchpad.net/ubuntu/raring/+package/libsuitesparse-dev\n\nI will try to check with the development source.\n\nNote: it is a clean install of ubuntu.",
+      "parentUuid": "ad4bc472_c4d7bed4",
+      "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
