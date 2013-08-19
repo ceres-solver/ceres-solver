@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4bc472_c4d7bed4",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-19T13:38:11Z",
+      "side": 0,
+      "message": "this works? because suitesparse uses a macro for uf_long and suitesparse_long also, what version of suitesparse did you check this with?",
+      "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
