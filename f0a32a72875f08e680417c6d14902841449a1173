@@ -16,6 +16,24 @@
       "revId": "f0a32a72875f08e680417c6d14902841449a1173",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad4bc472_670c8c51",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-19T16:43:13Z",
+      "side": 1,
+      "message": "yes, SuiteSparse_long is not defined in old versions of suitesparse.",
+      "parentUuid": "ed513c1f_0fb96d0f",
+      "revId": "f0a32a72875f08e680417c6d14902841449a1173",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
