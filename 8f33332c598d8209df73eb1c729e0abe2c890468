@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4bc472_e4dabafe",
+        "filename": "include/ceres/internal/fixed_array.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-19T13:38:56Z",
+      "side": 0,
+      "message": "what compiler and version is complaining about this? and you are assuming this is always going to be an unsigned int.",
+      "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
