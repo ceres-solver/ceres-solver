@@ -16,6 +16,24 @@
       "revId": "491c23c5b3616c8a52f93450b92651e85aeb9255",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d8d14f3_a06ffa6a",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-08-19T14:59:12Z",
+      "side": 1,
+      "message": "The compiler is g++ (Ubuntu/Linaro 4.7.3-1ubuntu1) 4.7.3\n\nBut I found what I was doing wrong :( For some reason (by mistake) the flag BUILD_ANDROID was active, and a number of strange errors appear.\n\nI don\u0027t this message now.",
+      "parentUuid": "ad4bc472_04f6f67f",
+      "revId": "491c23c5b3616c8a52f93450b92651e85aeb9255",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
