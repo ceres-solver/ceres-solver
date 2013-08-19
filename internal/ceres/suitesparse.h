@@ -64,7 +64,7 @@
 // SuiteSparse, we define SuiteSparse_long to be the same as UF_long,
 // which is what recent versions of SuiteSparse do anyways.
 #ifndef SuiteSparse_long
-#define SuiteSparse_long UF_long;
+typedef UF_long SuiteSparse_long;
 #endif
 
 namespace ceres {
