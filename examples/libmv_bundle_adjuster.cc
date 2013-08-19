@@ -92,6 +92,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 
 #ifdef _MSC_VER
 #  include <io.h>
