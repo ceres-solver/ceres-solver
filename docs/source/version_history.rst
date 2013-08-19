@@ -15,6 +15,13 @@ New Features
 #. ``BFGS`` line search direction. (Alex Stewart)
 #. C API
 #. Speeded up the use of loss functions > 17x.
+#. Faster ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and ``DENSE_SCHUR``
+   solvers.
+#. Support for multiple dense linear algebra backends. In particular
+   optimized ``BLAS`` and ``LAPACK`` implementations (e.g., Intel MKL,
+   AMD MCL, OpenBLAS etc) can now be used to do the dense linear
+   algebra for ``DENSE_QR``, ``DENSE_NORMAL_CHOLESKY`` and
+   ``DENSE_SCHUR``
 #. Use of Inner iterations can now be adaptively stopped. Iteration
    and runtime statistics for inner iterations are not reported in
    ``Solver::Summary`` and ``Solver::Summary::FullReport``.
@@ -30,7 +37,12 @@ New Features
 
 Bug Fixes
 ---------
-
+#. Fix breakage on old versions of SuiteSparse. (Fisher Yu)
+#. Fix warning C4373 in Visual Studio (Petter Strandmark)
+#. Fix compilation error caused by missing suitesparse headers and
+   reorganize them to be more robust. (Sergey Sharybin)
+#. Check GCC Version before adding -fast compiler option on
+   OSX. (Steven Lovegrove)
 #. Add documentation for minimizer progress output.
 #. Lint and other cleanups (William Rucklidge and James Roseborough)
 #. Collections port fix for MSC 2008 (Sergey Sharybin)
