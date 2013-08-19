@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4bc472_a46f226b",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-08-19T06:26:47Z",
+      "side": 1,
+      "message": "Maybe mention that this opens the door to Intel\u0027s MKL and other  BLAS libraries?",
+      "revId": "36efe103b09cdc24b5ffc0c54cf73eb94394c675",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
