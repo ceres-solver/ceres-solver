@@ -16,6 +16,24 @@
       "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d8d14f3_209f6a4b",
+        "filename": "include/ceres/internal/fixed_array.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-08-19T15:02:53Z",
+      "side": 0,
+      "message": "Even though I don\u0027t have this problem anymore (I was building with BUILD_ANDROID by mistake), I see that the variable \u0027i\u0027 is \u0027size_t\u0027 which is always unsigned.\n\nThe compiler is g++ (Ubuntu/Linaro 4.7.3-1ubuntu1) 4.7.3",
+      "parentUuid": "ad4bc472_e4dabafe",
+      "revId": "8f33332c598d8209df73eb1c729e0abe2c890468",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
