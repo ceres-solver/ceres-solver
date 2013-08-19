@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4bc472_04f6f67f",
+        "filename": "examples/libmv_bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-19T13:38:28Z",
+      "side": 1,
+      "message": "what compiler and what lines do not compile without this include?",
+      "revId": "491c23c5b3616c8a52f93450b92651e85aeb9255",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
