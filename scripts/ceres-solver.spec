@@ -3,13 +3,13 @@ Version:        1.7.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        "0.1.0%{?dist}"
+Release:        "0.2.0%{?dist}"
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Libraries
 License:        BSD
 URL:            http://code.google.com/p/ceres-solver/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc1.tar.gz
+Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc2.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if (0%{?rhel} == 06)
