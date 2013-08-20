@@ -7,6 +7,12 @@ Version History
 1.7.0
 =====
 
+Backward Incompatible API Changes
+---------------------------------
+
+#. ``Solver::Options::sparse_linear_algebra_library`` has been renamed
+   to ``Solver::Options::sparse_linear_algebra_library_type``.
+
 New Features
 ------------
 
