@@ -177,6 +177,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   int num_consecutive_invalid_steps = 0;
   bool inner_iterations_are_enabled = options.inner_iteration_minimizer != NULL;
   while (true) {
+    bool inner_iterations_were_useful = false;
     if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
       return;
     }
@@ -240,8 +241,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       //  = -f'J * step - step' * J' * J * step / 2
       model_residuals.setZero();
       jacobian->RightMultiply(trust_region_step.data(), model_residuals.data());
-      model_cost_change = -(residuals.dot(model_residuals) +
-                            model_residuals.squaredNorm() / 2.0);
+      model_cost_change =
+          - model_residuals.dot(residuals + model_residuals / 2.0);
 
       if (model_cost_change < 0.0) {
         VLOG(1) << "Invalid step: current_cost: " << cost
@@ -330,10 +331,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                     << " x_plus_delta_cost: " << x_plus_delta_cost
                     << " new_cost: " << new_cost;
             const double inner_iteration_relative_progress =
-                (x_plus_delta_cost - new_cost) / x_plus_delta_cost;
+                1.0 - new_cost / x_plus_delta_cost;
             inner_iterations_are_enabled =
                 (inner_iteration_relative_progress >
                  options.inner_iteration_tolerance);
+
+            inner_iterations_were_useful = new_cost < cost;
 
             // Disable inner iterations once the relative improvement
             // drops below tolerance.
@@ -399,12 +402,15 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           : relative_decrease;
 
       iteration_summary.step_is_successful =
-          iteration_summary.relative_decrease > options_.min_relative_decrease;
+          (inner_iterations_were_useful ||
+           iteration_summary.relative_decrease >
+           options_.min_relative_decrease);
 
       if (iteration_summary.step_is_successful) {
         accumulated_candidate_model_cost_change += model_cost_change;
         accumulated_reference_model_cost_change += model_cost_change;
-        if (relative_decrease <= options_.min_relative_decrease) {
+        if (!inner_iterations_were_useful &&
+            relative_decrease <= options_.min_relative_decrease) {
           iteration_summary.step_is_nonmonotonic = true;
           VLOG(2) << "Non-monotonic step! "
                   << " relative_decrease: " << relative_decrease
