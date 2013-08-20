@@ -401,6 +401,40 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           ? max(relative_decrease, historical_relative_decrease)
           : relative_decrease;
 
+      // Normally, the quality of a trust region step is measured by
+      // the ratio
+      //
+      //              cost_change
+      //    r =    -----------------
+      //           model_cost_change
+      //
+      // All the change in the nonlinear objective is due to the trust
+      // region step so this ratio is a good measure of the quality of
+      // the trust region radius. However, when inner iterations are
+      // being used, cost_change includes the contribution of the
+      // inner iterations and its not fair to credit it all to the
+      // trust region algorithm. So we change the ratio to be
+      //
+      //                              cost_change
+      //    r =    ------------------------------------------------
+      //           (model_cost_change + inner_iteration_cost_change)
+      //
+      // In most cases this is fine, but it can be the case that the
+      // change in solution quality due to inner iterations is so large
+      // and the trust region step is so bad, that this ratio can become
+      // quite small.
+      //
+      // This can cause the trust region loop to reject this step. To
+      // get around this, we expicitly check if the inner iterations
+      // led to a net decrease in the objective function value. If
+      // they did, we accept the step even if the trust region ratio
+      // is small.
+      //
+      // Notice that we do not just check that cost_change is positive
+      // which is a weaker condition and would render the
+      // min_relative_decrease threshold useless. Instead, we keep
+      // track of inner_iterations_were_useful, which is true only
+      // when inner iterations lead to a net decrease in the cost.
       iteration_summary.step_is_successful =
           (inner_iterations_were_useful ||
            iteration_summary.relative_decrease >
@@ -409,6 +443,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (iteration_summary.step_is_successful) {
         accumulated_candidate_model_cost_change += model_cost_change;
         accumulated_reference_model_cost_change += model_cost_change;
+
         if (!inner_iterations_were_useful &&
             relative_decrease <= options_.min_relative_decrease) {
           iteration_summary.step_is_nonmonotonic = true;
