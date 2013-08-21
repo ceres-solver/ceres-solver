@@ -1018,7 +1018,7 @@ TEST(CompactifyArray, NonContiguousEntries) {
   EXPECT_EQ(array, expected);
 }
 
-TEST(CompactifyArray, ) {
+TEST(CompactifyArray, NonContiguousRepeatingEntries) {
   vector<int> array;
   array.push_back(3);
   array.push_back(1);
