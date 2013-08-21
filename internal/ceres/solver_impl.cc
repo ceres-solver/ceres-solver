@@ -317,6 +317,16 @@ void SolverImpl::LineSearchMinimize(
 void SolverImpl::Solve(const Solver::Options& options,
                        ProblemImpl* problem_impl,
                        Solver::Summary* summary) {
+  LOG(INFO) << "Initial problem: "
+            << problem_impl->NumParameterBlocks()
+            << " parameter blocks, "
+            << problem_impl->NumParameters()
+            << " parameters,  "
+            << problem_impl->NumResidualBlocks()
+            << " residual blocks, "
+            << problem_impl->NumResiduals()
+            << " residuals.";
+
   if (options.minimizer_type == TRUST_REGION) {
     TrustRegionSolve(options, problem_impl, summary);
   } else {
@@ -1068,6 +1078,16 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                     error)) {
     return NULL;
   }
+
+  LOG(INFO) << "Reduced problem: "
+            << transformed_program->NumParameterBlocks()
+            << " parameter blocks, "
+            << transformed_program->NumParameters()
+            << " parameters,  "
+            << transformed_program->NumResidualBlocks()
+            << " residual blocks, "
+            << transformed_program->NumResiduals()
+            << " residuals.";
 
   if (transformed_program->NumParameterBlocks() == 0) {
     LOG(WARNING) << "No varying parameter blocks to optimize; "
