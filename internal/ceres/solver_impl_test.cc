@@ -991,5 +991,52 @@ TEST(SolverImpl, ReallocationInCreateJacobianBlockSparsityTranspose) {
   EXPECT_EQ((expected_dense_jacobian - actual_dense_jacobian).norm(), 0.0);
 }
 
+TEST(CompactifyArray, ContiguousEntries) {
+  vector<int> array;
+  array.push_back(0);
+  array.push_back(1);
+  vector<int> expected = array;
+  SolverImpl::CompactifyArray(&array);
+  EXPECT_EQ(array, expected);
+  array.clear();
+
+  array.push_back(1);
+  array.push_back(0);
+  expected = array;
+  SolverImpl::CompactifyArray(&array);
+  EXPECT_EQ(array, expected);
+}
+
+TEST(CompactifyArray, NonContiguousEntries) {
+  vector<int> array;
+  array.push_back(0);
+  array.push_back(2);
+  vector<int> expected;
+  expected.push_back(0);
+  expected.push_back(1);
+  SolverImpl::CompactifyArray(&array);
+  EXPECT_EQ(array, expected);
+}
+
+TEST(CompactifyArray, ) {
+  vector<int> array;
+  array.push_back(3);
+  array.push_back(1);
+  array.push_back(0);
+  array.push_back(0);
+  array.push_back(0);
+  array.push_back(5);
+  vector<int> expected;
+  expected.push_back(2);
+  expected.push_back(1);
+  expected.push_back(0);
+  expected.push_back(0);
+  expected.push_back(0);
+  expected.push_back(3);
+
+  SolverImpl::CompactifyArray(&array);
+  EXPECT_EQ(array, expected);
+}
+
 }  // namespace internal
 }  // namespace ceres

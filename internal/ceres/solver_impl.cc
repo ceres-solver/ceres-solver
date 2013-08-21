@@ -317,6 +317,16 @@ void SolverImpl::LineSearchMinimize(
 void SolverImpl::Solve(const Solver::Options& options,
                        ProblemImpl* problem_impl,
                        Solver::Summary* summary) {
+  VLOG(2) << "Initial problem: "
+          << problem_impl->NumParameterBlocks()
+          << " parameter blocks, "
+          << problem_impl->NumParameters()
+          << " parameters,  "
+          << problem_impl->NumResidualBlocks()
+          << " residual blocks, "
+          << problem_impl->NumResiduals()
+          << " residuals.";
+
   if (options.minimizer_type == TRUST_REGION) {
     TrustRegionSolve(options, problem_impl, summary);
   } else {
@@ -1069,6 +1079,16 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     return NULL;
   }
 
+  VLOG(2) << "Reduced problem: "
+          << transformed_program->NumParameterBlocks()
+          << " parameter blocks, "
+          << transformed_program->NumParameters()
+          << " parameters,  "
+          << transformed_program->NumResidualBlocks()
+          << " residual blocks, "
+          << transformed_program->NumResiduals()
+          << " residuals.";
+
   if (transformed_program->NumParameterBlocks() == 0) {
     LOG(WARNING) << "No varying parameter blocks to optimize; "
                  << "bailing early.";
@@ -1617,6 +1637,11 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
               parameter_blocks[i]->mutable_user_state()));
     }
 
+    // Renumber the entries of constraints to be contiguous integers
+    // as camd requires that the group ids be in the range [0,
+    // parameter_blocks.size() - 1].
+    SolverImpl::CompactifyArray(&constraints);
+
     // Set the offsets and index for CreateJacobianSparsityTranspose.
     program->SetParameterOffsetsAndIndex();
     // Compute a block sparse presentation of J'.
@@ -1738,6 +1763,21 @@ bool SolverImpl::ReorderProgramForSparseNormalCholesky(
 
   program->SetParameterOffsetsAndIndex();
   return true;
+}
+
+void SolverImpl::CompactifyArray(vector<int>* array_ptr) {
+  vector<int>& array = *array_ptr;
+  const set<int> unique_group_ids(array.begin(), array.end());
+  map<int, int> group_id_map;
+  for (set<int>::const_iterator it = unique_group_ids.begin();
+       it != unique_group_ids.end();
+       ++it) {
+    InsertOrDie(&group_id_map, *it, group_id_map.size());
+  }
+
+  for (int i = 0; i < array.size(); ++i) {
+    array[i] = group_id_map[array[i]];
+  }
 }
 
 }  // namespace internal
