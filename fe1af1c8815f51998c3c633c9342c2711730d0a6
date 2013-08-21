@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d25b0ee_a767eac3",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-08-21T06:26:11Z",
+      "side": 1,
+      "message": "I\u0027m not convinced about this. I believe this was removed for a reason. INFO seems spammy.",
+      "revId": "fe1af1c8815f51998c3c633c9342c2711730d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
