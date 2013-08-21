@@ -16,6 +16,24 @@
       "revId": "fe1af1c8815f51998c3c633c9342c2711730d0a6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d25b0ee_677cd229",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-08-21T13:07:15Z",
+      "side": 1,
+      "message": "Imagine you have a crash report. The only way to get the size of the problem when you are trying to debug is to manually insert code like this. I do this far too often. \n\nWe removed this from earlier because we had a misguided notion that Summary::FullReport was enough. But in cases of crashes, we never get to having a valid summary object to inspect.",
+      "parentUuid": "0d25b0ee_a767eac3",
+      "revId": "fe1af1c8815f51998c3c633c9342c2711730d0a6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
