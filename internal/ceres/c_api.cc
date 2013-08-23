@@ -49,7 +49,8 @@ using ceres::Problem;
 void ceres_init() {
   // This is not ideal, but it's not clear what to do if there is no gflags and
   // no access to command line arguments.
-  google::InitGoogleLogging("<unknown>");
+  char message[] = "<unknown>";
+  google::InitGoogleLogging(message);
 }
 
 ceres_problem_t* ceres_create_problem() {
@@ -172,7 +173,7 @@ ceres_residual_block_id_t* ceres_problem_add_residual_block(
 
 void ceres_solve(ceres_problem_t* c_problem) {
   Problem* problem = reinterpret_cast<Problem*>(c_problem);
-  
+
   // TODO(keir): Obviously, this way of setting options won't scale or last.
   // Instead, figure out a way to specify some of the options without
   // duplicating everything.

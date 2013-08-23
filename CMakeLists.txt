@@ -83,83 +83,95 @@ SET(CERES_ABI_VERSION 1.7.0)
 
 ENABLE_TESTING()
 
-OPTION(BUILD_TESTING
-       "Enable tests"
+OPTION(MINIGLOG "Use a stripped down version of glog" OFF)
+OPTION(GFLAGS "Enable Google Flags." ON)
+# Template specializations for the Schur complement based solvers. If
+# compile time, binary size or compiler performance is an issue, you
+# may consider disabling this.
+OPTION(SCHUR_SPECIALIZATIONS "Enable fixed-size schur specializations." ON)
+OPTION(CUSTOM_BLAS
+       "Use handcoded BLAS routines (usually faster) instead of Eigen."
        ON)
 
-OPTION(BUILD_ANDROID
-       "Build for Android. Use build_android.sh instead of setting this."
+# Multithreading using OpenMP
+OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
+
+# TODO(sameeragarwal): Replace this with a positive option instead?
+OPTION(DISABLE_TR1
+       "Don't use TR1. This replaces some hash tables with sets. Slower."
        OFF)
 
+# Line search minimizer is useful for large scale problems or when
+# sparse linear algebra libraries are not available. If compile time,
+# binary size or compiler performance is an issue, consider disabling
+# this.
+OPTION(LINE_SEARCH_MINIMIZER "Enable the line search minimizer." ON)
+
+OPTION(BUILD_TESTING "Enable tests" ON)
+OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
+OPTION(BUILD_EXAMPLES "Build examples" ON)
+
+# TODO(sameeragarwal): Make this more cmake friendly using
+# BUILD_SHARED_LIBRARIES.
 OPTION(BUILD_SHARED
        "Build a dynamically linkable version of Ceres Solver."
        ON)
-
 # To get a more static build, try the following line on Mac and Linux:
 # SET(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 
 # Default locations to search for on various platforms.
-LIST(APPEND SEARCH_LIBS /usr/lib)
-LIST(APPEND SEARCH_LIBS /usr/local/lib)
-LIST(APPEND SEARCH_LIBS /usr/local/homebrew/lib) # Mac OS X
-LIST(APPEND SEARCH_LIBS /opt/local/lib)
 
-LIST(APPEND SEARCH_HEADERS /usr/include)
-LIST(APPEND SEARCH_HEADERS /usr/local/include)
-LIST(APPEND SEARCH_HEADERS /usr/local/homebrew/include) # Mac OS X
-LIST(APPEND SEARCH_HEADERS /opt/local/include)
+# Libraries
+LIST(APPEND CMAKE_LIBRARY_PATH /opt/local/lib)
+LIST(APPEND CMAKE_LIBRARY_PATH /opt/local/lib/ufsparse) # Mac OS X
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib)
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib/suitesparse) # Ubuntu
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/homebrew/lib) # Mac OS X
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/lib)
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/lib/suitesparse)
 
-# Locations to search for Eigen
-SET(EIGEN_SEARCH_HEADERS ${SEARCH_HEADERS})
-LIST(APPEND EIGEN_SEARCH_HEADERS /usr/include/eigen3) # Ubuntu 10.04's default location.
-LIST(APPEND EIGEN_SEARCH_HEADERS /usr/local/include/eigen3)
-LIST(APPEND EIGEN_SEARCH_HEADERS /usr/local/homebrew/include/eigen3)  # Mac OS X
-LIST(APPEND EIGEN_SEARCH_HEADERS /opt/local/var/macports/software/eigen3/opt/local/include/eigen3) # Mac OS X
+# Headers
+LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/include)
+LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/include/ufsparse) # Mac OS X
+LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/var/macports/software/eigen3/opt/local/include/eigen3) # Mac OS X
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/include)
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/include/eigen3) # Ubuntu 10.04's default location.
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/include/suitesparse) # Ubuntu
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/homebrew/include) # Mac OS X
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/homebrew/include/eigen3)  # Mac OS X
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include)
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include/eigen3)
+LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include/suitesparse)
 
-# Locations to search for SuiteSparse
-SET(SUITESPARSE_SEARCH_LIBS ${SEARCH_LIBS})
-LIST(APPEND SUITESPARSE_SEARCH_LIBS /usr/lib/suitesparse) # Ubuntu
-LIST(APPEND SUITESPARSE_SEARCH_LIBS /usr/local/lib/suitesparse)
-LIST(APPEND SUITESPARSE_SEARCH_LIBS /opt/local/lib/ufsparse) # Mac OS X
-
-SET(SUITESPARSE_SEARCH_HEADERS ${SEARCH_HEADERS})
-LIST(APPEND SUITESPARSE_SEARCH_HEADERS /usr/include/suitesparse) # Ubuntu
-LIST(APPEND SUITESPARSE_SEARCH_HEADERS /usr/local/include/suitesparse)
-LIST(APPEND SUITESPARSE_SEARCH_HEADERS /opt/local/include/ufsparse) # Mac OS X
-
-SET(CXSPARSE_SEARCH_LIBS ${SEARCH_LIBS})
-SET(CXSPARSE_SEARCH_HEADERS ${SEARCH_HEADERS})
-LIST(APPEND CXSPARSE_SEARCH_HEADERS /usr/include/suitesparse) # Ubuntu
+# Eigen
+FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core)
+IF (NOT EXISTS ${EIGEN_INCLUDE})
+  MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
+ELSE (NOT EXISTS ${EIGEN_INCLUDE})
+  MESSAGE("-- Found Eigen 3.x: ${EIGEN_INCLUDE}")
+ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
 
 SET(BLAS_AND_LAPACK_FOUND TRUE)
 IF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
-  MESSAGE("${LAPACK}")
+  FIND_PACKAGE(LAPACK)
+  IF (LAPACK_FOUND)
+    MESSAGE("-- Found LAPACK library: ${LAPACK_LIBRARIES}")
+  ELSE (LAPACK_FOUND)
+    MESSAGE("-- Did not find LAPACK library")
+    SET(BLAS_AND_LAPACK_FOUND FALSE)
+  ENDIF (LAPACK_FOUND)
 
-  IF (APPLE)
-    # Mac OS X has LAPACK/BLAS bundled in a framework called
-    # "vecLib". Search for that instead of for the normal "lapack"
-    # library.
-    FIND_LIBRARY(LAPACK_LIB NAMES vecLib)
-  ELSE (APPLE)
-    FIND_LIBRARY(BLAS_LIB NAMES blas)
-    IF (EXISTS ${BLAS_LIB})
-      MESSAGE("-- Found BLAS library: ${BLAS_LIB}")
-    ELSE (EXISTS ${BLAS_LIB})
-      MESSAGE("-- Did not find BLAS library")
-      SET(BLAS_AND_LAPACK_FOUND FALSE)
-    ENDIF (EXISTS ${BLAS_LIB})
-    FIND_LIBRARY(LAPACK_LIB NAMES lapack)
-  ENDIF (APPLE)
+  FIND_PACKAGE(BLAS)
+  IF (BLAS_FOUND)
+    MESSAGE("-- Found BLAS library: ${BLAS_LIBRARIES}")
+  ELSE (BLAS_FOUND)
+    MESSAGE("-- Did not find BLAS library")
+    SET(BLAS_AND_BLAS_FOUND FALSE)
+  ENDIF (BLAS_FOUND)
+
 ELSE ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
   SET(BLAS_AND_LAPACK_FOUND FALSE)
 ENDIF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
-
-IF (EXISTS ${LAPACK_LIB})
-  MESSAGE("-- Found LAPACK library: ${LAPACK_LIB}")
-ELSE (EXISTS ${LAPACK_LIB})
-  SET(BLAS_AND_LAPACK_FOUND FALSE)
-  MESSAGE("-- Did not find LAPACK library")
-ENDIF (EXISTS ${LAPACK_LIB})
 
 IF (NOT BLAS_AND_LAPACK_FOUND)
   ADD_DEFINITIONS(-DCERES_NO_LAPACK)
@@ -169,7 +181,7 @@ IF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
 # Check for SuiteSparse dependencies
 
 SET(AMD_FOUND TRUE)
-FIND_LIBRARY(AMD_LIB NAMES amd PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(AMD_LIB NAMES amd)
 IF (EXISTS ${AMD_LIB})
   MESSAGE("-- Found AMD library: ${AMD_LIB}")
 ELSE (EXISTS ${AMD_LIB})
@@ -177,7 +189,7 @@ ELSE (EXISTS ${AMD_LIB})
   SET(AMD_FOUND FALSE)
 ENDIF (EXISTS ${AMD_LIB})
 
-FIND_PATH(AMD_INCLUDE NAMES amd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(AMD_INCLUDE NAMES amd.h)
 IF (EXISTS ${AMD_INCLUDE})
   MESSAGE("-- Found AMD header in: ${AMD_INCLUDE}")
 ELSE (EXISTS ${AMD_INCLUDE})
@@ -186,7 +198,7 @@ ELSE (EXISTS ${AMD_INCLUDE})
 ENDIF (EXISTS ${AMD_INCLUDE})
 
 SET(CAMD_FOUND TRUE)
-FIND_LIBRARY(CAMD_LIB NAMES camd PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(CAMD_LIB NAMES camd)
 IF (EXISTS ${CAMD_LIB})
   MESSAGE("-- Found CAMD library: ${CAMD_LIB}")
 ELSE (EXISTS ${CAMD_LIB})
@@ -194,7 +206,7 @@ ELSE (EXISTS ${CAMD_LIB})
   SET(CAMD_FOUND FALSE)
 ENDIF (EXISTS ${CAMD_LIB})
 
-FIND_PATH(CAMD_INCLUDE NAMES camd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(CAMD_INCLUDE NAMES camd.h)
 IF (EXISTS ${CAMD_INCLUDE})
   MESSAGE("-- Found CAMD header in: ${CAMD_INCLUDE}")
 ELSE (EXISTS ${CAMD_INCLUDE})
@@ -203,7 +215,7 @@ ELSE (EXISTS ${CAMD_INCLUDE})
 ENDIF (EXISTS ${CAMD_INCLUDE})
 
 SET(COLAMD_FOUND TRUE)
-FIND_LIBRARY(COLAMD_LIB NAMES colamd PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(COLAMD_LIB NAMES colamd)
 IF (EXISTS ${COLAMD_LIB})
   MESSAGE("-- Found COLAMD library: ${COLAMD_LIB}")
 ELSE (EXISTS ${COLAMD_LIB})
@@ -211,7 +223,7 @@ ELSE (EXISTS ${COLAMD_LIB})
   SET(COLAMD_FOUND FALSE)
 ENDIF (EXISTS ${COLAMD_LIB})
 
-FIND_PATH(COLAMD_INCLUDE NAMES colamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(COLAMD_INCLUDE NAMES colamd.h)
 IF (EXISTS ${COLAMD_INCLUDE})
   MESSAGE("-- Found COLAMD header in: ${COLAMD_INCLUDE}")
 ELSE (EXISTS ${COLAMD_INCLUDE})
@@ -220,7 +232,7 @@ ELSE (EXISTS ${COLAMD_INCLUDE})
 ENDIF (EXISTS ${COLAMD_INCLUDE})
 
 SET(CCOLAMD_FOUND TRUE)
-FIND_LIBRARY(CCOLAMD_LIB NAMES ccolamd PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(CCOLAMD_LIB NAMES ccolamd)
 IF (EXISTS ${CCOLAMD_LIB})
   MESSAGE("-- Found CCOLAMD library: ${CCOLAMD_LIB}")
 ELSE (EXISTS ${CCOLAMD_LIB})
@@ -228,7 +240,7 @@ ELSE (EXISTS ${CCOLAMD_LIB})
   SET(CCOLAMD_FOUND FALSE)
 ENDIF (EXISTS ${CCOLAMD_LIB})
 
-FIND_PATH(CCOLAMD_INCLUDE NAMES ccolamd.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(CCOLAMD_INCLUDE NAMES ccolamd.h)
 IF (EXISTS ${CCOLAMD_INCLUDE})
   MESSAGE("-- Found CCOLAMD header in: ${CCOLAMD_INCLUDE}")
 ELSE (EXISTS ${CCOLAMD_INCLUDE})
@@ -237,7 +249,7 @@ ELSE (EXISTS ${CCOLAMD_INCLUDE})
 ENDIF (EXISTS ${CCOLAMD_INCLUDE})
 
 SET(CHOLMOD_FOUND TRUE)
-FIND_LIBRARY(CHOLMOD_LIB NAMES cholmod PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(CHOLMOD_LIB NAMES cholmod)
 IF (EXISTS ${CHOLMOD_LIB})
   MESSAGE("-- Found CHOLMOD library: ${CHOLMOD_LIB}")
 ELSE (EXISTS ${CHOLMOD_LIB})
@@ -245,7 +257,7 @@ ELSE (EXISTS ${CHOLMOD_LIB})
   SET(CHOLMOD_FOUND FALSE)
 ENDIF (EXISTS ${CHOLMOD_LIB})
 
-FIND_PATH(CHOLMOD_INCLUDE NAMES cholmod.h PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(CHOLMOD_INCLUDE NAMES cholmod.h)
 IF (EXISTS ${CHOLMOD_INCLUDE})
   MESSAGE("-- Found CHOLMOD header in: ${CHOLMOD_INCLUDE}")
 ELSE (EXISTS ${CHOLMOD_INCLUDE})
@@ -254,7 +266,7 @@ ELSE (EXISTS ${CHOLMOD_INCLUDE})
 ENDIF (EXISTS ${CHOLMOD_INCLUDE})
 
 SET(SUITESPARSEQR_FOUND TRUE)
-FIND_LIBRARY(SUITESPARSEQR_LIB NAMES spqr PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(SUITESPARSEQR_LIB NAMES spqr)
 IF (EXISTS ${SUITESPARSEQR_LIB})
   MESSAGE("-- Found SUITESPARSEQR library: ${SUITESPARSEQR_LIB}")
 ELSE (EXISTS ${SUITESPARSEQR_LIB})
@@ -262,7 +274,7 @@ ELSE (EXISTS ${SUITESPARSEQR_LIB})
   SET(SUITESPARSEQR_FOUND FALSE)
 ENDIF (EXISTS ${SUITESPARSEQR_LIB})
 
-FIND_PATH(SUITESPARSEQR_INCLUDE NAMES SuiteSparseQR.hpp PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(SUITESPARSEQR_INCLUDE NAMES SuiteSparseQR.hpp)
 IF (EXISTS ${SUITESPARSEQR_INCLUDE})
   MESSAGE("-- Found SUITESPARSEQR header in: ${SUITESPARSEQR_INCLUDE}")
 ELSE (EXISTS ${SUITESPARSEQR_INCLUDE})
@@ -275,18 +287,14 @@ ENDIF (EXISTS ${SUITESPARSEQR_INCLUDE})
 SET(SUITESPARSE_CONFIG_FOUND TRUE)
 SET(UFCONFIG_FOUND TRUE)
 
-FIND_LIBRARY(SUITESPARSE_CONFIG_LIB
-             NAMES suitesparseconfig
-             PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(SUITESPARSE_CONFIG_LIB NAMES suitesparseconfig)
 IF (EXISTS ${SUITESPARSE_CONFIG_LIB})
   MESSAGE("-- Found SuiteSparse_config library: ${SUITESPARSE_CONFIG_LIB}")
 ELSE (EXISTS ${SUITESPARSE_CONFIG_LIB})
   MESSAGE("-- Did not find SuiteSparse_config library")
 ENDIF (EXISTS ${SUITESPARSE_CONFIG_LIB})
 
-FIND_PATH(SUITESPARSE_CONFIG_INCLUDE
-          NAMES SuiteSparse_config.h
-          PATHS ${SUITESPARSE_SEARCH_HEADERS})
+FIND_PATH(SUITESPARSE_CONFIG_INCLUDE NAMES SuiteSparse_config.h)
 IF (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
   MESSAGE("-- Found SuiteSparse_config header in: ${SUITESPARSE_CONFIG_INCLUDE}")
   SET(UFCONFIG_FOUND FALSE)
@@ -294,20 +302,20 @@ ELSE (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
   MESSAGE("-- Did not find SuiteSparse_config header")
 ENDIF (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
 
-IF (NOT EXISTS ${SUITESPARSE_CONFIG_LIB} OR NOT EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
+IF (NOT EXISTS ${SUITESPARSE_CONFIG_LIB} OR
+    NOT EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
   SET(SUITESPARSE_CONFIG_FOUND FALSE)
-  FIND_PATH(UFCONFIG_INCLUDE
-            NAMES UFconfig.h
-            PATHS ${SUITESPARSE_SEARCH_HEADERS})
+  FIND_PATH(UFCONFIG_INCLUDE NAMES UFconfig.h)
   IF (EXISTS ${UFCONFIG_INCLUDE})
     MESSAGE("-- Found UFconfig header in: ${UFCONFIG_INCLUDE}")
   ELSE (EXISTS ${UFCONFIG_INCLUDE})
     MESSAGE("-- Did not find UFconfig header")
     SET(UFCONFIG_FOUND FALSE)
   ENDIF (EXISTS ${UFCONFIG_INCLUDE})
-ENDIF (NOT EXISTS ${SUITESPARSE_CONFIG_LIB} OR NOT EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
+ENDIF (NOT EXISTS ${SUITESPARSE_CONFIG_LIB} OR
+       NOT EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
 
-FIND_LIBRARY(METIS_LIB NAMES metis PATHS ${SUITESPARSE_SEARCH_LIBS})
+FIND_LIBRARY(METIS_LIB NAMES metis)
 IF (EXISTS ${METIS_LIB})
   MESSAGE("-- Found METIS library: ${METIS_LIB}")
 ELSE (EXISTS ${METIS_LIB})
@@ -316,7 +324,7 @@ ENDIF (EXISTS ${METIS_LIB})
 
 # SuiteSparseQR may be compiled with Intel Threading Building Blocks.
 SET(TBB_FOUND TRUE)
-FIND_LIBRARY(TBB_LIB NAMES tbb PATHS ${SEARCH_LIBS})
+FIND_LIBRARY(TBB_LIB NAMES tbb)
 IF (EXISTS ${TBB_LIB})
   MESSAGE("-- Found TBB library: ${TBB_LIB}")
 ELSE (EXISTS ${TBB_LIB})
@@ -324,7 +332,7 @@ ELSE (EXISTS ${TBB_LIB})
   SET(TBB_FOUND FALSE)
 ENDIF (EXISTS ${TBB_LIB})
 
-FIND_LIBRARY(TBB_MALLOC_LIB NAMES tbbmalloc PATHS ${SEARCH_LIBS})
+FIND_LIBRARY(TBB_MALLOC_LIB NAMES tbbmalloc)
 IF (EXISTS ${TBB_MALLOC_LIB})
   MESSAGE("-- Found TBB Malloc library: ${TBB_MALLOC_LIB}")
 ELSE (EXISTS ${TBB_MALLOC_LIB})
@@ -383,7 +391,7 @@ ENDIF (DEFINED SUITESPARSE)
 IF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
 
 SET(CXSPARSE_FOUND ON)
-FIND_LIBRARY(CXSPARSE_LIB NAMES cxsparse PATHS ${CXSPARSE_SEARCH_LIBS})
+FIND_LIBRARY(CXSPARSE_LIB NAMES cxsparse)
 IF (EXISTS ${CXSPARSE_LIB})
   MESSAGE("-- Found CXSparse library in: ${CXSPARSE_LIB}")
 ELSE (EXISTS ${CXSPARSE_LIB})
@@ -391,7 +399,7 @@ ELSE (EXISTS ${CXSPARSE_LIB})
   SET(CXSPARSE_FOUND FALSE)
 ENDIF (EXISTS ${CXSPARSE_LIB})
 
-FIND_PATH(CXSPARSE_INCLUDE NAMES cs.h PATHS ${CXSPARSE_SEARCH_HEADERS})
+FIND_PATH(CXSPARSE_INCLUDE NAMES cs.h)
 IF (EXISTS ${CXSPARSE_INCLUDE})
   MESSAGE("-- Found CXSparse header in: ${CXSPARSE_INCLUDE}")
 ELSE (EXISTS ${CXSPARSE_INCLUDE})
@@ -419,20 +427,15 @@ ELSE (DEFINED CXSPARSE)
   ENDIF (CXSPARSE_FOUND)
 ENDIF (DEFINED CXSPARSE)
 
-# Google Flags
-OPTION(GFLAGS
-       "Enable Google Flags."
-       ON)
-
 IF (GFLAGS)
-  FIND_LIBRARY(GFLAGS_LIB NAMES gflags PATHS ${SEARCH_LIBS})
+  FIND_LIBRARY(GFLAGS_LIB NAMES gflags)
   IF (NOT EXISTS ${GFLAGS_LIB})
     MESSAGE(FATAL_ERROR
             "Can't find Google Flags. Please specify: "
             "-DGFLAGS_LIB=...")
   ENDIF (NOT EXISTS ${GFLAGS_LIB})
   MESSAGE("-- Found Google Flags library: ${GFLAGS_LIB}")
-  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h PATHS ${SEARCH_HEADERS})
+  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h)
   IF (NOT EXISTS ${GFLAGS_INCLUDE})
     MESSAGE(FATAL_ERROR
             "Can't find Google Flags. Please specify: "
@@ -444,76 +447,43 @@ ELSE (GFLAGS)
   ADD_DEFINITIONS(-DCERES_NO_GFLAGS)
 ENDIF (GFLAGS)
 
-# Google Logging
-IF (NOT BUILD_ANDROID)
-  FIND_LIBRARY(GLOG_LIB NAMES glog PATHS ${SEARCH_LIBS})
-  IF (NOT EXISTS ${GLOG_LIB})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Log. Please specify: "
-            "-DGLOG_LIB=...")
-  ENDIF (NOT EXISTS ${GLOG_LIB})
-  MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
-
-  FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h PATHS ${SEARCH_HEADERS})
-  IF (NOT EXISTS ${GLOG_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Log. Please specify: "
-            "-DGLOG_INCLUDE=...")
-  ENDIF (NOT EXISTS ${GLOG_INCLUDE})
-  MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
-ELSE (NOT BUILD_ANDROID)
+IF (MINIGLOG)
   SET(GLOG_LIB miniglog)
-  MESSAGE("-- Using minimal Glog substitute for Android (library): ${GLOG_LIB}")
+  MESSAGE("-- Using minimal Glog substitute (library): ${GLOG_LIB}")
   SET(GLOG_INCLUDE internal/ceres/miniglog)
-  MESSAGE("-- Using minimal Glog substitute for Android (include): ${GLOG_INCLUDE}")
-ENDIF (NOT BUILD_ANDROID)
+  MESSAGE("-- Using minimal Glog substitute (include): ${GLOG_INCLUDE}")
+ELSE (MINIGLOG)
+  FIND_LIBRARY(GLOG_LIB NAMES glog)
+  IF (EXISTS ${GLOG_LIB})
+    MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
+  ELSE (EXISTS ${GLOG_LIB})
+    MESSAGE(FATAL_ERROR
+            "Can't find Google Log. Please specify: -DGLOG_LIB=...")
+  ENDIF (EXISTS ${GLOG_LIB})
 
-# Eigen
-FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core PATHS ${EIGEN_SEARCH_HEADERS})
-IF (NOT EXISTS ${EIGEN_INCLUDE})
-  MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
-ELSE (NOT EXISTS ${EIGEN_INCLUDE})
-  MESSAGE("-- Found Eigen 3.x: ${EIGEN_INCLUDE}")
-ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
-
-# Template specializations for the Schur complement based solvers. If
-# compile time, binary size or compiler performance is an issue, you
-# may consider disabling this.
-OPTION(SCHUR_SPECIALIZATIONS
-       "Enable fixed-size schur specializations."
-       ON)
+  FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h)
+  IF (EXISTS ${GLOG_INCLUDE})
+    MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
+  ELSE (EXISTS ${GLOG_INCLUDE})
+    MESSAGE(FATAL_ERROR
+            "Can't find Google Log. Please specify: -DGLOG_INCLUDE=...")
+  ENDIF (EXISTS ${GLOG_INCLUDE})
+ENDIF (MINIGLOG)
 
 IF (NOT SCHUR_SPECIALIZATIONS)
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
 ENDIF (NOT SCHUR_SPECIALIZATIONS)
 
-# Line search minimizer is useful for large scale problems or when
-# sparse linear algebra libraries are not available. If compile time,
-# binary size or compiler performance is an issue, consider disabling
-# this.
-OPTION(LINE_SEARCH_MINIMIZER
-       "Enable the line search minimizer."
-       ON)
-
 IF (NOT LINE_SEARCH_MINIMIZER)
   ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
   MESSAGE("-- Disabling line search minimizer")
 ENDIF (NOT LINE_SEARCH_MINIMIZER)
 
-OPTION(CUSTOM_BLAS
-       "Use handcoded BLAS routines (usually faster) instead of Eigen."
-       ON)
-
 IF (NOT CUSTOM_BLAS)
   ADD_DEFINITIONS(-DCERES_NO_CUSTOM_BLAS)
   MESSAGE("-- Disabling custom blas")
 ENDIF (NOT CUSTOM_BLAS)
-
-# Multithreading using OpenMP
-OPTION(OPENMP
-       "Enable threaded solving in Ceres (requires OpenMP)"
-       ON)
 
 IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   SET(OPENMP_FOUND FALSE)
@@ -542,17 +512,6 @@ ELSE (OPENMP_FOUND)
   MESSAGE("-- Can't find OpenMP. Disabling multithreading.")
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
 ENDIF (OPENMP_FOUND)
-
-# Disable threads in mutex.h. Someday, after there is OpenMP support in
-# Android, this can get removed. Also turn on a workaround for an NDK bug.
-IF (BUILD_ANDROID)
-  ADD_DEFINITIONS(-DCERES_NO_THREADS)
-  ADD_DEFINITIONS(-DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG)
-ENDIF (BUILD_ANDROID)
-
-OPTION(DISABLE_TR1
-       "Don't use TR1. This replaces some hash tables with sets. Slower."
-       OFF)
 
 IF (DISABLE_TR1)
   MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
@@ -647,25 +606,20 @@ SET (CERES_CXX_FLAGS)
 
 IF (CMAKE_BUILD_TYPE STREQUAL "Release")
   IF (CMAKE_COMPILER_IS_GNUCXX)
-    IF (BUILD_ANDROID)
-      # TODO(keir): Figure out what flags should go here to make an optimized
-      # native ARM binary for Android.
-    ELSE (BUILD_ANDROID)
-      # Linux
-      IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
-        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
-      ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
-      # Mac OS X
-      IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
-        # Use of -fast only applicable for Apple's GCC
-        # Assume this is being used if GCC version < 4.3 on OSX
-        EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-        IF (GCC_VERSION VERSION_LESS 4.3)
-          SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
-        ENDIF (GCC_VERSION VERSION_LESS 4.3)
-      ENDIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    ENDIF (BUILD_ANDROID)
+    # Linux
+    IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+      SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -march=native -mtune=native")
+    ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    # Mac OS X
+    IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+      SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
+      # Use of -fast only applicable for Apple's GCC
+      # Assume this is being used if GCC version < 4.3 on OSX
+      EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+      IF (GCC_VERSION VERSION_LESS 4.3)
+        SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
+      ENDIF (GCC_VERSION VERSION_LESS 4.3)
+    ENDIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   ENDIF (CMAKE_COMPILER_IS_GNUCXX)
   IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # Use of -O4 requires use of gold linker & LLVM-gold plugin, which might
@@ -733,10 +687,6 @@ ENDIF ()
 
 ADD_SUBDIRECTORY(internal/ceres)
 
-OPTION(BUILD_DOCUMENTATION
-       "Build User's Guide (html)"
-       OFF)
-
 IF (BUILD_DOCUMENTATION)
   MESSAGE("-- Documentation building is enabled")
 
@@ -747,8 +697,6 @@ IF (BUILD_DOCUMENTATION)
   # The corresponding target is UserGuide, but is included in ALL.
   ADD_SUBDIRECTORY(docs)
 ENDIF (BUILD_DOCUMENTATION)
-
-OPTION(BUILD_EXAMPLES "Build examples" ON)
 
 IF (BUILD_EXAMPLES)
   MESSAGE("-- Build the examples.")
