@@ -31,6 +31,7 @@ New Features
 #. Use of Inner iterations can now be adaptively stopped. Iteration
    and runtime statistics for inner iterations are not reported in
    ``Solver::Summary`` and ``Solver::Summary::FullReport``.
+#. Improved inner iteration step acceptance criterion.
 #. Add BlockRandomAccessCRSMatrix.
 #. Speeded up automatic differentiation by 7\%.
 #. Bundle adjustment example from libmv/Blender (Sergey Sharybin)
@@ -40,9 +41,13 @@ New Features
 #. Ability to write trust region problems to disk.
 #. Add sinh, cosh, tanh and tan functions to automatic differentiation
    (Johannes Schönberger)
+#. Simplifications to the cmake build file.
+#. ``miniglog`` can now be used as a replacement for ``google-glog``
+   on non Android platforms. (This is NOT recommended).
 
 Bug Fixes
 ---------
+#. Fix how ceres calls CAMD (Manas Jagadev)
 #. Fix breakage on old versions of SuiteSparse. (Fisher Yu)
 #. Fix warning C4373 in Visual Studio (Petter Strandmark)
 #. Fix compilation error caused by missing suitesparse headers and

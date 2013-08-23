@@ -97,11 +97,12 @@
 #endif  // ANDROID
 
 #include <algorithm>
-#include <iostream>
-#include <string>
+#include <ctime>
 #include <fstream>
+#include <iostream>
 #include <set>
 #include <sstream>
+#include <string>
 #include <vector>
 
 // Log severity level constants.
