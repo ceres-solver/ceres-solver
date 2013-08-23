@@ -103,6 +103,7 @@
 #include <set>
 #include <sstream>
 #include <vector>
+#include <ctime>
 
 // Log severity level constants.
 const int FATAL   = -3;
