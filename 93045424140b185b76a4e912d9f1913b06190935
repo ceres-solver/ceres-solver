@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1244f155_4fe9ad31",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "A note that tbb-devel and suitesparse-devel come from epel BETA repository would be nice.",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "120f9125_f752800e",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "Where/what is this patch?",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_af01391c",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "My system fails to find suitesparse. Best solution is to add a FindSuiteSparse.cmake such as this one:\n\nhttps://github.com/cgogn/CGoGN/blob/master/ThirdParty/OpenNL/CMakeModules/FindSuiteSparse.cmake\n\n(though I don\u0027t find any license information for that CGoGN project so I don\u0027t know if it\u0027s compatible with Ceres)\n\nBy adding -DSUITESPARSEQR_INCLUDE:PATH\u003d%{_includedir}/suitesparse I was able to begin compiling, but hit an error because SuiteSparseQR.hpp could not be found. Is this a problem with the suitesparse-devel package I\u0027m using from the epel-testing repo?",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_cff47d08",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "No, only versioned shared objects go in the base package.\n\nThe correct solution is fix CMakeLists.txt to set the VERSION and SOVERSION target properties. See this post:\n\nhttp://cmake.3232098.n2.nabble.com/Version-in-name-of-shared-library-tp7581530p7581536.html\n\nAt a bare minimum, the *.so glob should not be in both the base package and the -devel package.",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_8ffe75e2",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "This fails rpmlint. %{_datadir} should be used instead of /usr/share\n\nBut more importantly, why exclude this directory? The *.cmake files should be included like this:\n\n%{_datadir}/Ceres/*.cmake\n\nActually it\u0027s nice for the consistency\u0027s sake when packages put their cmake files in %{_datadir}/%{name}. In my local copy of ceres-solver.spec I\u0027ve been doing this by applying this patch:\n\n--- ceres-solver-1.5.0.orig/CMakeLists.txt\n+++ ceres-solver-1.5.0/CMakeLists.txt\n@@ -686,7 +686,7 @@ ADD_CUSTOM_TARGET(uninstall\n SET(LIB_INSTALL_DIR_SUFFIX \"\" CACHE\n     STRING \"The directories where to install libraries to\")\n SET(LIB_INSTALL_DIR lib${LIB_INSTALL_DIR_SUFFIX} )\n-SET(CMAKECONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/Ceres)\n+SET(CMAKECONFIG_INSTALL_DIR share/ceres-solver)\n SET(INCLUDE_INSTALL_DIR include)\n \n # This \"exports\" all targets which have been put into the export set",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_eff7410a",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2013-08-28T13:21:18Z",
+      "side": 1,
+      "message": "The version-release string does not match what is defined at the top of this file. (Same comment for the next two change log entries...)",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
