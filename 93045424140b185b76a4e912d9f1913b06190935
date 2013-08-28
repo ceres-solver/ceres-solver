@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1244f155_2f07892d",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5245
+      },
+      "writtenOn": "2013-08-28T13:57:16Z",
+      "side": 1,
+      "message": "These aren\u0027t from EPEL; the tbb and suitesparse packages are from Red Hat. If you\u0027re a Red Hat customer, I\u0027m not sure what channel you need to subscribe to in RHN to get them. In CentOS they\u0027re just in the base repository.",
+      "parentUuid": "1244f155_4fe9ad31",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "120f9125_f752800e",
         "filename": "scripts/ceres-solver.spec",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1244f155_4f12cd6b",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5245
+      },
+      "writtenOn": "2013-08-28T13:57:16Z",
+      "side": 1,
+      "message": "There should be no patch needed here; I just had one in my own spec file to solve my immediate problems with CMakeLists.txt.",
+      "parentUuid": "120f9125_f752800e",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1244f155_af01391c",
         "filename": "scripts/ceres-solver.spec",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-08-28T13:21:18Z",
       "side": 1,
       "message": "My system fails to find suitesparse. Best solution is to add a FindSuiteSparse.cmake such as this one:\n\nhttps://github.com/cgogn/CGoGN/blob/master/ThirdParty/OpenNL/CMakeModules/FindSuiteSparse.cmake\n\n(though I don\u0027t find any license information for that CGoGN project so I don\u0027t know if it\u0027s compatible with Ceres)\n\nBy adding -DSUITESPARSEQR_INCLUDE:PATH\u003d%{_includedir}/suitesparse I was able to begin compiling, but hit an error because SuiteSparseQR.hpp could not be found. Is this a problem with the suitesparse-devel package I\u0027m using from the epel-testing repo?",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_0f0cc54b",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5245
+      },
+      "writtenOn": "2013-08-28T13:57:16Z",
+      "side": 1,
+      "message": "What OS are you building on? I didn\u0027t have any trouble finding suitesparse using epel-6-x86_64 or fedora-19-x86_64 buildroots with mock. I did have trouble with SuiteSparseQR.hpp and filed a bug with Red Hat which they\u0027ve already started to fix. See my posts on the mailing list at https://groups.google.com/forum/?fromgroups#!topic/ceres-solver/7BUI-MAX27Y for more details.",
+      "parentUuid": "1244f155_af01391c",
       "revId": "93045424140b185b76a4e912d9f1913b06190935",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -81,6 +135,24 @@
       "writtenOn": "2013-08-28T13:21:18Z",
       "side": 1,
       "message": "This fails rpmlint. %{_datadir} should be used instead of /usr/share\n\nBut more importantly, why exclude this directory? The *.cmake files should be included like this:\n\n%{_datadir}/Ceres/*.cmake\n\nActually it\u0027s nice for the consistency\u0027s sake when packages put their cmake files in %{_datadir}/%{name}. In my local copy of ceres-solver.spec I\u0027ve been doing this by applying this patch:\n\n--- ceres-solver-1.5.0.orig/CMakeLists.txt\n+++ ceres-solver-1.5.0/CMakeLists.txt\n@@ -686,7 +686,7 @@ ADD_CUSTOM_TARGET(uninstall\n SET(LIB_INSTALL_DIR_SUFFIX \"\" CACHE\n     STRING \"The directories where to install libraries to\")\n SET(LIB_INSTALL_DIR lib${LIB_INSTALL_DIR_SUFFIX} )\n-SET(CMAKECONFIG_INSTALL_DIR ${LIB_INSTALL_DIR}/cmake/Ceres)\n+SET(CMAKECONFIG_INSTALL_DIR share/ceres-solver)\n SET(INCLUDE_INSTALL_DIR include)\n \n # This \"exports\" all targets which have been put into the export set",
+      "revId": "93045424140b185b76a4e912d9f1913b06190935",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1244f155_ef2061b6",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5245
+      },
+      "writtenOn": "2013-08-28T13:57:16Z",
+      "side": 1,
+      "message": "Good point about the datadir macro. As to whether the cmake files belong in the package or not, I\u0027m not familiar with cmake so I don\u0027t know.",
+      "parentUuid": "1244f155_8ffe75e2",
       "revId": "93045424140b185b76a4e912d9f1913b06190935",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
