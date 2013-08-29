@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b27965b7_babba9d2",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-29T15:57:46Z",
+      "side": 1,
+      "message": "Please delete the trailing whitespace.",
+      "revId": "57c36bb6b5db6e26066698a6c20c50c293d07941",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_7a9f515a",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-29T15:57:46Z",
+      "side": 1,
+      "message": "don\u0027t need protobufs anymore. starting 1.7.0 onwards its not a dependency anymore.",
+      "revId": "57c36bb6b5db6e26066698a6c20c50c293d07941",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b27965b7_da8d4531",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-08-29T15:57:46Z",
+      "side": 1,
+      "message": "is this rpm package also installing the documentation?",
+      "revId": "57c36bb6b5db6e26066698a6c20c50c293d07941",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
