@@ -113,7 +113,9 @@ OPTION(BUILD_EXAMPLES "Build examples" ON)
 LIST(APPEND CMAKE_LIBRARY_PATH /opt/local/lib)
 LIST(APPEND CMAKE_LIBRARY_PATH /opt/local/lib/ufsparse) # Mac OS X
 LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib)
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib/atlas)
 LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib/suitesparse) # Ubuntu
+LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib64/atlas)
 LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/homebrew/lib) # Mac OS X
 LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/lib)
 LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/lib/suitesparse)

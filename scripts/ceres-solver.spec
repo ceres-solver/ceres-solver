@@ -3,13 +3,13 @@ Version:        1.7.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        "0.3.0%{?dist}"
+Release:        0.3.0%{?dist}
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Libraries
 License:        BSD
 URL:            http://code.google.com/p/ceres-solver/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc2.tar.gz
+Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc3.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if (0%{?rhel} == 06)
@@ -18,9 +18,16 @@ BuildRequires:  cmake28
 BuildRequires:  cmake
 %endif
 BuildRequires:  eigen3-devel
-BuildRequires:  suitesparse-devel
+# suitesparse <= 3.4.0-7 ships without *.hpp C++ headers
+# https://bugzilla.redhat.com/show_bug.cgi?id=1001869
+BuildRequires:  suitesparse-devel > 3.4.0-7
+# If the suitesparse package was built with TBB then we need TBB too
+%ifarch %{ix86} x86_64 ia64
+BuildRequires:  tbb-devel
+%endif
 # Use atlas for BLAS and LAPACK
 BuildRequires:  atlas-devel
+BuildRequires:  protobuf-devel
 BuildRequires:  gflags-devel
 BuildRequires:  glog-devel
 
@@ -65,12 +72,10 @@ pushd build
 # packages because it breaks the build since release 1.5.0rc1
 %define optflags ""
 %if (0%{?rhel} == 06)
-%{cmake28} .. \
+%{cmake28} ..
 %else
-%{cmake} .. \
+%{cmake} ..
 %endif
-    -DBLAS_LIB:FILEPATH=%{_libdir}/atlas/libatlas.so \
-    -DLAPACK_LIB:FILEPATH=%{_libdir}/atlas/liblapack.so
 make %{?_smp_mflags}
 
 
@@ -79,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 pushd build
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -delete
+
+# Make the subdirectory in /usr/share match the name of this package
+mv $RPM_BUILD_ROOT%{_datadir}/{Ceres,%{name}}
 
 
 %clean
@@ -92,22 +100,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc
+%doc README LICENSE
 %{_libdir}/*.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%doc
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/*.a
+%{_datadir}/%{name}/*.cmake
 
 
 %changelog
-* Mon August 26 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.7.0-3
+* Thu Aug 29 2013 Taylor Braun-Jones <taylor@braun-jones.org> - 1.7.0-0.3.0
 - Bump version
 
-* Mon July 18 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.7.0-0
+* Mon Aug 26 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.7.0-0.2.0
+- Bump version
+
+* Mon Jul 18 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.7.0-0.1.0
 - Bump version
 
 * Mon Apr 29 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.6.0-1
