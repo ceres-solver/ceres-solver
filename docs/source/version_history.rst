@@ -96,6 +96,7 @@ Bug Fixes
 #. Fix a reallocation bug in
    ``CreateJacobianBlockSparsityTranspose``. (Yuliy Schwartzburg)
 #. Add a define for O_BINARY.
+#. Fix miniglog-based Android NDK build; now works with NDK r9. (Scott Ettinger)
 
 
 1.6.0
