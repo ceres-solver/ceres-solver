@@ -47,6 +47,11 @@ New Features
 
 Bug Fixes
 ---------
+
+#. Fix ``ITERATIVE_SCHUR`` solver to work correctly when the schur
+   complement is of size zero. (Soohyun Bae)
+#. Fix the ``spec`` file for generating ``RPM`` packages (Brian Pitts
+   and Taylor Braun-Jones).
 #. Fix how ceres calls CAMD (Manas Jagadev)
 #. Fix breakage on old versions of SuiteSparse. (Fisher Yu)
 #. Fix warning C4373 in Visual Studio (Petter Strandmark)

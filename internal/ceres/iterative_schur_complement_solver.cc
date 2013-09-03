@@ -78,6 +78,17 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   }
   schur_complement_->Init(*A, per_solve_options.D, b);
 
+  const int num_schur_complement_blocks =
+      A->block_structure()->cols.size() - options_.elimination_groups[0];
+  if (num_schur_complement_blocks == 0) {
+    VLOG(2) << "No parameter blocks left in the schur complement.";
+    LinearSolver::Summary cg_summary;
+    cg_summary.num_iterations = 0;
+    cg_summary.termination_type = TOLERANCE;
+    schur_complement_->BackSubstitute(NULL, x);
+    return cg_summary;
+  }
+
   // Initialize the solution to the Schur complement system to zero.
   //
   // TODO(sameeragarwal): There maybe a better initialization than an
@@ -116,16 +127,16 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
     case SCHUR_JACOBI:
       if (preconditioner_.get() == NULL) {
         preconditioner_.reset(
-            new SchurJacobiPreconditioner(
-                *A->block_structure(), preconditioner_options));
+            new SchurJacobiPreconditioner(*A->block_structure(),
+                                          preconditioner_options));
       }
       break;
     case CLUSTER_JACOBI:
     case CLUSTER_TRIDIAGONAL:
       if (preconditioner_.get() == NULL) {
         preconditioner_.reset(
-            new VisibilityBasedPreconditioner(
-                *A->block_structure(), preconditioner_options));
+            new VisibilityBasedPreconditioner(*A->block_structure(),
+                                              preconditioner_options));
       }
       break;
     default:
