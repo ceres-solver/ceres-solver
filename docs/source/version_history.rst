@@ -35,7 +35,10 @@ New Features
 #. Add BlockRandomAccessCRSMatrix.
 #. Speeded up automatic differentiation by 7\%.
 #. Bundle adjustment example from libmv/Blender (Sergey Sharybin)
-#. Add the ability to turn shared library compilation on and off
+#. Shared library building is now controlled by CMake, rather than a custom
+   solution. Previously, Ceres had a custom option, but this is now deprecated
+   in favor of CMake's built in support for switching between static and
+   shared. Turn on BUILD_SHARED_LIBS to get shared Ceres libraries.
 #. No more dependence on Protocol Buffers.
 #. Incomplete LQ factorization.
 #. Ability to write trust region problems to disk.
