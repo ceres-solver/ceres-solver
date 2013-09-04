@@ -737,9 +737,15 @@ ADD_CUSTOM_TARGET(uninstall
 
 # Set up install directories. INCLUDE_INSTALL_DIR, LIB_INSTALL_DIR and
 # CMAKECONFIG_INSTALL_DIR must not be absolute paths.
-SET(INCLUDE_INSTALL_DIR include)
-SET(LIB_INSTALL_DIR lib)
-SET(CMAKECONFIG_INSTALL_DIR share/Ceres)
+IF (WIN32)
+  SET(INCLUDE_INSTALL_DIR Include)
+  SET(LIB_INSTALL_DIR Lib)
+  SET(CMAKECONFIG_INSTALL_DIR CMake)
+ELSE ()
+  SET(INCLUDE_INSTALL_DIR include)
+  SET(LIB_INSTALL_DIR lib)
+  SET(CMAKECONFIG_INSTALL_DIR share/Ceres)
+ENDIF ()
 
 # This "exports" all targets which have been put into the export set
 # "CeresExport". This means that CMake generates a file with the given
