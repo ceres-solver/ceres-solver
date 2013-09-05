@@ -322,13 +322,15 @@ ELSE (EXISTS ${TBB_LIB})
   SET(TBB_FOUND FALSE)
 ENDIF (EXISTS ${TBB_LIB})
 
-FIND_LIBRARY(TBB_MALLOC_LIB NAMES tbbmalloc)
-IF (EXISTS ${TBB_MALLOC_LIB})
-  MESSAGE("-- Found TBB Malloc library: ${TBB_MALLOC_LIB}")
-ELSE (EXISTS ${TBB_MALLOC_LIB})
-  MESSAGE("-- Did not find TBB library")
-  SET(TBB_FOUND FALSE)
-ENDIF (EXISTS ${TBB_MALLOC_LIB})
+IF (TBB_FOUND)
+  FIND_LIBRARY(TBB_MALLOC_LIB NAMES tbbmalloc)
+  IF (EXISTS ${TBB_MALLOC_LIB})
+    MESSAGE("-- Found TBB Malloc library: ${TBB_MALLOC_LIB}")
+  ELSE (EXISTS ${TBB_MALLOC_LIB})
+    MESSAGE("-- Did not find TBB Malloc library")
+    SET(TBB_FOUND FALSE)
+  ENDIF (EXISTS ${TBB_MALLOC_LIB})
+ENDIF (TBB_FOUND)
 
 # We don't use SET(SUITESPARSE_FOUND ${AMD_FOUND} ...) in order to be
 # able to check whether SuiteSparse is available without expanding
