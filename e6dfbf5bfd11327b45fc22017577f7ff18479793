@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b29885f6_1c53f514",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-09-05T19:14:36Z",
+      "side": 1,
+      "message": "yeah, otherwise the flood of logging you get is entirely incomprehensible.",
+      "parentUuid": "b29885f6_dc06ed2e",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29885f6_5c1bbd80",
         "filename": "internal/ceres/minimizer.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b29885f6_bc84c160",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-09-05T19:14:36Z",
+      "side": 1,
+      "message": "right now no. since Solver::Options does not have a silence_minimizer or something equivalent. \n\nIts not clear to me whether something like that should even be exposed at the solver level since it creates a complicated mess with the use of glog.\n\nwe should discuss the API implications of this separately, right now this is just a way to make sure inner iterations can actually be used in production where the last attempt to do so was abandoned because of the verbosity of the logs.",
+      "parentUuid": "b29885f6_5c1bbd80",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29885f6_7c187983",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-09-05T19:04:35Z",
       "side": 1,
       "message": "Delete blakn",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_dc898d77",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-09-05T19:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29885f6_7c187983",
       "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
