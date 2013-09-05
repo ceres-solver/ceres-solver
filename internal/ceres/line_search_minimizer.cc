@@ -124,7 +124,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
   // Do initial cost and Jacobian evaluation.
   if (!Evaluate(evaluator, x, &current_state)) {
-    LOG(WARNING) << "Terminating: Cost and gradient evaluation failed.";
+    if (!options.is_silent) {
+      LOG(WARNING) << "Terminating: Cost and gradient evaluation failed.";
+    }
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
@@ -143,10 +145,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
   if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
     summary->termination_type = GRADIENT_TOLERANCE;
-    VLOG(1) << "Terminating: Gradient tolerance reached."
-            << "Relative gradient max norm: "
-            << iteration_summary.gradient_max_norm / initial_gradient_max_norm
-            << " <= " << options.gradient_tolerance;
+    if (!options.is_silent) {
+      VLOG(1) << "Terminating: Gradient tolerance reached."
+              << "Relative gradient max norm: "
+              << iteration_summary.gradient_max_norm / initial_gradient_max_norm
+              << " <= " << options.gradient_tolerance;
+    }
     return;
   }
 
@@ -193,8 +197,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                                      line_search_options,
                                      &summary->error));
   if (line_search.get() == NULL) {
-    LOG(ERROR) << "Ceres bug: Unable to create a LineSearch object, please "
-               << "contact the developers!, error: " << summary->error;
+    if (!options.is_silent) {
+      LOG(ERROR) << "Ceres bug: Unable to create a LineSearch object, please "
+                 << "contact the developers!, error: " << summary->error;
+    }
     summary->termination_type = DID_NOT_RUN;
     return;
   }
@@ -209,16 +215,20 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options.max_num_iterations) {
+      if (!options.is_silent) {
+        VLOG(1) << "Terminating: Maximum number of iterations reached.";
+      }
       summary->termination_type = NO_CONVERGENCE;
-      VLOG(1) << "Terminating: Maximum number of iterations reached.";
       break;
     }
 
     const double total_solver_time = iteration_start_time - start_time +
         summary->preprocessor_time_in_seconds;
     if (total_solver_time >= options.max_solver_time_in_seconds) {
+      if (!options.is_silent) {
+        VLOG(1) << "Terminating: Maximum solver time reached.";
+      }
       summary->termination_type = NO_CONVERGENCE;
-      VLOG(1) << "Terminating: Maximum solver time reached.";
       break;
     }
 
@@ -247,10 +257,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           StringPrintf("Line search direction failure: specified "
                        "max_num_line_search_direction_restarts: %d reached.",
                        options.max_num_line_search_direction_restarts);
-      LOG(WARNING) << summary->error << " terminating optimization.";
+      if (!options.is_silent) {
+        LOG(WARNING) << summary->error
+                     << " terminating optimization.";
+      }
       summary->termination_type = NUMERICAL_FAILURE;
       break;
-
     } else if (!line_search_status) {
       // Restart line search direction with gradient descent on first iteration
       // as we have not yet reached our maximum number of restarts.
@@ -258,16 +270,20 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                options.max_num_line_search_direction_restarts);
 
       ++num_line_search_direction_restarts;
-      LOG(WARNING)
-          << "Line search direction algorithm: "
-          << LineSearchDirectionTypeToString(options.line_search_direction_type)
-          << ", failed to produce a valid new direction at iteration: "
-          << iteration_summary.iteration << ". Restarting, number of "
-          << "restarts: " << num_line_search_direction_restarts << " / "
-          << options.max_num_line_search_direction_restarts << " [max].";
-      line_search_direction.reset(
-          LineSearchDirection::Create(line_search_direction_options));
-      current_state.search_direction = -current_state.gradient;
+      if (!options.is_silent) {
+        LOG(WARNING) << "Line search direction algorithm: "
+                     << LineSearchDirectionTypeToString(
+                         options.line_search_direction_type)
+                     << ", failed to produce a valid new direction at "
+                     << "iteration: " << iteration_summary.iteration
+                     << ". Restarting, number of restarts: "
+                     << num_line_search_direction_restarts << " / "
+                     << options.max_num_line_search_direction_restarts
+                     << " [max].";
+        line_search_direction.reset(
+            LineSearchDirection::Create(line_search_direction_options));
+        current_state.search_direction = -current_state.gradient;
+      }
     }
 
     line_search_function.Init(x, current_state.search_direction);
@@ -295,7 +311,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                        "(current_cost - previous_cost): %.5e",
                        initial_step_size, current_state.directional_derivative,
                        (current_state.cost - previous_state.cost));
-      LOG(WARNING) << summary->error;
+      if (!options.is_silent) {
+        LOG(WARNING) << summary->error;
+      }
+
       summary->termination_type = NUMERICAL_FAILURE;
       break;
     }
@@ -323,11 +342,14 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
+      if (!options.is_silent) {
+        VLOG(1) << "Terminating: Gradient tolerance reached."
+                << "Relative gradient max norm: "
+                << (iteration_summary.gradient_max_norm /
+                    initial_gradient_max_norm)
+                << " <= " << options.gradient_tolerance;
+      }
       summary->termination_type = GRADIENT_TOLERANCE;
-      VLOG(1) << "Terminating: Gradient tolerance reached."
-              << "Relative gradient max norm: "
-              << iteration_summary.gradient_max_norm / initial_gradient_max_norm
-              << " <= " << options.gradient_tolerance;
       break;
     }
 
@@ -335,10 +357,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     const double absolute_function_tolerance =
         options.function_tolerance * previous_state.cost;
     if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
-      VLOG(1) << "Terminating. Function tolerance reached. "
-              << "|cost_change|/cost: "
-              << fabs(iteration_summary.cost_change) / previous_state.cost
-              << " <= " << options.function_tolerance;
+      if (!options.is_silent) {
+        VLOG(1) << "Terminating. Function tolerance reached. "
+                << "|cost_change|/cost: "
+                << fabs(iteration_summary.cost_change) / previous_state.cost
+                << " <= " << options.function_tolerance;
+      }
       summary->termination_type = FUNCTION_TOLERANCE;
       return;
     }
