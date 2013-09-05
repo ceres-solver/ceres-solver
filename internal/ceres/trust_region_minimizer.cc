@@ -81,6 +81,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   double start_time = WallTimeInSeconds();
   double iteration_start_time =  start_time;
   Init(options);
+  const bool is_not_silent = !options.is_silent;
 
   summary->termination_type = NO_CONVERGENCE;
   summary->num_successful_steps = 0;
@@ -128,7 +129,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                            residuals.data(),
                            gradient.data(),
                            jacobian)) {
-    LOG(WARNING) << "Terminating: Residual and Jacobian evaluation failed.";
+    LOG_IF(WARNING, is_not_silent)
+        << "Terminating: Residual and Jacobian evaluation failed.";
     summary->termination_type = NUMERICAL_FAILURE;
     return;
   }
@@ -152,11 +154,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       options_.gradient_tolerance * initial_gradient_max_norm;
 
   if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
+    VLOG_IF(1, is_not_silent) << "Terminating: Gradient tolerance reached."
+                              << "Relative gradient max norm: "
+                              << (iteration_summary.gradient_max_norm /
+                                  initial_gradient_max_norm)
+                              << " <= " << options_.gradient_tolerance;
     summary->termination_type = GRADIENT_TOLERANCE;
-    VLOG(1) << "Terminating: Gradient tolerance reached."
-            << "Relative gradient max norm: "
-            << iteration_summary.gradient_max_norm / initial_gradient_max_norm
-            << " <= " << options_.gradient_tolerance;
     return;
   }
 
@@ -184,17 +187,19 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
+      VLOG_IF(1, is_not_silent)
+          << "Terminating: Maximum number of iterations reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG(1) << "Terminating: Maximum number of iterations reached.";
-      break;
+      return;
     }
 
     const double total_solver_time = iteration_start_time - start_time +
         summary->preprocessor_time_in_seconds;
     if (total_solver_time >= options_.max_solver_time_in_seconds) {
+      VLOG_IF(1, is_not_silent)
+          << "Terminating: Maximum solver time reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG(1) << "Terminating: Maximum solver time reached.";
-      break;
+      return;
     }
 
     const double strategy_start_time = WallTimeInSeconds();
@@ -245,9 +250,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           - model_residuals.dot(residuals + model_residuals / 2.0);
 
       if (model_cost_change < 0.0) {
-        VLOG(1) << "Invalid step: current_cost: " << cost
-                << " absolute difference " << model_cost_change
-                << " relative difference " << (model_cost_change / cost);
+        VLOG_IF(1, is_not_silent) << "Invalid step: current_cost: "
+                                  << cost
+                                  << " absolute difference "
+                                  << model_cost_change
+                                  << " relative difference "
+                                  << (model_cost_change / cost);
       } else {
         iteration_summary.step_is_valid = true;
       }
@@ -259,13 +267,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // NUMERICAL_FAILURE if this limit is exceeded.
       if (++num_consecutive_invalid_steps >=
           options_.max_num_consecutive_invalid_steps) {
-        summary->termination_type = NUMERICAL_FAILURE;
         summary->error = StringPrintf(
             "Terminating. Number of successive invalid steps more "
             "than Solver::Options::max_num_consecutive_invalid_steps: %d",
             options_.max_num_consecutive_invalid_steps);
-
-        LOG(WARNING) << summary->error;
+        LOG_IF(WARNING, is_not_silent) << summary->error;
+        summary->termination_type = NUMERICAL_FAILURE;
         return;
       }
 
@@ -314,30 +321,30 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           if (!evaluator->Evaluate(inner_iteration_x.data(),
                                    &new_cost,
                                    NULL, NULL, NULL)) {
-            VLOG(2) << "Inner iteration failed.";
+            VLOG_IF(2, is_not_silent) << "Inner iteration failed.";
             new_cost = x_plus_delta_cost;
           } else {
             x_plus_delta = inner_iteration_x;
             // Boost the model_cost_change, since the inner iteration
             // improvements are not accounted for by the trust region.
             model_cost_change +=  x_plus_delta_cost - new_cost;
-            VLOG(2) << "Inner iteration succeeded; current cost: " << cost
-                    << " x_plus_delta_cost: " << x_plus_delta_cost
-                    << " new_cost: " << new_cost;
-            const double inner_iteration_relative_progress =
-                1.0 - new_cost / x_plus_delta_cost;
-            inner_iterations_are_enabled =
-                (inner_iteration_relative_progress >
-                 options.inner_iteration_tolerance);
+            VLOG_IF(2, is_not_silent)
+                << "Inner iteration succeeded; Current cost: " << cost
+                << " Trust region step cost: " << x_plus_delta_cost
+                << " Inner iteration cost: " << new_cost;
 
             inner_iterations_were_useful = new_cost < cost;
 
+            const double inner_iteration_relative_progress =
+                1.0 - new_cost / x_plus_delta_cost;
             // Disable inner iterations once the relative improvement
             // drops below tolerance.
-            if (!inner_iterations_are_enabled) {
-              VLOG(2) << "Disabling inner iterations. Progress : "
-                      << inner_iteration_relative_progress;
-            }
+            inner_iterations_are_enabled =
+                (inner_iteration_relative_progress >
+                 options.inner_iteration_tolerance);
+            VLOG_IF(2, is_not_silent && !inner_iterations_are_enabled)
+                << "Disabling inner iterations. Progress : "
+                << inner_iteration_relative_progress;
           }
           summary->inner_iteration_time_in_seconds +=
               WallTimeInSeconds() - inner_iteration_start_time;
@@ -350,11 +357,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       const double step_size_tolerance =  options_.parameter_tolerance *
           (x_norm + options_.parameter_tolerance);
       if (iteration_summary.step_norm <= step_size_tolerance) {
-        VLOG(1) << "Terminating. Parameter tolerance reached. "
-                << "relative step_norm: "
-                << iteration_summary.step_norm /
-            (x_norm + options_.parameter_tolerance)
-                << " <= " << options_.parameter_tolerance;
+        VLOG_IF(1, is_not_silent)
+            << "Terminating. Parameter tolerance reached. "
+            << "relative step_norm: "
+            << (iteration_summary.step_norm /
+                (x_norm + options_.parameter_tolerance))
+            << " <= " << options_.parameter_tolerance;
         summary->termination_type = PARAMETER_TOLERANCE;
         return;
       }
@@ -363,10 +371,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       const double absolute_function_tolerance =
           options_.function_tolerance * cost;
       if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
-        VLOG(1) << "Terminating. Function tolerance reached. "
-                << "|cost_change|/cost: "
-                << fabs(iteration_summary.cost_change) / cost
-                << " <= " << options_.function_tolerance;
+        VLOG_IF(1, is_not_silent) << "Terminating. Function tolerance reached. "
+                                  << "|cost_change|/cost: "
+                                  << fabs(iteration_summary.cost_change) / cost
+                                  << " <= " << options_.function_tolerance;
         summary->termination_type = FUNCTION_TOLERANCE;
         return;
       }
@@ -441,10 +449,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         if (!inner_iterations_were_useful &&
             relative_decrease <= options_.min_relative_decrease) {
           iteration_summary.step_is_nonmonotonic = true;
-          VLOG(2) << "Non-monotonic step! "
-                  << " relative_decrease: " << relative_decrease
-                  << " historical_relative_decrease: "
-                  << historical_relative_decrease;
+          VLOG_IF(2, is_not_silent) << "Non-monotonic step! "
+                                    << " relative_decrease: "
+                                    << relative_decrease
+                                    << " historical_relative_decrease: "
+                                    << historical_relative_decrease;
         }
       }
     }
@@ -462,22 +471,22 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                residuals.data(),
                                gradient.data(),
                                jacobian)) {
-        summary->termination_type = NUMERICAL_FAILURE;
         summary->error =
             "Terminating: Residual and Jacobian evaluation failed.";
-        LOG(WARNING) << summary->error;
+        LOG_IF(WARNING, is_not_silent) << summary->error;
+        summary->termination_type = NUMERICAL_FAILURE;
         return;
       }
 
       iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
 
       if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
+        VLOG_IF(1, is_not_silent) << "Terminating: Gradient tolerance reached."
+                                  << "Relative gradient max norm: "
+                                  << (iteration_summary.gradient_max_norm /
+                                      initial_gradient_max_norm)
+                                  << " <= " << options_.gradient_tolerance;
         summary->termination_type = GRADIENT_TOLERANCE;
-        VLOG(1) << "Terminating: Gradient tolerance reached."
-                << "Relative gradient max norm: "
-                << (iteration_summary.gradient_max_norm /
-                    initial_gradient_max_norm)
-                << " <= " << options_.gradient_tolerance;
         return;
       }
 
@@ -505,7 +514,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         if (cost > candidate_cost) {
           // The current iterate is has a higher cost than the
           // candidate iterate. Set the candidate to this point.
-          VLOG(2) << "Updating the candidate iterate to the current point.";
+          VLOG_IF(2, is_not_silent)
+              << "Updating the candidate iterate to the current point.";
           candidate_cost = cost;
           accumulated_candidate_model_cost_change = 0.0;
         }
@@ -519,7 +529,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         // iterate.
         if (num_consecutive_nonmonotonic_steps ==
             options.max_consecutive_nonmonotonic_steps) {
-          VLOG(2) << "Resetting the reference point to the candidate point";
+          VLOG_IF(2, is_not_silent)
+              << "Resetting the reference point to the candidate point";
           reference_cost = candidate_cost;
           accumulated_reference_model_cost_change =
               accumulated_candidate_model_cost_change;
@@ -538,8 +549,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.trust_region_radius = strategy->Radius();
     if (iteration_summary.trust_region_radius <
         options_.min_trust_region_radius) {
+      VLOG_IF(1, is_not_silent)
+          << "Termination. Minimum trust region radius reached.";
       summary->termination_type = PARAMETER_TOLERANCE;
-      VLOG(1) << "Termination. Minimum trust region radius reached.";
       return;
     }
 
