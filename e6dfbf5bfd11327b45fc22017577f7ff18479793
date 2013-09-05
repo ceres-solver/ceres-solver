@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29885f6_dc06ed2e",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-05T19:04:35Z",
+      "side": 1,
+      "message": "This should always be true?",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_5c1bbd80",
+        "filename": "internal/ceres/minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-05T19:04:35Z",
+      "side": 1,
+      "message": "shouldn\u0027t this come from options?",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b29885f6_7c187983",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-05T19:04:35Z",
+      "side": 1,
+      "message": "Delete blakn",
+      "revId": "e6dfbf5bfd11327b45fc22017577f7ff18479793",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
