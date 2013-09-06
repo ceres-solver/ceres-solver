@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4715c92d_7c877567",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-06T21:58:57Z",
+      "side": 1,
+      "message": "I don\u0027t like this because it will make debugging hard: you can\u0027t tell which side failed. Please log different information for the case that plus fails.",
+      "revId": "f0477557fd6c38932bda7efe3bd94217e79122b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
