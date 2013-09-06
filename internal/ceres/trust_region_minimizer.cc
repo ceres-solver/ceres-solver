@@ -287,24 +287,18 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
-      if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-        summary->termination_type = NUMERICAL_FAILURE;
-        summary->error =
-            "Terminating. Failed to compute Plus(x, delta, x_plus_delta).";
 
-        LOG(WARNING) << summary->error;
-        return;
-      }
-
-      // Try this step.
       double new_cost = numeric_limits<double>::max();
-      if (!evaluator->Evaluate(x_plus_delta.data(),
-                               &new_cost,
-                               NULL, NULL, NULL)) {
-        // If the evaluation of the new cost fails, treat it as a step
-        // with high cost.
+      if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+        LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. "
+                     << "Treating it as a step with infinite cost";
+      } else if (!evaluator->Evaluate(x_plus_delta.data(),
+                                      &new_cost,
+                                      NULL,
+                                      NULL,
+                                      NULL)) {
         LOG(WARNING) << "Step failed to evaluate. "
-                     << "Treating it as step with infinite cost";
+                     << "Treating it as a step with infinite cost";
         new_cost = numeric_limits<double>::max();
       } else {
         // Check if performing an inner iteration will make it better.
