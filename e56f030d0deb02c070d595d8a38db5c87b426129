@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4715c92d_dc7e816c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-06T22:00:36Z",
+      "side": 1,
+      "message": "Even if it\u0027s described in the cmake docs, can you include a short comment about why these need to be different on windows? I just know I\u0027ll stare at this code later on and have no idea why it\u0027s done this way.",
+      "revId": "e56f030d0deb02c070d595d8a38db5c87b426129",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
