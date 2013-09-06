@@ -69,6 +69,9 @@ namespace {
 // use.
 const double kEpsilon = 1e-12;
 
+// TODO(sameeragarwal): I think there is a small bug here, in that if
+// the evaluation fails, then the state can contain garbage. Look at
+// this more carefully.
 bool Evaluate(Evaluator* evaluator,
               const Vector& x,
               LineSearchMinimizer::State* state) {
@@ -310,9 +313,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - iteration_start_time;
 
     // TODO(sameeragarwal): Collect stats.
-    if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data()) ||
-        !Evaluate(evaluator, x_plus_delta, &current_state)) {
-      LOG(WARNING) << "Evaluation failed.";
+    if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+      LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. ";
+    } else if (!Evaluate(evaluator, x_plus_delta, &current_state)) {
+      LOG(WARNING) << "Step failed to evaluate. ";
     } else {
       x = x_plus_delta;
     }
