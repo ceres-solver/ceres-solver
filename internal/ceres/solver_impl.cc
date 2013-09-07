@@ -275,6 +275,7 @@ void SolverImpl::TrustRegionMinimize(
 void SolverImpl::LineSearchMinimize(
     const Solver::Options& options,
     Program* program,
+    CoordinateDescentMinimizer* inner_iteration_minimizer,
     Evaluator* evaluator,
     double* parameters,
     Solver::Summary* summary) {
@@ -305,6 +306,7 @@ void SolverImpl::LineSearchMinimize(
   }
 
   minimizer_options.evaluator = evaluator;
+  minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
   LineSearchMinimizer minimizer;
   double minimizer_start_time = WallTimeInSeconds();
@@ -852,6 +854,24 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
+  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+  if (options.use_inner_iterations) {
+    if (reduced_program->parameter_blocks().size() < 2) {
+      LOG(WARNING) << "Reduced problem only contains one parameter block."
+                   << "Disabling inner iterations.";
+    } else {
+      inner_iteration_minimizer.reset(
+          CreateInnerIterationMinimizer(original_options,
+                                        *reduced_program,
+                                        problem_impl->parameter_map(),
+                                        summary));
+      if (inner_iteration_minimizer == NULL) {
+        LOG(ERROR) << summary->error;
+        return;
+      }
+    }
+  }
+
   // The optimizer works on contiguous parameter vectors; allocate some.
   Vector parameters(reduced_program->NumParameters());
 
@@ -867,6 +887,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // Run the optimization.
   LineSearchMinimize(options,
                      reduced_program.get(),
+                     inner_iteration_minimizer.get(),
                      evaluator.get(),
                      parameters.data(),
                      summary);

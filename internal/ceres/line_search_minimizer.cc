@@ -318,7 +318,31 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     } else if (!Evaluate(evaluator, x_plus_delta, &current_state)) {
       LOG(WARNING) << "Step failed to evaluate. ";
     } else {
+      const double pre_cost = current_state.cost;
       x = x_plus_delta;
+      LOG(INFO) << "Foo " << options.inner_iteration_minimizer;
+      if (options.inner_iteration_minimizer != NULL) {
+        LOG(INFO) << "Running IIM";
+        ++summary->num_inner_iteration_steps;
+        double inner_iteration_start_time = WallTimeInSeconds();
+        Vector inner_iteration_x = x;
+        Solver::Summary inner_iteration_summary;
+        options.inner_iteration_minimizer->Minimize(options,
+                                                    inner_iteration_x.data(),
+                                                    &inner_iteration_summary);
+
+        if (Evaluate(evaluator, inner_iteration_x, &current_state)) {
+          double post_cost = current_state.cost;
+          x = inner_iteration_x;
+          LOG(INFO) << "Inner iteration successful: " << pre_cost << " "  << post_cost;
+        } else {
+          LOG(INFO) << "Inner iteration evaluation failed.";
+          Evaluate(evaluator, x, &current_state);
+        }
+
+        summary->inner_iteration_time_in_seconds +=
+            WallTimeInSeconds() - inner_iteration_start_time;
+      }
     }
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;

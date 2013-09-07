@@ -78,6 +78,7 @@ class SolverImpl {
   // Run the LineSearchMinimizer for the given evaluator and configuration.
   static void LineSearchMinimize(const Solver::Options &options,
                                  Program* program,
+                                 CoordinateDescentMinimizer* inner_iteration_minimizer,
                                  Evaluator* evaluator,
                                  double* parameters,
                                  Solver::Summary* summary);
