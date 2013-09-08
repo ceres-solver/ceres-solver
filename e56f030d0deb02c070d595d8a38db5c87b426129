@@ -16,6 +16,24 @@
       "revId": "e56f030d0deb02c070d595d8a38db5c87b426129",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67e72d95_a256fe63",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-09-08T14:41:56Z",
+      "side": 1,
+      "message": "Well... actually I don\u0027t know how CMake finds thing on Windows, but for sure \"share/\" is not the correct folder. So far no one has complained about this, so probably is because \u0027make install\u0027 is not used in Windows (not idea again).\n\nThen, the purpose of this commit is not to solve an actual problem, just make you aware that there is a mistake for Windows (and maybe for Apple as well) in the installation system (well... in the find_package() support).\n\nCMAKECONFIG_INSTALL_DIR is the only one which has changed, because Windows is not case sensitive.\n\nSo, I am not the appropriate person to solve this \"problem\" and it can be easily ignored ;)",
+      "parentUuid": "4715c92d_dc7e816c",
+      "revId": "e56f030d0deb02c070d595d8a38db5c87b426129",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
