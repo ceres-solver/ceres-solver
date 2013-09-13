@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27645599_f7be8aa7",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-13T20:16:02Z",
+      "side": 1,
+      "message": "So everyone will pay this cost even though they may not need it?",
+      "revId": "4d2df0cf340e425c791980d7e0d4ce5963206303",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
