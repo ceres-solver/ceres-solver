@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670e4db7_8aba6b01",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-13T04:11:20Z",
+      "side": 1,
+      "message": "This is harder to read now; instead put the \u003c\u003c on the next line to make the rest of the log better.",
+      "revId": "b1cf4ecd01a87e22f5c82a84864106d0d2563ed2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "670e4db7_6ab05720",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-13T04:11:20Z",
+      "side": 1,
+      "message": "Break before \u003c\u003c to make this more readable.",
+      "revId": "b1cf4ecd01a87e22f5c82a84864106d0d2563ed2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
