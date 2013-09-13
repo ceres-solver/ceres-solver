@@ -1588,6 +1588,9 @@ elimination group [LiSaad]_.
        // Infinity norm of the gradient vector.
        double gradient_max_norm;
 
+       // 2-norm of the gradient vector.
+       double gradient_norm;
+
        // 2-norm of the size of the step computed by the optimization
        // algorithm.
        double step_norm;

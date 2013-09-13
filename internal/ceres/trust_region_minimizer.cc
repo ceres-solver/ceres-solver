@@ -113,6 +113,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.step_is_successful = false;
   iteration_summary.cost_change = 0.0;
   iteration_summary.gradient_max_norm = 0.0;
+  iteration_summary.gradient_norm = 0.0;
   iteration_summary.step_norm = 0.0;
   iteration_summary.relative_decrease = 0.0;
   iteration_summary.trust_region_radius = strategy->Radius();
@@ -145,6 +146,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   summary->initial_cost = cost + summary->fixed_cost;
   iteration_summary.cost = cost + summary->fixed_cost;
   iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
+  iteration_summary.gradient_norm = gradient.norm();
 
   // The initial gradient max_norm is bounded from below so that we do
   // not divide by zero.
@@ -283,6 +285,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       iteration_summary.cost_change = 0.0;
       iteration_summary.gradient_max_norm =
           summary->iterations.back().gradient_max_norm;
+      iteration_summary.gradient_norm =
+          summary->iterations.back().gradient_norm;
       iteration_summary.step_norm = 0.0;
       iteration_summary.relative_decrease = 0.0;
       iteration_summary.eta = options_.eta;
@@ -478,6 +482,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
 
       iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
+      iteration_summary.gradient_norm = gradient.norm();
 
       if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
         VLOG_IF(1, is_not_silent) << "Terminating: Gradient tolerance reached."

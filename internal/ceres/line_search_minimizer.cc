@@ -119,6 +119,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.step_is_successful = false;
   iteration_summary.cost_change = 0.0;
   iteration_summary.gradient_max_norm = 0.0;
+  iteration_summary.gradient_norm = 0.0;
   iteration_summary.step_norm = 0.0;
   iteration_summary.linear_solver_iterations = 0;
   iteration_summary.step_solver_time_in_seconds = 0;
@@ -135,6 +136,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.cost = current_state.cost + summary->fixed_cost;
 
   iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
+  iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
 
   // The initial gradient max_norm is bounded from below so that we do
   // not divide by zero.
@@ -331,6 +333,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
+    iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
+
     if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
       VLOG_IF(1, is_not_silent)
           << "Terminating: Gradient tolerance reached."
