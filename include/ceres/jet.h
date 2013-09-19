@@ -740,7 +740,8 @@ struct NumTraits<ceres::Jet<T, N> > {
     AddCost = 1,
     // For Jet types, multiplication is more expensive than addition.
     MulCost = 3,
-    HasFloatingPoint = 1
+    HasFloatingPoint = 1,
+    RequireInitialization = 1
   };
 };
 
