@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64580b70_43b7eced",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-23T17:15:12Z",
+      "side": 1,
+      "message": "Drop inserted blank.",
+      "revId": "39a527c16f86f6ad0d5c3358e815224c31acf40e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64580b70_63b670f0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-09-23T17:15:12Z",
+      "side": 1,
+      "message": "temp -\u003e tmp to be consistent with other code.\n\nI see tmp and temp are used inconsistently in this code, even before your patch. Want to fix it while you\u0027re here?",
+      "revId": "39a527c16f86f6ad0d5c3358e815224c31acf40e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
