@@ -494,6 +494,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+    original_program->SetParameterOffsetsAndIndex();
 
     summary->postprocessor_time_in_seconds =
         WallTimeInSeconds() - post_process_start_time;
@@ -596,6 +597,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   // Ensure the program state is set to the user parameters on the way
   // out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  original_program->SetParameterOffsetsAndIndex();
 
   const map<string, double>& linear_solver_time_statistics =
       linear_solver->TimeStatistics();
@@ -839,6 +841,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
     // Ensure the program state is set to the user parameters on the way out.
     original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+    original_program->SetParameterOffsetsAndIndex();
+
     summary->postprocessor_time_in_seconds =
         WallTimeInSeconds() - post_process_start_time;
     return;
@@ -889,6 +893,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   // Ensure the program state is set to the user parameters on the way out.
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  original_program->SetParameterOffsetsAndIndex();
 
   const map<string, double>& evaluator_time_statistics =
       evaluator->TimeStatistics();

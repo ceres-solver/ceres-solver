@@ -452,7 +452,11 @@ template<typename Block>
 void ProblemImpl::DeleteBlockInVector(vector<Block*>* mutable_blocks,
                                       Block* block_to_remove) {
   CHECK_EQ((*mutable_blocks)[block_to_remove->index()], block_to_remove)
-      << "You found a Ceres bug! Block: " << block_to_remove->ToString();
+      << "You found a Ceres bug! \n"
+      << "Block requested: "
+      << block_to_remove->ToString() << "\n"
+      << "Block present: "
+      << (*mutable_blocks)[block_to_remove->index()]->ToString();
 
   // Prepare the to-be-moved block for the new, lower-in-index position by
   // setting the index to the blocks final location.
