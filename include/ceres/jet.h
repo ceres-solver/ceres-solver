@@ -565,7 +565,7 @@ Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
 }
 
 
-// pow -- base is a differentiatble function, exponent is a constant.
+// pow -- base is a differentiable function, exponent is a constant.
 // (a+da)^p ~= a^p + p*a^(p-1) da
 template <typename T, int N> inline
 Jet<T, N> pow(const Jet<T, N>& f, double g) {
@@ -577,9 +577,8 @@ Jet<T, N> pow(const Jet<T, N>& f, double g) {
 // (a)^(p+dp) ~= a^p + a^p log(a) dp
 template <typename T, int N> inline
 Jet<T, N> pow(double f, const Jet<T, N>& g) {
-  T const tmp1 = pow(f, g.a);
-  T const tmp2 = log(f) * tmp1;
-  return Jet<T, N>(tmp1, tmp2 * g.v);
+  T const tmp = pow(f, g.a);
+  return Jet<T, N>(tmp, log(f) * tmp * g.v);
 }
 
 
