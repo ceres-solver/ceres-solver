@@ -676,7 +676,14 @@ ENDIF (UNIX)
 # threshold to the linker and clang complains about it and dies.
 IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   SET(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600 -Wno-return-type-c-linkage")
+      "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
+  # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
+  # option, so check for its presence before adding it to the default flags set.
+  CHECK_CXX_COMPILER_FLAG("-Wno-return-type-c-linkage"
+                          HAVE_RETURN_TYPE_C_LINKAGE)
+  IF (HAVE_RETURN_TYPE_C_LINKAGE)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
+  ENDIF(HAVE_RETURN_TYPE_C_LINKAGE)
 ENDIF ()
 
 ADD_SUBDIRECTORY(internal/ceres)
