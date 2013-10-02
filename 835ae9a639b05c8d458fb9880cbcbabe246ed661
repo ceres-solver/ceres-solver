@@ -16,6 +16,24 @@
       "revId": "835ae9a639b05c8d458fb9880cbcbabe246ed661",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1c1a91a_b0fbb6ef",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-02T17:10:02Z",
+      "side": 1,
+      "message": "Essentially in CMake, if you have IF( VAR ), this is legal - and false - if the variable does not exist (or exists, but has not been set, or is set to one of the \u0027defined false constants\u0027).\n\nOnly variables explicitly defined in the CMake cache are displayed in the CMake GUI and BUILD_SHARED_LIBS is not defined by default, in the cache or anywhere else.  As such although any IF( BUILD_SHARED_LIBS ) tests are false, the user cannot enable shared libraries from the GUI, they have to explicitly set the variable via the -D flag.\n\nAll this does is declare BUILD_SHARED_LIBS as a CMake option() (which are represented by variables stored in the cache) which is explicitly set to false by default, but is directly controllable by the user in the GUI.",
+      "parentUuid": "21b445af_a8203bbd",
+      "revId": "835ae9a639b05c8d458fb9880cbcbabe246ed661",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
