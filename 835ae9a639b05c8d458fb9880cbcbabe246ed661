@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b445af_a8203bbd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-02T16:55:54Z",
+      "side": 1,
+      "message": "I do not have any objections to this patch but I do not understand it.\n\nI do not know enough about cmake gui etc, so I will let keir comment on this. What I am curious about is that BUILD_SHARED_LIBS is a cmake flag already with a default value, why do we need to add it explicitly like this?",
+      "revId": "835ae9a639b05c8d458fb9880cbcbabe246ed661",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
