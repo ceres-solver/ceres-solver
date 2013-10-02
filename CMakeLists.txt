@@ -106,6 +106,12 @@ OPTION(LINE_SEARCH_MINIMIZER "Enable the line search minimizer." ON)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
+OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
+IF (BUILD_SHARED_LIBS)
+  MESSAGE("-- Building as a shared library.")
+ELSE (BUILD_SHARED_LIBS)
+  MESSAGE("-- Building as a static library.")
+ENDIF (BUILD_SHARED_LIBS)
 
 # Default locations to search for on various platforms.
 
