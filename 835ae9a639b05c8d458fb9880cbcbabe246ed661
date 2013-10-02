@@ -34,6 +34,24 @@
       "revId": "835ae9a639b05c8d458fb9880cbcbabe246ed661",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21b445af_cb7fa966",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-02T17:13:29Z",
+      "side": 1,
+      "message": "thanks for the explanation Alex. I suspected it was something like this but wanted to be sure.\n\ncan I just say that I find cmake as a language abhorrent..",
+      "parentUuid": "c1c1a91a_b0fbb6ef",
+      "revId": "835ae9a639b05c8d458fb9880cbcbabe246ed661",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
