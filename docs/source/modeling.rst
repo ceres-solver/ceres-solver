@@ -164,7 +164,7 @@ residuals and their derivatives. This is done using
    .. code-block:: c++
 
      template <typename CostFunctor,
-            int M,        // Number of residuals, or ceres::DYNAMIC.
+            int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
             int N0,       // Number of parameters in block 0.
             int N1 = 0,   // Number of parameters in block 1.
             int N2 = 0,   // Number of parameters in block 2.
@@ -176,7 +176,7 @@ residuals and their derivatives. This is done using
             int N8 = 0,   // Number of parameters in block 8.
             int N9 = 0>   // Number of parameters in block 9.
      class AutoDiffCostFunction : public
-     SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+     SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
      };
 
    To get an auto differentiated cost function, you must define a
@@ -253,6 +253,22 @@ residuals and their derivatives. This is done using
    ``MyScalarCostFunction``, ``<1, 2, 2>`` describe the functor as
    computing a 1-dimensional output from two arguments, both
    2-dimensional.
+
+   :class:`AutoDiffCostFunction` also supports cost functions with a
+   runtime-determined number of residuals. For example:
+
+   .. code-block:: c++
+
+     CostFunction* cost_function
+         = new AutoDiffCostFunction<MyScalarCostFunctor, DYNAMIC, 2, 2>(
+             new CostFunctorWithDynamicNumResiduals(1.0),   ^     ^  ^
+             runtime_number_of_residuals); <----+           |     |  |
+                                                |           |     |  |
+                                                |           |     |  |
+               Actual number of residuals ------+           |     |  |
+               Indicate dynamic number of residuals --------+     |  |
+               Dimension of x ------------------------------------+  |
+               Dimension of y ---------------------------------------+
 
    The framework can currently accommodate cost functions of up to 10
    independent variables, and there is no limit on the dimensionality
@@ -342,12 +358,21 @@ residuals and their derivatives. This is done using
 
     .. code-block:: c++
 
-      template <typename CostFunctionNoJacobian,
-                NumericDiffMethod method = CENTRAL, int M = 0,
-                int N0 = 0, int N1 = 0, int N2 = 0, int N3 = 0, int N4 = 0,
-                int N5 = 0, int N6 = 0, int N7 = 0, int N8 = 0, int N9 = 0>
+      template <typename CostFunctor,
+                NumericDiffMethod method = CENTRAL,
+            	int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
+	        int N0,       // Number of parameters in block 0.
+            	int N1 = 0,   // Number of parameters in block 1.
+		int N2 = 0,   // Number of parameters in block 2.
+                int N3 = 0,   // Number of parameters in block 3.
+                int N4 = 0,   // Number of parameters in block 4.
+                int N5 = 0,   // Number of parameters in block 5.
+                int N6 = 0,   // Number of parameters in block 6.
+                int N7 = 0,   // Number of parameters in block 7.
+                int N8 = 0,   // Number of parameters in block 8.
+                int N9 = 0>   // Number of parameters in block 9.
       class NumericDiffCostFunction
-        : public SizedCostFunction<M, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+        : public SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
       };
 
    To get a numerically differentiated :class:`CostFunction`, you must
@@ -425,6 +450,24 @@ residuals and their derivatives. This is done using
    ``MyScalarCostFunctor``, ``1, 2, 2``, describe the functor as
    computing a 1-dimensional output from two arguments, both
    2-dimensional.
+
+   NumericDiffCostFunction also supports cost functions with a
+   runtime-determined number of residuals. For example:
+
+   .. code-block:: c++
+
+     CostFunction* cost_function
+         = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, DYNAMIC, 2, 2>(
+             new CostFunctorWithDynamicNumResiduals(1.0),   ^     ^  ^
+             TAKE_OWNERSHIP,                                |     |  |
+             runtime_number_of_residuals); <----+           |     |  |
+                                                |           |     |  |
+                                                |           |     |  |
+               Actual number of residuals ------+           |     |  |
+               Indicate dynamic number of residuals --------+     |  |
+               Dimension of x ------------------------------------+  |
+               Dimension of y ---------------------------------------+
+
 
    The framework can currently accommodate cost functions of up to 10
    independent variables, and there is no limit on the dimensionality
