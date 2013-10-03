@@ -371,8 +371,8 @@ residuals and their derivatives. This is done using
                 int N7 = 0,   // Number of parameters in block 7.
                 int N8 = 0,   // Number of parameters in block 8.
                 int N9 = 0>   // Number of parameters in block 9.
-      class NumericDiffCostFunction
-        : public SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
+      class NumericDiffCostFunction : public
+      SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9> {
       };
 
    To get a numerically differentiated :class:`CostFunction`, you must
@@ -458,15 +458,15 @@ residuals and their derivatives. This is done using
 
      CostFunction* cost_function
          = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, DYNAMIC, 2, 2>(
-             new CostFunctorWithDynamicNumResiduals(1.0),   ^     ^  ^
-             TAKE_OWNERSHIP,                                |     |  |
-             runtime_number_of_residuals); <----+           |     |  |
-                                                |           |     |  |
-                                                |           |     |  |
-               Actual number of residuals ------+           |     |  |
-               Indicate dynamic number of residuals --------+     |  |
-               Dimension of x ------------------------------------+  |
-               Dimension of y ---------------------------------------+
+             new CostFunctorWithDynamicNumResiduals(1.0),               ^     ^  ^
+             TAKE_OWNERSHIP,                                            |     |  |
+             runtime_number_of_residuals); <----+                       |     |  |
+                                                |                       |     |  |
+                                                |                       |     |  |
+               Actual number of residuals ------+                       |     |  |
+               Indicate dynamic number of residuals --------------------+     |  |
+               Dimension of x ------------------------------------------------+  |
+               Dimension of y ---------------------------------------------------+
 
 
    The framework can currently accommodate cost functions of up to 10

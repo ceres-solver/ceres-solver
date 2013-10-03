@@ -100,15 +100,15 @@
 //
 //   CostFunction* cost_function
 //       = new NumericDiffCostFunction<MyScalarCostFunctor, CENTRAL, DYNAMIC, 2, 2>(
-//           new CostFunctorWithDynamicNumResiduals(1.0),   ^     ^  ^
-//           TAKE_OWNERSHIP,                                |     |  |
-//           runtime_number_of_residuals); <----+           |     |  |
-//                                              |           |     |  |
-//                                              |           |     |  |
-//             Actual number of residuals ------+           |     |  |
-//             Indicate dynamic number of residuals --------+     |  |
-//             Dimension of x ------------------------------------+  |
-//             Dimension of y ---------------------------------------+
+//           new CostFunctorWithDynamicNumResiduals(1.0),               ^     ^  ^
+//           TAKE_OWNERSHIP,                                            |     |  |
+//           runtime_number_of_residuals); <----+                       |     |  |
+//                                              |                       |     |  |
+//                                              |                       |     |  |
+//             Actual number of residuals ------+                       |     |  |
+//             Indicate dynamic number of residuals --------------------+     |  |
+//             Dimension of x ------------------------------------------------+  |
+//             Dimension of y ---------------------------------------------------+
 //
 // The framework can currently accommodate cost functions of up to 10
 // independent variables, and there is no limit on the dimensionality
@@ -197,7 +197,9 @@ class NumericDiffCostFunction
        ownership_(ownership),
        relative_step_size_(relative_step_size) {
     if (kNumResiduals == DYNAMIC) {
-      SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+      SizedCostFunction<kNumResiduals,
+                        N0, N1, N2, N3, N4,
+                        N5, N6, N7, N8, N9>
           ::set_num_residuals(num_residuals);
     }
   }
@@ -277,7 +279,9 @@ class NumericDiffCostFunction
                            functor_.get(),                              \
                            residuals,                                   \
                            relative_step_size_,                         \
-                           SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::num_residuals(), \
+                          SizedCostFunction<kNumResiduals,              \
+                           N0, N1, N2, N3, N4,                          \
+                           N5, N6, N7, N8, N9>::num_residuals(),        \
                            parameters_reference_copy.get(),             \
                            jacobians[block])) {                         \
         return false;                                                   \

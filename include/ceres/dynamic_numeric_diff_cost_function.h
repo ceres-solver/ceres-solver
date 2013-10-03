@@ -108,8 +108,8 @@ class DynamicNumericDiffCostFunction : public CostFunction {
         << "You must call DynamicNumericDiffCostFunction::AddParameterBlock() "
         << "before DynamicNumericDiffCostFunction::Evaluate().";
 
-    bool status = (*functor_)(parameters, residuals);
-    if (jacobians == NULL) {
+    const bool status = (*functor_)(parameters, residuals);
+    if (jacobians == NULL || !status) {
       return status;
     }
 

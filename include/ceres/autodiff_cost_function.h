@@ -186,7 +186,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
     CHECK_EQ(kNumResiduals, DYNAMIC)
         << "Can't run the dynamic-size constructor if the "
         << "number of residuals is not ceres::DYNAMIC.";
-    SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+    SizedCostFunction<kNumResiduals,
+                      N0, N1, N2, N3, N4,
+                      N5, N6, N7, N8, N9>
         ::set_num_residuals(num_residuals);
   }
 
@@ -209,7 +211,9 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
            N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>::Differentiate(
                *functor_,
                parameters,
-               SizedCostFunction<kNumResiduals, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>
+               SizedCostFunction<kNumResiduals,
+               N0, N1, N2, N3, N4,
+               N5, N6, N7, N8, N9>
                    ::num_residuals(),
                residuals,
                jacobians);
