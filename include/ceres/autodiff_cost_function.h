@@ -212,9 +212,8 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
                *functor_,
                parameters,
                SizedCostFunction<kNumResiduals,
-               N0, N1, N2, N3, N4,
-               N5, N6, N7, N8, N9>
-                   ::num_residuals(),
+                                 N0, N1, N2, N3, N4,
+                                 N5, N6, N7, N8, N9>::num_residuals(),
                residuals,
                jacobians);
   }
