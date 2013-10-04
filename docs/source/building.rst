@@ -66,6 +66,14 @@ Building on Linux
 We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
 platform. Start by installing all the dependencies.
 
+.. NOTE::
+Up to at least Ubuntu 13.10, the SuiteSparse package in the official
+package repository (built from SuiteSparse v3.4.0) **cannot** be used to
+build Ceres as a *shared* library.  Thus if you want to build Ceres as a
+shared library using SuiteSparse, you must perform a source install of
+SuiteSparse.  It is recommended that you use the current version of
+SuiteSparse (4.2.1 at the time of writing).
+
 .. code-block:: bash
 
      # CMake
@@ -86,8 +94,14 @@ platform. Start by installing all the dependencies.
      sudo apt-get install libatlas-base-dev
      # Eigen3
      sudo apt-get install libeigen3-dev
-     # SuiteSparse and CXSparse
+     # SuiteSparse and CXSparse (optional)
+     # - If you want to build Ceres as a *static* library (the default)
+     #   you can use the SuiteSparse package in the main Ubuntu package
+     #   repository:
      sudo apt-get install libsuitesparse-dev
+     # - However, if you want to build Ceres as a *shared* library, you must
+     #   perform a source install of SuiteSparse (and uninstall the Ubuntu
+     #   package if it is currently installed.
 
 We are now ready to build and test Ceres.
 
@@ -286,42 +300,48 @@ Customizing the build
 =====================
 
 It is possible to reduce the libraries needed to build Ceres and
-customize the build process by passing appropriate flags to
-``CMake``. Use these flags only if you really know what you are doing.
+customize the build process by setting the appropriate options in
+``CMake``.  These options can either be set in the ``CMake`` GUI,
+or via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the
+command line.  In general, you should only modify these options from
+their defaults if you know what you are doing.
 
-#. ``-DSUITESPARSE=OFF``: By default, Ceres will link to
-   ``SuiteSparse`` if all its dependencies are present. Use this flag
+#. ``SUITESPARSE [Default: ON]``: By default, Ceres will link to
+   ``SuiteSparse`` if all its dependencies are present. Turn this ``OFF``
    to build Ceres without ``SuiteSparse``. This will also disable
    dependency checking for ``LAPACK`` and ``BLAS``. This will reduce
    Ceres' dependencies down to ``Eigen``, ``gflags`` and
    ``google-glog``.
 
-#. ``-DCXSPARSE=OFF``: By default, Ceres will link to ``CXSparse`` if
-   all its dependencies are present. Use this flag to builds Ceres
+#. ``CXSPARSE [Default: ON]``: By default, Ceres will link to ``CXSparse`` if
+   all its dependencies are present. Turn this ``OFF`` to build Ceres
    without ``CXSparse``. This will reduce Ceres' dependencies down to
    ``Eigen``, ``gflags`` and ``google-glog``.
 
-#. ``-DGFLAGS=OFF``: Use this flag to build Ceres without
+#. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.
 
-#. ``-DSCHUR_SPECIALIZATIONS=OFF``: If you are concerned about binary
+#. ``SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about binary
    size/compilation time over some small (10-20%) performance gains in
    the ``SPARSE_SCHUR`` solver, you can disable some of the template
-   specializations by using this flag.
+   specializations by turning this ``OFF``.
 
-#. ``-DLINE_SEARCH_MINIMIZER=OFF``: The line search based minimizer is
+#. ``LINE_SEARCH_MINIMIZER [Default: OFF]``: The line search based minimizer is
    mostly suitable for large scale optimization problems, or when sparse
    linear algebra libraries are not available. You can further save on
-   some compile time and binary size by using this flag.
+   some compile time and binary size by turning this ``OFF``.
 
-#. ``-DOPENMP=OFF``: On certain platforms like Android,
-   multi-threading with ``OpenMP`` is not supported. Use this flag to
+#. ``OPENMP [Default: ON]``: On certain platforms like Android,
+   multi-threading with ``OpenMP`` is not supported. Turn this ``OFF`` to
    disable multithreading.
 
-#. ``-DBUILD_DOCUMENTATION=ON``: Use this flag to enable building the
-   documentation. In addition, ``make ceres_docs`` can be used to
-   build only the documentation.
+#. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as a static
+   library, turn this ``ON`` to instead build Ceres as a shared library.
+
+#. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building the
+   documentation, requires `Sphinx <http://sphinx-doc.org/>`_. In addition,
+   ``make ceres_docs`` can be used to build only the documentation.
 
 .. _section-using-ceres:
 
@@ -376,17 +396,3 @@ the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
 
 Note that this can be used to have multiple versions of Ceres installed.
 
-Compiling against static or shared library
-------------------------------------------
-
-.. code-block:: cmake
-
-    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES})
-
-will result in a statically linked binary. Changing this line to
-
-.. code-block:: cmake
-
-    TARGET_LINK_LIBRARIES(helloworld ${CERES_LIBRARIES_SHARED})
-
-will result in a dynamically linked binary.
