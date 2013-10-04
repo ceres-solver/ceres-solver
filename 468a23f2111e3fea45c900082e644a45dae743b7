@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2120c5dd_8b60f1a7",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-04T20:01:25Z",
+      "side": 0,
+      "message": "Is this not true? Why remove this section?",
+      "revId": "468a23f2111e3fea45c900082e644a45dae743b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_0b0081cd",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-04T20:01:25Z",
+      "side": 0,
+      "message": "Good catch.",
+      "revId": "468a23f2111e3fea45c900082e644a45dae743b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2120c5dd_ab7fb566",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-04T20:01:25Z",
+      "side": 1,
+      "message": "Does this work? I think there is a mismatch here. It looks like this is a danglig else",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_4b38b9af",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-04T20:01:25Z",
+      "side": 1,
+      "message": "I think this branch is dangling now? Same comment as above.",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_2b50e5dc",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-04T20:01:25Z",
+      "side": 1,
+      "message": "Can we detect and warn about this during the build?",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
