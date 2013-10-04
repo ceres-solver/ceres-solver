@@ -203,7 +203,7 @@ class DynamicNumericDiffCostFunction : public CostFunction {
       // 1. Store residuals for the forward part.
       // 2. Subtract residuals for the backward (or 0) part.
       // 3. Divide out the run.
-      parameter_jacobian.col(j) = residuals;
+      parameter_jacobian.col(j).matrix() = residuals;
 
       double one_over_h = 1 / step_size(j);
       if (method == CENTRAL) {
