@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2120c5dd_8b12b117",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-04T20:06:12Z",
+      "side": 1,
+      "message": "this is an artifact of the size of the if statement.\nit is not a dangler.\n\nalex, would you mind indenting the stuff inside the SUITESPARSE, we should have done this a while ago.\n\nanother thought is, that perhaps its time to refactor suitesparse and cxsparse lookup into their own functions/cmake files and reduce the size of this file a bit.",
+      "parentUuid": "2120c5dd_ab7fb566",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_4b38b9af",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2120c5dd_0bd2411d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-04T20:06:12Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "2120c5dd_4b38b9af",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_2b50e5dc",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2013-10-04T20:01:25Z",
       "side": 1,
       "message": "Can we detect and warn about this during the build?",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_abe055e0",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-04T20:06:12Z",
+      "side": 1,
+      "message": "well.. the build is going to fail.. so its not a silent failure.\n\nnot sure if there is a robust way to detect if we are dealing with a default or custom suitesparse build... maybe check for the presence of the rpm.. seems overkill to me.",
+      "parentUuid": "2120c5dd_2b50e5dc",
       "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
