@@ -63,6 +63,9 @@ IF (EXISTS ${LOCAL_GIT_DIRECTORY})
   ENDIF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
 ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
 
+# Make CMake aware of the cmake folder for local FindXXX scripts.
+SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -83,8 +86,10 @@ SET(CERES_ABI_VERSION 1.7.0)
 
 ENABLE_TESTING()
 
-OPTION(MINIGLOG "Use a stripped down version of glog" OFF)
+OPTION(MINIGLOG "Use a stripped down version of glog." OFF)
 OPTION(GFLAGS "Enable Google Flags." ON)
+OPTION(SUITESPARSE "Enable SuiteSparse." ON)
+OPTION(CXSPARSE "Enable CXSparse." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
 # may consider disabling this.
@@ -108,9 +113,9 @@ OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
 OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 IF (BUILD_SHARED_LIBS)
-  MESSAGE("-- Building as a shared library.")
+  MESSAGE("-- Building Ceres as a shared library.")
 ELSE (BUILD_SHARED_LIBS)
-  MESSAGE("-- Building as a static library.")
+  MESSAGE("-- Building Ceres as a static library.")
 ENDIF (BUILD_SHARED_LIBS)
 
 # Default locations to search for on various platforms.
@@ -139,14 +144,16 @@ LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include)
 LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include/eigen3)
 LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include/suitesparse)
 
-# Eigen
+# Eigen.
 FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core)
 IF (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
 ELSE (NOT EXISTS ${EIGEN_INCLUDE})
   MESSAGE("-- Found Eigen 3.x: ${EIGEN_INCLUDE}")
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
+MARK_AS_ADVANCED(EIGEN_INCLUDE)
 
+# BLAS & LAPACK.
 SET(BLAS_AND_LAPACK_FOUND TRUE)
 IF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
   FIND_PACKAGE(LAPACK)
@@ -164,7 +171,6 @@ IF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
     MESSAGE("-- Did not find BLAS library")
     SET(BLAS_AND_BLAS_FOUND FALSE)
   ENDIF (BLAS_FOUND)
-
 ELSE ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
   SET(BLAS_AND_LAPACK_FOUND FALSE)
 ENDIF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
@@ -173,273 +179,85 @@ IF (NOT BLAS_AND_LAPACK_FOUND)
   ADD_DEFINITIONS(-DCERES_NO_LAPACK)
 ENDIF (NOT BLAS_AND_LAPACK_FOUND)
 
-IF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
-# Check for SuiteSparse dependencies
+# SuiteSparse.
+IF (SUITESPARSE)
+  # By default, if SuiteSparse and all dependencies are found, Ceres is
+  # built with SuiteSparse support.
 
-SET(AMD_FOUND TRUE)
-FIND_LIBRARY(AMD_LIB NAMES amd)
-IF (EXISTS ${AMD_LIB})
-  MESSAGE("-- Found AMD library: ${AMD_LIB}")
-ELSE (EXISTS ${AMD_LIB})
-  MESSAGE("-- Did not find AMD library")
-  SET(AMD_FOUND FALSE)
-ENDIF (EXISTS ${AMD_LIB})
-
-FIND_PATH(AMD_INCLUDE NAMES amd.h)
-IF (EXISTS ${AMD_INCLUDE})
-  MESSAGE("-- Found AMD header in: ${AMD_INCLUDE}")
-ELSE (EXISTS ${AMD_INCLUDE})
-  MESSAGE("-- Did not find AMD header")
-  SET(AMD_FOUND FALSE)
-ENDIF (EXISTS ${AMD_INCLUDE})
-
-SET(CAMD_FOUND TRUE)
-FIND_LIBRARY(CAMD_LIB NAMES camd)
-IF (EXISTS ${CAMD_LIB})
-  MESSAGE("-- Found CAMD library: ${CAMD_LIB}")
-ELSE (EXISTS ${CAMD_LIB})
-  MESSAGE("-- Did not find CAMD library")
-  SET(CAMD_FOUND FALSE)
-ENDIF (EXISTS ${CAMD_LIB})
-
-FIND_PATH(CAMD_INCLUDE NAMES camd.h)
-IF (EXISTS ${CAMD_INCLUDE})
-  MESSAGE("-- Found CAMD header in: ${CAMD_INCLUDE}")
-ELSE (EXISTS ${CAMD_INCLUDE})
-  MESSAGE("-- Did not find CAMD header")
-  SET(CAMD_FOUND FALSE)
-ENDIF (EXISTS ${CAMD_INCLUDE})
-
-SET(COLAMD_FOUND TRUE)
-FIND_LIBRARY(COLAMD_LIB NAMES colamd)
-IF (EXISTS ${COLAMD_LIB})
-  MESSAGE("-- Found COLAMD library: ${COLAMD_LIB}")
-ELSE (EXISTS ${COLAMD_LIB})
-  MESSAGE("-- Did not find COLAMD library")
-  SET(COLAMD_FOUND FALSE)
-ENDIF (EXISTS ${COLAMD_LIB})
-
-FIND_PATH(COLAMD_INCLUDE NAMES colamd.h)
-IF (EXISTS ${COLAMD_INCLUDE})
-  MESSAGE("-- Found COLAMD header in: ${COLAMD_INCLUDE}")
-ELSE (EXISTS ${COLAMD_INCLUDE})
-  MESSAGE("-- Did not find COLAMD header")
-  SET(COLAMD_FOUND FALSE)
-ENDIF (EXISTS ${COLAMD_INCLUDE})
-
-SET(CCOLAMD_FOUND TRUE)
-FIND_LIBRARY(CCOLAMD_LIB NAMES ccolamd)
-IF (EXISTS ${CCOLAMD_LIB})
-  MESSAGE("-- Found CCOLAMD library: ${CCOLAMD_LIB}")
-ELSE (EXISTS ${CCOLAMD_LIB})
-  MESSAGE("-- Did not find CCOLAMD library")
-  SET(CCOLAMD_FOUND FALSE)
-ENDIF (EXISTS ${CCOLAMD_LIB})
-
-FIND_PATH(CCOLAMD_INCLUDE NAMES ccolamd.h)
-IF (EXISTS ${CCOLAMD_INCLUDE})
-  MESSAGE("-- Found CCOLAMD header in: ${CCOLAMD_INCLUDE}")
-ELSE (EXISTS ${CCOLAMD_INCLUDE})
-  MESSAGE("-- Did not find CCOLAMD header")
-  SET(CCOLAMD_FOUND FALSE)
-ENDIF (EXISTS ${CCOLAMD_INCLUDE})
-
-SET(CHOLMOD_FOUND TRUE)
-FIND_LIBRARY(CHOLMOD_LIB NAMES cholmod)
-IF (EXISTS ${CHOLMOD_LIB})
-  MESSAGE("-- Found CHOLMOD library: ${CHOLMOD_LIB}")
-ELSE (EXISTS ${CHOLMOD_LIB})
-  MESSAGE("-- Did not find CHOLMOD library")
-  SET(CHOLMOD_FOUND FALSE)
-ENDIF (EXISTS ${CHOLMOD_LIB})
-
-FIND_PATH(CHOLMOD_INCLUDE NAMES cholmod.h)
-IF (EXISTS ${CHOLMOD_INCLUDE})
-  MESSAGE("-- Found CHOLMOD header in: ${CHOLMOD_INCLUDE}")
-ELSE (EXISTS ${CHOLMOD_INCLUDE})
-  MESSAGE("-- Did not find CHOLMOD header")
-  SET(CHOLMOD_FOUND FALSE)
-ENDIF (EXISTS ${CHOLMOD_INCLUDE})
-
-SET(SUITESPARSEQR_FOUND TRUE)
-FIND_LIBRARY(SUITESPARSEQR_LIB NAMES spqr)
-IF (EXISTS ${SUITESPARSEQR_LIB})
-  MESSAGE("-- Found SUITESPARSEQR library: ${SUITESPARSEQR_LIB}")
-ELSE (EXISTS ${SUITESPARSEQR_LIB})
-  MESSAGE("-- Did not find SUITESPARSEQR library")
-  SET(SUITESPARSEQR_FOUND FALSE)
-ENDIF (EXISTS ${SUITESPARSEQR_LIB})
-
-FIND_PATH(SUITESPARSEQR_INCLUDE NAMES SuiteSparseQR.hpp)
-IF (EXISTS ${SUITESPARSEQR_INCLUDE})
-  MESSAGE("-- Found SUITESPARSEQR header in: ${SUITESPARSEQR_INCLUDE}")
-ELSE (EXISTS ${SUITESPARSEQR_INCLUDE})
-  MESSAGE("-- Did not find SUITESPARSEQR header")
-  SET(SUITESPARSEQR_FOUND FALSE)
-ENDIF (EXISTS ${SUITESPARSEQR_INCLUDE})
-
-# If SuiteSparse version is >= 4 then SuiteSparse_config is required.
-# For SuiteSparse 3, UFconfig.h is required.
-SET(SUITESPARSE_CONFIG_FOUND TRUE)
-SET(UFCONFIG_FOUND TRUE)
-
-FIND_LIBRARY(SUITESPARSE_CONFIG_LIB NAMES suitesparseconfig)
-IF (EXISTS ${SUITESPARSE_CONFIG_LIB})
-  MESSAGE("-- Found SuiteSparse_config library: ${SUITESPARSE_CONFIG_LIB}")
-ELSE (EXISTS ${SUITESPARSE_CONFIG_LIB})
-  MESSAGE("-- Did not find SuiteSparse_config library")
-ENDIF (EXISTS ${SUITESPARSE_CONFIG_LIB})
-
-FIND_PATH(SUITESPARSE_CONFIG_INCLUDE NAMES SuiteSparse_config.h)
-IF (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-  MESSAGE("-- Found SuiteSparse_config header in: ${SUITESPARSE_CONFIG_INCLUDE}")
-  SET(UFCONFIG_FOUND FALSE)
-ELSE (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-  MESSAGE("-- Did not find SuiteSparse_config header")
-ENDIF (EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-
-IF (EXISTS ${SUITESPARSE_CONFIG_LIB} AND
-    EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-  # SuiteSparse_config (SuiteSparse version >= 4) requires librt library for
-  # timing by default when compiled on Linux or Unix, but not on OSX (which
-  # does not have librt).
-  IF (CMAKE_SYSTEM_NAME MATCHES "Linux" OR UNIX AND NOT APPLE)
-    FIND_LIBRARY(LIBRT_LIB NAMES rt)
-    IF (LIBRT_LIB)
-      MESSAGE("-- Adding librt: ${LIBRT_LIB} to SuiteSparse_config libraries.")
-    ELSE (LIBRT_LIB)
-      MESSAGE("-- Could not find librt, but found SuiteSparse_config, "
-        "assuming that SuiteSparse was compiled without timing.")
-    ENDIF (LIBRT_LIB)
-    LIST(APPEND SUITESPARSE_CONFIG_LIB ${LIBRT_LIB})
-  ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux" OR UNIX AND NOT APPLE)
-ELSE (EXISTS ${SUITESPARSE_CONFIG_LIB} AND
-      EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-  SET(SUITESPARSE_CONFIG_FOUND FALSE)
-  FIND_PATH(UFCONFIG_INCLUDE NAMES UFconfig.h)
-  IF (EXISTS ${UFCONFIG_INCLUDE})
-    MESSAGE("-- Found UFconfig header in: ${UFCONFIG_INCLUDE}")
-  ELSE (EXISTS ${UFCONFIG_INCLUDE})
-    MESSAGE("-- Did not find UFconfig header")
-    SET(UFCONFIG_FOUND FALSE)
-  ENDIF (EXISTS ${UFCONFIG_INCLUDE})
-ENDIF (EXISTS ${SUITESPARSE_CONFIG_LIB} AND
-       EXISTS ${SUITESPARSE_CONFIG_INCLUDE})
-
-FIND_LIBRARY(METIS_LIB NAMES metis)
-IF (EXISTS ${METIS_LIB})
-  MESSAGE("-- Found METIS library: ${METIS_LIB}")
-ELSE (EXISTS ${METIS_LIB})
-  MESSAGE("-- Did not find METIS library")
-ENDIF (EXISTS ${METIS_LIB})
-
-# SuiteSparseQR may be compiled with Intel Threading Building Blocks.
-SET(TBB_FOUND TRUE)
-FIND_LIBRARY(TBB_LIB NAMES tbb)
-IF (EXISTS ${TBB_LIB})
-  MESSAGE("-- Found TBB library: ${TBB_LIB}")
-ELSE (EXISTS ${TBB_LIB})
-  MESSAGE("-- Did not find TBB library")
-  SET(TBB_FOUND FALSE)
-ENDIF (EXISTS ${TBB_LIB})
-
-IF (TBB_FOUND)
-  FIND_LIBRARY(TBB_MALLOC_LIB NAMES tbbmalloc)
-  IF (EXISTS ${TBB_MALLOC_LIB})
-    MESSAGE("-- Found TBB Malloc library: ${TBB_MALLOC_LIB}")
-  ELSE (EXISTS ${TBB_MALLOC_LIB})
-    MESSAGE("-- Did not find TBB Malloc library")
-    SET(TBB_FOUND FALSE)
-  ENDIF (EXISTS ${TBB_MALLOC_LIB})
-ENDIF (TBB_FOUND)
-
-# We don't use SET(SUITESPARSE_FOUND ${AMD_FOUND} ...) in order to be
-# able to check whether SuiteSparse is available without expanding
-# SUITESPARSE_FOUND with ${}. This means further checks could be:
-#
-#   IF (SUITESPARSE_FOUND)
-#
-# and not:
-#
-#   IF (${SUITESPARSE_FOUND})
-#
-IF (${AMD_FOUND} AND
-    ${CAMD_FOUND} AND
-    ${COLAMD_FOUND} AND
-    ${CCOLAMD_FOUND} AND
-    ${CHOLMOD_FOUND} AND
-    (${SUITESPARSE_CONFIG_FOUND} OR ${UFCONFIG_FOUND}) AND
-    ${BLAS_AND_LAPACK_FOUND})
-  SET(SUITESPARSE_FOUND TRUE)
-ELSE ()
-  SET(SUITESPARSE_FOUND FALSE)
-ENDIF ()
-
-ENDIF ((NOT DEFINED SUITESPARSE) OR (DEFINED SUITESPARSE AND SUITESPARSE))
-# By default, if all of SuiteSparse's dependencies are found, Ceres is
-# built with SuiteSparse support. -DSUITESPARSE=ON/OFF can be used to
-# enable/disable SuiteSparse explicitly.
-IF (DEFINED SUITESPARSE)
-  IF (SUITESPARSE)
-    IF (NOT SUITESPARSE_FOUND)
-      MESSAGE(FATAL_ERROR "One or more of SuiteSparse's dependencies was not found")
-    ENDIF (NOT SUITESPARSE_FOUND)
-  ELSE (SUITESPARSE)
-    ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
-  ENDIF (SUITESPARSE)
-ELSE (DEFINED SUITESPARSE)
+  # Check for SuiteSparse and dependencies.
+  FIND_PACKAGE(SuiteSparse QUIET)
   IF (SUITESPARSE_FOUND)
-    MESSAGE("-- Found all SuiteSparse dependencies. Building with SuiteSparse")
-    SET(SUITESPARSE ON)
+    # On Ubuntu the system install of SuiteSparse (v3.4.0) up to at least
+    # Ubuntu 13.10 cannot be used to link shared libraries.
+    IF (BUILD_SHARED_LIBS AND
+        SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
+      MESSAGE(FATAL_ERROR "You are attempting to build Ceres as a shared "
+        "library on Ubuntu using a system package install of SuiteSparse "
+        "3.4.0. This package is broken and does not support the "
+        "construction of shared libraries (you can still build Ceres as "
+        "a static library), see: http://homes.cs.washington.edu/~sagarwal"
+        "/ceres-solver/dev/building.html for more information.")
+    ENDIF (BUILD_SHARED_LIBS AND
+      SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
+
+    # By default, if all of SuiteSparse's dependencies are found, Ceres is
+    # built with SuiteSparse support.
+    MESSAGE("-- Found all SuiteSparse dependencies. Building with SuiteSparse.")
   ELSE (SUITESPARSE_FOUND)
-    MESSAGE("-- Did not find all SuiteSparse dependencies. Building without SuiteSparse")
-    SET(SUITESPARSE OFF)
+    # Disable use of SuiteSparse if it cannot be found and continue.
+    MESSAGE("-- Did not find all SuiteSparse dependencies, disabling "
+      "SuiteSparse support.")
+    # Retain the help string associated with the SUITESPARSE option
+    # when updating it to disable use of SuiteSparse.
+    GET_PROPERTY(HELP_STRING CACHE SUITESPARSE PROPERTY HELPSTRING)
+    SET(SUITESPARSE OFF CACHE BOOL "${HELP_STRING}" FORCE)
     ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)
   ENDIF (SUITESPARSE_FOUND)
-ENDIF (DEFINED SUITESPARSE)
+ELSE (SUITESPARSE)
+  MESSAGE("-- Building without SuiteSparse.")
+  ADD_DEFINITIONS(-DCERES_NO_SUITESPARSE)  
+ENDIF (SUITESPARSE)
 
-# By default, if all of CXSparse's dependencies are found, Ceres is
-# built with CXSparse support. -DCXSPARSE=ON/OFF can be used to
-# enable/disable CXSparse explicitly.
-IF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
+# CXSparse.
+IF (CXSPARSE)
+  SET(CXSPARSE_FOUND ON)
+  FIND_LIBRARY(CXSPARSE_LIB NAMES cxsparse)
+  IF (EXISTS ${CXSPARSE_LIB})
+    MESSAGE("-- Found CXSparse library in: ${CXSPARSE_LIB}")
+  ELSE (EXISTS ${CXSPARSE_LIB})
+    MESSAGE("-- Did not find CXSparse header")
+    SET(CXSPARSE_FOUND FALSE)
+  ENDIF (EXISTS ${CXSPARSE_LIB})
+  MARK_AS_ADVANCED(CXSPARSE_LIB)
 
-SET(CXSPARSE_FOUND ON)
-FIND_LIBRARY(CXSPARSE_LIB NAMES cxsparse)
-IF (EXISTS ${CXSPARSE_LIB})
-  MESSAGE("-- Found CXSparse library in: ${CXSPARSE_LIB}")
-ELSE (EXISTS ${CXSPARSE_LIB})
-  MESSAGE("-- Did not find CXSparse header")
-  SET(CXSPARSE_FOUND FALSE)
-ENDIF (EXISTS ${CXSPARSE_LIB})
+  FIND_PATH(CXSPARSE_INCLUDE NAMES cs.h)
+  IF (EXISTS ${CXSPARSE_INCLUDE})
+    MESSAGE("-- Found CXSparse header in: ${CXSPARSE_INCLUDE}")
+  ELSE (EXISTS ${CXSPARSE_INCLUDE})
+    MESSAGE("-- Did not find CXSparse header")
+    SET(CXSPARSE_FOUND FALSE)
+  ENDIF (EXISTS ${CXSPARSE_INCLUDE})
+  MARK_AS_ADVANCED(CXSPARSE_INCLUDE)
 
-FIND_PATH(CXSPARSE_INCLUDE NAMES cs.h)
-IF (EXISTS ${CXSPARSE_INCLUDE})
-  MESSAGE("-- Found CXSparse header in: ${CXSPARSE_INCLUDE}")
-ELSE (EXISTS ${CXSPARSE_INCLUDE})
-  MESSAGE("-- Did not find CXSparse header")
-  SET(CXSPARSE_FOUND FALSE)
-ENDIF (EXISTS ${CXSPARSE_INCLUDE})
-ENDIF ((NOT DEFINED CXSPARSE) OR (DEFINED CXSPARSE AND CXSPARSE))
-
-IF (DEFINED CXSPARSE)
-  IF (CXSPARSE)
-    IF (NOT CXSPARSE_FOUND)
-      MESSAGE(FATAL_ERROR "-- CXSparse not found.")
-    ENDIF (NOT CXSPARSE_FOUND)
-  ELSE (CXSPARSE)
-    ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
-  ENDIF (CXSPARSE)
-ELSE (DEFINED CXSPARSE)
   IF (CXSPARSE_FOUND)
-    MESSAGE("-- Building with CXSparse support.")
-    SET(CXSPARSE ON)
+    # By default, if CXSparse and all dependencies are found, Ceres is
+    # built with CXSparse support.
+    MESSAGE("-- Building with CXSparse.")
   ELSE (CXSPARSE_FOUND)
-    MESSAGE("-- Building without CXSparse.")
-    SET(CXSPARSE OFF)
+    # Disable use of CXSparse if it cannot be found and continue.
+    MESSAGE("-- Did not find CXSparse, Building without CXSparse.")
+    # Retain the help string associated with the CXSPARSE option
+    # when updating it to disable use of CXSparse.
+    GET_PROPERTY(HELP_STRING CACHE CXSPARSE PROPERTY HELPSTRING)
+    SET(CXSPARSE OFF CACHE BOOL "${HELP_STRING}" FORCE)
     ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
   ENDIF (CXSPARSE_FOUND)
-ENDIF (DEFINED CXSPARSE)
+ELSE (CXSPARSE)
+  MESSAGE("-- Building without CXSparse.")
+  ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
+ENDIF (CXSPARSE)  
 
+# GFlags.
 IF (GFLAGS)
   FIND_LIBRARY(GFLAGS_LIB NAMES gflags)
   IF (NOT EXISTS ${GFLAGS_LIB})
@@ -447,6 +265,7 @@ IF (GFLAGS)
             "Can't find Google Flags. Please specify: "
             "-DGFLAGS_LIB=...")
   ENDIF (NOT EXISTS ${GFLAGS_LIB})
+  MARK_AS_ADVANCED(GFLAGS_LIB)
   MESSAGE("-- Found Google Flags library: ${GFLAGS_LIB}")
   FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h)
   IF (NOT EXISTS ${GFLAGS_INCLUDE})
@@ -454,12 +273,14 @@ IF (GFLAGS)
             "Can't find Google Flags. Please specify: "
             "-DGFLAGS_INCLUDE=...")
   ENDIF (NOT EXISTS ${GFLAGS_INCLUDE})
+  MARK_AS_ADVANCED(GFLAGS_INCLUDE)
   MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE}")
 ELSE (GFLAGS)
   MESSAGE("-- Google Flags disabled; no tests or tools will be built!")
   ADD_DEFINITIONS(-DCERES_NO_GFLAGS)
 ENDIF (GFLAGS)
 
+# MiniGLog.
 IF (MINIGLOG)
   SET(GLOG_LIB miniglog)
   MESSAGE("-- Using minimal Glog substitute (library): ${GLOG_LIB}")
@@ -473,6 +294,7 @@ ELSE (MINIGLOG)
     MESSAGE(FATAL_ERROR
             "Can't find Google Log. Please specify: -DGLOG_LIB=...")
   ENDIF (EXISTS ${GLOG_LIB})
+  MARK_AS_ADVANCED(GLOG_LIB)
 
   FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h)
   IF (EXISTS ${GLOG_INCLUDE})
@@ -481,6 +303,7 @@ ELSE (MINIGLOG)
     MESSAGE(FATAL_ERROR
             "Can't find Google Log. Please specify: -DGLOG_INCLUDE=...")
   ENDIF (EXISTS ${GLOG_INCLUDE})
+  MARK_AS_ADVANCED(GLOG_INCLUDE)
 ENDIF (MINIGLOG)
 
 IF (NOT SCHUR_SPECIALIZATIONS)
@@ -573,18 +396,7 @@ FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/
 INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 
 IF (SUITESPARSE)
-  INCLUDE_DIRECTORIES(${AMD_INCLUDE})
-  INCLUDE_DIRECTORIES(${CAMD_INCLUDE})
-  INCLUDE_DIRECTORIES(${COLAMD_INCLUDE})
-  INCLUDE_DIRECTORIES(${CCOLAMD_INCLUDE})
-  INCLUDE_DIRECTORIES(${CHOLMOD_INCLUDE})
-  INCLUDE_DIRECTORIES(${SUITESPARSEQR_INCLUDE})
-  IF (SUITESPARSE_CONFIG_FOUND)
-    INCLUDE_DIRECTORIES(${SUITESPARSE_CONFIG_INCLUDE})
-  ENDIF (SUITESPARSE_CONFIG_FOUND)
-  IF (UFCONFIG_FOUND)
-    INCLUDE_DIRECTORIES(${UFCONFIG_INCLUDE})
-  ENDIF (UFCONFIG_FOUND)
+  INCLUDE_DIRECTORIES(${SUITESPARSE_INCLUDE_DIRS})
 ENDIF (SUITESPARSE)
 
 IF (CXSPARSE)
@@ -711,9 +523,6 @@ ADD_SUBDIRECTORY(internal/ceres)
 
 IF (BUILD_DOCUMENTATION)
   MESSAGE("-- Documentation building is enabled")
-
-  # Make CMake aware of the cmake folder, in order to find 'FindSphinx.cmake'
-  SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
   # Generate the User's Guide (html).
   # The corresponding target is UserGuide, but is included in ALL.
