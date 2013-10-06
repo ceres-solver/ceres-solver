@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "21d52500_2029ea68",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-06T17:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_8b12b117",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_4b38b9af",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "well.. the build is going to fail.. so its not a silent failure.\n\nnot sure if there is a robust way to detect if we are dealing with a default or custom suitesparse build... maybe check for the presence of the rpm.. seems overkill to me.",
       "parentUuid": "2120c5dd_2b50e5dc",
+      "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21d52500_402eee71",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-06T17:10:44Z",
+      "side": 1,
+      "message": "We now check for all the constituent pieces of this problem in FindSuiteSparse, and FATAL_ERROR in CMake if they are all true - tested on Ubuntu 12.10.",
+      "parentUuid": "2120c5dd_abe055e0",
       "revId": "9c2188ccc58666194596817bb08ea3a2900c8f6d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
