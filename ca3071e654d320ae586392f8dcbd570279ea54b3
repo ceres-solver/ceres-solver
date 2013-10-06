@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2120c5dd_cf9e6eff",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "should these paths be fixed ? or if these are already augmented, why add copies of these inside findsuitesparse?",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_4fab9e21",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "CAMD \u003d Constrained AMD",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_2fb0ea87",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "drop empty #",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_cfc5cedd",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "see my comment about these directories in the main cmake file. \nI think this stuff should be buried so deep..",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_4fd27ea7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "blas and lapack are needed for stuff other than suitesparse too. they should not be moved here. they should be in the main cmake file.",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_efa53246",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-06T22:05:50Z",
+      "side": 1,
+      "message": "this looks way nicer.",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
