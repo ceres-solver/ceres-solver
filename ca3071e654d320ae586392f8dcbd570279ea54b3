@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21d52500_40a42eaf",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_cf9e6eff",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_4fab9e21",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-06T22:05:50Z",
       "side": 1,
       "message": "CAMD \u003d Constrained AMD",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21d52500_c0dd9e2b",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_4fab9e21",
       "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "21d52500_e0eaa2be",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_2fb0ea87",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_cfc5cedd",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "21d52500_c0c4be51",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T08:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_cfc5cedd",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_4fd27ea7",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2013-10-06T22:05:50Z",
       "side": 1,
       "message": "blas and lapack are needed for stuff other than suitesparse too. they should not be moved here. they should be in the main cmake file.",
+      "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21d52500_a0c7ba53",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T08:54:21Z",
+      "side": 1,
+      "message": "So the argument against removing BLAS from here is that then SUITESPARSE_LIBRARIES does not in fact contain all the required libraries to link against SuiteSparse (when it is compiled as shared libraries - or even regardless if the BLAS used to compile against was shared).\n\nEverything in this file is actually independent of Ceres, it\u0027s just a standard CMake FindPackage script, as such my preference would be to keep BLAS here (because it reflects the fact that SuiteSparse requires it) _and_ in the Ceres CMakeLists, as Ceres independently depends on BLAS directly so I think it more clearly captures the dependency requirements.",
+      "parentUuid": "2120c5dd_4fd27ea7",
       "revId": "ca3071e654d320ae586392f8dcbd570279ea54b3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
