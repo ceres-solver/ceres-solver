@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a365b4_19362f0f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T23:14:16Z",
+      "side": 1,
+      "message": "while we are at it, make LAPACK\u003dON by default? same logic as SuiteSparse/CXSparse, where if its found we build with it, otherwise we build without it?",
+      "revId": "0b07d3e9f91cdefdbbb40e5ef15b301752fae27e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
