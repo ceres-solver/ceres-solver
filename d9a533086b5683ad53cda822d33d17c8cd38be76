@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21d52500_a3e0a4e0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T19:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_924ad92d",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_724f653f",
         "filename": "CMakeLists.txt",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-07T14:08:02Z",
       "side": 1,
       "message": "QUIET here and at other FIND_PACKAGE commands too?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6182bd1a_2ae63f60",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T19:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2120c5dd_724f653f",
       "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e175cd06_26e67660",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T19:01:38Z",
+      "side": 1,
+      "message": "I think the best argument is reduced complexity, checking for BLAS/LAPACK_FOUND and conditioning would add extra logic but the delta in configuration time would be very small as find_path and find_library do cache their results.\n\nIn general, as I understand it CMake best-practice is that FindXXX scripts should always find all of their dependencies (and assume nothing about how they are being used).  Thus if a library being built had overlapping dependencies the target_link_libraries list would contain duplicates.  You can always prune manually via LIST(REMOVE_DUPLICATES ...), but if there were static libraries in the mix then the ordering might be important, so in general people don\u0027t seem to do this.",
+      "parentUuid": "2120c5dd_d263b1b2",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_b260bda7",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e175cd06_46eb7227",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T19:01:38Z",
+      "side": 1,
+      "message": "We now only emit messages about BLAS \u0026 LAPACK if we cannot find them.",
+      "parentUuid": "2120c5dd_b260bda7",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2120c5dd_52fb41a7",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2013-10-07T14:08:02Z",
       "side": 1,
       "message": "no tbb?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21d52500_83dc8031",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-07T19:01:38Z",
+      "side": 1,
+      "message": "TBB is added to SUITESPARSEQR_LIBRARY if it is found above (as SuiteSparseQR is apparently the only library that might required it).\n\nWe do the same thing with librt and SuiteSparse_config.",
+      "parentUuid": "2120c5dd_52fb41a7",
       "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
