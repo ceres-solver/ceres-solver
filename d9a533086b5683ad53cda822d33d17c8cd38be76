@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2120c5dd_924ad92d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T14:08:02Z",
+      "side": 1,
+      "message": "move this towards the bottom, as its a subtle message and better reported once all the configuration is done?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_724f653f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T14:08:02Z",
+      "side": 1,
+      "message": "QUIET here and at other FIND_PACKAGE commands too?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_d263b1b2",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T14:08:02Z",
+      "side": 1,
+      "message": "I understand this is a stand alone package, but why do the blas and lapack detection again? perhaps pay attention to the BLAS_FOUND and LAPACK_FOUND variables to begin with?\n\nis there a standard cmake-ism to deal with multiple libraries with common dependencies ?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_b260bda7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T14:08:02Z",
+      "side": 1,
+      "message": "these messages are bound to come across as confusing since they are going to duplicate earlier find lapack and blas messages.",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2120c5dd_52fb41a7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-07T14:08:02Z",
+      "side": 1,
+      "message": "no tbb?",
+      "revId": "d9a533086b5683ad53cda822d33d17c8cd38be76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
