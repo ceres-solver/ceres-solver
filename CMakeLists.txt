@@ -90,6 +90,7 @@ OPTION(MINIGLOG "Use a stripped down version of glog." OFF)
 OPTION(GFLAGS "Enable Google Flags." ON)
 OPTION(SUITESPARSE "Enable SuiteSparse." ON)
 OPTION(CXSPARSE "Enable CXSparse." ON)
+OPTION(LAPACK "Enable use of LAPACK." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
 # may consider disabling this.
@@ -143,31 +144,33 @@ ELSE (NOT EXISTS ${EIGEN_INCLUDE})
 ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
 MARK_AS_ADVANCED(EIGEN_INCLUDE)
 
-# BLAS & LAPACK.
-SET(BLAS_AND_LAPACK_FOUND TRUE)
-IF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
+# LAPACK (& BLAS).
+IF (LAPACK)
   FIND_PACKAGE(LAPACK QUIET)
   IF (LAPACK_FOUND)
     MESSAGE("-- Found LAPACK library: ${LAPACK_LIBRARIES}")
   ELSE (LAPACK_FOUND)
-    MESSAGE("-- Did not find LAPACK library")
-    SET(BLAS_AND_LAPACK_FOUND FALSE)
+    MESSAGE("-- Did not find LAPACK library, disabling LAPACK support.")
   ENDIF (LAPACK_FOUND)
 
   FIND_PACKAGE(BLAS QUIET)
   IF (BLAS_FOUND)
     MESSAGE("-- Found BLAS library: ${BLAS_LIBRARIES}")
   ELSE (BLAS_FOUND)
-    MESSAGE("-- Did not find BLAS library")
-    SET(BLAS_AND_BLAS_FOUND FALSE)
+    MESSAGE("-- Did not find BLAS library, disabling LAPACK support.")
   ENDIF (BLAS_FOUND)
-ELSE ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
-  SET(BLAS_AND_LAPACK_FOUND FALSE)
-ENDIF ((NOT DEFINED LAPACK) OR (DEFINED LAPACK AND LAPACK))
 
-IF (NOT BLAS_AND_LAPACK_FOUND)
+  IF (NOT (LAPACK_FOUND AND BLAS_FOUND))
+    # Retain the help string associated with the LAPACK option
+    # when updating it to disable use of LAPACK.
+    GET_PROPERTY(HELP_STRING CACHE LAPACK PROPERTY HELPSTRING)
+    SET(LAPACK OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    ADD_DEFINITIONS(-DCERES_NO_LAPACK)
+  ENDIF (NOT (LAPACK_FOUND AND BLAS_FOUND))
+ELSE (LAPACK)
+  MESSAGE("-- Building without LAPACK.")
   ADD_DEFINITIONS(-DCERES_NO_LAPACK)
-ENDIF (NOT BLAS_AND_LAPACK_FOUND)
+ENDIF (LAPACK)
 
 # SuiteSparse.
 IF (SUITESPARSE)
@@ -185,7 +188,11 @@ IF (SUITESPARSE)
         "library on Ubuntu using a system package install of SuiteSparse "
         "3.4.0. This package is broken and does not support the "
         "construction of shared libraries (you can still build Ceres as "
-        "a static library), see: http://homes.cs.washington.edu/~sagarwal"
+        "a static library).  If you wish to build a shared version of Ceres "
+        "you should uninstall the system install of SuiteSparse "
+        "(libsuitesparse-dev) and perform a source install of SuiteSparse "
+        "(we recommend that you use the latest version), "
+        "see: http://homes.cs.washington.edu/~sagarwal"
         "/ceres-solver/dev/building.html for more information.")
     ENDIF (BUILD_SHARED_LIBS AND
       SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
