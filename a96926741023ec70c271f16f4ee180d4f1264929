@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c0fd68_a95d494d",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-08T19:20:47Z",
+      "side": 1,
+      "message": "Add a note that turning this off will also disable SuiteSparse?",
+      "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
