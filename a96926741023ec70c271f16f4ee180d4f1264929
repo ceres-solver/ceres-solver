@@ -34,6 +34,24 @@
       "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61c0fd68_943dfca0",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-08T19:55:56Z",
+      "side": 1,
+      "message": "in the old code, it turned off detection of lapack from what I remember, which meant that suitesparse would also fail to install. \n\nI do not think we should dealing with the corner case of having suitesparse but not having the code for solving using lapack, since that can be easily controlled at runtime using the Solver::Options::dense_linear_algebra_library.\n\nIts a cascading thing, you can turn off suitesparse and still have lapack, or turn it off too...",
+      "parentUuid": "4113f9db_4c3a4fa8",
+      "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
