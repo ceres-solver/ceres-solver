@@ -28,13 +28,16 @@ used for doing all the low level matrix and linear algebra operations.
 3. `google-glog <http://code.google.com/p/google-glog>`_ is
 used for error checking and logging. Ceres needs glog version 0.3.1 or
 later. Version 0.3 (which ships with Fedora 16) has a namespace bug
-which prevents Ceres from building.
+which prevents Ceres from building. Ceres contains a stripped-down,
+minimal version of ``glog`` called ``miniglog``, which can be enabled
+with the ``MINIGLOG`` build option. If enabled, it replaces the
+requirement for ``glog``. However, in general it is recommended that
+you use the full ``glog``.
 
 4. `gflags <http://code.google.com/p/gflags>`_ is a library for
 processing command line flags. It is used by some of the examples and
 tests. While it is not strictly necessary to build the library, we
 strongly recommend building the library with gflags.
-
 
 5. `SuiteSparse
 <http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_ is used for
@@ -47,15 +50,15 @@ a sparse matrix library similar in scope to ``SuiteSparse`` but with
 no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
 build process and a smaller binary.  The simplicity comes at a cost --
 for all but the most trivial matrices, ``SuiteSparse`` is
-significantly faster than ``CXSparse``.
+significantly faster than ``CXSparse``. This is an optional dependency.
 
 7. `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
 <http://www.netlib.org/lapack/>`_ routines are needed by
-SuiteSparse. We recommend `ATLAS
-<http://math-atlas.sourceforge.net/>`_, which includes BLAS and LAPACK
-routines. It is also possible to use `OpenBLAS
-<https://github.com/xianyi/OpenBLAS>`_ . However, one needs to be
-careful to `turn off the threading
+SuiteSparse, and optionally used by Ceres directly for some operations.
+We recommend `ATLAS <http://math-atlas.sourceforge.net/>`_,
+which includes BLAS and LAPACK routines. It is also possible to use
+`OpenBLAS <https://github.com/xianyi/OpenBLAS>`_ . However, one needs
+to be careful to `turn off the threading
 <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
 inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
 
@@ -306,21 +309,28 @@ or via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the
 command line.  In general, you should only modify these options from
 their defaults if you know what you are doing.
 
+#. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK``
+   (& ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres without
+   ``LAPACK``. Turning this ``OFF`` also disables ``SUITESPARSE`` as it
+   depends on ``LAPACK``.
+
 #. ``SUITESPARSE [Default: ON]``: By default, Ceres will link to
-   ``SuiteSparse`` if all its dependencies are present. Turn this ``OFF``
-   to build Ceres without ``SuiteSparse``. This will also disable
-   dependency checking for ``LAPACK`` and ``BLAS``. This will reduce
-   Ceres' dependencies down to ``Eigen``, ``gflags`` and
-   ``google-glog``.
+   ``SuiteSparse`` if it and all of its dependencies are present. Turn this ``OFF``
+   to build Ceres without ``SuiteSparse``. Note that ``LAPACK`` must be
+   ``ON`` in order to build with ``SuiteSparse``.
 
 #. ``CXSPARSE [Default: ON]``: By default, Ceres will link to ``CXSparse`` if
    all its dependencies are present. Turn this ``OFF`` to build Ceres
-   without ``CXSparse``. This will reduce Ceres' dependencies down to
-   ``Eigen``, ``gflags`` and ``google-glog``.
+   without ``CXSparse``.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.
+
+#. ``MINIGLOG [Default: OFF]``: Ceres includes a stripped-down, minimal
+   implementation of ``glog`` which can optionally be used as a substitute for
+   ``glog``, thus removing ``glog`` as a required dependency. Turn this ``ON`` to
+   use this minimal ``glog`` implementation.
 
 #. ``SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about binary
    size/compilation time over some small (10-20%) performance gains in
