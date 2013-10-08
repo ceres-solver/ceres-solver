@@ -52,6 +52,24 @@
       "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4113f9db_2c103b0f",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-08T22:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61c0fd68_943dfca0",
+      "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
