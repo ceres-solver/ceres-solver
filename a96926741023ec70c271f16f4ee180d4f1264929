@@ -16,6 +16,24 @@
       "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4113f9db_4c3a4fa8",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-08T19:51:53Z",
+      "side": 1,
+      "message": "So, currently setting LAPACK to OFF would only disable Ceres directly using LAPACK via -DCERES_NO_LAPACK, it would not turn off SuiteSparse.\n\nIs this reasonable, or would you like LAPACK to control _all_ uses of LAPACK?",
+      "parentUuid": "61c0fd68_a95d494d",
+      "revId": "a96926741023ec70c271f16f4ee180d4f1264929",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
