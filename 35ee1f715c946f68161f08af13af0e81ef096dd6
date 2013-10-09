@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01690174_c7b71ec9",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-09T17:31:19Z",
+      "side": 1,
+      "message": "probably.",
+      "parentUuid": "8126d14d_963e4a3c",
+      "revId": "35ee1f715c946f68161f08af13af0e81ef096dd6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8126d14d_564992df",
         "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-09T17:27:26Z",
       "side": 1,
       "message": "I think these changes can get made in the normal numeric diff too.",
+      "revId": "35ee1f715c946f68161f08af13af0e81ef096dd6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01690174_87b126d6",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-09T17:31:19Z",
+      "side": 1,
+      "message": "there we call variadic evaluate.. which does the same trick in numeric_diff.h",
+      "parentUuid": "8126d14d_564992df",
       "revId": "35ee1f715c946f68161f08af13af0e81ef096dd6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
