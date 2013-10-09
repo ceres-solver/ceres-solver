@@ -272,7 +272,8 @@ automated way to install the dependencies.
 To run the tests, select the ``RUN_TESTS`` target and hit **Build
 RUN_TESTS** from the build menu.
 
-Like the Linux build, you should now be able to run ``bin/simple_bundle_adjuster``.
+Like the Linux build, you should now be able to run
+``bin/simple_bundle_adjuster``.
 
 Notes:
 
@@ -309,49 +310,53 @@ or via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the
 command line.  In general, you should only modify these options from
 their defaults if you know what you are doing.
 
-#. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK``
-   (& ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres without
-   ``LAPACK``. Turning this ``OFF`` also disables ``SUITESPARSE`` as it
-   depends on ``LAPACK``.
+#. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK`` (&
+   ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres
+   without ``LAPACK``. Turning this ``OFF`` also disables
+   ``SUITESPARSE`` as it depends on ``LAPACK``.
 
 #. ``SUITESPARSE [Default: ON]``: By default, Ceres will link to
-   ``SuiteSparse`` if it and all of its dependencies are present. Turn this ``OFF``
-   to build Ceres without ``SuiteSparse``. Note that ``LAPACK`` must be
-   ``ON`` in order to build with ``SuiteSparse``.
+   ``SuiteSparse`` if it and all of its dependencies are present. Turn
+   this ``OFF`` to build Ceres without ``SuiteSparse``. Note that
+   ``LAPACK`` must be ``ON`` in order to build with ``SuiteSparse``.
 
-#. ``CXSPARSE [Default: ON]``: By default, Ceres will link to ``CXSparse`` if
-   all its dependencies are present. Turn this ``OFF`` to build Ceres
-   without ``CXSparse``.
+#. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
+   ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
+   to build Ceres without ``CXSparse``.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.
 
-#. ``MINIGLOG [Default: OFF]``: Ceres includes a stripped-down, minimal
-   implementation of ``glog`` which can optionally be used as a substitute for
-   ``glog``, thus removing ``glog`` as a required dependency. Turn this ``ON`` to
-   use this minimal ``glog`` implementation.
+#. ``MINIGLOG [Default: OFF]``: Ceres includes a stripped-down,
+   minimal implementation of ``glog`` which can optionally be used as
+   a substitute for ``glog``, thus removing ``glog`` as a required
+   dependency. Turn this ``ON`` to use this minimal ``glog``
+   implementation.
 
-#. ``SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about binary
-   size/compilation time over some small (10-20%) performance gains in
-   the ``SPARSE_SCHUR`` solver, you can disable some of the template
-   specializations by turning this ``OFF``.
+#. ``SCHUR_SPECIALIZATIONS [Default: ON]``: If you are concerned about
+   binary size/compilation time over some small (10-20%) performance
+   gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
+   template specializations by turning this ``OFF``.
 
-#. ``LINE_SEARCH_MINIMIZER [Default: OFF]``: The line search based minimizer is
-   mostly suitable for large scale optimization problems, or when sparse
-   linear algebra libraries are not available. You can further save on
-   some compile time and binary size by turning this ``OFF``.
+#. ``LINE_SEARCH_MINIMIZER [Default: OFF]``: The line search based
+   minimizer is mostly suitable for large scale optimization problems,
+   or when sparse linear algebra libraries are not available. You can
+   further save on some compile time and binary size by turning this
+   ``OFF``.
 
 #. ``OPENMP [Default: ON]``: On certain platforms like Android,
-   multi-threading with ``OpenMP`` is not supported. Turn this ``OFF`` to
-   disable multithreading.
+   multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
+   to disable multithreading.
 
-#. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as a static
-   library, turn this ``ON`` to instead build Ceres as a shared library.
+#. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
+   a static library, turn this ``ON`` to instead build Ceres as a
+   shared library.
 
-#. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building the
-   documentation, requires `Sphinx <http://sphinx-doc.org/>`_. In addition,
-   ``make ceres_docs`` can be used to build only the documentation.
+#. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
+   the documentation, requires `Sphinx <http://sphinx-doc.org/>`_. In
+   addition, ``make ceres_docs`` can be used to build only the
+   documentation.
 
 .. _section-using-ceres:
 
@@ -404,5 +409,6 @@ the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
 
    FIND_PACKAGE(Ceres REQUIRED PATHS "/some/where/local/")
 
-Note that this can be used to have multiple versions of Ceres installed.
+Note that this can be used to have multiple versions of Ceres
+installed.
 
