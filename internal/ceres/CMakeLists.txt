@@ -86,7 +86,6 @@ SET(CERES_INTERNAL_SRC
     program.cc
     residual_block.cc
     residual_block_utils.cc
-    runtime_numeric_diff_cost_function.cc
     schur_complement_solver.cc
     schur_eliminator.cc
     schur_jacobi_preconditioner.cc
@@ -247,7 +246,6 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
   CERES_TEST(rotation)
-  CERES_TEST(runtime_numeric_diff_cost_function)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
   CERES_TEST(small_blas)
