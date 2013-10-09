@@ -161,7 +161,6 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/program.cc \
                    $(CERES_SRC_PATH)/residual_block.cc \
                    $(CERES_SRC_PATH)/residual_block_utils.cc \
-                   $(CERES_SRC_PATH)/runtime_numeric_diff_cost_function.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/schur_eliminator.cc \
                    $(CERES_SRC_PATH)/schur_jacobi_preconditioner.cc \
