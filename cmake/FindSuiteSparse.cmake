@@ -428,6 +428,7 @@ IF (AMD_FOUND AND
     COLAMD_FOUND AND
     CCOLAMD_FOUND AND
     CHOLMOD_FOUND AND
+    SUITESPARSEQR_FOUND AND
     (SUITESPARSE_CONFIG_FOUND OR UFCONFIG_FOUND) AND
     BLAS_FOUND AND
     LAPACK_FOUND)
@@ -501,6 +502,11 @@ ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux" AND
 
 # Handle REQUIRED and QUIET arguments to FIND_PACKAGE
 INCLUDE(FindPackageHandleStandardArgs)
+# A change to CMake after release 2.8.10.2 means that
+# FindPackageHandleStandardArgs() unsets <LibraryName>_FOUND without checking
+# if it is one of the variables passed whose existence & validity is verified
+# by FindPackageHandleStandardArgs() in conjunction with handling the REQUIRED
+# and QUIET optional arguments, as such we use an intermediary variable.
+SET(SUITESPARSE_FOUND_COPY ${SUITESPARSE_FOUND})
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SuiteSparse DEFAULT_MSG
-  SUITESPARSE_FOUND SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES)
-
+  SUITESPARSE_FOUND_COPY SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES)
