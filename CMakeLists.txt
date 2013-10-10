@@ -456,7 +456,10 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
       SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
       # Use of -fast only applicable for Apple's GCC
       # Assume this is being used if GCC version < 4.3 on OSX
-      EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+      EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER}
+        ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+        OUTPUT_VARIABLE GCC_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
       IF (GCC_VERSION VERSION_LESS 4.3)
         SET (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -fast")
       ENDIF (GCC_VERSION VERSION_LESS 4.3)
@@ -532,6 +535,24 @@ IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
   ENDIF(HAVE_RETURN_TYPE_C_LINKAGE)
 ENDIF ()
+
+# Xcode 4.5.x used Clang 4.1 (Apple version), this has a bug that prevents
+# compilation of Ceres.
+IF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  EXECUTE_PROCESS(COMMAND ${CMAKE_CXX_COMPILER}
+    ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
+    OUTPUT_VARIABLE CLANG_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  # Use version > 4.0 & < 4.2 to catch all 4.1(.x) versions.
+  IF (CLANG_VERSION VERSION_GREATER 4.0 AND
+      CLANG_VERSION VERSION_LESS 4.2)
+    MESSAGE(FATAL_ERROR "You are attempting to build Ceres on OS X using Xcode "
+      "4.5.x (Clang version: ${CLANG_VERSION}). This version of Clang has a "
+      "bug that prevents compilation of Ceres, please update to "
+      "Xcode >= 4.6.3.")
+  ENDIF (CLANG_VERSION VERSION_GREATER 4.0 AND
+    CLANG_VERSION VERSION_LESS 4.2)
+ENDIF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 ADD_SUBDIRECTORY(internal/ceres)
 

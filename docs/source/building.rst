@@ -192,6 +192,12 @@ routines as part of the `vecLib
 <https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
 framework.
 
+.. NOTE::
+
+ Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a bug in that version of
+ Clang.  If you are running Xcode 4.5.x, please update to Xcode >= 4.6.x before attempting to
+ build Ceres.
+
 .. code-block:: bash
 
       # CMake
