@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6149dd4c_f2202863",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "I think at this point we are also gong to need GetResidualBlocks(), since otherwise there is no way of structuring a traversal starting from a residual block, you will always have to start with a parameter block.\n\nalso it makes the API symmetric.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_3213901f",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "maybe Problem::Options::enable_fast_parameter_block_removal should be renamed to something more generic? since it is being used for fast access rather than fast removal now.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_d21b2438",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "parameter_block for clarity?",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_12168c0e",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "is it possible for both RemoveParameterblock and GetResidualBlocksForParameterBlock to share some code? or not worth it? since the exact same logic is being repeated here and there.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_52101410",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "gunit has support for this now.\n\nhttps://code.google.com/p/googlemock/wiki/CheatSheet\n\nUnorderedElementsAreArray\n\nIt gives you nicer logging at failure etc.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_720d18f9",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "we do not do this style of code anywhere else. Very C. can you name the struct please?",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_92cc3c86",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "blank before. and explicit comparison to NULL.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6149dd4c_b2d1401b",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T12:03:02Z",
+      "side": 1,
+      "message": "same comments as above.",
+      "revId": "417d34211d878d3531cb771ba52aa76435814a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
