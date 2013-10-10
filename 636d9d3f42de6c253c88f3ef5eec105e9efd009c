@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6149dd4c_3b960b96",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-10T18:51:37Z",
+      "side": 1,
+      "message": "I would drop the stuff in the parenthesis, as it is actually not correct.\nThe bug is a compiler error that gets triggered in the linking process somewhere. It just so happens that it got triggered after that CL. RemoveParameterBlock has nothing to do with it.",
+      "revId": "636d9d3f42de6c253c88f3ef5eec105e9efd009c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
