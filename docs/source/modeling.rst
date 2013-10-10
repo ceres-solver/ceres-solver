@@ -295,10 +295,10 @@ residuals and their derivatives. This is done using
 .. class:: DynamicAutoDiffCostFunction
 
    :class:`AutoDiffCostFunction` requires that the number of parameter
-   blocks and their sizes be known at compile time, e.g., Bezier curve
-   fitting, Neural Network training etc. It also has an upper limit of
-   10 parameter blocks. In a number of applications, this is not
-   enough.
+   blocks and their sizes be known at compile time. It also has an
+   upper limit of 10 parameter blocks. In a number of applications,
+   this is not enough e.g., Bezier curve fitting, Neural Network
+   training etc.
 
      .. code-block:: c++
 
@@ -517,6 +517,52 @@ residuals and their derivatives. This is done using
    where ``MyCostFunction`` has 1 residual and 2 parameter blocks with
    sizes 4 and 8 respectively. Look at the tests for a more detailed
    example.
+
+:class:`DynamicNumericDiffCostFunction`
+---------------------------------------
+
+.. class:: DynamicNumericDiffCostFunction
+
+   Like :class:`AutoDiffCostFunction` :class:`NumericDiffCostFunction`
+   requires that the number of parameter blocks and their sizes be
+   known at compile time. It also has an upper limit of 10 parameter
+   blocks. In a number of applications, this is not enough.
+
+     .. code-block:: c++
+
+      template <typename CostFunctor, NumericDiffMethod method = CENTRAL>
+      class DynamicNumericDiffCostFunction : public CostFunction {
+      };
+
+   In such cases when numeric differentiation is desired,
+   :class:`DynamicNumericDiffCostFunction` can be used.
+
+   Like :class:`NumericDiffCostFunction` the user must define a
+   functor, but the signature of the functor differs slightly. The
+   expected interface for the cost functors is:
+
+     .. code-block:: c++
+
+       struct MyCostFunctor {
+         bool operator()(double const* const* parameters, double* residuals) const {
+         }
+       }
+
+   Since the sizing of the parameters is done at runtime, you must
+   also specify the sizes after creating the dynamic numeric diff cost
+   function. For example:
+
+     .. code-block:: c++
+
+       DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
+           new MyCostFunctor());
+       cost_function.AddParameterBlock(5);
+       cost_function.AddParameterBlock(10);
+       cost_function.SetNumResiduals(21);
+
+   As a rule of thumb, try using :class:`NumericDiffCostFunction` before
+   you use :class:`DynamicNumericDiffCostFunction`.
+
 
 :class:`NumericDiffFunctor`
 ---------------------------

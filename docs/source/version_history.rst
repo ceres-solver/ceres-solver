@@ -4,6 +4,40 @@
 Version History
 ===============
 
+HEAD
+====
+
+New Features
+------------
+#. ``DynamicNumericDiffCostFunction`` for numerically differentiated cost
+   functions whose sizing is determined at run time.
+#. ``NumericDiffCostFunction`` now supports a dynamic number of
+   residuals just like ``AutoDiffCostFunction``.
+#. Significant refactoring of the ``CMake`` for increased robustness,
+   better dependency checking, better GUI support. (Alex Stewart)
+#. Faster Automatic differentiation (Tim Langlois)
+
+Bug Fixes
+---------
+
+#. Remove RuntimeNumericDiffCostFunction.
+#. Fix operator= ambiguity on some versions of Clang. (Alex Stewart)
+#. Various Lint cleanups (William Rucklidge & Jim Roseborough)
+#. Modified installation folders for Windows. (Pablo Speciale)
+#. Added librt to link libraries for SuiteSparse_config on Linux. (Alex Stewart)
+#. Check for presence of return-type-c-linkage option with
+   Clang. (Alex Stewart)
+#. Fix Problem::RemoveParameterBlock after calling solve. (Simon Lynen)
+#. Fix a free/delete bug in covariance_impl.cc
+#. Fix two build errors. (Dustin Lang)
+#. Add RequireInitialization = 1 to NumTraits::Jet.
+#. Update gmock/gtest to 1.7.0
+#. Added IterationSummary::gradient_norm.
+#. Reduced verbosity of the inner iteration minimizer.
+#. Fixed a bug in TrustRegionMinimizer. (Michael Vitus)
+#. Removed android/build_android.sh.
+
+
 1.7.0
 =====
 

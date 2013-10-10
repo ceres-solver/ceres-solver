@@ -70,12 +70,13 @@ We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
 platform. Start by installing all the dependencies.
 
 .. NOTE::
-Up to at least Ubuntu 13.10, the SuiteSparse package in the official
-package repository (built from SuiteSparse v3.4.0) **cannot** be used to
-build Ceres as a *shared* library.  Thus if you want to build Ceres as a
-shared library using SuiteSparse, you must perform a source install of
-SuiteSparse.  It is recommended that you use the current version of
-SuiteSparse (4.2.1 at the time of writing).
+
+ Up to at least Ubuntu 13.10, the SuiteSparse package in the official
+ package repository (built from SuiteSparse v3.4.0) **cannot** be used
+ to build Ceres as a *shared* library.  Thus if you want to build
+ Ceres as a shared library using SuiteSparse, you must perform a
+ source install of SuiteSparse.  It is recommended that you use the
+ current version of SuiteSparse (4.2.1 at the time of writing).
 
 .. code-block:: bash
 
