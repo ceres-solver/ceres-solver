@@ -1542,95 +1542,121 @@ elimination group [LiSaad]_.
 
 .. class:: IterationSummary
 
-   :class:`IterationSummary` describes the state of the optimizer
-   after each iteration of the minimization. Note that all times are
-   wall times.
+   :class:`IterationSummary` describes the state of the minimizer at
+   the end of each iteration.
 
-   .. code-block:: c++
+.. member:: int32 IterationSummary::iteration
 
-     struct IterationSummary {
-       // Current iteration number.
-       int32 iteration;
+   Current iteration number.
 
-       // Step was numerically valid, i.e., all values are finite and the
-       // step reduces the value of the linearized model.
-       //
-       // Note: step_is_valid is false when iteration = 0.
-       bool step_is_valid;
+.. member:: bool IterationSummary::step_is_valid
 
-       // Step did not reduce the value of the objective function
-       // sufficiently, but it was accepted because of the relaxed
-       // acceptance criterion used by the non-monotonic trust region
-       // algorithm.
-       //
-       // Note: step_is_nonmonotonic is false when iteration = 0;
-       bool step_is_nonmonotonic;
+   Step was numerically valid, i.e., all values are finite and the
+   step reduces the value of the linearized model.
 
-       // Whether or not the minimizer accepted this step or not. If the
-       // ordinary trust region algorithm is used, this means that the
-       // relative reduction in the objective function value was greater
-       // than Solver::Options::min_relative_decrease. However, if the
-       // non-monotonic trust region algorithm is used
-       // (Solver::Options:use_nonmonotonic_steps = true), then even if the
-       // relative decrease is not sufficient, the algorithm may accept the
-       // step and the step is declared successful.
-       //
-       // Note: step_is_successful is false when iteration = 0.
-       bool step_is_successful;
+    **Note**: :member:`IterationSummary::step_is_valid` is `false`
+    when :member:`IterationSummary::iteration` = 0.
 
-       // Value of the objective function.
-       double cost;
+.. member::  bool IterationSummary::step_is_nonmonotonic
 
-       // Change in the value of the objective function in this
-       // iteration. This can be positive or negative.
-       double cost_change;
+    Step did not reduce the value of the objective function
+    sufficiently, but it was accepted because of the relaxed
+    acceptance criterion used by the non-monotonic trust region
+    algorithm.
 
-       // Infinity norm of the gradient vector.
-       double gradient_max_norm;
+    **Note**: :member:`IterationSummary::step_is_nonmonotonic` is
+    `false` when when :member:`IterationSummary::iteration` = 0.
 
-       // 2-norm of the gradient vector.
-       double gradient_norm;
+.. member:: bool IterationSummary::step_is_successful
 
-       // 2-norm of the size of the step computed by the optimization
-       // algorithm.
-       double step_norm;
+   Whether or not the minimizer accepted this step or not.
 
-       // For trust region algorithms, the ratio of the actual change in
-       // cost and the change in the cost of the linearized approximation.
-       double relative_decrease;
+   If the ordinary trust region algorithm is used, this means that the
+   relative reduction in the objective function value was greater than
+   :member:`Solver::Options::min_relative_decrease`. However, if the
+   non-monotonic trust region algorithm is used
+   (:member:`Solver::Options:use_nonmonotonic_steps` = `true`), then
+   even if the relative decrease is not sufficient, the algorithm may
+   accept the step and the step is declared successful.
 
-       // Size of the trust region at the end of the current iteration. For
-       // the Levenberg-Marquardt algorithm, the regularization parameter
-       // mu = 1.0 / trust_region_radius.
-       double trust_region_radius;
+   **Note**: :member:`IterationSummary::step_is_successful` is `false`
+   when when :member:`IterationSummary::iteration` = 0.
 
-       // For the inexact step Levenberg-Marquardt algorithm, this is the
-       // relative accuracy with which the Newton(LM) step is solved. This
-       // number affects only the iterative solvers capable of solving
-       // linear systems inexactly. Factorization-based exact solvers
-       // ignore it.
-       double eta;
+.. member:: double IterationSummary::cost
 
-       // Step sized computed by the line search algorithm.
-       double step_size;
+   Value of the objective function.
 
-       // Number of function evaluations used by the line search algorithm.
-       int line_search_function_evaluations;
+.. member:: double IterationSummary::cost_change
 
-       // Number of iterations taken by the linear solver to solve for the
-       // Newton step.
-       int linear_solver_iterations;
+   Change in the value of the objective function in this
+   iteration. This can be positive or negative.
 
-       // Time (in seconds) spent inside the minimizer loop in the current
-       // iteration.
-       double iteration_time_in_seconds;
+.. member:: double IterationSummary::gradient_max_norm
 
-       // Time (in seconds) spent inside the trust region step solver.
-       double step_solver_time_in_seconds;
+   Infinity norm of the gradient vector.
 
-       // Time (in seconds) since the user called Solve().
-       double cumulative_time_in_seconds;
-    };
+.. member:: double IterationSummary::gradient_norm
+
+   2-norm of the gradient vector.
+
+.. member:: double IterationSummary::step_norm
+
+   2-norm of the size of the step computed in this iteration.
+
+.. member:: double IterationSummary::relative_decrease
+
+   For trust region algorithms, the ratio of the actual change in cost
+   and the change in the cost of the linearized approximation.
+
+   This field is not used when a linear search minimizer is used.
+
+.. member:: double IterationSummary::trust_region_radius
+
+   Size of the trust region at the end of the current iteration. For
+   the Levenberg-Marquardt algorithm, the regularization parameter is
+   1.0 / member::`IterationSummary::trust_region_radius`.
+
+.. member:: double IterationSummary::eta
+
+   For the inexact step Levenberg-Marquardt algorithm, this is the
+   relative accuracy with which the step is solved. This number is
+   only applicable to the iterative solvers capable of solving linear
+   systems inexactly. Factorization-based exact solvers always have an
+   eta of 0.0.
+
+.. member:: double IterationSummary::step_size
+
+   Step sized computed by the line search algorithm.
+
+   This field is not used when a trust region minimizer is used.
+
+.. member:: int IterationSummary::line_search_function_evaluations
+
+   Number of function evaluations used by the line search algorithm.
+
+   This field is not used when a trust region minimizer is used.
+
+.. member:: int IterationSummary::linear_solver_iterations
+
+   Number of iterations taken by the linear solver to solve for the
+   trust region step.
+
+   Currently this field is not used when a line search minimizer is
+   used.
+
+.. member:: double IterationSummary::iteration_time_in_seconds
+
+   Time (in seconds) spent inside the minimizer loop in the current
+   iteration.
+
+.. member:: double IterationSummary::step_solver_time_in_seconds
+
+   Time (in seconds) spent inside the trust region step solver.
+
+.. member:: double IterationSummary::cumulative_time_in_seconds
+
+   Time (in seconds) since the user called Solve().
+
 
 .. class:: IterationCallback
 
