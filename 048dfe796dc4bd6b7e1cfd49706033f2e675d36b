@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e15442f_dcfb2158",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "Hi Alex, I realize this is a complete re-write, but we generally try to keep the history of authorship in place. so it would be nice to keep pablo in this file too.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_3aec61ad",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "nice trick.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_da5fa578",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "wait on setting the variables till after doing all the existence checks? I am not sure what the appropriate cmake style is.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_ba5cf184",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "is there a way to define this list at one place preferably in the main cmake file and then just share it in various cmake files so that we do not have to worry about keeping it in sync?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_7ad899dd",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "what about the rest of the dependencies like suitesparse?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_9a592d95",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "same as above.. perhaps we can just define a single include and lib search  paths list?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_5addd5cb",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "add your name to it too please since it is a substantial addition.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e10383e_3ae2218c",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-11T17:20:17Z",
+      "side": 1,
+      "message": "uppercase variable name like everywhere else?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
