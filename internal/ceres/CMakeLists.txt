@@ -132,7 +132,7 @@ ENDIF (SCHUR_SPECIALIZATIONS)
 
 # For Android, use the internal Glog implementation.
 IF (MINIGLOG)
-  ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
+  ADD_LIBRARY(miniglog miniglog/glog/logging.cc)
   INSTALL(TARGETS miniglog
           EXPORT  CeresExport
           RUNTIME DESTINATION bin

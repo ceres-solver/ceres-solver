@@ -403,6 +403,11 @@ INSTALL(FILES ${CERES_HDRS} DESTINATION include/ceres)
 FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/*.h)
 INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 
+IF (MINIGLOG)
+  INSTALL(FILES ${CMAKE_SOURCE_DIR}/internal/ceres/miniglog/glog/logging.h
+    DESTINATION include/ceres/internal/miniglog/glog)
+ENDIF (MINIGLOG)
+
 IF (SUITESPARSE)
   INCLUDE_DIRECTORIES(${SUITESPARSE_INCLUDE_DIRS})
 ENDIF (SUITESPARSE)
@@ -605,7 +610,7 @@ INSTALL(EXPORT CeresExport
 # install prefix (which may be at runtime different from the chosen
 # CMAKE_INSTALL_PREFIX if under Windows the package was installed anywhere)
 # This relative path will be configured into the CeresConfig.cmake.
-FILE(RELATIVE_PATH relInstallDir
+FILE(RELATIVE_PATH INSTALL_ROOT_REL_CONFIG_INSTALL_DIR
      ${CMAKE_INSTALL_PREFIX}/${CMAKECONFIG_INSTALL_DIR} ${CMAKE_INSTALL_PREFIX})
 
 # Create a CeresConfig.cmake file. <name>Config.cmake files are searched by
@@ -624,5 +629,4 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
 # Install these two files into the same directory as the generated exports-file.
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
-              "${CMAKE_SOURCE_DIR}/cmake/depend.cmake"
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})

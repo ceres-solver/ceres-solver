@@ -28,6 +28,11 @@
 #
 # Author: arnaudgelas@gmail.com (Arnaud Gelas)
 
+IF (COMMAND cmake_policy)
+  # Ignore empty elements in LIST() commands.
+  CMAKE_POLICY(SET CMP0007 OLD)
+ENDIF (COMMAND cmake_policy)
+
 IF (NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
   MESSAGE(FATAL_ERROR
           "Cannot find install manifest: \"@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt\"")
@@ -36,7 +41,23 @@ ENDIF (NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
 FILE(READ "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" files)
 STRING(REGEX REPLACE "\n" ";" files "${files}")
 LIST(REVERSE files)
+
 FOREACH (file ${files})
+  # Save the root ceres include install directory, e.g. /usr/local/include/ceres
+  # so that we can remove it at the end.
+  IF (NOT CERES_INCLUDE_INSTALL_ROOT)
+    GET_FILENAME_COMPONENT(FILE_NAME ${file} NAME)
+    IF (FILE_NAME STREQUAL ceres.h)
+      # Ensure that the directory is nested as we expect, as we are going to
+      # remove it, and we do not want to remove files pertaining to anyone else.
+      GET_FILENAME_COMPONENT(PARENT_DIR ${file} PATH)
+      GET_FILENAME_COMPONENT(PARENT_DIR_NAME ${PARENT_DIR} NAME)
+      IF (PARENT_DIR_NAME STREQUAL ceres AND IS_DIRECTORY ${PARENT_DIR})
+        SET(CERES_INCLUDE_INSTALL_ROOT ${PARENT_DIR})
+      ENDIF (PARENT_DIR_NAME STREQUAL ceres AND IS_DIRECTORY ${PARENT_DIR})
+    ENDIF (FILE_NAME STREQUAL ceres.h)
+  ENDIF (NOT CERES_INCLUDE_INSTALL_ROOT)
+
   MESSAGE(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
   IF (EXISTS "$ENV{DESTDIR}${file}")
     EXECUTE_PROCESS(COMMAND @CMAKE_COMMAND@ -E remove "$ENV{DESTDIR}${file}"
@@ -49,3 +70,24 @@ FOREACH (file ${files})
     MESSAGE(STATUS "File \"$ENV{DESTDIR}${file}\" does not exist.")
   ENDIF (EXISTS "$ENV{DESTDIR}${file}")
 ENDFOREACH(file)
+
+# Removing Ceres include install directory.
+IF (CERES_INCLUDE_INSTALL_ROOT AND
+    EXISTS ${CERES_INCLUDE_INSTALL_ROOT})
+  MESSAGE(STATUS "Removing Ceres include install directory: "
+    "\"$ENV{DESTDIR}${CERES_INCLUDE_INSTALL_ROOT}\"")
+  EXECUTE_PROCESS(COMMAND @CMAKE_COMMAND@ -E remove_directory
+    "$ENV{DESTDIR}${CERES_INCLUDE_INSTALL_ROOT}"
+    OUTPUT_VARIABLE rm_out
+    RESULT_VARIABLE rm_retval)
+  IF (NOT ${rm_retval} EQUAL 0)
+    MESSAGE(FATAL_ERROR
+      "Failed to remove: \"$ENV{DESTDIR}${CERES_INCLUDE_INSTALL_ROOT\"")
+  ENDIF (NOT ${rm_retval} EQUAL 0)
+ELSE (CERES_INCLUDE_INSTALL_ROOT AND
+    EXISTS ${CERES_INCLUDE_INSTALL_ROOT})
+  MESSAGE(FATAL_ERROR "Failed to find Ceres installed include directory "
+    "(e.g. /usr/local/include/ceres), candidate: "
+    "\"$ENV{DESTDIR}${CERES_INCLUDE_INSTALL_ROOT}\"")
+ENDIF (CERES_INCLUDE_INSTALL_ROOT AND
+  EXISTS ${CERES_INCLUDE_INSTALL_ROOT})
