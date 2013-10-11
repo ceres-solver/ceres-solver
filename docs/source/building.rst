@@ -317,6 +317,22 @@ or via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the
 command line.  In general, you should only modify these options from
 their defaults if you know what you are doing.
 
+.. NOTE::
+
+ If you are setting variables via ``-D<VARIABLE>=<VALUE>`` when calling
+ ``CMake``, it is important to understand that this forcibly overwrites the
+ variable ``<VARIABLE>`` in the ``CMake`` cache at the start of *every configure*.
+ This means that even if you set the value of ``<VARIABLE>`` in the ``CMake``
+ GUI, it will be **overwritten** with the value passed via
+ ``-D<VARIABLE>=<VALUE>`` if one exists.  This is particularly important
+ if you are manually setting include directory and/or library locations for
+ Ceres' dependencies.
+ 
+ As such, it is generally easier not to pass values to ``CMake`` via ``-D``
+ and instead interactively experiment with their values in the ``CMake`` GUI.
+ If they are not present in the *Standard View*, toggle to the *Advanced View*
+ with ``<t>``.
+
 #. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK`` (&
    ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres
    without ``LAPACK``. Turning this ``OFF`` also disables
@@ -385,7 +401,7 @@ the following CMakeList.txt can be used:
     PROJECT(helloworld)
 
     FIND_PACKAGE(Ceres REQUIRED)
-    INCLUDE_DIRECTORIES(${CERES_INCLUDES})
+    INCLUDE_DIRECTORIES(${CERES_INCLUDE_DIRS})
 
     # helloworld
     ADD_EXECUTABLE(helloworld helloworld.cc)

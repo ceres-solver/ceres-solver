@@ -369,7 +369,18 @@ ENDIF (EXISTS ${SUITESPARSE_CONFIG_LIBRARY} AND
 # <= v3, SuiteSparse_config.h for >= v4).
 IF (UFCONFIG_FOUND)
   # SuiteSparse version <= 3.
-  FILE(READ "${UFCONFIG_INCLUDE_DIR}/UFconfig.h" UFCONFIG_CONTENTS)
+  SET(SUITESPARSE_VERSION_FILE ${UFCONFIG_INCLUDE_DIR}/UFconfig.h)
+  # If we are being called with QUIET argument to FindPackage(), fail
+  # silently if we cannot find version file.
+  IF (NOT SUITESPARSE_FIND_QUIETLY AND
+      NOT EXISTS ${SUITESPARSE_VERSION_FILE})
+    MESSAGE(FATAL_ERROR "Failed to find SuiteSparse - Could not find file: "
+      "${SUITESPARSE_VERSION_FILE} containing version information for "
+      " <= v3 SuiteSparse installs, but UFconfig was found (only present "
+      "in <= v3 installs).")
+  ENDIF (NOT SUITESPARSE_FIND_QUIETLY AND
+         NOT EXISTS ${SUITESPARSE_VERSION_FILE})
+  FILE(READ ${SUITESPARSE_VERSION_FILE} UFCONFIG_CONTENTS)
 
   STRING(REGEX MATCH "#define SUITESPARSE_MAIN_VERSION [0-9]+"
     SUITESPARSE_MAIN_VERSION "${UFCONFIG_CONTENTS}")
@@ -389,8 +400,19 @@ ENDIF (UFCONFIG_FOUND)
 
 IF (SUITESPARSE_CONFIG_FOUND)
   # SuiteSparse version >= 4.
-  FILE(READ "${SUITESPARSE_CONFIG_INCLUDE_DIR}/SuiteSparse_config.h"
-    SUITESPARSE_CONFIG_CONTENTS)
+  SET(SUITESPARSE_VERSION_FILE
+    ${SUITESPARSE_CONFIG_INCLUDE_DIR}/SuiteSparse_config.h)
+  # If we are being called with QUIET argument to FindPackage(), fail
+  # silently if we cannot find version file.
+  IF (NOT SUITESPARSE_FIND_QUIETLY AND
+      NOT EXISTS ${SUITESPARSE_VERSION_FILE})
+    MESSAGE(FATAL_ERROR "Failed to find SuiteSparse - Could not find file: "
+      "${SUITESPARSE_VERSION_FILE} containing version information for "
+      " >= v4 SuiteSparse installs, but SuiteSparse_config was found (only "
+      "present in >= v4 installs).")
+  ENDIF (NOT SUITESPARSE_FIND_QUIETLY AND
+         NOT EXISTS ${SUITESPARSE_VERSION_FILE})
+  FILE(READ ${SUITESPARSE_VERSION_FILE} SUITESPARSE_CONFIG_CONTENTS)
 
   STRING(REGEX MATCH "#define SUITESPARSE_MAIN_VERSION [0-9]+"
     SUITESPARSE_MAIN_VERSION "${SUITESPARSE_CONFIG_CONTENTS}")
@@ -468,10 +490,10 @@ IF (AMD_FOUND AND
     LIST(APPEND SUITESPARSE_LIBRARIES
       ${METIS_LIBRARY})
   ENDIF (METIS_FOUND)
-  MESSAGE("-- Found SuiteSparse version: ${SUITESPARSE_VERSION}")
+  MESSAGE(STATUS "Found SuiteSparse version: ${SUITESPARSE_VERSION}")
 ELSE()
   SET(SUITESPARSE_FOUND FALSE)
-  MESSAGE("-- Failed to find some/all required components of SuiteSparse.")
+  MESSAGE(STATUS "Failed to find some/all required components of SuiteSparse.")
 ENDIF()
 
 # Determine if we are running on Ubuntu with the package install of SuiteSparse
@@ -508,5 +530,6 @@ INCLUDE(FindPackageHandleStandardArgs)
 # by FindPackageHandleStandardArgs() in conjunction with handling the REQUIRED
 # and QUIET optional arguments, as such we use an intermediary variable.
 SET(SUITESPARSE_FOUND_COPY ${SUITESPARSE_FOUND})
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(SuiteSparse DEFAULT_MSG
-  SUITESPARSE_FOUND_COPY SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SuiteSparse
+  REQUIRED_VARS SUITESPARSE_FOUND_COPY SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES
+  VERSION_VAR SUITESPARSE_VERSION)
