@@ -262,12 +262,15 @@ automated way to install the dependencies.
 #. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
-   #. ``GLOG_INCLUDE``
-   #. ``GLOG_LIB``
-   #. ``GFLAGS_LIB``
-   #. ``GFLAGS_INCLUDE``
+   #. ``EIGEN_INCLUDE_DIR``
+   #. ``GLOG_INCLUDE_DIR``
+   #. ``GLOG_LIBRARY``
+   #. ``GFLAGS_INCLUDE_DIR``
+   #. ``GFLAGS_LIBRARY``
 
-   to the appropriate place where you unpacked/built them.
+   to the appropriate place where you unpacked/built them. If any of the
+   variables are not visible in the ``CMake`` GUI, toggle to the
+   *Advanced View* with ``<t>``.
 
 #. You may have to tweak some more settings to generate a MSVC
    project.  After each adjustment, try pressing Configure & Generate
@@ -317,6 +320,27 @@ or via ``-D<OPTION>=<ON/OFF>`` when running ``CMake`` from the
 command line.  In general, you should only modify these options from
 their defaults if you know what you are doing.
 
+.. NOTE::
+
+ If you are setting variables via ``-D<VARIABLE>=<VALUE>`` when calling
+ ``CMake``, it is important to understand that this forcibly **overwrites** the
+ variable ``<VARIABLE>`` in the ``CMake`` cache at the start of *every configure*.
+
+ This can lead to confusion if you are invoking the ``CMake``
+ `curses <http://www.gnu.org/software/ncurses/ncurses.html>`_ terminal GUI
+ (via ``ccmake``, e.g. ```ccmake -D<VARIABLE>=<VALUE> <PATH_TO_SRC>``).
+ In this case, even if you change the value of ``<VARIABLE>`` in the ``CMake``
+ GUI, your changes will be **overwritten** with the value passed via
+ ``-D<VARIABLE>=<VALUE>`` (if one exists) at the start of each configure.
+
+ As such, it is generally easier not to pass values to ``CMake`` via ``-D``
+ and instead interactively experiment with their values in the ``CMake`` GUI.
+ If they are not present in the *Standard View*, toggle to the *Advanced View*
+ with ``<t>``.
+
+Options controlling Ceres configuration
+--------------------
+
 #. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK`` (&
    ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres
    without ``LAPACK``. Turning this ``OFF`` also disables
@@ -365,6 +389,47 @@ their defaults if you know what you are doing.
    addition, ``make ceres_docs`` can be used to build only the
    documentation.
 
+
+Options controlling Ceres dependency locations
+--------------------
+
+Ceres uses the ``CMake`` 
+`find_package <http://www.cmake.org/cmake/help/v2.8.12/cmake.html#command:find_package>`_
+function to find all of its dependencies using
+``Find<DEPENDENCY_NAME>.cmake`` scripts which are either included in Ceres
+(for most dependencies) or are shipped as standard with ``CMake``
+(for ``LAPACK`` & ``BLAS``).  These scripts will search all of the "standard"
+install locations for various OSs for each dependency.  However, particularly
+for Windows, they may fail to find the library, in this case you will have to
+manually specify its installed location.  The ``Find<DEPENDENCY_NAME>.cmake``
+scripts shipped with Ceres support two ways for you to do this:
+
+#. Set the *hints* variables specifying the *directories* to search in
+   preference, but in addition, to the search directories in the
+   ``Find<DEPENDENCY_NAME>.cmake`` script:
+
+   - ``<DEPENDENCY_NAME (CAPS)>_INCLUDE_DIR_HINTS``
+   - ``<DEPENDENCY_NAME (CAPS)>_LIBRARY_DIR_HINTS``
+
+   These variables should be set via ``-D<VAR>=<VALUE>``
+   ``CMake`` arguments as they are not visible in the GUI.
+
+#. Set the variables specifying the *explicit* include directory
+   and library file to use:
+
+   - ``<DEPENDENCY_NAME (CAPS)>_INCLUDE_DIR``
+   - ``<DEPENDENCY_NAME (CAPS)>_LIBRARY``
+
+   This bypasses *all* searching in the
+   ``Find<DEPENDENCY_NAME>.cmake`` script, but validation is still
+   performed.
+
+   These variables are available to set in the ``CMake`` GUI. They
+   are visible in the *Standard View* if the library has not been
+   found (but the current Ceres configuration requires it), but
+   are always visible in the *Advanced View*.  They can also be
+   set directly via ``-D<VAR>=<VALUE>`` arguments to ``CMake``.
+
 .. _section-using-ceres:
 
 Using Ceres with CMake
@@ -385,7 +450,7 @@ the following CMakeList.txt can be used:
     PROJECT(helloworld)
 
     FIND_PACKAGE(Ceres REQUIRED)
-    INCLUDE_DIRECTORIES(${CERES_INCLUDES})
+    INCLUDE_DIRECTORIES(${CERES_INCLUDE_DIRS})
 
     # helloworld
     ADD_EXECUTABLE(helloworld helloworld.cc)
