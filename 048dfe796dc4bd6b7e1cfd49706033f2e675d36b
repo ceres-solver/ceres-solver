@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e15442f_a2dcc4fb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T18:55:49Z",
+      "side": 1,
+      "message": "I think the destination here can get stacked under FILES.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15442f_dcfb2158",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 1
@@ -70,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "3e15442f_4205e895",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T18:55:49Z",
+      "side": 1,
+      "message": "I believe this needs to be somewhat independent of the other CMake files used to build Ceres.",
+      "parentUuid": "5e10383e_ba5cf184",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e10383e_7ad899dd",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 1
@@ -132,6 +167,23 @@
       "writtenOn": "2013-10-11T17:20:17Z",
       "side": 1,
       "message": "uppercase variable name like everywhere else?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e15442f_82342060",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T18:55:49Z",
+      "side": 1,
+      "message": "I think this comment is outdated too.",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
