@@ -69,6 +69,9 @@ SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+# Set postfixes for generated libraries based on buildtype.
+SET(CMAKE_RELEASE_POSTFIX "")
+SET(CMAKE_DEBUG_POSTFIX "-debug")
 
 # Important: Always bump the second number (e.g. 1.3.x to 1.4.0) for any
 # release that changes the ABI. The ABI changes for almost any modification to
@@ -114,35 +117,67 @@ OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
 OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 
-# Default locations to search for on various platforms.
+# Prior to October 2013, Ceres used some non-CMake standardised variables to
+# hold user-specified (as opposed to FindPackage found) include directory and
+# library paths for Ceres dependencies.  These were were of the form:
+# <DEPENDENCY>_LIB / <DEPENDENCY>_INCLUDE.  Since then, Ceres now has
+# FindPackage() scripts for all of its dependencies which obey the standard
+# CMake variables: <DEPENDENCY>_LIBRARIES & <DEPENDENCY>_INCLUDE_DIRS.  In order
+# to ensure backwards compatibility, we use convert any legacy variables to
+# _directory_ hints for the FindPackage() scripts.
+MACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT
+    LEGACY_VAR DIRECTORY_HINT_VAR)
+  IF (DEFINED ${LEGACY_VAR})
+    # Get the dependency name (all caps) from the hint directory variable
+    # for the warning message.
+    STRING(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
+    MESSAGE(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
+      "to specify the include directory for ${DEPENDENCY_NAME}.  This is "
+      "deprecated and support for it will be removed in a future release. "
+      "Please use either the search directory hints variable: "
+      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_INCLUDE_DIR to specify "
+      "exactly the directory used (no search performed), see: "
+      "http://homes.cs.washington.edu/~sagarwal/ceres-solver/dev/building.html "
+      "for more information.")
+    LIST(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
+  ENDIF (DEFINED ${LEGACY_VAR})
+ENDMACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT)
 
-# Libraries
-LIST(APPEND CMAKE_LIBRARY_PATH /opt/local/lib)
-LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib)
-LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib/atlas)
-LIST(APPEND CMAKE_LIBRARY_PATH /usr/lib64/atlas)
-LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/homebrew/lib) # Mac OS X
-LIST(APPEND CMAKE_LIBRARY_PATH /usr/local/lib)
-
-# Headers
-LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/include)
-LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/var/macports/software/eigen3) # Mac OS X
-LIST(APPEND CMAKE_INCLUDE_PATH /opt/local/include/eigen3) # Mac OS X
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/include)
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/include/eigen3) # Ubuntu 10.04's default location.
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/homebrew/include) # Mac OS X
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/homebrew/include/eigen3)  # Mac OS X
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include)
-LIST(APPEND CMAKE_INCLUDE_PATH /usr/local/include/eigen3)
+MACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT
+    LEGACY_VAR DIRECTORY_HINT_VAR)
+  IF (DEFINED ${LEGACY_VAR})
+    # Get the dependency name (all caps) from the hint directory variable
+    # for the warning message.
+    STRING(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
+    MESSAGE(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
+      "to specify the library for ${DEPENDENCY_NAME}.  This is "
+      "deprecated and support for it will be removed in a future release. "
+      "Please use either the search directory hints variable: "
+      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_LIBRARY to specify "
+      "exactly the library used (no search performed), see: "
+      "http://homes.cs.washington.edu/~sagarwal/ceres-solver/dev/building.html "
+      "for more information.")
+    IF (EXISTS ${${LEGACY_VAR}} AND
+        NOT IS_DIRECTORY ${${LEGACY_VAR}})
+      # User specified an explicit (library) file using the legacy variable
+      # interface, hints to FindPackage() scripts are directories so add the
+      # parent directory of the specified file.
+      GET_FILENAME_COMPONENT(DIR_HINT ${${LEGACY_VAR}} PATH)
+      LIST(APPEND ${DIRECTORY_HINT_VAR} ${DIR_HINT})
+    ELSEIF (EXISTS ${${LEGACY_VAR}} AND
+            IS_DIRECTORY ${${LEGACY_VAR}})
+      # User specified a directory hint using the legacy variable, use it.
+      LIST(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
+    ENDIF()
+  ENDIF (DEFINED ${LEGACY_VAR})
+ENDMACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT)
 
 # Eigen.
-FIND_PATH(EIGEN_INCLUDE NAMES Eigen/Core)
-IF (NOT EXISTS ${EIGEN_INCLUDE})
-  MESSAGE(FATAL_ERROR "Can't find Eigen. Try passing -DEIGEN_INCLUDE=...")
-ELSE (NOT EXISTS ${EIGEN_INCLUDE})
-  MESSAGE("-- Found Eigen 3.x: ${EIGEN_INCLUDE}")
-ENDIF (NOT EXISTS ${EIGEN_INCLUDE})
-MARK_AS_ADVANCED(EIGEN_INCLUDE)
+HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
+FIND_PACKAGE(Eigen REQUIRED)
+IF (EIGEN_FOUND)
+  MESSAGE("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
+ENDIF (EIGEN_FOUND)
 
 # LAPACK (& BLAS).
 IF (LAPACK)
@@ -210,7 +245,8 @@ IF (SUITESPARSE)
 
     # By default, if all of SuiteSparse's dependencies are found, Ceres is
     # built with SuiteSparse support.
-    MESSAGE("-- Found all SuiteSparse dependencies. Building with SuiteSparse.")
+    MESSAGE("-- Found SuiteSparse ${SUITESPARSE_VERSION}, "
+            "building with SuiteSparse.")
   ELSE (SUITESPARSE_FOUND)
     # Disable use of SuiteSparse if it cannot be found and continue.
     MESSAGE("-- Did not find all SuiteSparse dependencies, disabling "
@@ -228,29 +264,13 @@ ENDIF (SUITESPARSE)
 
 # CXSparse.
 IF (CXSPARSE)
-  SET(CXSPARSE_FOUND ON)
-  FIND_LIBRARY(CXSPARSE_LIB NAMES cxsparse)
-  IF (EXISTS ${CXSPARSE_LIB})
-    MESSAGE("-- Found CXSparse library in: ${CXSPARSE_LIB}")
-  ELSE (EXISTS ${CXSPARSE_LIB})
-    MESSAGE("-- Did not find CXSparse header")
-    SET(CXSPARSE_FOUND FALSE)
-  ENDIF (EXISTS ${CXSPARSE_LIB})
-  MARK_AS_ADVANCED(CXSPARSE_LIB)
-
-  FIND_PATH(CXSPARSE_INCLUDE NAMES cs.h)
-  IF (EXISTS ${CXSPARSE_INCLUDE})
-    MESSAGE("-- Found CXSparse header in: ${CXSPARSE_INCLUDE}")
-  ELSE (EXISTS ${CXSPARSE_INCLUDE})
-    MESSAGE("-- Did not find CXSparse header")
-    SET(CXSPARSE_FOUND FALSE)
-  ENDIF (EXISTS ${CXSPARSE_INCLUDE})
-  MARK_AS_ADVANCED(CXSPARSE_INCLUDE)
-
+  # Don't search with REQUIRED as we can continue without CXSparse.
+  FIND_PACKAGE(CXSparse)
   IF (CXSPARSE_FOUND)
     # By default, if CXSparse and all dependencies are found, Ceres is
     # built with CXSparse support.
-    MESSAGE("-- Building with CXSparse.")
+    MESSAGE("-- Found CXSparse version: ${CXSPARSE_VERSION}, "
+      "building with CXSparse.")
   ELSE (CXSPARSE_FOUND)
     # Disable use of CXSparse if it cannot be found and continue.
     MESSAGE("-- Did not find CXSparse, Building without CXSparse.")
@@ -263,55 +283,70 @@ IF (CXSPARSE)
 ELSE (CXSPARSE)
   MESSAGE("-- Building without CXSparse.")
   ADD_DEFINITIONS(-DCERES_NO_CXSPARSE)
+  # Mark as advanced (remove from default GUI view) the CXSparse search
+  # variables in case user enabled CXSPARSE, FindCXSparse did not find it, so
+  # made search variables visible in GUI for user to set, but then user disables
+  # CXSPARSE instead of setting them.
+  MARK_AS_ADVANCED(FORCE CXSPARSE_INCLUDE_DIR
+                         CXSPARSE_LIBRARY)
 ENDIF (CXSPARSE)
 
 # GFlags.
 IF (GFLAGS)
-  FIND_LIBRARY(GFLAGS_LIB NAMES gflags)
-  IF (NOT EXISTS ${GFLAGS_LIB})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Flags. Please specify: "
-            "-DGFLAGS_LIB=...")
-  ENDIF (NOT EXISTS ${GFLAGS_LIB})
-  MARK_AS_ADVANCED(GFLAGS_LIB)
-  MESSAGE("-- Found Google Flags library: ${GFLAGS_LIB}")
-  FIND_PATH(GFLAGS_INCLUDE NAMES gflags/gflags.h)
-  IF (NOT EXISTS ${GFLAGS_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Flags. Please specify: "
-            "-DGFLAGS_INCLUDE=...")
-  ENDIF (NOT EXISTS ${GFLAGS_INCLUDE})
-  MARK_AS_ADVANCED(GFLAGS_INCLUDE)
-  MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE}")
+  HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GFLAGS_INCLUDE GFLAGS_INCLUDE_DIR_HINTS)
+  HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT(GFLAGS_LIB GFLAGS_LIBRARY_DIR_HINTS)
+
+  # Don't search with REQUIRED as we can continue without gflags.
+  FIND_PACKAGE(Gflags)
+  IF (GFLAGS_FOUND)
+    MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIRS}")
+  ELSE (GFLAGS_FOUND)
+    MESSAGE("-- Did not find Google Flags (gflags), Building without gflags "
+      "- no tests or tools will be built!")
+    # Retain the help string associated with the GFLAGS option
+    # when updating it to disable use of gflags.
+    GET_PROPERTY(HELP_STRING CACHE GFLAGS PROPERTY HELPSTRING)
+    SET(GFLAGS OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    ADD_DEFINITIONS(-DCERES_NO_GFLAGS)
+  ENDIF (GFLAGS_FOUND)
 ELSE (GFLAGS)
   MESSAGE("-- Google Flags disabled; no tests or tools will be built!")
   ADD_DEFINITIONS(-DCERES_NO_GFLAGS)
+  # Mark as advanced (remove from default GUI view) the gflags search
+  # variables in case user enabled GFLAGS, FindGflags did not find it, so
+  # made search variables visible in GUI for user to set, but then user disables
+  # GFLAGS instead of setting them.
+  MARK_AS_ADVANCED(FORCE GFLAGS_INCLUDE_DIR
+                         GFLAGS_LIBRARY)
 ENDIF (GFLAGS)
 
 # MiniGLog.
 IF (MINIGLOG)
-  SET(GLOG_LIB miniglog)
-  MESSAGE("-- Using minimal Glog substitute (library): ${GLOG_LIB}")
-  SET(GLOG_INCLUDE internal/ceres/miniglog)
-  MESSAGE("-- Using minimal Glog substitute (include): ${GLOG_INCLUDE}")
-ELSE (MINIGLOG)
-  FIND_LIBRARY(GLOG_LIB NAMES glog)
-  IF (EXISTS ${GLOG_LIB})
-    MESSAGE("-- Found Google Log library: ${GLOG_LIB}")
-  ELSE (EXISTS ${GLOG_LIB})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Log. Please specify: -DGLOG_LIB=...")
-  ENDIF (EXISTS ${GLOG_LIB})
-  MARK_AS_ADVANCED(GLOG_LIB)
+  SET(GLOG_LIBRARIES miniglog)
+  MESSAGE("-- Using minimal Glog substitute (library): ${GLOG_LIBRARIES}")
+  SET(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
+  MESSAGE("-- Using minimal Glog substitute (include): ${GLOG_INCLUDE_DIRS}")
 
-  FIND_PATH(GLOG_INCLUDE NAMES glog/logging.h)
-  IF (EXISTS ${GLOG_INCLUDE})
-    MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE}")
-  ELSE (EXISTS ${GLOG_INCLUDE})
-    MESSAGE(FATAL_ERROR
-            "Can't find Google Log. Please specify: -DGLOG_INCLUDE=...")
-  ENDIF (EXISTS ${GLOG_INCLUDE})
-  MARK_AS_ADVANCED(GLOG_INCLUDE)
+  # Mark as advanced (remove from default GUI view) the glog search
+  # variables in case user disables MINIGLOG, FindGlog did not find it, so
+  # made search variables visible in GUI for user to set, but then user enables
+  # MINIGLOG instead of setting them.
+  MARK_AS_ADVANCED(FORCE GLOG_INCLUDE_DIR
+                         GLOG_LIBRARY)
+ELSE (MINIGLOG)
+  HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GLOG_INCLUDE GLOG_INCLUDE_DIR_HINTS)
+  HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT(GLOG_LIB GLOG_LIBRARY_DIR_HINTS)
+
+  # Don't search with REQUIRED so that configuration continues if not found and
+  # we can output an error messages explaining MINIGLOG option.
+  FIND_PACKAGE(Glog)
+  IF (GLOG_FOUND)
+    MESSAGE("-- Found Google Log header in: ${GLOG_INCLUDE_DIRS}")
+  ELSE (GLOG_FOUND)
+    MESSAGE(FATAL_ERROR "Can't find Google Log. Please set GLOG_INCLUDE_DIR & "
+      "GLOG_LIBRARY or enable MINIGLOG option to use minimal glog "
+      "implementation.")
+  ENDIF (GLOG_FOUND)
 ENDIF (MINIGLOG)
 
 IF (NOT SCHUR_SPECIALIZATIONS)
@@ -393,15 +428,8 @@ INCLUDE_DIRECTORIES(
   include
   internal
   internal/ceres
-  ${GLOG_INCLUDE}
-  ${EIGEN_INCLUDE}
-  )
-
-FILE(GLOB CERES_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/*.h)
-INSTALL(FILES ${CERES_HDRS} DESTINATION include/ceres)
-
-FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/*.h)
-INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
+  ${GLOG_INCLUDE_DIRS}
+  ${EIGEN_INCLUDE_DIRS})
 
 IF (SUITESPARSE)
   INCLUDE_DIRECTORIES(${SUITESPARSE_INCLUDE_DIRS})
@@ -412,7 +440,7 @@ IF (CXSPARSE)
 ENDIF (CXSPARSE)
 
 IF (GFLAGS)
-  INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE})
+  INCLUDE_DIRECTORIES(${GFLAGS_INCLUDE_DIRS})
 ENDIF (GFLAGS)
 
 IF (BUILD_SHARED_LIBS)
@@ -529,6 +557,7 @@ IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
       "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
   # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
   # option, so check for its presence before adding it to the default flags set.
+  INCLUDE(CheckCXXCompilerFlag)
   CHECK_CXX_COMPILER_FLAG("-Wno-return-type-c-linkage"
                           HAVE_RETURN_TYPE_C_LINKAGE)
   IF (HAVE_RETURN_TYPE_C_LINKAGE)
@@ -571,6 +600,20 @@ ELSE (BUILD_EXAMPLES)
   MESSAGE("-- Do not build any example.")
 ENDIF (BUILD_EXAMPLES)
 
+# Setup installation of Ceres public headers.
+FILE(GLOB CERES_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/*.h)
+INSTALL(FILES ${CERES_HDRS} DESTINATION include/ceres)
+
+FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/*.h)
+INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
+
+IF (MINIGLOG)
+  # Install miniglog header if being used as logging #includes appear in
+  # installed public Ceres headers.
+  INSTALL(FILES ${CMAKE_SOURCE_DIR}/internal/ceres/miniglog/glog/logging.h
+          DESTINATION include/ceres/internal/miniglog/glog)
+ENDIF (MINIGLOG)
+
 # Add an uninstall target to remove all installed files.
 CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
                "${CMAKE_BINARY_DIR}/cmake/uninstall.cmake"
@@ -605,7 +648,7 @@ INSTALL(EXPORT CeresExport
 # install prefix (which may be at runtime different from the chosen
 # CMAKE_INSTALL_PREFIX if under Windows the package was installed anywhere)
 # This relative path will be configured into the CeresConfig.cmake.
-FILE(RELATIVE_PATH relInstallDir
+FILE(RELATIVE_PATH INSTALL_ROOT_REL_CONFIG_INSTALL_DIR
      ${CMAKE_INSTALL_PREFIX}/${CMAKECONFIG_INSTALL_DIR} ${CMAKE_INSTALL_PREFIX})
 
 # Create a CeresConfig.cmake file. <name>Config.cmake files are searched by
@@ -621,8 +664,11 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfig.cmake.in"
 CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY)
 
-# Install these two files into the same directory as the generated exports-file.
+# Install these files into the same directory as the generated exports-file,
+# we include the FindPackage scripts for libraries whose headers are included
+# in the public API of Ceres and should thus be present in CERES_INCLUDE_DIRS.
 INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
-              "${CMAKE_SOURCE_DIR}/cmake/depend.cmake"
+              "${CMAKE_SOURCE_DIR}/cmake/FindEigen.cmake"
+              "${CMAKE_SOURCE_DIR}/cmake/FindGlog.cmake"
         DESTINATION ${CMAKECONFIG_INSTALL_DIR})

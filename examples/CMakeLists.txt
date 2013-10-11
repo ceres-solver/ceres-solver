@@ -53,26 +53,26 @@ TARGET_LINK_LIBRARIES(simple_bundle_adjuster ceres)
 
 IF (GFLAGS)
   ADD_EXECUTABLE(powell powell.cc)
-  TARGET_LINK_LIBRARIES(powell ceres)
+  TARGET_LINK_LIBRARIES(powell ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(nist nist.cc)
-  TARGET_LINK_LIBRARIES(nist ceres)
+  TARGET_LINK_LIBRARIES(nist ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
-  TARGET_LINK_LIBRARIES(circle_fit ceres)
+  TARGET_LINK_LIBRARIES(circle_fit ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(bundle_adjuster
                  bundle_adjuster.cc
                  bal_problem.cc)
-  TARGET_LINK_LIBRARIES(bundle_adjuster ceres)
+  TARGET_LINK_LIBRARIES(bundle_adjuster ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(libmv_bundle_adjuster
                  libmv_bundle_adjuster.cc)
-  TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres)
+  TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(denoising
                  denoising.cc
                  fields_of_experts.cc)
-  TARGET_LINK_LIBRARIES(denoising ceres)
+  TARGET_LINK_LIBRARIES(denoising ceres ${GFLAGS_LIBRARIES})
 ENDIF (GFLAGS)
 
