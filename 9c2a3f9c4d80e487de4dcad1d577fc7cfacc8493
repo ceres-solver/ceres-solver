@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4e9480_abc24d41",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Consider stacking AND operands instead of indenting only 4",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_4ba3d9a8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "FATAL_ERROR?",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_2baf7d94",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "I think this should be a FATAL_ERROR as it was before; is there a reason to change this? Same above in the gflags section.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_cb13491d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trailing blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_2b4bfd33",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Is the duplicated license header intended?",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_0b5041da",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_abc6cd35",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Inconsistent use of -- prefx; is there a standard for this?",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_6b1d75dd",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Indent 4 or stack.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_cb6109ad",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_6bfa15a4",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_0b0961f8",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trlaiing space",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_cbea29cf",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_abf7edb4",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_8bf431b1",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_0b95e1fb",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Maybe stack arguments instead.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_2b909d0b",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Consider stacking arguments here instead of just indenting 2",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_eb7965fa",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-11T22:52:10Z",
+      "side": 1,
+      "message": "Maybe stack strings instead",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
