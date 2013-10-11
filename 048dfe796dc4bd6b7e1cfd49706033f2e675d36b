@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_68090343",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e15442f_a2dcc4fb",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15442f_dcfb2158",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-11T17:20:17Z",
       "side": 1,
       "message": "Hi Alex, I realize this is a complete re-write, but we generally try to keep the history of authorship in place. so it would be nice to keep pablo in this file too.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_480e3f4d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e15442f_dcfb2158",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2013-10-11T17:20:17Z",
       "side": 1,
       "message": "wait on setting the variables till after doing all the existence checks? I am not sure what the appropriate cmake style is.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_28030b25",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "As it\u0027s a hardcoded value (filled in when Ceres is configured) I\u0027m not sure.",
+      "parentUuid": "5e10383e_da5fa578",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_0808473b",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Latest patch adds FindPackage scripts for everything, hopefully all the nasty platform specific stuff gets confined in them.",
+      "parentUuid": "3e15442f_4205e895",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e10383e_7ad899dd",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 1
@@ -116,6 +188,24 @@
       "writtenOn": "2013-10-11T17:20:17Z",
       "side": 1,
       "message": "what about the rest of the dependencies like suitesparse?",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_e81cd37f",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "As they do not appear (as #includes) in the (installed) public headers for Ceres, their include directories are not required and CMake has already marked their libraries as required for Ceres via the imported target link libraries.",
+      "parentUuid": "5e10383e_7ad899dd",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -139,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_c8190f8e",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "See note about FindPackage scripts.",
+      "parentUuid": "5e10383e_9a592d95",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e10383e_5addd5cb",
         "filename": "cmake/uninstall.cmake.in",
         "patchSetId": 1
@@ -150,6 +258,24 @@
       "writtenOn": "2013-10-11T17:20:17Z",
       "side": 1,
       "message": "add your name to it too please since it is a substantial addition.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_a816db5b",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e10383e_5addd5cb",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -173,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_8813176c",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e10383e_3ae2218c",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e15442f_82342060",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -184,6 +328,24 @@
       "writtenOn": "2013-10-11T18:55:49Z",
       "side": 1,
       "message": "I think this comment is outdated too.",
+      "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_68322305",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-11T21:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e15442f_82342060",
       "revId": "048dfe796dc4bd6b7e1cfd49706033f2e675d36b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
