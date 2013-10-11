@@ -771,9 +771,6 @@ class Solver {
     int num_residual_blocks_reduced;
     int num_residuals_reduced;
 
-    int num_eliminate_blocks_given;
-    int num_eliminate_blocks_used;
-
     int num_threads_given;
     int num_threads_used;
 
