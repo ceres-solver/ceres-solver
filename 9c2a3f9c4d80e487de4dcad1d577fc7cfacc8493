@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_c8c6af90",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_abc24d41",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_4ba3d9a8",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "FATAL_ERROR?",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_a8d37b4c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_4ba3d9a8",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_88d0b740",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_2baf7d94",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_cb13491d",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Trailing blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_68bfc3f3",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_cb13491d",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_48c4ff83",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Nope. Fixed. :P",
+      "parentUuid": "be4e9480_2b4bfd33",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_0b5041da",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Trailing space",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_28b9cb0b",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_0b5041da",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_08be07f4",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "So sort of, MESSAGE(STATUS ...) will have the \"--\" prefix added automatically, as these messages are not displayed in the CMake GUI during a configure, but are output to the terminal during configuration.\n\nAny other MESSAGE() call (with another priority [not STATUS], or unspecified priority) are rendered to the CMake GUI and the terminal verbatim.  As such if you want your MESSAGE() unspecified priority messages to nicely fit in with the MESSAGE(STATUS ...) messages when CMake is configured in the terminal (no GUI) then you have to add the \"--\" manually.\n\nIn general I would not add anything to WARNING, ERROR \u0026 FATAL_ERROR priority messages as these are rendered differently by CMake with a stack trace output.\n\nSo, the above is in line with this, thoughts?",
+      "parentUuid": "be4e9480_abc6cd35",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_6b1d75dd",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Indent 4 or stack.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_e8b29326",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "So to clarify, this should be everywhere? e.g. in the CERES_REPORT_NOT_FOUND() calls above as well? - I can just tweak cmake-model.el and reformat if this should be global rather than just for non-indented function calls.",
+      "parentUuid": "be4e9480_6b1d75dd",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_c8afcfbe",
+        "filename": "cmake/FindCXSparse.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_cb6109ad",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_6bfa15a4",
         "filename": "cmake/FindEigen.cmake",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Trailing space.",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_a8ac9bca",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_6bfa15a4",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_88a9d7ba",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_0b0961f8",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_cbea29cf",
         "filename": "cmake/FindGflags.cmake",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Drop blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_6828e363",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "So, it should be:\n\n# Author ...\n# \n# FindGflags.cmake ...\n\nIn one block?  If so I will update the others this way too.\n\nOr do you mean no spare commented line after Author, but with the new (uncommented) line between the license and description blocks?",
+      "parentUuid": "be4e9480_cbea29cf",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_482d1f72",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_abf7edb4",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_8bf431b1",
         "filename": "cmake/FindGlog.cmake",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Drop blank",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_2832ebd1",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "See previous note in FindGflags.cmake",
+      "parentUuid": "be4e9480_8bf431b1",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_083727c2",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_0b95e1fb",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_2b909d0b",
         "filename": "cmake/uninstall.cmake.in",
         "patchSetId": 2
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_e83bb3a8",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_2b909d0b",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_eb7965fa",
         "filename": "cmake/uninstall.cmake.in",
         "patchSetId": 2
@@ -285,6 +573,24 @@
       "writtenOn": "2013-10-11T22:52:10Z",
       "side": 1,
       "message": "Maybe stack strings instead",
+      "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_c838efae",
+        "filename": "cmake/uninstall.cmake.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-13T14:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_eb7965fa",
       "revId": "9c2a3f9c4d80e487de4dcad1d577fc7cfacc8493",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
