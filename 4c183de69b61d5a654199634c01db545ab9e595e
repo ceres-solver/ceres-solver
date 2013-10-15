@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_ce5fd778",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "OK, so as the FindPackage scripts for BLAS \u0026 LAPACK are shipped with CMake (and maintained by Kitware) they should work across standard system installs.\n\nIf the user has gone wild and put things in non-standard locations, then it\u0027s a bit messy, as it depends on what the author of the FindPackage script did as to how much help the user will get (we give a lot - see later in this note).  In the case of BLAS \u0026 LAPACK, they don\u0027t get much, just LAPACK/BLAS_FOUND \u003d FALSE and LAPACK/BLAS_LIBRARIES \u003cempty\u003e or FALSE.\n\nThe variable BLAS/LAPACK_LIBRARIES that we need is covered in the FindLAPACK/BLAS scripts, but would not appear in the CMake GUI (as it\u0027s not a cache variable).\n\nAs it stands, they would have to either:\n\n1) Write their own FindBLAS/LAPACK.cmake scripts installed somewhere in the CMAKE_MODULE_PATH (and thus used in preference to the standard CMake modules).  This is probably the best alternative, as they will likely have the same problem across multiple projects, this way they would centralise the hard-coding of the special case of their installation.\n\n2) Hack our CMakeLists file to not use FIND_PACKAGE(LAPACK) but replace it with:\n\nSET(LAPACK_FOUND TRUE);\nSET(LAPACK_LIBRARIES \u003cmagic installed libraries\u003e)\n\nIn general, 1) is \u0027better\u0027, 2) is perhaps the more likely path for the user who \u0027just wants stuff to work\u0027.\n\nWe might be able to make it a bit nicer for them by upgrading the BLAS/LAPACK variables to cache vars and making them visible if they are not found in our CMakeLists thus allowing the user to specify them in the GUI (in addition to outputting an error message).  But the downside to this is that there is a lot of checking of the validity of the BLAS/LAPACK libraries in FindLAPACK/BLAS that we would not be replicating, and the number of libraries pulled in could be significant, but we wouldn\u0027t be able to use any of the checking logic in FindLAPACK/BLAS (not without modifying it).\n\nIn our FindPackage scripts, e.g. FindEigen, if we can\u0027t find something, we make the variable visible in the GUI and emit an error message telling them what to do (I made this even more explicit in the latest patch).\n\nThoughts?",
+      "parentUuid": "be4e9480_f33833ae",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_133cefa0",
         "filename": "CMakeLists.txt",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-15T14:07:26Z",
       "side": 1,
       "message": "since you are using the word legacy here and elsewhere, its worth explaining at he top, what it means.",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_ae5ca384",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_133cefa0",
       "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_2e90b30b",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "I know it\u0027s bizarre, but this is actually correct as written, the \u003cpackage-name\u003e_FIND_QUIETLY/REQUIRED vars populated by CMake use the camelcase package name, not all caps - I will add a comment as per the other FindPackage scripts.",
+      "parentUuid": "be4e9480_735683dc",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_534b8732",
         "filename": "cmake/CeresConfig.cmake.in",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2013-10-15T14:07:26Z",
       "side": 1,
       "message": "why mixes case?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_0e95effb",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "Ah, so, because it\u0027s: \u003cProjectName\u003e_BINARY_DIR (hence is Ceres), but TARGET takes the target name, which is just ceres --\u003e libceres.",
+      "parentUuid": "be4e9480_534b8732",
       "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_ee797bfa",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "It will indeed, this is part of the magic of CMake\u0027s export, have a look at (after you\u0027ve installed Ceres):\n\n/usr/local/share/Ceres/CeresTargets-release.cmake\n\nIn essence, it stores a record of all the things assigned as dependencies via target_link_libraries() to each exported target, in this case the only exported target is Ceres itself: \"ceres\").\n\nThus, after you have loaded CeresTargets-release.cmake into CMake, it behaves as though ceres was a target built locally in your project.",
+      "parentUuid": "be4e9480_13ee2fe5",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_93233f71",
         "filename": "cmake/FindEigen.cmake",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2013-10-15T14:07:26Z",
       "side": 1,
       "message": "document the hint variables in the documentation?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_ce76b70a",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "Not quite sure I understand, are you referring to the Ceres-specific legacy  EIGEN_INCLUDE variable?  Or the EIGEN_INCLUDE_DIR var? If the latter, is the section below not clear?",
+      "parentUuid": "be4e9480_93233f71",
       "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_ae8383c6",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_7328c34a",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_33224b6b",
         "filename": "docs/source/building.rst",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_8e80bfba",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "I\u0027ve tried to clear it up in the latest patch, let me know if you think it\u0027s any better.",
+      "parentUuid": "be4e9480_33224b6b",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4e9480_531dc72a",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 4
@@ -149,6 +293,24 @@
       "writtenOn": "2013-10-15T14:07:26Z",
       "side": 1,
       "message": "double optionally?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_6e6fcb2d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-15T20:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e9480_531dc72a",
       "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
