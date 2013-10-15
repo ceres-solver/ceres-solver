@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4e9480_f33833ae",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "since the cmake file is fragmented now, up top here it would be useful to document the various variables that the user can define.\n\nThe reason is, unless the user knows the cmake style, it is a pain to guess what the right variable names to set for lapack and blas are.\n\nthe case I am imagining is, the lapack/blas detection fails and it is installed in some random location ...what should the user do? go plumbing in findlapack.cmake?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_133cefa0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "since you are using the word legacy here and elsewhere, its worth explaining at he top, what it means.",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_735683dc",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "CERES_FIND_QUIETLY",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_534b8732",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "why mixes case?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_13ee2fe5",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "this will bring in all the dependencies? how?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_93233f71",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "document the hint variables in the documentation?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_7328c34a",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "extra blank.",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_33224b6b",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "I think this is a bit opaque.\nThe reason is that this is mostly talking about the gui, but it comes across as if its talking about the command line usage also.\n\natleast that is my understanding.",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be4e9480_531dc72a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-10-15T14:07:26Z",
+      "side": 1,
+      "message": "double optionally?",
+      "revId": "4c183de69b61d5a654199634c01db545ab9e595e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
