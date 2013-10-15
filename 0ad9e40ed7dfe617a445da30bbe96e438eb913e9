@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed624dc_f1a06889",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-15T20:52:40Z",
+      "side": 1,
+      "message": "so one question to think about is, should we break backward compatibility just like we did for shared library building and move to more standard ways of building stuff?\n\nor maybe print a warning here when the actual conversion is taking place that this facility is going to go away soon?",
+      "revId": "0ad9e40ed7dfe617a445da30bbe96e438eb913e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ed624dc_91ad5c80",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-15T20:52:40Z",
+      "side": 1,
+      "message": "add a big bold warning here that this will eventually be deprecated and what the better syntax here will be?",
+      "revId": "0ad9e40ed7dfe617a445da30bbe96e438eb913e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
