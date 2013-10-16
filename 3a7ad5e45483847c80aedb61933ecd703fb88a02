@@ -16,6 +16,24 @@
       "revId": "3a7ad5e45483847c80aedb61933ecd703fb88a02",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_91bd7e55",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-16T15:29:58Z",
+      "side": 1,
+      "message": "Well, the deprecated part is people using the old \u003cDEP\u003e_INCLUDE/LIB vars, setting the \u003cDEP\u003e_INCLUDE_DIR/LIBRARY vars directly isn\u0027t deprecated as in fact it\u0027s only possible with the new FindPackage scripts in this patch.  But it is probably less desirable than setting the hints as it forces the locations (although we still check in the FindPackage scripts that what the user gave us are sensible).\n\nBut that said, if they are using the GUI, the \u003cDEP\u003e_INCLUDE_DIR/LIBRARY vars are the ones that will be displayed in the standard view if the library cannot be found, and at that point it is those that they would set, as the hints vars don\u0027t appear in the GUI.\n\nI could make the hints vars appear in the GUI too of course if you want, but it might be more confusing to seasoned users as the format for hints are not defined by CMake, but they would (probably) know/expect that \u003cDEP\u003e_INCLUDE_DIR \u0026 \u003cDEP\u003e_LIBRARY store the information they need to set.\n\nThoughts?",
+      "parentUuid": "dead086a_cf6495bf",
+      "revId": "3a7ad5e45483847c80aedb61933ecd703fb88a02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
