@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dead086a_cf6495bf",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-16T14:29:39Z",
+      "side": 1,
+      "message": "I would drop this part completely, as its deprecated and I do not wan to promote this way of specifying stuff at all. Its only people who are already doing this who I am worried about, and they will get warnings anyways.",
+      "revId": "3a7ad5e45483847c80aedb61933ecd703fb88a02",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
