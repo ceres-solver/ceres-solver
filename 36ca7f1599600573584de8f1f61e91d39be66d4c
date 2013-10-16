@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e58386f_ba971193",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-10-16T18:30:03Z",
+      "side": 1,
+      "message": "Is it necessary to install these files? In case that case, why aren\u0027t the rest installed as well (FindGflags.cmake, FindCXSparse.cmake, FindSuiteSparse.cmake)?",
+      "revId": "36ca7f1599600573584de8f1f61e91d39be66d4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e5d4460_795587fc",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2013-10-16T18:30:03Z",
+      "side": 1,
+      "message": "If the ${CERES_INCLUDES} doesn\u0027t exist anymore, all the old users will have problems to compile after this commit. Could it be good idea to silently supporting that variable (kind of backward compatibility)?",
+      "revId": "36ca7f1599600573584de8f1f61e91d39be66d4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
