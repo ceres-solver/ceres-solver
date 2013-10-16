@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3e5d4460_39bf8ff4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-16T20:33:46Z",
+      "side": 1,
+      "message": "Sorry Pablo, to answer the first part of your question, do we need to install the FindPackage scripts - strictly speaking no, we could hard code the include directories when we configure CeresConfig.cmake.  However the recommended approach from Kitware for XXXConfig.cmake files is to use FindPackage to find all dependencies.  As no FindPackage scripts are shipped with CMake for our dependencies we need to export them.",
+      "parentUuid": "3e5d4460_1989eb7a",
+      "revId": "36ca7f1599600573584de8f1f61e91d39be66d4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5d4460_795587fc",
         "filename": "docs/source/building.rst",
         "patchSetId": 8
