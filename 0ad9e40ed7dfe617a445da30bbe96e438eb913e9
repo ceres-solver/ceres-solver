@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e588040_b1d3e24c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-16T11:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed624dc_f1a06889",
+      "revId": "0ad9e40ed7dfe617a445da30bbe96e438eb913e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed624dc_91ad5c80",
         "filename": "CMakeLists.txt",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-15T20:52:40Z",
       "side": 1,
       "message": "add a big bold warning here that this will eventually be deprecated and what the better syntax here will be?",
+      "revId": "0ad9e40ed7dfe617a445da30bbe96e438eb913e9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e588040_91d0de40",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-16T11:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed624dc_91ad5c80",
       "revId": "0ad9e40ed7dfe617a445da30bbe96e438eb913e9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
