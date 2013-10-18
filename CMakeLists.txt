@@ -116,6 +116,10 @@ OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
 OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
+IF (MSVC)
+  OPTION(MSVC_USE_STATIC_CRT
+    "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
+ENDIF (MSVC)
 
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
 # hold user-specified (as opposed to FindPackage found) include directory and
@@ -537,6 +541,29 @@ IF (MSVC)
   # which results in linker warnings. This is irrelevant for Ceres, so ignore
   # the warnings.
   SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
+
+  # Update the C/CXX flags for MSVC to use either the static or shared
+  # C-Run Time (CRT) library based on the user option: MSVC_USE_STATIC_CRT.
+  LIST(APPEND C_CXX_FLAGS
+    CMAKE_CXX_FLAGS
+    CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_MINSIZEREL
+    CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+
+  FOREACH(FLAG_VAR ${C_CXX_FLAGS})
+    IF (MSVC_USE_STATIC_CRT)
+      # Use static CRT.
+      IF (${FLAG_VAR} MATCHES "/MD")
+        STRING(REGEX REPLACE "/MD" "/MT" ${FLAG_VAR} "${${FLAG_VAR}}")
+      ENDIF (${FLAG_VAR} MATCHES "/MD")
+    ELSE (MSVC_USE_STATIC_CRT)
+      # Use shared, not static, CRT.
+      IF (${FLAG_VAR} MATCHES "/MT")
+        STRING(REGEX REPLACE "/MT" "/MD" ${FLAG_VAR} "${${FLAG_VAR}}")
+      ENDIF (${FLAG_VAR} MATCHES "/MT")
+    ENDIF (MSVC_USE_STATIC_CRT)
+  ENDFOREACH()
 
   # Tuple sizes of 10 are used by Gtest.
   ADD_DEFINITIONS("-D_VARIADIC_MAX=10")

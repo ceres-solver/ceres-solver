@@ -138,14 +138,17 @@ IF (GLOG_INCLUDE_DIR AND
     " ${GLOG_INCLUDE_DIR} does not contain glog/logging.h header.")
 ENDIF (GLOG_INCLUDE_DIR AND
        NOT EXISTS ${GLOG_INCLUDE_DIR}/glog/logging.h)
-# TODO: This regex for glog library is pretty primitive, could it be better?
+# TODO: This regex for glog library is pretty primitive, we use lowercase
+#       for comparison to handle Windows using CamelCase library names, could
+#       this check be better?
+STRING(TOLOWER "${GLOG_LIBRARY}" LOWERCASE_GLOG_LIBRARY)
 IF (GLOG_LIBRARY AND
-    NOT ${GLOG_LIBRARY} MATCHES ".*glog[^/]*")
+    NOT "${LOWERCASE_GLOG_LIBRARY}" MATCHES ".*glog[^/]*")
   GLOG_REPORT_NOT_FOUND(
     "Caller defined GLOG_LIBRARY: "
     "${GLOG_LIBRARY} does not match glog.")
 ENDIF (GLOG_LIBRARY AND
-       NOT ${GLOG_LIBRARY} MATCHES ".*glog[^/]*")
+       NOT "${LOWERCASE_GLOG_LIBRARY}" MATCHES ".*glog[^/]*")
 
 # Set standard CMake FindPackage variables if found.
 IF (GLOG_FOUND)

@@ -138,14 +138,17 @@ IF (GFLAGS_INCLUDE_DIR AND
     " ${GFLAGS_INCLUDE_DIR} does not contain gflags/gflags.h header.")
 ENDIF (GFLAGS_INCLUDE_DIR AND
        NOT EXISTS ${GFLAGS_INCLUDE_DIR}/gflags/gflags.h)
-# TODO: This regex for gflags library is pretty primitive, could it be better?
+# TODO: This regex for gflags library is pretty primitive, we use lowercase
+#       for comparison to handle Windows using CamelCase library names, could
+#       this check be better?
+STRING(TOLOWER "${GFLAGS_LIBRARY}" LOWERCASE_GFLAGS_LIBRARY)
 IF (GFLAGS_LIBRARY AND
-    NOT ${GFLAGS_LIBRARY} MATCHES ".*gflags[^/]*")
+    NOT "${LOWERCASE_GFLAGS_LIBRARY}" MATCHES ".*gflags[^/]*")
   GFLAGS_REPORT_NOT_FOUND(
     "Caller defined GFLAGS_LIBRARY: "
     "${GFLAGS_LIBRARY} does not match gflags.")
 ENDIF (GFLAGS_LIBRARY AND
-       NOT ${GFLAGS_LIBRARY} MATCHES ".*gflags[^/]*")
+       NOT "${LOWERCASE_GFLAGS_LIBRARY}" MATCHES ".*gflags[^/]*")
 
 # Set standard CMake FindPackage variables if found.
 IF (GFLAGS_FOUND)

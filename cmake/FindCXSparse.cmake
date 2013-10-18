@@ -167,16 +167,19 @@ ENDIF (CXSPARSE_INCLUDE_DIR)
 # Catch the case when the caller has set CXSPARSE_LIBRARY in the cache / GUI and
 # thus FIND_LIBRARY was not called, but specified library is invalid, otherwise
 # we would report CXSparse as found.
-# TODO: This regex for CXSparse library is pretty primitive, could it be better?
+# TODO: This regex for CXSparse library is pretty primitive, we use lowercase
+#       for comparison to handle Windows using CamelCase library names, could
+#       this check be better?
+STRING(TOLOWER "${CXSPARSE_LIBRARY}" LOWERCASE_CXSPARSE_LIBRARY)
 IF (CXSPARSE_LIBRARY AND
     EXISTS ${CXSPARSE_LIBRARY} AND
-    NOT ${CXSPARSE_LIBRARY} MATCHES ".*cxsparse[^/]*")
+    NOT "${LOWERCASE_CXSPARSE_LIBRARY}" MATCHES ".*cxsparse[^/]*")
   CXSPARSE_REPORT_NOT_FOUND(
     "Caller defined CXSPARSE_LIBRARY: "
     "${CXSPARSE_LIBRARY} does not match CXSparse.")
 ENDIF (CXSPARSE_LIBRARY AND
        EXISTS ${CXSPARSE_LIBRARY} AND
-       NOT ${CXSPARSE_LIBRARY} MATCHES ".*cxsparse[^/]*")
+       NOT "${LOWERCASE_CXSPARSE_LIBRARY}" MATCHES ".*cxsparse[^/]*")
 
 # Set standard CMake FindPackage variables if found.
 IF (CXSPARSE_FOUND)
