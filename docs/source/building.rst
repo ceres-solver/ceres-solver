@@ -339,7 +339,7 @@ their defaults if you know what you are doing.
  with ``<t>``.
 
 Options controlling Ceres configuration
---------------------
+---------------------------------------
 
 #. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK`` (&
    ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres
@@ -391,9 +391,9 @@ Options controlling Ceres configuration
 
 
 Options controlling Ceres dependency locations
---------------------
+----------------------------------------------
 
-Ceres uses the ``CMake`` 
+Ceres uses the ``CMake``
 `find_package <http://www.cmake.org/cmake/help/v2.8.12/cmake.html#command:find_package>`_
 function to find all of its dependencies using
 ``Find<DEPENDENCY_NAME>.cmake`` scripts which are either included in Ceres
