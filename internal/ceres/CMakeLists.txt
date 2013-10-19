@@ -104,6 +104,7 @@ SET(CERES_INTERNAL_SRC
     visibility.cc
     visibility_based_preconditioner.cc
     wall_time.cc
+    weighted_cost_function.cc
 )
 
 # Heuristic for determining LIB_SUFFIX. FHS recommends that 64-bit systems
@@ -260,7 +261,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(unsymmetric_linear_solver)
   CERES_TEST(visibility)
   CERES_TEST(visibility_based_preconditioner)
-
+  CERES_TEST(weighted_cost_function)
   # Put the large end to end test last.
   CERES_TEST(system)
 ENDIF (BUILD_TESTING AND GFLAGS)

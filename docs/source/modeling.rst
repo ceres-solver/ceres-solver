@@ -722,6 +722,50 @@ residuals and their derivatives. This is done using
       scoped_ptr<CostFunctionToFunctor<2,5,3> > intrinsic_projection_;
     };
 
+:class:`WeightedCostFunction`
+-----------------------------
+.. class:: WeightedCostFunction
+
+   A cost function whose residuals are obtained by multiplying the
+   residuals of another cost function (wrapped_cost_function) by a
+   weight matrix, i.e,
+
+   .. math::  \text{weighted_residuals} = \text{weight_matrix} * residuals
+
+   The most common usage of this class is to add covariance weighting
+   to a cost function, e.g to get a cost function with cost
+
+   .. math::  cost = 1/2 r(x)'S^{-1}r(x)
+
+   Let FooCostFunction be a CostFunction that implements the
+   computation of :math:`r(x)` and let
+
+    .. math:: \text{weight_matrix} = S^{-1/2}
+
+   then the `weighted_cost_function` which implements a residual
+   :math:`S^{-1/2} * r(x)` can be defined as
+
+   .. code-block::c++
+
+     CostFunction* cost_function = new FooCostFunction(...);
+     WeightedCostFunction weighted_cost_function(weight_matrix,
+                                                 num_rows,
+                                                 num_cols,
+                                                 cost_function);
+
+.. function:: WeightedCostFunction::WeightedCostFunction(const double* weight_matrix, int num_rows, int num_cols, CostFunction* wrapped_cost_function)
+
+
+  The `weight_matrix` is a row-major matrix.
+
+  `num_rows` is the number of residuals returned by
+  ::class::`WeightedCostFunction`.
+
+  `num_cols` must be equal to the number of residuals returned by
+  `wrapped_cost_function`.
+
+  :class:`WeightedCostFunction` takes ownership of the
+  `wrapped_cost_function`.
 
 
 :class:`ConditionedCostFunction`
