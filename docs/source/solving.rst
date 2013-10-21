@@ -1792,7 +1792,8 @@ The three arrays will be:
 
 .. class:: Solver::Summary
 
-  Note that all times reported in this struct are wall times.
+   Summary of the various stages of the solver after termination.
+
 
 .. function:: string Solver::Summary::BriefReport() const
 
@@ -1957,8 +1958,8 @@ The three arrays will be:
 
    Number of threads actually used by the solver for solving the trust
    region problem. This number is not equal to
-   :member:`Solver::Summary::num_threads_given` if `OpenMP` is not
-   available.
+   :member:`Solver::Summary::num_linear_solver_threads_given` if
+   `OpenMP` is not available.
 
 .. member:: LinearSolverType Solver::Summary::linear_solver_type_given
 
@@ -2021,7 +2022,7 @@ The three arrays will be:
 
 .. member:: TrustRegionStrategyType Solver::Summary::trust_region_strategy_type
 
-   Type of trust region strategy
+   Type of trust region strategy.
 
 .. member:: DoglegType Solver::Summary::dogleg_type
 
@@ -2042,6 +2043,17 @@ The three arrays will be:
 .. member:: LineSearchType Solver::Summary::line_search_type
 
    Type of the line search algorithm used.
+
+.. member:: LineSearchInterpolationType Solver::Summary::line_search_interpolation_type
+
+   When performing line search, the degree of the polynomial used to
+   approximate the objective function.
+
+.. member:: NonlinearConjugateGradientType Solver::Summary::nonlinear_conjugate_gradient_type
+
+   If the line search direction is `NONLINEAR_CONJUGATE_GRADIENT`,
+   then this indicates the particular variant of non-linear conjugate
+   gradient used.
 
 .. member:: int Solver::Summary::max_lbfgs_rank
 
