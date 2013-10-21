@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e02a442_1ff6e570",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "Can\u0027t we infer the size from the weighted_cost_function? Why bother with the extra parameters?",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_7f34515f",
+        "filename": "include/ceres/weighted_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "num_rows / num_cols parameters unnecessary.",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_3f52c989",
+        "filename": "include/ceres/weighted_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "const double*/",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_9f43f5c1",
+        "filename": "include/ceres/weighted_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "Can\u0027t use this; it\u0027s not thread safe.",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_ff47a1cb",
+        "filename": "include/ceres/weighted_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "Can\u0027t use this; it\u0027s not thread safe.",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_df445dca",
+        "filename": "include/ceres/weighted_cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "Can\u0027t use this; it\u0027s not thread safe.",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_5f398d53",
+        "filename": "internal/ceres/weighted_cost_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "This is not thread safe. I do not believe you can cache the array; sadly I think it needs allocating every time. Perhaps we should consider exposing scratch to user cost functions :/",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e02a442_bf3eb93a",
+        "filename": "internal/ceres/weighted_cost_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-21T14:03:55Z",
+      "side": 1,
+      "message": "Not thread safe",
+      "revId": "45055b28bf075a32e351a61fa89a61e5d97ba76c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
