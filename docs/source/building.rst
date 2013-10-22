@@ -370,7 +370,7 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``LINE_SEARCH_MINIMIZER [Default: OFF]``: The line search based
+#. ``LINE_SEARCH_MINIMIZER [Default: ON]``: The line search based
    minimizer is mostly suitable for large scale optimization problems,
    or when sparse linear algebra libraries are not available. You can
    further save on some compile time and binary size by turning this
@@ -388,6 +388,10 @@ Options controlling Ceres configuration
    the documentation, requires `Sphinx <http://sphinx-doc.org/>`_. In
    addition, ``make ceres_docs`` can be used to build only the
    documentation.
+
+#. ``MSVC_USE_STATIC_CRT [Default: OFF]`` *Windows Only*: By default
+   Ceres will use the Visual Studio default, *shared* C-Run Time (CRT) library.
+   Turn this ``ON`` to use the *static* C-Run Time library instead.
 
 
 Options controlling Ceres dependency locations
