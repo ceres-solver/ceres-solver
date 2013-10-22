@@ -679,6 +679,12 @@ void ExpectJetArraysClose(const Jet<double, N> *x, const Jet<double, N> *y) {
   }
 }
 
+using std::log;
+using std::pow;
+using std::cos;
+using std::sin;
+using std::sqrt;
+
 // Log-10 of a value well below machine precision.
 static const int kSmallTinyCutoff =
     static_cast<int>(2 * log(numeric_limits<double>::epsilon())/log(10.0));

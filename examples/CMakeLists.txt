@@ -51,6 +51,10 @@ ADD_EXECUTABLE(simple_bundle_adjuster
                simple_bundle_adjuster.cc)
 TARGET_LINK_LIBRARIES(simple_bundle_adjuster ceres)
 
+ADD_EXECUTABLE(autodiff_timing
+               autodiff_timing.cc)
+TARGET_LINK_LIBRARIES(autodiff_timing ceres)
+
 IF (GFLAGS)
   ADD_EXECUTABLE(powell powell.cc)
   TARGET_LINK_LIBRARIES(powell ceres)

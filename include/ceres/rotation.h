@@ -581,8 +581,8 @@ T DotProduct(const T x[3], const T y[3]) {
 template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
   T w[3];
-  T sintheta;
-  T costheta;
+//  T sintheta;
+//  T costheta;
 
   const T theta2 = DotProduct(angle_axis, angle_axis);
   if (theta2 > 0.0) {
@@ -600,11 +600,11 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
     w[0] = angle_axis[0] / theta;
     w[1] = angle_axis[1] / theta;
     w[2] = angle_axis[2] / theta;
-    costheta = cos(theta);
-    sintheta = sin(theta);
+    T costheta = cos(theta);
+    T sintheta = sin(theta);
     T w_cross_pt[3];
     CrossProduct(w, pt, w_cross_pt);
-    T w_dot_pt = DotProduct(w, pt);
+    const T w_dot_pt = DotProduct(w, pt);
     for (int i = 0; i < 3; ++i) {
       result[i] = pt[i] * costheta +
           w_cross_pt[i] * sintheta +
