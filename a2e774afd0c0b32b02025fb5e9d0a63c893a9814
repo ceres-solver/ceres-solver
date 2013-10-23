@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "befe94ba_ab808df7",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-23T18:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "befe94ba_0bc0c138",
+      "revId": "a2e774afd0c0b32b02025fb5e9d0a63c893a9814",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "befe94ba_8bacb195",
         "filename": "include/ceres/rotation.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-23T18:44:06Z",
       "side": 1,
       "message": "Comment about unpacked cross product.\n\nConsider making it a macro since it\u0027s used above too.",
+      "revId": "a2e774afd0c0b32b02025fb5e9d0a63c893a9814",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "befe94ba_6b7bb52b",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-23T18:46:08Z",
+      "side": 1,
+      "message": "macro is not really worth it, since we already have something called DotProduct, this is hopefully temporary as we get to expression templates we should be able to go back to something nicer.",
+      "parentUuid": "befe94ba_8bacb195",
       "revId": "a2e774afd0c0b32b02025fb5e9d0a63c893a9814",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
