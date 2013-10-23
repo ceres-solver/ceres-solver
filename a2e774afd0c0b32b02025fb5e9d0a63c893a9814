@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "befe94ba_0bc0c138",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-23T18:44:06Z",
+      "side": 1,
+      "message": "Add comment about why this and the cross product are inlined (with perf #s)",
+      "revId": "a2e774afd0c0b32b02025fb5e9d0a63c893a9814",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "befe94ba_8bacb195",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-23T18:44:06Z",
+      "side": 1,
+      "message": "Comment about unpacked cross product.\n\nConsider making it a macro since it\u0027s used above too.",
+      "revId": "a2e774afd0c0b32b02025fb5e9d0a63c893a9814",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
