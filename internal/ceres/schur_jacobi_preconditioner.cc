@@ -33,7 +33,7 @@
 #include <utility>
 #include <vector>
 #include "Eigen/Dense"
-#include "ceres/block_random_access_sparse_matrix.h"
+#include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/collections_port.h"
 #include "ceres/detect_structure.h"
@@ -59,14 +59,14 @@ SchurJacobiPreconditioner::SchurJacobiPreconditioner(
   block_size_.resize(num_blocks);
   set<pair<int, int> > block_pairs;
 
-  int num_block_diagonal_entries = 0;
+  //int num_block_diagonal_entries = 0;
   for (int i = 0; i < num_blocks; ++i) {
     block_size_[i] = bs.cols[i + options_.elimination_groups[0]].size;
-    block_pairs.insert(make_pair(i, i));
-    num_block_diagonal_entries += block_size_[i] * block_size_[i];
+    //block_pairs.insert(make_pair(i, i));
+    //num_block_diagonal_entries += block_size_[i] * block_size_[i];
   }
 
-  m_.reset(new BlockRandomAccessSparseMatrix(block_size_, block_pairs));
+  m_.reset(new BlockRandomAccessDiagonalMatrix(block_size_));
   InitEliminator(bs);
 }
 
@@ -118,7 +118,7 @@ void SchurJacobiPreconditioner::RightMultiply(const double* x,
   CHECK_NOTNULL(y);
 
   const double* lhs_values =
-      down_cast<BlockRandomAccessSparseMatrix*>(m_.get())->matrix()->values();
+      down_cast<BlockRandomAccessDiagonalMatrix*>(m_.get())->matrix()->values();
 
   // This loop can be easily multi-threaded with OpenMP if need be.
   for (int i = 0; i < block_size_.size(); ++i) {

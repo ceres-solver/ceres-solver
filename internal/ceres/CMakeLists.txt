@@ -36,6 +36,7 @@ SET(CERES_INTERNAL_SRC
     block_jacobian_writer.cc
     block_random_access_crs_matrix.cc
     block_random_access_dense_matrix.cc
+    block_random_access_diagonal_matrix.cc
     block_random_access_matrix.cc
     block_random_access_sparse_matrix.cc
     block_sparse_matrix.cc
