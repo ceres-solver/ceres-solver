@@ -580,10 +580,6 @@ T DotProduct(const T x[3], const T y[3]) {
 
 template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
-  T w[3];
-  T sintheta;
-  T costheta;
-
   const T theta2 = DotProduct(angle_axis, angle_axis);
   if (theta2 > 0.0) {
     // Away from zero, use the rodriguez formula
@@ -597,19 +593,22 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
     // we get a division by zero.
     //
     const T theta = sqrt(theta2);
-    w[0] = angle_axis[0] / theta;
-    w[1] = angle_axis[1] / theta;
-    w[2] = angle_axis[2] / theta;
-    costheta = cos(theta);
-    sintheta = sin(theta);
-    T w_cross_pt[3];
-    CrossProduct(w, pt, w_cross_pt);
-    T w_dot_pt = DotProduct(w, pt);
-    for (int i = 0; i < 3; ++i) {
-      result[i] = pt[i] * costheta +
-          w_cross_pt[i] * sintheta +
-          w[i] * (T(1.0) - costheta) * w_dot_pt;
-    }
+    const T costheta = cos(theta);
+    const T sintheta = sin(theta);
+    const T theta_inverse = 1.0 / theta;
+    const T w[3] = { angle_axis[0] * theta_inverse,
+                     angle_axis[1] * theta_inverse,
+                     angle_axis[2] * theta_inverse };
+
+    const T w_cross_pt[3] = { w[1] * pt[2] - w[2] * pt[1],
+                              w[2] * pt[0] - w[0] * pt[2],
+                              w[0] * pt[1] - w[1] * pt[0] };
+    const T tmp =
+        (w[0] * pt[0] + w[1] * pt[1] + w[2] * pt[2]) * (T(1.0) - costheta);
+
+    result[0] = pt[0] * costheta + w_cross_pt[0] * sintheta + w[0] * tmp;
+    result[1] = pt[1] * costheta + w_cross_pt[1] * sintheta + w[1] * tmp;
+    result[2] = pt[2] * costheta + w_cross_pt[2] * sintheta + w[2] * tmp;
   } else {
     // Near zero, the first order Taylor approximation of the rotation
     // matrix R corresponding to a vector w and angle w is
@@ -625,11 +624,13 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
     //
     // Switching to the Taylor expansion at zero helps avoid all sorts
     // of numerical nastiness.
-    T w_cross_pt[3];
-    CrossProduct(angle_axis, pt, w_cross_pt);
-    for (int i = 0; i < 3; ++i) {
-      result[i] = pt[i] + w_cross_pt[i];
-    }
+    const T w_cross_pt[3] = { angle_axis[1] * pt[2] - angle_axis[2] * pt[1],
+                              angle_axis[2] * pt[0] - angle_axis[0] * pt[2],
+                              angle_axis[0] * pt[1] - angle_axis[1] * pt[0] };
+
+    result[0] = pt[0] + w_cross_pt[0];
+    result[1] = pt[1] + w_cross_pt[1];
+    result[2] = pt[2] + w_cross_pt[2];
   }
 }
 
