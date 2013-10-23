@@ -117,6 +117,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/block_jacobian_writer.cc \
                    $(CERES_SRC_PATH)/block_jacobi_preconditioner.cc \
                    $(CERES_SRC_PATH)/block_random_access_dense_matrix.cc \
+                   $(CERES_SRC_PATH)/block_random_access_diagonalk_matrix.cc \
                    $(CERES_SRC_PATH)/block_random_access_matrix.cc \
                    $(CERES_SRC_PATH)/block_random_access_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/block_sparse_matrix.cc \
