@@ -368,33 +368,46 @@ IF (NOT CUSTOM_BLAS)
   MESSAGE("-- Disabling custom blas")
 ENDIF (NOT CUSTOM_BLAS)
 
-IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  SET(OPENMP_FOUND FALSE)
-ELSE (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  IF (OPENMP)
-    FIND_PACKAGE(OpenMP REQUIRED)
-  ENDIF (OPENMP)
-ENDIF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-
-IF (OPENMP_FOUND)
-  MESSAGE("-- Found OpenMP.")
-  ADD_DEFINITIONS(-DCERES_USE_OPENMP)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-  IF (UNIX)
-    # At least on Linux, we need pthreads to be enabled for mutex to
-    # compile.  This may not work on Windows or Android.
-    FIND_PACKAGE(Threads REQUIRED)
-    SET(STATIC_LIBRARY_FLAGS
-        "${STATIC_LIBRARY_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
-    SET(CMAKE_SHARED_LINKER_FLAGS
-        "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
-    ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
-    ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
-  ENDIF (UNIX)
-ELSE (OPENMP_FOUND)
-  MESSAGE("-- Can't find OpenMP. Disabling multithreading.")
+IF (OPENMP)
+  # Clang does not (yet) support OpenMP.
+  IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # Retain the help string associated with the OPENMP option
+    # when updating it to disable use of OPENMP.
+    GET_PROPERTY(HELP_STRING CACHE OPENMP PROPERTY HELPSTRING)
+    SET(OPENMP OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    MESSAGE("-- Compiler is Clang, disabling OpenMP.")
+    ADD_DEFINITIONS(-DCERES_NO_THREADS)
+  ELSE (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # Find quietly s/t as we can continue without OpenMP if it is not found.
+    FIND_PACKAGE(OpenMP QUIET)
+    IF (OPENMP_FOUND)
+      MESSAGE("-- Building with OpenMP.")
+      ADD_DEFINITIONS(-DCERES_USE_OPENMP)
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+      IF (UNIX)
+        # At least on Linux, we need pthreads to be enabled for mutex to
+        # compile.  This may not work on Windows or Android.
+        FIND_PACKAGE(Threads REQUIRED)
+        SET(STATIC_LIBRARY_FLAGS
+          "${STATIC_LIBRARY_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
+        SET(CMAKE_SHARED_LINKER_FLAGS
+          "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
+        ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
+        ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
+      ENDIF (UNIX)
+    ELSE (OPENMP_FOUND)
+      MESSAGE("-- Failed to find OpenMP, disabling.")
+      # Retain the help string associated with the OPENMP option
+      # when updating it to disable use of OPENMP.
+      GET_PROPERTY(HELP_STRING CACHE OPENMP PROPERTY HELPSTRING)
+      SET(OPENMP OFF CACHE BOOL "${HELP_STRING}" FORCE)
+      ADD_DEFINITIONS(-DCERES_NO_THREADS)
+    ENDIF (OPENMP_FOUND)
+  ENDIF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+ELSE (OPENMP)
+  MESSAGE("-- Building without OpenMP (disabling multithreading).")
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
-ENDIF (OPENMP_FOUND)
+ENDIF (OPENMP)
 
 IF (DISABLE_TR1)
   MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
