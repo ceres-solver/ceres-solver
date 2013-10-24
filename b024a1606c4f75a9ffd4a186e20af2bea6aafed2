@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee9602b_c9f9e9af",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-24T16:15:29Z",
+      "side": 1,
+      "message": "unify the various clang/apple related hacks in one place? there are atleast two more places below where we are doing special apple related handling.",
+      "revId": "b024a1606c4f75a9ffd4a186e20af2bea6aafed2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
