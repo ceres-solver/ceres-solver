@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee9602b_cfb449e9",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-24T19:29:42Z",
+      "side": 1,
+      "message": "Why bother initializing?",
+      "revId": "6563d804582d4d5837e74dc859e263070056b91b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ee9602b_4fe039e1",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-24T19:29:42Z",
+      "side": 1,
+      "message": "Can you mention that sum(blocks) \u003d\u003d num_rows() \u003d\u003d num_cols()?",
+      "revId": "6563d804582d4d5837e74dc859e263070056b91b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ee9602b_6f99bd72",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-24T19:29:42Z",
+      "side": 1,
+      "message": "Weird indentation",
+      "revId": "6563d804582d4d5837e74dc859e263070056b91b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ee9602b_cf860915",
+        "filename": "jni/Android.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-24T19:29:42Z",
+      "side": 1,
+      "message": "Tyop",
+      "revId": "6563d804582d4d5837e74dc859e263070056b91b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
