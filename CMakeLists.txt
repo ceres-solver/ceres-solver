@@ -121,6 +121,27 @@ IF (MSVC)
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 ENDIF (MSVC)
 
+# OS X 10.9 Mavericks swaps the default C++ library from libstdc++ to libc++,
+# as this removes the namespace and include directories for TR1, which affects
+# Ceres and the version of gmock currently shipped with Ceres, currently we
+# disable TR1 if Mavericks is found as a temporary fix.
+IF (APPLE)
+  EXECUTE_PROCESS(COMMAND /usr/bin/sw_vers -productVersion
+    OUTPUT_VARIABLE OSX_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  IF (OSX_VERSION VERSION_EQUAL 10.9.0 OR
+      OSX_VERSION VERSION_GREATER 10.9.0)
+    MESSAGE("-- Detected OS X version: ${OSX_VERSION} >= Mavericks (10.9), "
+      "disabling TR1 support due to libstdc++ -> libc++ change, this will "
+      "be fixed in a future release of Ceres.")
+    # Retain the help string associated with the DISABLE_TR1 option
+    # when updating it to disable use of TR1.
+    GET_PROPERTY(HELP_STRING CACHE DISABLE_TR1 PROPERTY HELPSTRING)
+    SET(DISABLE_TR1 ON CACHE BOOL "${HELP_STRING}" FORCE)
+  ENDIF (OSX_VERSION VERSION_EQUAL 10.9.0 OR
+         OSX_VERSION VERSION_GREATER 10.9.0)
+ENDIF (APPLE)
+
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
 # hold user-specified (as opposed to FindPackage found) include directory and
 # library paths for Ceres dependencies.  These were were of the form:
