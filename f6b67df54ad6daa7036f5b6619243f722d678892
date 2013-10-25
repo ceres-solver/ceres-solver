@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec09cbf_064c7c75",
+        "filename": "internal/ceres/collections_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-25T21:21:04Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "f6b67df54ad6daa7036f5b6619243f722d678892",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
