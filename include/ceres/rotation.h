@@ -395,7 +395,7 @@ void AngleAxisToRotationMatrix(
     const MatrixAdapter<T, row_stride, col_stride>& R) {
   static const T kOne = T(1.0);
   const T theta2 = DotProduct(angle_axis, angle_axis);
-  if (theta2 > 0.0) {
+  if (theta2 > T(1e-16)) {
     // We want to be careful to only evaluate the square root if the
     // norm of the angle_axis vector is greater than zero. Otherwise
     // we get a division by zero.
@@ -419,13 +419,13 @@ void AngleAxisToRotationMatrix(
   } else {
     // At zero, we switch to using the first order Taylor expansion.
     R(0, 0) =  kOne;
-    R(1, 0) = -angle_axis[2];
-    R(2, 0) =  angle_axis[1];
-    R(0, 1) =  angle_axis[2];
+    R(1, 0) =  angle_axis[2];
+    R(2, 0) = -angle_axis[1];
+    R(0, 1) = -angle_axis[2];
     R(1, 1) =  kOne;
-    R(2, 1) = -angle_axis[0];
-    R(0, 2) = -angle_axis[1];
-    R(1, 2) =  angle_axis[0];
+    R(2, 1) =  angle_axis[0];
+    R(0, 2) =  angle_axis[1];
+    R(1, 2) = -angle_axis[0];
     R(2, 2) = kOne;
   }
 }
@@ -581,7 +581,7 @@ T DotProduct(const T x[3], const T y[3]) {
 template<typename T> inline
 void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
   const T theta2 = DotProduct(angle_axis, angle_axis);
-  if (theta2 > 0.0) {
+  if (theta2 > T(1e-16)) {
     // Away from zero, use the rodriguez formula
     //
     //   result = pt costheta +
