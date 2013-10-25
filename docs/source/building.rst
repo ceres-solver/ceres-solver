@@ -380,6 +380,12 @@ Options controlling Ceres configuration
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
    to disable multithreading.
 
+#. ``UNORDERED_MAP [Default: ON]``: On certain platforms like Android
+   (using STLPort) modern C++ features like ``unordered_map`` and
+   ``unordered_set`` are not available. Turn this ``OFF`` to disable
+   the use of these datastructures. This will lead to some loss in
+   performance.
+
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
    shared library.
@@ -392,7 +398,6 @@ Options controlling Ceres configuration
 #. ``MSVC_USE_STATIC_CRT [Default: OFF]`` *Windows Only*: By default
    Ceres will use the Visual Studio default, *shared* C-Run Time (CRT) library.
    Turn this ``ON`` to use the *static* C-Run Time library instead.
-
 
 Options controlling Ceres dependency locations
 ----------------------------------------------

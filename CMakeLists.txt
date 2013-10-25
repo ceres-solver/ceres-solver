@@ -104,9 +104,9 @@ OPTION(CUSTOM_BLAS
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
 # TODO(sameeragarwal): Replace this with a positive option instead?
-OPTION(DISABLE_TR1
-       "Don't use TR1. This replaces some hash tables with sets. Slower."
-       OFF)
+OPTION(UNORDERED_MAP
+       "Use unordered_map/unordered_set if available."
+       ON)
 # Line search minimizer is useful for large scale problems or when
 # sparse linear algebra libraries are not available. If compile time,
 # binary size or compiler performance is an issue, consider disabling
@@ -409,37 +409,30 @@ ELSE (OPENMP)
   ADD_DEFINITIONS(-DCERES_NO_THREADS)
 ENDIF (OPENMP)
 
-IF (DISABLE_TR1)
-  MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
-  ADD_DEFINITIONS(-DCERES_NO_TR1)
-ELSE (DISABLE_TR1)
-  MESSAGE("-- Using normal TR1 unordered_map/set")
-  # Use the std namespace for the hash<> and related templates. This may vary by
-  # system.
-  IF (MSVC)
-    IF (MSVC90)
-      # Special case for Visual Studio 2008.
-      # Newer versions have got tr1 symbols in another namespace,
-      # and this is being handled in Else branch of this condition.
-      # Probably Visual studio 2003 and 2005 also shall be handled here,
-      # but don't have by hand to verify and most likely they're not
-      # used by Ceres users anyway.
-      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
-      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
-    ELSE (MSVC90)
-      # This is known to work with Visual Studio 2010 Express.
-      # Further, for as long Visual Studio 2012 didn't move tr1 to
-      # just another namespace, the same define will work for it as well.
-      # Hopefully all further versions will also keep working with this define.
+IF (UNORDERED_MAP)
+  Include(CheckIncludeFileCXX)
+  CHECK_INCLUDE_FILE_CXX(unordered_map UNORDERED_MAP_IN_STD_NAMESPACE)
+  If (UNORDERED_MAP_IN_STD_NAMESPACE)
+      ADD_DEFINITIONS(-DCERES_STD_UNORDERED_MAP)
       ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std {\"")
       ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}\"")
-    ENDIF(MSVC90)
-  ELSE (MSVC)
-    # This is known to work with recent versions of Linux and Mac OS X.
-    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
-    ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
-  ENDIF (MSVC)
-ENDIF (DISABLE_TR1)
+  ELSE (UNORDERED_MAP_IN_STD_NAMESPACE)
+    CHECK_INCLUDE_FILE_CXX("tr1/unordered_map" UNORDERED_MAP_IN_TR1_NAMESPACE)
+    IF (UNORDERED_MAP_IN_TR1_NAMESPACE)
+      ADD_DEFINITIONS(-DCERES_TR1_UNORDERED_MAP)
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_START=namespace std { namespace tr1 {\"")
+      ADD_DEFINITIONS("\"-DCERES_HASH_NAMESPACE_END=}}\"")
+    ELSE (UNORDERED_MAP_IN_TR1_NAMESPACE)
+      GET_PROPERTY(HELP_STRING CACHE UNORDERED_MAP PROPERTY HELPSTRING)
+      SET(UNORDERED_MAP OFF CACHE BOOL "${HELP_STRING}" FORCE)
+      MESSAGE("-- Disabling the use of unordered_map/unordered_set.")
+      ADD_DEFINITIONS(-DCERES_NO_UNORDERED_MAP)
+    ENDIF (UNORDERED_MAP_IN_TR1_NAMESPACE)
+  ENDIF (UNORDERED_MAP_IN_STD_NAMESPACE)
+ELSE (UNORDERED_MAP)
+  MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
+  ADD_DEFINITIONS(-DCERES_NO_UNORDERED_MAP)
+ENDIF (UNORDERED_MAP)
 
 INCLUDE_DIRECTORIES(
   include
