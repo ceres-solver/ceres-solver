@@ -104,7 +104,7 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_GFLAGS \
                 -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
-                -DCERES_NO_TR1 \
+                -DCERES_NO_UNORDERED_MAP \
                 -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 
 # On Android NDK 8b, GCC gives spurrious warnings about ABI incompatibility for
