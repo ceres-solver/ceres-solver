@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec09cbf_63c1e2ce",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-25T15:59:08Z",
+      "side": 1,
+      "message": "This seems reasonable for now, to check for libc++ I think we need to use CheckCXXSymbolExists() - ala:\n\nINCLUDE(CheckCXXSymbolExists)\nCHECK_CXX_SYMBOL_EXISTS(\"_LIBCPP_VERSION\" \"\" HAVE_LIBCPP)",
+      "revId": "3a18c1423300726bcffcaf7a31e29854c6030ae7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
