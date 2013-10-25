@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec09cbf_232b6aa6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-10-25T17:26:42Z",
+      "side": 1,
+      "message": "Perhaps be more descriptive of the cause?:\n\nCould not find unordered_map/unordered_set, disabling the use of unordered_map/unordered_set.",
+      "revId": "68fa62264f2439a8cff312d6880c0b9f3be6b55d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
