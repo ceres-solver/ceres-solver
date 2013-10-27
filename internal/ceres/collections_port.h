@@ -41,13 +41,20 @@
 #if defined(CERES_TR1_UNORDERED_MAP)
 #  include <tr1/unordered_map>
 #  include <tr1/unordered_set>
+#  define CERES_HASH_NAMESPACE_START namespace std { namespace tr1 {
+#  define CERES_HASH_NAMESPACE_END } }
 #endif
 
 #if defined(CERES_STD_UNORDERED_MAP)
 #  include <unordered_map>
 #  include <unordered_set>
+#  define CERES_HASH_NAMESPACE_START namespace std {
+#  define CERES_HASH_NAMESPACE_END }
 #endif
 
+#if !defined(CERES_NO_UNORDERED_MAP) && !defined(CERES_TR1_UNORDERED_MAP) && !defined(CERES_STD_UNORDERED_MAP)
+#error One of: CERES_NO_UNORDERED_MAP, CERES_TR1_UNORDERED_MAP, CERES_STD_UNORDERED_MAP must be defined!
+#endif
 
 #include <utility>
 #include "ceres/integral_types.h"
@@ -55,7 +62,7 @@
 
 // Some systems don't have access to unordered_map/unordered_set. In
 // that case, substitute the hash map/set with normal map/set. The
-// price to pay is slightly slower speed for some operations.
+// price to pay is slower speed for some operations.
 #if defined(CERES_NO_UNORDERED_MAP)
 
 namespace ceres {
