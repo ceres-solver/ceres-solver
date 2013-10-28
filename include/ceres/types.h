@@ -117,6 +117,11 @@ enum PreconditionerType {
   CLUSTER_TRIDIAGONAL
 };
 
+enum VisibilityClusteringType {
+  CANONICAL_VIEWS,
+  SINGLE_LINKAGE
+};
+
 enum SparseLinearAlgebraLibraryType {
   // High performance sparse Cholesky factorization and approximate
   // minimum degree ordering.
@@ -399,6 +404,10 @@ bool StringToLinearSolverType(string value, LinearSolverType* type);
 
 const char* PreconditionerTypeToString(PreconditionerType type);
 bool StringToPreconditionerType(string value, PreconditionerType* type);
+
+const char* VisibilityClusteringTypeToString(VisibilityClusteringType type);
+bool StringToVisibilityClusteringType(string value,
+                                      VisibilityClusteringType* type);
 
 const char* SparseLinearAlgebraLibraryTypeToString(
     SparseLinearAlgebraLibraryType type);
