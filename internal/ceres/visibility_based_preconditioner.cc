@@ -49,6 +49,7 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
+#include "ceres/single_linkage_clustering.h"
 #include "ceres/visibility.h"
 #include "glog/logging.h"
 
@@ -188,17 +189,26 @@ void VisibilityBasedPreconditioner::ClusterCameras(
   scoped_ptr<Graph<int> > schur_complement_graph(
       CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
 
-  CanonicalViewsClusteringOptions options;
-  options.size_penalty_weight = kSizePenaltyWeight;
-  options.similarity_penalty_weight = kSimilarityPenaltyWeight;
-
-  vector<int> centers;
   HashMap<int, int> membership;
-  ComputeCanonicalViewsClustering(*schur_complement_graph,
-                                  options,
-                                  &centers,
-                                  &membership);
-  num_clusters_ = centers.size();
+
+  if (options_.visibility_clustering_type == CANONICAL_VIEWS) {
+    vector<int> centers;
+    CanonicalViewsClusteringOptions clustering_options;
+    clustering_options.size_penalty_weight = kSizePenaltyWeight;
+    clustering_options.similarity_penalty_weight = kSimilarityPenaltyWeight;
+    ComputeCanonicalViewsClustering(clustering_options,
+                                    *schur_complement_graph,
+                                    &centers,
+                                    &membership);
+    num_clusters_ = centers.size();
+  } else if (options_.visibility_clustering_type == SINGLE_LINKAGE) {
+    SingleLinkageClusteringOptions clustering_options;
+    clustering_options.min_similarity = 0.90;
+    num_clusters_ = ComputeSingleLinkageClustering(clustering_options,
+                                                   *schur_complement_graph,
+                                                   &membership);
+  }
+
   CHECK_GT(num_clusters_, 0);
   VLOG(2) << "num_clusters: " << num_clusters_;
   FlattenMembershipMap(membership, &cluster_membership_);
@@ -546,11 +556,18 @@ Graph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
 // cluster ids. Convert this into a flat array for quick lookup. It is
 // possible that some of the vertices may not be associated with any
 // cluster. In that case, randomly assign them to one of the clusters.
+//
+// The cluster ids can be non-contiguous integers. So as we flatten
+// the membership_map, we also map the cluster ids to a contiguous set
+// of integers so that the cluster ids are in [0, num_clusters_).
 void VisibilityBasedPreconditioner::FlattenMembershipMap(
     const HashMap<int, int>& membership_map,
     vector<int>* membership_vector) const {
   CHECK_NOTNULL(membership_vector)->resize(0);
   membership_vector->resize(num_blocks_, -1);
+
+  HashMap<int, int> cluster_id_to_index;
+
   // Iterate over the cluster membership map and update the
   // cluster_membership_ vector assigning arbitrary cluster ids to
   // the few cameras that have not been clustered.
@@ -571,7 +588,17 @@ void VisibilityBasedPreconditioner::FlattenMembershipMap(
       cluster_id = camera_id % num_clusters_;
     }
 
-    membership_vector->at(camera_id) = cluster_id;
+    const int index = FindWithDefault(cluster_id_to_index,
+                                      cluster_id,
+                                      cluster_id_to_index.size());
+
+    if (index == cluster_id_to_index.size()) {
+      cluster_id_to_index[cluster_id] = index;
+      CHECK_NE(index, cluster_id_to_index.size());
+    }
+
+    CHECK_NE(index, num_clusters_);
+    membership_vector->at(camera_id) = index;
   }
 }
 

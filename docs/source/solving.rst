@@ -1147,6 +1147,28 @@ elimination group [LiSaad]_.
    ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. See
    :ref:`section-preconditioner` for more details.
 
+.. member:: VisibilityClusteringType Solver::Options::visibility_clustering_type
+
+   Default: ``CANONICAL_VIEWS``
+
+   Type of clustering algorithm to use when constructing a visibility
+   based preconditioner. The original visibility based preconditioning
+   paper and implementation only used the canonical views algorithm.
+
+   This algorithm gives high quality results but for large dense
+   graphs can be particularly expensive. As its worst case complexity
+   is cubic in size of the graph.
+
+   Another option is to use ``SINGLE_LINKAGE`` which is a simple
+   thresholded single linkage clustering algorithm that only pays
+   attention to tightly coupled blocks in the Schur complement. This
+   is a fast algorithm that works well.
+
+   The optimal choice of the clustering algorithm depends on the
+   sparsity structure of the problem, but generally speaking we
+   recommend that you try ``CANONICAL_VIEWS`` first and if it is too
+   expensive try ``SINGLE_LINKAGE``.
+
 .. member:: DenseLinearAlgebraLibrary Solver::Options::dense_linear_algebra_library_type
 
    Default:``EIGEN``
@@ -2019,6 +2041,13 @@ The three arrays will be:
 
    Type of preconditioner used for solving the trust region step. Only
    meaningful when an iterative linear solver is used.
+
+.. member:: VisibilityClusteringType Solver::Summary::visibility_clustering_type
+
+   Type of clustering algorithm used for visibility based
+   preconditioning. Only meaningful when the
+   :member:`Solver::Summary::preconditioner_type` is
+   ``CLUSTER_JACOBI`` or ``CLUSTER_TRIDIAGONAL``.
 
 .. member:: TrustRegionStrategyType Solver::Summary::trust_region_strategy_type
 
