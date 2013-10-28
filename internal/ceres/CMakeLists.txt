@@ -91,6 +91,7 @@ SET(CERES_INTERNAL_SRC
     schur_eliminator.cc
     schur_jacobi_preconditioner.cc
     scratch_evaluate_preparer.cc
+    single_linkage_clustering.cc
     solver.cc
     solver_impl.cc
     sparse_matrix.cc
