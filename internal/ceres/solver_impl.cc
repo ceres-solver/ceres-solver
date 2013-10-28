@@ -512,6 +512,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->linear_solver_type_used = options.linear_solver_type;
 
   summary->preconditioner_type = options.preconditioner_type;
+  summary->visibility_clustering_type = options.visibility_clustering_type;
 
   summary->num_linear_solver_threads_given =
       original_options.num_linear_solver_threads;
@@ -1244,6 +1245,8 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
       options->max_linear_solver_iterations;
   linear_solver_options.type = options->linear_solver_type;
   linear_solver_options.preconditioner_type = options->preconditioner_type;
+  linear_solver_options.visibility_clustering_type =
+      options->visibility_clustering_type;
   linear_solver_options.sparse_linear_algebra_library_type =
       options->sparse_linear_algebra_library_type;
   linear_solver_options.dense_linear_algebra_library_type =

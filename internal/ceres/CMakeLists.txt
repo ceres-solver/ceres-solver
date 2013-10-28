@@ -91,6 +91,7 @@ SET(CERES_INTERNAL_SRC
     schur_eliminator.cc
     schur_jacobi_preconditioner.cc
     scratch_evaluate_preparer.cc
+    single_linkage_clustering.cc
     solver.cc
     solver_impl.cc
     sparse_matrix.cc
@@ -247,6 +248,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(rotation)
   CERES_TEST(schur_complement_solver)
   CERES_TEST(schur_eliminator)
+  CERES_TEST(single_linkage_clustering)
   CERES_TEST(small_blas)
   CERES_TEST(solver_impl)
 

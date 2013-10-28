@@ -110,6 +110,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
 
   Preconditioner::Options preconditioner_options;
   preconditioner_options.type = options_.preconditioner_type;
+  preconditioner_options.visibility_clustering_type =
+      options_.visibility_clustering_type;
   preconditioner_options.sparse_linear_algebra_library_type =
       options_.sparse_linear_algebra_library_type;
   preconditioner_options.num_threads = options_.num_threads;
