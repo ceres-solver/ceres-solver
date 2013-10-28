@@ -1244,6 +1244,8 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
       options->max_linear_solver_iterations;
   linear_solver_options.type = options->linear_solver_type;
   linear_solver_options.preconditioner_type = options->preconditioner_type;
+  linear_solver_options.visibility_clustering_type =
+      options->visibility_clustering_type;
   linear_solver_options.sparse_linear_algebra_library_type =
       options->sparse_linear_algebra_library_type;
   linear_solver_options.dense_linear_algebra_library_type =

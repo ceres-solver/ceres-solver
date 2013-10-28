@@ -98,7 +98,7 @@ class Solver {
 #endif
 
       preconditioner_type = JACOBI;
-
+      visibility_clustering_type = CANONICAL_VIEWS;
       dense_linear_algebra_library_type = EIGEN;
       sparse_linear_algebra_library_type = SUITE_SPARSE;
 #if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
@@ -384,6 +384,11 @@ class Solver {
 
     // Type of preconditioner to use with the iterative linear solvers.
     PreconditionerType preconditioner_type;
+
+    // Type of clustering algorithm to use visibility based
+    // preconditioning. This option is used only when the
+    // preconditioner_type is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
+    VisibilityClusteringType visibility_clustering_type;
 
     // Ceres supports using multiple dense linear algebra libraries
     // for dense matrix factorizations. Currently EIGEN and LAPACK are
@@ -885,6 +890,11 @@ class Solver {
     //  Type of preconditioner used for solving the trust region
     //  step. Only meaningful when an iterative linear solver is used.
     PreconditionerType preconditioner_type;
+
+    // Type of clustering algorithm used for visibility based
+    // preconditioning. Only meaningful when the preconditioner_type
+    // is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
+    VisibilityClusteringType visibility_clustering_type;
 
     //  Type of trust region strategy.
     TrustRegionStrategyType trust_region_strategy_type;
