@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec09cbf_495a0589",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-28T23:38:48Z",
+      "side": 1,
+      "message": "preconditioners",
+      "revId": "181a9defc9bd45cc3191e9746a80dc11be4e54dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ec09cbf_89dcfdd1",
+        "filename": "internal/ceres/single_linkage_clustering.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-28T23:38:48Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "181a9defc9bd45cc3191e9746a80dc11be4e54dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
