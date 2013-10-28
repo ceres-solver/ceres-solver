@@ -119,6 +119,7 @@ Solver::Summary::Summary()
       inner_iterations_given(false),
       inner_iterations_used(false),
       preconditioner_type(IDENTITY),
+      visibility_clustering_type(CANONICAL_VIEWS),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
       dense_linear_algebra_library_type(EIGEN),
       sparse_linear_algebra_library_type(SUITE_SPARSE),
