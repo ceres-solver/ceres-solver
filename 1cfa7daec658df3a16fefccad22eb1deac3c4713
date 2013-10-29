@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49184c_4c4cf376",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "CHECK_NOTNULL(parameter_blocks)-\u003eresize(..)",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_8c46db54",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "CHECK_NOTNULL(residual_blocks)",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_0c93cba9",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "early return.",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_ac839f5c",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "CHECK_NOTNULL(residual_blocks)",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_ac6c7fc8",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "wha?",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_8c9fbba6",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "if and when this fails, will it print something useful?",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_0c6cabc3",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "Why Get? this is a struct, and get is a verb and this sounds like a method.",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_4c7eb36a",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-29T00:08:20Z",
+      "side": 1,
+      "message": "same as above.",
+      "revId": "1cfa7daec658df3a16fefccad22eb1deac3c4713",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
