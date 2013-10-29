@@ -1424,22 +1424,43 @@ Instances
    The size of the residual vector obtained by summing over the sizes
    of all of the residual blocks.
 
-.. function int Problem::ParameterBlockSize(const double* values) const;
+.. function:: int Problem::ParameterBlockSize(const double* values) const
 
    The size of the parameter block.
 
-.. function int Problem::ParameterBlockLocalSize(const double* values) const;
+.. function:: int Problem::ParameterBlockLocalSize(const double* values) const
 
   The size of local parameterization for the parameter block. If
   there is no local parameterization associated with this parameter
   block, then ``ParameterBlockLocalSize`` = ``ParameterBlockSize``.
 
+.. function:: void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const
 
-.. function void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const;
+   Fills the passed ``parameter_blocks`` vector with pointers to the
+   parameter blocks currently in the problem. After this call,
+   ``parameter_block.size() == NumParameterBlocks``.
 
-  Fills the passed ``parameter_blocks`` vector with pointers to the
-  parameter blocks currently in the problem. After this call,
-  ``parameter_block.size() == NumParameterBlocks``.
+.. function:: void Problem::GetResidualBlocks(vector<ResidualBlockId>* residual_blocks) const
+
+   Fills the passed `residual_blocks` vector with pointers to the
+   residual blocks currently in the problem. After this call,
+   `residual_blocks.size() == NumResidualBlocks`.
+
+.. function:: void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, vector<double*>* parameter_blocks) const
+
+   Get all the parameter blocks that depend on the given residual
+   block.
+
+.. function:: void Problem::GetResidualBlocksForParameterBlock(const double* values, vector<ResidualBlockId>* residual_blocks) const
+
+   Get all the residual blocks that depend on the given parameter
+   block.
+
+   If `Problem::Options::enable_fast_parameter_block_removal` is
+   `true`, then getting the residual blocks is fast and depends only
+   on the number of residual blocks. Otherwise, getting the residual
+   blocks for a parameter block will incur a scan of the entire
+   :class:`Problem` object.
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
