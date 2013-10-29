@@ -417,7 +417,7 @@ void AngleAxisToRotationMatrix(
     R(1, 2) = -wx*sintheta   + wy*wz*(kOne -    costheta);
     R(2, 2) =     costheta   + wz*wz*(kOne -    costheta);
   } else {
-    // At zero, we switch to using the first order Taylor expansion.
+    // Near zero, we switch to using the first order Taylor expansion.
     R(0, 0) =  kOne;
     R(1, 0) =  angle_axis[2];
     R(2, 0) = -angle_axis[1];
@@ -625,7 +625,7 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
     // and actually performing multiplication with the point pt, gives us
     // R * pt = pt + w x pt.
     //
-    // Switching to the Taylor expansion at zero provides meaningful
+    // Switching to the Taylor expansion near zero provides meaningful
     // derivatives when evaluated using Jets.
     //
     // Explicitly inlined evaluation of the cross product for
