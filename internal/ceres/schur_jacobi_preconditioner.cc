@@ -36,7 +36,6 @@
 #include "ceres/block_random_access_diagonal_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/collections_port.h"
-#include "ceres/detect_structure.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
 #include "ceres/schur_eliminator.h"
@@ -71,18 +70,14 @@ SchurJacobiPreconditioner::~SchurJacobiPreconditioner() {
 // Initialize the SchurEliminator.
 void SchurJacobiPreconditioner::InitEliminator(
     const CompressedRowBlockStructure& bs) {
-  LinearSolver::Options eliminator_options;
-
+    LinearSolver::Options eliminator_options;
   eliminator_options.elimination_groups = options_.elimination_groups;
   eliminator_options.num_threads = options_.num_threads;
-
-  DetectStructure(bs, options_.elimination_groups[0],
-                  &eliminator_options.row_block_size,
-                  &eliminator_options.e_block_size,
-                  &eliminator_options.f_block_size);
-
+  eliminator_options.e_block_size = options_.e_block_size;
+  eliminator_options.f_block_size = options_.f_block_size;
+  eliminator_options.row_block_size = options_.row_block_size;
   eliminator_.reset(SchurEliminatorBase::Create(eliminator_options));
-  eliminator_->Init(options_.elimination_groups[0], &bs);
+  eliminator_->Init(eliminator_options.elimination_groups[0], &bs);
 }
 
 // Update the values of the preconditioner matrix and factorize it.
