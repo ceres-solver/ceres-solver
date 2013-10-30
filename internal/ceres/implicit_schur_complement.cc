@@ -35,6 +35,7 @@
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/detect_structure.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
 
@@ -61,7 +62,15 @@ void ImplicitSchurComplement::Init(const BlockSparseMatrix& A,
   // Since initialization is reasonably heavy, perhaps we can save on
   // constructing a new object everytime.
   if (A_ == NULL) {
-    A_.reset(new PartitionedMatrixView(A, num_eliminate_blocks_));
+    LinearSolver::Options options;
+    options.elimination_groups.push_back(num_eliminate_blocks_);
+    DetectStructure(*A.block_structure(),
+                    num_eliminate_blocks_,
+                    &options.row_block_size,
+                    &options.e_block_size,
+                    &options.f_block_size);
+
+    A_.reset(PartitionedMatrixViewBase::Create(options, A));
   }
 
   D_ = D;
