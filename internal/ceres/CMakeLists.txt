@@ -128,7 +128,7 @@ IF (SCHUR_SPECIALIZATIONS)
   FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/*.cc)
 ELSE (SCHUR_SPECIALIZATIONS)
   # Only the fully dynamic solver. The build is much faster this way.
-  FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/schur_eliminator_d_d_d.cc)
+  FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/*_d_d_d.cc)
 ENDIF (SCHUR_SPECIALIZATIONS)
 
 # Primarily for Android, but optionally for others, use the minimal internal

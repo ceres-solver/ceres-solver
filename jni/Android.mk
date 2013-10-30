@@ -63,8 +63,7 @@
 #
 #   -DCERES_RESTRICT_SCHUR_SPECIALIZATION
 #
-# to the LOCAL_CFLAGS variable below, and commenting out all the
-# generated/schur_eliminator_2_2_2.cc-alike files, leaving only the _d_d_d one.
+# to the LOCAL_CFLAGS variable below.
 #
 # Similarly if you do not need the line search minimizer, consider adding
 #
@@ -195,7 +194,23 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_2.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_3.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_4.cc \
-                   $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_d.cc
+                   $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_d.cc \
+		   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_d_d_d.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_2.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_3.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_4.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_d.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_3_3.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_3_4.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_3_9.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_3_d.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_3.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_4.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_d.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_4_4_2.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_4_4_3.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_4_4_4.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_4_4_d.cc
 
 ifndef CERES_GLOG_DIR
 LOCAL_SRC_FILES += $(CERES_SRC_PATH)/miniglog/glog/logging.cc
