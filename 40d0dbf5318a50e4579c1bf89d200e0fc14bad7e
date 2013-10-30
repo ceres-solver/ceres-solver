@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e49184c_74609238",
+        "filename": "internal/ceres/implicit_schur_complement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T21:42:06Z",
+      "side": 1,
+      "message": "so I could invent another struct here, ImplictSchurComplement::Options if you want, not sure what the point would be though. \n\nMy thought is that the only way these classes are getting used is part of a linearsolver.. so we are just passing that stuff down.  That said, I agree this is not optimal. \n\nI would argue that it is better than before where we were passing raw parameters and then duplicating work inside. If you feel strongly about this, I will drop a refactoring todo here.",
+      "parentUuid": "5e49184c_d4cbfe6a",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e49184c_f4b9e2dd",
         "filename": "internal/ceres/iterative_schur_complement_solver.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-10-30T21:30:39Z",
       "side": 1,
       "message": "Shouldn\u0027t this be part of an implicit schur complement factory? Or could it not run in the constructor?",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_b4f3da57",
+        "filename": "internal/ceres/iterative_schur_complement_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T21:42:06Z",
+      "side": 1,
+      "message": "no, this information is of use not just to the implicitschurcomplement, but also to the preconditioner, so we do it once here at the level of the iterative_schur_complement_solver and then pipe this information down.",
+      "parentUuid": "5e49184c_f4b9e2dd",
       "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -105,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "5e49184c_741252ac",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T21:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e49184c_d48f7e1e",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e49184c_54a46e9c",
         "filename": "internal/ceres/partitioned_matrix_view_impl.h",
         "patchSetId": 4
@@ -122,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "5e49184c_b40cba8d",
+        "filename": "internal/ceres/partitioned_matrix_view_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T21:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e49184c_54a46e9c",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e49184c_54cd4e52",
         "filename": "internal/ceres/partitioned_matrix_view_test.cc",
         "patchSetId": 4
@@ -133,6 +205,24 @@
       "writtenOn": "2013-10-30T21:30:39Z",
       "side": 1,
       "message": "Consider using templated tests (gtest has support for this) to test at least one specialization.",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_34d28aa5",
+        "filename": "internal/ceres/partitioned_matrix_view_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T21:42:06Z",
+      "side": 1,
+      "message": "well I cannot just templatize it, I need to detect or specify structure first.\nThis problem that we are using is purely scalar. But you are right this needs a better test now that template parameters are a variable.\n\nokay if I drop a todo and do something about it in the next CL which will also touch the templating?\n\nThis issue is common to both schur_eliminator_impl and partitioned_matrix_view_impl.",
+      "parentUuid": "5e49184c_54cd4e52",
       "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
