@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49184c_09564fda",
+        "filename": "internal/ceres/partitioned_matrix_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-30T20:38:13Z",
+      "side": 1,
+      "message": "So these are done manually? Can we make this done with a script like the schur specializations?\n\nAlso, please put them in separate files. I know it seems annoying but it will make compilation faster since you can run each specialization in a different process.",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
