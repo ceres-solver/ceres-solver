@@ -16,6 +16,24 @@
       "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_c95a8787",
+        "filename": "internal/ceres/partitioned_matrix_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-10-30T20:48:20Z",
+      "side": 1,
+      "message": "I just cut and pasted the specialization file for schur_eliminator for now. \n\nMy plan is to generalize that script to generate both sets of specializations.\nI will do the needed python refactoring of the script in a subsequent CL.\n\nSo lets get the basic logic and code reviewed in this CL, and then I will send you another one later tonight or tomorrow morning for the file generation.",
+      "parentUuid": "5e49184c_09564fda",
+      "revId": "40d0dbf5318a50e4579c1bf89d200e0fc14bad7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
