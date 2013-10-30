@@ -145,7 +145,7 @@ class ImplicitSchurComplement : public LinearOperator {
   int num_eliminate_blocks_;
   bool preconditioner_;
 
-  scoped_ptr<PartitionedMatrixView> A_;
+  scoped_ptr<PartitionedMatrixViewBase> A_;
   const double* D_;
   const double* b_;
 
