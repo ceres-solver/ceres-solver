@@ -43,6 +43,9 @@
 // the case for us, as the default choice causes a 30% performance
 // regression when we moved from Eigen2 to Eigen3.
 
+#ifdef EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD
+#undef EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD
+#endif
 #define EIGEN_CACHEFRIENDLY_PRODUCT_THRESHOLD 10
 
 #ifdef CERES_USE_OPENMP
