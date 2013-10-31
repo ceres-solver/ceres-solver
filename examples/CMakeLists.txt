@@ -41,11 +41,13 @@ ADD_EXECUTABLE(curve_fitting curve_fitting.cc)
 TARGET_LINK_LIBRARIES(curve_fitting ceres)
 
 ADD_EXECUTABLE(curve_fitting_c curve_fitting.c)
+TARGET_LINK_LIBRARIES(curve_fitting_c ceres)
 # As this is a C file #including <math.h> we have to explicitly add the math
 # library (libm). Although some compilers (dependent upon options) will accept
 # the indirect link to libm via Ceres, at least GCC 4.8 on pure Debian won't.
-TARGET_LINK_LIBRARIES(curve_fitting_c ceres m)
-
+IF (NOT MSVC)
+  TARGET_LINK_LIBRARIES(curve_fitting_c m)
+ENDIF (NOT MSVC)
 
 ADD_EXECUTABLE(robust_curve_fitting robust_curve_fitting.cc)
 TARGET_LINK_LIBRARIES(robust_curve_fitting ceres)
