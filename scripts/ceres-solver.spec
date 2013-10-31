@@ -1,9 +1,9 @@
 Name:           ceres-solver
-Version:        1.7.0
+Version:        1.8.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        0.3.0%{?dist}
+Release:        0.1.0%{?dist}
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Libraries
@@ -110,6 +110,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct 31 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.8.0-0.1.0
+- Bump version
+
 * Thu Aug 29 2013 Taylor Braun-Jones <taylor@braun-jones.org> - 1.7.0-0.3.0
 - Bump version
 
