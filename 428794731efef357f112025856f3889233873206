@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e49184c_9ba19e8e",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-31T20:14:45Z",
+      "side": 1,
+      "message": "Drop bblank",
+      "revId": "428794731efef357f112025856f3889233873206",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_bbae6278",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-31T20:14:45Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "428794731efef357f112025856f3889233873206",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_fbb8eabb",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-31T20:14:45Z",
+      "side": 1,
+      "message": "Hmmmm",
+      "revId": "428794731efef357f112025856f3889233873206",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e49184c_3bb352df",
+        "filename": "internal/ceres/visibility_based_preconditioner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-10-31T20:14:45Z",
+      "side": 1,
+      "message": "Drop blank",
+      "revId": "428794731efef357f112025856f3889233873206",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
