@@ -130,7 +130,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
 
     if (IsZeroOrInfinity(rho)) {
       LOG(ERROR) << "Numerical failure. rho = " << rho;
-      summary.termination_type = FAILURE;
+      summary.termination_type = NUMERICAL_CAUSES;
       break;
     };
 
@@ -140,7 +140,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
       double beta = rho / last_rho;
       if (IsZeroOrInfinity(beta)) {
         LOG(ERROR) << "Numerical failure. beta = " << beta;
-        summary.termination_type = FAILURE;
+        summary.termination_type = NUMERICAL_CAUSES;
         break;
       }
       p = z + beta * p;
@@ -153,14 +153,14 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
 
     if ((pq <= 0) || IsInfinite(pq))  {
       LOG(ERROR) << "Numerical failure. pq = " << pq;
-      summary.termination_type = FAILURE;
+      summary.termination_type = NUMERICAL_CAUSES;
       break;
     }
 
     double alpha = rho / pq;
     if (IsInfinite(alpha)) {
       LOG(ERROR) << "Numerical failure. alpha " << alpha;
-      summary.termination_type = FAILURE;
+      summary.termination_type = NUMERICAL_CAUSES;
       break;
     }
 

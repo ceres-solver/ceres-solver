@@ -304,6 +304,7 @@ const char* SolverTerminationTypeToString(SolverTerminationType type) {
     CASESTR(GRADIENT_TOLERANCE);
     CASESTR(PARAMETER_TOLERANCE);
     CASESTR(NUMERICAL_FAILURE);
+    CASESTR(NON_NUMERICAL_FAILURE);
     CASESTR(USER_ABORT);
     CASESTR(USER_SUCCESS);
     CASESTR(DID_NOT_RUN);
@@ -317,8 +318,8 @@ const char* LinearSolverTerminationTypeToString(
   switch (type) {
     CASESTR(TOLERANCE);
     CASESTR(MAX_ITERATIONS);
-    CASESTR(STAGNATION);
-    CASESTR(FAILURE);
+    CASESTR(NUMERICAL_CAUSES);
+    CASESTR(NON_NUMERICAL_CAUSES);
     default:
       return "UNKNOWN";
   }

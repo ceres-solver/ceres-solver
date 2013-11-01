@@ -135,23 +135,28 @@ TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
   summary.num_iterations = linear_solver_summary.num_iterations;
   summary.termination_type = linear_solver_summary.termination_type;
 
-  if (linear_solver_summary.termination_type != FAILURE) {
-    switch (dogleg_type_) {
-      // Interpolate the Cauchy point and the Gauss-Newton step.
-      case TRADITIONAL_DOGLEG:
-        ComputeTraditionalDoglegStep(step);
-        break;
+  if (summary.termination_type == NON_NUMERICAL_CAUSES ||
+      summary.termination_type == NUMERICAL_CAUSES) {
+    return summary;
+  }
+
+  switch (dogleg_type_) {
+    // Interpolate the Cauchy point and the Gauss-Newton step.
+    case TRADITIONAL_DOGLEG:
+      ComputeTraditionalDoglegStep(step);
+      break;
 
       // Find the minimum in the subspace defined by the
       // Cauchy point and the (Gauss-)Newton step.
-      case SUBSPACE_DOGLEG:
-        if (!ComputeSubspaceModel(jacobian)) {
-          summary.termination_type = FAILURE;
-          break;
-        }
-        ComputeSubspaceDoglegStep(step);
+    case SUBSPACE_DOGLEG:
+      if (!ComputeSubspaceModel(jacobian)) {
+        summary.termination_type = NUMERICAL_CAUSES;
         break;
-    }
+      }
+      ComputeSubspaceDoglegStep(step);
+      break;
+    default:
+      LOG(FATAL) << "Unknown dogleg type";
   }
 
   return summary;
@@ -513,7 +518,7 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
     const double* residuals) {
   const int n = jacobian->num_cols();
   LinearSolver::Summary linear_solver_summary;
-  linear_solver_summary.termination_type = FAILURE;
+  linear_solver_summary.termination_type = NUMERICAL_CAUSES;
 
   // The Jacobian matrix is often quite poorly conditioned. Thus it is
   // necessary to add a diagonal matrix at the bottom to prevent the
@@ -526,7 +531,7 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
   // If the solve fails, the multiplier to the diagonal is increased
   // up to max_mu_ by a factor of mu_increase_factor_ every time. If
   // the linear solver is still not successful, the strategy returns
-  // with FAILURE.
+  // with NUMERICAL_CAUSES.
   //
   // Next time when a new Gauss-Newton step is requested, the
   // multiplier starts out from the last successful solve.
@@ -579,17 +584,22 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
       }
     }
 
-    if (linear_solver_summary.termination_type == FAILURE ||
+    if (linear_solver_summary.termination_type == NON_NUMERICAL_CAUSES) {
+      LOG(WARNING) << "Fatal linear solver failure.";
+      return linear_solver_summary;
+    }
+
+    if (linear_solver_summary.termination_type == NUMERICAL_CAUSES ||
         !IsArrayValid(n, gauss_newton_step_.data())) {
-      mu_ *= mu_increase_factor_;
       VLOG(2) << "Increasing mu " << mu_;
-      linear_solver_summary.termination_type = FAILURE;
+      mu_ *= mu_increase_factor_;
+      linear_solver_summary.termination_type = NUMERICAL_CAUSES;
       continue;
     }
     break;
   }
 
-  if (linear_solver_summary.termination_type != FAILURE) {
+  if (linear_solver_summary.termination_type != NUMERICAL_CAUSES) {
     // The scaled Gauss-Newton step is D * GN:
     //
     //     - (D^-1 J^T J D^-1)^-1 (D^-1 g)

@@ -245,7 +245,7 @@ class LinearSolver {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(NUMERICAL_CAUSES) {
     }
 
     double residual_norm;

@@ -169,14 +169,13 @@ enum LinearSolverTerminationType {
   // termination tolerance could be satified.
   MAX_ITERATIONS,
 
-  // Solver is stuck and further iterations will not result in any
-  // measurable progress.
-  STAGNATION,
+  // Solver was terminated due to numerical errors. The exact cause of
+  // failure depends on the particular solver being used.
+  NUMERICAL_CAUSES,
 
-  // Solver failed. Solver was terminated due to numerical errors. The
-  // exact cause of failure depends on the particular solver being
-  // used.
-  FAILURE
+  // Solver was terminated due to a non-numeric error e.g., the
+  // symbolic analysis phase for the sparse direct solvers failed.
+  NON_NUMERICAL_CAUSES
 };
 
 // Logging options
@@ -346,6 +345,10 @@ enum SolverTerminationType {
   // The minimizer terminated because it encountered a numerical error
   // that it could not recover from.
   NUMERICAL_FAILURE,
+
+  // The minimizer terminated because it encountered a non-numerical
+  // error, e.g., a non-numeric failure in the linear solver.
+  NON_NUMERICAL_FAILURE,
 
   // Using an IterationCallback object, user code can control the
   // minimizer. The following enums indicate that the user code was
