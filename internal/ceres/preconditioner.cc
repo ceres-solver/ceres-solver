@@ -45,9 +45,10 @@ SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
 SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
 }
 
-bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
-                                                   const double* D) {
-  return true;
+TerminationType SparseMatrixPreconditionerWrapper::UpdateImpl(
+    const SparseMatrix& A,
+    const double* D) {
+  return CONVERGENCE;
 }
 
 void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,

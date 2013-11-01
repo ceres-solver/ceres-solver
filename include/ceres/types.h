@@ -159,26 +159,6 @@ enum DenseLinearAlgebraLibraryType {
   LAPACK
 };
 
-enum LinearSolverTerminationType {
-  // Termination criterion was met. For factorization based solvers
-  // the tolerance is assumed to be zero. Any user provided values are
-  // ignored.
-  TOLERANCE,
-
-  // Solver ran for max_num_iterations and terminated before the
-  // termination tolerance could be satified.
-  MAX_ITERATIONS,
-
-  // Solver is stuck and further iterations will not result in any
-  // measurable progress.
-  STAGNATION,
-
-  // Solver failed. Solver was terminated due to numerical errors. The
-  // exact cause of failure depends on the particular solver being
-  // used.
-  FAILURE
-};
-
 // Logging options
 // The options get progressively noisier.
 enum LoggingType {
@@ -321,43 +301,6 @@ enum DoglegType {
   SUBSPACE_DOGLEG
 };
 
-enum SolverTerminationType {
-  // The minimizer did not run at all; usually due to errors in the user's
-  // Problem or the solver options.
-  DID_NOT_RUN,
-
-  // The solver ran for maximum number of iterations specified by the
-  // user, but none of the convergence criterion specified by the user
-  // were met.
-  NO_CONVERGENCE,
-
-  // Minimizer terminated because
-  //  (new_cost - old_cost) < function_tolerance * old_cost;
-  FUNCTION_TOLERANCE,
-
-  // Minimizer terminated because
-  // max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
-  GRADIENT_TOLERANCE,
-
-  // Minimized terminated because
-  //  |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
-  PARAMETER_TOLERANCE,
-
-  // The minimizer terminated because it encountered a numerical error
-  // that it could not recover from.
-  NUMERICAL_FAILURE,
-
-  // Using an IterationCallback object, user code can control the
-  // minimizer. The following enums indicate that the user code was
-  // responsible for termination.
-
-  // User's IterationCallback returned SOLVER_ABORT.
-  USER_ABORT,
-
-  // User's IterationCallback returned SOLVER_TERMINATE_SUCCESSFULLY
-  USER_SUCCESS
-};
-
 // Enums used by the IterationCallback instances to indicate to the
 // solver whether it should continue solving, the user detected an
 // error or the solution is good enough and the solver should
@@ -422,6 +365,33 @@ enum CovarianceAlgorithmType {
   SPARSE_QR
 };
 
+// Reason why ceres::Solve returned. Further details about the
+// termination can be found in the string Solver::Summary::message.
+enum TerminationType {
+  // Termination because:
+  //   1. A user specified convergence criterion was met.
+  //   2. User code (an IterationCallback) returned with
+  //    SOLVER_TERMINATE_SUCCESSFULLY.
+  CONVERGENCE,
+
+  // Termination without convergence because:
+  //   1. Maximum number of iterations was reached.
+  //   2. Maximum amount of time allowed was reached.
+  NO_CONVERGENCE,
+
+  // Termination without convergence before the maximum number of
+  // iteration or time was reached because the solver reached a state
+  // where further progress was not possible.
+  //
+  // 1. The solver was misconfigured.
+  // 2. The evaluation of the residual/Jacobian failed.
+  // 3. Unable to compute a numerically meaningful step.
+  // 4. A third party library e.g., SuiteSparse/CHOLMOD failed with a
+  //    fatal error.
+  // 5. User code (an IterationCallback) returned with SOLVER_ABORT.
+  FAILURE
+};
+
 const char* LinearSolverTypeToString(LinearSolverType type);
 bool StringToLinearSolverType(string value, LinearSolverType* type);
 
@@ -479,10 +449,7 @@ bool StringToCovarianceAlgorithmType(
     string value,
     CovarianceAlgorithmType* type);
 
-const char* LinearSolverTerminationTypeToString(
-    LinearSolverTerminationType type);
-
-const char* SolverTerminationTypeToString(SolverTerminationType type);
+const char* TerminationTypeToString(TerminationType type);
 
 bool IsSchurType(LinearSolverType type);
 bool IsSparseLinearAlgebraLibraryTypeAvailable(
