@@ -443,7 +443,14 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
 
   cholmod_factor* factor = ss.AnalyzeCholesky(&cholmod_jacobian_view);
   event_logger.AddEvent("Symbolic Factorization");
-  bool factorization_succeeded = ss.Cholesky(&cholmod_jacobian_view, factor);
+  if (factor == NULL) {
+    LOG(WARNING) << "Cholesky symbolic factorization failed.";
+    return false;
+  }
+
+  bool factorization_succeeded =
+      (ss.Cholesky(&cholmod_jacobian_view, factor) ==
+       CONVERGENCE);
   if (factorization_succeeded) {
     const double reciprocal_condition_number =
         cholmod_rcond(factor, ss.mutable_cc());

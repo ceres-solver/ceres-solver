@@ -99,13 +99,13 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
                       per_solve_options,
                       x_regularized.data());
 
-    EXPECT_EQ(unregularized_solve_summary.termination_type, TOLERANCE);
+    EXPECT_EQ(unregularized_solve_summary.termination_type, CONVERGENCE);
 
     for (int i = 0; i < A_->num_cols(); ++i) {
       EXPECT_NEAR(sol_unregularized_[i], x_unregularized[i], 1e-8);
     }
 
-    EXPECT_EQ(regularized_solve_summary.termination_type, TOLERANCE);
+    EXPECT_EQ(regularized_solve_summary.termination_type, CONVERGENCE);
     for (int i = 0; i < A_->num_cols(); ++i) {
       EXPECT_NEAR(sol_regularized_[i], x_regularized[i], 1e-8);
     }

@@ -71,7 +71,9 @@ class RegularizationCheckingLinearSolver : public DenseSparseMatrixSolver {
       EXPECT_NEAR(per_solve_options.D[i], diagonal_[i], kTolerance)
           << i << " " << per_solve_options.D[i] << " " << diagonal_[i];
     }
-    return LinearSolver::Summary();
+    LinearSolver::Summary summary;
+    summary.termination_type = FAILURE;
+    return summary;
   }
 
   const int num_cols_;
