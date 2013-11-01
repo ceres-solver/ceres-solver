@@ -66,8 +66,9 @@ BlockJacobiPreconditioner::BlockJacobiPreconditioner(
 
 BlockJacobiPreconditioner::~BlockJacobiPreconditioner() {}
 
-bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
-                                           const double* D) {
+LinearSolverTerminationType BlockJacobiPreconditioner::UpdateImpl(
+    const BlockSparseMatrix& A,
+    const double* D) {
   const CompressedRowBlockStructure* bs = A.block_structure();
 
   // Compute the diagonal blocks by block inner products.
@@ -114,7 +115,7 @@ bool BlockJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
                  .llt()
                  .solve(Matrix::Identity(size, size));
   }
-  return true;
+  return LINEAR_SOLVER_CONVERGENCE;
 }
 
 void BlockJacobiPreconditioner::RightMultiply(const double* x,

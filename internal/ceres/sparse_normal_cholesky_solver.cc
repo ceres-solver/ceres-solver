@@ -137,21 +137,26 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
     if (options_.use_postordering) {
-      cxsparse_factor_ =
-          CHECK_NOTNULL(cxsparse_.BlockAnalyzeCholesky(AtA,
-                                                       A->col_blocks(),
-                                                       A->col_blocks()));
+      cxsparse_factor_ = cxsparse_.BlockAnalyzeCholesky(AtA,
+                                                        A->col_blocks(),
+                                                        A->col_blocks());
     } else {
-      cxsparse_factor_ =
-          CHECK_NOTNULL(cxsparse_.AnalyzeCholeskyWithNaturalOrdering(AtA));
+      cxsparse_factor_ = cxsparse_.AnalyzeCholeskyWithNaturalOrdering(AtA);
     }
   }
   event_logger.AddEvent("Analysis");
 
+  if (cxsparse_factor_ == NULL) {
+    summary.num_iterations = 0;
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+    cxsparse_.Free(AtA);
+    return summary;
+  }
+
   // Solve the linear system.
   if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = LINEAR_SOLVER_CONVERGENCE;
   }
   event_logger.AddEvent("Solve");
 
@@ -198,21 +203,38 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
   event_logger.AddEvent("Setup");
 
+  summary.num_iterations = 1;
+
   if (factor_ == NULL) {
     if (options_.use_postordering) {
-      factor_ =
-          CHECK_NOTNULL(ss_.BlockAnalyzeCholesky(&lhs,
-                                                 A->col_blocks(),
-                                                 A->row_blocks()));
+      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
+                                         A->col_blocks(),
+                                         A->row_blocks());
     } else {
-      factor_ =
-      CHECK_NOTNULL(ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs));
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs);
     }
   }
-
   event_logger.AddEvent("Analysis");
 
-  cholmod_dense* sol = ss_.SolveCholesky(&lhs, factor_, rhs);
+  if (factor_ == NULL) {
+    if (per_solve_options.D != NULL) {
+      A->DeleteRows(num_cols);
+    }
+    ss_.Free(rhs);
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+    return summary;
+  }
+
+  summary.termination_type = ss_.Cholesky(&lhs, factor_);
+  if (summary.termination_type != LINEAR_SOLVER_CONVERGENCE) {
+    if (per_solve_options.D != NULL) {
+      A->DeleteRows(num_cols);
+    }
+    ss_.Free(rhs);
+    return summary;
+  }
+
+  cholmod_dense* sol = ss_.Solve(factor_, rhs);
   event_logger.AddEvent("Solve");
 
   ss_.Free(rhs);
@@ -225,10 +247,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   if (sol != NULL) {
     memcpy(x, sol->x, num_cols * sizeof(*x));
-
     ss_.Free(sol);
     sol = NULL;
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = LINEAR_SOLVER_CONVERGENCE;
   }
 
   event_logger.AddEvent("Teardown");

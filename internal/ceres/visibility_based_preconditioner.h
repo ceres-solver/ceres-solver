@@ -142,12 +142,13 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   friend class VisibilityBasedPreconditionerTest;
 
  private:
-  virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  virtual LinearSolverTerminationType UpdateImpl(const BlockSparseMatrix& A,
+                                                 const double* D);
   void ComputeClusterJacobiSparsity(const CompressedRowBlockStructure& bs);
   void ComputeClusterTridiagonalSparsity(const CompressedRowBlockStructure& bs);
   void InitStorage(const CompressedRowBlockStructure& bs);
   void InitEliminator(const CompressedRowBlockStructure& bs);
-  bool Factorize();
+  LinearSolverTerminationType Factorize();
   void ScaleOffDiagonalCells();
 
   void ClusterCameras(const vector< set<int> >& visibility);
@@ -218,8 +219,9 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   virtual int num_cols() const { return -1; }
 
  private:
-  bool UpdateImpl(const BlockSparseMatrix& A, const double* D) {
-    return false;
+  LinearSolverTerminationType UpdateImpl(const BlockSparseMatrix& A,
+                                         const double* D) {
+    return LINEAR_SOLVER_FATAL_ERROR;
   }
 };
 #endif  // CERES_NO_SUITESPARSE

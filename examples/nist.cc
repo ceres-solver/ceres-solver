@@ -160,11 +160,8 @@ void SkipLines(std::ifstream& ifs, int num_lines) {
 }
 
 bool IsSuccessfulTermination(ceres::SolverTerminationType status) {
-  return
-      (status == ceres::FUNCTION_TOLERANCE) ||
-      (status == ceres::GRADIENT_TOLERANCE) ||
-      (status == ceres::PARAMETER_TOLERANCE) ||
-      (status == ceres::USER_SUCCESS);
+  return (status == ceres::CONVERGENCE ||
+          status == ceres::USER_SUCCESS);
 }
 
 class NISTProblem {

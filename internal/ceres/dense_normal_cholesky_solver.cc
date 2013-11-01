@@ -95,7 +95,7 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_CONVERGENCE;
   VectorRef(x, num_cols) =
       lhs.selfadjointView<Eigen::Upper>().llt().solve(rhs);
   event_logger.AddEvent("Solve");
@@ -147,7 +147,10 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingLAPACK(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = info == 0 ? TOLERANCE : FAILURE;
+  summary.termination_type =
+      (info == 0)
+      ? LINEAR_SOLVER_CONVERGENCE
+      : LINEAR_SOLVER_NUMERICAL_ERROR;
 
   event_logger.AddEvent("TearDown");
   return summary;

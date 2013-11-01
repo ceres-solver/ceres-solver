@@ -105,14 +105,11 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
   // do not need to be modified.
   LinearSolver::Summary linear_solver_summary =
       linear_solver_->Solve(jacobian, residuals, solve_options, step);
-  if (linear_solver_summary.termination_type == FAILURE ||
-      !IsArrayValid(num_parameters, step)) {
-    LOG(WARNING) << "Linear solver failure. Failed to compute a finite step.";
-    linear_solver_summary.termination_type = FAILURE;
-  } else {
-    VectorRef(step, num_parameters) *= -1.0;
-  }
-  reuse_diagonal_ = true;
+
+  TrustRegionStrategy::Summary summary;
+  summary.residual_norm = linear_solver_summary.residual_norm;
+  summary.num_iterations = linear_solver_summary.num_iterations;
+  summary.termination_type = linear_solver_summary.termination_type;
 
   if (per_solve_options.dump_format_type == CONSOLE ||
       (per_solve_options.dump_format_type != CONSOLE &&
@@ -129,11 +126,21 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
     }
   }
 
+  if (summary.termination_type == LINEAR_SOLVER_FATAL_ERROR) {
+    LOG(WARNING) << "Fatal linear solver failure.";
+    return summary;
+  }
 
-  TrustRegionStrategy::Summary summary;
-  summary.residual_norm = linear_solver_summary.residual_norm;
-  summary.num_iterations = linear_solver_summary.num_iterations;
-  summary.termination_type = linear_solver_summary.termination_type;
+  if (linear_solver_summary.termination_type == LINEAR_SOLVER_NUMERICAL_ERROR ||
+      !IsArrayValid(num_parameters, step)) {
+    LOG(WARNING) << "Non-fatal linear solver failure. "
+                 << "Failed to compute a finite step.";
+    summary.termination_type = LINEAR_SOLVER_NUMERICAL_ERROR;
+    return summary;
+  }
+
+  VectorRef(step, num_parameters) *= -1.0;
+  reuse_diagonal_ = true;
   return summary;
 }
 

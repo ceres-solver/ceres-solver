@@ -35,6 +35,7 @@
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_operator.h"
+#include "ceres/linear_solver.h"
 #include "ceres/sparse_matrix.h"
 
 namespace ceres {
@@ -108,7 +109,8 @@ class Preconditioner : public LinearOperator {
   //
   // D can be NULL, in which case its interpreted as a diagonal matrix
   // of size zero.
-  virtual bool Update(const LinearOperator& A, const double* D) = 0;
+  virtual LinearSolverTerminationType Update(const LinearOperator& A,
+                                             const double* D) = 0;
 
   // LinearOperator interface. Since the operator is symmetric,
   // LeftMultiply and num_cols are just calls to RightMultiply and
@@ -132,12 +134,14 @@ template <typename MatrixType>
 class TypedPreconditioner : public Preconditioner {
  public:
   virtual ~TypedPreconditioner() {}
-  virtual bool Update(const LinearOperator& A, const double* D) {
+  virtual LinearSolverTerminationType Update(const LinearOperator& A,
+                                             const double* D) {
     return UpdateImpl(*down_cast<const MatrixType*>(&A), D);
   }
 
  private:
-  virtual bool UpdateImpl(const MatrixType& A, const double* D) = 0;
+  virtual LinearSolverTerminationType UpdateImpl(const MatrixType& A,
+                                                 const double* D) = 0;
 };
 
 // Preconditioners that depend on acccess to the low level structure
@@ -158,7 +162,8 @@ class SparseMatrixPreconditionerWrapper : public SparseMatrixPreconditioner {
   virtual int num_rows() const;
 
  private:
-  virtual bool UpdateImpl(const SparseMatrix& A, const double* D);
+  virtual LinearSolverTerminationType UpdateImpl(const SparseMatrix& A,
+                                                 const double* D);
   const SparseMatrix* matrix_;
 };
 

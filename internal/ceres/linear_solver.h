@@ -52,6 +52,31 @@ namespace internal {
 
 class LinearOperator;
 
+// This enum describes the reason why LinearSolver::Solve returns. It
+// is expected that the linear solver will set
+// LinearSolver::Summary::termination_type with this enum and and
+// LinearSolver::Summary::message with a string with any further
+// details.
+enum LinearSolverTerminationType {
+  // Linear solver terminated successfully, and a solution was
+  // computed to the required tolerance.
+  LINEAR_SOLVER_CONVERGENCE,
+
+  // Solver ran for max_num_iterations and terminated before the
+  // termination tolerance could be satisfied.
+  LINEAR_SOLVER_NO_CONVERGENCE,
+
+  // Solver encountered a numerical error and could not compute a
+  // solution. This is usually the linear system is poorly conditioned
+  // or is rank deficient.
+  LINEAR_SOLVER_NUMERICAL_ERROR,
+
+  // Solver encountered a fatal error, e.g. it ran out of memory, or
+  // there was an error in the sparsity structure of the linear
+  // system.
+  LINEAR_SOLVER_FATAL_ERROR
+};
+
 // Abstract base class for objects that implement algorithms for
 // solving linear systems
 //
@@ -245,12 +270,13 @@ class LinearSolver {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(LINEAR_SOLVER_FATAL_ERROR) {
     }
 
     double residual_norm;
     int num_iterations;
     LinearSolverTerminationType termination_type;
+    string message;
   };
 
   virtual ~LinearSolver();

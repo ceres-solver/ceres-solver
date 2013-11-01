@@ -299,26 +299,11 @@ bool StringToVisibilityClusteringType(
 
 const char* SolverTerminationTypeToString(SolverTerminationType type) {
   switch (type) {
+    CASESTR(CONVERGENCE);
     CASESTR(NO_CONVERGENCE);
-    CASESTR(FUNCTION_TOLERANCE);
-    CASESTR(GRADIENT_TOLERANCE);
-    CASESTR(PARAMETER_TOLERANCE);
-    CASESTR(NUMERICAL_FAILURE);
+    CASESTR(FAILURE);
     CASESTR(USER_ABORT);
     CASESTR(USER_SUCCESS);
-    CASESTR(DID_NOT_RUN);
-    default:
-      return "UNKNOWN";
-  }
-}
-
-const char* LinearSolverTerminationTypeToString(
-    LinearSolverTerminationType type) {
-  switch (type) {
-    CASESTR(TOLERANCE);
-    CASESTR(MAX_ITERATIONS);
-    CASESTR(STAGNATION);
-    CASESTR(FAILURE);
     default:
       return "UNKNOWN";
   }
