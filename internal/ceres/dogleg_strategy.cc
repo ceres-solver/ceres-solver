@@ -99,7 +99,7 @@ TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
     }
     TrustRegionStrategy::Summary summary;
     summary.num_iterations = 0;
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = CONVERGENCE;
     return summary;
   }
 
@@ -135,23 +135,28 @@ TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
   summary.num_iterations = linear_solver_summary.num_iterations;
   summary.termination_type = linear_solver_summary.termination_type;
 
-  if (linear_solver_summary.termination_type != FAILURE) {
-    switch (dogleg_type_) {
-      // Interpolate the Cauchy point and the Gauss-Newton step.
-      case TRADITIONAL_DOGLEG:
-        ComputeTraditionalDoglegStep(step);
-        break;
+  if (summary.termination_type == FAILURE ||
+      summary.termination_type == ABORT) {
+    return summary;
+  }
+
+  switch (dogleg_type_) {
+    // Interpolate the Cauchy point and the Gauss-Newton step.
+    case TRADITIONAL_DOGLEG:
+      ComputeTraditionalDoglegStep(step);
+      break;
 
       // Find the minimum in the subspace defined by the
       // Cauchy point and the (Gauss-)Newton step.
-      case SUBSPACE_DOGLEG:
-        if (!ComputeSubspaceModel(jacobian)) {
-          summary.termination_type = FAILURE;
-          break;
-        }
-        ComputeSubspaceDoglegStep(step);
+    case SUBSPACE_DOGLEG:
+      if (!ComputeSubspaceModel(jacobian)) {
+        summary.termination_type = FAILURE;
         break;
-    }
+      }
+      ComputeSubspaceDoglegStep(step);
+      break;
+    default:
+      LOG(FATAL) << "Unknown dogleg type";
   }
 
   return summary;
@@ -526,7 +531,7 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
   // If the solve fails, the multiplier to the diagonal is increased
   // up to max_mu_ by a factor of mu_increase_factor_ every time. If
   // the linear solver is still not successful, the strategy returns
-  // with FAILURE.
+  // with NUMERICAL_CAUSES.
   //
   // Next time when a new Gauss-Newton step is requested, the
   // multiplier starts out from the last successful solve.
@@ -579,10 +584,15 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
       }
     }
 
+    if (linear_solver_summary.termination_type == ABORT) {
+      LOG(WARNING) << "Fatal linear solver failure.";
+      return linear_solver_summary;
+    }
+
     if (linear_solver_summary.termination_type == FAILURE ||
         !IsArrayValid(n, gauss_newton_step_.data())) {
-      mu_ *= mu_increase_factor_;
       VLOG(2) << "Increasing mu " << mu_;
+      mu_ *= mu_increase_factor_;
       linear_solver_summary.termination_type = FAILURE;
       continue;
     }

@@ -157,7 +157,7 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
                    NULL,
                    NULL);
 
-    CHECK_NE(summary.termination_type, ceres::NUMERICAL_FAILURE)
+    CHECK_NE(summary.termination_type, FAILURE)
         << "Solver configuration " << i << " failed.";
     problems.push_back(system_test_problem);
 

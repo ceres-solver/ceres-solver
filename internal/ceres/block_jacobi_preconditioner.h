@@ -64,7 +64,8 @@ class BlockJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
   virtual int num_cols() const { return num_rows_; }
 
  private:
-  virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  virtual TerminationType UpdateImpl(const BlockSparseMatrix& A,
+                                                 const double* D);
 
   std::vector<double*> blocks_;
   std::vector<double> block_storage_;

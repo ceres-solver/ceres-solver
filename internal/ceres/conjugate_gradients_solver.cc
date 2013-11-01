@@ -76,7 +76,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   CHECK_EQ(A->num_rows(), A->num_cols());
 
   LinearSolver::Summary summary;
-  summary.termination_type = MAX_ITERATIONS;
+  summary.termination_type = NO_CONVERGENCE;
   summary.num_iterations = 0;
 
   int num_cols = A->num_cols();
@@ -86,7 +86,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double norm_b = bref.norm();
   if (norm_b == 0.0) {
     xref.setZero();
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = CONVERGENCE;
     return summary;
   }
 
@@ -103,7 +103,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double norm_r = r.norm();
 
   if (norm_r <= tol_r) {
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = CONVERGENCE;
     return summary;
   }
 
@@ -211,7 +211,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     VLOG(3) << "Q termination: zeta " << zeta
             << " " << per_solve_options.q_tolerance;
     if (zeta < per_solve_options.q_tolerance) {
-      summary.termination_type = TOLERANCE;
+      summary.termination_type = CONVERGENCE;
       break;
     }
     Q0 = Q1;
@@ -221,7 +221,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     VLOG(3) << "R termination: norm_r " << norm_r
             << " " << tol_r;
     if (norm_r <= tol_r) {
-      summary.termination_type = TOLERANCE;
+      summary.termination_type = CONVERGENCE;
       break;
     }
   }

@@ -245,12 +245,13 @@ class LinearSolver {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(ABORT) {
     }
 
     double residual_norm;
     int num_iterations;
-    LinearSolverTerminationType termination_type;
+    TerminationType termination_type;
+    string message;
   };
 
   virtual ~LinearSolver();
