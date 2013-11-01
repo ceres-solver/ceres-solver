@@ -50,12 +50,14 @@ bool Minimizer::RunCallbacks(const vector<IterationCallback*> callbacks,
     case SOLVER_CONTINUE:
       return true;
     case SOLVER_TERMINATE_SUCCESSFULLY:
-      summary->termination_type = USER_SUCCESS;
-      VLOG(1) << "Terminating: User callback returned USER_SUCCESS.";
+      summary->termination_type = CONVERGENCE;
+      summary->message = "Terminating: User callback returned USER_SUCCESS.";
+      VLOG(1) << summary->message;
       return false;
     case SOLVER_ABORT:
-      summary->termination_type = USER_ABORT;
-      VLOG(1) << "Terminating: User callback returned  USER_ABORT.";
+      summary->termination_type = ABORT;
+      summary->message = "Terminating: User callback returned  USER_ABORT.";
+      VLOG(1) << summary->message;
       return false;
     default:
       LOG(FATAL) << "Unknown type of user callback status";

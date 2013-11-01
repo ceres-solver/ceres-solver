@@ -607,6 +607,9 @@ class Solver {
     // it to terminate the iterations when
     //
     //  (Q_i - Q_{i-1})/Q_i < eta/i
+    //
+    // TODO(sameeragarwal): Rename eta to linear_solver_accuracy or
+    // something similar across the board.
     double eta;
 
     // Normalize the jacobian using Jacobi scaling before calling
@@ -717,11 +720,10 @@ class Solver {
     // Minimizer summary -------------------------------------------------
     MinimizerType minimizer_type;
 
-    SolverTerminationType termination_type;
+    TerminationType termination_type;
 
-    // If the solver did not run, or there was a failure, a
-    // description of the error.
-    string error;
+    // A string describing in more detail why the solver terminated.
+    string message;
 
     // Cost of the problem (value of the objective function) before
     // the optimization.

@@ -336,8 +336,9 @@ void VisibilityBasedPreconditioner::InitEliminator(
 }
 
 // Update the values of the preconditioner matrix and factorize it.
-bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
-                                               const double* D) {
+TerminationType VisibilityBasedPreconditioner::UpdateImpl(
+    const BlockSparseMatrix& A,
+    const double* D) {
   const time_t start_time = time(NULL);
   const int num_rows = m_->num_rows();
   CHECK_GT(num_rows, 0);
@@ -368,14 +369,15 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   //
   // Doing the factorization like this saves us matrix mass when
   // scaling is not needed, which is quite often in our experience.
-  bool status = Factorize();
-
+  //
   // The scaling only affects the tri-diagonal case, since
   // ScaleOffDiagonalBlocks only pays attenion to the cells that
   // belong to the edges of the degree-2 forest. In the CLUSTER_JACOBI
   // case, the preconditioner is guaranteed to be positive
   // semidefinite.
-  if (!status && options_.type == CLUSTER_TRIDIAGONAL) {
+  TerminationType status = Factorize();
+  if (options_.type == CLUSTER_TRIDIAGONAL &&
+      status == FAILURE) {
     VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
             << "scaling";
     ScaleOffDiagonalCells();
@@ -420,7 +422,7 @@ void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
 
 // Compute the sparse Cholesky factorization of the preconditioner
 // matrix.
-bool VisibilityBasedPreconditioner::Factorize() {
+TerminationType VisibilityBasedPreconditioner::Factorize() {
   // Extract the TripletSparseMatrix that is used for actually storing
   // S and convert it into a cholmod_sparse object.
   cholmod_sparse* lhs = ss_.CreateSparseMatrix(
@@ -436,7 +438,7 @@ bool VisibilityBasedPreconditioner::Factorize() {
     factor_ = ss_.BlockAnalyzeCholesky(lhs, block_size_, block_size_);
   }
 
-  bool status = ss_.Cholesky(lhs, factor_);
+  TerminationType status = ss_.Cholesky(lhs, factor_);
   ss_.Free(lhs);
   return status;
 }

@@ -760,8 +760,8 @@ TEST(SolverImpl, NoParameterBlocks) {
   Solver::Options options;
   Solver::Summary summary;
   SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
-  EXPECT_EQ(summary.error, "Problem contains no parameter blocks.");
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_EQ(summary.message, "Problem contains no parameter blocks.");
 }
 
 TEST(SolverImpl, NoResiduals) {
@@ -771,8 +771,8 @@ TEST(SolverImpl, NoResiduals) {
   double x = 1;
   problem_impl.AddParameterBlock(&x, 1);
   SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, DID_NOT_RUN);
-  EXPECT_EQ(summary.error, "Problem contains no residual blocks.");
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_EQ(summary.message, "Problem contains no residual blocks.");
 }
 
 
@@ -784,7 +784,7 @@ TEST(SolverImpl, ProblemIsConstant) {
   problem_impl.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
   problem_impl.SetParameterBlockConstant(&x);
   SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, FUNCTION_TOLERANCE);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
   EXPECT_EQ(summary.initial_cost, 1.0 / 2.0);
   EXPECT_EQ(summary.final_cost, 1.0 / 2.0);
 }
