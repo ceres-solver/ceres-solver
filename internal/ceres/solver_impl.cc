@@ -584,7 +584,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   // terminated because of a numerical failure, then return without
   // updating user state.
   if (summary->termination_type == USER_ABORT ||
-      summary->termination_type == NUMERICAL_FAILURE) {
+      summary->termination_type == NUMERICAL_FAILURE ||
+      summary->termination_type == NON_NUMERICAL_FAILURE) {
     return;
   }
 
@@ -880,7 +881,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // terminated because of a numerical failure, then return without
   // updating user state.
   if (summary->termination_type == USER_ABORT ||
-      summary->termination_type == NUMERICAL_FAILURE) {
+      summary->termination_type == NUMERICAL_FAILURE ||
+      summary->termination_type == NON_NUMERICAL_FAILURE) {
     return;
   }
 

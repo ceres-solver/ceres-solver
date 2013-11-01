@@ -147,7 +147,7 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingLAPACK(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = info == 0 ? TOLERANCE : FAILURE;
+  summary.termination_type = info == 0 ? TOLERANCE : NUMERICAL_CAUSES;
 
   event_logger.AddEvent("TearDown");
   return summary;

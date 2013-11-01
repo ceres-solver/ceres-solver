@@ -52,6 +52,30 @@ namespace internal {
 
 class LinearOperator;
 
+enum LinearSolverTerminationType {
+  // Linear solver terminated successfully.
+  LINEAR_SOLVER_CONVERGENCE,
+
+  // Solver ran for max_num_iterations and terminated before the
+  // termination tolerance could be satified.
+  LINEAR_SOLVER_NO_CONVERGENCE,
+  LINEAR_SOLVER_NUMERICAL_ERROR,
+  LINEAR_SOLVER_FATAL_ERROR
+
+
+  MAX_ITERATIONS,
+
+  // Solver was terminated due to numerical errors. The exact cause of
+  // failure depends on the particular solver being used.
+  NUMERICAL_ERROR,
+
+  // Solver was terminated due to a non-numeric error e.g., the
+  // symbolic analysis phase for the sparse direct solvers failed.
+  NON_NUMERICAL_CAUSES
+};
+
+
+
 // Abstract base class for objects that implement algorithms for
 // solving linear systems
 //
@@ -245,7 +269,7 @@ class LinearSolver {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(NUMERICAL_CAUSES) {
     }
 
     double residual_norm;

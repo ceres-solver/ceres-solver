@@ -114,7 +114,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
     VectorRef(x, num_cols) = rhs_.head(num_cols);
     summary.termination_type = TOLERANCE;
   } else {
-    summary.termination_type = FAILURE;
+    summary.termination_type = NUMERICAL_CAUSES;
   }
 
   event_logger.AddEvent("TearDown");

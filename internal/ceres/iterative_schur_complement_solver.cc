@@ -85,7 +85,6 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   const int num_schur_complement_blocks =
       A->block_structure()->cols.size() - num_eliminate_blocks;
   if (num_schur_complement_blocks == 0) {
-    VLOG(2) << "No parameter blocks left in the schur complement.";
     LinearSolver::Summary cg_summary;
     cg_summary.num_iterations = 0;
     cg_summary.termination_type = TOLERANCE;
@@ -147,31 +146,27 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
       LOG(FATAL) << "Unknown Preconditioner Type";
   }
 
-  bool preconditioner_update_was_successful = true;
-  if (preconditioner_.get() != NULL) {
-    preconditioner_update_was_successful =
-        preconditioner_->Update(*A, per_solve_options.D);
-    cg_per_solve_options.preconditioner = preconditioner_.get();
-  }
-
-  event_logger.AddEvent("Setup");
-
   LinearSolver::Summary cg_summary;
   cg_summary.num_iterations = 0;
-  cg_summary.termination_type = FAILURE;
+  cg_summary.termination_type = TOLERANCE;
+  if (preconditioner_.get() != NULL) {
+    cg_per_solve_options.preconditioner = preconditioner_.get();
+    cg_summary.termination_type =
+        preconditioner_->Update(*A, per_solve_options.D);
+  }
+  event_logger.AddEvent("Setup");
 
-  if (preconditioner_update_was_successful) {
+  if (cg_summary.termination_type == TOLERANCE) {
     cg_summary = cg_solver.Solve(schur_complement_.get(),
                                  schur_complement_->rhs().data(),
                                  cg_per_solve_options,
                                  reduced_linear_system_solution_.data());
-    if (cg_summary.termination_type != FAILURE) {
+    if (cg_summary.termination_type != NUMERICAL_CAUSES ||
+        cg_summary.termination_type != NON_NUMERICAL_CAUSES) {
       schur_complement_->BackSubstitute(
           reduced_linear_system_solution_.data(), x);
     }
   }
-
-  VLOG(2) << "CG Iterations : " << cg_summary.num_iterations;
 
   event_logger.AddEvent("Solve");
   return cg_summary;

@@ -81,8 +81,9 @@ void SchurJacobiPreconditioner::InitEliminator(
 }
 
 // Update the values of the preconditioner matrix and factorize it.
-bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
-                                           const double* D) {
+LinearSolverTerminationType SchurJacobiPreconditioner::UpdateImpl(
+    const BlockSparseMatrix& A,
+    const double* D) {
   const int num_rows = m_->num_rows();
   CHECK_GT(num_rows, 0);
 
@@ -99,7 +100,7 @@ bool SchurJacobiPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 
   // Compute a subset of the entries of the Schur complement.
   eliminator_->Eliminate(&A, b.data(), D, m_.get(), rhs.data());
-  return true;
+  return TOLERANCE;
 }
 
 void SchurJacobiPreconditioner::RightMultiply(const double* x,

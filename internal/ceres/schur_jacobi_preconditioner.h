@@ -91,7 +91,8 @@ class SchurJacobiPreconditioner : public BlockSparseMatrixPreconditioner {
 
  private:
   void InitEliminator(const CompressedRowBlockStructure& bs);
-  virtual bool UpdateImpl(const BlockSparseMatrix& A, const double* D);
+  virtual LinearSolverTerminationType UpdateImpl(const BlockSparseMatrix& A,
+                                                 const double* D);
 
   Preconditioner::Options options_;
 

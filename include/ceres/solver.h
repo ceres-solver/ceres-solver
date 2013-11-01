@@ -719,9 +719,8 @@ class Solver {
 
     SolverTerminationType termination_type;
 
-    // If the solver did not run, or there was a failure, a
-    // description of the error.
-    string error;
+    // A string describing in more detail why the solver terminated.
+    string message;
 
     // Cost of the problem (value of the objective function) before
     // the optimization.
