@@ -85,7 +85,7 @@ Solver::Summary::Summary()
     // Invalid values for most fields, to ensure that we are not
     // accidentally reporting default values.
     : minimizer_type(TRUST_REGION),
-      termination_type(DID_NOT_RUN),
+      termination_type(FAILURE),
       initial_cost(-1.0),
       final_cost(-1.0),
       fixed_cost(-1.0),
@@ -132,12 +132,12 @@ Solver::Summary::Summary()
 
 string Solver::Summary::BriefReport() const {
   string report = "Ceres Solver Report: ";
-  if (termination_type == DID_NOT_RUN) {
-    CHECK(!error.empty())
+  if (termination_type == FAILURE) {
+    CHECK(!message.empty())
           << "Solver terminated with DID_NOT_RUN but the solver did not "
           << "return a reason. This is a Ceres error. Please report this "
           << "to the Ceres team";
-    return report + "Termination: DID_NOT_RUN, because " + error;
+    return report + "Termination: FAILURE, because " + message;
   }
 
   internal::StringAppendF(&report, "Iterations: %d",
@@ -146,13 +146,12 @@ string Solver::Summary::BriefReport() const {
 
   // If the solver failed or was aborted, then the final_cost has no
   // meaning.
-  if (termination_type != NUMERICAL_FAILURE &&
-      termination_type != USER_ABORT) {
+  if (termination_type != FAILURE && termination_type != ABORT) {
     internal::StringAppendF(&report, ", Final cost: %e", final_cost);
   }
 
   internal::StringAppendF(&report, ", Termination: %s.",
-                          SolverTerminationTypeToString(termination_type));
+                          TerminationTypeToString(termination_type));
   return report;
 };
 
@@ -165,7 +164,7 @@ string Solver::Summary::FullReport() const {
       "Ceres Solver Report\n"
       "-------------------\n";
 
-  if (termination_type == DID_NOT_RUN) {
+  if (termination_type == FAILURE) {
     StringAppendF(&report, "                      Original\n");
     StringAppendF(&report, "Parameter blocks    % 10d\n", num_parameter_blocks);
     StringAppendF(&report, "Parameters          % 10d\n", num_parameters);
@@ -317,21 +316,20 @@ string Solver::Summary::FullReport() const {
                   num_threads_given, num_threads_used);
   }
 
-  if (termination_type == DID_NOT_RUN) {
-    CHECK(!error.empty())
-        << "Solver terminated with DID_NOT_RUN but the solver did not "
+  if (termination_type == FAILURE) {
+    CHECK(!message.empty())
+        << "Solver terminated with FAILURE but the solver did not "
         << "return a reason. This is a Ceres error. Please report this "
         << "to the Ceres team";
     StringAppendF(&report, "Termination:           %20s\n",
                   "DID_NOT_RUN");
-    StringAppendF(&report, "Reason: %s\n", error.c_str());
+    StringAppendF(&report, "Reason: %s\n", message.c_str());
     return report;
   }
 
   StringAppendF(&report, "\nCost:\n");
   StringAppendF(&report, "Initial        % 30e\n", initial_cost);
-  if (termination_type != NUMERICAL_FAILURE &&
-      termination_type != USER_ABORT) {
+  if (termination_type != FAILURE && termination_type != ABORT) {
     StringAppendF(&report, "Final          % 30e\n", final_cost);
     StringAppendF(&report, "Change         % 30e\n",
                   initial_cost - final_cost);
@@ -383,7 +381,7 @@ string Solver::Summary::FullReport() const {
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s\n",
-                SolverTerminationTypeToString(termination_type));
+                TerminationTypeToString(termination_type));
   return report;
 };
 

@@ -50,6 +50,7 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
+  LinearSolver::Summary summary;
   EventLogger event_logger("CgnrSolver::Solve");
 
   // Form z = Atb.
@@ -63,7 +64,10 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
     if (preconditioner_.get() == NULL) {
       preconditioner_.reset(new BlockJacobiPreconditioner(*A));
     }
-    preconditioner_->Update(*A, per_solve_options.D);
+    summary.termination_type = preconditioner_->Update(*A, per_solve_options.D);
+    if (summary.termination_type != CONVERGENCE) {
+      return summary;
+    }
     cg_per_solve_options.preconditioner = preconditioner_.get();
   } else if (options_.preconditioner_type != IDENTITY) {
     LOG(FATAL) << "CGNR only supports IDENTITY and JACOBI preconditioners.";
@@ -75,8 +79,10 @@ LinearSolver::Summary CgnrSolver::SolveImpl(
   event_logger.AddEvent("Setup");
 
   ConjugateGradientsSolver conjugate_gradient_solver(options_);
-  LinearSolver::Summary summary =
-      conjugate_gradient_solver.Solve(&lhs, z.get(), cg_per_solve_options, x);
+  summary = conjugate_gradient_solver.Solve(&lhs,
+                                            z.get(),
+                                            cg_per_solve_options,
+                                            x);
   event_logger.AddEvent("Solve");
 
   return summary;

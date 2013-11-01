@@ -126,7 +126,7 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
 
  private:
   virtual void InitStorage(const CompressedRowBlockStructure* bs) = 0;
-  virtual bool SolveReducedLinearSystem(double* solution) = 0;
+  virtual LinearSolver::Summary SolveReducedLinearSystem(double* solution) = 0;
 
   LinearSolver::Options options_;
 
@@ -146,7 +146,7 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
 
  private:
   virtual void InitStorage(const CompressedRowBlockStructure* bs);
-  virtual bool SolveReducedLinearSystem(double* solution);
+  virtual LinearSolver::Summary SolveReducedLinearSystem(double* solution);
 
   CERES_DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
 };
@@ -160,9 +160,9 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
 
  private:
   virtual void InitStorage(const CompressedRowBlockStructure* bs);
-  virtual bool SolveReducedLinearSystem(double* solution);
-  bool SolveReducedLinearSystemUsingSuiteSparse(double* solution);
-  bool SolveReducedLinearSystemUsingCXSparse(double* solution);
+  virtual LinearSolver::Summary SolveReducedLinearSystem(double* solution);
+  LinearSolver::Summary SolveReducedLinearSystemUsingSuiteSparse(double* solution);
+  LinearSolver::Summary SolveReducedLinearSystemUsingCXSparse(double* solution);
 
   // Size of the blocks in the Schur complement.
   vector<int> blocks_;
