@@ -226,7 +226,7 @@ IF (SUITESPARSE)
   # built with SuiteSparse support.
 
   # Check for SuiteSparse and dependencies.
-  FIND_PACKAGE(SuiteSparse QUIET)
+  FIND_PACKAGE(SuiteSparse)
   IF (SUITESPARSE_FOUND)
     # On Ubuntu the system install of SuiteSparse (v3.4.0) up to at least
     # Ubuntu 13.10 cannot be used to link shared libraries.

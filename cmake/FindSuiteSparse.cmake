@@ -125,32 +125,37 @@ MACRO(SUITESPARSE_REPORT_NOT_FOUND REASON_MSG)
   # use the camelcase library name, not uppercase.
   IF (SuiteSparse_FIND_QUIETLY)
     MESSAGE(STATUS "Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
-  ELSE (SuiteSparse_FIND_QUIETLY)
+  ELSEIF (SuiteSparse_FIND_REQUIRED)
     MESSAGE(FATAL_ERROR "Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
+  ELSE()
+    # Neither QUIETLY nor REQUIRED, use WARNING which emits a message
+    # but continues configuration and allows generation.
+    MESSAGE(WARNING "Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
   ENDIF (SuiteSparse_FIND_QUIETLY)
 ENDMACRO(SUITESPARSE_REPORT_NOT_FOUND)
 
 # Specify search directories for include files and libraries (this is the union
 # of the search directories for all OSs).  Search user-specified hint
-# directories first if supplied.
+# directories first if supplied, and search user-installed locations first
+# so that we prefer user installs to system installs where both exist.
 LIST(APPEND SUITESPARSE_CHECK_INCLUDE_DIRS
   ${SUITESPARSE_INCLUDE_DIR_HINTS}
   /opt/local/include
   /opt/local/include/ufsparse # Mac OS X
-  /usr/include
-  /usr/include/suitesparse # Ubuntu
   /usr/local/homebrew/include # Mac OS X
   /usr/local/include
-  /usr/local/include/suitesparse)
+  /usr/local/include/suitesparse
+  /usr/include/suitesparse # Ubuntu
+  /usr/include)
 LIST(APPEND SUITESPARSE_CHECK_LIBRARY_DIRS
   ${SUITESPARSE_LIBRARY_DIR_HINTS}
   /opt/local/lib
   /opt/local/lib/ufsparse # Mac OS X
-  /usr/lib
-  /usr/lib/suitesparse # Ubuntu
   /usr/local/homebrew/lib # Mac OS X
   /usr/local/lib
-  /usr/local/lib/suitesparse)
+  /usr/local/lib/suitesparse
+  /usr/lib/suitesparse # Ubuntu
+  /usr/lib)
 
 # BLAS.
 FIND_PACKAGE(BLAS QUIET)
