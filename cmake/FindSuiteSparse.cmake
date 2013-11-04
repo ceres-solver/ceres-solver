@@ -520,6 +520,9 @@ IF (AMD_FOUND AND
     LIST(APPEND SUITESPARSE_INCLUDE_DIRS
       ${UFCONFIG_INCLUDE_DIR})
   ENDIF (UFCONFIG_FOUND)
+  # As SuiteSparse includes are often all in the same directory, remove any
+  # repetitions.
+  LIST(REMOVE_DUPLICATES SUITESPARSE_INCLUDE_DIRS)
 
   # Important: The ordering of these libraries is *NOT* arbitrary, as these
   # could potentially be static libraries their link ordering is important.
@@ -538,7 +541,6 @@ IF (AMD_FOUND AND
     LIST(APPEND SUITESPARSE_LIBRARIES
       ${METIS_LIBRARY})
   ENDIF (METIS_FOUND)
-  MESSAGE(STATUS "Found SuiteSparse version: ${SUITESPARSE_VERSION}")
 ELSE()
   SUITESPARSE_REPORT_NOT_FOUND(
     "Failed to find some/all required components of SuiteSparse.")
@@ -582,5 +584,5 @@ INCLUDE(FindPackageHandleStandardArgs)
 # and QUIET optional arguments, as such we use an intermediary variable.
 SET(SUITESPARSE_FOUND_COPY ${SUITESPARSE_FOUND})
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SuiteSparse
-  REQUIRED_VARS SUITESPARSE_FOUND_COPY SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES
+  REQUIRED_VARS SUITESPARSE_INCLUDE_DIRS SUITESPARSE_LIBRARIES SUITESPARSE_FOUND_COPY
   VERSION_VAR SUITESPARSE_VERSION)
