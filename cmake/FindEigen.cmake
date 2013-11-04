@@ -76,19 +76,22 @@ MACRO(EIGEN_REPORT_NOT_FOUND REASON_MSG)
   ELSEIF (Eigen_FIND_REQUIRED)
     MESSAGE(FATAL_ERROR "Failed to find Eigen - " ${REASON_MSG} ${ARGN})
   ELSE()
-    # Neither QUIETLY nor REQUIRED, use SEND_ERROR which emits an error
-    # that prevents generation, but continues configuration.
-    MESSAGE(SEND_ERROR "Failed to find Eigen - " ${REASON_MSG} ${ARGN})
+    # Neither QUIETLY nor REQUIRED, use WARNING which emits a message
+    # but continues configuration and allows generation.
+    MESSAGE(WARNING "Failed to find Eigen - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(EIGEN_REPORT_NOT_FOUND)
 
+# Search user-installed locations first, so that we prefer user installs
+# to system installs where both exist.
+#
 # TODO: Add standard Windows search locations for Eigen.
 LIST(APPEND EIGEN_CHECK_INCLUDE_DIRS
-  /usr/include/eigen3
   /usr/local/include/eigen3
   /usr/local/homebrew/include/eigen3 # Mac OS X
   /opt/local/var/macports/software/eigen3 # Mac OS X.
-  /opt/local/include/eigen3)
+  /opt/local/include/eigen3
+  /usr/include/eigen3)
 
 # Search supplied hint directories first if supplied.
 FIND_PATH(EIGEN_INCLUDE_DIR

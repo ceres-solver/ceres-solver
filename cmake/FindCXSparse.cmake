@@ -85,24 +85,27 @@ MACRO(CXSPARSE_REPORT_NOT_FOUND REASON_MSG)
   ELSEIF (CXSparse_FIND_REQUIRED)
     MESSAGE(FATAL_ERROR "Failed to find CXSparse - " ${REASON_MSG} ${ARGN})
   ELSE()
-    # Neither QUIETLY nor REQUIRED, use SEND_ERROR which emits an error
-    # that prevents generation, but continues configuration.
-    MESSAGE(SEND_ERROR "Failed to find CXSparse - " ${REASON_MSG} ${ARGN})
+    # Neither QUIETLY nor REQUIRED, use WARNING which emits a message
+    # but continues configuration and allows generation.
+    MESSAGE(WARNING "Failed to find CXSparse - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(CXSPARSE_REPORT_NOT_FOUND)
 
+# Search user-installed locations first, so that we prefer user installs
+# to system installs where both exist.
+#
 # TODO: Add standard Windows search locations for CXSparse.
 LIST(APPEND CXSPARSE_CHECK_INCLUDE_DIRS
-  /usr/include
   /usr/local/include
   /usr/local/homebrew/include # Mac OS X
   /opt/local/var/macports/software # Mac OS X.
-  /opt/local/include)
+  /opt/local/include
+  /usr/include)
 LIST(APPEND CXSPARSE_CHECK_LIBRARY_DIRS
-  /usr/lib
   /usr/local/lib
   /usr/local/homebrew/lib # Mac OS X.
-  /opt/local/lib)
+  /opt/local/lib
+  /usr/lib)
 
 # Search supplied hint directories first if supplied.
 FIND_PATH(CXSPARSE_INCLUDE_DIR
