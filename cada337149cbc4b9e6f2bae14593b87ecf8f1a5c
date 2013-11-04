@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e32f8d3_85c151d1",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-04T18:52:42Z",
+      "side": 0,
+      "message": "findsuitesparse is called quietly but findcxsparse is not called quietly? what is the reason for that?",
+      "revId": "cada337149cbc4b9e6f2bae14593b87ecf8f1a5c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
