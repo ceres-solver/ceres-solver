@@ -78,9 +78,9 @@ MACRO(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
   ELSEIF (Gflags_FIND_REQUIRED)
     MESSAGE(FATAL_ERROR "Failed to find gflags - " ${REASON_MSG} ${ARGN})
   ELSE()
-    # Neither QUIETLY nor REQUIRED, use WARNING which emits a message
+    # Neither QUIETLY nor REQUIRED, use no priority which emits a message
     # but continues configuration and allows generation.
-    MESSAGE(WARNING "Failed to find gflags - " ${REASON_MSG} ${ARGN})
+    MESSAGE("-- Failed to find gflags - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(GFLAGS_REPORT_NOT_FOUND)
 
