@@ -105,6 +105,24 @@
       "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e15fd2d_1f5aabba",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-04T19:06:12Z",
+      "side": 1,
+      "message": "Because if we used FIND_PACKAGE(Glog REQUIRED) and it failed, then as it uses FATAL_ERROR, CMake immediately stops processing, if we don\u0027t use REQUIRED, then it continues processing so that we get to display a more helpful error message explaining the MINIGLOG option before bailing.",
+      "parentUuid": "5e32f8d3_c5d269a7",
+      "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
