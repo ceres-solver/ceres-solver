@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e15fd2d_5f294318",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-04T18:44:29Z",
+      "side": 1,
+      "message": "When we invoke it we use: find_package(Eigen REQUIRED), so it is a hard failure in Ceres, but the FindEigen script itself is generic.",
+      "parentUuid": "5e32f8d3_a52815f6",
+      "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e32f8d3_c58509d2",
         "filename": "cmake/FindGlog.cmake",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-04T18:40:39Z",
       "side": 1,
       "message": "I think this needs to be a hard failure if miniglog is not turned on, in which case this file will never be executed.",
+      "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e15fd2d_3f1e8ff0",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-04T18:44:29Z",
+      "side": 1,
+      "message": "Yep, we have exactly that behaviour, it\u0027s just in the main CMakeLists (circa line 348) as it\u0027s Ceres-specific.",
+      "parentUuid": "5e32f8d3_c58509d2",
       "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
