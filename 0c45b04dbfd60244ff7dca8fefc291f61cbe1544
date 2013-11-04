@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e32f8d3_a52815f6",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-04T18:40:39Z",
+      "side": 1,
+      "message": "this cannot continue. since eigen is actually a required dependency. This should be a hard failure.",
+      "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e32f8d3_c58509d2",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-04T18:40:39Z",
+      "side": 1,
+      "message": "I think this needs to be a hard failure if miniglog is not turned on, in which case this file will never be executed.",
+      "revId": "0c45b04dbfd60244ff7dca8fefc291f61cbe1544",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
