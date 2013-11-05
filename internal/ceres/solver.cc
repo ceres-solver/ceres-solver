@@ -241,8 +241,10 @@ string Solver::Summary::FullReport() const {
     if (preconditioner_type == CLUSTER_JACOBI ||
         preconditioner_type == CLUSTER_TRIDIAGONAL) {
       StringAppendF(&report, "Visibility clustering%24s%25s\n",
-                    VisibilityClusteringTypeToString(visibility_clustering_type),
-                    VisibilityClusteringTypeToString(visibility_clustering_type));
+                    VisibilityClusteringTypeToString(
+                        visibility_clustering_type),
+                    VisibilityClusteringTypeToString(
+                        visibility_clustering_type));
     }
     StringAppendF(&report, "Threads             % 25d% 25d\n",
                   num_threads_given, num_threads_used);

@@ -87,14 +87,16 @@ class PartitionedMatrixViewBase {
   // BlockStructure (preferably created using
   // CreateBlockDiagonalMatrixEtE) which is has the same structure as
   // the block diagonal of E'E.
-  virtual void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalEtE(
+      BlockSparseMatrix* block_diagonal) const = 0;
 
   // Compute the block diagonal of the matrix F'F and store it in
   // block_diagonal. The matrix block_diagonal is expected to have a
   // BlockStructure (preferably created using
   // CreateBlockDiagonalMatrixFtF) which is has the same structure as
   // the block diagonal of F'F.
-  virtual void UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const = 0;
+  virtual void UpdateBlockDiagonalFtF(
+      BlockSparseMatrix* block_diagonal) const = 0;
 
   virtual int num_col_blocks_e() const = 0;
   virtual int num_col_blocks_f() const = 0;

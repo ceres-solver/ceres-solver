@@ -70,7 +70,7 @@ SchurJacobiPreconditioner::~SchurJacobiPreconditioner() {
 // Initialize the SchurEliminator.
 void SchurJacobiPreconditioner::InitEliminator(
     const CompressedRowBlockStructure& bs) {
-    LinearSolver::Options eliminator_options;
+  LinearSolver::Options eliminator_options;
   eliminator_options.elimination_groups = options_.elimination_groups;
   eliminator_options.num_threads = options_.num_threads;
   eliminator_options.e_block_size = options_.e_block_size;

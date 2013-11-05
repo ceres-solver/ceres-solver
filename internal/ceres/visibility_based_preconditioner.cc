@@ -210,6 +210,8 @@ void VisibilityBasedPreconditioner::ClusterCameras(
     num_clusters_ = ComputeSingleLinkageClustering(clustering_options,
                                                    *schur_complement_graph,
                                                    &membership);
+  } else {
+    LOG(FATAL) << "Unknown visibility clustering algorithm.";
   }
 
   CHECK_GT(num_clusters_, 0);
@@ -593,10 +595,9 @@ void VisibilityBasedPreconditioner::FlattenMembershipMap(
 
     if (index == cluster_id_to_index.size()) {
       cluster_id_to_index[cluster_id] = index;
-      CHECK_NE(index, cluster_id_to_index.size());
     }
 
-    CHECK_NE(index, num_clusters_);
+    CHECK_LT(index, num_clusters_);
     membership_vector->at(camera_id) = index;
   }
 }

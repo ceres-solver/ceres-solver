@@ -279,7 +279,8 @@ CreateBlockDiagonalEtE() const {
 }
 
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
-BlockSparseMatrix* PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+BlockSparseMatrix*
+PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 CreateBlockDiagonalFtF() const {
   BlockSparseMatrix* block_diagonal =
       CreateBlockDiagonalMatrixLayout(

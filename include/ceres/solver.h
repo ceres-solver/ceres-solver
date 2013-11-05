@@ -385,7 +385,7 @@ class Solver {
     // Type of preconditioner to use with the iterative linear solvers.
     PreconditionerType preconditioner_type;
 
-    // Type of clustering algorithm to use visibility based
+    // Type of clustering algorithm to use for visibility based
     // preconditioning. This option is used only when the
     // preconditioner_type is CLUSTER_JACOBI or CLUSTER_TRIDIAGONAL.
     VisibilityClusteringType visibility_clustering_type;

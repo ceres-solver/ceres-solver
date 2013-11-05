@@ -134,7 +134,7 @@ enum VisibilityClusteringType {
   CANONICAL_VIEWS,
 
   // The classic single linkage algorithm. It is extremely fast as
-  // compared to CANONICAL_VIEWS, but can give slightly poor
+  // compared to CANONICAL_VIEWS, but can give slightly poorer
   // results. For problems with large number of cameras though, this
   // is generally a pretty good option.
   //

@@ -36,7 +36,7 @@
 # This script creates two sets of files.
 #
 # 1. partitioned_matrix_view_x_x_x.cc
-# where, the x indicates the template parameters and
+# where the x indicates the template parameters and
 #
 # 2. partitioned_matrix_view.cc
 #

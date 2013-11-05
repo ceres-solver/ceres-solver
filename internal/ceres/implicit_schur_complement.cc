@@ -42,7 +42,8 @@
 namespace ceres {
 namespace internal {
 
-ImplicitSchurComplement::ImplicitSchurComplement(const LinearSolver::Options& options)
+ImplicitSchurComplement::ImplicitSchurComplement(
+    const LinearSolver::Options& options)
     : options_(options),
       D_(NULL),
       b_(NULL) {

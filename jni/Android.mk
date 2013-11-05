@@ -195,7 +195,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_3.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_4.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_4_4_d.cc \
-		   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_d_d_d.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_d_d_d.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_2.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_3.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_2_4.cc \
