@@ -104,8 +104,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   summary->termination_type = NO_CONVERGENCE;
   summary->num_successful_steps = 0;
   summary->num_unsuccessful_steps = 0;
+  summary->line_search_iterations = 0;
 
-  VectorRef x(parameters, num_parameters);
+  VectorRef x_min(parameters, num_parameters);
+  Vector x = x_min;
 
   State current_state(num_parameters, num_effective_parameters);
   State previous_state(num_parameters, num_effective_parameters);
@@ -359,6 +361,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       return;
     }
 
+    // A step that improves the solution quality was found.
+    x_min = x;
+
     iteration_summary.cost = current_state.cost + summary->fixed_cost;
     iteration_summary.step_norm = delta.norm();
     iteration_summary.step_is_valid = true;
@@ -379,6 +384,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     summary->iterations.push_back(iteration_summary);
     ++summary->num_successful_steps;
+    summary->line_search_iterations +=
+        iteration_summary.line_search_iterations;
   }
 }
 

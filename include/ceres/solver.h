@@ -915,8 +915,8 @@ class Solver {
     // Type of the line search algorithm used.
     LineSearchType line_search_type;
 
-    //  When performing line search, the degree of the polynomial used
-    //  to approximate the objective function.
+    // When performing line search, the degree of the polynomial used
+    // to approximate the objective function.
     LineSearchInterpolationType line_search_interpolation_type;
 
     // If the line search direction is NONLINEAR_CONJUGATE_GRADIENT,
@@ -927,6 +927,9 @@ class Solver {
     // If the type of the line search direction is LBFGS, then this
     // indicates the rank of the Hessian approximation.
     int max_lbfgs_rank;
+
+    // Total number of iterations taken by the line search algorithm.
+    int line_search_iterations;
   };
 
   // Once a least squares problem has been built, this function takes

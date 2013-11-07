@@ -29,6 +29,9 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
+#include <iomanip> // For std::setprecision.
+#include <iostream> // For std::scientific.
+
 #include "ceres/line_search.h"
 
 #include "ceres/fpclassify.h"
@@ -41,6 +44,8 @@
 namespace ceres {
 namespace internal {
 namespace {
+// Precision used for floating point values in error message output.
+const int kErrorMessageNumericPrecision = 20;
 
 FunctionSample ValueSample(const double x, const double value) {
   FunctionSample sample;
@@ -170,6 +175,7 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
   // to avoid replicating current.value_is_valid == false
   // behaviour in WolfeLineSearch.
   CHECK(lowerbound.value_is_valid)
+      << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
       << "Ceres bug: lower-bound sample for interpolation is invalid, "
       << "please contact the developers!, interpolation_type: "
       << LineSearchInterpolationTypeToString(interpolation_type)
@@ -238,6 +244,7 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
   current.value_is_valid = false;
 
   const bool interpolation_uses_gradients =
+      options().interpolation_type == QUADRATIC ||
       options().interpolation_type == CUBIC;
   const double descent_direction_max_norm =
       static_cast<const LineSearchFunction*>(function)->DirectionInfinityNorm();
@@ -350,23 +357,26 @@ void WolfeLineSearch::Search(const double step_size_estimate,
                              &bracket_low,
                              &bracket_high,
                              &do_zoom_search,
-                             summary) &&
-      summary->num_iterations < options().max_num_iterations) {
-    // Failed to find either a valid point or a valid bracket, but we did not
-    // run out of iterations.
+                             summary)) {
+    // Failed to find either a valid point, a valid bracket satisfying the Wolfe
+    // conditions, or even a step size > minimum tolerance satisfying the Armijo
+    // condition.
     return;
   }
+
   if (!do_zoom_search) {
     // Either: Bracketing phase already found a point satisfying the strong
     // Wolfe conditions, thus no Zoom required.
     //
     // Or: Bracketing failed to find a valid bracket or a point satisfying the
-    // strong Wolfe conditions within max_num_iterations.  As this is an
-    // 'artificial' constraint, and we would otherwise fail to produce a valid
-    // point when ArmijoLineSearch would succeed, we return the lowest point
-    // found thus far which satsifies the Armijo condition (but not the Wolfe
-    // conditions).
+    // strong Wolfe conditions within max_num_iterations, or whilst searching
+    // shrank the bracket width until it was below our minimum tolerance.
+    // As these are 'artificial' constraints, and we would otherwise fail to
+    // produce a valid point when ArmijoLineSearch would succeed, we return the
+    // point with the lowest cost found thus far which satsifies the Armijo
+    // condition (but not the Wolfe conditions).
     CHECK(bracket_low.value_is_valid)
+        << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
         << "Ceres bug: Bracketing produced an invalid bracket_low, please "
         << "contact the developers!, bracket_low: " << bracket_low
         << ", bracket_high: " << bracket_high << ", num_iterations: "
@@ -419,11 +429,22 @@ void WolfeLineSearch::Search(const double step_size_estimate,
   summary->success = true;
 }
 
-// Returns true iff bracket_low & bracket_high bound a bracket that contains
-// points which satisfy the strong Wolfe conditions. Otherwise, on return false,
-// if we stopped searching due to the 'artificial' condition of reaching
-// max_num_iterations, bracket_low is the step size amongst all those
-// tested, which satisfied the Armijo decrease condition and minimized f().
+// Returns true if either:
+//
+// A termination condition satisfying the (strong) Wolfe bracketing conditions
+// is found:
+//
+// - A valid point, defined as a bracket of zero width [zoom not required].
+// - A valid bracket (of width > tolerance), [zoom required].
+//
+// Or, searching was stopped due to an 'artificial' constraint, i.e. not
+// a condition imposed / required by the underlying algorithm, but instead an
+// engineering / implementation consideration. But a step which exceeds the
+// minimum step size, and satsifies the Armijo condition was still found,
+// and should thus be used [zoom not required].
+//
+// Otherwise, (return false) no step size > minimum step size was found which
+// satisfies at least the Armijo condition.
 bool WolfeLineSearch::BracketingPhase(
     const FunctionSample& initial_position,
     const double step_size_estimate,
@@ -438,6 +459,7 @@ bool WolfeLineSearch::BracketingPhase(
   current.value_is_valid = false;
 
   const bool interpolation_uses_gradients =
+      options().interpolation_type == QUADRATIC ||
       options().interpolation_type == CUBIC;
   const double descent_direction_max_norm =
       static_cast<const LineSearchFunction*>(function)->DirectionInfinityNorm();
@@ -507,6 +529,27 @@ bool WolfeLineSearch::BracketingPhase(
       *bracket_high = previous;
       break;
 
+    } else if (current.value_is_valid &&
+               fabs(current.x - previous.x) * descent_direction_max_norm
+               < options().min_step_size) {
+      // We have shrunk the search bracket to a width less than our tolerance,
+      // and still not found either a point satisfying the strong Wolfe
+      // conditions, or a valid bracket containing such a point. Stop searching
+      // and set bracket_low to the size size amongst all those tested which
+      // minimizes f() and satisfies the Armijo condition.
+      summary->error =
+          StringPrintf("Line search failed: Wolfe bracketing phase shrank "
+                       "bracket width: %.5e, to < tolerance: %.5e, with "
+                       "descent_direction_max_norm: %.5e, and failed to find "
+                       "a point satisfying the strong Wolfe conditions or a "
+                       "bracketing containing such a point.",
+                       fabs(current.x - previous.x),
+                       options().min_step_size,
+                       descent_direction_max_norm);
+      LOG(WARNING) << summary->error;
+      *bracket_low = current;
+      break;
+
     } else if (summary->num_iterations >= options().max_num_iterations) {
       // Check num iterations bound here so that we always evaluate the
       // max_num_iterations-th iteration against all conditions, and
@@ -523,7 +566,7 @@ bool WolfeLineSearch::BracketingPhase(
       *bracket_low =
           current.value_is_valid && current.value < bracket_low->value
           ? current : *bracket_low;
-      return false;
+      break;
     }
     // Either: f(current) is invalid; or, f(current) is valid, but does not
     // satisfy the strong Wolfe conditions itself, or the conditions for
@@ -572,8 +615,15 @@ bool WolfeLineSearch::BracketingPhase(
     current.gradient_is_valid =
         interpolation_uses_gradients && current.value_is_valid;
   }
-  // Either we have a valid point, defined as a bracket of zero width, in which
-  // case no zoom is required, or a valid bracket in which to zoom.
+
+  // Ensure that even if a valid bracket was found, we will only mark a zoom
+  // as required if the bracket's width is greater than our minimum tolerance.
+  if (*do_zoom_search &&
+      fabs(bracket_high->x - bracket_low->x) * descent_direction_max_norm
+      < options().min_step_size) {
+    *do_zoom_search = false;
+  }
+
   return true;
 }
 
@@ -589,6 +639,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
   Function* function = options().function;
 
   CHECK(bracket_low.value_is_valid && bracket_low.gradient_is_valid)
+      << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
       << "Ceres bug: f_low input to Wolfe Zoom invalid, please contact "
       << "the developers!, initial_position: " << initial_position
       << ", bracket_low: " << bracket_low
@@ -599,21 +650,49 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
   // not have been calculated (if bracket_high.value does not satisfy the
   // Armijo sufficient decrease condition and interpolation method does not
   // require it).
+  //
+  // We also do not require that: bracket_low.value < bracket_high.value,
+  // although this is typical. This is to deal with the case when
+  // bracket_low = initial_position, bracket_high is the first sample,
+  // and bracket_high does not satisfy the Armijo condition, but still has
+  // bracket_high.value < initial_position.value.
   CHECK(bracket_high.value_is_valid)
+      << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
       << "Ceres bug: f_high input to Wolfe Zoom invalid, please "
       << "contact the developers!, initial_position: " << initial_position
       << ", bracket_low: " << bracket_low
       << ", bracket_high: "<< bracket_high;
-  CHECK_LT(bracket_low.gradient *
-           (bracket_high.x - bracket_low.x), 0.0)
-      << "Ceres bug: f_high input to Wolfe Zoom does not satisfy gradient "
-      << "condition combined with f_low, please contact the developers!"
-      << ", initial_position: " << initial_position
-      << ", bracket_low: " << bracket_low
-      << ", bracket_high: "<< bracket_high;
+
+  if (bracket_low.gradient * (bracket_high.x - bracket_low.x) >= 0) {
+    // The third condition for a valid initial bracket:
+    //
+    //   3. bracket_high is chosen after bracket_low, s.t.
+    //      bracket_low.gradient * (bracket_high.x - bracket_low.x) < 0.
+    //
+    // is not satisfied.  As this can happen when the users' cost function
+    // returns inconsistent gradient values relative to the function values,
+    // we do not CHECK_LT(), but we do stop processing and return an invalid
+    // value.
+    std::stringstream error_message;
+    error_message
+        << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+        << "Line search failed: Wolfe zoom phase passed a bracket which does "
+        << "satisfy: bracket_low.gradient * (bracket_high.x - bracket_low.x) "
+        << "< 0 [" << bracket_low.gradient * (bracket_high.x - bracket_low.x)
+        << " !< 0.0], with initial_position: " << initial_position
+        << ", bracket_low: " << bracket_low
+        << ", bracket_high: "<< bracket_high
+        << ", the most likely cause of which is the cost function returning "
+        << "inconsistent gradient & function values.";
+    summary->error = error_message.str();
+    LOG(WARNING) << summary->error;
+    solution->value_is_valid = false;
+    return false;
+  }
 
   const int num_bracketing_iterations = summary->num_iterations;
   const bool interpolation_uses_gradients =
+      options().interpolation_type == QUADRATIC ||
       options().interpolation_type == CUBIC;
   const double descent_direction_max_norm =
       static_cast<const LineSearchFunction*>(function)->DirectionInfinityNorm();
