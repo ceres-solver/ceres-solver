@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5dfd5e_5937e315",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-11-07T01:40:04Z",
+      "side": 1,
+      "message": "While this is reasonable, perhaps there should also be termination based on the previous iteration\u0027s gradient rather than from the initial iteration\u0027s gradient.",
+      "revId": "ef8f267990cef8dd2bdf893aad5ddbdfa6aa4d22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
