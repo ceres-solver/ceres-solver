@@ -105,7 +105,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   summary->num_successful_steps = 0;
   summary->num_unsuccessful_steps = 0;
 
-  VectorRef x(parameters, num_parameters);
+  VectorRef x_min(parameters, num_parameters);
+  Vector x = x_min;
 
   State current_state(num_parameters, num_effective_parameters);
   State previous_state(num_parameters, num_effective_parameters);
@@ -314,6 +315,18 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                         current_state.cost,
                         current_state.directional_derivative,
                         &line_search_summary);
+    if (!line_search_summary.success) {
+      summary->error =
+          StringPrintf("Numerical failure in line search, failed to find "
+                       "a valid step size, (did not run out of iterations) "
+                       "using initial_step_size: %.5e, initial_cost: %.5e, "
+                       "initial_gradient: %.5e.",
+                       initial_step_size, current_state.cost,
+                       current_state.directional_derivative);
+      LOG_IF(WARNING, is_not_silent) << summary->error;
+      summary->termination_type = NUMERICAL_FAILURE;
+      break;
+    }
 
     current_state.step_size = line_search_summary.optimal_step_size;
     delta = current_state.step_size * current_state.search_direction;
@@ -358,6 +371,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       summary->termination_type = FUNCTION_TOLERANCE;
       return;
     }
+
+    // A step that improves the solution quality was found.
+    x_min = x;
 
     iteration_summary.cost = current_state.cost + summary->fixed_cost;
     iteration_summary.step_norm = delta.norm();
