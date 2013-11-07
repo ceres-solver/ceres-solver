@@ -314,6 +314,18 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                         current_state.cost,
                         current_state.directional_derivative,
                         &line_search_summary);
+    if (!line_search_summary.success) {
+      summary->error =
+          StringPrintf("Numerical failure in line search, failed to find "
+                       "a valid step size, (did not run out of iterations) "
+                       "using initial_step_size: %.5e, initial_cost: %.5e, "
+                       "initial_gradient: %.5e.",
+                       initial_step_size, current_state.cost,
+                       current_state.directional_derivative);
+      LOG_IF(WARNING, is_not_silent) << summary->error;
+      summary->termination_type = NUMERICAL_FAILURE;
+      break;
+    }
 
     current_state.step_size = line_search_summary.optimal_step_size;
     delta = current_state.step_size * current_state.search_direction;
@@ -323,6 +335,13 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - iteration_start_time;
 
     // TODO(sameeragarwal): Collect stats.
+    //
+    // TODO(sameeragarwal): This call to Plus() directly updates the parameter
+    //       vector via the VectorRef x. This is incorrect as we check the
+    //       gradient and cost changes to determine if the step is accepted
+    //       later, as such we could mutate x with a step that is not
+    //       subsequently accepted, thus it is possible that
+    //       summary->iterations.end()->x != x at termination.
     if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
       LOG_IF(WARNING, is_not_silent)
           << "x_plus_delta = Plus(x, delta) failed. ";

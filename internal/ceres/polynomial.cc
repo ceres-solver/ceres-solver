@@ -37,6 +37,7 @@
 
 #include "Eigen/Dense"
 #include "ceres/internal/port.h"
+#include "ceres/stringprintf.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -253,6 +254,12 @@ void MinimizePolynomial(const Vector& polynomial,
       *optimal_x = root;
     }
   }
+}
+
+string FunctionSample::ToDebugString() const {
+  return StringPrintf("[x: %.8e, value: %.8e, gradient: %.8e, "
+                      "value_is_valid: %d, gradient_is_valid: %d]",
+                      x, value, gradient, value_is_valid, gradient_is_valid);
 }
 
 Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {

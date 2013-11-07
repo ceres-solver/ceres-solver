@@ -124,7 +124,10 @@ Solver::Summary::Summary()
       dense_linear_algebra_library_type(EIGEN),
       sparse_linear_algebra_library_type(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
-      line_search_type(ARMIJO) {
+      line_search_type(ARMIJO),
+      line_search_interpolation_type(BISECTION),
+      nonlinear_conjugate_gradient_type(FLETCHER_REEVES),
+      max_lbfgs_rank(-1) {
 }
 
 string Solver::Summary::BriefReport() const {
