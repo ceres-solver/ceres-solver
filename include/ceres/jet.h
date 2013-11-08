@@ -106,8 +106,8 @@
 //   Jet<double, 2> y(1);  // Pick the 1st dual number for y.
 //   Jet<double, 2> z = f(x, y);
 //
-//   LG << "df/dx = " << z.a[0]
-//      << "df/dy = " << z.a[1];
+//   LOG(INFO) << "df/dx = " << z.a[0]
+//             << "df/dy = " << z.a[1];
 //
 // Most users should not use Jet objects directly; a wrapper around Jet objects,
 // which makes computing the derivative, gradient, or jacobian of templated
