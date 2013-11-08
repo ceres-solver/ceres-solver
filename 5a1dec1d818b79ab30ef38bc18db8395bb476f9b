@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5dfd5e_7b61f2e5",
+        "filename": "internal/ceres/corrector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-11-08T17:42:55Z",
+      "side": 1,
+      "message": "Maybe I\u0027m dense, but it\u0027s not clear to me why rho[2] \u003c\u003d0 implies alpha_sq_norm \u003d\u003d 0. This is just a comment issue; the below hack is great.\n\nThough we\u0027ve battled with eigen before, consider testing this as an eigen expression and not as an eigen expression. (e.g. Map\u003cdouble\u003c...\u003e(jacobian) *\u003d sqrt_rho1_)",
+      "revId": "5a1dec1d818b79ab30ef38bc18db8395bb476f9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
