@@ -16,6 +16,24 @@
       "revId": "12f1ab2b09afef3fa909e8f8fbf5d4cddc71b5d8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_9242dcc3",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-08T18:27:45Z",
+      "side": 1,
+      "message": "So, I think I\u0027m missing something here (as I haven\u0027t used gmock before) but my understanding from the docs is that gmock doesn\u0027t depend on gflags (and indeed gmock_main.cc in the latest version of gmock has no references to it or ParseCommandLineFlags()).\n\nAs such this doesn\u0027t seem like something upstream gmock would want?",
+      "parentUuid": "7e5dfd5e_3bce5a9f",
+      "revId": "12f1ab2b09afef3fa909e8f8fbf5d4cddc71b5d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
