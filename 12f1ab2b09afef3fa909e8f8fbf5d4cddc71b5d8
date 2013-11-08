@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5dfd5e_3bce5a9f",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5130
+      },
+      "writtenOn": "2013-11-08T17:45:21Z",
+      "side": 1,
+      "message": "This is a dangerous patch to have hanging out in a private fork of GMock in Ceres. There\u0027s a good chance we\u0027ll lose it when we upgrade. Would you be willing to send this upstream? Upstream gmock/gtest is friendly.\n\nI am fine with merging this, but please include \"Ceres change: ...\" so we can at least grep for it.",
+      "revId": "12f1ab2b09afef3fa909e8f8fbf5d4cddc71b5d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
