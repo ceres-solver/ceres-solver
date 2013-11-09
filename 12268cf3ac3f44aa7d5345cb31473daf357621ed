@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5dfd5e_aa0ded91",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "we do not do the total linear solver iterations, this is similar to that, I do not see the point of replicating that information from per iteration iterationsummary here.",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_ea1ec5bb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "20 digits?? seriously?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_4a1c11c3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "is this because we eliminated this bool about using extra gradient information if available? and when we did that we missed the fact that this type of information always uses gradient? and if so, how did this manifest itself?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_6abab559",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "maybe make a macro out of this logging statement and use it here and above?\n\nalso its a bit odd to be doing this check here, since bracketingphase already knows about both do_zoom_search and the state of bracket_low. should it ever return an invalid bracket_low then?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_0aa9790e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "its a bit odd that this function always returns true.",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_aac4cddb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "if this is an error, why is this returning true?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_cabf8146",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "this seems to contradict your error checking above, if you are so careful here, why should the CHECK failures above ever get triggered.",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_eaa52532",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "define and use a macro here and below for the logging?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_4ab3717e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "use stringprintf instead please.",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_0a221902",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-09T23:57:44Z",
+      "side": 1,
+      "message": "what is the point of this, since we only ever update x with x_plus_delta if the step is already successful.\n\nIs there a subtle corner case that I am missing?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
