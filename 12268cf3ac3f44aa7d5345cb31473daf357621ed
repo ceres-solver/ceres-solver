@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "defa6981_95164662",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5dfd5e_aa0ded91",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_ea1ec5bb",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-09T23:57:44Z",
       "side": 1,
       "message": "20 digits?? seriously?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_d510ce66",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "Done - sorry, overzealous legacy from when I was trying to get to the bottom of an issue.",
+      "parentUuid": "7e5dfd5e_ea1ec5bb",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "defa6981_95448662",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "So, in the Armijo case, I made a mistake - we only require the gradient at the current sample if the interpolation is CUBIC, as we always use the initial point (value + gradient) - I have added a comment to this effect and cleaned up the name of the bool to be more explicit.\n\nIn the Wolfe case, things got interesting:\n\n1. I originally thought I had made a mistake by not including QUADRATIC in the interpolation_uses_gradient check - so I added it, and indeed on the NIST test with QUADRATIC it did better than before (32 vs 37).\n\n2. Checking again more thoroughly to follow up on your comment, I realised I was wrong in 1), the original code should have been fine, as by construction \u0027previous\u0027 would always have a valid gradient (as it is copied from \u0027current\u0027, but only after \u0027current\u0027 has had it\u0027s gradient evaluated).  This raises the obvious question - why was it doing better in the NIST test?\n\n3. After some digging, the issue is that:\n\ncurrent\u003ccalculated_without_gradient\u003e.value !\u003d current\u003ccalculated_with_gradient\u003e.value\n\nThe delta is very small (~10^-10 to 10^-15) but the issue is that we check to see if the Armijo condition is satisfied, then if it is and !interpolation_uses_gradients we recalculate the value \u0026 gradient, then check if the gradient meets the Wolfe condition check.  What was happening was that the _original_ cost (calculated without gradient) passed the Armijo test, but the new cost (calculated with the gradient) does not (i.e. current\u003ccalculated_without_gradient\u003e.value \u003c current\u003ccalculated_with_gradient\u003e.value).  But we continued and checked the Wolfe (gradient) condition, which _was_ satisfied by the newly calculated gradient and so we returned the newly calculated current as a new valid point.  This however meant that we were actually breaking the cardinal rule that cost_k \u003e cost_k+1 and so line_search_minimizer was writing off the solve as NUMERICAL_FAILURE.\n\nTo resolve this, I propose that we _always_ calculate the gradient in the Wolfe case, irrespective of the interpolation type, as we always need the gradient to perform the Wolfe check anyway.\n\nThere is still a potential issue here, namely that if the user recalculates the cost (only) at the reported optimum outside of line_search.cc then they would get a different value to the one we return.  In the very specific case of the NIST tests, it would appear to be OK, as it happens that for the cases when this happens: current\u003ccalculated_without_gradient\u003e.value \u003c current\u003ccalculated_with_gradient\u003e.value, so we are unlikely to trigger any failures, but of course for a general problem I would assume it could be either way round.\n\nAs an aside, if there had been an issue whereby we were passing two samples with only values to MinimizeInterpolatingPolynomial, then what would happen is that FindInterpolatingPolynomial() called by MinimizeInterpolatingPolynomial() would fit a line instead of a quadratic (if presented with two samples with just values and no gradients).",
+      "parentUuid": "7e5dfd5e_4a1c11c3",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_6abab559",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-09T23:57:44Z",
       "side": 1,
       "message": "maybe make a macro out of this logging statement and use it here and above?\n\nalso its a bit odd to be doing this check here, since bracketingphase already knows about both do_zoom_search and the state of bracket_low. should it ever return an invalid bracket_low then?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_558a1e51",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "Removed as you\u0027re right, this should never happen given the checks in BracketingPhase().",
+      "parentUuid": "7e5dfd5e_6abab559",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "defa6981_f5418a50",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "Sorry docs, evidently aren\u0027t clear - it doesn\u0027t, it fails if it cannot find a step that even satisfies the Armijo condition.",
+      "parentUuid": "7e5dfd5e_0aa9790e",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_aac4cddb",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-11-09T23:57:44Z",
       "side": 1,
       "message": "if this is an error, why is this returning true?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_1580962f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "It returns true because the returned solution satisfies the Armijo condition, and so is still better than our current estimate.  This was so that Wolfe would never fail to return a point when Armijo would succeed.  Although for this to happen the cost function is likely giving us inconsistent values.\n\nBut you\u0027re right, it shouldn\u0027t be added to summary-\u003eerror, I think just sending to LOG(WARNING) should be fine, do you agree?",
+      "parentUuid": "7e5dfd5e_aac4cddb",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "defa6981_b58ee261",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "Done - removed unnecessary checks above.",
+      "parentUuid": "7e5dfd5e_cabf8146",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_eaa52532",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2013-11-09T23:57:44Z",
       "side": 1,
       "message": "define and use a macro here and below for the logging?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_958be651",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "The messages aren\u0027t exactly the same though f_low vs f_high, do you still want this as a macro?",
+      "parentUuid": "7e5dfd5e_eaa52532",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "defa6981_357b12a7",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "This would mean replicating the work of the stream operators for the bracket_low \u0026 bracket_high values, do you still want it?",
+      "parentUuid": "7e5dfd5e_4ab3717e",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_0a221902",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2013-11-09T23:57:44Z",
       "side": 1,
       "message": "what is the point of this, since we only ever update x with x_plus_delta if the step is already successful.\n\nIs there a subtle corner case that I am missing?",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "defa6981_f5134a70",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:24:07Z",
+      "side": 1,
+      "message": "This is because we check gradient \u0026 function value exit conditions after updating x (and evaluating at that position), as per the trust region minimizer.  This means that if we terminate due to either of those conditions, we have updated x (which wraps the parameter vector), but the corresponding iteration_summary has not been included in the output, so: iteration_summary.end()-\u003ex !\u003d x.  Thus we have x_min wrapping the parameter vector and only update it when the step is accepted (as per the trust region case).",
+      "parentUuid": "7e5dfd5e_0a221902",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
