@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "defa6981_55617ee5",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-10T21:34:26Z",
+      "side": 1,
+      "message": "So I am somewhat unclear what the return type in this situation should really be, the cases when it happens are:\n\n1. We can\u0027t find a step_size \u003e minimum which satisfies at least the Armijo condition.\n\n2. The cost function fails to evaluate at a step_size: s, but evaluated successfully at s_l \u0026 s_u s/t: s_l \u003c s \u003c s_u.\n\nThe problem being that the optimal solution satisfies 1), so reporting NUMERICAL_FAILURE seems wrong.",
+      "revId": "87fcffdd900251a72ab391fc16278223f47436fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
