@@ -16,6 +16,24 @@
       "revId": "87fcffdd900251a72ab391fc16278223f47436fc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_cd083b83",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T13:44:16Z",
+      "side": 1,
+      "message": "numerical failure is fine. I am as you will notice, actually reducing the number of failure types and bringing it down to just \"FAILURE\". The explanation in summary-\u003eerror is the right place to put all the detailed information.",
+      "parentUuid": "defa6981_55617ee5",
+      "revId": "87fcffdd900251a72ab391fc16278223f47436fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
