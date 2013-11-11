@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7e5dfd5e_4d1c2bc3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "interesting debugging and thanks for the explanation.\n\nI think the difference between the two evaluations could be because of two reasons.\n\n1. threading.\n2. use of jets. since the evaluation paths for the two values is different. I am surprised though that a difference of what is essentially numerical precision 1e-15 is having such an effect. That said, you will notice that the code in trust region minimizer is ultra careful about maintaining monotonicity and comparisons to zero, where as the code in line search minimizer is much more trusting, mostly because of the youth of the code.\n\nI think as long as the differences are of the order of 1e-15 I would not worry about what the user is doing outside.",
+      "parentUuid": "defa6981_95448662",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_6abab559",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "7e5dfd5e_2d19f7d1",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "sorry, gerrit compresses lines while reviewing and I missed the false. you are right.",
+      "parentUuid": "defa6981_f5418a50",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_aac4cddb",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "It returns true because the returned solution satisfies the Armijo condition, and so is still better than our current estimate.  This was so that Wolfe would never fail to return a point when Armijo would succeed.  Although for this to happen the cost function is likely giving us inconsistent values.\n\nBut you\u0027re right, it shouldn\u0027t be added to summary-\u003eerror, I think just sending to LOG(WARNING) should be fine, do you agree?",
       "parentUuid": "7e5dfd5e_aac4cddb",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_8db5a36a",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "Yes error should only contain stuff the user should be inspecting upon termination and indicates a cause for final termination.\n\nperhaps the message should also say something about the fact that this is not a fatal failure and this points still satisfies armijo?",
+      "parentUuid": "defa6981_1580962f",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "7e5dfd5e_6dbacf59",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "hmm maybe not, I am just trying ot figure out how to reduce some of the verbosity in the file.",
+      "parentUuid": "defa6981_958be651",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_4ab3717e",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -317,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "7e5dfd5e_ed1edfbb",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "hmm good point, but I think the solution there might be to add a ToString method to brackets.",
+      "parentUuid": "defa6981_357b12a7",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_0a221902",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -346,6 +436,24 @@
       "side": 1,
       "message": "This is because we check gradient \u0026 function value exit conditions after updating x (and evaluating at that position), as per the trust region minimizer.  This means that if we terminate due to either of those conditions, we have updated x (which wraps the parameter vector), but the corresponding iteration_summary has not been included in the output, so: iteration_summary.end()-\u003ex !\u003d x.  Thus we have x_min wrapping the parameter vector and only update it when the step is accepted (as per the trust region case).",
       "parentUuid": "7e5dfd5e_0a221902",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_0d223302",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-11T14:50:15Z",
+      "side": 1,
+      "message": "ah, yes that is a problem. but I think as you point out in your email, it is better to do something about the iteration summary being added to the summary::iterations rather than dropping the step here. I\u0027d say lets drop this change from this patch. and drop a todo here about this.\nas I am fixing trust region minimizer I will also take a pass over line search minimizer and deal with these early truncations in one go.",
+      "parentUuid": "defa6981_f5134a70",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
