@@ -34,6 +34,24 @@
       "revId": "12f1ab2b09afef3fa909e8f8fbf5d4cddc71b5d8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e5dfd5e_362668e5",
+        "filename": "internal/ceres/gmock_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-11T22:18:33Z",
+      "side": 1,
+      "message": "Can you please add a \"Ceres fix: ...\" to the comment so at least if we grep for Ceres when upgrading gmock, we\u0027ll find the change?\n\nThanks!",
+      "parentUuid": "defa6981_9242dcc3",
+      "revId": "12f1ab2b09afef3fa909e8f8fbf5d4cddc71b5d8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
