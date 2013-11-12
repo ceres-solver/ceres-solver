@@ -22,12 +22,16 @@ New Features
 #. Faster ``ITERATIVE_SCHUR`` solver using template specializations.
 #. Faster ``SCHUR_JACOBI`` preconditioner construction.
 #. Faster ``AngleAxisRotatePoint``.
+#. Faster Jacobian evaluation when a loss function is used.
 #. Added support for multiple clustering algorithms in visibility
    based preconditioning, including a new fast single linkage
    clustering algorithm.
 
 Bug Fixes
 ---------
+#. Fix ordering of ParseCommandLineFlags() & InitGoogleTest() for
+   Windows. (Alex Stewart)
+#. Remove DCHECK_GE checks from fixed_array.h.
 #. Fix build on MSVC 2013 (Petter Strandmark)
 #. Fixed ``AngleAxisToRotationMatrix`` near zero.
 #. Move ``CERES_HASH_NAMESPACE`` macros to ``collections_port.h``.
