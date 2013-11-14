@@ -643,16 +643,12 @@ CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
 ADD_CUSTOM_TARGET(uninstall
                   COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)
 
-# Set up install directories. INCLUDE_INSTALL_DIR, LIB_INSTALL_DIR and
-# CMAKECONFIG_INSTALL_DIR must not be absolute paths.
+# Set relative install paths, which are appended to CMAKE_INSTALL_PREFIX to
+# generate the absolute install paths.
 IF (WIN32)
-  SET(INCLUDE_INSTALL_DIR Include)
-  SET(LIB_INSTALL_DIR Lib)
-  SET(CMAKECONFIG_INSTALL_DIR CMake)
+  SET(RELATIVE_CMAKECONFIG_INSTALL_DIR CMake)
 ELSE ()
-  SET(INCLUDE_INSTALL_DIR include)
-  SET(LIB_INSTALL_DIR lib)
-  SET(CMAKECONFIG_INSTALL_DIR share/Ceres)
+  SET(RELATIVE_CMAKECONFIG_INSTALL_DIR share/Ceres)
 ENDIF ()
 
 # This "exports" all targets which have been put into the export set
@@ -663,14 +659,15 @@ ENDIF ()
 # library targets from these, which can be used in many ways in the same way
 # as a normal library target created via a normal ADD_LIBRARY().
 INSTALL(EXPORT CeresExport
-        DESTINATION ${CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
+        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR} FILE CeresTargets.cmake)
 
 # Figure out the relative path from the installed Config.cmake file to the
 # install prefix (which may be at runtime different from the chosen
 # CMAKE_INSTALL_PREFIX if under Windows the package was installed anywhere)
 # This relative path will be configured into the CeresConfig.cmake.
 FILE(RELATIVE_PATH INSTALL_ROOT_REL_CONFIG_INSTALL_DIR
-     ${CMAKE_INSTALL_PREFIX}/${CMAKECONFIG_INSTALL_DIR} ${CMAKE_INSTALL_PREFIX})
+     ${CMAKE_INSTALL_PREFIX}/${RELATIVE_CMAKECONFIG_INSTALL_DIR}
+     ${CMAKE_INSTALL_PREFIX})
 
 # Create a CeresConfig.cmake file. <name>Config.cmake files are searched by
 # FIND_PACKAGE() automatically. We configure that file so that we can put any
@@ -692,4 +689,4 @@ INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
               "${CMAKE_SOURCE_DIR}/cmake/FindEigen.cmake"
               "${CMAKE_SOURCE_DIR}/cmake/FindGlog.cmake"
-        DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
