@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e81c517_fbf7976f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-14T14:46:18Z",
+      "side": 1,
+      "message": "This is fine or you could  add a ToString() or ToDebugString() method to FunctionSample. This is a fairly common pattern in google code.",
+      "revId": "efbe378e5ec70ea62e639a00d35d64d3dd1c69b2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
