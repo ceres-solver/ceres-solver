@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "1ed4012d_f6b200f0",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-14T14:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5dfd5e_8db5a36a",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_cabf8146",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -407,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "9ec0f169_5af8b533",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-14T14:31:46Z",
+      "side": 1,
+      "message": "Done - added FunctionSampleToString() as a standalone function in line_search.cc rather than adding to FunctionSample struct in polynomial.h/cc.",
+      "parentUuid": "7e5dfd5e_ed1edfbb",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5dfd5e_0a221902",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -454,6 +490,24 @@
       "side": 1,
       "message": "ah, yes that is a problem. but I think as you point out in your email, it is better to do something about the iteration summary being added to the summary::iterations rather than dropping the step here. I\u0027d say lets drop this change from this patch. and drop a todo here about this.\nas I am fixing trust region minimizer I will also take a pass over line search minimizer and deal with these early truncations in one go.",
       "parentUuid": "defa6981_f5134a70",
+      "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ec0f169_5a4315ca",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-14T14:31:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5dfd5e_0d223302",
       "revId": "12268cf3ac3f44aa7d5345cb31473daf357621ed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
