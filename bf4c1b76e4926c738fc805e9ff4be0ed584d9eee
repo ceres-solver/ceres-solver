@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e81c517_b051b9f5",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-14T21:46:21Z",
+      "side": 1,
+      "message": "This LOG(WARNING) maybe a bit too aggressive.. anyways.",
+      "revId": "bf4c1b76e4926c738fc805e9ff4be0ed584d9eee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
