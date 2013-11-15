@@ -103,7 +103,6 @@ OPTION(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
-# TODO(sameeragarwal): Replace this with a positive option instead?
 
 # Line search minimizer is useful for large scale problems or when
 # sparse linear algebra libraries are not available. If compile time,
