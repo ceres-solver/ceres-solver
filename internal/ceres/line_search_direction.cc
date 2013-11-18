@@ -39,6 +39,12 @@
 namespace ceres {
 namespace internal {
 
+// A step must have delta_x^T * delta_gradient >= tolerance before it will be
+// used to update the (L)BFGS inverse hessian approximation.  Note that 1e-14
+// is very small, but larger values (1e-10/12) substantially weaken the
+// performance on the NIST benchmark suite.
+const double kBFGSUpdateHessianTolerance = 1e-14;
+
 class SteepestDescent : public LineSearchDirection {
  public:
   virtual ~SteepestDescent() {}
@@ -118,9 +124,18 @@ class LBFGS : public LineSearchDirection {
         << "approximation has become indefinite, please contact the "
         << "developers!";
 
-    low_rank_inverse_hessian_.Update(
-        previous.search_direction * previous.step_size,
-        current.gradient - previous.gradient);
+    const Vector delta_x = previous.search_direction * previous.step_size;
+    const Vector delta_gradient = current.gradient - previous.gradient;
+    const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
+
+    if (delta_x_dot_delta_gradient <= kBFGSUpdateHessianTolerance) {
+      VLOG(2) << "Skipping LBFGS Update, delta_x_dot_delta_gradient too small: "
+              << delta_x_dot_delta_gradient << ", tolerance: "
+              << kBFGSUpdateHessianTolerance;
+    } else {
+      low_rank_inverse_hessian_.Update(delta_x, delta_gradient);
+    }
+
     search_direction->setZero();
     low_rank_inverse_hessian_.RightMultiply(current.gradient.data(),
                                             search_direction->data());
@@ -176,9 +191,10 @@ class BFGS : public LineSearchDirection {
     const Vector delta_gradient = current.gradient - previous.gradient;
     const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
 
-    if (delta_x_dot_delta_gradient <= 1e-10) {
+    if (delta_x_dot_delta_gradient <= kBFGSUpdateHessianTolerance) {
       VLOG(2) << "Skipping BFGS Update, delta_x_dot_delta_gradient too "
-              << "small: " << delta_x_dot_delta_gradient;
+              << "small: " << delta_x_dot_delta_gradient << ", tolerance: "
+              << kBFGSUpdateHessianTolerance;
     } else {
       // Update dense inverse Hessian approximation.
 

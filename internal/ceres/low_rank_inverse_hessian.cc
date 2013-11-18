@@ -52,13 +52,6 @@ LowRankInverseHessian::LowRankInverseHessian(
 bool LowRankInverseHessian::Update(const Vector& delta_x,
                                    const Vector& delta_gradient) {
   const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
-  // Note that 1e-14 is very small, but larger values (1e-10/12) substantially
-  // weaken the performance on the NIST benchmark suite.
-  if (delta_x_dot_delta_gradient <= 1e-14) {
-    VLOG(2) << "Skipping LBFGS Update, delta_x_dot_delta_gradient too small: "
-            << delta_x_dot_delta_gradient;
-    return false;
-  }
 
   if (num_corrections_ == max_num_corrections_) {
     // TODO(sameeragarwal): This can be done more efficiently using
