@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe71ed53_104c8a57",
+        "filename": "internal/ceres/low_rank_inverse_hessian.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-18T13:42:33Z",
+      "side": 1,
+      "message": "add a comment here/in the header that it is assumed that the product delta_x_dot_delta_gradient is assumed to be large enough in some sense.",
+      "revId": "99bdc4fa2d0953fc3a37393456f6cb6db343ea12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
