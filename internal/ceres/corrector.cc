@@ -40,7 +40,6 @@ namespace internal {
 
 Corrector::Corrector(const double sq_norm, const double rho[3]) {
   CHECK_GE(sq_norm, 0.0);
-  CHECK_GT(rho[1], 0.0);
   sqrt_rho1_ = sqrt(rho[1]);
 
   // If sq_norm = 0.0, the correction becomes trivial, the residual
@@ -85,6 +84,7 @@ Corrector::Corrector(const double sq_norm, const double rho[3]) {
     return;
   }
 
+  CHECK_GT(rho[1], 0.0);
   // Calculate the smaller of the two solutions to the equation
   //
   // 0.5 *  alpha^2 - alpha - rho'' / rho' *  z'z = 0.
