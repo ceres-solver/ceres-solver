@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe71ed53_6fc7204f",
+        "filename": "internal/ceres/corrector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-19T18:37:52Z",
+      "side": 1,
+      "message": "Can you include the commit comment here?",
+      "revId": "ca75ca043a48ea058ccaf76f466df0925a0f227d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
