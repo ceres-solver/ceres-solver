@@ -40,7 +40,6 @@ namespace internal {
 
 Corrector::Corrector(const double sq_norm, const double rho[3]) {
   CHECK_GE(sq_norm, 0.0);
-  CHECK_GT(rho[1], 0.0);
   sqrt_rho1_ = sqrt(rho[1]);
 
   // If sq_norm = 0.0, the correction becomes trivial, the residual
@@ -84,6 +83,14 @@ Corrector::Corrector(const double sq_norm, const double rho[3]) {
     alpha_sq_norm_ = 0.0;
     return;
   }
+
+  // We now require that the first derivative of the loss function be
+  // positive only if the second derivative is non-zero. This is
+  // because when the second derivative is non-positive, we do not use
+  // the second order correction suggested by BANS and instead use a
+  // simpler first order strategy which does not use a division by the
+  // gradient of the loss function.
+  CHECK_GT(rho[1], 0.0);
 
   // Calculate the smaller of the two solutions to the equation
   //
