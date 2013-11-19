@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ef3211c_81705cb3",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-19T18:44:03Z",
+      "side": 1,
+      "message": "Done, given declaration \u0026 definition requirements for static double constants, and assuming that you don\u0027t want this declared in the header - the constant is declared inline in the code.",
+      "parentUuid": "fe71ed53_6ff3a019",
+      "revId": "141f9a19342fa175333c3b680e6fc8504d8a57d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe71ed53_cfedf434",
         "filename": "internal/ceres/low_rank_inverse_hessian.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-19T18:26:53Z",
       "side": 1,
       "message": "name this kLBFGS...",
+      "revId": "141f9a19342fa175333c3b680e6fc8504d8a57d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ef3211c_616d50d7",
+        "filename": "internal/ceres/low_rank_inverse_hessian.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-19T18:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe71ed53_cfedf434",
       "revId": "141f9a19342fa175333c3b680e6fc8504d8a57d5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
