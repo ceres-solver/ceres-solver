@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe71ed53_6ff3a019",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-19T18:26:53Z",
+      "side": 1,
+      "message": "no point having this constant as a global constant. You can move this and the constant inside the class.",
+      "revId": "141f9a19342fa175333c3b680e6fc8504d8a57d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe71ed53_cfedf434",
+        "filename": "internal/ceres/low_rank_inverse_hessian.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-19T18:26:53Z",
+      "side": 1,
+      "message": "name this kLBFGS...",
+      "revId": "141f9a19342fa175333c3b680e6fc8504d8a57d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
