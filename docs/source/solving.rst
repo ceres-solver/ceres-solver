@@ -291,9 +291,10 @@ In this case, we solve for the trust region step for the full problem,
 and then use it as the starting point to further optimize just `a_1`
 and `a_2`. For the linear case, this amounts to doing a single linear
 least squares solve. For non-linear problems, any method for solving
-the `a_1` and `a_2` optimization problems will do. The only constraint
-on `a_1` and `a_2` (if they are two different parameter block) is that
-they do not co-occur in a residual block.
+the :math:`a_1` and :math:`a_2` optimization problems will do. The
+only constraint on :math:`a_1` and :math:`a_2` (if they are two
+different parameter block) is that they do not co-occur in a residual
+block.
 
 This idea can be further generalized, by not just optimizing
 :math:`(a_1, a_2)`, but decomposing the graph corresponding to the
@@ -315,9 +316,9 @@ Non-monotonic Steps
 -------------------
 
 Note that the basic trust-region algorithm described in
-Algorithm~\ref{alg:trust-region} is a descent algorithm in that they
-only accepts a point if it strictly reduces the value of the objective
-function.
+:ref:`section-trust-region-methods` is a descent algorithm in that
+they only accepts a point if it strictly reduces the value of the
+objective function.
 
 Relaxing this requirement allows the algorithm to be more efficient in
 the long term at the cost of some local increase in the value of the
@@ -362,7 +363,7 @@ Line search algorithms
 Here :math:`H(x)` is some approximation to the Hessian of the
 objective function, and :math:`g(x)` is the gradient at
 :math:`x`. Depending on the choice of :math:`H(x)` we get a variety of
-different search directions -`\Delta x`.
+different search directions - :math:`\Delta x`.
 
 Step 4, which is a one dimensional optimization or `Line Search` along
 :math:`\Delta x` is what gives this class of methods its name.

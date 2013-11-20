@@ -30,7 +30,7 @@ when :math:`\rho_i(x) = x`, i.e., the identity function, we get the
 more familiar `non-linear least squares problem
 <http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
-.. math:: \frac{1}{2}\sum_{i=1} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
+.. math:: \frac{1}{2}\sum_{i} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
    :label: ceresproblem2
 
 In this chapter we will learn how to solve :eq:`ceresproblem` using
