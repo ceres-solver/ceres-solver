@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe71ed53_4afd69e1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-20T19:59:22Z",
+      "side": 0,
+      "message": "I remember keir adding these lines.\nso I suppose he should comment on their removal.\nI see that you added one of these to the internal cmake file.\nwhat about the linker flags? are they redundant?",
+      "revId": "7747bb0e6b0e54366933ed75c1bcafe6a1109c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
