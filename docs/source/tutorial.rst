@@ -9,7 +9,7 @@ Tutorial
 ========
 Ceres solves robustified non-linear least squares problems of the form
 
-.. math:: \frac{1}{2}\sum_{i=1} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
+.. math:: \frac{1}{2}\sum_{i} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
    :label: ceresproblem
 
 The expression
