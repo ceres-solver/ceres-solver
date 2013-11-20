@@ -385,10 +385,6 @@ IF (OPENMP)
         # At least on Linux, we need pthreads to be enabled for mutex to
         # compile.  This may not work on Windows or Android.
         FIND_PACKAGE(Threads REQUIRED)
-        SET(STATIC_LIBRARY_FLAGS
-          "${STATIC_LIBRARY_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
-        SET(CMAKE_SHARED_LINKER_FLAGS
-          "${CMAKE_SHARED_LINKER_FLAGS} ${CMAKE_THREAD_LIBS_INIT}")
         ADD_DEFINITIONS(-DCERES_HAVE_PTHREAD)
         ADD_DEFINITIONS(-DCERES_HAVE_RWLOCK)
       ENDIF (UNIX)
