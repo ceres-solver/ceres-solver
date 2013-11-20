@@ -16,6 +16,24 @@
       "revId": "7747bb0e6b0e54366933ed75c1bcafe6a1109c3d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe180d2e_9b0a9339",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-20T20:02:03Z",
+      "side": 0,
+      "message": "They\u0027re not redundant, but adding ${CMAKE_THREAD_LIBS_INIT} to CERES_LIBRARY_DEPENDENCIES means that they are included automatically in both shared \u0026 static builds.  Whereas if the flags are added directly to the linker flags for the project, then they have to be added for both static \u0026 shared separately.",
+      "parentUuid": "fe71ed53_4afd69e1",
+      "revId": "7747bb0e6b0e54366933ed75c1bcafe6a1109c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
