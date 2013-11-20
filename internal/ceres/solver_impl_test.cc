@@ -88,19 +88,26 @@ TEST(SolverImpl, RemoveFixedBlocksNothingConstant) {
 
   string error;
   {
-    ParameterBlockOrdering ordering;
-    ordering.AddElementToGroup(&x, 0);
-    ordering.AddElementToGroup(&y, 0);
-    ordering.AddElementToGroup(&z, 0);
+    ParameterBlockOrdering linear_solver_ordering;
+    linear_solver_ordering.AddElementToGroup(&x, 0);
+    linear_solver_ordering.AddElementToGroup(&y, 0);
+    linear_solver_ordering.AddElementToGroup(&z, 0);
+
+    ParameterBlockOrdering inner_iteration_ordering;
+    inner_iteration_ordering.AddElementToGroup(&x, 0);
+    inner_iteration_ordering.AddElementToGroup(&y, 0);
+    inner_iteration_ordering.AddElementToGroup(&z, 0);
 
     Program program(*problem.mutable_program());
     EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                         &ordering,
+                                                         &linear_solver_ordering,
+                                                         &inner_iteration_ordering,
                                                          NULL,
                                                          &error));
     EXPECT_EQ(program.NumParameterBlocks(), 3);
     EXPECT_EQ(program.NumResidualBlocks(), 3);
-    EXPECT_EQ(ordering.NumElements(), 3);
+    EXPECT_EQ(linear_solver_ordering.NumElements(), 3);
+    EXPECT_EQ(inner_iteration_ordering.NumElements(), 3);
   }
 }
 
@@ -112,18 +119,23 @@ TEST(SolverImpl, RemoveFixedBlocksAllParameterBlocksConstant) {
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
   problem.SetParameterBlockConstant(&x);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+
+  ParameterBlockOrdering inner_iteration_ordering;
+  inner_iteration_ordering.AddElementToGroup(&x, 0);
 
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &ordering,
+                                                       &linear_solver_ordering,
+                                                       &inner_iteration_ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(ordering.NumElements(), 0);
+  EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
+  EXPECT_EQ(inner_iteration_ordering.NumElements(), 0);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
@@ -136,21 +148,27 @@ TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 0);
-  ordering.AddElementToGroup(&z, 0);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 0);
+  linear_solver_ordering.AddElementToGroup(&z, 0);
 
+  ParameterBlockOrdering inner_iteration_ordering;
+  inner_iteration_ordering.AddElementToGroup(&x, 0);
+  inner_iteration_ordering.AddElementToGroup(&y, 0);
+  inner_iteration_ordering.AddElementToGroup(&z, 0);
 
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &ordering,
+                                                       &linear_solver_ordering,
+                                                       &inner_iteration_ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(ordering.NumElements(), 0);
+  EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
+  EXPECT_EQ(inner_iteration_ordering.NumElements(), 0);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
@@ -163,10 +181,15 @@ TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 0);
-  ordering.AddElementToGroup(&z, 0);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 0);
+  linear_solver_ordering.AddElementToGroup(&z, 0);
+
+  ParameterBlockOrdering inner_iteration_ordering;
+  inner_iteration_ordering.AddElementToGroup(&x, 0);
+  inner_iteration_ordering.AddElementToGroup(&y, 0);
+  inner_iteration_ordering.AddElementToGroup(&z, 0);
 
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
@@ -176,12 +199,14 @@ TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &ordering,
+                                                       &linear_solver_ordering,
+                                                       &inner_iteration_ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 1);
   EXPECT_EQ(program.NumResidualBlocks(), 1);
-  EXPECT_EQ(ordering.NumElements(), 1);
+  EXPECT_EQ(linear_solver_ordering.NumElements(), 1);
+  EXPECT_EQ(inner_iteration_ordering.NumElements(), 1);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
@@ -198,22 +223,31 @@ TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 0);
-  ordering.AddElementToGroup(&z, 1);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 0);
+  linear_solver_ordering.AddElementToGroup(&z, 1);
+
+  ParameterBlockOrdering inner_iteration_ordering;
+  inner_iteration_ordering.AddElementToGroup(&x, 0);
+  inner_iteration_ordering.AddElementToGroup(&y, 0);
+  inner_iteration_ordering.AddElementToGroup(&z, 1);
 
   Program program(problem.program());
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &ordering,
+                                                       &linear_solver_ordering,
+                                                       &inner_iteration_ordering,
                                                        NULL,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(ordering.NumElements(), 2);
-  EXPECT_EQ(ordering.GroupId(&y), 0);
-  EXPECT_EQ(ordering.GroupId(&z), 1);
+  EXPECT_EQ(linear_solver_ordering.NumElements(), 2);
+  EXPECT_EQ(linear_solver_ordering.GroupId(&y), 0);
+  EXPECT_EQ(linear_solver_ordering.GroupId(&z), 1);
+  EXPECT_EQ(inner_iteration_ordering.NumElements(), 2);
+  EXPECT_EQ(inner_iteration_ordering.GroupId(&y), 0);
+  EXPECT_EQ(inner_iteration_ordering.GroupId(&z), 1);
 }
 
 TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
@@ -230,10 +264,10 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 0);
-  ordering.AddElementToGroup(&z, 1);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 0);
+  linear_solver_ordering.AddElementToGroup(&z, 1);
 
   double fixed_cost = 0.0;
   Program program(problem.program());
@@ -250,14 +284,15 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
 
   string error;
   EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &ordering,
+                                                       &linear_solver_ordering,
+                                                       NULL,
                                                        &fixed_cost,
                                                        &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(ordering.NumElements(), 2);
-  EXPECT_EQ(ordering.GroupId(&y), 0);
-  EXPECT_EQ(ordering.GroupId(&z), 1);
+  EXPECT_EQ(linear_solver_ordering.NumElements(), 2);
+  EXPECT_EQ(linear_solver_ordering.GroupId(&y), 0);
+  EXPECT_EQ(linear_solver_ordering.GroupId(&z), 1);
   EXPECT_DOUBLE_EQ(fixed_cost, expected_fixed_cost);
 }
 
@@ -278,14 +313,14 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
 
-  ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
-  ordering->AddElementToGroup(&x, 0);
-  ordering->AddElementToGroup(&y, 0);
-  ordering->AddElementToGroup(&z, 1);
+  ParameterBlockOrdering* linear_solver_ordering = new ParameterBlockOrdering;
+  linear_solver_ordering->AddElementToGroup(&x, 0);
+  linear_solver_ordering->AddElementToGroup(&y, 0);
+  linear_solver_ordering->AddElementToGroup(&z, 1);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.linear_solver_ordering = ordering;
+  options.linear_solver_ordering = linear_solver_ordering;
 
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
@@ -340,14 +375,14 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &z);  // 6 x
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);       // 7
 
-  ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
-  ordering->AddElementToGroup(&x, 0);
-  ordering->AddElementToGroup(&z, 0);
-  ordering->AddElementToGroup(&y, 1);
+  ParameterBlockOrdering* linear_solver_ordering = new ParameterBlockOrdering;
+  linear_solver_ordering->AddElementToGroup(&x, 0);
+  linear_solver_ordering->AddElementToGroup(&z, 0);
+  linear_solver_ordering->AddElementToGroup(&y, 1);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.linear_solver_ordering = ordering;
+  options.linear_solver_ordering = linear_solver_ordering;
 
   // Create the reduced program. This should remove the fixed block "z",
   // marking the index to -1 at the same time. x and y also get indices.
@@ -409,14 +444,14 @@ TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &y);
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &z);
 
-  ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
-  ordering->AddElementToGroup(&x, 0);
-  ordering->AddElementToGroup(&z, 0);
-  ordering->AddElementToGroup(&y, 0);
+  ParameterBlockOrdering* linear_solver_ordering = new ParameterBlockOrdering;
+  linear_solver_ordering->AddElementToGroup(&x, 0);
+  linear_solver_ordering->AddElementToGroup(&z, 0);
+  linear_solver_ordering->AddElementToGroup(&y, 0);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
-  options.linear_solver_ordering = ordering;
+  options.linear_solver_ordering = linear_solver_ordering;
 
   string error;
   scoped_ptr<Program> reduced_program(
@@ -453,14 +488,14 @@ TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 1);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 1);
 
   Program program(problem.program());
   string error;
   EXPECT_FALSE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
-                                             &ordering,
+                                             &linear_solver_ordering,
                                              &program,
                                              &error));
 }
@@ -475,16 +510,16 @@ TEST(SolverImpl, ApplyUserOrderingNormal) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  ParameterBlockOrdering ordering;
-  ordering.AddElementToGroup(&x, 0);
-  ordering.AddElementToGroup(&y, 2);
-  ordering.AddElementToGroup(&z, 1);
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x, 0);
+  linear_solver_ordering.AddElementToGroup(&y, 2);
+  linear_solver_ordering.AddElementToGroup(&z, 1);
 
   Program* program = problem.mutable_program();
   string error;
 
   EXPECT_TRUE(SolverImpl::ApplyUserOrdering(problem.parameter_map(),
-                                            &ordering,
+                                            &linear_solver_ordering,
                                             program,
                                             &error));
   const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
