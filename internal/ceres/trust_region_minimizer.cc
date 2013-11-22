@@ -238,6 +238,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_is_successful = false;
 
     double model_cost_change = 0.0;
+    if (strategy_summary.termination_type == FATAL_ERROR) {
+      summary->error = "Terminating. Linear solver encountered a fatal error.";
+      LOG_IF(WARNING, is_not_silent) << summary->error;
+      summary->termination_type = NUMERICAL_FAILURE;
+      return;
+    }
+
     if (strategy_summary.termination_type != FAILURE) {
       // new_model_cost
       //  = 1/2 [f + J * step]^2

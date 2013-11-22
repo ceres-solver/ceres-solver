@@ -41,6 +41,7 @@
 #include <vector>
 
 #include "ceres/internal/port.h"
+#include "ceres/linear_solver.h"
 #include "cholmod.h"
 #include "glog/logging.h"
 #include "SuiteSparseQR.hpp"
@@ -167,19 +168,12 @@ class SuiteSparse {
   // factorization for the matrix A or AA^T. Return true if
   // successful, false otherwise. L contains the numeric factorization
   // on return.
-  bool Cholesky(cholmod_sparse* A, cholmod_factor* L);
+  LinearSolverTerminationType Cholesky(cholmod_sparse* A, cholmod_factor* L);
 
   // Given a Cholesky factorization of a matrix A = LL^T, solve the
   // linear system Ax = b, and return the result. If the Solve fails
   // NULL is returned. Caller owns the result.
   cholmod_dense* Solve(cholmod_factor* L, cholmod_dense* b);
-
-  // Combine the calls to Cholesky and Solve into a single call. If
-  // the cholesky factorization or the solve fails, return
-  // NULL. Caller owns the result.
-  cholmod_dense* SolveCholesky(cholmod_sparse* A,
-                               cholmod_factor* L,
-                               cholmod_dense* b);
 
   // By virtue of the modeling layer in Ceres being block oriented,
   // all the matrices used by Ceres are also block oriented. When

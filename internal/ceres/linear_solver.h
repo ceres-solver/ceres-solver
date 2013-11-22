@@ -50,6 +50,30 @@
 namespace ceres {
 namespace internal {
 
+enum LinearSolverTerminationType {
+  // Termination criterion was met. For factorization based solvers
+  // the tolerance is assumed to be zero. Any user provided values are
+  // ignored.
+  TOLERANCE,
+
+  // Solver ran for max_num_iterations and terminated before the
+  // termination tolerance could be satified.
+  MAX_ITERATIONS,
+
+  // Solver is stuck and further iterations will not result in any
+  // measurable progress.
+  STAGNATION,
+
+  // Solver failed. Solver was terminated due to numerical errors. The
+  // exact cause of failure depends on the particular solver being
+  // used.
+  FAILURE,
+
+  // Solver failed with a fatal error that cannot be recovered from.
+  FATAL_ERROR
+};
+
+
 class LinearOperator;
 
 // Abstract base class for objects that implement algorithms for
@@ -251,6 +275,7 @@ class LinearSolver {
     double residual_norm;
     int num_iterations;
     LinearSolverTerminationType termination_type;
+    string status;
   };
 
   virtual ~LinearSolver();

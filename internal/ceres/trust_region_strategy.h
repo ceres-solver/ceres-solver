@@ -33,7 +33,7 @@
 
 #include <string>
 #include "ceres/internal/port.h"
-#include "ceres/types.h"
+#include "ceres/linear_solver.h"
 
 namespace ceres {
 namespace internal {
