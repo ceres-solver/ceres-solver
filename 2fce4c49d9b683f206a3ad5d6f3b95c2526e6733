@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "deaa69eb_13e94b29",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-22T06:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deaa69eb_015bb870",
+      "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deaa69eb_e15f8c58",
         "filename": "internal/ceres/corrector_test.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-22T06:10:55Z",
       "side": 1,
       "message": "Intended? Seems out of place in this CL.",
+      "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_f3ed9f34",
+        "filename": "internal/ceres/corrector_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-22T06:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deaa69eb_e15f8c58",
       "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "deaa69eb_33f0c70a",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-22T06:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deaa69eb_814fa8a4",
+      "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deaa69eb_c137f016",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-22T06:10:55Z",
       "side": 1,
       "message": "Hmm. I think we want to propagate the linear solver error message all the way up to the user\u0027s summary-\u003emessage. or maybe that\u0027s in another CL.",
+      "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_73fa4fec",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-22T06:16:19Z",
+      "side": 1,
+      "message": "yes right now we do not have the correct and sane logging of it. \nI will clean this up thoroughly in a subsequent CL.",
+      "parentUuid": "deaa69eb_c137f016",
       "revId": "2fce4c49d9b683f206a3ad5d6f3b95c2526e6733",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
