@@ -312,18 +312,6 @@ const char* SolverTerminationTypeToString(SolverTerminationType type) {
   }
 }
 
-const char* LinearSolverTerminationTypeToString(
-    LinearSolverTerminationType type) {
-  switch (type) {
-    CASESTR(TOLERANCE);
-    CASESTR(MAX_ITERATIONS);
-    CASESTR(STAGNATION);
-    CASESTR(FAILURE);
-    default:
-      return "UNKNOWN";
-  }
-}
-
 #undef CASESTR
 #undef STRENUM
 

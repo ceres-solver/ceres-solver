@@ -135,6 +135,10 @@ TrustRegionStrategy::Summary DoglegStrategy::ComputeStep(
   summary.num_iterations = linear_solver_summary.num_iterations;
   summary.termination_type = linear_solver_summary.termination_type;
 
+  if (linear_solver_summary.termination_type == FATAL_ERROR) {
+    return summary;
+  }
+
   if (linear_solver_summary.termination_type != FAILURE) {
     switch (dogleg_type_) {
       // Interpolate the Cauchy point and the Gauss-Newton step.
@@ -577,6 +581,10 @@ LinearSolver::Summary DoglegStrategy::ComputeGaussNewtonStep(
                    << " Filename base: "
                    << per_solve_options.dump_filename_base;
       }
+    }
+
+    if (linear_solver_summary.termination_type == FATAL_ERROR) {
+      return linear_solver_summary;
     }
 
     if (linear_solver_summary.termination_type == FAILURE ||

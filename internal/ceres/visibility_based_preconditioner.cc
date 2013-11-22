@@ -368,14 +368,18 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   //
   // Doing the factorization like this saves us matrix mass when
   // scaling is not needed, which is quite often in our experience.
-  bool status = Factorize();
+  LinearSolverTerminationType status = Factorize();
+
+  if (status == FATAL_ERROR) {
+    return false;
+  }
 
   // The scaling only affects the tri-diagonal case, since
   // ScaleOffDiagonalBlocks only pays attenion to the cells that
   // belong to the edges of the degree-2 forest. In the CLUSTER_JACOBI
   // case, the preconditioner is guaranteed to be positive
   // semidefinite.
-  if (!status && options_.type == CLUSTER_TRIDIAGONAL) {
+  if (status == FAILURE && options_.type == CLUSTER_TRIDIAGONAL) {
     VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
             << "scaling";
     ScaleOffDiagonalCells();
@@ -383,7 +387,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   }
 
   VLOG(2) << "Compute time: " << time(NULL) - start_time;
-  return status;
+  return (status == TOLERANCE);
 }
 
 // Consider the preconditioner matrix as meta-block matrix, whose
@@ -420,7 +424,7 @@ void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
 
 // Compute the sparse Cholesky factorization of the preconditioner
 // matrix.
-bool VisibilityBasedPreconditioner::Factorize() {
+LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   // Extract the TripletSparseMatrix that is used for actually storing
   // S and convert it into a cholmod_sparse object.
   cholmod_sparse* lhs = ss_.CreateSparseMatrix(
@@ -436,7 +440,7 @@ bool VisibilityBasedPreconditioner::Factorize() {
     factor_ = ss_.BlockAnalyzeCholesky(lhs, block_size_, block_size_);
   }
 
-  bool status = ss_.Cholesky(lhs, factor_);
+  LinearSolverTerminationType status = ss_.Cholesky(lhs, factor_);
   ss_.Free(lhs);
   return status;
 }

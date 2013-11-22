@@ -195,34 +195,50 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   VectorRef(x, num_cols).setZero();
 
   cholmod_sparse lhs = ss_.CreateSparseMatrixTransposeView(A);
-  cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
+
   event_logger.AddEvent("Setup");
 
   if (factor_ == NULL) {
     if (options_.use_postordering) {
-      factor_ =
-          CHECK_NOTNULL(ss_.BlockAnalyzeCholesky(&lhs,
-                                                 A->col_blocks(),
-                                                 A->row_blocks()));
+      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
+                                         A->col_blocks(),
+                                         A->row_blocks());
     } else {
-      factor_ =
-      CHECK_NOTNULL(ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs));
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs);
     }
   }
-
   event_logger.AddEvent("Analysis");
 
-  cholmod_dense* sol = ss_.SolveCholesky(&lhs, factor_, rhs);
+  if (factor_ == NULL) {
+    if (per_solve_options.D != NULL) {
+      A->DeleteRows(num_cols);
+    }
+
+    summary.termination_type = FATAL_ERROR;
+    return summary;
+  }
+
+  const LinearSolverTerminationType status = ss_.Cholesky(&lhs, factor_);
+  if (status != TOLERANCE) {
+    if (per_solve_options.D != NULL) {
+      A->DeleteRows(num_cols);
+    }
+
+    summary.termination_type = FATAL_ERROR;
+    return summary;
+  }
+
+  cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
+  cholmod_dense* sol = ss_.Solve(factor_, rhs);
   event_logger.AddEvent("Solve");
 
   ss_.Free(rhs);
-  rhs = NULL;
-
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
 
   summary.num_iterations = 1;
+
   if (sol != NULL) {
     memcpy(x, sol->x, num_cols * sizeof(*x));
 
