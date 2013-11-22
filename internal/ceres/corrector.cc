@@ -85,7 +85,7 @@ Corrector::Corrector(const double sq_norm, const double rho[3]) {
   }
 
   // We now require that the first derivative of the loss function be
-  // positive only if the second derivative is non-zero. This is
+  // positive only if the second derivative is positive. This is
   // because when the second derivative is non-positive, we do not use
   // the second order correction suggested by BANS and instead use a
   // simpler first order strategy which does not use a division by the

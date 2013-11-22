@@ -447,7 +447,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
     return false;
   }
 
-  LinearSolverTerminationType termination_type = ss.Cholesky(&cholmod_jacobian_view, factor);
+  LinearSolverTerminationType termination_type =
+      ss.Cholesky(&cholmod_jacobian_view, factor);
   event_logger.AddEvent("Numeric Factorization");
 
   if (termination_type != TOLERANCE) {
