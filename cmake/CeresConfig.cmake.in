@@ -37,7 +37,13 @@
 #
 # This module defines the following variables:
 #
-# CERES_VERSION
+# Ceres_FOUND / CERES_FOUND: True iff Ceres has been successfully found. Both
+#                            variables are set as although FindPackage() only
+#                            references Ceres_FOUND in Config mode, given the
+#                            conventions for <package>_FOUND when FindPackage()
+#                            is called in Module mode, users could reasonably
+#                            expect to use CERES_FOUND instead.
+# CERES_VERSION: Version of Ceres found.
 # CERES_INCLUDE_DIRS: Include directories for Ceres and the dependencies which
 #                     appear in the Ceres public API and are thus required to
 #                     use Ceres.
@@ -55,7 +61,10 @@
 # unsets all public (designed to be used externally) variables and reports
 # error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
 MACRO(CERES_REPORT_NOT_FOUND REASON_MSG)
-  UNSET(CERES_FOUND)
+  # FindPackage() only references Ceres_FOUND, and requires it to be explicitly
+  # set FALSE to denote not found (not merely undefined).
+  SET(Ceres_FOUND FALSE)
+  SET(CERES_FOUND FALSE)
   UNSET(CERES_INCLUDE_DIRS)
   UNSET(CERES_LIBRARIES)
 
@@ -191,3 +200,7 @@ SET(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
 # found Ceres and all required dependencies.
 MESSAGE(STATUS "Found Ceres version: ${CERES_VERSION} "
     "installed in: ${CURRENT_ROOT_INSTALL_DIR}")
+# Set CERES_FOUND to be equivalent to Ceres_FOUND, which is set to TRUE by
+# FindPackage() if this file is found and run, and after which Ceres_FOUND
+# is not (explicitly, i.e. undefined does not count) set to FALSE.
+SET(CERES_FOUND TRUE)
