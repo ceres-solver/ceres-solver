@@ -133,6 +133,7 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
   Vector polynomial = RemoveLeadingZeros(polynomial_in);
   const int degree = polynomial.size() - 1;
 
+  VLOG(3) << "polynomial: " << polynomial.transpose();
   // Is the polynomial constant?
   if (degree == 0) {
     LOG(WARNING) << "Trying to extract roots from a constant "
@@ -159,7 +160,41 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
     }
   }
 
-  // The degree is now known to be at least 2.
+  if (degree == 2) {
+    if (real != NULL) {
+      real->resize(2);
+    }
+    if (imaginary != NULL) {
+      imaginary->resize(2);
+    }
+
+    const double a = 1.0;
+    const double b = polynomial(1);
+    const double c = polynomial(2);
+    const double D = b * b - 4 * a * c;
+    if (D >= 0) {
+      if (real != NULL) {
+        (*real)(0) = (-b + sqrt(D)) / (2.0 * a);
+        (*real)(1) = (-b - sqrt(D)) / (2.0 * a);
+      }
+      if (imaginary != NULL) {
+        (*imaginary)(0) = 0.0;
+        (*imaginary)(1) = 0.0;
+      }
+    } else {
+      if (real != NULL) {
+        (*real)(0) = -b / (2.0 * a);
+        (*real)(1) = -b/ (2.0 * a);
+      }
+      if (imaginary != NULL) {
+        (*imaginary)(0) = sqrt(-D) / (2.0 * a);
+        (*imaginary)(1) = - sqrt(-D) / (2.0 * a);
+      }
+    }
+    return true;
+  }
+
+  // The degree is now known to be at least 3.
   // Build and balance the companion matrix to the polynomial.
   Matrix companion_matrix(degree, degree);
   BuildCompanionMatrix(polynomial, &companion_matrix);
@@ -278,6 +313,7 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
   }
 
   const int degree = num_constraints - 1;
+
   Matrix lhs = Matrix::Zero(num_constraints, num_constraints);
   Vector rhs = Vector::Zero(num_constraints);
 
