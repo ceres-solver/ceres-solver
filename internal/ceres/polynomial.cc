@@ -122,6 +122,63 @@ Vector RemoveLeadingZeros(const Vector& polynomial_in) {
 }
 }  // namespace
 
+void FindLinearPolynomialRoots(const Vector& polynomial,
+                               Vector* real,
+                               Vector* imaginary) {
+  CHECK_EQ(polynomial.size(), 2);
+  if (real != NULL) {
+    real->resize(1);
+    (*real)(0) = -polynomial(1) / polynomial(0);
+  }
+
+  if (imaginary != NULL) {
+    imaginary->setZero(1);
+  }
+}
+
+void FindQuadraticPolynomialRoots(const Vector& polynomial,
+                                  Vector* real,
+                                  Vector* imaginary) {
+  CHECK_EQ(polynomial.size(), 3);
+  const double a = polynomial(0);
+  const double b = polynomial(1);
+  const double c = polynomial(2);
+  const double D = b * b - 4 * a * c;
+  const double sqrt_D = sqrt(fabs(D));
+  if (real != NULL) {
+    real->setZero(2);
+  }
+  if (imaginary != NULL) {
+    imaginary->setZero(2);
+  }
+
+  // Real roots.
+  if (D >= 0) {
+    if (real != NULL) {
+      // Stable quadratic roots according to BKP Horn.
+      // http://people.csail.mit.edu/bkph/articles/Quadratics.pdf
+      if (b >= 0) {
+        (*real)(0) = (-b - sqrt_D) / (2.0 * a);
+        (*real)(1) = (2.0 * c) / (-b - sqrt_D);
+      } else {
+        (*real)(0) = (2.0 * c) / (-b + sqrt_D);
+        (*real)(1) = (-b + sqrt_D) / (2.0 * a);
+      }
+    }
+    return;
+  }
+
+  // Use the normal quadratic formula for the complex case.
+  if (real != NULL) {
+    (*real)(0) = -b / (2.0 * a);
+    (*real)(1) = -b / (2.0 * a);
+  }
+  if (imaginary != NULL) {
+    (*imaginary)(0) = sqrt_D / (2.0 * a);
+    (*imaginary)(1) = -sqrt_D / (2.0 * a);
+  }
+}
+
 bool FindPolynomialRoots(const Vector& polynomial_in,
                          Vector* real,
                          Vector* imaginary) {
@@ -133,6 +190,11 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
   Vector polynomial = RemoveLeadingZeros(polynomial_in);
   const int degree = polynomial.size() - 1;
 
+  VLOG(3) << "Input polynomial: " << polynomial_in.transpose();
+  if (polynomial.size() != polynomial_in.size()) {
+    VLOG(3) << "Trimmed polynomial: " << polynomial.transpose();
+  }
+
   // Is the polynomial constant?
   if (degree == 0) {
     LOG(WARNING) << "Trying to extract roots from a constant "
@@ -143,23 +205,25 @@ bool FindPolynomialRoots(const Vector& polynomial_in,
     return true;
   }
 
+  // Linear
+  if (degree == 1) {
+    FindLinearPolynomialRoots(polynomial, real, imaginary);
+    return true;
+  }
+
+  // Quadratic
+  if (degree == 2) {
+    FindQuadraticPolynomialRoots(polynomial, real, imaginary);
+    return true;
+  }
+
+  // The degree is now known to be at least 3. For cubic or higher
+  // roots we use the method of companion matrices.
+
   // Divide by leading term
   const double leading_term = polynomial(0);
   polynomial /= leading_term;
 
-  // Separately handle linear polynomials.
-  if (degree == 1) {
-    if (real != NULL) {
-      real->resize(1);
-      (*real)(0) = -polynomial(1);
-    }
-    if (imaginary != NULL) {
-      imaginary->resize(1);
-      imaginary->setZero();
-    }
-  }
-
-  // The degree is now known to be at least 2.
   // Build and balance the companion matrix to the polynomial.
   Matrix companion_matrix(degree, degree);
   BuildCompanionMatrix(polynomial, &companion_matrix);
@@ -278,6 +342,7 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
   }
 
   const int degree = num_constraints - 1;
+
   Matrix lhs = Matrix::Zero(num_constraints, num_constraints);
   Vector rhs = Vector::Zero(num_constraints);
 
