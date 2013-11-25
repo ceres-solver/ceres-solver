@@ -16,6 +16,24 @@
       "revId": "f0eab11f1372830ceba520d4ff7f901f1e0ebada",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_a1ca9a32",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T12:10:37Z",
+      "side": 1,
+      "message": "no, linear solver orderings are guaranteed to contain all parameter blocks.",
+      "parentUuid": "deaa69eb_9ec41b78",
+      "revId": "f0eab11f1372830ceba520d4ff7f901f1e0ebada",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
