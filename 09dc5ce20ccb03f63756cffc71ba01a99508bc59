@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e7b915f_6be351f5",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T18:03:20Z",
+      "side": 1,
+      "message": "sure, but do we need to see this number regularly as part of debugging going forward?",
+      "parentUuid": "430f8224_5786ccb7",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_2b2b0969",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "It is, but it\u0027s at level 2 rather than 3, so rather than getting the detail of each iteration you just get the start and end - still remove?",
       "parentUuid": "9e7b915f_0b26459f",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_24beb89a",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T18:03:20Z",
+      "side": 1,
+      "message": "no I meant this is reported by the LoggingCallback for the line search minimizer.",
+      "parentUuid": "630ac615_1891a5c5",
       "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
