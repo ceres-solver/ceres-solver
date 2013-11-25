@@ -435,14 +435,19 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   // matrix contains the values.
   lhs->stype = 1;
 
+  // TODO(sameeragarwal): Refactor to pipe this up and out.
+  string status;
+
   // Symbolic factorization is computed if we don't already have one handy.
   if (factor_ == NULL) {
-    factor_ = ss_.BlockAnalyzeCholesky(lhs, block_size_, block_size_);
+    factor_ = ss_.BlockAnalyzeCholesky(lhs, block_size_, block_size_, &status);
   }
 
-  LinearSolverTerminationType status = ss_.Cholesky(lhs, factor_);
+  const LinearSolverTerminationType termination_type =
+      (factor_ != NULL) ? ss_.Cholesky(lhs, factor_, &status) : FATAL_ERROR;
+
   ss_.Free(lhs);
-  return status;
+  return termination_type;
 }
 
 void VisibilityBasedPreconditioner::RightMultiply(const double* x,
@@ -453,7 +458,9 @@ void VisibilityBasedPreconditioner::RightMultiply(const double* x,
 
   const int num_rows = m_->num_rows();
   memcpy(CHECK_NOTNULL(tmp_rhs_)->x, x, m_->num_rows() * sizeof(*x));
-  cholmod_dense* solution = CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_));
+  // TODO(sameeragarwal): Better error handling.
+  string status;
+  cholmod_dense* solution = CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_, &status));
   memcpy(y, solution->x, sizeof(*y) * num_rows);
   ss->Free(solution);
 }

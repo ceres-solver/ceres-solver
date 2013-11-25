@@ -165,9 +165,9 @@ bool CovarianceImpl::GetCovarianceBlock(const double* original_parameter_block1,
   }
 
   if (offset == row_size) {
-    LOG(WARNING) << "Unable to find covariance block for "
-                 << original_parameter_block1 << " "
-                 << original_parameter_block2;
+    LOG(ERROR) << "Unable to find covariance block for "
+               << original_parameter_block1 << " "
+               << original_parameter_block2;
     return false;
   }
 
@@ -441,18 +441,24 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
   cholmod_jacobian_view.sorted = 1;
   cholmod_jacobian_view.packed = 1;
 
-  cholmod_factor* factor = ss.AnalyzeCholesky(&cholmod_jacobian_view);
+  string status;
+  cholmod_factor* factor = ss.AnalyzeCholesky(&cholmod_jacobian_view, &status);
   event_logger.AddEvent("Symbolic Factorization");
   if (factor == NULL) {
+    LOG(ERROR) << "Covariance estimation failed. "
+               << "CHOLMOD symbolic cholesky factorization returned with: "
+               << status;
     return false;
   }
 
   LinearSolverTerminationType termination_type =
-      ss.Cholesky(&cholmod_jacobian_view, factor);
+      ss.Cholesky(&cholmod_jacobian_view, factor, &status);
   event_logger.AddEvent("Numeric Factorization");
-
   if (termination_type != TOLERANCE) {
-    LOG(WARNING) << "Cholesky factorization failed.";
+    LOG(ERROR) << "Covariance estimation failed. "
+               << "CHOLMOD numeric cholesky factorization returned with: "
+               << status;
+    ss.Free(factor);
     return false;
   }
 
@@ -461,11 +467,11 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
 
   if (reciprocal_condition_number <
       options_.min_reciprocal_condition_number) {
-    LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
-                 << "Reciprocal condition number: "
-                 << reciprocal_condition_number << " "
-                 << "min_reciprocal_condition_number : "
-                 << options_.min_reciprocal_condition_number;
+    LOG(ERROR) << "Cholesky factorization of J'J is not reliable. "
+               << "Reciprocal condition number: "
+               << reciprocal_condition_number << " "
+               << "min_reciprocal_condition_number : "
+               << options_.min_reciprocal_condition_number;
     ss.Free(factor);
     return false;
   }
@@ -687,9 +693,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   CHECK_NOTNULL(R);
 
   if (rank < cholmod_jacobian.ncol) {
-    LOG(WARNING) << "Jacobian matrix is rank deficient."
-                 << "Number of columns: " << cholmod_jacobian.ncol
-                 << " rank: " << rank;
+    LOG(ERROR) << "Jacobian matrix is rank deficient. "
+               << "Number of columns: " << cholmod_jacobian.ncol
+               << " rank: " << rank;
     free(permutation);
     cholmod_l_free_sparse(&R, &cc);
     cholmod_l_finish(&cc);
@@ -813,11 +819,11 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       if (automatic_truncation) {
         break;
       } else {
-        LOG(WARNING) << "Cholesky factorization of J'J is not reliable. "
-                     << "Reciprocal condition number: "
-                     << singular_value_ratio * singular_value_ratio << " "
-                     << "min_reciprocal_condition_number : "
-                     << options_.min_reciprocal_condition_number;
+        LOG(ERROR) << "Cholesky factorization of J'J is not reliable. "
+                   << "Reciprocal condition number: "
+                   << singular_value_ratio * singular_value_ratio << " "
+                   << "min_reciprocal_condition_number : "
+                   << options_.min_reciprocal_condition_number;
         return false;
       }
     }
