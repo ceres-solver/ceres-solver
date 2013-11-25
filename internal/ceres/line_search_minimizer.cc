@@ -310,6 +310,13 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
+    VLOG_IF(2, is_not_silent)
+        << "Initial step size: " << initial_step_size
+        << ", (current_state.cost - previous_state.cost): "
+        << (current_state.cost - previous_state.cost)
+        << ", current_state.directional_derivative: "
+        << current_state.directional_derivative;
+
     line_search->Search(initial_step_size,
                         current_state.cost,
                         current_state.directional_derivative,
@@ -350,6 +357,11 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     } else {
       x = x_plus_delta;
     }
+
+    VLOG_IF(2, is_not_silent)
+        << "Step size found from line search: " << current_state.step_size
+        << ", current_state.gradient_max_norm: "
+        << current_state.gradient_max_norm;
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);

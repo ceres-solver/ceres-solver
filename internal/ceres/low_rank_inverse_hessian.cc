@@ -170,6 +170,10 @@ void LowRankInverseHessian::RightMultiply(const double* x_ptr,
     //     20(5), 863-874, 1974.
     // [2] Nocedal J., Wright S., Numerical Optimization, Springer, 1999.
     search_direction *= approximate_eigenvalue_scale_;
+
+    VLOG(3) << "Applying approximate_eigenvalue_scale: "
+            << approximate_eigenvalue_scale_ << " to initial inverse Hessian "
+            << "approximation.";
   }
 
   for (int i = 0; i < num_corrections_; ++i) {
