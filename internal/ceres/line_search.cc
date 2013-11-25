@@ -384,6 +384,13 @@ void WolfeLineSearch::Search(const double step_size_estimate,
     return;
   }
 
+  VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+          << "Starting line search zoom phase with bracket_low: "
+          << bracket_low << ", bracket_high: " << bracket_high
+          << ", bracket width: " << fabs(bracket_low.x - bracket_high.x)
+          << ", bracket abs delta cost: "
+          << fabs(bracket_low.value - bracket_high.value);
+
   // Wolfe Zoom phase: Called when the Bracketing phase finds an interval of
   // non-zero, finite width that should bracket step sizes which satisfy the
   // (strong) Wolfe conditions (before finding a step size that satisfies the
@@ -493,6 +500,10 @@ bool WolfeLineSearch::BracketingPhase(
       *do_zoom_search = true;
       *bracket_low = previous;
       *bracket_high = current;
+      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+              << "Bracket found: current step (" << current.x
+              << ") violates Armijo sufficient condition, or has passed an "
+              << "inflection point of f() based on value.";
       break;
     }
 
@@ -503,6 +514,10 @@ bool WolfeLineSearch::BracketingPhase(
       // valid termination point, therefore a Zoom not required.
       *bracket_low = current;
       *bracket_high = current;
+      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+              << "Bracketing phase found step size: " << current.x
+              << ", satisfying strong Wolfe conditions, initial_position: "
+              << initial_position << ", current: " << current;
       break;
 
     } else if (current.value_is_valid && current.gradient >= 0) {
@@ -515,6 +530,9 @@ bool WolfeLineSearch::BracketingPhase(
       // Note inverse ordering from first bracket case.
       *bracket_low = current;
       *bracket_high = previous;
+      VLOG(3) << "Bracket found: current step (" << current.x
+              << ") satisfies Armijo, but has gradient >= 0, thus have passed "
+              << "an inflection point of f().";
       break;
 
     } else if (current.value_is_valid &&
@@ -757,6 +775,12 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
       return false;
     }
 
+    VLOG(3) << "Zoom iteration: "
+            << summary->num_iterations - num_bracketing_iterations
+            << ", bracket_low: " << bracket_low
+            << ", bracket_high: " << bracket_high
+            << ", minimizing solution: " << *solution;
+
     if ((solution->value > (initial_position.value
                             + options().sufficient_decrease
                             * initial_position.gradient
@@ -772,6 +796,9 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     if (fabs(solution->gradient) <=
         -options().sufficient_curvature_decrease * initial_position.gradient) {
       // Found a valid termination point satisfying strong Wolfe conditions.
+      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+              << "Zoom phase found step size: " << solution->x
+              << ", satisfying strong Wolfe conditions.";
       break;
 
     } else if (solution->gradient * (bracket_high.x - bracket_low.x) >= 0) {
