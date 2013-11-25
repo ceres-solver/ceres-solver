@@ -441,18 +441,21 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
   cholmod_jacobian_view.sorted = 1;
   cholmod_jacobian_view.packed = 1;
 
-  cholmod_factor* factor = ss.AnalyzeCholesky(&cholmod_jacobian_view);
+  string status;
+  cholmod_factor* factor = ss.AnalyzeCholesky(&cholmod_jacobian_view, &status);
   event_logger.AddEvent("Symbolic Factorization");
   if (factor == NULL) {
+    LOG(ERROR) << status;
     return false;
   }
 
   LinearSolverTerminationType termination_type =
-      ss.Cholesky(&cholmod_jacobian_view, factor);
+      ss.Cholesky(&cholmod_jacobian_view, factor, &status);
   event_logger.AddEvent("Numeric Factorization");
 
   if (termination_type != TOLERANCE) {
     LOG(WARNING) << "Cholesky factorization failed.";
+    LOG(WARNING) << status;
     return false;
   }
 
