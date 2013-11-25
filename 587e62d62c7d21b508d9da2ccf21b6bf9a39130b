@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deaa69eb_248a3851",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-25T17:41:55Z",
+      "side": 1,
+      "message": "sqrt_D \u003d sqrt(fabs(D))?",
+      "revId": "587e62d62c7d21b508d9da2ccf21b6bf9a39130b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_84768cae",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-25T17:41:55Z",
+      "side": 1,
+      "message": "Should these really return void? What about the degenerate case with a divide by zero?",
+      "revId": "587e62d62c7d21b508d9da2ccf21b6bf9a39130b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_04c9fc96",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-25T17:41:55Z",
+      "side": 1,
+      "message": "Should this really return void? What about detecting the degenerate case with a \u003d\u003d 0 (leading to a division by zero).\n\nNote that the other pathways do correct error handling.",
+      "revId": "587e62d62c7d21b508d9da2ccf21b6bf9a39130b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
