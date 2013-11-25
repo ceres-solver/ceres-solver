@@ -86,6 +86,7 @@ Solver::Summary::Summary()
     // accidentally reporting default values.
     : minimizer_type(TRUST_REGION),
       termination_type(DID_NOT_RUN),
+      error("ceres::Solve was not called."),
       initial_cost(-1.0),
       final_cost(-1.0),
       fixed_cost(-1.0),
@@ -133,10 +134,6 @@ Solver::Summary::Summary()
 string Solver::Summary::BriefReport() const {
   string report = "Ceres Solver Report: ";
   if (termination_type == DID_NOT_RUN) {
-    CHECK(!error.empty())
-          << "Solver terminated with DID_NOT_RUN but the solver did not "
-          << "return a reason. This is a Ceres error. Please report this "
-          << "to the Ceres team";
     return report + "Termination: DID_NOT_RUN, because " + error;
   }
 
@@ -318,10 +315,6 @@ string Solver::Summary::FullReport() const {
   }
 
   if (termination_type == DID_NOT_RUN) {
-    CHECK(!error.empty())
-        << "Solver terminated with DID_NOT_RUN but the solver did not "
-        << "return a reason. This is a Ceres error. Please report this "
-        << "to the Ceres team";
     StringAppendF(&report, "Termination:           %20s\n",
                   "DID_NOT_RUN");
     StringAppendF(&report, "Reason: %s\n", error.c_str());
