@@ -112,10 +112,8 @@ class LinearSolver {
     }
 
     LinearSolverType type;
-
     PreconditionerType preconditioner_type;
     VisibilityClusteringType visibility_clustering_type;
-
     DenseLinearAlgebraLibraryType dense_linear_algebra_library_type;
     SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type;
 
