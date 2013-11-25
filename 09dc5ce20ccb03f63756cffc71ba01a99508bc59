@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7b915f_cb1b7d57",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T17:36:52Z",
+      "side": 1,
+      "message": "this seems too noisy for 3? why do we want to log this?",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e7b915f_2b2b0969",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T17:36:52Z",
+      "side": 1,
+      "message": "same as below. well everything except for the directional derivative..",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e7b915f_0b26459f",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T17:36:52Z",
+      "side": 1,
+      "message": "isn\u0027t this already reported by the logging for the line search minimizer anyways the usual scroll?",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e7b915f_4b284d6a",
+        "filename": "internal/ceres/low_rank_inverse_hessian.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T17:36:52Z",
+      "side": 1,
+      "message": "same question as bfgs.",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
