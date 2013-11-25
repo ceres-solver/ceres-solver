@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eca41de_6c354fc1",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T15:04:00Z",
+      "side": 1,
+      "message": "Should this also CHECK() that polynomial.size() \u003d\u003d 2?",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "430f8224_179a9459",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T15:04:00Z",
+      "side": 1,
+      "message": "Same as above: should this CHECK() that polynomial.size() \u003d\u003d 3?",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "430f8224_5785acf0",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T15:04:00Z",
+      "side": 1,
+      "message": "Should this not be real-\u003esetZero(2)?  As eigen otherwise will not initialise, and then we don\u0027t need to explicitly set the imag parts to zero later.",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1eca41de_cc3c43ac",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T15:04:00Z",
+      "side": 1,
+      "message": "I think this can be removed if we use setZero above instead of resize().",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
