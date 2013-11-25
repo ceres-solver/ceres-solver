@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "deaa69eb_614392ca",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T15:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eca41de_6c354fc1",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430f8224_179a9459",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-25T15:04:00Z",
       "side": 1,
       "message": "Same as above: should this CHECK() that polynomial.size() \u003d\u003d 3?",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_81467ed8",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T15:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430f8224_179a9459",
       "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "deaa69eb_21318a71",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T15:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430f8224_5785acf0",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eca41de_cc3c43ac",
         "filename": "internal/ceres/polynomial.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-25T15:04:00Z",
       "side": 1,
       "message": "I think this can be removed if we use setZero above instead of resize().",
+      "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deaa69eb_412c9618",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2013-11-25T15:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eca41de_cc3c43ac",
       "revId": "812b6636eb07871c38a8347409dc4f8c75d68931",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
