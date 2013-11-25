@@ -251,8 +251,13 @@ class BFGS : public LineSearchDirection {
         //     Part II: Implementation and experiments, Management Science,
         //     20(5), 863-874, 1974.
         // [2] Nocedal J., Wright S., Numerical Optimization, Springer, 1999.
-        inverse_hessian_ *=
+        const double approximate_eigenvalue_scale =
             delta_x_dot_delta_gradient / delta_gradient.dot(delta_gradient);
+        inverse_hessian_ *= approximate_eigenvalue_scale;
+
+        VLOG(4) << "Applying approximate_eigenvalue_scale: "
+                << approximate_eigenvalue_scale << " to initial inverse "
+                << "Hessian approximation.";
       }
       initialized_ = true;
 
