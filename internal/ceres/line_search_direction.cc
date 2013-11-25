@@ -212,10 +212,10 @@ class BFGS : public LineSearchDirection {
     const double kBFGSSecantConditionHessianUpdateTolerance = 1e-14;
     if (delta_x_dot_delta_gradient <=
         kBFGSSecantConditionHessianUpdateTolerance) {
-      LOG(WARNING) << "Skipping BFGS Update, delta_x_dot_delta_gradient too "
-                   << "small: " << delta_x_dot_delta_gradient << ", tolerance: "
-                   << kBFGSSecantConditionHessianUpdateTolerance
-                   << " (Secant condition).";
+      VLOG(2) << "Skipping BFGS Update, delta_x_dot_delta_gradient too "
+              << "small: " << delta_x_dot_delta_gradient << ", tolerance: "
+              << kBFGSSecantConditionHessianUpdateTolerance
+              << " (Secant condition).";
     } else {
       // Update dense inverse Hessian approximation.
 

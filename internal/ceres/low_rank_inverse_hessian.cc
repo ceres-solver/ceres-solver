@@ -88,10 +88,10 @@ bool LowRankInverseHessian::Update(const Vector& delta_x,
   const double delta_x_dot_delta_gradient = delta_x.dot(delta_gradient);
   if (delta_x_dot_delta_gradient <=
       kLBFGSSecantConditionHessianUpdateTolerance) {
-    LOG(WARNING) << "Skipping L-BFGS Update, delta_x_dot_delta_gradient too "
-                 << "small: " << delta_x_dot_delta_gradient << ", tolerance: "
-                 << kLBFGSSecantConditionHessianUpdateTolerance
-                 << " (Secant condition).";
+    VLOG(2) << "Skipping L-BFGS Update, delta_x_dot_delta_gradient too "
+            << "small: " << delta_x_dot_delta_gradient << ", tolerance: "
+            << kLBFGSSecantConditionHessianUpdateTolerance
+            << " (Secant condition).";
     return false;
   }
 
