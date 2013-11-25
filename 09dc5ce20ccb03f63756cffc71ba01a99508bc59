@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "430f8224_5786ccb7",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T17:54:51Z",
+      "side": 1,
+      "message": "I thought it might be useful as turning the eigenvalue scaling off made such a big improvement to the NIST scores.",
+      "parentUuid": "9e7b915f_cb1b7d57",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_2b2b0969",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2013-11-25T17:36:52Z",
       "side": 1,
       "message": "isn\u0027t this already reported by the logging for the line search minimizer anyways the usual scroll?",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "630ac615_1891a5c5",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T17:54:51Z",
+      "side": 1,
+      "message": "It is, but it\u0027s at level 2 rather than 3, so rather than getting the detail of each iteration you just get the start and end - still remove?",
+      "parentUuid": "9e7b915f_0b26459f",
       "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
