@@ -60,6 +60,7 @@ LinearSolver::Summary DenseQRSolver::SolveImpl(
     return SolveUsingLAPACK(A, b, per_solve_options, x);
   }
 }
+
 LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
     DenseSparseMatrix* A,
     const double* b,
@@ -100,21 +101,18 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
     work_.resize(work_size);
   }
 
-  const int info = LAPACK::SolveUsingQR(lhs_.rows(),
-                                        lhs_.cols(),
-                                        lhs_.data(),
-                                        work_.rows(),
-                                        work_.data(),
-                                        rhs_.data());
-  event_logger.AddEvent("Solve");
-
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  if (info == 0) {
+  summary.termination_type = LAPACK::SolveInPlaceUsingQR(lhs_.rows(),
+                                                         lhs_.cols(),
+                                                         lhs_.data(),
+                                                         work_.rows(),
+                                                         work_.data(),
+                                                         rhs_.data(),
+                                                         &summary.status);
+  event_logger.AddEvent("Solve");
+  if (summary.termination_type == TOLERANCE) {
     VectorRef(x, num_cols) = rhs_.head(num_cols);
-    summary.termination_type = TOLERANCE;
-  } else {
-    summary.termination_type = FAILURE;
   }
 
   event_logger.AddEvent("TearDown");
@@ -162,6 +160,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
+  summary.status = "Success.";
 
   event_logger.AddEvent("TearDown");
   return summary;
