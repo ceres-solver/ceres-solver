@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "430f8224_d771bc28",
+        "filename": "internal/ceres/line_search_direction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T18:17:45Z",
+      "side": 1,
+      "message": "Probably not, but it might be useful if you were playing with the eigenvalue scaling option - I can turn it down to level 4?",
+      "parentUuid": "9e7b915f_6be351f5",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_2b2b0969",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2013-11-25T17:36:52Z",
       "side": 1,
       "message": "same as below. well everything except for the directional derivative..",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "430f8224_b76e4843",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T18:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7b915f_2b2b0969",
       "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "no I meant this is reported by the LoggingCallback for the line search minimizer.",
       "parentUuid": "630ac615_1891a5c5",
+      "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "630ac615_786b010b",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-25T18:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deaa69eb_24beb89a",
       "revId": "09dc5ce20ccb03f63756cffc71ba01a99508bc59",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
