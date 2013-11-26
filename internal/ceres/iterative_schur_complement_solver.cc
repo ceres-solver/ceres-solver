@@ -160,8 +160,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   cg_summary.termination_type = FAILURE;
 
   // TODO(sameeragarwal): Refactor preconditioners to return a more
-  // sane status.
-  cg_summary.status = "Preconditioner update failed.";
+  // sane message.
+  cg_summary.message = "Preconditioner update failed.";
   if (preconditioner_update_was_successful) {
     cg_summary = cg_solver.Solve(schur_complement_.get(),
                                  schur_complement_->rhs().data(),

@@ -103,7 +103,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   const int num_cols = A->num_cols();
   Vector Atb = Vector::Zero(num_cols);
@@ -151,7 +151,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
   if (cxsparse_factor_ == NULL) {
     summary.termination_type = FATAL_ERROR;
-    summary.status = "CXSparse failure. Unable to find symbolic factorization.";
+    summary.message =
+        "CXSparse failure. Unable to find symbolic factorization.";
   } else if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
   } else {
@@ -186,7 +187,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   LinearSolver::Summary summary;
   summary.termination_type = TOLERANCE;
   summary.num_iterations = 1;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   const int num_cols = A->num_cols();
   Vector Atb = Vector::Zero(num_cols);
@@ -208,9 +209,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
       factor_ = ss_.BlockAnalyzeCholesky(&lhs,
                                          A->col_blocks(),
                                          A->row_blocks(),
-                                         &summary.status);
+                                         &summary.message);
     } else {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.status);
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.message);
     }
   }
   event_logger.AddEvent("Analysis");
@@ -223,7 +224,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     return summary;
   }
 
-  summary.termination_type = ss_.Cholesky(&lhs, factor_, &summary.status);
+  summary.termination_type = ss_.Cholesky(&lhs, factor_, &summary.message);
   if (summary.termination_type != TOLERANCE) {
     if (per_solve_options.D != NULL) {
       A->DeleteRows(num_cols);
@@ -232,7 +233,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   }
 
   cholmod_dense* rhs = ss_.CreateDenseVector(Atb.data(), num_cols, num_cols);
-  cholmod_dense* sol = ss_.Solve(factor_, rhs, &summary.status);
+  cholmod_dense* sol = ss_.Solve(factor_, rhs, &summary.message);
   event_logger.AddEvent("Solve");
 
   ss_.Free(rhs);

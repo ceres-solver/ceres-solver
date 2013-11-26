@@ -137,7 +137,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
   }
 
   if (cc_.status != CHOLMOD_OK) {
-    *status = StringPrintf("cholmod_analyze failed. error code: %d",  cc_.status);
+    *status = StringPrintf("cholmod_analyze failed. error code: %d",
+                           cc_.status);
     return NULL;
   }
 
@@ -171,7 +172,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
     cholmod_print_common(const_cast<char*>("Symbolic Analysis"), &cc_);
   }
   if (cc_.status != CHOLMOD_OK) {
-    *status = StringPrintf("cholmod_analyze failed. error code: %d",  cc_.status);
+    *status = StringPrintf("cholmod_analyze failed. error code: %d",
+                           cc_.status);
     return NULL;
   }
 
@@ -190,7 +192,8 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
     cholmod_print_common(const_cast<char*>("Symbolic Analysis"), &cc_);
   }
   if (cc_.status != CHOLMOD_OK) {
-    *status = StringPrintf("cholmod_analyze failed. error code: %d",  cc_.status);
+    *status = StringPrintf("cholmod_analyze failed. error code: %d",
+                           cc_.status);
     return NULL;
   }
 

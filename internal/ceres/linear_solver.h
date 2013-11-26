@@ -273,7 +273,7 @@ class LinearSolver {
     double residual_norm;
     int num_iterations;
     LinearSolverTerminationType termination_type;
-    string status;
+    string message;
   };
 
   virtual ~LinearSolver();

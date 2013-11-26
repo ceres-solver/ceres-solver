@@ -109,7 +109,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingLAPACK(
                                                          work_.rows(),
                                                          work_.data(),
                                                          rhs_.data(),
-                                                         &summary.status);
+                                                         &summary.message);
   event_logger.AddEvent("Solve");
   if (summary.termination_type == TOLERANCE) {
     VectorRef(x, num_cols) = rhs_.head(num_cols);
@@ -160,7 +160,7 @@ LinearSolver::Summary DenseQRSolver::SolveUsingEigen(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   event_logger.AddEvent("TearDown");
   return summary;

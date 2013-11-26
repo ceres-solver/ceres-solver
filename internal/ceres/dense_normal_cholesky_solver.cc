@@ -96,14 +96,15 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = TOLERANCE;
-  Eigen::LLT<Matrix, Eigen::Upper> llt = lhs.selfadjointView<Eigen::Upper>().llt();
+  Eigen::LLT<Matrix, Eigen::Upper> llt =
+      lhs.selfadjointView<Eigen::Upper>().llt();
 
   if (llt.info() != Eigen::Success) {
     summary.termination_type = FAILURE;
-    summary.status = "Eigen LLT decomposition failed.";
+    summary.message = "Eigen LLT decomposition failed.";
   } else {
     summary.termination_type = TOLERANCE;
-    summary.status = "Success.";
+    summary.message = "Success.";
   }
 
   VectorRef(x, num_cols) = llt.solve(rhs);
@@ -153,10 +154,11 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingLAPACK(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = LAPACK::SolveInPlaceUsingCholesky(num_cols,
-                                                               lhs.data(),
-                                                               x,
-                                                               &summary.status);
+  summary.termination_type =
+      LAPACK::SolveInPlaceUsingCholesky(num_cols,
+                                        lhs.data(),
+                                        x,
+                                        &summary.message);
   event_logger.AddEvent("Solve");
   return summary;
 }

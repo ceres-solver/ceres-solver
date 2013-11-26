@@ -762,7 +762,8 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
   if (options_.enable_fast_parameter_block_removal) {
     // In this case the residual blocks that depend on the parameter block are
     // stored in the parameter block already, so just copy them out.
-    CHECK_NOTNULL(residual_blocks)->resize(parameter_block->mutable_residual_blocks()->size());
+    CHECK_NOTNULL(residual_blocks)->resize(
+        parameter_block->mutable_residual_blocks()->size());
     std::copy(parameter_block->mutable_residual_blocks()->begin(),
               parameter_block->mutable_residual_blocks()->end(),
               residual_blocks->begin());

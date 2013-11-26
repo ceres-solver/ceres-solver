@@ -29,8 +29,8 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
-#include <iomanip> // For std::setprecision.
-#include <iostream> // For std::scientific.
+#include <iomanip>
+#include <iostream>  // NOLINT
 
 #include "ceres/line_search.h"
 
@@ -500,7 +500,8 @@ bool WolfeLineSearch::BracketingPhase(
       *do_zoom_search = true;
       *bracket_low = previous;
       *bracket_high = current;
-      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+      VLOG(3) << std::scientific
+              << std::setprecision(kErrorMessageNumericPrecision)
               << "Bracket found: current step (" << current.x
               << ") violates Armijo sufficient condition, or has passed an "
               << "inflection point of f() based on value.";
@@ -514,7 +515,8 @@ bool WolfeLineSearch::BracketingPhase(
       // valid termination point, therefore a Zoom not required.
       *bracket_low = current;
       *bracket_high = current;
-      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+      VLOG(3) << std::scientific
+              << std::setprecision(kErrorMessageNumericPrecision)
               << "Bracketing phase found step size: " << current.x
               << ", satisfying strong Wolfe conditions, initial_position: "
               << initial_position << ", current: " << current;
@@ -796,7 +798,8 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     if (fabs(solution->gradient) <=
         -options().sufficient_curvature_decrease * initial_position.gradient) {
       // Found a valid termination point satisfying strong Wolfe conditions.
-      VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
+      VLOG(3) << std::scientific
+              << std::setprecision(kErrorMessageNumericPrecision)
               << "Zoom phase found step size: " << solution->x
               << ", satisfying strong Wolfe conditions.";
       break;

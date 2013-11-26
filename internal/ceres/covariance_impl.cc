@@ -348,8 +348,8 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // values of the parameter blocks. Thus iterating over the keys of
   // parameter_block_to_row_index_ corresponds to iterating over the
   // rows of the covariance matrix in order.
-  int i = 0; // index into covariance_blocks.
-  int cursor = 0; // index into the covariance matrix.
+  int i = 0;  // index into covariance_blocks.
+  int cursor = 0;  // index into the covariance matrix.
   for (map<const double*, int>::const_iterator it =
            parameter_block_to_row_index_.begin();
        it != parameter_block_to_row_index_.end();
@@ -393,12 +393,12 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
 
 bool CovarianceImpl::ComputeCovarianceValues() {
   switch (options_.algorithm_type) {
-    case (DENSE_SVD):
+    case DENSE_SVD:
       return ComputeCovarianceValuesUsingDenseSVD();
 #ifndef CERES_NO_SUITESPARSE
-    case (SPARSE_CHOLESKY):
+    case SPARSE_CHOLESKY:
       return ComputeCovarianceValuesUsingSparseCholesky();
-    case (SPARSE_QR):
+    case SPARSE_QR:
       return ComputeCovarianceValuesUsingSparseQR();
 #endif
     default:

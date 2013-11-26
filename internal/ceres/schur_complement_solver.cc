@@ -117,7 +117,7 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = TOLERANCE;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   const BlockRandomAccessDenseMatrix* m =
       down_cast<const BlockRandomAccessDenseMatrix*>(lhs());
@@ -138,7 +138,7 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
         .llt();
     if (llt.info() != Eigen::Success) {
       summary.termination_type = FAILURE;
-      summary.status = "Eigen LLT decomposition failed.";
+      summary.message = "Eigen LLT decomposition failed.";
       return summary;
     }
 
@@ -149,7 +149,7 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
         LAPACK::SolveInPlaceUsingCholesky(num_rows,
                                           m->values(),
                                           solution,
-                                          &summary.status);
+                                          &summary.message);
   }
 
   return summary;
@@ -276,7 +276,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = TOLERANCE;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   TripletSparseMatrix* tsm =
       const_cast<TripletSparseMatrix*>(
@@ -305,7 +305,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
       factor_ = ss_.BlockAnalyzeCholesky(cholmod_lhs,
                                          blocks_,
                                          blocks_,
-                                         &summary.status);
+                                         &summary.message);
     }
   } else {
     // If we are going to use the natural ordering (i.e. rely on the
@@ -319,7 +319,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
 
     if (factor_ == NULL) {
       factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(cholmod_lhs,
-                                                       &summary.status);
+                                                       &summary.message);
     }
   }
 
@@ -330,7 +330,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   }
 
   summary.termination_type =
-      ss_.Cholesky(cholmod_lhs, factor_, &summary.status);
+      ss_.Cholesky(cholmod_lhs, factor_, &summary.message);
   if (summary.termination_type != TOLERANCE) {
     return summary;
   }
@@ -339,7 +339,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
       ss_.CreateDenseVector(const_cast<double*>(rhs()), num_rows, num_rows);
   cholmod_dense* cholmod_solution = ss_.Solve(factor_,
                                               cholmod_rhs,
-                                              &summary.status);
+                                              &summary.message);
   ss_.Free(cholmod_lhs);
   ss_.Free(cholmod_rhs);
 
@@ -372,7 +372,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = TOLERANCE;
-  summary.status = "Success.";
+  summary.message = "Success.";
 
   // Extract the TripletSparseMatrix that is used for actually storing S.
   TripletSparseMatrix* tsm =
@@ -396,10 +396,11 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 
   if (cxsparse_factor_ == NULL) {
     summary.termination_type = FATAL_ERROR;
-    summary.status = "CXSparse failure. Unable to find symbolic factorization.";
+    summary.message =
+        "CXSparse failure. Unable to find symbolic factorization.";
   } else if (!cxsparse_.SolveCholesky(lhs, cxsparse_factor_, solution)) {
     summary.termination_type = FAILURE;
-    summary.status = "CXSparse::SolveCholesky failed.";
+    summary.message = "CXSparse::SolveCholesky failed.";
   }
 
   cxsparse_.Free(lhs);

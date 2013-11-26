@@ -66,7 +66,8 @@ namespace internal {
 //
 // [1] Nocedal J., Wright S., Numerical Optimization, 2nd Ed. Springer, 1999.
 //
-// TODO: Consider using Damped BFGS update instead of skipping update.
+// TODO(alexs.mac): Consider using Damped BFGS update instead of
+// skipping update.
 const double kLBFGSSecantConditionHessianUpdateTolerance = 1e-14;
 
 LowRankInverseHessian::LowRankInverseHessian(

@@ -125,7 +125,7 @@ void Corrector::CorrectJacobian(const int num_rows,
   // The common case (rho[2] <= 0).
   if (alpha_sq_norm_ == 0.0) {
     VectorRef(jacobian, num_rows * num_cols) *= sqrt_rho1_;
-   return;
+    return;
   }
 
   // Equation 11 in BANS.

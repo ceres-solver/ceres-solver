@@ -460,7 +460,8 @@ void VisibilityBasedPreconditioner::RightMultiply(const double* x,
   memcpy(CHECK_NOTNULL(tmp_rhs_)->x, x, m_->num_rows() * sizeof(*x));
   // TODO(sameeragarwal): Better error handling.
   string status;
-  cholmod_dense* solution = CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_, &status));
+  cholmod_dense* solution =
+      CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_, &status));
   memcpy(y, solution->x, sizeof(*y) * num_rows);
   ss->Free(solution);
 }
