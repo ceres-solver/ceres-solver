@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3a0765c_5c805de2",
+        "filename": "internal/ceres/cgnr_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-26T14:11:52Z",
+      "side": 1,
+      "message": "I was looking into this, we don\u0027t always log(fatal), sometimes we check too, in fact this could easily be written as a check. so what is the right thing to do here?",
+      "parentUuid": "9e7b915f_56a1d4bb",
+      "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_969b5c8a",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-26T07:46:25Z",
       "side": 1,
       "message": "Perhaps prefix this error with something useful; \"Failed estimating covariance; error: %s\"",
+      "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83717ac9_99291b9e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-26T14:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7b915f_969b5c8a",
       "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2380cec3_3668187a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-26T14:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7b915f_b616a02e",
+      "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_f6202886",
         "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "63664614_f8d4d10d",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-26T14:11:52Z",
+      "side": 1,
+      "message": "http://eigen.tuxfamily.org/dox/classEigen_1_1LLT.html#a0c06d5c2034ebb329c54235369643ad2\n\nLLT cannot handle negative definite matrices as it does a squareroot so I am pretty sure it has to do some error checking.",
+      "parentUuid": "9e7b915f_f6202886",
+      "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7b915f_b6e4e002",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2013-11-26T07:46:25Z",
       "side": 1,
       "message": "else if?",
+      "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2380cec3_766e908b",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-11-26T14:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e7b915f_b6e4e002",
       "revId": "1be8e2cee24ff8b1e7ba2c3df3687d62964de2d1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
