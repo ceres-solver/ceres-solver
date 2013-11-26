@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e062af_af6b5932",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-26T17:57:44Z",
+      "side": 1,
+      "message": "Space after . due to string concatenation.",
+      "revId": "b3c98d4ce07ffdcfcdf6b3805ce0870978c2bc32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43e062af_8f6e9543",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-26T17:57:44Z",
+      "side": 1,
+      "message": "Space after . due to string concatenation.",
+      "revId": "b3c98d4ce07ffdcfcdf6b3805ce0870978c2bc32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43e062af_4fe66d9d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-26T17:57:44Z",
+      "side": 1,
+      "message": "Space after . due to string concatenation.",
+      "revId": "b3c98d4ce07ffdcfcdf6b3805ce0870978c2bc32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
