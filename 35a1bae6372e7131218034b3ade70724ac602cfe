@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3bafe99_2d3bf9ea",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-27T18:06:57Z",
+      "side": 1,
+      "message": "Space after .",
+      "revId": "35a1bae6372e7131218034b3ade70724ac602cfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3bafe99_0d363504",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-27T18:06:57Z",
+      "side": 1,
+      "message": "Space after .",
+      "revId": "35a1bae6372e7131218034b3ade70724ac602cfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3bafe99_ed1c017d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-27T18:06:57Z",
+      "side": 1,
+      "message": "Space after .",
+      "revId": "35a1bae6372e7131218034b3ade70724ac602cfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3bafe99_0d4f1582",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-27T18:06:57Z",
+      "side": 1,
+      "message": "Hmm. This changes how much of the summary is set; is this intended? Since this is moved above. I guess the below iteration summary was not pushed into the vector?",
+      "revId": "35a1bae6372e7131218034b3ade70724ac602cfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3bafe99_ed45e15e",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-11-27T18:06:57Z",
+      "side": 1,
+      "message": "Space after .",
+      "revId": "35a1bae6372e7131218034b3ade70724ac602cfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
