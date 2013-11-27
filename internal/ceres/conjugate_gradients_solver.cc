@@ -74,7 +74,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   CHECK_EQ(A->num_rows(), A->num_cols());
 
   LinearSolver::Summary summary;
-  summary.termination_type = MAX_ITERATIONS;
+  summary.termination_type = LINEAR_SOLVER_NO_CONVERGENCE;
   summary.message = "Maximum number of iterations reached.";
   summary.num_iterations = 0;
 
@@ -85,7 +85,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   const double norm_b = bref.norm();
   if (norm_b == 0.0) {
     xref.setZero();
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = LINEAR_SOLVER_SUCCESS;
     summary.message = "Convergence. |b| = 0.";
     return summary;
   }
@@ -102,7 +102,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   r = bref - tmp;
   double norm_r = r.norm();
   if (norm_r <= tol_r) {
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = LINEAR_SOLVER_SUCCESS;
     summary.message =
         StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
     return summary;
@@ -127,7 +127,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     double last_rho = rho;
     rho = r.dot(z);
     if (IsZeroOrInfinity(rho)) {
-      summary.termination_type = FAILURE;
+      summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message = StringPrintf("Numerical failure. rho = r'z = %e.", rho);
       break;
     };
@@ -137,7 +137,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     } else {
       double beta = rho / last_rho;
       if (IsZeroOrInfinity(beta)) {
-        summary.termination_type = FAILURE;
+        summary.termination_type = LINEAR_SOLVER_FAILURE;
         summary.message = StringPrintf(
             "Numerical failure. beta = rho_n / rho_{n-1} = %e.", beta);
         break;
@@ -150,14 +150,14 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     A->RightMultiply(p.data(), q.data());
     const double pq = p.dot(q);
     if ((pq <= 0) || IsInfinite(pq))  {
-      summary.termination_type = FAILURE;
+      summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message = StringPrintf("Numerical failure. p'q = %e.", pq);
       break;
     }
 
     const double alpha = rho / pq;
     if (IsInfinite(alpha)) {
-      summary.termination_type = FAILURE;
+      summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message =
           StringPrintf("Numerical failure. alpha = rho / pq = %e", alpha);
       break;
@@ -208,7 +208,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     //
     const double zeta = summary.num_iterations * (Q1 - Q0) / Q1;
     if (zeta < per_solve_options.q_tolerance) {
-      summary.termination_type = TOLERANCE;
+      summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
           StringPrintf("Convergence: zeta = %e < %e",
                        zeta,
@@ -220,7 +220,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     // Residual based termination.
     norm_r = r. norm();
     if (norm_r <= tol_r) {
-      summary.termination_type = TOLERANCE;
+      summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
           StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
       break;

@@ -51,26 +51,19 @@ namespace ceres {
 namespace internal {
 
 enum LinearSolverTerminationType {
-  // Termination criterion was met. For factorization based solvers
-  // the tolerance is assumed to be zero. Any user provided values are
-  // ignored.
-  TOLERANCE,
+  // Termination criterion was met.
+  LINEAR_SOLVER_SUCCESS,
 
   // Solver ran for max_num_iterations and terminated before the
-  // termination tolerance could be satified.
-  MAX_ITERATIONS,
+  // termination tolerance could be satisfied.
+  LINEAR_SOLVER_NO_CONVERGENCE,
 
-  // Solver is stuck and further iterations will not result in any
-  // measurable progress.
-  STAGNATION,
-
-  // Solver failed. Solver was terminated due to numerical errors. The
-  // exact cause of failure depends on the particular solver being
-  // used.
-  FAILURE,
+  // Solver was terminated due to numerical problems, generally due to
+  // the linear system being poorly conditioned.
+  LINEAR_SOLVER_FAILURE,
 
   // Solver failed with a fatal error that cannot be recovered from.
-  FATAL_ERROR
+  LINEAR_SOLVER_FATAL_ERROR
 };
 
 
@@ -267,7 +260,7 @@ class LinearSolver {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(LINEAR_SOLVER_FAILURE) {
     }
 
     double residual_norm;

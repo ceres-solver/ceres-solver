@@ -370,7 +370,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   // scaling is not needed, which is quite often in our experience.
   LinearSolverTerminationType status = Factorize();
 
-  if (status == FATAL_ERROR) {
+  if (status == LINEAR_SOLVER_FATAL_ERROR) {
     return false;
   }
 
@@ -379,7 +379,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   // belong to the edges of the degree-2 forest. In the CLUSTER_JACOBI
   // case, the preconditioner is guaranteed to be positive
   // semidefinite.
-  if (status == FAILURE && options_.type == CLUSTER_TRIDIAGONAL) {
+  if (status == LINEAR_SOLVER_FAILURE && options_.type == CLUSTER_TRIDIAGONAL) {
     VLOG(1) << "Unscaled factorization failed. Retrying with off-diagonal "
             << "scaling";
     ScaleOffDiagonalCells();
@@ -387,7 +387,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
   }
 
   VLOG(2) << "Compute time: " << time(NULL) - start_time;
-  return (status == TOLERANCE);
+  return (status == LINEAR_SOLVER_SUCCESS);
 }
 
 // Consider the preconditioner matrix as meta-block matrix, whose
@@ -444,7 +444,9 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   }
 
   const LinearSolverTerminationType termination_type =
-      (factor_ != NULL) ? ss_.Cholesky(lhs, factor_, &status) : FATAL_ERROR;
+      (factor_ != NULL)
+      ? ss_.Cholesky(lhs, factor_, &status)
+      : LINEAR_SOLVER_FATAL_ERROR;
 
   ss_.Free(lhs);
   return termination_type;

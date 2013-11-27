@@ -95,15 +95,15 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   Eigen::LLT<Matrix, Eigen::Upper> llt =
       lhs.selfadjointView<Eigen::Upper>().llt();
 
   if (llt.info() != Eigen::Success) {
-    summary.termination_type = FAILURE;
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "Eigen LLT decomposition failed.";
   } else {
-    summary.termination_type = TOLERANCE;
+    summary.termination_type = LINEAR_SOLVER_SUCCESS;
     summary.message = "Success.";
   }
 

@@ -454,7 +454,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
   LinearSolverTerminationType termination_type =
       ss.Cholesky(&cholmod_jacobian_view, factor, &status);
   event_logger.AddEvent("Numeric Factorization");
-  if (termination_type != TOLERANCE) {
+  if (termination_type != LINEAR_SOLVER_SUCCESS) {
     LOG(ERROR) << "Covariance estimation failed. "
                << "CHOLMOD numeric cholesky factorization returned with: "
                << status;

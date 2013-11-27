@@ -83,7 +83,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
       SolveReducedLinearSystem(reduced_solution);
   event_logger.AddEvent("ReducedSolve");
 
-  if (summary.termination_type == TOLERANCE) {
+  if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
     eliminator_->BackSubstitute(A, b, per_solve_options.D, reduced_solution, x);
     event_logger.AddEvent("BackSubstitute");
   }
@@ -116,7 +116,7 @@ LinearSolver::Summary
 DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
   const BlockRandomAccessDenseMatrix* m =
@@ -137,7 +137,7 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
         .selfadjointView<Eigen::Upper>()
         .llt();
     if (llt.info() != Eigen::Success) {
-      summary.termination_type = FAILURE;
+      summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message = "Eigen LLT decomposition failed.";
       return summary;
     }
@@ -275,7 +275,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
     double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
   TripletSparseMatrix* tsm =
@@ -325,13 +325,13 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
 
   if (factor_ == NULL) {
     ss_.Free(cholmod_lhs);
-    summary.termination_type = FATAL_ERROR;
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     return summary;
   }
 
   summary.termination_type =
       ss_.Cholesky(cholmod_lhs, factor_, &summary.message);
-  if (summary.termination_type != TOLERANCE) {
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
     return summary;
   }
 
@@ -344,7 +344,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   ss_.Free(cholmod_rhs);
 
   if (cholmod_solution == NULL) {
-    summary.termination_type = FAILURE;
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
     return summary;
   }
 
@@ -371,7 +371,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
     double* solution) {
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
   // Extract the TripletSparseMatrix that is used for actually storing S.
@@ -395,11 +395,11 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
   }
 
   if (cxsparse_factor_ == NULL) {
-    summary.termination_type = FATAL_ERROR;
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     summary.message =
         "CXSparse failure. Unable to find symbolic factorization.";
   } else if (!cxsparse_.SolveCholesky(lhs, cxsparse_factor_, solution)) {
-    summary.termination_type = FAILURE;
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "CXSparse::SolveCholesky failed.";
   }
 

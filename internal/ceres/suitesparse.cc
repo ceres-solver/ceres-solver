@@ -269,41 +269,41 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
   switch (cc_.status) {
     case CHOLMOD_NOT_INSTALLED:
       *status = "CHOLMOD failure: Method not installed.";
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
     case CHOLMOD_OUT_OF_MEMORY:
       *status = "CHOLMOD failure: Out of memory.";
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
     case CHOLMOD_TOO_LARGE:
       *status = "CHOLMOD failure: Integer overflow occured.";
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
     case CHOLMOD_INVALID:
       *status = "CHOLMOD failure: Invalid input.";
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
     case CHOLMOD_NOT_POSDEF:
       *status = "CHOLMOD warning: Matrix not positive definite.";
-      return FAILURE;
+      return LINEAR_SOLVER_FAILURE;
     case CHOLMOD_DSMALL:
       *status = "CHOLMOD warning: D for LDL' or diag(L) or "
                 "LL' has tiny absolute value.";
-      return FAILURE;
+      return LINEAR_SOLVER_FAILURE;
     case CHOLMOD_OK:
       if (cholmod_status != 0) {
-        return TOLERANCE;
+        return LINEAR_SOLVER_SUCCESS;
       }
 
       *status = "CHOLMOD failure: cholmod_factorize returned false "
                 "but cholmod_common::status is CHOLMOD_OK."
                 "Please report this to ceres-solver@googlegroups.com.";
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
     default:
       *status =
           StringPrintf("Unknown cholmod return code: %d. "
                        "Please report this to ceres-solver@googlegroups.com.",
                        cc_.status);
-      return FATAL_ERROR;
+      return LINEAR_SOLVER_FATAL_ERROR;
   }
 
-  return FATAL_ERROR;
+  return LINEAR_SOLVER_FATAL_ERROR;
 }
 
 cholmod_dense* SuiteSparse::Solve(cholmod_factor* L,
