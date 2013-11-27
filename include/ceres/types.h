@@ -301,40 +301,46 @@ enum DoglegType {
   SUBSPACE_DOGLEG
 };
 
-enum SolverTerminationType {
-  // The minimizer did not run at all; usually due to errors in the user's
-  // Problem or the solver options.
+enum TerminationType {
+  // The minimizer did not run at all; usually due to errors in the
+  // user's Problem or the solver options. The user's parameter blocks
+  // will not be updated.
   DID_NOT_RUN,
 
   // The solver ran for maximum number of iterations specified by the
   // user, but none of the convergence criterion specified by the user
-  // were met.
+  // were met. The user's parameter blocks will be updated with the
+  // solution found so far.
   NO_CONVERGENCE,
 
-  // Minimizer terminated because
-  //  (new_cost - old_cost) < function_tolerance * old_cost;
-  FUNCTION_TOLERANCE,
-
-  // Minimizer terminated because
-  // max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
-  GRADIENT_TOLERANCE,
-
-  // Minimized terminated because
-  //  |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
-  PARAMETER_TOLERANCE,
+  // Minimizer terminated because one of the convergence criterion set
+  // by the user was satisfied.
+  //
+  // 1.  (new_cost - old_cost) < function_tolerance * old_cost;
+  // 2.  max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
+  // 3.  |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
+  //
+  // The user's parameter blocks will be updated with the solution.
+  SUCCESS,
 
   // The minimizer terminated because it encountered a numerical error
   // that it could not recover from.
-  NUMERICAL_FAILURE,
+  //
+  // The user's parameter blocks will not be updated.
+  FAILURE,
 
   // Using an IterationCallback object, user code can control the
   // minimizer. The following enums indicate that the user code was
   // responsible for termination.
-
+  //
   // User's IterationCallback returned SOLVER_ABORT.
+  //
+  // The user's parameter blocks will not be updated.
   USER_ABORT,
 
-  // User's IterationCallback returned SOLVER_TERMINATE_SUCCESSFULLY
+  // User's IterationCallback returned SOLVER_TERMINATE_SUCCESSFULLY.
+  //
+  // The user's parameter blocks will be updated with the solution.
   USER_SUCCESS
 };
 
