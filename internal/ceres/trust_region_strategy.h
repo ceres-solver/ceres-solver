@@ -106,7 +106,7 @@ class TrustRegionStrategy {
     Summary()
         : residual_norm(0.0),
           num_iterations(-1),
-          termination_type(FAILURE) {
+          termination_type(LINEAR_SOLVER_FAILURE) {
     }
 
     // If the trust region problem is,

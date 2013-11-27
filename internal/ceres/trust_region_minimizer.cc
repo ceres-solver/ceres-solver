@@ -227,7 +227,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                               residuals.data(),
                               trust_region_step.data());
 
-    if (strategy_summary.termination_type == FATAL_ERROR) {
+    if (strategy_summary.termination_type == LINEAR_SOLVER_FATAL_ERROR) {
       summary->error =
           "Terminating. Linear solver failed due to unrecoverable "
           "non-numeric causes. Please see the error log for clues. ";
@@ -246,7 +246,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_is_successful = false;
 
     double model_cost_change = 0.0;
-    if (strategy_summary.termination_type != FAILURE) {
+    if (strategy_summary.termination_type != LINEAR_SOLVER_FAILURE) {
       // new_model_cost
       //  = 1/2 [f + J * step]^2
       //  = 1/2 [ f'f + 2f'J * step + step' * J' * J * step ]

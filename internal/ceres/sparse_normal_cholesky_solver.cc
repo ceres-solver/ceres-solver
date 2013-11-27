@@ -102,7 +102,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
   const int num_cols = A->num_cols();
@@ -150,13 +150,13 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   event_logger.AddEvent("Analysis");
 
   if (cxsparse_factor_ == NULL) {
-    summary.termination_type = FATAL_ERROR;
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     summary.message =
         "CXSparse failure. Unable to find symbolic factorization.";
   } else if (cxsparse_.SolveCholesky(AtA, cxsparse_factor_, Atb.data())) {
     VectorRef(x, Atb.rows()) = Atb;
   } else {
-    summary.termination_type = FAILURE;
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
   }
   event_logger.AddEvent("Solve");
 
@@ -185,7 +185,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     double * x) {
   EventLogger event_logger("SparseNormalCholeskySolver::SuiteSparse::Solve");
   LinearSolver::Summary summary;
-  summary.termination_type = TOLERANCE;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.num_iterations = 1;
   summary.message = "Success.";
 
@@ -220,12 +220,12 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     if (per_solve_options.D != NULL) {
       A->DeleteRows(num_cols);
     }
-    summary.termination_type = FATAL_ERROR;
+    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     return summary;
   }
 
   summary.termination_type = ss_.Cholesky(&lhs, factor_, &summary.message);
-  if (summary.termination_type != TOLERANCE) {
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
     if (per_solve_options.D != NULL) {
       A->DeleteRows(num_cols);
     }
@@ -245,7 +245,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     memcpy(x, sol->x, num_cols * sizeof(*x));
     ss_.Free(sol);
   } else {
-    summary.termination_type = FAILURE;
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
   }
 
   event_logger.AddEvent("Teardown");

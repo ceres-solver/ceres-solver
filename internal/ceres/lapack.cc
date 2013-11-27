@@ -73,7 +73,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
     string* status) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a BLAS library.";
-  return FATAL_ERROR;
+  return LINEAR_SOLVER_FATAL_ERROR;
 #else
   char uplo = 'L';
   int n = num_rows;
@@ -87,7 +87,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
                << "Please report it."
                << "LAPACK::dpotrf fatal error."
                << "Argument: " << -info << " is invalid.";
-    return FATAL_ERROR;
+    return LINEAR_SOLVER_FATAL_ERROR;
   }
 
   if (info > 0) {
@@ -95,7 +95,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
         StringPrintf(
             "LAPACK::dpotrf numerical failure. "
              "The leading minor of order %d  is not positive definite.", info);
-    return FAILURE;
+    return LINEAR_SOLVER_FAILURE;
   }
 
   dpotrs_(&uplo, &n, &nrhs, lhs, &n, rhs_and_solution, &n, &info);
@@ -104,11 +104,11 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
                << "Please report it."
                << "LAPACK::dpotrs fatal error."
                << "Argument: " << -info << " is invalid.";
-    return FATAL_ERROR;
+    return LINEAR_SOLVER_FATAL_ERROR;
   }
 
   *status = "Success";
-  return TOLERANCE;
+  return LINEAR_SOLVER_SUCCESS;
 #endif
 };
 
@@ -154,7 +154,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
     string* status) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a LAPACK library.";
-  return FATAL_ERROR;
+  return LINEAR_SOLVER_FATAL_ERROR;
 #else
   char trans = 'N';
   int m = num_rows;
@@ -185,7 +185,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
   }
 
   *status = "Success.";
-  return TOLERANCE;
+  return LINEAR_SOLVER_SUCCESS;
 #endif
 }
 
