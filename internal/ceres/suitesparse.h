@@ -1,4 +1,4 @@
-s// Ceres Solver - A fast non-linear least squares minimizer
+// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //

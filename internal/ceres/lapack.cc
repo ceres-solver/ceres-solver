@@ -70,7 +70,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
     int num_rows,
     const double* in_lhs,
     double* rhs_and_solution,
-    string* status) {
+    string* message) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a BLAS library.";
   return LINEAR_SOLVER_FATAL_ERROR;
@@ -91,7 +91,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
   }
 
   if (info > 0) {
-    *status =
+    *message =
         StringPrintf(
             "LAPACK::dpotrf numerical failure. "
              "The leading minor of order %d  is not positive definite.", info);
@@ -107,7 +107,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
     return LINEAR_SOLVER_FATAL_ERROR;
   }
 
-  *status = "Success";
+  *message = "Success";
   return LINEAR_SOLVER_SUCCESS;
 #endif
 };
@@ -151,7 +151,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
     int work_size,
     double* work,
     double* rhs_and_solution,
-    string* status) {
+    string* message) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a LAPACK library.";
   return LINEAR_SOLVER_FATAL_ERROR;
@@ -184,7 +184,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
                << "Argument: " << -info << " is invalid.";
   }
 
-  *status = "Success.";
+  *message = "Success.";
   return LINEAR_SOLVER_SUCCESS;
 #endif
 }

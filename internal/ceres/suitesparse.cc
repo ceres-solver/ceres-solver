@@ -287,7 +287,7 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
                 "LL' has tiny absolute value.";
       return LINEAR_SOLVER_FAILURE;
     case CHOLMOD_OK:
-      if (cholmod_message != 0) {
+      if (cholmod_status != 0) {
         return LINEAR_SOLVER_SUCCESS;
       }
 
