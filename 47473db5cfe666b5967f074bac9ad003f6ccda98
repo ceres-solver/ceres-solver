@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d566ff_20b48a6c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "From here on UNORDERED --\u003e UNURDERED in all CMake (C++ definitions are fine).",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23dfee24_de6e6544",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63d566ff_001a26c5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "Is it worth adding a comment here stating that this craziness is to support MSVC 2008?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e313169f_64d7aa8c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23dfee24_9e74dd1a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "Grammatical nitpick, but I\u0027m British :P, so I think this scans better: \"... cannot find either std::unordered_map or std::tr1::unordered_map.\"",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63d566ff_80c396d3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:15:49Z",
+      "side": 1,
+      "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
