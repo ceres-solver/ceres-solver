@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63d566ff_20dd6aac",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "63d566ff_20b48a6c",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23dfee24_de6e6544",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2013-11-28T19:15:49Z",
       "side": 1,
       "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e313169f_c4c77ed3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "23dfee24_de6e6544",
       "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e313169f_2482d27b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "Added it before HAVE_UNORDERED_MAP_IN_STD_NAMESPACE check.",
+      "parentUuid": "63d566ff_001a26c5",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e313169f_64d7aa8c",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2013-11-28T19:15:49Z",
       "side": 1,
       "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63d566ff_80dc76ae",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e313169f_64d7aa8c",
       "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e313169f_0487d68b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "I\u0027m russian so juct copy-pasted your suggestion. For me it\u0027s just as clear s it can be :)",
+      "parentUuid": "23dfee24_9e74dd1a",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63d566ff_80c396d3",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2013-11-28T19:15:49Z",
       "side": 1,
       "message": "Perhaps add a message stating where we found unordered_map/set?",
+      "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e313169f_648ccaac",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2013-11-28T19:38:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "63d566ff_80c396d3",
       "revId": "47473db5cfe666b5967f074bac9ad003f6ccda98",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
