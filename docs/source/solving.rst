@@ -316,9 +316,9 @@ Non-monotonic Steps
 -------------------
 
 Note that the basic trust-region algorithm described in
-:ref:`section-trust-region-methods` is a descent algorithm in that
-they only accepts a point if it strictly reduces the value of the
-objective function.
+:ref:`section-trust-region-methods` is a descent algorithm in that it
+only accepts a point if it strictly reduces the value of the objective
+function.
 
 Relaxing this requirement allows the algorithm to be more efficient in
 the long term at the cost of some local increase in the value of the

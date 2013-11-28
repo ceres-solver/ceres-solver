@@ -99,11 +99,12 @@ TEST(SolverImpl, RemoveFixedBlocksNothingConstant) {
     inner_iteration_ordering.AddElementToGroup(&z, 0);
 
     Program program(*problem.mutable_program());
-    EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                         &linear_solver_ordering,
-                                                         &inner_iteration_ordering,
-                                                         NULL,
-                                                         &error));
+    EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                    &program,
+                    &linear_solver_ordering,
+                    &inner_iteration_ordering,
+                    NULL,
+                    &error));
     EXPECT_EQ(program.NumParameterBlocks(), 3);
     EXPECT_EQ(program.NumResidualBlocks(), 3);
     EXPECT_EQ(linear_solver_ordering.NumElements(), 3);
@@ -127,11 +128,12 @@ TEST(SolverImpl, RemoveFixedBlocksAllParameterBlocksConstant) {
 
   Program program(problem.program());
   string error;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &linear_solver_ordering,
-                                                       &inner_iteration_ordering,
-                                                       NULL,
-                                                       &error));
+  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                  &program,
+                  &linear_solver_ordering,
+                  &inner_iteration_ordering,
+                  NULL,
+                  &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
   EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
@@ -160,11 +162,12 @@ TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
 
   Program program(problem.program());
   string error;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &linear_solver_ordering,
-                                                       &inner_iteration_ordering,
-                                                       NULL,
-                                                       &error));
+  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                  &program,
+                  &linear_solver_ordering,
+                  &inner_iteration_ordering,
+                  NULL,
+                  &error));
   EXPECT_EQ(program.NumParameterBlocks(), 0);
   EXPECT_EQ(program.NumResidualBlocks(), 0);
   EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
@@ -198,11 +201,12 @@ TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
 
   Program program(problem.program());
   string error;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &linear_solver_ordering,
-                                                       &inner_iteration_ordering,
-                                                       NULL,
-                                                       &error));
+  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                  &program,
+                  &linear_solver_ordering,
+                  &inner_iteration_ordering,
+                  NULL,
+                  &error));
   EXPECT_EQ(program.NumParameterBlocks(), 1);
   EXPECT_EQ(program.NumResidualBlocks(), 1);
   EXPECT_EQ(linear_solver_ordering.NumElements(), 1);
@@ -235,11 +239,12 @@ TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
 
   Program program(problem.program());
   string error;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &linear_solver_ordering,
-                                                       &inner_iteration_ordering,
-                                                       NULL,
-                                                       &error));
+  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                  &program,
+                  &linear_solver_ordering,
+                  &inner_iteration_ordering,
+                  NULL,
+                  &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
   EXPECT_EQ(linear_solver_ordering.NumElements(), 2);
@@ -283,11 +288,12 @@ TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
                                    scratch.get());
 
   string error;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(&program,
-                                                       &linear_solver_ordering,
-                                                       NULL,
-                                                       &fixed_cost,
-                                                       &error));
+  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
+                  &program,
+                  &linear_solver_ordering,
+                  NULL,
+                  &fixed_cost,
+                  &error));
   EXPECT_EQ(program.NumParameterBlocks(), 2);
   EXPECT_EQ(program.NumResidualBlocks(), 2);
   EXPECT_EQ(linear_solver_ordering.NumElements(), 2);

@@ -470,7 +470,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
     LOG(ERROR) << "Cholesky factorization of J'J is not reliable. "
                << "Reciprocal condition number: "
                << reciprocal_condition_number << " "
-               << "min_reciprocal_condition_number : "
+               << "min_reciprocal_condition_number: "
                << options_.min_reciprocal_condition_number;
     ss.Free(factor);
     return false;
@@ -822,7 +822,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
         LOG(ERROR) << "Cholesky factorization of J'J is not reliable. "
                    << "Reciprocal condition number: "
                    << singular_value_ratio * singular_value_ratio << " "
-                   << "min_reciprocal_condition_number : "
+                   << "min_reciprocal_condition_number: "
                    << options_.min_reciprocal_condition_number;
         return false;
       }

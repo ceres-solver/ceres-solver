@@ -138,7 +138,7 @@ int LAPACK::EstimateWorkSizeForQR(int num_rows, int num_cols) {
     LOG(FATAL) << "Congratulations, you found a bug in Ceres."
                << "Please report it."
                << "LAPACK::dgels fatal error."
-               << "Argument: " << info << " is invalid.";
+               << "Argument: " << -info << " is invalid.";
   }
   return static_cast<int>(work);
 #endif
