@@ -403,19 +403,55 @@ ELSE (OPENMP)
 ENDIF (OPENMP)
 
 Include(CheckIncludeFileCXX)
-CHECK_INCLUDE_FILE_CXX(unordered_map UNORDERED_MAP_IN_STD_NAMESPACE)
-If (UNORDERED_MAP_IN_STD_NAMESPACE)
-  ADD_DEFINITIONS(-DCERES_STD_UNORDERED_MAP)
-ELSE (UNORDERED_MAP_IN_STD_NAMESPACE)
+CHECK_INCLUDE_FILE_CXX(unordered_map HAVE_STD_UNORDERED_MAP_HEADER)
+IF (HAVE_STD_UNORDERED_MAP_HEADER)
+  # Even so we've found unordered_map header file it doesn't
+  # mean unordered_map and unordered_set will be declared in
+  # std namespace.
+  #
+  # Namely, MSVC 2008 have unordered_map header which declares
+  # unordered_map class in std::tr1 namespace. In order to support
+  # this, we do extra check to see which exactly namespace is
+  # to be used.
+
+  INCLUDE (CheckCXXSourceCompiles)
+  CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
+                            int main() {
+                              std::unordered_map<int, int> map;
+                              return 0;
+                            }"
+                            HAVE_UNURDERED_MAP_IN_STD_NAMESPACE)
+  IF (HAVE_UNURDERED_MAP_IN_STD_NAMESPACE)
+    ADD_DEFINITIONS(-DCERES_STD_UNORDERED_MAP)
+    MESSAGE("-- Found unordered_map/set in std namespace.")
+  ELSE (HAVE_UNURDERED_MAP_IN_STD_NAMESPACE)
+    CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
+                              int main() {
+                                std::tr1::unordered_map<int, int> map;
+                                return 0;
+                              }"
+                              HAVE_UNURDERED_MAP_IN_TR1_NAMESPACE)
+    IF (HAVE_UNURDERED_MAP_IN_TR1_NAMESPACE)
+      ADD_DEFINITIONS(-DCERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
+      MESSAGE("-- Found unordered_map/set in std::tr1 namespace.")
+    ELSE (HAVE_UNURDERED_MAP_IN_TR1_NAMESPACE)
+      MESSAGE("-- Found <unordered_map> but cannot find either std::unordered_map "
+              "or std::tr1::unordered_map.")
+      MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
+      ADD_DEFINITIONS(-DCERES_NO_UNORDERED_MAP)
+    ENDIF (HAVE_UNURDERED_MAP_IN_TR1_NAMESPACE)
+  ENDIF (HAVE_UNURDERED_MAP_IN_STD_NAMESPACE)
+ELSE (HAVE_STD_UNORDERED_MAP_HEADER)
   CHECK_INCLUDE_FILE_CXX("tr1/unordered_map" UNORDERED_MAP_IN_TR1_NAMESPACE)
   IF (UNORDERED_MAP_IN_TR1_NAMESPACE)
     ADD_DEFINITIONS(-DCERES_TR1_UNORDERED_MAP)
+    MESSAGE("-- Found unordered_map/set in std::tr1 namespace.")
   ELSE (UNORDERED_MAP_IN_TR1_NAMESPACE)
     MESSAGE("-- Unable to find <unordered_map> or <tr1/unordered_map>. ")
     MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
     ADD_DEFINITIONS(-DCERES_NO_UNORDERED_MAP)
   ENDIF (UNORDERED_MAP_IN_TR1_NAMESPACE)
-ENDIF (UNORDERED_MAP_IN_STD_NAMESPACE)
+ENDIF (HAVE_STD_UNORDERED_MAP_HEADER)
 
 INCLUDE_DIRECTORIES(
   include
