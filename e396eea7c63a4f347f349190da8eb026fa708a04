@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23dfee24_de03c567",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:57:46Z",
+      "side": 1,
+      "message": "We currently use all caps style for CMake commands, Include -\u003e INCLUDE (here and below).",
+      "revId": "e396eea7c63a4f347f349190da8eb026fa708a04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e313169f_a49522b3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:57:46Z",
+      "side": 1,
+      "message": "Include -\u003e INCLUDE",
+      "revId": "e396eea7c63a4f347f349190da8eb026fa708a04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63d566ff_2082ca7b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:57:46Z",
+      "side": 1,
+      "message": "UNURDERED -\u003e UNORDERED throughout (starts here).",
+      "revId": "e396eea7c63a4f347f349190da8eb026fa708a04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e313169f_e49f1acd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2013-11-28T19:57:46Z",
+      "side": 1,
+      "message": "Add tr1 prefix in name so that it\u0027s clearer which path was followed from the log messages: \"-- Found tr1/unordered_map/set in std::tr1 namespace.\"",
+      "revId": "e396eea7c63a4f347f349190da8eb026fa708a04",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
