@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "832b3ac2_ec29c39c",
+        "filename": "internal/ceres/collections_port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-02T07:18:11Z",
+      "side": 1,
+      "message": "Don\u0027t indent the structs; only the preprocessor defines.",
+      "revId": "c637d16f62aa156ffaae47e510a4542b9bd01889",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
