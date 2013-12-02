@@ -48,11 +48,20 @@
 #if defined(CERES_STD_UNORDERED_MAP)
 #  include <unordered_map>
 #  include <unordered_set>
-#  define CERES_HASH_NAMESPACE_START namespace std {
-#  define CERES_HASH_NAMESPACE_END }
+// MSVC 2008 defines unordered_map/set without the tr1 prefix but uses
+// the std::tr1 namespace.
+#  if _MSC_VER == 1500
+#    define CERES_HASH_NAMESPACE_START namespace std { namespace tr1 {
+#    define CERES_HASH_NAMESPACE_END } }
+#  else
+#    define CERES_HASH_NAMESPACE_START namespace std {
+#    define CERES_HASH_NAMESPACE_END }
+#  endif
 #endif
 
-#if !defined(CERES_NO_UNORDERED_MAP) && !defined(CERES_TR1_UNORDERED_MAP) && !defined(CERES_STD_UNORDERED_MAP)
+#if !defined(CERES_NO_UNORDERED_MAP) &&                                 \
+    !defined(CERES_TR1_UNORDERED_MAP) &&                                \
+    !defined(CERES_STD_UNORDERED_MAP)
 #error One of: CERES_NO_UNORDERED_MAP, CERES_TR1_UNORDERED_MAP, CERES_STD_UNORDERED_MAP must be defined!
 #endif
 
@@ -90,10 +99,19 @@ struct HashSet : std::tr1::unordered_set<K> {};
 #endif
 
 #if defined(CERES_STD_UNORDERED_MAP)
-template<typename K, typename V>
-struct HashMap : std::unordered_map<K, V> {};
-template<typename K>
-struct HashSet : std::unordered_set<K> {};
+// MSVC 2008 defines unordered_map/set without the tr1 prefix but uses
+// the std::tr1 namespace.
+#  if _MSC_VER == 1500
+    template<typename K, typename V>
+    struct HashMap : std::tr1::unordered_map<K, V> {};
+    template<typename K>
+    struct HashSet : std::tr1::unordered_set<K> {};
+#  else
+    template<typename K, typename V>
+    struct HashMap : std::unordered_map<K, V> {};
+    template<typename K>
+    struct HashSet : std::unordered_set<K> {};
+#  endif
 #endif
 
 #if defined(_WIN32) && !defined(__MINGW64__) && !defined(__MINGW32__)
