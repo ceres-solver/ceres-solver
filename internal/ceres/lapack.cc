@@ -94,7 +94,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
     *message =
         StringPrintf(
             "LAPACK::dpotrf numerical failure. "
-             "The leading minor of order %d  is not positive definite.", info);
+             "The leading minor of order %d is not positive definite.", info);
     return LINEAR_SOLVER_FAILURE;
   }
 

@@ -252,7 +252,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       // have already reached our specified maximum number of restarts,
       // terminate optimization.
       summary->error =
-          StringPrintf("Termination: Line search direction failure: specified "
+          StringPrintf("Terminating: Line search direction failure: specified "
                        "max_num_line_search_direction_restarts: %d reached.",
                        options.max_num_line_search_direction_restarts);
       summary->termination_type = NUMERICAL_FAILURE;

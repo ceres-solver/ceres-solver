@@ -138,7 +138,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
 
   if (cc_.status != CHOLMOD_OK) {
     *message = StringPrintf("cholmod_analyze failed. error code: %d",
-                           cc_.status);
+                            cc_.status);
     return NULL;
   }
 
@@ -173,7 +173,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
   }
   if (cc_.status != CHOLMOD_OK) {
     *message = StringPrintf("cholmod_analyze failed. error code: %d",
-                           cc_.status);
+                            cc_.status);
     return NULL;
   }
 
@@ -193,7 +193,7 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
   }
   if (cc_.status != CHOLMOD_OK) {
     *message = StringPrintf("cholmod_analyze failed. error code: %d",
-                           cc_.status);
+                            cc_.status);
     return NULL;
   }
 
@@ -292,8 +292,8 @@ LinearSolverTerminationType SuiteSparse::Cholesky(cholmod_sparse* A,
       }
 
       *message = "CHOLMOD failure: cholmod_factorize returned false "
-                "but cholmod_common::status is CHOLMOD_OK."
-                "Please report this to ceres-solver@googlegroups.com.";
+          "but cholmod_common::status is CHOLMOD_OK."
+          "Please report this to ceres-solver@googlegroups.com.";
       return LINEAR_SOLVER_FATAL_ERROR;
     default:
       *message =

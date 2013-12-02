@@ -155,10 +155,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
     summary->error = StringPrintf("Terminating: Gradient tolerance reached. "
-                                    "Relative gradient max norm: %e <= %e",
-                                    (iteration_summary.gradient_max_norm /
-                                     initial_gradient_max_norm),
-                                    options_.gradient_tolerance);
+                                  "Relative gradient max norm: %e <= %e",
+                                  (iteration_summary.gradient_max_norm /
+                                   initial_gradient_max_norm),
+                                  options_.gradient_tolerance);
     summary->termination_type = GRADIENT_TOLERANCE;
     VLOG_IF(1, is_not_silent) << summary->error;
     return;
