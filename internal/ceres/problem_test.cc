@@ -997,7 +997,9 @@ class ProblemEvaluateTest : public ::testing::Test {
                                   parameters_));
   }
 
-
+  void TearDown() {
+    EXPECT_TRUE(problem_.program().IsValid());
+  }
 
   void EvaluateAndCompare(const Problem::EvaluateOptions& options,
                           const int expected_num_rows,

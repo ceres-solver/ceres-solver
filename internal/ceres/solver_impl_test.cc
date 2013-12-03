@@ -794,6 +794,8 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   EXPECT_EQ(&y, problem.program().parameter_blocks()[1]->state());
   EXPECT_EQ(&z, problem.program().parameter_blocks()[2]->state());
   EXPECT_EQ(&w, problem.program().parameter_blocks()[3]->state());
+
+  EXPECT_TRUE(problem.program().IsValid());
 }
 
 TEST(SolverImpl, NoParameterBlocks) {
