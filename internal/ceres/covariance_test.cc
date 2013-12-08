@@ -727,7 +727,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
                                                       parameter_block_size_,
                                                       jacobian.data()),
                                 NULL,
-                                block_i );
+                                block_i);
       for (int j = i; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;
         all_covariance_blocks_.push_back(make_pair(block_i, block_j));
