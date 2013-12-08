@@ -1703,7 +1703,7 @@ elimination group [LiSaad]_.
      situation. The solver returns without updating the parameter
      blocks (unless ``Solver::Options::update_state_every_iteration`` is
      set true). Solver returns with ``Solver::Summary::termination_type``
-     set to ``USER_ABORT``.
+     set to ``USER_FAILURE``.
 
   #. ``SOLVER_TERMINATE_SUCCESSFULLY`` indicates that there is no need
      to optimize anymore (some user specified termination criterion
@@ -1832,14 +1832,14 @@ The three arrays will be:
 
    Type of minimization algorithm used.
 
-.. member:: SolverTerminationType Solver::Summary::termination_type
+.. member:: TerminationType Solver::Summary::termination_type
 
    The cause of the minimizer terminating.
 
-.. member:: string Solver::Summary::error
+.. member:: string Solver::Summary::message
 
-   If the solver did not run, or there was a failure, a description of
-   the error.
+   Reason why the solver terminated.
+
 
 .. member:: double Solver::Summary::initial_cost
 
