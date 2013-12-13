@@ -80,6 +80,8 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
   CXSparse cxsparse_;
   // Cached factorization
   cs_dis* cxsparse_factor_;
+  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
+  vector<int> pattern_;
 
   const LinearSolver::Options options_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
