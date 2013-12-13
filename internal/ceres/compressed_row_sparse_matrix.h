@@ -128,6 +128,14 @@ class CompressedRowSparseMatrix : public SparseMatrix {
       const double* diagonal,
       const vector<int>& blocks);
 
+  static CompressedRowSparseMatrix* CreateOuterProductMatrixAndProgram(
+      const CompressedRowSparseMatrix& m,
+      vector<int>* program);
+
+  static void ComputeOuterProduct(const CompressedRowSparseMatrix& m,
+                                  const vector<int>& program,
+                                  CompressedRowSparseMatrix* result);
+
  private:
   int num_rows_;
   int num_cols_;

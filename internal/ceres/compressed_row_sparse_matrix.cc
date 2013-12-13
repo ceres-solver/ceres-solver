@@ -380,6 +380,132 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   return transpose;
 }
 
+namespace {
+struct ProductTerm {
+  ProductTerm(const int row, const int col, const int index)
+      : row(row), col(col), index(index) {
+  }
+
+  bool operator<(const ProductTerm& right) const {
+    if (row == right.row) {
+      if (col == right.col) {
+        return index < right.index;
+      }
+      else {
+        return col < right.col;
+      }
+    } else {
+      return row < right.row;
+    }
+  }
+
+  int row;
+  int col;
+  int index;
+};
+
+CompressedRowSparseMatrix*
+CompressAndFillProgram(const int num_rows,
+                       const int num_cols,
+                       const vector<ProductTerm>& product,
+                       vector<int>* program) {
+  int num_nonzeros = 1;
+  for (int i = 1; i < product.size(); ++i) {
+    if (product[i].row != product[i-1].row ||
+        product[i].col != product[i-1].col) {
+      ++num_nonzeros;
+    }
+  }
+
+  CompressedRowSparseMatrix* matrix =
+      new CompressedRowSparseMatrix(num_rows, num_cols, num_nonzeros);
+
+  int* crsm_rows = matrix->mutable_rows();
+  std::fill(crsm_rows, crsm_rows + num_rows + 1, 0);
+  int* crsm_cols = matrix->mutable_cols();
+  std::fill(crsm_cols, crsm_cols + num_nonzeros, 0);
+
+  CHECK_NOTNULL(program)->clear();
+  program->resize(product.size());
+
+  int nnz = 0;
+  crsm_cols[0] = product[0].col;
+  ++crsm_rows[product[0].row + 1];
+  (*program)[product[0].index] = nnz;
+  for (int i = 1; i < product.size(); ++i) {
+    const ProductTerm& previous = product[i-1];
+    const ProductTerm& current = product[i];
+    if (previous.row != current.row || previous.col != current.col) {
+      crsm_cols[++nnz] = current.col;
+      ++crsm_rows[current.row + 1];
+    }
+
+    (*program)[current.index] = nnz;
+  }
+
+  for (int i = 1; i < num_rows + 1; ++i) {
+    crsm_rows[i] += crsm_rows[i-1];
+  }
+
+  return matrix;
+}
+
+}  // namespace
+
+CompressedRowSparseMatrix*
+CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
+      const CompressedRowSparseMatrix& m,
+      vector<int>* program) {
+  vector<ProductTerm> product;
+  const vector<int>& row_blocks = m.row_blocks();
+  int row_block_begin = 0;
+  for (int rblock = 0; rblock < row_blocks.size(); ++rblock) {
+    const int row_block_end = row_block_begin + row_blocks[rblock];
+    const int r = row_block_begin;
+    for (int idx1 = m.rows()[r]; idx1 < m.rows()[r + 1]; ++idx1) {
+      for (int idx2 = m.rows()[r]; idx2 <= idx1; ++idx2) {
+        product.push_back(ProductTerm(m.cols()[idx1], m.cols()[idx2], product.size()));
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+  CHECK_EQ(row_block_begin, m.num_rows());
+  sort(product.begin(), product.end());
+  return CompressAndFillProgram(m.num_cols(), m.num_cols(), product, program);
+}
+
+void CompressedRowSparseMatrix::ComputeOuterProduct(
+    const CompressedRowSparseMatrix& m,
+    const vector<int>& program,
+    CompressedRowSparseMatrix* result) {
+  result->SetZero();
+  double* values = result->mutable_values();
+  const vector<int>& row_blocks = m.row_blocks();
+
+  int cursor = 0;
+  int row_block_begin = 0;
+  const double* m_values = m.values();
+  const int* m_rows = m.rows();
+  for (int rblock = 0; rblock < row_blocks.size(); ++rblock) {
+    const int row_block_end = row_block_begin + row_blocks[rblock];
+    const int saved_cursor = cursor;
+    for (int r = row_block_begin; r < row_block_end; ++r) {
+      cursor = saved_cursor;
+      const int row_begin = m_rows[r];
+      const int row_end = m_rows[r + 1];
+      for (int idx1 = row_begin; idx1 < row_end; ++idx1) {
+        const double v1 =  m_values[idx1];
+        for (int idx2 = row_begin; idx2 <= idx1; ++idx2) {
+          values[program[cursor++]] += v1 * m_values[idx2];
+        }
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+
+  CHECK_EQ(row_block_begin, m.num_rows());
+  CHECK_EQ(cursor, program.size());
+}
 
 }  // namespace internal
 }  // namespace ceres
