@@ -31,6 +31,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 
 #include <algorithm>
+#include <numeric>
 #include <vector>
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/port.h"
@@ -150,6 +151,48 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
   CHECK_EQ(num_nonzeros(), num_rows);
 }
 
+CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
+                                                     const vector<int>& row_blocks) {
+  CHECK_NOTNULL(diagonal);
+  int nnz = 0;
+  num_rows_ = 0;
+  for (int i = 0; i < row_blocks.size(); ++i) {
+    num_rows_ += row_blocks[i];
+    nnz += row_blocks[i] * row_blocks[i];
+  }
+
+  num_cols_ = num_rows_;
+  rows_.resize(num_rows_ + 1, 0);
+  cols_.resize(nnz, 0);
+  values_.resize(nnz, 0.0);
+
+  row_blocks_ = row_blocks;
+  col_blocks_ = row_blocks;
+
+  nnz = 0;
+  int row_block_begin = 0;
+  for (int i = 0; i < row_blocks.size(); ++i) {
+    const int row_block_end = row_block_begin + row_blocks[i];
+    for (int r = row_block_begin; r < row_block_end; ++r) {
+      rows_[r + 1] = row_blocks[i];
+      for (int c = row_block_begin; c < row_block_end; ++c) {
+        cols_[nnz] = c;
+        if (c == r) {
+          values_[nnz] = diagonal[c];
+        }
+        ++nnz;
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+
+
+  for (int i = 1; i < num_rows_ + 1; ++i) {
+    rows_[i] += rows_[i-1];
+  }
+}
+
+
 CompressedRowSparseMatrix::~CompressedRowSparseMatrix() {
 }
 
@@ -215,9 +258,19 @@ void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
 
   num_rows_ -= delta_rows;
   rows_.resize(num_rows_ + 1);
+  int num_row_blocks = 0;
+  int num_rows = 0;
+  while (num_row_blocks < row_blocks_.size() &&
+         num_rows < num_rows_) {
+    num_rows += row_blocks_[num_row_blocks];
+    ++num_row_blocks;
+  }
+
+  row_blocks_.resize(num_row_blocks);
 }
 
 void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
+  CHECK(row_blocks_.size() == 0 || m.row_blocks().size() !=0);
   CHECK_EQ(m.num_cols(), num_cols_);
 
   if (cols_.size() < num_nonzeros() + m.num_nonzeros()) {
@@ -239,6 +292,7 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   }
 
   num_rows_ += m.num_rows();
+  row_blocks_.insert(row_blocks_.end(), m.row_blocks().begin(), m.row_blocks().end());
 }
 
 void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
