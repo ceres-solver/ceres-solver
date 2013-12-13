@@ -48,6 +48,152 @@
 
 namespace ceres {
 namespace internal {
+namespace {
+// Hack for now.
+
+struct RowColLessThan {
+  RowColLessThan(const int* rows, const int* cols)
+      : rows(rows), cols(cols) {
+  }
+
+  bool operator()(const int& x, const int& y) const {
+    if (rows[x] == rows[y]) {
+      return (cols[x] < cols[y]);
+    }
+    return (rows[x] < rows[y]);
+  }
+
+  const int* rows;
+  const int* cols;
+};
+
+CompressedRowSparseMatrix* FooFoo(const int num_rows,
+                                  const int num_cols,
+                                  const vector<int>& rows,
+                                  const vector<int>& cols,
+                                  vector<int>* pattern) {
+  EventLogger logger("compress");
+  CHECK_EQ(rows.size(), cols.size());
+  CHECK_GT(rows.size(), 1);
+  CHECK_NOTNULL(pattern)->clear();
+
+  vector<int> index(rows.size());
+  for (int i = 0; i < rows.size(); ++i) {
+    index[i] = i;
+  }
+
+  sort(index.begin(), index.end(), RowColLessThan(&rows[0], &cols[0]));
+  logger.AddEvent("sort");
+
+  int num_nonzeros = 1;
+  for (int i = 1; i < index.size(); ++i) {
+    if (rows[index[i-1]] != rows[index[i]] ||
+        cols[index[i-1]] != cols[index[i]]) {
+      ++num_nonzeros;
+    }
+  }
+
+  logger.AddEvent("nnz");
+  CompressedRowSparseMatrix* matrix =
+      new CompressedRowSparseMatrix(num_rows, num_cols, num_nonzeros);
+
+  int* crsm_rows = matrix->mutable_rows();
+  std::fill(crsm_rows, crsm_rows + num_rows + 1, 0);
+  int* crsm_cols = matrix->mutable_cols();
+  std::fill(crsm_cols, crsm_cols + num_nonzeros, 0);
+  pattern->resize(rows.size());
+
+
+  crsm_cols[0] = cols[index[0]];
+  crsm_rows[1] = 1;
+  (*pattern)[index[0]] = 0;
+  int nnz = 0;
+  for (int i = 1; i < index.size(); ++i) {
+    const int prev_idx = index[i-1];
+    const int cur_idx = index[i];
+
+    if (rows[prev_idx] != rows[cur_idx] ||  cols[prev_idx] != cols[cur_idx]) {
+      crsm_cols[++nnz] = cols[cur_idx];
+      ++crsm_rows[rows[cur_idx] + 1];
+    }
+
+    (*pattern)[index[i]] = nnz;
+  }
+
+  for (int i = 1; i < num_rows + 1; ++i) {
+    crsm_rows[i] += crsm_rows[i-1];
+  }
+
+  logger.AddEvent("fill");
+  //PrintCRSM(*matrix);
+  return matrix;
+}
+
+
+CompressedRowSparseMatrix* CreateOuterProductMatrix(
+    const CompressedRowSparseMatrix& m,
+    vector<int>* pattern) {
+  EventLogger logger("symbolic outer");
+  vector<int> rows;
+  vector<int> cols;
+
+  const vector<int>& row_blocks = m.row_blocks();
+  int row_block_begin = 0;
+  for (int rblock = 0; rblock < row_blocks.size(); ++rblock) {
+    const int row_block_end = row_block_begin + row_blocks[rblock];
+    //for (int r = row_block_begin; r < row_block_end; ++r)
+    const int r = row_block_begin;
+    {
+      for (int idx1 = m.rows()[r]; idx1 < m.rows()[r + 1]; ++idx1) {
+        for (int idx2 = m.rows()[r]; idx2 <= idx1; ++idx2) {
+          rows.push_back(m.cols()[idx1]);
+          cols.push_back(m.cols()[idx2]);
+        }
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+
+  CHECK_EQ(row_block_begin, m.num_rows());
+  logger.AddEvent("product");
+
+  CompressedRowSparseMatrix* value =
+      FooFoo(m.num_cols(), m.num_cols(), rows, cols, pattern);
+  logger.AddEvent("compress");
+  return value;
+}
+
+void ComputeOuterProduct(const CompressedRowSparseMatrix& m,
+                         const vector<int>& pattern,
+                         CompressedRowSparseMatrix* result) {
+  result->SetZero();
+  double* values = result->mutable_values();
+  const vector<int>& row_blocks = m.row_blocks();
+
+  int cursor = 0;
+  int row_block_begin = 0;
+  for (int rblock = 0; rblock < row_blocks.size(); ++rblock) {
+    const int row_block_end = row_block_begin + row_blocks[rblock];
+    const int saved_cursor = cursor;
+    for (int r = row_block_begin; r < row_block_end; ++r) {
+      cursor = saved_cursor;
+      const int row_begin = m.rows()[r];
+      const int row_end = m.rows()[r + 1];
+      for (int idx1 = row_begin; idx1 < row_end; ++idx1) {
+        const double v1 =  m.values()[idx1];
+        for (int idx2 = row_begin; idx2 <= idx1; ++idx2) {
+          values[pattern[cursor++]] += v1 * m.values()[idx2];
+        }
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+
+  CHECK_EQ(row_block_begin, m.num_rows());
+  CHECK_EQ(cursor, pattern.size());
+}
+
+} // namespace
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
@@ -112,14 +258,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
-    CompressedRowSparseMatrix D(per_solve_options.D, num_cols);
+    CompressedRowSparseMatrix D(per_solve_options.D, A->col_blocks());
     A->AppendRows(D);
   }
 
   VectorRef(x, num_cols).setZero();
-
-  // Wrap the augmented Jacobian in a compressed sparse column matrix.
-  cs_di At = cxsparse_.CreateSparseMatrixTransposeView(A);
 
   // Compute the normal equations. J'J delta = J'f and solve them
   // using a sparse Cholesky factorization. Notice that when compared
@@ -128,10 +271,14 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // factorized. CHOLMOD/SuiteSparse on the other hand can just work
   // off of Jt to compute the Cholesky factorization of the normal
   // equations.
-  cs_di* A2 = cxsparse_.TransposeMatrix(&At);
-  cs_di* AtA = cxsparse_.MatrixMatrixMultiply(&At, A2);
+  if (outer_product_.get() == NULL) {
+    outer_product_.reset(CreateOuterProductMatrix(*A, &pattern_));
+  }
 
-  cxsparse_.Free(A2);
+  ComputeOuterProduct(*A, pattern_, outer_product_.get());
+  cs_di AtA_view = cxsparse_.CreateSparseMatrixTransposeView(outer_product_.get());
+  cs_di* AtA = &AtA_view;
+
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
@@ -159,9 +306,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     summary.termination_type = LINEAR_SOLVER_FAILURE;
   }
   event_logger.AddEvent("Solve");
-
-  cxsparse_.Free(AtA);
-  event_logger.AddEvent("Teardown");
   return summary;
 }
 #else
@@ -196,7 +340,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
-    CompressedRowSparseMatrix D(per_solve_options.D, num_cols);
+    CompressedRowSparseMatrix D(per_solve_options.D, A->col_blocks());
     A->AppendRows(D);
   }
 
