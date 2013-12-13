@@ -75,6 +75,10 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // columns. The diagonal m(i,i) = diagonal(i);
   CompressedRowSparseMatrix(const double* diagonal, int num_rows);
 
+  // Build a square sparse diagonal matrix with num_rows rows and
+  // columns. The diagonal m(i,i) = diagonal(i);
+  CompressedRowSparseMatrix(const double* diagonal, const vector<int>& row_blocks);
+
   virtual ~CompressedRowSparseMatrix();
 
   // SparseMatrix interface.
@@ -88,7 +92,9 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   virtual void ToTextFile(FILE* file) const;
   virtual int num_rows() const { return num_rows_; }
   virtual int num_cols() const { return num_cols_; }
-  virtual int num_nonzeros() const { return rows_[num_rows_]; }
+  virtual int num_nonzeros() const {
+    CHECK_EQ(num_rows_ + 1, rows_.size());
+    return rows_[num_rows_]; }
   virtual const double* values() const { return &values_[0]; }
   virtual double* mutable_values() { return &values_[0]; }
 
