@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86c6f4a_b6c0c918",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-17T19:15:44Z",
+      "side": 1,
+      "message": "Or maximum time, right?",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86c6f4a_d6ef059b",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-17T19:15:44Z",
+      "side": 1,
+      "message": "I worry that someone will want to check this as an enum. Sometimes having no variable blocks is a bug. That number is exposed in summary somehow right? I guess the user can check for successful iterations and see 0.",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86c6f4a_f666c185",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-17T19:15:44Z",
+      "side": 1,
+      "message": "I\u0027m not convinced by the renames in this file of error -\u003e message. Here, I believe it is the case that error really is an error or nothing. Consider leaving the naming here as-is (and in the tests).",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
