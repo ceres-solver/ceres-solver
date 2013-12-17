@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c86c6f4a_568795b3",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-17T19:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86c6f4a_b6c0c918",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c86c6f4a_d6ef059b",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c86c6f4a_96f4ad40",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-17T19:20:09Z",
+      "side": 1,
+      "message": "This is both non-fatal as well as non-bad. Since if the user calls this -- part of some sort of automated sharding of problem etc, its perfectly okay to be returning this.",
+      "parentUuid": "c86c6f4a_d6ef059b",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c86c6f4a_f666c185",
         "filename": "internal/ceres/solver_impl.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2013-12-17T19:15:44Z",
       "side": 1,
       "message": "I\u0027m not convinced by the renames in this file of error -\u003e message. Here, I believe it is the case that error really is an error or nothing. Consider leaving the naming here as-is (and in the tests).",
+      "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c86c6f4a_561155ab",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-17T19:20:09Z",
+      "side": 1,
+      "message": "we are going to have a mishmash then.\n\nsome functions when they return with failure/termination actually cause the solver to terminate successfully (for e.g. if there are no non-constant blocks, and the message is not an error at all), others are actually errors.. message is more neutral.. and carries both meannigs.",
+      "parentUuid": "c86c6f4a_f666c185",
       "revId": "8988b4c7ea69636b9b7454c3baaf70b33ce21546",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
