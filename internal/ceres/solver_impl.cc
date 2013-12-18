@@ -208,6 +208,22 @@ void SummarizeOrdering(ParameterBlockOrdering* ordering,
   }
 }
 
+void SummarizeGivenProgram(const Program& program, Solver::Summary* summary) {
+  summary->num_parameter_blocks = program.NumParameterBlocks();
+  summary->num_parameters = program.NumParameters();
+  summary->num_effective_parameters = program.NumEffectiveParameters();
+  summary->num_residual_blocks = program.NumResidualBlocks();
+  summary->num_residuals = program.NumResiduals();
+}
+
+void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
+  summary->num_parameter_blocks_reduced = program.NumParameterBlocks();
+  summary->num_parameters_reduced = program.NumParameters();
+  summary->num_effective_parameters_reduced = program.NumEffectiveParameters();
+  summary->num_residual_blocks_reduced = program.NumResidualBlocks();
+  summary->num_residuals_reduced = program.NumResiduals();
+}
+
 }  // namespace
 
 void SolverImpl::TrustRegionMinimize(
@@ -351,29 +367,10 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
   summary->minimizer_type = TRUST_REGION;
-  summary->num_parameter_blocks = problem_impl->NumParameterBlocks();
-  summary->num_parameters = problem_impl->NumParameters();
-  summary->num_effective_parameters =
-      original_program->NumEffectiveParameters();
-  summary->num_residual_blocks = problem_impl->NumResidualBlocks();
-  summary->num_residuals = problem_impl->NumResiduals();
 
-  // Empty programs are usually a user error.
-  if (summary->num_parameter_blocks == 0) {
-    summary->message = "Problem contains no parameter blocks.";
-    LOG(ERROR) << summary->message;
-    return;
-  }
-
-  if (summary->num_residual_blocks == 0) {
-    summary->message = "Problem contains no residual blocks.";
-    LOG(ERROR) << summary->message;
-    return;
-  }
-
+  SummarizeGivenProgram(*original_program, summary);
   SummarizeOrdering(original_options.linear_solver_ordering,
                     &(summary->linear_solver_ordering_given));
-
   SummarizeOrdering(original_options.inner_iteration_ordering,
                     &(summary->inner_iteration_ordering_given));
 
@@ -475,13 +472,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   SummarizeOrdering(options.linear_solver_ordering,
                     &(summary->linear_solver_ordering_used));
-
-  summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
-  summary->num_parameters_reduced = reduced_program->NumParameters();
-  summary->num_effective_parameters_reduced =
-      reduced_program->NumEffectiveParameters();
-  summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
-  summary->num_residuals_reduced = reduced_program->NumResiduals();
+  SummarizeReducedProgram(*reduced_program, summary);
 
   if (summary->num_parameter_blocks_reduced == 0) {
     summary->preprocessor_time_in_seconds =
@@ -641,6 +632,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
   summary->minimizer_type = LINE_SEARCH;
+  SummarizeGivenProgram(*original_program, summary);
+
   summary->line_search_direction_type =
       original_options.line_search_direction_type;
   summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
@@ -649,13 +642,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
       original_options.line_search_interpolation_type;
   summary->nonlinear_conjugate_gradient_type =
       original_options.nonlinear_conjugate_gradient_type;
-
-  summary->num_parameter_blocks = original_program->NumParameterBlocks();
-  summary->num_parameters = original_program->NumParameters();
-  summary->num_residual_blocks = original_program->NumResidualBlocks();
-  summary->num_residuals = original_program->NumResiduals();
-  summary->num_effective_parameters =
-      original_program->NumEffectiveParameters();
 
   // Validate values for configuration parameters supplied by user.
   if ((original_options.line_search_direction_type == ceres::BFGS ||
@@ -739,19 +725,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  // Empty programs are usually a user error.
-  if (summary->num_parameter_blocks == 0) {
-    summary->message = "Problem contains no parameter blocks.";
-    LOG(ERROR) << summary->message;
-    return;
-  }
-
-  if (summary->num_residual_blocks == 0) {
-    summary->message = "Problem contains no residual blocks.";
-    LOG(ERROR) << summary->message;
-    return;
-  }
-
   Solver::Options options(original_options);
 
   // This ensures that we get a Block Jacobian Evaluator along with
@@ -759,7 +732,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // refactored to deal with the various bits of cleanups related to
   // line search.
   options.linear_solver_type = CGNR;
-
   options.linear_solver_ordering = NULL;
   options.inner_iteration_ordering = NULL;
 
@@ -824,13 +796,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  summary->num_parameter_blocks_reduced = reduced_program->NumParameterBlocks();
-  summary->num_parameters_reduced = reduced_program->NumParameters();
-  summary->num_residual_blocks_reduced = reduced_program->NumResidualBlocks();
-  summary->num_effective_parameters_reduced =
-      reduced_program->NumEffectiveParameters();
-  summary->num_residuals_reduced = reduced_program->NumResiduals();
-
+  SummarizeReducedProgram(*reduced_program, summary);
   if (summary->num_parameter_blocks_reduced == 0) {
     summary->preprocessor_time_in_seconds =
         WallTimeInSeconds() - solver_start_time;
