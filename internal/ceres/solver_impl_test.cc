@@ -803,8 +803,10 @@ TEST(SolverImpl, NoParameterBlocks) {
   Solver::Options options;
   Solver::Summary summary;
   SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, FAILURE);
-  EXPECT_EQ(summary.message, "Problem contains no parameter blocks.");
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Terminating: Function tolerance reached. "
+            "No non-constant parameter blocks found.");
 }
 
 TEST(SolverImpl, NoResiduals) {
@@ -814,8 +816,10 @@ TEST(SolverImpl, NoResiduals) {
   double x = 1;
   problem_impl.AddParameterBlock(&x, 1);
   SolverImpl::Solve(options, &problem_impl, &summary);
-  EXPECT_EQ(summary.termination_type, FAILURE);
-  EXPECT_EQ(summary.message, "Problem contains no residual blocks.");
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Terminating: Function tolerance reached. "
+            "No non-constant parameter blocks found.");
 }
 
 
