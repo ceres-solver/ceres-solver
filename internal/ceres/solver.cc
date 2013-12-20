@@ -40,19 +40,99 @@
 #include "ceres/wall_time.h"
 
 namespace ceres {
+
+using internal::StringAppendF;
+using internal::StringPrintf;
+
 namespace {
 
 void StringifyOrdering(const vector<int>& ordering, string* report) {
   if (ordering.size() == 0) {
-    internal::StringAppendF(report, "AUTOMATIC");
+    StringAppendF(report, "AUTOMATIC");
     return;
   }
 
   for (int i = 0; i < ordering.size() - 1; ++i) {
-    internal::StringAppendF(report, "%d, ", ordering[i]);
+    StringAppendF(report, "%d, ", ordering[i]);
   }
-  internal::StringAppendF(report, "%d", ordering.back());
+  StringAppendF(report, "%d", ordering.back());
 }
+
+string GradientProblemFullReport(const Solver::Summary& summary) {
+  string report =
+      "\n"
+      "Ceres Solver Report\n"
+      "-------------------\n";
+
+  StringAppendF(&report, "Parameters          % 25d\n",
+                summary.num_parameters);
+  if (summary.num_effective_parameters_reduced !=
+      summary.num_parameters_reduced) {
+    StringAppendF(&report, "Effective parameters% 25d\n",
+                  summary.num_parameters_reduced);
+  }
+
+  StringAppendF(&report, "\nMinimizer                 %19s\n", "LINE_SEARCH");
+
+  string line_search_direction_string;
+  if (summary.line_search_direction_type == LBFGS) {
+      line_search_direction_string = StringPrintf("LBFGS (%d)",
+                                                  summary.max_lbfgs_rank);
+  } else if (summary.line_search_direction_type ==
+             NONLINEAR_CONJUGATE_GRADIENT) {
+    line_search_direction_string =
+        NonlinearConjugateGradientTypeToString(
+              summary.nonlinear_conjugate_gradient_type);
+  } else {
+    line_search_direction_string =
+        LineSearchDirectionTypeToString(summary.line_search_direction_type);
+    }
+
+  StringAppendF(&report, "Line search direction     %19s\n",
+                line_search_direction_string.c_str());
+
+  const string line_search_type_string =
+      StringPrintf("%s %s",
+                   LineSearchInterpolationTypeToString(
+                       summary.line_search_interpolation_type),
+                   LineSearchTypeToString(summary.line_search_type));
+  StringAppendF(&report, "Line search type          %19s\n",
+                line_search_type_string.c_str());
+
+  StringAppendF(&report, "\nCost:\n");
+  StringAppendF(&report, "Initial        % 30e\n", summary.initial_cost);
+  if (summary.termination_type != FAILURE &&
+      summary.termination_type != USER_FAILURE) {
+    StringAppendF(&report, "Final          % 30e\n", summary.final_cost);
+    StringAppendF(&report, "Change         % 30e\n",
+                  summary.initial_cost - summary.final_cost);
+  }
+
+  StringAppendF(&report, "\nMinimizer iterations         % 16d\n",
+                summary.num_successful_steps + summary.num_unsuccessful_steps);
+
+  StringAppendF(&report, "\nTime (in seconds):\n");
+  StringAppendF(&report, "Preprocessor        %25.3f\n",
+                summary.preprocessor_time_in_seconds);
+
+  StringAppendF(&report, "\n  Cost evaluation     %23.3f\n",
+                summary.residual_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Gradient evaluation %23.3f\n",
+                summary.jacobian_evaluation_time_in_seconds);
+
+  StringAppendF(&report, "Minimizer           %25.3f\n\n",
+                summary.minimizer_time_in_seconds);
+
+  StringAppendF(&report, "Postprocessor        %24.3f\n",
+                summary.postprocessor_time_in_seconds);
+
+  StringAppendF(&report, "Total               %25.3f\n\n",
+                summary.total_time_in_seconds);
+
+  StringAppendF(&report, "Termination:        %25s\n",
+                TerminationTypeToString(summary.termination_type));
+  return report;
+};
 
 }  // namespace
 
@@ -74,6 +154,28 @@ void Solver::Solve(const Solver::Options& options,
       internal::WallTimeInSeconds() - start_time_seconds;
 }
 
+void Solver::Solve(const Solver::Options& options,
+                   const GradientProblem& problem,
+                   double* parameters,
+                   Solver::Summary* summary) {
+  double start_time_seconds = internal::WallTimeInSeconds();
+  if (options.minimizer_type == ceres::TRUST_REGION) {
+    LOG(WARNING) << "Gradient search problems are solved using the line "
+        "search minimizer. Ignoring all trust region minimizer related "
+        "settings.";
+  }
+
+#ifndef CERES_NO_LINE_SEARCH_MINIMIZER
+  internal::SolverImpl::LineSearchSolve(options, problem, parameters, summary);
+#else
+  LOG(FATAL) << "Ceres was compiled without the line search minimizer.";
+#endif
+
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
+};
+
+
 void Solve(const Solver::Options& options,
            Problem* problem,
            Solver::Summary* summary) {
@@ -81,10 +183,19 @@ void Solve(const Solver::Options& options,
   solver.Solve(options, problem, summary);
 }
 
+void Solve(const Solver::Options& options,
+           const GradientProblem& problem,
+           double* parameters,
+           Solver::Summary* summary) {
+  Solver solver;
+  solver.Solve(options, problem, parameters, summary);
+};
+
 Solver::Summary::Summary()
     // Invalid values for most fields, to ensure that we are not
     // accidentally reporting default values.
-    : minimizer_type(TRUST_REGION),
+    : problem_type(NONLINEAR_LEAST_SQUARES),
+      minimizer_type(TRUST_REGION),
       termination_type(FAILURE),
       message("ceres::Solve was not called."),
       initial_cost(-1.0),
@@ -131,9 +242,6 @@ Solver::Summary::Summary()
       max_lbfgs_rank(-1) {
 }
 
-using internal::StringAppendF;
-using internal::StringPrintf;
-
 string Solver::Summary::BriefReport() const {
   return StringPrintf("Ceres Solver Report: "
                       "Iterations: %d, "
@@ -147,6 +255,10 @@ string Solver::Summary::BriefReport() const {
 };
 
 string Solver::Summary::FullReport() const {
+  if (problem_type == GRADIENT) {
+    return GradientProblemFullReport(*this);
+  }
+
   string report =
       "\n"
       "Ceres Solver Report\n"
