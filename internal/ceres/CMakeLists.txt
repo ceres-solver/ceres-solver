@@ -81,6 +81,7 @@ SET(CERES_INTERNAL_SRC
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
+    positive_function_solver.cc
     preconditioner.cc
     problem.cc
     problem_impl.cc

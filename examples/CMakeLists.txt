@@ -40,6 +40,9 @@ TARGET_LINK_LIBRARIES(helloworld_analytic_diff ceres)
 ADD_EXECUTABLE(curve_fitting curve_fitting.cc)
 TARGET_LINK_LIBRARIES(curve_fitting ceres)
 
+ADD_EXECUTABLE(positive_function_solver_example positive_function_solver_example.cc)
+TARGET_LINK_LIBRARIES(positive_function_solver_example ceres)
+
 ADD_EXECUTABLE(curve_fitting_c curve_fitting.c)
 TARGET_LINK_LIBRARIES(curve_fitting_c ceres)
 # As this is a C file #including <math.h> we have to explicitly add the math
