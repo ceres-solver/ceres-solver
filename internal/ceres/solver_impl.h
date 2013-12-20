@@ -75,6 +75,11 @@ class SolverImpl {
                               ProblemImpl* problem_impl,
                               Solver::Summary* summary);
 
+  static void LineSearchSolve(const Solver::Options& options,
+                              const FirstOrderProblem& problem,
+                              double* parameters,
+                              Solver::Summary* summary);
+
   // Run the LineSearchMinimizer for the given evaluator and configuration.
   static void LineSearchMinimize(const Solver::Options &options,
                                  Program* program,
