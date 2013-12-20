@@ -56,6 +56,11 @@ class SolverImpl {
                     ProblemImpl* problem_impl,
                     Solver::Summary* summary);
 
+  static void LineSearchSolve(const Solver::Options& options,
+                              const NonlinearProblem& problem,
+                              double* parameters,
+                              Solver::Summary* summary);
+
   static void TrustRegionSolve(const Solver::Options& options,
                                ProblemImpl* problem_impl,
                                Solver::Summary* summary);
