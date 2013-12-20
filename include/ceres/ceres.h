@@ -49,6 +49,7 @@
 #include "ceres/jet.h"
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
+#include "ceres/nonlinear_problem.h"
 #include "ceres/numeric_diff_cost_function.h"
 #include "ceres/numeric_diff_functor.h"
 #include "ceres/ordered_groups.h"

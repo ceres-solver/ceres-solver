@@ -74,12 +74,34 @@ void Solver::Solve(const Solver::Options& options,
       internal::WallTimeInSeconds() - start_time_seconds;
 }
 
+void Solver::Solve(const Solver::Options& options,
+                   const NonlinearProblem& problem,
+                   double* parameters,
+                   Solver::Summary* summary) {
+  double start_time_seconds = internal::WallTimeInSeconds();
+  // For now be strict about this. So that the user is under no illusion.
+  CHECK_EQ(options.minimizer_type, ceres::LINE_SEARCH)
+      << "ceres::Solver::Options::minimizer_type needs to be ceres::LINE_SEARCH";
+  internal::SolverImpl::LineSearchSolve(options, problem, parameters, summary);
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
+};
+
+
 void Solve(const Solver::Options& options,
            Problem* problem,
            Solver::Summary* summary) {
   Solver solver;
   solver.Solve(options, problem, summary);
 }
+
+void Solve(const Solver::Options& options,
+           const NonlinearProblem& problem,
+           double* parameters,
+           Solver::Summary* summary) {
+  Solver solver;
+  solver.Solve(options, problem, parameters, summary);
+};
 
 Solver::Summary::Summary()
     // Invalid values for most fields, to ensure that we are not
