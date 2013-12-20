@@ -43,6 +43,7 @@
 
 namespace ceres {
 
+class NonlinearProblem;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -938,11 +939,32 @@ class Solver {
   virtual void Solve(const Options& options,
                      Problem* problem,
                      Solver::Summary* summary);
+
+  virtual void Solve(const Solver::Options& options,
+                     const NonlinearProblem& problem,
+                     double* parameters,
+                     Solver::Summary* summary);
 };
 
 // Helper function which avoids going through the interface.
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary);
+
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+// WARNING: THIS IS EXPERIMENTAL CODE. THE API WILL CHANGE.
+
+// Solve a non-linear problem using the line search based
+// minimizer. All options related to the trust region minimizer are
+// ignored.
+void Solve(const Solver::Options& options,
+           const NonlinearProblem& problem,
+           double* parameters,
            Solver::Summary* summary);
 
 }  // namespace ceres
