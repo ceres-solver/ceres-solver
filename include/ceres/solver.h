@@ -44,6 +44,7 @@
 namespace ceres {
 
 class Problem;
+struct Function;
 
 // Interface for non-linear least squares solvers.
 class Solver {
@@ -938,11 +939,23 @@ class Solver {
   virtual void Solve(const Options& options,
                      Problem* problem,
                      Solver::Summary* summary);
+
+  virtual void Solve(const Solver::Options& options,
+                     const Function& function,
+                     const int num_parameters,
+                     double* parameters,
+                     Solver::Summary* summary);
 };
 
 // Helper function which avoids going through the interface.
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary);
+
+void Solve(const Solver::Options& options,
+           const Function& function,
+           const int num_parameters,
+           double* parameters,
            Solver::Summary* summary);
 
 }  // namespace ceres
