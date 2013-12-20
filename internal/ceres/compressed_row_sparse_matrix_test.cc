@@ -76,6 +76,14 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
 
     num_rows = tsm->num_rows();
     num_cols = tsm->num_cols();
+
+    vector<int>* row_blocks = crsm->mutable_row_blocks();
+    row_blocks->resize(num_rows);
+    std::fill(row_blocks->begin(), row_blocks->end(), 1);
+
+    vector<int>* col_blocks = crsm->mutable_col_blocks();
+    col_blocks->resize(num_cols);
+    std::fill(col_blocks->begin(), col_blocks->end(), 1);
   }
 
   int num_rows;
@@ -126,6 +134,9 @@ TEST_F(CompressedRowSparseMatrixTest, Scale) {
 }
 
 TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
+  // Clear the row and column blocks as these are purely scalar tests.
+  crsm->mutable_row_blocks()->clear();
+  crsm->mutable_col_blocks()->clear();
   for (int i = 0; i < num_rows; ++i) {
     tsm->Resize(num_rows - i, num_cols);
     crsm->DeleteRows(crsm->num_rows() - tsm->num_rows());
@@ -134,6 +145,10 @@ TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
 }
 
 TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
+  // Clear the row and column blocks as these are purely scalar tests.
+  crsm->mutable_row_blocks()->clear();
+  crsm->mutable_col_blocks()->clear();
+
   for (int i = 0; i < num_rows; ++i) {
     TripletSparseMatrix tsm_appendage(*tsm);
     tsm_appendage.Resize(i, num_cols);
@@ -144,6 +159,47 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
 
     CompareMatrices(tsm.get(), crsm.get());
   }
+}
+
+TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
+  int num_diagonal_rows = crsm->num_cols();
+
+  scoped_array<double> diagonal(new double[num_diagonal_rows]);
+  for (int i = 0; i < num_diagonal_rows; ++i) {
+    diagonal[i] =i;
+  }
+
+  vector<int> row_and_column_blocks;
+  row_and_column_blocks.push_back(1);
+  row_and_column_blocks.push_back(2);
+  row_and_column_blocks.push_back(2);
+
+  const vector<int> pre_row_blocks = crsm->row_blocks();
+  const vector<int> pre_col_blocks = crsm->col_blocks();
+
+  scoped_ptr<CompressedRowSparseMatrix> appendage(
+      CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
+          diagonal.get(), row_and_column_blocks));
+  LOG(INFO) << appendage->row_blocks().size();
+
+  crsm->AppendRows(*appendage);
+
+  const vector<int> post_row_blocks = crsm->row_blocks();
+  const vector<int> post_col_blocks = crsm->col_blocks();
+
+  vector<int> expected_row_blocks = pre_row_blocks;
+  expected_row_blocks.insert(expected_row_blocks.end(),
+                             row_and_column_blocks.begin(),
+                             row_and_column_blocks.end());
+
+  vector<int> expected_col_blocks = pre_col_blocks;
+
+  EXPECT_EQ(expected_row_blocks, crsm->row_blocks());
+  EXPECT_EQ(expected_col_blocks, crsm->col_blocks());
+
+  crsm->DeleteRows(num_diagonal_rows);
+  EXPECT_EQ(crsm->row_blocks(), pre_row_blocks);
+  EXPECT_EQ(crsm->col_blocks(), pre_col_blocks);
 }
 
 TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
