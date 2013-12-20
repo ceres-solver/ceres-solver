@@ -44,6 +44,7 @@
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
+#include "ceres/nonlinear_problem.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
@@ -59,6 +60,75 @@
 namespace ceres {
 namespace internal {
 namespace {
+
+
+class NonlinearProblemEvaluator : public Evaluator {
+ public:
+  NonlinearProblemEvaluator(const NonlinearProblem& problem)
+      : problem_(problem) {
+  }
+
+  virtual ~NonlinearProblemEvaluator() {}
+  virtual SparseMatrix* CreateJacobian() const { return NULL; }
+
+  // Evaluate the cost function for the given state. Returns the cost,
+  // residuals, and jacobian in the corresponding arguments. Both residuals and
+  // jacobian are optional; to avoid computing them, pass NULL.
+  //
+  // If non-NULL, the Jacobian must have a suitable sparsity pattern; only the
+  // values array of the jacobian is modified.
+  //
+  // state is an array of size NumParameters(), cost is a pointer to a single
+  // double, and residuals is an array of doubles of size NumResiduals().
+  virtual bool Evaluate(const EvaluateOptions& evaluate_options,
+                        const double* state,
+                        double* cost,
+                        double* residuals,
+                        double* gradient,
+                        SparseMatrix* jacobian) {
+    ScopedExecutionTimer total_timer("Evaluator::Total", &execution_summary_);
+    ScopedExecutionTimer call_type_timer(gradient == NULL && jacobian == NULL
+                                         ? "Evaluator::Residual"
+                                         : "Evaluator::Jacobian",
+                                         &execution_summary_);
+    return problem_.Evaluate(state, cost, gradient);
+  }
+
+  virtual bool Plus(const double* state,
+                    const double* delta,
+                    double* state_plus_delta) const {
+    for (int i = 0; i < NumParameters(); ++i) {
+      state_plus_delta[i] = state[i] + delta[i];
+    }
+    return true;
+  }
+
+  virtual int NumParameters() const {
+    return problem_.NumParameters();
+  }
+
+  virtual int NumEffectiveParameters()  const {
+    return NumParameters();
+  }
+
+  // The number of residuals in the optimization problem.
+  virtual int NumResiduals() const {
+    return 1;
+  }
+
+  virtual map<string, int> CallStatistics() const {
+    return execution_summary_.calls();
+  }
+
+  virtual map<string, double> TimeStatistics() const {
+    return execution_summary_.times();
+  }
+
+ private:
+  const NonlinearProblem& problem_;
+  ::ceres::internal::ExecutionSummary execution_summary_;
+};
+
 
 // Callback for updating the user's parameter blocks. Updates are only
 // done if the step is successful.
@@ -620,6 +690,188 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
+bool AreLineSearchOptionsValid(const Solver::Options& options,
+                               string* message) {
+  // Validate values for configuration parameters supplied by user.
+  if ((options.line_search_direction_type == ceres::BFGS ||
+       options.line_search_direction_type == ceres::LBFGS) &&
+      options.line_search_type != ceres::WOLFE) {
+    *message =
+        string("Invalid configuration: require line_search_type == "
+               "ceres::WOLFE when using (L)BFGS to ensure that underlying "
+               "assumptions are guaranteed to be satisfied.");
+    return false;
+  }
+  if (options.max_lbfgs_rank <= 0) {
+    *message =
+        string("Invalid configuration: require max_lbfgs_rank > 0");
+    return false;
+  }
+  if (options.min_line_search_step_size <= 0.0) {
+    *message =
+        "Invalid configuration: min_line_search_step_size <= 0.0.";
+    return false;
+  }
+  if (options.line_search_sufficient_function_decrease <= 0.0) {
+    *message =
+        string("Invalid configuration: require ") +
+        string("line_search_sufficient_function_decrease <= 0.0.");
+    return false;
+  }
+  if (options.max_line_search_step_contraction <= 0.0 ||
+      options.max_line_search_step_contraction >= 1.0) {
+    *message = string("Invalid configuration: require ") +
+        string("0.0 < max_line_search_step_contraction < 1.0.");
+    return false;
+  }
+  if (options.min_line_search_step_contraction <=
+      options.max_line_search_step_contraction ||
+      options.min_line_search_step_contraction > 1.0) {
+    *message = string("Invalid configuration: require ") +
+        string("max_line_search_step_contraction < ") +
+        string("min_line_search_step_contraction <= 1.0.");
+    return false;
+  }
+  // Warn user if they have requested BISECTION interpolation, but constraints
+  // on max/min step size change during line search prevent bisection scaling
+  // from occurring. Warn only, as this is likely a user mistake, but one which
+  // does not prevent us from continuing.
+  LOG_IF(WARNING,
+         (options.line_search_interpolation_type == ceres::BISECTION &&
+          (options.max_line_search_step_contraction > 0.5 ||
+           options.min_line_search_step_contraction < 0.5)))
+      << "Line search interpolation type is BISECTION, but specified "
+      << "max_line_search_step_contraction: "
+      << options.max_line_search_step_contraction << ", and "
+      << "min_line_search_step_contraction: "
+      << options.min_line_search_step_contraction
+      << ", prevent bisection (0.5) scaling, continuing with solve regardless.";
+  if (options.max_num_line_search_step_size_iterations <= 0) {
+    *message = string("Invalid configuration: require ") +
+        string("max_num_line_search_step_size_iterations > 0.");
+    return false;
+  }
+  if (options.line_search_sufficient_curvature_decrease <=
+      options.line_search_sufficient_function_decrease ||
+      options.line_search_sufficient_curvature_decrease > 1.0) {
+    *message = string("Invalid configuration: require ") +
+        string("line_search_sufficient_function_decrease < ") +
+        string("line_search_sufficient_curvature_decrease < 1.0.");
+    return false;
+  }
+  if (options.max_line_search_step_expansion <= 1.0) {
+    *message = string("Invalid configuration: require ") +
+        string("max_line_search_step_expansion > 1.0.");
+    return false;
+  }
+  return true;
+}
+
+void SolverImpl::LineSearchSolve(const Solver::Options& options,
+                                 const NonlinearProblem& problem,
+                                 double* parameters,
+                                 Solver::Summary* summary) {
+  double solver_start_time = WallTimeInSeconds();
+  const int num_parameters = problem.NumParameters();
+
+  // Reset the summary object to its default values.
+  *CHECK_NOTNULL(summary) = Solver::Summary();
+  summary->minimizer_type = LINE_SEARCH;
+  summary->num_parameter_blocks = 1;
+  summary->num_parameters = num_parameters;
+  summary->num_effective_parameters = num_parameters;
+  summary->num_residual_blocks = 1;
+  summary->num_residuals = 1;
+  summary->line_search_direction_type =
+      options.line_search_direction_type;
+  summary->max_lbfgs_rank = options.max_lbfgs_rank;
+  summary->line_search_type = options.line_search_type;
+  summary->line_search_interpolation_type =
+      options.line_search_interpolation_type;
+  summary->nonlinear_conjugate_gradient_type =
+      options.nonlinear_conjugate_gradient_type;
+  summary->num_threads_given = options.num_threads;
+  summary->fixed_cost = 0.0;
+  summary->num_parameter_blocks_reduced = 1;
+  summary->num_parameters_reduced = num_parameters;
+  summary->num_effective_parameters_reduced = num_parameters;
+  summary->num_residual_blocks_reduced = 1;
+  summary->num_residuals_reduced = 1;
+
+  if (!AreLineSearchOptionsValid(options, &summary->message)) {
+    LOG(WARNING) << summary->message;
+    return;
+  }
+
+  summary->num_threads_used = options.num_threads;
+#ifndef CERES_USE_OPENMP
+  if (options.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+  }
+  summary->num_threads_used = 1
+#endif  // CERES_USE_OPENMP
+
+  Vector working_parameters = VectorRef(parameters, num_parameters);
+
+  const double minimizer_start_time = WallTimeInSeconds();
+  summary->preprocessor_time_in_seconds =
+      minimizer_start_time - solver_start_time;
+
+  Minimizer::Options minimizer_options(options);
+  scoped_ptr<IterationCallback> file_logging_callback;
+  if (!options.solver_log.empty()) {
+    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       file_logging_callback.get());
+  }
+
+  LineSearchLoggingCallback logging_callback(
+      options.minimizer_progress_to_stdout);
+  if (options.logging_type != SILENT) {
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &logging_callback);
+  }
+
+  if (options.update_state_every_iteration) {
+    LOG(FATAL) << "Not supported";
+  }
+
+  NonlinearProblemEvaluator evaluator(problem);
+  minimizer_options.evaluator = &evaluator;
+  LineSearchMinimizer minimizer;
+  minimizer.Minimize(minimizer_options, working_parameters.data(), summary);
+
+  summary->minimizer_time_in_seconds =
+      WallTimeInSeconds() - minimizer_start_time;
+
+  // If the user aborted mid-optimization or the optimization
+  // terminated because of a numerical failure, then return without
+  // updating user state.
+  if (summary->termination_type == USER_FAILURE ||
+      summary->termination_type == FAILURE) {
+    return;
+  }
+
+  const double post_process_start_time = WallTimeInSeconds();
+
+  SetSummaryFinalCost(summary);
+  VectorRef(parameters, num_parameters) = working_parameters;
+  const map<string, double>& evaluator_time_statistics =
+      evaluator.TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
+  // Stick a fork in it, we're done.
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
+}
+
 void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
                                  ProblemImpl* original_problem_impl,
                                  Solver::Summary* summary) {
@@ -631,9 +883,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // Reset the summary object to its default values.
   *CHECK_NOTNULL(summary) = Solver::Summary();
 
-  summary->minimizer_type = LINE_SEARCH;
   SummarizeGivenProgram(*original_program, summary);
-
+  summary->minimizer_type = LINE_SEARCH;
   summary->line_search_direction_type =
       original_options.line_search_direction_type;
   summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
@@ -643,85 +894,8 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->nonlinear_conjugate_gradient_type =
       original_options.nonlinear_conjugate_gradient_type;
 
-  // Validate values for configuration parameters supplied by user.
-  if ((original_options.line_search_direction_type == ceres::BFGS ||
-       original_options.line_search_direction_type == ceres::LBFGS) &&
-      original_options.line_search_type != ceres::WOLFE) {
-    summary->message =
-        string("Invalid configuration: require line_search_type == "
-               "ceres::WOLFE when using (L)BFGS to ensure that underlying "
-               "assumptions are guaranteed to be satisfied.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.max_lbfgs_rank <= 0) {
-    summary->message =
-        string("Invalid configuration: require max_lbfgs_rank > 0");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.min_line_search_step_size <= 0.0) {
-    summary->message =
-        "Invalid configuration: min_line_search_step_size <= 0.0.";
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.line_search_sufficient_function_decrease <= 0.0) {
-    summary->message =
-        string("Invalid configuration: require ") +
-        string("line_search_sufficient_function_decrease <= 0.0.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.max_line_search_step_contraction <= 0.0 ||
-      original_options.max_line_search_step_contraction >= 1.0) {
-    summary->message = string("Invalid configuration: require ") +
-        string("0.0 < max_line_search_step_contraction < 1.0.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.min_line_search_step_contraction <=
-      original_options.max_line_search_step_contraction ||
-      original_options.min_line_search_step_contraction > 1.0) {
-    summary->message = string("Invalid configuration: require ") +
-        string("max_line_search_step_contraction < ") +
-        string("min_line_search_step_contraction <= 1.0.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  // Warn user if they have requested BISECTION interpolation, but constraints
-  // on max/min step size change during line search prevent bisection scaling
-  // from occurring. Warn only, as this is likely a user mistake, but one which
-  // does not prevent us from continuing.
-  LOG_IF(WARNING,
-         (original_options.line_search_interpolation_type == ceres::BISECTION &&
-          (original_options.max_line_search_step_contraction > 0.5 ||
-           original_options.min_line_search_step_contraction < 0.5)))
-      << "Line search interpolation type is BISECTION, but specified "
-      << "max_line_search_step_contraction: "
-      << original_options.max_line_search_step_contraction << ", and "
-      << "min_line_search_step_contraction: "
-      << original_options.min_line_search_step_contraction
-      << ", prevent bisection (0.5) scaling, continuing with solve regardless.";
-  if (original_options.max_num_line_search_step_size_iterations <= 0) {
-    summary->message = string("Invalid configuration: require ") +
-        string("max_num_line_search_step_size_iterations > 0.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.line_search_sufficient_curvature_decrease <=
-      original_options.line_search_sufficient_function_decrease ||
-      original_options.line_search_sufficient_curvature_decrease > 1.0) {
-    summary->message = string("Invalid configuration: require ") +
-        string("line_search_sufficient_function_decrease < ") +
-        string("line_search_sufficient_curvature_decrease < 1.0.");
-    LOG(ERROR) << summary->message;
-    return;
-  }
-  if (original_options.max_line_search_step_expansion <= 1.0) {
-    summary->message = string("Invalid configuration: require ") +
-        string("max_line_search_step_expansion > 1.0.");
-    LOG(ERROR) << summary->message;
+  if (!AreLineSearchOptionsValid(original_options, &summary->message)) {
+    LOG(WARNING) << summary->message;
     return;
   }
 
