@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,32 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
-
-#define CERES_VERSION 1.8.0
-#define CERES_ABI_VERSION 1.8.0
-
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
-#include "ceres/cost_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_problem.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/numeric_diff_functor.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
+#include "ceres/internal/eigen.h"
+#include "glog/logging.h"
 
-#endif  // CERES_PUBLIC_CERES_H_
+namespace ceres {
+
+GradientProblem::~GradientProblem() {
+}
+
+int GradientProblem::NumTangentSpaceParameters() const {
+  return NumParameters();
+}
+
+bool GradientProblem::Plus(const double* x,
+                           const double* delta,
+                           double* x_plus_delta) const {
+  CHECK_NOTNULL(x);
+  CHECK_NOTNULL(delta);
+  CHECK_NOTNULL(x_plus_delta);
+  CHECK_EQ(NumParameters(), NumTangentSpaceParameters());
+  VectorRef(x_plus_delta, NumParameters()) =
+      ConstVectorRef(x, NumParameters()) +
+      ConstVectorRef(delta, NumParameters());
+  return true;
+}
+
+}  // namespace ceres
