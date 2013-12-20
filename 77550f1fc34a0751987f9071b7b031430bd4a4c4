@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "088cc7b8_1cd3ecec",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-20T22:07:43Z",
+      "side": 1,
+      "message": "Ordering",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "77550f1fc34a0751987f9071b7b031430bd4a4c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "088cc7b8_3c1a68f8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-20T22:07:43Z",
+      "side": 1,
+      "message": "Holdover?",
+      "revId": "77550f1fc34a0751987f9071b7b031430bd4a4c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "088cc7b8_5c5ad4b7",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-20T22:07:43Z",
+      "side": 1,
+      "message": "Perhaps we should have summary-\u003eReset()",
+      "revId": "77550f1fc34a0751987f9071b7b031430bd4a4c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "088cc7b8_dc4d0405",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-20T22:07:43Z",
+      "side": 1,
+      "message": "Double blank",
+      "revId": "77550f1fc34a0751987f9071b7b031430bd4a4c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "088cc7b8_bc4838f6",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-20T22:07:43Z",
+      "side": 1,
+      "message": "Double blank",
+      "revId": "77550f1fc34a0751987f9071b7b031430bd4a4c4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
