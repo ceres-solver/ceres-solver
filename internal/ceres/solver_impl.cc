@@ -38,6 +38,8 @@
 #include "ceres/cxsparse.h"
 #include "ceres/evaluator.h"
 #include "ceres/gradient_checking_cost_function.h"
+#include "ceres/gradient_problem.h"
+#include "ceres/gradient_problem_evaluator.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/levenberg_marquardt_strategy.h"
 #include "ceres/line_search_minimizer.h"
@@ -60,8 +62,9 @@ namespace ceres {
 namespace internal {
 namespace {
 
-// Callback for updating the user's parameter blocks. Updates are only
+// Callbacks for updating the user's parameter blocks. Updates are only
 // done if the step is successful.
+
 class StateUpdatingCallback : public IterationCallback {
  public:
   StateUpdatingCallback(Program* program, double* parameters)
@@ -77,6 +80,30 @@ class StateUpdatingCallback : public IterationCallback {
 
  private:
   Program* program_;
+  double* parameters_;
+};
+
+class GradientProblemStateUpdatingCallback : public IterationCallback {
+ public:
+  GradientProblemStateUpdatingCallback(const double* working_parameters,
+                                       int num_parameters,
+                                       double* parameters)
+      : working_parameters_(working_parameters),
+        num_parameters_(num_parameters),
+        parameters_(parameters) {}
+
+  CallbackReturnType operator()(const IterationSummary& summary) {
+    if (summary.step_is_successful) {
+      std::copy(working_parameters_,
+                working_parameters_ + num_parameters_,
+                parameters_);
+    }
+    return SOLVER_CONTINUE;
+  }
+
+ private:
+  const double* working_parameters_;
+  int num_parameters_;
   double* parameters_;
 };
 
@@ -696,6 +723,119 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 }
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
+
+void SolverImpl::LineSearchSolve(const Solver::Options& options,
+                                 const GradientProblem& problem,
+                                 double* parameters,
+                                 Solver::Summary* summary) {
+  double solver_start_time = WallTimeInSeconds();
+  const int num_parameters = problem.NumParameters();
+
+  // Reset the summary object to its default values.
+  *CHECK_NOTNULL(summary) = Solver::Summary();
+  summary->problem_type = GRADIENT;
+  summary->minimizer_type = LINE_SEARCH;
+  summary->num_parameter_blocks = 1;
+  summary->num_parameters = num_parameters;
+  summary->num_effective_parameters = num_parameters;
+  summary->num_residual_blocks = 1;
+  summary->num_residuals = 1;
+  summary->line_search_direction_type =
+      options.line_search_direction_type;
+  summary->max_lbfgs_rank = options.max_lbfgs_rank;
+  summary->line_search_type = options.line_search_type;
+  summary->line_search_interpolation_type =
+      options.line_search_interpolation_type;
+  summary->nonlinear_conjugate_gradient_type =
+      options.nonlinear_conjugate_gradient_type;
+  summary->num_threads_given = options.num_threads;
+  summary->fixed_cost = 0.0;
+  summary->num_parameter_blocks_reduced = 1;
+  summary->num_parameters_reduced = num_parameters;
+  summary->num_effective_parameters_reduced = num_parameters;
+  summary->num_residual_blocks_reduced = 1;
+  summary->num_residuals_reduced = 1;
+
+  if (!LineSearchOptionsAreValid(options, &summary->message)) {
+    LOG(ERROR) << summary->message;
+    return;
+  }
+
+  summary->num_threads_used = options.num_threads;
+#ifndef CERES_USE_OPENMP
+  if (options.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+  }
+  summary->num_threads_used = 1;
+#endif  // CERES_USE_OPENMP
+
+  Vector working_parameters = VectorRef(parameters, num_parameters);
+
+  const double minimizer_start_time = WallTimeInSeconds();
+  summary->preprocessor_time_in_seconds =
+      minimizer_start_time - solver_start_time;
+
+  Minimizer::Options minimizer_options(options);
+  scoped_ptr<IterationCallback> file_logging_callback;
+  if (!options.solver_log.empty()) {
+    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       file_logging_callback.get());
+  }
+
+  LineSearchLoggingCallback logging_callback(
+      options.minimizer_progress_to_stdout);
+  if (options.logging_type != SILENT) {
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &logging_callback);
+  }
+
+  GradientProblemStateUpdatingCallback updating_callback(
+      working_parameters.data(),
+      num_parameters,
+      parameters);
+
+  if (options.update_state_every_iteration) {
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &updating_callback);
+  }
+
+  GradientProblemEvaluator evaluator(problem);
+  minimizer_options.evaluator = &evaluator;
+  LineSearchMinimizer minimizer;
+  minimizer.Minimize(minimizer_options, working_parameters.data(), summary);
+
+  summary->minimizer_time_in_seconds =
+      WallTimeInSeconds() - minimizer_start_time;
+
+  // If the user aborted mid-optimization or the optimization
+  // terminated because of a numerical failure, then return without
+  // updating user state.
+  if (summary->termination_type == USER_FAILURE ||
+      summary->termination_type == FAILURE) {
+    return;
+  }
+
+  const double post_process_start_time = WallTimeInSeconds();
+
+  SetSummaryFinalCost(summary);
+  VectorRef(parameters, num_parameters) = working_parameters;
+  const map<string, double>& evaluator_time_statistics =
+      evaluator.TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Cost", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Gradient", 0.0);
+
+  // Stick a fork in it, we're done.
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
+}
+
 void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
                                  ProblemImpl* original_problem_impl,
                                  Solver::Summary* summary) {
