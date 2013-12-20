@@ -74,12 +74,34 @@ void Solver::Solve(const Solver::Options& options,
       internal::WallTimeInSeconds() - start_time_seconds;
 }
 
+void Solver::Solve(const Solver::Options& options,
+                   const Function& function,
+                   const int num_parameters,
+                   double* parameters,
+                   Solver::Summary* summary) {
+  double start_time_seconds = internal::WallTimeInSeconds();
+  CHECK_EQ(options.minimizer_type, ceres::LINE_SEARCH);
+  internal::SolverImpl::LineSearchSolve(options, function, num_parameters, parameters, summary);
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
+};
+
+
 void Solve(const Solver::Options& options,
            Problem* problem,
            Solver::Summary* summary) {
   Solver solver;
   solver.Solve(options, problem, summary);
 }
+
+void Solve(const Solver::Options& options,
+                   const Function& function,
+                   const int num_parameters,
+                   double* parameters,
+                   Solver::Summary* summary) {
+  Solver solver;
+  solver.Solve(options, function, num_parameters, parameters, summary);
+};
 
 Solver::Summary::Summary()
     // Invalid values for most fields, to ensure that we are not

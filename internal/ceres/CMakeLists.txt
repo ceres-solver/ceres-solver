@@ -60,6 +60,7 @@ SET(CERES_INTERNAL_SRC
     detect_structure.cc
     dogleg_strategy.cc
     evaluator.cc
+    function_evaluator.cc
     file.cc
     gradient_checking_cost_function.cc
     implicit_schur_complement.cc
