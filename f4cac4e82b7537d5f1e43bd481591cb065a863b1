@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e871338d_488ccfdb",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-25T06:37:02Z",
+      "side": 1,
+      "message": "untill",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_68998b18",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-25T06:37:02Z",
+      "side": 1,
+      "message": "and the -\u003e and then",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_8896e7e5",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-25T06:37:02Z",
+      "side": 1,
+      "message": "this 9 lines of code is dupilcated exactly below... function?",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
