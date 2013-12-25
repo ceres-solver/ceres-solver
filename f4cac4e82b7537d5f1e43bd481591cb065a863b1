@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "088cc7b8_abf8e8f0",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-25T06:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e871338d_488ccfdb",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e871338d_68998b18",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "088cc7b8_8bfb2ced",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-25T06:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e871338d_68998b18",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e871338d_8896e7e5",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2013-12-25T06:37:02Z",
       "side": 1,
       "message": "this 9 lines of code is dupilcated exactly below... function?",
+      "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "088cc7b8_cb037427",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-25T06:40:47Z",
+      "side": 1,
+      "message": "already part of the next refactor.",
+      "parentUuid": "e871338d_8896e7e5",
       "revId": "f4cac4e82b7537d5f1e43bd481591cb065a863b1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
