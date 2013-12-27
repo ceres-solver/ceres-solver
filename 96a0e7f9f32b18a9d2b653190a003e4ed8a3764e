@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e871338d_a852c350",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "Until. It looks like your merge reverted some of the fixes from the other patch?",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_c857ff3f",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "I believe this ordering is intentional; can you explain why?",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_0862d725",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "This and the name should be on the same line. Then bring the args down below.",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_e85cbb66",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "i-1 -\u003e i - 1 (throughout)",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_28479391",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "Consider adding a bigger-picture comment about why this goes to all the trouble.",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_4844cf8a",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "80 cols?",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e871338d_68518b47",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-27T00:18:41Z",
+      "side": 1,
+      "message": "sol -\u003e solution",
+      "revId": "96a0e7f9f32b18a9d2b653190a003e4ed8a3764e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
