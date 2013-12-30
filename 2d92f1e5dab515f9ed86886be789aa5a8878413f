@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df1d54f_e3ec0c39",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T17:53:29Z",
+      "side": 1,
+      "message": "Move else on same line, or, i suggest deleting the else",
+      "revId": "2d92f1e5dab515f9ed86886be789aa5a8878413f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
