@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df1d54f_c001fe63",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:07:45Z",
+      "side": 1,
+      "message": "Name still makes me cringe :(",
+      "revId": "3bf779a7a13e0f05b33ff17900ae506cb73ed775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_a0fefa19",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:07:45Z",
+      "side": 1,
+      "message": "It looks like there is some line search refactoring happening in this patch. Could that part get done as part of a different patch?",
+      "revId": "3bf779a7a13e0f05b33ff17900ae506cb73ed775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
