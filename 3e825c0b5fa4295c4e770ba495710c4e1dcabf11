@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df1d54f_c097bee4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "This should be } else {",
+      "range": {
+        "startLine": 395,
+        "startChar": 6,
+        "endLine": 395,
+        "endChar": 7
+      },
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_a094bae0",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Consider dropping the \"else\"s since they are redundant (here and below).",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_80e41696",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Why does num_nonzeros start at 1? Consider adding a comment if I\u0027m not being overly dense.",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_60e9126a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "num_rows + 1? Please comment.",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_8083f6a8",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "If a term repeats,OR If terms repeat, i.e. they ...",
+      "range": {
+        "startLine": 437,
+        "startChar": 8,
+        "endLine": 437,
+        "endChar": 13
+      },
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_40ee0e74",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Consider making this postincrement for clarity? While it\u0027s true that it is increasing the element IN the array, it requires pausing to think for a moment about operator precedence. This is less the case for postincrement.",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_407deefa",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "rblock -\u003e row_block?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_0077e61c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Consider a more conventional i and j?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_6088f2c2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "how abotu just values and rows?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_2082eaa2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "rblock -\u003e row_block?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_c070de22",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Perhaps i instead of idx1?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_a06dda4a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "idx2 -\u003e j?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_20f30a5a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Phew!",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_00f80630",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2013-12-30T09:03:27Z",
+      "side": 1,
+      "message": "Set by fair dice roll :)",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
