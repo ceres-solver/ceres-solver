@@ -76,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_e01d22be",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "this is how compressed_row_sparse_matrix objects are stored, their rows array contains num_rows + 1 entries. This is detailed in the structure of this object elsewhere.",
+      "parentUuid": "6df1d54f_60e9126a",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df1d54f_8083f6a8",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 5
@@ -87,6 +105,30 @@
       "writtenOn": "2013-12-30T09:03:27Z",
       "side": 1,
       "message": "If a term repeats,OR If terms repeat, i.e. they ...",
+      "range": {
+        "startLine": 437,
+        "startChar": 8,
+        "endLine": 437,
+        "endChar": 13
+      },
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_c01a1ec4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df1d54f_8083f6a8",
       "range": {
         "startLine": 437,
         "startChar": 8,
@@ -116,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_a0171a9c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df1d54f_40ee0e74",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df1d54f_407deefa",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 5
@@ -127,6 +187,24 @@
       "writtenOn": "2013-12-30T09:03:27Z",
       "side": 1,
       "message": "rblock -\u003e row_block?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_80b65672",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df1d54f_407deefa",
       "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -150,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_60bb525a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "everywhere in this file we use idx to iterate between m.rows[i] - m.rows[i + 1]",
+      "parentUuid": "6df1d54f_0077e61c",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df1d54f_6088f2c2",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 5
@@ -161,6 +257,24 @@
       "writtenOn": "2013-12-30T09:03:27Z",
       "side": 1,
       "message": "how abotu just values and rows?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_40c04eca",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "there is already a values vector above.",
+      "parentUuid": "6df1d54f_6088f2c2",
       "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -201,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_20c54ada",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df1d54f_c070de22",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df1d54f_a06dda4a",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 5
@@ -212,6 +344,24 @@
       "writtenOn": "2013-12-30T09:03:27Z",
       "side": 1,
       "message": "idx2 -\u003e j?",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_00aa4604",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "see comment above.",
+      "parentUuid": "6df1d54f_a06dda4a",
       "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -235,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_e0a64240",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "I hit this case!",
+      "parentUuid": "6df1d54f_20f30a5a",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df1d54f_00f80630",
         "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
         "patchSetId": 5
@@ -246,6 +414,24 @@
       "writtenOn": "2013-12-30T09:03:27Z",
       "side": 1,
       "message": "Set by fair dice roll :)",
+      "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_c0b33e7c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2013-12-30T15:31:16Z",
+      "side": 1,
+      "message": "Why would you expect anything less from me.",
+      "parentUuid": "6df1d54f_00f80630",
       "revId": "3e825c0b5fa4295c4e770ba495710c4e1dcabf11",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
