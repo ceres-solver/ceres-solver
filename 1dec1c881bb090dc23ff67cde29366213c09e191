@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed04e503_5c5cbd3c",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Is it worth checking that residuals and jacobian are NULL here?  As this is currently only ever called from the line_search_minimizer.cc::Evaluate() wrapper and line_search.cc::LineSearchFunction wrapper which only ever call it with NULL for these arguments.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_31470869",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "My understanding is that this means the user cannot set a local parameterization when using a FirstOrderProblem - is this right?  I think we should allow this, perhaps by augmenting FirstOrderProblem to also accept a LocalParameterization object, and use standard addition if NULL?",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_51449461",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "c.f local parameterization issue above, this would no longer be a straight call-through to NumParameters().",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed04e503_fc4a696f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Should we check that parameters is not NULL here?",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed04e503_3c51f124",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "\".. when solving a FirstOrderProblem\"?",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed04e503_1c56351d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "This is my bad, but to fit with the style of the others it should be:\n\n\"Invalid configuration: require min_line_search_step_size \u003e 0.0\"",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_71419050",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Again my bad, but this should be:\n\n\"line_search_sufficient_function_decrease \u003e 0.0\"",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed04e503_bc44e163",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "I wonder if we should extent this API to allow the user to pass a vector\u003cIterationCallback*\u003e s/t they can still have their own callbacks at each iteration if they want to?  We could then just push them into the callbacks in the minimizer options.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed04e503_dc47ad67",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "c.f previous comments about local parameterizations, this would need to change from being a straight copy of num_parameters.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a832dbd0_304d5058",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Again c.f local parameterizations this would change.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a832dbd0_10504ced",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Again c.f local parameterizations this would change.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_9178bca8",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Isn\u0027t it true that we are in fact always updating the user provided state variable?  So in fact this option is in effect always on?",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8438f32_b17db897",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-01T13:48:08Z",
+      "side": 1,
+      "message": "Is this really necessary?  I think this is just doing a self assignment given the above.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
