@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6df1d54f_068eded4",
+        "filename": "include/ceres/first_order_problem.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "The aim of this interface is to provide a simple euclidean optimization ..  so this interface does not support local parameterizations, \n\nhaving a single local parameterization for the entire parameter vector is a bit painful.\n\nif are going to go down that route then we are going to need a Problem like object which can be constructed on term at a time.\n\nThat leads to serious design and implementation questions, and also of utility.\n\nare people who are interested in using the first order optimization algorithms, interested in the modeling interface also or just providing cost and a gradient and solving a problem without exposing the structure of their problems.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed04e503_5c5cbd3c",
         "filename": "internal/ceres/first_order_problem_evaluator.h",
         "patchSetId": 12
@@ -19,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_2630c26a",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "sure I can add a CHECK here, but we know there is exactly one caller..",
+      "parentUuid": "ed04e503_5c5cbd3c",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8438f32_31470869",
         "filename": "internal/ceres/first_order_problem_evaluator.h",
         "patchSetId": 12
@@ -30,6 +71,24 @@
       "writtenOn": "2014-01-01T13:48:08Z",
       "side": 1,
       "message": "My understanding is that this means the user cannot set a local parameterization when using a FirstOrderProblem - is this right?  I think we should allow this, perhaps by augmenting FirstOrderProblem to also accept a LocalParameterization object, and use standard addition if NULL?",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_0645bed0",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "That is true. I will reply to the local parameterization issue in more detail elsewhere.",
+      "parentUuid": "c8438f32_31470869",
       "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_26a9e230",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "ed04e503_fc4a696f",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed04e503_3c51f124",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 12
@@ -104,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_e641bac4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "want to submit a patch :)",
+      "parentUuid": "ed04e503_1c56351d",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8438f32_71419050",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 12
@@ -115,6 +210,24 @@
       "writtenOn": "2014-01-01T13:48:08Z",
       "side": 1,
       "message": "Again my bad, but this should be:\n\n\"line_search_sufficient_function_decrease \u003e 0.0\"",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_c63eb63c",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "patch :)",
+      "parentUuid": "c8438f32_71419050",
       "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_a63bb24a",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "solver::options can carry  IterationCallbacks. we just don\u0027t implement support for them yet, but they are easy to do.",
+      "parentUuid": "ed04e503_bc44e163",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed04e503_dc47ad67",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 12
@@ -149,6 +280,24 @@
       "writtenOn": "2014-01-01T13:48:08Z",
       "side": 1,
       "message": "c.f previous comments about local parameterizations, this would need to change from being a straight copy of num_parameters.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_869aee10",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "ed04e503_dc47ad67",
       "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -206,6 +355,24 @@
     },
     {
       "key": {
+        "uuid": "6df1d54f_669fea02",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "no, we make a copy and work on it.",
+      "parentUuid": "c8438f32_9178bca8",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8438f32_b17db897",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 12
@@ -217,6 +384,24 @@
       "writtenOn": "2014-01-01T13:48:08Z",
       "side": 1,
       "message": "Is this really necessary?  I think this is just doing a self assignment given the above.",
+      "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6df1d54f_46a4e65a",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-02T00:23:41Z",
+      "side": 1,
+      "message": "no working_parameters is a different array.",
+      "parentUuid": "c8438f32_b17db897",
       "revId": "1dec1c881bb090dc23ff67cde29366213c09e191",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
