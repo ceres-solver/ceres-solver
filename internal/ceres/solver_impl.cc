@@ -639,13 +639,13 @@ bool LineSearchOptionsAreValid(const Solver::Options& options,
   }
   if (options.min_line_search_step_size <= 0.0) {
     *message =
-        "Invalid configuration: min_line_search_step_size <= 0.0.";
+        "Invalid configuration: require min_line_search_step_size > 0.0.";
     return false;
   }
   if (options.line_search_sufficient_function_decrease <= 0.0) {
     *message =
         string("Invalid configuration: require ") +
-        string("line_search_sufficient_function_decrease <= 0.0.");
+        string("line_search_sufficient_function_decrease > 0.0.");
     return false;
   }
   if (options.max_line_search_step_contraction <= 0.0 ||
