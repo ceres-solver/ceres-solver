@@ -39,6 +39,24 @@
       "revId": "8c9c6ec11622e58ccfb3c4d3a6feae5426b1b4d0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd43d2d_f63c40ab",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-08T21:14:45Z",
+      "side": 1,
+      "message": "yes, its just not supported in this CL, its very easy to add.",
+      "parentUuid": "edb4e5fd_1ce115ee",
+      "revId": "8c9c6ec11622e58ccfb3c4d3a6feae5426b1b4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
