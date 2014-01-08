@@ -484,7 +484,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
         "Terminating: Function tolerance reached. "
         "No non-constant parameter blocks found.";
     summary->termination_type = CONVERGENCE;
-    VLOG(1) << summary->message;
+    VLOG_IF(1, options.logging_type != SILENT) << summary->message;
 
     summary->initial_cost = summary->fixed_cost;
     summary->final_cost = summary->fixed_cost;
@@ -804,7 +804,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
         "Terminating: Function tolerance reached. "
         "No non-constant parameter blocks found.";
     summary->termination_type = CONVERGENCE;
-    VLOG(1) << summary->message;
+    VLOG_IF(1, options.logging_type != SILENT) << summary->message;
 
     const double post_process_start_time = WallTimeInSeconds();
     SetSummaryFinalCost(summary);
