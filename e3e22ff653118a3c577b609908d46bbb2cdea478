@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6da395b3_f6c4187c",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-01-08T19:18:37Z",
+      "side": 1,
+      "message": "I think you mean Evaluator::Residual and Evaluator::Gradient?",
+      "revId": "e3e22ff653118a3c577b609908d46bbb2cdea478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da395b3_36cf809d",
+        "filename": "internal/ceres/first_order_problem_evaluator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-01-08T19:18:37Z",
+      "side": 1,
+      "message": "I suggest adding a CHECK_NULL(jacobian) here.",
+      "revId": "e3e22ff653118a3c577b609908d46bbb2cdea478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da395b3_d631d4d5",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-01-08T19:18:37Z",
+      "side": 1,
+      "message": "I am starting to think this is a long-term mistake. We\u0027ll require people to add \"magic parameters\" to their code, and won\u0027t understand this. I\u0027ve seen it several times where people just copy whatever is in the example code without understanding, and those settings persist effectively forever.\n\nCan we add a new minimzer type which is \"DEFAULT\" that picks e.g. LM for LSQ and LBFGS for nonlinear problems?",
+      "revId": "e3e22ff653118a3c577b609908d46bbb2cdea478",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
