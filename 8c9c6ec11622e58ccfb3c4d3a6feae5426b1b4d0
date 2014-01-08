@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb4e5fd_9cf405b1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-08T20:26:04Z",
+      "side": 1,
+      "message": "\"... when solving a FirstOrderProblem\" ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 79
+      },
+      "revId": "8c9c6ec11622e58ccfb3c4d3a6feae5426b1b4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edb4e5fd_1ce115ee",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-08T20:26:04Z",
+      "side": 1,
+      "message": "Could we not retain this functionality by adding a callback like StateUpdatingCallback that took the original \u0026 optimized parameter pointers (and the number of parameters / the FirstOrderProblem which if then queries for this) and then pushing an instance of it onto the front of minimizer_options.callbacks here?\n\nAs the user can add callbacks via Solver::Options that might want to be able to get the latest parameter values, this seems like it would be useful.",
+      "revId": "8c9c6ec11622e58ccfb3c4d3a6feae5426b1b4d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
