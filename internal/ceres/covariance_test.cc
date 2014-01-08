@@ -125,7 +125,7 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
 class UnaryCostFunction: public CostFunction {
  public:
   UnaryCostFunction(const int num_residuals,
-                    const int16 parameter_block_size,
+                    const int32 parameter_block_size,
                     const double* jacobian)
       : jacobian_(jacobian, jacobian + num_residuals * parameter_block_size) {
     set_num_residuals(num_residuals);
@@ -158,8 +158,8 @@ class UnaryCostFunction: public CostFunction {
 class BinaryCostFunction: public CostFunction {
  public:
   BinaryCostFunction(const int num_residuals,
-                     const int16 parameter_block1_size,
-                     const int16 parameter_block2_size,
+                     const int32 parameter_block1_size,
+                     const int32 parameter_block2_size,
                      const double* jacobian1,
                      const double* jacobian2)
       : jacobian1_(jacobian1,

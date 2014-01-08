@@ -53,11 +53,11 @@ residuals and their derivatives. This is done using
       virtual bool Evaluate(double const* const* parameters,
                             double* residuals,
                             double** jacobians) = 0;
-      const vector<int16>& parameter_block_sizes();
+      const vector<int32>& parameter_block_sizes();
       int num_residuals() const;
 
      protected:
-      vector<int16>* mutable_parameter_block_sizes();
+      vector<int32>* mutable_parameter_block_sizes();
       void set_num_residuals(int num_residuals);
     };
 
