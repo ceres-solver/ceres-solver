@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd43d2d_7d480877",
+        "filename": "internal/ceres/low_rank_inverse_hessian.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-01-09T21:25:51Z",
+      "side": 1,
+      "message": "Perhaps at least comment that this is using a circular buffer scheme, since it\u0027s not 100% obvious from the code.",
+      "revId": "ec0dd5c7f9a003e74716758be1c6269758d10796",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
