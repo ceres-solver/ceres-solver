@@ -22,6 +22,30 @@
       "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede2251a_b251189f",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-01-13T15:10:32Z",
+      "side": 1,
+      "message": "Ifdef block indeed seems a bit redundant here, however i thought single function is to be marked as static instead of being moved to an anonymous namespace?",
+      "parentUuid": "2dd43d2d_73594ce7",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 37
+      },
+      "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
