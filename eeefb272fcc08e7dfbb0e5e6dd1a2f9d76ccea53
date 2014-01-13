@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd43d2d_73594ce7",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-01-13T15:07:14Z",
+      "side": 1,
+      "message": "You can move this into the anonymous namespace too. It does not have to be hidden behind the ifdef.",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 37
+      },
+      "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
