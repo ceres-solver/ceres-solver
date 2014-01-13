@@ -70,6 +70,30 @@
       "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad33cd7d_855924c3",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-01-13T15:24:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0dd6993f_f33c48ab",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 37
+      },
+      "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
