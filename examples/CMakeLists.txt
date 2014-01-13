@@ -78,6 +78,10 @@ IF (GFLAGS)
                  libmv_bundle_adjuster.cc)
   TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres ${GFLAGS_LIBRARIES})
 
+  ADD_EXECUTABLE(libmv_homography
+                 libmv_homography.cc)
+  TARGET_LINK_LIBRARIES(libmv_homography ceres ${GFLAGS_LIBRARIES})
+
   ADD_EXECUTABLE(denoising
                  denoising.cc
                  fields_of_experts.cc)
