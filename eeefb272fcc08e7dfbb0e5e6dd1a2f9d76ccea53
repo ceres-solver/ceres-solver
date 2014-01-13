@@ -46,6 +46,30 @@
       "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dd6993f_f33c48ab",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-01-13T15:12:39Z",
+      "side": 1,
+      "message": "Hold on, misread the code. And now not sure what do you mean \"It does not have to be hidden behind the ifdef.\"",
+      "parentUuid": "ede2251a_b251189f",
+      "range": {
+        "startLine": 623,
+        "startChar": 12,
+        "endLine": 623,
+        "endChar": 37
+      },
+      "revId": "eeefb272fcc08e7dfbb0e5e6dd1a2f9d76ccea53",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
