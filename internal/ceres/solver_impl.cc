@@ -620,8 +620,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
-bool LineSearchOptionsAreValid(const Solver::Options& options,
-                               string* message) {
+static bool LineSearchOptionsAreValid(const Solver::Options& options,
+                                      string* message) {
   // Validate values for configuration parameters supplied by user.
   if ((options.line_search_direction_type == ceres::BFGS ||
        options.line_search_direction_type == ceres::LBFGS) &&
