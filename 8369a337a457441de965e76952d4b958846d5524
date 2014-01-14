@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_a762342e",
+        "filename": "examples/rosenbrock.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "why would you use 4 * 2 * num_parameters? it is a two dimensional problem.. you should not need anything more than two.. I could just drop this setting and let it be the default..",
+      "parentUuid": "cd7ba135_cbb2d517",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7ba135_8baccdba",
         "filename": "include/ceres/gradient_problem.h",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "functio_n_",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_e73a6cfe",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7ba135_8baccdba",
       "range": {
         "startLine": 46,
         "startChar": 35,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_0740c072",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7ea524_8c3627c8",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 11
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7ba135_4ba7c5d5",
         "filename": "internal/ceres/gradient_problem.cc",
         "patchSetId": 15
@@ -76,6 +142,24 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "Indentation doesn\u0027t match that of x.",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_a7347411",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7ba135_4ba7c5d5",
       "revId": "8369a337a457441de965e76952d4b958846d5524",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_872cd0c7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7ea524_ccaf4f87",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7ba135_8befeddd",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 15
@@ -110,6 +212,24 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "Indentation doesn\u0027t match closing brace of matching if().",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_272944b6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7ba135_8befeddd",
       "revId": "8369a337a457441de965e76952d4b958846d5524",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_4726b8e7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d697173_c7987e64",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7ba135_6bd7210f",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 15
@@ -144,6 +282,24 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "Would it not be better to return with FAILURE here, mimicking our behaviour for other invalid configurations in LineSearchOptionsAreValid?",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_f2db088d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "I am in two minds about it, since the intent of the user is entirely clear here.",
+      "parentUuid": "cd7ba135_6bd7210f",
       "revId": "8369a337a457441de965e76952d4b958846d5524",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_12e1dc43",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "it can be, it doesn\u0027t buy you much though.",
+      "parentUuid": "cd7ba135_2be119ee",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 89,
+        "endChar": 57
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7ea524_0cceb76a",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 15
@@ -184,6 +364,24 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "const int num_parameters_ ?",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_d2ea841d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7ea524_0cceb76a",
       "revId": "8369a337a457441de965e76952d4b958846d5524",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "6d1635de_72f0580b",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7ba135_eb131125",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d697173_c7815eea",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 15
@@ -218,6 +434,24 @@
       "writtenOn": "2014-01-14T13:05:09Z",
       "side": 1,
       "message": "num_parameters -\u003e problem.NumTangentSpaceParameters()",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d1635de_52f75400",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-01-14T17:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d697173_c7815eea",
       "revId": "8369a337a457441de965e76952d4b958846d5524",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
