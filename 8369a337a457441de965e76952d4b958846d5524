@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed7ea524_2c4db3ac",
+        "filename": "examples/rosenbrock.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T20:01:20Z",
+      "side": 1,
+      "message": "Sorry, I meant 4 \u003d 2 * num_parameters.  As to why this is \u003e num_parameters, because although the Hessian is only going to have rank \u003d num_parameters, and each iteration of LBFGS performs two rank-1 updates (-\u003e rank-2 update) to the Hessian approximation, you\u0027re still relying on the aggregation of multiple updates to generate a good Hessian approximation.  In this case the problem would now be overdetermined.  This is analogous to the (full) BFGS case, in which case the information is kept for all time, i.e. lbfgs_rank \u003d inf.\n\nObviously 2 * num_parameters is only feasible here as the problem is small, so the storage requirements aren\u0027t the limiting factor, whereas for a general LBFGS problem this wouldn\u0027t be possible.",
+      "parentUuid": "6d1635de_a762342e",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7ba135_8baccdba",
         "filename": "include/ceres/gradient_problem.h",
         "patchSetId": 15
