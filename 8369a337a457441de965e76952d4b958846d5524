@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7ba135_cbb2d517",
+        "filename": "examples/rosenbrock.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "I would use lbfgs_rank \u003d 4 (2 * # parameters) here, as with rank \u003d 1, there\u0027s no BFGS component really as the Hessian is only estimated using the most recent iteration.  Alternatively use options.line_search_direction_type \u003d ceres::BFGS.\n\nBoth of these reduce the number of iterations from 48 to 33.",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_8baccdba",
+        "filename": "include/ceres/gradient_problem.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "functio_n_",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7ea524_8c3627c8",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "There is a trailing comma for the last element in this enum.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 11
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_4ba7c5d5",
+        "filename": "internal/ceres/gradient_problem.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Indentation doesn\u0027t match that of x.",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7ea524_ccaf4f87",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Indentation doesn\u0027t match opening if().",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_8befeddd",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Indentation doesn\u0027t match closing brace of matching if().",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d697173_c7987e64",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Mismatched indentation for arguments.",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_6bd7210f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Would it not be better to return with FAILURE here, mimicking our behaviour for other invalid configurations in LineSearchOptionsAreValid?",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_2be119ee",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "Should this not be const (even though it\u0027s passed by value, for clarity / symmetry)?",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 89,
+        "endChar": 57
+      },
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed7ea524_0cceb76a",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "const int num_parameters_ ?",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd7ba135_eb131125",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "num_parameters -\u003e problem.NumTangentSpaceParameters()",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d697173_c7815eea",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-01-14T13:05:09Z",
+      "side": 1,
+      "message": "num_parameters -\u003e problem.NumTangentSpaceParameters()",
+      "revId": "8369a337a457441de965e76952d4b958846d5524",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
