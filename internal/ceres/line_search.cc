@@ -67,13 +67,6 @@ FunctionSample ValueAndGradientSample(const double x,
   return sample;
 };
 
-// Convenience stream operator for pushing FunctionSamples into log messages.
-std::ostream& operator<<(std::ostream &os,
-                         const FunctionSample& sample) {
-  os << sample.ToDebugString();
-  return os;
-}
-
 }  // namespace
 
 LineSearch::LineSearch(const LineSearch::Options& options)
@@ -176,8 +169,9 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
       << "Ceres bug: lower-bound sample for interpolation is invalid, "
       << "please contact the developers!, interpolation_type: "
       << LineSearchInterpolationTypeToString(interpolation_type)
-      << ", lowerbound: " << lowerbound << ", previous: " << previous
-      << ", current: " << current;
+      << ", lowerbound: " << lowerbound.ToDebugString()
+      << ", previous: " << previous.ToDebugString()
+      << ", current: " << current.ToDebugString();
 
   // Select step size by interpolating the function and gradient values
   // and minimizing the corresponding polynomial.
@@ -386,7 +380,8 @@ void WolfeLineSearch::Search(const double step_size_estimate,
 
   VLOG(3) << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
           << "Starting line search zoom phase with bracket_low: "
-          << bracket_low << ", bracket_high: " << bracket_high
+          << bracket_low.ToDebugString()
+          << ", bracket_high: " << bracket_high.ToDebugString()
           << ", bracket width: " << fabs(bracket_low.x - bracket_high.x)
           << ", bracket abs delta cost: "
           << fabs(bracket_low.value - bracket_high.value);
@@ -519,7 +514,8 @@ bool WolfeLineSearch::BracketingPhase(
               << std::setprecision(kErrorMessageNumericPrecision)
               << "Bracketing phase found step size: " << current.x
               << ", satisfying strong Wolfe conditions, initial_position: "
-              << initial_position << ", current: " << current;
+              << initial_position.ToDebugString()
+              << ", current: " << current.ToDebugString();
       break;
 
     } else if (current.value_is_valid && current.gradient >= 0) {
@@ -646,9 +642,10 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
   CHECK(bracket_low.value_is_valid && bracket_low.gradient_is_valid)
       << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
       << "Ceres bug: f_low input to Wolfe Zoom invalid, please contact "
-      << "the developers!, initial_position: " << initial_position
-      << ", bracket_low: " << bracket_low
-      << ", bracket_high: "<< bracket_high;
+      << "the developers!, initial_position: "
+      << initial_position.ToDebugString()
+      << ", bracket_low: " << bracket_low.ToDebugString()
+      << ", bracket_high: "<< bracket_high.ToDebugString();
   // We do not require bracket_high.gradient_is_valid as the gradient condition
   // for a valid bracket is only dependent upon bracket_low.gradient, and
   // in order to minimize jacobian evaluations, bracket_high.gradient may
@@ -664,9 +661,10 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
   CHECK(bracket_high.value_is_valid)
       << std::scientific << std::setprecision(kErrorMessageNumericPrecision)
       << "Ceres bug: f_high input to Wolfe Zoom invalid, please "
-      << "contact the developers!, initial_position: " << initial_position
-      << ", bracket_low: " << bracket_low
-      << ", bracket_high: "<< bracket_high;
+      << "contact the developers!, initial_position: "
+      << initial_position.ToDebugString()
+      << ", bracket_low: " << bracket_low.ToDebugString()
+      << ", bracket_high: "<< bracket_high.ToDebugString();
 
   if (bracket_low.gradient * (bracket_high.x - bracket_low.x) >= 0) {
     // The third condition for a valid initial bracket:
@@ -779,9 +777,9 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
 
     VLOG(3) << "Zoom iteration: "
             << summary->num_iterations - num_bracketing_iterations
-            << ", bracket_low: " << bracket_low
-            << ", bracket_high: " << bracket_high
-            << ", minimizing solution: " << *solution;
+            << ", bracket_low: " << bracket_low.ToDebugString()
+            << ", bracket_high: " << bracket_high.ToDebugString()
+            << ", minimizing solution: " << solution->ToDebugString();
 
     if ((solution->value > (initial_position.value
                             + options().sufficient_decrease
