@@ -224,6 +224,24 @@ void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
   summary->num_residuals_reduced = program.NumResiduals();
 }
 
+bool ParameterBlocksAreFinite(const ProblemImpl* problem,
+                              string* message) {
+  CHECK_NOTNULL(message);
+  const Program& program = problem->program();
+  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  for (int i = 0; i < parameter_blocks.size(); ++i) {
+    const double* array = parameter_blocks[i]->user_state();
+    const int size = parameter_blocks[i]->Size();
+    if (!IsArrayValid(size, array)) {
+      *message = StringPrintf(
+          "ParameterBlock: %p with size %d has invalid values: ", array, size);
+      AppendArrayToString(size, array, message);
+      return false;
+    }
+  }
+  return true;
+}
+
 bool LineSearchOptionsAreValid(const Solver::Options& options,
                                string* message) {
   // Validate values for configuration parameters supplied by user.
@@ -419,7 +437,7 @@ void SolverImpl::Solve(const Solver::Options& options,
           << " residual blocks, "
           << problem_impl->NumResiduals()
           << " residuals.";
-
+  *CHECK_NOTNULL(summary) = Solver::Summary();
   if (options.minimizer_type == TRUST_REGION) {
     TrustRegionSolve(options, problem_impl, summary);
   } else {
@@ -439,9 +457,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
 
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
-
-  // Reset the summary object to its default values.
-  *CHECK_NOTNULL(summary) = Solver::Summary();
 
   summary->minimizer_type = TRUST_REGION;
 
@@ -481,6 +496,11 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     summary->message =
         "Solver::Options::trust_region_problem_dump_directory is empty.";
     LOG(ERROR) << summary->message;
+    return;
+  }
+
+  if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
 
@@ -704,9 +724,6 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   Program* original_program = original_problem_impl->mutable_program();
   ProblemImpl* problem_impl = original_problem_impl;
 
-  // Reset the summary object to its default values.
-  *CHECK_NOTNULL(summary) = Solver::Summary();
-
   SummarizeGivenProgram(*original_program, summary);
   summary->minimizer_type = LINE_SEARCH;
   summary->line_search_direction_type =
@@ -745,6 +762,11 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   summary->num_threads_given = original_options.num_threads;
   summary->num_threads_used = options.num_threads;
+
+  if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
 
   if (original_options.linear_solver_ordering != NULL) {
     if (!IsOrderingValid(original_options, problem_impl, &summary->message)) {

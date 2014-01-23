@@ -1085,5 +1085,18 @@ TEST(CompactifyArray, NonContiguousRepeatingEntries) {
   EXPECT_EQ(array, expected);
 }
 
+TEST(SolverImpl, ProblemHasNanParameterBlocks) {
+  Problem problem;
+  double x[2];
+  x[0] = 1.0;
+  x[1] = std::numeric_limits<double>::quiet_NaN();
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  Solver::Options options;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_NE(summary.message.find("has invalid values"), string::npos);
+}
+
 }  // namespace internal
 }  // namespace ceres
