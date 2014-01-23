@@ -46,6 +46,8 @@
 #include "ceres/sparse_matrix.h"
 #include "ceres/types.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "gmock/mock-log.h"
 
 namespace ceres {
 namespace internal {
@@ -205,10 +207,6 @@ TEST(Problem, AddParameterWithDifferentSizesOnTheSameVariableDies) {
                             "different block sizes");
 }
 
-static double *IntToPtr(int i) {
-  return reinterpret_cast<double*>(sizeof(double) * i);  // NOLINT
-}
-
 TEST(Problem, AddParameterWithAliasedParametersDies) {
   // Layout is
   //
@@ -220,30 +218,51 @@ TEST(Problem, AddParameterWithAliasedParametersDies) {
   // Parameter block additions are tested as listed above; expected successful
   // ones marked with o==o and aliasing ones marked with o--o.
 
-  Problem problem;
-  problem.AddParameterBlock(IntToPtr(5),  5);  // x
-  problem.AddParameterBlock(IntToPtr(13), 3);  // y
+  double parameters[17];
+  double* x = parameters + 5;
+  double* y = parameters + 13;
 
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 2),
+  Problem problem;
+  problem.AddParameterBlock(x, 5);
+  problem.AddParameterBlock(y, 3);
+
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 4, 2),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 3),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 4, 3),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 4), 9),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 4, 9),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr( 8), 3),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 8, 3),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(12), 2),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 12, 2),
                             "Aliasing detected");
-  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(IntToPtr(14), 3),
+  EXPECT_DEATH_IF_SUPPORTED(problem.AddParameterBlock(parameters + 14, 3),
                             "Aliasing detected");
 
   // These ones should work.
-  problem.AddParameterBlock(IntToPtr( 2), 3);
-  problem.AddParameterBlock(IntToPtr(10), 3);
-  problem.AddParameterBlock(IntToPtr(16), 2);
+  problem.AddParameterBlock(parameters + 2, 3);
+  problem.AddParameterBlock(parameters + 10, 3);
+  problem.AddParameterBlock(parameters + 16, 2);
 
   ASSERT_EQ(5, problem.NumParameterBlocks());
 }
+
+TEST(Problem, AddParameterBlockWithNansLogsError) {
+  Problem problem;
+  double x[2];
+  x[0] = 1.0;
+  x[1] = std::numeric_limits<double>::quiet_NaN();
+
+  using testing::AnyNumber;
+  using testing::HasSubstr;
+  using testing::ScopedMockLog;
+  using testing::_;
+
+  ScopedMockLog log;
+  EXPECT_CALL(log, Log(_, _, _)).Times(AnyNumber());
+  EXPECT_CALL(log, Log(ERROR, _, HasSubstr("has invalid values")));
+  problem.AddParameterBlock(x, 2);
+};
 
 TEST(Problem, AddParameterIgnoresDuplicateCalls) {
   double x[3], y[4];

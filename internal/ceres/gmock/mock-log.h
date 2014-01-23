@@ -48,6 +48,7 @@
 namespace ceres {
 namespace internal {
 using google::WARNING;
+using google::ERROR;
 }  // namespace internal
 }  // namespace ceres
 

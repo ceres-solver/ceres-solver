@@ -95,6 +95,14 @@ ParameterBlock* ProblemImpl::InternalAddParameterBlock(double* values,
   CHECK(values != NULL) << "Null pointer passed to AddParameterBlock "
                         << "for a parameter with size " << size;
 
+  if (!IsArrayValid(size, values)) {
+    string stringified_values;
+    AppendArrayToString(size, values, &stringified_values);
+    LOG(ERROR) << "Input parameter block: "
+               << values << " of size : " << size
+               << " has invalid values : " << stringified_values;
+  }
+
   // Ignore the request if there is a block for the given pointer already.
   ParameterMap::iterator it = parameter_block_map_.find(values);
   if (it != parameter_block_map_.end()) {
