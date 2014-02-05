@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a1fe0c_b1b67ade",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-05T18:54:35Z",
+      "side": 1,
+      "message": "The special NULL treatment seems overly clever and a good way to hide bugs. It\u0027s probably fine; just my thoughts.",
+      "revId": "a0b0922332cd7178c33f2ff9c5ee8a754e4eae89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32a1fe0c_51d2b612",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-05T18:54:35Z",
+      "side": 1,
+      "message": "This could result in huge and unreadable messages. Perhaps it should go in a followup, but consider a threshold on the amount of values to print. It\u0027d also be nice to highlight which entry is non-finite (e.g. index 10 is non-finite).",
+      "revId": "a0b0922332cd7178c33f2ff9c5ee8a754e4eae89",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
