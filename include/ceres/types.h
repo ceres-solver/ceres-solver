@@ -45,7 +45,6 @@ namespace ceres {
 
 // Basic integer types. These typedefs are in the Ceres namespace to avoid
 // conflicts with other packages having similar typedefs.
-typedef short int16;
 typedef int   int32;
 
 // Argument type used in interfaces that can optionally take ownership
