@@ -535,6 +535,12 @@ void ProblemImpl::SetParameterization(
       ->SetParameterization(local_parameterization);
 }
 
+const LocalParameterization* ProblemImpl::GetParameterization(
+    double* values) const {
+  return FindParameterBlockOrDie(parameter_block_map_, values)
+      ->local_parameterization();
+}
+
 bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                            double* cost,
                            vector<double>* residuals,

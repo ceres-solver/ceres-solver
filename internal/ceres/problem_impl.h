@@ -127,6 +127,7 @@ class ProblemImpl {
   void SetParameterBlockVariable(double* values);
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
+  const LocalParameterization* GetParameterization(double* values) const;
 
   bool Evaluate(const Problem::EvaluateOptions& options,
                 double* cost,

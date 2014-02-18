@@ -312,6 +312,11 @@ class Problem {
   void SetParameterization(double* values,
                            LocalParameterization* local_parameterization);
 
+  // Get the local parameterization object associated with this
+  // parameter block. If there is no parameterization object
+  // associated then NULL is returned.
+  const LocalParameterization* GetParameterization(double* values) const;
+
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
   int NumParameterBlocks() const;

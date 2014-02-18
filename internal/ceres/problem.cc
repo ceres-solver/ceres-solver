@@ -178,6 +178,11 @@ void Problem::SetParameterization(
   problem_impl_->SetParameterization(values, local_parameterization);
 }
 
+const LocalParameterization* Problem::GetParameterization(
+    double* values) const {
+  return problem_impl_->GetParameterization(values);
+}
+
 bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
                        double* cost,
                        vector<double>* residuals,

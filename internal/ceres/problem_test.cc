@@ -502,6 +502,20 @@ TEST(Problem, RemoveParameterBlockWithUnknownPtrDies) {
       problem.RemoveParameterBlock(y), "Parameter block not found:");
 }
 
+TEST(Problem, GetParameterization) {
+  double x[3];
+  double y[2];
+
+  Problem problem;
+  problem.AddParameterBlock(x, 3);
+  problem.AddParameterBlock(y, 2);
+
+  LocalParameterization* parameterization =  new IdentityParameterization(3);
+  problem.SetParameterization(x, parameterization);
+  EXPECT_EQ(problem.GetParameterization(x), parameterization);
+  EXPECT_TRUE(problem.GetParameterization(y) == NULL);
+}
+
 TEST(Problem, ParameterBlockQueryTest) {
   double x[3];
   double y[4];
