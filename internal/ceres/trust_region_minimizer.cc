@@ -50,6 +50,7 @@
 #include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
+#include "ceres/line_search.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -81,23 +82,21 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   double start_time = WallTimeInSeconds();
   double iteration_start_time =  start_time;
   Init(options);
-  const bool is_not_silent = !options.is_silent;
-
-  summary->termination_type = NO_CONVERGENCE;
-  summary->num_successful_steps = 0;
-  summary->num_unsuccessful_steps = 0;
 
   Evaluator* evaluator = CHECK_NOTNULL(options_.evaluator);
   SparseMatrix* jacobian = CHECK_NOTNULL(options_.jacobian);
   TrustRegionStrategy* strategy = CHECK_NOTNULL(options_.trust_region_strategy);
 
+  const bool is_not_silent = !options.is_silent;
+  const bool use_line_search = options.is_constrained;
+
+  summary->termination_type = NO_CONVERGENCE;
+  summary->num_successful_steps = 0;
+  summary->num_unsuccessful_steps = 0;
+
   const int num_parameters = evaluator->NumParameters();
   const int num_effective_parameters = evaluator->NumEffectiveParameters();
   const int num_residuals = evaluator->NumResiduals();
-
-  VectorRef x_min(parameters, num_parameters);
-  Vector x = x_min;
-  double x_norm = x.norm();
 
   Vector residuals(num_residuals);
   Vector trust_region_step(num_effective_parameters);
@@ -121,6 +120,23 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.linear_solver_iterations = 0;
   iteration_summary.step_solver_time_in_seconds = 0;
 
+  VectorRef x_min(parameters, num_parameters);
+  Vector x = x_min;
+  // Project onto the feasible set.
+  if (options.is_constrained) {
+    delta.setZero();
+    if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+      summary->message = "Unable to project initial point onto the feasible set.";
+      summary->termination_type = FAILURE;
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      return;
+    }
+    x_min = x_plus_delta;
+    x = x_plus_delta;
+  }
+
+  double x_norm = x.norm();
+
   // Do initial cost and Jacobian evaluation.
   double cost = 0.0;
   if (!evaluator->Evaluate(x.data(),
@@ -128,9 +144,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                            residuals.data(),
                            gradient.data(),
                            jacobian)) {
-    summary->message = "Terminating: Residual and Jacobian evaluation failed.";
+    summary->message = "Residual and Jacobian evaluation failed.";
     summary->termination_type = FAILURE;
-    LOG_IF(WARNING, is_not_silent) << summary->message;
+    LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
     return;
   }
 
@@ -304,20 +320,58 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
+      if (use_line_search) {
+        LineSearchFunction line_search_function(evaluator);
+        line_search_function.Init(x, delta);
 
-      double new_cost = numeric_limits<double>::max();
-      if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+        LineSearch::Options line_search_options;
+        line_search_options.interpolation_type =
+            options.line_search_interpolation_type;
+        line_search_options.min_step_size = options.min_line_search_step_size;
+        line_search_options.sufficient_decrease =
+            options.line_search_sufficient_function_decrease;
+        line_search_options.max_step_contraction =
+            options.max_line_search_step_contraction;
+        line_search_options.min_step_contraction =
+            options.min_line_search_step_contraction;
+        line_search_options.max_num_iterations =
+            options.max_num_line_search_step_size_iterations;
+        line_search_options.sufficient_curvature_decrease =
+            options.line_search_sufficient_curvature_decrease;
+        line_search_options.max_step_expansion =
+            options.max_line_search_step_expansion;
+        line_search_options.function = &line_search_function;
+
+        scoped_ptr<LineSearch>
+            line_search(CHECK_NOTNULL(
+                            LineSearch::Create(ceres::ARMIJO,
+                                               line_search_options,
+                                               &summary->message)));
+        LineSearch::Summary line_search_summary;
+        line_search->Search(1.0, cost, gradient.dot(delta), &line_search_summary);
+        if (line_search_summary.success) {
+          VLOG(2) << "line search: " << line_search_summary.optimal_step_size;
+          delta *= line_search_summary.optimal_step_size;
+        }
+      }
+
+      double new_cost = std::numeric_limits<double>::max();
+      if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+        if (!evaluator->Evaluate(x_plus_delta.data(),
+                                &new_cost,
+                                NULL,
+                                NULL,
+                                NULL)) {
+          LOG(WARNING) << "Step failed to evaluate. "
+                       << "Treating it as a step with infinite cost";
+          new_cost = numeric_limits<double>::max();
+        }
+      } else {
         LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. "
                      << "Treating it as a step with infinite cost";
-      } else if (!evaluator->Evaluate(x_plus_delta.data(),
-                                      &new_cost,
-                                      NULL,
-                                      NULL,
-                                      NULL)) {
-        LOG(WARNING) << "Step failed to evaluate. "
-                     << "Treating it as a step with infinite cost";
-        new_cost = numeric_limits<double>::max();
-      } else {
+      }
+
+      if (new_cost < std::numeric_limits<double>::max()) {
         // Check if performing an inner iteration will make it better.
         if (inner_iterations_are_enabled) {
           ++summary->num_inner_iteration_steps;
@@ -450,6 +504,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // min_relative_decrease threshold useless. Instead, we keep
       // track of inner_iterations_were_useful, which is true only
       // when inner iterations lead to a net decrease in the cost.
+
+      LOG(INFO) <<  "decrease: " << iteration_summary.relative_decrease << " " << options_.min_relative_decrease;
+
       iteration_summary.step_is_successful =
           (inner_iterations_were_useful ||
            iteration_summary.relative_decrease >
@@ -473,6 +530,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     }
 
     if (iteration_summary.step_is_successful) {
+      LOG(INFO) << "Successful step";
       ++summary->num_successful_steps;
       strategy->StepAccepted(iteration_summary.relative_decrease);
       x = x_plus_delta;

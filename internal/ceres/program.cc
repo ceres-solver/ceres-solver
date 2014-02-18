@@ -112,9 +112,19 @@ bool Program::Plus(const double* state,
     if (!parameter_blocks_[i]->Plus(state, delta, state_plus_delta)) {
       return false;
     }
-    state += parameter_blocks_[i]->Size();
+
+    const double* lower_bounds = parameter_blocks_[i]->lower_bounds();
+    const double* upper_bounds = parameter_blocks_[i]->upper_bounds();
+    const int size = parameter_blocks_[i]->Size();
+    for (int j = 0; j < size; ++j) {
+      const double value = state_plus_delta[j];
+      state_plus_delta[j] =
+          std::min(std::max(value, lower_bounds[j]), upper_bounds[j]);
+    }
+
+    state += size;
     delta += parameter_blocks_[i]->LocalSize();
-    state_plus_delta += parameter_blocks_[i]->Size();
+    state_plus_delta += size;
   }
   return true;
 }

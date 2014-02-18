@@ -31,7 +31,9 @@
 #ifndef CERES_INTERNAL_PARAMETER_BLOCK_H_
 #define CERES_INTERNAL_PARAMETER_BLOCK_H_
 
+#include <algorithm>
 #include <cstdlib>
+#include <limits>
 #include <string>
 #include "ceres/array_utils.h"
 #include "ceres/collections_port.h"
@@ -180,6 +182,16 @@ class ParameterBlock {
     }
   }
 
+  void SetUpperBound(int index, double upper_bound) {
+    CHECK_LT(index, size_);
+    upper_bounds_[index] = upper_bound;
+  };
+
+  void SetLowerBound(int index, double lower_bound) {
+    CHECK_LT(index, size_);
+    lower_bounds_[index] = lower_bound;
+  }
+
   // Generalization of the addition operation. This is the same as
   // LocalParameterization::Plus() but uses the parameter's current state
   // instead of operating on a passed in pointer.
@@ -234,6 +246,14 @@ class ParameterBlock {
     return residual_blocks_.get();
   }
 
+  const double* upper_bounds() const {
+    return upper_bounds_.get();
+  }
+
+  const double* lower_bounds() const {
+    return lower_bounds_.get();
+  }
+
  private:
   void Init(double* user_state,
             int size,
@@ -249,6 +269,15 @@ class ParameterBlock {
     if (local_parameterization != NULL) {
       SetParameterization(local_parameterization);
     }
+
+    upper_bounds_.reset(new double[size_]);
+    std::fill(upper_bounds_.get(),
+              upper_bounds_.get() + size_,
+              std::numeric_limits<double>::max());
+    lower_bounds_.reset(new double[size_]);
+    std::fill(lower_bounds_.get(),
+              lower_bounds_.get() + size_,
+              -std::numeric_limits<double>::max());
 
     state_offset_ = -1;
     delta_offset_ = -1;
@@ -311,6 +340,9 @@ class ParameterBlock {
 
   // If non-null, contains the residual blocks this parameter block is in.
   scoped_ptr<ResidualBlockSet> residual_blocks_;
+
+  scoped_array<double> upper_bounds_;
+  scoped_array<double> lower_bounds_;
 
   // Necessary so ProblemImpl can clean up the parameterizations.
   friend class ProblemImpl;
