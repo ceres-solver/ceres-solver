@@ -114,6 +114,7 @@ class Minimizer {
       callbacks = options.callbacks;
       inner_iteration_minimizer = NULL;
       inner_iteration_tolerance = options.inner_iteration_tolerance;
+      is_constrained = false;
     }
 
     int max_num_iterations;
@@ -180,6 +181,9 @@ class Minimizer {
 
     Minimizer* inner_iteration_minimizer;
     double inner_iteration_tolerance;
+
+    // Use a bounds constrained optimization algorithm.
+    bool is_constrained;
   };
 
   static bool RunCallbacks(const vector<IterationCallback*> callbacks,
