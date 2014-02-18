@@ -63,6 +63,9 @@ IF (GFLAGS)
   ADD_EXECUTABLE(nist nist.cc)
   TARGET_LINK_LIBRARIES(nist ceres ${GFLAGS_LIBRARIES})
 
+  ADD_EXECUTABLE(more_garbow_hillstrom more_garbow_hillstrom.cc)
+  TARGET_LINK_LIBRARIES(more_garbow_hillstrom ceres ${GFLAGS_LIBRARIES})
+
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
   TARGET_LINK_LIBRARIES(circle_fit ceres ${GFLAGS_LIBRARIES})
 
@@ -80,4 +83,3 @@ IF (GFLAGS)
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres ${GFLAGS_LIBRARIES})
 ENDIF (GFLAGS)
-
