@@ -36,6 +36,42 @@
     },
     {
       "key": {
+        "uuid": "ef293d20_bbd56830",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-18T23:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef293d20_497fb135",
+      "revId": "e65764cc49da11f91fc9e3aa7a1c7c371314e03d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef293d20_1bd1fc43",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-18T23:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef293d20_495811e9",
+      "revId": "e65764cc49da11f91fc9e3aa7a1c7c371314e03d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef293d20_1b6c9cdb",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ef293d20_dbdaa45d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-18T23:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef293d20_1b6c9cdb",
+      "revId": "e65764cc49da11f91fc9e3aa7a1c7c371314e03d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef293d20_5b99b4ab",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-02-18T23:22:52Z",
       "side": 1,
       "message": "Move this to a separate function; add a TODO() around TR sizing.",
+      "revId": "e65764cc49da11f91fc9e3aa7a1c7c371314e03d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef293d20_1be57cf9",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-18T23:33:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef293d20_5b99b4ab",
       "revId": "e65764cc49da11f91fc9e3aa7a1c7c371314e03d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
