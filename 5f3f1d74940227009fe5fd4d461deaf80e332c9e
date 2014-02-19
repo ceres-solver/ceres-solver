@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff0510e_fdae27ab",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-19T05:12:41Z",
+      "side": 1,
+      "message": "Comment above: Clamp to the box constraints.",
+      "revId": "5f3f1d74940227009fe5fd4d461deaf80e332c9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
