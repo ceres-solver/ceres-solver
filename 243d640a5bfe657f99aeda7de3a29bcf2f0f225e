@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ff0510e_1d45d389",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "actually no, what I have here is correct. since we are interested in only checking the constant parameter blocks. notice the loop.. we actually skip over all variable parameter blocks.",
+      "parentUuid": "0ff0510e_3dcd2ffa",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff0510e_5dc47bd3",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-02-19T07:37:00Z",
       "side": 1,
       "message": "Something weird is going on here; do you have an extra *message?",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff0510e_5d4f5ba7",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "yes, good catch.",
+      "parentUuid": "0ff0510e_5dc47bd3",
       "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0ff0510e_fd5d8766",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "no its meant to break on the first one.",
+      "parentUuid": "0ff0510e_9d8a8394",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff0510e_fd8f47a2",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-02-19T07:37:00Z",
       "side": 1,
       "message": "Is this a CHECK() failure? Or a message fail?",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff0510e_bd53ff5c",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "actually it turns out that I was wrong about this. This works just fine.",
+      "parentUuid": "0ff0510e_fd8f47a2",
       "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0ff0510e_dd6d2b18",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "that only checks stuff in options.",
+      "parentUuid": "0ff0510e_7da4d720",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ff0510e_1d9793bd",
         "filename": "internal/ceres/solver_impl.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2014-02-19T07:37:00Z",
       "side": 1,
       "message": "Add this to summary-\u003emessage?",
+      "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff0510e_1d803369",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-19T07:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff0510e_1d9793bd",
       "revId": "243d640a5bfe657f99aeda7de3a29bcf2f0f225e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
