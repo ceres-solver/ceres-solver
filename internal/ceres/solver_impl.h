@@ -67,7 +67,6 @@ class SolverImpl {
       CoordinateDescentMinimizer* inner_iteration_minimizer,
       Evaluator* evaluator,
       LinearSolver* linear_solver,
-      double* parameters,
       Solver::Summary* summary);
 
 #ifndef CERES_NO_LINE_SEARCH_MINIMIZER
@@ -79,7 +78,6 @@ class SolverImpl {
   static void LineSearchMinimize(const Solver::Options &options,
                                  Program* program,
                                  Evaluator* evaluator,
-                                 double* parameters,
                                  Solver::Summary* summary);
 #endif  // CERES_NO_LINE_SEARCH_MINIMIZER
 
