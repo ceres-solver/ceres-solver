@@ -541,6 +541,20 @@ const LocalParameterization* ProblemImpl::GetParameterization(
       ->local_parameterization();
 }
 
+void ProblemImpl::SetParameterLowerBound(double* values,
+                                         int index,
+                                         double lower_bound) {
+  FindParameterBlockOrDie(parameter_block_map_, values)
+      ->SetLowerBound(index, lower_bound);
+}
+
+void ProblemImpl::SetParameterUpperBound(double* values,
+                                         int index,
+                                         double upper_bound) {
+  FindParameterBlockOrDie(parameter_block_map_, values)
+      ->SetUpperBound(index, upper_bound);
+}
+
 bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
                            double* cost,
                            vector<double>* residuals,

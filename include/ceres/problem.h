@@ -300,7 +300,7 @@ class Problem {
   // Hold the indicated parameter block constant during optimization.
   void SetParameterBlockConstant(double* values);
 
-  // Allow the indicated parameter to vary during optimization.
+  // Allow the indicated parameter block to vary during optimization.
   void SetParameterBlockVariable(double* values);
 
   // Set the local parameterization for one of the parameter blocks.
@@ -316,6 +316,10 @@ class Problem {
   // parameter block. If there is no parameterization object
   // associated then NULL is returned.
   const LocalParameterization* GetParameterization(double* values) const;
+
+  // Set the lower/upper bound for the parameter with position "index".
+  void SetParameterLowerBound(double* values, int index, double lower_bound);
+  void SetParameterUpperBound(double* values, int index, double upper_bound);
 
   // Number of parameter blocks in the problem. Always equals
   // parameter_blocks().size() and parameter_block_sizes().size().
