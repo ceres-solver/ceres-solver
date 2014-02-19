@@ -183,6 +183,18 @@ const LocalParameterization* Problem::GetParameterization(
   return problem_impl_->GetParameterization(values);
 }
 
+void Problem::SetParameterLowerBound(double* values,
+                                     int index,
+                                     double lower_bound) {
+  problem_impl_->SetParameterLowerBound(values, index, lower_bound);
+}
+
+void Problem::SetParameterUpperBound(double* values,
+                                     int index,
+                                     double upper_bound) {
+  problem_impl_->SetParameterUpperBound(values, index, upper_bound);
+}
+
 bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
                        double* cost,
                        vector<double>* residuals,

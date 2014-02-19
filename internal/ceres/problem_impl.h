@@ -129,6 +129,9 @@ class ProblemImpl {
                            LocalParameterization* local_parameterization);
   const LocalParameterization* GetParameterization(double* values) const;
 
+  void SetParameterLowerBound(double* values, int index, double lower_bound);
+  void SetParameterUpperBound(double* values, int index, double upper_bound);
+
   bool Evaluate(const Problem::EvaluateOptions& options,
                 double* cost,
                 vector<double>* residuals,
