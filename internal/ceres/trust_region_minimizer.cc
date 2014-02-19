@@ -130,9 +130,9 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   // If the problem is bounds constrained, then enable the use of a
   // line search after the trust region step has been computed. This
-  // line search will automatically use a projected the test point
-  // onto the feasible set, there by guaranteeing the feasibility of
-  // the final output.
+  // line search will automatically use a projected test point onto
+  // the feasible set, there by guaranteeing the feasibility of the
+  // final output.
   //
   // TODO(sameeragarwal): Make line search available more generally.
   const bool use_line_search = options.is_constrained;
