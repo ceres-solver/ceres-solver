@@ -1095,7 +1095,54 @@ TEST(SolverImpl, ProblemHasNanParameterBlocks) {
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   EXPECT_EQ(summary.termination_type, FAILURE);
-  EXPECT_NE(summary.message.find("has at least one invalid value"), string::npos);
+  EXPECT_NE(summary.message.find("has at least one invalid value"),
+            string::npos)
+      << summary.message;
+}
+
+TEST(SolverImpl, BoundsConstrainedProblemWithLineSearchMinimizerDoesNotWork) {
+  Problem problem;
+  double x[] = {0.0, 0.0};
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.SetParameterUpperBound(x, 0, 1.0);
+  Solver::Options options;
+  options.minimizer_type = LINE_SEARCH;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_NE(summary.message.find(
+                "LINE_SEARCH Minimizer does not support bounds"),
+            string::npos)
+      << summary.message;
+}
+
+TEST(SolverImpl, InfeasibleParameterBlock) {
+  Problem problem;
+  double x[] = {0.0, 0.0};
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.SetParameterLowerBound(x, 0, 2.0);
+  problem.SetParameterUpperBound(x, 0, 1.0);
+  Solver::Options options;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_NE(summary.message.find("infeasible bound"), string::npos)
+      << summary.message;
+}
+
+TEST(SolverImpl, InfeasibleConstantParameterBlock) {
+  Problem problem;
+  double x[] = {0.0, 0.0};
+  problem.AddResidualBlock(new MockCostFunctionBase<1, 2, 0, 0>(), NULL, x);
+  problem.SetParameterLowerBound(x, 0, 1.0);
+  problem.SetParameterUpperBound(x, 0, 2.0);
+  problem.SetParameterBlockConstant(x);
+  Solver::Options options;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, FAILURE);
+  EXPECT_NE(summary.message.find("infeasible value"), string::npos)
+      << summary.message;
 }
 
 }  // namespace internal
