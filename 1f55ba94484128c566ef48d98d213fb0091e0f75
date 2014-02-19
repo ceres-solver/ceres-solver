@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff0510e_a06bd4c4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-19T08:27:27Z",
+      "side": 1,
+      "message": "Comment above here: \"Constant parameter blocks must start in the feasible region to ultimately produce a feasible solution, since Ceres cannot change them.\"",
+      "revId": "1f55ba94484128c566ef48d98d213fb0091e0f75",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff0510e_0061e8e4",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-19T08:27:27Z",
+      "side": 1,
+      "message": "Comment above here: \"Variable parameter blocks must have non-empty feasible regions, otherwise there is way to produce a feasible solution.\"",
+      "revId": "1f55ba94484128c566ef48d98d213fb0091e0f75",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
