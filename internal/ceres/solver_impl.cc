@@ -345,38 +345,51 @@ bool IsBoundsConstrained(const Program& program) {
   return false;
 }
 
-// Returns true, if the problem has any constant parameter blocks
-// which are not feasible. This means that Ceres cannot produce a
-// feasible solution to the problem.
-bool HasInfeasibleConstantParameterBlock(const ProblemImpl* problem,
-                                         string* message) {
+// Returns false, if the problem has any constant parameter blocks
+// which are not feasible, or any variable parameter blocks which have
+// a lower bound greater than or equal to the upper bound.
+bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
   CHECK_NOTNULL(message);
   const Program& program = problem->program();
+   const Program& program = problem->program();
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
-    if (!parameter_blocks[i]->IsConstant()) {
-      continue;
-    }
-
     const double* array = parameter_blocks[i]->user_state();
     const double* lower_bounds = parameter_blocks[i]->lower_bounds();
     const double* upper_bounds = parameter_blocks[i]->upper_bounds();
     const int size = parameter_blocks[i]->Size();
-    for (int j = 0; j < size; ++j) {
-      if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
-        *message = StringPrintf(
-            "ParameterBlock: %p with size %d has at least one infeasible value."
-            "\nFirst infeasible value is at index: %d."
-            "\nLower bound: %e, value: %e, upper bound: %e"
-            "\nParameter block values: ",
-            array, size, j, lower_bounds[j], array[j], upper_bounds[j]);
-        AppendArrayToString(size, array, message);
-        return true;
+    if (parameter_blocks[i]->IsConstant()) {
+      for (int j = 0; j < size; ++j) {
+        if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
+          *message = StringPrintf(
+              "ParameterBlock: %p with size %d has at least one infeasible value."
+              "\nFirst infeasible value is at index: %d."
+              "\nLower bound: %e, value: %e, upper bound: %e"
+              "\nParameter block values: ",
+              array, size, j, lower_bounds[j], array[j], upper_bounds[j]);
+          AppendArrayToString(size, array, message);
+          return false;
+        }
+      }
+    } else {
+      for (int j = 0; j < size; ++j) {
+        if (lower_bounds[j] >= upper_bounds[j]) {
+          *message = StringPrintf(
+              "ParameterBlock: %p with size %d has at least one infeasible bound."
+              "\nFirst infeasible bound is at index: %d."
+              "\nLower bound: %e, upper bound: %e"
+              "\nParameter block values: ",
+              array, size, j, lower_bounds[j], upper_bounds[j]);
+          AppendArrayToString(size, array, message);
+          return false;
+        }
       }
     }
   }
-  return false;
+
+  return true;
 }
+
 
 }  // namespace
 
@@ -594,7 +607,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
-  if (HasInfeasibleConstantParameterBlock(problem_impl, &summary->message)) {
+  if (ParameterBlocksAreFeasible(problem_impl, &summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
