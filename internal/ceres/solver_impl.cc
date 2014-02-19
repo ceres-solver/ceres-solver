@@ -323,6 +323,62 @@ bool LineSearchOptionsAreValid(const Solver::Options& options,
   return true;
 }
 
+// Returns true if the program has any non-constant parameter blocks
+// which have non-trivial bounds constraints.
+bool IsBoundsConstrained(const Program& program) {
+  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  for (int i = 0; i < parameter_blocks.size(); ++i) {
+    if (parameter_blocks[i]->IsConstant()) {
+      continue;
+    }
+
+    const double* lower_bounds = parameter_blocks[i]->lower_bounds();
+    const double* upper_bounds = parameter_blocks[i]->upper_bounds();
+    const int size = parameter_blocks[i]->Size();
+    for (int j = 0; j < size; ++j) {
+      if (lower_bounds[j] > -std::numeric_limits<double>::max() ||
+          upper_bounds[j] < std::numeric_limits<double>::max()) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// Returns true, if the problem has any constant parameter blocks
+// which are not feasible. This means that Ceres cannot produce a
+// feasible solution to the problem.
+bool InfeasibleParameterBlocksAreConstant(const ProblemImpl* problem,
+                                          string* message) {
+  CHECK_NOTNULL(message);
+  const Program& program = problem->program();
+  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  for (int i = 0; i < parameter_blocks.size(); ++i) {
+    if (!parameter_blocks[i]->IsConstant()) {
+      continue;
+    }
+
+    const double* array = parameter_blocks[i]->user_state();
+    const double* lower_bounds = parameter_blocks[i]->lower_bounds();
+    const double* upper_bounds = parameter_blocks[i]->upper_bounds();
+    const int size = parameter_blocks[i]->Size();
+    for (int j = 0; j < size; ++j) {
+      if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
+        *message =
+             *message = StringPrintf(
+          "ParameterBlock: %p with size %d has at least one infeasible value.\n"
+          "First infeasible value is at index: %d.\n"
+          "Lower bound: %e, value: %e, upper bound: %e\n"
+          "Parameter block values: ",
+          array, size, j, lower_bounds[j], array[j], upper_bounds[j]);
+        AppendArrayToString(size, array, message);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 }  // namespace
 
 void SolverImpl::TrustRegionMinimize(
@@ -331,12 +387,20 @@ void SolverImpl::TrustRegionMinimize(
     CoordinateDescentMinimizer* inner_iteration_minimizer,
     Evaluator* evaluator,
     LinearSolver* linear_solver,
-    double* parameters,
     Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
+  minimizer_options.is_constrained = IsBoundsConstrained(*program);
+  if (minimizer_options.is_constrained) {
+    CHECK(inner_iteration_minimizer == NULL)
+        << "Inner iterations cannot be used with bounds constrained problems.";
+  }
 
-  // TODO(sameeragarwal): Add support for logging the configuration
-  // and more detailed stats.
+  // The optimizer works on contiguous parameter vectors; allocate some.
+  Vector parameters(program->NumParameters());
+
+  // Collect the discontiguous parameters into a contiguous state vector.
+  program->ParameterBlocksToStateVector(parameters.data());
+
   scoped_ptr<IterationCallback> file_logging_callback;
   if (!options.solver_log.empty()) {
     file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
@@ -351,7 +415,7 @@ void SolverImpl::TrustRegionMinimize(
                                        &logging_callback);
   }
 
-  StateUpdatingCallback updating_callback(program, parameters);
+  StateUpdatingCallback updating_callback(program, parameters.data());
   if (options.update_state_every_iteration) {
     // This must get pushed to the front of the callbacks so that it is run
     // before any of the user callbacks.
@@ -381,7 +445,17 @@ void SolverImpl::TrustRegionMinimize(
 
   TrustRegionMinimizer minimizer;
   double minimizer_start_time = WallTimeInSeconds();
-  minimizer.Minimize(minimizer_options, parameters, summary);
+  minimizer.Minimize(minimizer_options, parameters.data(), summary);
+
+  // If the user aborted mid-optimization or the optimization
+  // terminated because of a numerical failure, then do not update
+  // user state.
+  if (summary->termination_type != USER_FAILURE &&
+      summary->termination_type != FAILURE) {
+    program->StateVectorToParameterBlocks(parameters.data());
+    program->CopyParameterBlockStateToUserState();
+  }
+
   summary->minimizer_time_in_seconds =
       WallTimeInSeconds() - minimizer_start_time;
 }
@@ -391,9 +465,14 @@ void SolverImpl::LineSearchMinimize(
     const Solver::Options& options,
     Program* program,
     Evaluator* evaluator,
-    double* parameters,
     Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
+
+  // The optimizer works on contiguous parameter vectors; allocate some.
+  Vector parameters(program->NumParameters());
+
+  // Collect the discontiguous parameters into a contiguous state vector.
+  program->ParameterBlocksToStateVector(parameters.data());
 
   // TODO(sameeragarwal): Add support for logging the configuration
   // and more detailed stats.
@@ -411,7 +490,7 @@ void SolverImpl::LineSearchMinimize(
                                        &logging_callback);
   }
 
-  StateUpdatingCallback updating_callback(program, parameters);
+  StateUpdatingCallback updating_callback(program, parameters.data());
   if (options.update_state_every_iteration) {
     // This must get pushed to the front of the callbacks so that it is run
     // before any of the user callbacks.
@@ -423,7 +502,17 @@ void SolverImpl::LineSearchMinimize(
 
   LineSearchMinimizer minimizer;
   double minimizer_start_time = WallTimeInSeconds();
-  minimizer.Minimize(minimizer_options, parameters, summary);
+  minimizer.Minimize(minimizer_options, parameters.data(), summary);
+
+  // If the user aborted mid-optimization or the optimization
+  // terminated because of a numerical failure, then do not update
+  // user state.
+  if (summary->termination_type != USER_FAILURE &&
+      summary->termination_type != FAILURE) {
+    program->StateVectorToParameterBlocks(parameters.data());
+    program->CopyParameterBlockStateToUserState();
+  }
+
   summary->minimizer_time_in_seconds =
       WallTimeInSeconds() - minimizer_start_time;
 }
@@ -504,6 +593,11 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   }
 
   if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
+
+  if (InfeasibleParameterBlocksAreConstant(problem_impl, &summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
@@ -654,14 +748,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   }
   event_logger.AddEvent("CreateInnerIterationMinimizer");
 
-  // The optimizer works on contiguous parameter vectors; allocate some.
-  Vector parameters(reduced_program->NumParameters());
-
-  // Collect the discontiguous parameters into a contiguous state vector.
-  reduced_program->ParameterBlocksToStateVector(parameters.data());
-
-  Vector original_parameters = parameters;
-
   double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
@@ -672,26 +758,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                       inner_iteration_minimizer.get(),
                       evaluator.get(),
                       linear_solver.get(),
-                      parameters.data(),
                       summary);
   event_logger.AddEvent("Minimize");
 
-  SetSummaryFinalCost(summary);
-
-  // If the user aborted mid-optimization or the optimization
-  // terminated because of a numerical failure, then return without
-  // updating user state.
-  if (summary->termination_type == USER_FAILURE ||
-      summary->termination_type == FAILURE) {
-    return;
-  }
-
   double post_process_start_time = WallTimeInSeconds();
 
-  // Push the contiguous optimized parameters back to the user's
-  // parameters.
-  reduced_program->StateVectorToParameterBlocks(parameters.data());
-  reduced_program->CopyParameterBlockStateToUserState();
+  SetSummaryFinalCost(summary);
 
   // Ensure the program state is set to the user parameters on the way
   // out.
@@ -741,6 +813,11 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
 
   if (!LineSearchOptionsAreValid(original_options, &summary->message)) {
     LOG(ERROR) << summary->message;
+    return;
+  }
+
+  if (IsBoundsConstrained(problem_impl->program())) {
+    LOG(ERROR) << "Terminating: LINE_SEARCH Minimizer does not support bounds.";
     return;
   }
 
@@ -851,38 +928,14 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  // The optimizer works on contiguous parameter vectors; allocate some.
-  Vector parameters(reduced_program->NumParameters());
-
-  // Collect the discontiguous parameters into a contiguous state vector.
-  reduced_program->ParameterBlocksToStateVector(parameters.data());
-
-  Vector original_parameters = parameters;
-
   const double minimizer_start_time = WallTimeInSeconds();
   summary->preprocessor_time_in_seconds =
       minimizer_start_time - solver_start_time;
 
   // Run the optimization.
-  LineSearchMinimize(options,
-                     reduced_program.get(),
-                     evaluator.get(),
-                     parameters.data(),
-                     summary);
-
-  // If the user aborted mid-optimization or the optimization
-  // terminated because of a numerical failure, then return without
-  // updating user state.
-  if (summary->termination_type == USER_FAILURE ||
-      summary->termination_type == FAILURE) {
-    return;
-  }
+  LineSearchMinimize(options, reduced_program.get(), evaluator.get(), summary);
 
   const double post_process_start_time = WallTimeInSeconds();
-
-  // Push the contiguous optimized parameters back to the user's parameters.
-  reduced_program->StateVectorToParameterBlocks(parameters.data());
-  reduced_program->CopyParameterBlockStateToUserState();
 
   SetSummaryFinalCost(summary);
 
