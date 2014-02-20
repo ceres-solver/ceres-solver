@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1c351e_0a358bba",
+        "filename": "examples/more_garbow_hillstrom.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-20T07:14:17Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "0129daaf9c122e1a051766668b3fadd8cf2fd0aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
