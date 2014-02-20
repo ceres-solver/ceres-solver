@@ -58,13 +58,14 @@
 namespace ceres {
 namespace examples {
 
-#define BEGIN_BOUNDS_TEST(name, num_parameters, num_residuals)          \
+#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)          \
   struct name {                                                         \
     static const int kNumParameters = num_parameters;                   \
     static const double initial_x[kNumParameters];                      \
     static const double lower_bounds[kNumParameters];                   \
     static const double upper_bounds[kNumParameters];                   \
-    static const double optimal_cost;                                   \
+    static const double constrained_optimal_cost;                       \
+    static const double unconstrained_optimal_cost;                     \
     static CostFunction* Create() {                                     \
       return new AutoDiffCostFunction<name,                             \
                                       num_residuals,                    \
@@ -73,47 +74,50 @@ namespace examples {
     template <typename T>                                               \
     bool operator()(const T* const x, T* residual) const {
 
-#define END_BOUNDS_TEST return true; } };
+#define END_MGH_PROBLEM return true; } };
 
-BEGIN_BOUNDS_TEST(TestProblem3, 2, 2)
+BEGIN_MGH_PROBLEM(TestProblem3, 2, 2)
   const T x1 = x[0];
   const T x2 = x[1];
   residual[0] = T(10000.0) * x1 * x2 - T(1.0);
   residual[1] = exp(-x1) + exp(-x2) - T(1.0001);
-END_BOUNDS_TEST;
+END_MGH_PROBLEM;
 
 const double TestProblem3::initial_x[] = {0.0, 1.0};
 const double TestProblem3::lower_bounds[] = {0.0, 1.0};
 const double TestProblem3::upper_bounds[] = {1.0, 9.0};
-const double TestProblem3::optimal_cost = 0.15125900e-9;
+const double TestProblem3::constrained_optimal_cost = 0.15125900e-9;
+const double TestProblem3::unconstrained_optimal_cost = 0.0;
 
-BEGIN_BOUNDS_TEST(TestProblem4, 2, 3)
+BEGIN_MGH_PROBLEM(TestProblem4, 2, 3)
   const T x1 = x[0];
   const T x2 = x[1];
   residual[0] = x1  - T(1000000.0);
   residual[1] = x2 - T(0.000002);
   residual[2] = x1 * x2 - T(2.0);
-END_BOUNDS_TEST;
+END_MGH_PROBLEM;
 
 const double TestProblem4::initial_x[] = {1.0, 1.0};
 const double TestProblem4::lower_bounds[] = {0.0, 0.00003};
 const double TestProblem4::upper_bounds[] = {1000000.0, 100.0};
-const double TestProblem4::optimal_cost = 0.78400000e3;
+const double TestProblem4::constrained_optimal_cost = 0.78400000e3;
+const double TestProblem4::unconstrained_optimal_cost = 0.0;
 
-BEGIN_BOUNDS_TEST(TestProblem5, 2, 3)
+BEGIN_MGH_PROBLEM(TestProblem5, 2, 3)
   const T x1 = x[0];
   const T x2 = x[1];
   residual[0] = T(1.5) - x1 * (T(1.0) - x2);
   residual[1] = T(2.25) - x1 * (T(1.0) - x2 * x2);
   residual[2] = T(2.625) - x1 * (T(1.0) - x2 * x2 * x2);
-END_BOUNDS_TEST;
+END_MGH_PROBLEM;
 
 const double TestProblem5::initial_x[] = {1.0, 1.0};
 const double TestProblem5::lower_bounds[] = {0.6, 0.5};
 const double TestProblem5::upper_bounds[] = {10.0, 100.0};
-const double TestProblem5::optimal_cost = 0.0;
+const double TestProblem5::constrained_optimal_cost = 0.0;
+const double TestProblem5::unconstrained_optimal_cost = 0.0;
 
-BEGIN_BOUNDS_TEST(TestProblem7, 3, 3)
+BEGIN_MGH_PROBLEM(TestProblem7, 3, 3)
   const T x1 = x[0];
   const T x2 = x[1];
   const T x3 = x[2];
@@ -122,14 +126,15 @@ BEGIN_BOUNDS_TEST(TestProblem7, 3, 3)
   residual[0] = T(10.0) * (x3 - T(10.0) * theta);
   residual[1] = T(10.0) * (sqrt(x1 * x1 + x2 * x2) - T(1.0));
   residual[2] = x3;
-END_BOUNDS_TEST;
+END_MGH_PROBLEM;
 
 const double TestProblem7::initial_x[] = {-1.0, 0.0, 0.0};
 const double TestProblem7::lower_bounds[] = {-100.0, -1.0, -1.0};
 const double TestProblem7::upper_bounds[] = {0.8, 1.0, 1.0};
-const double TestProblem7::optimal_cost = 0.99042212;
+const double TestProblem7::constrained_optimal_cost = 0.99042212;
+const double TestProblem7::unconstrained_optimal_cost = 0.0;
 
-BEGIN_BOUNDS_TEST(TestProblem9, 3, 15)
+BEGIN_MGH_PROBLEM(TestProblem9, 3, 15)
   const T x1 = x[0];
   const T x2 = x[1];
   const T x3 = x[2];
@@ -142,17 +147,18 @@ BEGIN_BOUNDS_TEST(TestProblem9, 3, 15)
     const T y_i = T(y[i]);
     residual[i] = x1 * exp( -x2 * (t_i - x3) * (t_i - x3) / T(2.0)) - y_i;
   }
-END_BOUNDS_TEST;
+END_MGH_PROBLEM;
 
 const double TestProblem9::initial_x[] = {0.4, 1.0, 0.0};
 const double TestProblem9::lower_bounds[] = {0.398, 1.0 ,-0.5};
 const double TestProblem9::upper_bounds[] = {4.2, 2.0, 0.1};
-const double TestProblem9::optimal_cost = 0.11279300e-7;
+const double TestProblem9::constrained_optimal_cost = 0.11279300e-7;
+const double TestProblem9::unconstrained_optimal_cost = 0.112793e-7;
 
-#undef BEGIN_BOUNDS_TEST
-#undef END_BOUNDS_TEST
+#undef BEGIN_MGH_PROBLEM
+#undef END_MGH_PROBLEM
 
-template<typename TestProblem> string Solve() {
+template<typename TestProblem> string ConstrainedSolve() {
   double x[TestProblem::kNumParameters];
   std::copy(TestProblem::initial_x,
             TestProblem::initial_x + TestProblem::kNumParameters,
@@ -176,8 +182,40 @@ template<typename TestProblem> string Solve() {
 
   const double kMinLogRelativeError = 5.0;
   const double log_relative_error = -std::log10(
-      std::abs(2.0 * summary.final_cost - TestProblem::optimal_cost) /
-      (TestProblem::optimal_cost > 0.0 ? TestProblem::optimal_cost : 1.0));
+      std::abs(2.0 * summary.final_cost - TestProblem::constrained_optimal_cost) /
+      (TestProblem::constrained_optimal_cost > 0.0
+       ? TestProblem::constrained_optimal_cost
+       : 1.0));
+
+  return (log_relative_error >= kMinLogRelativeError
+          ? "Success\n"
+          : "Failure\n");
+}
+
+template<typename TestProblem> string UnconstrainedSolve() {
+  double x[TestProblem::kNumParameters];
+  std::copy(TestProblem::initial_x,
+            TestProblem::initial_x + TestProblem::kNumParameters,
+            x);
+
+  Problem problem;
+  problem.AddResidualBlock(TestProblem::Create(), NULL, x);
+
+  Solver::Options options;
+  options.parameter_tolerance = 1e-18;
+  options.function_tolerance = 1e-18;
+  options.gradient_tolerance = 1e-18;
+  options.max_num_iterations = 1000;
+  options.linear_solver_type = DENSE_QR;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+
+  const double kMinLogRelativeError = 5.0;
+  const double log_relative_error = -std::log10(
+      std::abs(2.0 * summary.final_cost - TestProblem::unconstrained_optimal_cost) /
+      (TestProblem::unconstrained_optimal_cost > 0.0
+       ? TestProblem::unconstrained_optimal_cost
+       : 1.0));
 
   return (log_relative_error >= kMinLogRelativeError
           ? "Success\n"
@@ -191,13 +229,32 @@ int main(int argc, char** argv) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  using ceres::examples::Solve;
+  using ceres::examples::ConstrainedSolve;
+  using ceres::examples::UnconstrainedSolve;
 
-  std::cout << "Test problem 3 : " << Solve<ceres::examples::TestProblem3>();
-  std::cout << "Test problem 4 : " << Solve<ceres::examples::TestProblem4>();
-  std::cout << "Test problem 5 : " << Solve<ceres::examples::TestProblem5>();
-  std::cout << "Test problem 7 : " << Solve<ceres::examples::TestProblem7>();
-  std::cout << "Test problem 9 : " << Solve<ceres::examples::TestProblem9>();
+  std::cout << "Unconstrained Problems\n";
+  std::cout << "Test problem 3 : "
+            << UnconstrainedSolve<ceres::examples::TestProblem3>();
+  std::cout << "Test problem 4 : "
+            << UnconstrainedSolve<ceres::examples::TestProblem4>();
+  std::cout << "Test problem 5 : "
+            << UnconstrainedSolve<ceres::examples::TestProblem5>();
+  std::cout << "Test problem 7 : "
+            << UnconstrainedSolve<ceres::examples::TestProblem7>();
+  std::cout << "Test problem 9 : "
+            << UnconstrainedSolve<ceres::examples::TestProblem9>();
+
+  std::cout << "Constrained Problems\n";
+  std::cout << "Test problem 3 : "
+            << ConstrainedSolve<ceres::examples::TestProblem3>();
+  std::cout << "Test problem 4 : "
+            << ConstrainedSolve<ceres::examples::TestProblem4>();
+  std::cout << "Test problem 5 : "
+            << ConstrainedSolve<ceres::examples::TestProblem5>();
+  std::cout << "Test problem 7 : "
+            << ConstrainedSolve<ceres::examples::TestProblem7>();
+  std::cout << "Test problem 9 : "
+            << ConstrainedSolve<ceres::examples::TestProblem9>();
 
   return 0;
 }
