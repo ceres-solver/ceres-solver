@@ -40,6 +40,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
+#include "ceres/constrained_problem.h"
 
 namespace ceres {
 
@@ -367,9 +368,16 @@ class Solver {
 
     // Minimizer terminates when
     //
-    //   max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
+    //   max_norm (x - Project(Plus(x, -gradient)))| < gradient_tolerance
     //
-    // This value should typically be 1e-4 * function_tolerance.
+    // Where, "Project" projects the vector Plus(x, -gradient) onto
+    // the bounds constraints.
+    //
+    // When no local parameterization or bounds constraints are
+    // present, the above reduces to
+    //
+    //   max_norm(gradient) < gradient_tolerance.
+    //
     double gradient_tolerance;
 
     // Minimizer terminates when
@@ -943,6 +951,10 @@ class Solver {
 // Helper function which avoids going through the interface.
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary);
+
+void Solve(const Solver::Options& options,
+           experimental::ConstrainedProblem* problem,
            Solver::Summary* summary);
 
 }  // namespace ceres
