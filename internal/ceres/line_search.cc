@@ -276,7 +276,7 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
                        "satisfying the sufficient decrease condition within "
                        "specified max_num_iterations: %d.",
                        options().max_num_iterations);
-      LOG(WARNING) << summary->error;
+      LOG_IF(WARNING, !options().is_silent) << summary->error;
       return;
     }
 
@@ -294,7 +294,7 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
           StringPrintf("Line search failed: step_size too small: %.5e "
                        "with descent_direction_max_norm: %.5e.", step_size,
                        descent_direction_max_norm);
-      LOG(WARNING) << summary->error;
+      LOG_IF(WARNING, !options().is_silent) << summary->error;
       return;
     }
 
