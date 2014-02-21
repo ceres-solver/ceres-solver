@@ -40,6 +40,9 @@
 #include "ceres/solver.h"
 
 namespace ceres {
+
+class experimental::ConstrainedProblem;
+
 namespace internal {
 
 class CoordinateDescentMinimizer;
@@ -54,6 +57,10 @@ class SolverImpl {
   // details for testing internally.
   static void Solve(const Solver::Options& options,
                     ProblemImpl* problem_impl,
+                    Solver::Summary* summary);
+
+  static void Solve(const Solver::Options& options,
+                    experimental::ConstrainedProblem* problem,
                     Solver::Summary* summary);
 
   static void TrustRegionSolve(const Solver::Options& options,
@@ -78,6 +85,20 @@ class SolverImpl {
                                  Program* program,
                                  Evaluator* evaluator,
                                  Solver::Summary* summary);
+
+  static void ConstrainedSolve(const Solver::Options& original_options,
+                               ProblemImpl* original_problem_impl,
+                               const map<ConstraintBlockId, CostFunction*>& constraints,
+                               Solver::Summary* summary);
+
+  static void AugmentedLagrangianMinimize(
+      const Solver::Options& options,
+      const map<ConstraintBlockId, CostFunction*>& constraints,
+      Program* program,
+      CoordinateDescentMinimizer* inner_iteration_minimizer,
+      Evaluator* evaluator,
+      LinearSolver* linear_solver,
+      Solver::Summary* summary);
 
   // Create the transformed Program, which has all the fixed blocks
   // and residuals eliminated, and in the case of automatic schur

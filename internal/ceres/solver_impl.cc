@@ -55,9 +55,12 @@
 #include "ceres/suitesparse.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/wall_time.h"
+#include "ceres/augmented_lagrangian_cost_function.h"
 
 namespace ceres {
 namespace internal {
+using ::ceres::experimental::AugmentedLagrangianCostFunction;
+
 namespace {
 
 // Callback for updating the user's parameter blocks. Updates are only
@@ -397,6 +400,56 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
   return true;
 }
 
+double EvaluateConstraintMaxNorm(const map<ConstraintBlockId, CostFunction*>& constraints) {
+  Vector residuals;
+  double max_norm = 0.0;
+  for (map<ConstraintBlockId, CostFunction*>::const_iterator it = constraints.begin();
+       it != constraints.end();
+       ++it) {
+    AugmentedLagrangianCostFunction* cost_function =
+            down_cast<AugmentedLagrangianCostFunction*>(it->second);
+    vector<double*> parameter_blocks;
+    ResidualBlock* residual_block = it->first;
+    int num_parameter_blocks = residual_block->NumParameterBlocks();
+    parameter_blocks.resize(num_parameter_blocks);
+    for (int i = 0; i < num_parameter_blocks; ++i) {
+      parameter_blocks[i] =
+          residual_block->parameter_blocks()[i]->mutable_user_state();
+    }
+    const CostFunction* constraint = cost_function->constraint();
+    if (constraint->num_residuals() > residuals.size()) {
+      residuals.resize(constraint->num_residuals());
+    }
+    CHECK(constraint->Evaluate(&parameter_blocks[0], residuals.data(), NULL));
+    max_norm = std::max(max_norm, residuals.lpNorm<Eigen::Infinity>());
+  }
+  return max_norm;
+};
+
+
+double EvaluateObjective(const set<ResidualBlock*>& residual_blocks) {
+  Vector residuals;
+  double cost = 0.0;
+  for (set<ResidualBlock*>::const_iterator it = residual_blocks.begin();
+       it != residual_blocks.end();
+       ++it) {
+    vector<double*> parameter_blocks;
+    const ResidualBlock* residual_block = *it;
+    int num_parameter_blocks = residual_block->NumParameterBlocks();
+    parameter_blocks.resize(num_parameter_blocks);
+    for (int i = 0; i < num_parameter_blocks; ++i) {
+      parameter_blocks[i] =
+          residual_block->parameter_blocks()[i]->mutable_user_state();
+    }
+    const CostFunction* cost_function = residual_block->cost_function();
+    if (cost_function->num_residuals() > residuals.size()) {
+      residuals.resize(cost_function->num_residuals());
+    }
+    CHECK(cost_function->Evaluate(&parameter_blocks[0], residuals.data(), NULL));
+    cost += residuals.squaredNorm() / 2.0;
+  }
+  return cost;
+};
 
 }  // namespace
 
@@ -413,7 +466,6 @@ void SolverImpl::TrustRegionMinimize(
   // The optimizer works on contiguous parameter vectors; allocate
   // some.
   Vector parameters(program->NumParameters());
-
   // Collect the discontiguous parameters into a contiguous state
   // vector.
   program->ParameterBlocksToStateVector(parameters.data());
@@ -476,6 +528,162 @@ void SolverImpl::TrustRegionMinimize(
   summary->minimizer_time_in_seconds =
       WallTimeInSeconds() - minimizer_start_time;
 }
+
+void SolverImpl::AugmentedLagrangianMinimize(
+    const Solver::Options& options,
+    const map<ConstraintBlockId, CostFunction*>& constraints,
+    Program* program,
+    CoordinateDescentMinimizer* inner_iteration_minimizer,
+    Evaluator* evaluator,
+    LinearSolver* linear_solver,
+    Solver::Summary* summary) {
+  Minimizer::Options minimizer_options(options);
+  minimizer_options.is_constrained = IsBoundsConstrained(*program);
+
+  // The optimizer works on contiguous parameter vectors; allocate
+  // some.
+  Vector parameters(program->NumParameters());
+
+  scoped_ptr<IterationCallback> file_logging_callback;
+  if (!options.solver_log.empty()) {
+    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       file_logging_callback.get());
+  }
+
+  TrustRegionLoggingCallback logging_callback(
+      options.minimizer_progress_to_stdout);
+  if (options.logging_type != SILENT) {
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &logging_callback);
+  }
+
+  StateUpdatingCallback updating_callback(program, parameters.data());
+  if (options.update_state_every_iteration) {
+    // This must get pushed to the front of the callbacks so that it is run
+    // before any of the user callbacks.
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       &updating_callback);
+  }
+
+  minimizer_options.evaluator = evaluator;
+  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+
+  minimizer_options.jacobian = jacobian.get();
+  minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
+
+  TrustRegionStrategy::Options trust_region_strategy_options;
+  trust_region_strategy_options.linear_solver = linear_solver;
+  trust_region_strategy_options.initial_radius =
+      options.initial_trust_region_radius;
+  trust_region_strategy_options.max_radius = options.max_trust_region_radius;
+  trust_region_strategy_options.min_lm_diagonal = options.min_lm_diagonal;
+  trust_region_strategy_options.max_lm_diagonal = options.max_lm_diagonal;
+  trust_region_strategy_options.trust_region_strategy_type =
+      options.trust_region_strategy_type;
+  trust_region_strategy_options.dogleg_type = options.dogleg_type;
+
+
+  double minimizer_start_time = WallTimeInSeconds();
+  set<ResidualBlock*> residual_blocks(program->residual_blocks().begin(),
+                                      program->residual_blocks().end());
+
+  // Project onto feasible set.
+  program->ParameterBlocksToStateVector(parameters.data());
+  Vector delta(program->NumEffectiveParameters());
+  delta.setZero();
+  Vector unprojected_parameters = parameters;
+  evaluator->Plus(unprojected_parameters.data(), delta.data(), parameters.data());
+  program->StateVectorToParameterBlocks(parameters.data());
+
+  double constraint_max_norm = EvaluateConstraintMaxNorm(constraints);
+  double objective = EvaluateObjective(residual_blocks);
+  double mu = 0.1;
+  double omega  = 0.1;
+  double eta = 1.0;
+
+  LOG(INFO) << "objective: " << objective
+            << " constraint: " << constraint_max_norm
+            << " mu: " << mu
+            << " omega: " << omega
+            << " eta: " << eta;
+
+  // Initialize mu and lambda.
+  for (map<ConstraintBlockId, CostFunction*>::const_iterator it = constraints.begin();
+       it != constraints.end();
+       ++it) {
+    AugmentedLagrangianCostFunction* cost_function =
+        down_cast<AugmentedLagrangianCostFunction*>(it->second);
+    cost_function->mutable_lambda()->setZero();
+    cost_function->set_mu(mu);
+    residual_blocks.erase(it->first);
+  }
+  for (int iter = 0; iter < 10 && constraint_max_norm > 1e-6; ++iter) {
+    TrustRegionMinimizer minimizer;
+    scoped_ptr<TrustRegionStrategy> strategy(
+        TrustRegionStrategy::Create(trust_region_strategy_options));
+    minimizer_options.trust_region_strategy = strategy.get();
+
+    minimizer_options.gradient_tolerance = omega;
+    minimizer_options.max_num_iterations = 15;
+
+    minimizer.Minimize(minimizer_options, parameters.data(), summary);
+    SetSummaryFinalCost(summary);
+
+    if (summary->termination_type == USER_FAILURE ||
+        summary->termination_type == FAILURE) {
+      break;
+    }
+
+    program->StateVectorToParameterBlocks(parameters.data());
+    program->CopyParameterBlockStateToUserState();
+
+    constraint_max_norm = EvaluateConstraintMaxNorm(constraints);
+    objective = EvaluateObjective(residual_blocks);
+    if (constraint_max_norm < eta) {
+      for (map<ConstraintBlockId, CostFunction*>::const_iterator it = constraints.begin();
+           it != constraints.end();
+           ++it) {
+        AugmentedLagrangianCostFunction* cost_function =
+            down_cast<AugmentedLagrangianCostFunction*>(it->second);
+        vector<double*> parameter_blocks;
+        ResidualBlock* residual_block = it->first;
+        int num_parameter_blocks = residual_block->NumParameterBlocks();
+        parameter_blocks.resize(num_parameter_blocks);
+        for (int i = 0; i < num_parameter_blocks; ++i) {
+          parameter_blocks[i] =
+              residual_block->parameter_blocks()[i]->mutable_user_state();
+        }
+        cost_function->UpdateLambda(parameter_blocks);
+      }
+
+      omega *= mu;
+      eta *= std::pow(mu, 0.9);
+    } else {
+      mu *= 0.1;
+      for (map<ConstraintBlockId, CostFunction*>::const_iterator it = constraints.begin();
+           it != constraints.end();
+           ++it) {
+        AugmentedLagrangianCostFunction* cost_function =
+            down_cast<AugmentedLagrangianCostFunction*>(it->second);
+        cost_function->set_mu(mu);
+      }
+
+      omega = mu;
+      eta = 0.1258925 * std::pow(mu, 0.1);
+    }
+
+    LOG(INFO) << "objective: " << objective
+            << " constraint: " << constraint_max_norm
+            << " mu: " << mu
+            << " omega: " << omega
+            << " eta: " << eta;
+  }
+
+  summary->minimizer_time_in_seconds =
+      WallTimeInSeconds() - minimizer_start_time;
+}
+
 
 void SolverImpl::LineSearchMinimize(
     const Solver::Options& options,
@@ -801,6 +1009,259 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       WallTimeInSeconds() - post_process_start_time;
   event_logger.AddEvent("PostProcess");
 }
+
+void SolverImpl::ConstrainedSolve(const Solver::Options& original_options,
+                                  ProblemImpl* original_problem_impl,
+                                  const map<ConstraintBlockId, CostFunction*>& constraints,
+                                  Solver::Summary* summary) {
+  EventLogger event_logger("TrustRegionSolve");
+  double solver_start_time = WallTimeInSeconds();
+
+  Program* original_program = original_problem_impl->mutable_program();
+  ProblemImpl* problem_impl = original_problem_impl;
+
+  summary->minimizer_type = TRUST_REGION;
+
+  SummarizeGivenProgram(*original_program, summary);
+  SummarizeOrdering(original_options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_given));
+  SummarizeOrdering(original_options.inner_iteration_ordering,
+                    &(summary->inner_iteration_ordering_given));
+
+  Solver::Options options(original_options);
+  options.linear_solver_ordering = NULL;
+  options.inner_iteration_ordering = NULL;
+
+#ifndef CERES_USE_OPENMP
+  if (options.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+    options.num_threads = 1;
+  }
+  if (options.num_linear_solver_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_linear_solver_threads=1 is supported. Switching "
+        << "to single threaded mode.";
+    options.num_linear_solver_threads = 1;
+  }
+#endif
+
+  summary->num_threads_given = original_options.num_threads;
+  summary->num_threads_used = options.num_threads;
+
+  if (options.trust_region_minimizer_iterations_to_dump.size() > 0 &&
+      options.trust_region_problem_dump_format_type != CONSOLE &&
+      options.trust_region_problem_dump_directory.empty()) {
+    summary->message =
+        "Solver::Options::trust_region_problem_dump_directory is empty.";
+    LOG(ERROR) << summary->message;
+    return;
+  }
+
+  if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
+
+  if (!ParameterBlocksAreFeasible(problem_impl, &summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
+
+  event_logger.AddEvent("Init");
+
+  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  event_logger.AddEvent("SetParameterBlockPtrs");
+
+  // If the user requests gradient checking, construct a new
+  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
+  // GradientCheckingCostFunction and replacing problem_impl with
+  // gradient_checking_problem_impl.
+  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
+  if (options.check_gradients) {
+    VLOG(1) << "Checking Gradients";
+    gradient_checking_problem_impl.reset(
+        CreateGradientCheckingProblemImpl(
+            problem_impl,
+            options.numeric_derivative_relative_step_size,
+            options.gradient_check_relative_precision));
+
+    // From here on, problem_impl will point to the gradient checking
+    // version.
+    problem_impl = gradient_checking_problem_impl.get();
+  }
+
+  if (original_options.linear_solver_ordering != NULL) {
+    if (!IsOrderingValid(original_options, problem_impl, &summary->message)) {
+      LOG(ERROR) << summary->message;
+      return;
+    }
+    event_logger.AddEvent("CheckOrdering");
+    options.linear_solver_ordering =
+        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
+    event_logger.AddEvent("CopyOrdering");
+  } else {
+    options.linear_solver_ordering = new ParameterBlockOrdering;
+    const ProblemImpl::ParameterMap& parameter_map =
+        problem_impl->parameter_map();
+    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
+         it != parameter_map.end();
+         ++it) {
+      options.linear_solver_ordering->AddElementToGroup(it->first, 0);
+    }
+    event_logger.AddEvent("ConstructOrdering");
+  }
+
+  if (original_options.inner_iteration_ordering != NULL) {
+    // Make a copy, as the options struct takes ownership of the
+    // ordering objects.
+    options.inner_iteration_ordering =
+        new ParameterBlockOrdering(*original_options.inner_iteration_ordering);
+  }
+
+  // Create the three objects needed to minimize: the transformed program, the
+  // evaluator, and the linear solver.
+  scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
+                                                           problem_impl,
+                                                           &summary->fixed_cost,
+                                                           &summary->message));
+
+  event_logger.AddEvent("CreateReducedProgram");
+  if (reduced_program == NULL) {
+    return;
+  }
+
+  SummarizeOrdering(options.linear_solver_ordering,
+                    &(summary->linear_solver_ordering_used));
+  SummarizeReducedProgram(*reduced_program, summary);
+
+  if (summary->num_parameter_blocks_reduced == 0) {
+    summary->preprocessor_time_in_seconds =
+        WallTimeInSeconds() - solver_start_time;
+
+    double post_process_start_time = WallTimeInSeconds();
+
+     summary->message =
+        "Terminating: Function tolerance reached. "
+        "No non-constant parameter blocks found.";
+    summary->termination_type = CONVERGENCE;
+    VLOG_IF(1, options.logging_type != SILENT) << summary->message;
+
+    summary->initial_cost = summary->fixed_cost;
+    summary->final_cost = summary->fixed_cost;
+
+    // Ensure the program state is set to the user parameters on the way out.
+    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+    original_program->SetParameterOffsetsAndIndex();
+
+    summary->postprocessor_time_in_seconds =
+        WallTimeInSeconds() - post_process_start_time;
+    return;
+  }
+
+  scoped_ptr<LinearSolver>
+      linear_solver(CreateLinearSolver(&options, &summary->message));
+  event_logger.AddEvent("CreateLinearSolver");
+  if (linear_solver == NULL) {
+    return;
+  }
+
+  summary->linear_solver_type_given = original_options.linear_solver_type;
+  summary->linear_solver_type_used = options.linear_solver_type;
+
+  summary->preconditioner_type = options.preconditioner_type;
+  summary->visibility_clustering_type = options.visibility_clustering_type;
+
+  summary->num_linear_solver_threads_given =
+      original_options.num_linear_solver_threads;
+  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
+
+  summary->dense_linear_algebra_library_type =
+      options.dense_linear_algebra_library_type;
+  summary->sparse_linear_algebra_library_type =
+      options.sparse_linear_algebra_library_type;
+
+  summary->trust_region_strategy_type = options.trust_region_strategy_type;
+  summary->dogleg_type = options.dogleg_type;
+
+  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+                                                  problem_impl->parameter_map(),
+                                                  reduced_program.get(),
+                                                  &summary->message));
+
+  event_logger.AddEvent("CreateEvaluator");
+
+  if (evaluator == NULL) {
+    return;
+  }
+
+  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+  if (options.use_inner_iterations) {
+    if (reduced_program->parameter_blocks().size() < 2) {
+      LOG(WARNING) << "Reduced problem only contains one parameter block."
+                   << "Disabling inner iterations.";
+    } else {
+      inner_iteration_minimizer.reset(
+          CreateInnerIterationMinimizer(options,
+                                        *reduced_program,
+                                        problem_impl->parameter_map(),
+                                        summary));
+      if (inner_iteration_minimizer == NULL) {
+        LOG(ERROR) << summary->message;
+        return;
+      }
+    }
+  }
+  event_logger.AddEvent("CreateInnerIterationMinimizer");
+
+  double minimizer_start_time = WallTimeInSeconds();
+  summary->preprocessor_time_in_seconds =
+      minimizer_start_time - solver_start_time;
+
+  // Run the optimization.
+  AugmentedLagrangianMinimize(options,
+                              constraints,
+                              reduced_program.get(),
+                              inner_iteration_minimizer.get(),
+                              evaluator.get(),
+                              linear_solver.get(),
+                              summary);
+
+  event_logger.AddEvent("Minimize");
+
+  double post_process_start_time = WallTimeInSeconds();
+
+  SetSummaryFinalCost(summary);
+
+  // Ensure the program state is set to the user parameters on the way
+  // out.
+  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
+  original_program->SetParameterOffsetsAndIndex();
+
+  const map<string, double>& linear_solver_time_statistics =
+      linear_solver->TimeStatistics();
+  summary->linear_solver_time_in_seconds =
+      FindWithDefault(linear_solver_time_statistics,
+                      "LinearSolver::Solve",
+                      0.0);
+
+  const map<string, double>& evaluator_time_statistics =
+      evaluator->TimeStatistics();
+
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
+  // Stick a fork in it, we're done.
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
+  event_logger.AddEvent("PostProcess");
+}
+
 
 void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
                                  ProblemImpl* original_problem_impl,

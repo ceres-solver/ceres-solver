@@ -69,6 +69,9 @@ IF (GFLAGS)
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
   TARGET_LINK_LIBRARIES(circle_fit ceres ${GFLAGS_LIBRARIES})
 
+  ADD_EXECUTABLE(trajectory trajectory.cc)
+  TARGET_LINK_LIBRARIES(trajectory ceres ${GFLAGS_LIBRARIES})
+
   ADD_EXECUTABLE(bundle_adjuster
                  bundle_adjuster.cc
                  bal_problem.cc)

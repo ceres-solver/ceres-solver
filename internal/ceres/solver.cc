@@ -32,6 +32,7 @@
 #include "ceres/solver.h"
 
 #include <vector>
+#include "ceres/constrained_problem.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -74,8 +75,28 @@ void Solver::Solve(const Solver::Options& options,
       internal::WallTimeInSeconds() - start_time_seconds;
 }
 
+void Solver::Solve(const Solver::Options& options,
+                   experimental::ConstrainedProblem* problem,
+                   Solver::Summary* summary) {
+  double start_time_seconds = internal::WallTimeInSeconds();
+
+  internal::SolverImpl::ConstrainedSolve(options,
+                                         problem->mutable_problem()->problem_impl_.get(),
+                                         problem->constraints(),
+                                         summary);
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
+}
+
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary) {
+  Solver solver;
+  solver.Solve(options, problem, summary);
+}
+
+void Solve(const Solver::Options& options,
+           experimental::ConstrainedProblem* problem,
            Solver::Summary* summary) {
   Solver solver;
   solver.Solve(options, problem, summary);
