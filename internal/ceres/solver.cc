@@ -38,6 +38,7 @@
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
+#include "ceres/constrained_solver.h"
 
 namespace ceres {
 namespace {
@@ -79,6 +80,12 @@ void Solve(const Solver::Options& options,
            Solver::Summary* summary) {
   Solver solver;
   solver.Solve(options, problem, summary);
+}
+
+void Solve(const Solver::Options& options,
+           experimental::ConstrainedProblem* problem,
+           Solver::Summary* summary) {
+  ::ceres::experimental::ConstrainedSolver::Solve(options, problem, summary);
 }
 
 Solver::Summary::Summary()

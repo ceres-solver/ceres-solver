@@ -40,6 +40,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
+#include "ceres/constrained_problem.h"
 
 namespace ceres {
 
@@ -943,6 +944,10 @@ class Solver {
 // Helper function which avoids going through the interface.
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary);
+
+void Solve(const Solver::Options& options,
+           experimental::ConstrainedProblem* problem,
            Solver::Summary* summary);
 
 }  // namespace ceres
