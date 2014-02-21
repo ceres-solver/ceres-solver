@@ -32,12 +32,14 @@
 #include "ceres/solver.h"
 
 #include <vector>
+#include "ceres/constrained_problem.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
+#include "ceres/constrained_solver.h"
 
 namespace ceres {
 namespace {
@@ -74,8 +76,34 @@ void Solver::Solve(const Solver::Options& options,
       internal::WallTimeInSeconds() - start_time_seconds;
 }
 
+void Solver::Solve(const Solver::Options& options,
+                   experimental::ConstrainedProblem* problem,
+                   Solver::Summary* summary) {
+  double start_time_seconds = internal::WallTimeInSeconds();
+
+  if (0) {
+    LOG(INFO) << "CONSTRAINED SOLVER";
+    ::ceres::experimental::ConstrainedSolver::Solve(options, problem, summary);
+  } else {
+    LOG(INFO) << "SOLVER_IMPL";
+    internal::SolverImpl::ConstrainedSolve(options,
+                                           problem->mutable_problem()->problem_impl_.get(),
+                                           problem->constraints(),
+                                           summary);
+  }
+  summary->total_time_in_seconds =
+      internal::WallTimeInSeconds() - start_time_seconds;
+}
+
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary) {
+  Solver solver;
+  solver.Solve(options, problem, summary);
+}
+
+void Solve(const Solver::Options& options,
+           experimental::ConstrainedProblem* problem,
            Solver::Summary* summary) {
   Solver solver;
   solver.Solve(options, problem, summary);
