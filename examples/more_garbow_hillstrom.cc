@@ -58,6 +58,8 @@
 namespace ceres {
 namespace examples {
 
+const int kDoubleMax = std::numeric_limits<double>::max();
+
 #define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)          \
   struct name {                                                         \
     static const int kNumParameters = num_parameters;                   \
@@ -76,6 +78,35 @@ namespace examples {
 
 #define END_MGH_PROBLEM return true; } };
 
+// Rosenbrock function.
+BEGIN_MGH_PROBLEM(TestProblem1, 2, 2)
+  const T x1 = x[0];
+  const T x2 = x[1];
+  residual[0] = T(10.0) * (x2 - x1 * x1);
+  residual[1] = T(1.0) - x1;
+END_MGH_PROBLEM;
+
+const double TestProblem1::initial_x[] = {-1.2, 1.0};
+const double TestProblem1::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
+const double TestProblem1::upper_bounds[] = {kDoubleMax, kDoubleMax};
+const double TestProblem1::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem1::unconstrained_optimal_cost = 0.0;
+
+// Freudenstein and Roth function.
+BEGIN_MGH_PROBLEM(TestProblem2, 2, 2)
+  const T x1 = x[0];
+  const T x2 = x[1];
+  residual[0] = T(-13.0) + x1 + ((T(5.0) - x2) * x2 - T(2.0)) * x2;
+  residual[1] = T(-29.0) + x1 + ((x2 + T(1.0)) * x2 - T(14.0)) * x2;
+END_MGH_PROBLEM;
+
+const double TestProblem2::initial_x[] = {0.5, -2.0};
+const double TestProblem2::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
+const double TestProblem2::upper_bounds[] = {kDoubleMax, kDoubleMax};
+const double TestProblem2::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem2::unconstrained_optimal_cost = 0.0;
+
+// Powell badly scaled function.
 BEGIN_MGH_PROBLEM(TestProblem3, 2, 2)
   const T x1 = x[0];
   const T x2 = x[1];
@@ -89,6 +120,7 @@ const double TestProblem3::upper_bounds[] = {1.0, 9.0};
 const double TestProblem3::constrained_optimal_cost = 0.15125900e-9;
 const double TestProblem3::unconstrained_optimal_cost = 0.0;
 
+// Brown badly scaled function.
 BEGIN_MGH_PROBLEM(TestProblem4, 2, 3)
   const T x1 = x[0];
   const T x2 = x[1];
@@ -103,6 +135,7 @@ const double TestProblem4::upper_bounds[] = {1000000.0, 100.0};
 const double TestProblem4::constrained_optimal_cost = 0.78400000e3;
 const double TestProblem4::unconstrained_optimal_cost = 0.0;
 
+// Beale function.
 BEGIN_MGH_PROBLEM(TestProblem5, 2, 3)
   const T x1 = x[0];
   const T x2 = x[1];
@@ -117,6 +150,22 @@ const double TestProblem5::upper_bounds[] = {10.0, 100.0};
 const double TestProblem5::constrained_optimal_cost = 0.0;
 const double TestProblem5::unconstrained_optimal_cost = 0.0;
 
+// Jennrich and Sampson function.
+BEGIN_MGH_PROBLEM(TestProblem6, 2, 10)
+  const T x1 = x[0];
+  const T x2 = x[1];
+  for (int i = 1; i <= 10; ++i) {
+    residual[i - 1] = T(2.0) + T(2.0 * i) - exp(T(double(i)) * x1) - exp(T(double(i) * x2));
+  }
+END_MGH_PROBLEM;
+
+const double TestProblem6::initial_x[] = {1.0, 1.0};
+const double TestProblem6::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
+const double TestProblem6::upper_bounds[] = {kDoubleMax, kDoubleMax};
+const double TestProblem6::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem6::unconstrained_optimal_cost = 124.362;
+
+// Helical valley function.
 BEGIN_MGH_PROBLEM(TestProblem7, 3, 3)
   const T x1 = x[0];
   const T x2 = x[1];
@@ -134,6 +183,31 @@ const double TestProblem7::upper_bounds[] = {0.8, 1.0, 1.0};
 const double TestProblem7::constrained_optimal_cost = 0.99042212;
 const double TestProblem7::unconstrained_optimal_cost = 0.0;
 
+// Bard function
+BEGIN_MGH_PROBLEM(TestProblem8, 3, 15)
+  const T x1 = x[0];
+  const T x2 = x[1];
+  const T x3 = x[2];
+
+  double y[] = {0.14, 0.18, 0.22, 0.25,
+                0.29, 0.32, 0.35, 0.39, 0.37, 0.58,
+                0.73, 0.96, 1.34, 2.10, 4.39};
+
+  for (int i = 1; i <=15; ++i) {
+    const T u = T(double(i));
+    const T v = T(double(16 - i));
+    const T w = T(double(std::min(i, 16 - i)));
+    residual[i - 1] = T(y[i - 1]) - x1 + u / (v * x2 + w * x3);
+  }
+END_MGH_PROBLEM;
+
+const double TestProblem8::initial_x[] = {1.0, 1.0, 1.0};
+const double TestProblem8::lower_bounds[] = {-kDoubleMax, -kDoubleMax, -kDoubleMax};
+const double TestProblem8::upper_bounds[] = {kDoubleMax, kDoubleMax, kDoubleMax};
+const double TestProblem8::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem8::unconstrained_optimal_cost = 8.21487e-3;
+
+// Gaussian function.
 BEGIN_MGH_PROBLEM(TestProblem9, 3, 15)
   const T x1 = x[0];
   const T x2 = x[1];
@@ -203,7 +277,7 @@ template<typename TestProblem> string UnconstrainedSolve() {
 
   Solver::Options options;
   options.parameter_tolerance = 1e-18;
-  options.function_tolerance = 1e-18;
+  options.function_tolerance = 0.0;
   options.gradient_tolerance = 1e-18;
   options.max_num_iterations = 1000;
   options.linear_solver_type = DENSE_QR;
@@ -229,32 +303,34 @@ int main(int argc, char** argv) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
 
-  using ceres::examples::ConstrainedSolve;
   using ceres::examples::UnconstrainedSolve;
+  using ceres::examples::ConstrainedSolve;
 
-  std::cout << "Unconstrained Problems\n";
-  std::cout << "Test problem 3 : "
-            << UnconstrainedSolve<ceres::examples::TestProblem3>();
-  std::cout << "Test problem 4 : "
-            << UnconstrainedSolve<ceres::examples::TestProblem4>();
-  std::cout << "Test problem 5 : "
-            << UnconstrainedSolve<ceres::examples::TestProblem5>();
-  std::cout << "Test problem 7 : "
-            << UnconstrainedSolve<ceres::examples::TestProblem7>();
-  std::cout << "Test problem 9 : "
-            << UnconstrainedSolve<ceres::examples::TestProblem9>();
+#define UNCONSTRAINED_SOLVE(n)                                          \
+  std::cout << "Problem " << n << " : "                                 \
+            << UnconstrainedSolve<ceres::examples::TestProblem##n>();
 
-  std::cout << "Constrained Problems\n";
-  std::cout << "Test problem 3 : "
-            << ConstrainedSolve<ceres::examples::TestProblem3>();
-  std::cout << "Test problem 4 : "
-            << ConstrainedSolve<ceres::examples::TestProblem4>();
-  std::cout << "Test problem 5 : "
-            << ConstrainedSolve<ceres::examples::TestProblem5>();
-  std::cout << "Test problem 7 : "
-            << ConstrainedSolve<ceres::examples::TestProblem7>();
-  std::cout << "Test problem 9 : "
-            << ConstrainedSolve<ceres::examples::TestProblem9>();
+#define CONSTRAINED_SOLVE(n)                                            \
+  std::cout << "Problem " << n << " : "                                 \
+            << ConstrainedSolve<ceres::examples::TestProblem##n>();
+
+  std::cout << "Unconstrained problems\n";
+  UNCONSTRAINED_SOLVE(1);
+  UNCONSTRAINED_SOLVE(2);
+  UNCONSTRAINED_SOLVE(3);
+  UNCONSTRAINED_SOLVE(4);
+  UNCONSTRAINED_SOLVE(5);
+  UNCONSTRAINED_SOLVE(6);
+  UNCONSTRAINED_SOLVE(7);
+  UNCONSTRAINED_SOLVE(8);
+  UNCONSTRAINED_SOLVE(9);
+
+  std::cout << "\nConstrained problems\n";
+  CONSTRAINED_SOLVE(3);
+  CONSTRAINED_SOLVE(4);
+  CONSTRAINED_SOLVE(5);
+  CONSTRAINED_SOLVE(7);
+  CONSTRAINED_SOLVE(9);
 
   return 0;
 }
