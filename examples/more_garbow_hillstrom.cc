@@ -58,7 +58,7 @@
 namespace ceres {
 namespace examples {
 
-const int kDoubleMax = std::numeric_limits<double>::max();
+const double kDoubleMax = std::numeric_limits<double>::max();
 
 #define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)          \
   struct name {                                                         \
