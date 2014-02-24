@@ -152,6 +152,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   Vector gradient(num_effective_parameters);
   Vector model_residuals(num_residuals);
   Vector scale(num_effective_parameters);
+  Vector negative_gradient(num_effective_parameters);
+  Vector projected_gradient_step(num_parameters);
 
   IterationSummary iteration_summary;
   iteration_summary.iteration = 0;
@@ -197,34 +199,37 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
-  int num_consecutive_nonmonotonic_steps = 0;
-  double minimum_cost = cost;
-  double reference_cost = cost;
-  double accumulated_reference_model_cost_change = 0.0;
-  double candidate_cost = cost;
-  double accumulated_candidate_model_cost_change = 0.0;
+  negative_gradient = -gradient;
+  if (!evaluator->Plus(x.data(),
+                       negative_gradient.data(),
+                       projected_gradient_step.data())) {
+    summary->message = "Unable to compute gradient step.";
+    summary->termination_type = FAILURE;
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
 
   summary->initial_cost = cost + summary->fixed_cost;
   iteration_summary.cost = cost + summary->fixed_cost;
-  iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
-  iteration_summary.gradient_norm = gradient.norm();
+  iteration_summary.gradient_max_norm =
+    (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+  iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
 
-  // The initial gradient max_norm is bounded from below so that we do
-  // not divide by zero.
-  const double initial_gradient_max_norm =
-      max(iteration_summary.gradient_max_norm, kEpsilon);
-  const double absolute_gradient_tolerance =
-      options_.gradient_tolerance * initial_gradient_max_norm;
-
-  if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
-    summary->message = StringPrintf("Terminating: Gradient tolerance reached. "
-                                  "Relative gradient max norm: %e <= %e",
-                                  (iteration_summary.gradient_max_norm /
-                                   initial_gradient_max_norm),
-                                  options_.gradient_tolerance);
+  if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+    summary->message = StringPrintf("Gradient tolerance reached. "
+                                    "Gradient max norm: %e <= %e",
+                                    iteration_summary.gradient_max_norm,
+                                    options_.gradient_tolerance);
     summary->termination_type = CONVERGENCE;
-    VLOG_IF(1, is_not_silent) << summary->message;
+    VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
     return;
+  }
+
+  if (options_.jacobi_scaling) {
+    EstimateScale(*jacobian, scale.data());
+    jacobian->ScaleColumns(scale.data());
+  } else {
+    scale.setOnes();
   }
 
   iteration_summary.iteration_time_in_seconds =
@@ -234,13 +239,12 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
 
-  if (options_.jacobi_scaling) {
-    EstimateScale(*jacobian, scale.data());
-    jacobian->ScaleColumns(scale.data());
-  } else {
-    scale.setOnes();
-  }
-
+  int num_consecutive_nonmonotonic_steps = 0;
+  double minimum_cost = cost;
+  double reference_cost = cost;
+  double accumulated_reference_model_cost_change = 0.0;
+  double candidate_cost = cost;
+  double accumulated_candidate_model_cost_change = 0.0;
   int num_consecutive_invalid_steps = 0;
   bool inner_iterations_are_enabled = options.inner_iteration_minimizer != NULL;
   while (true) {
@@ -251,18 +255,18 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_start_time = WallTimeInSeconds();
     if (iteration_summary.iteration >= options_.max_num_iterations) {
-      summary->message = "Terminating: Maximum number of iterations reached.";
+      summary->message = "Maximum number of iterations reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << summary->message;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       return;
     }
 
     const double total_solver_time = iteration_start_time - start_time +
         summary->preprocessor_time_in_seconds;
     if (total_solver_time >= options_.max_solver_time_in_seconds) {
-      summary->message = "Terminating: Maximum solver time reached.";
+      summary->message = "Maximum solver time reached.";
       summary->termination_type = NO_CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << summary->message;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       return;
     }
 
@@ -565,25 +569,33 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                residuals.data(),
                                gradient.data(),
                                jacobian)) {
-        summary->message =
-            "Terminating: Residual and Jacobian evaluation failed.";
+        summary->message = "Residual and Jacobian evaluation failed.";
         summary->termination_type = FAILURE;
-        LOG_IF(WARNING, is_not_silent) << summary->message;
+        LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
         return;
       }
 
-      iteration_summary.gradient_max_norm = gradient.lpNorm<Eigen::Infinity>();
-      iteration_summary.gradient_norm = gradient.norm();
+      negative_gradient = -gradient;
+      if (!evaluator->Plus(x.data(),
+                           negative_gradient.data(),
+                           projected_gradient_step.data())) {
+        summary->message = "Unable to compute gradient step.";
+        summary->termination_type = FAILURE;
+        LOG(ERROR) << "Terminating: " << summary->message;
+        return;
+      }
 
-      if (iteration_summary.gradient_max_norm <= absolute_gradient_tolerance) {
-        summary->message =
-            StringPrintf("Terminating: Gradient tolerance reached. "
-                         "Relative gradient max norm: %e <= %e",
-                         (iteration_summary.gradient_max_norm /
-                          initial_gradient_max_norm),
-                         options_.gradient_tolerance);
+      iteration_summary.gradient_max_norm =
+        (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+      iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
+
+      if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+        summary->message = StringPrintf("Gradient tolerance reached. "
+                                        "Gradient max norm: %e <= %e",
+                                        iteration_summary.gradient_max_norm,
+                                        options_.gradient_tolerance);
         summary->termination_type = CONVERGENCE;
-        VLOG_IF(1, is_not_silent) << summary->message;
+        VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
         return;
       }
 
