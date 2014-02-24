@@ -364,7 +364,8 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
       for (int j = 0; j < size; ++j) {
         if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
           *message = StringPrintf(
-              "ParameterBlock: %p with size %d has at least one infeasible value."
+              "ParameterBlock: %p with size %d has at least one infeasible "
+              "value."
               "\nFirst infeasible value is at index: %d."
               "\nLower bound: %e, value: %e, upper bound: %e"
               "\nParameter block values: ",
@@ -380,7 +381,8 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
       for (int j = 0; j < size; ++j) {
         if (lower_bounds[j] >= upper_bounds[j]) {
           *message = StringPrintf(
-              "ParameterBlock: %p with size %d has at least one infeasible bound."
+              "ParameterBlock: %p with size %d has at least one infeasible "
+              "bound."
               "\nFirst infeasible bound is at index: %d."
               "\nLower bound: %e, upper bound: %e"
               "\nParameter block values: ",

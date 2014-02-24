@@ -175,7 +175,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   if (options.is_constrained) {
     delta.setZero();
     if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-      summary->message = "Unable to project initial point onto the feasible set.";
+      summary->message =
+          "Unable to project initial point onto the feasible set.";
       summary->termination_type = FAILURE;
       LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
       return;

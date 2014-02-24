@@ -95,7 +95,8 @@ bool Evaluate(Evaluator* evaluator,
   }
 
   state->gradient_squared_norm = (x - projected_gradient_step).squaredNorm();
-  state->gradient_max_norm = (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+  state->gradient_max_norm =
+      (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
   return true;
 }
 

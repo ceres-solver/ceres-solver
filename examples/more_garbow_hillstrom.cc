@@ -52,7 +52,7 @@
 
 
 #include <cmath>
-#include <iostream>
+#include <iostream>  // NOLINT
 #include "ceres/ceres.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
@@ -71,14 +71,14 @@ const double kDoubleMax = std::numeric_limits<double>::max();
     static const double constrained_optimal_cost;                       \
     static const double unconstrained_optimal_cost;                     \
     static CostFunction* Create() {                                     \
-      return new AutoDiffCostFunction<name,                             \
+      return new AutoDiffCostFunction<name,                             \  // NOLINT
                                       num_residuals,                    \
                                       num_parameters>(new name);        \
     }                                                                   \
     template <typename T>                                               \
     bool operator()(const T* const x, T* residual) const {
 
-#define END_MGH_PROBLEM return true; } };
+#define END_MGH_PROBLEM return true; } };  // NOLINT
 
 // Rosenbrock function.
 BEGIN_MGH_PROBLEM(TestProblem1, 2, 2)
@@ -91,7 +91,8 @@ END_MGH_PROBLEM;
 const double TestProblem1::initial_x[] = {-1.2, 1.0};
 const double TestProblem1::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
 const double TestProblem1::upper_bounds[] = {kDoubleMax, kDoubleMax};
-const double TestProblem1::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem1::constrained_optimal_cost =
+    std::numeric_limits<double>::quiet_NaN();
 const double TestProblem1::unconstrained_optimal_cost = 0.0;
 
 // Freudenstein and Roth function.
@@ -105,7 +106,8 @@ END_MGH_PROBLEM;
 const double TestProblem2::initial_x[] = {0.5, -2.0};
 const double TestProblem2::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
 const double TestProblem2::upper_bounds[] = {kDoubleMax, kDoubleMax};
-const double TestProblem2::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem2::constrained_optimal_cost =
+    std::numeric_limits<double>::quiet_NaN();
 const double TestProblem2::unconstrained_optimal_cost = 0.0;
 
 // Powell badly scaled function.
@@ -157,14 +159,17 @@ BEGIN_MGH_PROBLEM(TestProblem6, 2, 10)
   const T x1 = x[0];
   const T x2 = x[1];
   for (int i = 1; i <= 10; ++i) {
-    residual[i - 1] = T(2.0) + T(2.0 * i) - exp(T(double(i)) * x1) - exp(T(double(i) * x2));
+    residual[i - 1] = T(2.0) + T(2.0 * i) -
+        exp(T(static_cast<double>(i)) * x1) -
+        exp(T(static_cast<double>(i) * x2));
   }
 END_MGH_PROBLEM;
 
 const double TestProblem6::initial_x[] = {1.0, 1.0};
 const double TestProblem6::lower_bounds[] = {-kDoubleMax, -kDoubleMax};
 const double TestProblem6::upper_bounds[] = {kDoubleMax, kDoubleMax};
-const double TestProblem6::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem6::constrained_optimal_cost =
+    std::numeric_limits<double>::quiet_NaN();
 const double TestProblem6::unconstrained_optimal_cost = 124.362;
 
 // Helical valley function.
@@ -196,17 +201,20 @@ BEGIN_MGH_PROBLEM(TestProblem8, 3, 15)
                 0.73, 0.96, 1.34, 2.10, 4.39};
 
   for (int i = 1; i <=15; ++i) {
-    const T u = T(double(i));
-    const T v = T(double(16 - i));
-    const T w = T(double(std::min(i, 16 - i)));
+    const T u = T(static_cast<double>(i));
+    const T v = T(static_cast<double>(16 - i));
+    const T w = T(static_cast<double>(std::min(i, 16 - i)));
     residual[i - 1] = T(y[i - 1]) - x1 + u / (v * x2 + w * x3);
   }
 END_MGH_PROBLEM;
 
 const double TestProblem8::initial_x[] = {1.0, 1.0, 1.0};
-const double TestProblem8::lower_bounds[] = {-kDoubleMax, -kDoubleMax, -kDoubleMax};
-const double TestProblem8::upper_bounds[] = {kDoubleMax, kDoubleMax, kDoubleMax};
-const double TestProblem8::constrained_optimal_cost = std::numeric_limits<double>::quiet_NaN();
+const double TestProblem8::lower_bounds[] = {
+  -kDoubleMax, -kDoubleMax, -kDoubleMax};
+const double TestProblem8::upper_bounds[] = {
+  kDoubleMax, kDoubleMax, kDoubleMax};
+const double TestProblem8::constrained_optimal_cost =
+    std::numeric_limits<double>::quiet_NaN();
 const double TestProblem8::unconstrained_optimal_cost = 8.21487e-3;
 
 // Gaussian function.
@@ -221,12 +229,12 @@ BEGIN_MGH_PROBLEM(TestProblem9, 3, 15)
   for (int i = 0; i < 15; ++i) {
     const T t_i = T((8.0 - i - 1.0) / 2.0);
     const T y_i = T(y[i]);
-    residual[i] = x1 * exp( -x2 * (t_i - x3) * (t_i - x3) / T(2.0)) - y_i;
+    residual[i] = x1 * exp(-x2 * (t_i - x3) * (t_i - x3) / T(2.0)) - y_i;
   }
 END_MGH_PROBLEM;
 
 const double TestProblem9::initial_x[] = {0.4, 1.0, 0.0};
-const double TestProblem9::lower_bounds[] = {0.398, 1.0 ,-0.5};
+const double TestProblem9::lower_bounds[] = {0.398, 1.0, -0.5};
 const double TestProblem9::upper_bounds[] = {4.2, 2.0, 0.1};
 const double TestProblem9::constrained_optimal_cost = 0.11279300e-7;
 const double TestProblem9::unconstrained_optimal_cost = 0.112793e-7;
@@ -258,7 +266,8 @@ template<typename TestProblem> string ConstrainedSolve() {
 
   const double kMinLogRelativeError = 5.0;
   const double log_relative_error = -std::log10(
-      std::abs(2.0 * summary.final_cost - TestProblem::constrained_optimal_cost) /
+      std::abs(2.0 * summary.final_cost -
+               TestProblem::constrained_optimal_cost) /
       (TestProblem::constrained_optimal_cost > 0.0
        ? TestProblem::constrained_optimal_cost
        : 1.0));
@@ -288,7 +297,8 @@ template<typename TestProblem> string UnconstrainedSolve() {
 
   const double kMinLogRelativeError = 5.0;
   const double log_relative_error = -std::log10(
-      std::abs(2.0 * summary.final_cost - TestProblem::unconstrained_optimal_cost) /
+      std::abs(2.0 * summary.final_cost -
+               TestProblem::unconstrained_optimal_cost) /
       (TestProblem::unconstrained_optimal_cost > 0.0
        ? TestProblem::unconstrained_optimal_cost
        : 1.0));

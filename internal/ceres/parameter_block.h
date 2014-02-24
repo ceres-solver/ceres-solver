@@ -352,6 +352,10 @@ class ParameterBlock {
   // If non-null, contains the residual blocks this parameter block is in.
   scoped_ptr<ResidualBlockSet> residual_blocks_;
 
+  // Upper and lower bounds for the parameter block. These arrays are
+  // initialized to std::numeric_limits<double>::max() and
+  // -std::numeric_limits<double>::max() respectively which correspond
+  // to the parameter block being unconstrained.
   scoped_array<double> upper_bounds_;
   scoped_array<double> lower_bounds_;
 
