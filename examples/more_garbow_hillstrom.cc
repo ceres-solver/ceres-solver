@@ -71,7 +71,7 @@ const double kDoubleMax = std::numeric_limits<double>::max();
     static const double constrained_optimal_cost;                       \
     static const double unconstrained_optimal_cost;                     \
     static CostFunction* Create() {                                     \
-      return new AutoDiffCostFunction<name,                             \  // NOLINT
+      return new AutoDiffCostFunction<name,                             \
                                       num_residuals,                    \
                                       num_parameters>(new name);        \
     }                                                                   \
