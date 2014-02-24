@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf6894a_df42fb5a",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T18:38:13Z",
+      "side": 1,
+      "message": "Plumb message through; there are 2 failure cases.",
+      "revId": "30477b42f960293a5188efd4d1be8047a1a053be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cf6894a_bf3f37c5",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T18:38:13Z",
+      "side": 1,
+      "message": "Plumb message through \"Plus() failed\"",
+      "revId": "30477b42f960293a5188efd4d1be8047a1a053be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cf6894a_7f7d2f92",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T18:38:13Z",
+      "side": 1,
+      "message": "Doesn\u0027t specify which (Evaluate() or Plus()) failed; maybe plumb the message through.",
+      "revId": "30477b42f960293a5188efd4d1be8047a1a053be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5cf6894a_bf9a979f",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T18:38:13Z",
+      "side": 1,
+      "message": "In the TR mode, we return messaging about evaluate vs plus(); all I ask is that we do the same in line search.",
+      "revId": "30477b42f960293a5188efd4d1be8047a1a053be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
