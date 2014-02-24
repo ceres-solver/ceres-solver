@@ -344,8 +344,8 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "Total               %25.3f\n\n",
                 total_time_in_seconds);
 
-  StringAppendF(&report, "Termination:        %25s\n",
-                TerminationTypeToString(termination_type));
+  StringAppendF(&report, "Termination:        %25s (%s)\n",
+                TerminationTypeToString(termination_type), message.c_str());
   return report;
 };
 
