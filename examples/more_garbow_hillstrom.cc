@@ -54,6 +54,8 @@
 #include <cmath>
 #include <iostream>
 #include "ceres/ceres.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace examples {
