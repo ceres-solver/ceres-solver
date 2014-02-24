@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef469d41_01b478fc",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T03:25:33Z",
+      "side": 1,
+      "message": "Should we try to propagate the error here? I know we were not before but it is useful to know whether it was Plus() or Evaluate() that errored out.",
+      "revId": "cdd3cc9ee09884720fb33d977d821c4a7346b86b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef469d41_21a974a2",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-02-24T03:25:33Z",
+      "side": 1,
+      "message": "Return? Don\u0027t we still want the cleanup code below?",
+      "revId": "cdd3cc9ee09884720fb33d977d821c4a7346b86b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
