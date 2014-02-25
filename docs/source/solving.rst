@@ -1116,8 +1116,8 @@ elimination group [LiSaad]_.
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
    is projection onto the bounds constraints and :math:`\boxplus` is
-   Plus operation that for the overall local parameterization
-   associated with the parameter vector.
+   Plus operation for the overall local parameterization associated
+   with the parameter vector.
 
 .. member:: double Solver::Options::parameter_tolerance
 
