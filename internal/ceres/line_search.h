@@ -33,8 +33,6 @@
 #ifndef CERES_INTERNAL_LINE_SEARCH_H_
 #define CERES_INTERNAL_LINE_SEARCH_H_
 
-#ifndef CERES_NO_LINE_SEARCH_MINIMIZER
-
 #include <string>
 #include <vector>
 #include "ceres/internal/eigen.h"
@@ -298,5 +296,4 @@ class WolfeLineSearch : public LineSearch {
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_NO_LINE_SEARCH_MINIMIZER
 #endif  // CERES_INTERNAL_LINE_SEARCH_H_

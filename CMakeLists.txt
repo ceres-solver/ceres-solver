@@ -104,11 +104,6 @@ OPTION(CUSTOM_BLAS
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
 
-# Line search minimizer is useful for large scale problems or when
-# sparse linear algebra libraries are not available. If compile time,
-# binary size or compiler performance is an issue, consider disabling
-# this.
-OPTION(LINE_SEARCH_MINIMIZER "Enable the line search minimizer." ON)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -354,11 +349,6 @@ IF (NOT SCHUR_SPECIALIZATIONS)
   ADD_DEFINITIONS(-DCERES_RESTRICT_SCHUR_SPECIALIZATION)
   MESSAGE("-- Disabling Schur specializations (faster compiles)")
 ENDIF (NOT SCHUR_SPECIALIZATIONS)
-
-IF (NOT LINE_SEARCH_MINIMIZER)
-  ADD_DEFINITIONS(-DCERES_NO_LINE_SEARCH_MINIMIZER)
-  MESSAGE("-- Disabling line search minimizer")
-ENDIF (NOT LINE_SEARCH_MINIMIZER)
 
 IF (NOT CUSTOM_BLAS)
   ADD_DEFINITIONS(-DCERES_NO_CUSTOM_BLAS)

@@ -370,12 +370,6 @@ Options controlling Ceres configuration
    gains in the ``SPARSE_SCHUR`` solver, you can disable some of the
    template specializations by turning this ``OFF``.
 
-#. ``LINE_SEARCH_MINIMIZER [Default: ON]``: The line search based
-   minimizer is mostly suitable for large scale optimization problems,
-   or when sparse linear algebra libraries are not available. You can
-   further save on some compile time and binary size by turning this
-   ``OFF``.
-
 #. ``OPENMP [Default: ON]``: On certain platforms like Android,
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
    to disable multithreading.
@@ -487,4 +481,3 @@ the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
 
 Note that this can be used to have multiple versions of Ceres
 installed.
-
