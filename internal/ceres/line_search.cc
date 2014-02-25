@@ -28,7 +28,6 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_NO_LINE_SEARCH_MINIMIZER
 #include <iomanip>
 #include <iostream>  // NOLINT
 
@@ -820,5 +819,3 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_NO_LINE_SEARCH_MINIMIZER
