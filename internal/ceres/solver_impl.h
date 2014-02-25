@@ -69,7 +69,6 @@ class SolverImpl {
       LinearSolver* linear_solver,
       Solver::Summary* summary);
 
-#ifndef CERES_NO_LINE_SEARCH_MINIMIZER
   static void LineSearchSolve(const Solver::Options& options,
                               ProblemImpl* problem_impl,
                               Solver::Summary* summary);
@@ -79,7 +78,6 @@ class SolverImpl {
                                  Program* program,
                                  Evaluator* evaluator,
                                  Solver::Summary* summary);
-#endif  // CERES_NO_LINE_SEARCH_MINIMIZER
 
   // Create the transformed Program, which has all the fixed blocks
   // and residuals eliminated, and in the case of automatic schur

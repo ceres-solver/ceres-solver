@@ -65,10 +65,6 @@
 #
 # to the LOCAL_CFLAGS variable below.
 #
-# Similarly if you do not need the line search minimizer, consider adding
-#
-#   -DCERES_NO_LINE_SEARCH_MINIMIZER
-#
 # Changing the logging library:
 #
 # Ceres Solver ships with a replacement for glog that provides a
