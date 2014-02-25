@@ -66,9 +66,9 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
                                  const Vector& delta,
                                  Evaluator* evaluator) {
   LineSearchFunction line_search_function(evaluator);
-  line_search_function.Init(x, delta);
 
   LineSearch::Options line_search_options;
+  line_search_options.is_silent = true;
   line_search_options.interpolation_type =
       options.line_search_interpolation_type;
   line_search_options.min_step_size = options.min_line_search_step_size;
@@ -93,7 +93,15 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
                                          line_search_options,
                                          &message)));
   LineSearch::Summary summary;
+  line_search_function.Init(x, delta);
+  // Try the trust region step.
   line_search->Search(1.0, cost, gradient.dot(delta), &summary);
+  if (!summary.success) {
+    // If that was not successful, try the negative gradient as a
+    // search direction.
+    line_search_function.Init(x, -gradient);
+    line_search->Search(1.0, cost, -gradient.squaredNorm(), &summary);
+  }
   return summary;
 }
 
@@ -560,6 +568,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     if (iteration_summary.step_is_successful) {
       ++summary->num_successful_steps;
       strategy->StepAccepted(iteration_summary.relative_decrease);
+
       x = x_plus_delta;
       x_norm = x.norm();
 

@@ -1112,10 +1112,12 @@ elimination group [LiSaad]_.
 
    Solver terminates if
 
-   .. math:: \frac{\|g(x)\|_\infty}{\|g(x_0)\|_\infty} < \text{gradient_tolerance}
+   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty < \text{gradient_tolerance}
 
-   where :math:`\|\cdot\|_\infty` refers to the max norm, and :math:`x_0` is
-   the vector of initial parameter values.
+   where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
+   is projection onto the bounds constraints and :math:`\boxplus` is
+   Plus operation that for the overall local parameterization
+   associated with the parameter vector.
 
 .. member:: double Solver::Options::parameter_tolerance
 
@@ -2471,4 +2473,3 @@ Example Usage
  covariance.GetCovarianceBlock(x, x, covariance_xx)
  covariance.GetCovarianceBlock(y, y, covariance_yy)
  covariance.GetCovarianceBlock(x, y, covariance_xy)
-
