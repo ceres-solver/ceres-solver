@@ -357,32 +357,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
-
-    if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-      summary->message = StringPrintf("Gradient tolerance reached. "
-                                      "Gradient max norm: %e <= %e",
-                                      iteration_summary.gradient_max_norm,
-                                      options.gradient_tolerance);
-      summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-      break;
-    }
-
     iteration_summary.cost_change = previous_state.cost - current_state.cost;
-    const double absolute_function_tolerance =
-        options.function_tolerance * previous_state.cost;
-    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
-      summary->message =
-          StringPrintf("Function tolerance reached. "
-                       "|cost_change|/cost: %e <= %e",
-                       fabs(iteration_summary.cost_change) /
-                       previous_state.cost,
-                       options.function_tolerance);
-      summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-      break;
-    }
-
     iteration_summary.cost = current_state.cost + summary->fixed_cost;
     iteration_summary.step_norm = delta.norm();
     iteration_summary.step_is_valid = true;
@@ -403,6 +378,30 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     summary->iterations.push_back(iteration_summary);
     ++summary->num_successful_steps;
+
+    if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+      summary->message = StringPrintf("Gradient tolerance reached. "
+                                      "Gradient max norm: %e <= %e",
+                                      iteration_summary.gradient_max_norm,
+                                      options.gradient_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      break;
+    }
+
+    const double absolute_function_tolerance =
+        options.function_tolerance * previous_state.cost;
+    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+      summary->message =
+          StringPrintf("Function tolerance reached. "
+                       "|cost_change|/cost: %e <= %e",
+                       fabs(iteration_summary.cost_change) /
+                       previous_state.cost,
+                       options.function_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      break;
+    }
   }
 }
 
