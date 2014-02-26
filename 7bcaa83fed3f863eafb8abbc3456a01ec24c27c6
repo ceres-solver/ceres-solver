@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c156131_a22ba461",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-02-26T15:07:38Z",
+      "side": 1,
+      "message": "I see your point re: infinite-cost.  Perhaps terminating with ceres::FAILURE and outputting an error message is best ala: LOG(ERROR) \u003c\u003c \"x_plus_delta \u003d Plus(x, delta) failed in minimizer.  This should not happen as the step size was valid when selected by the line search direction.\"",
+      "revId": "7bcaa83fed3f863eafb8abbc3456a01ec24c27c6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
