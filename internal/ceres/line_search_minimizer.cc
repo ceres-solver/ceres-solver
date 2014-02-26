@@ -137,6 +137,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   // Do initial cost and Jacobian evaluation.
   if (!Evaluate(evaluator, x, &current_state, &summary->message)) {
     summary->termination_type = FAILURE;
+    summary->message = "Initial cost and jacobian evaluation failed."
+        "More details: " + summary->message;
     LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
     return;
   }
@@ -201,7 +203,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                                      &summary->message));
   if (line_search.get() == NULL) {
     summary->termination_type = FAILURE;
-    LOG_IF(ERROR, is_not_silent) << summary->message;
+    LOG_IF(ERROR, is_not_silent) << "Terminating: " << summary->message;
     return;
   }
 
@@ -306,7 +308,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                        initial_step_size, current_state.directional_derivative,
                        (current_state.cost - previous_state.cost));
       summary->termination_type = FAILURE;
-      LOG_IF(WARNING, is_not_silent) << summary->message;
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
       break;
     }
 
@@ -322,7 +324,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
                        "initial_gradient: %.5e.",
                        initial_step_size, current_state.cost,
                        current_state.directional_derivative);
-      LOG_IF(WARNING, is_not_silent) << summary->message;
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
       summary->termination_type = FAILURE;
       break;
     }
@@ -334,55 +336,31 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_solver_time_in_seconds =
         WallTimeInSeconds() - iteration_start_time;
 
-    // TODO(sameeragarwal): Collect stats.
-    //
-    // TODO(sameeragarwal): This call to Plus() directly updates the parameter
-    //       vector via the VectorRef x. This is incorrect as we check the
-    //       gradient and cost changes to determine if the step is accepted
-    //       later, as such we could mutate x with a step that is not
-    //       subsequently accepted, thus it is possible that
-    //       summary->iterations.end()->x != x at termination.
     if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-      LOG_IF(WARNING, is_not_silent)
-          << "x_plus_delta = Plus(x, delta) failed. ";
+      summary->termination_type = FAILURE;
+      summary->message =
+          "x_plus_delta = Plus(x, delta) failed. This should not happen "
+          "as the step was valid when it was selected by the line search.";
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      break;
     } else if (!Evaluate(evaluator,
                          x_plus_delta,
                          &current_state,
                          &summary->message)) {
-      LOG_IF(WARNING, is_not_silent) << "Step failed to evaluate. "
-                                     << summary->message;
+      summary->termination_type = FAILURE;
+      summary->message =
+          "Step failed to evaluate. This should not happen as the step was "
+          "valid when it was selected by the line search. More details: " +
+          summary->message;
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      break;
     } else {
       x = x_plus_delta;
     }
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
-
-    if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-      summary->message = StringPrintf("Gradient tolerance reached. "
-                                      "Gradient max norm: %e <= %e",
-                                      iteration_summary.gradient_max_norm,
-                                      options.gradient_tolerance);
-      summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-      break;
-    }
-
     iteration_summary.cost_change = previous_state.cost - current_state.cost;
-    const double absolute_function_tolerance =
-        options.function_tolerance * previous_state.cost;
-    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
-      summary->message =
-          StringPrintf("Function tolerance reached. "
-                       "|cost_change|/cost: %e <= %e",
-                       fabs(iteration_summary.cost_change) /
-                       previous_state.cost,
-                       options.function_tolerance);
-      summary->termination_type = CONVERGENCE;
-      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-      break;
-    }
-
     iteration_summary.cost = current_state.cost + summary->fixed_cost;
     iteration_summary.step_norm = delta.norm();
     iteration_summary.step_is_valid = true;
@@ -403,6 +381,30 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     summary->iterations.push_back(iteration_summary);
     ++summary->num_successful_steps;
+
+    if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+      summary->message = StringPrintf("Gradient tolerance reached. "
+                                      "Gradient max norm: %e <= %e",
+                                      iteration_summary.gradient_max_norm,
+                                      options.gradient_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      break;
+    }
+
+    const double absolute_function_tolerance =
+        options.function_tolerance * previous_state.cost;
+    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+      summary->message =
+          StringPrintf("Function tolerance reached. "
+                       "|cost_change|/cost: %e <= %e",
+                       fabs(iteration_summary.cost_change) /
+                       previous_state.cost,
+                       options.function_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      break;
+    }
   }
 }
 
