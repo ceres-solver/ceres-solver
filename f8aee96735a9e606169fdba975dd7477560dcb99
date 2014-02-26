@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c44c956_32800e9d",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-26T14:01:41Z",
+      "side": 1,
+      "message": "Actually it is. And yes the same issue exists in the trust region minimizer where there are many more ways for the solver to terminate. The code there has gotten a bit hairy and I am planning on refactoring both the line search minimizer and the trust region minimizer to share some infrastructure and common routines.\n\nI will fix that then. I am removing the current TODO as it is taken care of.",
+      "parentUuid": "9c156131_9fc35b25",
+      "revId": "f8aee96735a9e606169fdba975dd7477560dcb99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c156131_dfe0b3b0",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-02-26T11:19:41Z",
       "side": 1,
       "message": "So, I think there is a bug here, in the trust region minimizer, there is this line:\n\ndouble new_cost \u003d numeric_limits\u003cdouble\u003e::max();\n\nAnd the corresponding comment \"Treating it as a step with infinite cost\" for this case, which isn\u0027t here and should be I think.",
+      "revId": "f8aee96735a9e606169fdba975dd7477560dcb99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c44c956_f279660b",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-02-26T14:01:41Z",
+      "side": 1,
+      "message": "The problem is that in the trust region minimizer that evaluation takes place before we have decided to accept the step. Here however we have a bit of a conundrum. Technically this plus operation has already been performed inside the line search to come up with an acceptable point, so the plus should actually never fail. \n\nIf it does, there really is no recourse since treating this as an infinite cost at this point is not going to do anything useful.. perhaps try the gradient step again?",
+      "parentUuid": "9c156131_dfe0b3b0",
       "revId": "f8aee96735a9e606169fdba975dd7477560dcb99",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
