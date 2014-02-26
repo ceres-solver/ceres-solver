@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c156131_9fc35b25",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-02-26T11:19:41Z",
+      "side": 1,
+      "message": "Is this TODO fixed by this update?  I _think_ it is, although it does mean that the last IterationSummary will contain a step that is \u003c tolerance, but one which has been used to update the parameter vector.  So things are consistent, which was not true before.\n\nI remember when we discussed this before though you said that the same issue existed in the trust region minimizer with the same TODO and that you wanted to fix them at the same time.  Has this been done, and does it behave in the same way as this fix (I don\u0027t think it has from a quick look).",
+      "revId": "f8aee96735a9e606169fdba975dd7477560dcb99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c156131_dfe0b3b0",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-02-26T11:19:41Z",
+      "side": 1,
+      "message": "So, I think there is a bug here, in the trust region minimizer, there is this line:\n\ndouble new_cost \u003d numeric_limits\u003cdouble\u003e::max();\n\nAnd the corresponding comment \"Treating it as a step with infinite cost\" for this case, which isn\u0027t here and should be I think.",
+      "revId": "f8aee96735a9e606169fdba975dd7477560dcb99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
