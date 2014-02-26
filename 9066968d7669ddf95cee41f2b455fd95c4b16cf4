@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c156131_82dae0b5",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-02-26T17:23:10Z",
+      "side": 1,
+      "message": "So you don\u0027t want to stop with ceres::FAILURE here as well? - ditto below if Evaluate() fails?",
+      "revId": "9066968d7669ddf95cee41f2b455fd95c4b16cf4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
