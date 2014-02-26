@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c0a6d15_615c6c6a",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-02-26T19:31:58Z",
+      "side": 1,
+      "message": "Nitpick - should have a space at the start, or a space after the \u0027.\u0027 at the end of the previous line.",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 10
+      },
+      "revId": "8904d8be3434accbb0c9da92c06801ff4b46e456",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
