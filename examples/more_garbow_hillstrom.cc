@@ -223,9 +223,9 @@ BEGIN_MGH_PROBLEM(TestProblem9, 3, 15)
   const T x2 = x[1];
   const T x3 = x[2];
 
-  double y[] = {0.0009, 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521,
-                0.3989,
-                0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044, 0.0009};
+  const double y[] = {0.0009, 0.0044, 0.0175, 0.0540, 0.1295, 0.2420, 0.3521,
+                      0.3989,
+                      0.3521, 0.2420, 0.1295, 0.0540, 0.0175, 0.0044, 0.0009};
   for (int i = 0; i < 15; ++i) {
     const T t_i = T((8.0 - i - 1.0) / 2.0);
     const T y_i = T(y[i]);
@@ -238,6 +238,31 @@ const double TestProblem9::lower_bounds[] = {0.398, 1.0, -0.5};
 const double TestProblem9::upper_bounds[] = {4.2, 2.0, 0.1};
 const double TestProblem9::constrained_optimal_cost = 0.11279300e-7;
 const double TestProblem9::unconstrained_optimal_cost = 0.112793e-7;
+
+// Meyer function.
+BEGIN_MGH_PROBLEM(TestProblem10, 3, 16)
+  const T x1 = x[0];
+  const T x2 = x[1];
+  const T x3 = x[2];
+
+  const double y[] = {34780, 28610, 23650, 19630, 16370, 13720, 11540, 9744,
+                      8261, 7030, 6005, 5147, 4427, 3820, 3307, 2872};
+
+  for (int i = 0; i < 16; ++i) {
+    T t = T(45 + 5.0 * (i + 1));
+    residual[i] = x1 * exp(x2 / (t + x3)) - y[i];
+  }
+END_MGH_PROBLEM
+
+
+const double TestProblem10::initial_x[] = {0.02, 4000, 250};
+const double TestProblem10::lower_bounds[] ={
+  -kDoubleMax, -kDoubleMax, -kDoubleMax};
+const double TestProblem10::upper_bounds[] ={
+  kDoubleMax, kDoubleMax, kDoubleMax};
+const double TestProblem10::constrained_optimal_cost =
+    std::numeric_limits<double>::quiet_NaN();
+const double TestProblem10::unconstrained_optimal_cost = 87.9458;
 
 #undef BEGIN_MGH_PROBLEM
 #undef END_MGH_PROBLEM
@@ -336,6 +361,7 @@ int main(int argc, char** argv) {
   UNCONSTRAINED_SOLVE(7);
   UNCONSTRAINED_SOLVE(8);
   UNCONSTRAINED_SOLVE(9);
+  UNCONSTRAINED_SOLVE(10);
 
   std::cout << "\nConstrained problems\n";
   CONSTRAINED_SOLVE(3);
