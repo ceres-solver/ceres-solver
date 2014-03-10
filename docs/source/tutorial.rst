@@ -7,10 +7,14 @@
 ========
 Tutorial
 ========
-Ceres solves robustified non-linear least squares problems of the form
 
-.. math:: \frac{1}{2}\sum_{i} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
-   :label: ceresproblem
+Ceres solves robustified non-linear bounds constrained least squares
+problems of the form
+
+.. math:: :label: ceresproblem
+
+   \min_{\mathbf{x}} &\quad \frac{1}{2}\sum_{i} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right) \\
+   \text{s.t.} &\quad l_j \le x_j \le u_j
 
 Problems of this form comes up in a broad range of areas across
 science and engineering - from `fitting curves`_ in statistics, to
@@ -34,13 +38,16 @@ problems small groups of scalars occur together. For example the three
 components of a translation vector and the four components of the
 quaternion that define the pose of a camera. We refer to such a group
 of small scalars as a ``ParameterBlock``. Of course a
-``ParameterBlock`` can just be a single parameter.
+``ParameterBlock`` can just be a single parameter. :math:`l_j` and
+:math:`u_j` are bounds on the parameter block :math:`x_j`.
 
 :math:`\rho_i` is a :class:`LossFunction`. A :class:`LossFunction` is
 a scalar function that is used to reduce the influence of outliers on
-the solution of non-linear least squares problems. As a special case,
-when :math:`\rho_i(x) = x`, i.e., the identity function, we get the
-more familiar `non-linear least squares problem
+the solution of non-linear least squares problems.
+
+As a special case, when :math:`\rho_i(x) = x`, i.e., the identity
+function, and :math:`l_j = -\infty` and :math:`u_j = \infty` we get
+the more familiar `non-linear least squares problem
 <http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
 .. math:: \frac{1}{2}\sum_{i} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
@@ -75,10 +82,10 @@ function :math:`f(x) = 10 - x`:
 
 The important thing to note here is that ``operator()`` is a templated
 method, which assumes that all its inputs and outputs are of some type
-``T``. The reason for using templates here is because Ceres will call
-``CostFunctor::operator<T>()``, with ``T=double`` when just the
-residual is needed, and with a special type ``T=Jet`` when the
-Jacobians are needed. In :ref:`section-derivatives` we discuss the
+``T``. The use of templating here allows Ceres to call
+``CostFunctor::operator<T>()``, with ``T=double`` when just the value
+of the residual is needed, and with a special type ``T=Jet`` when the
+Jacobians are needed. In :ref:`section-derivatives` we will discuss the
 various ways of supplying derivatives to Ceres in more detail.
 
 Once we have a way of computing the residual function, it is now time
