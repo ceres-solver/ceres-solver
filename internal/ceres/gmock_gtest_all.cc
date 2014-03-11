@@ -4364,7 +4364,7 @@ void PrettyUnitTestResultPrinter::OnTestIterationEnd(const UnitTest& unit_test,
   int num_disabled = unit_test.reportable_disabled_test_count();
   if (num_disabled && !GTEST_FLAG(also_run_disabled_tests)) {
     if (!num_failures) {
-      printf("\n");  // Add a spacer if no LINEAR_SOLVER_FAILURE banner is displayed.
+      printf("\n");  // Add a spacer if no FAILURE banner is displayed.
     }
     ColoredPrintf(COLOR_YELLOW,
                   "  YOU HAVE %d DISABLED %s\n\n",
@@ -7904,7 +7904,6 @@ namespace internal {
 // of them.
 const char kPathSeparator = '\\';
 const char kAlternatePathSeparator = '/';
-const char kPathSeparatorString[] = "\\";
 const char kAlternatePathSeparatorString[] = "/";
 # if GTEST_OS_WINDOWS_MOBILE
 // Windows CE doesn't have a current directory. You should not use
@@ -9068,6 +9067,8 @@ namespace {
 using ::std::ostream;
 
 // Prints a segment of bytes in the given object.
+GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
 void PrintByteSegmentInObjectTo(const unsigned char* obj_bytes, size_t start,
                                 size_t count, ostream* os) {
   char text[5] = "";
@@ -9264,6 +9265,8 @@ void PrintTo(wchar_t wc, ostream* os) {
 // The array starts at begin, the length is len, it may include '\0' characters
 // and may not be NUL-terminated.
 template <typename CharType>
+GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
 static void PrintCharsAsStringTo(
     const CharType* begin, size_t len, ostream* os) {
   const char* const kQuoteBegin = sizeof(CharType) == 1 ? "\"" : "L\"";
@@ -9285,6 +9288,8 @@ static void PrintCharsAsStringTo(
 // Prints a (const) char/wchar_t array of 'len' elements, starting at address
 // 'begin'.  CharType must be either char or wchar_t.
 template <typename CharType>
+GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
+GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
 static void UniversalPrintCharArray(
     const CharType* begin, size_t len, ostream* os) {
   // The code
@@ -10699,7 +10704,14 @@ void ReportUninterestingCall(CallReaction reaction, const string& msg) {
       Log(kInfo, msg, 3);
       break;
     case kWarn:
-      Log(kWarning, msg, 3);
+      Log(kWarning,
+          msg +
+          "\nNOTE: You can safely ignore the above warning unless this "
+          "call should not happen.  Do not suppress it by blindly adding "
+          "an EXPECT_CALL() if you don't mean to enforce the call.  "
+          "See http://code.google.com/p/googlemock/wiki/CookBook#"
+          "Knowing_When_to_Expect for details.",
+          3);
       break;
     default:  // FAIL
       Expect(false, NULL, -1, msg);
@@ -10774,7 +10786,7 @@ const char* UntypedFunctionMockerBase::Name() const
 // Calculates the result of invoking this mock function with the given
 // arguments, prints it, and returns it.  The caller is responsible
 // for deleting the result.
-const UntypedActionResultHolderBase*
+UntypedActionResultHolderBase*
 UntypedFunctionMockerBase::UntypedInvokeWith(const void* const untyped_args)
     GTEST_LOCK_EXCLUDED_(g_gmock_mutex) {
   if (untyped_expectations_.size() == 0) {
@@ -10812,7 +10824,7 @@ UntypedFunctionMockerBase::UntypedInvokeWith(const void* const untyped_args)
     this->UntypedDescribeUninterestingCall(untyped_args, &ss);
 
     // Calculates the function result.
-    const UntypedActionResultHolderBase* const result =
+    UntypedActionResultHolderBase* const result =
         this->UntypedPerformDefaultAction(untyped_args, ss.str());
 
     // Prints the function result.
@@ -10859,7 +10871,7 @@ UntypedFunctionMockerBase::UntypedInvokeWith(const void* const untyped_args)
     untyped_expectation->DescribeLocationTo(&loc);
   }
 
-  const UntypedActionResultHolderBase* const result =
+  UntypedActionResultHolderBase* const result =
       untyped_action == NULL ?
       this->UntypedPerformDefaultAction(untyped_args, ss.str()) :
       this->UntypedPerformAction(untyped_action, untyped_args);
