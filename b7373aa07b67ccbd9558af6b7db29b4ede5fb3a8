@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cda0934_62d4d888",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7921,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-11T15:36:56Z",
+      "side": 0,
+      "message": "Lets not fix gmock on this CL, let me see if there is a newer version of gmock available upstream.",
+      "range": {
+        "startLine": 7921,
+        "startChar": 11,
+        "endLine": 7921,
+        "endChar": 31
+      },
+      "revId": "b7373aa07b67ccbd9558af6b7db29b4ede5fb3a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
