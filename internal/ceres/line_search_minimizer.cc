@@ -62,10 +62,6 @@
 namespace ceres {
 namespace internal {
 namespace {
-// Small constant for various floating point issues.
-// TODO(sameeragarwal): Change to a better name if this has only one
-// use.
-const double kEpsilon = 1e-12;
 
 // TODO(sameeragarwal): I think there is a small bug here, in that if
 // the evaluation fails, then the state can contain garbage. Look at
