@@ -22,6 +22,30 @@
       "revId": "b7373aa07b67ccbd9558af6b7db29b4ede5fb3a8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fce81dcd_b01b80ce",
+        "filename": "internal/ceres/gmock_gtest_all.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7921,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-11T16:24:16Z",
+      "side": 0,
+      "message": "Agreed; please don\u0027t modify bundled code from other projects.",
+      "parentUuid": "5cda0934_62d4d888",
+      "range": {
+        "startLine": 7921,
+        "startChar": 11,
+        "endLine": 7921,
+        "endChar": 31
+      },
+      "revId": "b7373aa07b67ccbd9558af6b7db29b4ede5fb3a8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
