@@ -56,8 +56,6 @@
 namespace ceres {
 namespace internal {
 namespace {
-// Small constant for various floating point issues.
-const double kEpsilon = 1e-12;
 
 LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
                                  const Vector& x,
