@@ -139,7 +139,7 @@ TEST(Problem, AddResidualWithIncorrectNumberOfParameterBlocksDies) {
   // UnaryCostFunction takes only one parameter, but two are passed.
   EXPECT_DEATH_IF_SUPPORTED(
       problem.AddResidualBlock(new UnaryCostFunction(2, 3), NULL, x, y),
-      "parameter_blocks.size()");
+      "parameter_blocks.size");
 }
 
 TEST(Problem, AddResidualWithDifferentSizesOnTheSameVariableDies) {
