@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb1990e_8f25e591",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-14T20:45:29Z",
+      "side": 1,
+      "message": "I think some people don\u0027t understand what sparse and dense are. I know it sounds insane, but this has come up in a couple of conversations. I think having a section somewhere that described (maybe with a picture) what a sparse and dense problem is would be good.\n\nNot for this CL though.",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_4f2fdd6f",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-14T20:45:29Z",
+      "side": 1,
+      "message": "upto is not a word; up to",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_ef3c69a7",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-14T20:45:29Z",
+      "side": 1,
+      "message": "I suspect the people who know what a schur complement / reduced camera matricies are don\u0027t need to read this section, and the people who don\u0027t (who could most benefit) won\u0027t understand this. \n\nI propose adding some text about what these problems look like; maybe even a picture or examples.",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_2f2c9178",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-14T20:45:29Z",
+      "side": 1,
+      "message": "Perhaps also mention that iterative_schur can be a good alternative when suitesparse is not available.",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_8f4cc561",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-14T20:45:29Z",
+      "side": 1,
+      "message": "\u0027its\u0027? what\u0027s its in this case? perhaps add a one-sentence description about how these are different",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
