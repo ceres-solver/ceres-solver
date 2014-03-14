@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcb1990e_aab76fb6",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-14T22:03:28Z",
+      "side": 1,
+      "message": "IMO this is not a tutorial. And if we go down that road this is going to become overly verbose. I have added a sentence though.",
+      "parentUuid": "dcb1990e_8f25e591",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb1990e_4f2fdd6f",
         "filename": "docs/source/faqs.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-03-14T20:45:29Z",
       "side": 1,
       "message": "upto is not a word; up to",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_0a4d4308",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-14T22:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb1990e_4f2fdd6f",
       "revId": "12d474abc97a021eb35e3289761a409ea830984b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dcb1990e_4adeabf6",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-14T22:03:28Z",
+      "side": 1,
+      "message": "People who know the word bundle adjustment generally speaking know the term schur complement.",
+      "parentUuid": "dcb1990e_ef3c69a7",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb1990e_2f2c9178",
         "filename": "docs/source/faqs.rst",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dcb1990e_4af90b60",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-14T22:03:28Z",
+      "side": 1,
+      "message": "I am loathe to add that bit of advice without knowing how well it does on general sparse problems, also it hasn\u0027t been shown to work that well on the few probelms I have tried it on.",
+      "parentUuid": "dcb1990e_2f2c9178",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb1990e_8f4cc561",
         "filename": "docs/source/faqs.rst",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2014-03-14T20:45:29Z",
       "side": 1,
       "message": "\u0027its\u0027? what\u0027s its in this case? perhaps add a one-sentence description about how these are different",
+      "revId": "12d474abc97a021eb35e3289761a409ea830984b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb1990e_8a16f3d4",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-14T22:03:28Z",
+      "side": 1,
+      "message": "I am trying not to repeat too much of the reference material. I am going to hyperlink it in the next CL.",
+      "parentUuid": "dcb1990e_8f4cc561",
       "revId": "12d474abc97a021eb35e3289761a409ea830984b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
