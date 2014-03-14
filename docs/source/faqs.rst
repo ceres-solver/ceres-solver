@@ -1,13 +1,43 @@
 .. _chapter-tricks:
 
 ===================
-Tips, Tricks & FAQs
+FAQS, Tips & Tricks
 ===================
 
-A collection of miscellanous tips, tricks and answers to frequently
-asked questions.
+Answers to frequently asked questions, tricks of the trade and general
+wisdom.
 
-1. Use analytical/automatic derivatives when possible.
+Building
+========
+
+#. Use `google-glog <http://code.google.com/p/google-glog>`_.
+
+   Ceres has extensive support for logging detailed information about
+   memory allocations and time consumed in various parts of the solve,
+   internal error conditions etc. This is done logging using the
+   `google-glog <http://code.google.com/p/google-glog>`_ library. We
+   use it extensively to observe and analyze Ceres's
+   performance. `google-glog <http://code.google.com/p/google-glog>`_
+   allows you to control its behaviour from the command line `flags
+   <http://google-glog.googlecode.com/svn/trunk/doc/glog.html>`_. Starting
+   with ``-logtostdterr`` you can add ``-v=N`` for increasing values
+   of ``N`` to get more and more verbose and detailed information
+   about Ceres internals.
+
+   In an attempt to reduce dependencies, it is tempting to use
+   `miniglog` - a minimal implementation of the ``glog`` interface
+   that ships with Ceres. This is a bad idea. ``miniglog`` was written
+   primarily for building and using Ceres on Android because the
+   current version of `google-glog
+   <http://code.google.com/p/google-glog>`_ does not build using the
+   NDK. It has worse performance than the full fledged glog library
+   and is much harder to control and use.
+
+
+Modeling
+========
+
+#. Use analytical/automatic derivatives.
 
    This is the single most important piece of advice we can give to
    you. It is tempting to take the easy way out and use numeric
@@ -36,32 +66,99 @@ asked questions.
    automatic and numeric differentiation. See
    :class:`NumericDiffFunctor` and :class:`CostFunctionToFunctor`.
 
+#. Putting `Inverse Function Theorem
+   <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ to use.
 
-2. Use `google-glog <http://code.google.com/p/google-glog>`_.
+   Every now and then we have to deal with functions which cannot be
+   evaluated analytically. Computing the Jacobian in such cases is
+   tricky. A particularly interesting case is where the inverse of the
+   function is easy to compute analytically. An example of such a
+   function is the Coordinate transformation between the `ECEF
+   <http://en.wikipedia.org/wiki/ECEF>`_ and the `WGS84
+   <http://en.wikipedia.org/wiki/World_Geodetic_System>`_ where the
+   conversion from WGS84 to ECEF is analytic, but the conversion back
+   to ECEF uses an iterative algorithm. So how do you compute the
+   derivative of the ECEF to WGS84 transformation?
 
-   Ceres has extensive support for logging various stages of the
-   solve. This includes detailed information about memory allocations
-   and time consumed in various parts of the solve, internal error
-   conditions etc. This logging structure is built on top of the
-   `google-glog <http://code.google.com/p/google-glog>`_ library and
-   can easily be controlled from the command line.
+   One obvious approach would be to numerically
+   differentiate the conversion function. This is not a good idea. For
+   one, it will be slow, but it will also be numerically quite
+   bad.
 
-   We use it extensively to observe and analyze Ceres's
-   performance. Starting with ``-logtostdterr`` you can add ``-v=N``
-   for increasing values of N to get more and more verbose and
-   detailed information about Ceres internals.
+   Turns out you can use the `Inverse Function Theorem
+   <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ in this
+   case to compute the derivatives more or less analytically.
 
-   Building Ceres like this introduces an external dependency, and it
-   is tempting instead to use the `miniglog` implementation that ships
-   inside Ceres instead. This is a bad idea.
+   The key result here is. If :math:`x = f^{-1}(y)`, and :math:`Df(x)`
+   is the invertible Jacobian of :math:`f` at :math:`x`. Then the
+   Jacobian :math:`Df^{-1}(y) = [Df(x)]^{-1}`, i.e., the Jacobian of
+   the :math:`f^{-1}` is the inverse of the Jacobian of :math:`f`.
 
-   ``miniglog`` was written primarily for building and using Ceres on
-   Android because the current version of `google-glog
-   <http://code.google.com/p/google-glog>`_ does not build using the
-   NDK. It has worse performance than the full fledged glog library
-   and is much harder to control and use.
+   Algorithmically this means that given :math:`y`, compute :math:`x =
+   f^{-1}(y)` by whatever means you can. Evaluate the Jacobian of
+   :math:`f` at :math:`x`. If the Jacobian matrix is invertible, then
+   the inverse is the Jacobian of the inverse at :math:`y`.
 
-3. `Solver::Summary::FullReport` is your friend.
+   One can put this into practice with the following code fragment.
+
+   .. code-block:: c++
+
+      Eigen::Vector3d ecef; // Fill some values
+      // Iterative computation.
+      Eigen::Vector3d lla = ECEFToLLA(ecef);
+      // Analytic derivatives
+      Eigen::Matrix3d lla_to_ecef_jacobian = LLAToECEFJacobian(lla);
+      bool invertible;
+      Eigen::Matrix3d ecef_to_lla_jacobian;
+      lla_to_ecef_jacobian.computeInverseWithCheck(ecef_to_lla_jacobian, invertible);
+
+#. When using Quaternions, use :class:`QuaternionParameterization`.
+
+   TBD
+
+#. How to choose a parameter block size?
+
+   TBD
+
+Solving
+=======
+
+#. Choosing a linear solver.
+
+   When using the ``TRUST_REGION`` minimizer, the choice of linear
+   solver is an important decision. It affects solution quality and
+   runtime. Here is a simple way to reason about it.
+
+   1. For small (a few hundred parameters) or dense problems use
+      ``DENSE_QR``.
+
+   2. For general sparse problems use ``SPARSE_NORMAL_CHOLESKY``. This
+      requires that you have ``SuiteSparse`` or ``CXSparse``
+      installed.
+
+   3. For bundle adjustment problems with upto a hundred or so
+      cameras, use ``DENSE_SCHUR``.
+
+   4. For larger bundle adjustment problems with sparse Schur
+      Complement/Reduced camera matrices use ``SPARSE_SCHUR``. This
+      requires that you have ``SuiteSparse`` or ``CXSparse``
+      installed.
+
+   5. For large bundle adjustment problems (a few thousand cameras or
+      more) use the ``ITERATIVE_SCHUR`` solver. There are a number of
+      preconditioners choices here. ``SCHUR_JACOBI`` offers an
+      excellent balance of speed and accuracy. This is also the
+      recommended option if you are solving medium sized problems for
+      which ``DENSE_SCHUR`` is too slow but ``SuiteSparse`` is not
+      available.
+
+      If you are not satisfied with its performance try
+      ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` in that
+      order. They require that you have ``SuiteSparse``
+      installed. Both of these preconditioners use a clustering
+      algorithm. Use ``SINGLE_LINKAGE`` before ``CANONICAL_VIEWS``.
+
+#. Use `Solver::Summary::FullReport` to diagnose performance problems.
 
    When diagnosing Ceres performance issues - runtime and convergence,
    the first place to start is by looking at the output of
@@ -169,50 +266,3 @@ asked questions.
      Total                                   0.998
 
   The preprocessor time has gone down by more than 4x!.
-
-
-4. Putting `Inverse Function Theorem
-   <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ to use.
-
-   Every now and then we have to deal with functions which cannot be
-   evaluated analytically. Computing the Jacobian in such cases is
-   tricky. A particularly interesting case is where the inverse of the
-   function is easy to compute analytically. An example of such a
-   function is the Coordinate transformation between the `ECEF
-   <http://en.wikipedia.org/wiki/ECEF>`_ and the `WGS84
-   <http://en.wikipedia.org/wiki/World_Geodetic_System>`_ where the
-   conversion from WGS84 to ECEF is analytic, but the conversion back
-   to ECEF uses an iterative algorithm. So how do you compute the
-   derivative of the ECEF to WGS84 transformation?
-
-   One obvious approach would be to numerically
-   differentiate the conversion function. This is not a good idea. For
-   one, it will be slow, but it will also be numerically quite
-   bad.
-
-   Turns out you can use the `Inverse Function Theorem
-   <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ in this
-   case to compute the derivatives more or less analytically.
-
-   The key result here is. If :math:`x = f^{-1}(y)`, and :math:`Df(x)`
-   is the invertible Jacobian of :math:`f` at :math:`x`. Then the
-   Jacobian :math:`Df^{-1}(y) = [Df(x)]^{-1}`, i.e., the Jacobian of
-   the :math:`f^{-1}` is the inverse of the Jacobian of :math:`f`.
-
-   Algorithmically this means that given :math:`y`, compute :math:`x =
-   f^{-1}(y)` by whatever means you can. Evaluate the Jacobian of
-   :math:`f` at :math:`x`. If the Jacobian matrix is invertible, then
-   the inverse is the Jacobian of the inverse at :math:`y`.
-
-   One can put this into practice with the following code fragment.
-
-   .. code-block:: c++
-
-      Eigen::Vector3d ecef; // Fill some values
-      // Iterative computation.
-      Eigen::Vector3d lla = ECEFToLLA(ecef);
-      // Analytic derivatives
-      Eigen::Matrix3d lla_to_ecef_jacobian = LLAToECEFJacobian(lla);
-      bool invertible;
-      Eigen::Matrix3d ecef_to_lla_jacobian;
-      lla_to_ecef_jacobian.computeInverseWithCheck(ecef_to_lla_jacobian, invertible);

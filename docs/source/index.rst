@@ -43,7 +43,7 @@ squares problems.
    tutorial
    modeling
    solving
-   tricks
+   faqs
    reading
    contributing
    acknowledgements
