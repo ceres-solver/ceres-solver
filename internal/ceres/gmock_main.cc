@@ -63,6 +63,10 @@ int main(int argc, char** argv) {
   // gflags, InitGoogleTest() (called by InitGoogleMock()) must be called
   // before ParseCommandLineFlags() to handle & remove them before gflags
   // parses the remaining flags.
-  google::ParseCommandLineFlags(&argc, &argv, true);
+{
+  using namespace gflags;
+  using namespace google;
+  ParseCommandLineFlags(&argc, &argv, true);
+}
   return RUN_ALL_TESTS();
 }
