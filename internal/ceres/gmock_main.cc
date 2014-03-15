@@ -35,7 +35,6 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-
 // NOTE(keir): This flag is normally part of gtest within Google but isn't in
 // the open source Google Test, since it is build-system dependent. However for
 // Ceres this is needed for our tests. Add the new flag here.
@@ -53,8 +52,6 @@ int _tmain(int argc, TCHAR** argv) {
 #else
 int main(int argc, char** argv) {
 #endif  // GTEST_OS_WINDOWS_MOBILE
-  using namespace gflags;
-  using namespace google;
   google::InitGoogleLogging(argv[0]);
   // Since Google Mock depends on Google Test, InitGoogleMock() is
   // also responsible for initializing Google Test.  Therefore there's
@@ -66,6 +63,10 @@ int main(int argc, char** argv) {
   // gflags, InitGoogleTest() (called by InitGoogleMock()) must be called
   // before ParseCommandLineFlags() to handle & remove them before gflags
   // parses the remaining flags.
+{
+  using namespace gflags;
+  using namespace google;
   ParseCommandLineFlags(&argc, &argv, true);
+}
   return RUN_ALL_TESTS();
 }
