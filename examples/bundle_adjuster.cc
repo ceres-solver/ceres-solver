@@ -336,7 +336,11 @@ void SolveProblem(const char* filename) {
 }  // namespace ceres
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
+{
+  using namespace gflags;
+  using namespace google;
+  ParseCommandLineFlags(&argc, &argv, true);
+}
   google::InitGoogleLogging(argv[0]);
   if (FLAGS_input.empty()) {
     LOG(ERROR) << "Usage: bundle_adjustment_example --input=bal_problem";

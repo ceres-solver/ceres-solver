@@ -107,7 +107,11 @@ class DistanceFromCircleCost {
 };
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
+{
+  using namespace gflags;
+  using namespace google;
+  ParseCommandLineFlags(&argc, &argv, true);
+}
   google::InitGoogleLogging(argv[0]);
 
   double x, y, r;
