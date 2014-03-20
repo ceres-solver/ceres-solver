@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc4d1911_30c72e34",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-20T19:28:10Z",
+      "side": 1,
+      "message": "I think these usually go on the previous line.",
+      "revId": "49e4ba57f1bf20c7bbd15f22c234efc5c25f7bc3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc4d1911_50c43a2c",
+        "filename": "include/ceres/autodiff_local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-20T19:28:10Z",
+      "side": 1,
+      "message": "Goes on the previous line.",
+      "revId": "49e4ba57f1bf20c7bbd15f22c234efc5c25f7bc3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
