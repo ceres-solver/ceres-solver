@@ -56,8 +56,8 @@ Modeling
    resort, where it is simply not possible to write a templated
    implementation of the cost function.
 
-   In many cases where it is not possible to do analytic or automatic
-   differentiation of the entire cost function. But it is generally
+   In many cases it is not possible to do analytic or automatic
+   differentiation of the entire cost function, but it is generally
    the case that it is possible to decompose the cost function into
    parts that need to be numerically differentiated and parts that can
    be automatically or analytically differentiated.
@@ -76,8 +76,8 @@ Modeling
    function is the Coordinate transformation between the `ECEF
    <http://en.wikipedia.org/wiki/ECEF>`_ and the `WGS84
    <http://en.wikipedia.org/wiki/World_Geodetic_System>`_ where the
-   conversion from WGS84 to ECEF is analytic, but the conversion back
-   to ECEF uses an iterative algorithm. So how do you compute the
+   conversion from WGS84 from ECEF is analytic, but the conversion
+   back to ECEF uses an iterative algorithm. So how do you compute the
    derivative of the ECEF to WGS84 transformation?
 
    One obvious approach would be to numerically
@@ -147,7 +147,7 @@ Solving
 
    5. For large bundle adjustment problems (a few thousand cameras or
       more) use the ``ITERATIVE_SCHUR`` solver. There are a number of
-      preconditioners choices here. ``SCHUR_JACOBI`` offers an
+      preconditioner choices here. ``SCHUR_JACOBI`` offers an
       excellent balance of speed and accuracy. This is also the
       recommended option if you are solving medium sized problems for
       which ``DENSE_SCHUR`` is too slow but ``SuiteSparse`` is not
