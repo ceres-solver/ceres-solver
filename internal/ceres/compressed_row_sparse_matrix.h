@@ -154,7 +154,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
                                   const vector<int>& program,
                                   CompressedRowSparseMatrix* result);
 
- private:
+ protected:
   int num_rows_;
   int num_cols_;
   vector<int> rows_;
