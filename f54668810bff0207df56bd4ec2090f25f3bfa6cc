@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b910773f_9a712d22",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-03-26T13:49:15Z",
+      "side": 1,
+      "message": "Log message for crash.\nor better still this function should return a bool and the calling function can log the crash as needed or ignore it?\nthat way you can use the logging in removeresidualblock.\n\nanother thought is that this check is not needed at all, since at this point you know your data is consistent, so you can make this a DCHECK perhaps?",
+      "range": {
+        "startLine": 168,
+        "startChar": 39,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
