@@ -48,7 +48,7 @@
 namespace ceres {
 namespace internal {
 
-template class SchurEliminator<4, 4, 4>;
+template class SchurEliminator<2, 4, 9>;
 
 }  // namespace internal
 }  // namespace ceres
