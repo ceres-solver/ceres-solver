@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1c23318f_9a561949",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-26T15:54:03Z",
+      "side": 1,
+      "message": "Maybe check failure if not enable_fast_removal",
+      "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23318f_fa6aad01",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 2
