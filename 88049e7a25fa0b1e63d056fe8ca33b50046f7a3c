@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c23318f_2e32461f",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-03-26T17:18:54Z",
+      "side": 1,
+      "message": "This is highly nitpicky, but maybe make this error formatted nicely. In practice when this prints, it will run together. Adding a newline per numbered bullet would improve things (and maybe indent).",
+      "revId": "88049e7a25fa0b1e63d056fe8ca33b50046f7a3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
