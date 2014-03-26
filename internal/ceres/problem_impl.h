@@ -45,6 +45,7 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/collections_port.h"
 #include "ceres/problem.h"
 #include "ceres/types.h"
 
@@ -63,6 +64,7 @@ class ResidualBlock;
 class ProblemImpl {
  public:
   typedef map<double*, ParameterBlock*> ParameterMap;
+  typedef HashSet<ResidualBlock*> ResidualBlockSet;
 
   ProblemImpl();
   explicit ProblemImpl(const Problem::Options& options);
@@ -160,9 +162,13 @@ class ProblemImpl {
   Program* mutable_program() { return program_.get(); }
 
   const ParameterMap& parameter_map() const { return parameter_block_map_; }
+  const ResidualBlockSet* residual_block_set() const {
+    return residual_block_set_.get();
+  }
 
  private:
   ParameterBlock* InternalAddParameterBlock(double* values, int size);
+  void InternalRemoveResidualBlock(ResidualBlock* residual_block);
 
   bool InternalEvaluate(Program* program,
                         double* cost,
@@ -183,6 +189,10 @@ class ProblemImpl {
 
   // The mapping from user pointers to parameter blocks.
   map<double*, ParameterBlock*> parameter_block_map_;
+
+  // If non-null (enable_fast_block_removal is enabled), contains the
+  // current residuals blocks.
+  internal::scoped_ptr<ResidualBlockSet> residual_block_set_;
 
   // The actual parameter and residual blocks.
   internal::scoped_ptr<internal::Program> program_;

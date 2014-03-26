@@ -1363,7 +1363,10 @@ Instances
    Remove a residual block from the problem. Any parameters that the residual
    block depends on are not removed. The cost and loss functions for the
    residual block will not get deleted immediately; won't happen until the
-   problem itself is deleted.
+   problem itself is deleted.  If Problem::Options::enable_fast_block_removal is
+   true, then the removal is fast (almost constant time). Otherwise, removing a
+   residual block will incur a scan of the entire Problem object to verify that
+   the residual_block represents a valid residual in the problem.
 
    **WARNING:** Removing a residual or parameter block will destroy
    the implicit ordering, rendering the jacobian or residuals returned
@@ -1378,7 +1381,7 @@ Instances
    of the problem (similar to cost/loss functions in residual block
    removal). Any residual blocks that depend on the parameter are also
    removed, as described above in RemoveResidualBlock().  If
-   Problem::Options::enable_fast_parameter_block_removal is true, then
+   Problem::Options::enable_fast_block_removal is true, then
    the removal is fast (almost constant time). Otherwise, removing a
    parameter block will incur a scan of the entire Problem object.
 
@@ -1456,7 +1459,7 @@ Instances
    Get all the residual blocks that depend on the given parameter
    block.
 
-   If `Problem::Options::enable_fast_parameter_block_removal` is
+   If `Problem::Options::enable_fast_block_removal` is
    `true`, then getting the residual blocks is fast and depends only
    on the number of residual blocks. Otherwise, getting the residual
    blocks for a parameter block will incur a scan of the entire

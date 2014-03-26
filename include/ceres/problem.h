@@ -124,7 +124,7 @@ class Problem {
         : cost_function_ownership(TAKE_OWNERSHIP),
           loss_function_ownership(TAKE_OWNERSHIP),
           local_parameterization_ownership(TAKE_OWNERSHIP),
-          enable_fast_parameter_block_removal(false),
+          enable_fast_block_removal(false),
           disable_all_safety_checks(false) {}
 
     // These flags control whether the Problem object owns the cost
@@ -138,17 +138,21 @@ class Problem {
     Ownership loss_function_ownership;
     Ownership local_parameterization_ownership;
 
-    // If true, trades memory for a faster RemoveParameterBlock() operation.
+    // If true, trades memory for faster RemoveResidualBlock() and
+    // RemoveParameterBlock() operations.
     //
-    // RemoveParameterBlock() takes time proportional to the size of the entire
-    // Problem. If you only remove parameter blocks from the Problem
-    // occassionaly, this may be acceptable. However, if you are modifying the
-    // Problem frequently, and have memory to spare, then flip this switch to
+    // By default, RemoveParameterBlock() and RemoveResidualBlock() take time
+    // proportional to the size of the entire problem.  If you only ever remove
+    // parameters or residuals from the problem occassionally, this might be
+    // acceptable.  However, if you have memory to spare, enable this option to
     // make RemoveParameterBlock() take time proportional to the number of
-    // residual blocks that depend on it.  The increase in memory usage is an
-    // additonal hash set per parameter block containing all the residuals that
-    // depend on the parameter block.
-    bool enable_fast_parameter_block_removal;
+    // residual blocks that depend on it, and RemoveResidualBlock() take (on
+    // average) constant time.
+    //
+    // The increase in memory usage is twofold: an additonal hash set per
+    // parameter block containing all the residuals that depend on the parameter
+    // block; and a hash set in the problem containing all residuals.
+    bool enable_fast_block_removal;
 
     // By default, Ceres performs a variety of safety checks when constructing
     // the problem. There is a small but measurable performance penalty to
@@ -276,7 +280,7 @@ class Problem {
   // residual blocks that depend on the parameter are also removed, as
   // described above in RemoveResidualBlock().
   //
-  // If Problem::Options::enable_fast_parameter_block_removal is true, then the
+  // If Problem::Options::enable_fast_block_removal is true, then the
   // removal is fast (almost constant time). Otherwise, removing a parameter
   // block will incur a scan of the entire Problem object.
   //
@@ -362,7 +366,7 @@ class Problem {
 
   // Get all the residual blocks that depend on the given parameter block.
   //
-  // If Problem::Options::enable_fast_parameter_block_removal is true, then
+  // If Problem::Options::enable_fast_block_removal is true, then
   // getting the residual blocks is fast and depends only on the number of
   // residual blocks. Otherwise, getting the residual blocks for a parameter
   // block will incur a scan of the entire Problem object.
