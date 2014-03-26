@@ -59,13 +59,14 @@ SPECIALIZATIONS = [(2, 2, 2),
                    (2, 3, "Eigen::Dynamic"),
                    (2, 4, 3),
                    (2, 4, 4),
+		   (2, 4, 9),
                    (2, 4, "Eigen::Dynamic"),
                    (2, "Eigen::Dynamic", "Eigen::Dynamic"),
                    (4, 4, 2),
                    (4, 4, 3),
                    (4, 4, 4),
                    (4, 4, "Eigen::Dynamic"),
-                   ("Eigen::Dynamic", "Eigen::Dynamic", "Eigen::Dynamic")]
+		   ("Eigen::Dynamic", "Eigen::Dynamic", "Eigen::Dynamic")]
 HEADER = """// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2010, 2011, 2012, 2013 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
