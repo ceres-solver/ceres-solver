@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19f8a337_7d23f739",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T13:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23318f_7a431d2e",
+      "range": {
+        "startLine": 127,
+        "startChar": 10,
+        "endLine": 127,
+        "endChar": 35
+      },
+      "revId": "be79c91f3ca5f99daacd3391244cbefa67606ccd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23318f_9ae299f3",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "19f8a337_3d1d6ff4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T13:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23318f_9ae299f3",
+      "range": {
+        "startLine": 527,
+        "startChar": 18,
+        "endLine": 527,
+        "endChar": 37
+      },
+      "revId": "be79c91f3ca5f99daacd3391244cbefa67606ccd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23318f_bae75502",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2014-03-26T12:34:41Z",
       "side": 1,
       "message": "why is this a pointer, why not a member, that way all the code dealing with this being null etc goes away.",
+      "range": {
+        "startLine": 195,
+        "startChar": 23,
+        "endLine": 195,
+        "endChar": 39
+      },
+      "revId": "be79c91f3ca5f99daacd3391244cbefa67606ccd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f8a337_dd132be5",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T13:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23318f_bae75502",
       "range": {
         "startLine": 195,
         "startChar": 23,
