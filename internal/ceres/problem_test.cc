@@ -378,7 +378,7 @@ TEST(Problem, CostFunctionsAreDeletedEvenWithRemovals) {
 struct DynamicProblem : public ::testing::TestWithParam<bool> {
   DynamicProblem() {
     Problem::Options options;
-    options.enable_fast_parameter_block_removal = GetParam();
+    options.enable_fast_removal = GetParam();
     problem.reset(new ProblemImpl(options));
   }
 
@@ -390,9 +390,26 @@ struct DynamicProblem : public ::testing::TestWithParam<bool> {
   }
 
   bool HasResidualBlock(ResidualBlock* residual_block) {
-    return find(problem->program().residual_blocks().begin(),
-                problem->program().residual_blocks().end(),
-                residual_block) != problem->program().residual_blocks().end();
+    bool have_residual_block = true;
+    if (GetParam()) {
+      have_residual_block &=
+          (problem->residual_block_set().find(residual_block) !=
+           problem->residual_block_set().end());
+    }
+    have_residual_block &=
+        find(problem->program().residual_blocks().begin(),
+             problem->program().residual_blocks().end(),
+             residual_block) != problem->program().residual_blocks().end();
+    return have_residual_block;
+  }
+
+  int NumResidualBlocks() {
+    // Verify that the hash set of residuals is maintained consistently.
+    if (GetParam()) {
+      EXPECT_EQ(problem->residual_block_set().size(),
+                problem->NumResidualBlocks());
+    }
+    return problem->NumResidualBlocks();
   }
 
   // The next block of functions until the end are only for testing the
@@ -550,7 +567,7 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   problem->AddParameterBlock(z, 5);
   problem->AddParameterBlock(w, 3);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(z, GetParameterBlock(1)->user_state());
   EXPECT_EQ(w, GetParameterBlock(2)->user_state());
@@ -559,12 +576,12 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   // removing it.
   problem->RemoveParameterBlock(w);
   ASSERT_EQ(2, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(z, GetParameterBlock(1)->user_state());
   problem->AddParameterBlock(w, 3);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(z, GetParameterBlock(1)->user_state());
   EXPECT_EQ(w, GetParameterBlock(2)->user_state());
@@ -572,12 +589,12 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   // Now remove z, which is in the middle, and add it back.
   problem->RemoveParameterBlock(z);
   ASSERT_EQ(2, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(w, GetParameterBlock(1)->user_state());
   problem->AddParameterBlock(z, 5);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(w, GetParameterBlock(1)->user_state());
   EXPECT_EQ(z, GetParameterBlock(2)->user_state());
@@ -586,20 +603,20 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithNoResiduals) {
   // y
   problem->RemoveParameterBlock(y);
   ASSERT_EQ(2, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(z, GetParameterBlock(0)->user_state());
   EXPECT_EQ(w, GetParameterBlock(1)->user_state());
 
   // z
   problem->RemoveParameterBlock(z);
   ASSERT_EQ(1, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(w, GetParameterBlock(0)->user_state());
 
   // w
   problem->RemoveParameterBlock(w);
   EXPECT_EQ(0, problem->NumParameterBlocks());
-  EXPECT_EQ(0, problem->NumResidualBlocks());
+  EXPECT_EQ(0, NumResidualBlocks());
 }
 
 TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
@@ -607,7 +624,7 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   problem->AddParameterBlock(z, 5);
   problem->AddParameterBlock(w, 3);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   EXPECT_EQ(y, GetParameterBlock(0)->user_state());
   EXPECT_EQ(z, GetParameterBlock(1)->user_state());
   EXPECT_EQ(w, GetParameterBlock(2)->user_state());
@@ -630,12 +647,12 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   ResidualBlock* r_w   = problem->AddResidualBlock(cost_w,   NULL, w);
 
   EXPECT_EQ(3, problem->NumParameterBlocks());
-  EXPECT_EQ(7, problem->NumResidualBlocks());
+  EXPECT_EQ(7, NumResidualBlocks());
 
   // Remove w, which should remove r_yzw, r_yw, r_zw, r_w.
   problem->RemoveParameterBlock(w);
   ASSERT_EQ(2, problem->NumParameterBlocks());
-  ASSERT_EQ(3, problem->NumResidualBlocks());
+  ASSERT_EQ(3, NumResidualBlocks());
 
   ASSERT_FALSE(HasResidualBlock(r_yzw));
   ASSERT_TRUE (HasResidualBlock(r_yz ));
@@ -648,7 +665,7 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   // Remove z, which will remove almost everything else.
   problem->RemoveParameterBlock(z);
   ASSERT_EQ(1, problem->NumParameterBlocks());
-  ASSERT_EQ(1, problem->NumResidualBlocks());
+  ASSERT_EQ(1, NumResidualBlocks());
 
   ASSERT_FALSE(HasResidualBlock(r_yzw));
   ASSERT_FALSE(HasResidualBlock(r_yz ));
@@ -661,7 +678,7 @@ TEST_P(DynamicProblem, RemoveParameterBlockWithResiduals) {
   // Remove y; all gone.
   problem->RemoveParameterBlock(y);
   EXPECT_EQ(0, problem->NumParameterBlocks());
-  EXPECT_EQ(0, problem->NumResidualBlocks());
+  EXPECT_EQ(0, NumResidualBlocks());
 }
 
 TEST_P(DynamicProblem, RemoveResidualBlock) {
@@ -699,14 +716,14 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
     EXPECT_TRUE(GetParameterBlock(2)->mutable_residual_blocks() == NULL);
   }
   EXPECT_EQ(3, problem->NumParameterBlocks());
-  EXPECT_EQ(7, problem->NumResidualBlocks());
+  EXPECT_EQ(7, NumResidualBlocks());
 
   // Remove each residual and check the state after each removal.
 
   // Remove r_yzw.
   problem->RemoveResidualBlock(r_yzw);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(6, problem->NumResidualBlocks());
+  ASSERT_EQ(6, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y, r_yz, r_yw, r_y);
     ExpectParameterBlockContains(z, r_yz, r_zw, r_z);
@@ -722,7 +739,7 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
   // Remove r_yw.
   problem->RemoveResidualBlock(r_yw);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(5, problem->NumResidualBlocks());
+  ASSERT_EQ(5, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y, r_yz, r_y);
     ExpectParameterBlockContains(z, r_yz, r_zw, r_z);
@@ -737,7 +754,7 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
   // Remove r_zw.
   problem->RemoveResidualBlock(r_zw);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(4, problem->NumResidualBlocks());
+  ASSERT_EQ(4, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y, r_yz, r_y);
     ExpectParameterBlockContains(z, r_yz, r_z);
@@ -751,7 +768,7 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
   // Remove r_w.
   problem->RemoveResidualBlock(r_w);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(3, problem->NumResidualBlocks());
+  ASSERT_EQ(3, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y, r_yz, r_y);
     ExpectParameterBlockContains(z, r_yz, r_z);
@@ -764,7 +781,7 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
   // Remove r_yz.
   problem->RemoveResidualBlock(r_yz);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(2, problem->NumResidualBlocks());
+  ASSERT_EQ(2, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y, r_y);
     ExpectParameterBlockContains(z, r_z);
@@ -777,12 +794,62 @@ TEST_P(DynamicProblem, RemoveResidualBlock) {
   problem->RemoveResidualBlock(r_z);
   problem->RemoveResidualBlock(r_y);
   ASSERT_EQ(3, problem->NumParameterBlocks());
-  ASSERT_EQ(0, problem->NumResidualBlocks());
+  ASSERT_EQ(0, NumResidualBlocks());
   if (GetParam()) {
     ExpectParameterBlockContains(y);
     ExpectParameterBlockContains(z);
     ExpectParameterBlockContains(w);
   }
+}
+
+TEST_P(DynamicProblem, RemoveInvalidResidualBlockDies) {
+  problem->AddParameterBlock(y, 4);
+  problem->AddParameterBlock(z, 5);
+  problem->AddParameterBlock(w, 3);
+
+  // Add all combinations of cost functions.
+  CostFunction* cost_yzw = new TernaryCostFunction(1, 4, 5, 3);
+  CostFunction* cost_yz  = new BinaryCostFunction (1, 4, 5);
+  CostFunction* cost_yw  = new BinaryCostFunction (1, 4, 3);
+  CostFunction* cost_zw  = new BinaryCostFunction (1, 5, 3);
+  CostFunction* cost_y   = new UnaryCostFunction  (1, 4);
+  CostFunction* cost_z   = new UnaryCostFunction  (1, 5);
+  CostFunction* cost_w   = new UnaryCostFunction  (1, 3);
+
+  ResidualBlock* r_yzw = problem->AddResidualBlock(cost_yzw, NULL, y, z, w);
+  ResidualBlock* r_yz  = problem->AddResidualBlock(cost_yz,  NULL, y, z);
+  ResidualBlock* r_yw  = problem->AddResidualBlock(cost_yw,  NULL, y, w);
+  ResidualBlock* r_zw  = problem->AddResidualBlock(cost_zw,  NULL, z, w);
+  ResidualBlock* r_y   = problem->AddResidualBlock(cost_y,   NULL, y);
+  ResidualBlock* r_z   = problem->AddResidualBlock(cost_z,   NULL, z);
+  ResidualBlock* r_w   = problem->AddResidualBlock(cost_w,   NULL, w);
+
+  // Remove r_yzw.
+  problem->RemoveResidualBlock(r_yzw);
+  ASSERT_EQ(3, problem->NumParameterBlocks());
+  ASSERT_EQ(6, NumResidualBlocks());
+  // Attempt to remove r_yzw again.
+  EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(r_yzw), "not found");
+
+  // Attempt to remove a cast pointer never added as a residual.
+  int trash_memory = 1234;
+  ResidualBlock* invalid_residual =
+      reinterpret_cast<ResidualBlock*>(&trash_memory);
+  EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(invalid_residual),
+                            "not found");
+
+  // Remove a parameter block, which in turn removes the dependent residuals
+  // then attempt to remove them directly.
+  problem->RemoveParameterBlock(z);
+  ASSERT_EQ(2, problem->NumParameterBlocks());
+  ASSERT_EQ(3, NumResidualBlocks());
+  EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(r_yz), "not found");
+  EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(r_zw), "not found");
+  EXPECT_DEATH_IF_SUPPORTED(problem->RemoveResidualBlock(r_z), "not found");
+
+  problem->RemoveResidualBlock(r_yw);
+  problem->RemoveResidualBlock(r_w);
+  problem->RemoveResidualBlock(r_y);
 }
 
 // Check that a null-terminated array, a, has the same elements as b.
