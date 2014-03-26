@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19f8a337_e0119c6e",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T16:34:43Z",
+      "side": 1,
+      "message": "So I think I agree with you that this check isn\u0027t really necessary, as this is the internal method and we don\u0027t check the validity elsewhere in the internal methods.",
+      "parentUuid": "b910773f_9a712d22",
+      "range": {
+        "startLine": 168,
+        "startChar": 39,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23318f_9a561949",
         "filename": "internal/ceres/problem_impl.h",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "19f8a337_e0e87c20",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T16:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23318f_9a561949",
+      "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23318f_fa6aad01",
         "filename": "internal/ceres/problem_test.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2014-03-26T15:50:35Z",
       "side": 1,
       "message": "Can\u0027t you early return if this is true?",
+      "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f8a337_c0f580f6",
+        "filename": "internal/ceres/problem_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T16:34:43Z",
+      "side": 1,
+      "message": "I didn\u0027t want to so that we verify that residual_block is in _both_ the hash set (if fast removal is enabled) and the program before we mark it as found.  That way, any inconsistency in the set would be picked up by the tests.",
+      "parentUuid": "1c23318f_fa6aad01",
       "revId": "f54668810bff0207df56bd4ec2090f25f3bfa6cc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
