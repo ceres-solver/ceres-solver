@@ -16,6 +16,24 @@
       "revId": "88049e7a25fa0b1e63d056fe8ca33b50046f7a3c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f8a337_4033b0d5",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-26T17:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23318f_2e32461f",
+      "revId": "88049e7a25fa0b1e63d056fe8ca33b50046f7a3c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
