@@ -109,7 +109,7 @@ namespace ceres {
 // Jacobian which is needed to compute the Jacobian of f w.r.t delta.
 class LocalParameterization {
  public:
-  virtual ~LocalParameterization() {}
+  virtual ~LocalParameterization();
 
   // Generalization of the addition operation,
   //
@@ -122,6 +122,16 @@ class LocalParameterization {
 
   // The jacobian of Plus(x, delta) w.r.t delta at delta = 0.
   virtual bool ComputeJacobian(const double* x, double* jacobian) const = 0;
+
+  // local_matrix = jacobian(x) * global_matrix.
+  //
+  // global_matrix is a GlobalSize x num_cols row major matrix.
+  // local_matrix is a LocalSize x num_cols row major matrix.
+  // jacobian(x) is the matrix returned by ComputeJacobian at x.
+  virtual bool MultiplyByJacobian(const double* x,
+                                  const int num_cols,
+                                  const double* global_matrix,
+                                  double* local_matrix);
 
   // Size of x.
   virtual int GlobalSize() const = 0;

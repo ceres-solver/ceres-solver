@@ -36,6 +36,22 @@
 
 namespace ceres {
 
+LocalParameterization::~LocalParameterization() {
+}
+
+bool LocalParameterization::MultiplyByJacobian(const double* x,
+                                               const int num_cols,
+                                               const double* global_matrix,
+                                               double* local_matrix) {
+  Matrix jacobian(LocalSize(), GlobalSize());
+  if (!ComputeJacobian(x, jacobian.data())) {
+    return false;
+  }
+  MatrixRef(local_matrix, LocalSize(), num_cols) =
+      jacobian * ConstMatrixRef(global_matrix, GlobalSize(), num_cols);
+  return true;
+}
+
 IdentityParameterization::IdentityParameterization(const int size)
     : size_(size) {
   CHECK_GT(size, 0);
