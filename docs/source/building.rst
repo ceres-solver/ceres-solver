@@ -140,46 +140,46 @@ this.
    5: f: 1.803399e+04 d: 5.33e+01 g: 1.48e+04 h: 1.23e+01 rho: 9.99e-01 mu: 8.33e+05 li:  1 it: 1.75e-01 tt: 1.14e+00
    6: f: 1.803390e+04 d: 9.02e-02 g: 6.35e+01 h: 8.00e-01 rho: 1.00e+00 mu: 2.50e+06 li:  1 it: 1.75e-01 tt: 1.32e+00
 
-Ceres Solver Report
--------------------
-                                     Original                  Reduced
-Parameter blocks                        22122                    22122
-Parameters                              66462                    66462
-Residual blocks                         83718                    83718
-Residual                               167436                   167436
+   Ceres Solver Report
+   -------------------
+                                        Original                  Reduced
+   Parameter blocks                        22122                    22122
+   Parameters                              66462                    66462
+   Residual blocks                         83718                    83718
+   Residual                               167436                   167436
 
-Minimizer                        TRUST_REGION
+   Minimizer                        TRUST_REGION
 
-Dense linear algebra library            EIGEN
-Trust region strategy     LEVENBERG_MARQUARDT
+   Dense linear algebra library            EIGEN
+   Trust region strategy     LEVENBERG_MARQUARDT
 
-                                        Given                     Used
-Linear solver                     DENSE_SCHUR              DENSE_SCHUR
-Threads                                     1                        1
-Linear solver threads                       1                        1
-Linear solver ordering              AUTOMATIC                22106, 16
+                                           Given                     Used
+   Linear solver                     DENSE_SCHUR              DENSE_SCHUR
+   Threads                                     1                        1
+   Linear solver threads                       1                        1
+   Linear solver ordering              AUTOMATIC                22106, 16
 
-Cost:
-Initial                          4.185660e+06
-Final                            1.803390e+04
-Change                           4.167626e+06
+   Cost:
+   Initial                          4.185660e+06
+   Final                            1.803390e+04
+   Change                           4.167626e+06
 
-Minimizer iterations                        6
-Successful steps                            6
-Unsuccessful steps                          0
+   Minimizer iterations                        6
+   Successful steps                            6
+   Unsuccessful steps                          0
 
-Time (in seconds):
-Preprocessor                            0.173
+   Time (in seconds):
+   Preprocessor                            0.173
 
-  Residual evaluation                   0.115
-  Jacobian evaluation                   0.498
-  Linear solver                         0.517
-Minimizer                               1.242
+     Residual evaluation                   0.115
+     Jacobian evaluation                   0.498
+     Linear solver                         0.517
+   Minimizer                               1.242
 
-Postprocessor                           0.003
-Total                                   1.437
+   Postprocessor                           0.003
+   Total                                   1.437
 
-Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769750e-09 <= 1.000000e-06)
+   Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769750e-09 <= 1.000000e-06)
 
 .. section-osx:
 
