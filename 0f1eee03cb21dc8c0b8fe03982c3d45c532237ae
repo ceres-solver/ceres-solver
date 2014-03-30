@@ -16,6 +16,24 @@
       "revId": "0f1eee03cb21dc8c0b8fe03982c3d45c532237ae",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_4e60821a",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-30T21:31:50Z",
+      "side": 1,
+      "message": "Yes that is a good idea. This CL in its current state is only meant as an illustration to what the API modification is going to look like. I will update here as well the docs and tests before submission.",
+      "parentUuid": "f904af03_054a589c",
+      "revId": "0f1eee03cb21dc8c0b8fe03982c3d45c532237ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
