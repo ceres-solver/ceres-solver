@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f8a337_5186e454",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-30T12:58:59Z",
+      "side": 1,
+      "message": "Seems to be out of line with previous {}.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 5
+      },
+      "revId": "22c1063cb5bbab1d04ccf141f2c15496d7b3f4e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99ec937b_95d8d496",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-30T12:58:59Z",
+      "side": 1,
+      "message": "The option to compile without this option has now been removed, so this check can be removed.",
+      "revId": "22c1063cb5bbab1d04ccf141f2c15496d7b3f4e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f8a337_318b585b",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-30T12:58:59Z",
+      "side": 1,
+      "message": "Isn\u0027t the gradient problem inherently single threaded?  Should this not be something like:\n\nif (options.num_threads \u003e 1) {\n  LOG(WARNING) \u003c\u003c \"Gradient problem evaluation is single threaded, so only \"\n\u003c\u003c \"options.num_threads\u003d1 is supported.  Continuing with a single thread.\"\n  summary-\u003enum_threads_used \u003d 1;\n}",
+      "revId": "22c1063cb5bbab1d04ccf141f2c15496d7b3f4e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
