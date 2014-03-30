@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f904af03_054a589c",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-03-30T13:13:02Z",
+      "side": 1,
+      "message": "Should the documentation say something about what this is used for, and that most users likely won\u0027t need this?",
+      "revId": "0f1eee03cb21dc8c0b8fe03982c3d45c532237ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
