@@ -43,6 +43,7 @@
 
 namespace ceres {
 
+class GradientProblem;
 class Problem;
 
 // Interface for non-linear least squares solvers.
@@ -717,6 +718,8 @@ class Solver {
     bool IsSolutionUsable() const;
 
     // Minimizer summary -------------------------------------------------
+    ProblemType problem_type;
+
     MinimizerType minimizer_type;
 
     TerminationType termination_type;
@@ -938,11 +941,25 @@ class Solver {
   virtual void Solve(const Options& options,
                      Problem* problem,
                      Solver::Summary* summary);
+
+  // Solve a GradientProblem using the line search based
+  // minimizer. All options related to the trust region minimizer are
+  // ignored.
+  virtual void Solve(const Solver::Options& options,
+                     const GradientProblem& problem,
+                     double* parameters,
+                     Solver::Summary* summary);
 };
 
-// Helper function which avoids going through the interface.
+// Helper function which avoids going through the Solver interface.
 void Solve(const Solver::Options& options,
            Problem* problem,
+           Solver::Summary* summary);
+
+// Helper function which avoids going through the Solver interface.
+void Solve(const Solver::Options& options,
+           const GradientProblem& problem,
+           double* parameters,
            Solver::Summary* summary);
 
 }  // namespace ceres
