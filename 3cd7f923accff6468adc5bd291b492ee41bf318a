@@ -1,0 +1,284 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "194fc37f_24c1e7d1",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "please also add a section to the documentation.",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_84b2db79",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "google style prohibits protected data members. These will have to be manipulated via accessors.",
+      "range": {
+        "startLine": 157,
+        "startChar": 1,
+        "endLine": 157,
+        "endChar": 10
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_e4cbcfe5",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "const\n and you can drop total here and below",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_c4c8d3eb",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "const",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_04cf0bf6",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "no c++11 in ceres yet :/",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_64e0ff63",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "move to cc",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_a4acb719",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "move to cc",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_84dbfbb9",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "move to cc",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_24da07b4",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "default arguments are generally discouraged.",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_44d50384",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "why protected?",
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_e4a2af27",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "this does not seem like a very good idea.",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_c4afb30d",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "why are you inheriting from CompressedRowSparseMatrixSolver? in fact why can\u0027t you just use CompressedRowSparseMatrixSolver?\n\nExcept for the natural ordering analysis what else that you are doing here is different?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_64b7df6b",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "NullJacobianFinalizer",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "194fc37f_44bce34b",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-03-31T13:43:09Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 253,
+        "startChar": 10,
+        "endLine": 253,
+        "endChar": 24
+      },
+      "revId": "3cd7f923accff6468adc5bd291b492ee41bf318a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
