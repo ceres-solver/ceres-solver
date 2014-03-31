@@ -56,6 +56,16 @@ enum Ownership {
   TAKE_OWNERSHIP
 };
 
+enum ProblemType {
+  // Non-linear least squraes problems modeled using the Problem
+  // object.
+  NONLINEAR_LEAST_SQUARES,
+
+  // General first order optimization problem models using the
+  // GradientProblem object.
+  GRADIENT
+};
+
 // TODO(keir): Considerably expand the explanations of each solver type.
 enum LinearSolverType {
   // These solvers are for general rectangular systems formed from the
