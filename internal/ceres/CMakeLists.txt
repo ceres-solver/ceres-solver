@@ -63,6 +63,7 @@ SET(CERES_INTERNAL_SRC
     evaluator.cc
     file.cc
     gradient_checking_cost_function.cc
+    gradient_problem.cc
     implicit_schur_complement.cc
     incomplete_lq_factorization.cc
     iterative_schur_complement_solver.cc
