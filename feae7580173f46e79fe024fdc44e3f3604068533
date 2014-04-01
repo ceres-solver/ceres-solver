@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ae4766_4d0aeaee",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-01T16:59:05Z",
+      "side": 1,
+      "message": "Blanks around seems inconsistent.",
+      "revId": "feae7580173f46e79fe024fdc44e3f3604068533",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
