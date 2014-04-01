@@ -791,6 +791,11 @@ int ProblemImpl::ParameterBlockLocalSize(const double* parameter_block) const {
       parameter_block_map_, const_cast<double*>(parameter_block))->LocalSize();
 };
 
+bool ProblemImpl::IsParameterBlockPresent(const double* parameter_block) const {
+  return (parameter_block_map_.find(const_cast<double*>(parameter_block)) !=
+          parameter_block_map_.end());
+}
+
 void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {
   CHECK_NOTNULL(parameter_blocks);
   parameter_blocks->resize(0);

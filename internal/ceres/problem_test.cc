@@ -556,7 +556,9 @@ TEST(Problem, ParameterBlockQueryTest) {
   EXPECT_TRUE(parameter_blocks[0] == x || parameter_blocks[0] == y);
   EXPECT_TRUE(parameter_blocks[1] == x || parameter_blocks[1] == y);
 
+  EXPECT_TRUE(problem.IsParameterBlockPresent(x));
   problem.RemoveParameterBlock(x);
+  EXPECT_FALSE(problem.IsParameterBlockPresent(x));
   problem.GetParameterBlocks(&parameter_blocks);
   EXPECT_EQ(parameter_blocks.size(), 1);
   EXPECT_TRUE(parameter_blocks[0] == y);
