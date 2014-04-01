@@ -349,6 +349,9 @@ class Problem {
   // block, then ParameterBlockLocalSize = ParameterBlockSize.
   int ParameterBlockLocalSize(const double* values) const;
 
+  // Is the given parameter block present in this problem or not?
+  bool HasParameterBlock(const double* values) const;
+
   // Fills the passed parameter_blocks vector with pointers to the
   // parameter blocks currently in the problem. After this call,
   // parameter_block.size() == NumParameterBlocks.

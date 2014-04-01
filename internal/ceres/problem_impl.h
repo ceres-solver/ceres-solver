@@ -147,6 +147,9 @@ class ProblemImpl {
 
   int ParameterBlockSize(const double* parameter_block) const;
   int ParameterBlockLocalSize(const double* parameter_block) const;
+
+  bool HasParameterBlock(const double* parameter_block) const;
+
   void GetParameterBlocks(vector<double*>* parameter_blocks) const;
   void GetResidualBlocks(vector<ResidualBlockId>* residual_blocks) const;
 

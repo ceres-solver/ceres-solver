@@ -231,6 +231,10 @@ int Problem::ParameterBlockLocalSize(const double* parameter_block) const {
   return problem_impl_->ParameterBlockLocalSize(parameter_block);
 };
 
+bool Problem::HasParameterBlock(const double* values) const {
+  return problem_impl_->HasParameterBlock(values);
+}
+
 void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const {
   problem_impl_->GetParameterBlocks(parameter_blocks);
 }
