@@ -102,6 +102,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   void ToCRSMatrix(CRSMatrix* matrix) const;
 
+  void Resize(int num_nonzeros);
+
   // Low level access methods that expose the structure of the matrix.
   const int* cols() const { return &cols_[0]; }
   int* mutable_cols() { return &cols_[0]; }
