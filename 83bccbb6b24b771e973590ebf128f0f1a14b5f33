@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9cb6b3b_ae96f77a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-01T14:09:08Z",
+      "side": 1,
+      "message": "I think Resize is a bit misleading here. Since it may mean that you are resizing the dimensions of the matrix.  How about\n\nSetMaxNumNonZeros() ? and document that this maybe destructive.",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9cb6b3b_6e6a4fc5",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-01T14:09:08Z",
+      "side": 1,
+      "message": "are these calls thread safe? since Write will get called concurrently, which means InsertEntry will get called concurrently.",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
