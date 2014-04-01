@@ -377,6 +377,9 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   }
   transpose_rows[0] = 0;
 
+  *(transpose->mutable_row_blocks()) = col_blocks_;
+  *(transpose->mutable_col_blocks()) = row_blocks_;
+
   return transpose;
 }
 
