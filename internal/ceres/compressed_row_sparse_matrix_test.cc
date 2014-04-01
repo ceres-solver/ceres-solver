@@ -338,10 +338,22 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   // 13  0 14 15  9  0
   //  0 16 17  0  0  0
 
+  // Block structure:
+  //  A  A  A  A  B  B
+  //  A  A  A  A  B  B
+  //  A  A  A  A  B  B
+  //  C  C  C  C  D  D
+  //  C  C  C  C  D  D
+  //  C  C  C  C  D  D
+
   CompressedRowSparseMatrix matrix(5, 6, 30);
   int* rows = matrix.mutable_rows();
   int* cols = matrix.mutable_cols();
   double* values = matrix.mutable_values();
+  matrix.mutable_row_blocks()->push_back(3);
+  matrix.mutable_row_blocks()->push_back(3);
+  matrix.mutable_col_blocks()->push_back(4);
+  matrix.mutable_col_blocks()->push_back(2);
 
   rows[0] = 0;
   cols[0] = 1;
@@ -375,6 +387,16 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   copy(values, values + 17, cols);
 
   scoped_ptr<CompressedRowSparseMatrix> transpose(matrix.Transpose());
+
+  ASSERT_EQ(transpose->row_blocks().size(), matrix.col_blocks().size());
+  for(int i = 0; i<transpose->row_blocks().size(); ++i) {
+    EXPECT_EQ(transpose->row_blocks()[i], matrix.col_blocks()[i]);
+  }
+
+  ASSERT_EQ(transpose->col_blocks().size(), matrix.row_blocks().size());
+  for(int i = 0; i<transpose->col_blocks().size(); ++i) {
+    EXPECT_EQ(transpose->col_blocks()[i], matrix.row_blocks()[i]);
+  }
 
   Matrix dense_matrix;
   matrix.ToDenseMatrix(&dense_matrix);
