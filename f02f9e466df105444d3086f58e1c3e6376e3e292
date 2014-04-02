@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92f97b4_d7bbbea0",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-02T03:56:36Z",
+      "side": 1,
+      "message": "more robust if you compare the original matrix\u0027s row to this matrix columns etc instead of hard coding the values of the block sizes.",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 11
+      },
+      "revId": "f02f9e466df105444d3086f58e1c3e6376e3e292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
