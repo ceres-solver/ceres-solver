@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99bf338c_8f2d3978",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "This should have associated ProblemTypeToString \u0026 StringToProblemType functions.",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79b43fb0_8e2d3f78",
+        "filename": "internal/ceres/gradient_problem_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "Should we set residuals[0] \u003d NAN here?  As we should never be being used to make it explicit, and highlight any mistaken uses?",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99bf338c_af2a7d5b",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "State the problem type first? (this should probably also be added to the main FullReport() method too.\n\nStringAppendF(\u0026report, \"Problem Type: %s\\n\", ProblemTypeToString(summary.problem_type));",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b93ba9_cd233d8c",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "MinimizerTypeToString(summary.minimizer_type) instead of \"LINE_SEARCH\"?",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b93ba9_8d2d4578",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "Should we have the same block about threads (given / used) as the line search output for the least-squares solver here?  I know it will always be used \u003d 1, but perhaps if the user has set given \u003d 4 it would be useful to highlight if they haven\u0027t looked at the log and thus seen the warning?",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b93ba9_ad43692d",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-02T12:21:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to check for OpenMP, but should LOG(WARNING) if the num_threads \u003e 1, and then set num_threads_used \u003d 1 as the GradientProblem evaluation is all single threaded.",
+      "revId": "e2f4312aff3c76a3685164d5554701934b7d6292",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
