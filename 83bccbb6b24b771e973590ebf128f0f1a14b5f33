@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "995d7362_4d9ef90b",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-03T16:00:09Z",
+      "side": 1,
+      "message": "Indent all these continued lines 2 more",
+      "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79527f52_e798cc18",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-03T16:00:09Z",
+      "side": 1,
+      "message": "Consider factoring this preamble such that the code that is common with CompressedRowJacobianWriter is not duplicated.",
+      "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9cb6b3b_6e6a4fc5",
         "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
         "patchSetId": 2
@@ -42,6 +76,23 @@
         "endLine": 119,
         "endChar": 31
       },
+      "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79527f52_87eab058",
+        "filename": "internal/ceres/evaluator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-03T16:00:09Z",
+      "side": 1,
+      "message": "Indent 2 more",
       "revId": "83bccbb6b24b771e973590ebf128f0f1a14b5f33",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
