@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9995785_3bddab85",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-05T00:35:45Z",
+      "side": 1,
+      "message": "space around binary operators",
+      "revId": "0929af1c00bc75856167681aa490db56a2936090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9995785_5be26f44",
+        "filename": "internal/ceres/compressed_row_sparse_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-05T00:35:45Z",
+      "side": 1,
+      "message": "space around \u003c",
+      "range": {
+        "startLine": 397,
+        "startChar": 18,
+        "endLine": 397,
+        "endChar": 19
+      },
+      "revId": "0929af1c00bc75856167681aa490db56a2936090",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
