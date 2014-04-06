@@ -70,6 +70,10 @@ enum LinearSolverType {
   // Eigen.
   DENSE_QR,
 
+  // Solve the normal equations using a sparse cholesky solver with a
+  // dynamic sparsity pattern; requires SuiteSparse.
+  DYNAMIC_SPARSE_NORMAL_CHOLESKY,
+
   // Solve the normal equations using a sparse cholesky solver; requires
   // SuiteSparse or CXSparse.
   SPARSE_NORMAL_CHOLESKY,

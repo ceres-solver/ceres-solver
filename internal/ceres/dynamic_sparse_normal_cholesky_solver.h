@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,58 +26,54 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
+// Author: richie.stebbing@gmail.com (Richard Stebbing)
 //
-// A jacobian writer that directly writes to compressed row sparse matrices.
+// A solver for sparse linear least squares problem based on solving
+// the normal equations via a sparse cholesky factorization.
 
-#ifndef CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_
-#define CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_
+#ifndef CERES_INTERNAL_DYNAMIC_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#define CERES_INTERNAL_DYNAMIC_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 
-#include "ceres/evaluator.h"
-#include "ceres/scratch_evaluate_preparer.h"
+#if !defined(CERES_NO_SUITESPARSE)
+
+#include "ceres/internal/macros.h"
+#include "ceres/linear_solver.h"
+#include "ceres/suitesparse.h"
 
 namespace ceres {
 namespace internal {
 
 class CompressedRowSparseMatrix;
-class Program;
-class SparseMatrix;
 
-class CompressedRowJacobianWriter {
+// Solves the normal equations (A'A + D'D) x = A'b, using the CHOLMOD sparse
+// cholesky solver but with sparsity analysis at each iteration.
+class DynamicSparseNormalCholeskySolver :
+  public CompressedRowSparseMatrixSolver {
  public:
-  CompressedRowJacobianWriter(Evaluator::Options /* ignored */,
-                              Program* program)
-    : program_(program) {
-  }
-
-  static void PopulateJacobianBlocks(const Program* program,
-                                     CompressedRowSparseMatrix* jacobian);
-  static void GetOrderedParameterBlocks(
-      const Program* program,
-      int residual_id,
-      vector<pair<int, int> >* evaluated_jacobian_blocks);
-
-  // JacobianWriter interface.
-
-  // Since the compressed row matrix has different layout than that assumed by
-  // the cost functions, use scratch space to store the jacobians temporarily
-  // then copy them over to the larger jacobian in the Write() function.
-  ScratchEvaluatePreparer* CreateEvaluatePreparers(int num_threads) {
-    return ScratchEvaluatePreparer::Create(*program_, num_threads);
-  }
-
-  SparseMatrix* CreateJacobian() const;
-
-  void Write(int residual_id,
-             int residual_offset,
-             double **jacobians,
-             SparseMatrix* base_jacobian);
+  explicit DynamicSparseNormalCholeskySolver(
+    const LinearSolver::Options& options);
+  virtual ~DynamicSparseNormalCholeskySolver();
 
  private:
-  Program* program_;
+  virtual LinearSolver::Summary SolveImpl(
+      CompressedRowSparseMatrix* A,
+      const double* b,
+      const LinearSolver::PerSolveOptions& options,
+      double* x);
+
+  LinearSolver::Summary SolveImplUsingSuiteSparse(
+      CompressedRowSparseMatrix* A,
+      const LinearSolver::PerSolveOptions& options,
+      double* rhs_and_solution);
+
+  SuiteSparse ss_;
+
+  const LinearSolver::Options options_;
+  CERES_DISALLOW_COPY_AND_ASSIGN(DynamicSparseNormalCholeskySolver);
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_
+#endif  // !defined(CERES_NO_SUITESPARSE)
+#endif  // CERES_INTERNAL_DYNAMIC_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

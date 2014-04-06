@@ -1260,6 +1260,13 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
     return NULL;
   }
 
+  if (options->linear_solver_type == DYNAMIC_SPARSE_NORMAL_CHOLESKY &&
+      options->sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    *error = "Can't use DYNAMICSPARSE_NORMAL_CHOLESKY with SUITESPARSE "
+             "because SuiteSparse was not enabled when Ceres was built.";
+    return NULL;
+  }
+
   if (options->preconditioner_type == CLUSTER_JACOBI) {
     *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
         "with SuiteSparse support.";
