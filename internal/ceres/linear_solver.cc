@@ -33,6 +33,7 @@
 #include "ceres/cgnr_solver.h"
 #include "ceres/dense_normal_cholesky_solver.h"
 #include "ceres/dense_qr_solver.h"
+#include "ceres/dynamic_sparse_normal_cholesky_solver.h"
 #include "ceres/iterative_schur_complement_solver.h"
 #include "ceres/schur_complement_solver.h"
 #include "ceres/sparse_normal_cholesky_solver.h"
@@ -58,6 +59,16 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
       return NULL;
 #else
       return new SparseNormalCholeskySolver(options);
+#endif
+
+    case DYNAMIC_SPARSE_NORMAL_CHOLESKY:
+#if defined(CERES_NO_SUITESPARSE)
+      LOG(WARNING) << "DYNAMIC_SPARSE_NORMAL_CHOLESKY is not available. "
+                   << "Please build Ceres with SuiteSparse. "
+                   << "Returning NULL.";
+      return NULL;
+#else
+      return new DynamicSparseNormalCholeskySolver(options);
 #endif
 
     case SPARSE_SCHUR:
