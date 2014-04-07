@@ -4,9 +4,9 @@
 
 .. _`chapter-modeling`:
 
-========
-Modeling
-========
+============
+Modeling API
+============
 
 Recall that Ceres solves robustified non-linear least squares problems
 of the form
