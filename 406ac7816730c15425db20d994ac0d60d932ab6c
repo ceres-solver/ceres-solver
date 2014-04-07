@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a69bd4_02b76c04",
+        "filename": "docs/source/introduction.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T17:05:04Z",
+      "side": 1,
+      "message": "for bundle adjustment",
+      "range": {
+        "startLine": 58,
+        "startChar": 42,
+        "endLine": 58,
+        "endChar": 48
+      },
+      "revId": "406ac7816730c15425db20d994ac0d60d932ab6c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
