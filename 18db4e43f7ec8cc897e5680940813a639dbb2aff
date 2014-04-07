@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "797c3ff1_eb98ad18",
+        "filename": "docs/source/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-07T09:24:34Z",
+      "side": 1,
+      "message": "Trailing whitespace.",
+      "range": {
+        "startLine": 28,
+        "startChar": 62,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "18db4e43f7ec8cc897e5680940813a639dbb2aff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9823717_6def716a",
+        "filename": "docs/source/index.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-07T09:24:34Z",
+      "side": 1,
+      "message": "This is a long line, should it not be wrapped at 80?",
+      "revId": "18db4e43f7ec8cc897e5680940813a639dbb2aff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99873329_4cbc6f4c",
+        "filename": "docs/source/introduction.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-07T09:24:34Z",
+      "side": 1,
+      "message": "\"solvers for bundle\"",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "18db4e43f7ec8cc897e5680940813a639dbb2aff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
