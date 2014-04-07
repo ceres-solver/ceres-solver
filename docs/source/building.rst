@@ -1,8 +1,8 @@
 .. _chapter-building:
 
-============
-Installation
-============
+=====================
+Installing & Building
+=====================
 
 Stable Ceres Solver releases are available for download at
 `code.google.com <http://code.google.com/p/ceres-solver/>`_. For the

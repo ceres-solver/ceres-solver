@@ -1,8 +1,8 @@
 .. _chapter-version-history:
 
-===============
-Version History
-===============
+========
+Releases
+========
 
 1.8.0
 =====
