@@ -1,0 +1,368 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39764713_2301fd24",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "I would add a note of caution here, that unless you know this about your problem, do not set this to be true.. it will for most problems lead to a worsening  of performance.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_e399a5ac",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "PopulateJacobianRowAndColumnBlockVectors()\nBlock is so generic across ceres code that its hard to keep track of things.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_a31ded7b",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "Document the methods and add a comment why they are static.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_838b9158",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "drop blank.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_a38fad63",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "parameter_block",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_4381993a",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "document class.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_63869555",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "move implementation into cc.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_2353bd34",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "these don\u0027t stack next to the function name?",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_634db58d",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "num_additional_elements ? num_additional_entries?",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_8352b12a",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "new c++ style casting.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_033ec1c7",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "better named variable.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_c343c95e",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "is it worth second guessing c++ here and doing a bit copy instead?",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_e340c554",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "new style casts.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_237c9d95",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "Add a crash message.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_c31ae980",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "document class and example usage.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_e327e5c5",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "document methods and thread safety.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 7
+      },
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_4306f93d",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "I would group these two together and keep one comment.",
+      "range": {
+        "startLine": 120,
+        "startChar": 35,
+        "endLine": 120,
+        "endChar": 36
+      },
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_63fbf5e4",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "space around \u003d",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_8300f11e",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "do cost, gradient and then jacobian.. easier to read?",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 25
+      },
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39764713_432fd9a3",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-07T12:46:30Z",
+      "side": 1,
+      "message": "nice simple change. I like it.\nPlease add a test to unsymmetric_linear_solver_test for this.",
+      "revId": "dc640544a7e1ecf40d389862fedd875d44a04f6f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
