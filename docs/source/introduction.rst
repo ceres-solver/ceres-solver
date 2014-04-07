@@ -43,29 +43,29 @@ Why use Ceres Solver?
 ---------------------
 * Ceres has an **integrated modelling layer**, making it easy and intutive to
   model large, complex cost functions with interacting terms, such as a moving
-  vehicle with multiple sensors and tricky dynamics
+  vehicle with multiple sensors and tricky dynamics.
 * Ceres has **integrated automatic differentiation**, avoiding the error-prone
-  task of manually computing derivatives
+  task of manually computing derivatives.
 * Ceres can model a **wide variety of problems**, beyond simple nonlinear least
   squares, thanks to robust loss functions and local parameterizations (e.g.
-  for quaternions)
+  for quaternions).
 * Ceres is **very fast**, thanks to threaded cost function evaluators, threaded linear
-  solvers, and generous amounts of engineering time spent optimizing
+  solvers, and generous amounts of engineering time spent optimizing.
 * Ceres has **multiple nonlinear solvers** including trust region (fast, uses
-  more memory) and line search (slower, uses less memory)
+  more memory) and line search (slower, uses less memory).
 * Ceres has **multiple linear solvers** for both sparse and dense systems,
   leveraging Eigen or MKL for dense solving, CHOLMOD or CXSparse for sparse
-  solving, and specialized linear solvers bundle adjustment
+  solving, and specialized linear solvers for bundle adjustment.
 * Ceres has **thorough automated tests** ensuring it is high-quality
 * Ceres is **industrial grade** thanks to **many compute-years** spent
-  running its code, analyzing the results, and improving it
+  running its code, analyzing the results, and improving it.
 * Ceres has **world-class solution quality**, with the best known results of
-  any least squares solver on the `NIST least squares precision benchmark`_
+  any least squares solver on the `NIST least squares precision benchmark`_.
 * Ceres has an **active community** encouraging contributions and mentoring
-  those starting out
+  those starting out.
 * Ceres runs on **many platforms** including Linux, Windows, Mac OS X, Android, and
-  iOS (sort of)
+  iOS (sort of).
 * Ceres is **liberally licensed (BSD)** so that you can use it freely in
-  commercial applications without releasing your code
+  commercial applications without releasing your code.
 
 .. _NIST least squares precision benchmark: https://groups.google.com/forum/#!topic/ceres-solver/UcicgMPgbXw
