@@ -1,9 +1,8 @@
 .. _chapter-contributing:
 
-=============
-Contributions
-=============
-
+============
+Contributing
+============
 
 We welcome contributions to Ceres, whether they are new features, bug
 fixes or tests. The Ceres `mailing
