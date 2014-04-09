@@ -1,13 +1,19 @@
 .. _chapter-building:
 
-=====================
-Building & Installing
-=====================
+=======================
+Building & Installation
+=======================
 
-Stable Ceres Solver releases are available for download at
-`code.google.com <http://code.google.com/p/ceres-solver/>`_. For the
-more adventurous, the git repository is hosted on `Gerrit
-<https://ceres-solver-review.googlesource.com/>`_.
+Getting the source code
+=======================
+.. _section-source:
+
+You can start with the `latest stable release
+<http://ceres-solver.org/ceres-solver-1.8.0.tar.gz>`_ . Or if you want
+the latest version, you can clone the git repository
+  .. code-block:: bash
+
+       git clone https://ceres-solver.googlesource.com/ceres-solver
 
 .. _section-dependencies:
 
@@ -185,20 +191,35 @@ this.
 
 Building on Mac OS X
 ====================
-
-On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager to install the
-dependencies. There is no need to install ``BLAS`` or ``LAPACK``
-separately as OS X ships with optimized ``BLAS`` and ``LAPACK``
-routines as part of the `vecLib
-<https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
-framework.
-
 .. NOTE::
 
  Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a bug in that version of
  Clang.  If you are running Xcode 4.5.x, please update to Xcode >= 4.6.x before attempting to
  build Ceres.
+
+
+On OS X, we recommend using the `homebrew
+<http://mxcl.github.com/homebrew/>`_ package manager to install Ceres.
+
+.. code-block:: bash
+
+      brew install ceres-solver
+
+will install the latest stable version along with all the required
+dependencies and
+
+.. code-block:: bash
+
+      brew install ceres-solver --HEAD
+
+will install the latest version in the git repo.
+
+You can also install each of the dependencies by hand using `homebrew
+<http://mxcl.github.com/homebrew/>`_. There is no need to install
+``BLAS`` or ``LAPACK`` separately as OS X ships with optimized
+``BLAS`` and ``LAPACK`` routines as part of the `vecLib
+<https://developer.apple.com/library/mac/#documentation/Performance/Conceptual/vecLib/Reference/reference.html>`_
+framework.
 
 .. code-block:: bash
 
@@ -211,7 +232,6 @@ framework.
       # SuiteSparse and CXSparse
       brew install suite-sparse
 
-
 We are now ready to build and test Ceres.
 
 .. code-block:: bash
@@ -222,7 +242,6 @@ We are now ready to build and test Ceres.
    cmake ../ceres-solver-1.8.0
    make -j3
    make test
-
 
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
