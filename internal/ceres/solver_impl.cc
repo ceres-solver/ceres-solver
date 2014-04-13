@@ -565,14 +565,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->minimizer_type = TRUST_REGION;
 
   SummarizeGivenProgram(*original_program, summary);
-  SummarizeOrdering(original_options.linear_solver_ordering,
+  SummarizeOrdering(original_options.linear_solver_ordering.get(),
                     &(summary->linear_solver_ordering_given));
-  SummarizeOrdering(original_options.inner_iteration_ordering,
+  SummarizeOrdering(original_options.inner_iteration_ordering.get(),
                     &(summary->inner_iteration_ordering_given));
 
   Solver::Options options(original_options);
-  options.linear_solver_ordering = NULL;
-  options.inner_iteration_ordering = NULL;
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -636,17 +634,14 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     problem_impl = gradient_checking_problem_impl.get();
   }
 
-  if (original_options.linear_solver_ordering != NULL) {
-    if (!IsOrderingValid(original_options, problem_impl, &summary->message)) {
+  if (options.linear_solver_ordering.get() != NULL) {
+    if (!IsOrderingValid(options, problem_impl, &summary->message)) {
       LOG(ERROR) << summary->message;
       return;
     }
     event_logger.AddEvent("CheckOrdering");
-    options.linear_solver_ordering =
-        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
-    event_logger.AddEvent("CopyOrdering");
   } else {
-    options.linear_solver_ordering = new ParameterBlockOrdering;
+    options.linear_solver_ordering.reset(new ParameterBlockOrdering);
     const ProblemImpl::ParameterMap& parameter_map =
         problem_impl->parameter_map();
     for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
@@ -655,13 +650,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
       options.linear_solver_ordering->AddElementToGroup(it->first, 0);
     }
     event_logger.AddEvent("ConstructOrdering");
-  }
-
-  if (original_options.inner_iteration_ordering != NULL) {
-    // Make a copy, as the options struct takes ownership of the
-    // ordering objects.
-    options.inner_iteration_ordering =
-        new ParameterBlockOrdering(*original_options.inner_iteration_ordering);
   }
 
   // Create the three objects needed to minimize: the transformed program, the
@@ -676,7 +664,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
-  SummarizeOrdering(options.linear_solver_ordering,
+  SummarizeOrdering(options.linear_solver_ordering.get(),
                     &(summary->linear_solver_ordering_used));
   SummarizeReducedProgram(*reduced_program, summary);
 
@@ -839,8 +827,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   // refactored to deal with the various bits of cleanups related to
   // line search.
   options.linear_solver_type = CGNR;
-  options.linear_solver_ordering = NULL;
-  options.inner_iteration_ordering = NULL;
+
 
 #ifndef CERES_USE_OPENMP
   if (options.num_threads > 1) {
@@ -860,15 +847,13 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  if (original_options.linear_solver_ordering != NULL) {
-    if (!IsOrderingValid(original_options, problem_impl, &summary->message)) {
+  if (options.linear_solver_ordering.get() != NULL) {
+    if (!IsOrderingValid(options, problem_impl, &summary->message)) {
       LOG(ERROR) << summary->message;
       return;
     }
-    options.linear_solver_ordering =
-        new ParameterBlockOrdering(*original_options.linear_solver_ordering);
   } else {
-    options.linear_solver_ordering = new ParameterBlockOrdering;
+    options.linear_solver_ordering.reset(new ParameterBlockOrdering);
     const ProblemImpl::ParameterMap& parameter_map =
         problem_impl->parameter_map();
     for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
@@ -877,6 +862,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
       options.linear_solver_ordering->AddElementToGroup(it->first, 0);
     }
   }
+
 
   original_program->SetParameterBlockStatePtrsToUserStatePtrs();
 
@@ -1134,16 +1120,16 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           ProblemImpl* problem_impl,
                                           double* fixed_cost,
                                           string* error) {
-  CHECK_NOTNULL(options->linear_solver_ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering.get());
   Program* original_program = problem_impl->mutable_program();
   scoped_ptr<Program> transformed_program(new Program(*original_program));
 
   ParameterBlockOrdering* linear_solver_ordering =
-      options->linear_solver_ordering;
+      options->linear_solver_ordering.get();
   const int min_group_id =
       linear_solver_ordering->group_to_elements().begin()->first;
   ParameterBlockOrdering* inner_iteration_ordering =
-      options->inner_iteration_ordering;
+      options->inner_iteration_ordering.get();
   if (!RemoveFixedBlocksFromProgram(transformed_program.get(),
                                     linear_solver_ordering,
                                     inner_iteration_ordering,
@@ -1216,7 +1202,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
                                              string* error) {
   CHECK_NOTNULL(options);
-  CHECK_NOTNULL(options->linear_solver_ordering);
+  CHECK_NOTNULL(options->linear_solver_ordering.get());
   CHECK_NOTNULL(error);
 
   if (options->trust_region_strategy_type == DOGLEG) {
@@ -1486,7 +1472,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
   scoped_ptr<ParameterBlockOrdering> inner_iteration_ordering;
   ParameterBlockOrdering* ordering_ptr  = NULL;
 
-  if (options.inner_iteration_ordering == NULL) {
+  if (options.inner_iteration_ordering.get() == NULL) {
     // Find a recursive decomposition of the Hessian matrix as a set
     // of independent sets of decreasing size and invert it. This
     // seems to work better in practice, i.e., Cameras before
@@ -1513,7 +1499,7 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
         return NULL;
       }
     }
-    ordering_ptr = options.inner_iteration_ordering;
+    ordering_ptr = options.inner_iteration_ordering.get();
   }
 
   if (!inner_iteration_minimizer->Init(program,
