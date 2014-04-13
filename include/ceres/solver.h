@@ -107,7 +107,6 @@ class Solver {
 
 
       num_linear_solver_threads = 1;
-      linear_solver_ordering = NULL;
       use_postordering = false;
       min_linear_solver_iterations = 1;
       max_linear_solver_iterations = 500;
@@ -115,7 +114,6 @@ class Solver {
       jacobi_scaling = true;
       use_inner_iterations = false;
       inner_iteration_tolerance = 1e-3;
-      inner_iteration_ordering = NULL;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
       trust_region_problem_dump_directory = "/tmp";
@@ -126,7 +124,6 @@ class Solver {
       update_state_every_iteration = false;
     }
 
-    ~Options();
     // Minimizer options ----------------------------------------
 
     // Ceres supports the two major families of optimization strategies -
@@ -480,10 +477,7 @@ class Solver {
     // the parameter blocks into two groups, one for the points and one
     // for the cameras, where the group containing the points has an id
     // smaller than the group containing cameras.
-    //
-    // Once assigned, Solver::Options owns this pointer and will
-    // deallocate the memory when destroyed.
-    ParameterBlockOrdering* linear_solver_ordering;
+    shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // Sparse Cholesky factorization algorithms use a fill-reducing
     // ordering to permute the columns of the Jacobian matrix. There
@@ -576,7 +570,7 @@ class Solver {
     //    the lower numbered groups are optimized before the higher
     //    number groups. Each group must be an independent set. Not
     //    all parameter blocks need to be present in the ordering.
-    ParameterBlockOrdering* inner_iteration_ordering;
+    shared_ptr<ParameterBlockOrdering> inner_iteration_ordering;
 
     // Generally speaking, inner iterations make significant progress
     // in the early stages of the solve and then their contribution
