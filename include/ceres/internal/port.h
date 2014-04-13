@@ -33,6 +33,13 @@
 
 #include <string>
 
+#if defined(CERES_STD_SHARED_PTR) || defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE)
+#include <memory>
+#else
+#include <tr1/memory>
+#endif
+
+
 namespace ceres {
 
 // It is unfortunate that this import of the entire standard namespace is
@@ -44,6 +51,14 @@ using namespace std;
 // This is necessary to properly handle the case that there is a different
 // "string" implementation in the global namespace.
 using std::string;
+
+#if defined(CERES_STD_SHARED_PTR)
+using std::shared_ptr;
+#endif
+
+#if defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE) || defined(SHARED_PTR_IN_TR1_NAMESPACE)
+using std::tr1::shared_ptr;
+#endif
 
 }  // namespace ceres
 
