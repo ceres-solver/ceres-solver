@@ -151,19 +151,19 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   if (options->use_inner_iterations) {
     if (FLAGS_blocks_for_inner_iterations == "cameras") {
       LOG(INFO) << "Camera blocks for inner iterations";
-      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 0);
       }
     } else if (FLAGS_blocks_for_inner_iterations == "points") {
       LOG(INFO) << "Point blocks for inner iterations";
-      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
       for (int i = 0; i < num_points; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(points + point_block_size * i, 0);
       }
     } else if (FLAGS_blocks_for_inner_iterations == "cameras,points") {
       LOG(INFO) << "Camera followed by point blocks for inner iterations";
-      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 0);
       }
@@ -172,7 +172,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
       }
     } else if (FLAGS_blocks_for_inner_iterations == "points,cameras") {
       LOG(INFO) << "Point followed by camera blocks for inner iterations";
-      options->inner_iteration_ordering = new ParameterBlockOrdering;
+      options->inner_iteration_ordering.reset(new ParameterBlockOrdering);
       for (int i = 0; i < num_cameras; ++i) {
         options->inner_iteration_ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
       }
@@ -221,7 +221,7 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     }
   }
 
-  options->linear_solver_ordering = ordering;
+  options->linear_solver_ordering.reset(ordering);
 }
 
 void SetMinimizerOptions(Solver::Options* options) {
