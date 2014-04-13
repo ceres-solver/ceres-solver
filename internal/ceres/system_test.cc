@@ -140,8 +140,7 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
     options.num_linear_solver_threads = config.num_threads;
 
     if (config.use_automatic_ordering) {
-      delete options.linear_solver_ordering;
-      options.linear_solver_ordering = NULL;
+      options.linear_solver_ordering.reset();
     }
 
     LOG(INFO) << "Running solver configuration: "
@@ -398,7 +397,7 @@ class BundleAdjustmentProblem {
       problem_.AddResidualBlock(cost_function, NULL, camera, point);
     }
 
-    options_.linear_solver_ordering = new ParameterBlockOrdering;
+    options_.linear_solver_ordering.reset(new ParameterBlockOrdering);
 
     // The points come before the cameras.
     for (int i = 0; i < num_points_; ++i) {
