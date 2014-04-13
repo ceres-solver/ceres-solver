@@ -33,6 +33,5 @@ APP_CPPFLAGS += -fno-exceptions
 APP_CPPFLAGS += -fno-rtti
 APP_OPTIM := release
 
-# Don't use GNU libstdc++; instead use STLPort, which is free of GPL3 issues.
-APP_STL := stlport_static
+APP_STL := c++_static
 APP_ABI := armeabi-v7a
