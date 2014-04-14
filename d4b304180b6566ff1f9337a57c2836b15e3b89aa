@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f9c3cfc8_a76484f9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T21:25:06Z",
+      "side": 1,
+      "message": "I was thinking of two separate functions, mainly just to thin down the main CMakeLists, but I think there might be something that would factor out most of the duplicated code.  When this goes in I can have a look at cleaning.",
+      "parentUuid": "d9c0cbc1_269258fc",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f3a71c_a72e48a5",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -277,6 +295,24 @@
       "side": 1,
       "message": "actually isn\u0027t the ownership warning incorrect now, since technically the user may own another shared ptr holding these objects? I should actually remove it from above.",
       "parentUuid": "f9c3cfc8_4444ae35",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c3cfc8_876988d1",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T21:25:06Z",
+      "side": 1,
+      "message": "Yes you\u0027re quite right, it should be removed from the linear_solver_ordering case.",
+      "parentUuid": "d9c0cbc1_c6ac243f",
       "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
