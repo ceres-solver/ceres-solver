@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9c0cbc1_269258fc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "I am wondering the same thing, but there seemed to be enough going on between this and the unordered_set thing that I did not see how it could be refactored into a single function that we could call for both purposes.\n\nso are you suggesting just making them two functions? without any refactoring of common logic?\n\non second thoughts, perhaps I can get you to do it, my cmake fu is far weaker than yours and I am bound to produce something fairly buggy! so once this CL is in, you are welcome to refactor it?",
+      "parentUuid": "39f3a71c_672560bd",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f3a71c_a72e48a5",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -53,6 +71,30 @@
       "writtenOn": "2014-04-14T09:44:25Z",
       "side": 1,
       "message": "\"either std::shared_ptr or std::tr1::shared_ptr",
+      "range": {
+        "startLine": 478,
+        "startChar": 61,
+        "endLine": 478,
+        "endChar": 84
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c0cbc1_068f5cd4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39f3a71c_07345cf3",
       "range": {
         "startLine": 478,
         "startChar": 61,
@@ -111,6 +153,54 @@
     },
     {
       "key": {
+        "uuid": "d9c0cbc1_4699541a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "Good point. Done here and above.",
+      "parentUuid": "39f3a71c_271b5887",
+      "range": {
+        "startLine": 483,
+        "startChar": 45,
+        "endLine": 483,
+        "endChar": 72
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c0cbc1_a68648bb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ee9b35_a543ea83",
+      "range": {
+        "startLine": 483,
+        "startChar": 26,
+        "endLine": 483,
+        "endChar": 43
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f3a71c_87286c97",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -122,6 +212,30 @@
       "writtenOn": "2014-04-14T09:44:25Z",
       "side": 1,
       "message": "We haven\u0027t actually checked the namespace here, is it always std::tr1?",
+      "range": {
+        "startLine": 486,
+        "startChar": 16,
+        "endLine": 486,
+        "endChar": 55
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c0cbc1_669c500c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "This is the normal pre c++11 case where if you had the header in tr1, your object was also in std::tr1. we do the same above, we should be okay. But if you prefer I can add an explicit test here and above.",
+      "parentUuid": "39f3a71c_87286c97",
       "range": {
         "startLine": 486,
         "startChar": 16,
@@ -151,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "d9c0cbc1_c6ac243f",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "actually isn\u0027t the ownership warning incorrect now, since technically the user may own another shared ptr holding these objects? I should actually remove it from above.",
+      "parentUuid": "f9c3cfc8_4444ae35",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c3cfc8_44ddce2d",
         "filename": "internal/ceres/system_test.cc",
         "patchSetId": 1
@@ -162,6 +294,24 @@
       "writtenOn": "2014-04-14T09:44:25Z",
       "side": 1,
       "message": "options.linear_solver_options.reset() ?",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9c0cbc1_e6a7a059",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-14T13:07:37Z",
+      "side": 1,
+      "message": "oh good point. that works.",
+      "parentUuid": "f9c3cfc8_44ddce2d",
       "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
