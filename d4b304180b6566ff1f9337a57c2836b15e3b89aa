@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f3a71c_672560bd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether this section, and the one for unordered_map/set would be cleaner as separate CMake functions?  Might reduce some of the clutter here in the main CMakeLists",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39f3a71c_a72e48a5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "unordered_map/set --\u003e shared_ptr",
+      "range": {
+        "startLine": 476,
+        "startChar": 24,
+        "endLine": 476,
+        "endChar": 41
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39f3a71c_07345cf3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "\"either std::shared_ptr or std::tr1::shared_ptr",
+      "range": {
+        "startLine": 478,
+        "startChar": 61,
+        "endLine": 478,
+        "endChar": 84
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59ee9b35_a543ea83",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "tr1/memory",
+      "range": {
+        "startLine": 483,
+        "startChar": 26,
+        "endLine": 483,
+        "endChar": 43
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39f3a71c_271b5887",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "SHARED_PTR_IN_TR1_NAMESPACE -\u003e HAVE_TR1_MEMORY_HEADER as that\u0027s really what it means here",
+      "range": {
+        "startLine": 483,
+        "startChar": 45,
+        "endLine": 483,
+        "endChar": 72
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39f3a71c_87286c97",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "We haven\u0027t actually checked the namespace here, is it always std::tr1?",
+      "range": {
+        "startLine": 486,
+        "startChar": 16,
+        "endLine": 486,
+        "endChar": 55
+      },
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c3cfc8_4444ae35",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "Should there be a similar warning to linear_solver_ordering here re: ownership?",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9c3cfc8_44ddce2d",
+        "filename": "internal/ceres/system_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-14T09:44:25Z",
+      "side": 1,
+      "message": "options.linear_solver_options.reset() ?",
+      "revId": "d4b304180b6566ff1f9337a57c2836b15e3b89aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
