@@ -56,13 +56,13 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
       options_(options) {
 }
 
-SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
+void SparseNormalCholeskySolver::FreeFactorization() {
 #ifndef CERES_NO_SUITESPARSE
   if (factor_ != NULL) {
     ss_.Free(factor_);
     factor_ = NULL;
   }
-#endif
+#endif  // CERES_NO_SUITESPARSE
 
 #ifndef CERES_NO_CXSPARSE
   if (cxsparse_factor_ != NULL) {
@@ -70,6 +70,10 @@ SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
     cxsparse_factor_ = NULL;
   }
 #endif  // CERES_NO_CXSPARSE
+}
+
+SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {
+  FreeFactorization();
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
@@ -150,6 +154,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   event_logger.AddEvent("Setup");
 
   // Compute symbolic factorization if not available.
+  if (options_.dynamic_sparsity) {
+    FreeFactorization();
+  }
   if (cxsparse_factor_ == NULL) {
     if (options_.use_postordering) {
       cxsparse_factor_ = cxsparse_.BlockAnalyzeCholesky(AtA,
@@ -169,6 +176,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     summary.termination_type = LINEAR_SOLVER_FAILURE;
   }
   event_logger.AddEvent("Solve");
+
   return summary;
 }
 #else
@@ -198,6 +206,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   cholmod_sparse lhs = ss_.CreateSparseMatrixTransposeView(A);
   event_logger.AddEvent("Setup");
 
+  if (options_.dynamic_sparsity) {
+    FreeFactorization();
+  }
   if (factor_ == NULL) {
     if (options_.use_postordering) {
       factor_ = ss_.BlockAnalyzeCholesky(&lhs,
@@ -205,7 +216,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
                                          A->row_blocks(),
                                          &summary.message);
     } else {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.message);
+      if (options_.dynamic_sparsity) {
+        factor_ = ss_.AnalyzeCholesky(&lhs, &summary.message);
+      } else {
+        factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.message);
+      }
     }
   }
   event_logger.AddEvent("Analysis");
