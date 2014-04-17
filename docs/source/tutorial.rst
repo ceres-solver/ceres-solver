@@ -12,6 +12,19 @@ Ceres solves robustified non-linear least squares problems of the form
 .. math:: \frac{1}{2}\sum_{i} \rho_i\left(\left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2\right).
    :label: ceresproblem
 
+Problems of this form comes up in a broad range of areas across
+science and engineering - from `fitting curves`_ in statistics, to
+constructing `3D models from photographs`_ in computer vision.
+
+.. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression
+.. _3D model from photographs: http://en.wikipedia.org/wiki/Bundle_adjustment
+
+In this chapter we will learn how to solve :eq:`ceresproblem` using
+Ceres Solver. Full working code for all the examples described in this
+chapter and more can be found in the `examples
+<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
+directory.
+
 The expression
 :math:`\rho_i\left(\left\|f_i\left(x_{i_1},...,x_{i_k}\right)\right\|^2\right)`
 is known as a ``ResidualBlock``, where :math:`f_i(\cdot)` is a
@@ -32,12 +45,6 @@ more familiar `non-linear least squares problem
 
 .. math:: \frac{1}{2}\sum_{i} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
    :label: ceresproblem2
-
-In this chapter we will learn how to solve :eq:`ceresproblem` using
-Ceres Solver. Full working code for all the examples described in this
-chapter and more can be found in the `examples
-<https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/>`_
-directory.
 
 .. _section-hello-world:
 
