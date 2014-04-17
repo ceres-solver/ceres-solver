@@ -1319,6 +1319,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.dense_linear_algebra_library_type =
       options->dense_linear_algebra_library_type;
   linear_solver_options.use_postordering = options->use_postordering;
+  linear_solver_options.dynamic_sparsity = options->dynamic_sparsity;
 
   // Ignore user's postordering preferences and force it to be true if
   // cholmod_camd is not available. This ensures that the linear
@@ -1471,6 +1472,7 @@ Evaluator* SolverImpl::CreateEvaluator(
          ->second.size())
       : 0;
   evaluator_options.num_threads = options.num_threads;
+  evaluator_options.dynamic_sparsity = options.dynamic_sparsity;
   return Evaluator::Create(evaluator_options, program, error);
 }
 
