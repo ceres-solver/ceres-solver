@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0524b7a2_1f82af3f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T06:36:15Z",
+      "side": 1,
+      "message": "raw tab; intended?",
+      "revId": "0d23e779da346a84cfcbae57c76e4cc422ffa60c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
