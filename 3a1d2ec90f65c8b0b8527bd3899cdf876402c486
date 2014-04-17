@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0524b7a2_1f34efff",
+        "filename": "docs/source/features.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T05:40:25Z",
+      "side": 1,
+      "message": "I have had many questions about automatic differentiation; many folks don\u0027t know about it. Perhaps make this link to something about autodiff, or the tutorial where it shows autodiff.",
+      "revId": "3a1d2ec90f65c8b0b8527bd3899cdf876402c486",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0524b7a2_df155758",
+        "filename": "docs/source/features.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T05:40:25Z",
+      "side": 1,
+      "message": ", and\n\n\"a and b\" or \"a, b, and c\" never \"a, b and c\"",
+      "revId": "3a1d2ec90f65c8b0b8527bd3899cdf876402c486",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0524b7a2_9f1fdf76",
+        "filename": "docs/source/features.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T05:40:25Z",
+      "side": 1,
+      "message": "\", custom\" -\u003e \", and custom\"",
+      "revId": "3a1d2ec90f65c8b0b8527bd3899cdf876402c486",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0524b7a2_7f4c0387",
+        "filename": "docs/source/features.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T05:40:25Z",
+      "side": 1,
+      "message": "dense, sparse -\u003e dense and sparse",
+      "revId": "3a1d2ec90f65c8b0b8527bd3899cdf876402c486",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0524b7a2_5f51471d",
+        "filename": "docs/source/index.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-17T05:40:25Z",
+      "side": 1,
+      "message": "and simulate lens blur!",
+      "revId": "3a1d2ec90f65c8b0b8527bd3899cdf876402c486",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
