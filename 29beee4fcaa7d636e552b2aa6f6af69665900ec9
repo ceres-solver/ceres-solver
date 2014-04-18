@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45586f41_48f99431",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-18T06:10:46Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "revId": "29beee4fcaa7d636e552b2aa6f6af69665900ec9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45586f41_88bd4c5b",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-18T06:10:46Z",
+      "side": 1,
+      "message": "this comment is a bit redundant since thats exactly the message that CHECK_GE failure will present. the message for crashes like this should generally explain why this is a problem and how to report it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 30,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "29beee4fcaa7d636e552b2aa6f6af69665900ec9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45586f41_c8ba245b",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-18T06:10:46Z",
+      "side": 1,
+      "message": "good idea.",
+      "revId": "29beee4fcaa7d636e552b2aa6f6af69665900ec9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
