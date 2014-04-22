@@ -82,4 +82,9 @@ IF (GFLAGS)
                  denoising.cc
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres ${GFLAGS_LIBRARIES})
+
+  ADD_EXECUTABLE(dynamic_autodiff_cost_function
+                 dynamic_autodiff_cost_function.cc)
+  TARGET_LINK_LIBRARIES(dynamic_autodiff_cost_function ceres ${GFLAGS_LIBRARIES})
+
 ENDIF (GFLAGS)
