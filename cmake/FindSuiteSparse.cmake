@@ -383,7 +383,7 @@ ENDIF(SUITESPARSEQR_FOUND)
 #
 # If SuiteSparse version is >= 4 then SuiteSparse_config is required.
 # For SuiteSparse 3, UFconfig.h is required.
-FIND_LIBRARY(SUITESPARSE_CONFIG_LIBRARY NAMES suitesparseconfig
+FIND_LIBRARY(SUITESPARSE_CONFIG_LIBRARY NAMES suitesparseconfig SuiteSparse_config
   PATHS ${SUITESPARSE_CHECK_LIBRARY_DIRS})
 IF (EXISTS ${SUITESPARSE_CONFIG_LIBRARY})
   MESSAGE(STATUS "Found SuiteSparse_config library: "
