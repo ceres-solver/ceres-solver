@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b4efaf_f7b12a1f",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "Since there is already a file called dynamic_autodiff_cost_function, this is not a terribly great name for this file.  The file name should reflect what the code is doing. The documentation can point to the fact that this is an example that uses the dynamic autodiff cost function.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 2
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45b4efaf_97beaeee",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "I think you mean corridor_length here",
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_442540cd",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "the _ prefix is ugly, also for structs you can name the arguments to the constructor the same as the members and it works fine.",
+      "range": {
+        "startLine": 91,
+        "startChar": 13,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_242abc9e",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "odd to have prefix once and suffice in another.. \n\nhow about position, stddev \n\nodometry itself can refer to an entire group of observations.",
+      "range": {
+        "startLine": 103,
+        "startChar": 15,
+        "endLine": 103,
+        "endChar": 32
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_842f48ad",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "same comment a before about naming.\n\nalso when we have multiple arguments that do not fit on a line, we stack them vertically for better readability.",
+      "range": {
+        "startLine": 110,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_6434c401",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "there is RandNormal in bal_problem.cc maybe worth refactoring out and reusing here.",
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_c4183093",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "stack vertically",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 145,
+        "endChar": 39
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_a4152c59",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "worth creating a static factory method in the struct itself to do this.",
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_042338c5",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "create a static factory method Create() in the struct.",
+      "range": {
+        "startLine": 216,
+        "startChar": 46,
+        "endLine": 216,
+        "endChar": 49
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_444c2087",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "stack vertically.",
+      "range": {
+        "startLine": 221,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 30
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65349307_24511c1f",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-22T16:15:18Z",
+      "side": 1,
+      "message": "scientific notation is easier to read.. 1e-6 in this case. Also why bother changing it?",
+      "range": {
+        "startLine": 227,
+        "startChar": 17,
+        "endLine": 227,
+        "endChar": 35
+      },
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
