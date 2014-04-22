@@ -82,4 +82,9 @@ IF (GFLAGS)
                  denoising.cc
                  fields_of_experts.cc)
   TARGET_LINK_LIBRARIES(denoising ceres ${GFLAGS_LIBRARIES})
+
+  ADD_EXECUTABLE(robot_pose_mle
+                 robot_pose_mle.cc)
+  TARGET_LINK_LIBRARIES(robot_pose_mle ceres ${GFLAGS_LIBRARIES})
+
 ENDIF (GFLAGS)
