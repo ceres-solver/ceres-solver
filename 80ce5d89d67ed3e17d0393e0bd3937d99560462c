@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2557fb42_0c2ec3c5",
+        "filename": "examples/math_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-23T15:47:14Z",
+      "side": 1,
+      "message": "thanks for doing this joydeep. This file should probably just be called random.h  math_utils is too generic sounding and does not say anything about whats in here.",
+      "revId": "80ce5d89d67ed3e17d0393e0bd3937d99560462c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2557fb42_ec2a6faf",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-23T15:47:14Z",
+      "side": 1,
+      "message": "still a bit odd to call observed_foo and foo_stddev.\n\nisn\u0027t it better to call it foo_mean and foo_stddev then?",
+      "range": {
+        "startLine": 115,
+        "startChar": 15,
+        "endLine": 115,
+        "endChar": 32
+      },
+      "revId": "80ce5d89d67ed3e17d0393e0bd3937d99560462c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
