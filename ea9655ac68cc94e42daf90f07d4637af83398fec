@@ -111,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "2557fb42_66ccc0fc",
+        "filename": "examples/dynamic_autodiff_cost_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T02:40:06Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that this is doing quadratic work in the number of poses (over the entire problem) to compute the residuals. The structure of Ceres\u0027s autodiff makes it impossible to share computation between cost functions.\n\nThis is fine for example code. Nice work!",
+      "revId": "ea9655ac68cc94e42daf90f07d4637af83398fec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65349307_6434c401",
         "filename": "examples/dynamic_autodiff_cost_function.cc",
         "patchSetId": 1
