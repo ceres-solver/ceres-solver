@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5104b96_261c9800",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "There can be no includes from public headers -\u003e internal headers; it can only go in one direction. The internal header are not shipped in binary packages.",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_461b9406",
+        "filename": "include/ceres/internal/platform_defines.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_e609e0b9",
+        "filename": "include/ceres/internal/platform_defines.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "I think a better place for this is port.h, which is already in the public headers.",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_661690e0",
+        "filename": "include/ceres/internal/platform_defines.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_664df0f8",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "This should get inlined here.",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_4652749a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_c65dc4a7",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "Trailingn space",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_8653cc9a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:34:58Z",
+      "side": 1,
+      "message": "Don\u0027t we have a build-shared flag already? Why is another flag needed?",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
