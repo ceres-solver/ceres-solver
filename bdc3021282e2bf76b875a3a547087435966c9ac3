@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5137f9f_ea39a3ef",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-23T21:03:00Z",
+      "side": 1,
+      "message": "pull out dynamic_cols[i].size() as num_nonzero_columns and use it for better readability.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "bdc3021282e2bf76b875a3a547087435966c9ac3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5137f9f_0aad1fbe",
+        "filename": "internal/ceres/evaluator_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-23T21:03:00Z",
+      "side": 1,
+      "message": "why do you need the makeevaluatortestoptions function, can\u0027t you just pass the object itself and the constructor for the options will be called..",
+      "range": {
+        "startLine": 556,
+        "startChar": 6,
+        "endLine": 556,
+        "endChar": 30
+      },
+      "revId": "bdc3021282e2bf76b875a3a547087435966c9ac3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
