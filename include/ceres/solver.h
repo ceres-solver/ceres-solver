@@ -46,7 +46,7 @@ namespace ceres {
 class Problem;
 
 // Interface for non-linear least squares solvers.
-class Solver {
+class CERES_EXPORT Solver {
  public:
   virtual ~Solver();
 
@@ -55,7 +55,7 @@ class Solver {
   // problems; however, better performance is often obtainable with tweaking.
   //
   // The constants are defined inside types.h
-  struct Options {
+  struct CERES_EXPORT Options {
     // Default constructor that sets up a generic sparse problem.
     Options() {
       minimizer_type = TRUST_REGION;
@@ -713,7 +713,7 @@ class Solver {
     string solver_log;
   };
 
-  struct Summary {
+  struct CERES_EXPORT Summary {
     Summary();
 
     // A brief one line description of the state of the solver after
@@ -951,7 +951,7 @@ class Solver {
 };
 
 // Helper function which avoids going through the interface.
-void Solve(const Solver::Options& options,
+CERES_EXPORT void Solve(const Solver::Options& options,
            Problem* problem,
            Solver::Summary* summary);
 
