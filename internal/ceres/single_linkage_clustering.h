@@ -59,7 +59,7 @@ struct SingleLinkageClusteringOptions {
 //
 // The return value of this function is the number of clusters
 // identified by the algorithm.
-int ComputeSingleLinkageClustering(
+CERES_EXPORT int ComputeSingleLinkageClustering(
     const SingleLinkageClusteringOptions& options,
     const Graph<int>& graph,
     HashMap<int, int>* membership);

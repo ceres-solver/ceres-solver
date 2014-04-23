@@ -57,7 +57,7 @@ class ProblemImpl;
 // differences.
 //
 // Note: This is quite inefficient and is intended only for debugging.
-CostFunction* CreateGradientCheckingCostFunction(
+CERES_EXPORT CostFunction* CreateGradientCheckingCostFunction(
     const CostFunction* cost_function,
     double relative_step_size,
     double relative_precision,
@@ -75,7 +75,7 @@ CostFunction* CreateGradientCheckingCostFunction(
 // jacobians obtained by numerically differentiating them. For more
 // details see the documentation for
 // CreateGradientCheckingCostFunction above.
-ProblemImpl* CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
+CERES_EXPORT ProblemImpl* CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
                                                double relative_step_size,
                                                double relative_precision);
 

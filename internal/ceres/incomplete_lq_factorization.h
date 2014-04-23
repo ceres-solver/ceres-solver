@@ -63,7 +63,7 @@ namespace internal {
 // returns L.
 //
 // Caller owns the result.
-CompressedRowSparseMatrix* IncompleteLQFactorization(
+CERES_EXPORT CompressedRowSparseMatrix* IncompleteLQFactorization(
     const CompressedRowSparseMatrix& matrix,
     const int l_level_of_fill,
     const double l_drop_tolerance,
@@ -77,7 +77,7 @@ CompressedRowSparseMatrix* IncompleteLQFactorization(
 //
 // scratch is used to prevent allocations inside this function. It is
 // assumed that scratch is of size matrix->num_cols().
-void DropEntriesAndAddRow(const Vector& dense_row,
+CERES_EXPORT void DropEntriesAndAddRow(const Vector& dense_row,
                           const int num_entries,
                           const int level_of_fill,
                           const double drop_tolerance,

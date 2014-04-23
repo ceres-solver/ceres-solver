@@ -62,16 +62,16 @@ struct LinearLeastSquaresProblem {
 };
 
 // Factories for linear least squares problem.
-LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id);
+CERES_EXPORT LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id);
 
-LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem1();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem2();
-LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
+CERES_EXPORT LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
+CERES_EXPORT LinearLeastSquaresProblem* LinearLeastSquaresProblem1();
+CERES_EXPORT LinearLeastSquaresProblem* LinearLeastSquaresProblem2();
+CERES_EXPORT LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.
-bool DumpLinearLeastSquaresProblem(const string& filename_base,
+CERES_EXPORT bool DumpLinearLeastSquaresProblem(const string& filename_base,
                                    DumpFormatType dump_format_type,
                                    const SparseMatrix* A,
                                    const double* D,

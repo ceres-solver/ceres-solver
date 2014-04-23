@@ -55,20 +55,20 @@ class ParameterBlock;
 // ordering = [independent set,
 //             complement of the independent set,
 //             fixed blocks]
-int ComputeSchurOrdering(const Program& program,
+CERES_EXPORT int ComputeSchurOrdering(const Program& program,
                          vector<ParameterBlock* >* ordering);
 
 // Same as above, except that ties while computing the independent set
 // ordering are resolved in favour of the order in which the parameter
 // blocks occur in the program.
-int ComputeStableSchurOrdering(const Program& program,
+CERES_EXPORT int ComputeStableSchurOrdering(const Program& program,
                                vector<ParameterBlock* >* ordering);
 
 // Use an approximate independent set ordering to decompose the
 // parameter blocks of a problem in a sequence of independent
 // sets. The ordering covers all the non-constant parameter blocks in
 // the program.
-void ComputeRecursiveIndependentSetOrdering(const Program& program,
+CERES_EXPORT void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering);
 
 // Builds a graph on the parameter blocks of a Problem, whose
@@ -76,7 +76,7 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
 // vertex corresponds to a parameter block in the Problem except for
 // parameter blocks that are marked constant. An edge connects two
 // parameter blocks, if they co-occur in a residual block.
-Graph<ParameterBlock*>* CreateHessianGraph(const Program& program);
+CERES_EXPORT Graph<ParameterBlock*>* CreateHessianGraph(const Program& program);
 
 }  // namespace internal
 }  // namespace ceres

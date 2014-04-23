@@ -49,7 +49,7 @@ namespace internal {
 
 // A square BlockRandomAccessMatrix where the underlying storage is a
 // compressed row sparse matrix. The matrix need not be symmetric.
-class BlockRandomAccessCRSMatrix : public BlockRandomAccessMatrix {
+class CERES_EXPORT BlockRandomAccessCRSMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes. block_pairs is a set of
   // <row_block_id, col_block_id> pairs to identify the non-zero cells

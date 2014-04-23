@@ -96,7 +96,7 @@ struct CanonicalViewsClusteringOptions;
 // It is possible depending on the configuration of the clustering
 // algorithm that some of the vertices may not be assigned to any
 // cluster. In this case they are assigned to a cluster with id = -1;
-void ComputeCanonicalViewsClustering(
+CERES_EXPORT void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const Graph<int>& graph,
     vector<int>* centers,

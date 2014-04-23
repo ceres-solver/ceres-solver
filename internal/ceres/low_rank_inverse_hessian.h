@@ -59,7 +59,7 @@ namespace internal {
 // Byrd, R. H.; Nocedal, J.; Schnabel, R. B. (1994).
 // "Representations of Quasi-Newton Matrices and their use in
 // Limited Memory Methods". Mathematical Programming 63 (4):
-class LowRankInverseHessian : public LinearOperator {
+class CERES_EXPORT LowRankInverseHessian : public LinearOperator {
  public:
   // num_parameters is the row/column size of the Hessian.
   // max_num_corrections is the rank of the Hessian approximation.

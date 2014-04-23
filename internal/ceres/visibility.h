@@ -54,7 +54,7 @@ struct CompressedRowBlockStructure;
 //
 // In a structure from motion problem, e_blocks correspond to 3D
 // points and f_blocks correspond to cameras.
-void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
+CERES_EXPORT void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        int num_eliminate_blocks,
                        vector<set<int> >* visibility);
 
@@ -71,7 +71,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 //
 // Caller acquires ownership of the returned Graph pointer
 // (heap-allocated).
-Graph<int>* CreateSchurComplementGraph(const vector<set<int> >& visibility);
+CERES_EXPORT Graph<int>* CreateSchurComplementGraph(const vector<set<int> >& visibility);
 
 }  // namespace internal
 }  // namespace ceres

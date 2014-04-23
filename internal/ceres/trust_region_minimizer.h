@@ -42,7 +42,7 @@ namespace internal {
 // done by a TrustRegionStrategy object passed in as part of options.
 //
 // For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class CERES_EXPORT TrustRegionMinimizer : public Minimizer {
  public:
   ~TrustRegionMinimizer() {}
   virtual void Minimize(const Minimizer::Options& options,

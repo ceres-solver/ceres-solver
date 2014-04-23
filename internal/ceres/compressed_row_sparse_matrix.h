@@ -46,7 +46,7 @@ namespace internal {
 
 class TripletSparseMatrix;
 
-class CompressedRowSparseMatrix : public SparseMatrix {
+class CERES_EXPORT CompressedRowSparseMatrix : public SparseMatrix {
  public:
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. TripletSparseMatrix objects are easier to construct

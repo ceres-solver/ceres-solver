@@ -79,7 +79,7 @@ class DenseSparseMatrix;
 // library. This solver always returns a solution, it is the user's
 // responsibility to judge if the solution is good enough for their
 // purposes.
-class DenseQRSolver: public DenseSparseMatrixSolver {
+class CERES_EXPORT DenseQRSolver : public DenseSparseMatrixSolver {
  public:
   explicit DenseQRSolver(const LinearSolver::Options& options);
 

@@ -53,7 +53,7 @@ namespace internal {
 //
 // The minimizer assumes that none of the parameter blocks in the
 // program are constant.
-class CoordinateDescentMinimizer : public Minimizer {
+class CERES_EXPORT CoordinateDescentMinimizer : public Minimizer {
  public:
   bool Init(const Program& program,
             const ProblemImpl::ParameterMap& parameter_map,

@@ -52,7 +52,7 @@ namespace internal {
 // pair.
 //
 // ReturnCell is a nop.
-class BlockRandomAccessDenseMatrix : public BlockRandomAccessMatrix {
+class CERES_EXPORT BlockRandomAccessDenseMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is a vector of block sizes. The resulting matrix has
   // blocks.size() * blocks.size() cells.

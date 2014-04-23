@@ -62,7 +62,7 @@ namespace internal {
 // matrix type dependent and we are at this stage unable to come up
 // with an efficient high level interface that spans multiple sparse
 // matrix types.
-class SparseMatrix : public LinearOperator {
+class CERES_EXPORT SparseMatrix : public LinearOperator {
  public:
   virtual ~SparseMatrix();
 

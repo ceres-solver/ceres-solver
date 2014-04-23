@@ -40,7 +40,7 @@ namespace internal {
 
 // This is an abstract base class for linear operators. It supports
 // access to size information and left and right multiply operators.
-class LinearOperator {
+class CERES_EXPORT LinearOperator {
  public:
   virtual ~LinearOperator();
 

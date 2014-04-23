@@ -161,7 +161,7 @@ namespace internal {
 // 2008 for an example of such use].
 //
 // Example usage: Please see schur_complement_solver.cc
-class SchurEliminatorBase {
+class CERES_EXPORT SchurEliminatorBase {
  public:
   virtual ~SchurEliminatorBase() {}
 

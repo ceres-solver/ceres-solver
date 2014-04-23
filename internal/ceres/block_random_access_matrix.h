@@ -34,6 +34,7 @@
 #define CERES_INTERNAL_BLOCK_RANDOM_ACCESS_MATRIX_H_
 
 #include "ceres/mutex.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
@@ -96,7 +97,7 @@ struct CellInfo {
   Mutex m;
 };
 
-class BlockRandomAccessMatrix {
+class CERES_EXPORT BlockRandomAccessMatrix {
  public:
   virtual ~BlockRandomAccessMatrix();
 

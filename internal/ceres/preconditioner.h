@@ -43,7 +43,7 @@ namespace internal {
 class BlockSparseMatrix;
 class SparseMatrix;
 
-class Preconditioner : public LinearOperator {
+class CERES_EXPORT Preconditioner : public LinearOperator {
  public:
   struct Options {
     Options()

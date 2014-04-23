@@ -48,7 +48,7 @@ class LinearSolver;
 class Program;
 class TripletSparseMatrix;
 
-class SolverImpl {
+class CERES_EXPORT SolverImpl {
  public:
   // Mirrors the interface in solver.h, but exposes implementation
   // details for testing internally.

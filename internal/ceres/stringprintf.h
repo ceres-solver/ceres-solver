@@ -63,17 +63,17 @@ namespace internal {
 #endif
 
 // Return a C++ string.
-extern string StringPrintf(const char* format, ...)
+CERES_EXPORT string StringPrintf(const char* format, ...)
     // Tell the compiler to do printf format string checking.
     CERES_PRINTF_ATTRIBUTE(1, 2);
 
 // Store result into a supplied string and return it.
-extern const string& SStringPrintf(string* dst, const char* format, ...)
+CERES_EXPORT const string& SStringPrintf(string* dst, const char* format, ...)
     // Tell the compiler to do printf format string checking.
     CERES_PRINTF_ATTRIBUTE(2, 3);
 
 // Append result to a supplied string.
-extern void StringAppendF(string* dst, const char* format, ...)
+CERES_EXPORT void StringAppendF(string* dst, const char* format, ...)
     // Tell the compiler to do printf format string checking.
     CERES_PRINTF_ATTRIBUTE(2, 3);
 

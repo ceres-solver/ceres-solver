@@ -61,7 +61,7 @@ namespace internal {
 class Program;
 class ResidualBlock;
 
-class ProblemImpl {
+class CERES_EXPORT ProblemImpl {
  public:
   typedef map<double*, ParameterBlock*> ParameterMap;
   typedef HashSet<ResidualBlock*> ResidualBlockSet;

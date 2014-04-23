@@ -88,7 +88,7 @@ class LinearOperator;
 // The Options struct configures the LinearSolver object for its
 // lifetime. The PerSolveOptions struct is used to specify options for
 // a particular Solve call.
-class LinearSolver {
+class CERES_EXPORT LinearSolver{
  public:
   struct Options {
     Options()
@@ -304,7 +304,7 @@ class LinearSolver {
 // details behind a private virtual method, and has the Solve method
 // perform the necessary upcasting.
 template <typename MatrixType>
-class TypedLinearSolver : public LinearSolver {
+class CERES_EXPORT TypedLinearSolver : public LinearSolver {
  public:
   virtual ~TypedLinearSolver() {}
   virtual LinearSolver::Summary Solve(

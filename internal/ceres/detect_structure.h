@@ -51,7 +51,7 @@ namespace internal {
 // For more details about e_blocks and f_blocks, see
 // schur_eliminator.h. This information is used to initialized an
 // appropriate template specialization of SchurEliminator.
-void DetectStructure(const CompressedRowBlockStructure& bs,
+CERES_EXPORT void DetectStructure(const CompressedRowBlockStructure& bs,
                      const int num_eliminate_blocks,
                      int* row_block_size,
                      int* e_block_size,

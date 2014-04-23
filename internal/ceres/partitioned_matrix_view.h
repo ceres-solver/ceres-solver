@@ -59,7 +59,7 @@ namespace internal {
 // block structure of the matrix does not satisfy the requirements of
 // the Schur complement solver it will result in unpredictable and
 // wrong output.
-class PartitionedMatrixViewBase {
+class CERES_EXPORT PartitionedMatrixViewBase {
  public:
   virtual ~PartitionedMatrixViewBase() {}
 
