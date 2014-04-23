@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2557fb42_51469437",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T04:11:54Z",
+      "side": 1,
+      "message": "meant -\u003e mean",
+      "revId": "2bc3d450f2f9cbc835296a856117f9e3123f2a64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2557fb42_b12f307a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T04:11:54Z",
+      "side": 1,
+      "message": "meant -\u003e mean",
+      "revId": "2bc3d450f2f9cbc835296a856117f9e3123f2a64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
