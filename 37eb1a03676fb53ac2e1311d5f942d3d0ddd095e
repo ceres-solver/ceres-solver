@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5104b96_03e98e49",
+        "filename": "examples/random.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_63de82a1",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "This needs the standard Ceres license header; copyright 2014.",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_a3d7da7f",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "at compile time",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_035eae58",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "The constructor name and parameters can fit on one line\n\nAlso : on the next line. Look at other cases like this in the Ceres code.",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_26d7785e",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "Don\u0027t bother with odometry_ptr; just use *odometry below. We don\u0027t use _ptr almost anywhere in Ceres.",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_e32d52ca",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "Why bother with residual_ptr? Why not just residual? It\u0027s fine for residual to be a pointer; then this code becomes\n\n*residual \u003d (odometry - T(... ......",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_86e74c49",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "Return the result of new immediately. I wouldn\u0027t bother with the intermediate variables since they add no value.\n\n  return new OdometryCostFunction(\n      new OdometryConstraint(odometry_value, FLAGS_odometry_stddev));",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_a6636895",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "int",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_66b170d1",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "I\u0027d drop these extra variables",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_06d35ce8",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "These can get stacked after the ( instead of on the next line.",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5104b96_66c85031",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-23T22:31:15Z",
+      "side": 1,
+      "message": "Don\u0027t bother with _ptr variables",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
