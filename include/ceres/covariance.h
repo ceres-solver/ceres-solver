@@ -42,7 +42,7 @@ namespace ceres {
 class Problem;
 
 namespace internal {
-class CovarianceImpl;
+class CERES_EXPORT CovarianceImpl;
 }  // namespace internal
 
 // WARNING
@@ -196,7 +196,7 @@ class CovarianceImpl;
 //  covariance.GetCovarianceBlock(y, y, covariance_yy)
 //  covariance.GetCovarianceBlock(x, y, covariance_xy)
 //
-class Covariance {
+class CERES_EXPORT Covariance {
  public:
   struct Options {
     Options()
