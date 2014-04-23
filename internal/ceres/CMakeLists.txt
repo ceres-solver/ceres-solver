@@ -135,7 +135,7 @@ ENDIF (SCHUR_SPECIALIZATIONS)
 # Primarily for Android, but optionally for others, use the minimal internal
 # Glog implementation.
 IF (MINIGLOG)
-  ADD_LIBRARY(miniglog miniglog/glog/logging.cc)
+  ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
   INSTALL(TARGETS miniglog
           EXPORT  CeresExport
           RUNTIME DESTINATION bin
@@ -169,6 +169,13 @@ SET(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
     ${CERES_INTERNAL_HDRS}
     ${CERES_INTERNAL_SCHUR_FILES})
+    
+IF (BUILD_SHARED_LIBS)
+  SET_SOURCE_FILES_PROPERTIES(
+      ${CERES_INTERNAL_SRC} 
+      ${CERES_INTERNAL_SCHUR_FILES}
+      PROPERTIES COMPILE_DEFINITIONS "CERES_BUILDING_SHARED_LIBRARY")
+ENDIF()
 
 ADD_LIBRARY(ceres ${CERES_LIBRARY_SOURCE})
 SET_TARGET_PROPERTIES(ceres PROPERTIES
@@ -184,8 +191,8 @@ INSTALL(TARGETS ceres
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
 IF (BUILD_TESTING AND GFLAGS)
-  ADD_LIBRARY(gtest gmock_gtest_all.cc gmock_main.cc)
-  ADD_LIBRARY(test_util
+  ADD_LIBRARY(gtest STATIC gmock_gtest_all.cc gmock_main.cc)
+  ADD_LIBRARY(test_util STATIC
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
               test_util.cc)
@@ -194,6 +201,9 @@ IF (BUILD_TESTING AND GFLAGS)
   TARGET_LINK_LIBRARIES(test_util ceres gtest ${GLOG_LIBRARIES})
 
   MACRO (CERES_TEST NAME)
+    IF (BUILD_SHARED_LIBS)
+      SET_SOURCE_FILES_PROPERTIES(${NAME}_test.cc PROPERTIES COMPILE_DEFINITIONS "CERES_USING_SHARED_LIBRARY")
+    ENDIF()
     ADD_EXECUTABLE(${NAME}_test ${NAME}_test.cc)
     TARGET_LINK_LIBRARIES(${NAME}_test test_util ceres gtest)
     ADD_TEST(NAME ${NAME}_test

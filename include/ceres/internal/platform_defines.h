@@ -26,26 +26,18 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
 
-#ifndef CERES_PUBLIC_INTERNAL_PORT_H_
-#define CERES_PUBLIC_INTERNAL_PORT_H_
+#ifndef CERES_PUBLIC_INTERNAL_PLATFORM_DEFINES_H_
+#define CERES_PUBLIC_INTERNAL_PLATFORM_DEFINES_H_
 
-#include "ceres/internal/platform_defines.h"
-#include <string>
+// A macro to signal wich functions and classes are exported when 
+// bulding a DLL with MSC.
+#if defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
+# define CERES_EXPORT __declspec(dllimport)
+#elif defined(_MSC_VER) && defined(CERES_BUILDING_SHARED_LIBRARY)
+# define CERES_EXPORT __declspec(dllexport)
+#else
+# define CERES_EXPORT
+#endif
 
-namespace ceres {
-
-// It is unfortunate that this import of the entire standard namespace is
-// necessary. The reasons are historical and won't be explained here, but
-// suffice to say it is not a mistake and can't be removed without breaking
-// things outside of the Ceres optimization package.
-using namespace std;
-
-// This is necessary to properly handle the case that there is a different
-// "string" implementation in the global namespace.
-using std::string;
-
-}  // namespace ceres
-
-#endif  // CERES_PUBLIC_INTERNAL_PORT_H_
+#endif  // CERES_PUBLIC_INTERNAL_PLATFORM_DEFINES_H_

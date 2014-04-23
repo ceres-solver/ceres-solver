@@ -38,6 +38,8 @@
 #ifndef CERES_PUBLIC_C_API_H_
 #define CERES_PUBLIC_C_API_H_
 
+#include "ceres/internal/platform_defines.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
