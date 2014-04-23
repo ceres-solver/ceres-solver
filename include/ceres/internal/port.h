@@ -39,6 +39,16 @@
 #include <memory>
 #endif
 
+// A macro to signal wich functions and classes are exported when 
+// bulding a DLL with MSC.
+#if defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
+# define CERES_EXPORT __declspec(dllimport)
+#elif defined(_MSC_VER) && defined(CERES_BUILDING_SHARED_LIBRARY)
+# define CERES_EXPORT __declspec(dllexport)
+#else
+# define CERES_EXPORT
+#endif
+
 namespace ceres {
 
 // It is unfortunate that this import of the entire standard namespace is

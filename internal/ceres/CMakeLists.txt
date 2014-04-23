@@ -137,7 +137,7 @@ ENDIF (SCHUR_SPECIALIZATIONS)
 # Primarily for Android, but optionally for others, use the minimal internal
 # Glog implementation.
 IF (MINIGLOG)
-  ADD_LIBRARY(miniglog miniglog/glog/logging.cc)
+  ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
   INSTALL(TARGETS miniglog
           EXPORT  CeresExport
           RUNTIME DESTINATION bin
@@ -184,6 +184,17 @@ INSTALL(TARGETS ceres
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib${LIB_SUFFIX}
         ARCHIVE DESTINATION lib${LIB_SUFFIX})
+
+IF (MSVC AND BUILD_TESTING AND BUILD_SHARED_LIBS)
+  MESSAGE(
+    "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
+    " are incompatible with MSVC."
+  )
+  # Retain the help string associated with the BUILD_TESTING option
+  # and turn testing off.
+  GET_PROPERTY(HELP_STRING CACHE BUILD_TESTING PROPERTY HELPSTRING)
+  SET(BUILD_TESTING OFF CACHE BOOL "${HELP_STRING}" FORCE)
+ENDIF()
 
 IF (BUILD_TESTING AND GFLAGS)
   ADD_LIBRARY(gtest gmock_gtest_all.cc gmock_main.cc)

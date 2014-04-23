@@ -507,6 +507,7 @@ ENDIF (GFLAGS)
 
 IF (BUILD_SHARED_LIBS)
   MESSAGE("-- Building Ceres as a shared library.")
+  ADD_DEFINITIONS(-DCERES_BUILDING_SHARED_LIBRARY)
 ELSE (BUILD_SHARED_LIBS)
   MESSAGE("-- Building Ceres as a static library.")
 ENDIF (BUILD_SHARED_LIBS)

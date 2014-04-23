@@ -310,7 +310,9 @@ Notes:
 
 #. The default build is Debug; consider switching it to release mode.
 #. Currently ``system_test`` is not working properly.
-#. Building Ceres as a DLL is not supported; patches welcome.
+#. If you build Ceres as a DLL with Visual Studio (BUILD_SHARED_LIBS),
+   you have to compile your own code with the flag 
+   CERES_USING_SHARED_LIBRARY.
 #. CMake puts the resulting test binaries in ``ceres-bin/examples/Debug``
    by default.
 #. The solvers supported on Windows are ``DENSE_QR``, ``DENSE_SCHUR``,
