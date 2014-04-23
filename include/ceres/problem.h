@@ -117,9 +117,9 @@ typedef internal::ResidualBlock* ResidualBlockId;
 //   problem.AddResidualBlock(new MyBinaryCostFunction(...), x2, x3);
 //
 // Please see cost_function.h for details of the CostFunction object.
-class Problem {
+class CERES_EXPORT Problem {
  public:
-  struct Options {
+  struct CERES_EXPORT Options {
     Options()
         : cost_function_ownership(TAKE_OWNERSHIP),
           loss_function_ownership(TAKE_OWNERSHIP),

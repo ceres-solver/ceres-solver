@@ -107,7 +107,7 @@ namespace ceres {
 //
 // The class LocalParameterization defines the function Plus and its
 // Jacobian which is needed to compute the Jacobian of f w.r.t delta.
-class LocalParameterization {
+class CERES_EXPORT LocalParameterization {
  public:
   virtual ~LocalParameterization() {}
 
@@ -133,7 +133,7 @@ class LocalParameterization {
 // Some basic parameterizations
 
 // Identity Parameterization: Plus(x, delta) = x + delta
-class IdentityParameterization : public LocalParameterization {
+class CERES_EXPORT IdentityParameterization : public LocalParameterization {
  public:
   explicit IdentityParameterization(int size);
   virtual ~IdentityParameterization() {}
@@ -150,7 +150,7 @@ class IdentityParameterization : public LocalParameterization {
 };
 
 // Hold a subset of the parameters inside a parameter block constant.
-class SubsetParameterization : public LocalParameterization {
+class CERES_EXPORT SubsetParameterization : public LocalParameterization {
  public:
   explicit SubsetParameterization(int size,
                                   const vector<int>& constant_parameters);
@@ -172,7 +172,7 @@ class SubsetParameterization : public LocalParameterization {
 // with * being the quaternion multiplication operator. Here we assume
 // that the first element of the quaternion vector is the real (cos
 // theta) part.
-class QuaternionParameterization : public LocalParameterization {
+class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
  public:
   virtual ~QuaternionParameterization() {}
   virtual bool Plus(const double* x,

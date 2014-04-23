@@ -111,6 +111,17 @@ OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 IF (MSVC)
   OPTION(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
+
+  IF ( BUILD_TESTING AND BUILD_SHARED_LIBS)
+    MESSAGE(
+      "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
+      " are incompatible with MSVC."
+    )
+    # Retain the help string associated with the BUILD_TESTING option
+    # and turn testing off.
+    GET_PROPERTY(HELP_STRING CACHE BUILD_TESTING PROPERTY HELPSTRING)
+    SET(BUILD_TESTING OFF CACHE BOOL "${HELP_STRING}" FORCE)
+  ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
@@ -474,6 +485,7 @@ ENDIF (GFLAGS)
 
 IF (BUILD_SHARED_LIBS)
   MESSAGE("-- Building Ceres as a shared library.")
+  ADD_DEFINITIONS(-DCERES_BUILDING_SHARED_LIBRARY)
 ELSE (BUILD_SHARED_LIBS)
   MESSAGE("-- Building Ceres as a static library.")
 ENDIF (BUILD_SHARED_LIBS)
