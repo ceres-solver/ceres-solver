@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85998785_92e83c8c",
+        "filename": "examples/random.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_03e98e49",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_63de82a1",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c5653f2b_3a1659b1",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_63de82a1",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_a3d7da7f",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2014-04-23T22:31:15Z",
       "side": 1,
       "message": "at compile time",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5653f2b_9affad14",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_a3d7da7f",
       "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "c5653f2b_1a1b9dd9",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_035eae58",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_26d7785e",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -87,6 +165,24 @@
       "writtenOn": "2014-04-23T22:31:15Z",
       "side": 1,
       "message": "Don\u0027t bother with odometry_ptr; just use *odometry below. We don\u0027t use _ptr almost anywhere in Ceres.",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5653f2b_7a10d1b1",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_26d7785e",
       "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "c5653f2b_5a1515a0",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_e32d52ca",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_86e74c49",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -121,6 +235,24 @@
       "writtenOn": "2014-04-23T22:31:15Z",
       "side": 1,
       "message": "Return the result of new immediately. I wouldn\u0027t bother with the intermediate variables since they add no value.\n\n  return new OdometryCostFunction(\n      new OdometryConstraint(odometry_value, FLAGS_odometry_stddev));",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5653f2b_ba29c9f0",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_86e74c49",
       "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "c5653f2b_3abdb959",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Hmm, I usually use size_t for array and vector indexing for the following reasons, let me know if you still differ.\n\nint is signed, whereas array indices will be unsigned. Also, int will not necessarily be the correct width for the machine architecture, while size_t is guaranteed to be large enough to represent the largest theoretically possible object, including arrays.\nGCC will also throw warnings about comparisons between signed and unsigned ints when using ints for array indexing with vectors.",
+      "parentUuid": "a5104b96_a6636895",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_66b170d1",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -155,6 +305,24 @@
       "writtenOn": "2014-04-23T22:31:15Z",
       "side": 1,
       "message": "I\u0027d drop these extra variables",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5653f2b_1ac27dc9",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_66b170d1",
       "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "c5653f2b_7ac731d9",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_06d35ce8",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_66c85031",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 5
@@ -189,6 +375,24 @@
       "writtenOn": "2014-04-23T22:31:15Z",
       "side": 1,
       "message": "Don\u0027t bother with _ptr variables",
+      "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5653f2b_5accf5fb",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-24T16:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5104b96_66c85031",
       "revId": "37eb1a03676fb53ac2e1311d5f942d3d0ddd095e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
