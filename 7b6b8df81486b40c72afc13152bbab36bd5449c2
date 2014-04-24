@@ -122,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "c5e8dfcd_c598509a",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-24T17:52:52Z",
+      "side": 1,
+      "message": "Normally we put our includes below standard headers. If there is a reason to not follow standard ordering, add a comment; otherwise rearrange the headers.\n\nConsider inlining the other file; it\u0027s not clear having a different file adds much value in this case.",
+      "parentUuid": "a5104b96_664df0f8",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_4652749a",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
