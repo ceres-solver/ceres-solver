@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "05c83774_f61fc074",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-24T08:59:40Z",
+      "side": 1,
+      "message": "I think the examples, if they need to, should use the same -D definition as Ceres itself: CERES_BUILDING_SHARED_LIBRARY.  That way we can have a single add_definitions() call in the root CMakeLists that does everything.  Unless there is some reason this doesn\u0027t work?",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_261c9800",
         "filename": "include/ceres/c_api.h",
         "patchSetId": 1
@@ -132,6 +149,24 @@
       "writtenOn": "2014-04-23T22:34:58Z",
       "side": 1,
       "message": "Don\u0027t we have a build-shared flag already? Why is another flag needed?",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45aeaf94_d822edbf",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-24T08:59:40Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add this to the source files here, but rather use add_definitions() in the root CMakeLists as we do for other Ceres-specific defines (e.g. the C++11/TR1 ones).  This will mean that the #defines are passed to all targets, (including those in examples, and miniglog etc) but we already do this anyway.",
+      "parentUuid": "a5104b96_8653cc9a",
       "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
