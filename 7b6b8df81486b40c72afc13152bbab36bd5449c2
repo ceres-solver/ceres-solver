@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c5e8dfcd_053798fa",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-24T17:48:01Z",
+      "side": 1,
+      "message": "To clarify: there are no source files (or headers) shipped with binary versions of Ceres from \"ceres/internal/\". This include adds a dependency from public headers (include/ceres) to internal, non-public, non-shipped, headers (internal/ceres).\n\nThis include must be removed.",
+      "parentUuid": "a5104b96_261c9800",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_461b9406",
         "filename": "include/ceres/internal/platform_defines.h",
         "patchSetId": 1
