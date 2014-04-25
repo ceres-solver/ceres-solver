@@ -97,7 +97,13 @@
 namespace ceres {
 namespace internal {
 
-template<typename EvaluatePreparer, typename JacobianWriter>
+struct NullJacobianFinalizer {
+  void operator()(SparseMatrix* jacobian, int num_parameters) {}
+};
+
+template<typename EvaluatePreparer,
+         typename JacobianWriter,
+         typename JacobianFinalizer = NullJacobianFinalizer>
 class ProgramEvaluator : public Evaluator {
  public:
   ProgramEvaluator(const Evaluator::Options &options, Program* program)
@@ -244,9 +250,10 @@ class ProgramEvaluator : public Evaluator {
     }
 
     if (!abort) {
+      const int num_parameters = program_->NumEffectiveParameters();
+
       // Sum the cost and gradient (if requested) from each thread.
       (*cost) = 0.0;
-      int num_parameters = program_->NumEffectiveParameters();
       if (gradient != NULL) {
         VectorRef(gradient, num_parameters).setZero();
       }
@@ -256,6 +263,15 @@ class ProgramEvaluator : public Evaluator {
           VectorRef(gradient, num_parameters) +=
               VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters);
         }
+      }
+
+      // Finalize the Jacobian if it is available.
+      // `num_parameters` is passed to the finalizer so that additional
+      // storage can be reserved for additional diagonal elements if
+      // necessary.
+      if (jacobian != NULL) {
+        JacobianFinalizer f;
+        f(jacobian, num_parameters);
       }
     }
     return !abort;

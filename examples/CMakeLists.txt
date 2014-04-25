@@ -49,6 +49,9 @@ IF (NOT MSVC)
   TARGET_LINK_LIBRARIES(curve_fitting_c m)
 ENDIF (NOT MSVC)
 
+ADD_EXECUTABLE(ellipse_approximation ellipse_approximation.cc)
+TARGET_LINK_LIBRARIES(ellipse_approximation ceres)
+
 ADD_EXECUTABLE(robust_curve_fitting robust_curve_fitting.cc)
 TARGET_LINK_LIBRARIES(robust_curve_fitting ceres)
 
