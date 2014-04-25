@@ -33,12 +33,11 @@
 
 #include <string>
 
-#if defined(CERES_STD_SHARED_PTR) || defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE)
-#include <memory>
-#else
+#if defined(CERES_TR1_SHARED_PTR)
 #include <tr1/memory>
+#else
+#include <memory>
 #endif
-
 
 namespace ceres {
 
@@ -52,12 +51,10 @@ using namespace std;
 // "string" implementation in the global namespace.
 using std::string;
 
-#if defined(CERES_STD_SHARED_PTR)
-using std::shared_ptr;
-#endif
-
 #if defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE) || defined(SHARED_PTR_IN_TR1_NAMESPACE)
 using std::tr1::shared_ptr;
+#else
+using std::shared_ptr;
 #endif
 
 }  // namespace ceres
