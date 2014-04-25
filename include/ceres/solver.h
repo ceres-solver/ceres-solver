@@ -108,6 +108,7 @@ class Solver {
 
       num_linear_solver_threads = 1;
       use_postordering = false;
+      dynamic_sparsity = false;
       min_linear_solver_iterations = 1;
       max_linear_solver_iterations = 500;
       eta = 1e-1;
@@ -499,6 +500,21 @@ class Solver {
     // performance at the expense of an extra copy of the Jacobian
     // matrix. Setting use_postordering to true enables this tradeoff.
     bool use_postordering;
+
+    // Some non-linear least squares problems are symbolically dense but
+    // numerically sparse. i.e. at any given state only a small number
+    // of jacobian entries are non-zero, but the position and number of
+    // non-zeros is different depending on the state. For these problems
+    // it can be useful to factorize the sparse jacobian at each solver
+    // iteration instead of including all of the zero entries in a single
+    // general factorization.
+    //
+    // If your problem does not have this property (or you do not know),
+    // then it is probably best to keep this false, otherwise it will
+    // likely lead to worse performance.
+
+    // This settings affects the SPARSE_NORMAL_CHOLESKY solver.
+    bool dynamic_sparsity;
 
     // Some non-linear least squares problems have additional
     // structure in the way the parameter blocks interact that it is
