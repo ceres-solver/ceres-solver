@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a593eb68_05d96601",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:39:35Z",
+      "side": 1,
+      "message": "Leave this block in, but add the standard Ceres header above (3-clause BSD).\n\nThis should be 2014 libmv authors.",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_45fa8e59",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:39:35Z",
+      "side": 1,
+      "message": "Include a block describing where this comes from.",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_65c86a31",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:39:35Z",
+      "side": 1,
+      "message": "Change this to simply\n\n  return ((L * h).isApprox(b, expected_precision);",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_c5de7eec",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:39:35Z",
+      "side": 1,
+      "message": "Nitpicky, but in Ceres our convention is T* x, not T *x. I wish I had made libmv follow that convention :(",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
