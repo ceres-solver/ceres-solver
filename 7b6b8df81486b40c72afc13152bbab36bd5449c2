@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a593eb68_c5603e8b",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:35:13Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "05c83774_f61fc074",
+      "revId": "7b6b8df81486b40c72afc13152bbab36bd5449c2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5104b96_261c9800",
         "filename": "include/ceres/c_api.h",
         "patchSetId": 1
