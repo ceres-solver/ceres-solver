@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a593eb68_458e0e20",
+        "filename": "jni/Android.mk",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:33:59Z",
+      "side": 1,
+      "message": "Tab character should get removed.",
+      "revId": "24d915a68f7ca3a1785288f1afed2d8fbc042322",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_65930a47",
+        "filename": "jni/Android.mk",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:33:59Z",
+      "side": 1,
+      "message": "This is unrelated to the shared_ptr change, but ok.",
+      "revId": "24d915a68f7ca3a1785288f1afed2d8fbc042322",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_856f167c",
+        "filename": "jni/Application.mk",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-04-25T17:33:59Z",
+      "side": 1,
+      "message": "Nice! However, I have a question. Doesn\u0027t this break the JNI build for almost all existing Android users? It\u0027s only Google that\u0027s using libc++ on Android JNI right now, no?\n\nConvince me we should not include a caveat / description in the main docs about this part of the port.",
+      "revId": "24d915a68f7ca3a1785288f1afed2d8fbc042322",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
