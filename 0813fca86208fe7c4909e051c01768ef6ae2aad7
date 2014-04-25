@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e572431f_05bdf258",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_9aea1112",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_bae7cd48",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2014-04-25T12:14:17Z",
       "side": 1,
       "message": "isn\u0027t that N+2 poses? e.g., p_start, p_0, p_1 for N \u003d 1 ?\n\ndo you mean to say p_start \u003d p_0 ? I do not think you need to use p_start, p_0 is evident.",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e572431f_25c2eec9",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_bae7cd48",
       "range": {
         "startLine": 82,
         "startChar": 43,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e572431f_45c7ead8",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_daf499f8",
+      "range": {
+        "startLine": 83,
+        "startChar": 59,
+        "endLine": 83,
+        "endChar": 62
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_1afe21d6",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 6
@@ -82,6 +154,24 @@
       "writtenOn": "2014-04-25T12:14:17Z",
       "side": 1,
       "message": "put the equal to/propto signs on the left for easier readability.",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e572431f_65cce6fc",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_1afe21d6",
       "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e572431f_85b0027d",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_3a03dd2e",
+      "range": {
+        "startLine": 98,
+        "startChar": 3,
+        "endLine": 98,
+        "endChar": 7
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_5af8a9e6",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 6
@@ -122,6 +236,24 @@
       "writtenOn": "2014-04-25T12:14:17Z",
       "side": 1,
       "message": "up to scale",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e572431f_a5adfe23",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_5af8a9e6",
       "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "e572431f_c5bafa5a",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_7afd65d5",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_9a113176",
         "filename": "examples/robot_pose_mle.cc",
         "patchSetId": 6
@@ -156,6 +306,24 @@
       "writtenOn": "2014-04-25T12:14:17Z",
       "side": 1,
       "message": "arise",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e572431f_e5b7f66f",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5135
+      },
+      "writtenOn": "2014-04-25T12:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a593eb68_9a113176",
       "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
