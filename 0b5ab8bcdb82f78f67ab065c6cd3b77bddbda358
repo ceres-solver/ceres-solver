@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a593eb68_df2d6bca",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "better named variable.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_ff2a27af",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "residuals, jacobians",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_1ad7015e",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "early return if jacboians is null reduces a level of nesting.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_3f458f79",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "add a static create method.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_bf309f23",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "CamelCase for method names.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_7f3f17f7",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "named parameters",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_9f33e32f",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "e-\u003e residuals",
+      "range": {
+        "startLine": 338,
+        "startChar": 15,
+        "endLine": 338,
+        "endChar": 16
+      },
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_1f40d368",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "add a static create method, it makes the call site easier to read.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_5f3a5b08",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "better name for this guy.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_df564b3a",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "you are more or less replicating the Summary::FullReport, may as well use that.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_7f68f7fb",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "use Eigen. ceres::Vector and ceres::Matrix in example code sets a bad precedent.",
+      "range": {
+        "startLine": 384,
+        "startChar": 2,
+        "endLine": 384,
+        "endChar": 7
+      },
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_9f4cc3ac",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "no need for these enclosing scope brackets.",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 3
+      },
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_bf497f9b",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "drop enclosing scope brackets.",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_ff530747",
+        "filename": "examples/ellipse_approximation.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T11:55:55Z",
+      "side": 1,
+      "message": "use a named constant. Also if this is a constant like this, why make it an argument?",
+      "revId": "0b5ab8bcdb82f78f67ab065c6cd3b77bddbda358",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
