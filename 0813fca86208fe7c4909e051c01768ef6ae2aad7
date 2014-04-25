@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a593eb68_9aea1112",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "Just \"Mathematical Formulation\" is better.",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_bae7cd48",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "isn\u0027t that N+2 poses? e.g., p_start, p_0, p_1 for N \u003d 1 ?\n\ndo you mean to say p_start \u003d p_0 ? I do not think you need to use p_start, p_0 is evident.",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_daf499f8",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "this sentence reads funny. how about\n\nLet  p_0, .., p_N be (N+1) robot poses, where the robot moves down the corridor starting from p_0 and ending at p_N. We assume that p_0 is the origin of the coordinate system.",
+      "range": {
+        "startLine": 83,
+        "startChar": 59,
+        "endLine": 83,
+        "endChar": 62
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_1afe21d6",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "put the equal to/propto signs on the left for easier readability.",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_3a03dd2e",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "Bayes\u0027",
+      "range": {
+        "startLine": 98,
+        "startChar": 3,
+        "endLine": 98,
+        "endChar": 7
+      },
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_5af8a9e6",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "up to scale",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_7afd65d5",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "modeled",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a593eb68_9a113176",
+        "filename": "examples/robot_pose_mle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-25T12:14:17Z",
+      "side": 1,
+      "message": "arise",
+      "revId": "0813fca86208fe7c4909e051c01768ef6ae2aad7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
