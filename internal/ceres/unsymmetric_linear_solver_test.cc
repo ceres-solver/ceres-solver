@@ -172,6 +172,15 @@ TEST_F(UnsymmetricLinearSolverTest,
   options.use_postordering = true;
   TestSolver(options);
 }
+
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingSuiteSparseDynamicSparsity) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.dynamic_sparsity = true;
+  TestSolver(options);
+}
 #endif
 
 #ifndef CERES_NO_CXSPARSE
@@ -190,6 +199,15 @@ TEST_F(UnsymmetricLinearSolverTest,
   options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.type = SPARSE_NORMAL_CHOLESKY;
   options.use_postordering = true;
+  TestSolver(options);
+}
+
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingCXSparseDynamicSparsity) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = CX_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.dynamic_sparsity = true;
   TestSolver(options);
 }
 #endif

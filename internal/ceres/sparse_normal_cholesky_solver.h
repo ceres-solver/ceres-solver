@@ -71,6 +71,8 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
+  void FreeFactorization();
+
   SuiteSparse ss_;
   // Cached factorization
   cholmod_factor* factor_;
