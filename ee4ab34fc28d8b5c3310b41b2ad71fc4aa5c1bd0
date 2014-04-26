@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4516afdd_d8a14d9b",
+        "filename": "internal/ceres/dynamic_compressed_row_jacobian_writer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-26T06:40:18Z",
+      "side": 1,
+      "message": "sorry I meant this one. this is not used anywhere.",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "ee4ab34fc28d8b5c3310b41b2ad71fc4aa5c1bd0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
