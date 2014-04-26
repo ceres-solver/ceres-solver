@@ -33,7 +33,7 @@
 
 #include <string>
 
-#if defined(CERES_TR1_SHARED_PTR)
+#if defined(CERES_SHARED_PTR_IN_TR1_NAMESPACE)
 #include <tr1/memory>
 #else
 #include <memory>
@@ -51,7 +51,7 @@ using namespace std;
 // "string" implementation in the global namespace.
 using std::string;
 
-#if defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE) || defined(SHARED_PTR_IN_TR1_NAMESPACE)
+#if defined(CERES_STD_SHARED_PTR_IN_TR1_NAMESPACE) || defined(CERES_SHARED_PTR_IN_TR1_NAMESPACE)
 using std::tr1::shared_ptr;
 #else
 using std::shared_ptr;
