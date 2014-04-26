@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4516afdd_b844992b",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-26T04:53:21Z",
+      "side": 1,
+      "message": "this is not used anywhere and triggers a unused variable warning.",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "6a34a5ba1fedb835d99bc23c7d54344a85a897ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4516afdd_585a1d0b",
+        "filename": "internal/ceres/dynamic_compressed_row_sparse_matrix.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-26T04:53:21Z",
+      "side": 1,
+      "message": "pre c++11 this should be \u003e \u003e  and in the next line too.",
+      "revId": "6a34a5ba1fedb835d99bc23c7d54344a85a897ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
