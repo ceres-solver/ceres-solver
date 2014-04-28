@@ -100,7 +100,6 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
                 -DCERES_STD_UNORDERED_MAP \
-                -DCERES_STD_SHARED_PTR   \
                 -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
