@@ -441,6 +441,7 @@ ELSE (HAVE_STD_UNORDERED_MAP_HEADER)
 ENDIF (HAVE_STD_UNORDERED_MAP_HEADER)
 
 CHECK_INCLUDE_FILE_CXX(memory HAVE_STD_MEMORY_HEADER)
+SET(__ceres_shared_ptr_found FALSE)
 IF (HAVE_STD_MEMORY_HEADER)
   # Finding the memory header doesn't mean that shared_ptr is in std
   # namespace.
@@ -459,6 +460,7 @@ IF (HAVE_STD_MEMORY_HEADER)
   IF (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
     ADD_DEFINITIONS(-DCERES_STD_SHARED_PTR)
     MESSAGE("-- Found shared_ptr in std namespace.")
+    SET(__ceres_shared_ptr_found TRUE)
   ELSE (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
     CHECK_CXX_SOURCE_COMPILES("#include <memory>
                                int main() {
@@ -468,23 +470,37 @@ IF (HAVE_STD_MEMORY_HEADER)
                               HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
     IF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
       ADD_DEFINITIONS(-DCERES_STD_SHARED_PTR_IN_TR1_NAMESPACE)
-      MESSAGE("-- Found shared_ptr in std::tr1 namespace.")
-    ELSE (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
-      MESSAGE(FATAL_ERROR "-- Found <memory> but cannot find either "
-                          "std::shared_ptr or std::tr1::shared_ptr")
-      ADD_DEFINITIONS(-DCERES_NO_SHARED_PTR)
+      MESSAGE("-- Found shared_ptr in std::tr1 namespace using <memory> header.")
+      SET(__ceres_shared_ptr_found TRUE)
     ENDIF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
   ENDIF (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
-ELSE (HAVE_STD_MEMORY_HEADER)
-  CHECK_INCLUDE_FILE_CXX("tr1/memory" HAVE_TR1_MEMORY_HEADER)
-  IF (HAVE_TR1_MEMORY_HEADER)
-    ADD_DEFINITIONS(-DCERES_TR1_SHARED_PTR)
-    MESSAGE("-- Found tr1/memory in std::tr1 namespace.")
-  ELSE (HAVE_TR1_MEMORY_HEADER)
-    MESSAGE(FATAL_ERROR "-- Unable to find <memory> or <tr1/memory>. ")
-  ENDIF (HAVE_TR1_MEMORY_HEADER)
 ENDIF (HAVE_STD_MEMORY_HEADER)
 
+IF (NOT __ceres_shared_ptr_found)
+  # Further, gcc defines shared_ptr in std::tr1 namespace and
+  # <tr1/memory> is to be included for this. And what makes things
+  # even more tricky is that gcc does have <memory> header, so
+  # all the checks above wouldn't find shared_ptr.
+  CHECK_INCLUDE_FILE_CXX("tr1/memory" HAVE_TR1_MEMORY_HEADER)
+  IF (HAVE_TR1_MEMORY_HEADER)
+    CHECK_CXX_SOURCE_COMPILES("#include <tr1/memory>
+                               int main() {
+                                 std::tr1::shared_ptr<int> int_ptr;
+                                 return 0;
+                               }"
+                              HAVE_SHARED_PTR_IN_TR1_NAMESPACE_FROM_TR1_MEMORY)
+    IF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE_FROM_TR1_MEMORY)
+      ADD_DEFINITIONS(-DCERES_STD_SHARED_PTR_IN_TR1_NAMESPACE)
+      MESSAGE("-- Found shared_ptr in std::tr1 namespace using <tr1/memory> header.")
+      SET(__ceres_shared_ptr_found TRUE)
+    ELSE (HAVE_SHARED_PTR_IN_TR1_NAMESPACE_FROM_TR1_MEMORY)
+      MESSAGE(FATAL_ERROR "-- Found <tr1/memory> but unable to find shared_ptr.")
+    ENDIF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE_FROM_TR1_MEMORY)
+  ELSE (HAVE_TR1_MEMORY_HEADER)
+    MESSAGE(FATAL_ERROR "-- Unable to find <memory> or <tr1/memory>.")
+  ENDIF (HAVE_TR1_MEMORY_HEADER)
+ENDIF (NOT __ceres_shared_ptr_found)
+UNSET(__ceres_shared_ptr_found)
 
 INCLUDE_DIRECTORIES(
   include
