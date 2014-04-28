@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c529bf20_340730a5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-28T12:49:48Z",
+      "side": 1,
+      "message": "*SHARED_PTR_FOUND",
+      "parentUuid": "4516afdd_416548e5",
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4516afdd_e1c01c64",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -53,6 +71,64 @@
         "endLine": 481,
         "endChar": 8
       },
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52c0330_d56fdc7d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-28T12:49:48Z",
+      "side": 1,
+      "message": "This seems sensible to me.",
+      "parentUuid": "4516afdd_01c6707d",
+      "range": {
+        "startLine": 481,
+        "startChar": 5,
+        "endLine": 481,
+        "endChar": 8
+      },
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c529bf20_f44778d7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-28T12:49:48Z",
+      "side": 1,
+      "message": "I would move this to below the closing ENDIF (NOT SHARED_PTR_FOUND), to remove a level of nesting:\n\n...\nENDIF (NOT SHARED_PTR_FOUND)\n\nIF(NOT SHARED_PTR_FOUND)\n  MESSAGE(FATAL_ERROR \"Failed to find either \u003cmemory\u003e or \u003ctr1/memory\u003e for including shared_ptr.\")\nENDIF(NOT SHARED_PTR_FOUND)",
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52c0330_557d0c3b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-04-28T12:49:48Z",
+      "side": 1,
+      "message": "Why the explicit unset here?",
       "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
