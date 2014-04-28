@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c529bf20_f423f897",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-28T08:02:11Z",
+      "side": 1,
+      "message": "Done.\n\nNot sure did it in a correct way tho, so please have a second look.",
+      "parentUuid": "a593eb68_05d96601",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_45fa8e59",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-25T17:39:35Z",
       "side": 1,
       "message": "Include a block describing where this comes from.",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52c0330_152314c6",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-28T08:02:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a593eb68_45fa8e59",
       "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e52c0330_352090b6",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-28T08:02:11Z",
+      "side": 1,
+      "message": "Done.\n\nThat\u0027s not my code tho, so guess we need to do the same in Libmv upstream?",
+      "parentUuid": "a593eb68_65c86a31",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593eb68_c5de7eec",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2014-04-25T17:39:35Z",
       "side": 1,
       "message": "Nitpicky, but in Ceres our convention is T* x, not T *x. I wish I had made libmv follow that convention :(",
+      "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c529bf20_94288476",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-28T08:02:11Z",
+      "side": 1,
+      "message": "Done.\n\nThat\u0027s a strange convention tho. Also, what about cases like \u0027Parameters *p\u0027 ?",
+      "parentUuid": "a593eb68_c5de7eec",
       "revId": "ed7eeff7ca82eb5a0faba7014e1ce52e60c06ba8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
