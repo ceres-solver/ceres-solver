@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4516afdd_416548e5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-28T12:17:09Z",
+      "side": 1,
+      "message": "__ceres_shared_ptr_found is a bad name, we do not use the __ prefix or lower case.\n\nhow about just\n\nSHARE_PTR_FOUND",
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4516afdd_e1c01c64",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-28T12:17:09Z",
+      "side": 1,
+      "message": "oh wow.\nI totally borked the linux build.\nI just realized that.",
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4516afdd_01c6707d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-28T12:17:09Z",
+      "side": 1,
+      "message": "I think its worth having two defines now.\n\nCERES_TR1_MEMORY_HEADER, which if it is not defined we use the standard memory header.\n\nCERES_TR1_SHARED_PTR which if it is not defined we use std::shared_ptr,\ninstead of the ever increasing size of the defines. \n\nwhat do you think?",
+      "range": {
+        "startLine": 481,
+        "startChar": 5,
+        "endLine": 481,
+        "endChar": 8
+      },
+      "revId": "01065efb24aaeecc87417edbb4605ac672bc3a63",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
