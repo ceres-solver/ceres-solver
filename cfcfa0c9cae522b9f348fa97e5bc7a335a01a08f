@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2569bb74_8745a659",
+        "filename": "include/ceres/c_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-28T15:53:05Z",
+      "side": 1,
+      "message": "move to port.h\n\nand have port.h export some parts only to c++ and others to everyone.",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "cfcfa0c9cae522b9f348fa97e5bc7a335a01a08f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2569bb74_47400e46",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-28T15:53:05Z",
+      "side": 1,
+      "message": "I am a bit surprised by this. so the same header file when building the dll needs a different annotation compared to when it is being used? this is truly odd.",
+      "revId": "cfcfa0c9cae522b9f348fa97e5bc7a335a01a08f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2569bb74_c74b9e6e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-28T15:53:05Z",
+      "side": 1,
+      "message": "Why is this being forced to be static? does this mean if miniglog is enabled and with shared libraries are being built then miniglog will be included inside the ceres dll?",
+      "revId": "cfcfa0c9cae522b9f348fa97e5bc7a335a01a08f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2569bb74_e750221d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-28T15:53:05Z",
+      "side": 1,
+      "message": "This should happen in the top level cmake file.",
+      "revId": "cfcfa0c9cae522b9f348fa97e5bc7a335a01a08f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
