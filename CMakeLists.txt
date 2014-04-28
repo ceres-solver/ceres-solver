@@ -440,51 +440,18 @@ ELSE (HAVE_STD_UNORDERED_MAP_HEADER)
   ENDIF (HAVE_TR1_UNORDERED_MAP_HEADER)
 ENDIF (HAVE_STD_UNORDERED_MAP_HEADER)
 
-CHECK_INCLUDE_FILE_CXX(memory HAVE_STD_MEMORY_HEADER)
-IF (HAVE_STD_MEMORY_HEADER)
-  # Finding the memory header doesn't mean that shared_ptr is in std
-  # namespace.
-  #
-  # In particular, MSVC 2008 has shared_ptr declared in std::tr1.  In
-  # order to support this, we do an extra check to see which namespace
-  # should be used.
-  INCLUDE(CheckCXXSourceCompiles)
-  CHECK_CXX_SOURCE_COMPILES("#include <memory>
-                             int main() {
-                               std::shared_ptr<int> int_ptr;
-                               return 0;
-                             }"
-                            HAVE_SHARED_PTR_IN_STD_NAMESPACE)
-
-  IF (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
-    ADD_DEFINITIONS(-DCERES_STD_SHARED_PTR)
-    MESSAGE("-- Found shared_ptr in std namespace.")
-  ELSE (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
-    CHECK_CXX_SOURCE_COMPILES("#include <memory>
-                               int main() {
-                                 std::tr1::shared_ptr<int> int_ptr;
-                                 return 0;
-                               }"
-                              HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
-    IF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
-      ADD_DEFINITIONS(-DCERES_STD_SHARED_PTR_IN_TR1_NAMESPACE)
-      MESSAGE("-- Found shared_ptr in std::tr1 namespace.")
-    ELSE (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
-      MESSAGE(FATAL_ERROR "-- Found <memory> but cannot find either "
-                          "std::shared_ptr or std::tr1::shared_ptr")
-      ADD_DEFINITIONS(-DCERES_NO_SHARED_PTR)
-    ENDIF (HAVE_SHARED_PTR_IN_TR1_NAMESPACE)
-  ENDIF (HAVE_SHARED_PTR_IN_STD_NAMESPACE)
-ELSE (HAVE_STD_MEMORY_HEADER)
-  CHECK_INCLUDE_FILE_CXX("tr1/memory" HAVE_TR1_MEMORY_HEADER)
-  IF (HAVE_TR1_MEMORY_HEADER)
+INCLUDE(FindSharedPtr)
+FIND_SHARED_PTR()
+IF (SHARED_PTR_FOUND)
+  IF (SHARED_PTR_TR1_MEMORY_HEADER)
+    ADD_DEFINITIONS(-DCERES_TR1_MEMORY_HEADER)
+  ENDIF (SHARED_PTR_TR1_MEMORY_HEADER)
+  IF (SHARED_PTR_TR1_NAMESPACE)
     ADD_DEFINITIONS(-DCERES_TR1_SHARED_PTR)
-    MESSAGE("-- Found tr1/memory in std::tr1 namespace.")
-  ELSE (HAVE_TR1_MEMORY_HEADER)
-    MESSAGE(FATAL_ERROR "-- Unable to find <memory> or <tr1/memory>. ")
-  ENDIF (HAVE_TR1_MEMORY_HEADER)
-ENDIF (HAVE_STD_MEMORY_HEADER)
-
+  ENDIF (SHARED_PTR_TR1_NAMESPACE)
+ELSE (SHARED_PTR_FOUND)
+  MESSAGE(FATAL_ERROR "Unable to find shared_ptr.")
+ENDIF (SHARED_PTR_FOUND)
 
 INCLUDE_DIRECTORIES(
   include
