@@ -44,8 +44,8 @@ inline double RandDouble() {
   return r / RAND_MAX;
 }
 
-// Box-Muller algorithm for normal random number generation.
-// http://en.wikipedia.org/wiki/Box-Muller_transform
+// Marsaglia Polar method for generation standard normal (pseudo)
+// random numbers http://en.wikipedia.org/wiki/Marsaglia_polar_method
 inline double RandNormal() {
   double x1, x2, w;
   do {
