@@ -126,6 +126,8 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/dense_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/detect_structure.cc \
                    $(CERES_SRC_PATH)/dogleg_strategy.cc \
+                   $(CERES_SRC_PATH)/dynamic_compressed_row_jacobian_writer.cc \
+                   $(CERES_SRC_PATH)/dynamic_compressed_row_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/evaluator.cc \
                    $(CERES_SRC_PATH)/file.cc \
                    $(CERES_SRC_PATH)/gradient_checking_cost_function.cc \
