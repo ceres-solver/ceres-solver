@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "857b475f_e50dd009",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T17:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_e7a15cc9",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_67960c6c",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2014-04-29T16:57:23Z",
       "side": 1,
       "message": "constructor defined inline is fine for structs like this. we do it all the time in ceres",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 19
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "857b475f_0513942e",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T17:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_67960c6c",
       "range": {
         "startLine": 86,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e58b23a1_80e878c9",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T17:29:02Z",
+      "side": 1,
+      "message": "I\u0027ve just realized one thing. It\u0027s not that simple.\n\nFor the residual blocks we\u0027re using forward and backward error as different residuals and this function returns sum of forward and backwards errors.\n\nAny ideas?",
+      "parentUuid": "c5c37fc9_a71e444f",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_0730f8d9",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a5c04bc0_c681c43c",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T17:29:02Z",
+      "side": 1,
+      "message": "That\u0027s interesting, but would want to see Keir\u0027s feedback. It sounds like it might be some changes wed want to do in Libmv as well.",
+      "parentUuid": "c5c37fc9_0730f8d9",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_673d6cb2",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2014-04-29T16:57:23Z",
       "side": 1,
       "message": "const Vec",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 5
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5c04bc0_2687f84f",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T17:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_673d6cb2",
       "range": {
         "startLine": 210,
         "startChar": 2,
