@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e58b23a1_1d405345",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T09:52:04Z",
+      "side": 1,
+      "message": "Nice wording! used it instead.",
+      "parentUuid": "4516afdd_41d9c800",
+      "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4516afdd_c1fdd81e",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-28T16:05:15Z",
       "side": 1,
       "message": "Consider instead\n\nTermination checking callback. This is needed to finish the optimization when an absolute error threshold is met, as opposed to Ceres\u0027s function_tolerance, which provides for finishing when successful steps reduce the cost function by a fractional amount. In this case, the callback checks for the absolute average reprojection error and terminates when it\u0027s below a threshold (for example all points \u003c 0.5px error).",
+      "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5c04bc0_036bcebf",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T09:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4516afdd_c1fdd81e",
       "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a5c04bc0_6368c2c1",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T09:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4516afdd_6103ac73",
+      "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4516afdd_81004066",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a5c04bc0_4365c6e5",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T09:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4516afdd_81004066",
+      "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4516afdd_c114f8a6",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2014-04-28T16:05:15Z",
       "side": 1,
       "message": "It\u0027d be cool if there were more data points; consider expanding this?",
+      "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5c04bc0_e33f92a5",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2014-04-29T09:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4516afdd_c114f8a6",
       "revId": "1b35ac2e7f5a67ebcb8a35b3d385e71e3629bf9b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
