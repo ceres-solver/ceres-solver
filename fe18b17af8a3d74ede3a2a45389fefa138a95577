@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5c37fc9_a4ee4269",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_a4292215",
+      "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_842ea618",
         "filename": "docs/source/version_history.rst",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-04-29T16:05:26Z",
       "side": 1,
       "message": "Make it more interesting! Describe the problem briefly. Same for the Blender example.",
+      "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_e4715a23",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:09:09Z",
+      "side": 1,
+      "message": "I am going to take another pass and just add hyper links here. I want to the version history to be compact and to the point.",
+      "parentUuid": "c5c37fc9_842ea618",
       "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5c37fc9_e4f83a31",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_043bd659",
+      "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_849506ed",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2014-04-29T16:05:26Z",
       "side": 1,
       "message": "Even though it fits, purely for symmetry, consider wrapping observations arguments below like with the quat one.",
+      "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_24037274",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:09:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c37fc9_849506ed",
       "revId": "fe18b17af8a3d74ede3a2a45389fefa138a95577",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
