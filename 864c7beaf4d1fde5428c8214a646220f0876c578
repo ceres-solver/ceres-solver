@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c37fc9_0430f6d9",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T13:52:12Z",
+      "side": 1,
+      "message": "why do you need a default constructor here?",
+      "revId": "864c7beaf4d1fde5428c8214a646220f0876c578",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_844a2639",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T13:52:12Z",
+      "side": 1,
+      "message": "this is being done twice. here and down below. Can you share the code between the two?",
+      "revId": "864c7beaf4d1fde5428c8214a646220f0876c578",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_643d6ab2",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T13:52:12Z",
+      "side": 1,
+      "message": "this is not a terribly good parameterization of the homography since it is forcing the last coordinate to be 1. Do you know if your homographies always satisfies this constraint?",
+      "revId": "864c7beaf4d1fde5428c8214a646220f0876c578",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_a445a22b",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T13:52:12Z",
+      "side": 1,
+      "message": "implement this inline with the struct.",
+      "revId": "864c7beaf4d1fde5428c8214a646220f0876c578",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_243372ea",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T13:52:12Z",
+      "side": 1,
+      "message": "add a static Create method here to do the autodiff wrapping etc, it makes the AddResidualBlock call much simpler.",
+      "revId": "864c7beaf4d1fde5428c8214a646220f0876c578",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
