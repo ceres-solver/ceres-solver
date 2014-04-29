@@ -21,7 +21,7 @@ science and engineering - from `fitting curves`_ in statistics, to
 constructing `3D models from photographs`_ in computer vision.
 
 .. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression
-.. _3D model from photographs: http://en.wikipedia.org/wiki/Bundle_adjustment
+.. _3D models from photographs: http://en.wikipedia.org/wiki/Bundle_adjustment
 
 In this chapter we will learn how to solve :eq:`ceresproblem` using
 Ceres Solver. Full working code for all the examples described in this
@@ -649,10 +649,9 @@ as follows:
  ceres::Problem problem;
  for (int i = 0; i < bal_problem.num_observations(); ++i) {
    ceres::CostFunction* cost_function =
-       new ceres::AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-           new SnavelyReprojectionError(
-               bal_problem.observations()[2 * i + 0],
-               bal_problem.observations()[2 * i + 1]));
+       SnavelyReprojectionError::Create(
+            bal_problem.observations()[2 * i + 0],
+            bal_problem.observations()[2 * i + 1]);
    problem.AddResidualBlock(cost_function,
                             NULL /* squared loss */,
                             bal_problem.mutable_camera_for_observation(i),
