@@ -263,18 +263,14 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     CostFunction* cost_function;
     // Each Residual block takes a point and a camera as input and
     // outputs a 2 dimensional residual.
-    if (FLAGS_use_quaternions) {
-      cost_function = new AutoDiffCostFunction<
-          SnavelyReprojectionErrorWithQuaternions, 2, 4, 6, 3>(
-              new SnavelyReprojectionErrorWithQuaternions(
-                  observations[2 * i + 0],
-                  observations[2 * i + 1]));
-    } else {
-      cost_function =
-          new AutoDiffCostFunction<SnavelyReprojectionError, 2, 9, 3>(
-              new SnavelyReprojectionError(observations[2 * i + 0],
-                                           observations[2 * i + 1]));
-    }
+    cost_function =
+        (FLAGS_use_quaternions)
+        ? SnavelyReprojectionErrorWithQuaternions::Create(
+            observations[2 * i + 0],
+            observations[2 * i + 1])
+        : SnavelyReprojectionError::Create(
+            observations[2 * i + 0],
+            observations[2 * i + 1]);
 
     // If enabled use Huber's loss function.
     LossFunction* loss_function = FLAGS_robustify ? new HuberLoss(1.0) : NULL;

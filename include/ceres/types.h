@@ -305,7 +305,7 @@ enum TerminationType {
   // by the user was satisfied.
   //
   // 1.  (new_cost - old_cost) < function_tolerance * old_cost;
-  // 2.  max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
+  // 2.  max_i |gradient_i| < gradient_tolerance
   // 3.  |step|_2 <= parameter_tolerance * ( |x|_2 +  parameter_tolerance)
   //
   // The user's parameter blocks will be updated with the solution.
