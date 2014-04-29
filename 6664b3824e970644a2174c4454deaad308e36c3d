@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c5c37fc9_8744e87d",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-04-29T17:41:35Z",
+      "side": 1,
+      "message": "do a templatized function that computes the symmetric projection, and then this function can add these things up and the functor can compute the residual",
+      "parentUuid": "c5c37fc9_a71e444f",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c37fc9_0730f8d9",
         "filename": "examples/libmv_homography.cc",
         "patchSetId": 5
