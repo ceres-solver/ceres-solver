@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c37fc9_e7a15cc9",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:57:23Z",
+      "side": 1,
+      "message": "drop the void.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_67960c6c",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:57:23Z",
+      "side": 1,
+      "message": "constructor defined inline is fine for structs like this. we do it all the time in ceres",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 19
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_a71e444f",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:57:23Z",
+      "side": 1,
+      "message": "make this templated and reuse it.",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_0730f8d9",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:57:23Z",
+      "side": 1,
+      "message": "see\n\nhttp://www.ri.cmu.edu/pub_files/pub4/baker_simon_2006_1/baker_simon_2006_1.pdf",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 3
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5c37fc9_673d6cb2",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-04-29T16:57:23Z",
+      "side": 1,
+      "message": "const Vec",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 5
+      },
+      "revId": "6664b3824e970644a2174c4454deaad308e36c3d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
