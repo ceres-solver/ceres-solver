@@ -112,7 +112,7 @@ IF (MSVC)
   OPTION(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 
-  IF ( BUILD_TESTING AND BUILD_SHARED_LIBS)
+  IF (BUILD_TESTING AND BUILD_SHARED_LIBS)
     MESSAGE(
       "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
       " are incompatible with MSVC."

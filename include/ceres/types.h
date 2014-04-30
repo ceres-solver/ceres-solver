@@ -378,9 +378,9 @@ enum DumpFormatType {
   TEXTFILE
 };
 
-// For SizedCostFunction and AutoDiffCostFunction, DYNAMIC can be specified for
-// the number of residuals. If specified, then the number of residuas for that
-// cost function can vary at runtime.
+// For SizedCostFunction and AutoDiffCostFunction, DYNAMIC can be
+// specified for the number of residuals. If specified, then the
+// number of residuas for that cost function can vary at runtime.
 enum DimensionType {
   DYNAMIC = -1
 };
@@ -402,13 +402,17 @@ enum CovarianceAlgorithmType {
   SPARSE_QR
 };
 
-CERES_EXPORT const char* LinearSolverTypeToString(LinearSolverType type);
-CERES_EXPORT bool StringToLinearSolverType(string value, LinearSolverType* type);
+CERES_EXPORT const char* LinearSolverTypeToString(
+    LinearSolverType type);
+CERES_EXPORT bool StringToLinearSolverType(string value,
+                                           LinearSolverType* type);
 
 CERES_EXPORT const char* PreconditionerTypeToString(PreconditionerType type);
-CERES_EXPORT bool StringToPreconditionerType(string value, PreconditionerType* type);
+CERES_EXPORT bool StringToPreconditionerType(string value,
+                                             PreconditionerType* type);
 
-CERES_EXPORT const char* VisibilityClusteringTypeToString(VisibilityClusteringType type);
+CERES_EXPORT const char* VisibilityClusteringTypeToString(
+    VisibilityClusteringType type);
 CERES_EXPORT bool StringToVisibilityClusteringType(string value,
                                       VisibilityClusteringType* type);
 
@@ -424,7 +428,8 @@ CERES_EXPORT bool StringToDenseLinearAlgebraLibraryType(
     string value,
     DenseLinearAlgebraLibraryType* type);
 
-CERES_EXPORT const char* TrustRegionStrategyTypeToString(TrustRegionStrategyType type);
+CERES_EXPORT const char* TrustRegionStrategyTypeToString(
+    TrustRegionStrategyType type);
 CERES_EXPORT bool StringToTrustRegionStrategyType(string value,
                                      TrustRegionStrategyType* type);
 
@@ -434,7 +439,8 @@ CERES_EXPORT bool StringToDoglegType(string value, DoglegType* type);
 CERES_EXPORT const char* MinimizerTypeToString(MinimizerType type);
 CERES_EXPORT bool StringToMinimizerType(string value, MinimizerType* type);
 
-CERES_EXPORT const char* LineSearchDirectionTypeToString(LineSearchDirectionType type);
+CERES_EXPORT const char* LineSearchDirectionTypeToString(
+    LineSearchDirectionType type);
 CERES_EXPORT bool StringToLineSearchDirectionType(string value,
                                      LineSearchDirectionType* type);
 

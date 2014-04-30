@@ -27,12 +27,12 @@ New Features
    (Alex Stewart)
 #. LBFGS is faster due to fewer memory copies.
 #. Parameter blocks are not restricted to be less than 32k in size,
-   they can be upto 2G in size.
+   they can be up to 2G in size.
 #. Faster ``SPARSE_NORMAL_CHOLESKY`` solver when using ``CX_SPARSE``
    as the sparse linear algebra library.
 #. ``Problem::IsParameterBlockPresent`` can be used to check if a
    parameter block is already present in the problem.
-#. ``Problem::GetParameterzation`` can be used to access the
+#. ``Problem::GetParameterization`` can be used to access the
    parameterization associated with a parameter block.
 #. Added the (2,4,9) template specialization for PartitionedMatrixView
    and SchurEliminator.
@@ -98,7 +98,7 @@ Bug Fixes
    column blocks. (Richard Bowen)
 #. Better error checking when ``Problem::RemoveResidualBlock`` is
    called. (Alex Stewart)
-#. Fixed a memory leack in ``SchurComplementSolver``.
+#. Fixed a memory leak in ``SchurComplementSolver``.
 #. Added ``epsilon()`` method to ``NumTraits<ceres::Jet<T, N> >``. (Filippo
    Basso)
 #. Fixed a bug in `CompressedRowSparseMatrix::AppendRows`` and
