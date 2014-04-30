@@ -365,7 +365,7 @@ class CERES_EXPORT Solver {
 
     // Minimizer terminates when
     //
-    //   max_i |gradient_i| < gradient_tolerance * max_i|initial_gradient_i|
+    //   max_i |x - Project(Plus(x, -g(x))| < gradient_tolerance
     //
     // This value should typically be 1e-4 * function_tolerance.
     double gradient_tolerance;
