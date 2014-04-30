@@ -5,9 +5,9 @@
 
 .. _chapter-solving:
 
-===========
-Solving API
-===========
+=======
+Solving
+=======
 
 Introduction
 ============
@@ -23,7 +23,8 @@ variables, and
 :math:`m`-dimensional function of :math:`x`.  We are interested in
 solving the following optimization problem [#f1]_ .
 
-.. math:: \arg \min_x \frac{1}{2}\|F(x)\|^2\ .
+.. math:: \arg \min_x \frac{1}{2}\|F(x)\|^2\ . \\
+          L \le x \le U
   :label: nonlinsq
 
 Here, the Jacobian :math:`J(x)` of :math:`F(x)` is an :math:`m\times
@@ -80,15 +81,20 @@ Trust Region Methods
 The basic trust region algorithm looks something like this.
 
    1. Given an initial point :math:`x` and a trust region radius :math:`\mu`.
-   2. :math:`\arg \min_{\Delta x} \frac{1}{2}\|J(x)\Delta
-      x + F(x)\|^2` s.t. :math:`\|D(x)\Delta x\|^2 \le \mu`
+   2. Solve
+
+      .. math::
+         \arg \min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
+         \text{such that} &\|D(x)\Delta x\|^2 \le \mu\\
+         &L \le x + \Delta x \le U.
+
    3. :math:`\rho = \frac{\displaystyle \|F(x + \Delta x)\|^2 -
       \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 -
       \|F(x)\|^2}`
    4. if :math:`\rho > \epsilon` then  :math:`x = x + \Delta x`.
    5. if :math:`\rho > \eta_1` then :math:`\rho = 2  \rho`
    6. else if :math:`\rho < \eta_2` then :math:`\rho = 0.5 * \rho`
-   7. Goto 2.
+   7. Go to 2.
 
 Here, :math:`\mu` is the trust region radius, :math:`D(x)` is some
 matrix used to define a metric on the domain of :math:`F(x)` and
@@ -102,21 +108,27 @@ in the value of :math:`\rho`.
 The key computational step in a trust-region algorithm is the solution
 of the constrained optimization problem
 
-.. math:: \arg\min_{\Delta x} \frac{1}{2}\|J(x)\Delta x +  F(x)\|^2\quad \text{such that}\quad  \|D(x)\Delta x\|^2 \le \mu
+.. math::
+   \arg \min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
+   \text{such that} &\|D(x)\Delta x\|^2 \le \mu\\
+    &L \le x + \Delta x \le U.
    :label: trp
 
 There are a number of different ways of solving this problem, each
 giving rise to a different concrete trust-region algorithm. Currently
 Ceres, implements two trust-region algorithms - Levenberg-Marquardt
-and Dogleg. The user can choose between them by setting
-:member:`Solver::Options::trust_region_strategy_type`.
+and Dogleg, each of which is augmented with a line search if bounds
+constrained are present [Kanzow]_. The user can choose between them by
+setting :member:`Solver::Options::trust_region_strategy_type`.
 
 .. rubric:: Footnotes
 
-.. [#f1] At the level of the non-linear solver, the block
-         structure is not relevant, therefore our discussion here is
-         in terms of an optimization problem defined over a state
-         vector of size :math:`n`.
+.. [#f1] At the level of the non-linear solver, the block structure is
+         not relevant, therefore our discussion here is in terms of an
+         optimization problem defined over a state vector of size
+         :math:`n`. Similarly the presence of loss functions is also
+         ignored as the problem is internally converted into a pure
+         non-linear least squares problem.
 
 
 .. _section-levenberg-marquardt:
@@ -346,10 +358,9 @@ region strategies.
 Line Search Methods
 ===================
 
-**The implementation of line search algorithms in Ceres Solver is
-fairly new and not very well tested, so for now this part of the
-solver should be considered beta quality. We welcome reports of your
-experiences both good and bad on the mailinglist.**
+The line search method in Ceres Solver cannot handle bounds
+constraints right now, so it can only be used for solving
+unconstrained problems.
 
 Line search algorithms
 
@@ -1208,7 +1219,7 @@ elimination group [LiSaad]_.
 
    Number of threads used by the linear solver.
 
-.. member:: ParameterBlockOrdering* Solver::Options::linear_solver_ordering
+.. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::linear_solver_ordering
 
    Default: ``NULL``
 
@@ -1244,6 +1255,22 @@ elimination group [LiSaad]_.
    algorithm which has slightly better runtime performance at the
    expense of an extra copy of the Jacobian matrix. Setting
    ``use_postordering`` to ``true`` enables this tradeoff.
+
+.. member:: bool Solver::Options::dynamic_sparsity
+
+   Some non-linear least squares problems are symbolically dense but
+   numerically sparse. i.e. at any given state only a small number of
+   Jacobian entries are non-zero, but the position and number of
+   non-zeros is different depending on the state. For these problems
+   it can be useful to factorize the sparse jacobian at each solver
+   iteration instead of including all of the zero entries in a single
+   general factorization.
+
+   If your problem does not have this property (or you do not know),
+   then it is probably best to keep this false, otherwise it will
+   likely lead to worse performance.
+
+   This settings affects the `SPARSE_NORMAL_CHOLESKY` solver.
 
 .. member:: int Solver::Options::min_linear_solver_iterations
 
@@ -1304,7 +1331,7 @@ elimination group [LiSaad]_.
    inner iterations in subsequent trust region minimizer iterations is
    disabled.
 
-.. member:: ParameterBlockOrdering*  Solver::Options::inner_iteration_ordering
+.. member:: shared_ptr<ParameterBlockOrdering> Solver::Options::inner_iteration_ordering
 
    Default: ``NULL``
 
@@ -1829,6 +1856,16 @@ The three arrays will be:
    A full multiline description of the state of the solver after
    termination.
 
+.. function:: bool IsSolutionUsable() cost;
+
+   Whether the solution returned by the optimization algorithm can be
+   relied on to be numerically sane. This will be the case if
+   `Solver::Summary:termination_type` is set to `CONVERGENCE`,
+   `NO_CONVERGENCE` or `USER_SUCCESS`, i.e., either the solver
+   converged by meeting one of the convergence tolerances or because
+   the user indicated that it had converged or it ran to the maximum
+   number of iterations or time.
+
 .. member:: MinimizerType Solver::Summary::minimizer_type
 
    Type of minimization algorithm used.
@@ -1840,7 +1877,6 @@ The three arrays will be:
 .. member:: string Solver::Summary::message
 
    Reason why the solver terminated.
-
 
 .. member:: double Solver::Summary::initial_cost
 

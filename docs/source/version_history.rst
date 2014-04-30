@@ -10,7 +10,7 @@ HEAD
 New Features
 ------------
 
-#. Parameters can now have upper and/or lower bounds when using the
+#. Support for bounds constrained optimization problems when using the
    trust region minimizer.
 #. Problems in which the sparsity structure of the Jacobian changes
    over the course of the optimization can now be solved much more
@@ -34,8 +34,8 @@ New Features
    parameter block is already present in the problem.
 #. ``Problem::GetParameterization`` can be used to access the
    parameterization associated with a parameter block.
-#. Added the (2,4,9) template specialization for PartitionedMatrixView
-   and SchurEliminator.
+#. Added the (2,4,9) and (2,4,8) template specialization for
+   PartitionedMatrixView and SchurEliminator.
 #. An example demonstrating the use of
    DynamicAutoDiffCostFunction. (Joydeep Biswas)
 #. An example demonstrating the use of dynamic sparsity (Richard
@@ -92,6 +92,7 @@ Backward Incompatible API Changes
 Bug Fixes
 ---------
 
+#. Fixed errant verbose levels (Bjorn Piltz)
 #. Variety of code cleanups, optimizations and bug fixes to the line
    search minimizer code (Alex Stewart)
 #. Fixed ``BlockSparseMatrix::Transpose`` when the matrix has row and
@@ -121,7 +122,8 @@ Bug Fixes
    Schönberger)
 #. METIS_FOUND is never set. Changed the commit to fit the setting of
    the other #._FOUND definitions. (Andreas Franek)
-#. Variety of bug fixes to the ``CMake`` build system (Alex Stewart)
+#. Variety of bug fixes and cleanups to the ``CMake`` build system
+   (Alex Stewart)
 #. Removed fictious shared library target from the NDK build.
 #. Solver::Options now uses ``shared_ptr`` to handle ownership of
    ``Solver::Options::linear_solver_ordering`` and
