@@ -61,7 +61,8 @@ Getting started
 
        git clone https://ceres-solver.googlesource.com/ceres-solver
 
-* Read the :ref:`chapter-tutorial`, browse :ref:`chapter-modeling` and :ref:`chapter-solving`.
+* Read the :ref:`chapter-tutorial`, browse the chapters on the
+  :ref:`chapter-modeling` API and the :ref:`chapter-solving` API.
 * Join the `mailing list
   <https://groups.google.com/forum/?fromgroups#!forum/ceres-solver>`_
   and ask questions.

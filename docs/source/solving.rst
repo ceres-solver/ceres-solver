@@ -5,9 +5,9 @@
 
 .. _chapter-solving:
 
-===========
-Solving API
-===========
+=======
+Solving
+=======
 
 Introduction
 ============
