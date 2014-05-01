@@ -647,6 +647,13 @@ IF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     CLANG_VERSION VERSION_LESS 4.2)
 ENDIF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
+# Get the complete list of any added compile definitions so that we can
+# export them.  Currently we export all Ceres compile definitions to users
+# of Ceres via FindPackage() rather than differentiating between public and
+# interface compile definitions.
+GET_DIRECTORY_PROPERTY(CERES_PUBLIC_COMPILE_DEFINITIONS
+  DIRECTORY ${CMAKE_SOURCE_DIR} COMPILE_DEFINITIONS)
+
 ADD_SUBDIRECTORY(internal/ceres)
 
 IF (BUILD_DOCUMENTATION)
