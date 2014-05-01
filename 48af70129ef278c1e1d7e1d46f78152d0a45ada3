@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3f9cb5_8a153f17",
+        "filename": "internal/ceres/minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-01T18:19:46Z",
+      "side": 1,
+      "message": "Accidental double-space between returned and USER_ABORT",
+      "revId": "48af70129ef278c1e1d7e1d46f78152d0a45ada3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
