@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3f9cb5_0a114fe4",
+        "filename": "internal/ceres/minimizer_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-01T18:35:13Z",
+      "side": 1,
+      "message": "Check for the actual error; this doesn\u0027t check the right thing. For example, there could be some other incorrect error message that this doesn\u0027t cover.",
+      "revId": "0bfecf8ab773101a4e73a965399fddcc2fea29ac",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
