@@ -207,7 +207,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   int num_line_search_direction_restarts = 0;
 
   while (true) {
-    if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
+    if (!RunCallbacks(options, iteration_summary, summary)) {
       break;
     }
 

@@ -256,7 +256,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   bool inner_iterations_are_enabled = options.inner_iteration_minimizer != NULL;
   while (true) {
     bool inner_iterations_were_useful = false;
-    if (!RunCallbacks(options.callbacks, iteration_summary, summary)) {
+    if (!RunCallbacks(options, iteration_summary, summary)) {
       return;
     }
 
