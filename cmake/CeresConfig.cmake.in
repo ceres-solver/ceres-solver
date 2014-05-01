@@ -51,6 +51,15 @@
 #                  was compiled. This will not include any optional dependencies
 #                  that were disabled when Ceres was compiled.
 #
+# CERES_PUBLIC_COMPILE_DEFINITIONS: List of compile definitions which should be
+#                                   used when compiling a target that uses Ceres
+#                                   Note that these variables will NOT have a -D
+#                                   prefix appended.
+# IMPORTANT: The contents of CERES_PUBLIC_COMPILE_DEFINITIONS will be
+#            AUTOMATICALLY added for you, either via the CMake function
+#            target_compile_definitions() in CMake >= 2.8.11, or via a call to
+#            add_definitions() in CMake < 2.8.11.
+#
 # The following variables are also defined for legacy compatibility only.
 # Any new code should not use them as they do not conform to the standard CMake
 # FindPackage naming conventions.
@@ -67,6 +76,7 @@ MACRO(CERES_REPORT_NOT_FOUND REASON_MSG)
   SET(CERES_FOUND FALSE)
   UNSET(CERES_INCLUDE_DIRS)
   UNSET(CERES_LIBRARIES)
+  UNSET(CERES_PUBLIC_COMPILE_DEFINITIONS)
 
   # Reset the CMake module path to its state when this script was called.
   SET(CMAKE_MODULE_PATH ${CALLERS_CMAKE_MODULE_PATH})
@@ -189,6 +199,24 @@ IF (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 ENDIF (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 # Set the expected XX_LIBRARIES variable for FindPackage().
 SET(CERES_LIBRARIES ceres)
+
+# If Ceres was compiled with CMake < 2.8.11, we were not able to use the
+# new (in 2.8.11) target_compile_definitions() function to append the
+# required compile definitions to use when compiling a target that uses
+# Ceres to the Ceres library target.  As such, we need to use add_definitions()
+# to ensure that they will be present.  This is a blunt instrument, as it
+# will add the Ceres definitions to _all_ targets declared from this point
+# on in the caller's project.  Hoever, without requiring the user to
+# explicitly set the flags themselves, this is the only way in CMake
+# versions < 2.8.11.
+SET (CERES_COMPILED_CMAKE_VERSION @CMAKE_VERSION@)
+SET (CERES_PUBLIC_COMPILE_DEFINITIONS @CERES_PUBLIC_COMPILE_DEFINITIONS@)
+IF (CERES_COMPILED_CMAKE_VERSION VERSION_LESS 2.8.11)
+  # The definitions will have been stripped of -D, add it back.
+  FOREACH(DEF ${CERES_PUBLIC_COMPILE_DEFINITIONS})
+    ADD_DEFINITIONS("-D${DEF}")
+  ENDFOREACH()
+ENDIF()
 
 # Set legacy include directories variable for backwards compatibility.
 SET(CERES_INCLUDES ${CERES_INCLUDE_DIRS})

@@ -177,6 +177,22 @@ SET_TARGET_PROPERTIES(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR}
 )
+
+# If we are using CMake >= 2.8.11, make use of the target_compile_definitions()
+# function to append the compile definitions to the exported ceres target, thus
+# any library that finds Ceres via CMake, then adds Ceres to one of its own
+# targets will be compiled with the Ceres compile definitions defined.  This
+# is important for any defines that appear in the installed Ceres header files
+# e.g those related to shared_ptr.
+#
+# If we are using CMake < 2.8.11, then we will have added an add_definitions()
+# call in the CeresConfig.cmake file, which whilst achieving a similar effect,
+# is more of a blunt instrument, as the Ceres definitions will also be added
+# to targets in the users project that do not use Ceres.
+IF (CMAKE_VERSION VERSION_EQUAL 2.8.11 OR
+    CMAKE_VERSION VERSION_GREATER 2.8.11)
+  TARGET_COMPILE_DEFINITIONS(ceres PUBLIC ${CERES_PUBLIC_COMPILE_DEFINITIONS})
+ENDIF()
 TARGET_LINK_LIBRARIES(ceres ${CERES_LIBRARY_DEPENDENCIES})
 
 INSTALL(TARGETS ceres
