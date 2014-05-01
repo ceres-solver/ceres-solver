@@ -186,7 +186,7 @@ class Minimizer {
     bool is_constrained;
   };
 
-  static bool RunCallbacks(const vector<IterationCallback*> callbacks,
+  static bool RunCallbacks(const Options& options,
                            const IterationSummary& iteration_summary,
                            Solver::Summary* summary);
 
