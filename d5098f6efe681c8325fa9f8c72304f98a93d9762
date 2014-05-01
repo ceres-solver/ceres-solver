@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3f9cb5_aa636353",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-01T18:47:52Z",
+      "side": 1,
+      "message": "the Blender test file -\u003e a Blender test file",
+      "revId": "d5098f6efe681c8325fa9f8c72304f98a93d9762",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3f9cb5_4af8772d",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-01T18:47:52Z",
+      "side": 1,
+      "message": "normalization AT runtime",
+      "revId": "d5098f6efe681c8325fa9f8c72304f98a93d9762",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3f9cb5_0a026f6f",
+        "filename": "examples/libmv_homography.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-01T18:47:52Z",
+      "side": 1,
+      "message": "lost -\u003e loss\n\nminimul -\u003e minimum\n\nPerhaps for this entire sentence:\n\n  Note: Normalize the homography, since they are only defined up to a scale.\n\nIt\u0027s not clear what the rest of the comment is for. Just add more noise to the points instead of this comment.",
+      "revId": "d5098f6efe681c8325fa9f8c72304f98a93d9762",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
