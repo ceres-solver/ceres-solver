@@ -184,11 +184,27 @@ class ParameterBlock {
 
   void SetUpperBound(int index, double upper_bound) {
     CHECK_LT(index, size_);
+
+    if (upper_bounds_.get() == NULL) {
+      upper_bounds_.reset(new double[size_]);
+      std::fill(upper_bounds_.get(),
+                upper_bounds_.get() + size_,
+                std::numeric_limits<double>::max());
+    }
+
     upper_bounds_[index] = upper_bound;
   };
 
   void SetLowerBound(int index, double lower_bound) {
     CHECK_LT(index, size_);
+
+    if (lower_bounds_.get() == NULL) {
+      lower_bounds_.reset(new double[size_]);
+      std::fill(lower_bounds_.get(),
+                lower_bounds_.get() + size_,
+                -std::numeric_limits<double>::max());
+    }
+
     lower_bounds_[index] = lower_bound;
   }
 
@@ -206,10 +222,16 @@ class ParameterBlock {
     }
 
     // Project onto the box constraints.
-    for (int i = 0; i < size_; ++i) {
-      x_plus_delta[i] = std::min(std::max(x_plus_delta[i],
-                                          lower_bounds_[i]),
-                                 upper_bounds_[i]);
+    if (lower_bounds_.get() != NULL) {
+      for (int i = 0; i < size_; ++i) {
+        x_plus_delta[i] = std::max(x_plus_delta[i], lower_bounds_[i]);
+      }
+    }
+
+    if (upper_bounds_.get() != NULL) {
+      for (int i = 0; i < size_; ++i) {
+        x_plus_delta[i] = std::min(x_plus_delta[i], upper_bounds_[i]);
+      }
     }
 
     return true;
@@ -281,15 +303,6 @@ class ParameterBlock {
       SetParameterization(local_parameterization);
     }
 
-    upper_bounds_.reset(new double[size_]);
-    std::fill(upper_bounds_.get(),
-              upper_bounds_.get() + size_,
-              std::numeric_limits<double>::max());
-    lower_bounds_.reset(new double[size_]);
-    std::fill(lower_bounds_.get(),
-              lower_bounds_.get() + size_,
-              -std::numeric_limits<double>::max());
-
     state_offset_ = -1;
     delta_offset_ = -1;
   }
@@ -352,8 +365,15 @@ class ParameterBlock {
   // If non-null, contains the residual blocks this parameter block is in.
   scoped_ptr<ResidualBlockSet> residual_blocks_;
 
-  // Upper and lower bounds for the parameter block. These arrays are
-  // initialized to std::numeric_limits<double>::max() and
+  // Upper and lower bounds for the parameter block.  SetUpperBound
+  // and SetLowerBound lazily initialize the upper_bounds_ and
+  // lower_bounds_ arrays. If they are never called, then memory for
+  // these arrays is never allocated. Thus for problems where there
+  // are no bounds, or only one sided bounds we do not pay the cost of
+  // allocating memory for the inactive bounds constraints.
+  //
+  // Upon initialization these arrays are initialized to
+  // std::numeric_limits<double>::max() and
   // -std::numeric_limits<double>::max() respectively which correspond
   // to the parameter block being unconstrained.
   scoped_array<double> upper_bounds_;

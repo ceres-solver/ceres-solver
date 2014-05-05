@@ -334,10 +334,23 @@ bool IsBoundsConstrained(const Program& program) {
 
     const double* lower_bounds = parameter_blocks[i]->lower_bounds();
     const double* upper_bounds = parameter_blocks[i]->upper_bounds();
+    if (lower_bounds == NULL && upper_bounds == NULL) {
+      continue;
+    }
+
     const int size = parameter_blocks[i]->Size();
     for (int j = 0; j < size; ++j) {
-      if (lower_bounds[j] > -std::numeric_limits<double>::max() ||
-          upper_bounds[j] < std::numeric_limits<double>::max()) {
+      const double lb =
+          (lower_bounds != NULL)
+          ? lower_bounds[j]
+          : -std::numeric_limits<double>::max();
+      const double ub =
+          (upper_bounds != NULL)
+          ? upper_bounds[j]
+          : std::numeric_limits<double>::max();
+
+      if (lb > -std::numeric_limits<double>::max() ||
+          ub < std::numeric_limits<double>::max()) {
         return true;
       }
     }
@@ -356,20 +369,36 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
     const double* array = parameter_blocks[i]->user_state();
     const double* lower_bounds = parameter_blocks[i]->lower_bounds();
     const double* upper_bounds = parameter_blocks[i]->upper_bounds();
+
+    // If either of the two bounds is missing, then the program is
+    // always feasible.
+    if (lower_bounds == NULL || upper_bounds == NULL) {
+      continue;
+    }
+
     const int size = parameter_blocks[i]->Size();
     if (parameter_blocks[i]->IsConstant()) {
       // Constant parameter blocks must start in the feasible region
       // to ultimately produce a feasible solution, since Ceres cannot
       // change them.
       for (int j = 0; j < size; ++j) {
-        if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
+        const double lb =
+            (lower_bounds != NULL)
+            ? lower_bounds[j]
+            : -std::numeric_limits<double>::max();
+        const double ub =
+            (upper_bounds != NULL)
+            ? upper_bounds[j]
+            : std::numeric_limits<double>::max();
+
+        if (array[j] < lb || array[j] > ub) {
           *message = StringPrintf(
               "ParameterBlock: %p with size %d has at least one infeasible "
               "value."
               "\nFirst infeasible value is at index: %d."
               "\nLower bound: %e, value: %e, upper bound: %e"
               "\nParameter block values: ",
-              array, size, j, lower_bounds[j], array[j], upper_bounds[j]);
+              array, size, j, lb, array[j], ub);
           AppendArrayToString(size, array, message);
           return false;
         }
@@ -379,7 +408,15 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
       // regions, otherwise there is no way to produce a feasible
       // solution.
       for (int j = 0; j < size; ++j) {
-        if (lower_bounds[j] >= upper_bounds[j]) {
+        const double lb =
+            (lower_bounds != NULL)
+            ? lower_bounds[j]
+            : -std::numeric_limits<double>::max();
+        const double ub =
+            (upper_bounds != NULL)
+            ? upper_bounds[j]
+            : std::numeric_limits<double>::max();
+        if (lb >= ub) {
           *message = StringPrintf(
               "ParameterBlock: %p with size %d has at least one infeasible "
               "bound."
