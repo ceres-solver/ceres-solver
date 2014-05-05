@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae0a8ae_6f1a5145",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-05T14:46:24Z",
+      "side": 1,
+      "message": "ugh; user_state?",
+      "revId": "03d2a2f72f336423fa5305e5e9a741b0fcf24a3b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
