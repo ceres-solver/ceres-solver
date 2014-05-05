@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa49887_636022de",
+        "filename": "include/ceres/sized_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-05T13:06:36Z",
+      "side": 1,
+      "message": "Another possibility is to make the number of parameters an optional CostFunction constructor parameter, which would cause the correct allocation at construction.\n\nInstead, this may trigger 2 allocations per cost function creation.",
+      "revId": "31131cc727e20952b1a5f8af8e2caf0ed77683e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
