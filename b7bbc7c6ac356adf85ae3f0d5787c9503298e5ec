@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae0a8ae_2f468935",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-05T13:12:05Z",
+      "side": 1,
+      "message": "Perhaps this could be worked into ParameterBlock somehow? This little snippet of upper/lower logic is duplicated below (ugly).",
+      "revId": "b7bbc7c6ac356adf85ae3f0d5787c9503298e5ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ae0a8ae_cf5a5d08",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-05T13:12:05Z",
+      "side": 1,
+      "message": "Consider renaming lb/ub to lower_bound and upper_bound. I don\u0027t think the abbreviation adds anything, so expand. Same above.",
+      "revId": "b7bbc7c6ac356adf85ae3f0d5787c9503298e5ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4adb1c06_30510896",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-05T13:12:05Z",
+      "side": 1,
+      "message": "Perhaps GetParameterBounds(parameter, lower_bounds, upper_bounds, \u0026lower_bound, \u0026upper_bound)?",
+      "revId": "b7bbc7c6ac356adf85ae3f0d5787c9503298e5ec",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
