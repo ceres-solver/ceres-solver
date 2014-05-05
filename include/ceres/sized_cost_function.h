@@ -84,6 +84,10 @@ class SizedCostFunction : public CostFunction {
     ADD_PARAMETER_BLOCK(N8);
     ADD_PARAMETER_BLOCK(N9);
 #undef ADD_PARAMETER_BLOCK
+
+    // Right size the parameter block sizes vector.
+    std::vector<int32>(*mutable_parameter_block_sizes()).swap(
+        *mutable_parameter_block_sizes());
   }
 
   virtual ~SizedCostFunction() { }
