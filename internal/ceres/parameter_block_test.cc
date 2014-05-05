@@ -172,12 +172,14 @@ TEST(ParameterBlock, DetectBadLocalParameterization) {
 TEST(ParameterBlock, DefaultBounds) {
   double x[2];
   ParameterBlock parameter_block(x, 2, -1, NULL);
-  const double* upper_bounds = parameter_block.upper_bounds();
-  EXPECT_EQ(upper_bounds[0], std::numeric_limits<double>::max());
-  EXPECT_EQ(upper_bounds[1], std::numeric_limits<double>::max());
-  const double* lower_bounds = parameter_block.lower_bounds();
-  EXPECT_EQ(lower_bounds[0], -std::numeric_limits<double>::max());
-  EXPECT_EQ(lower_bounds[1], -std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(0),
+            std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(1),
+            std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.LowerBoundForParameter(0),
+            -std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.LowerBoundForParameter(1),
+            -std::numeric_limits<double>::max());
 }
 
 TEST(ParameterBlock, SetBounds) {
@@ -186,12 +188,12 @@ TEST(ParameterBlock, SetBounds) {
   parameter_block.SetUpperBound(1, 1);
   parameter_block.SetLowerBound(0, 1);
 
-  const double* upper_bounds = parameter_block.upper_bounds();
-  EXPECT_EQ(upper_bounds[0], std::numeric_limits<double>::max());
-  EXPECT_EQ(upper_bounds[1], 1.0);
-  const double* lower_bounds = parameter_block.lower_bounds();
-  EXPECT_EQ(lower_bounds[0], 1.0);
-  EXPECT_EQ(lower_bounds[1], -std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(0),
+            std::numeric_limits<double>::max());
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(1), 1.0);
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(0), 1.0);
+  EXPECT_EQ(parameter_block.UpperBoundForParameter(1),
+            -std::numeric_limits<double>::max());
 }
 
 TEST(ParameterBlock, PlusWithBoundsConstraints) {

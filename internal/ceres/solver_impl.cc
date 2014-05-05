@@ -328,16 +328,16 @@ bool LineSearchOptionsAreValid(const Solver::Options& options,
 bool IsBoundsConstrained(const Program& program) {
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
-    if (parameter_blocks[i]->IsConstant()) {
+    const ParameterBlock* parameter_block = parameter_blocks[i];
+    if (parameter_block->IsConstant()) {
       continue;
     }
-
-    const double* lower_bounds = parameter_blocks[i]->lower_bounds();
-    const double* upper_bounds = parameter_blocks[i]->upper_bounds();
-    const int size = parameter_blocks[i]->Size();
+    const int size = parameter_block->Size();
     for (int j = 0; j < size; ++j) {
-      if (lower_bounds[j] > -std::numeric_limits<double>::max() ||
-          upper_bounds[j] < std::numeric_limits<double>::max()) {
+      const double lower_bound = parameter_block->LowerBoundForParameter(j);
+      const double upper_bound = parameter_block->UpperBoundForParameter(j);
+      if (lower_bound > -std::numeric_limits<double>::max() ||
+          upper_bound < std::numeric_limits<double>::max()) {
         return true;
       }
     }
@@ -353,24 +353,25 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
   const Program& program = problem->program();
   const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
-    const double* array = parameter_blocks[i]->user_state();
-    const double* lower_bounds = parameter_blocks[i]->lower_bounds();
-    const double* upper_bounds = parameter_blocks[i]->upper_bounds();
-    const int size = parameter_blocks[i]->Size();
-    if (parameter_blocks[i]->IsConstant()) {
+    const ParameterBlock* parameter_block = parameter_blocks[i];
+    const double* parameters = parameter_block->user_state();
+    const int size = parameter_block->Size();
+    if (parameter_block->IsConstant()) {
       // Constant parameter blocks must start in the feasible region
       // to ultimately produce a feasible solution, since Ceres cannot
       // change them.
       for (int j = 0; j < size; ++j) {
-        if (array[j] < lower_bounds[j] || array[j] > upper_bounds[j]) {
+        const double lower_bound = parameter_block->LowerBoundForParameter(j);
+        const double upper_bound = parameter_block->UpperBoundForParameter(j);
+        if (parameters[j] < lower_bound || parameters[j] > upper_bound) {
           *message = StringPrintf(
               "ParameterBlock: %p with size %d has at least one infeasible "
               "value."
               "\nFirst infeasible value is at index: %d."
               "\nLower bound: %e, value: %e, upper bound: %e"
               "\nParameter block values: ",
-              array, size, j, lower_bounds[j], array[j], upper_bounds[j]);
-          AppendArrayToString(size, array, message);
+              parameters, size, j, lower_bound, parameters[j], upper_bound);
+          AppendArrayToString(size, parameters, message);
           return false;
         }
       }
@@ -379,15 +380,17 @@ bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
       // regions, otherwise there is no way to produce a feasible
       // solution.
       for (int j = 0; j < size; ++j) {
-        if (lower_bounds[j] >= upper_bounds[j]) {
+        const double lower_bound = parameter_block->LowerBoundForParameter(j);
+        const double upper_bound = parameter_block->UpperBoundForParameter(j);
+        if (lower_bound >= upper_bound) {
           *message = StringPrintf(
               "ParameterBlock: %p with size %d has at least one infeasible "
               "bound."
               "\nFirst infeasible bound is at index: %d."
               "\nLower bound: %e, upper bound: %e"
               "\nParameter block values: ",
-              array, size, j, lower_bounds[j], upper_bounds[j]);
-          AppendArrayToString(size, array, message);
+              parameters, size, j, lower_bound, upper_bound);
+          AppendArrayToString(size, parameters, message);
           return false;
         }
       }
