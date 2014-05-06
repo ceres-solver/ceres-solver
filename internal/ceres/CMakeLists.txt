@@ -34,7 +34,6 @@ SET(CERES_INTERNAL_SRC
     block_evaluate_preparer.cc
     block_jacobi_preconditioner.cc
     block_jacobian_writer.cc
-    block_random_access_crs_matrix.cc
     block_random_access_dense_matrix.cc
     block_random_access_diagonal_matrix.cc
     block_random_access_matrix.cc
@@ -224,7 +223,6 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(autodiff)
   CERES_TEST(autodiff_cost_function)
   CERES_TEST(autodiff_local_parameterization)
-  CERES_TEST(block_random_access_crs_matrix)
   CERES_TEST(block_random_access_dense_matrix)
   CERES_TEST(block_random_access_diagonal_matrix)
   CERES_TEST(block_random_access_sparse_matrix)
