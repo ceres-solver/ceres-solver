@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "4adb1c06_b95163eb",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-07T14:15:54Z",
+      "side": 1,
+      "message": "Spaces around operators\n\nSee the Google C++ style guide",
+      "revId": "d87b8e5ca3002792b3446e120cb691e836b6ca07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaa49887_49bc255c",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-07T14:15:54Z",
+      "side": 1,
+      "message": "Spaces around operators",
+      "revId": "d87b8e5ca3002792b3446e120cb691e836b6ca07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaa49887_69c1e1c4",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-07T14:15:54Z",
+      "side": 1,
+      "message": "Spaces around operators",
+      "revId": "d87b8e5ca3002792b3446e120cb691e836b6ca07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a58b470_94c93c36",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 1
