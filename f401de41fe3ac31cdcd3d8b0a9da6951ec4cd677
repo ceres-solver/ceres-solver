@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4adb1c06_d9cd4767",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-07T15:14:37Z",
+      "side": 1,
+      "message": "I think this can be just IF (BUILD_SHARED_LIBS), there shouldn\u0027t be an issue on other OSs using CMake with PUBLIC/PRIVATE libraries.  It certainly seems fine on the OSX 10.8 \u0026 Ubuntu 12.10 test machines I have to hand.\n\nIn which case the comment should be updated to not be MSVC specific.",
+      "revId": "f401de41fe3ac31cdcd3d8b0a9da6951ec4cd677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae0a8ae_b5216805",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 1
@@ -13,6 +30,23 @@
       "writtenOn": "2014-05-07T14:20:06Z",
       "side": 1,
       "message": "Consider expanding this comment; perhaps\n\nWhen building a DLL on Windows, bundle the Ceres private libraries into a single DLL so they are hidden users.",
+      "revId": "f401de41fe3ac31cdcd3d8b0a9da6951ec4cd677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4adb1c06_39a2539d",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-07T15:14:37Z",
+      "side": 1,
+      "message": "This form of target_link_libraries was new in 2.8.12, the PUBLIC \u0026 PRIVATE qualifiers don\u0027t exist before then, which is a problem as Ubuntu (amongst others) still use much earlier versions of CMake (2.8.7).  In those version of CMake the qualifiers are LINK_PUBLIC \u0026 LINK_PRIVATE instead.",
       "revId": "f401de41fe3ac31cdcd3d8b0a9da6951ec4cd677",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
