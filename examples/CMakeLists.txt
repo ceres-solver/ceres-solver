@@ -28,10 +28,6 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
-IF (BUILD_SHARED_LIBS)
-  ADD_DEFINITIONS(-DCERES_USING_SHARED_LIBRARY)
-ENDIF()
-
 ADD_EXECUTABLE(helloworld helloworld.cc)
 TARGET_LINK_LIBRARIES(helloworld ceres)
 
