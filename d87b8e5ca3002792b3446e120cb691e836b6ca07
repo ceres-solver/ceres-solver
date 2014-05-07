@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a58b470_94c93c36",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-05-07T13:54:17Z",
+      "side": 1,
+      "message": "static_cast\u003cint\u003e(constancy_mask_.size());",
+      "range": {
+        "startLine": 163,
+        "startChar": 43,
+        "endLine": 163,
+        "endChar": 46
+      },
+      "revId": "d87b8e5ca3002792b3446e120cb691e836b6ca07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
