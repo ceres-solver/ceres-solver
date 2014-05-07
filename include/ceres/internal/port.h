@@ -36,6 +36,8 @@
 
 #include <string>
 
+#include "ceres/internal/config.h"
+
 #if defined(CERES_TR1_MEMORY_HEADER)
 #include <tr1/memory>
 #else
@@ -64,12 +66,21 @@ using std::shared_ptr;
 
 #endif  // __cplusplus
 
-// A macro to signal wich functions and classes are exported when
-// bulding a DLL with MSC.
-#if defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
-# define CERES_EXPORT __declspec(dllimport)
-#elif defined(_MSC_VER) && defined(CERES_BUILDING_SHARED_LIBRARY)
+// A macro to signal which functions and classes are exported when
+// building a DLL with MSVC.
+//
+// Note that the ordering here is important, CERES_BUILDING_SHARED_LIBRARY
+// is only defined locally when Ceres is compiled, it is never exported to
+// users.  However, in order that we do not have to configure config.h
+// separately for building vs installing, if we are using MSVC and building
+// a shared library, then both CERES_BUILDING_SHARED_LIBRARY and
+// CERES_USING_SHARED_LIBRARY will be defined when Ceres is compiled.
+// Hence it is important that the check for CERES_BUILDING_SHARED_LIBRARY
+// happens first.
+#if defined(_MSC_VER) && defined(CERES_BUILDING_SHARED_LIBRARY)
 # define CERES_EXPORT __declspec(dllexport)
+#elif defined(_MSC_VER) && defined(CERES_USING_SHARED_LIBRARY)
+# define CERES_EXPORT __declspec(dllimport)
 #else
 # define CERES_EXPORT
 #endif

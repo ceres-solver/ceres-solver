@@ -28,8 +28,11 @@
 #
 # Author: keir@google.com (Keir Mierle)
 
+# Only Ceres itself should be compiled with CERES_BUILDING_SHARED_LIBRARY
+# defined, any users of Ceres will have CERES_USING_SHARED_LIBRARY defined
+# for them in Ceres' config.h if appropriate.
 IF (BUILD_SHARED_LIBS)
-  ADD_DEFINITIONS(-DCERES_USING_SHARED_LIBRARY)
+  REMOVE_DEFINITIONS(-DCERES_BUILDING_SHARED_LIBRARY)
 ENDIF()
 
 ADD_EXECUTABLE(helloworld helloworld.cc)

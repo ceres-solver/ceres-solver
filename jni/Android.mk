@@ -96,7 +96,6 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_LAPACK \
                 -DCERES_NO_SUITESPARSE \
-                -DCERES_NO_GFLAGS \
                 -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
                 -DCERES_STD_UNORDERED_MAP \

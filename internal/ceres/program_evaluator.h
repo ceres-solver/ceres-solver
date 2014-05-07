@@ -79,6 +79,9 @@
 #ifndef CERES_INTERNAL_PROGRAM_EVALUATOR_H_
 #define CERES_INTERNAL_PROGRAM_EVALUATOR_H_
 
+// This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/port.h"
+
 #ifdef CERES_USE_OPENMP
 #include <omp.h>
 #endif

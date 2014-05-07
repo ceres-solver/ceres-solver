@@ -126,6 +126,9 @@ template class SchurEliminator<%s, %s, %s>;
 """
 
 SPECIALIZATION_FILE = """
+// This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/port.h"
+
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 
 #include "ceres/schur_eliminator_impl.h"

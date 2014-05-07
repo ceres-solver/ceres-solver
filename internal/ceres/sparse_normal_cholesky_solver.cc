@@ -28,6 +28,9 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+// This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/port.h"
+
 #if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
 
 #include "ceres/sparse_normal_cholesky_solver.h"

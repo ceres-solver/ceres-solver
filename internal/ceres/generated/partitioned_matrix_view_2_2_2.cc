@@ -40,6 +40,9 @@
 // This file is generated using generate_partitioned_matrix_view_specializations.py.
 // Editing it manually is not recommended.
 
+// This include must come before any #ifndef check on Ceres compile options.
+#include "ceres/internal/port.h"
+
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 
 #include "ceres/partitioned_matrix_view_impl.h"
