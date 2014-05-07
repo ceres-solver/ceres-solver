@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a58b470_37eaef3d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-07T20:54:13Z",
+      "side": 1,
+      "message": "at this point you should add your name here.",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "d9a3fd1fe047bc47f97c8a3ce10c7c06e2d00c81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a58b470_5ad6aa62",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-07T20:54:13Z",
+      "side": 1,
+      "message": "should this be called CREATE_CERES_CONFIG ?",
+      "range": {
+        "startLine": 659,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 22
+      },
+      "revId": "d9a3fd1fe047bc47f97c8a3ce10c7c06e2d00c81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a58b470_7a33ae1a",
+        "filename": "internal/ceres/blas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-07T20:54:13Z",
+      "side": 1,
+      "message": "i\u0027d rather use ceres/internal/port.h",
+      "revId": "d9a3fd1fe047bc47f97c8a3ce10c7c06e2d00c81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a58b470_da175a60",
+        "filename": "internal/ceres/collections_port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-07T20:54:13Z",
+      "side": 1,
+      "message": "port.h",
+      "revId": "d9a3fd1fe047bc47f97c8a3ce10c7c06e2d00c81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a58b470_1a2272c1",
+        "filename": "internal/ceres/mutex.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-07T20:54:13Z",
+      "side": 1,
+      "message": "port.h",
+      "revId": "d9a3fd1fe047bc47f97c8a3ce10c7c06e2d00c81",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
