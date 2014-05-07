@@ -59,11 +59,8 @@
 # --------------------
 # This build includes the Schur specializations, which increase the
 # size of the binary. If you don't need them for your application,
-# consider adding:
-#
-#   -DCERES_RESTRICT_SCHUR_SPECIALIZATION
-#
-# to the LOCAL_CFLAGS variable below.
+# consider modifying the Android config.h (in this directory) to
+# disable them.
 #
 # Changing the logging library
 # ----------------------------
@@ -73,6 +70,16 @@
 # define CERES_GLOG_DIR to point to it.
 
 LOCAL_PATH := $(call my-dir)
+
+# Copy the Android-specific Ceres config.h into include/ceres/internal
+# before building Ceres, when building Ceres with CMake, CMake would
+# perform this step.
+include $(CLEAR_VARS)
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := $(LOCAL_PATH)/../include/ceres/internal
+LOCAL_SRC_FILES := $(LOCAL_PATH)/config.h
+include $(BUILD_PREBUILT)
 
 EIGEN_PATH := $(EIGEN_PATH)
 CERES_INCLUDE_PATHS := $(CERES_EXTRA_INCLUDES)
@@ -93,14 +100,7 @@ LOCAL_C_INCLUDES := $(CERES_INCLUDE_PATHS)
 LOCAL_C_INCLUDES += $(EIGEN_PATH)
 
 LOCAL_CPP_EXTENSION := .cc
-LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
-                -DCERES_NO_LAPACK \
-                -DCERES_NO_SUITESPARSE \
-                -DCERES_NO_GFLAGS \
-                -DCERES_NO_THREADS \
-                -DCERES_NO_CXSPARSE \
-                -DCERES_STD_UNORDERED_MAP \
-                -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
+LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES)
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/blas.cc \
