@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae0a8ae_b5216805",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-07T14:20:06Z",
+      "side": 1,
+      "message": "Consider expanding this comment; perhaps\n\nWhen building a DLL on Windows, bundle the Ceres private libraries into a single DLL so they are hidden users.",
+      "revId": "f401de41fe3ac31cdcd3d8b0a9da6951ec4cd677",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
