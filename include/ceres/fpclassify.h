@@ -47,9 +47,9 @@ namespace ceres {
 
 #if defined(_MSC_VER)
 
-inline bool IsFinite  (double x) { return _finite(x);                }
-inline bool IsInfinite(double x) { return !_finite(x) && !_isnan(x); }
-inline bool IsNaN     (double x) { return _isnan(x);                 }
+inline bool IsFinite  (double x) { return _finite(x)!=0;                }
+inline bool IsInfinite(double x) { return _finite(x)==0 && _isnan(x)==0; }
+inline bool IsNaN     (double x) { return _isnan(x)!=0;                 }
 inline bool IsNormal  (double x) {
   int classification = _fpclass(x);
   return classification == _FPCLASS_NN ||

@@ -160,7 +160,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
                     double* x_plus_delta) const;
   virtual bool ComputeJacobian(const double* x,
                                double* jacobian) const;
-  virtual int GlobalSize() const { return constancy_mask_.size(); }
+  virtual int GlobalSize() const { return (int)constancy_mask_.size(); }
   virtual int LocalSize() const { return local_size_; }
 
  private:
