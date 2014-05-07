@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae0a8ae_558a7c9b",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-07T15:18:14Z",
+      "side": 1,
+      "message": "Please maintain existing column alignments of the }s.",
+      "revId": "54f4b76677eef47a0f5fb2844925f68a5ed00872",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
