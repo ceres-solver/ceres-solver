@@ -111,7 +111,8 @@ Submitting a change to Ceres Solver
       git push origin HEAD:refs/for/master
 
    When the push succeeds, the console will display a URL showing the
-   address of the review. Go to the URL and add reviewers; typically
+   address of the review. Go to the URL and add atleast one of the
+   maintainers (Sameer Agarwal, Keir Mierle or Alex Stewart) as reviewers.
    this is Sameer or Keir at this point.
 
 3. Wait for a review.
