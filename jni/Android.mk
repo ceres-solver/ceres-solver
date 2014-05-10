@@ -79,6 +79,7 @@ CERES_INCLUDE_PATHS := $(CERES_EXTRA_INCLUDES)
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../internal/ceres
 CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../include
+CERES_INCLUDE_PATHS += $(LOCAL_PATH)/../config
 
 # Use the alternate glog implementation if provided by the user.
 ifdef CERES_GLOG_DIR

@@ -56,11 +56,16 @@ SET(CERES_CONFIG_IN_FILE "${CMAKE_CURRENT_LIST_DIR}/config.h.in")
 #                                  will be <src>/include/ceres/internal.
 
 FUNCTION(CREATE_CERES_CONFIG CURRENT_CERES_COMPILE_OPTIONS CERES_CONFIG_OUTPUT_DIRECTORY)
-  # Verify that the specified output directory is valid.
-  IF (NOT (EXISTS "${CERES_CONFIG_OUTPUT_DIRECTORY}" AND
-        IS_DIRECTORY "${CERES_CONFIG_OUTPUT_DIRECTORY}"))
+  # Create the specified output directory if it does not exist.
+  IF (NOT EXISTS "${CERES_CONFIG_OUTPUT_DIRECTORY}")
+    MESSAGE(STATUS "Creating configured Ceres config.h output directory: "
+      "${CERES_CONFIG_OUTPUT_DIRECTORY}")
+    FILE(MAKE_DIRECTORY "${CERES_CONFIG_OUTPUT_DIRECTORY}")
+  ENDIF()
+  IF (EXISTS "${CERES_CONFIG_OUTPUT_DIRECTORY}" AND
+      NOT IS_DIRECTORY "${CERES_CONFIG_OUTPUT_DIRECTORY}")
     MESSAGE(FATAL_ERROR "Ceres Bug: Specified CERES_CONFIG_OUTPUT_DIRECTORY: "
-      "${CERES_CONFIG_OUTPUT_DIRECTORY} does not exist, or is not a directory.")
+      "${CERES_CONFIG_OUTPUT_DIRECTORY} exists, but is not a directory.")
   ENDIF()
 
   # Read all possible configurable compile options from config.h.in, this avoids

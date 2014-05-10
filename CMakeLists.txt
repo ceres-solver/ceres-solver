@@ -654,11 +654,13 @@ IF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 ENDIF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 # Configure the Ceres config.h compile options header using the current
-# compile options and put the configured header into the Ceres source tree.
+# compile options and put the configured header into the Ceres build
+# directory, and add it to the include list.
 LIST(REMOVE_DUPLICATES CERES_COMPILE_OPTIONS)
 INCLUDE(CreateCeresConfig)
 CREATE_CERES_CONFIG("${CERES_COMPILE_OPTIONS}"
-  ${CMAKE_SOURCE_DIR}/include/ceres/internal)
+  ${CMAKE_CURRENT_BINARY_DIR}/config/ceres/internal)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/config)
 
 ADD_SUBDIRECTORY(internal/ceres)
 
@@ -683,6 +685,12 @@ INSTALL(FILES ${CERES_HDRS} DESTINATION include/ceres)
 
 FILE(GLOB CERES_PUBLIC_INTERNAL_HDRS ${CMAKE_SOURCE_DIR}/include/ceres/internal/*.h)
 INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
+
+# Also setup installation of Ceres config.h configured with the current
+# build options into the installed headers directory.
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/config/ceres/internal/config.h
+        DESTINATION include/ceres/internal)
+
 
 IF (MINIGLOG)
   # Install miniglog header if being used as logging #includes appear in
