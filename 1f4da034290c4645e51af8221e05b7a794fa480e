@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a81944e_321f5077",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-11T11:26:56Z",
+      "side": 1,
+      "message": "*problem",
+      "range": {
+        "startLine": 16,
+        "startChar": 49,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "1f4da034290c4645e51af8221e05b7a794fa480e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_5113f47d",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-11T11:26:56Z",
+      "side": 1,
+      "message": "using Ceres / using the Ceres solver ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 65,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "1f4da034290c4645e51af8221e05b7a794fa480e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_d24cc487",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-11T11:26:56Z",
+      "side": 1,
+      "message": "Ceres ?",
+      "range": {
+        "startLine": 361,
+        "startChar": 26,
+        "endLine": 361,
+        "endChar": 27
+      },
+      "revId": "1f4da034290c4645e51af8221e05b7a794fa480e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
