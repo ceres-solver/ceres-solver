@@ -123,6 +123,52 @@ IF (MSVC)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
+# Use ios-cmake to build a static library for iOS
+#
+# We need to add isysroot to force cmake to find the toolchains from the iOS SDK
+# instead of using the standard ones. And add flag mios-simulator-version so clang
+# knows we are building for ios simulator but not mac.
+#
+# You can build for OS (armv7, armv7s, arm64), SIMULATOR (i386) or SIMULATOR64 (x86_64)
+# separately and use lipo to merge them into one static library.
+#
+# There are some features/algorithms are not available in iOS version and the
+# minimum supported iOS version is 6.0 now.
+#
+# Use cmake ../ceres-solver -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
+# -DIOS_PLATFORM=PLATFORM -DEIGEN_INCLUDE_DIR=/path/to/eigen/header
+# to config the cmake. The PLATFORM can be one of OS, SIMULATOR and SIMULATOR64.
+# Check the documentation in iOS.cmake to find more options.
+#
+# After building, you will get libceres.a and libminiglog.a
+# You need to add these two libraries into your xcode project.
+#
+# If you use the lapack and blas, then you also need to add Accelerate.framework
+# to your xcode project's linking dependency.
+IF (IOS)
+  MESSAGE(STATUS "Building Ceres for iOS platform: ${IOS_PLATFORM}")
+
+  UPDATE_CACHE_VARIABLE(MINIGLOG ON)
+  MESSAGE(STATUS "Building for iOS, forcing use of miniglog instead of glog.")
+
+  UPDATE_CACHE_VARIABLE(SUITESPARSE OFF)
+  UPDATE_CACHE_VARIABLE(CXSPARSE OFF)
+  UPDATE_CACHE_VARIABLE(GFLAGS OFF)
+  UPDATE_CACHE_VARIABLE(OPENMP OFF)
+
+  MESSAGE(STATUS "Building for iOS: SuiteSparse, CXSparse, gflags and OpenMP are not available.")
+
+  UPDATE_CACHE_VARIABLE(BUILD_EXAMPLES OFF)
+  MESSAGE(STATUS "Building for iOS, will not build examples.")
+
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
+
+  IF (${IOS_PLATFORM} STREQUAL "SIMULATOR" OR ${IOS_PLATFORM} STREQUAL "SIMULATOR64")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=6.0")
+  ENDIF()
+ENDIF (IOS)
+
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
 # hold user-specified (as opposed to FindPackage found) include directory and
 # library paths for Ceres dependencies.  These were were of the form:
