@@ -125,6 +125,15 @@ IF (MSVC)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
+IF (${IOS})
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -std=gnu++11 -stdlib=libc++ -isysroot ${CMAKE_OSX_SYSROOT}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc --std=gnu++11 -stdlib=libc++ isysroot ${CMAKE_OSX_SYSROOT}")
+
+  IF (${SIMULATOR})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=6.0")
+  ENDIF()
+ENDIF()
+
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
 # hold user-specified (as opposed to FindPackage found) include directory and
 # library paths for Ceres dependencies.  These were were of the form:
