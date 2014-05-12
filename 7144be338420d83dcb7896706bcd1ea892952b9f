@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a81944e_728158a9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "\"find the toolchains from the\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 44,
+        "endLine": 130,
+        "endChar": 64
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_128eccd8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "using the standard",
+      "range": {
+        "startLine": 131,
+        "startChar": 13,
+        "endLine": 131,
+        "endChar": 27
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_528454ba",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 132,
+        "startChar": 40,
+        "endLine": 132,
+        "endChar": 41
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_328bd0c9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "when building for the simulator, not a device.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 39
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_716ab82b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "A link for this might be useful ?",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 63
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa26584d_16f47af5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "They\u0027re / There are",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 10
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_1167ac62",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 137,
+        "startChar": 76,
+        "endLine": 137,
+        "endChar": 77
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_f1f22850",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "into your xcode",
+      "range": {
+        "startLine": 147,
+        "startChar": 38,
+        "endLine": 147,
+        "endChar": 48
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa26584d_76e7ee4a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "trailing space.",
+      "range": {
+        "startLine": 147,
+        "startChar": 56,
+        "endLine": 147,
+        "endChar": 57
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_51021471",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "I\u0027m surprised you need to explicitly add libc++ when compiling statically, or are you doing this to be sure the app uses libc++ as you\u0027ve passed -stdlib\u003dlibc++ for Ceres and the user might be running \u003c\u003d Mountain Lion where libstdc++ was the default?",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 55
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa26584d_d62362ca",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "In CMake you can just have IF (\u003cVAR\u003e), so this could be IF (IOS) which IMO looks cleaner.\n\nI would also add a log output here:\n\nIF (IOS)\n  MESSAGE(STATUS \"Building Ceres for iOS platform: ${IOS_PLATFORM}\")\n  ...",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 11
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_9272bc26",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "set() -\u003e SET() throughout, as currently we\u0027re using upper-case for all CMake commands.",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 5
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_d2eda46e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "This should be:\n\nGET_PROPERTY(HELP_STRING CACHE MINIGLOG PROPERTY HELPSTRING)\nSET(MINIGLOG OFF CACHE BOOL \"${HELP_STRING}\" FORCE)\n\nI would also add:\n\nMESSAGE(STATUS \"Building for iOS, forcing use of miniglog instead of glog.\")\n\nTo ensure that the values are changed in the CMake ncurses GUI.  I know this sounds unbelievable, but when you\u0027re calling SET(MINIGLOG FALSE) what\u0027s actually happening is that you\u0027re defining a local variable called MINIGLOG that hides the pre-existing cache variable (also called MINIGLOG).  Thus the GUI still says that MINIGLOG\u003dON even after SET(MINIGLOG FALSE).  This can also cause some bizarre scoping problems later.",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_3122f009",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "GET_PROPERTY(HELP_STRING CACHE BUILD_EXAMPLES PROPERTY HELPSTRING) SET(BUILD_EXAMPLES OFF CACHE BOOL \"${HELP_STRING}\" FORCE)\n\nI would also add:\n\nMESSAGE(STATUS \"Building for iOS, will not build examples.\")",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 25
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_3164305b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "trailing space",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 2
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_b2fca021",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "This has a \u0027--\u0027 prefix whilst the CXX flags have a single \u0027-\u0027 prefix, I think they should be the same for consistency.",
+      "range": {
+        "startLine": 154,
+        "startChar": 70,
+        "endLine": 154,
+        "endChar": 83
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a862067_91c5dcd2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "Missing leading \u0027-\u0027",
+      "range": {
+        "startLine": 154,
+        "startChar": 99,
+        "endLine": 154,
+        "endChar": 107
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a81944e_12256c10",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-12T13:33:03Z",
+      "side": 1,
+      "message": "I would prefer:\n\nIF (${IOS_PLATFORM} STREQUAL \"SIMULATOR\" OR ${IOS_PLATFORM} STREQUAL \"SIMULATOR64\")\n\nAs it\u0027s clearer what the check relates to - also I\u0027m assuming that you need -mios-simulator-xxx flag for SIMULATOR64 as well as SIMULATOR?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 19
+      },
+      "revId": "7144be338420d83dcb7896706bcd1ea892952b9f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
