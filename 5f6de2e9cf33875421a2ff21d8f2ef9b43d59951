@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4d7811_fe2f5d13",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-05-12T03:33:35Z",
+      "side": 1,
+      "message": "could you add some comments here as to how this is expected to work, and what is needed for this to work?",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "5f6de2e9cf33875421a2ff21d8f2ef9b43d59951",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
