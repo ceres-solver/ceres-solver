@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a1b4808_daf38184",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-12T23:26:02Z",
+      "side": 1,
+      "message": "so my only comment here is that its not entirely clear to me why this needs to be this particular path.. why not just config? the whole ceres/internal thing is a bit of a google artifact. \n\nor do you want this stuff to be internal?\n\ndo we also need to update ceresconfig.cmake?",
+      "range": {
+        "startLine": 662,
+        "startChar": 42,
+        "endLine": 662,
+        "endChar": 43
+      },
+      "revId": "cbc7f473677d1afe0cbc242f48dce119a6780b1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa4d7811_9e61791b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-12T23:26:02Z",
+      "side": 1,
+      "message": "funny indentation.",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 2
+      },
+      "revId": "cbc7f473677d1afe0cbc242f48dce119a6780b1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
