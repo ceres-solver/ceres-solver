@@ -125,6 +125,39 @@ IF (MSVC)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
+# Use ios-cmake to build a static library for iOS
+#
+# We need to add isysroot to force cmake to find toolchain from iOS SDK
+# instead of using standard ones. And add flag mios-simulator-version for clang
+# to know we are building for simulator. 
+#
+# You can build for device (armv7, armv7s, arm64) or simulator (i386, x86_64)
+# separately and use lipo to merge them into one static library.
+#
+# There're some features/algorithms are not available in iOS version and the 
+# minimum support iOS version is 6.0 now. It's tested with xcode 5.1 and 7.1 SDK.
+#
+# Download the ios-cmake from https://github.com/cristeab/ios-cmake.
+# Use cmake ../ceres-solver -DCMAKE_TOOLCHAIN_FILE=../ios-cmake/toolchain/iOS.cmake \
+# -DIOS_PLATFORM=PLATFORM -DEIGEN_INCLUDE_DIR=/path/to/eigen/header
+# to config the cmake. The PLATFORM can be one of OS, SIMULATOR and SIMULATOR64.
+# Check the documentation in ios-cmake to find more options.
+#
+# After building, you will get libceres.a and libminiglog.a
+# You need to add these two libraries into xcode project 
+# and add libc++ and Accelerate framework to dependency.
+IF (${IOS})
+  set(MINIGLOG true)
+  set(BUILD_EXAMPLES OFF)
+  
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -std=gnu++11 -stdlib=libc++ -isysroot ${CMAKE_OSX_SYSROOT}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc --std=gnu++11 -stdlib=libc++ isysroot ${CMAKE_OSX_SYSROOT}")
+
+  IF (${SIMULATOR})
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=6.0")
+  ENDIF()
+ENDIF()
+
 # Prior to October 2013, Ceres used some non-CMake standardised variables to
 # hold user-specified (as opposed to FindPackage found) include directory and
 # library paths for Ceres dependencies.  These were were of the form:
