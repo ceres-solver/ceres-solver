@@ -16,6 +16,29 @@
       "revId": "61d1a7bc98d17b4a9a88b05e787068b95d4ec8b7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca50eca6_e257c23b",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5345
+      },
+      "writtenOn": "2014-05-13T08:31:21Z",
+      "side": 1,
+      "message": "I think you should use the ios-cmake from https://github.com/cristeab/ios-cmake instead of google project. The one from google project is no longer being maintained.",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 39
+      },
+      "revId": "61d1a7bc98d17b4a9a88b05e787068b95d4ec8b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
