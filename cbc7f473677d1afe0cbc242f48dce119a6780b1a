@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa26584d_dca5c18f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-13T19:23:40Z",
+      "side": 1,
+      "message": "So it does need to be in \u003cbuild/config\u003e/ceres/internal because, of the next line:\n\nINCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/config)\n\nBecause we are building Ceres without copying config.h into the sources, it still needs to be in a ceres/internal dir, as it\u0027s #included with \"ceres/internal/config.h\".  I have added a better comment to clarify this - when it\u0027s installed obviously, it\u0027s put into the same location as all of the other headers.\n\nThe reason this was in internal was that it\u0027s only #included from port.h, which is in internal.  I see what you mean though, are you thinking of moving all headers from include/ceres/internal to include/ceres ?\n\nWe don\u0027t have to modify CeresConfig.cmake, as that works on an installed version of Ceres, in which case the configured config.h is in the same include/ceres/internal directory as port.h etc.",
+      "parentUuid": "2a1b4808_daf38184",
+      "range": {
+        "startLine": 662,
+        "startChar": 42,
+        "endLine": 662,
+        "endChar": 43
+      },
+      "revId": "cbc7f473677d1afe0cbc242f48dce119a6780b1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4d7811_9e61791b",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2014-05-12T23:26:02Z",
       "side": 1,
       "message": "funny indentation.",
+      "range": {
+        "startLine": 692,
+        "startChar": 0,
+        "endLine": 692,
+        "endChar": 2
+      },
+      "revId": "cbc7f473677d1afe0cbc242f48dce119a6780b1a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa26584d_7c790d4e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-13T19:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4d7811_9e61791b",
       "range": {
         "startLine": 692,
         "startChar": 0,
