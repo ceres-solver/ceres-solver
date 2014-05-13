@@ -66,6 +66,7 @@ ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
 
 # Make CMake aware of the cmake folder for local FindXXX scripts.
 SET (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+INCLUDE(UpdateCacheVariable)
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -117,11 +118,8 @@ IF (MSVC)
     MESSAGE(
       "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
       " are incompatible with MSVC."
-    )
-    # Retain the help string associated with the BUILD_TESTING option
-    # and turn testing off.
-    GET_PROPERTY(HELP_STRING CACHE BUILD_TESTING PROPERTY HELPSTRING)
-    SET(BUILD_TESTING OFF CACHE BOOL "${HELP_STRING}" FORCE)
+      )
+    UPDATE_CACHE_VARIABLE(BUILD_TESTING OFF)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
@@ -206,10 +204,7 @@ IF (LAPACK)
   ENDIF (BLAS_FOUND)
 
   IF (NOT (LAPACK_FOUND AND BLAS_FOUND))
-    # Retain the help string associated with the LAPACK option
-    # when updating it to disable use of LAPACK.
-    GET_PROPERTY(HELP_STRING CACHE LAPACK PROPERTY HELPSTRING)
-    SET(LAPACK OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    UPDATE_CACHE_VARIABLE(LAPACK OFF)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)
   ENDIF (NOT (LAPACK_FOUND AND BLAS_FOUND))
 ELSE (LAPACK)
@@ -224,10 +219,7 @@ IF (SUITESPARSE AND NOT LAPACK)
   # via SuiteSparse to LAPACK.
   MESSAGE("-- Disabling SuiteSparse as use of LAPACK has been disabled, "
     "turn ON LAPACK to enable (optional) building with SuiteSparse.")
-  # Retain the help string associated with the SUITESPARSE option
-  # when updating it to disable use of SuiteSparse.
-  GET_PROPERTY(HELP_STRING CACHE SUITESPARSE PROPERTY HELPSTRING)
-  SET(SUITESPARSE OFF CACHE BOOL "${HELP_STRING}" FORCE)
+  UPDATE_CACHE_VARIABLE(SUITESPARSE OFF)
 ENDIF (SUITESPARSE AND NOT LAPACK)
 IF (SUITESPARSE)
   # By default, if SuiteSparse and all dependencies are found, Ceres is
@@ -261,10 +253,7 @@ IF (SUITESPARSE)
     # Disable use of SuiteSparse if it cannot be found and continue.
     MESSAGE("-- Did not find all SuiteSparse dependencies, disabling "
       "SuiteSparse support.")
-    # Retain the help string associated with the SUITESPARSE option
-    # when updating it to disable use of SuiteSparse.
-    GET_PROPERTY(HELP_STRING CACHE SUITESPARSE PROPERTY HELPSTRING)
-    SET(SUITESPARSE OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    UPDATE_CACHE_VARIABLE(SUITESPARSE OFF)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
   ENDIF (SUITESPARSE_FOUND)
 ELSE (SUITESPARSE)
@@ -284,10 +273,7 @@ IF (CXSPARSE)
   ELSE (CXSPARSE_FOUND)
     # Disable use of CXSparse if it cannot be found and continue.
     MESSAGE("-- Did not find CXSparse, Building without CXSparse.")
-    # Retain the help string associated with the CXSPARSE option
-    # when updating it to disable use of CXSparse.
-    GET_PROPERTY(HELP_STRING CACHE CXSPARSE PROPERTY HELPSTRING)
-    SET(CXSPARSE OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    UPDATE_CACHE_VARIABLE(CXSPARSE OFF)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_CXSPARSE)
   ENDIF (CXSPARSE_FOUND)
 ELSE (CXSPARSE)
@@ -313,10 +299,7 @@ IF (GFLAGS)
   ELSE (GFLAGS_FOUND)
     MESSAGE("-- Did not find Google Flags (gflags), Building without gflags "
       "- no tests or tools will be built!")
-    # Retain the help string associated with the GFLAGS option
-    # when updating it to disable use of gflags.
-    GET_PROPERTY(HELP_STRING CACHE GFLAGS PROPERTY HELPSTRING)
-    SET(GFLAGS OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    UPDATE_CACHE_VARIABLE(GFLAGS OFF)
   ENDIF (GFLAGS_FOUND)
 ELSE (GFLAGS)
   MESSAGE("-- Google Flags disabled; no tests or tools will be built!")
@@ -370,10 +353,7 @@ ENDIF (NOT CUSTOM_BLAS)
 IF (OPENMP)
   # Clang does not (yet) support OpenMP.
   IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    # Retain the help string associated with the OPENMP option
-    # when updating it to disable use of OPENMP.
-    GET_PROPERTY(HELP_STRING CACHE OPENMP PROPERTY HELPSTRING)
-    SET(OPENMP OFF CACHE BOOL "${HELP_STRING}" FORCE)
+    UPDATE_CACHE_VARIABLE(OPENMP OFF)
     MESSAGE("-- Compiler is Clang, disabling OpenMP.")
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
   ELSE (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -392,10 +372,7 @@ IF (OPENMP)
       ENDIF (UNIX)
     ELSE (OPENMP_FOUND)
       MESSAGE("-- Failed to find OpenMP, disabling.")
-      # Retain the help string associated with the OPENMP option
-      # when updating it to disable use of OPENMP.
-      GET_PROPERTY(HELP_STRING CACHE OPENMP PROPERTY HELPSTRING)
-      SET(OPENMP OFF CACHE BOOL "${HELP_STRING}" FORCE)
+      UPDATE_CACHE_VARIABLE(OPENMP OFF)
       LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
     ENDIF (OPENMP_FOUND)
   ENDIF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
