@@ -27,12 +27,17 @@ solving the following optimization problem [#f1]_ .
           L \le x \le U
   :label: nonlinsq
 
-Here, the Jacobian :math:`J(x)` of :math:`F(x)` is an :math:`m\times
-n` matrix, where :math:`J_{ij}(x) = \partial_j f_i(x)` and the
-gradient vector :math:`g(x) = \nabla \frac{1}{2}\|F(x)\|^2 = J(x)^\top
-F(x)`. Since the efficient global minimization of :eq:`nonlinsq` for
+Where, :math:`L` and :math:`U` are lower and upper bounds on the
+parameter vector :math:`x`.
+
+Since the efficient global minimization of :eq:`nonlinsq` for
 general :math:`F(x)` is an intractable problem, we will have to settle
 for finding a local minimum.
+
+In the following, the Jacobian :math:`J(x)` of :math:`F(x)` is an
+:math:`m\times n` matrix, where :math:`J_{ij}(x) = \partial_j f_i(x)`
+and the gradient vector is :math:`g(x) = \nabla \frac{1}{2}\|F(x)\|^2
+= J(x)^\top F(x)`.
 
 The general strategy when solving non-linear optimization problems is
 to solve a sequence of approximations to the original problem
@@ -118,7 +123,7 @@ There are a number of different ways of solving this problem, each
 giving rise to a different concrete trust-region algorithm. Currently
 Ceres, implements two trust-region algorithms - Levenberg-Marquardt
 and Dogleg, each of which is augmented with a line search if bounds
-constrained are present [Kanzow]_. The user can choose between them by
+constraints are present [Kanzow]_. The user can choose between them by
 setting :member:`Solver::Options::trust_region_strategy_type`.
 
 .. rubric:: Footnotes

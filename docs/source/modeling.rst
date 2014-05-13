@@ -43,7 +43,7 @@ a scalar valued function that is used to reduce the influence of
 outliers on the solution of non-linear least squares problems.
 
 :math:`l_j` and :math:`u_j` are lower and upper bounds on the
-:math:parameter block `x_j`.
+parameter block :math:`x_j`.
 
 As a special case, when :math:`\rho_i(x) = x`, i.e., the identity
 function, and :math:`l_j = -\infty` and :math:`u_j = \infty` we get
@@ -1462,7 +1462,7 @@ Instances
 
 .. function bool Problem::HasParameterBlock(const double* values) const;
 
-   Is the give parameter block present in the problem or not?
+   Is the given parameter block present in the problem or not?
 
 .. function void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const
 
