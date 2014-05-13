@@ -63,8 +63,9 @@ of Jacobian matrices, i.e., given :math:`\left[x_{i_1}, ... ,
 x_{i_k}\right]`, compute the vector
 :math:`f_i\left(x_{i_1},...,x_{i_k}\right)` and the matrices
 
- .. math:: J_{ij} = \frac{\partial}{\partial x_{i_j}}f_i\left(x_{i_1},...,x_{i_k}\right),\quad \forall j \in \{i_1,..., i_k\}
-
+ .. math:: J_{ij} = \frac{\partial}{\partial
+	   x_{i_j}}f_i\left(x_{i_1},...,x_{i_k}\right),\quad \forall j
+	   \in \{1, \ldots, k\}
 
 .. class:: CostFunction
 
