@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a698874_706ce6d4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-13T06:04:33Z",
+      "side": 1,
+      "message": "Consider instead:\n\n\"Building for iOS: SuiteSparse, CXSparse, gflags, and OpenMP are not available.\"\n\n(note colon)",
+      "revId": "15aa2667f024655df2bbe58b4abc5ace7c837b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a698874_30666ef5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-13T06:04:33Z",
+      "side": 1,
+      "message": "Change 4-space indent to 2.",
+      "revId": "15aa2667f024655df2bbe58b4abc5ace7c837b66",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
