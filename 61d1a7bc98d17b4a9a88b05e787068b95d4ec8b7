@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a698874_7015c656",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-13T05:53:08Z",
+      "side": 1,
+      "message": "You still need to add the copyright header; e.g. who is claiming copyright?",
+      "revId": "61d1a7bc98d17b4a9a88b05e787068b95d4ec8b7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
