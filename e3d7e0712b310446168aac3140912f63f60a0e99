@@ -68,6 +68,23 @@
       "revId": "e3d7e0712b310446168aac3140912f63f60a0e99",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ad6f480_4a6673f5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-14T17:07:24Z",
+      "side": 1,
+      "message": "Please use Alex\u0027s new helper function UPDATE_CACHE_VARIABLE(); see\n\nhttps://ceres-solver-review.googlesource.com/#/c/5031/1/CMakeLists.txt",
+      "revId": "e3d7e0712b310446168aac3140912f63f60a0e99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
