@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9db0d4_76f406f7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-14T05:17:21Z",
+      "side": 1,
+      "message": "the platform variable and the options here do not match.",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 55
+      },
+      "revId": "e3d7e0712b310446168aac3140912f63f60a0e99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea9db0d4_f6f8f6e7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-14T05:17:21Z",
+      "side": 1,
+      "message": "this sentence needs fixed. also the bulk of this stuff can probably go in the building.rst docs.",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "e3d7e0712b310446168aac3140912f63f60a0e99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea9db0d4_f6df5670",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-14T05:17:21Z",
+      "side": 1,
+      "message": "the line about downloading can go now.\n\nalso update the documentation link to point to the cmake file.",
+      "range": {
+        "startLine": 138,
+        "startChar": 29,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "e3d7e0712b310446168aac3140912f63f60a0e99",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
