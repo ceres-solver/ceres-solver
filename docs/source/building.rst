@@ -324,9 +324,39 @@ Notes:
 Building on Android
 ===================
 
-
 Download the ``Android NDK``. Run ``ndk-build`` from inside the
 ``jni`` directory. Use the ``libceres.a`` that gets created.
+
+.. _section-ios
+
+Building on iOS
+===============
+.. NOTE::
+
+   You need iOS version 6.0 or higher to build Ceres Solver.
+
+To build Ceres for iOS, we need to force `CMake` to find the
+toolchains from the iOS SDK instead of using the standard ones.
+building for ios simulator. The following incanation does the needful:
+
+.. code-block:: bash
+
+   cmake ../ceres-solver -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
+   -DIOS_PLATFORM=<PLATFORM> -DEIGEN_INCLUDE_DIR=/path/to/eigen/header
+
+`PLATFORM` can be one of `OS`, `SIMULATOR` and `SIMULATOR64`. You can
+build for `OS` (`armv7`, `armv7s`, `arm64`), `SIMULATOR` (`i386`) or
+`SIMULATOR64` (`x86_64`) separately and use `LIPO` to merge them into
+one static library.  See `cmake/iOS.cmake` for more options.
+
+After building, you will get `libceres.a` and `libminiglog.a`
+You need to add these two libraries into your xcode project.
+
+The default cmake configuration builds a bare bones version of Ceres
+Solver that only depends on Eigen and MINIGLOG, this should be
+sufficient for solving small to moderate sized problems. If you decide
+to use `LAPACK` and `BLAS`, then you also need to add
+`Accelerate.framework` to your xcode project's linking dependency.
 
 .. _section-customizing:
 
