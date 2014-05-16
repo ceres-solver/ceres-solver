@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fffad42e_4110541f",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-16T15:29:04Z",
+      "side": 1,
+      "message": "Maybe \"building for ios simulator\" should be a subheading? Or capitalized?",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fffad42e_61beb0c4",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-16T15:29:04Z",
+      "side": 1,
+      "message": "Consider writing this in the more readable way:\n\n  cmake ../ceres-solver \\\n  -DCMAKE_TOOLCHAIN_FILE\u003d../ceres-solver/cmake/iOS.cmake \\\n  -DIOS_PLATFORM\u003d\u003cPLATFORM\u003e \\\n  -DEIGEN_INCLUDE_DIR\u003d/path/to/eigen/header",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fffad42e_01cdac68",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-16T15:29:04Z",
+      "side": 1,
+      "message": "Perhaps be more explicit and say that this doesn\u0027t build any sparse support (except for cgnr and iterative schur).",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fffad42e_e1c9a05c",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-16T15:29:04Z",
+      "side": 1,
+      "message": "I wrote the original code, but ok :)",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
