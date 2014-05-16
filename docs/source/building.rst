@@ -11,7 +11,7 @@ Getting the source code
 You can start with the `latest stable release
 <http://ceres-solver.org/ceres-solver-1.8.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
-  .. code-block:: bash
+.. code-block:: bash
 
        git clone https://ceres-solver.googlesource.com/ceres-solver
 
@@ -327,7 +327,7 @@ Building on Android
 Download the ``Android NDK``. Run ``ndk-build`` from inside the
 ``jni`` directory. Use the ``libceres.a`` that gets created.
 
-.. _section-ios
+.. _section-ios:
 
 Building on iOS
 ===============
@@ -335,7 +335,7 @@ Building on iOS
 
    You need iOS version 6.0 or higher to build Ceres Solver.
 
-To build Ceres for iOS, we need to force `CMake` to find the
+To build Ceres for iOS, we need to force ``CMake`` to find the
 toolchains from the iOS SDK instead of using the standard ones.
 The following incanation does the needful:
 
@@ -346,22 +346,22 @@ The following incanation does the needful:
    -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
    -DIOS_PLATFORM=<PLATFORM>
 
-`PLATFORM` can be one of `OS`, `SIMULATOR` and `SIMULATOR64`. You can
-build for `OS` (`armv7`, `armv7s`, `arm64`), `SIMULATOR` (`i386`) or
-`SIMULATOR64` (`x86_64`) separately and use `LIPO` to merge them into
-one static library.  See `cmake/iOS.cmake` for more options.
+``PLATFORM`` can be one of ``OS``, ``SIMULATOR`` and ``SIMULATOR64``. You can
+build for ``OS`` (``armv7``, ``armv7s``, ``arm64``), ``SIMULATOR`` (``i386``) or
+``SIMULATOR64`` (``x86_64``) separately and use ``LIPO`` to merge them into
+one static library.  See ``cmake/iOS.cmake`` for more options.
 
-After building, you will get `libceres.a` and `libminiglog.a`
+After building, you will get ``libceres.a`` and ``libminiglog.a``
 You need to add these two libraries into your xcode project.
 
 The default cmake configuration builds a bare bones version of Ceres
 Solver that only depends on Eigen and MINIGLOG, this should be
 sufficient for solving small to moderate sized problems (No
-`SPARSE_SCHUR`, `SPARSE_NORMAL_CHOLESKY` linear solvers and no
-`CLUSTER_JACOBI` and `CLUSTER_TRIDIAGONAL` preconditioners).
+``SPARSE_SCHUR``, ``SPARSE_NORMAL_CHOLESKY`` linear solvers and no
+``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` preconditioners).
 
-If you decide to use `LAPACK` and `BLAS`, then you also need to add
-`Accelerate.framework` to your xcode project's linking dependency.
+If you decide to use ``LAPACK`` and ``BLAS``, then you also need to add
+``Accelerate.framework`` to your xcode project's linking dependency.
 
 .. _section-customizing:
 
