@@ -10,14 +10,17 @@ HEAD
 New Features
 ------------
 
-#. Support for bounds constrained optimization problems when using the
-   trust region minimizer.
-#. Problems in which the sparsity structure of the Jacobian changes
-   over the course of the optimization can now be solved much more
-   efficiently. (Richard Stebbing)
+#. Bounds constraints: Support for upper and/or lower bounds on
+   parameters when using the trust region minimizer.
+#. Dynamic Sparsity: Problems in which the sparsity structure of the
+   Jacobian changes over the course of the optimization can now be
+   solved much more efficiently. (Richard Stebbing)
 #. Improved support for Microsoft Visual C++ including the ability to
    build and ship DLLs. (Björn Piltz, Alex Stewart and Sergey
    Sharybin)
+#. Support for building on iOS 6.0 or higher (Jack Feng).
+#. Autogeneration of config.h that captures all the defines used to
+   build and use Ceres Solver.
 #. Simpler and more informative solver termination type
    reporting. (See below for more details)
 #. New `website <http://www.ceres-solver.org>`_ based entirely on
@@ -30,18 +33,13 @@ New Features
    they can be up to 2G in size.
 #. Faster ``SPARSE_NORMAL_CHOLESKY`` solver when using ``CX_SPARSE``
    as the sparse linear algebra library.
-#. ``Problem::IsParameterBlockPresent`` can be used to check if a
-   parameter block is already present in the problem.
-#. ``Problem::GetParameterization`` can be used to access the
-   parameterization associated with a parameter block.
-#. Added the (2,4,9) and (2,4,8) template specialization for
-   PartitionedMatrixView and SchurEliminator.
+#. Added ``Problem::IsParameterBlockPresent`` and
+   ``Problem::GetParameterization``.
+#. Added the (2,4,9) and (2,4,8) template specializations.
 #. An example demonstrating the use of
    DynamicAutoDiffCostFunction. (Joydeep Biswas)
-#. An example demonstrating the use of dynamic sparsity (Richard
-   Stebbing)
-#. An example from Blender demonstrating the use of a custom
-   ``IterationCallback``. (Sergey Sharybin)
+#. Homography estimation example from Blender demonstrating the use of
+   a custom ``IterationCallback``. (Sergey Sharybin)
 
 
 Backward Incompatible API Changes
@@ -92,7 +90,10 @@ Backward Incompatible API Changes
 Bug Fixes
 ---------
 
-#. Fixed errant verbose levels (Bjorn Piltz)
+#. Do not propagate 3d party libs through
+   `IMPORTED_LINK_INTERFACE_LIBRARIES_[DEBUG/RELEASE]` mechanism when
+   building shared libraries. (Björn Piltz)
+#. Fixed errant verbose levels (Björn Piltz)
 #. Variety of code cleanups, optimizations and bug fixes to the line
    search minimizer code (Alex Stewart)
 #. Fixed ``BlockSparseMatrix::Transpose`` when the matrix has row and
@@ -130,7 +131,7 @@ Bug Fixes
    ``Solver::Options::inner_iteration_ordering``. As a consequence the
    ``NDK`` build now depends on ``libc++`` from the ``LLVM`` project.
 #. Variety of lint cleanups (William Rucklidge & Jim Roseborough)
-#. Various internal cleanups.
+#. Various internal cleanups including dead code removal.
 
 
 1.8.0
