@@ -1,15 +1,15 @@
 Name:           ceres-solver
-Version:        1.8.0
+Version:        1.9.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        0.3.0%{?dist}
+Release:        0.1.0%{?dist}
 Summary:        A non-linear least squares minimizer
 
 Group:          Development/Libraries
 License:        BSD
-URL:            http://code.google.com/p/ceres-solver/
-Source0:        http://%{name}.googlecode.com/files/%{name}-%{version}rc3.tar.gz
+URL:            http://ceres-solver.org/
+Source0:        http://%{name}.org/%{name}-%{version}rc1.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %if (0%{?rhel} == 06)
@@ -110,6 +110,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri May 16 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.9.0-0.1.0
+- Bump version
+
 * Tue Nov 12 2013 Sameer Agarwal <sameeragarwal@google.com> - 1.8.0-0.3.0
 - Bump version
 
