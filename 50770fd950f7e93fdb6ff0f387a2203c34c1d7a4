@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fffad42e_a1d39806",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-16T15:33:25Z",
+      "side": 1,
+      "message": "oh that is errant sentence.",
+      "parentUuid": "fffad42e_4110541f",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffad42e_61beb0c4",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fffad42e_81a09c98",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-16T15:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffad42e_61beb0c4",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fffad42e_01cdac68",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2014-05-16T15:29:04Z",
       "side": 1,
       "message": "Perhaps be more explicit and say that this doesn\u0027t build any sparse support (except for cgnr and iterative schur).",
+      "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fffad42e_419a9462",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-16T15:33:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffad42e_01cdac68",
       "revId": "50770fd950f7e93fdb6ff0f387a2203c34c1d7a4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
