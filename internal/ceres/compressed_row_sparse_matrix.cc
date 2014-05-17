@@ -31,6 +31,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 
 #include <algorithm>
+#include <deque>
 #include <numeric>
 #include <vector>
 #include "ceres/crs_matrix.h"
@@ -416,7 +417,7 @@ struct ProductTerm {
 CompressedRowSparseMatrix*
 CompressAndFillProgram(const int num_rows,
                        const int num_cols,
-                       const vector<ProductTerm>& product,
+                       const deque<ProductTerm>& product,
                        vector<int>* program) {
   CHECK_GT(product.size(), 0);
 
@@ -484,7 +485,7 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
   CHECK_GT(m.num_nonzeros(), 0) << "Congratulations, "
                                 << "you found a bug in Ceres. Please report it.";
 
-  vector<ProductTerm> product;
+  deque<ProductTerm> product;
   const vector<int>& row_blocks = m.row_blocks();
   int row_block_begin = 0;
   // Iterate over row blocks
