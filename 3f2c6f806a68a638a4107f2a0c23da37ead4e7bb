@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0a3da49e_a241e6c8",
+        "filename": "include/ceres/internal/disable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-19T18:58:53Z",
+      "side": 1,
+      "message": "I wonder if we shouldn\u0027t be more specific about why this is happening for Ceres here, we\u0027re not actually deriving from STL types (as far as I\u0027m aware), but we do import the std:: namespace into ceres:: in port.h.",
+      "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df20b093_5e770956",
         "filename": "include/ceres/internal/reenable_warnings.h",
         "patchSetId": 1
@@ -13,6 +30,58 @@
       "writtenOn": "2014-05-19T18:38:17Z",
       "side": 1,
       "message": "Is there any way to pop a specific warning? I worry that this could have interactions with other headers; for example, Eigen includes a similar mechanism.",
+      "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a58a819_c38ef6ac",
+        "filename": "include/ceres/internal/reenable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-19T18:58:53Z",
+      "side": 1,
+      "message": "As far as I\u0027m aware, no: http://msdn.microsoft.com/en-us/library/2c8f766e.aspx\n\nI think the best we can do is ensure that the #include of disable/enable warnings always comes after all other #includes, and tightly brackets the Ceres code.",
+      "parentUuid": "df20b093_5e770956",
+      "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a58a819_83d06e87",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-19T18:58:53Z",
+      "side": 1,
+      "message": "#include \"glog/logging.h\" should really go above all of the Ceres #includes, but specifically the disable_warnings one as per Keir\u0027s comments for safety surrounding push/pop pragmas.",
+      "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a531cfd_1fe04fe2",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-19T18:58:53Z",
+      "side": 1,
+      "message": "Ditto previous - move #include \"glog/logging.h\" above all of the Ceres includes, but specifically the disable_warnings one.",
       "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
