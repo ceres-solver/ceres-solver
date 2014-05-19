@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df20b093_5e770956",
+        "filename": "include/ceres/internal/reenable_warnings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-19T18:38:17Z",
+      "side": 1,
+      "message": "Is there any way to pop a specific warning? I worry that this could have interactions with other headers; for example, Eigen includes a similar mechanism.",
+      "revId": "3f2c6f806a68a638a4107f2a0c23da37ead4e7bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
