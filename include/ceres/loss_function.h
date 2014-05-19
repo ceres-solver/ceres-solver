@@ -78,6 +78,7 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "ceres/internal/disable_warnings.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -394,5 +395,7 @@ class CERES_EXPORT LossFunctionWrapper : public LossFunction {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/disable_warnings.h"
 
 #endif  // CERES_PUBLIC_LOSS_FUNCTION_H_
