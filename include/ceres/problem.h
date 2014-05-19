@@ -39,11 +39,12 @@
 #include <set>
 #include <vector>
 
+#include "glog/logging.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
-#include "glog/logging.h"
+#include "ceres/internal/disable_warnings.h"
 
 
 namespace ceres {
@@ -465,5 +466,7 @@ class CERES_EXPORT Problem {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_PROBLEM_H_

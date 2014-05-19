@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -26,61 +26,13 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_CRS_MATRIX_H_
-#define CERES_PUBLIC_CRS_MATRIX_H_
+// This is not your usual header guard. See disable_warnings.h
+#ifdef CERES_WARNINGS_DISABLED
+#undef CERES_WARNINGS_DISABLED
 
-#include <vector>
-#include "ceres/internal/port.h"
-#include "ceres/internal/disable_warnings.h"
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
-namespace ceres {
-
-// A compressed row sparse matrix used primarily for communicating the
-// Jacobian matrix to the user.
-struct CERES_EXPORT CRSMatrix {
-  CRSMatrix() : num_rows(0), num_cols(0) {}
-
-  int num_rows;
-  int num_cols;
-
-  // A compressed row matrix stores its contents in three arrays,
-  // rows, cols and values.
-  //
-  // rows is a num_rows + 1 sized array that points into the cols and
-  // values array. For each row i:
-  //
-  // cols[rows[i]] ... cols[rows[i + 1] - 1] are the indices of the
-  // non-zero columns of row i.
-  //
-  // values[rows[i]] .. values[rows[i + 1] - 1] are the values of the
-  // corresponding entries.
-  //
-  // cols and values contain as many entries as there are non-zeros in
-  // the matrix.
-  //
-  // e.g, consider the 3x4 sparse matrix
-  //
-  //  [ 0 10  0  4 ]
-  //  [ 0  2 -3  2 ]
-  //  [ 1  2  0  0 ]
-  //
-  // The three arrays will be:
-  //
-  //
-  //            -row0-  ---row1---  -row2-
-  //  rows   = [ 0,      2,          5,     7]
-  //  cols   = [ 1,  3,  1,  2,  3,  0,  1]
-  //  values = [10,  4,  2, -3,  2,  1,  2]
-
-  vector<int> cols;
-  vector<int> rows;
-  vector<double> values;
-};
-
-}  // namespace ceres
-
-#include "ceres/internal/reenable_warnings.h"
-
-#endif  // CERES_PUBLIC_CRS_MATRIX_H_
+#endif  // CERES_WARNINGS_DISABLED

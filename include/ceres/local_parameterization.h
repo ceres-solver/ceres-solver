@@ -34,6 +34,7 @@
 
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -187,5 +188,7 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
 };
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_

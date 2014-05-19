@@ -40,6 +40,7 @@
 #include "ceres/iteration_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
+#include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
 
@@ -956,5 +957,7 @@ CERES_EXPORT void Solve(const Solver::Options& options,
            Solver::Summary* summary);
 
 }  // namespace ceres
+
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_SOLVER_H_
