@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_PROGRAM_H_
 
 #include <string>
+#include <set>
 #include <vector>
 #include "ceres/internal/port.h"
 
@@ -41,6 +42,7 @@ namespace internal {
 class ParameterBlock;
 class ProblemImpl;
 class ResidualBlock;
+class TripletSparseMatrix;
 
 // A nonlinear least squares optimization problem. This is different from the
 // similarly-named "Problem" object, which offers a mutation interface for
@@ -102,6 +104,37 @@ class Program {
   // Check if the internal state of the program (the indexing and the
   // offsets) are correct.
   bool IsValid() const;
+
+  bool ParameterBlocksAreFinite(string* message) const;
+
+  // Returns true if the program has any non-constant parameter blocks
+  // which have non-trivial bounds constraints.
+  bool IsBoundsConstrained() const;
+
+  // Returns false, if the program has any constant parameter blocks
+  // which are not feasible, or any variable parameter blocks which
+  // have a lower bound greater than or equal to the upper bound.
+  bool IsFeasible(string* message) const;
+
+  // Loop over each residual block and ensure that no two parameter
+  // blocks in the same residual block are part of
+  // parameter_blocks as that would violate the assumption that it
+  // is an independent set in the Hessian matrix.
+  bool IsParameterBlockSetIndependent(const set<double*>& independent_set) const;
+
+  // Create a TripletSparseMatrix which contains the zero-one
+  // structure corresponding to the block sparsity of the transpose of
+  // the Jacobian matrix.
+  //
+  // Caller owns the result.
+  TripletSparseMatrix* CreateJacobianBlockSparsityTranspose() const;
+
+  // Removes constant parameter blocks and residual blocks with no
+  // varying parameter blocks while preserving order.
+  // TODO(sameeragarwal): Update message here.
+  bool RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
+                         double* fixed_cost,
+                         string* message);
 
   // See problem.h for what these do.
   int NumParameterBlocks() const;

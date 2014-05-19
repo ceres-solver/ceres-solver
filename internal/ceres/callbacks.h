@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,40 +27,45 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//         mierle@gmail.com (Keir Mierle)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#ifndef CERES_INTERNAL_CALLBACKS_H_
+#define CERES_INTERNAL_CALLBACKS_H_
 
-#include "ceres/minimizer.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
+#include <string>
+#include "ceres/iteration_callback.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class Program;
+
+// Callback for updating the externally visible state of parameter
+// blocks.
+class StateUpdatingCallback : public IterationCallback {
  public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+  StateUpdatingCallback(Program* program, double* parameters);
+  virtual ~StateUpdatingCallback();
+  virtual CallbackReturnType operator()(const IterationSummary& summary);
+ private:
+  Program* program_;
+  double* parameters_;
+};
+
+// Callback for logging the state of the minimizer to STDERR or
+// STDOUT depending on the user's preferences and logging level.
+class LoggingCallback : public IterationCallback {
+ public:
+  LoggingCallback(MinimizerType minimizer_type, bool log_to_stdout);
+  virtual ~LoggingCallback();
+  virtual CallbackReturnType operator()(const IterationSummary& summary);
 
  private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem(const int iteration,
-                                          const SparseMatrix* jacobian,
-                                          const double* residuals,
-                                          const double* step) const;
-
-  Minimizer::Options options_;
+  const MinimizerType minimizer_type;
+  const bool log_to_stdout_;
 };
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+
+#endif  // CERES_INTERNAL_CALLBACKS_H_

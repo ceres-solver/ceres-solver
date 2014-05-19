@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,40 +27,39 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//         mierle@gmail.com (Keir Mierle)
+//         keir@google.com (Keir Mierle)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#ifndef CERES_INTERNAL_TRUST_REGION_SOLVER_H_
+#define CERES_INTERNAL_TRUST_REGION_SOLVER_H_
 
-#include "ceres/minimizer.h"
+#include <set>
+#include <string>
+#include <vector>
+#include "ceres/internal/port.h"
 #include "ceres/solver.h"
-#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
+class ProblemImpl;
+class Program;
+class LinearSolver;
+
+class TrustRegionSolver {
  public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+  static void Solve(const Solver::Options& options,
+                    ProblemImpl* problem_impl,
+                    Solver::Summary* summary);
 
- private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem(const int iteration,
-                                          const SparseMatrix* jacobian,
-                                          const double* residuals,
-                                          const double* step) const;
+  static bool IsOrderingValid(const Solver::Options& options,
+                              const Program& program,
+                              string* error);
 
-  Minimizer::Options options_;
+  static bool OptionsAreValid(const Solver::Options& options,
+                              string* error);
 };
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+
+#endif  // CERES_INTERNAL_SOLVER_IMPL_H_

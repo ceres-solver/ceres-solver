@@ -37,11 +37,12 @@
 #include "ceres/evaluator.h"
 #include "ceres/minimizer.h"
 #include "ceres/problem_impl.h"
-#include "ceres/program.h"
 #include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
+
+class Program;
 
 // Given a Program, and a ParameterBlockOrdering which partitions
 // (non-exhaustively) the Hessian matrix into independent sets,
@@ -66,6 +67,11 @@ class CoordinateDescentMinimizer : public Minimizer {
                         double* parameters,
                         Solver::Summary* summary);
 
+  static bool IsOrderingValid(const Program& program,
+                              const ParameterBlockOrdering& ordering,
+                              string* message);
+
+  static ParameterBlockOrdering* CreateOrdering(const Program& program);
  private:
   void Solve(Program* program,
              LinearSolver* linear_solver,

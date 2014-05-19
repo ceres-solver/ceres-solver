@@ -295,7 +295,7 @@ class LinearSolver {
   }
 
   // Factory
-  static LinearSolver* Create(const Options& options);
+  static LinearSolver* Create(const Options& options, string* error);
 };
 
 // This templated subclass of LinearSolver serves as a base class for

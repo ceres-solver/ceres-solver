@@ -43,6 +43,7 @@
 #ifndef CERES_INTERNAL_ARRAY_UTILS_H_
 #define CERES_INTERNAL_ARRAY_UTILS_H_
 
+#include <vector>
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -66,6 +67,13 @@ int FindInvalidValue(const int size, const double* x);
 void AppendArrayToString(const int size, const double* x, string* result);
 
 extern const double kImpossibleValue;
+
+// array contains a list of (possibly repeating) non-negative
+// integers. Let us assume that we have constructed another array
+// `p` by sorting and uniqueing the entries of array.
+// CompactifyArray replaces each entry in "array" with its position
+// in `p`.
+void CompactifyArray(vector<int>* array);
 
 }  // namespace internal
 }  // namespace ceres

@@ -45,7 +45,69 @@ namespace internal {
 LinearSolver::~LinearSolver() {
 }
 
-LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
+LinearSolver* LinearSolver::Create(const LinearSolver::Options& options,
+                                   string* error) {
+#ifdef CERES_NO_LAPACK
+  if (options.type == DENSE_NORMAL_CHOLESKY &&
+      options.dense_linear_algebra_library_type == LAPACK) {
+    *error = "Can't use DENSE_NORMAL_CHOLESKY with LAPACK because "
+        "LAPACK was not enabled when Ceres was built.";
+    return NULL;
+  }
+
+  if (options.type == DENSE_QR &&
+      options.dense_linear_algebra_library_type == LAPACK) {
+    *error = "Can't use DENSE_QR with LAPACK because "
+        "LAPACK was not enabled when Ceres was built.";
+    return NULL;
+  }
+
+  if (options.type == DENSE_SCHUR &&
+      options.dense_linear_algebra_library_type == LAPACK) {
+    *error = "Can't use DENSE_SCHUR with LAPACK because "
+        "LAPACK was not enabled when Ceres was built.";
+    return NULL;
+  }
+#endif
+
+#ifdef CERES_NO_SUITESPARSE
+  if (options.type == SPARSE_NORMAL_CHOLESKY &&
+      options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
+             "SuiteSparse was not enabled when Ceres was built.";
+    return NULL;
+  }
+
+  if (options.preconditioner_type == CLUSTER_JACOBI) {
+    *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
+        "with SuiteSparse support.";
+    return NULL;
+  }
+
+  if (options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
+        "Ceres with SuiteSparse support.";
+    return NULL;
+  }
+#endif
+
+#ifdef CERES_NO_CXSPARSE
+  if (options.type == SPARSE_NORMAL_CHOLESKY &&
+      options.sparse_linear_algebra_library_type == CX_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with CXSPARSE because "
+             "CXSparse was not enabled when Ceres was built.";
+    return NULL;
+  }
+#endif
+
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+  if (options.type == SPARSE_SCHUR) {
+    *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
+        "CXSparse was enabled when Ceres was compiled.";
+    return NULL;
+  }
+#endif
+
   switch (options.type) {
     case CGNR:
       return new CgnrSolver(options);
