@@ -82,7 +82,8 @@ class IterativeSchurComplementSolverTest : public ::testing::Test {
 
     LinearSolver::Options options;
     options.type = DENSE_QR;
-    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
+    string error;
+    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options, &error));
 
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D;

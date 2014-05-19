@@ -38,7 +38,7 @@
 namespace ceres {
 namespace internal {
 
-TEST(OrderedGroup, EmptyOrderedGroupBehavesCorrectly) {
+TEST(OrderedGroups, EmptyOrderedGroupBehavesCorrectly) {
   ParameterBlockOrdering ordering;
   EXPECT_EQ(ordering.NumGroups(), 0);
   EXPECT_EQ(ordering.NumElements(), 0);
@@ -48,7 +48,7 @@ TEST(OrderedGroup, EmptyOrderedGroupBehavesCorrectly) {
   EXPECT_FALSE(ordering.Remove(&x));
 }
 
-TEST(OrderedGroup, EverythingInOneGroup) {
+TEST(OrderedGroups, EverythingInOneGroup) {
   ParameterBlockOrdering ordering;
   double x[3];
   ordering.AddElementToGroup(x, 1);
@@ -75,7 +75,7 @@ TEST(OrderedGroup, EverythingInOneGroup) {
   EXPECT_EQ(ordering.GroupId(x + 2), 1);
 }
 
-TEST(OrderedGroup, StartInOneGroupAndThenSplit) {
+TEST(OrderedGroups, StartInOneGroupAndThenSplit) {
   ParameterBlockOrdering ordering;
   double x[3];
   ordering.AddElementToGroup(x, 1);
@@ -103,7 +103,7 @@ TEST(OrderedGroup, StartInOneGroupAndThenSplit) {
   EXPECT_EQ(ordering.GroupId(x + 2), 1);
 }
 
-TEST(OrderedGroup, AddAndRemoveEveryThingFromOneGroup) {
+TEST(OrderedGroups, AddAndRemoveEveryThingFromOneGroup) {
   ParameterBlockOrdering ordering;
   double x[3];
   ordering.AddElementToGroup(x, 1);
@@ -133,7 +133,7 @@ TEST(OrderedGroup, AddAndRemoveEveryThingFromOneGroup) {
   EXPECT_EQ(ordering.GroupId(x + 2), 5);
 }
 
-TEST(OrderedGroup, ReverseOrdering) {
+TEST(OrderedGroups, ReverseOrdering) {
   ParameterBlockOrdering ordering;
   double x[3];
   ordering.AddElementToGroup(x, 1);
@@ -157,6 +157,42 @@ TEST(OrderedGroup, ReverseOrdering) {
   EXPECT_EQ(ordering.GroupId(x), 3);
   EXPECT_EQ(ordering.GroupId(x + 1), 2);
   EXPECT_EQ(ordering.GroupId(x + 2), 2);
+}
+
+TEST(OrderedGroups, BulkRemove) {
+  ParameterBlockOrdering ordering;
+  double x[3];
+  ordering.AddElementToGroup(x, 1);
+  ordering.AddElementToGroup(x + 1, 2);
+  ordering.AddElementToGroup(x + 2, 2);
+
+  vector<double*> elements_to_remove;
+  elements_to_remove.push_back(x);
+  elements_to_remove.push_back(x + 2);
+
+  EXPECT_EQ(ordering.Remove(elements_to_remove), 2);
+  EXPECT_EQ(ordering.NumElements(), 1);
+  EXPECT_EQ(ordering.GroupId(x), -1);
+  EXPECT_EQ(ordering.GroupId(x + 1), 2);
+  EXPECT_EQ(ordering.GroupId(x + 2), -1);
+}
+
+TEST(OrderedGroups, BulkRemoveWithNoElements) {
+  ParameterBlockOrdering ordering;
+
+  double x[3];
+  vector<double*> elements_to_remove;
+  elements_to_remove.push_back(x);
+  elements_to_remove.push_back(x + 2);
+
+  EXPECT_EQ(ordering.Remove(elements_to_remove), 0);
+
+  ordering.AddElementToGroup(x, 1);
+  ordering.AddElementToGroup(x + 1, 2);
+  ordering.AddElementToGroup(x + 2, 2);
+
+  elements_to_remove.clear();
+  EXPECT_EQ(ordering.Remove(elements_to_remove), 0);
 }
 
 }  // namespace internal

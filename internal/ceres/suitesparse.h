@@ -283,8 +283,13 @@ class SuiteSparse {
 
 #else  // CERES_NO_SUITESPARSE
 
-class SuiteSparse {};
 typedef void cholmod_factor;
+
+class SuiteSparse {
+  static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
+    return false;
+  }
+};
 
 #endif  // CERES_NO_SUITESPARSE
 

@@ -32,10 +32,13 @@
 
 #include <cmath>
 #include <cstddef>
+#include <map>
+#include <set>
 #include <string>
 
 #include "ceres/fpclassify.h"
 #include "ceres/stringprintf.h"
+#include "ceres/map_util.h"
 
 namespace ceres {
 namespace internal {
@@ -91,6 +94,20 @@ void AppendArrayToString(const int size, const double* x, string* result) {
         StringAppendF(result, "%12g ", x[i]);
       }
     }
+  }
+}
+
+void CompactifyArray(const int size, int* array) {
+  const set<int> unique_group_ids(array, array + size);
+  map<int, int> group_id_map;
+  for (set<int>::const_iterator it = unique_group_ids.begin();
+       it != unique_group_ids.end();
+       ++it) {
+    InsertOrDie(&group_id_map, *it, group_id_map.size());
+  }
+
+  for (int i = 0; i < size; ++i) {
+    array[i] = group_id_map[array[i]];
   }
 }
 

@@ -126,6 +126,8 @@ class CERES_EXPORT Solver {
       update_state_every_iteration = false;
     }
 
+    bool IsValid(string* error) const;
+
     // Minimizer options ----------------------------------------
 
     // Ceres supports the two major families of optimization strategies -
@@ -708,10 +710,6 @@ class CERES_EXPORT Solver {
     //
     // The solver does NOT take ownership of these pointers.
     vector<IterationCallback*> callbacks;
-
-    // If non-empty, a summary of the execution of the solver is
-    // recorded to this file.
-    string solver_log;
   };
 
   struct CERES_EXPORT Summary {

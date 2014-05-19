@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,54 +27,36 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// Utility routines for validating arrays.
-//
-// These are useful for detecting two common class of errors.
-//
-// 1. Uninitialized memory - where the user for some reason did not
-// compute part of an array, but the code expects it.
-//
-// 2. Numerical failure while computing the cost/residual/jacobian,
-// e.g. NaN, infinities etc. This is particularly useful since the
-// automatic differentiation code does computations that are not
-// evident to the user and can silently generate hard to debug errors.
+//         keir@google.com (Keir Mierle)
 
-#ifndef CERES_INTERNAL_ARRAY_UTILS_H_
-#define CERES_INTERNAL_ARRAY_UTILS_H_
+#ifndef CERES_INTERNAL_TRUST_REGION_SOLVER_H_
+#define CERES_INTERNAL_TRUST_REGION_SOLVER_H_
 
+#include <set>
+#include <string>
+#include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-// Fill the array x with an impossible value that the user code is
-// never expected to compute.
-void InvalidateArray(int size, double* x);
+class ProblemImpl;
+class Program;
+class LinearSolver;
 
-// Check if all the entries of the array x are valid, i.e. all the
-// values in the array should be finite and none of them should be
-// equal to the "impossible" value used by InvalidateArray.
-bool IsArrayValid(int size, const double* x);
+class TrustRegionSolver {
+ public:
+  static void Solve(const Solver::Options& options,
+                    ProblemImpl* problem_impl,
+                    Solver::Summary* summary);
 
-// If the array contains an invalid value, return the index for it,
-// otherwise return size.
-int FindInvalidValue(const int size, const double* x);
-
-// Utility routine to print an array of doubles to a string. If the
-// array pointer is NULL, it is treated as an array of zeros.
-void AppendArrayToString(const int size, const double* x, string* result);
-
-extern const double kImpossibleValue;
-
-// array contains a list of (possibly repeating) non-negative
-// integers. Let us assume that we have constructed another array
-// `p` by sorting and uniqueing the entries of array.
-// CompactifyArray replaces each entry in "array" with its position
-// in `p`.
-void CompactifyArray(int size, int* array);
+  static bool IsOrderingValid(const Solver::Options& options,
+                              const Program& program,
+                              string* error);
+};
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_ARRAY_UTILS_H_
+#endif  // CERES_INTERNAL_SOLVER_IMPL_H_

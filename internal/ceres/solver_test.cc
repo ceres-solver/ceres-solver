@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2012 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,25 +28,45 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/solver.h"
+
+#include <limits>
+#include <cmath>
+#include <vector>
 #include "gtest/gtest.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/autodiff_cost_function.h"
-#include "ceres/linear_solver.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/parameter_block.h"
-#include "ceres/problem_impl.h"
-#include "ceres/program.h"
-#include "ceres/residual_block.h"
-#include "ceres/solver_impl.h"
 #include "ceres/sized_cost_function.h"
+#include "ceres/problem.h"
+#include "ceres/problem_impl.h"
 
 namespace ceres {
 namespace internal {
 
-struct QuadraticCostFunction {
+TEST(SolverOptions, DefaultTrustRegionOptionsAreValid) {
+  Solver::Options options;
+  options.minimizer_type = TRUST_REGION;
+  string error;
+  EXPECT_TRUE(options.IsValid(&error)) << error;
+}
+
+TEST(SolverOptions, DefaultLineSearchOptionsAreValid) {
+  Solver::Options options;
+  options.minimizer_type = LINE_SEARCH;
+  string error;
+  EXPECT_TRUE(options.IsValid(&error)) << error;
+}
+
+struct QuadraticCostFunctor {
   template <typename T> bool operator()(const T* const x,
                                         T* residual) const {
     residual[0] = T(5.0) - *x;
     return true;
+  }
+
+  static CostFunction* Create() {
+    return new AutoDiffCostFunction<QuadraticCostFunctor, 1, 1>(
+        new QuadraticCostFunctor);
   }
 };
 
@@ -62,17 +82,14 @@ struct RememberingCallback : public IterationCallback {
   vector<double> x_values;
 };
 
-TEST(SolverImpl, UpdateStateEveryIterationOption) {
+TEST(Solver, UpdateStateEveryIterationOption) {
   double x = 50.0;
   const double original_x = x;
 
-  scoped_ptr<CostFunction> cost_function(
-      new AutoDiffCostFunction<QuadraticCostFunction, 1, 1>(
-          new QuadraticCostFunction));
-
+  scoped_ptr<CostFunction> cost_function(QuadraticCostFunctor::Create());
   Problem::Options problem_options;
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
-  ProblemImpl problem(problem_options);
+  Problem problem(problem_options);
   problem.AddResidualBlock(cost_function.get(), NULL, &x);
 
   Solver::Options options;
@@ -86,7 +103,7 @@ TEST(SolverImpl, UpdateStateEveryIterationOption) {
   int num_iterations;
 
   // First try: no updating.
-  SolverImpl::Solve(options, &problem, &summary);
+  Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
                    summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
@@ -98,7 +115,7 @@ TEST(SolverImpl, UpdateStateEveryIterationOption) {
   x = 50.0;
   options.update_state_every_iteration = true;
   callback.x_values.clear();
-  SolverImpl::Solve(options, &problem, &summary);
+  Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
                    summary.num_unsuccessful_steps;
   EXPECT_GT(num_iterations, 1);
@@ -121,9 +138,15 @@ struct Quadratic4DCostFunction {
                   T(40.0) - *w;
     return true;
   }
+
+  static CostFunction* Create() {
+    return new AutoDiffCostFunction<Quadratic4DCostFunction, 1, 1, 1, 1, 1>(
+        new Quadratic4DCostFunction);
+  }
 };
 
-TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
+/*
+TEST(Solver, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   double x = 50.0;
   double y = 50.0;
   double z = 50.0;
@@ -133,9 +156,7 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   const double original_z = 50.0;
   const double original_w = 50.0;
 
-  scoped_ptr<CostFunction> cost_function(
-      new AutoDiffCostFunction<Quadratic4DCostFunction, 1, 1, 1, 1, 1>(
-          new Quadratic4DCostFunction));
+  scoped_ptr<CostFunction> cost_function(Quadratic4DCostFunction::Create());
 
   Problem::Options problem_options;
   problem_options.cost_function_ownership = DO_NOT_TAKE_OWNERSHIP;
@@ -149,7 +170,7 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   options.linear_solver_type = DENSE_QR;
 
   Solver::Summary summary;
-  SolverImpl::Solve(options, &problem, &summary);
+  Solver::Solve(options, &problem, &summary);
 
   // Verify only the non-constant parameters were mutated.
   EXPECT_EQ(original_x, x);
@@ -165,6 +186,101 @@ TEST(SolverImpl, ConstantParameterBlocksDoNotChangeAndStateInvariantKept) {
   EXPECT_EQ(&w, problem.program().parameter_blocks()[3]->state());
 
   EXPECT_TRUE(problem.program().IsValid());
+}
+*/
+
+// A cost function that simply returns its argument.
+class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    residuals[0] = parameters[0][0];
+    if (jacobians != NULL && jacobians[0] != NULL) {
+      jacobians[0][0] = 1.0;
+    }
+    return true;
+  }
+};
+
+TEST(Solver, TrustRegionProblemHasNoParameterBlocks) {
+  Problem problem;
+  Solver::Options options;
+  options.minimizer_type = TRUST_REGION;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Function tolerance reached. "
+            "No non-constant parameter blocks found.");
+}
+
+TEST(Solver, LineSearchProblemHasNoParameterBlocks) {
+  Problem problem;
+  Solver::Options options;
+  options.minimizer_type = LINE_SEARCH;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Function tolerance reached. "
+            "No non-constant parameter blocks found.");
+}
+
+TEST(Solver, TrustRegionProblemHasZeroResiduals) {
+  Problem problem;
+  double x = 1;
+  problem.AddParameterBlock(&x, 1);
+  Solver::Options options;
+  options.minimizer_type = TRUST_REGION;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Function tolerance reached. "
+            "No non-constant parameter blocks found.");
+}
+
+TEST(Solver, LineSearchProblemHasZeroResiduals) {
+  Problem problem;
+  double x = 1;
+  problem.AddParameterBlock(&x, 1);
+  Solver::Options options;
+  options.minimizer_type = LINE_SEARCH;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.message,
+            "Function tolerance reached. "
+            "No non-constant parameter blocks found.");
+}
+
+TEST(Solver, TrustRegionProblemIsConstant) {
+  Problem problem;
+  double x = 1;
+  problem.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
+  problem.SetParameterBlockConstant(&x);
+  Solver::Options options;
+  options.minimizer_type = TRUST_REGION;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.initial_cost, 1.0 / 2.0);
+  EXPECT_EQ(summary.final_cost, 1.0 / 2.0);
+}
+
+TEST(Solver, LineSearchProblemIsConstant) {
+  Problem problem;
+  double x = 1;
+  problem.AddResidualBlock(new UnaryIdentityCostFunction, NULL, &x);
+  problem.SetParameterBlockConstant(&x);
+  Solver::Options options;
+  options.minimizer_type = LINE_SEARCH;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_EQ(summary.termination_type, CONVERGENCE);
+  EXPECT_EQ(summary.initial_cost, 1.0 / 2.0);
+  EXPECT_EQ(summary.final_cost, 1.0 / 2.0);
 }
 
 }  // namespace internal

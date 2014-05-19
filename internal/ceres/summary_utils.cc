@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2013 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,45 +28,37 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/preconditioner.h"
-#include "glog/logging.h"
+#include "ceres/summary_utils.h"
+#include "ceres/program.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-Preconditioner::~Preconditioner() {
-}
-
-PreconditionerType Preconditioner::AlternatePreconditionerForZeroEBlocks(
-    PreconditionerType preconditioner_type) {
-  if (preconditioner_type == SCHUR_JACOBI ||
-      preconditioner_type == CLUSTER_JACOBI ||
-      preconditioner_type == CLUSTER_TRIDIAGONAL) {
-    return JACOBI;
+void SetSummaryFinalCost(Solver::Summary* summary) {
+  summary->final_cost = summary->initial_cost;
+  // We need the loop here, instead of just looking at the last
+  // iteration because the minimizer maybe making non-monotonic steps.
+  for (int i = 0; i < summary->iterations.size(); ++i) {
+    const IterationSummary& iteration_summary = summary->iterations[i];
+    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
   }
-  return preconditioner_type;
 }
 
-SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
-    const SparseMatrix* matrix)
-    : matrix_(CHECK_NOTNULL(matrix)) {
+void SummarizeGivenProgram(const Program& program, Solver::Summary* summary) {
+  summary->num_parameter_blocks = program.NumParameterBlocks();
+  summary->num_parameters = program.NumParameters();
+  summary->num_effective_parameters = program.NumEffectiveParameters();
+  summary->num_residual_blocks = program.NumResidualBlocks();
+  summary->num_residuals = program.NumResiduals();
 }
 
-SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
-}
-
-bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
-                                                   const double* D) {
-  return true;
-}
-
-void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
-                                                      double* y) const {
-  matrix_->RightMultiply(x, y);
-}
-
-int  SparseMatrixPreconditionerWrapper::num_rows() const {
-  return matrix_->num_rows();
+void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
+  summary->num_parameter_blocks_reduced = program.NumParameterBlocks();
+  summary->num_parameters_reduced = program.NumParameters();
+  summary->num_effective_parameters_reduced = program.NumEffectiveParameters();
+  summary->num_residual_blocks_reduced = program.NumResidualBlocks();
+  summary->num_residuals_reduced = program.NumResiduals();
 }
 
 }  // namespace internal

@@ -274,6 +274,9 @@ class LinearSolver {
     string message;
   };
 
+  static LinearSolverType LinearSolverForZeroEBlocks(
+      LinearSolverType linear_solver_type);
+
   virtual ~LinearSolver();
 
   // Solve Ax = b.
@@ -295,7 +298,7 @@ class LinearSolver {
   }
 
   // Factory
-  static LinearSolver* Create(const Options& options);
+  static LinearSolver* Create(const Options& options, string* error);
 };
 
 // This templated subclass of LinearSolver serves as a base class for

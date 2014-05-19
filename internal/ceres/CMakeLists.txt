@@ -41,6 +41,7 @@ SET(CERES_INTERNAL_SRC
     block_sparse_matrix.cc
     block_structure.cc
     c_api.cc
+    callbacks.cc
     canonical_views_clustering.cc
     cgnr_solver.cc
     compressed_col_sparse_matrix_utils.cc
@@ -71,6 +72,7 @@ SET(CERES_INTERNAL_SRC
     line_search.cc
     line_search_direction.cc
     line_search_minimizer.cc
+    line_search_solver.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
@@ -86,6 +88,7 @@ SET(CERES_INTERNAL_SRC
     problem.cc
     problem_impl.cc
     program.cc
+    reorder_program.cc
     residual_block.cc
     residual_block_utils.cc
     schur_complement_solver.cc
@@ -94,14 +97,16 @@ SET(CERES_INTERNAL_SRC
     scratch_evaluate_preparer.cc
     single_linkage_clustering.cc
     solver.cc
-    solver_impl.cc
+    solver_utils.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
     split.cc
     stringprintf.cc
     suitesparse.cc
+    summary_utils.cc
     triplet_sparse_matrix.cc
     trust_region_minimizer.cc
+    trust_region_solver.cc
     trust_region_strategy.cc
     types.cc
     visibility.cc
@@ -260,6 +265,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(partitioned_matrix_view)
   CERES_TEST(polynomial)
   CERES_TEST(problem)
+  CERES_TEST(program)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
   CERES_TEST(rotation)
@@ -267,7 +273,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(schur_eliminator)
   CERES_TEST(single_linkage_clustering)
   CERES_TEST(small_blas)
-  CERES_TEST(solver_impl)
+  CERES_TEST(solver)
 
   # TODO(sameeragarwal): This test should ultimately be made
   # independent of SuiteSparse.
