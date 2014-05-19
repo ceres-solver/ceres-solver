@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2013 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,47 +27,36 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//         keir@google.com (Keir Mierle)
 
-#include "ceres/preconditioner.h"
-#include "glog/logging.h"
+#ifndef CERES_INTERNAL_TRUST_REGION_SOLVER_H_
+#define CERES_INTERNAL_TRUST_REGION_SOLVER_H_
+
+#include <set>
+#include <string>
+#include <vector>
+#include "ceres/internal/port.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-Preconditioner::~Preconditioner() {
-}
+class ProblemImpl;
+class Program;
+class LinearSolver;
 
-PreconditionerType Preconditioner::AlternatePreconditionerForZeroEBlocks(
-    PreconditionerType preconditioner_type) {
-  if (preconditioner_type == SCHUR_JACOBI ||
-      preconditioner_type == CLUSTER_JACOBI ||
-      preconditioner_type == CLUSTER_TRIDIAGONAL) {
-    return JACOBI;
-  }
-  return preconditioner_type;
-}
+class TrustRegionSolver {
+ public:
+  static void Solve(const Solver::Options& options,
+                    ProblemImpl* problem_impl,
+                    Solver::Summary* summary);
 
-SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
-    const SparseMatrix* matrix)
-    : matrix_(CHECK_NOTNULL(matrix)) {
-}
-
-SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
-}
-
-bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
-                                                   const double* D) {
-  return true;
-}
-
-void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
-                                                      double* y) const {
-  matrix_->RightMultiply(x, y);
-}
-
-int  SparseMatrixPreconditionerWrapper::num_rows() const {
-  return matrix_->num_rows();
-}
+  static bool IsOrderingValid(const Solver::Options& options,
+                              const Program& program,
+                              string* error);
+};
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_SOLVER_IMPL_H_

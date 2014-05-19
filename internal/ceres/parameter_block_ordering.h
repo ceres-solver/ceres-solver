@@ -78,6 +78,10 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
 // parameter blocks, if they co-occur in a residual block.
 Graph<ParameterBlock*>* CreateHessianGraph(const Program& program);
 
+
+void OrderingToGroupSizes(ParameterBlockOrdering* ordering,
+                          vector<int>* group_sizes);
+
 }  // namespace internal
 }  // namespace ceres
 

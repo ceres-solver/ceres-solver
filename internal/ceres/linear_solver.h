@@ -274,6 +274,9 @@ class LinearSolver {
     string message;
   };
 
+  static LinearSolverType LinearSolverForZeroEBlocks(
+      LinearSolverType linear_solver_type);
+
   virtual ~LinearSolver();
 
   // Solve Ax = b.

@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2013 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,46 +28,31 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/preconditioner.h"
-#include "glog/logging.h"
+#ifndef CERES_INTERNAL_SOLVER_UTILS_H_
+#define CERES_INTERNAL_SOLVER_UTILS_H_
+
+#include <vector>
+#include <map>
+#include <string>
+#include "ceres/internal/port.h"
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-Preconditioner::~Preconditioner() {
-}
+class Program;
 
-PreconditionerType Preconditioner::AlternatePreconditionerForZeroEBlocks(
-    PreconditionerType preconditioner_type) {
-  if (preconditioner_type == SCHUR_JACOBI ||
-      preconditioner_type == CLUSTER_JACOBI ||
-      preconditioner_type == CLUSTER_TRIDIAGONAL) {
-    return JACOBI;
-  }
-  return preconditioner_type;
-}
+Program* CreateReducedProgram(const Program& program,
+                              vector<double*>* removed_parameter_blocks,
+                              double* fixed_cost,
+                              string* message);
 
-SparseMatrixPreconditionerWrapper::SparseMatrixPreconditionerWrapper(
-    const SparseMatrix* matrix)
-    : matrix_(CHECK_NOTNULL(matrix)) {
-}
-
-SparseMatrixPreconditionerWrapper::~SparseMatrixPreconditionerWrapper() {
-}
-
-bool SparseMatrixPreconditionerWrapper::UpdateImpl(const SparseMatrix& A,
-                                                   const double* D) {
-  return true;
-}
-
-void SparseMatrixPreconditionerWrapper::RightMultiply(const double* x,
-                                                      double* y) const {
-  matrix_->RightMultiply(x, y);
-}
-
-int  SparseMatrixPreconditionerWrapper::num_rows() const {
-  return matrix_->num_rows();
-}
+void Finish(const map<string, double>& evaluator_time_statistics,
+            const map<string, double>& linear_solver_time_statistics,
+            Program* program,
+            Solver::Summary* summary);
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_SOLVER_UTILS_H_

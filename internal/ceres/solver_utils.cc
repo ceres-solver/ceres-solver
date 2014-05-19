@@ -28,75 +28,56 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/linear_solver.h"
-
-#include "ceres/cgnr_solver.h"
-#include "ceres/dense_normal_cholesky_solver.h"
-#include "ceres/dense_qr_solver.h"
-#include "ceres/iterative_schur_complement_solver.h"
-#include "ceres/schur_complement_solver.h"
-#include "ceres/sparse_normal_cholesky_solver.h"
-#include "ceres/types.h"
-#include "glog/logging.h"
+#include "ceres/solver_utils.h"
+#include "ceres/internal/scoped_ptr.h"
+#include "ceres/map_util.h"
+#include "ceres/program.h"
+#include "ceres/summary_utils.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace internal {
 
-LinearSolver::~LinearSolver() {
+Program* CreateReducedProgram(const Program& program,
+                              vector<double*>* removed_parameter_blocks,
+                              double* fixed_cost,
+                              string* error) {
+  scoped_ptr<Program> reduced_program(new Program(program));
+  if (!reduced_program->RemoveFixedBlocks(removed_parameter_blocks,
+                                          fixed_cost,
+                                          error)) {
+    return NULL;
+  }
+
+  reduced_program->SetParameterOffsetsAndIndex();
+  return reduced_program.release();
 }
 
-LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
-    LinearSolverType linear_solver_type) {
-  if (!IsSchurType(linear_solver_type)) {
-    return linear_solver_type;
-  }
 
-  if (linear_solver_type == SPARSE_SCHUR) {
-    return SPARSE_NORMAL_CHOLESKY;
-  }
+void Finish(const map<string, double>& evaluator_time_statistics,
+            const map<string, double>& linear_solver_time_statistics,
+            Program* program,
+            Solver::Summary* summary) {
+  double post_process_start_time = WallTimeInSeconds();
+  SetSummaryFinalCost(summary);
 
-  if (linear_solver_type == DENSE_SCHUR) {
-    // TODO(sameeragarwal): This is probably not a great choice.
-    // Ideally, we should have a DENSE_NORMAL_CHOLESKY, that can take
-    // a BlockSparseMatrix as input.
-    return DENSE_QR;
-  }
+  // Ensure the program state is set to the user parameters on the way
+  // out.
+  program->SetParameterBlockStatePtrsToUserStatePtrs();
+  program->SetParameterOffsetsAndIndex();
 
-  if (linear_solver_type == ITERATIVE_SCHUR) {
-    return CGNR;
-  }
+  summary->linear_solver_time_in_seconds =
+      FindWithDefault(linear_solver_time_statistics,
+                      "LinearSolver::Solve",
+                      0.0);
 
-  return linear_solver_type;
-}
+  summary->residual_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+  summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
 
-LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
-  switch (options.type) {
-    case CGNR:
-      return new CgnrSolver(options);
-
-    case SPARSE_NORMAL_CHOLESKY:
-      return new SparseNormalCholeskySolver(options);
-
-    case SPARSE_SCHUR:
-      return new SparseSchurComplementSolver(options);
-
-    case DENSE_SCHUR:
-      return new DenseSchurComplementSolver(options);
-
-    case ITERATIVE_SCHUR:
-      return new IterativeSchurComplementSolver(options);
-
-    case DENSE_QR:
-      return new DenseQRSolver(options);
-
-    case DENSE_NORMAL_CHOLESKY:
-      return new DenseNormalCholeskySolver(options);
-
-    default:
-      LOG(FATAL) << "Unknown linear solver type :"
-                 << options.type;
-      return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
-  }
+  summary->postprocessor_time_in_seconds =
+      WallTimeInSeconds() - post_process_start_time;
 }
 
 }  // namespace internal

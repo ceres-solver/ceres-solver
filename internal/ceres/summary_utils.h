@@ -28,76 +28,17 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/linear_solver.h"
-
-#include "ceres/cgnr_solver.h"
-#include "ceres/dense_normal_cholesky_solver.h"
-#include "ceres/dense_qr_solver.h"
-#include "ceres/iterative_schur_complement_solver.h"
-#include "ceres/schur_complement_solver.h"
-#include "ceres/sparse_normal_cholesky_solver.h"
-#include "ceres/types.h"
-#include "glog/logging.h"
+#include <vector>
+#include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-LinearSolver::~LinearSolver() {
-}
+class Program;
 
-LinearSolverType LinearSolver::LinearSolverForZeroEBlocks(
-    LinearSolverType linear_solver_type) {
-  if (!IsSchurType(linear_solver_type)) {
-    return linear_solver_type;
-  }
-
-  if (linear_solver_type == SPARSE_SCHUR) {
-    return SPARSE_NORMAL_CHOLESKY;
-  }
-
-  if (linear_solver_type == DENSE_SCHUR) {
-    // TODO(sameeragarwal): This is probably not a great choice.
-    // Ideally, we should have a DENSE_NORMAL_CHOLESKY, that can take
-    // a BlockSparseMatrix as input.
-    return DENSE_QR;
-  }
-
-  if (linear_solver_type == ITERATIVE_SCHUR) {
-    return CGNR;
-  }
-
-  return linear_solver_type;
-}
-
-LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
-  switch (options.type) {
-    case CGNR:
-      return new CgnrSolver(options);
-
-    case SPARSE_NORMAL_CHOLESKY:
-      return new SparseNormalCholeskySolver(options);
-
-    case SPARSE_SCHUR:
-      return new SparseSchurComplementSolver(options);
-
-    case DENSE_SCHUR:
-      return new DenseSchurComplementSolver(options);
-
-    case ITERATIVE_SCHUR:
-      return new IterativeSchurComplementSolver(options);
-
-    case DENSE_QR:
-      return new DenseQRSolver(options);
-
-    case DENSE_NORMAL_CHOLESKY:
-      return new DenseNormalCholeskySolver(options);
-
-    default:
-      LOG(FATAL) << "Unknown linear solver type :"
-                 << options.type;
-      return NULL;  // MSVC doesn't understand that LOG(FATAL) never returns.
-  }
-}
+void SummarizeGivenProgram(const Program& program, Solver::Summary* summary);
+void SummarizeReducedProgram(const Program& program, Solver::Summary* summary);
+void SetSummaryFinalCost(Solver::Summary* summary);
 
 }  // namespace internal
 }  // namespace ceres

@@ -33,6 +33,7 @@
 
 #include <set>
 #include <string>
+#include <set>
 #include <vector>
 #include "ceres/internal/port.h"
 
