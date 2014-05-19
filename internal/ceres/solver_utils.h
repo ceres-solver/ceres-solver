@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,40 +27,32 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//         mierle@gmail.com (Keir Mierle)
 
-#ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
-#define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+#ifndef CERES_INTERNAL_SOLVER_UTILS_H_
+#define CERES_INTERNAL_SOLVER_UTILS_H_
 
-#include "ceres/minimizer.h"
+#include <vector>
+#include <map>
+#include <string>
+#include "ceres/internal/port.h"
 #include "ceres/solver.h"
-#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
-//
-// For example usage, see SolverImpl::Minimize.
-class TrustRegionMinimizer : public Minimizer {
- public:
-  ~TrustRegionMinimizer() {}
-  virtual void Minimize(const Minimizer::Options& options,
-                        double* parameters,
-                        Solver::Summary* summary);
+class Program;
 
- private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem(const int iteration,
-                                          const SparseMatrix* jacobian,
-                                          const double* residuals,
-                                          const double* step) const;
+Program* CreateReducedProgram(const Program& program,
+                              vector<double*>* removed_parameter_blocks,
+                              double* fixed_cost,
+                              string* message);
 
-  Minimizer::Options options_;
-};
+void Finish(const map<string, double>& evaluator_time_statistics,
+            const map<string, double>& linear_solver_time_statistics,
+            Program* program,
+            Solver::Summary* summary);
 
 }  // namespace internal
 }  // namespace ceres
-#endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
+
+#endif  // CERES_INTERNAL_SOLVER_UTILS_H_

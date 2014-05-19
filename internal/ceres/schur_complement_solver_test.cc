@@ -65,8 +65,8 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     LinearSolver::Options options;
     options.type = DENSE_QR;
-
-    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options));
+    string error;
+    scoped_ptr<LinearSolver> qr(LinearSolver::Create(options, &error));
 
     TripletSparseMatrix triplet_A(A->num_rows(),
                                   A->num_cols(),
@@ -102,7 +102,8 @@ class SchurComplementSolverTest : public ::testing::Test {
         sparse_linear_algebra_library_type;
     options.use_postordering = use_postordering;
 
-    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+    string error;
+    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options, &error));
 
     LinearSolver::PerSolveOptions per_solve_options;
     LinearSolver::Summary summary;

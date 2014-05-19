@@ -57,8 +57,6 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
   }
 
   void TestSolver(const LinearSolver::Options& options) {
-
-
     LinearSolver::PerSolveOptions per_solve_options;
     LinearSolver::Summary unregularized_solve_summary;
     LinearSolver::Summary regularized_solve_summary;
@@ -86,7 +84,8 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
     }
 
     // Unregularized
-    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options));
+    string error;
+    scoped_ptr<LinearSolver> solver(LinearSolver::Create(options, &error));
     unregularized_solve_summary =
         solver->Solve(transformed_A.get(),
                       b_.get(),
@@ -94,7 +93,7 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
                       x_unregularized.data());
 
     // Sparsity structure is changing, reset the solver.
-    solver.reset(LinearSolver::Create(options));
+    solver.reset(LinearSolver::Create(options, &error));
     // Regularized solution
     per_solve_options.D = D_.get();
     regularized_solve_summary =

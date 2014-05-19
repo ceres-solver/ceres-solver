@@ -32,6 +32,7 @@
 
 #include <limits>
 #include <cmath>
+#include <vector>
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -69,6 +70,52 @@ TEST(ArrayUtils, FindInvalidIndex) {
   EXPECT_EQ(FindInvalidValue(1, NULL), 1);
   InvalidateArray(3, x);
   EXPECT_EQ(FindInvalidValue(3, x), 0);
+}
+
+TEST(CompactifyArray, ContiguousEntries) {
+  vector<int> array;
+  array.push_back(0);
+  array.push_back(1);
+  vector<int> expected = array;
+  CompactifyArray(array.size(), &array[0]);
+  EXPECT_EQ(array, expected);
+  array.clear();
+
+  array.push_back(1);
+  array.push_back(0);
+  expected = array;
+  CompactifyArray(array.size(), &array[0]);
+  EXPECT_EQ(array, expected);
+}
+
+TEST(CompactifyArray, NonContiguousEntries) {
+  vector<int> array;
+  array.push_back(0);
+  array.push_back(2);
+  vector<int> expected;
+  expected.push_back(0);
+  expected.push_back(1);
+  CompactifyArray(array.size(), &array[0]);
+  EXPECT_EQ(array, expected);
+}
+
+TEST(CompactifyArray, NonContiguousRepeatingEntries) {
+  vector<int> array;
+  array.push_back(3);
+  array.push_back(1);
+  array.push_back(0);
+  array.push_back(0);
+  array.push_back(0);
+  array.push_back(5);
+  vector<int> expected;
+  expected.push_back(2);
+  expected.push_back(1);
+  expected.push_back(0);
+  expected.push_back(0);
+  expected.push_back(0);
+  expected.push_back(3);
+  CompactifyArray(array.size(), &array[0]);
+  EXPECT_EQ(array, expected);
 }
 
 }  // namespace internal

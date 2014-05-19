@@ -144,5 +144,23 @@ CreateHessianGraph(const Program& program) {
   return graph;
 }
 
+// Iterate over each of the groups in order of their priority and fill
+// group_sizes.
+void OrderingToGroupSizes(ParameterBlockOrdering* ordering,
+                          vector<int>* group_sizes) {
+  CHECK_NOTNULL(group_sizes)->clear();
+  if (ordering == NULL) {
+    return;
+  }
+
+  const map<int, set<double*> >& group_to_elements =
+      ordering->group_to_elements();
+  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+       it != group_to_elements.end();
+       ++it) {
+    group_sizes->push_back(it->second.size());
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres

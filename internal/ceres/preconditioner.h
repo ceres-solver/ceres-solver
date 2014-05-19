@@ -36,6 +36,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/linear_operator.h"
 #include "ceres/sparse_matrix.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
@@ -94,6 +95,9 @@ class Preconditioner : public LinearOperator {
     int e_block_size;
     int f_block_size;
   };
+
+  static PreconditionerType AlternatePreconditionerForZeroEBlocks(
+      PreconditionerType preconditioner_type);
 
   virtual ~Preconditioner();
 

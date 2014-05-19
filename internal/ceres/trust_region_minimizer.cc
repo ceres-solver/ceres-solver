@@ -27,6 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//         mierle@gmail.com (Keir Mierle)
 
 #include "ceres/trust_region_minimizer.h"
 
