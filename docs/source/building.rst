@@ -11,6 +11,7 @@ Getting the source code
 You can start with the `latest stable release
 <http://ceres-solver.org/ceres-solver-1.8.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
+
 .. code-block:: bash
 
        git clone https://ceres-solver.googlesource.com/ceres-solver
