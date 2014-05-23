@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb46caf_d17e7637",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-23T22:20:53Z",
+      "side": 1,
+      "message": "There are several ports it appears:\n\nhttps://github.com/TheFrenchLeaf/CXSparse\nhttps://github.com/PetterS/CXSparse/commits/master\n\nNote that Petter has contributed to Ceres as well.",
+      "revId": "d0de26d19f09c15b0fd9612ab996428f5335bc7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
