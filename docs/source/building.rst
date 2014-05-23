@@ -480,6 +480,16 @@ scripts shipped with Ceres support two ways for you to do this:
    are always visible in the *Advanced View*.  They can also be
    set directly via ``-D<VAR>=<VALUE>`` arguments to ``CMake``.
 
+If you are building on an exotic system, then the standard find package
+scripts for ``BLAS`` & ``LAPACK`` which ship with ``CMake`` might not
+work.  In this case, one option would be to write your own custom versions for your
+environment and then set ``CMAKE_MODULE_PATH`` to the directory containing
+these custom scripts when invoking ``CMake`` to build Ceres and they will
+be used in preference to the default versions.  However, in order for this to work,
+your scripts must provide the full set of variables provided by the default scripts.
+Also, if you are building Ceres with ``SuiteSparse``, the versions of ``BLAS``
+& ``LAPACK`` used by ``SuiteSparse`` and Ceres should be the same.
+
 .. _section-using-ceres:
 
 Using Ceres with CMake
