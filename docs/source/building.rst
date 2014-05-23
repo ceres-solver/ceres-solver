@@ -250,9 +250,9 @@ Building on Windows with Visual Studio
 
 On Windows, we support building with Visual Studio 2010 or newer. Note
 that the Windows port is less featureful and less tested than the
-Linux or Mac OS X versions due to the unavailability of SuiteSparse
-and ``CXSparse``. Building is also more involved since there is no
-automated way to install the dependencies.
+Linux or Mac OS X versions due to the unofficial availability of ``SuiteSparse``
+and ``CXSparse``. Building is also more involved since there is no automated
+way to install the dependencies.
 
 #. Make a toplevel directory for deps & build & src somewhere: ``ceres/``
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
@@ -263,6 +263,18 @@ automated way to install the dependencies.
 
    #. ``google-glog`` Open up the Visual Studio solution and build it.
    #. ``gflags`` Open up the Visual Studio solution and build it.
+
+   #. (Experimental) ``SuiteSparse`` Previously SuiteSparse was not available
+      on Windows, recently it has become possible to build it on Windows using
+      the `suitesparse-metis-for-windows <https://github.com/jlblancoc/suitesparse-metis-for-windows>`_
+      project.  If you wish to use ``SuiteSparse``, follow their instructions
+      for obtaining and building it.
+
+   #. (Experimental) ``CXSparse`` Previously CXSparse was not available on
+      Windows, there are now several ports that enable it to be, including:
+      `[1] <https://github.com/PetterS/CXSparse>`_ and
+      `[2] <https://github.com/TheFrenchLeaf/CXSparse>`_.  If you wish to use
+      ``CXSparse``, follow their instructions for obtaining and building it.
 
 #. Unpack the Ceres tarball into ``ceres``. For the tarball, you
    should get a directory inside ``ceres`` similar to
@@ -280,15 +292,22 @@ automated way to install the dependencies.
 #. Try running ``Configure``. It won't work. It'll show a bunch of options.
    You'll need to set:
 
-   #. ``EIGEN_INCLUDE_DIR``
-   #. ``GLOG_INCLUDE_DIR``
-   #. ``GLOG_LIBRARY``
-   #. ``GFLAGS_INCLUDE_DIR``
-   #. ``GFLAGS_LIBRARY``
+   #. ``EIGEN_INCLUDE_DIR_HINTS``
+   #. ``GLOG_INCLUDE_DIR_HINTS``
+   #. ``GLOG_LIBRARY_DIR_HINTS``
+   #. ``GFLAGS_INCLUDE_DIR_HINTS``
+   #. ``GFLAGS_LIBRARY_DIR_HINTS``
+   #. (Optional) ``SUITESPARSE_INCLUDE_DIR_HINTS``
+   #. (Optional) ``SUITESPARSE_LIBRARY_DIR_HINTS``
+   #. (Optional) ``CXSPARSE_INCLUDE_DIR_HINTS``
+   #. (Optional) ``CXSPARSE_LIBRARY_DIR_HINTS``
 
-   to the appropriate place where you unpacked/built them. If any of the
-   variables are not visible in the ``CMake`` GUI, toggle to the
-   *Advanced View* with ``<t>``.
+   to the appropriate directories where you unpacked/built them. If any of
+   the variables are not visible in the ``CMake`` GUI, create a new entry
+   for them.  We recommend using the ``<NAME>_(INCLUDE/LIBRARY)_DIR_HINTS``
+   variables rather than setting the ``<NAME>_INCLUDE_DIR`` &
+   ``<NAME>_LIBRARY`` variables directly to keep all of the validity
+   checking, and to avoid having to specify the library files manually.
 
 #. You may have to tweak some more settings to generate a MSVC
    project.  After each adjustment, try pressing Configure & Generate
@@ -313,7 +332,7 @@ Notes:
    ``CGNR``, and ``ITERATIVE_SCHUR``.
 #. We're looking for someone to work with upstream ``SuiteSparse`` to
    port their build system to something sane like ``CMake``, and get a
-   supported Windows port.
+   fully supported Windows port.
 
 
 .. _section-android:
@@ -431,9 +450,10 @@ Options controlling Ceres configuration
    shared library.
 
 #. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
-   the documentation, requires `Sphinx <http://sphinx-doc.org/>`_. In
-   addition, ``make ceres_docs`` can be used to build only the
-   documentation.
+   the documentation, requires `Sphinx <http://sphinx-doc.org/>`_ and the
+   `sphinx_rtd_theme <https://pypi.python.org/pypi/sphinx_rtd_theme>`_
+   package available from the Python package index. In addition,
+   ``make ceres_docs`` can be used to build only the documentation.
 
 #. ``MSVC_USE_STATIC_CRT [Default: OFF]`` *Windows Only*: By default
    Ceres will use the Visual Studio default, *shared* C-Run Time (CRT) library.
