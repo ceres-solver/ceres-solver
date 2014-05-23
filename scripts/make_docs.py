@@ -80,12 +80,15 @@ replacements = [
 # This is a nasty hack to strip the breadcrumb navigation. A better strategy is
 # to fork the upstream template, but that is no fun either. Whitespace matters!
 # This doesn't use regular expressions since the escaping makes it untenable.
-breadcrumb_start = \
+breadcrumb_start_other = \
 '''<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
     <li>'''
+
+# The index page has a slightly different breadcrumb.
+breadcrumb_start_index = breadcrumb_start_other.replace('index.html', '#')
 
 breadcrumb_end = \
 '''</li>
@@ -105,6 +108,9 @@ for name in glob.glob('%s/*.html' % html_dir):
     out = out.replace(input_pattern, output_pattern)
 
   try:
+    breadcrumb_start = breadcrumb_start_index \
+                       if name.endswith('index.html') \
+                       else breadcrumb_start_other
     pre_breadcrumb_start, post_breadcrumb_start = out.split(breadcrumb_start)
     title, post_breadcrumb_end = post_breadcrumb_start.split(breadcrumb_end)
     print 'Stripping breadcrumb for -', title
