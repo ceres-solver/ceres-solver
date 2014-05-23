@@ -25,49 +25,45 @@ Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
-1. `CMake <http://www.cmake.org>`_ is a cross platform build
-system. Ceres needs a relatively recent version of CMake (version
-2.8.0 or better).
+- `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ 3.0 or later.
+  **Required**
 
-2. `eigen3 <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ is
-used for doing all the low level matrix and linear algebra operations.
+- `CMake <http://www.cmake.org>`_ 2.8.0 or later.
+  **Required on all platforms except for Android.**
 
-3. `google-glog <http://code.google.com/p/google-glog>`_ is
-used for error checking and logging. Ceres needs glog version 0.3.1 or
-later. Version 0.3 (which ships with Fedora 16) has a namespace bug
-which prevents Ceres from building. Ceres contains a stripped-down,
-minimal version of ``glog`` called ``miniglog``, which can be enabled
-with the ``MINIGLOG`` build option. If enabled, it replaces the
-requirement for ``glog``. However, in general it is recommended that
-you use the full ``glog``.
+- `Google Log <http://code.google.com/p/google-glog>`_ 0.3.1 or
+  later. **Recommended**
 
-4. `gflags <http://code.google.com/p/gflags>`_ is a library for
-processing command line flags. It is used by some of the examples and
-tests. While it is not strictly necessary to build the library, we
-strongly recommend building the library with gflags.
+  Ceres has a minimal replacement of ``glog`` called ``miniglog``,
+  enabled with the ``MINIGLOG`` build option. ``miniglog`` replaces
+  the requirement for ``glog``. We advise using full ``glog`` due to
+  performance compromises in ``miniglog``. ``miniglog`` is needed on
+  Android.
 
-5. `SuiteSparse
-<http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_ is used for
-sparse matrix analysis, ordering and factorization. In particular
-Ceres uses the AMD, CAMD, COLAMD and CHOLMOD libraries. This is an optional
-dependency.
+- `Google Flags <http://code.google.com/p/gflags>`_. Needed to build
+  examples and tests.
 
-6. `CXSparse <http://www.cise.ufl.edu/research/sparse/CXSparse/>`_ is
-a sparse matrix library similar in scope to ``SuiteSparse`` but with
-no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
-build process and a smaller binary.  The simplicity comes at a cost --
-for all but the most trivial matrices, ``SuiteSparse`` is
-significantly faster than ``CXSparse``. This is an optional dependency.
+- `SuiteSparse
+  <http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_. Needed for
+  analyzing and solving sparse systems. Ceres useses the AMD, CAMD,
+  COLAMD and CHOLMOD libraries.
+  **Optional; strongly recomended for bundle adjustment**
 
-7. `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
-<http://www.netlib.org/lapack/>`_ routines are needed by
-SuiteSparse, and optionally used by Ceres directly for some operations.
-We recommend `ATLAS <http://math-atlas.sourceforge.net/>`_,
-which includes BLAS and LAPACK routines. It is also possible to use
-`OpenBLAS <https://github.com/xianyi/OpenBLAS>`_ . However, one needs
-to be careful to `turn off the threading
-<https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
-inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
+- `CXSparse <http://www.cise.ufl.edu/research/sparse/CXSparse/>`_.
+  Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
+  no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
+  build process and a smaller binary. **Optional**
+
+- `BLAS <http://www.netlib.org/blas/>`_ and `LAPACK
+  <http://www.netlib.org/lapack/>`_ routines are needed by
+  SuiteSparse, and optionally used by Ceres directly for some operations.
+  We recommend `ATLAS <http://math-atlas.sourceforge.net/>`_,
+  which includes BLAS and LAPACK routines. It is also possible to use
+  `OpenBLAS <https://github.com/xianyi/OpenBLAS>`_ . However, one needs
+  to be careful to `turn off the threading
+  <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
+  inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
+  **Optional but required for SuiteSparse**
 
 .. _section-linux:
 
