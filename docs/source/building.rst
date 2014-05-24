@@ -332,12 +332,15 @@ Building on iOS
 
    You need iOS version 6.0 or higher to build Ceres Solver.
 
-To build Ceres for iOS, we need to force ``CMake`` to find the
-toolchains from the iOS SDK instead of using the standard ones.
-The following incanation does the needful:
+To build Ceres for iOS, we need to force ``CMake`` to find the toolchains from
+the iOS SDK instead of using the standard ones. For example:
 
 .. code-block:: bash
 
+   tar zxf ceres-solver-1.8.0.tar.gz
+   mv ceres-solver-1.8.0 ceres-solver
+   mkdir ceres-bin
+   cd ceres-bin
    cmake ../ceres-solver \
    -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
    -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
@@ -349,16 +352,16 @@ build for ``OS`` (``armv7``, ``armv7s``, ``arm64``), ``SIMULATOR`` (``i386``) or
 one static library.  See ``cmake/iOS.cmake`` for more options.
 
 After building, you will get ``libceres.a`` and ``libminiglog.a``
-You need to add these two libraries into your xcode project.
+You need to add these two libraries into your XCode project.
 
-The default cmake configuration builds a bare bones version of Ceres
+The default CMake configuration builds a bare bones version of Ceres
 Solver that only depends on Eigen and MINIGLOG, this should be
 sufficient for solving small to moderate sized problems (No
 ``SPARSE_SCHUR``, ``SPARSE_NORMAL_CHOLESKY`` linear solvers and no
 ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` preconditioners).
 
 If you decide to use ``LAPACK`` and ``BLAS``, then you also need to add
-``Accelerate.framework`` to your xcode project's linking dependency.
+``Accelerate.framework`` to your XCode project's linking dependency.
 
 .. _section-customizing:
 
