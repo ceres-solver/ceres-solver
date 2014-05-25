@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf65bc2b_94af841c",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-25T04:37:28Z",
+      "side": 1,
+      "message": "I am not sure its worth adding the tar and the mv and the mkdir instructions. they seem rather pointless to me.",
+      "range": {
+        "startLine": 341,
+        "startChar": 6,
+        "endLine": 341,
+        "endChar": 11
+      },
+      "revId": "999ae4407927502bde41acf2ff742a0de70b9f3e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
