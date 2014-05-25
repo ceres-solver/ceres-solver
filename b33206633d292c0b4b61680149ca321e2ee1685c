@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf65bc2b_74c908ee",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-25T04:33:42Z",
+      "side": 1,
+      "message": "the folder is actually called \"cmake\"",
+      "parentUuid": "3f52ac51_d8bf6d97",
+      "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f52ac51_d8d64dcf",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-05-24T17:02:54Z",
       "side": 1,
       "message": "I could see the current behavior also being correct. Could this not break existing behavior? Perhaps make a new variable CMAKE_EXTRA_SOURCE_DIR instead?\n\nI don\u0027t feel strongly; just that we\u0027ve had this behavior forever.",
+      "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf65bc2b_54ce8cf7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-25T04:33:42Z",
+      "side": 1,
+      "message": "I am not sure what the convention here is in other cmake scripts? any other examples of this sort of stuff?",
+      "parentUuid": "3f52ac51_d8d64dcf",
       "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
