@@ -16,6 +16,24 @@
       "revId": "d0de26d19f09c15b0fd9612ab996428f5335bc7e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f34c006_218e2eb1",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-26T18:40:39Z",
+      "side": 1,
+      "message": "Done - although do we know if anyone has actually used these to build Ceres with CXSparse?",
+      "parentUuid": "3fb46caf_d17e7637",
+      "revId": "d0de26d19f09c15b0fd9612ab996428f5335bc7e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
