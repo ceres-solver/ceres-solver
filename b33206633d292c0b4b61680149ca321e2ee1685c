@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9fa47888_a63868e8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-26T19:13:00Z",
+      "side": 1,
+      "message": "Honestly, I have seen both approaches in the wild, I think that appending to CMAKE_MODULE_PATH is pretty common though (e.g [1] from Clang) and it is my default elsewhere.  My temptation would be to stick with it, because it\u0027s detailed in the CMake docs and so I\u0027m tempted not to add another different variable that would basically do the same thing, but would be Ceres specific.\n\nI don\u0027t think that this could break anything, as CMAKE_MODULE_PATH is empty by default.\n\n[1] http://opensource.apple.com/source/clang/clang-163.7.1/src/CMakeLists.txt",
+      "parentUuid": "bf65bc2b_54ce8cf7",
+      "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f52ac51_b8ea7983",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "writtenOn": "2014-05-24T17:02:54Z",
       "side": 1,
       "message": "This paragraph could use better wrapping. gqap in vim is your friend :)",
+      "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f34c006_619836f0",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-26T19:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f52ac51_b8ea7983",
       "revId": "b33206633d292c0b4b61680149ca321e2ee1685c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
