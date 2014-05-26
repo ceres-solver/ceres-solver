@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf65bc2b_3d1db353",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-05-26T22:17:20Z",
+      "side": 1,
+      "message": "This sentence is odd. I think a better phrasing of this is.\n\n\"is less feature and less tested than the Linux or Mac OS X versions due to the lack of an officially supported way of building SuiteSparse and CXSparse. There are however a number of unofficial ways of building these libraries. Using them is a bit more involved since there is no automated way to install the dependencies.\"",
+      "range": {
+        "startLine": 253,
+        "startChar": 38,
+        "endLine": 253,
+        "endChar": 48
+      },
+      "revId": "a33f0a5b713aec68bc7fb56c233e222793e7209a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
