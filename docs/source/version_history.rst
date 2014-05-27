@@ -4,8 +4,8 @@
 Releases
 ========
 
-HEAD
-====
+1.9.0
+=====
 
 New Features
 ------------
@@ -40,7 +40,8 @@ New Features
    DynamicAutoDiffCostFunction. (Joydeep Biswas)
 #. Homography estimation example from Blender demonstrating the use of
    a custom ``IterationCallback``. (Sergey Sharybin)
-
+#. Support user passing a custom CMAKE_MODULE_PATH (for BLAS /
+   LAPACK).
 
 Backward Incompatible API Changes
 ---------------------------------
@@ -90,6 +91,7 @@ Backward Incompatible API Changes
 Bug Fixes
 ---------
 
+#. Disabled warning C4251. (Björn Piltz)
 #. Do not propagate 3d party libs through
    `IMPORTED_LINK_INTERFACE_LIBRARIES_[DEBUG/RELEASE]` mechanism when
    building shared libraries. (Björn Piltz)
