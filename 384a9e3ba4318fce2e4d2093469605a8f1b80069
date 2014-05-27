@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff71899_0ec88b8a",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-27T17:53:18Z",
+      "side": 1,
+      "message": "I suggest dropping the periods. Most of these are not complete sentences.",
+      "revId": "384a9e3ba4318fce2e4d2093469605a8f1b80069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ff71899_ce3843ea",
+        "filename": "scripts/ceres-solver.spec",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-27T17:53:18Z",
+      "side": 1,
+      "message": "comma after Android. Always a comma in lists with more than 2.\n\n  x and y\n  x, y, and z\n\nnot\n\n  x, y and z",
+      "revId": "384a9e3ba4318fce2e4d2093469605a8f1b80069",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
