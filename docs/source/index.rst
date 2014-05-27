@@ -54,7 +54,7 @@ Getting started
 ---------------
 
 * Download the `latest stable release
-  <http://ceres-solver.org/ceres-solver-1.8.0.tar.gz>`_ or clone the
+  <http://ceres-solver.org/ceres-solver-1.9.0.tar.gz>`_ or clone the
   Git repository for the latest development version.
 
   .. code-block:: bash

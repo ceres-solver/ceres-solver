@@ -9,7 +9,7 @@ Getting the source code
 .. _section-source:
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-1.8.0.tar.gz>`_ . Or if you want
+<http://ceres-solver.org/ceres-solver-1.9.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -114,10 +114,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.8.0.tar.gz
+ tar zxf ceres-solver-1.9.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.8.0
+ cmake ../ceres-solver-1.9.0
  make -j3
  make test
 
@@ -127,7 +127,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-1.8.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-1.9.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -233,10 +233,10 @@ We are now ready to build and test Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.8.0.tar.gz
+   tar zxf ceres-solver-1.9.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.8.0
+   cmake ../ceres-solver-1.9.0
    make -j3
    make test
 
@@ -341,8 +341,9 @@ Notes:
 Building on Android
 ===================
 
-Download the ``Android NDK``. Run ``ndk-build`` from inside the
-``jni`` directory. Use the ``libceres.a`` that gets created.
+Download the ``Android NDK`` version ``r9d`` or later. Run
+``ndk-build`` from inside the ``jni`` directory. Use the
+``libceres.a`` that gets created.
 
 .. _section-ios:
 
