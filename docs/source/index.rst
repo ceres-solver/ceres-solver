@@ -30,7 +30,7 @@ since 2010. At Google, Ceres Solver is used to:
 
 * Estimate the pose of `Street View`_ cars, aircrafts, and satellites.
 * Build 3D models for `PhotoTours`_.
-* Estmate satellite image sensor characteristics.
+* Estimate satellite image sensor characteristics.
 * Stitch `panoramas`_ or apply `Lens Blur`_ on Android.
 * Solve `bundle adjustment`_ and SLAM problems in `Project Tango`_.
 
