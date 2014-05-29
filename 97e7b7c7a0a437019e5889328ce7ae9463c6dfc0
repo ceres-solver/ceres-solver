@@ -16,6 +16,24 @@
       "revId": "97e7b7c7a0a437019e5889328ce7ae9463c6dfc0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fcab88f_d6526221",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-29T21:25:11Z",
+      "side": 1,
+      "message": "I was trying to keep this file operating purely on arrays. \nif you are okay with doing vectors here, sure. the nice thing is, this way you can always operate on a vector by passing the underlying data ptr, but not the other way around.",
+      "parentUuid": "7fc0a468_09f7956f",
+      "revId": "97e7b7c7a0a437019e5889328ce7ae9463c6dfc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
