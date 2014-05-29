@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_5459a467",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:48:44Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "6d16beb4b773129c4372e2b317b7b680a0bed86a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc0a468_744ca8ab",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:48:44Z",
+      "side": 1,
+      "message": "-\u003e 2014 only",
+      "revId": "6d16beb4b773129c4372e2b317b7b680a0bed86a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc0a468_f4467886",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:48:44Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "6d16beb4b773129c4372e2b317b7b680a0bed86a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fc0a468_b4692004",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:48:44Z",
+      "side": 1,
+      "message": "update copyright; 2014 only",
+      "revId": "6d16beb4b773129c4372e2b317b7b680a0bed86a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
