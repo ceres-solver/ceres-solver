@@ -1197,33 +1197,16 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
   ParameterBlockOrdering* ordering_ptr  = NULL;
 
   if (options.inner_iteration_ordering.get() == NULL) {
-    // Find a recursive decomposition of the Hessian matrix as a set
-    // of independent sets of decreasing size and invert it. This
-    // seems to work better in practice, i.e., Cameras before
-    // points.
-    inner_iteration_ordering.reset(new ParameterBlockOrdering);
-    ComputeRecursiveIndependentSetOrdering(program,
-                                           inner_iteration_ordering.get());
-    inner_iteration_ordering->Reverse();
+    inner_iteration_ordering.reset(
+        CoordinateDescentMinimizer::CreateOrdering(program));
     ordering_ptr = inner_iteration_ordering.get();
   } else {
-    const map<int, set<double*> >& group_to_elements =
-        options.inner_iteration_ordering->group_to_elements();
-
-    // Iterate over each group and verify that it is an independent
-    // set.
-    map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-    for ( ; it != group_to_elements.end(); ++it) {
-      if (!IsParameterBlockSetIndependent(it->second,
-                                          program.residual_blocks())) {
-        summary->message =
-            StringPrintf("The user-provided "
-                         "parameter_blocks_for_inner_iterations does not "
-                         "form an independent set. Group Id: %d", it->first);
-        return NULL;
-      }
-    }
     ordering_ptr = options.inner_iteration_ordering.get();
+    if (!CoordinateDescentMinimizer::IsOrderingValid(program,
+                                                     *ordering_ptr,
+                                                     &summary->message)) {
+      return NULL;
+    }
   }
 
   if (!inner_iteration_minimizer->Init(program,
