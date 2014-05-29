@@ -1522,17 +1522,6 @@ elimination group [LiSaad]_.
    iteration. This setting is useful when building an interactive
    application using Ceres and using an :class:`IterationCallback`.
 
-.. member:: string Solver::Options::solver_log
-
-   Default: ``empty``
-
-   If non-empty, a summary of the execution of the solver is recorded
-   to this file.  This file is used for recording and Ceres'
-   performance. Currently, only the iteration number, total time and
-   the objective function value are logged. The format of this file is
-   expected to change over time as the performance evaluation
-   framework is fleshed out.
-
 :class:`ParameterBlockOrdering`
 -------------------------------
 
