@@ -34,6 +34,7 @@
 #include <iostream>  // NOLINT
 #include <numeric>
 #include <string>
+#include "ceres/array_utils.h"
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/cxsparse.h"
 #include "ceres/evaluator.h"
@@ -1707,7 +1708,7 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
     // Renumber the entries of constraints to be contiguous integers
     // as camd requires that the group ids be in the range [0,
     // parameter_blocks.size() - 1].
-    SolverImpl::CompactifyArray(&constraints);
+    MapValuesToContiguousRange(constraints.size(), &constraints[0]);
 
     // Set the offsets and index for CreateJacobianSparsityTranspose.
     program->SetParameterOffsetsAndIndex();
@@ -1830,21 +1831,6 @@ bool SolverImpl::ReorderProgramForSparseNormalCholesky(
 
   program->SetParameterOffsetsAndIndex();
   return true;
-}
-
-void SolverImpl::CompactifyArray(vector<int>* array_ptr) {
-  vector<int>& array = *array_ptr;
-  const set<int> unique_group_ids(array.begin(), array.end());
-  map<int, int> group_id_map;
-  for (set<int>::const_iterator it = unique_group_ids.begin();
-       it != unique_group_ids.end();
-       ++it) {
-    InsertOrDie(&group_id_map, *it, group_id_map.size());
-  }
-
-  for (int i = 0; i < array.size(); ++i) {
-    array[i] = group_id_map[array[i]];
-  }
 }
 
 }  // namespace internal
