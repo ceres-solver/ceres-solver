@@ -40,15 +40,15 @@
 #include "ceres/evaluator.h"
 #include "ceres/linear_solver.h"
 #include "ceres/minimizer.h"
-#include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
+#include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/solver.h"
-#include "ceres/solver_impl.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
+#include "ceres/parameter_block_ordering.h"
 
 namespace ceres {
 namespace internal {
@@ -231,6 +231,39 @@ void CoordinateDescentMinimizer::Solve(Program* program,
 
   TrustRegionMinimizer minimizer;
   minimizer.Minimize(minimizer_options, parameter, summary);
+}
+
+bool CoordinateDescentMinimizer::IsOrderingValid(
+    const Program& program,
+    const ParameterBlockOrdering& ordering,
+    string* message) {
+  const map<int, set<double*> >& group_to_elements =
+      ordering.group_to_elements();
+
+  // Verify that each group is an independent set
+  map<int, set<double*> >::const_iterator it = group_to_elements.begin();
+  for ( ; it != group_to_elements.end(); ++it) {
+    if (!program.IsParameterBlockSetIndependent(it->second)) {
+      *message =
+          StringPrintf("The user-provided "
+                       "parameter_blocks_for_inner_iterations does not "
+                       "form an independent set. Group Id: %d", it->first);
+      return false;
+    }
+  }
+  return true;
+}
+
+// Find a recursive decomposition of the Hessian matrix as a set
+// of independent sets of decreasing size and invert it. This
+// seems to work better in practice, i.e., Cameras before
+// points.
+ParameterBlockOrdering* CoordinateDescentMinimizer::CreateOrdering(
+    const Program& program) {
+  scoped_ptr<ParameterBlockOrdering> ordering(new ParameterBlockOrdering);
+  ComputeRecursiveIndependentSetOrdering(program, ordering.get());
+  ordering->Reverse();
+  return ordering.release();
 }
 
 }  // namespace internal
