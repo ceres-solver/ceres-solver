@@ -33,6 +33,7 @@
 
 #include <map>
 #include <set>
+#include <vector>
 #include "ceres/internal/port.h"
 
 namespace ceres {
@@ -87,6 +88,10 @@ class OrderedGroups {
   // Remove the element, no matter what group it is in. Return value
   // indicates if the element was actually removed.
   bool Remove(const T element) {
+    if (NumElements() == 0) {
+      return false;
+    }
+
     const int current_group = GroupId(element);
     if (current_group < 0) {
       return false;
@@ -101,6 +106,20 @@ class OrderedGroups {
 
     element_to_group_.erase(element);
     return true;
+  }
+
+  // Bulk remove elements. The return value indicates the number of
+  // elements successfully removed.
+  int Remove(const vector<T>& elements) {
+    if (NumElements() == 0 || elements.size() == 0) {
+      return 0;
+    }
+
+    int num_removed = 0;
+    for (int i = 0; i < elements.size(); ++i) {
+      num_removed += Remove(elements[i]);
+    }
+    return num_removed;
   }
 
   // Reverse the order of the groups in place.
@@ -158,6 +177,10 @@ class OrderedGroups {
 
   const map<int, set<T> >& group_to_elements() const {
     return group_to_elements_;
+  }
+
+  const map<T, int>& element_to_group() const {
+    return element_to_group_;
   }
 
  private:
