@@ -7,11 +7,15 @@ Releases
 HEAD
 ====
 
+#. Added ``Solver::Options::IsValid`` which allows users to validate
+   their solver configuration before calling ``Solve``.
+
 Backward Incompatible API Changes
 ---------------------------------
 
 #. ``Solver::Options::solver_log`` has been removed. If needed this
    iteration callback can easily be implemented in user code.
+
 
 
 1.9.0

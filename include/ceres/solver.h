@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -125,6 +125,10 @@ class CERES_EXPORT Solver {
       numeric_derivative_relative_step_size = 1e-6;
       update_state_every_iteration = false;
     }
+
+    // Is the solver configured correctly. If not, then error contains
+    // a textual description of the problem.
+    bool IsValid(string* error) const;
 
     // Minimizer options ----------------------------------------
 
