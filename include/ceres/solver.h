@@ -126,6 +126,10 @@ class CERES_EXPORT Solver {
       update_state_every_iteration = false;
     }
 
+    // Is the solver configured correctly. If not, then error contains
+    // a textual description of the problem.
+    bool IsValid(string* error) const;
+
     // Minimizer options ----------------------------------------
 
     // Ceres supports the two major families of optimization strategies -
