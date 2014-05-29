@@ -43,6 +43,7 @@ SET(CERES_INTERNAL_SRC
     c_api.cc
     canonical_views_clustering.cc
     cgnr_solver.cc
+    callbacks.cc
     compressed_col_sparse_matrix_utils.cc
     compressed_row_jacobian_writer.cc
     compressed_row_sparse_matrix.cc

@@ -35,6 +35,7 @@
 #include <numeric>
 #include <string>
 #include "ceres/array_utils.h"
+#include "ceres/callbacks.h"
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/cxsparse.h"
 #include "ceres/evaluator.h"
@@ -61,26 +62,6 @@ namespace ceres {
 namespace internal {
 namespace {
 
-// Callback for updating the user's parameter blocks. Updates are only
-// done if the step is successful.
-class StateUpdatingCallback : public IterationCallback {
- public:
-  StateUpdatingCallback(Program* program, double* parameters)
-      : program_(program), parameters_(parameters) {}
-
-  CallbackReturnType operator()(const IterationSummary& summary) {
-    if (summary.step_is_successful) {
-      program_->StateVectorToParameterBlocks(parameters_);
-      program_->CopyParameterBlockStateToUserState();
-    }
-    return SOLVER_CONTINUE;
-  }
-
- private:
-  Program* program_;
-  double* parameters_;
-};
-
 void SetSummaryFinalCost(Solver::Summary* summary) {
   summary->final_cost = summary->initial_cost;
   // We need the loop here, instead of just looking at the last
@@ -90,106 +71,6 @@ void SetSummaryFinalCost(Solver::Summary* summary) {
     summary->final_cost = min(iteration_summary.cost, summary->final_cost);
   }
 }
-
-// Callback for logging the state of the minimizer to STDERR or STDOUT
-// depending on the user's preferences and logging level.
-class TrustRegionLoggingCallback : public IterationCallback {
- public:
-  explicit TrustRegionLoggingCallback(bool log_to_stdout)
-      : log_to_stdout_(log_to_stdout) {}
-
-  ~TrustRegionLoggingCallback() {}
-
-  CallbackReturnType operator()(const IterationSummary& summary) {
-    const char* kReportRowFormat =
-        "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
-        "rho:% 3.2e mu:% 3.2e li:% 3d it:% 3.2e tt:% 3.2e";
-    string output = StringPrintf(kReportRowFormat,
-                                 summary.iteration,
-                                 summary.cost,
-                                 summary.cost_change,
-                                 summary.gradient_max_norm,
-                                 summary.step_norm,
-                                 summary.relative_decrease,
-                                 summary.trust_region_radius,
-                                 summary.linear_solver_iterations,
-                                 summary.iteration_time_in_seconds,
-                                 summary.cumulative_time_in_seconds);
-    if (log_to_stdout_) {
-      cout << output << endl;
-    } else {
-      VLOG(1) << output;
-    }
-    return SOLVER_CONTINUE;
-  }
-
- private:
-  const bool log_to_stdout_;
-};
-
-// Callback for logging the state of the minimizer to STDERR or STDOUT
-// depending on the user's preferences and logging level.
-class LineSearchLoggingCallback : public IterationCallback {
- public:
-  explicit LineSearchLoggingCallback(bool log_to_stdout)
-      : log_to_stdout_(log_to_stdout) {}
-
-  ~LineSearchLoggingCallback() {}
-
-  CallbackReturnType operator()(const IterationSummary& summary) {
-    const char* kReportRowFormat =
-        "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
-        "s:% 3.2e e:% 3d it:% 3.2e tt:% 3.2e";
-    string output = StringPrintf(kReportRowFormat,
-                                 summary.iteration,
-                                 summary.cost,
-                                 summary.cost_change,
-                                 summary.gradient_max_norm,
-                                 summary.step_norm,
-                                 summary.step_size,
-                                 summary.line_search_function_evaluations,
-                                 summary.iteration_time_in_seconds,
-                                 summary.cumulative_time_in_seconds);
-    if (log_to_stdout_) {
-      cout << output << endl;
-    } else {
-      VLOG(1) << output;
-    }
-    return SOLVER_CONTINUE;
-  }
-
- private:
-  const bool log_to_stdout_;
-};
-
-
-// Basic callback to record the execution of the solver to a file for
-// offline analysis.
-class FileLoggingCallback : public IterationCallback {
- public:
-  explicit FileLoggingCallback(const string& filename)
-      : fptr_(NULL) {
-    fptr_ = fopen(filename.c_str(), "w");
-    CHECK_NOTNULL(fptr_);
-  }
-
-  virtual ~FileLoggingCallback() {
-    if (fptr_ != NULL) {
-      fclose(fptr_);
-    }
-  }
-
-  virtual CallbackReturnType operator()(const IterationSummary& summary) {
-    fprintf(fptr_,
-            "%4d %e %e\n",
-            summary.iteration,
-            summary.cost,
-            summary.cumulative_time_in_seconds);
-    return SOLVER_CONTINUE;
-  }
- private:
-    FILE* fptr_;
-};
 
 // Iterate over each of the groups in order of their priority and fill
 // summary with their sizes.
@@ -422,8 +303,8 @@ void SolverImpl::TrustRegionMinimize(
   // vector.
   program->ParameterBlocksToStateVector(parameters.data());
 
-  TrustRegionLoggingCallback logging_callback(
-      options.minimizer_progress_to_stdout);
+  LoggingCallback logging_callback(TRUST_REGION,
+                                   options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        &logging_callback);
@@ -487,8 +368,8 @@ void SolverImpl::LineSearchMinimize(
   // Collect the discontiguous parameters into a contiguous state vector.
   program->ParameterBlocksToStateVector(parameters.data());
 
-  LineSearchLoggingCallback logging_callback(
-      options.minimizer_progress_to_stdout);
+  LoggingCallback logging_callback(LINE_SEARCH,
+                                   options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
     minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
                                        &logging_callback);
