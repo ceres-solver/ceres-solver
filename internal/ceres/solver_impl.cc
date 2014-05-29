@@ -422,13 +422,6 @@ void SolverImpl::TrustRegionMinimize(
   // vector.
   program->ParameterBlocksToStateVector(parameters.data());
 
-  scoped_ptr<IterationCallback> file_logging_callback;
-  if (!options.solver_log.empty()) {
-    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       file_logging_callback.get());
-  }
-
   TrustRegionLoggingCallback logging_callback(
       options.minimizer_progress_to_stdout);
   if (options.logging_type != SILENT) {
@@ -493,15 +486,6 @@ void SolverImpl::LineSearchMinimize(
 
   // Collect the discontiguous parameters into a contiguous state vector.
   program->ParameterBlocksToStateVector(parameters.data());
-
-  // TODO(sameeragarwal): Add support for logging the configuration
-  // and more detailed stats.
-  scoped_ptr<IterationCallback> file_logging_callback;
-  if (!options.solver_log.empty()) {
-    file_logging_callback.reset(new FileLoggingCallback(options.solver_log));
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       file_logging_callback.get());
-  }
 
   LineSearchLoggingCallback logging_callback(
       options.minimizer_progress_to_stdout);
