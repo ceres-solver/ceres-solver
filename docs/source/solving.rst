@@ -791,9 +791,14 @@ elimination group [LiSaad]_.
 
 .. class:: Solver::Options
 
-  :class:`Solver::Options` controls the overall behavior of the
-  solver. We list the various settings and their default values below.
+   :class:`Solver::Options` controls the overall behavior of the
+   solver. We list the various settings and their default values below.
 
+.. function:: bool Solver::Options::IsValid(string* error) const
+
+   Validate the values in the options struct and returns true on
+   success. If there is a problem, the method returns false with
+   ``error`` containing a textual description of the cause.
 
 .. member:: MinimizerType Solver::Options::minimizer_type
 
