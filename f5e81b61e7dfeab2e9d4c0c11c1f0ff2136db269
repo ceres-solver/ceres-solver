@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_34eab0c3",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:09:44Z",
+      "side": 1,
+      "message": "iteration_callbacks.cc?",
+      "revId": "f5e81b61e7dfeab2e9d4c0c11c1f0ff2136db269",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
