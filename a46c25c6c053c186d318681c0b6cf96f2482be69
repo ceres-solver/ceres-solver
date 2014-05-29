@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_c96bdd72",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T21:18:30Z",
+      "side": 1,
+      "message": "Perhaps comment on why this is here; it\u0027s not obvious.",
+      "revId": "a46c25c6c053c186d318681c0b6cf96f2482be69",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
