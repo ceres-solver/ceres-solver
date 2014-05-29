@@ -116,7 +116,6 @@ DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
 DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
              "the pertubations.");
-DEFINE_string(solver_log, "", "File to record the solver execution to.");
 DEFINE_bool(line_search, false, "Use a line search instead of trust region "
             "algorithm.");
 
@@ -320,7 +319,6 @@ void SolveProblem(const char* filename) {
   BuildProblem(&bal_problem, &problem);
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
-  options.solver_log = FLAGS_solver_log;
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
   Solver::Summary summary;
