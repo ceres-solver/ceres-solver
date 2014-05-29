@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_4ff34d0d",
+        "filename": "internal/ceres/coordinate_descent_minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T22:53:45Z",
+      "side": 1,
+      "message": "blank after",
+      "revId": "7bea23429b76ecb64bdc9c7566671af7f256b683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
