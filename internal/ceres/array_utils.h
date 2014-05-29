@@ -67,6 +67,14 @@ void AppendArrayToString(const int size, const double* x, string* result);
 
 extern const double kImpossibleValue;
 
+// array contains a list of (possibly repeating) non-negative
+// integers. Let us assume that we have constructed another array `p`
+// by sorting and uniquing the entries of array.
+//
+// MapValuesToContiguousRange replaces each entry in "array" with its
+// position in `p`.
+void MapValuesToContiguousRange(int size, int* array);
+
 }  // namespace internal
 }  // namespace ceres
 
