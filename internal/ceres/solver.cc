@@ -42,6 +42,211 @@
 namespace ceres {
 namespace {
 
+#define OPTION_GT(x, y)                                                 \
+  if (options.x <= y) {                                                 \
+    *error = string("Invalid configuration. Violated constrained "      \
+                    "Solver::Options::" #x " > " #y);                   \
+    return false;                                                       \
+  }
+
+#define OPTION_GE(x, y)                                                 \
+  if (options.x < y) {                                                  \
+    *error = string("Invalid configuration. Violated constrained "      \
+                    "Solver::Options::" #x " >= " #y);                  \
+    return false;                                                       \
+  }
+
+#define OPTION_LE(x, y)                                                 \
+  if (options.x > y) {                                                  \
+    *error = string("Invalid configuration. Violated constrained "      \
+                    "Solver::Options::" #x " <= " #y);                  \
+    return false;                                                       \
+  }
+
+#define OPTION_LE_OPTION(x, y)                                          \
+  if (options.x > options.y) {                                          \
+    *error = string("Invalid configuration. Violated constrained "      \
+                    "Solver::Options::" #x " <= "                       \
+                    "Solver::Options::" #y);                            \
+    return false;                                                       \
+  }
+
+#define OPTION_LT_OPTION(x, y)                                          \
+  if (options.x >= options.y) {                                         \
+    *error = string("Invalid configuration. Violated constrained "      \
+                    "Solver::Options::" #x " < "                        \
+                    "Solver::Options::" #y);                            \
+    return false;                                                       \
+  }
+
+bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
+  OPTION_GE(max_num_iterations, 0);
+  OPTION_GE(max_solver_time_in_seconds, 0.0);
+  OPTION_GE(function_tolerance, 0.0);
+  OPTION_GE(gradient_tolerance, 0.0);
+  OPTION_GE(parameter_tolerance, 0.0);
+  OPTION_GT(num_threads, 0);
+  OPTION_GT(num_linear_solver_threads, 0);
+  if (options.check_gradients) {
+    OPTION_GT(gradient_check_relative_precision, 0.0);
+    OPTION_GT(numeric_derivative_relative_step_size, 0.0);
+  }
+  return true;
+}
+
+bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
+  OPTION_GT(initial_trust_region_radius, 0.0);
+  OPTION_GT(min_trust_region_radius, 0.0);
+  OPTION_GT(max_trust_region_radius, 0.0);
+  OPTION_LE_OPTION(min_trust_region_radius, max_trust_region_radius);
+  OPTION_LE_OPTION(min_trust_region_radius, initial_trust_region_radius);
+  OPTION_LE_OPTION(initial_trust_region_radius, max_trust_region_radius);
+  OPTION_GT(min_relative_decrease, 0.0);
+  OPTION_GE(min_lm_diagonal, 0.0);
+  OPTION_GE(max_lm_diagonal, 0.0);
+  OPTION_LE_OPTION(min_lm_diagonal, max_lm_diagonal);
+  OPTION_GE(max_num_consecutive_invalid_steps, 0);
+  OPTION_GT(eta, 0.0);
+  OPTION_GE(min_linear_solver_iterations, 1);
+  OPTION_GE(max_linear_solver_iterations, 1);
+  OPTION_LE_OPTION(min_linear_solver_iterations, max_linear_solver_iterations);
+
+  if (options.use_inner_iterations) {
+    OPTION_GE(inner_iteration_tolerance, 0.0);
+  }
+
+  if (options.use_nonmonotonic_steps) {
+    OPTION_GT(max_consecutive_nonmonotonic_steps, 0);
+  }
+
+#ifdef CERES_NO_LAPACK
+  if (options.dense_linear_algebra_library_type == LAPACK) {
+    if (options.type == DENSE_NORMAL_CHOLESKY) {
+      *error = "Can't use DENSE_NORMAL_CHOLESKY with LAPACK because "
+          "LAPACK was not enabled when Ceres was built.";
+      return false;
+    }
+
+    if (options.type == DENSE_QR) {
+      *error = "Can't use DENSE_QR with LAPACK because "
+          "LAPACK was not enabled when Ceres was built.";
+      return false;
+    }
+
+    if (options.type == DENSE_SCHUR) {
+      *error = "Can't use DENSE_SCHUR with LAPACK because "
+          "LAPACK was not enabled when Ceres was built.";
+      return false;
+    }
+#endif
+
+#ifdef CERES_NO_SUITESPARSE
+  if (options.type == SPARSE_NORMAL_CHOLESKY &&
+      options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
+             "SuiteSparse was not enabled when Ceres was built.";
+    return false;
+  }
+
+  if (options.preconditioner_type == CLUSTER_JACOBI) {
+    *error =  "CLUSTER_JACOBI preconditioner not suppored. Please build Ceres "
+        "with SuiteSparse support.";
+    return false;
+  }
+
+  if (options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    *error =  "CLUSTER_TRIDIAGONAL preconditioner not suppored. Please build "
+        "Ceres with SuiteSparse support.";
+    return false;
+  }
+#endif
+
+#ifdef CERES_NO_CXSPARSE
+  if (options.type == SPARSE_NORMAL_CHOLESKY &&
+      options.sparse_linear_algebra_library_type == CX_SPARSE) {
+    *error = "Can't use SPARSE_NORMAL_CHOLESKY with CXSPARSE because "
+             "CXSparse was not enabled when Ceres was built.";
+    return false;
+  }
+#endif
+
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+  if (options.type == SPARSE_SCHUR) {
+    *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"
+        "CXSparse was enabled when Ceres was compiled.";
+    return false;
+  }
+#endif
+
+  if (options.trust_region_strategy_type == DOGLEG) {
+    if (options.linear_solver_type == ITERATIVE_SCHUR ||
+        options.linear_solver_type == CGNR) {
+      *error = "DOGLEG only supports exact factorization based linear "
+          "solvers. If you want to use an iterative solver please "
+          "use LEVENBERG_MARQUARDT as the trust_region_strategy_type";
+      return false;
+    }
+  }
+
+  if (options.trust_region_minimizer_iterations_to_dump.size() > 0 &&
+      options.trust_region_problem_dump_format_type != CONSOLE &&
+      options.trust_region_problem_dump_directory.empty()) {
+    *error = "Solver::Options::trust_region_problem_dump_directory is empty.";
+    return false;
+  }
+
+  return true;
+}
+
+bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
+  OPTION_GT(max_lbfgs_rank, 0);
+  OPTION_GT(min_line_search_step_size, 0.0);
+  OPTION_GT(line_search_sufficient_function_decrease, 0.0);
+  OPTION_GT(max_line_search_step_contraction, 0.0);
+  OPTION_LE(max_line_search_step_contraction, 1.0);
+  OPTION_LT_OPTION(max_line_search_step_contraction,
+                   min_line_search_step_contraction);
+  OPTION_LE(min_line_search_step_contraction, 1.0);
+  OPTION_GT(max_num_line_search_step_size_iterations, 0);
+  OPTION_LT_OPTION(line_search_sufficient_function_decrease,
+                   line_search_sufficient_curvature_decrease);
+  OPTION_LE(line_search_sufficient_curvature_decrease, 1.0);
+  OPTION_GT(max_line_search_step_expansion, 1.0);
+
+  if ((options.line_search_direction_type == ceres::BFGS ||
+       options.line_search_direction_type == ceres::LBFGS) &&
+      options.line_search_type != ceres::WOLFE) {
+    *error =
+        string("Invalid configuration: require line_search_type == "
+               "ceres::WOLFE when using (L)BFGS to ensure that underlying "
+               "assumptions are guaranteed to be satisfied.");
+    return false;
+  }
+
+  // Warn user if they have requested BISECTION interpolation, but constraints
+  // on max/min step size change during line search prevent bisection scaling
+  // from occurring. Warn only, as this is likely a user mistake, but one which
+  // does not prevent us from continuing.
+  LOG_IF(WARNING,
+         (options.line_search_interpolation_type == ceres::BISECTION &&
+          (options.max_line_search_step_contraction > 0.5 ||
+           options.min_line_search_step_contraction < 0.5)))
+      << "Line search interpolation type is BISECTION, but specified "
+      << "max_line_search_step_contraction: "
+      << options.max_line_search_step_contraction << ", and "
+      << "min_line_search_step_contraction: "
+      << options.min_line_search_step_contraction
+      << ", prevent bisection (0.5) scaling, continuing with solve regardless.";
+
+  return true;
+}
+
+#undef OPTION_GT
+#undef OPTION_GE
+#undef OPTION_LE
+#undef OPTION_LE_OPTION
+#undef OPTION_LT_OPTION
+
 void StringifyOrdering(const vector<int>& ordering, string* report) {
   if (ordering.size() == 0) {
     internal::StringAppendF(report, "AUTOMATIC");
@@ -54,7 +259,20 @@ void StringifyOrdering(const vector<int>& ordering, string* report) {
   internal::StringAppendF(report, "%d", ordering.back());
 }
 
-}  // namespace
+} // namespace
+
+bool Solver::Options::IsValid(string* error) const {
+  if (!CommonOptionsAreValid(*this, error)) {
+    return false;
+  }
+
+  if (minimizer_type == TRUST_REGION) {
+    return TrustRegionOptionsAreValid(*this, error);
+  }
+
+  CHECK_EQ(minimizer_type, LINE_SEARCH);
+  return LineSearchOptionsAreValid(*this, error);
+}
 
 Solver::~Solver() {}
 
@@ -62,8 +280,16 @@ void Solver::Solve(const Solver::Options& options,
                    Problem* problem,
                    Solver::Summary* summary) {
   double start_time_seconds = internal::WallTimeInSeconds();
-  internal::ProblemImpl* problem_impl =
-      CHECK_NOTNULL(problem)->problem_impl_.get();
+  CHECK_NOTNULL(problem);
+  CHECK_NOTNULL(summary);
+
+  *summary = Summary();
+  if (!options.IsValid(&summary->message)) {
+    LOG(ERROR) << "Terminating: " << summary->message;
+    return;
+  }
+
+  internal::ProblemImpl* problem_impl = problem->problem_impl_.get();
   internal::SolverImpl::Solve(options, problem_impl, summary);
   summary->total_time_in_seconds =
       internal::WallTimeInSeconds() - start_time_seconds;
