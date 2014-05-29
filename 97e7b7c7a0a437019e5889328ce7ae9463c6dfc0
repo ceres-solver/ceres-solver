@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_09f7956f",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T21:24:09Z",
+      "side": 1,
+      "message": "Rename to RemoveDuplicatesInPlace()\n\nPass the array first\n\nShouldn\u0027t size() be a pointer too? This will make it tricky for vectors since you can\u0027t resize down to trim the end.\n\nWhy not operate on vectors?",
+      "revId": "97e7b7c7a0a437019e5889328ce7ae9463c6dfc0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
