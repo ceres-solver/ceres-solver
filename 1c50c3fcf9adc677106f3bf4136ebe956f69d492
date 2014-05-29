@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_c9175dd7",
+        "filename": "include/ceres/ordered_groups.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T21:25:24Z",
+      "side": 1,
+      "message": "|| part unnecessary; below loop does the right thing in that case.",
+      "revId": "1c50c3fcf9adc677106f3bf4136ebe956f69d492",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
