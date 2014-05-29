@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc0a468_b4fa40db",
+        "filename": "internal/ceres/array_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-29T21:51:25Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "535ee01ef41042eb71bf53aaddf096d4210e5aab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
