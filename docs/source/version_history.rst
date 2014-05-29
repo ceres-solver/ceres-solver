@@ -7,6 +7,9 @@ Releases
 HEAD
 ====
 
+#. Added ``Solver::Options::IsValid`` which allows users to validate
+   their solver configuration before calling ``Solve``.
+
 Backward Incompatible API Changes
 ---------------------------------
 
