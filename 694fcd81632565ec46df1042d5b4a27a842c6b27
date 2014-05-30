@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_df002325",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T19:58:52Z",
+      "side": 1,
+      "message": "violated constrainT",
+      "revId": "694fcd81632565ec46df1042d5b4a27a842c6b27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
