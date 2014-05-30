@@ -1413,76 +1413,76 @@ Instances
    parameterizations only once. The local parameterization can only be
    set once per parameter, and cannot be changed once set.
 
-.. function LocalParameterization* Problem::GetParameterization(double* values) const;
+.. function:: LocalParameterization* Problem::GetParameterization(double* values) const
 
    Get the local parameterization object associated with this
    parameter block. If there is no parameterization object associated
    then `NULL` is returned
 
-.. function void Problem::SetParameterLowerBound(double* values, int index, double lower_bound);
+.. function:: void Problem::SetParameterLowerBound(double* values, int index, double lower_bound)
 
    Set the lower bound for the parameter at position `index` in the
    parameter block corresponding to `values`. By default the lower
    bound is :math:`-\infty`.
 
-.. function void Problem::SetParameterUpperBound(double* values, int index, double upper_bound);
+.. function:: void Problem::SetParameterUpperBound(double* values, int index, double upper_bound)
 
    Set the upper bound for the parameter at position `index` in the
    parameter block corresponding to `values`. By default the value is
    :math:`\infty`.
 
-.. function int Problem::NumParameterBlocks() const
+.. function:: int Problem::NumParameterBlocks() const
 
    Number of parameter blocks in the problem. Always equals
    parameter_blocks().size() and parameter_block_sizes().size().
 
-.. function int Problem::NumParameters() const
+.. function:: int Problem::NumParameters() const
 
    The size of the parameter vector obtained by summing over the sizes
    of all the parameter blocks.
 
-.. function int Problem::NumResidualBlocks() const
+.. function:: int Problem::NumResidualBlocks() const
 
    Number of residual blocks in the problem. Always equals
    residual_blocks().size().
 
-.. function int Problem::NumResiduals() const
+.. function:: int Problem::NumResiduals() const
 
    The size of the residual vector obtained by summing over the sizes
    of all of the residual blocks.
 
-.. function int Problem::ParameterBlockSize(const double* values) const
+.. function:: int Problem::ParameterBlockSize(const double* values) const
 
    The size of the parameter block.
 
-.. function int Problem::ParameterBlockLocalSize(const double* values) const
+.. function:: int Problem::ParameterBlockLocalSize(const double* values) const
 
    The size of local parameterization for the parameter block. If
    there is no local parameterization associated with this parameter
    block, then ``ParameterBlockLocalSize`` = ``ParameterBlockSize``.
 
-.. function bool Problem::HasParameterBlock(const double* values) const;
+.. function:: bool Problem::HasParameterBlock(const double* values) const
 
    Is the given parameter block present in the problem or not?
 
-.. function void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const
+.. function:: void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const
 
    Fills the passed ``parameter_blocks`` vector with pointers to the
    parameter blocks currently in the problem. After this call,
    ``parameter_block.size() == NumParameterBlocks``.
 
-.. function void Problem::GetResidualBlocks(vector<ResidualBlockId>* residual_blocks) const
+.. function:: void Problem::GetResidualBlocks(vector<ResidualBlockId>* residual_blocks) const
 
    Fills the passed `residual_blocks` vector with pointers to the
    residual blocks currently in the problem. After this call,
    `residual_blocks.size() == NumResidualBlocks`.
 
-.. function void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, vector<double*>* parameter_blocks) const
+.. function:: void Problem::GetParameterBlocksForResidualBlock(const ResidualBlockId residual_block, vector<double*>* parameter_blocks) const
 
    Get all the parameter blocks that depend on the given residual
    block.
 
-.. function void Problem::GetResidualBlocksForParameterBlock(const double* values, vector<ResidualBlockId>* residual_blocks) const
+.. function:: void Problem::GetResidualBlocksForParameterBlock(const double* values, vector<ResidualBlockId>* residual_blocks) const
 
    Get all the residual blocks that depend on the given parameter
    block.
@@ -1493,7 +1493,7 @@ Instances
    blocks for a parameter block will incur a scan of the entire
    :class:`Problem` object.
 
-.. function bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
+.. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
    Evaluate a :class:`Problem`. Any of the output pointers can be
    `NULL`. Which residual blocks and parameter blocks are used is
