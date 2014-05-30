@@ -101,6 +101,7 @@ SET(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    summary_utils.cc
     triplet_sparse_matrix.cc
     trust_region_minimizer.cc
     trust_region_strategy.cc

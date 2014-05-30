@@ -55,22 +55,13 @@
 #include "ceres/residual_block.h"
 #include "ceres/stringprintf.h"
 #include "ceres/suitesparse.h"
+#include "ceres/summary_utils.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
 namespace internal {
 namespace {
-
-void SetSummaryFinalCost(Solver::Summary* summary) {
-  summary->final_cost = summary->initial_cost;
-  // We need the loop here, instead of just looking at the last
-  // iteration because the minimizer maybe making non-monotonic steps.
-  for (int i = 0; i < summary->iterations.size(); ++i) {
-    const IterationSummary& iteration_summary = summary->iterations[i];
-    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
-  }
-}
 
 // Iterate over each of the groups in order of their priority and fill
 // summary with their sizes.
@@ -88,22 +79,6 @@ void SummarizeOrdering(ParameterBlockOrdering* ordering,
        ++it) {
     summary->push_back(it->second.size());
   }
-}
-
-void SummarizeGivenProgram(const Program& program, Solver::Summary* summary) {
-  summary->num_parameter_blocks = program.NumParameterBlocks();
-  summary->num_parameters = program.NumParameters();
-  summary->num_effective_parameters = program.NumEffectiveParameters();
-  summary->num_residual_blocks = program.NumResidualBlocks();
-  summary->num_residuals = program.NumResiduals();
-}
-
-void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
-  summary->num_parameter_blocks_reduced = program.NumParameterBlocks();
-  summary->num_parameters_reduced = program.NumParameters();
-  summary->num_effective_parameters_reduced = program.NumEffectiveParameters();
-  summary->num_residual_blocks_reduced = program.NumResidualBlocks();
-  summary->num_residuals_reduced = program.NumResiduals();
 }
 
 bool LineSearchOptionsAreValid(const Solver::Options& options,
