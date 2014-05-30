@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fcab88f_5ce67150",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "Good catch.\n\nand I have cleaned up a bunch of stuff below too to be consistent.",
+      "parentUuid": "bfe21c19_92b3bcd7",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe21c19_f2a44095",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2014-05-30T19:01:06Z",
       "side": 1,
       "message": "*supported",
+      "range": {
+        "startLine": 153,
+        "startChar": 49,
+        "endLine": 153,
+        "endChar": 57
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fcab88f_1c07d936",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe21c19_f2a44095",
       "range": {
         "startLine": 153,
         "startChar": 49,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9fcab88f_bc30e50c",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "made it consistent.",
+      "parentUuid": "bfe21c19_d2a9446d",
+      "range": {
+        "startLine": 153,
+        "startChar": 59,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe21c19_b2aeb871",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 7
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9fcab88f_dc2ba1a3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "I have made the message consistent.",
+      "parentUuid": "bfe21c19_b2aeb871",
+      "range": {
+        "startLine": 159,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe21c19_72e050ac",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 7
@@ -99,6 +189,24 @@
       "writtenOn": "2014-05-30T19:01:06Z",
       "side": 1,
       "message": "I would move this down to just above line 212 so that all of the checks are together:\n\n  OPTION_LT_OPTION(line_search_sufficient_function_decrease,\n                   line_search_sufficient_curvature_decrease);",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fcab88f_9c3529fd",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe21c19_72e050ac",
       "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "9fcab88f_fc4d3d85",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe21c19_32dac8f6",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe21c19_12d7cccc",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 7
@@ -150,6 +276,24 @@
       "writtenOn": "2014-05-30T19:01:06Z",
       "side": 1,
       "message": "\"Terminating, solver options invalid: \" ? - although I notice that you removed the \"Terminating: \" prefix from the \"No non-constant parameter blocks found.\" and other cases in solver_impl.cc, so perhaps just \"Solver options invalid: \" ?",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fcab88f_7c424d52",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T19:47:55Z",
+      "side": 1,
+      "message": "I add the terminating to the log, but not to the message. I think I am consistent about it.",
+      "parentUuid": "bfe21c19_12d7cccc",
       "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
