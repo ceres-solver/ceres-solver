@@ -22,6 +22,30 @@
       "revId": "ec5b9eccf00410b51c0e13afbdbe7110e1ea7b1e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_08c0c70b",
+        "filename": "include/ceres/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T05:17:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "dffef0bb_c8a98f6d",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "ec5b9eccf00410b51c0e13afbdbe7110e1ea7b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
