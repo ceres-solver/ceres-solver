@@ -49,6 +49,7 @@
 #include "ceres/ordered_groups.h"
 #include "ceres/parameter_block.h"
 #include "ceres/parameter_block_ordering.h"
+#include "ceres/preconditioner.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -712,7 +713,15 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     // as they assume there is at least one e_block. Thus, we
     // automatically switch to the closest solver to the one indicated
     // by the user.
-    AlternateLinearSolverForSchurTypeLinearSolver(options);
+    if (options->linear_solver_type == ITERATIVE_SCHUR) {
+      options->preconditioner_type =
+        Preconditioner::PreconditionerForZeroEBlocks(
+            options->preconditioner_type);
+    }
+
+    options->linear_solver_type =
+        LinearSolver::LinearSolverForZeroEBlocks(
+            options->linear_solver_type);
   }
 
   if (IsSchurType(options->linear_solver_type)) {
@@ -1057,39 +1066,6 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
   OrderingToGroupSizes(ordering_ptr,
                        &(summary->inner_iteration_ordering_used));
   return inner_iteration_minimizer.release();
-}
-
-void SolverImpl::AlternateLinearSolverForSchurTypeLinearSolver(
-    Solver::Options* options) {
-  if (!IsSchurType(options->linear_solver_type)) {
-    return;
-  }
-
-  string msg = "No e_blocks remaining. Switching from ";
-  if (options->linear_solver_type == SPARSE_SCHUR) {
-    options->linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-    msg += "SPARSE_SCHUR to SPARSE_NORMAL_CHOLESKY.";
-  } else if (options->linear_solver_type == DENSE_SCHUR) {
-    // TODO(sameeragarwal): This is probably not a great choice.
-    // Ideally, we should have a DENSE_NORMAL_CHOLESKY, that can
-    // take a BlockSparseMatrix as input.
-    options->linear_solver_type = DENSE_QR;
-    msg += "DENSE_SCHUR to DENSE_QR.";
-  } else if (options->linear_solver_type == ITERATIVE_SCHUR) {
-    options->linear_solver_type = CGNR;
-    if (options->preconditioner_type != IDENTITY) {
-      msg += StringPrintf("ITERATIVE_SCHUR with %s preconditioner "
-                          "to CGNR with JACOBI preconditioner.",
-                          PreconditionerTypeToString(
-                            options->preconditioner_type));
-      // CGNR currently only supports the JACOBI preconditioner.
-      options->preconditioner_type = JACOBI;
-    } else {
-      msg += "ITERATIVE_SCHUR with IDENTITY preconditioner"
-          "to CGNR with IDENTITY preconditioner.";
-    }
-  }
-  LOG(WARNING) << msg;
 }
 
 bool SolverImpl::ApplyUserOrdering(

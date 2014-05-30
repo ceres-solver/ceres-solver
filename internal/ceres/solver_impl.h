@@ -149,16 +149,6 @@ class SolverImpl {
       const ProblemImpl::ParameterMap& parameter_map,
       Solver::Summary* summary);
 
-  // If the linear solver is of Schur type, then replace it with the
-  // closest equivalent linear solver. This is done when the user
-  // requested a Schur type solver but the problem structure makes it
-  // impossible to use one.
-  //
-  // If the linear solver is not of Schur type, the function is a
-  // no-op.
-  static void AlternateLinearSolverForSchurTypeLinearSolver(
-      Solver::Options* options);
-
   // Reorder the parameter blocks in program using the ordering
   static bool ApplyUserOrdering(
       const ProblemImpl::ParameterMap& parameter_map,
