@@ -99,40 +99,11 @@ class SolverImpl {
   static LinearSolver* CreateLinearSolver(Solver::Options* options,
                                           string* message);
 
-  // Reorder the residuals for program, if necessary, so that the
-  // residuals involving e block (i.e., the first num_eliminate_block
-  // parameter blocks) occur together. This is a necessary condition
-  // for the Schur eliminator.
-  static bool LexicographicallyOrderResidualBlocks(
-      const int num_eliminate_blocks,
-      Program* program,
-      string* message);
-
   // Create the appropriate evaluator for the transformed program.
   static Evaluator* CreateEvaluator(
       const Solver::Options& options,
       const ProblemImpl::ParameterMap& parameter_map,
       Program* program,
-      string* message);
-
-  // Remove the fixed or unused parameter blocks and residuals
-  // depending only on fixed parameters from the program.
-  //
-  // If either linear_solver_ordering or inner_iteration_ordering are
-  // not NULL, the constant parameter blocks are removed from them
-  // too.
-  //
-  // If fixed_cost is not NULL, the residual blocks that are removed
-  // are evaluated and the sum of their cost is returned in
-  // fixed_cost.
-  //
-  // If a failure is encountered, the function returns false with a
-  // description of the failure in message.
-  static bool RemoveFixedBlocksFromProgram(
-      Program* program,
-      ParameterBlockOrdering* linear_solver_ordering,
-      ParameterBlockOrdering* inner_iteration_ordering,
-      double* fixed_cost,
       string* message);
 
   static bool IsOrderingValid(const Solver::Options& options,
@@ -148,53 +119,6 @@ class SolverImpl {
       const Program& program,
       const ProblemImpl::ParameterMap& parameter_map,
       Solver::Summary* summary);
-
-  // Reorder the parameter blocks in program using the ordering
-  static bool ApplyUserOrdering(
-      const ProblemImpl::ParameterMap& parameter_map,
-      const ParameterBlockOrdering* parameter_block_ordering,
-      Program* program,
-      string* message);
-
-  // Sparse cholesky factorization routines when doing the sparse
-  // cholesky factorization of the Jacobian matrix, reorders its
-  // columns to reduce the fill-in. Compute this permutation and
-  // re-order the parameter blocks.
-  //
-  // If the parameter_block_ordering contains more than one
-  // elimination group and support for constrained fill-reducing
-  // ordering is available in the sparse linear algebra library
-  // (SuiteSparse version >= 4.2.0) then the fill reducing
-  // ordering will take it into account, otherwise it will be ignored.
-  static bool ReorderProgramForSparseNormalCholesky(
-      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-      const ParameterBlockOrdering* parameter_block_ordering,
-      Program* program,
-      string* message);
-
-  // Schur type solvers require that all parameter blocks eliminated
-  // by the Schur eliminator occur before others and the residuals be
-  // sorted in lexicographic order of their parameter blocks.
-  //
-  // If the parameter_block_ordering only contains one elimination
-  // group then a maximal independent set is computed and used as the
-  // first elimination group, otherwise the user's ordering is used.
-  //
-  // If the linear solver type is SPARSE_SCHUR and support for
-  // constrained fill-reducing ordering is available in the sparse
-  // linear algebra library (SuiteSparse version >= 4.2.0) then
-  // columns of the schur complement matrix are ordered to reduce the
-  // fill-in the Cholesky factorization.
-  //
-  // Upon return, ordering contains the parameter block ordering that
-  // was used to order the program.
-  static bool ReorderProgramForSchurTypeLinearSolver(
-      const LinearSolverType linear_solver_type,
-      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
-      const ProblemImpl::ParameterMap& parameter_map,
-      ParameterBlockOrdering* parameter_block_ordering,
-      Program* program,
-      string* message);
 };
 
 }  // namespace internal
