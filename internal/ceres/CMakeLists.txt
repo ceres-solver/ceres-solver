@@ -87,6 +87,7 @@ SET(CERES_INTERNAL_SRC
     problem.cc
     problem_impl.cc
     program.cc
+    reorder_program.cc
     residual_block.cc
     residual_block_utils.cc
     schur_complement_solver.cc
@@ -269,6 +270,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(polynomial)
   CERES_TEST(problem)
   CERES_TEST(program)
+  CERES_TEST(reorder_program)
   CERES_TEST(residual_block)
   CERES_TEST(residual_block_utils)
   CERES_TEST(rotation)
