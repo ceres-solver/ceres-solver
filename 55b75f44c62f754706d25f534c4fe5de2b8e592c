@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_454c6aab",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T03:52:31Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "55b75f44c62f754706d25f534c4fe5de2b8e592c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_05567237",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T03:52:31Z",
+      "side": 1,
+      "message": "Returns true if the options struct has a valid configuration. Returns false otherwise, and fills in *error with a message.",
+      "revId": "55b75f44c62f754706d25f534c4fe5de2b8e592c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_e5411671",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T03:52:31Z",
+      "side": 1,
+      "message": "Since I\u0027m a pedant, maybe do if \u003d\u003d LINE_SEARCH then a log fatal otherwise?",
+      "revId": "55b75f44c62f754706d25f534c4fe5de2b8e592c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_e857ab00",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T03:52:31Z",
+      "side": 1,
+      "message": "Interesting. Is there a test that covers this change?",
+      "revId": "55b75f44c62f754706d25f534c4fe5de2b8e592c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
