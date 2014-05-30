@@ -64,7 +64,9 @@ SizedCostFunction<kNumResiduals, N0, N1, N2> {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
-    // Do nothing. This is never called.
+    for (int i = 0; i < kNumResiduals; ++i) {
+      residuals[i] = 0.0;
+    }
     return true;
   }
 };
@@ -72,235 +74,6 @@ SizedCostFunction<kNumResiduals, N0, N1, N2> {
 class UnaryCostFunction : public MockCostFunctionBase<2, 1, 0, 0> {};
 class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1, 0> {};
 class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
-
-TEST(SolverImpl, RemoveFixedBlocksNothingConstant) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-
-  string message;
-  {
-    ParameterBlockOrdering linear_solver_ordering;
-    linear_solver_ordering.AddElementToGroup(&x, 0);
-    linear_solver_ordering.AddElementToGroup(&y, 0);
-    linear_solver_ordering.AddElementToGroup(&z, 0);
-
-    ParameterBlockOrdering inner_iteration_ordering;
-    inner_iteration_ordering.AddElementToGroup(&x, 0);
-    inner_iteration_ordering.AddElementToGroup(&y, 0);
-    inner_iteration_ordering.AddElementToGroup(&z, 0);
-
-    Program program(*problem.mutable_program());
-    EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                    &program,
-                    &linear_solver_ordering,
-                    &inner_iteration_ordering,
-                    NULL,
-                    &message));
-    EXPECT_EQ(program.NumParameterBlocks(), 3);
-    EXPECT_EQ(program.NumResidualBlocks(), 3);
-    EXPECT_EQ(linear_solver_ordering.NumElements(), 3);
-    EXPECT_EQ(inner_iteration_ordering.NumElements(), 3);
-  }
-}
-
-TEST(SolverImpl, RemoveFixedBlocksAllParameterBlocksConstant) {
-  ProblemImpl problem;
-  double x;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.SetParameterBlockConstant(&x);
-
-  ParameterBlockOrdering linear_solver_ordering;
-  linear_solver_ordering.AddElementToGroup(&x, 0);
-
-  ParameterBlockOrdering inner_iteration_ordering;
-  inner_iteration_ordering.AddElementToGroup(&x, 0);
-
-  Program program(problem.program());
-  string message;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                  &program,
-                  &linear_solver_ordering,
-                  &inner_iteration_ordering,
-                  NULL,
-                  &message));
-  EXPECT_EQ(program.NumParameterBlocks(), 0);
-  EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
-  EXPECT_EQ(inner_iteration_ordering.NumElements(), 0);
-}
-
-TEST(SolverImpl, RemoveFixedBlocksNoResidualBlocks) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-
-  ParameterBlockOrdering linear_solver_ordering;
-  linear_solver_ordering.AddElementToGroup(&x, 0);
-  linear_solver_ordering.AddElementToGroup(&y, 0);
-  linear_solver_ordering.AddElementToGroup(&z, 0);
-
-  ParameterBlockOrdering inner_iteration_ordering;
-  inner_iteration_ordering.AddElementToGroup(&x, 0);
-  inner_iteration_ordering.AddElementToGroup(&y, 0);
-  inner_iteration_ordering.AddElementToGroup(&z, 0);
-
-  Program program(problem.program());
-  string message;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                  &program,
-                  &linear_solver_ordering,
-                  &inner_iteration_ordering,
-                  NULL,
-                  &message));
-  EXPECT_EQ(program.NumParameterBlocks(), 0);
-  EXPECT_EQ(program.NumResidualBlocks(), 0);
-  EXPECT_EQ(linear_solver_ordering.NumElements(), 0);
-  EXPECT_EQ(inner_iteration_ordering.NumElements(), 0);
-}
-
-TEST(SolverImpl, RemoveFixedBlocksOneParameterBlockConstant) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-
-  ParameterBlockOrdering linear_solver_ordering;
-  linear_solver_ordering.AddElementToGroup(&x, 0);
-  linear_solver_ordering.AddElementToGroup(&y, 0);
-  linear_solver_ordering.AddElementToGroup(&z, 0);
-
-  ParameterBlockOrdering inner_iteration_ordering;
-  inner_iteration_ordering.AddElementToGroup(&x, 0);
-  inner_iteration_ordering.AddElementToGroup(&y, 0);
-  inner_iteration_ordering.AddElementToGroup(&z, 0);
-
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.SetParameterBlockConstant(&x);
-
-
-  Program program(problem.program());
-  string message;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                  &program,
-                  &linear_solver_ordering,
-                  &inner_iteration_ordering,
-                  NULL,
-                  &message));
-  EXPECT_EQ(program.NumParameterBlocks(), 1);
-  EXPECT_EQ(program.NumResidualBlocks(), 1);
-  EXPECT_EQ(linear_solver_ordering.NumElements(), 1);
-  EXPECT_EQ(inner_iteration_ordering.NumElements(), 1);
-}
-
-TEST(SolverImpl, RemoveFixedBlocksNumEliminateBlocks) {
-  ProblemImpl problem;
-  double x;
-  double y;
-  double z;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.SetParameterBlockConstant(&x);
-
-  ParameterBlockOrdering linear_solver_ordering;
-  linear_solver_ordering.AddElementToGroup(&x, 0);
-  linear_solver_ordering.AddElementToGroup(&y, 0);
-  linear_solver_ordering.AddElementToGroup(&z, 1);
-
-  ParameterBlockOrdering inner_iteration_ordering;
-  inner_iteration_ordering.AddElementToGroup(&x, 0);
-  inner_iteration_ordering.AddElementToGroup(&y, 0);
-  inner_iteration_ordering.AddElementToGroup(&z, 1);
-
-  Program program(problem.program());
-  string message;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                  &program,
-                  &linear_solver_ordering,
-                  &inner_iteration_ordering,
-                  NULL,
-                  &message));
-  EXPECT_EQ(program.NumParameterBlocks(), 2);
-  EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(linear_solver_ordering.NumElements(), 2);
-  EXPECT_EQ(linear_solver_ordering.GroupId(&y), 0);
-  EXPECT_EQ(linear_solver_ordering.GroupId(&z), 1);
-  EXPECT_EQ(inner_iteration_ordering.NumElements(), 2);
-  EXPECT_EQ(inner_iteration_ordering.GroupId(&y), 0);
-  EXPECT_EQ(inner_iteration_ordering.GroupId(&z), 1);
-}
-
-TEST(SolverImpl, RemoveFixedBlocksFixedCost) {
-  ProblemImpl problem;
-  double x = 1.23;
-  double y = 4.56;
-  double z = 7.89;
-
-  problem.AddParameterBlock(&x, 1);
-  problem.AddParameterBlock(&y, 1);
-  problem.AddParameterBlock(&z, 1);
-  problem.AddResidualBlock(new UnaryIdentityCostFunction(), NULL, &x);
-  problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
-  problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
-  problem.SetParameterBlockConstant(&x);
-
-  ParameterBlockOrdering linear_solver_ordering;
-  linear_solver_ordering.AddElementToGroup(&x, 0);
-  linear_solver_ordering.AddElementToGroup(&y, 0);
-  linear_solver_ordering.AddElementToGroup(&z, 1);
-
-  double fixed_cost = 0.0;
-  Program program(problem.program());
-
-  double expected_fixed_cost;
-  ResidualBlock *expected_removed_block = program.residual_blocks()[0];
-  scoped_array<double> scratch(
-      new double[expected_removed_block->NumScratchDoublesForEvaluate()]);
-  expected_removed_block->Evaluate(true,
-                                   &expected_fixed_cost,
-                                   NULL,
-                                   NULL,
-                                   scratch.get());
-
-  string message;
-  EXPECT_TRUE(SolverImpl::RemoveFixedBlocksFromProgram(
-                  &program,
-                  &linear_solver_ordering,
-                  NULL,
-                  &fixed_cost,
-                  &message));
-  EXPECT_EQ(program.NumParameterBlocks(), 2);
-  EXPECT_EQ(program.NumResidualBlocks(), 2);
-  EXPECT_EQ(linear_solver_ordering.NumElements(), 2);
-  EXPECT_EQ(linear_solver_ordering.GroupId(&y), 0);
-  EXPECT_EQ(linear_solver_ordering.GroupId(&z), 1);
-  EXPECT_DOUBLE_EQ(fixed_cost, expected_fixed_cost);
-}
 
 TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   ProblemImpl problem;
@@ -393,8 +166,12 @@ TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   // Create the reduced program. This should remove the fixed block "z",
   // marking the index to -1 at the same time. x and y also get indices.
   string message;
+  double fixed_cost;
   scoped_ptr<Program> reduced_program(
-      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &message));
+      SolverImpl::CreateReducedProgram(&options,
+                                       &problem,
+                                       &fixed_cost,
+                                       &message));
 
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
@@ -460,8 +237,12 @@ TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
   options.linear_solver_ordering.reset(linear_solver_ordering);
 
   string message;
+  double fixed_cost;
   scoped_ptr<Program> reduced_program(
-      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &message));
+      SolverImpl::CreateReducedProgram(&options,
+                                       &problem,
+                                       &fixed_cost,
+                                       &message));
 
   const vector<ResidualBlock*>& residual_blocks =
       reduced_program->residual_blocks();
