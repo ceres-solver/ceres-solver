@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_0809e7b9",
+        "filename": "internal/ceres/summary_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T05:38:49Z",
+      "side": 1,
+      "message": "column align",
+      "revId": "912c3d326df8359eaa07447ff0af45cb2a973a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_e840cbc5",
+        "filename": "internal/ceres/summary_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T05:38:49Z",
+      "side": 1,
+      "message": "column align",
+      "revId": "912c3d326df8359eaa07447ff0af45cb2a973a57",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
