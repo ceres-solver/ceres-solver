@@ -159,14 +159,6 @@ class SolverImpl {
   static void AlternateLinearSolverForSchurTypeLinearSolver(
       Solver::Options* options);
 
-  // Create a TripletSparseMatrix which contains the zero-one
-  // structure corresponding to the block sparsity of the transpose of
-  // the Jacobian matrix.
-  //
-  // Caller owns the result.
-  static TripletSparseMatrix* CreateJacobianBlockSparsityTranspose(
-      const Program* program);
-
   // Reorder the parameter blocks in program using the ordering
   static bool ApplyUserOrdering(
       const ProblemImpl::ParameterMap& parameter_map,

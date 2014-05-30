@@ -106,28 +106,6 @@ void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
   summary->num_residuals_reduced = program.NumResiduals();
 }
 
-bool ParameterBlocksAreFinite(const ProblemImpl* problem,
-                              string* message) {
-  CHECK_NOTNULL(message);
-  const Program& program = problem->program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    const double* array = parameter_blocks[i]->user_state();
-    const int size = parameter_blocks[i]->Size();
-    const int invalid_index = FindInvalidValue(size, array);
-    if (invalid_index != size) {
-      *message = StringPrintf(
-          "ParameterBlock: %p with size %d has at least one invalid value.\n"
-          "First invalid value is at index: %d.\n"
-          "Parameter block values: ",
-          array, size, invalid_index);
-      AppendArrayToString(size, array, message);
-      return false;
-    }
-  }
-  return true;
-}
-
 bool LineSearchOptionsAreValid(const Solver::Options& options,
                                string* message) {
   // Validate values for configuration parameters supplied by user.
@@ -205,84 +183,6 @@ bool LineSearchOptionsAreValid(const Solver::Options& options,
   return true;
 }
 
-// Returns true if the program has any non-constant parameter blocks
-// which have non-trivial bounds constraints.
-bool IsBoundsConstrained(const Program& program) {
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    const ParameterBlock* parameter_block = parameter_blocks[i];
-    if (parameter_block->IsConstant()) {
-      continue;
-    }
-    const int size = parameter_block->Size();
-    for (int j = 0; j < size; ++j) {
-      const double lower_bound = parameter_block->LowerBoundForParameter(j);
-      const double upper_bound = parameter_block->UpperBoundForParameter(j);
-      if (lower_bound > -std::numeric_limits<double>::max() ||
-          upper_bound < std::numeric_limits<double>::max()) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-// Returns false, if the problem has any constant parameter blocks
-// which are not feasible, or any variable parameter blocks which have
-// a lower bound greater than or equal to the upper bound.
-bool ParameterBlocksAreFeasible(const ProblemImpl* problem, string* message) {
-  CHECK_NOTNULL(message);
-  const Program& program = problem->program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-  for (int i = 0; i < parameter_blocks.size(); ++i) {
-    const ParameterBlock* parameter_block = parameter_blocks[i];
-    const double* parameters = parameter_block->user_state();
-    const int size = parameter_block->Size();
-    if (parameter_block->IsConstant()) {
-      // Constant parameter blocks must start in the feasible region
-      // to ultimately produce a feasible solution, since Ceres cannot
-      // change them.
-      for (int j = 0; j < size; ++j) {
-        const double lower_bound = parameter_block->LowerBoundForParameter(j);
-        const double upper_bound = parameter_block->UpperBoundForParameter(j);
-        if (parameters[j] < lower_bound || parameters[j] > upper_bound) {
-          *message = StringPrintf(
-              "ParameterBlock: %p with size %d has at least one infeasible "
-              "value."
-              "\nFirst infeasible value is at index: %d."
-              "\nLower bound: %e, value: %e, upper bound: %e"
-              "\nParameter block values: ",
-              parameters, size, j, lower_bound, parameters[j], upper_bound);
-          AppendArrayToString(size, parameters, message);
-          return false;
-        }
-      }
-    } else {
-      // Variable parameter blocks must have non-empty feasible
-      // regions, otherwise there is no way to produce a feasible
-      // solution.
-      for (int j = 0; j < size; ++j) {
-        const double lower_bound = parameter_block->LowerBoundForParameter(j);
-        const double upper_bound = parameter_block->UpperBoundForParameter(j);
-        if (lower_bound >= upper_bound) {
-          *message = StringPrintf(
-              "ParameterBlock: %p with size %d has at least one infeasible "
-              "bound."
-              "\nFirst infeasible bound is at index: %d."
-              "\nLower bound: %e, upper bound: %e"
-              "\nParameter block values: ",
-              parameters, size, j, lower_bound, upper_bound);
-          AppendArrayToString(size, parameters, message);
-          return false;
-        }
-      }
-    }
-  }
-
-  return true;
-}
-
-
 }  // namespace
 
 void SolverImpl::TrustRegionMinimize(
@@ -293,7 +193,7 @@ void SolverImpl::TrustRegionMinimize(
     LinearSolver* linear_solver,
     Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
-  minimizer_options.is_constrained = IsBoundsConstrained(*program);
+  minimizer_options.is_constrained = program->IsBoundsConstrained();
 
   // The optimizer works on contiguous parameter vectors; allocate
   // some.
@@ -470,12 +370,12 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
-  if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+  if (!original_program->ParameterBlocksAreFinite(&summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
 
-  if (!ParameterBlocksAreFeasible(problem_impl, &summary->message)) {
+  if (!original_program->IsFeasible(&summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
@@ -683,7 +583,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  if (IsBoundsConstrained(problem_impl->program())) {
+  if (original_program->IsBoundsConstrained()) {
     summary->message =  "LINE_SEARCH Minimizer does not support bounds.";
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
@@ -711,7 +611,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
   summary->num_threads_given = original_options.num_threads;
   summary->num_threads_used = options.num_threads;
 
-  if (!ParameterBlocksAreFinite(problem_impl, &summary->message)) {
+  if (original_program->ParameterBlocksAreFinite(&summary->message)) {
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
@@ -1464,54 +1364,6 @@ bool SolverImpl::ApplyUserOrdering(
   return true;
 }
 
-
-TripletSparseMatrix* SolverImpl::CreateJacobianBlockSparsityTranspose(
-    const Program* program) {
-
-  // Matrix to store the block sparsity structure of the Jacobian.
-  TripletSparseMatrix* tsm =
-      new TripletSparseMatrix(program->NumParameterBlocks(),
-                              program->NumResidualBlocks(),
-                              10 * program->NumResidualBlocks());
-  int num_nonzeros = 0;
-  int* rows = tsm->mutable_rows();
-  int* cols = tsm->mutable_cols();
-  double* values = tsm->mutable_values();
-
-  const vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
-  for (int c = 0; c < residual_blocks.size(); ++c) {
-    const ResidualBlock* residual_block = residual_blocks[c];
-    const int num_parameter_blocks = residual_block->NumParameterBlocks();
-    ParameterBlock* const* parameter_blocks =
-        residual_block->parameter_blocks();
-
-    for (int j = 0; j < num_parameter_blocks; ++j) {
-      if (parameter_blocks[j]->IsConstant()) {
-        continue;
-      }
-
-      // Re-size the matrix if needed.
-      if (num_nonzeros >= tsm->max_num_nonzeros()) {
-        tsm->set_num_nonzeros(num_nonzeros);
-        tsm->Reserve(2 * num_nonzeros);
-        rows = tsm->mutable_rows();
-        cols = tsm->mutable_cols();
-        values = tsm->mutable_values();
-      }
-      CHECK_LT(num_nonzeros,  tsm->max_num_nonzeros());
-
-      const int r = parameter_blocks[j]->index();
-      rows[num_nonzeros] = r;
-      cols[num_nonzeros] = c;
-      values[num_nonzeros] = 1.0;
-      ++num_nonzeros;
-    }
-  }
-
-  tsm->set_num_nonzeros(num_nonzeros);
-  return tsm;
-}
-
 bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
     const LinearSolverType linear_solver_type,
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
@@ -1579,7 +1431,7 @@ bool SolverImpl::ReorderProgramForSchurTypeLinearSolver(
     program->SetParameterOffsetsAndIndex();
     // Compute a block sparse presentation of J'.
     scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-        SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+        program->CreateJacobianBlockSparsityTranspose());
 
     SuiteSparse ss;
     cholmod_sparse* block_jacobian_transpose =
@@ -1617,7 +1469,7 @@ bool SolverImpl::ReorderProgramForSparseNormalCholesky(
   program->SetParameterOffsetsAndIndex();
   // Compute a block sparse presentation of J'.
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
-      SolverImpl::CreateJacobianBlockSparsityTranspose(program));
+      program->CreateJacobianBlockSparsityTranspose());
 
   vector<int> ordering(program->NumParameterBlocks(), 0);
   vector<ParameterBlock*>& parameter_blocks =
