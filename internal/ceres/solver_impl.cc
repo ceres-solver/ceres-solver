@@ -63,24 +63,6 @@ namespace ceres {
 namespace internal {
 namespace {
 
-// Iterate over each of the groups in order of their priority and fill
-// summary with their sizes.
-void SummarizeOrdering(ParameterBlockOrdering* ordering,
-                       vector<int>* summary) {
-  CHECK_NOTNULL(summary)->clear();
-  if (ordering == NULL) {
-    return;
-  }
-
-  const map<int, set<double*> >& group_to_elements =
-      ordering->group_to_elements();
-  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-       it != group_to_elements.end();
-       ++it) {
-    summary->push_back(it->second.size());
-  }
-}
-
 bool LineSearchOptionsAreValid(const Solver::Options& options,
                                string* message) {
   // Validate values for configuration parameters supplied by user.
@@ -309,10 +291,10 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->minimizer_type = TRUST_REGION;
 
   SummarizeGivenProgram(*original_program, summary);
-  SummarizeOrdering(original_options.linear_solver_ordering.get(),
-                    &(summary->linear_solver_ordering_given));
-  SummarizeOrdering(original_options.inner_iteration_ordering.get(),
-                    &(summary->inner_iteration_ordering_given));
+  OrderingToGroupSizes(original_options.linear_solver_ordering.get(),
+                       &(summary->linear_solver_ordering_given));
+  OrderingToGroupSizes(original_options.inner_iteration_ordering.get(),
+                       &(summary->inner_iteration_ordering_given));
 
   Solver::Options options(original_options);
 
@@ -408,8 +390,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
     return;
   }
 
-  SummarizeOrdering(options.linear_solver_ordering.get(),
-                    &(summary->linear_solver_ordering_used));
+  OrderingToGroupSizes(options.linear_solver_ordering.get(),
+                       &(summary->linear_solver_ordering_used));
   SummarizeReducedProgram(*reduced_program, summary);
 
   if (summary->num_parameter_blocks_reduced == 0) {
@@ -1066,13 +1048,8 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   linear_solver_options.num_threads = options->num_linear_solver_threads;
   options->num_linear_solver_threads = linear_solver_options.num_threads;
 
-  const map<int, set<double*> >& groups =
-      options->linear_solver_ordering->group_to_elements();
-  for (map<int, set<double*> >::const_iterator it = groups.begin();
-       it != groups.end();
-       ++it) {
-    linear_solver_options.elimination_groups.push_back(it->second.size());
-  }
+  OrderingToGroupSizes(options->linear_solver_ordering.get(),
+                       &linear_solver_options.elimination_groups);
   // Schur type solvers, expect at least two elimination groups. If
   // there is only one elimination group, then CreateReducedProgram
   // guarantees that this group only contains e_blocks. Thus we add a
@@ -1258,7 +1235,8 @@ CoordinateDescentMinimizer* SolverImpl::CreateInnerIterationMinimizer(
 
   summary->inner_iterations_used = true;
   summary->inner_iteration_time_in_seconds = 0.0;
-  SummarizeOrdering(ordering_ptr, &(summary->inner_iteration_ordering_used));
+  OrderingToGroupSizes(ordering_ptr,
+                       &(summary->inner_iteration_ordering_used));
   return inner_iteration_minimizer.release();
 }
 
