@@ -26,33 +26,24 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: mierle@gmail.com (Keir Mierle)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
+#ifndef CERES_PUBLIC_VERSION_H_
+#define CERES_PUBLIC_VERSION_H_
 
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
-#include "ceres/cost_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/numeric_diff_functor.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
-#include "ceres/version.h"
+// Classic CPP stringifcation; the extra level of indirection allows the
+// preprocessor to expand the macro before being converted to a string.
+#define CERES_TO_STRING_HELPER(x) #x
+#define CERES_TO_STRING(x) CERES_TO_STRING_HELPER(x)
 
-#endif  // CERES_PUBLIC_CERES_H_
+// NOTE: Don't forget to bump the ABI version if necessary.
+#define CERES_VERSION_MAJOR 1
+#define CERES_VERSION_MINOR 10
+#define CERES_VERSION_REVISION 0
+#define CERES_VERSION_ABI 1
+
+#define CERES_VERSION_STRING CERES_TO_STRING(CERES_VERSION_MAJOR) "." \
+                             CERES_TO_STRING(CERES_VERSION_MINOR) "." \
+                             CERES_TO_STRING(CERES_VERSION_REVISION)
+
+#endif  // CERES_PUBLIC_VERSION_H_

@@ -38,6 +38,7 @@
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
+#include "ceres/version.h"
 
 namespace ceres {
 namespace {
@@ -144,8 +145,8 @@ string Solver::Summary::BriefReport() const {
 string Solver::Summary::FullReport() const {
   string report =
       "\n"
-      "Ceres Solver Report\n"
-      "-------------------\n";
+      "Ceres Solver v" CERES_VERSION_STRING " Solve Report\n"
+      "----------------------------------\n";
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
   StringAppendF(&report, "Parameter blocks    % 25d% 25d\n",
