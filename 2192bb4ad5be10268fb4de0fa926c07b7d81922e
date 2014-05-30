@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfe21c19_92b3bcd7",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "This { doesn\u0027t seem to be closed...\n\nAlso, is there a reason to have this be a nested check rather than the later checks which are of the form:\n\nif (options.type \u003d\u003d SPARSE_NORMAL_CHOLESKY \u0026\u0026\n    options.sparse_linear_algebra_library_type \u003d\u003d SUITE_SPARSE)",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_f2a44095",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "*supported",
+      "range": {
+        "startLine": 153,
+        "startChar": 49,
+        "endLine": 153,
+        "endChar": 57
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_d2a9446d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "This is a different form to the LAPACK errors, which just say \"because SuiteSparse was not enabled when Ceres was built.\" - which implies a rebuild would be required to use it, do you mind this delta?",
+      "range": {
+        "startLine": 153,
+        "startChar": 59,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_b2aeb871",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "Same issue with consistency with previous / following error messages.",
+      "range": {
+        "startLine": 159,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_72e050ac",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "I would move this down to just above line 212 so that all of the checks are together:\n\n  OPTION_LT_OPTION(line_search_sufficient_function_decrease,\n                   line_search_sufficient_curvature_decrease);",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_d2d024db",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "OPTION_LE --\u003e OPTION_LT\n\n0 \u003c max_line_search_step_contraction \u003c 1",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_32dac8f6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "OPTION_LE --\u003e OPTION_LT, although I realise that made a mistake here originally, but it should be:\n\n0 \u003c sufficient_function_decrease \u003c sufficient_curvature_decrease \u003c 1",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_12d7cccc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-05-30T19:01:06Z",
+      "side": 1,
+      "message": "\"Terminating, solver options invalid: \" ? - although I notice that you removed the \"Terminating: \" prefix from the \"No non-constant parameter blocks found.\" and other cases in solver_impl.cc, so perhaps just \"Solver options invalid: \" ?",
+      "revId": "2192bb4ad5be10268fb4de0fa926c07b7d81922e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
