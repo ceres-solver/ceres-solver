@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_cea3d2d1",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T23:13:54Z",
+      "side": 1,
+      "message": "Change to\n\n  // Verify that each group is an independent set",
+      "revId": "6c29899acf0030f3f070939f3fff1c0dedf49ae4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
