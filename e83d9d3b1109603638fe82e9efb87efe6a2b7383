@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_aee3f640",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T22:56:41Z",
+      "side": 1,
+      "message": "drop comma",
+      "revId": "e83d9d3b1109603638fe82e9efb87efe6a2b7383",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_8ee95a23",
+        "filename": "internal/ceres/linear_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T22:56:41Z",
+      "side": 1,
+      "message": "E-blocks\n\ncomma after E-blocks",
+      "revId": "e83d9d3b1109603638fe82e9efb87efe6a2b7383",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_2e6386e7",
+        "filename": "internal/ceres/preconditioner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T22:56:41Z",
+      "side": 1,
+      "message": "Same comment as the other file",
+      "revId": "e83d9d3b1109603638fe82e9efb87efe6a2b7383",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
