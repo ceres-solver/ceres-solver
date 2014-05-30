@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_c8a98f6d",
+        "filename": "include/ceres/version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-05-30T05:16:02Z",
+      "side": 1,
+      "message": "this is pointless, because well if you can see it.. then you are already being careful :)",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 38
+      },
+      "revId": "ec5b9eccf00410b51c0e13afbdbe7110e1ea7b1e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
