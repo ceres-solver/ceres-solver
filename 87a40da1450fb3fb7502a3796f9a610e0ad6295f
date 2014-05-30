@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_08d447ed",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T04:50:15Z",
+      "side": 1,
+      "message": "This is the only function that feels out of place.",
+      "revId": "87a40da1450fb3fb7502a3796f9a610e0ad6295f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_e89fab51",
+        "filename": "internal/ceres/solver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T04:50:15Z",
+      "side": 1,
+      "message": "This is nicer.",
+      "revId": "87a40da1450fb3fb7502a3796f9a610e0ad6295f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
