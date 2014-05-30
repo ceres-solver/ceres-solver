@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_889717bf",
+        "filename": "internal/ceres/parameter_block_ordering.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-05-30T06:20:32Z",
+      "side": 1,
+      "message": "Why not just set it to the correct size at the start, then insert below instead of doing push_back?",
+      "revId": "a2df262441e680b4b562cb3fea056547ced0a263",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
