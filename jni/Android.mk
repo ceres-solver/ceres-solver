@@ -113,6 +113,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/block_random_access_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/block_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/block_structure.cc \
+                   $(CERES_SRC_PATH)/callbacks.cc \
                    $(CERES_SRC_PATH)/canonical_views_clustering.cc \
                    $(CERES_SRC_PATH)/cgnr_solver.cc \
                    $(CERES_SRC_PATH)/compressed_row_jacobian_writer.cc \
@@ -165,6 +166,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/sparse_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/split.cc \
                    $(CERES_SRC_PATH)/stringprintf.cc \
+                   $(CERES_SRC_PATH)/summary_utils.cc \
                    $(CERES_SRC_PATH)/suitesparse.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \
