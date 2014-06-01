@@ -75,10 +75,18 @@ LinearSolver* LinearSolver::Create(const LinearSolver::Options& options) {
       return new CgnrSolver(options);
 
     case SPARSE_NORMAL_CHOLESKY:
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+      return NULL;
+#else
       return new SparseNormalCholeskySolver(options);
+#endif
 
     case SPARSE_SCHUR:
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+      return NULL;
+#else
       return new SparseSchurComplementSolver(options);
+#endif
 
     case DENSE_SCHUR:
       return new DenseSchurComplementSolver(options);
