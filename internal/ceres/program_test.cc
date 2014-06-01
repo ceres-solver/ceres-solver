@@ -88,15 +88,15 @@ TEST(Program, RemoveFixedBlocksNothingConstant) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.AddResidualBlock(new TernaryCostFunction(), NULL, &x, &y, &z);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
-  EXPECT_EQ(program->NumParameterBlocks(), 3);
-  EXPECT_EQ(program->NumResidualBlocks(), 3);
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
+  EXPECT_EQ(program.NumParameterBlocks(), 3);
+  EXPECT_EQ(program.NumResidualBlocks(), 3);
   EXPECT_EQ(removed_parameter_blocks.size(), 0);
   EXPECT_EQ(fixed_cost, 0.0);
 }
@@ -109,15 +109,15 @@ TEST(Program, RemoveFixedBlocksAllParameterBlocksConstant) {
   problem.AddResidualBlock(new UnaryCostFunction(), NULL, &x);
   problem.SetParameterBlockConstant(&x);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
-  EXPECT_EQ(program->NumParameterBlocks(), 0);
-  EXPECT_EQ(program->NumResidualBlocks(), 0);
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
+  EXPECT_EQ(program.NumParameterBlocks(), 0);
+  EXPECT_EQ(program.NumResidualBlocks(), 0);
   EXPECT_EQ(removed_parameter_blocks.size(), 1);
   EXPECT_EQ(removed_parameter_blocks[0], &x);
   EXPECT_EQ(fixed_cost, 9.0);
@@ -134,15 +134,15 @@ TEST(Program, RemoveFixedBlocksNoResidualBlocks) {
   problem.AddParameterBlock(&y, 1);
   problem.AddParameterBlock(&z, 1);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
-  EXPECT_EQ(program->NumParameterBlocks(), 0);
-  EXPECT_EQ(program->NumResidualBlocks(), 0);
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
+  EXPECT_EQ(program.NumParameterBlocks(), 0);
+  EXPECT_EQ(program.NumResidualBlocks(), 0);
   EXPECT_EQ(removed_parameter_blocks.size(), 3);
   EXPECT_EQ(fixed_cost, 0.0);
 }
@@ -161,15 +161,15 @@ TEST(Program, RemoveFixedBlocksOneParameterBlockConstant) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
-  EXPECT_EQ(program->NumParameterBlocks(), 1);
-  EXPECT_EQ(program->NumResidualBlocks(), 1);
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
+  EXPECT_EQ(program.NumParameterBlocks(), 1);
+  EXPECT_EQ(program.NumResidualBlocks(), 1);
 }
 
 TEST(Program, RemoveFixedBlocksNumEliminateBlocks) {
@@ -186,15 +186,15 @@ TEST(Program, RemoveFixedBlocksNumEliminateBlocks) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
-  EXPECT_EQ(program->NumParameterBlocks(), 2);
-  EXPECT_EQ(program->NumResidualBlocks(), 2);
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
+  EXPECT_EQ(program.NumParameterBlocks(), 2);
+  EXPECT_EQ(program.NumResidualBlocks(), 2);
 }
 
 TEST(Program, RemoveFixedBlocksFixedCost) {
@@ -211,10 +211,10 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  Program* program = problem.mutable_program();
+  Program program(problem.program());
 
   double expected_fixed_cost;
-  ResidualBlock *expected_removed_block = program->residual_blocks()[0];
+  ResidualBlock *expected_removed_block = program.residual_blocks()[0];
   scoped_array<double> scratch(
       new double[expected_removed_block->NumScratchDoublesForEvaluate()]);
   expected_removed_block->Evaluate(true,
@@ -226,12 +226,12 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   vector<double*> removed_parameter_blocks;
   double fixed_cost = 0.0;
   string message;
-  EXPECT_TRUE(program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                         &fixed_cost,
-                                         &message));
+  EXPECT_TRUE(program.RemoveFixedBlocks(&removed_parameter_blocks,
+                                        &fixed_cost,
+                                        &message));
 
-  EXPECT_EQ(program->NumParameterBlocks(), 2);
-  EXPECT_EQ(program->NumResidualBlocks(), 2);
+  EXPECT_EQ(program.NumParameterBlocks(), 2);
+  EXPECT_EQ(program.NumResidualBlocks(), 2);
   EXPECT_DOUBLE_EQ(fixed_cost, expected_fixed_cost);
 }
 

@@ -131,7 +131,11 @@ class Program {
 
   // Removes constant parameter blocks and residual blocks with no
   // varying parameter blocks while preserving order.
-  // TODO(sameeragarwal): Update message here.
+  //
+  // WARNING: It is the caller's responsibility to track ownership of
+  // the parameter and residual blocks removed from the
+  // program. Generally speaking this method should only be called on
+  // a copy of an existing program.
   bool RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
                          double* fixed_cost,
                          string* message);
