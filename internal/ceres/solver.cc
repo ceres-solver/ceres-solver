@@ -145,19 +145,19 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
 #ifdef CERES_NO_LAPACK
   if (options.dense_linear_algebra_library_type == LAPACK) {
-    if (options.type == DENSE_NORMAL_CHOLESKY) {
+    if (options.linear_solver_type == DENSE_NORMAL_CHOLESKY) {
       *error = "Can't use DENSE_NORMAL_CHOLESKY with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
     }
 
-    if (options.type == DENSE_QR) {
+    if (options.linear_solver_type == DENSE_QR) {
       *error = "Can't use DENSE_QR with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
     }
 
-    if (options.type == DENSE_SCHUR) {
+    if (options.linear_solver_type == DENSE_SCHUR) {
       *error = "Can't use DENSE_SCHUR with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
@@ -167,13 +167,13 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
 #ifdef CERES_NO_SUITESPARSE
   if (options.sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    if (options.type == SPARSE_NORMAL_CHOLESKY) {
+    if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
              "SuiteSparse was not enabled when Ceres was built.";
       return false;
     }
 
-    if (options.type == SPARSE_SCHUR) {
+    if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with SUITESPARSE because "
           "SuiteSparse was not enabled when Ceres was built.";
       return false;
@@ -181,13 +181,13 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
     if (options.preconditioner_type == CLUSTER_JACOBI) {
       *error =  "CLUSTER_JACOBI preconditioner not supported. "
-          "SuiteSparse was not enabled when Ceres was built."
+          "SuiteSparse was not enabled when Ceres was built.";
       return false;
     }
 
     if (options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
       *error =  "CLUSTER_TRIDIAGONAL preconditioner not supported. "
-          "SuiteSparse was not enabled when Ceres was built."
+          "SuiteSparse was not enabled when Ceres was built.";
     return false;
     }
   }
