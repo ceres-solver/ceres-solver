@@ -72,6 +72,7 @@ SET(CERES_INTERNAL_SRC
     line_search.cc
     line_search_direction.cc
     line_search_minimizer.cc
+    line_search_solver.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
@@ -96,6 +97,7 @@ SET(CERES_INTERNAL_SRC
     single_linkage_clustering.cc
     solver.cc
     solver_impl.cc
+    solver_utils.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
     split.cc
