@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_ce0d129c",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-01T23:34:13Z",
+      "side": 1,
+      "message": "Document. Also the name of this function seems unfinished :)",
+      "revId": "ba124f58c13f6fc2e5c83c81c77c1bcd1b96dd32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
