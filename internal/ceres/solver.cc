@@ -195,13 +195,13 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
 
 #ifdef CERES_NO_CXSPARSE
   if (options.sparse_linear_algebra_library_type == CX_SPARSE) {
-    if (options.type == SPARSE_NORMAL_CHOLESKY) {
+    if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY with CX_SPARSE because "
              "CXSparse was not enabled when Ceres was built.";
       return false;
     }
 
-    if (options.type == SPARSE_SCHUR) {
+    if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with CX_SPARSE because "
           "CXSparse was not enabled when Ceres was built.";
       return false;
