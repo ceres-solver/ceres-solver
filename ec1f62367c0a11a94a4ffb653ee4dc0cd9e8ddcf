@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_0e144aa4",
+        "filename": "internal/ceres/program.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-01T23:31:21Z",
+      "side": 1,
+      "message": "exist -\u003e exit",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 3
+      },
+      "revId": "ec1f62367c0a11a94a4ffb653ee4dc0cd9e8ddcf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
