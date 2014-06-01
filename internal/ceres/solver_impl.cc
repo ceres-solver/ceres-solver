@@ -664,40 +664,42 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
                                           string* error) {
   CHECK_NOTNULL(options->linear_solver_ordering.get());
   Program* original_program = problem_impl->mutable_program();
-  scoped_ptr<Program> transformed_program(new Program(*original_program));
+
+  vector<double*> removed_parameter_blocks;
+  scoped_ptr<Program> reduced_program(
+      original_program->CreateReducedProgram(&removed_parameter_blocks,
+                                             fixed_cost,
+                                             error));
+  if (reduced_program.get() == NULL) {
+    return NULL;
+  }
+
+  VLOG(2) << "Reduced problem: "
+          << reduced_program->NumParameterBlocks()
+          << " parameter blocks, "
+          << reduced_program->NumParameters()
+          << " parameters,  "
+          << reduced_program->NumResidualBlocks()
+          << " residual blocks, "
+          << reduced_program->NumResiduals()
+          << " residuals.";
+
+  if (reduced_program->NumParameterBlocks() == 0) {
+    LOG(WARNING) << "No varying parameter blocks to optimize; "
+                 << "bailing early.";
+    return reduced_program.release();
+  }
 
   ParameterBlockOrdering* linear_solver_ordering =
       options->linear_solver_ordering.get();
   const int min_group_id =
       linear_solver_ordering->group_to_elements().begin()->first;
-  vector<double*> removed_parameter_blocks;
-  if (!transformed_program->RemoveFixedBlocks(&removed_parameter_blocks,
-                                              fixed_cost,
-                                              error)) {
-    return NULL;
-  }
-
   linear_solver_ordering->Remove(removed_parameter_blocks);
+
   ParameterBlockOrdering* inner_iteration_ordering =
       options->inner_iteration_ordering.get();
   if (inner_iteration_ordering != NULL) {
     inner_iteration_ordering->Remove(removed_parameter_blocks);
-  }
-
-  VLOG(2) << "Reduced problem: "
-          << transformed_program->NumParameterBlocks()
-          << " parameter blocks, "
-          << transformed_program->NumParameters()
-          << " parameters,  "
-          << transformed_program->NumResidualBlocks()
-          << " residual blocks, "
-          << transformed_program->NumResiduals()
-          << " residuals.";
-
-  if (transformed_program->NumParameterBlocks() == 0) {
-    LOG(WARNING) << "No varying parameter blocks to optimize; "
-                 << "bailing early.";
-    return transformed_program.release();
   }
 
   if (IsSchurType(options->linear_solver_type) &&
@@ -730,11 +732,11 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
             options->sparse_linear_algebra_library_type,
             problem_impl->parameter_map(),
             linear_solver_ordering,
-            transformed_program.get(),
+            reduced_program.get(),
             error)) {
       return NULL;
     }
-    return transformed_program.release();
+    return reduced_program.release();
   }
 
   if (options->linear_solver_type == SPARSE_NORMAL_CHOLESKY &&
@@ -742,16 +744,16 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
     if (!ReorderProgramForSparseNormalCholesky(
             options->sparse_linear_algebra_library_type,
             linear_solver_ordering,
-            transformed_program.get(),
+            reduced_program.get(),
             error)) {
       return NULL;
     }
 
-    return transformed_program.release();
+    return reduced_program.release();
   }
 
-  transformed_program->SetParameterOffsetsAndIndex();
-  return transformed_program.release();
+  reduced_program->SetParameterOffsetsAndIndex();
+  return reduced_program.release();
 }
 
 LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
