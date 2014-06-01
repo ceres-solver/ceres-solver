@@ -109,7 +109,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_LE_OPTION(min_trust_region_radius, max_trust_region_radius);
   OPTION_LE_OPTION(min_trust_region_radius, initial_trust_region_radius);
   OPTION_LE_OPTION(initial_trust_region_radius, max_trust_region_radius);
-  OPTION_GT(min_relative_decrease, 0.0);
+  OPTION_GE(min_relative_decrease, 0.0);
   OPTION_GE(min_lm_diagonal, 0.0);
   OPTION_GE(max_lm_diagonal, 0.0);
   OPTION_LE_OPTION(min_lm_diagonal, max_lm_diagonal);
