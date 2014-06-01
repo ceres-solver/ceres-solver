@@ -129,16 +129,22 @@ class Program {
   // Caller owns the result.
   TripletSparseMatrix* CreateJacobianBlockSparsityTranspose() const;
 
-  // Removes constant parameter blocks and residual blocks with no
-  // varying parameter blocks while preserving order.
+  // Create a copy of this program and removes constant parameter
+  // blocks and residual blocks with no varying parameter blocks while
+  // preserving their relative order.
   //
-  // WARNING: It is the caller's responsibility to track ownership of
-  // the parameter and residual blocks removed from the
-  // program. Generally speaking this method should only be called on
-  // a copy of an existing program.
-  bool RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
-                         double* fixed_cost,
-                         string* message);
+  // removed_parameter_blocks on exit will contain the list of
+  // parameter blocks that were removed.
+  //
+  // fixed_cost will be equal to the sum of the costs of the residual
+  // blocks that were removed.
+  //
+  // If there was a problem, then the function will return a NULL
+  // pointer and error will contain a human readable description of
+  // the problem.
+  Program* CreateReducedProgram(vector<double*>* removed_parameter_blocks,
+                                double* fixed_cost,
+                                string* error) const;
 
   // See problem.h for what these do.
   int NumParameterBlocks() const;
@@ -157,6 +163,21 @@ class Program {
   string ToString() const;
 
  private:
+  // Remove constant parameter blocks and residual blocks with no
+  // varying parameter blocks while preserving their relative order.
+  //
+  // removed_parameter_blocks on exit will contain the list of
+  // parameter blocks that were removed.
+  //
+  // fixed_cost will be equal to the sum of the costs of the residual
+  // blocks that were removed.
+  //
+  // If there was a problem, then the function will return false and
+  // error will contain a human readable description of the problem.
+  bool RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
+                         double* fixed_cost,
+                         string* message);
+
   // The Program does not own the ParameterBlock or ResidualBlock objects.
   vector<ParameterBlock*> parameter_blocks_;
   vector<ResidualBlock*> residual_blocks_;
