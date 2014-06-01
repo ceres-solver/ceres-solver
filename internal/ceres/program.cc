@@ -261,6 +261,24 @@ bool Program::IsFeasible(string* message) const {
   return true;
 }
 
+Program* Program::CreateReducedProgram(vector<double*>* removed_parameter_blocks,
+                                       double* fixed_cost,
+                                       string* error) const {
+  CHECK_NOTNULL(removed_parameter_blocks);
+  CHECK_NOTNULL(fixed_cost);
+  CHECK_NOTNULL(error);
+
+  scoped_ptr<Program> reduced_program(new Program(*this));
+  if (!reduced_program->RemoveFixedBlocks(removed_parameter_blocks,
+                                          fixed_cost,
+                                          error)) {
+    return NULL;
+  }
+
+  reduced_program->SetParameterOffsetsAndIndex();
+  return reduced_program.release();
+}
+
 bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
                                 double* fixed_cost,
                                 string* error) {
