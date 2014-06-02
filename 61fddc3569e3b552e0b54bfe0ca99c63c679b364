@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffef0bb_91585f10",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-02T23:18:34Z",
+      "side": 1,
+      "message": "Do we not have a stringprintf?",
+      "revId": "61fddc3569e3b552e0b54bfe0ca99c63c679b364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffef0bb_b1423b20",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-02T23:18:34Z",
+      "side": 1,
+      "message": "\\ alignment throughout.",
+      "revId": "61fddc3569e3b552e0b54bfe0ca99c63c679b364",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
