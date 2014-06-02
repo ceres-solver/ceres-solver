@@ -31,65 +31,51 @@
 
 #include "ceres/solver.h"
 
+#include <iostream>  // NOLINT
 #include <vector>
+#include "ceres/internal/port.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
 #include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
-#include "ceres/wall_time.h"
 #include "ceres/version.h"
+#include "ceres/types.h"
+#include "ceres/wall_time.h"
 
 namespace ceres {
 namespace {
 
-// TODO(sameeragarwal): These macros are not terribly informative when
-// things do crash. It would be nice to actually print the offending
-// value.
-
-#define OPTION_GT(x, y)                                                 \
-  if (options.x <= y) {                                                 \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " > " #y);                   \
+#define OPTION_OP(x, y, OP)                                             \
+  if (!(options.x OP y)) {                                              \
+    std::stringstream ss;                                               \
+    ss << "Invalid configuration. ";                                    \
+    ss << string("Solver::Options::" #x " = ") << options.x << ". ";    \
+    ss << "Violated constraint: ";                                      \
+    ss << string("Solver::Options::" #x " " #OP " "#y);                 \
+    *error = ss.str();                                                  \
     return false;                                                       \
   }
 
-#define OPTION_GE(x, y)                                                 \
-  if (options.x < y) {                                                  \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " >= " #y);                  \
+#define OPTION_OP_OPTION(x, y, OP)                                      \
+  if (!(options.x OP options.y)) {                                      \
+    std::stringstream ss;                                               \
+    ss << "Invalid configuration. ";                                    \
+    ss << string("Solver::Options::" #x " = ") << options.x << ". ";    \
+    ss << string("Solver::Options::" #y " = ") << options.y << ". ";    \
+    ss << "Violated constraint: ";                                      \
+    ss << string("Solver::Options::" #x );                              \
+    ss << string(#OP " Solver::Options::" #y ".");                      \
+    *error = ss.str();                                                  \
     return false;                                                       \
   }
 
-#define OPTION_LE(x, y)                                                 \
-  if (options.x > y) {                                                  \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " <= " #y);                  \
-    return false;                                                       \
-  }
-
-#define OPTION_LT(x, y)                                                 \
-  if (options.x >= y) {                                                 \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " < " #y);                   \
-    return false;                                                       \
-  }
-
-#define OPTION_LE_OPTION(x, y)                                          \
-  if (options.x > options.y) {                                          \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " <= "                       \
-                    "Solver::Options::" #y);                            \
-    return false;                                                       \
-  }
-
-#define OPTION_LT_OPTION(x, y)                                          \
-  if (options.x >= options.y) {                                         \
-    *error = string("Invalid configuration. Violated constraint "       \
-                    "Solver::Options::" #x " < "                        \
-                    "Solver::Options::" #y);                            \
-    return false;                                                       \
-  }
+#define OPTION_GE(x, y) OPTION_OP(x, y, >=);
+#define OPTION_GT(x, y) OPTION_OP(x, y, >);
+#define OPTION_LE(x, y) OPTION_OP(x, y, <=);
+#define OPTION_LT(x, y) OPTION_OP(x, y, <);
+#define OPTION_LE_OPTION(x, y) OPTION_OP_OPTION(x ,y, <=)
+#define OPTION_LT_OPTION(x, y) OPTION_OP_OPTION(x ,y, <)
 
 bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_GE(max_num_iterations, 0);
@@ -251,10 +237,12 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
   if ((options.line_search_direction_type == ceres::BFGS ||
        options.line_search_direction_type == ceres::LBFGS) &&
       options.line_search_type != ceres::WOLFE) {
+
     *error =
-        string("Invalid configuration: require line_search_type == "
-               "ceres::WOLFE when using (L)BFGS to ensure that underlying "
-               "assumptions are guaranteed to be satisfied.");
+        string("Invalid configuration: Solver::Options::line_search_type = ")
+        + string(LineSearchTypeToString(options.line_search_type))
+        + string(". When using (L)BFGS, "
+                 "Solver::Options::line_search_type must be set to WOLFE.");
     return false;
   }
 
@@ -276,6 +264,8 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
   return true;
 }
 
+#undef OPTION_OP
+#undef OPTION_OP_OPTION
 #undef OPTION_GT
 #undef OPTION_GE
 #undef OPTION_LE
