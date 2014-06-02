@@ -67,12 +67,19 @@ void AppendArrayToString(const int size, const double* x, string* result);
 
 extern const double kImpossibleValue;
 
-// array contains a list of (possibly repeating) non-negative
-// integers. Let us assume that we have constructed another array `p`
-// by sorting and uniquing the entries of array.
+// This routine takes an array of integer values, sorts and uniques
+// them and then maps each value in the array to its position in the
+// sorted+uniqued array. By doing this, if there are are k unique
+// values in the array, each value is replaced by an integer in the
+// range [0, k-1], while preserving their relative order.
 //
-// MapValuesToContiguousRange replaces each entry in "array" with its
-// position in `p`.
+// For example
+//
+// [1 0 3 5 0 1 5]
+//
+// gets mapped to
+//
+// [1 0 2 3 0 1 3]
 void MapValuesToContiguousRange(int size, int* array);
 
 }  // namespace internal

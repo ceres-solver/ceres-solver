@@ -43,6 +43,10 @@
 namespace ceres {
 namespace {
 
+// TODO(sameeragarwal): These macros are not terribly informative when
+// things do crash. It would be nice to actually print the offending
+// value.
+
 #define OPTION_GT(x, y)                                                 \
   if (options.x <= y) {                                                 \
     *error = string("Invalid configuration. Violated constraint "       \
