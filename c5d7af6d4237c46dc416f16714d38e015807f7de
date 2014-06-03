@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfe21c19_7b282bed",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-03T22:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffef0bb_76d710f5",
+      "revId": "c5d7af6d4237c46dc416f16714d38e015807f7de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dffef0bb_b6cd886a",
         "filename": "jni/assert_ndk_version.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-06-03T21:01:32Z",
       "side": 1,
       "message": "Move this above the copyright header since it\u0027s Ceres-specific.",
+      "revId": "c5d7af6d4237c46dc416f16714d38e015807f7de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_9b12b7b6",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-03T22:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffef0bb_b6cd886a",
       "revId": "c5d7af6d4237c46dc416f16714d38e015807f7de",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
