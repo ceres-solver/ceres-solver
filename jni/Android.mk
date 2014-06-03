@@ -99,8 +99,7 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_SUITESPARSE \
                 -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
-                -DCERES_STD_UNORDERED_MAP \
-                -DCERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG
+                -DCERES_STD_UNORDERED_MAP
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/blas.cc \
