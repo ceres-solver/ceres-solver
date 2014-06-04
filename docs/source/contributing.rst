@@ -104,6 +104,9 @@ Submitting a change to Ceres Solver
    like. Commit your changes as one patch. When you commit, the Gerrit
    hook will add a `Change-Id:` line as the last line of the commit.
 
+   Make sure that your commit message is formatted in the `50/72 style
+   <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
+
 2. Push your changes to the Ceres Gerrit instance:
 
    .. code-block:: bash
