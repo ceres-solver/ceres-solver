@@ -399,7 +399,7 @@ directions, all aimed at large scale problems.
    Gradient method to non-linear functions. The generalization can be
    performed in a number of different ways, resulting in a variety of
    search directions. Ceres Solver currently supports
-   ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and ``HESTENES_STIEFEL``
+   ``FLETCHER_REEVES``, ``POLAK_RIBIERE`` and ``HESTENES_STIEFEL``
    directions.
 
 3. ``BFGS`` A generalization of the Secant method to multiple
@@ -828,7 +828,7 @@ elimination group [LiSaad]_.
 
    Default: ``FLETCHER_REEVES``
 
-   Choices are ``FLETCHER_REEVES``, ``POLAK_RIBIRERE`` and
+   Choices are ``FLETCHER_REEVES``, ``POLAK_RIBIERE`` and
    ``HESTENES_STIEFEL``.
 
 .. member:: int Solver::Options::max_lbfs_rank

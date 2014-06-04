@@ -240,7 +240,7 @@ const char* NonlinearConjugateGradientTypeToString(
     NonlinearConjugateGradientType type) {
   switch (type) {
     CASESTR(FLETCHER_REEVES);
-    CASESTR(POLAK_RIBIRERE);
+    CASESTR(POLAK_RIBIERE);
     CASESTR(HESTENES_STIEFEL);
     default:
       return "UNKNOWN";
@@ -252,7 +252,7 @@ bool StringToNonlinearConjugateGradientType(
     NonlinearConjugateGradientType* type) {
   UpperCase(&value);
   STRENUM(FLETCHER_REEVES);
-  STRENUM(POLAK_RIBIRERE);
+  STRENUM(POLAK_RIBIERE);
   STRENUM(HESTENES_STIEFEL);
   return false;
 }
