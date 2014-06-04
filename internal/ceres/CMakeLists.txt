@@ -135,24 +135,10 @@ ELSE (SCHUR_SPECIALIZATIONS)
   FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/*_d_d_d.cc)
 ENDIF (SCHUR_SPECIALIZATIONS)
 
-# Primarily for Android, but optionally for others, use the minimal internal
-# Glog implementation.
-IF (MINIGLOG)
-  IF (MSVC)
-    # Miniglog needs to be built statically with Visual Studio since it
-    # doesn't export any symbols with dllexport/dllimport.
-    ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
-  ELSE()
-    ADD_LIBRARY(miniglog miniglog/glog/logging.cc)
-  ENDIF()
-  INSTALL(TARGETS miniglog
-          EXPORT  CeresExport
-          RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib${LIB_SUFFIX}
-          ARCHIVE DESTINATION lib${LIB_SUFFIX})
-ENDIF (MINIGLOG)
-
-SET(CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
+# Build the list of dependencies for Ceres based on the current configuration.
+IF (NOT MINIGLOG AND GLOG_FOUND)
+  LIST(APPEND CERES_LIBRARY_PUBLIC_DEPENDENCIES ${GLOG_LIBRARIES})
+ENDIF (NOT MINIGLOG AND GLOG_FOUND)
 
 IF (SUITESPARSE AND SUITESPARSE_FOUND)
   LIST(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${SUITESPARSE_LIBRARIES})
@@ -178,6 +164,12 @@ SET(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
     ${CERES_INTERNAL_HDRS}
     ${CERES_INTERNAL_SCHUR_FILES})
+
+# Primarily for Android, but optionally for others, compile the minimal
+# glog implementation into Ceres.
+IF (MINIGLOG)
+  LIST(APPEND CERES_LIBRARY_SOURCE miniglog/glog/logging.cc)
+ENDIF (MINIGLOG)
 
 ADD_LIBRARY(ceres ${CERES_LIBRARY_SOURCE})
 SET_TARGET_PROPERTIES(ceres PROPERTIES
@@ -214,8 +206,15 @@ IF (BUILD_TESTING AND GFLAGS)
               numeric_diff_test_utils.cc
               test_util.cc)
 
-  TARGET_LINK_LIBRARIES(gtest ${GFLAGS_LIBRARIES} ${GLOG_LIBRARIES})
-  TARGET_LINK_LIBRARIES(test_util ceres gtest ${GLOG_LIBRARIES})
+  IF (MINIGLOG)
+    # When using miniglog, it is compiled into Ceres, thus Ceres becomes
+    # the library against which other libraries should link for logging.
+    TARGET_LINK_LIBRARIES(gtest ${GFLAGS_LIBRARIES} ceres)
+    TARGET_LINK_LIBRARIES(test_util ceres gtest)
+  ELSE (MINIGLOG)
+    TARGET_LINK_LIBRARIES(gtest ${GFLAGS_LIBRARIES} ${GLOG_LIBRARIES})
+    TARGET_LINK_LIBRARIES(test_util ceres gtest ${GLOG_LIBRARIES})
+  ENDIF (MINIGLOG)
 
   MACRO (CERES_TEST NAME)
     ADD_EXECUTABLE(${NAME}_test ${NAME}_test.cc)
