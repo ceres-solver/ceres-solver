@@ -28,6 +28,7 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
+#include <algorithm>
 #include "ceres/summary_utils.h"
 #include "ceres/program.h"
 #include "ceres/solver.h"
