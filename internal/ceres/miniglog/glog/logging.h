@@ -105,6 +105,9 @@
 #include <string>
 #include <vector>
 
+// For appropriate definition of CERES_EXPORT macro.
+#include "ceres/internal/port.h"
+
 // Log severity level constants.
 const int FATAL   = -3;
 const int ERROR   = -2;
@@ -125,7 +128,7 @@ const int FATAL   = ::FATAL;
 // added, all log output is also sent to each sink through the send function.
 // In this implementation, WaitTillSent() is called immediately after the send.
 // This implementation is not thread safe.
-class LogSink {
+class CERES_EXPORT LogSink {
  public:
   virtual ~LogSink() {}
   virtual void send(LogSeverity severity,
@@ -139,7 +142,7 @@ class LogSink {
 };
 
 // Global set of log sinks. The actual object is defined in logging.cc.
-extern std::set<LogSink *> log_sinks_global;
+extern CERES_EXPORT std::set<LogSink *> log_sinks_global;
 
 inline void InitGoogleLogging(char *argv) {
   // Do nothing; this is ignored.
@@ -164,7 +167,7 @@ inline void RemoveLogSink(LogSink *sink) {
 // defined, output is directed to std::cerr.  This class should not
 // be directly instantiated in code, rather it should be invoked through the
 // use of the log macros LG, LOG, or VLOG.
-class MessageLogger {
+class CERES_EXPORT MessageLogger {
  public:
   MessageLogger(const char *file, int line, const char *tag, int severity)
     : file_(file), line_(line), tag_(tag), severity_(severity) {
@@ -271,7 +274,7 @@ class MessageLogger {
 // This class is used to explicitly ignore values in the conditional
 // logging macros.  This avoids compiler warnings like "value computed
 // is not used" and "statement has no effect".
-class LoggerVoidify {
+class CERES_EXPORT LoggerVoidify {
  public:
   LoggerVoidify() { }
   // This has to be an operator with a precedence lower than << but

@@ -142,8 +142,8 @@ ENDIF (MSVC)
 # to config the cmake. The PLATFORM can be one of OS, SIMULATOR and SIMULATOR64.
 # Check the documentation in iOS.cmake to find more options.
 #
-# After building, you will get libceres.a and libminiglog.a
-# You need to add these two libraries into your xcode project.
+# After building, you will get a single library: libceres.a, which
+# you need to add to your xcode project.
 #
 # If you use the lapack and blas, then you also need to add Accelerate.framework
 # to your xcode project's linking dependency.
@@ -361,10 +361,9 @@ ENDIF (GFLAGS)
 
 # MiniGLog.
 IF (MINIGLOG)
-  SET(GLOG_LIBRARIES miniglog)
-  MESSAGE("-- Using minimal Glog substitute (library): ${GLOG_LIBRARIES}")
+  MESSAGE("-- Compiling minimal glog substitute into Ceres.")
   SET(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
-  MESSAGE("-- Using minimal Glog substitute (include): ${GLOG_INCLUDE_DIRS}")
+  MESSAGE("-- Using minimal glog substitute (include): ${GLOG_INCLUDE_DIRS}")
 
   # Mark as advanced (remove from default GUI view) the glog search
   # variables in case user disables MINIGLOG, FindGlog did not find it, so
