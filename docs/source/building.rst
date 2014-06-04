@@ -368,13 +368,13 @@ build for ``OS`` (``armv7``, ``armv7s``, ``arm64``), ``SIMULATOR`` (``i386``) or
 ``SIMULATOR64`` (``x86_64``) separately and use ``LIPO`` to merge them into
 one static library.  See ``cmake/iOS.cmake`` for more options.
 
-After building, you will get ``libceres.a`` and ``libminiglog.a``
-You need to add these two libraries into your XCode project.
+After building, you will get a ``libceres.a`` library, which you will need to
+add to your Xcode project.
 
 The default CMake configuration builds a bare bones version of Ceres
-Solver that only depends on Eigen and MINIGLOG, this should be
-sufficient for solving small to moderate sized problems (No
-``SPARSE_SCHUR``, ``SPARSE_NORMAL_CHOLESKY`` linear solvers and no
+Solver that only depends on Eigen (``MINIGLOG`` is compiled into Ceres if it is
+used), this should be sufficient for solving small to moderate sized problems
+(No ``SPARSE_SCHUR``, ``SPARSE_NORMAL_CHOLESKY`` linear solvers and no
 ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` preconditioners).
 
 If you decide to use ``LAPACK`` and ``BLAS``, then you also need to add
