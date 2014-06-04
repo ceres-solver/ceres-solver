@@ -247,7 +247,7 @@ enum LineSearchDirectionType {
 // details see Numerical Optimization by Nocedal & Wright.
 enum NonlinearConjugateGradientType {
   FLETCHER_REEVES,
-  POLAK_RIBIRERE,
+  POLAK_RIBIERE,
   HESTENES_STIEFEL,
 };
 
