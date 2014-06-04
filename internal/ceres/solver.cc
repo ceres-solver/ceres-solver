@@ -37,8 +37,7 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/line_search_solver.h"
-#include "ceres/trust_region_solver.h"
+#include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
 #include "ceres/version.h"
@@ -316,16 +315,8 @@ void Solver::Solve(const Solver::Options& options,
     return;
   }
 
-  internal::ProblemImpl* problem_impl =
-      CHECK_NOTNULL(problem)->problem_impl_.get();
-  if (options.minimizer_type == TRUST_REGION) {
-    internal::TrustRegionSolver::Solve(options, problem_impl, summary);
-  } else if (options.minimizer_type == LINE_SEARCH) {
-    internal::LineSearchSolver::Solve(options, problem_impl, summary);
-  } else {
-    LOG(FATAL) << "Unknown solver type.";
-  }
-
+  internal::ProblemImpl* problem_impl = problem->problem_impl_.get();
+  internal::SolverImpl::Solve(options, problem_impl, summary);
   summary->total_time_in_seconds =
       internal::WallTimeInSeconds() - start_time_seconds;
 }

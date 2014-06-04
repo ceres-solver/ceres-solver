@@ -28,14 +28,54 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/reorder_program.h"
-
 #include "gtest/gtest.h"
+#include "ceres/autodiff_cost_function.h"
+#include "ceres/linear_solver.h"
+#include "ceres/ordered_groups.h"
+#include "ceres/parameter_block.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
+#include "ceres/residual_block.h"
+#include "ceres/solver_impl.h"
+#include "ceres/sized_cost_function.h"
 
 namespace ceres {
 namespace internal {
 
-TEST(_, ReorderResidualBlockNormalFunction) {
+// A cost function that sipmply returns its argument.
+class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    residuals[0] = parameters[0][0];
+    if (jacobians != NULL && jacobians[0] != NULL) {
+      jacobians[0][0] = 1.0;
+    }
+    return true;
+  }
+};
+
+// Templated base class for the CostFunction signatures.
+template <int kNumResiduals, int N0, int N1, int N2>
+class MockCostFunctionBase : public
+SizedCostFunction<kNumResiduals, N0, N1, N2> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** jacobians) const {
+    for (int i = 0; i < kNumResiduals; ++i) {
+      residuals[i] = 0.0;
+    }
+    return true;
+  }
+};
+
+class UnaryCostFunction : public MockCostFunctionBase<2, 1, 0, 0> {};
+class BinaryCostFunction : public MockCostFunctionBase<2, 1, 1, 0> {};
+class TernaryCostFunction : public MockCostFunctionBase<2, 1, 1, 1> {};
+
+TEST(SolverImpl, ReorderResidualBlockNormalFunction) {
   ProblemImpl problem;
   double x;
   double y;
@@ -91,7 +131,7 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   }
 }
 
-TEST(_, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
+TEST(SolverImpl, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   ProblemImpl problem;
   double x;
   double y;
@@ -126,8 +166,12 @@ TEST(_, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   // Create the reduced program. This should remove the fixed block "z",
   // marking the index to -1 at the same time. x and y also get indices.
   string message;
+  double fixed_cost;
   scoped_ptr<Program> reduced_program(
-      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &message));
+      SolverImpl::CreateReducedProgram(&options,
+                                       &problem,
+                                       &fixed_cost,
+                                       &message));
 
   const vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
@@ -160,7 +204,7 @@ TEST(_, ReorderResidualBlockNormalFunctionWithFixedBlocks) {
   }
 }
 
-TEST(_, AutomaticSchurReorderingRespectsConstantBlocks) {
+TEST(SolverImpl, AutomaticSchurReorderingRespectsConstantBlocks) {
   ProblemImpl problem;
   double x;
   double y;
@@ -193,8 +237,12 @@ TEST(_, AutomaticSchurReorderingRespectsConstantBlocks) {
   options.linear_solver_ordering.reset(linear_solver_ordering);
 
   string message;
+  double fixed_cost;
   scoped_ptr<Program> reduced_program(
-      SolverImpl::CreateReducedProgram(&options, &problem, NULL, &message));
+      SolverImpl::CreateReducedProgram(&options,
+                                       &problem,
+                                       &fixed_cost,
+                                       &message));
 
   const vector<ResidualBlock*>& residual_blocks =
       reduced_program->residual_blocks();
@@ -217,7 +265,7 @@ TEST(_, AutomaticSchurReorderingRespectsConstantBlocks) {
   }
 }
 
-TEST(_, ApplyUserOrderingOrderingTooSmall) {
+TEST(SolverImpl, ApplyUserOrderingOrderingTooSmall) {
   ProblemImpl problem;
   double x;
   double y;
@@ -239,7 +287,7 @@ TEST(_, ApplyUserOrderingOrderingTooSmall) {
                                              &message));
 }
 
-TEST(_, ApplyUserOrderingNormal) {
+TEST(SolverImpl, ApplyUserOrderingNormal) {
   ProblemImpl problem;
   double x;
   double y;
