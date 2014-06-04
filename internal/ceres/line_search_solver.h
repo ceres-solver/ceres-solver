@@ -31,25 +31,16 @@
 #ifndef CERES_INTERNAL_LINE_SEARCH_SOLVER_H_
 #define CERES_INTERNAL_LINE_SEARCH_SOLVER_H_
 
-#include <map>
-#include <string>
-#include "ceres/internal/port.h"
 #include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-class Evaluator;
-class Program;
 class ProblemImpl;
 
-class LineSearchSolver {
- public:
-  static void Solve(const Solver::Options& options,
-                    ProblemImpl* problem_impl,
-                    Solver::Summary* summary);
-};
-
+void SolveUsingLineSearchMinimizer((const Solver::Options& options,
+                                    ProblemImpl* problem_impl,
+                                    Solver::Summary* summary);
 }  // namespace internal
 }  // namespace ceres
 

@@ -48,198 +48,245 @@ namespace ceres {
 namespace internal {
 namespace {
 
-void Minimize(const Solver::Options& options,
-              Program* program,
-              Evaluator* evaluator,
-              Solver::Summary* summary) {
-  Minimizer::Options minimizer_options(options);
+class LineSearchSolver {
+ public:
+  void Solve(const Solver::Options& options,
+             ProblemImpl* problem,
+             Solver::Summary* summary) {
+    CHECK_NOTNULL(problem);
+    CHECK_NOTNULL(summary);
 
-  // The optimizer works on contiguous parameter vectors; allocate
-  // some and collect the discontiguous parameters into the continuous
-  // parameter vector.
-  Vector parameters(program->NumParameters());
-  program->ParameterBlocksToStateVector(parameters.data());
-
-  LoggingCallback logging_callback(LINE_SEARCH,
-                                   options.minimizer_progress_to_stdout);
-  if (options.logging_type != SILENT) {
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       &logging_callback);
-  }
-
-  StateUpdatingCallback updating_callback(program, parameters.data());
-  if (options.update_state_every_iteration) {
-    // This must get pushed to the front of the callbacks so that it is run
-    // before any of the user callbacks.
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       &updating_callback);
-  }
-
-  minimizer_options.evaluator = evaluator;
-  LineSearchMinimizer minimizer;
-  double minimizer_start_time = WallTimeInSeconds();
-  minimizer.Minimize(minimizer_options, parameters.data(), summary);
-
-  // If the user aborted mid-optimization or the optimization
-  // terminated because of a numerical failure, then do not update
-  // user state.
-  if (summary->IsSolutionUsable()) {
-    program->StateVectorToParameterBlocks(parameters.data());
-    program->CopyParameterBlockStateToUserState();
-  }
-
-  summary->minimizer_time_in_seconds =
-      WallTimeInSeconds() - minimizer_start_time;
-}
-
-}  // namespace
-
-void LineSearchSolver::Solve(const Solver::Options& original_options,
-                             ProblemImpl* problem_impl,
-                             Solver::Summary* summary) {
-  EventLogger event_logger("LineSearchSolver::Solve");
-  const double solver_start_time = WallTimeInSeconds();
-  Program* original_program = problem_impl->mutable_program();
-
-  VLOG(2) << "Initial problem: "
-          << original_program->NumParameterBlocks()
-          << " parameter blocks, "
-          << original_program->NumParameters()
-          << " parameters,  "
-          << original_program->NumResidualBlocks()
-          << " residual blocks, "
-          << original_program->NumResiduals()
-          << " residuals.";
-
-  SummarizeGivenProgram(*original_program, summary);
-  summary->minimizer_type = LINE_SEARCH;
-  summary->line_search_direction_type =
-      original_options.line_search_direction_type;
-  summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
-  summary->line_search_type = original_options.line_search_type;
-  summary->line_search_interpolation_type =
-      original_options.line_search_interpolation_type;
-  summary->nonlinear_conjugate_gradient_type =
-      original_options.nonlinear_conjugate_gradient_type;
-
-  if (original_program->IsBoundsConstrained()) {
-    summary->message =  "LINE_SEARCH Minimizer does not support bounds.";
-    LOG(ERROR) << "Terminating: " << summary->message;
-    return;
-  }
-
-  if (!original_program->ParameterBlocksAreFinite(&summary->message)) {
-    LOG(ERROR) << "Terminating: " << summary->message;
-    return;
-  }
-
-  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-  event_logger.AddEvent("Init");
-
-  Solver::Options options(original_options);
-
-#ifndef CERES_USE_OPENMP
-  if (options.num_threads > 1) {
-    LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
-        << "only options.num_threads=1 is supported. Switching "
-        << "to single threaded mode.";
-    options.num_threads = 1;
-  }
-#endif  // CERES_USE_OPENMP
-
-  summary->num_threads_given = original_options.num_threads;
-  summary->num_threads_used = options.num_threads;
-  event_logger.AddEvent("Init");
-
-  // If the user requests gradient checking, construct a new
-  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
-  // GradientCheckingCostFunction and replacing problem_impl with
-  // gradient_checking_problem_impl.
-  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
-  if (options.check_gradients) {
-    VLOG(1) << "Checking Gradients";
-    gradient_checking_problem_impl.reset(
-        CreateGradientCheckingProblemImpl(
-            problem_impl,
-            options.numeric_derivative_relative_step_size,
-            options.gradient_check_relative_precision));
-
-    // From here on, problem_impl will point to the gradient checking
-    // version.
-    problem_impl = gradient_checking_problem_impl.get();
-    event_logger.AddEvent("ConstructGradientCheckingProblem");
-  }
-
-  // Removed fixed blocks from the program.
-  vector<double*> removed_parameter_blocks;
-  scoped_ptr<Program> reduced_program(
-      CreateReducedProgram(problem_impl->program(),
-                           &removed_parameter_blocks,
-                           &summary->fixed_cost,
-                           &summary->message));
-
-  event_logger.AddEvent("CreateReducedProgram");
-  if (reduced_program == NULL) {
-    return;
-  }
-
-  VLOG(2) << "Reduced problem: "
-          << reduced_program->NumParameterBlocks()
-          << " parameter blocks, "
-          << reduced_program->NumParameters()
-          << " parameters,  "
-          << reduced_program->NumResidualBlocks()
-          << " residual blocks, "
-          << reduced_program->NumResiduals()
-          << " residuals.";
-
-  SummarizeReducedProgram(*reduced_program, summary);
-
-  if (summary->num_parameter_blocks_reduced == 0) {
+    const double solver_start_time = WallTimeInSeconds();
+    Init(options, problem, summary);
+    const bool preprocessor_status = Preprocess();
     summary->preprocessor_time_in_seconds =
         WallTimeInSeconds() - solver_start_time;
 
-    summary->message =
-        "Function tolerance reached. "
-        "No non-constant parameter blocks found.";
-    VLOG_IF(1, options.logging_type != SILENT)
-        << "Terminating: " << summary->message;
+    if (preprocessor_status) {
+      Minimize();
+    }
 
-    summary->termination_type = CONVERGENCE;
-    summary->initial_cost = summary->fixed_cost;
-    Finish(map<string, double>(),
-           map<string, double>(),
-           original_program,
-           summary);
-    return;
+    Finish();
+  };
+
+  bool Preprocess() {
+    if (IsProblemValid()) {
+      return false;
+    }
+
+    if (options_.check_gradients) {
+      CreateGradientCheckingProblem();
+    }
+
+    ChangeOptionsIfNeeded();
+
+    if (!CreateReducedProgram() || !CreateEvaluator) {
+      return false;
+    }
+
+    return true;
   }
 
-  Evaluator::Options evaluator_options;
-  // This ensures that we get a Block Jacobian Evaluator without any
-  // requirement on orderings.
-  evaluator_options.linear_solver_type = CGNR;
-  evaluator_options.num_eliminate_blocks = 0;
-  evaluator_options.num_threads = options.num_threads;
-  scoped_ptr<Evaluator> evaluator(
-      Evaluator::Create(evaluator_options,
-                        reduced_program.get(),
-                        &summary->message));
-  event_logger.AddEvent("CreateEvaluator");
-  if (evaluator == NULL) {
-    LOG(ERROR) << "Terminating: " << summary->message;
-    return;
+ private:
+  void Init(Solver::Options& options,
+            ProblemImpl* problem,
+            Solver::Summary* summary) {
+    options_ = options;
+    given_problem_ = problem;
+    problem_ = problem;
+    summary_ = summary;
+    program_ = problem_->mutable_program();
+    program_->SetParameterBlockStatePtrsToUserStatePtrs();
+    SummarizeInputs();
   }
 
-  summary->preprocessor_time_in_seconds =
-      WallTimeInSeconds() - solver_start_time;
+  void SummarizeInputs() {
+    SummarizeGivenProgram(*program_, summary_);
+    summary_->minimizer_type = LINE_SEARCH;
+    summary_->line_search_direction_type = options.line_search_direction_type;
+    summary_->max_lbfgs_rank = options.max_lbfgs_rank;
+    summary_->line_search_type = options.line_search_type;
+    summary_->line_search_interpolation_type =
+        options.line_search_interpolation_type;
+    summary_->nonlinear_conjugate_gradient_type =
+        options.nonlinear_conjugate_gradient_type;
+    summary_->num_threads_given = options.num_threads;
+  }
 
-  Minimize(options, reduced_program.get(), evaluator.get(), summary);
-  Finish(evaluator->TimeStatistics(),
-         map<string, double>(),
-         original_program,
-         summary);
-}
+  bool IsProblemValid() {
+    if (program_->IsBoundsConstrained()) {
+      summary->message =  "LINE_SEARCH Minimizer does not support bounds.";
+      return false;
+    }
+
+    return program_->ParameterBlocksAreFinite(&summary->message);
+  }
+
+  void CreateGradientCheckingProblem() {
+    VLOG(1) << "Checking Gradients";
+    gradient_checking_problem_.reset(
+        CreateGradientCheckingProblemImpl(
+            problem_,
+            options_.numeric_derivative_relative_step_size,
+            options_.gradient_check_relative_precision));
+    problem_ = gradient_checking_problem_impl.get();
+    program_ = problem_->mutable_program();
+    program_->SetParameterBlockStatePtrsToUserStatePtrs();
+  }
+
+  void ChangeOptionsIfNeeded() {
+#ifndef CERES_USE_OPENMP
+    if (options_.num_threads > 1) {
+      LOG(WARNING)
+          << "OpenMP support is not compiled into this binary; "
+          << "only options.num_threads = 1 is supported. Switching "
+          << "to single threaded mode.";
+      options_.num_threads = 1;
+    }
+#endif  // CERES_USE_OPENMP
+  }
+
+  bool CreateReducedProgram() {
+    VLOG(2) << "Initial problem: "
+            << program_->NumParameterBlocks()
+            << " parameter blocks, "
+            << program_->NumParameters()
+            << " parameters,  "
+            << program_->NumResidualBlocks()
+            << " residual blocks, "
+            << program_->NumResiduals()
+            << " residuals.";
+
+    vector<double*> removed_parameter_blocks;
+    reduced_program_.reset(
+        program_->CreateReducedProgram(&removed_parameter_blocks,
+                                       &summary_->fixed_cost,
+                                       &summary->message));
+    if (reduced_program_.get() == NULL) {
+      return false;
+    }
+
+    VLOG(2) << "Reduced problem: "
+            << reduced_program_->NumParameterBlocks()
+            << " parameter blocks, "
+            << reduced_program_->NumParameters()
+            << " parameters,  "
+            << reduced_program_->NumResidualBlocks()
+            << " residual blocks, "
+            << reduced_program_->NumResiduals()
+            << " residuals.";
+
+    if (reduced_program_->NumParameterBlocks() == 0) {
+      summary_->message =
+          "Function tolerance reached. "
+          "No non-constant parameter blocks found.";
+      summary_->termination_type = CONVERGENCE;
+      summary_->initial_cost = summary->fixed_cost;
+      return false;
+    }
+
+    program_ = reduced_program_.get();
+    program_->SetParameterOffsetsAndIndex();
+    return true;
+  }
+
+  bool CreateEvaluator() {
+    Evaluator::Options evaluator_options;
+    // This ensures that we get a Block Jacobian Evaluator without any
+    // requirement on orderings.
+    evaluator_options.linear_solver_type = CGNR;
+    evaluator_options.num_eliminate_blocks = 0;
+    evaluator_options.num_threads = options_.num_threads;
+    evaluator_.reset(Evaluator::Create(evaluator_options,
+                                       program_,
+                                       &summary->message));
+    return (evaluator_ != NULL);
+  }
+
+  void Minimize() {
+    Minimizer::Options minimizer_options(options_);
+
+    // The optimizer works on contiguous parameter vectors; allocate
+    // some and collect the discontiguous parameters into the continuous
+    // parameter vector.
+    Vector parameters(reduced_program_->NumParameters());
+    reduced_program_->ParameterBlocksToStateVector(parameters.data());
+
+    LoggingCallback logging_callback(LINE_SEARCH,
+                                     options_.minimizer_progress_to_stdout);
+    if (options_.logging_type != SILENT) {
+      minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                         &logging_callback);
+    }
+
+    StateUpdatingCallback updating_callback(program, parameters.data());
+    if (options_.update_state_every_iteration) {
+      // This must get pushed to the front of the callbacks so that it is run
+      // before any of the user callbacks.
+      minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                         &updating_callback);
+    }
+
+    minimizer_options.evaluator = evaluator_.get();
+    LineSearchMinimizer minimizer;
+    double minimizer_start_time = WallTimeInSeconds();
+    minimizer.Minimize(minimizer_options, parameters.data(), summary_);
+
+    // If the user aborted mid-optimization or the optimization
+    // terminated because of a numerical failure, then do not update
+    // user state.
+    if (summary_->IsSolutionUsable()) {
+      reduced_program_->StateVectorToParameterBlocks(parameters.data());
+      reduced_program_->CopyParameterBlockStateToUserState();
+    }
+
+    summary_->minimizer_time_in_seconds =
+        WallTimeInSeconds() - minimizer_start_time;
+  }
+
+  void Finish() {
+    // Summarize reduced program etc.
+
+    double post_process_start_time = WallTimeInSeconds();
+    // LOG something about the termination state.
+    if (reduced_program_ != NULL) {
+      SummarizeReducedProgram(*reduced_program_, summary_);
+    }
+
+    SetSummaryFinalCost(summary_);
+    summary_->num_threads_used = options.num_threads;
+    // Ensure the program state is set to the user parameters on the way
+    // out.
+    Program* program = given_problem_->mutable_program();
+    program->SetParameterBlockStatePtrsToUserStatePtrs();
+    program->SetParameterOffsetsAndIndex();
+
+    if (evaluator_ != NULL) {
+      summary_->residual_evaluation_time_in_seconds =
+          FindWithDefault(evaluator_->TimeStatistics(),
+                          "Evaluator::Residual",
+                          0.0);
+      summary_->jacobian_evaluation_time_in_seconds =
+          FindWithDefault(evaluator_->TimeStatistics(),
+                          "Evaluator::Jacobian",
+                          0.0);
+      summary_->postprocessor_time_in_seconds =
+          WallTimeInSeconds() - post_process_start_time;
+    }
+  }
+
+  Solver::Options options_;
+  ProblemImpl* given_problem_;
+  Solver::Summary summary_;
+  ProblemImpl* problem_;
+  Program* program_;
+  scoped_ptr<Program> reduced_program_;
+  scoped_ptr<ProblemImpl> gradient_checking_problem_;
+  scoped_ptr<Evaluator> evaluator_;
+};
+
+}  // namespace
+
 
 }  // namespace internal
 }  // namespace ceres
