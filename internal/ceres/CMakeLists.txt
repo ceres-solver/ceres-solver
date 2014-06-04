@@ -138,7 +138,13 @@ ENDIF (SCHUR_SPECIALIZATIONS)
 # Primarily for Android, but optionally for others, use the minimal internal
 # Glog implementation.
 IF (MINIGLOG)
-  ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
+  IF (MSVC)
+    # Miniglog needs to be built statically with Visual Studio since it
+    # doesn't export any symbols with dllexport/dllimport.
+    ADD_LIBRARY(miniglog STATIC miniglog/glog/logging.cc)
+  ELSE()
+    ADD_LIBRARY(miniglog miniglog/glog/logging.cc)
+  ENDIF()
   INSTALL(TARGETS miniglog
           EXPORT  CeresExport
           RUNTIME DESTINATION bin
