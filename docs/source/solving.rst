@@ -1377,28 +1377,29 @@ elimination group [LiSaad]_.
 
    .. code-block:: bash
 
-      0: f: 1.250000e+01 d: 0.00e+00 g: 5.00e+00 h: 0.00e+00 rho: 0.00e+00 mu: 1.00e+04 li:  0 it: 6.91e-06 tt: 1.91e-03
-      1: f: 1.249750e-07 d: 1.25e+01 g: 5.00e-04 h: 5.00e+00 rho: 1.00e+00 mu: 3.00e+04 li:  1 it: 2.81e-05 tt: 1.99e-03
-      2: f: 1.388518e-16 d: 1.25e-07 g: 1.67e-08 h: 5.00e-04 rho: 1.00e+00 mu: 9.00e+04 li:  1 it: 1.00e-05 tt: 2.01e-03
+      iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time
+         0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04       0    7.59e-02    3.37e-01
+         1  1.062590e+05    4.08e+06    8.99e+06   5.36e+02   9.82e-01  3.00e+04       1    1.65e-01    5.03e-01
+         2  4.992817e+04    5.63e+04    8.32e+06   3.19e+02   6.52e-01  3.09e+04       1    1.45e-01    6.48e-01
 
    Here
 
-   #. ``f`` is the value of the objective function.
-   #. ``d`` is the change in the value of the objective function if
-      the step computed in this iteration is accepted.
-   #. ``g`` is the max norm of the gradient.
-   #. ``h`` is the change in the parameter vector.
-   #. ``rho`` is the ratio of the actual change in the objective
+   #. ``cost`` is the value of the objective function.
+   #. ``cost_change`` is the change in the value of the objective
+      function if the step computed in this iteration is accepted.
+   #. ``|gradient|`` is the max norm of the gradient.
+   #. ``|step|`` is the change in the parameter vector.
+   #. ``tr_ratio`` is the ratio of the actual change in the objective
       function value to the change in the the value of the trust
       region model.
-   #. ``mu`` is the size of the trust region radius.
-   #. ``li`` is the number of linear solver iterations used to compute
-      the trust region step. For direct/factorization based solvers it
-      is always 1, for iterative solvers like ``ITERATIVE_SCHUR`` it
-      is the number of iterations of the Conjugate Gradients
-      algorithm.
-   #. ``it`` is the time take by the current iteration.
-   #. ``tt`` is the the total time taken by the minimizer.
+   #. ``tr_radius`` is the size of the trust region radius.
+   #. ``ls_iter`` is the number of linear solver iterations used to
+      compute the trust region step. For direct/factorization based
+      solvers it is always 1, for iterative solvers like
+      ``ITERATIVE_SCHUR`` it is the number of iterations of the
+      Conjugate Gradients algorithm.
+   #. ``iter_time`` is the time take by the current iteration.
+   #. ``total_time`` is the the total time taken by the minimizer.
 
    For ``LINE_SEARCH_MINIMIZER`` the progress display looks like
 
