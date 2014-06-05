@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f81844b_f21a2842",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-05T10:18:49Z",
+      "side": 1,
+      "message": "Perhaps we should keep the original behaviour and make NDK_ROOT an optional argument, which if provided is always used.  Otherwise we check for ndk-build on the path or ANDROID_NDK_ROOT as before?",
+      "revId": "e04398a7f612b39ee1a5fb4dd1edd28208d31bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
