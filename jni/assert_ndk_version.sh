@@ -6,7 +6,7 @@
 #
 # Typically used like this, in your jni/Android.mk:
 #
-#   ifneq ($(shell $(LOCAL_PATH)/assert_ndk_version.sh "r5c"),true)
+#   ifneq ($(shell $(LOCAL_PATH)/assert_ndk_version.sh "r5c" "ndk-dir"), true)
 #     $(error NDK version r5c or greater required)
 #   endif
 #
@@ -51,9 +51,9 @@ function get_major_minor() {
   echo "$major $minor"
 }
 
-if [[ -z "$1" ]]; then
-  echo "Usage: $0 <required version>" >&2
-  echo " For example: $0 r5c" >&2
+if [[ -z "$2" ]]; then
+  echo "Usage: $0 <required version> <NDK_ROOT>" >&2
+  echo " For example: $0 r5c android-ndk-r9d" >&2
   exit 1
 fi
 
@@ -66,17 +66,7 @@ if [[ ${expected_version[0]} -le 4 ]]; then
   exit 1
 fi
 
-if [[ ! -d "$ANDROID_NDK_ROOT" ]]; then
-  # Attempt to find ndk-build on the path.
-  ANDROID_NDK_ROOT=$(dirname $(which ndk-build))
-  if [ ! -s "$ANDROID_NDK_ROOT" ]; then
-    echo "Failed to find either ANDROID_NDK_ROOT or ndk-build."
-    echo false
-    exit 1
-  fi
-fi
-
-release_file="$ANDROID_NDK_ROOT/RELEASE.TXT"
+release_file="$2/RELEASE.TXT"
 
 # NDK version r4 or earlier doesn't have a RELEASE.txt, and we just asserted
 # that the person was looking for r5 or above, so that implies that this is an
