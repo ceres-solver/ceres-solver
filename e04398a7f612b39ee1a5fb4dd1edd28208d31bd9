@@ -16,6 +16,24 @@
       "revId": "e04398a7f612b39ee1a5fb4dd1edd28208d31bd9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df4350e0_b4b488d6",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-05T17:10:34Z",
+      "side": 1,
+      "message": "no, because this script is only ever called by ndk-build (in ceres we are not using it anywhere else) and ndk-build is guaranteed to make available the value of NDK_ROOT to the mk file so we can always call this.\n\nThis is much more robust than trying to guess or have the user define an ANDROID_NDK_ROOT.",
+      "parentUuid": "7f81844b_f21a2842",
+      "revId": "e04398a7f612b39ee1a5fb4dd1edd28208d31bd9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
