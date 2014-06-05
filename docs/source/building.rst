@@ -134,55 +134,55 @@ This runs Ceres for a maximum of 10 iterations using the
 this.
 
 .. code-block:: bash
+    iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time
+       0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04       0    7.59e-02    3.37e-01
+       1  1.062590e+05    4.08e+06    8.99e+06   5.36e+02   9.82e-01  3.00e+04       1    1.65e-01    5.03e-01
+       2  4.992817e+04    5.63e+04    8.32e+06   3.19e+02   6.52e-01  3.09e+04       1    1.45e-01    6.48e-01
+       3  1.899774e+04    3.09e+04    1.60e+06   1.24e+02   9.77e-01  9.26e+04       1    1.43e-01    7.92e-01
+       4  1.808729e+04    9.10e+02    3.97e+05   6.39e+01   9.51e-01  2.78e+05       1    1.45e-01    9.36e-01
+       5  1.803399e+04    5.33e+01    1.48e+04   1.23e+01   9.99e-01  8.33e+05       1    1.45e-01    1.08e+00
+       6  1.803390e+04    9.02e-02    6.35e+01   8.00e-01   1.00e+00  2.50e+06       1    1.50e-01    1.23e+00
 
-   0: f: 4.185660e+06 d: 0.00e+00 g: 1.09e+08 h: 0.00e+00 rho: 0.00e+00 mu: 1.00e+04 li:  0 it: 8.73e-02 tt: 2.61e-01
-   1: f: 1.062590e+05 d: 4.08e+06 g: 8.99e+06 h: 5.36e+02 rho: 9.82e-01 mu: 3.00e+04 li:  1 it: 1.85e-01 tt: 4.46e-01
-   2: f: 4.992817e+04 d: 5.63e+04 g: 8.32e+06 h: 3.19e+02 rho: 6.52e-01 mu: 3.09e+04 li:  1 it: 1.74e-01 tt: 6.20e-01
-   3: f: 1.899774e+04 d: 3.09e+04 g: 1.60e+06 h: 1.24e+02 rho: 9.77e-01 mu: 9.26e+04 li:  1 it: 1.74e-01 tt: 7.94e-01
-   4: f: 1.808729e+04 d: 9.10e+02 g: 3.97e+05 h: 6.39e+01 rho: 9.51e-01 mu: 2.78e+05 li:  1 it: 1.73e-01 tt: 9.67e-01
-   5: f: 1.803399e+04 d: 5.33e+01 g: 1.48e+04 h: 1.23e+01 rho: 9.99e-01 mu: 8.33e+05 li:  1 it: 1.75e-01 tt: 1.14e+00
-   6: f: 1.803390e+04 d: 9.02e-02 g: 6.35e+01 h: 8.00e-01 rho: 1.00e+00 mu: 2.50e+06 li:  1 it: 1.75e-01 tt: 1.32e+00
+    Ceres Solver v1.10.0 Solve Report
+    ----------------------------------
+                                         Original                  Reduced
+    Parameter blocks                        22122                    22122
+    Parameters                              66462                    66462
+    Residual blocks                         83718                    83718
+    Residual                               167436                   167436
 
-   Ceres Solver Report
-   -------------------
-                                        Original                  Reduced
-   Parameter blocks                        22122                    22122
-   Parameters                              66462                    66462
-   Residual blocks                         83718                    83718
-   Residual                               167436                   167436
+    Minimizer                        TRUST_REGION
 
-   Minimizer                        TRUST_REGION
+    Dense linear algebra library            EIGEN
+    Trust region strategy     LEVENBERG_MARQUARDT
 
-   Dense linear algebra library            EIGEN
-   Trust region strategy     LEVENBERG_MARQUARDT
+                                            Given                     Used
+    Linear solver                     DENSE_SCHUR              DENSE_SCHUR
+    Threads                                     1                        1
+    Linear solver threads                       1                        1
+    Linear solver ordering              AUTOMATIC                22106, 16
 
-                                           Given                     Used
-   Linear solver                     DENSE_SCHUR              DENSE_SCHUR
-   Threads                                     1                        1
-   Linear solver threads                       1                        1
-   Linear solver ordering              AUTOMATIC                22106, 16
+    Cost:
+    Initial                          4.185660e+06
+    Final                            1.803390e+04
+    Change                           4.167626e+06
 
-   Cost:
-   Initial                          4.185660e+06
-   Final                            1.803390e+04
-   Change                           4.167626e+06
+    Minimizer iterations                        6
+    Successful steps                            6
+    Unsuccessful steps                          0
 
-   Minimizer iterations                        6
-   Successful steps                            6
-   Unsuccessful steps                          0
+    Time (in seconds):
+    Preprocessor                            0.261
 
-   Time (in seconds):
-   Preprocessor                            0.173
+      Residual evaluation                   0.082
+      Jacobian evaluation                   0.412
+      Linear solver                         0.442
+    Minimizer                               1.051
 
-     Residual evaluation                   0.115
-     Jacobian evaluation                   0.498
-     Linear solver                         0.517
-   Minimizer                               1.242
+    Postprocessor                           0.002
+    Total                                   1.357
 
-   Postprocessor                           0.003
-   Total                                   1.437
-
-   Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769750e-09 <= 1.000000e-06)
+    Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769766e-09 <= 1.000000e-06)
 
 .. section-osx:
 
