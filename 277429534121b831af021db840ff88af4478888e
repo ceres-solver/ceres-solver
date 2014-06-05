@@ -16,6 +16,24 @@
       "revId": "277429534121b831af021db840ff88af4478888e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfe21c19_56c3011b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-05T19:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f162cdd_33ebbf46",
+      "revId": "277429534121b831af021db840ff88af4478888e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
