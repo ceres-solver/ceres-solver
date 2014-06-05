@@ -77,10 +77,12 @@ CallbackReturnType LoggingCallback::operator()(
                           summary.iteration_time_in_seconds,
                           summary.cumulative_time_in_seconds);
   } else if (minimizer_type == TRUST_REGION) {
+    if (summary.iteration == 0) {
+      output = "iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n";
+    }
     const char* kReportRowFormat =
-        "% 4d: f:% 8e d:% 3.2e g:% 3.2e h:% 3.2e "
-        "rho:% 3.2e mu:% 3.2e li:% 3d it:% 3.2e tt:% 3.2e";
-    output = StringPrintf(kReportRowFormat,
+        "% 4d % 8e   % 3.2e   % 3.2e  % 3.2e  % 3.2e % 3.2e     % 3d   % 3.2e   % 3.2e";
+    output += StringPrintf(kReportRowFormat,
                           summary.iteration,
                           summary.cost,
                           summary.cost_change,
