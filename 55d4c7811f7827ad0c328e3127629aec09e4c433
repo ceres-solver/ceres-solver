@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f162cdd_53599367",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-05T19:46:16Z",
+      "side": 1,
+      "message": "Windows",
+      "revId": "55d4c7811f7827ad0c328e3127629aec09e4c433",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
