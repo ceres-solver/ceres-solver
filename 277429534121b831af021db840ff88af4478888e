@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f162cdd_33ebbf46",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-05T19:19:40Z",
+      "side": 1,
+      "message": "Xcode",
+      "revId": "277429534121b831af021db840ff88af4478888e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
