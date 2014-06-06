@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f162cdd_4a531526",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-06T05:46:53Z",
+      "side": 1,
+      "message": "So a meta-comment that having both \"solver\" and \"minimizer\" is confusing. I am not sure what to call these classes though-- MinimizerManager(ugh) MinimizerPreprocessor (ugh)? MinimizerWrapper (ugh)? MinimizerHelper(double ugh)?\n\nIt\u0027s as though we have the MinimizerCore and the MinimizerBookkeeper or something equally bad. I will keep thinking on a better name. This also applies to the TR loop.",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f162cdd_ca188590",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-06T05:46:53Z",
+      "side": 1,
+      "message": "Maybe include some comment about why this is in a class.",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f162cdd_8a228dc0",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-06T05:46:53Z",
+      "side": 1,
+      "message": "This is a bit weird; why CGNR? It\u0027s not clear from the comment.\n\nShould we use a non-backdoor method to create the evaluator here? This is relying on implementation quirks of the evaluator factory.",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f162cdd_ea478960",
+        "filename": "internal/ceres/line_search_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-06-06T05:46:53Z",
+      "side": 1,
+      "message": "2014",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
