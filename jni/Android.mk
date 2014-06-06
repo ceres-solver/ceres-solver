@@ -158,6 +158,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/problem.cc \
                    $(CERES_SRC_PATH)/problem_impl.cc \
                    $(CERES_SRC_PATH)/program.cc \
+                   $(CERES_SRC_PATH)/reorder_program.cc \
                    $(CERES_SRC_PATH)/residual_block.cc \
                    $(CERES_SRC_PATH)/residual_block_utils.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
