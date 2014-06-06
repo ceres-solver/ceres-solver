@@ -210,23 +210,16 @@ void CoordinateDescentMinimizer::Solve(Program* program,
   summary->final_cost = 0.0;
   string error;
 
-  scoped_ptr<Evaluator> evaluator(
-      Evaluator::Create(evaluator_options_, program,  &error));
-  CHECK_NOTNULL(evaluator.get());
-
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-  CHECK_NOTNULL(jacobian.get());
+  Minimizer::Options minimizer_options;
+  minimizer_options.evaluator.reset(
+      CHECK_NOTNULL(Evaluator::Create(evaluator_options_, program,  &error)));
+  minimizer_options.jacobian.reset(
+      CHECK_NOTNULL(minimizer_options.evaluator->CreateJacobian()));
 
   TrustRegionStrategy::Options trs_options;
   trs_options.linear_solver = linear_solver;
-
-  scoped_ptr<TrustRegionStrategy>trust_region_strategy(
+  minimizer_options.trust_region_strategy.reset(
       CHECK_NOTNULL(TrustRegionStrategy::Create(trs_options)));
-
-  Minimizer::Options minimizer_options;
-  minimizer_options.evaluator = evaluator.get();
-  minimizer_options.jacobian = jacobian.get();
-  minimizer_options.trust_region_strategy = trust_region_strategy.get();
   minimizer_options.is_silent = true;
 
   TrustRegionMinimizer minimizer;
