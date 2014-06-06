@@ -85,10 +85,10 @@ SET(CERES_INTERNAL_SRC
     partitioned_matrix_view.cc
     polynomial.cc
     preconditioner.cc
+    preprocessor.cc
     problem.cc
     problem_impl.cc
     program.cc
-    preprocessor.cc
     reorder_program.cc
     residual_block.cc
     residual_block_utils.cc
@@ -98,13 +98,11 @@ SET(CERES_INTERNAL_SRC
     scratch_evaluate_preparer.cc
     single_linkage_clustering.cc
     solver.cc
-    solver_impl.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
     split.cc
     stringprintf.cc
     suitesparse.cc
-    summary_utils.cc
     triplet_sparse_matrix.cc
     trust_region_preprocessor.cc
     trust_region_minimizer.cc
@@ -282,7 +280,6 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(single_linkage_clustering)
   CERES_TEST(small_blas)
   CERES_TEST(solver)
-  CERES_TEST(solver_impl)
 
   # TODO(sameeragarwal): This test should ultimately be made
   # independent of SuiteSparse.
