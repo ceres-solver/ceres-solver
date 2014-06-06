@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f162cdd_ca3f25d1",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-06T05:54:44Z",
+      "side": 1,
+      "message": "I agree. since we already had a solver, I went with line_search_solver, but I a happy to rename this.",
+      "parentUuid": "3f162cdd_4a531526",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f162cdd_ca188590",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-06-06T05:46:53Z",
       "side": 1,
       "message": "Maybe include some comment about why this is in a class.",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f162cdd_4a76b5b2",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-06T05:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f162cdd_ca188590",
       "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f162cdd_6a3cd9dc",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-06T05:54:44Z",
+      "side": 1,
+      "message": "well evaluator gets created based on the linear solver, so yeah we are sort of using that quirk, its not a bad thing by itself. the comment already explains what you are asking for, but I will elaborate it.",
+      "parentUuid": "3f162cdd_8a228dc0",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f162cdd_ea478960",
         "filename": "internal/ceres/line_search_solver.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2014-06-06T05:46:53Z",
       "side": 1,
       "message": "2014",
+      "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f162cdd_0a80bd37",
+        "filename": "internal/ceres/line_search_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-06T05:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f162cdd_ea478960",
       "revId": "4b1782ad8fc70218081bfc8ed6108ea9eab36a8d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
