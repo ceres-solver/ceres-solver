@@ -26,28 +26,63 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sameragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_SUMMARY_UTILS_H_
-#define CERES_INTERNAL_SUMMARY_UTILS_H_
+#ifndef CERES_INTERNAL_PREPROCESSOR_H_
+#define CERES_INTERNAL_PREPROCESSOR_H_
 
-#include <vector>
+#include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/evaluator.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/port.h"
+#include "ceres/internal/scoped_ptr.h"
+#include "ceres/iteration_callback.h"
+#include "ceres/linear_solver.h"
+#include "ceres/minimizer.h"
+#include "ceres/problem_impl.h"
+#include "ceres/program.h"
 #include "ceres/solver.h"
 
 namespace ceres {
 namespace internal {
 
-class Program;
+struct PreprocessedProblem {
+  PreprocessedProblem()
+      : fixed_cost(0.0) {
+  }
 
-// TODO(sameeragarwal): Move this into an anonymous namespace in
-// solver.cc ? After the preprocessor refactoring that is the only
-// file that should have use for these functions.
+  string error;
+  Solver::Options options;
+  Minimizer::Options minimizer_options;
 
-void SummarizeGivenProgram(const Program& program, Solver::Summary* summary);
-void SummarizeReducedProgram(const Program& program, Solver::Summary* summary);
-void SetSummaryFinalCost(Solver::Summary* summary);
+  ProblemImpl* problem;
+  scoped_ptr<ProblemImpl> gradient_checking_problem;
+  scoped_ptr<Program> reduced_program;
+  scoped_ptr<LinearSolver> linear_solver;
+  scoped_ptr<IterationCallback> logging_callback;
+  scoped_ptr<IterationCallback> state_updating_callback;
+
+  shared_ptr<Evaluator> evaluator;
+  shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+
+  vector<double*> removed_parameter_blocks;
+  Vector reduced_parameters;
+  double fixed_cost;
+};
+
+class Preprocessor {
+public:
+  virtual ~Preprocessor();
+  virtual bool Preprocess(const Solver::Options& options,
+                          ProblemImpl* problem,
+                          PreprocessedProblem* preprocessed_problem) = 0;
+};
+
+// Common functions used by various preprocessors.
+void ChangeNumThreadsIfNeeded(Solver::Options* options);
+void SetupCommonMinimizerOptions(PreprocessedProblem* preprocessed_problem);
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SUMMARY_UTILS_H_
+#endif  // CERES_INTERNAL_PREPROCESSOR_H_

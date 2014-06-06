@@ -910,9 +910,15 @@ class CERES_EXPORT Solver {
     // parameter blocks.
     vector<int> inner_iteration_ordering_used;
 
-    //  Type of preconditioner used for solving the trust region
-    //  step. Only meaningful when an iterative linear solver is used.
-    PreconditionerType preconditioner_type;
+    // Type of the preconditioner requested by the user.
+    PreconditionerType preconditioner_type_given;
+
+    // Type of the preconditioner actually used. This may be different
+    // from linear_solver_type_given if Ceres determines that the
+    // problem structure is not compatible with the linear solver
+    // requested or if the linear solver requested by the user is not
+    // available.
+    PreconditionerType preconditioner_type_used;
 
     // Type of clustering algorithm used for visibility based
     // preconditioning. Only meaningful when the preconditioner_type
