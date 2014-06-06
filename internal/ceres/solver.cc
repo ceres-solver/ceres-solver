@@ -34,11 +34,17 @@
 #include <iostream>  // NOLINT
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/line_search_minimizer.h"
+#include "ceres/line_search_preprocessor.h"
+#include "ceres/parameter_block_ordering.h"
+#include "ceres/preprocessor.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/solver_impl.h"
 #include "ceres/stringprintf.h"
+#include "ceres/summary_utils.h"
+#include "ceres/trust_region_minimizer.h"
+#include "ceres/trust_region_preprocessor.h"
 #include "ceres/types.h"
 #include "ceres/version.h"
 #include "ceres/wall_time.h"
@@ -291,6 +297,136 @@ void StringifyOrdering(const vector<int>& ordering, string* report) {
   internal::StringAppendF(report, "%d", ordering.back());
 }
 
+void Presummarize(const Solver::Options& options,
+                  const internal::ProblemImpl* problem,
+                  Solver::Summary* summary) {
+  internal::SummarizeGivenProgram(problem->program(), summary);
+  internal::OrderingToGroupSizes(options.linear_solver_ordering.get(),
+                                 &(summary->linear_solver_ordering_given));
+  internal::OrderingToGroupSizes(options.inner_iteration_ordering.get(),
+                                 &(summary->inner_iteration_ordering_given));
+
+  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;
+  summary->dogleg_type                        = options.dogleg_type;
+  summary->inner_iteration_time_in_seconds    = 0.0;
+  summary->inner_iterations_given             = options.use_inner_iterations;
+  summary->line_search_direction_type         = options.line_search_direction_type;
+  summary->line_search_interpolation_type     = options.line_search_interpolation_type;
+  summary->line_search_type                   = options.line_search_type;
+  summary->linear_solver_type_given           = options.linear_solver_type;
+  summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
+  summary->minimizer_type                     = options.minimizer_type;
+  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;
+  summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;
+  summary->num_threads_given                  = options.num_threads;
+  summary->preconditioner_type_given          = options.preconditioner_type;
+  summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type;
+  summary->trust_region_strategy_type         = options.trust_region_strategy_type;
+  summary->visibility_clustering_type         = options.visibility_clustering_type;
+}
+
+void PostSummarize(const internal::PreprocessedProblem& pp,
+                   Solver::Summary* summary) {
+  const Solver::Options& options = pp.options;
+  internal::OrderingToGroupSizes(options.linear_solver_ordering.get(),
+                                 &(summary->linear_solver_ordering_used));
+  internal::OrderingToGroupSizes(options.inner_iteration_ordering.get(),
+                                 &(summary->inner_iteration_ordering_used));
+
+  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;
+  summary->linear_solver_type_used        = options.linear_solver_type;
+  summary->num_linear_solver_threads_used = options.num_linear_solver_threads;
+  summary->num_threads_used               = options.num_threads;
+  summary->preconditioner_type_used       = options.preconditioner_type;
+  internal::SetSummaryFinalCost(summary);
+
+  const internal::Program* program = pp.reduced_program.get();
+  if (program != NULL) {
+    internal::SummarizeReducedProgram(*program, summary);
+  }
+
+  const internal::Evaluator* evaluator = pp.evaluator.get();
+  if (evaluator != NULL) {
+    const map<string, double>& evaluator_time_statistics =
+        evaluator->TimeStatistics();
+    summary->residual_evaluation_time_in_seconds =
+        FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+    summary->jacobian_evaluation_time_in_seconds =
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+  }
+
+  internal::LinearSolver* linear_solver =
+      pp.linear_solver.get();
+  if (linear_solver != NULL) {
+    const map<string, double>& linear_solver_time_statistics =
+        linear_solver->TimeStatistics();
+    summary->linear_solver_time_in_seconds =
+        FindWithDefault(linear_solver_time_statistics,
+                        "LinearSolver::Solve",
+                        0.0);
+  }
+}
+
+void PreprocessAndSolve(const Solver::Options& options,
+                        internal::ProblemImpl* problem,
+                        Solver::Summary* summary) {
+  double preprocessor_start_time = internal::WallTimeInSeconds();
+  internal::scoped_ptr<internal::Preprocessor> preprocessor;
+  internal::scoped_ptr<internal::Minimizer> minimizer;
+  if (options.minimizer_type == TRUST_REGION) {
+    preprocessor.reset(new internal::TrustRegionPreprocessor);
+    minimizer.reset(new internal::TrustRegionMinimizer);
+  } else if (options.minimizer_type == LINE_SEARCH) {
+    preprocessor.reset(new internal::LineSearchPreprocessor);
+    minimizer.reset(new internal::LineSearchMinimizer);
+  } else {
+    LOG(FATAL) << "Whoa dude.";
+  }
+
+  Presummarize(options, problem, summary);
+
+  internal::PreprocessedProblem pp;
+  const bool preprocessor_status = preprocessor->Preprocess(
+      options, problem, &pp);
+  summary->message = pp.error;
+  summary->fixed_cost = pp.fixed_cost;
+  summary->preprocessor_time_in_seconds =
+      internal::WallTimeInSeconds() - preprocessor_start_time;
+
+  if (preprocessor_status) {
+    const double minimizer_start_time = internal::WallTimeInSeconds();
+    internal::Program* program = pp.reduced_program.get();
+    if (program->NumParameterBlocks() > 0) {
+      minimizer->Minimize(pp.minimizer_options,
+                          pp.reduced_parameters.data(),
+                          summary);
+      if (summary->IsSolutionUsable()) {
+        program->StateVectorToParameterBlocks(
+            pp.reduced_parameters.data());
+        program->CopyParameterBlockStateToUserState();
+      }
+    } else {
+      summary->message =
+          "Function tolerance reached. "
+          "No non-constant parameter blocks found.";
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, options.logging_type != SILENT) << summary->message;
+      summary->initial_cost = pp.fixed_cost;
+      summary->final_cost = pp.fixed_cost;
+    }
+    summary->minimizer_time_in_seconds =
+        internal::WallTimeInSeconds() - minimizer_start_time;
+  }
+
+  const double postprocessor_start_time = internal::WallTimeInSeconds();
+  internal::Program* program = problem->mutable_program();
+  program->SetParameterBlockStatePtrsToUserStatePtrs();
+  program->SetParameterOffsetsAndIndex();
+  PostSummarize(pp, summary);
+  summary->postprocessor_time_in_seconds =
+      internal::WallTimeInSeconds() - postprocessor_start_time;
+}
+
 } // namespace
 
 bool Solver::Options::IsValid(string* error) const {
@@ -322,7 +458,14 @@ void Solver::Solve(const Solver::Options& options,
   }
 
   internal::ProblemImpl* problem_impl = problem->problem_impl_.get();
-  internal::SolverImpl::Solve(options, problem_impl, summary);
+  PreprocessAndSolve(options, problem_impl, summary);
+  /*
+  if (options.minimizer_type == LINE_SEARCH) {
+    PreprocessAndSolve(options, problem_impl, summary);
+  } else {
+    internal::SolverImpl::Solve(options, problem_impl, summary);
+  }
+  */
   summary->total_time_in_seconds =
       internal::WallTimeInSeconds() - start_time_seconds;
 }
@@ -372,7 +515,8 @@ Solver::Summary::Summary()
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
       inner_iterations_given(false),
       inner_iterations_used(false),
-      preconditioner_type(IDENTITY),
+      preconditioner_type_given(IDENTITY),
+      preconditioner_type_used(IDENTITY),
       visibility_clustering_type(CANONICAL_VIEWS),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
       dense_linear_algebra_library_type(EIGEN),
@@ -435,8 +579,8 @@ string Solver::Summary::FullReport() const {
     if (linear_solver_type_used == SPARSE_NORMAL_CHOLESKY ||
         linear_solver_type_used == SPARSE_SCHUR ||
         (linear_solver_type_used == ITERATIVE_SCHUR &&
-         (preconditioner_type == CLUSTER_JACOBI ||
-          preconditioner_type == CLUSTER_TRIDIAGONAL))) {
+         (preconditioner_type_used == CLUSTER_JACOBI ||
+          preconditioner_type_used == CLUSTER_TRIDIAGONAL))) {
       StringAppendF(&report, "\nSparse linear algebra library %15s\n",
                     SparseLinearAlgebraLibraryTypeToString(
                         sparse_linear_algebra_library_type));
@@ -463,12 +607,12 @@ string Solver::Summary::FullReport() const {
     if (linear_solver_type_given == CGNR ||
         linear_solver_type_given == ITERATIVE_SCHUR) {
       StringAppendF(&report, "Preconditioner      %25s%25s\n",
-                    PreconditionerTypeToString(preconditioner_type),
-                    PreconditionerTypeToString(preconditioner_type));
+                    PreconditionerTypeToString(preconditioner_type_given),
+                    PreconditionerTypeToString(preconditioner_type_used));
     }
 
-    if (preconditioner_type == CLUSTER_JACOBI ||
-        preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    if (preconditioner_type_used == CLUSTER_JACOBI ||
+        preconditioner_type_used == CLUSTER_TRIDIAGONAL) {
       StringAppendF(&report, "Visibility clustering%24s%25s\n",
                     VisibilityClusteringTypeToString(
                         visibility_clustering_type),
