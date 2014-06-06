@@ -34,6 +34,7 @@
 #include <iostream>  // NOLINT
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/line_search_solver.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -322,7 +323,11 @@ void Solver::Solve(const Solver::Options& options,
   }
 
   internal::ProblemImpl* problem_impl = problem->problem_impl_.get();
-  internal::SolverImpl::Solve(options, problem_impl, summary);
+  if (options.minimizer_type == LINE_SEARCH) {
+    SolveUsingLineSearchMinimizer(options, problem_impl, summary);
+  } else {
+    internal::SolverImpl::Solve(options, problem_impl, summary);
+  }
   summary->total_time_in_seconds =
       internal::WallTimeInSeconds() - start_time_seconds;
 }
