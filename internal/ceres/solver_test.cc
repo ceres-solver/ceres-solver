@@ -294,5 +294,35 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
   EXPECT_TRUE(options.IsValid(&message));
 }
 
+template<int kNumResiduals, int N1 = 0, int N2 = 0, int N3 = 0>
+class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
+ public:
+  bool Evaluate(double const* const* parameters,
+                double* residuals,
+                double** jacobians) const {
+    for (int i = 0; i < kNumResiduals; ++i) {
+      residuals[i] = kNumResiduals * kNumResiduals + i;
+    }
+
+    return true;
+  }
+};
+
+TEST(Solver, FixedCostForConstantProblem) {
+  double x = 1.0;
+  Problem problem;
+  problem.AddResidualBlock(new DummyCostFunction<2,1>(), NULL, &x);
+  problem.SetParameterBlockConstant(&x);
+  const double expected_cost = 41.0 / 2.0; // 1/2 * ((4 + 0)^2 + (4 + 1)^2)
+  Solver::Options options;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  EXPECT_TRUE(summary.IsSolutionUsable());
+  EXPECT_EQ(summary.fixed_cost, expected_cost);
+  EXPECT_EQ(summary.initial_cost, expected_cost);
+  EXPECT_EQ(summary.final_cost, expected_cost);
+  EXPECT_EQ(summary.iterations.size(), 0);
+}
+
 }  // namespace internal
 }  // namespace ceres
