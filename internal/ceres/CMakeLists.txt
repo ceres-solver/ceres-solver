@@ -72,6 +72,7 @@ SET(CERES_INTERNAL_SRC
     line_search.cc
     line_search_direction.cc
     line_search_minimizer.cc
+    line_search_preprocessor.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
@@ -84,6 +85,7 @@ SET(CERES_INTERNAL_SRC
     partitioned_matrix_view.cc
     polynomial.cc
     preconditioner.cc
+    preprocessor.cc
     problem.cc
     problem_impl.cc
     program.cc
