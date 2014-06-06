@@ -43,6 +43,7 @@ namespace ceres {
 namespace internal {
 
 class Program;
+class LinearSolver;
 
 // Given a Program, and a ParameterBlockOrdering which partitions
 // (non-exhaustively) the Hessian matrix into independent sets,

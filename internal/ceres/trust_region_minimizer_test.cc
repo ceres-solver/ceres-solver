@@ -223,15 +223,12 @@ void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   parameters[2] = (col3 ? parameters[2] : 0.0);
   parameters[3] = (col4 ? parameters[3] : 0.0);
 
-  PowellEvaluator2<col1, col2, col3, col4> powell_evaluator;
-  scoped_ptr<SparseMatrix> jacobian(powell_evaluator.CreateJacobian());
-
   Minimizer::Options minimizer_options(solver_options);
   minimizer_options.gradient_tolerance = 1e-26;
   minimizer_options.function_tolerance = 1e-26;
   minimizer_options.parameter_tolerance = 1e-26;
-  minimizer_options.evaluator = &powell_evaluator;
-  minimizer_options.jacobian = jacobian.get();
+  minimizer_options.evaluator.reset(new PowellEvaluator2<col1, col2, col3, col4>);
+  minimizer_options.jacobian.reset(minimizer_options.evaluator->CreateJacobian());
 
   TrustRegionStrategy::Options trust_region_strategy_options;
   trust_region_strategy_options.trust_region_strategy_type = strategy_type;
@@ -240,9 +237,8 @@ void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   trust_region_strategy_options.max_radius = 1e20;
   trust_region_strategy_options.min_lm_diagonal = 1e-6;
   trust_region_strategy_options.max_lm_diagonal = 1e32;
-  scoped_ptr<TrustRegionStrategy> strategy(
+  minimizer_options.trust_region_strategy.reset(
       TrustRegionStrategy::Create(trust_region_strategy_options));
-  minimizer_options.trust_region_strategy = strategy.get();
 
   TrustRegionMinimizer minimizer;
   Solver::Summary summary;

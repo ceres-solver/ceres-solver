@@ -26,28 +26,25 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sameragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_SUMMARY_UTILS_H_
-#define CERES_INTERNAL_SUMMARY_UTILS_H_
+#ifndef CERES_INTERNAL_TRUST_REGION_PREPROCESSOR_H_
+#define CERES_INTERNAL_TRUST_REGION_PREPROCESSOR_H_
 
-#include <vector>
-#include "ceres/solver.h"
+#include "ceres/preprocessor.h"
 
 namespace ceres {
 namespace internal {
 
-class Program;
-
-// TODO(sameeragarwal): Move this into an anonymous namespace in
-// solver.cc ? After the preprocessor refactoring that is the only
-// file that should have use for these functions.
-
-void SummarizeGivenProgram(const Program& program, Solver::Summary* summary);
-void SummarizeReducedProgram(const Program& program, Solver::Summary* summary);
-void SetSummaryFinalCost(Solver::Summary* summary);
+class TrustRegionPreprocessor : public Preprocessor {
+ public:
+  virtual ~TrustRegionPreprocessor();
+  virtual bool Preprocess(const Solver::Options& options,
+                          ProblemImpl* problem,
+                          PreprocessedProblem* preprocessed_problem);
+};
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SUMMARY_UTILS_H_
+#endif  // CERES_INTERNAL_TRUST_REGION_PREPROCESSOR_H_
