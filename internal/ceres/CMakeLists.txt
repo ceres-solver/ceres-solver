@@ -74,6 +74,7 @@ SET(CERES_INTERNAL_SRC
     line_search_minimizer.cc
     linear_least_squares_problems.cc
     linear_operator.cc
+    line_search_solver.cc
     linear_solver.cc
     local_parameterization.cc
     loss_function.cc
