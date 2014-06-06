@@ -145,6 +145,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/line_search_minimizer.cc \
                    $(CERES_SRC_PATH)/linear_least_squares_problems.cc \
                    $(CERES_SRC_PATH)/linear_operator.cc \
+                   $(CERES_SRC_PATH)/line_search_preprocessor.cc \
                    $(CERES_SRC_PATH)/linear_solver.cc \
                    $(CERES_SRC_PATH)/local_parameterization.cc \
                    $(CERES_SRC_PATH)/loss_function.cc \
@@ -155,6 +156,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/partitioned_matrix_view.cc \
                    $(CERES_SRC_PATH)/polynomial.cc \
                    $(CERES_SRC_PATH)/preconditioner.cc \
+                   $(CERES_SRC_PATH)/preprocessor.cc \
                    $(CERES_SRC_PATH)/problem.cc \
                    $(CERES_SRC_PATH)/problem_impl.cc \
                    $(CERES_SRC_PATH)/program.cc \
@@ -166,15 +168,14 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/schur_jacobi_preconditioner.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
-                   $(CERES_SRC_PATH)/solver_impl.cc \
                    $(CERES_SRC_PATH)/sparse_matrix.cc \
                    $(CERES_SRC_PATH)/sparse_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/split.cc \
                    $(CERES_SRC_PATH)/stringprintf.cc \
-                   $(CERES_SRC_PATH)/summary_utils.cc \
                    $(CERES_SRC_PATH)/suitesparse.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \
+                   $(CERES_SRC_PATH)/trust_region_preprocessor.cc \
                    $(CERES_SRC_PATH)/trust_region_strategy.cc \
                    $(CERES_SRC_PATH)/types.cc \
                    $(CERES_SRC_PATH)/visibility_based_preconditioner.cc \
