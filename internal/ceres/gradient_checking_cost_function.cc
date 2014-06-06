@@ -310,6 +310,10 @@ ProblemImpl* CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
         parameter_blocks);
   }
 
+  gradient_checking_problem_impl
+      ->mutable_program()
+      ->SetParameterBlockStatePtrsToUserStatePtrs();
+
   return gradient_checking_problem_impl;
 }
 
