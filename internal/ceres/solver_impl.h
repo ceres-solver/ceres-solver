@@ -56,10 +56,6 @@ class SolverImpl {
                     ProblemImpl* problem_impl,
                     Solver::Summary* summary);
 
-  static void TrustRegionSolve(const Solver::Options& options,
-                               ProblemImpl* problem_impl,
-                               Solver::Summary* summary);
-
   // Run the TrustRegionMinimizer for the given evaluator and configuration.
   static void TrustRegionMinimize(
       const Solver::Options &options,
@@ -69,15 +65,6 @@ class SolverImpl {
       LinearSolver* linear_solver,
       Solver::Summary* summary);
 
-  static void LineSearchSolve(const Solver::Options& options,
-                              ProblemImpl* problem_impl,
-                              Solver::Summary* summary);
-
-  // Run the LineSearchMinimizer for the given evaluator and configuration.
-  static void LineSearchMinimize(const Solver::Options &options,
-                                 Program* program,
-                                 Evaluator* evaluator,
-                                 Solver::Summary* summary);
 
   // Create the transformed Program, which has all the fixed blocks
   // and residuals eliminated, and in the case of automatic schur

@@ -42,7 +42,6 @@
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/levenberg_marquardt_strategy.h"
-#include "ceres/line_search_minimizer.h"
 #include "ceres/linear_solver.h"
 #include "ceres/map_util.h"
 #include "ceres/minimizer.h"
@@ -133,75 +132,19 @@ void SolverImpl::TrustRegionMinimize(
       WallTimeInSeconds() - minimizer_start_time;
 }
 
-void SolverImpl::LineSearchMinimize(
-    const Solver::Options& options,
-    Program* program,
-    Evaluator* evaluator,
-    Solver::Summary* summary) {
-  Minimizer::Options minimizer_options(options);
-
-  // The optimizer works on contiguous parameter vectors; allocate some.
-  Vector parameters(program->NumParameters());
-
-  // Collect the discontiguous parameters into a contiguous state vector.
-  program->ParameterBlocksToStateVector(parameters.data());
-
-  LoggingCallback logging_callback(LINE_SEARCH,
-                                   options.minimizer_progress_to_stdout);
-  if (options.logging_type != SILENT) {
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       &logging_callback);
-  }
-
-  StateUpdatingCallback updating_callback(program, parameters.data());
-  if (options.update_state_every_iteration) {
-    // This must get pushed to the front of the callbacks so that it is run
-    // before any of the user callbacks.
-    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
-                                       &updating_callback);
-  }
-
-  minimizer_options.evaluator = evaluator;
-
-  LineSearchMinimizer minimizer;
-  double minimizer_start_time = WallTimeInSeconds();
-  minimizer.Minimize(minimizer_options, parameters.data(), summary);
-
-  // If the user aborted mid-optimization or the optimization
-  // terminated because of a numerical failure, then do not update
-  // user state.
-  if (summary->termination_type != USER_FAILURE &&
-      summary->termination_type != FAILURE) {
-    program->StateVectorToParameterBlocks(parameters.data());
-    program->CopyParameterBlockStateToUserState();
-  }
-
-  summary->minimizer_time_in_seconds =
-      WallTimeInSeconds() - minimizer_start_time;
-}
-
-void SolverImpl::Solve(const Solver::Options& options,
-                       ProblemImpl* problem_impl,
+void SolverImpl::Solve(const Solver::Options& original_options,
+                       ProblemImpl* original_problem_impl,
                        Solver::Summary* summary) {
   VLOG(2) << "Initial problem: "
-          << problem_impl->NumParameterBlocks()
+          << original_problem_impl->NumParameterBlocks()
           << " parameter blocks, "
-          << problem_impl->NumParameters()
+          << original_problem_impl->NumParameters()
           << " parameters,  "
-          << problem_impl->NumResidualBlocks()
+          << original_problem_impl->NumResidualBlocks()
           << " residual blocks, "
-          << problem_impl->NumResiduals()
+          << original_problem_impl->NumResiduals()
           << " residuals.";
-  if (options.minimizer_type == TRUST_REGION) {
-    TrustRegionSolve(options, problem_impl, summary);
-  } else {
-    LineSearchSolve(options, problem_impl, summary);
-  }
-}
 
-void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
-                                  ProblemImpl* original_problem_impl,
-                                  Solver::Summary* summary) {
   EventLogger event_logger("TrustRegionSolve");
   double solver_start_time = WallTimeInSeconds();
 
@@ -434,166 +377,6 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - post_process_start_time;
   event_logger.AddEvent("PostProcess");
-}
-
-void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
-                                 ProblemImpl* original_problem_impl,
-                                 Solver::Summary* summary) {
-  double solver_start_time = WallTimeInSeconds();
-
-  Program* original_program = original_problem_impl->mutable_program();
-  ProblemImpl* problem_impl = original_problem_impl;
-
-  SummarizeGivenProgram(*original_program, summary);
-  summary->minimizer_type = LINE_SEARCH;
-  summary->line_search_direction_type =
-      original_options.line_search_direction_type;
-  summary->max_lbfgs_rank = original_options.max_lbfgs_rank;
-  summary->line_search_type = original_options.line_search_type;
-  summary->line_search_interpolation_type =
-      original_options.line_search_interpolation_type;
-  summary->nonlinear_conjugate_gradient_type =
-      original_options.nonlinear_conjugate_gradient_type;
-
-  if (original_program->IsBoundsConstrained()) {
-    summary->message =  "LINE_SEARCH Minimizer does not support bounds.";
-    LOG(ERROR) << "Terminating: " << summary->message;
-    return;
-  }
-
-  Solver::Options options(original_options);
-
-  // This ensures that we get a Block Jacobian Evaluator along with
-  // none of the Schur nonsense. This file will have to be extensively
-  // refactored to deal with the various bits of cleanups related to
-  // line search.
-  options.linear_solver_type = CGNR;
-
-
-#ifndef CERES_USE_OPENMP
-  if (options.num_threads > 1) {
-    LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
-        << "only options.num_threads=1 is supported. Switching "
-        << "to single threaded mode.";
-    options.num_threads = 1;
-  }
-#endif  // CERES_USE_OPENMP
-
-  summary->num_threads_given = original_options.num_threads;
-  summary->num_threads_used = options.num_threads;
-
-  if (!original_program->ParameterBlocksAreFinite(&summary->message)) {
-    LOG(ERROR) << "Terminating: " << summary->message;
-    return;
-  }
-
-  if (options.linear_solver_ordering.get() != NULL) {
-    if (!IsOrderingValid(options, problem_impl, &summary->message)) {
-      LOG(ERROR) << summary->message;
-      return;
-    }
-  } else {
-    options.linear_solver_ordering.reset(new ParameterBlockOrdering);
-    const ProblemImpl::ParameterMap& parameter_map =
-        problem_impl->parameter_map();
-    for (ProblemImpl::ParameterMap::const_iterator it = parameter_map.begin();
-         it != parameter_map.end();
-         ++it) {
-      options.linear_solver_ordering->AddElementToGroup(it->first, 0);
-    }
-  }
-
-
-  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-
-  // If the user requests gradient checking, construct a new
-  // ProblemImpl by wrapping the CostFunctions of problem_impl inside
-  // GradientCheckingCostFunction and replacing problem_impl with
-  // gradient_checking_problem_impl.
-  scoped_ptr<ProblemImpl> gradient_checking_problem_impl;
-  if (options.check_gradients) {
-    VLOG(1) << "Checking Gradients";
-    gradient_checking_problem_impl.reset(
-        CreateGradientCheckingProblemImpl(
-            problem_impl,
-            options.numeric_derivative_relative_step_size,
-            options.gradient_check_relative_precision));
-
-    // From here on, problem_impl will point to the gradient checking
-    // version.
-    problem_impl = gradient_checking_problem_impl.get();
-  }
-
-  // Create the three objects needed to minimize: the transformed program, the
-  // evaluator, and the linear solver.
-  scoped_ptr<Program> reduced_program(CreateReducedProgram(&options,
-                                                           problem_impl,
-                                                           &summary->fixed_cost,
-                                                           &summary->message));
-  if (reduced_program == NULL) {
-    return;
-  }
-
-  SummarizeReducedProgram(*reduced_program, summary);
-  if (summary->num_parameter_blocks_reduced == 0) {
-    summary->preprocessor_time_in_seconds =
-        WallTimeInSeconds() - solver_start_time;
-
-    summary->message =
-        "Function tolerance reached. "
-        "No non-constant parameter blocks found.";
-    summary->termination_type = CONVERGENCE;
-    VLOG_IF(1, options.logging_type != SILENT) << summary->message;
-    summary->initial_cost = summary->fixed_cost;
-    summary->final_cost = summary->fixed_cost;
-
-    const double post_process_start_time = WallTimeInSeconds();
-    SetSummaryFinalCost(summary);
-
-    // Ensure the program state is set to the user parameters on the way out.
-    original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-    original_program->SetParameterOffsetsAndIndex();
-
-    summary->postprocessor_time_in_seconds =
-        WallTimeInSeconds() - post_process_start_time;
-    return;
-  }
-
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
-                                                  problem_impl->parameter_map(),
-                                                  reduced_program.get(),
-                                                  &summary->message));
-  if (evaluator == NULL) {
-    return;
-  }
-
-  const double minimizer_start_time = WallTimeInSeconds();
-  summary->preprocessor_time_in_seconds =
-      minimizer_start_time - solver_start_time;
-
-  // Run the optimization.
-  LineSearchMinimize(options, reduced_program.get(), evaluator.get(), summary);
-
-  const double post_process_start_time = WallTimeInSeconds();
-
-  SetSummaryFinalCost(summary);
-
-  // Ensure the program state is set to the user parameters on the way out.
-  original_program->SetParameterBlockStatePtrsToUserStatePtrs();
-  original_program->SetParameterOffsetsAndIndex();
-
-  const map<string, double>& evaluator_time_statistics =
-      evaluator->TimeStatistics();
-
-  summary->residual_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
-  summary->jacobian_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
-
-  // Stick a fork in it, we're done.
-  summary->postprocessor_time_in_seconds =
-      WallTimeInSeconds() - post_process_start_time;
 }
 
 bool SolverImpl::IsOrderingValid(const Solver::Options& options,
