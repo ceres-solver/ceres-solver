@@ -28,22 +28,20 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_INTERNAL_SUMMARY_UTILS_H_
-#define CERES_INTERNAL_SUMMARY_UTILS_H_
-
-#include <vector>
-#include "ceres/solver.h"
+#include "gtest/gtest.h"
+#include "ceres/trust_region_preprocessor.h"
+#include "ceres/problem_impl.h"
 
 namespace ceres {
 namespace internal {
 
-class Program;
-
-void SummarizeGivenProgram(const Program& program, Solver::Summary* summary);
-void SummarizeReducedProgram(const Program& program, Solver::Summary* summary);
-void SetSummaryFinalCost(Solver::Summary* summary);
+TEST(TrustRegionPreprocessorTest, NullProblem) {
+  ProblemImpl problem;
+  Solver::Options options;
+  TrustRegionPreprocessor preprocessor;
+  PreprocessedProblem pp;
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+}
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_SUMMARY_UTILS_H_

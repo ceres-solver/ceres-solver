@@ -26,41 +26,25 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: sameragarwal@google.com (Sameer Agarwal)
 
-#include <algorithm>
-#include "ceres/summary_utils.h"
-#include "ceres/program.h"
-#include "ceres/solver.h"
+#ifndef CERES_INTERNAL_LINE_SEARCH_PREPROCESSOR_H_
+#define CERES_INTERNAL_LINE_SEARCH_PREPROCESSOR_H_
+
+#include "ceres/preprocessor.h"
 
 namespace ceres {
 namespace internal {
 
-void SetSummaryFinalCost(Solver::Summary* summary) {
-  summary->final_cost = summary->initial_cost;
-  // We need the loop here, instead of just looking at the last
-  // iteration because the minimizer maybe making non-monotonic steps.
-  for (int i = 0; i < summary->iterations.size(); ++i) {
-    const IterationSummary& iteration_summary = summary->iterations[i];
-    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
-  }
-}
-
-void SummarizeGivenProgram(const Program& program, Solver::Summary* summary) {
-  summary->num_parameter_blocks     = program.NumParameterBlocks();
-  summary->num_parameters           = program.NumParameters();
-  summary->num_effective_parameters = program.NumEffectiveParameters();
-  summary->num_residual_blocks      = program.NumResidualBlocks();
-  summary->num_residuals            = program.NumResiduals();
-}
-
-void SummarizeReducedProgram(const Program& program, Solver::Summary* summary) {
-  summary->num_parameter_blocks_reduced     = program.NumParameterBlocks();
-  summary->num_parameters_reduced           = program.NumParameters();
-  summary->num_effective_parameters_reduced = program.NumEffectiveParameters();
-  summary->num_residual_blocks_reduced      = program.NumResidualBlocks();
-  summary->num_residuals_reduced            = program.NumResiduals();
-}
+class LineSearchPreprocessor : public Preprocessor {
+ public:
+  virtual ~LineSearchPreprocessor();
+  virtual bool Preprocess(const Solver::Options& options,
+                          ProblemImpl* problem,
+                          PreprocessedProblem* preprocessed_problem);
+};
 
 }  // namespace internal
 }  // namespace ceres
+
+#endif  // CERES_INTERNAL_LINE_SEARCH_PREPROCESSOR_H_
