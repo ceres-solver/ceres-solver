@@ -17,16 +17,20 @@ Backward Incompatible API Changes
 ---------------------------------
 
 #. ``Solver::Options::solver_log`` has been removed. If needed this
-   iteration callback can easily be implemented in user code.
+    iteration callback can easily be implemented in user code.
 
 #. The ``SPARSE_CHOLESKY`` algorithm for covariance estimation has
-   been removed. It is not rank revealing and numerically poorly
-   behaved. Sparse QR factorization is a much better way to do this.
+    been removed. It is not rank revealing and numerically poorly
+    behaved. Sparse QR factorization is a much better way to do this.
 
 #. The ``SPARSE_QR`` algorithm for covariance estimation has been
-   renamed to ``SUITE_SPARSE_QR`` to be consistent with
-   ``EIGEN_SPARSE_QR``.
+    renamed to ``SUITE_SPARSE_QR`` to be consistent with
+    ``EIGEN_SPARSE_QR``.
 
+# ``Solver::Summary::preconditioner_type`` has been replaced with
+   ``Solver::Summary::preconditioner_type_given`` and
+   ``Solver::Summary::preconditioner_type_used`` to be more consistent
+   with how information about the linear solver is communicated.
 
 1.9.0
 =====
