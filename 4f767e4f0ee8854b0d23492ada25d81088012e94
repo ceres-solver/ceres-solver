@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f81844b_1b3b47bf",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": ".reset() ?",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f81844b_3b388bbf",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "Extra space?",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 30
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df719054_ed7565a5",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "Extra space?",
+      "range": {
+        "startLine": 192,
+        "startChar": 29,
+        "endLine": 192,
+        "endChar": 30
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f81844b_fbf3e3bf",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "Do we explain this in the docs?  We don\u0027t seem to mention it in the docs for IsSolutionUsable.\n\nhttp://ceres-solver.org/solving.html?highlight\u003dissolutionusable#Solver::Summary::IsSolutionUsableC",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf7e9c23_2c6373e7",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "Should this not be program_ at this point as per usage above? (although they are the same thing here)",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 22
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f81844b_9bf8979e",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "program_ ?",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 22
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf7e9c23_ccc2ef6c",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "How could reduced_program_ be NULL at this point as we check its validity in CreateReducedProgram and terminate if invalid (and we reduce all programs)?",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf7e9c23_ecc7ab79",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-08T16:56:34Z",
+      "side": 1,
+      "message": "How could evaluator_ be NULL here as we check in CreateEvaluator() and terminate if invalid?",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
