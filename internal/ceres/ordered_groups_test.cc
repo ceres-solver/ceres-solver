@@ -195,5 +195,25 @@ TEST(OrderedGroups, BulkRemoveWithNoElements) {
   EXPECT_EQ(ordering.Remove(elements_to_remove), 0);
 }
 
+TEST(OrderedGroups, MinNonZeroGroup) {
+  ParameterBlockOrdering ordering;
+  double x[3];
+
+  ordering.AddElementToGroup(x, 1);
+  ordering.AddElementToGroup(x + 1, 1);
+  ordering.AddElementToGroup(x + 2, 2);
+
+  EXPECT_EQ(ordering.MinNonZeroGroup(), 1);
+  ordering.Remove(x);
+
+  EXPECT_EQ(ordering.MinNonZeroGroup(), 1);
+  ordering.Remove(x + 1);
+
+  EXPECT_EQ(ordering.MinNonZeroGroup(), 2);
+  ordering.Remove(x + 2);
+
+  // No non-zero groups left.
+  EXPECT_DEATH_IF_SUPPORTED(ordering.MinNonZeroGroup(), "NumGroups()");
+}
 }  // namespace internal
 }  // namespace ceres
