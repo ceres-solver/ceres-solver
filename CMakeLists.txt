@@ -115,6 +115,8 @@ OPTION(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 IF (MSVC)
   OPTION(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
+  OPTION(MSVC_USE_ERROR_LOGLEVEL_FIX
+    "Use basic fix for multiple definition of ERROR in windows.h & miniglog." OFF)
 
   IF (BUILD_TESTING AND BUILD_SHARED_LIBS)
     MESSAGE(
@@ -365,6 +367,16 @@ IF (MINIGLOG)
   SET(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
   MESSAGE("-- Using minimal glog substitute (include): ${GLOG_INCLUDE_DIRS}")
 
+  IF (MSVC)
+    # Ensure that the MSVC_USE_ERROR_LOGLEVEL_FIX option is visible in the
+    # CMake GUI if using miniglog (it is hidden if miniglog is disabled).
+    MARK_AS_ADVANCED(CLEAR MSVC_USE_ERROR_LOGLEVEL_FIX)
+    IF (MSVC_USE_ERROR_LOGLEVEL_FIX)
+      MESSAGE("-- Using basic fix in miniglog for multiple definitions of ERROR.")
+      LIST(APPEND CERES_COMPILE_OPTIONS GLOG_NO_ABBREVIATED_SEVERITIES)
+    ENDIF (MSVC_USE_ERROR_LOGLEVEL_FIX)
+  ENDIF (MSVC)
+
   # Mark as advanced (remove from default GUI view) the glog search
   # variables in case user disables MINIGLOG, FindGlog did not find it, so
   # made search variables visible in GUI for user to set, but then user enables
@@ -374,6 +386,13 @@ IF (MINIGLOG)
 ELSE (MINIGLOG)
   HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GLOG_INCLUDE GLOG_INCLUDE_DIR_HINTS)
   HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT(GLOG_LIB GLOG_LIBRARY_DIR_HINTS)
+
+  IF (MSVC)
+    # Not using miniglog, hence disable and hide MSVC_USE_ERROR_LOGLEVEL_FIX
+    # option in the CMake GUI to prevent confusion.
+    UPDATE_CACHE_VARIABLE(MSVC_USE_ERROR_LOGLEVEL_FIX OFF)
+    MARK_AS_ADVANCED(FORCE MSVC_USE_ERROR_LOGLEVEL_FIX)
+  ENDIF (MSVC)
 
   # Don't search with REQUIRED so that configuration continues if not found and
   # we can output an error messages explaining MINIGLOG option.

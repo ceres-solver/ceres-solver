@@ -86,4 +86,13 @@
 // If defined, Ceres was built as a shared library.
 @CERES_USING_SHARED_LIBRARY@
 
+// Only available on Windows when Ceres is compiled with miniglog.  If defined,
+// and when logging.h (miniglog) is included, ERROR is already defined (assumed
+// to be from windows.h) it will be undef'ed (as it would conflict with the
+// ERROR LogSeverity defined in logging.h).  Note that this option has the same
+// name as an option in glog to solve the same problem for compatibility,
+// but glog's resulting behaviour is more advanced, and this option will only
+// ever be defined (here by Ceres) when using miniglog.
+@GLOG_NO_ABBREVIATED_SEVERITIES@
+
 #endif  // CERES_PUBLIC_INTERNAL_CONFIG_H_

@@ -109,6 +109,36 @@
 #include "ceres/internal/port.h"
 #include "ceres/internal/disable_warnings.h"
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+// Check whether ERROR is already defined (assumed to be from windows.h)
+// which would conflict with our definition of the ERROR log severity and
+// remove it iff GLOG_NO_ABBREVIATED_SEVERITIES is defined.
+//
+// [1]: https://code.google.com/p/google-glog/issues/detail?id=33
+
+#if defined(ERROR) && defined(GLOG_NO_ABBREVIATED_SEVERITIES)
+// Remove the preexisting definition of ERROR, this is much less advanced than
+// real glog's response to GLOG_NO_ABBREVIATED_SEVERITIES.
+#undef ERROR
+#endif // defined(ERROR) && defined(GLOG_NO_ABBREVIATED_SEVERITIES)
+
+#if defined(ERROR) && !defined(GLOG_NO_ABBREVIATED_SEVERITIES)
+// If you see this error, then you included <windows.h> which defines the
+// ERROR macro. To avoid odd and unstable compile errors define a project
+// wide macro NOGDI.
+//
+// Or if you plan using GDI at the very first line of the project add the
+// following code:
+//
+// #include <windows.h>
+// #undef ERROR
+// #undef RGN_ERROR
+// #define RGN_ERROR 0
+#error ERROR name has already been defined.
+#endif // defined(ERROR) && !defined(GLOG_NO_ABBREVIATED_SEVERITIES)
+
+#endif // defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+
 // Log severity level constants.
 const int FATAL   = -3;
 const int ERROR   = -2;
