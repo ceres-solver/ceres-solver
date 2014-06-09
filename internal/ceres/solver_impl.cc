@@ -694,7 +694,7 @@ Program* SolverImpl::CreateReducedProgram(Solver::Options* options,
   ParameterBlockOrdering* linear_solver_ordering =
       options->linear_solver_ordering.get();
   const int min_group_id =
-      linear_solver_ordering->group_to_elements().begin()->first;
+      linear_solver_ordering->MinNonZeroGroup();
   linear_solver_ordering->Remove(removed_parameter_blocks);
 
   ParameterBlockOrdering* inner_iteration_ordering =
