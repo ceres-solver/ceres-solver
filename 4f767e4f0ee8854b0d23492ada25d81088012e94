@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff749443_02199add",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "yes, if the class is accidentally re-used, we want to ensure that reduced_program_ starts out null.",
+      "parentUuid": "7f81844b_1b3b47bf",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f81844b_3b388bbf",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2014-06-08T16:56:34Z",
       "side": 1,
       "message": "Extra space?",
+      "range": {
+        "startLine": 126,
+        "startChar": 29,
+        "endLine": 126,
+        "endChar": 30
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff749443_a20d269c",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f81844b_3b388bbf",
       "range": {
         "startLine": 126,
         "startChar": 29,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ff749443_c212b2b7",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df719054_ed7565a5",
+      "range": {
+        "startLine": 192,
+        "startChar": 29,
+        "endLine": 192,
+        "endChar": 30
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f81844b_fbf3e3bf",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 5
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "ff749443_62289eed",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "I think we do explain it, that the state is only updated if the solve is successful. this has always been the case, if you return with a failure of any sort then the user state is never updated.",
+      "parentUuid": "7f81844b_fbf3e3bf",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7e9c23_2c6373e7",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 5
@@ -93,6 +177,30 @@
       "writtenOn": "2014-06-08T16:56:34Z",
       "side": 1,
       "message": "Should this not be program_ at this point as per usage above? (although they are the same thing here)",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 22
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff749443_82258a14",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "yep, you are right.",
+      "parentUuid": "bf7e9c23_2c6373e7",
       "range": {
         "startLine": 263,
         "startChar": 6,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ff749443_421fa2bc",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f81844b_9bf8979e",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 22
+      },
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7e9c23_ccc2ef6c",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 5
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "ff749443_e2bece52",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "Notice the control flow, finish is always called.",
+      "parentUuid": "bf7e9c23_ccc2ef6c",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7e9c23_ecc7ab79",
         "filename": "internal/ceres/line_search_solver.cc",
         "patchSetId": 5
@@ -156,6 +306,24 @@
       "writtenOn": "2014-06-08T16:56:34Z",
       "side": 1,
       "message": "How could evaluator_ be NULL here as we check in CreateEvaluator() and terminate if invalid?",
+      "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff749443_a2c8c6eb",
+        "filename": "internal/ceres/line_search_solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-06-09T04:42:05Z",
+      "side": 1,
+      "message": "same as above. Preprocess can return false, but finish is always called.",
+      "parentUuid": "bf7e9c23_ecc7ab79",
       "revId": "4f767e4f0ee8854b0d23492ada25d81088012e94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
