@@ -216,6 +216,12 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     return false;
   }
 
+  if (options.dynamic_sparsity &&
+      options.linear_solver_type != SPARSE_NORMAL_CHOLESKY) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
+    return false;
+  }
+
   return true;
 }
 
