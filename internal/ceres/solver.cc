@@ -34,6 +34,7 @@
 #include <iostream>  // NOLINT
 #include <vector>
 #include "ceres/internal/port.h"
+#include "ceres/line_search_solver.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
@@ -213,6 +214,12 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       options.trust_region_problem_dump_format_type != CONSOLE &&
       options.trust_region_problem_dump_directory.empty()) {
     *error = "Solver::Options::trust_region_problem_dump_directory is empty.";
+    return false;
+  }
+
+  if (options.dynamic_sparsity &&
+      options.linear_solver_type != SPARSE_NORMAL_CHOLESKY) {
+    *error = "Dynamic sparsity is only supported with SPARSE_NORMAL_CHOLESKY.";
     return false;
   }
 
