@@ -134,6 +134,7 @@ This runs Ceres for a maximum of 10 iterations using the
 this.
 
 .. code-block:: bash
+
     iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time
        0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04       0    7.59e-02    3.37e-01
        1  1.062590e+05    4.08e+06    8.99e+06   5.36e+02   9.82e-01  3.00e+04       1    1.65e-01    5.03e-01
@@ -254,6 +255,24 @@ Mac OS X versions due to the lack of an officially supported way of building
 SuiteSparse and CXSparse.  There are however a number of unofficial ways of
 building these libraries. Building on Windows also a bit more involved since
 there is no automated way to install dependencies.
+
+.. NOTE:: Using ``google-glog`` & ``miniglog`` with windows.h.
+
+ The windows.h header if used with GDI (Graphics Device Interface) defines
+ ``ERROR``, which conflicts with the definition of ``ERROR`` as a LogSeverity
+ level in ``google-glog`` and ``miniglog``.  There are at least two possible
+ fixes to this problem:
+
+ #. Use ``google-glog`` and define ``GLOG_NO_ABBREVIATED_SEVERITIES``
+    when building Ceres and your own project, as documented
+    `here <http://google-glog.googlecode.com/svn/trunk/doc/glog.html>`__.
+    Note that this fix will not work for ``miniglog``,
+    but use of ``miniglog`` is strongly discouraged on any platform for which
+    ``google-glog`` is available (which includes Windows).
+ #. If you do not require GDI, then define ``NOGDI`` **before** including
+    windows.h.  This solution should work for both ``google-glog`` and
+    ``miniglog`` and is documented for ``google-glog``
+    `here <https://code.google.com/p/google-glog/issues/detail?id=33>`__.
 
 #. Make a toplevel directory for deps & build & src somewhere: ``ceres/``
 #. Get dependencies; unpack them as subdirectories in ``ceres/``
@@ -504,16 +523,23 @@ scripts shipped with Ceres support two ways for you to do this:
 Building using custom BLAS & LAPACK installs
 ----------------------------------------------
 
-If you are building on an exotic system, then the standard find package
-scripts for ``BLAS`` & ``LAPACK`` which ship with ``CMake`` might not
-work.  In this case, one option would be to write your own custom versions for
-your environment and then set ``CMAKE_MODULE_PATH`` to the directory
-containing these custom scripts when invoking ``CMake`` to build Ceres and they
-will be used in preference to the default versions.  However, in order for this
-to work, your scripts must provide the full set of variables provided by the
-default scripts.  Also, if you are building Ceres with ``SuiteSparse``, the
-versions of ``BLAS`` & ``LAPACK`` used by ``SuiteSparse`` and Ceres should be
-the same.
+If the standard find package scripts for ``BLAS`` & ``LAPACK`` which ship with
+``CMake`` fail to find the desired libraries on your system, try setting
+``CMAKE_LIBRARY_PATH`` to the path(s) to the directories containing the
+``BLAS`` & ``LAPACK`` libraries when invoking ``CMake`` to build Ceres via
+``-D<VAR>=<VALUE>``.  This should result in the libraries being found for any
+common variant of each.
+
+If you are building on an exotic system, or setting ``CMAKE_LIBRARY_PATH``
+does not work, or is not appropriate for some other reason, one option would be
+to write your own custom versions of ``FindBLAS.cmake`` &
+``FindLAPACK.cmake`` specific to your environment.  In this case you must set
+``CMAKE_MODULE_PATH`` to the directory containing these custom scripts when
+invoking ``CMake`` to build Ceres and they will be used in preference to the
+default versions.  However, in order for this to work, your scripts must provide
+the full set of variables provided by the default scripts.  Also, if you are
+building Ceres with ``SuiteSparse``, the versions of ``BLAS`` & ``LAPACK``
+used by ``SuiteSparse`` and Ceres should be the same.
 
 .. _section-using-ceres:
 
