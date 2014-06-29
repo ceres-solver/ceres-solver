@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841c2dfc_3d663b67",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-29T15:28:51Z",
+      "side": 1,
+      "message": "Is there a reason why this is initialised outside of the if (options.logging_type !\u003d SILENT) conditional?  It only seems to be referenced there and gradient_checking_problem is NULL if not being used.",
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6421f930_5cdbf1aa",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-29T15:28:51Z",
+      "side": 1,
+      "message": "Same question as for logging_callback, why not move this inside the if (options.update_state_every_iteration) conditional?",
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c450e5a6_5f868fc6",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-29T15:28:51Z",
+      "side": 1,
+      "message": "\u0027Summarize\u0027 is capitalised in PostSummarized, but not in Presummarized - IMO with capitalisation looks better, but I think they should be the same.",
+      "range": {
+        "startLine": 300,
+        "startChar": 5,
+        "endLine": 300,
+        "endChar": 17
+      },
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c450e5a6_bfa0f34e",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-06-29T15:28:51Z",
+      "side": 1,
+      "message": "Whoa indeed.., but perhaps something more descriptive? :P - or perhaps:\n\nif (options.minimizer_type \u003d\u003d TRUST_REGION) {\n...\nelse {\nCHECK(options.minimizer_type \u003d\u003d LINE_SEARCH);\n...\n}",
+      "range": {
+        "startLine": 411,
+        "startChar": 19,
+        "endLine": 411,
+        "endChar": 29
+      },
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
