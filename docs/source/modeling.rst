@@ -1175,8 +1175,8 @@ Instances
 
   For example, Quaternions have a three dimensional local
   parameterization. It's plus operation can be implemented as (taken
-  from `internal/ceres/auto_diff_local_parameterization_test.cc
-  <https://ceres-solver.googlesource.com/ceres-solver/+/master/include/ceres/local_parameterization.h>`_
+  from `internal/ceres/autodiff_local_parameterization_test.cc
+  <https://ceres-solver.googlesource.com/ceres-solver/+/master/internal/ceres/autodiff_local_parameterization_test.cc>`_
   )
 
     .. code-block:: c++
