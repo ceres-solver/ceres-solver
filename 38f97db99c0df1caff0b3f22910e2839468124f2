@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4c051c0_a9aa99a6",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-07-06T15:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841c2dfc_3d663b67",
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6421f930_5cdbf1aa",
         "filename": "internal/ceres/preprocessor.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2014-06-29T15:28:51Z",
       "side": 1,
       "message": "Same question as for logging_callback, why not move this inside the if (options.update_state_every_iteration) conditional?",
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4c051c0_89afddb6",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-07-06T15:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6421f930_5cdbf1aa",
       "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a4c051c0_e9a491dc",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-07-06T15:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c450e5a6_5f868fc6",
+      "range": {
+        "startLine": 300,
+        "startChar": 5,
+        "endLine": 300,
+        "endChar": 17
+      },
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c450e5a6_bfa0f34e",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 5
@@ -70,6 +130,30 @@
       "writtenOn": "2014-06-29T15:28:51Z",
       "side": 1,
       "message": "Whoa indeed.., but perhaps something more descriptive? :P - or perhaps:\n\nif (options.minimizer_type \u003d\u003d TRUST_REGION) {\n...\nelse {\nCHECK(options.minimizer_type \u003d\u003d LINE_SEARCH);\n...\n}",
+      "range": {
+        "startLine": 411,
+        "startChar": 19,
+        "endLine": 411,
+        "endChar": 29
+      },
+      "revId": "38f97db99c0df1caff0b3f22910e2839468124f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4c051c0_c9a9d5b2",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-07-06T15:27:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c450e5a6_bfa0f34e",
       "range": {
         "startLine": 411,
         "startChar": 19,
