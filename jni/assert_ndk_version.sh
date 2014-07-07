@@ -45,7 +45,7 @@
 # 'r9d (64-bit)' and versions >= 10.
 function get_major_minor() {
   # r9d (64-bit) -> '9d', also handle versions >= 10.
-  local version=$(echo "$1" | sed 's/r\([0-9]\{1,2\}[a-z]\).*/\1/')
+  local version=$(echo "$1" | sed 's/r\([0-9]\{1,2\}[a-z]\{0,1\}\).*/\1/')
   local major=$(echo "$version" | sed 's/\([0-9]\{1,2\}\).*/\1/')
   local minor=$(echo "$version" | sed 's/^[0-9]*//')
   echo "$major $minor"
