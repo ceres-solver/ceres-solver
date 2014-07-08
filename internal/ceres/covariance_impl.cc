@@ -38,6 +38,8 @@
 #include <cstdlib>
 #include <utility>
 #include <vector>
+#include "Eigen/SparseCore"
+#include "Eigen/SparseQR"
 #include "Eigen/SVD"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
@@ -401,6 +403,8 @@ bool CovarianceImpl::ComputeCovarianceValues() {
     case SPARSE_QR:
       return ComputeCovarianceValuesUsingSparseQR();
 #endif
+    case EIGEN_SPARSE_QR:
+      return ComputeCovarianceValuesUsingEigenSparseQR();
     default:
       LOG(ERROR) << "Unsupported covariance estimation algorithm type: "
                  << CovarianceAlgorithmTypeToString(options_.algorithm_type);
@@ -597,7 +601,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSparseCholesky() {
   return false;
 
 #endif  // CERES_NO_SUITESPARSE
-};
+}
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingSparseQR() {
   EventLogger event_logger(
@@ -851,7 +855,101 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
   }
   event_logger.AddEvent("CopyToCovarianceMatrix");
   return true;
-};
+}
+
+bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR");
+  if (covariance_matrix_.get() == NULL) {
+    // Nothing to do, all zeros covariance matrix.
+    return true;
+  }
+
+  CRSMatrix jacobian;
+  problem_->Evaluate(evaluate_options_, NULL, NULL, NULL, &jacobian);
+  event_logger.AddEvent("Evaluate");
+
+  Eigen::MappedSparseMatrix<double, Eigen::RowMajor> jacobian_row_major_order(
+      jacobian.num_rows, jacobian.num_cols,
+      static_cast<int>(jacobian.values.size()),
+      jacobian.rows.data(), jacobian.cols.data(), jacobian.values.data());
+
+  // Convert the matrix to column major order as required by SparseQR.
+  Eigen::SparseMatrix<double, Eigen::ColMajor> sparse_jacobian =
+      jacobian_row_major_order;
+  event_logger.AddEvent("ConvertToSparseMatrix");
+
+  Eigen::SparseQR<Eigen::SparseMatrix<double, Eigen::ColMajor>,
+                  Eigen::COLAMDOrdering<int> > qr_solver(sparse_jacobian);
+  event_logger.AddEvent("QRDecomposition");
+
+  if(qr_solver.info() != Eigen::Success) {
+    LOG(ERROR) << "Eigen::SparseQR decomposition failed.";
+    return false;
+  }
+
+  if (qr_solver.rank() < jacobian.num_cols) {
+    LOG(ERROR) << "Jacobian matrix is rank deficient. "
+               << "Number of columns: " << jacobian.num_cols
+               << " rank: " << qr_solver.rank();
+    return false;
+  }
+
+  const int* rows = covariance_matrix_->rows();
+  const int* cols = covariance_matrix_->cols();
+  double* values = covariance_matrix_->mutable_values();
+
+  Eigen::VectorXi permutation(jacobian.num_cols);
+  for (int col = 0; col < jacobian.num_cols; ++col) {
+    permutation(col) = col;
+  }
+  permutation = qr_solver.colsPermutation() * permutation;
+
+  // The following loop exploits the fact that the i^th column of A^{-1}
+  // is given by the solution to the linear system
+  //
+  //  A x = e_i
+  //
+  // where e_i is a vector with e(i) = 1 and all other entries zero.
+  //
+  // Since the covariance matrix is symmetric, the i^th row and column
+  // are equal.
+  int num_cols = jacobian.num_cols;
+  const int num_threads = options_.num_threads;
+  scoped_array<double> workspace(new double[num_threads * num_cols]);
+
+#pragma omp parallel for num_threads(num_threads) schedule(dynamic)
+  for (int r = 0; r < num_cols; ++r) {
+    const int row_begin = rows[r];
+    const int row_end = rows[r + 1];
+    if (row_end == row_begin) {
+      continue;
+    }
+
+#  ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+#  else
+    int thread_id = 0;
+#  endif
+
+    double* solution = workspace.get() + thread_id * num_cols;
+    SolveRTRWithSparseRHS<int>(
+        num_cols,
+        qr_solver.matrixR().innerIndexPtr(),
+        qr_solver.matrixR().outerIndexPtr(),
+        &qr_solver.matrixR().data().value(0),
+        permutation(r),
+        solution);
+    for (int idx = row_begin; idx < row_end; ++idx) {
+     const int c = cols[idx];
+     values[idx] = solution[permutation(c)];
+    }
+  }
+
+  event_logger.AddEvent("Inverse");
+
+  return true;
+}
 
 }  // namespace internal
 }  // namespace ceres

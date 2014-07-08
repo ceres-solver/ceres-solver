@@ -400,7 +400,8 @@ enum LineSearchInterpolationType {
 enum CovarianceAlgorithmType {
   DENSE_SVD,
   SPARSE_CHOLESKY,
-  SPARSE_QR
+  SPARSE_QR,
+  EIGEN_SPARSE_QR
 };
 
 CERES_EXPORT const char* LinearSolverTypeToString(
