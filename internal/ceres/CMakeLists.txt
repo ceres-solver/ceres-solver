@@ -61,6 +61,7 @@ SET(CERES_INTERNAL_SRC
     dogleg_strategy.cc
     dynamic_compressed_row_jacobian_writer.cc
     dynamic_compressed_row_sparse_matrix.cc
+    eigen_sparse_matrix_utils.cc
     evaluator.cc
     file.cc
     gradient_checking_cost_function.cc
@@ -245,6 +246,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(dynamic_autodiff_cost_function)
   CERES_TEST(dynamic_compressed_row_sparse_matrix)
   CERES_TEST(dynamic_numeric_diff_cost_function)
+  CERES_TEST(eigen_sparse_matrix_utils)
   CERES_TEST(evaluator)
   CERES_TEST(gradient_checker)
   CERES_TEST(gradient_checking_cost_function)

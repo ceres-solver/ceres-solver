@@ -26,65 +26,40 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: sameeragarwal@google.com (Sameer Agarwal)
+// Author: mike@hidof.com (Michael Vitus)
+// Adapted from the compressed_col_sparse_matrix_utils.h
 
-#ifndef CERES_INTERNAL_COVARIANCE_IMPL_H_
-#define CERES_INTERNAL_COVARIANCE_IMPL_H_
+#ifndef CERES_INTERNAL_EIGEN_SPARSE_MATRIX_UTILS_H_
+#define CERES_INTERNAL_EIGEN_SPARSE_MATRIX_UTILS_H_
 
-#include <map>
-#include <set>
-#include <utility>
-#include <vector>
-#include "ceres/covariance.h"
-#include "ceres/internal/scoped_ptr.h"
-#include "ceres/problem_impl.h"
-#include "ceres/suitesparse.h"
+#include "Eigen/SparseCore"
 
 namespace ceres {
-
 namespace internal {
 
-class CompressedRowSparseMatrix;
+// Solve the linear system
+//
+//   R * solution = rhs
+//
+// Where R is an upper triangular compressed column sparse matrix.
+void SolveUpperTriangularInPlace(const Eigen::SparseMatrix<double>& R,
+                                 Eigen::VectorXd* rhs_and_solution_ptr);
 
-class CovarianceImpl {
- public:
-  explicit CovarianceImpl(const Covariance::Options& options);
-  ~CovarianceImpl();
-
-  bool Compute(
-      const vector<pair<const double*, const double*> >& covariance_blocks,
-      ProblemImpl* problem);
-
-  bool GetCovarianceBlock(const double* parameter_block1,
-                          const double* parameter_block2,
-                          double* covariance_block) const;
-
-  bool ComputeCovarianceSparsity(
-      const vector<pair<const double*, const double*> >& covariance_blocks,
-      ProblemImpl* problem);
-
-  bool ComputeCovarianceValues();
-  bool ComputeCovarianceValuesUsingSparseCholesky();
-  bool ComputeCovarianceValuesUsingSparseQR();
-  bool ComputeCovarianceValuesUsingDenseSVD();
-  bool ComputeCovarianceValuesUsingEigenSparseQR();
-
-  const CompressedRowSparseMatrix* covariance_matrix() const {
-    return covariance_matrix_.get();
-  }
-
- private:
-  ProblemImpl* problem_;
-  Covariance::Options options_;
-  Problem::EvaluateOptions evaluate_options_;
-  bool is_computed_;
-  bool is_valid_;
-  map<const double*, int> parameter_block_to_row_index_;
-  set<const double*> constant_parameter_blocks_;
-  scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
-};
+// Given a upper triangular matrix R in compressed column form, solve
+// the linear system,
+//
+//  R'R x = b
+//
+// Where b is all zeros except for rhs_nonzero_index, where it is
+// equal to one.
+//
+// The function exploits this knowledge to reduce the number of
+// floating point operations.
+void SolveRTRWithSparseRHS(const Eigen::SparseMatrix<double>& R,
+                           const int rhs_nonzero_index,
+                           Eigen::VectorXd* solution_ptr);
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_COVARIANCE_IMPL_H_
+#endif  // CERES_INTERNAL_EIGEN_SPARSE_MATRIX_UTILS_H_
