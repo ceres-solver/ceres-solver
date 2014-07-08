@@ -409,6 +409,9 @@ TEST_F(CovarianceTest, NormalBehavior) {
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
 #ifdef CERES_USE_OPENMP
@@ -456,6 +459,9 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
 #endif
 
   options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -505,6 +511,9 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
 #endif
 
   options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
@@ -561,6 +570,9 @@ TEST_F(CovarianceTest, LocalParameterization) {
 #endif
 
   options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
 }
 
