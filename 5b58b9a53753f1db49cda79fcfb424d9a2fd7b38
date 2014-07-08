@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41f0544_c4c6fe26",
+        "filename": "internal/ceres/eigen_sparse_matrix_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-07-08T22:27:29Z",
+      "side": 1,
+      "message": "2014",
+      "revId": "5b58b9a53753f1db49cda79fcfb424d9a2fd7b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c41f0544_04ead684",
+        "filename": "internal/ceres/eigen_sparse_matrix_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-07-08T22:27:29Z",
+      "side": 1,
+      "message": "2014",
+      "revId": "5b58b9a53753f1db49cda79fcfb424d9a2fd7b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c41f0544_84f5e668",
+        "filename": "internal/ceres/eigen_sparse_matrix_utils_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-07-08T22:27:29Z",
+      "side": 1,
+      "message": "2014",
+      "revId": "5b58b9a53753f1db49cda79fcfb424d9a2fd7b38",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
