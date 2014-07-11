@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b976bcc3_56eb5257",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-11T17:51:53Z",
+      "side": 1,
+      "message": "You could save yourself some name space pollution here by just saying\n\nsparse_jacobian \u003d MappedSparseMatrix\u003c\u003e\n\nand skip the creation of jacobian_row_major_order;",
+      "range": {
+        "startLine": 872,
+        "startChar": 28,
+        "endLine": 872,
+        "endChar": 34
+      },
+      "revId": "054b062c2b414b17bfb57336afb786f16e8b14c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b976bcc3_96080a92",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-11T17:51:53Z",
+      "side": 1,
+      "message": "worth defining a typedef for Eigen::SparseMatrix\u003cdouble, Eigen::ColMajor\u003e ?",
+      "range": {
+        "startLine": 882,
+        "startChar": 25,
+        "endLine": 882,
+        "endChar": 43
+      },
+      "revId": "054b062c2b414b17bfb57336afb786f16e8b14c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b976bcc3_160cfa9f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-11T17:51:53Z",
+      "side": 1,
+      "message": "add a comment about eigen\u0027s permutation handling here.",
+      "range": {
+        "startLine": 902,
+        "startChar": 9,
+        "endLine": 902,
+        "endChar": 17
+      },
+      "revId": "054b062c2b414b17bfb57336afb786f16e8b14c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b976bcc3_f6229e04",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-11T17:51:53Z",
+      "side": 1,
+      "message": "blank before and a comment about the loop.",
+      "range": {
+        "startLine": 943,
+        "startChar": 9,
+        "endLine": 943,
+        "endChar": 12
+      },
+      "revId": "054b062c2b414b17bfb57336afb786f16e8b14c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
