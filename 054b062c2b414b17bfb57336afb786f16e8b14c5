@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f993d415_e0889cd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-11T18:01:30Z",
+      "side": 1,
+      "message": "This message format doesn\u0027t match our new standard from Tim Pope: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html",
+      "revId": "054b062c2b414b17bfb57336afb786f16e8b14c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b976bcc3_56eb5257",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
