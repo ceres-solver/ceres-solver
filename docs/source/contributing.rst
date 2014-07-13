@@ -26,8 +26,8 @@ no merges.
 We now describe how to set up your development environment and submit
 a change list for review via Gerrit.
 
-Setting up your Development Environment
-=======================================
+Setting up your Environment
+===========================
 
 1. Download and configure ``git``.
 
@@ -97,8 +97,8 @@ Setting up your Development Environment
        name.
 
 
-Submitting a change to Ceres Solver
-===================================
+Submitting a change
+===================
 
 1. Make your changes against master or whatever branch you
    like. Commit your changes as one patch. When you commit, the Gerrit
