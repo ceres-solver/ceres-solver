@@ -67,10 +67,11 @@ optional. For details on customizing the build process, see
 
 .. _section-linux:
 
-Building on Linux
-=================
-We will use `Ubuntu <http://www.ubuntu.com>`_ as our example
-platform. Start by installing all the dependencies.
+Linux
+=====
+
+We will use `Ubuntu <http://www.ubuntu.com>`_ as our example linux
+distribution. Start by installing all the dependencies.
 
 .. NOTE::
 
@@ -110,7 +111,7 @@ platform. Start by installing all the dependencies.
      #   perform a source install of SuiteSparse (and uninstall the Ubuntu
      #   package if it is currently installed.
 
-We are now ready to build and test Ceres.
+We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
@@ -120,6 +121,7 @@ We are now ready to build and test Ceres.
  cmake ../ceres-solver-1.9.0
  make -j3
  make test
+ make install
 
 You can also try running the command line bundling application with one of the
 included problems, which comes from the University of Washington's BAL
@@ -187,8 +189,8 @@ this.
 
 .. section-osx:
 
-Building on Mac OS X
-====================
+Mac OS X
+========
 .. NOTE::
 
  Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a bug in that version of
@@ -230,7 +232,7 @@ framework.
       # SuiteSparse and CXSparse
       brew install suite-sparse
 
-We are now ready to build and test Ceres.
+We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
@@ -240,28 +242,30 @@ We are now ready to build and test Ceres.
    cmake ../ceres-solver-1.9.0
    make -j3
    make test
+   make install
 
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
 
 .. _section-windows:
 
-Building on Windows with Visual Studio
-======================================
+Windows
+=======
 
 On Windows, we support building with Visual Studio 2010 or newer. Note
-that the Windows port is less featureful and less tested than the Linux or
-Mac OS X versions due to the lack of an officially supported way of building
-SuiteSparse and CXSparse.  There are however a number of unofficial ways of
-building these libraries. Building on Windows also a bit more involved since
-there is no automated way to install dependencies.
+that the Windows port is less featureful and less tested than the
+Linux or Mac OS X versions due to the lack of an officially supported
+way of building SuiteSparse and CXSparse.  There are however a number
+of unofficial ways of building these libraries. Building on Windows
+also a bit more involved since there is no automated way to install
+dependencies.
 
 .. NOTE:: Using ``google-glog`` & ``miniglog`` with windows.h.
 
- The windows.h header if used with GDI (Graphics Device Interface) defines
- ``ERROR``, which conflicts with the definition of ``ERROR`` as a LogSeverity
- level in ``google-glog`` and ``miniglog``.  There are at least two possible
- fixes to this problem:
+ The windows.h header if used with GDI (Graphics Device Interface)
+ defines ``ERROR``, which conflicts with the definition of ``ERROR``
+ as a LogSeverity level in ``google-glog`` and ``miniglog``.  There
+ are at least two possible fixes to this problem:
 
  #. Use ``google-glog`` and define ``GLOG_NO_ABBREVIATED_SEVERITIES``
     when building Ceres and your own project, as documented
