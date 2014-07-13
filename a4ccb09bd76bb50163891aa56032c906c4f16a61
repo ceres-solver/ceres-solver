@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9a7f088_8d0549a2",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-13T20:47:23Z",
+      "side": 1,
+      "message": "It reads a bit odd if I do it, basically the second paragraph refers to the first one, but we end up breaking it across two different blocks.\n\nLet me know if you feel strongly about this.",
+      "parentUuid": "7971a4c6_ff11176f",
+      "revId": "a4ccb09bd76bb50163891aa56032c906c4f16a61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f993d415_23cf6e97",
         "filename": "docs/source/building.rst",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2014-07-13T12:43:35Z",
       "side": 1,
       "message": "\u0027For (non OSX) *nix OSs, we recommend...\u0027?  As for OSX there is the Accelerate framework and Windows is more complicated.",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "a4ccb09bd76bb50163891aa56032c906c4f16a61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9a7f088_6d4c8d02",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-13T20:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f993d415_23cf6e97",
       "range": {
         "startLine": 65,
         "startChar": 15,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d9a7f088_8d646971",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-13T20:47:23Z",
+      "side": 1,
+      "message": "well should I add it here in a platform specific subsection or should I add it separately below as its own section?",
+      "parentUuid": "996c98f2_3d431b79",
+      "revId": "a4ccb09bd76bb50163891aa56032c906c4f16a61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7971a4c6_9f1edb7e",
         "filename": "docs/source/building.rst",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2014-07-13T12:43:35Z",
       "side": 1,
       "message": "Consider adding the same note as for Linux about the make uninstall target.",
+      "revId": "a4ccb09bd76bb50163891aa56032c906c4f16a61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9a7f088_ad612560",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-13T20:47:23Z",
+      "side": 1,
+      "message": "see response above.",
+      "parentUuid": "7971a4c6_9f1edb7e",
       "revId": "a4ccb09bd76bb50163891aa56032c906c4f16a61",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
