@@ -1120,7 +1120,7 @@ elimination group [LiSaad]_.
 
    Solver terminates if
 
-   .. math:: \frac{|\Delta \text{cost}|}{\text{cost} < \text{function_tolerance}}
+   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} < \text{function_tolerance}
 
    where, :math:`\Delta \text{cost}` is the change in objective
    function value (up or down) in the current iteration of
