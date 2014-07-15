@@ -10,11 +10,22 @@ HEAD
 #. Added ``Solver::Options::IsValid`` which allows users to validate
    their solver configuration before calling ``Solve``.
 
+#. Added ``EIGEN_SPARSE_QR`` algorithm for covariance estimation using
+   ``Eigen``'s sparse QR factorization. (Michael Vitus)
+
 Backward Incompatible API Changes
 ---------------------------------
 
 #. ``Solver::Options::solver_log`` has been removed. If needed this
    iteration callback can easily be implemented in user code.
+
+#. The ``SPARSE_CHOLESKY`` algorithm for covariance estimation has
+   been removed. It is not rank revealing and numerically poorly
+   behaved. Sparse QR factorization is a much better way to do this.
+
+#. The ``SPARSE_QR`` algorithm for covariance estimation has been
+   renamed to ``SUITE_SPARSE_QR`` to be consistent with
+   ``EIGEN_SPARSE_QR``.
 
 
 1.9.0
