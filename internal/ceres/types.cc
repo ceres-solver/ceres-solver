@@ -261,8 +261,8 @@ const char* CovarianceAlgorithmTypeToString(
     CovarianceAlgorithmType type) {
   switch (type) {
     CASESTR(DENSE_SVD);
-    CASESTR(SPARSE_CHOLESKY);
-    CASESTR(SPARSE_QR);
+    CASESTR(EIGEN_SPARSE_QR);
+    CASESTR(SUITE_SPARSE_QR);
     default:
       return "UNKNOWN";
   }
@@ -273,8 +273,8 @@ bool StringToCovarianceAlgorithmType(
     CovarianceAlgorithmType* type) {
   UpperCase(&value);
   STRENUM(DENSE_SVD);
-  STRENUM(SPARSE_CHOLESKY);
-  STRENUM(SPARSE_QR);
+  STRENUM(EIGEN_SPARSE_QR);
+  STRENUM(SUITE_SPARSE_QR);
   return false;
 }
 

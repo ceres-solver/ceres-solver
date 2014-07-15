@@ -2262,7 +2262,7 @@ cases.
 
 .. member:: CovarianceAlgorithmType Covariance::Options::algorithm_type
 
-   Default: ``SPARSE_QR`` or ``DENSE_SVD``
+   Default: ``EIGEN_SPARSE_QR``
 
    Ceres supports three different algorithms for covariance
    estimation, which represent different tradeoffs in speed, accuracy
@@ -2281,47 +2281,23 @@ cases.
       small to moderate sized problems. It can handle full-rank as
       well as rank deficient Jacobians.
 
-   2. ``SPARSE_CHOLESKY`` uses the ``CHOLMOD`` sparse Cholesky
-      factorization library to compute the decomposition :
-
-      .. math::   R^\top R = J^\top J
-
-      and then
-
-      .. math::   \left(J^\top J\right)^{-1}  = \left(R^\top R\right)^{-1}
-
-      It a fast algorithm for sparse matrices that should be used when
-      the Jacobian matrix J is well conditioned. For ill-conditioned
-      matrices, this algorithm can fail unpredictabily. This is
-      because Cholesky factorization is not a rank-revealing
-      factorization, i.e., it cannot reliably detect when the matrix
-      being factorized is not of full
-      rank. ``SuiteSparse``/``CHOLMOD`` supplies a heuristic for
-      checking if the matrix is rank deficient (cholmod_rcond), but it
-      is only a heuristic and can have both false positive and false
-      negatives.
-
-      Recent versions of ``SuiteSparse`` (>= 4.2.0) provide a much more
-      efficient method for solving for rows of the covariance
-      matrix. Therefore, if you are doing ``SPARSE_CHOLESKY``, we strongly
-      recommend using a recent version of ``SuiteSparse``.
-
-   3. ``SPARSE_QR`` uses the ``SuiteSparseQR`` sparse QR factorization
-      library to compute the decomposition
+   2. ``EIGEN_SPARSE_QR`` uses the sparse QR factorization algorithm
+      in ``Eigen`` to compute the decomposition
 
        .. math::
 
           QR &= J\\
           \left(J^\top J\right)^{-1} &= \left(R^\top R\right)^{-1}
 
-      It is a moderately fast algorithm for sparse matrices, which at
-      the price of more time and memory than the ``SPARSE_CHOLESKY``
-      algorithm is numerically better behaved and is rank revealing,
-      i.e., it can reliably detect when the Jacobian matrix is rank
-      deficient.
+      It is a moderately fast algorithm for sparse matrices.
 
-   Neither ``SPARSE_CHOLESKY`` or ``SPARSE_QR`` are capable of computing
-   the covariance if the Jacobian is rank deficient.
+   3. ``SUITE_SPARSE_QR`` uses the ``SuiteSparseQR`` sparse QR
+      factorization algorithm. It uses dense linear algebra and is
+      multi threaded, so for large sparse sparse matrices it is
+      significantly faster than ``EIGEN_SPARSE_QR``.
+
+   Neither ``EIGEN_SPARSE_QR`` nor ``SUITE_SPARSE_QR`` are capable of
+   computing the covariance if the Jacobian is rank deficient.
 
 .. member:: int Covariance::Options::min_reciprocal_condition_number
 
@@ -2360,29 +2336,14 @@ cases.
       :math:`\sigma_{\text{max}}` are the minimum and maxiumum
       singular values of :math:`J` respectively.
 
-    2. ``SPARSE_CHOLESKY``
-
-       .. math::  \text{cholmod_rcond} < \text{min_reciprocal_conditioner_number}
-
-      Here cholmod_rcond is a crude estimate of the reciprocal
-      condition number of :math:`J^\top J` by using the maximum and
-      minimum diagonal entries of the Cholesky factor :math:`R`. There
-      are no theoretical guarantees associated with this test. It can
-      give false positives and negatives. Use at your own risk. The
-      default value of ``min_reciprocal_condition_number`` has been
-      set to a conservative value, and sometimes the
-      :func:`Covariance::Compute` may return false even if it is
-      possible to estimate the covariance reliably. In such cases, the
-      user should exercise their judgement before lowering the value
-      of ``min_reciprocal_condition_number``.
-
-    3. ``SPARSE_QR``
+   2. ``EIGEN_SPARSE_QR`` and ``SUITE_SPARSE_QR``
 
        .. math:: \operatorname{rank}(J) < \operatorname{num\_col}(J)
 
        Here :\math:`\operatorname{rank}(J)` is the estimate of the
-       rank of `J` returned by the ``SuiteSparseQR`` algorithm. It is
-       a fairly reliable indication of rank deficiency.
+       rank of `J` returned by the sparse QR factorization
+       algorithm. It is a fairly reliable indication of rank
+       deficiency.
 
 .. member:: int Covariance::Options::null_space_rank
 
@@ -2417,8 +2378,8 @@ cases.
 
     .. math::  \frac{\lambda_i}{\lambda_{\textrm{max}}} < \textrm{min_reciprocal_condition_number}
 
-    This option has no effect on ``SPARSE_QR`` and ``SPARSE_CHOLESKY``
-      algorithms.
+    This option has no effect on ``EIGEN_SPARSE_QR`` and
+    ``SUITE_SPARSE_QR``.
 
 .. member:: bool Covariance::Options::apply_loss_function
 
