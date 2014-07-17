@@ -286,6 +286,7 @@ class SuiteSparse {
 typedef void cholmod_factor;
 
 class SuiteSparse {
+ public:
   // Defining this static function even when SuiteSparse is not
   // available, allows client code to check for the presence of CAMD
   // without checking for the absence of the CERES_NO_CAMD symbol.
@@ -296,6 +297,8 @@ class SuiteSparse {
   static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
     return false;
   }
+
+  void Free(void*) {};
 };
 
 #endif  // CERES_NO_SUITESPARSE

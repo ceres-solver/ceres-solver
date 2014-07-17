@@ -150,8 +150,14 @@ enum SparseLinearAlgebraLibraryType {
   // minimum degree ordering.
   SUITE_SPARSE,
 
-  // A lightweight replacment for SuiteSparse.
-  CX_SPARSE
+  // A lightweight replacment for SuiteSparse, which does not require
+  // a LAPACK/BLAS implementation. Consequently, its performance is
+  // also a bit lower than SuiteSparse.
+  CX_SPARSE,
+
+  // Eigen's sparse linear algebra routines. In particular Ceres uses
+  // the Simplicial LDLT routines.
+  EIGEN_SPARSE
 };
 
 enum DenseLinearAlgebraLibraryType {
