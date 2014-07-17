@@ -296,6 +296,8 @@ class SuiteSparse {
   static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
     return false;
   }
+
+  void Free(void*) {};
 };
 
 #endif  // CERES_NO_SUITESPARSE
