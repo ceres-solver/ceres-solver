@@ -114,22 +114,22 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
   LOG(FATAL) << "Congratulations, you found a Ceres bug! "
              << "Please report this error to the developers.";
 #else  // CERES_NO_CXSPARSE
-    // CXSparse works with J'J instead of J'. So compute the block
-    // sparsity for J'J and compute an approximate minimum degree
-    // ordering.
-    CXSparse cxsparse;
-    cs_di* block_jacobian_transpose;
-    block_jacobian_transpose =
-        cxsparse.CreateSparseMatrix(
+  // CXSparse works with J'J instead of J'. So compute the block
+  // sparsity for J'J and compute an approximate minimum degree
+  // ordering.
+  CXSparse cxsparse;
+  cs_di* block_jacobian_transpose;
+  block_jacobian_transpose =
+      cxsparse.CreateSparseMatrix(
             const_cast<TripletSparseMatrix*>(&tsm_block_jacobian_transpose));
-    cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
-    cs_di* block_hessian =
-        cxsparse.MatrixMatrixMultiply(block_jacobian_transpose, block_jacobian);
-    cxsparse.Free(block_jacobian);
-    cxsparse.Free(block_jacobian_transpose);
+  cs_di* block_jacobian = cxsparse.TransposeMatrix(block_jacobian_transpose);
+  cs_di* block_hessian =
+      cxsparse.MatrixMatrixMultiply(block_jacobian_transpose, block_jacobian);
+  cxsparse.Free(block_jacobian);
+  cxsparse.Free(block_jacobian_transpose);
 
-    cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, ordering);
-    cxsparse.Free(block_hessian);
+  cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, ordering);
+  cxsparse.Free(block_hessian);
 #endif  // CERES_NO_CXSPARSE
 }
 
@@ -378,9 +378,21 @@ bool ReorderProgramForSparseNormalCholesky(
     string* error) {
 
   if (sparse_linear_algebra_library_type != SUITE_SPARSE &&
-      sparse_linear_algebra_library_type != CX_SPARSE) {
+      sparse_linear_algebra_library_type != CX_SPARSE &&
+      sparse_linear_algebra_library_type != EIGEN_SPARSE) {
     *error = "Unknown sparse linear algebra library.";
     return false;
+  }
+
+  // For Eigen, there is nothing to do. This is because Eigen does not
+  // expose a method for doing symbolic analysis on pre-ordered
+  // matrices, so a block pre-ordering is a bit pointless.
+  //
+  // Once this situation changes, it is worth coming back to this and
+  // doing the right thing.
+  if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+    program->SetParameterOffsetsAndIndex();
+    return true;
   }
 
   // Set the offsets and index for CreateJacobianSparsityTranspose.

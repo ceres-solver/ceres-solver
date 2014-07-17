@@ -31,8 +31,6 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
-
 #include "ceres/sparse_normal_cholesky_solver.h"
 
 #include <algorithm>
@@ -49,6 +47,10 @@
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
 
+#ifdef CERES_ENABLE_LGPL_CODE
+#include "Eigen/SparseCholesky"
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -56,7 +58,8 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
     : factor_(NULL),
       cxsparse_factor_(NULL),
-      options_(options) {
+      simplicial_ldlt_has_symbolic_factorization_(false),
+      options_(options){
 }
 
 void SparseNormalCholeskySolver::FreeFactorization() {
@@ -111,6 +114,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     case CX_SPARSE:
       summary = SolveImplUsingCXSparse(A, per_solve_options, x);
       break;
+    case EIGEN_SPARSE:
+      summary = SolveImplUsingEigen(A, per_solve_options, x);
+      break;
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library : "
                  << options_.sparse_linear_algebra_library_type;
@@ -122,6 +128,90 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
 
   return summary;
 }
+
+#ifdef CERES_ENABLE_LGPL_CODE
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
+    CompressedRowSparseMatrix* A,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * rhs_and_solution) {
+  EventLogger event_logger("SparseNormalCholeskySolver::CXSparse::Solve");
+
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.message = "Success.";
+
+  // Compute the normal equations. J'J delta = J'f and solve them
+  // using a sparse Cholesky factorization. Notice that when compared
+  // to SuiteSparse we have to explicitly compute the transpose of Jt,
+  // and then the normal equations before they can be
+  // factorized. CHOLMOD/SuiteSparse on the other hand can just work
+  // off of Jt to compute the Cholesky factorization of the normal
+  // equations.
+  //
+  // TODO(sameeragarwal): See note about how this maybe a bad idea for
+  // dynamic sparsity.
+  if (outer_product_.get() == NULL) {
+    outer_product_.reset(
+        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
+            *A, &pattern_));
+  }
+
+  CompressedRowSparseMatrix::ComputeOuterProduct(
+      *A, pattern_, outer_product_.get());
+
+  Eigen::MappedSparseMatrix<double, Eigen::ColMajor> AtA(
+      outer_product_->num_rows(),
+      outer_product_->num_rows(),
+      outer_product_->num_nonzeros(),
+      outer_product_->mutable_rows(),
+      outer_product_->mutable_cols(),
+      outer_product_->mutable_values());
+
+  const Vector b = VectorRef(rhs_and_solution, outer_product_->num_rows());
+  if (!simplicial_ldlt_has_symbolic_factorization_ ||
+      options_.dynamic_sparsity) {
+    // This is a crappy way to be doing this. But right now Eigen does
+    // not expose a way to do symbolic analysis with a given
+    // permutation pattern.
+    simplicial_ldlt_.analyzePattern(AtA.selfadjointView<Eigen::Upper>());
+    if (simplicial_ldlt_.info() != Eigen::Success) {
+      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+      summary.message =
+          "Eigen failure. Unable to find symbolic factorization.";
+      return summary;
+    }
+    simplicial_ldlt_has_symbolic_factorization_ = true;
+  }
+  event_logger.AddEvent("Analysis");
+
+  simplicial_ldlt_.factorize(AtA.selfadjointView<Eigen::Upper>());
+  if(simplicial_ldlt_.info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    return summary;
+  }
+
+  VectorRef(rhs_and_solution, outer_product_->num_rows()) = simplicial_ldlt_.solve(b);
+  if(simplicial_ldlt_.info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    return summary;
+  }
+
+  event_logger.AddEvent("Solve");
+  return summary;
+}
+#else
+LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
+    CompressedRowSparseMatrix* A,
+    const LinearSolver::PerSolveOptions& per_solve_options,
+    double * rhs_and_solution) {
+  LOG(FATAL) << "Using SPARSE_NORMAL_CHOLESKY with EIGEN_SPARSE "
+      " requires enabling LGPL code in Ceres.";
+  // Unreachable but MSVC does not know this.
+  return LinearSolver::Summary();
+}
+#endif
+
 
 #ifndef CERES_NO_CXSPARSE
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
@@ -142,6 +232,10 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // factorized. CHOLMOD/SuiteSparse on the other hand can just work
   // off of Jt to compute the Cholesky factorization of the normal
   // equations.
+  //
+  // TODO(sameeragarwal): If dynamic sparsity is enabled, then this is
+  // not a good idea performance wise, since the jacobian has far too
+  // many entries and the program will go crazy with memory.
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
@@ -271,5 +365,3 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 
 }   // namespace internal
 }   // namespace ceres
-
-#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
