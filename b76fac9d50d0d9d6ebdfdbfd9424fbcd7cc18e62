@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1975083e_976dce82",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-17T21:45:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f87cd3_06067c83",
+      "range": {
+        "startLine": 215,
+        "startChar": 22,
+        "endLine": 215,
+        "endChar": 25
+      },
+      "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fb70cc_a775640b",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -59,6 +83,24 @@
       "writtenOn": "2014-07-17T19:15:41Z",
       "side": 1,
       "message": "Perhaps this should also include \"SuiteSparse is required for SUITE_SPARSE_QR method\"?",
+      "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_b7724a60",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-17T21:45:25Z",
+      "side": 1,
+      "message": "ah good point.",
+      "parentUuid": "d9fb70cc_a775640b",
       "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
