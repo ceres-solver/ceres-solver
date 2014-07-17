@@ -826,6 +826,7 @@ LinearSolver* SolverImpl::CreateLinearSolver(Solver::Options* options,
   }
 #endif
 
+  // TODO(sameeragarwal): This needs fixed in light of EIGEN_SPARSE.
 #if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
   if (options->linear_solver_type == SPARSE_SCHUR) {
     *error = "Can't use SPARSE_SCHUR because neither SuiteSparse nor"

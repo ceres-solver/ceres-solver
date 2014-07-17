@@ -151,7 +151,10 @@ enum SparseLinearAlgebraLibraryType {
   SUITE_SPARSE,
 
   // A lightweight replacment for SuiteSparse.
-  CX_SPARSE
+  CX_SPARSE,
+
+  EIGEN_SPARSE
+
 };
 
 enum DenseLinearAlgebraLibraryType {

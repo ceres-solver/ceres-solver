@@ -212,5 +212,35 @@ TEST_F(UnsymmetricLinearSolverTest,
 }
 #endif
 
+#ifdef CERES_ENABLE_LGPGL_CODE
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingEigenPreOrdering) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.use_postordering = false;
+  TestSolver(options);
+}
+
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingEigenPostOrdering) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.use_postordering = true;
+  TestSolver(options);
+}
+
+TEST_F(UnsymmetricLinearSolverTest,
+       SparseNormalCholeskyUsingEigenDynamicSparsity) {
+  LinearSolver::Options options;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options.type = SPARSE_NORMAL_CHOLESKY;
+  options.dynamic_sparsity = true;
+  TestSolver(options);
+}
+
+#endif
+
 }  // namespace internal
 }  // namespace ceres
