@@ -92,7 +92,7 @@ class CERES_EXPORT Solver {
       gradient_tolerance = 1e-10;
       parameter_tolerance = 1e-8;
 
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && !defined(CERES_ENABLE_LGPL_CODE)
       linear_solver_type = DENSE_QR;
 #else
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -101,11 +101,21 @@ class CERES_EXPORT Solver {
       preconditioner_type = JACOBI;
       visibility_clustering_type = CANONICAL_VIEWS;
       dense_linear_algebra_library_type = EIGEN;
-      sparse_linear_algebra_library_type = SUITE_SPARSE;
-#if defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_CXSPARSE)
-      sparse_linear_algebra_library_type = CX_SPARSE;
-#endif
 
+      // Choose a default sparse linear algebra library in the order:
+      //
+      //   SUITE_SPARSE > CX_SPARSE > EIGEN_SPARSE
+#if !defined(CERES_NO_SUITESPARSE)
+      sparse_linear_algebra_library_type = SUITE_SPARSE;
+#else
+  #if !defined(CERES_NO_CXSPARSE)
+      sparse_linear_algebra_library_type = CX_SPARSE;
+  #else
+    #if defined(CERES_USE_EIGEN_SPARSE)
+      sparse_linear_algebra_library_type = EIGEN_SPARSE;
+    #endif
+  #endif
+#endif
 
       num_linear_solver_threads = 1;
       use_postordering = false;

@@ -37,12 +37,14 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
-
-#include "ceres/cxsparse.h"
 #include "ceres/internal/macros.h"
 #include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
+#include "ceres/cxsparse.h"
+
+#ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/SparseCholesky"
+#endif
 
 namespace ceres {
 namespace internal {
@@ -74,6 +76,12 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
+  // Crashes if CERES_USE_LGPGL_CODE is not defined.
+  LinearSolver::Summary SolveImplUsingEigen(
+      CompressedRowSparseMatrix* A,
+      const LinearSolver::PerSolveOptions& options,
+      double* rhs_and_solution);
+
   void FreeFactorization();
 
   SuiteSparse ss_;
@@ -83,6 +91,13 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
   CXSparse cxsparse_;
   // Cached factorization
   cs_dis* cxsparse_factor_;
+
+#ifdef CERES_USE_EIGEN_SPARSE
+  scoped_ptr<Eigen::SimplicialLDLT<
+               Eigen::SparseMatrix<double, Eigen::ColMajor>,
+               Eigen::Upper> > simplicial_ldlt_;
+#endif
+
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;
   vector<int> pattern_;
   const LinearSolver::Options options_;
@@ -92,5 +107,4 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARSE)
 #endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

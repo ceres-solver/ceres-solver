@@ -107,7 +107,15 @@ OPTION(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
-
+OPTION(EIGEN_SPARSE
+  "Enable the use of Eigen as a sparse linear algebra library for
+   solving the nonlinear least squares problems. Enabling this
+   option will result in an LPGL licensed version of Ceres Solver
+   as the simplicial Cholesky in Eigen is licensed under LGPL.
+   This does not affect the covariance estimation algorith, as it
+   depends on the sparse QR factorization algorithm, which is licensed
+   under MPL"
+  OFF)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -233,6 +241,24 @@ HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
 FIND_PACKAGE(Eigen REQUIRED)
 IF (EIGEN_FOUND)
   MESSAGE("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
+  # Ensure that only MPL2 licensed code is part of the default build.
+  MESSAGE("")
+  MESSAGE("   ===============================================================")
+
+  IF (EIGEN_SPARSE)
+    LIST(APPEND CERES_COMPILE_OPTIONS CERES_USE_EIGEN_SPARSE)
+    MESSAGE("   Enable the use of Eigen as a sparse linear algebra library for ")
+    MESSAGE("   solving the nonlinear least squares problems. Enabling this ")
+    MESSAGE("   option will result in an LPGL licensed version of Ceres Solver ")
+    MESSAGE("   as the simplicial Cholesky in Eigen is licensed under LGPL. ")
+  ELSE (EIGEN_SPARSE)
+    MESSAGE("   Do not use Eigen as a sparse linear algebra library.")
+    MESSAGE("   This does not affect the covariance estimation algorithm ")
+    MESSAGE("   which can still use the EIGEN_SPARSE_QR algorithm.")
+    ADD_DEFINITIONS(-DEIGEN_MPL2_ONLY)
+  ENDIF (EIGEN_SPARSE)
+    MESSAGE("   ===============================================================")
+    MESSAGE("")
 ENDIF (EIGEN_FOUND)
 
 # LAPACK (& BLAS).
