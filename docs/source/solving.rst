@@ -490,7 +490,9 @@ Cholesky factorization of the normal equations. Ceres uses
 Cholesky factorization of the normal equations. This leads to
 substantial savings in time and memory for large sparse
 problems. Ceres uses the sparse Cholesky factorization routines in
-Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_.
+Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_
+or the sparse Cholesky factorization algorithm in ``Eigen`` (which
+incidently is a port of the algorithm implemented inside ``CXSparse``)
 
 .. _section-schur:
 
@@ -1156,8 +1158,9 @@ elimination group [LiSaad]_.
 
    Type of linear solver used to compute the solution to the linear
    least squares problem in each iteration of the Levenberg-Marquardt
-   algorithm. If Ceres is build with ``SuiteSparse`` linked in then
-   the default is ``SPARSE_NORMAL_CHOLESKY``, it is ``DENSE_QR``
+   algorithm. If Ceres is build with support for ``SuiteSparse`` or
+   ``CXSparse`` or ``Eigen``'s sparse Cholesky factorization, the
+   default is ``SPARSE_NORMAL_CHOLESKY``, it is ``DENSE_QR``
    otherwise.
 
 .. member:: PreconditionerType Solver::Options::preconditioner_type
@@ -1212,16 +1215,33 @@ elimination group [LiSaad]_.
 
    Default:``SUITE_SPARSE``
 
-   Ceres supports the use of two sparse linear algebra libraries,
+   Ceres supports the use of three sparse linear algebra libraries,
    ``SuiteSparse``, which is enabled by setting this parameter to
-   ``SUITE_SPARSE`` and ``CXSparse``, which can be selected by setting
-   this parameter to ```CX_SPARSE``. ``SuiteSparse`` is a
-   sophisticated and complex sparse linear algebra library and should
-   be used in general. If your needs/platforms prevent you from using
-   ``SuiteSparse``, consider using ``CXSparse``, which is a much
-   smaller, easier to build library. As can be expected, its
-   performance on large problems is not comparable to that of
-   ``SuiteSparse``.
+   ``SUITE_SPARSE``, ``CXSparse``, which can be selected by setting
+   this parameter to ```CX_SPARSE`` and ``Eigen`` which is enabled by
+   setting this parameter to ``EIGEN_SPARSE``.
+
+   ``SuiteSparse`` is a sophisticated and complex sparse linear
+   algebra library and should be used in general.
+
+   If your needs/platforms prevent you from using ``SuiteSparse``,
+   consider using ``CXSparse``, which is a much smaller, easier to
+   build library. As can be expected, its performance on large
+   problems is not comparable to that of ``SuiteSparse``.
+
+   Last but not the least you can use the sparse linear algebra
+   routines in ``Eigen``. Currently the performance of this library is
+   the poorest of the three. But this should change in the near
+   future.
+
+   Another thing to consider here is that the sparse Cholesky
+   factorization libraries in Eigen are licensed under ``LGPL`` and
+   building Ceres with support for ``EIGEN_SPARSE`` will result in an
+   LGPL licensed library (since the corresponding code from Eigen is
+   compiled into the library).
+
+   The upside is that you do not need to build and link to an external
+   library to use ``EIGEN_SPARSE``.
 
 .. member:: int Solver::Options::num_linear_solver_threads
 
