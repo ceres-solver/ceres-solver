@@ -33,7 +33,6 @@
 #include <set>
 #include <vector>
 
-#include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_random_access_sparse_matrix.h"
@@ -51,6 +50,8 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
+#include "Eigen/Dense"
+#include "Eigen/SparseCore"
 
 namespace ceres {
 namespace internal {
@@ -155,13 +156,12 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
   return summary;
 }
 
-#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
-
 SparseSchurComplementSolver::SparseSchurComplementSolver(
     const LinearSolver::Options& options)
     : SchurComplementSolver(options),
       factor_(NULL),
-      cxsparse_factor_(NULL) {
+      cxsparse_factor_(NULL),
+      simplicial_ldlt_has_symbolic_factorization_(false) {
 }
 
 SparseSchurComplementSolver::~SparseSchurComplementSolver() {
@@ -258,6 +258,8 @@ SparseSchurComplementSolver::SolveReducedLinearSystem(double* solution) {
       return SolveReducedLinearSystemUsingSuiteSparse(solution);
     case CX_SPARSE:
       return SolveReducedLinearSystemUsingCXSparse(solution);
+    case EIGEN_SPARSE:
+      return SolveReducedLinearSystemUsingEigen(solution);
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library : "
                  << options().sparse_linear_algebra_library_type;
@@ -417,6 +419,75 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
 }
 #endif  // CERES_NO_CXPARSE
 
-#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
+#ifdef CERES_ENABLE_LGPL_CODE
+// Solve the system Sx = r, assuming that the matrix S is stored in a
+// BlockRandomAccessSparseMatrix.  The linear system is solved using
+// Eigen's sparse cholesky factorization routines.
+LinearSolver::Summary
+SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
+    double* solution) {
+  LinearSolver::Summary summary;
+  summary.num_iterations = 0;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.message = "Success.";
+
+  // Extract the TripletSparseMatrix that is used for actually storing S.
+  TripletSparseMatrix* tsm =
+      const_cast<TripletSparseMatrix*>(
+          down_cast<const BlockRandomAccessSparseMatrix*>(lhs())->matrix());
+  const int num_rows = tsm->num_rows();
+
+  // The case where there are no f blocks, and the system is block
+  // diagonal.
+  if (num_rows == 0) {
+    return summary;
+  }
+
+  CompressedRowSparseMatrix crsm(*tsm);
+  Eigen::MappedSparseMatrix<double, Eigen::ColMajor> eigen_lhs(
+      crsm.num_rows(),
+      crsm.num_rows(),
+      crsm.num_nonzeros(),
+      crsm.mutable_rows(),
+      crsm.mutable_cols(),
+      crsm.mutable_values());
+
+  if (!simplicial_ldlt_has_symbolic_factorization_) {
+    simplicial_ldlt_.analyzePattern(eigen_lhs.selfadjointView<Eigen::Lower>());
+    if (simplicial_ldlt_.info() != Eigen::Success) {
+      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+      summary.message =
+          "Eigen failure. Unable to find symbolic factorization.";
+      return summary;
+    }
+
+    simplicial_ldlt_has_symbolic_factorization_ = true;
+  }
+
+  simplicial_ldlt_.factorize(eigen_lhs.selfadjointView<Eigen::Lower>());
+  if(simplicial_ldlt_.info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    return summary;
+  }
+
+  VectorRef(solution, num_rows) =
+      simplicial_ldlt_.solve(ConstVectorRef(rhs(), num_rows));
+
+  if(simplicial_ldlt_.info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+  }
+
+  return summary;
+}
+#else
+LinearSolver::Summary
+SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
+    double* solution) {
+  LOG(FATAL) << "Using SPARSE_SCHUR with EIGEN_SPARSE "
+      " requires enabling LGPL code in Ceres.";
+  return LinearSolver::Summary();
+}
+#endif  // CERES_ENABLE_LGPL_CODE
+
 }  // namespace internal
 }  // namespace ceres

@@ -35,6 +35,8 @@
 #include <utility>
 #include <vector>
 
+#include "ceres/internal/port.h"
+
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
@@ -44,6 +46,10 @@
 #include "ceres/suitesparse.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+
+#ifdef CERES_ENABLE_LGPL_CODE
+#include "Eigen/SparseCholesky"
+#endif
 
 namespace ceres {
 namespace internal {
@@ -153,7 +159,6 @@ class DenseSchurComplementSolver : public SchurComplementSolver {
   CERES_DISALLOW_COPY_AND_ASSIGN(DenseSchurComplementSolver);
 };
 
-#if !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
 // Sparse Cholesky factorization based solver.
 class SparseSchurComplementSolver : public SchurComplementSolver {
  public:
@@ -168,6 +173,8 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
       double* solution);
   LinearSolver::Summary SolveReducedLinearSystemUsingCXSparse(
       double* solution);
+  LinearSolver::Summary SolveReducedLinearSystemUsingEigen(
+      double* solution);
 
   // Size of the blocks in the Schur complement.
   vector<int> blocks_;
@@ -180,10 +187,16 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   CXSparse cxsparse_;
   // Cached factorization
   cs_dis* cxsparse_factor_;
+
+#ifdef CERES_ENABLE_LGPL_CODE
+  Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                        Eigen::Lower> simplicial_ldlt_;
+#endif
+  bool simplicial_ldlt_has_symbolic_factorization_;
+
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
 
-#endif  // !defined(CERES_NO_SUITESPARSE) || !defined(CERES_NO_CXSPARE)
 }  // namespace internal
 }  // namespace ceres
 
