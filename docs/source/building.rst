@@ -25,8 +25,14 @@ Ceres relies on a number of open source libraries, some of which are
 optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
-- `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_ 3.0 or later.
-  **Required**
+- `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+  3.2.1 or later.  **Required**
+
+  .. NOTE ::
+
+    Ceres can also use Eigen as a sparse linear algebra
+    library. Please see the documentation for ``-DEIGENSPARSE`` for
+    more details.
 
 - `CMake <http://www.cmake.org>`_ 2.8.0 or later.
   **Required on all platforms except for Android.**
@@ -470,6 +476,12 @@ Options controlling Ceres configuration
 #. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
    ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
    to build Ceres without ``CXSparse``.
+
+#. ``EIGENSPARSE [Default: OFF]``: By default, Ceres will not use
+   Eigen's sparse Cholesky factorization. The is because this part of
+   the code is licensed under the ``LGPL`` and since ``Eigen`` is a
+   header only library, including this code will result in an ``LGPL``
+   licensed version of Ceres.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
