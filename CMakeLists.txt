@@ -107,7 +107,7 @@ OPTION(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
-
+OPTION(EIGEN_LGPL_CODE "Enable the use of LGPL Code in Eigen." OFF)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -233,6 +233,18 @@ HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
 FIND_PACKAGE(Eigen REQUIRED)
 IF (EIGEN_FOUND)
   MESSAGE("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
+  # Ensure that only MPL2 licensed code is part of the default build.
+  IF (EIGEN_LGPL_CODE)
+    LIST(APPEND CERES_COMPILE_OPTIIONS CERES_ENABLE_LGPL_CODE)
+    MESSAGE("")
+    MESSAGE("=====================================================")
+    MESSAGE("-- Enabling the use of LPGL code in Eigen")
+    MESSAGE("=====================================================")
+    MESSAGE("")
+  ELSE (EIGEN_LGPL_CODE)
+    MESSAGE("-- Only MPL2 Eigen code.")
+    ADD_DEFINITIONS(-DEIGEN_MPL2_ONLY)
+  ENDIF (EIGEN_LGPL_CODE)
 ENDIF (EIGEN_FOUND)
 
 # LAPACK (& BLAS).
