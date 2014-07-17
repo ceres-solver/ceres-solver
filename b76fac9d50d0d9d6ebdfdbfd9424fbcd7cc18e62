@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7938c45c_a43d4cfc",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-17T19:15:41Z",
+      "side": 1,
+      "message": "Isn\u0027t SUITE_SPARSE_QR the default if SuiteSparse is available?",
+      "range": {
+        "startLine": 2265,
+        "startChar": 3,
+        "endLine": 2265,
+        "endChar": 31
+      },
+      "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9f87cd3_06067c83",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-17T19:15:41Z",
+      "side": 1,
+      "message": "three - I know QR \u0026 SVD are the two broad algorithms, but otherwise it seems a bit confused as there are three numbered items.  Perhaps otherwise, \u0027three implementations of two algorithms\u0027 but IMO I don\u0027t like this.",
+      "range": {
+        "startLine": 215,
+        "startChar": 22,
+        "endLine": 215,
+        "endChar": 25
+      },
+      "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9fb70cc_a775640b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-17T19:15:41Z",
+      "side": 1,
+      "message": "Perhaps this should also include \"SuiteSparse is required for SUITE_SPARSE_QR method\"?",
+      "revId": "b76fac9d50d0d9d6ebdfdbfd9424fbcd7cc18e62",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
