@@ -96,6 +96,7 @@ const char* SparseLinearAlgebraLibraryTypeToString(
   switch (type) {
     CASESTR(SUITE_SPARSE);
     CASESTR(CX_SPARSE);
+    CASESTR(EIGEN_SPARSE);
     default:
       return "UNKNOWN";
   }
@@ -107,6 +108,7 @@ bool StringToSparseLinearAlgebraLibraryType(
   UpperCase(&value);
   STRENUM(SUITE_SPARSE);
   STRENUM(CX_SPARSE);
+  STRENUM(EIGEN_SPARSE);
   return false;
 }
 
