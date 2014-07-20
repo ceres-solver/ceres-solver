@@ -1,0 +1,341 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d957f0b2_e77a5ccc",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but I think we may have to include a link to the LGPL when using the parts of Eigen that are LGPL licensed, they talk about it here:\n\nhttp://eigen.tuxfamily.org/index.php?title\u003dLicensing_FAQ\u0026oldid\u003d1117#So_what_does_the_LGPL_require_me_to_do.3F\n\nBut this is the previous version of the Licensing FAQ page, they now say that it\u0027s MPL2, so there aren\u0027t really any restrictions like LGPL, but presumably for the LGPL parts the same restrictions that used to apply throughout apply.\n\nI\u0027m also wondering if we shouldn\u0027t try to explain in the docs what it means in terms of using Ceres in your own project if this is enabled.  Personally, I\u0027m not exactly sure, but I can imagine a lot of questions on the mailing list about it.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_27815473",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Perhaps this should go to the top of the list?",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_07845882",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Should this #include be wrapped in #ifdef CERES_ENABLE_LGPL_CODE?",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_6b7e3536",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Should this not be Eigen::RowMajor here, as I thought that RowMajor -\u003e CSR, and ColMajor -\u003e CSC in Eigen?  I\u0027m assuming I must be wrong, but that was my reading of: http://eigen.tuxfamily.org/dox/group__TutorialSparse.html",
+      "range": {
+        "startLine": 447,
+        "startChar": 36,
+        "endLine": 447,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_89c29dcb",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "crsm.num_cols()",
+      "range": {
+        "startLine": 449,
+        "startChar": 6,
+        "endLine": 449,
+        "endChar": 21
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_a9c759da",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Update summary.message to reflect failed factorisation before returning.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_0b8b010f",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Update summary.message to reflect failed factorisation.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_49ad851d",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Style question - do you want to replicate the start of the definition here, or start the #ifdef / #else / #endif block after the signature?",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_c75c0067",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Should this be Eigen::SparseMatrix\u003cdouble, Eigen::RowMajor\u003e for CSR?  In the .cc it\u0027s used as Eigen::SparseMatrix\u003cdouble, Eigen::ColMajor\u003e so perhaps either way this should be specified / typedef\u0027ed?",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_e761fc15",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Eigen",
+      "range": {
+        "startLine": 137,
+        "startChar": 56,
+        "endLine": 137,
+        "endChar": 64
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_09b78d6f",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "This doesn\u0027t scan.",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 57
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_eb78e545",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Should this really be ColMajor not RowMajor for CSR?",
+      "range": {
+        "startLine": 167,
+        "startChar": 36,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d957f0b2_8766082b",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "num_cols",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 30
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_29b4c967",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Update summary.message with failure details.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_8b6db182",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Update summary.message with failure details.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f95af4db_cb73a967",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Same style question as before, do you want to have the signature twice and inside the #ifdef, or once and outside?",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "195ee8cf_c9df35a0",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T13:07:34Z",
+      "side": 1,
+      "message": "Again, should this not be Eigen::SparseMatrix\u003cdouble, Eigen::RowMajor\u003e, or if not, then explicitly Eigen::ColMajor / typedef\u0027ed?",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
