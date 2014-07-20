@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "1975083e_3062d21a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Hi Alex,\n\nThis part of the CL is quite rough - the cmakefile and the lack of documentation about the licensing implications. I am not sure about this either, so lets wait on this and get the rest of the code in good shape.\n\nI do know that including/using the sparsecholesky code makes the whole codebase LGPL. I asked our resident lawyer about this.\n\nKeir has a better understanding of this stuff and he can tell us more when he gets back.",
+      "parentUuid": "d957f0b2_e77a5ccc",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_d066ee2b",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "again, here I am going to include more information including warnings around LPGL code before submission. Dropping a todo here.",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d957f0b2_27815473",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -30,6 +71,24 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Perhaps this should go to the top of the list?",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_f06beaf2",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d957f0b2_27815473",
       "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "1975083e_9051464a",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "SparseCore is not LGPL, only the simplicial cholesky is.",
+      "parentUuid": "d957f0b2_07845882",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95af4db_6b7e3536",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -64,6 +141,30 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Should this not be Eigen::RowMajor here, as I thought that RowMajor -\u003e CSR, and ColMajor -\u003e CSC in Eigen?  I\u0027m assuming I must be wrong, but that was my reading of: http://eigen.tuxfamily.org/dox/group__TutorialSparse.html",
+      "range": {
+        "startLine": 447,
+        "startChar": 36,
+        "endLine": 447,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_8be7d745",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "if we say column major then we get a lower triangular matrix, if we do row major then we get a lower triangular matrix.  Both are correct. I need to experiment a bit to see what gives better performance.",
+      "parentUuid": "f95af4db_6b7e3536",
       "range": {
         "startLine": 447,
         "startChar": 36,
@@ -99,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "1975083e_b04ec2a4",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "its a square matrix!",
+      "parentUuid": "195ee8cf_89c29dcb",
+      "range": {
+        "startLine": 449,
+        "startChar": 6,
+        "endLine": 449,
+        "endChar": 21
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_a9c759da",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -110,6 +235,24 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Update summary.message to reflect failed factorisation before returning.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_2bd8238f",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "updated here and everywhere. I made things much more uniform.\n\nI also realized that now that we have the fatal error enum, the ifdefs can be handled in a much nicer form.  let me know what you think.",
+      "parentUuid": "195ee8cf_a9c759da",
       "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -133,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "1975083e_cbdcff84",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95af4db_0b8b010f",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_49ad851d",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 3
@@ -150,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "1975083e_ebe1bb33",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "see the new code.",
+      "parentUuid": "195ee8cf_49ad851d",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d957f0b2_c75c0067",
         "filename": "internal/ceres/schur_complement_solver.h",
         "patchSetId": 3
@@ -161,6 +340,30 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Should this be Eigen::SparseMatrix\u003cdouble, Eigen::RowMajor\u003e for CSR?  In the .cc it\u0027s used as Eigen::SparseMatrix\u003cdouble, Eigen::ColMajor\u003e so perhaps either way this should be specified / typedef\u0027ed?",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_6bee2b22",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d957f0b2_c75c0067",
       "range": {
         "startLine": 192,
         "startChar": 24,
@@ -196,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "1975083e_ab889362",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d957f0b2_e761fc15",
+      "range": {
+        "startLine": 137,
+        "startChar": 56,
+        "endLine": 137,
+        "endChar": 64
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_09b78d6f",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -207,6 +434,30 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "This doesn\u0027t scan.",
+      "range": {
+        "startLine": 146,
+        "startChar": 20,
+        "endLine": 146,
+        "endChar": 57
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_4b956f78",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_09b78d6f",
       "range": {
         "startLine": 146,
         "startChar": 20,
@@ -242,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "1975083e_6b92ab93",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "see my comment in schur complement solver.",
+      "parentUuid": "f95af4db_eb78e545",
+      "range": {
+        "startLine": 167,
+        "startChar": 36,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d957f0b2_8766082b",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -253,6 +528,30 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "num_cols",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 30
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_0b5e8725",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "square matrix, it does not matter.",
+      "parentUuid": "d957f0b2_8766082b",
       "range": {
         "startLine": 169,
         "startChar": 22,
@@ -282,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "1975083e_2b6343e7",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_29b4c967",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95af4db_8b6db182",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 3
@@ -293,6 +610,24 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Update summary.message with failure details.",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_cb571f05",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95af4db_8b6db182",
       "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -316,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "1975083e_eb5c5b2b",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "cleaned up code.",
+      "parentUuid": "f95af4db_cb73a967",
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195ee8cf_c9df35a0",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.h",
         "patchSetId": 3
@@ -327,6 +680,30 @@
       "writtenOn": "2014-07-20T13:07:34Z",
       "side": 1,
       "message": "Again, should this not be Eigen::SparseMatrix\u003cdouble, Eigen::RowMajor\u003e, or if not, then explicitly Eigen::ColMajor / typedef\u0027ed?",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7053db116be4e2341a7f52b8fd9604b0dcbaa913",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1975083e_0bfa07de",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-07-20T17:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195ee8cf_c9df35a0",
       "range": {
         "startLine": 97,
         "startChar": 24,
