@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d957f0b2_47a33023",
+        "filename": "docs/source/solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-07-20T10:58:04Z",
+      "side": 1,
+      "message": "Perhaps just SuiteSparse, as currently our FindSuiteSparse requires that SuiteSparseQR is present in order that SuiteSparse is reported found, and users might perhaps think SuiteSparseQR is something different from SuiteSparse?",
+      "range": {
+        "startLine": 2265,
+        "startChar": 37,
+        "endLine": 2265,
+        "endChar": 50
+      },
+      "revId": "95a7b5be239c27b3bd7425498bfdf43600304d5e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
