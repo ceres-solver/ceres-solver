@@ -32,7 +32,6 @@
 #include "ceres/internal/port.h"
 #include "ceres/solver.h"
 
-#include <iostream>  // NOLINT
 #include <sstream>   // NOLINT
 #include <vector>
 
