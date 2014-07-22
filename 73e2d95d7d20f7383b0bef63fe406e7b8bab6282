@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e44451_20cfbf96",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-07-22T18:10:19Z",
+      "side": 1,
+      "message": "so the structure of this is such that we are including SparseQR conditionally on each compiler. I think it would better to instead do two ifdef blocks one before and one after and the include for SparseQR is not conditional at all.\n\nThis is going to much less buggy.",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "73e2d95d7d20f7383b0bef63fe406e7b8bab6282",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
