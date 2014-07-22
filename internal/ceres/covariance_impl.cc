@@ -39,7 +39,24 @@
 #include <utility>
 #include <vector>
 #include "Eigen/SparseCore"
+
+// Suppress unused local variable warning from Eigen Ordering.h #included by
+// SparseQR in Eigen 3.2.0. This was fixed in Eigen 3.2.1, but 3.2.0 is still
+// widely used (Ubuntu 14.04), and Ceres won't compile otherwise due to -Werror.
+#if defined(_MSC_VER)
+#pragma warning( push )
+#pragma warning( disable : 42024 )
+#else
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
 #include "Eigen/SparseQR"
+#if defined(_MSC_VER)
+#pragma warning( pop )
+#else
+#pragma GCC diagnostic pop
+#endif
+
 #include "Eigen/SVD"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
