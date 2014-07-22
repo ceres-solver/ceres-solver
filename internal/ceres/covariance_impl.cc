@@ -45,10 +45,10 @@
 // widely used (Ubuntu 14.04), and Ceres won't compile otherwise due to -Werror.
 #if defined(_MSC_VER)
 #pragma warning( push )
-#pragma warning( disable : 42024 )
+#pragma warning( disable : 4189 )
 #else
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-variable"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #endif
 #include "Eigen/SparseQR"
 #if defined(_MSC_VER)
