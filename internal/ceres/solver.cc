@@ -29,11 +29,13 @@
 // Author: keir@google.com (Keir Mierle)
 //         sameeragarwal@google.com (Sameer Agarwal)
 
+#include "ceres/internal/port.h"
 #include "ceres/solver.h"
 
 #include <iostream>  // NOLINT
+#include <sstream>   // NOLINT
 #include <vector>
-#include "ceres/internal/port.h"
+
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
