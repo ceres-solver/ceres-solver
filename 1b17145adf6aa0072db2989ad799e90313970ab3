@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763a93c6_b484ee85",
+        "filename": "internal/ceres/loss_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-07-30T21:05:39Z",
+      "side": 1,
+      "message": "This is done many times; how about ClampBelow()?",
+      "revId": "1b17145adf6aa0072db2989ad799e90313970ab3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
