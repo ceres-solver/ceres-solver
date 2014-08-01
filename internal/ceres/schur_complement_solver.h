@@ -189,9 +189,8 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   cs_dis* cxsparse_factor_;
 
 #ifdef CERES_USE_EIGEN_SPARSE
-  scoped_ptr<Eigen::SimplicialLDLT<
-               Eigen::SparseMatrix<double, Eigen::ColMajor>,
-               Eigen::Lower> > simplicial_ldlt_;
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double> > SimplicialLDLT;
+  scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
 #endif
 
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);

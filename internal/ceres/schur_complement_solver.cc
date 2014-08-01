@@ -447,7 +447,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
   return summary;
 
 #else
-
+  EventLogger event_logger("SchurComplementSolver::EigenSolve");
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
@@ -465,14 +465,9 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
     return summary;
   }
 
+  // This is an upper triangular matrix.
   CompressedRowSparseMatrix crsm(*tsm);
-
-  // The crsm above is a symmetric matrix in upper triangular form, in
-  // compressed row form. When we map it to a compressed column matrix
-  // for Eigen, that turns it into a lower triangular matrix.
-  //
-  // TODO(sameeragarwal): What is the best memory layout for sparse
-  // cholesky factorization?
+  // Map this to a column major, lower triangular matrix.
   Eigen::MappedSparseMatrix<double, Eigen::ColMajor> eigen_lhs(
       crsm.num_rows(),
       crsm.num_rows(),
@@ -480,15 +475,17 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
       crsm.mutable_rows(),
       crsm.mutable_cols(),
       crsm.mutable_values());
-
-  typedef Eigen::SimplicialLDLT<
-    Eigen::SparseMatrix<double, Eigen::ColMajor>,
-    Eigen::Lower> SimplicialLDLT;
+  event_logger.AddEvent("ToCompressedRowSparseMatrix");
 
   // Compute symbolic factorization if one does not exist.
   if (simplicial_ldlt_.get() == NULL) {
     simplicial_ldlt_.reset(new SimplicialLDLT);
-    simplicial_ldlt_->analyzePattern(eigen_lhs.selfadjointView<Eigen::Lower>());
+    // This ordering is quite bad. The scalar ordering produced by the
+    // AMD algorithm is quite bad and can be an order of magnitude
+    // worse than the one computed using the block version of the
+    // algorithm.
+    simplicial_ldlt_->analyzePattern(eigen_lhs);
+    event_logger.AddEvent("Analysis");
     if (simplicial_ldlt_->info() != Eigen::Success) {
       summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
       summary.message =
@@ -497,7 +494,8 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
     }
   }
 
-  simplicial_ldlt_->factorize(eigen_lhs.selfadjointView<Eigen::Lower>());
+  simplicial_ldlt_->factorize(eigen_lhs);
+  event_logger.AddEvent("Factorize");
   if (simplicial_ldlt_->info() != Eigen::Success) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "Eigen failure. Unable to find numeric factoriztion.";
@@ -506,7 +504,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
 
   VectorRef(solution, num_rows) =
       simplicial_ldlt_->solve(ConstVectorRef(rhs(), num_rows));
-
+  event_logger.AddEvent("Solve");
   if (simplicial_ldlt_->info() != Eigen::Success) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "Eigen failure. Unable to do triangular solve.";
