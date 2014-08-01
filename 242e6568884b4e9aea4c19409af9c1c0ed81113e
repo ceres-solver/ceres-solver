@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_223d2eaa",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "so I had it like this, but it made the documentation extremely odd to read.\nalso notice this is the same as SUITE_SPARSE and CX_SPARSE though the _ should probably be removed.",
+      "parentUuid": "968387c4_e2b74610",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_82c99a92",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "LGPL",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_4242b225",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_82c99a92",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_a2505eeb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_22ce8e99",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_02b58a07",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "the MPL",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_0254aade",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_02b58a07",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_c24d6250",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_a2c13e66",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_c2bec2e9",
         "filename": "CMakeLists.txt",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "the LGPL",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_62e816ca",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_c2bec2e9",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_82ed1adb",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_82b2fa1a",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_62ad76b9",
         "filename": "include/ceres/types.h",
         "patchSetId": 14
@@ -132,6 +258,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "I think you can remove the TODO.",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_22f20ebc",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_62ad76b9",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_42f712ab",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_42acf2ba",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_22a76edb",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 14
@@ -166,6 +328,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "why is this up top? schur_complement_solver.h should be up top here.",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_e2dbc636",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "well during the refactor I was using various ifdefs, and they require that you have this at the top, as this brings in config.h",
+      "parentUuid": "968387c4_22a76edb",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_a2e5beee",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "this is what the google mode in emacs says.",
+      "parentUuid": "968387c4_029eea87",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_a29a9e90",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 14
@@ -200,6 +398,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "Comment above, symbolic factorize",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_82167a23",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_a29a9e90",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_220beef9",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_621a5662",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_c297a269",
         "filename": "internal/ceres/schur_complement_solver.cc",
         "patchSetId": 14
@@ -234,6 +468,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "space after if",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_42107225",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_c297a269",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_02026ada",
+        "filename": "internal/ceres/schur_complement_solver.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "so that CERES_USE_EIGEN_SPARSE is available below.",
+      "parentUuid": "968387c4_821f5a4f",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_22244e9c",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 14
@@ -268,6 +538,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "This is perhaps misleading; should a ; because, ... be added? or the . dropped and replaced with \u0027because\u0027?",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_a2fe1e79",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_22244e9c",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "968387c4_c2fb2288",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_42295271",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "968387c4_a237fece",
         "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
         "patchSetId": 14
@@ -302,6 +608,24 @@
       "writtenOn": "2014-08-01T04:32:47Z",
       "side": 1,
       "message": "Message is inconsistent with other messages in this CL; please make them all the same.",
+      "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "968387c4_62bed6c2",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-01T04:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968387c4_a237fece",
       "revId": "242e6568884b4e9aea4c19409af9c1c0ed81113e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
