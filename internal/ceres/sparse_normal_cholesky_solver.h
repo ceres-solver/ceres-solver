@@ -93,9 +93,9 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
   cs_dis* cxsparse_factor_;
 
 #ifdef CERES_USE_EIGEN_SPARSE
-  scoped_ptr<Eigen::SimplicialLDLT<
-               Eigen::SparseMatrix<double, Eigen::ColMajor>,
-               Eigen::Upper> > simplicial_ldlt_;
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                Eigen::Upper> SimplicialLDLT;
+  scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
 #endif
 
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;

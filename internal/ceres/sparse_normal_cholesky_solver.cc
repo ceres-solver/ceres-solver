@@ -170,12 +170,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   // outer_product_ is a compressed row sparse matrix and in lower
   // triangular form, when mapped to a compressed column sparse
   // matrix, it becomes an upper triangular matrix.
-  //
-  // TODO(sameeragarwal): It is not clear to me if an upper triangular
-  // column major matrix is the way to go here, or if a lower
-  // triangular matrix is better. This will require some testing. If
-  // it turns out that the lower triangular is better, then the logic
-  // used to compute the outer product needs to be updated.
   Eigen::MappedSparseMatrix<double, Eigen::ColMajor> AtA(
       outer_product_->num_rows(),
       outer_product_->num_rows(),
@@ -186,14 +180,12 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
 
   const Vector b = VectorRef(rhs_and_solution, outer_product_->num_rows());
   if (simplicial_ldlt_.get() == NULL || options_.dynamic_sparsity) {
-    typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double, Eigen::ColMajor>,
-                                  Eigen::Upper> SimplicialLDLT;
     simplicial_ldlt_.reset(new SimplicialLDLT);
     // This is a crappy way to be doing this. But right now Eigen does
     // not expose a way to do symbolic analysis with a given
     // permutation pattern, so we cannot use a block analysis of the
     // Jacobian.
-    simplicial_ldlt_->analyzePattern(AtA.selfadjointView<Eigen::Upper>());
+    simplicial_ldlt_->analyzePattern(AtA);
     if (simplicial_ldlt_->info() != Eigen::Success) {
       summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
       summary.message =
@@ -203,7 +195,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   }
   event_logger.AddEvent("Analysis");
 
-  simplicial_ldlt_->factorize(AtA.selfadjointView<Eigen::Upper>());
+  simplicial_ldlt_->factorize(AtA);
   if(simplicial_ldlt_->info() != Eigen::Success) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message =
