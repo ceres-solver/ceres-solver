@@ -111,7 +111,7 @@ OPTION(EIGENSPARSE
   "Enable the use of Eigen as a sparse linear algebra library for
    solving the nonlinear least squares problems. Enabling this
    option will result in an LGPL licensed version of Ceres Solver
-   as the simplicial Cholesky in Eigen is licensed under LGPL.
+   as the Simplicial Cholesky factorization in Eigen is licensed under LGPL.
    This does not affect the covariance estimation algorithm, as it
    depends on the sparse QR factorization algorithm, which is licensed
    under the MPL."
@@ -249,8 +249,8 @@ IF (EIGEN_FOUND)
     MESSAGE("   Enabling the use of Eigen as a sparse linear algebra library ")
     MESSAGE("   for solving the nonlinear least squares problems. Enabling ")
     MESSAGE("   this option will result in an LGPL licensed version of ")
-    MESSAGE("   Ceres Solver as the simplicial Cholesky in Eigen is licensed ")
-    MESSAGE("   under the LGPL. ")
+    MESSAGE("   Ceres Solver as the Simplicial Cholesky factorization in Eigen")
+    MESSAGE("   is licensed under the LGPL. ")
   ELSE (EIGENSPARSE)
     MESSAGE("   Disabling the use of Eigen as a sparse linear algebra library.")
     MESSAGE("   This does not affect the covariance estimation algorithm ")
