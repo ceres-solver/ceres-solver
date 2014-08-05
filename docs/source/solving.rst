@@ -1158,7 +1158,7 @@ elimination group [LiSaad]_.
 
    Type of linear solver used to compute the solution to the linear
    least squares problem in each iteration of the Levenberg-Marquardt
-   algorithm. If Ceres is build with support for ``SuiteSparse`` or
+   algorithm. If Ceres is built with support for ``SuiteSparse`` or
    ``CXSparse`` or ``Eigen``'s sparse Cholesky factorization, the
    default is ``SPARSE_NORMAL_CHOLESKY``, it is ``DENSE_QR``
    otherwise.

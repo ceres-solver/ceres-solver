@@ -132,9 +132,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
   summary.message =
-      "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE"
-      "because Ceres was not built with support for"
-      "Eigen's SimplicialLDLT decomposition."
+      "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
+      "because Ceres was not built with support for "
+      "Eigen's SimplicialLDLT decomposition. "
       "This requires enabling building with -DEIGENSPARSE=ON.";
   return summary;
 
@@ -229,8 +229,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
   summary.message =
-      "SPARSE_NORMAL_CHOLESKY cannot be used with CX_SPARSE"
-      "because Ceres was not built with support for CXSparse."
+      "SPARSE_NORMAL_CHOLESKY cannot be used with CX_SPARSE "
+      "because Ceres was not built with support for CXSparse. "
       "This requires enabling building with -DCXSPARSE=ON.";
 
   return summary;
@@ -311,8 +311,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
   summary.message =
-      "SPARSE_NORMAL_CHOLESKY cannot be used with SUITE_SPARSE"
-      "because Ceres was not built with support for SuiteSparse."
+      "SPARSE_NORMAL_CHOLESKY cannot be used with SUITE_SPARSE "
+      "because Ceres was not built with support for SuiteSparse. "
       "This requires enabling building with -DSUITESPARSE=ON.";
   return summary;
 

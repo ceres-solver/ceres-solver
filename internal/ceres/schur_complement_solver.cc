@@ -276,7 +276,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingSuiteSparse(
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-  summary.message = "Ceres was not built with SuiteSparse support."
+  summary.message = "Ceres was not built with SuiteSparse support. "
       "Therefore, SPARSE_SCHUR cannot be used with SUITE_SPARSE";
   return summary;
 
@@ -383,7 +383,7 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingCXSparse(
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-  summary.message = "Ceres was not built with CXSparse support."
+  summary.message = "Ceres was not built with CXSparse support. "
       "Therefore, SPARSE_SCHUR cannot be used with CX_SPARSE";
   return summary;
 
@@ -440,9 +440,9 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
   summary.message =
-      "SPARSE_SCHUR cannot be used with EIGEN_SPARSE."
-      "Ceres was not built with support for"
-      "Eigen's SimplicialLDLT decomposition."
+      "SPARSE_SCHUR cannot be used with EIGEN_SPARSE. "
+      "Ceres was not built with support for "
+      "Eigen's SimplicialLDLT decomposition. "
       "This requires enabling building with -DEIGENSPARSE=ON.";
   return summary;
 
