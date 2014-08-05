@@ -131,7 +131,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   LinearSolver::Summary summary;
   summary.num_iterations = 0;
   summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-   summary.message =
+  summary.message =
       "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE"
       "because Ceres was not built with support for"
       "Eigen's SimplicialLDLT decomposition."
