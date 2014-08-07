@@ -34,6 +34,278 @@
       "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_d8bc81a3",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "It\u0027s not totally obvious why this is needed; perhaps add a comment?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_b8e37daa",
+        "filename": "internal/ceres/line_search_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "blank after",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_7813d5f3",
+        "filename": "internal/ceres/line_search_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we generally put ifs on the same lines like this; do we?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_5818910c",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "These two ifs should get combined; not sure why they are split.",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_980959bf",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "There is a bunch of stuff in this block; perhaps a comment above?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_184ba9ea",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "Needs comment above",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_58553185",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "Description",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_d803e19a",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "indent 1 space",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_b859bdc1",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "What does this do?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_382f8d14",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "Perhaps add a comment above \"Select the right preprocessor\"",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_9856798f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "comment above block",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_f8634567",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "It\u0027s not clear what preprocessor_status is; perhaps this should be preprocessor_suceeded?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_18344967",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "Perhaps a \"Everything looks great; actually run the minimization\" comment?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_7829150b",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "2014",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_582ed114",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "I think we usually don\u0027t have the statements on the same line",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_983f993f",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:35:51Z",
+      "side": 1,
+      "message": "Not on one line (and below?)",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
