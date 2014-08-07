@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360c9b77_38a2ed83",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:09:02Z",
+      "side": 1,
+      "message": "Is there a reason to change this? Why not leave the original name and add a new one?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
