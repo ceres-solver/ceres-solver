@@ -67,8 +67,8 @@ namespace internal {
 void SolverImpl::TrustRegionMinimize(
     const Solver::Options& options,
     Program* program,
-    CoordinateDescentMinimizer* inner_iteration_minimizer,
-    Evaluator* evaluator,
+    shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer,
+    shared_ptr<Evaluator> evaluator,
     LinearSolver* linear_solver,
     Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
@@ -98,9 +98,7 @@ void SolverImpl::TrustRegionMinimize(
   }
 
   minimizer_options.evaluator = evaluator;
-  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
-
-  minimizer_options.jacobian = jacobian.get();
+  minimizer_options.jacobian.reset(evaluator->CreateJacobian());
   minimizer_options.inner_iteration_minimizer = inner_iteration_minimizer;
 
   TrustRegionStrategy::Options trust_region_strategy_options;
@@ -113,9 +111,7 @@ void SolverImpl::TrustRegionMinimize(
   trust_region_strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
   trust_region_strategy_options.dogleg_type = options.dogleg_type;
-  scoped_ptr<TrustRegionStrategy> strategy(
-      TrustRegionStrategy::Create(trust_region_strategy_options));
-  minimizer_options.trust_region_strategy = strategy.get();
+  minimizer_options.trust_region_strategy.reset(TrustRegionStrategy::Create(trust_region_strategy_options));
 
   TrustRegionMinimizer minimizer;
   double minimizer_start_time = WallTimeInSeconds();
@@ -137,7 +133,7 @@ void SolverImpl::TrustRegionMinimize(
 void SolverImpl::LineSearchMinimize(
     const Solver::Options& options,
     Program* program,
-    Evaluator* evaluator,
+    shared_ptr<Evaluator> evaluator,
     Solver::Summary* summary) {
   Minimizer::Options minimizer_options(options);
 
@@ -364,18 +360,18 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   summary->trust_region_strategy_type = options.trust_region_strategy_type;
   summary->dogleg_type = options.dogleg_type;
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+  shared_ptr<Evaluator> evaluator(CreateEvaluator(options,
                                                   problem_impl->parameter_map(),
                                                   reduced_program.get(),
                                                   &summary->message));
 
   event_logger.AddEvent("CreateEvaluator");
 
-  if (evaluator == NULL) {
+  if (evaluator.get() == NULL) {
     return;
   }
 
-  scoped_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
+  shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
   if (options.use_inner_iterations) {
     if (reduced_program->parameter_blocks().size() < 2) {
       LOG(WARNING) << "Reduced problem only contains one parameter block."
@@ -386,7 +382,7 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
                                         *reduced_program,
                                         problem_impl->parameter_map(),
                                         summary));
-      if (inner_iteration_minimizer == NULL) {
+      if (inner_iteration_minimizer.get() == NULL) {
         LOG(ERROR) << summary->message;
         return;
       }
@@ -401,8 +397,8 @@ void SolverImpl::TrustRegionSolve(const Solver::Options& original_options,
   // Run the optimization.
   TrustRegionMinimize(options,
                       reduced_program.get(),
-                      inner_iteration_minimizer.get(),
-                      evaluator.get(),
+                      inner_iteration_minimizer,
+                      evaluator,
                       linear_solver.get(),
                       summary);
   event_logger.AddEvent("Minimize");
@@ -561,11 +557,11 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
     return;
   }
 
-  scoped_ptr<Evaluator> evaluator(CreateEvaluator(options,
+  shared_ptr<Evaluator> evaluator(CreateEvaluator(options,
                                                   problem_impl->parameter_map(),
                                                   reduced_program.get(),
                                                   &summary->message));
-  if (evaluator == NULL) {
+  if (evaluator.get() == NULL) {
     return;
   }
 
@@ -574,7 +570,7 @@ void SolverImpl::LineSearchSolve(const Solver::Options& original_options,
       minimizer_start_time - solver_start_time;
 
   // Run the optimization.
-  LineSearchMinimize(options, reduced_program.get(), evaluator.get(), summary);
+  LineSearchMinimize(options, reduced_program.get(), evaluator, summary);
 
   const double post_process_start_time = WallTimeInSeconds();
 

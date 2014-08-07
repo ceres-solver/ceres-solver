@@ -64,8 +64,8 @@ class SolverImpl {
   static void TrustRegionMinimize(
       const Solver::Options &options,
       Program* program,
-      CoordinateDescentMinimizer* inner_iteration_minimizer,
-      Evaluator* evaluator,
+      shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer,
+      shared_ptr<Evaluator> evaluator,
       LinearSolver* linear_solver,
       Solver::Summary* summary);
 
@@ -76,7 +76,7 @@ class SolverImpl {
   // Run the LineSearchMinimizer for the given evaluator and configuration.
   static void LineSearchMinimize(const Solver::Options &options,
                                  Program* program,
-                                 Evaluator* evaluator,
+                                 shared_ptr<Evaluator> evaluator,
                                  Solver::Summary* summary);
 
   // Create the transformed Program, which has all the fixed blocks
