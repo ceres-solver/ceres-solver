@@ -87,6 +87,7 @@ SET(CERES_INTERNAL_SRC
     problem.cc
     problem_impl.cc
     program.cc
+    preprocessor.cc
     reorder_program.cc
     residual_block.cc
     residual_block_utils.cc
@@ -104,6 +105,7 @@ SET(CERES_INTERNAL_SRC
     suitesparse.cc
     summary_utils.cc
     triplet_sparse_matrix.cc
+    trust_region_preprocessor.cc
     trust_region_minimizer.cc
     trust_region_strategy.cc
     types.cc
