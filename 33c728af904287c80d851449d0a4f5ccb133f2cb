@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "360c9b77_0433442c",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-07T19:29:55Z",
+      "side": 1,
+      "message": "because the minimizer options struct has a shared ptr in it, I cannot initialize it with a raw pointer and have it delete these pointers which are owned here.\n\nthis will become simpler with the preprocessedproblem object.",
+      "parentUuid": "360c9b77_e481e074",
+      "revId": "33c728af904287c80d851449d0a4f5ccb133f2cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360c9b77_24612816",
         "filename": "internal/ceres/solver_impl.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-07T19:25:40Z",
       "side": 1,
       "message": "Why not just pass a pointer to the evaluator?",
+      "revId": "33c728af904287c80d851449d0a4f5ccb133f2cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_e42f20ba",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-07T19:29:55Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "360c9b77_24612816",
       "revId": "33c728af904287c80d851449d0a4f5ccb133f2cb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
