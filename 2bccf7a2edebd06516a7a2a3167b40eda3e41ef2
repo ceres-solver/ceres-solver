@@ -190,6 +190,40 @@
     },
     {
       "key": {
+        "uuid": "360c9b77_3894adf4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:38:54Z",
+      "side": 1,
+      "message": "PreSolveSummarize?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_1899e92a",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:38:54Z",
+      "side": 1,
+      "message": "PostSolveSummarize?",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360c9b77_382f8d14",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 8
@@ -201,6 +235,23 @@
       "writtenOn": "2014-08-07T06:35:51Z",
       "side": 1,
       "message": "Perhaps add a comment above \"Select the right preprocessor\"",
+      "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_58a37154",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T06:38:54Z",
+      "side": 1,
+      "message": "I think both the preprocessor and minimizer should have static factories to do this; it seems odd to expose the enums here.",
       "revId": "2bccf7a2edebd06516a7a2a3167b40eda3e41ef2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
