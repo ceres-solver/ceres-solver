@@ -313,6 +313,15 @@ bool ReorderProgramForSchurTypeLinearSolver(
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     string* error) {
+  if (parameter_block_ordering->NumElements() != program->NumParameterBlocks()) {
+    *error = StringPrintf(
+        "The program has %d parameter blocks, but the parameter block "
+        "ordering has %d parameter blocks.",
+        program->NumParameterBlocks(),
+        parameter_block_ordering->NumElements());
+    return false;
+  }
+
   if (parameter_block_ordering->NumGroups() == 1) {
     // If the user supplied an parameter_block_ordering with just one
     // group, it is equivalent to the user supplying NULL as an
@@ -339,6 +348,19 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // simpler.
     swap(*program->mutable_parameter_blocks(), schur_ordering);
   } else {
+    const set<double*>& first_elimination_group =
+        parameter_block_ordering
+        ->group_to_elements()
+        .begin()
+        ->second;
+    if (!program->IsParameterBlockSetIndependent(first_elimination_group)) {
+      *error =
+          StringPrintf("The first elimination group in the parameter block "
+                       "ordering of size %zd is not an independent set",
+                       first_elimination_group.size());
+      return false;
+    }
+
     // The user provided an ordering with more than one elimination
     // group. Trust the user and apply the ordering.
     if (!ApplyOrdering(parameter_map,
