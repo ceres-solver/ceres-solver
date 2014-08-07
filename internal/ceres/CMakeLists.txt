@@ -87,6 +87,7 @@ SET(CERES_INTERNAL_SRC
     problem.cc
     problem_impl.cc
     program.cc
+    preprocessor.cc
     reorder_program.cc
     residual_block.cc
     residual_block_utils.cc
@@ -104,6 +105,7 @@ SET(CERES_INTERNAL_SRC
     suitesparse.cc
     summary_utils.cc
     triplet_sparse_matrix.cc
+    trust_region_preprocessor.cc
     trust_region_minimizer.cc
     trust_region_strategy.cc
     types.cc
@@ -289,6 +291,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(symmetric_linear_solver)
   CERES_TEST(triplet_sparse_matrix)
   CERES_TEST(trust_region_minimizer)
+  CERES_TEST(trust_region_preprocessor)
   CERES_TEST(unsymmetric_linear_solver)
   CERES_TEST(visibility)
   CERES_TEST(visibility_based_preconditioner)
