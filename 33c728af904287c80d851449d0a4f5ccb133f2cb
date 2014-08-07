@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360c9b77_e481e074",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T19:25:40Z",
+      "side": 1,
+      "message": "Why do these need to be passed as shared pointers here? Is it not good enough to pass the pointer?",
+      "revId": "33c728af904287c80d851449d0a4f5ccb133f2cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360c9b77_24612816",
+        "filename": "internal/ceres/solver_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-07T19:25:40Z",
+      "side": 1,
+      "message": "Why not just pass a pointer to the evaluator?",
+      "revId": "33c728af904287c80d851449d0a4f5ccb133f2cb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
