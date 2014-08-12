@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d0433d_21d26972",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-12T16:18:05Z",
+      "side": 1,
+      "message": "ifs should get combined",
+      "revId": "d3376490943e3c28082804e42edaffa0c34ad469",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6d0433d_e1db5189",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-12T16:18:05Z",
+      "side": 1,
+      "message": "Cruft",
+      "revId": "d3376490943e3c28082804e42edaffa0c34ad469",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
