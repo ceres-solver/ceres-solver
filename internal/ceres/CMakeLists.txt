@@ -72,6 +72,7 @@ SET(CERES_INTERNAL_SRC
     line_search.cc
     line_search_direction.cc
     line_search_minimizer.cc
+    line_search_preprocessor.cc
     linear_least_squares_problems.cc
     linear_operator.cc
     linear_solver.cc
@@ -258,6 +259,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(jet)
   CERES_TEST(levenberg_marquardt_strategy)
   CERES_TEST(dogleg_strategy)
+  CERES_TEST(line_search_preprocessor)
   CERES_TEST(local_parameterization)
   CERES_TEST(loss_function)
   CERES_TEST(minimizer)
