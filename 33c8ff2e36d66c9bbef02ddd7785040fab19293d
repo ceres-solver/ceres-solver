@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64deb11_10c31244",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "Comment above this block; what is this doing?",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_d0ccca70",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "remove the amongst other things; unnecessary",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_70d2960f",
+        "filename": "internal/ceres/preprocessor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "instead of () use \"such as\"",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_50b2fae7",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "Are we guaranteed at this point that the ordering has at least one group?",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_b0957e30",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "remove comma",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_3063ae93",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:46:34Z",
+      "side": 1,
+      "message": "Do we set error / message in this case?",
+      "revId": "33c8ff2e36d66c9bbef02ddd7785040fab19293d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
