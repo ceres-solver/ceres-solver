@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64deb11_70e4d6b2",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:57:00Z",
+      "side": 1,
+      "message": "The comma in this case was ok, but below there is no \"For\"; hence the suggestion to remove the comma. I\u0027d put it back in this case.",
+      "revId": "924a52be1ff5d2ffe476a2264395df57d99656ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b64deb11_d0fe0a45",
+        "filename": "internal/ceres/trust_region_preprocessor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T04:57:00Z",
+      "side": 1,
+      "message": "Not seeing the comma removal; maybe you accidentally applied it above?",
+      "revId": "924a52be1ff5d2ffe476a2264395df57d99656ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
