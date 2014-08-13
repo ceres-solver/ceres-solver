@@ -30,6 +30,7 @@
 
 #include "ceres/callbacks.h"
 #include "ceres/gradient_checking_cost_function.h"
+#include "ceres/line_search_preprocessor.h"
 #include "ceres/preprocessor.h"
 #include "ceres/problem_impl.h"
 #include "ceres/solver.h"
@@ -43,8 +44,9 @@ Preprocessor* Preprocessor::Create(MinimizerType minimizer_type) {
     return new TrustRegionPreprocessor;
   }
 
-  // TODO(sameeragarwal): Add the LineSearchPreprocessor when it is
-  // ready.
+  if (minimizer_type == LINE_SEARCH) {
+    return new LineSearchPreprocessor;
+  }
 
   LOG(FATAL) << "Unknown minimizer_type: " << minimizer_type;
   return NULL;
