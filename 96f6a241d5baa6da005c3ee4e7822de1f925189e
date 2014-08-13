@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64deb11_10ef9262",
+        "filename": "internal/ceres/line_search_preprocessor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-13T05:55:37Z",
+      "side": 1,
+      "message": "Too many spaces after \u003d",
+      "revId": "96f6a241d5baa6da005c3ee4e7822de1f925189e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
