@@ -76,7 +76,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
-  // Crashes if CERES_USE_LGPGL_CODE is not defined.
+  // Crashes if CERES_USE_EIGEN_SPARSE is not defined.
   LinearSolver::Summary SolveImplUsingEigen(
       CompressedRowSparseMatrix* A,
       const LinearSolver::PerSolveOptions& options,
@@ -94,8 +94,10 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
 #ifdef CERES_USE_EIGEN_SPARSE
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper> SimplicialLDLT;
+                                Eigen::Upper,
+                                Eigen::NaturalOrdering<int> > SimplicialLDLT;
   scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
+
 #endif
 
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;

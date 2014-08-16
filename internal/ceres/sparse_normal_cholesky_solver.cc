@@ -51,6 +51,40 @@
 
 namespace ceres {
 namespace internal {
+namespace {
+
+template <typename SimplicialCholeskySolver>
+void FactorizeAndSolve(Eigen::MappedSparseMatrix<double, Eigen::ColMajor>& lhs,
+                       const Vector& rhs,
+                       bool analyze_pattern,
+                       SimplicialCholeskySolver* solver,
+                       double* solution,
+                       LinearSolver::Summary* summary) {
+  if (analyze_pattern) {
+    solver->analyzePattern(lhs);
+    if (solver->info() != Eigen::Success) {
+      summary->termination_type = LINEAR_SOLVER_FATAL_ERROR;
+      summary->message = "Eigen failure. Unable to find symbolic factorization.";
+      return;
+    }
+  }
+
+  solver->factorize(lhs);
+  if(solver->info() != Eigen::Success) {
+    summary->termination_type = LINEAR_SOLVER_FAILURE;
+    summary->message = "Eigen failure. Unable to find numeric factorization.";
+    return;
+  }
+
+  VectorRef(solution, lhs.cols()) = solver->solve(rhs);
+  if(solver->info() != Eigen::Success) {
+    summary->termination_type = LINEAR_SOLVER_FAILURE;
+    summary->message = "Eigen failure. Unable to do triangular solve.";
+    return;
+  }
+}
+
+}  // namespace
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
@@ -179,37 +213,32 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
       outer_product_->mutable_values());
 
   const Vector b = VectorRef(rhs_and_solution, outer_product_->num_rows());
-  if (simplicial_ldlt_.get() == NULL || options_.dynamic_sparsity) {
+
+  if (options_.dynamic_sparsity) {
+    // Dynamic sparsity means that we cannot depend on a static
+    // analysis of sparsity structure of the jacobian, so we compute a
+    // new symbolic factorization every time.
+    Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                          Eigen::Upper,
+                          Eigen::AMDOrdering<int> > simplicial_ldlt;
+    FactorizeAndSolve(AtA, b,
+                      true,
+                      &simplicial_ldlt,
+                      rhs_and_solution,
+                      &summary);
+  } else if (simplicial_ldlt_.get() == NULL) {
     simplicial_ldlt_.reset(new SimplicialLDLT);
-    // This is a crappy way to be doing this. But right now Eigen does
-    // not expose a way to do symbolic analysis with a given
-    // permutation pattern, so we cannot use a block analysis of the
-    // Jacobian.
-    simplicial_ldlt_->analyzePattern(AtA);
-    if (simplicial_ldlt_->info() != Eigen::Success) {
-      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-      summary.message =
-          "Eigen failure. Unable to find symbolic factorization.";
-      return summary;
-    }
-  }
-  event_logger.AddEvent("Analysis");
-
-  simplicial_ldlt_->factorize(AtA);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to find numeric factorization.";
-    return summary;
-  }
-
-  VectorRef(rhs_and_solution, outer_product_->num_rows()) =
-      simplicial_ldlt_->solve(b);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to do triangular solve.";
-    return summary;
+    FactorizeAndSolve(AtA, b,
+                      true,
+                      simplicial_ldlt_.get(),
+                      rhs_and_solution,
+                      &summary);
+  } else {
+    FactorizeAndSolve(AtA, b,
+                      false,
+                      simplicial_ldlt_.get(),
+                      rhs_and_solution,
+                      &summary);
   }
 
   event_logger.AddEvent("Solve");

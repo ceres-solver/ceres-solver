@@ -47,6 +47,12 @@
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+
+#ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/SparseCore"
+#include "Eigen/OrderingMethods"
+#endif
+
 #include "glog/logging.h"
 
 namespace ceres {
@@ -71,6 +77,40 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   }
   return min_parameter_block_position;
 }
+
+void OrderingForSparseNormalCholeskyUsingEigenSparse(
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
+#ifndef CERES_USE_EIGEN_SPARSE
+  LOG(FATAL) << "This function should never be called.";
+#else
+  const int* rows = tsm_block_jacobian_transpose.rows();
+  const int* cols = tsm_block_jacobian_transpose.cols();
+
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  typedef Eigen::Triplet<int> Triplet;
+  std::vector<Triplet> triplets;
+  int num_nonzeros = tsm_block_jacobian_transpose.num_nonzeros();
+  triplets.reserve(num_nonzeros);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    triplets.push_back(Triplet(rows[i], cols[i], 1));
+  }
+
+  SparseMatrix j_transpose(tsm_block_jacobian_transpose.num_rows(),
+                           tsm_block_jacobian_transpose.num_cols());
+  j_transpose.setFromTriplets(triplets.begin(), triplets.end());
+  SparseMatrix jtj = j_transpose * j_transpose.transpose();
+  Eigen::AMDOrdering<int> amd_ordering;
+  Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
+  amd_ordering(jtj, perm);
+  for (int i = 0; i < tsm_block_jacobian_transpose.num_rows(); ++i) {
+    ordering[i] = perm.indices()[i];
+  }
+#endif  // CERES_USE_EIGEN_SPARSE
+}
+
+
+}  // namespace
 
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
@@ -132,8 +172,6 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
   cxsparse.Free(block_hessian);
 #endif  // CERES_NO_CXSPARSE
 }
-
-}  // namespace
 
 bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
                    const ParameterBlockOrdering& ordering,
@@ -408,6 +446,7 @@ bool ReorderProgramForSparseNormalCholesky(
     return false;
   }
 
+#ifndef CERES_SIMPLICIAL_CHOLESKY_HAS_NATURAL_ORDERING
   // For Eigen, there is nothing to do. This is because Eigen in its
   // current stable version does not expose a method for doing
   // symbolic analysis on pre-ordered matrices, so a block
@@ -421,6 +460,7 @@ bool ReorderProgramForSparseNormalCholesky(
     program->SetParameterOffsetsAndIndex();
     return true;
   }
+#endif
 
   // Set the offsets and index for CreateJacobianSparsityTranspose.
   program->SetParameterOffsetsAndIndex();
@@ -442,6 +482,12 @@ bool ReorderProgramForSparseNormalCholesky(
     OrderingForSparseNormalCholeskyUsingCXSparse(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
+  } else if(sparse_linear_algebra_library_type == EIGEN_SPARSE){
+#ifdef CERES_SIMPLICIAL_CHOLESKY_HAS_NATURAL_ORDERING
+    OrderingForSparseNormalCholeskyUsingEigenSparse(
+        *tsm_block_jacobian_transpose,
+        &ordering[0]);
+#endif
   }
 
   // Apply ordering.

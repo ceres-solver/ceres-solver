@@ -251,6 +251,17 @@ IF (EIGEN_FOUND)
     MESSAGE("   this option will result in an LGPL licensed version of ")
     MESSAGE("   Ceres Solver as the Simplicial Cholesky factorization in Eigen")
     MESSAGE("   is licensed under the LGPL. ")
+
+    IF (EIGEN_VERSION VERSION_LESS 3.2.2)
+      MESSAGE("   Eigen is older than version 3.2.2. The performance of ")
+      MESSAGE("   SPARSE_NORMAL_CHOLESKY and SPARSE_SCHUR will suffer. ")
+      MESSAGE("   Consider upgrading your version of the Eigen library.")
+    ELSE (EIGEN_VERSION VERSION_LESS 3.2.2)
+      LIST(APPEND
+           CERES_COMPILE_OPTIONS
+	   CERES_SIMPLICIAL_CHOLESKY_HAS_NATURAL_ORDERING)
+    ENDIF (EIGEN_VERSION VERSION_LESS 3.2.2)
+
   ELSE (EIGENSPARSE)
     MESSAGE("   Disabling the use of Eigen as a sparse linear algebra library.")
     MESSAGE("   This does not affect the covariance estimation algorithm ")
