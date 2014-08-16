@@ -44,6 +44,8 @@
 // If defined, use the LGPL code in Eigen.
 @CERES_USE_EIGEN_SPARSE@
 
+@CERES_SIMPLICIAL_CHOLESKY_HAS_NATURAL_ORDERING@
+
 // If defined, Ceres was compiled without LAPACK.
 @CERES_NO_LAPACK@
 
