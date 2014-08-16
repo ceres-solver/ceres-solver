@@ -41,24 +41,31 @@
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
-#include "ceres/program.h"
 #include "ceres/residual_block.h"
 #include "ceres/solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "ceres/wall_time.h"
+#include "Eigen/SparseCore"
+
+#ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/OrderingMethods"
+#endif
+
 #include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
 namespace {
 
-// Find the minimum index of any parameter block to the given residual.
-// Parameter blocks that have indices greater than num_eliminate_blocks are
-// considered to have an index equal to num_eliminate_blocks.
+// Find the minimum index of any parameter block to the given
+// residual.  Parameter blocks that have indices greater than
+// size_of_first_elimination_group are considered to have an index
+// equal to size_of_first_elimination_group.
 static int MinParameterBlock(const ResidualBlock* residual_block,
-                             int num_eliminate_blocks) {
-  int min_parameter_block_position = num_eliminate_blocks;
+                             int size_of_first_elimination_group) {
+  int min_parameter_block_position = size_of_first_elimination_group;
   for (int i = 0; i < residual_block->NumParameterBlocks(); ++i) {
     ParameterBlock* parameter_block = residual_block->parameter_blocks()[i];
     if (!parameter_block->IsConstant()) {
@@ -70,6 +77,44 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
     }
   }
   return min_parameter_block_position;
+}
+
+void OrderingForSparseNormalCholeskyUsingEigenSparse(
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
+#ifndef CERES_USE_EIGEN_SPARSE
+  LOG(FATAL) <<
+      "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
+      "because Ceres was not built with support for "
+      "Eigen's SimplicialLDLT decomposition. "
+      "This requires enabling building with -DEIGENSPARSE=ON.";
+#else
+  const int* rows = tsm_block_jacobian_transpose.rows();
+  const int* cols = tsm_block_jacobian_transpose.cols();
+
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  typedef Eigen::Triplet<int> Triplet;
+  std::vector<Triplet> triplets;
+  int num_nonzeros = tsm_block_jacobian_transpose.num_nonzeros();
+  triplets.reserve(num_nonzeros);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    triplets.push_back(Triplet(rows[i], cols[i], 1));
+  }
+
+  SparseMatrix block_jacobian_transpose(
+      tsm_block_jacobian_transpose.num_rows(),
+      tsm_block_jacobian_transpose.num_cols());
+  block_jacobian_transpose.setFromTriplets(triplets.begin(),
+                                           triplets.end());
+  SparseMatrix block_hessian =
+      block_jacobian_transpose * block_jacobian_transpose.transpose();
+  Eigen::AMDOrdering<int> amd_ordering;
+  Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
+  amd_ordering(block_hessian, perm);
+  for (int i = 0; i < tsm_block_jacobian_transpose.num_rows(); ++i) {
+    ordering[i] = perm.indices()[i];
+  }
+#endif  // CERES_USE_EIGEN_SPARSE
 }
 
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
@@ -178,30 +223,33 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
   return true;
 }
 
-bool LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
-                                          Program* program,
-                                          string* error) {
-  CHECK_GE(num_eliminate_blocks, 1)
+bool LexicographicallyOrderResidualBlocks(
+    const int size_of_first_elimination_group,
+    Program* program,
+    string* error) {
+  CHECK_GE(size_of_first_elimination_group, 1)
       << "Congratulations, you found a Ceres bug! Please report this error "
       << "to the developers.";
 
-  // Create a histogram of the number of residuals for each E block. There is an
-  // extra bucket at the end to catch all non-eliminated F blocks.
-  vector<int> residual_blocks_per_e_block(num_eliminate_blocks + 1);
+  // Create a histogram of the number of residuals for each E
+  // block. There is an extra bucket at the end to catch all
+  // non-eliminated F blocks.
+  vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
   vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
   vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
-    int position = MinParameterBlock(residual_block, num_eliminate_blocks);
+    int position = MinParameterBlock(residual_block,
+                                     size_of_first_elimination_group);
     min_position_per_residual[i] = position;
-    DCHECK_LE(position, num_eliminate_blocks);
+    DCHECK_LE(position, size_of_first_elimination_group);
     residual_blocks_per_e_block[position]++;
   }
 
   // Run a cumulative sum on the histogram, to obtain offsets to the start of
   // each histogram bucket (where each bucket is for the residuals for that
   // E-block).
-  vector<int> offsets(num_eliminate_blocks + 1);
+  vector<int> offsets(size_of_first_elimination_group + 1);
   std::partial_sum(residual_blocks_per_e_block.begin(),
                    residual_blocks_per_e_block.end(),
                    offsets.begin());
@@ -240,7 +288,7 @@ bool LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
 
   // Sanity check #1: The difference in bucket offsets should match the
   // histogram sizes.
-  for (int i = 0; i < num_eliminate_blocks; ++i) {
+  for (int i = 0; i < size_of_first_elimination_group; ++i) {
     CHECK_EQ(residual_blocks_per_e_block[i], offsets[i + 1] - offsets[i])
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
@@ -289,7 +337,6 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
 
-
   cholmod_sparse* block_jacobian_transpose =
       ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
 
@@ -303,6 +350,66 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   for (int i = 0; i < program->NumParameterBlocks(); ++i) {
     parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
   }
+  program->SetParameterOffsetsAndIndex();
+#endif
+}
+
+void MaybeReorderSchurComplementColumnsUsingEigen(
+    const int size_of_first_elimination_group,
+    const ProblemImpl::ParameterMap& parameter_map,
+    Program* program) {
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 2) || !defined(CERES_USE_EIGEN_SPARSE)
+  return;
+#else
+
+  // Set the offsets and index for CreateJacobianSparsityTranspose.
+  program->SetParameterOffsetsAndIndex();
+  // Compute a block sparse presentation of J'.
+  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+      program->CreateJacobianBlockSparsityTranspose());
+
+  const int* rows = tsm_block_jacobian_transpose->rows();
+  const int* cols = tsm_block_jacobian_transpose->cols();
+
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  typedef Eigen::Triplet<int> Triplet;
+  std::vector<Triplet> triplets;
+  int num_nonzeros = tsm_block_jacobian_transpose->num_nonzeros();
+  triplets.reserve(num_nonzeros);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    triplets.push_back(Triplet(cols[i], rows[i], 1));
+  }
+
+  const int num_rows = tsm_block_jacobian_transpose->num_rows();
+  const int num_cols = tsm_block_jacobian_transpose->num_cols();
+  SparseMatrix block_jacobian(num_cols, num_rows);
+  block_jacobian.setFromTriplets(triplets.begin(), triplets.end());
+
+  typedef Eigen::Block<SparseMatrix> SparseBlock;
+  const SparseMatrix E =
+      block_jacobian.block(0, 0, num_cols, size_of_first_elimination_group);
+  const SparseMatrix F =
+      block_jacobian.block(0, size_of_first_elimination_group, num_cols,
+                           num_rows - size_of_first_elimination_group);
+
+  const SparseMatrix schur_complement =
+      F.transpose() * F - F.transpose() * E * E.transpose() * F;
+
+  Eigen::AMDOrdering<int> amd_ordering;
+  Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
+  amd_ordering(schur_complement, perm);
+  vector<ParameterBlock*> ordering(num_rows);
+  for (int i = 0; i < num_rows; ++i) {
+    const int index =
+        (i < size_of_first_elimination_group)
+        ? i
+        : perm.indices()[i - size_of_first_elimination_group] +
+        size_of_first_elimination_group;
+    ordering[i] = program->parameter_blocks()[index];
+  }
+
+  swap(*program->mutable_parameter_blocks(), ordering);
+  program->SetParameterOffsetsAndIndex();
 #endif
 }
 
@@ -313,7 +420,9 @@ bool ReorderProgramForSchurTypeLinearSolver(
     ParameterBlockOrdering* parameter_block_ordering,
     Program* program,
     string* error) {
-  if (parameter_block_ordering->NumElements() != program->NumParameterBlocks()) {
+  EventLogger event_logger("ReorderProgramForSchurTypeLinearSolver");
+  if (parameter_block_ordering->NumElements() !=
+      program->NumParameterBlocks()) {
     *error = StringPrintf(
         "The program has %d parameter blocks, but the parameter block "
         "ordering has %d parameter blocks.",
@@ -322,6 +431,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
     return false;
   }
 
+  program->SetParameterOffsetsAndIndex();
   if (parameter_block_ordering->NumGroups() == 1) {
     // If the user supplied an parameter_block_ordering with just one
     // group, it is equivalent to the user supplying NULL as an
@@ -330,23 +440,24 @@ bool ReorderProgramForSchurTypeLinearSolver(
     // this means that the user wishes for Ceres to identify the
     // e_blocks, which we do by computing a maximal independent set.
     vector<ParameterBlock*> schur_ordering;
-    const int num_eliminate_blocks =
+    const int size_of_first_elimination_group =
         ComputeStableSchurOrdering(*program, &schur_ordering);
-
     CHECK_EQ(schur_ordering.size(), program->NumParameterBlocks())
         << "Congratulations, you found a Ceres bug! Please report this error "
         << "to the developers.";
+    event_logger.AddEvent("ComputeSchurOrdering");
 
     // Update the parameter_block_ordering object.
     for (int i = 0; i < schur_ordering.size(); ++i) {
       double* parameter_block = schur_ordering[i]->mutable_user_state();
-      const int group_id = (i < num_eliminate_blocks) ? 0 : 1;
+      const int group_id = (i < size_of_first_elimination_group) ? 0 : 1;
       parameter_block_ordering->AddElementToGroup(parameter_block, group_id);
     }
 
     // We could call ApplyOrdering but this is cheaper and
     // simpler.
     swap(*program->mutable_parameter_blocks(), schur_ordering);
+    event_logger.AddEvent("ApplyOrdering");
   } else {
     // The user provided an ordering with more than one elimination
     // group.
@@ -364,6 +475,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
                        first_elimination_group.size());
       return false;
     }
+    event_logger.AddEvent("CheckOrderingIsValid");
 
     if (!ApplyOrdering(parameter_map,
                        *parameter_block_ordering,
@@ -371,27 +483,38 @@ bool ReorderProgramForSchurTypeLinearSolver(
                        error)) {
       return false;
     }
-  }
-
-  if (linear_solver_type == SPARSE_SCHUR &&
-      sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    MaybeReorderSchurComplementColumnsUsingSuiteSparse(
-        *parameter_block_ordering,
-        program);
+    event_logger.AddEvent("ApplyOrdering");
   }
 
   program->SetParameterOffsetsAndIndex();
+
+  const int size_of_first_elimination_group =
+      parameter_block_ordering->group_to_elements().begin()->second.size();
+
+  if (linear_solver_type == SPARSE_SCHUR) {
+    if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+      MaybeReorderSchurComplementColumnsUsingSuiteSparse(
+          *parameter_block_ordering,
+          program);
+    } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+      MaybeReorderSchurComplementColumnsUsingEigen(
+          size_of_first_elimination_group,
+          parameter_map,
+          program);
+    }
+
+    // TODO(sameeragarwal): Add preordering for CXSparse.
+    event_logger.AddEvent("ReorderSchurComplement");
+  }
+
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
-  const int num_eliminate_blocks =
-      parameter_block_ordering->group_to_elements().begin()->second.size();
-  if (!LexicographicallyOrderResidualBlocks(num_eliminate_blocks,
+  if (!LexicographicallyOrderResidualBlocks(size_of_first_elimination_group,
                                             program,
                                             error)) {
     return false;
   }
-
-  program->SetParameterOffsetsAndIndex();
+  event_logger.AddEvent("OrderResidualBlocks");
   return true;
 }
 
@@ -400,30 +523,8 @@ bool ReorderProgramForSparseNormalCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     Program* program,
     string* error) {
-
-  if (sparse_linear_algebra_library_type != SUITE_SPARSE &&
-      sparse_linear_algebra_library_type != CX_SPARSE &&
-      sparse_linear_algebra_library_type != EIGEN_SPARSE) {
-    *error = "Unknown sparse linear algebra library.";
-    return false;
-  }
-
-  // For Eigen, there is nothing to do. This is because Eigen in its
-  // current stable version does not expose a method for doing
-  // symbolic analysis on pre-ordered matrices, so a block
-  // pre-ordering is a bit pointless.
-  //
-  // The dev version as recently as July 20, 2014 has support for
-  // pre-ordering. Once this becomes more widespread, or we add
-  // support for detecting Eigen versions, we can add support for this
-  // along the lines of CXSparse.
-  if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-    program->SetParameterOffsetsAndIndex();
-    return true;
-  }
-
-  // Set the offsets and index for CreateJacobianSparsityTranspose.
   program->SetParameterOffsetsAndIndex();
+
   // Compute a block sparse presentation of J'.
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
@@ -438,8 +539,22 @@ bool ReorderProgramForSparseNormalCholesky(
         parameter_blocks,
         parameter_block_ordering,
         &ordering[0]);
-  } else if (sparse_linear_algebra_library_type == CX_SPARSE){
+  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
     OrderingForSparseNormalCholeskyUsingCXSparse(
+        *tsm_block_jacobian_transpose,
+        &ordering[0]);
+  } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 2)
+    // For Eigen versions less than 3.2.2, there is nothing to do as
+    // older versions of Eigen do not expose a method for doing
+    // symbolic analysis on pre-ordered matrices, so a block
+    // pre-ordering is a bit pointless.
+
+    return true;
+#endif
+
+    OrderingForSparseNormalCholeskyUsingEigenSparse(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
   }

@@ -49,6 +49,7 @@
 
 #ifdef CERES_USE_EIGEN_SPARSE
 #include "Eigen/SparseCholesky"
+#include "Eigen/OrderingMethods"
 #endif
 
 namespace ceres {
@@ -189,7 +190,19 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   cs_dis* cxsparse_factor_;
 
 #ifdef CERES_USE_EIGEN_SPARSE
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double> > SimplicialLDLT;
+
+  // For Eigen versions less than 3.2.2, we cannot pre-order the
+  // Jacobian, so we must use an AMD ordering.
+#if EIGEN_VERSION_AT_LEAST(3,2,2)
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                Eigen::Lower,
+                                Eigen::NaturalOrdering<int> > SimplicialLDLT;
+#else
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                Eigen::Lower,
+                                Eigen::AMDOrdering<int> > SimplicialLDLT;
+#endif
+
   scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
 #endif
 

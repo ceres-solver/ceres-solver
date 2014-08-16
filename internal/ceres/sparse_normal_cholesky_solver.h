@@ -34,6 +34,8 @@
 #ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 #define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 
+#include <vector>
+
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
@@ -76,7 +78,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
-  // Crashes if CERES_USE_LGPGL_CODE is not defined.
+  // Crashes if CERES_USE_EIGEN_SPARSE is not defined.
   LinearSolver::Summary SolveImplUsingEigen(
       CompressedRowSparseMatrix* A,
       const LinearSolver::PerSolveOptions& options,
@@ -94,8 +96,16 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
 #ifdef CERES_USE_EIGEN_SPARSE
   typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper> SimplicialLDLT;
-  scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
+                                Eigen::Upper,
+                                Eigen::NaturalOrdering<int> >
+  SimplicialLDLTWithNaturalOrdering;
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
+                                Eigen::Upper,
+                                Eigen::AMDOrdering<int> >
+  SimplicialLDLTWithAMDOrdering;
+
+  scoped_ptr<SimplicialLDLTWithNaturalOrdering> natural_ldlt_;
+  scoped_ptr<SimplicialLDLTWithAMDOrdering> amd_ldlt_;
 #endif
 
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;
