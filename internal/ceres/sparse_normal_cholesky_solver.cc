@@ -51,6 +51,48 @@
 
 namespace ceres {
 namespace internal {
+namespace {
+
+// A templated factorized and solve function, which allows us to use
+// the same code independent of whether a AMD or a Natural ordering is
+// used.
+template <typename SimplicialCholeskySolver>
+void SimplicialLDLTSolve(
+    Eigen::MappedSparseMatrix<double, Eigen::ColMajor>& lhs,
+    const Vector& rhs,
+    bool analyze_pattern,
+    SimplicialCholeskySolver* solver,
+    double* solution,
+    EventLogger* event_logger,
+    LinearSolver::Summary* summary) {
+  if (analyze_pattern) {
+    solver->analyzePattern(lhs);
+    event_logger->AddEvent("Analyze");
+    if (solver->info() != Eigen::Success) {
+      summary->termination_type = LINEAR_SOLVER_FATAL_ERROR;
+      summary->message = "Eigen failure. Unable to find symbolic factorization.";
+      return;
+    }
+  }
+
+  solver->factorize(lhs);
+  event_logger->AddEvent("Factorize");
+  if(solver->info() != Eigen::Success) {
+    summary->termination_type = LINEAR_SOLVER_FAILURE;
+    summary->message = "Eigen failure. Unable to find numeric factorization.";
+    return;
+  }
+
+  VectorRef(solution, lhs.cols()) = solver->solve(rhs);
+  event_logger->AddEvent("Solve");
+  if(solver->info() != Eigen::Success) {
+    summary->termination_type = LINEAR_SOLVER_FAILURE;
+    summary->message = "Eigen failure. Unable to do triangular solve.";
+    return;
+  }
+}
+
+}  // namespace
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
@@ -179,40 +221,55 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
       outer_product_->mutable_values());
 
   const Vector b = VectorRef(rhs_and_solution, outer_product_->num_rows());
-  if (simplicial_ldlt_.get() == NULL || options_.dynamic_sparsity) {
-    simplicial_ldlt_.reset(new SimplicialLDLT);
-    // This is a crappy way to be doing this. But right now Eigen does
-    // not expose a way to do symbolic analysis with a given
-    // permutation pattern, so we cannot use a block analysis of the
-    // Jacobian.
-    simplicial_ldlt_->analyzePattern(AtA);
-    if (simplicial_ldlt_->info() != Eigen::Success) {
-      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-      summary.message =
-          "Eigen failure. Unable to find symbolic factorization.";
-      return summary;
+
+  // Dynamic sparsity means that we cannot depend on a static analysis
+  // of sparsity structure of the jacobian, so we compute a new
+  // symbolic factorization every time.
+  if (options_.dynamic_sparsity) {
+    amd_ldlt_.reset(NULL);
+  }
+
+  // If using post ordering or dynamic sparsity, we cannot depend on a
+  // preordered jacobian, so we work with a SimplicialLDLT
+  // decomposition with AMD ordering.
+  if (options_.use_postordering || options_.dynamic_sparsity) {
+    if (amd_ldlt_.get() == NULL) {
+      amd_ldlt_.reset(new SimplicialLDLTWithAMDOrdering);
+      SimplicialLDLTSolve(AtA, b,
+                          true,
+                          amd_ldlt_.get(),
+                          rhs_and_solution,
+                          &event_logger,
+                          &summary);
+    } else {
+      SimplicialLDLTSolve(AtA, b,
+                          false,
+                          amd_ldlt_.get(),
+                          rhs_and_solution,
+                          &event_logger,
+                          &summary);
     }
-  }
-  event_logger.AddEvent("Analysis");
-
-  simplicial_ldlt_->factorize(AtA);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to find numeric factorization.";
     return summary;
   }
 
-  VectorRef(rhs_and_solution, outer_product_->num_rows()) =
-      simplicial_ldlt_->solve(b);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to do triangular solve.";
-    return summary;
+  // The more common case.
+  if (natural_ldlt_.get() == NULL) {
+    natural_ldlt_.reset(new SimplicialLDLTWithNaturalOrdering);
+    SimplicialLDLTSolve(AtA, b,
+                        true,
+                        natural_ldlt_.get(),
+                        rhs_and_solution,
+                        &event_logger,
+                        &summary);
+  } else {
+    SimplicialLDLTSolve(AtA, b,
+                        false,
+                        natural_ldlt_.get(),
+                        rhs_and_solution,
+                        &event_logger,
+                        &summary);
   }
 
-  event_logger.AddEvent("Solve");
   return summary;
 #endif  // EIGEN_USE_EIGEN_SPARSE
 }
