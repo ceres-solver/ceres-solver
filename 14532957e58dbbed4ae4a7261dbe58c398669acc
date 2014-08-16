@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7637f3c3_29d96d3f",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-16T06:17:31Z",
+      "side": 1,
+      "message": "this is actually fixing a bug in the summary object.\nalso the only client of this, is FullReport and no one else.\nI will bet money on that.",
+      "parentUuid": "7637f3c3_694e054d",
+      "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7637f3c3_a9ec7ddd",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2014-08-16T06:10:05Z",
       "side": 1,
       "message": "Comment above block; what is this doing?",
+      "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7637f3c3_a9155d19",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-16T06:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7637f3c3_a9ec7ddd",
       "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7637f3c3_c90a91f4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-16T06:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7637f3c3_c9f1b1b8",
+      "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7637f3c3_e9411521",
         "filename": "internal/ceres/solver_test.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2014-08-16T06:04:27Z",
       "side": 1,
       "message": "Two spaces before //",
+      "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7637f3c3_e90f5501",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-16T06:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7637f3c3_e9411521",
       "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
