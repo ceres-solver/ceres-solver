@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7637f3c3_e9411521",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-16T06:04:27Z",
+      "side": 1,
+      "message": "Two spaces before //",
+      "revId": "14532957e58dbbed4ae4a7261dbe58c398669acc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
