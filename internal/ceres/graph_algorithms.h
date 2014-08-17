@@ -38,6 +38,7 @@
 #include <utility>
 #include "ceres/collections_port.h"
 #include "ceres/graph.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -171,6 +172,8 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
 template <typename Vertex>
 int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                                  vector<Vertex>* ordering) {
+  EventLogger event_logger("StableIndependentSetOrdering");
+
   CHECK_NOTNULL(ordering);
   const HashSet<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
@@ -185,6 +188,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
 
   stable_sort(vertex_queue.begin(), vertex_queue.end(),
               VertexDegreeLessThan<Vertex>(graph));
+  event_logger.AddEvent("StableSort");
 
   // Mark all vertices white.
   HashMap<Vertex, char> vertex_color;
@@ -193,6 +197,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
        ++it) {
     vertex_color[*it] = kWhite;
   }
+  event_logger.AddEvent("MarkWhite");
 
   ordering->clear();
   ordering->reserve(num_vertices);
@@ -213,6 +218,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
       vertex_color[*it] = kGrey;
     }
   }
+  event_logger.AddEvent("IndependentVertices");
 
   int independent_set_size = ordering->size();
 
@@ -228,6 +234,7 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
       ordering->push_back(vertex);
     }
   }
+  event_logger.AddEvent("DependentVertices");
 
   CHECK_EQ(ordering->size(), num_vertices);
   return independent_set_size;
@@ -270,11 +277,11 @@ Vertex FindConnectedComponent(const Vertex& vertex,
 // spanning forest, or a collection of linear paths that span the
 // graph G.
 template <typename Vertex>
-Graph<Vertex>*
-Degree2MaximumSpanningForest(const Graph<Vertex>& graph) {
+WeightedGraph<Vertex>*
+Degree2MaximumSpanningForest(const WeightedGraph<Vertex>& graph) {
   // Array of edges sorted in decreasing order of their weights.
   vector<pair<double, pair<Vertex, Vertex> > > weighted_edges;
-  Graph<Vertex>* forest = new Graph<Vertex>();
+  WeightedGraph<Vertex>* forest = new WeightedGraph<Vertex>();
 
   // Disjoint-set to keep track of the connected components in the
   // maximum spanning tree.
