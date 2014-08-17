@@ -221,5 +221,9 @@ void ImplicitSchurComplement::UpdateRhs() {
   A_->LeftMultiplyF(tmp_rows_.data(), rhs_.data());
 }
 
+string ImplicitSchurComplement::Description() const {
+  return (A_.get() == NULL) ? "" : A_->Description();
+}
+
 }  // namespace internal
 }  // namespace ceres

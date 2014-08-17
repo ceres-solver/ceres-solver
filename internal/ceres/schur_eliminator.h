@@ -199,6 +199,9 @@ class SchurEliminatorBase {
                               const double* D,
                               const double* z,
                               double* y) = 0;
+
+  virtual string Description() const = 0;
+
   // Factory
   static SchurEliminatorBase* Create(const LinearSolver::Options& options);
 };
@@ -236,6 +239,8 @@ class SchurEliminator : public SchurEliminatorBase {
                               const double* D,
                               const double* z,
                               double* y);
+
+  virtual string Description() const;
 
  private:
   // Chunk objects store combinatorial information needed to

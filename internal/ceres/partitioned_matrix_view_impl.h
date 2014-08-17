@@ -376,5 +376,24 @@ UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const {
   }
 }
 
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+string
+PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
+Description() const {
+  const string row =
+      (kRowBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kRowBlockSize);
+
+  const string e =
+      (kEBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kEBlockSize);
+
+  const string f =
+      (kFBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kFBlockSize);
+
+  return StringPrintf("<%s,%s,%s>",row.c_str(), e.c_str(), f.c_str());
+}
+
 }  // namespace internal
 }  // namespace ceres

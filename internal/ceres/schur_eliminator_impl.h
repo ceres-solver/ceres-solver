@@ -64,6 +64,7 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/small_blas.h"
 #include "ceres/stl_util.h"
+#include "ceres/stringprintf.h"
 #include "Eigen/Dense"
 #include "glog/logging.h"
 
@@ -691,6 +692,24 @@ EBlockRowOuterProduct(const BlockSparseMatrix* A,
       }
     }
   }
+}
+
+template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
+string
+SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::Description() const {
+  const string row =
+      (kRowBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kRowBlockSize);
+
+  const string e =
+      (kEBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kEBlockSize);
+
+  const string f =
+      (kFBlockSize == Eigen::Dynamic)
+      ? "d" : StringPrintf("%d", kFBlockSize);
+
+  return StringPrintf("<%s,%s,%s>",row.c_str(), e.c_str(), f.c_str());
 }
 
 }  // namespace internal

@@ -71,6 +71,7 @@ class IterativeSchurComplementSolver : public BlockSparseMatrixSolver {
  public:
   explicit IterativeSchurComplementSolver(const LinearSolver::Options& options);
   virtual ~IterativeSchurComplementSolver();
+  virtual string Description() const;
 
  private:
   virtual LinearSolver::Summary SolveImpl(

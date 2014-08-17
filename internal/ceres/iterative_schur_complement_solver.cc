@@ -177,5 +177,11 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   return cg_summary;
 }
 
+string IterativeSchurComplementSolver::Description() const {
+  return (schur_complement_.get() == NULL)
+      ? ""
+      : schur_complement_->Description();
+}
+
 }  // namespace internal
 }  // namespace ceres

@@ -139,6 +139,8 @@ class ImplicitSchurComplement : public LinearOperator {
     return block_diagonal_FtF_inverse_.get();
   }
 
+  string Description() const;
+
  private:
   void AddDiagonalAndInvert(const double* D, BlockSparseMatrix* matrix);
   void UpdateRhs();

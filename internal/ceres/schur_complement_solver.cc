@@ -74,6 +74,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
     eliminator_.reset(CHECK_NOTNULL(SchurEliminatorBase::Create(options_)));
     eliminator_->Init(options_.elimination_groups[0], A->block_structure());
   };
+
   fill(x, x + A->num_cols(), 0.0);
   event_logger.AddEvent("Setup");
 
@@ -91,6 +92,10 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
   }
 
   return summary;
+}
+
+string SchurComplementSolver::Description() const {
+  return (eliminator_.get() == NULL) ? "" : eliminator_->Description();
 }
 
 // Initialize a BlockRandomAccessDenseMatrix to store the Schur

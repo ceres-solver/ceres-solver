@@ -98,6 +98,7 @@ class PartitionedMatrixViewBase {
   virtual void UpdateBlockDiagonalFtF(
       BlockSparseMatrix* block_diagonal) const = 0;
 
+  virtual string Description()   const = 0;
   virtual int num_col_blocks_e() const = 0;
   virtual int num_col_blocks_f() const = 0;
   virtual int num_cols_e()       const = 0;
@@ -127,6 +128,7 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   virtual BlockSparseMatrix* CreateBlockDiagonalFtF() const;
   virtual void UpdateBlockDiagonalEtE(BlockSparseMatrix* block_diagonal) const;
   virtual void UpdateBlockDiagonalFtF(BlockSparseMatrix* block_diagonal) const;
+  virtual string Description()   const;
   virtual int num_col_blocks_e() const { return num_col_blocks_e_;  }
   virtual int num_col_blocks_f() const { return num_col_blocks_f_;  }
   virtual int num_cols_e()       const { return num_cols_e_;        }

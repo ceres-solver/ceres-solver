@@ -392,6 +392,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
         FindWithDefault(linear_solver_time_statistics,
                         "LinearSolver::Solve",
                         0.0);
+    summary->linear_solver_details = pp.linear_solver->Description();
   }
 }
 
@@ -641,9 +642,10 @@ string Solver::Summary::FullReport() const {
     StringAppendF(&report, "\n");
 
     StringAppendF(&report, "%45s    %21s\n", "Given",  "Used");
-    StringAppendF(&report, "Linear solver       %25s%25s\n",
+    StringAppendF(&report, "Linear solver       %25s%25s %s\n",
                   LinearSolverTypeToString(linear_solver_type_given),
-                  LinearSolverTypeToString(linear_solver_type_used));
+                  LinearSolverTypeToString(linear_solver_type_used),
+                  linear_solver_details.c_str());
 
     if (linear_solver_type_given == CGNR ||
         linear_solver_type_given == ITERATIVE_SCHUR) {

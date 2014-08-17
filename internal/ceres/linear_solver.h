@@ -302,6 +302,10 @@ class LinearSolver {
     return map<string, double>();
   }
 
+  virtual string Description() const {
+    return string();
+  }
+
   // Factory
   static LinearSolver* Create(const Options& options);
 };

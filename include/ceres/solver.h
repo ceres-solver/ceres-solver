@@ -876,6 +876,13 @@ class CERES_EXPORT Solver {
     // no sparse linear algebra library was available.
     LinearSolverType linear_solver_type_used;
 
+    // String describing further details about the linear
+    // solver. Currently, this string is only used for Schur type
+    // linear solvers. For Schur type linear solvers, this string
+    // describes the template specialization of the Schur eliminator
+    // that was used.
+    string linear_solver_details;
+
     // Size of the elimination groups given by the user as hints to
     // the linear solver.
     vector<int> linear_solver_ordering_given;

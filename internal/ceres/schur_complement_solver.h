@@ -121,6 +121,7 @@ class SchurComplementSolver : public BlockSparseMatrixSolver {
       const double* b,
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* x);
+  virtual string Description() const;
 
  protected:
   const LinearSolver::Options& options() const { return options_; }
