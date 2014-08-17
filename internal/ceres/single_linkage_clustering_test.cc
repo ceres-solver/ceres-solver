@@ -43,7 +43,7 @@ namespace ceres {
 namespace internal {
 
 TEST(SingleLinkageClustering, GraphHasTwoComponents) {
-  Graph<int> graph;
+  WeightedGraph<int> graph;
   const int kNumVertices = 6;
   for (int i = 0; i < kNumVertices; ++i) {
     graph.AddVertex(i);
@@ -61,8 +61,7 @@ TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   ComputeSingleLinkageClustering(options, graph, &membership);
   EXPECT_EQ(membership.size(), kNumVertices);
 
-  EXPECT_EQ(membership[1], membership[0]);
-  EXPECT_EQ(membership[2], membership[0]);
+  EXPECT_EQ(membership[1], membership[0]); EXPECT_EQ(membership[2], membership[0]);
   EXPECT_EQ(membership[3], membership[0]);
   EXPECT_NE(membership[4], membership[0]);
   EXPECT_NE(membership[5], membership[0]);
@@ -70,7 +69,7 @@ TEST(SingleLinkageClustering, GraphHasTwoComponents) {
 }
 
 TEST(SingleLinkageClustering, ComponentWithWeakLink) {
-  Graph<int> graph;
+  WeightedGraph<int> graph;
   const int kNumVertices = 6;
   for (int i = 0; i < kNumVertices; ++i) {
     graph.AddVertex(i);
@@ -99,7 +98,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLink) {
 }
 
 TEST(SingleLinkageClustering, ComponentWithWeakLinkAndStrongLink) {
-  Graph<int> graph;
+  WeightedGraph<int> graph;
   const int kNumVertices = 6;
   for (int i = 0; i < kNumVertices; ++i) {
     graph.AddVertex(i);
