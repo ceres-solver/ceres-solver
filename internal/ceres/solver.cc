@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <sstream>   // NOLINT
 #include <vector>
+#include "ceres/detect_structure.h"
 #include "ceres/gradient_checking_cost_function.h"
 #include "ceres/internal/port.h"
 #include "ceres/parameter_block_ordering.h"
@@ -41,6 +42,7 @@
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
+#include "ceres/schur_templates.h"
 #include "ceres/solver_utils.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
@@ -316,7 +318,7 @@ void StringifyOrdering(const vector<int>& ordering, string* report) {
   }
 
   for (int i = 0; i < ordering.size() - 1; ++i) {
-    internal::StringAppendF(report, "%d, ", ordering[i]);
+    internal::StringAppendF(report, "%d,", ordering[i]);
   }
   internal::StringAppendF(report, "%d", ordering.back());
 }
@@ -414,6 +416,8 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
         FindWithDefault(linear_solver_time_statistics,
                         "LinearSolver::Solve",
                         0.0);
+    // TODO(sameeragarwal
+    //summary->schur_structure_used = pp.linear_solver->Description();
   }
 }
 
@@ -444,6 +448,24 @@ void Minimize(internal::PreprocessedProblem* pp,
     program->StateVectorToParameterBlocks(pp->reduced_parameters.data());
     program->CopyParameterBlockStateToUserState();
   }
+}
+
+std::string SchurStructureToString(const int row_block_size,
+                                   const int e_block_size,
+                                   const int f_block_size) {
+  const std::string row =
+      (row_block_size == Eigen::Dynamic)
+      ? "d" : internal::StringPrintf("%d", row_block_size);
+
+  const std::string e =
+      (e_block_size == Eigen::Dynamic)
+      ? "d" : internal::StringPrintf("%d", e_block_size);
+
+  const std::string f =
+      (f_block_size == Eigen::Dynamic)
+      ? "d" : internal::StringPrintf("%d", f_block_size);
+
+  return internal::StringPrintf("%s,%s,%s",row.c_str(), e.c_str(), f.c_str());
 }
 
 }  // namespace
@@ -517,7 +539,29 @@ void Solver::Solve(const Solver::Options& options,
   scoped_ptr<Preprocessor> preprocessor(
       Preprocessor::Create(modified_options.minimizer_type));
   PreprocessedProblem pp;
+
   const bool status = preprocessor->Preprocess(modified_options, problem_impl, &pp);
+
+  if (IsSchurType(pp.options.linear_solver_type)) {
+    int row_block_size;
+    int e_block_size;
+    int f_block_size;
+    DetectStructure(*static_cast<internal::BlockSparseMatrix*>(
+                        pp.minimizer_options.jacobian.get())
+                    ->block_structure(),
+                    pp.linear_solver_options.elimination_groups[0],
+                    &row_block_size,
+                    &e_block_size,
+                    &f_block_size);
+    summary->schur_structure_given =
+        SchurStructureToString(row_block_size, e_block_size, f_block_size);
+    internal::GetBestSchurTemplateSpecialization(&row_block_size,
+                                                 &e_block_size,
+                                                 &f_block_size);
+    summary->schur_structure_used =
+        SchurStructureToString(row_block_size, e_block_size, f_block_size);
+  }
+
   summary->fixed_cost = pp.fixed_cost;
   summary->preprocessor_time_in_seconds = WallTimeInSeconds() - start_time;
 
@@ -712,14 +756,20 @@ string Solver::Summary::FullReport() const {
                   num_linear_solver_threads_given,
                   num_linear_solver_threads_used);
 
-    string given;
-    StringifyOrdering(linear_solver_ordering_given, &given);
-    string used;
-    StringifyOrdering(linear_solver_ordering_used, &used);
-    StringAppendF(&report,
-                  "Linear solver ordering %22s %24s\n",
-                  given.c_str(),
-                  used.c_str());
+    if (IsSchurType(linear_solver_type_used)) {
+      string given;
+      StringifyOrdering(linear_solver_ordering_given, &given);
+      string used;
+      StringifyOrdering(linear_solver_ordering_used, &used);
+      StringAppendF(&report,
+                    "Linear solver ordering %22s %24s\n",
+                    given.c_str(),
+                    used.c_str());
+      StringAppendF(&report,
+                    "Schur structure        %22s %24s\n",
+                    schur_structure_given.c_str(),
+                    schur_structure_used.c_str());
+    }
 
     if (inner_iterations_given) {
       StringAppendF(&report,
