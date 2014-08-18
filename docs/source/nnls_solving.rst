@@ -2154,6 +2154,23 @@ The three arrays will be:
    and asked for an automatic ordering, or if the problem contains
    some constant or inactive parameter blocks.
 
+.. member:: std::string Solver::Summary::schur_structure_given
+
+    For Schur type linear solvers, this string describes, the template
+    specialization which was detected in the problem and should be
+    used.
+
+.. member:: std::string Solver::Summary::schur_structure_used
+
+   For Schur type linear solvers, this string describes the template
+   specialization that was actually instantiated and used. The reason
+   this will be different from
+   :member:`Solver::Summary::schur_structure_given` is because the
+   corresponding template specialization does not exist.
+
+   Template specializations can be added to ceres by editing
+   ``internal/ceres/generate_template_specializations.py``
+
 .. member:: bool Solver::Summary::inner_iterations_given
 
    `True` if the user asked for inner iterations to be used as part of
