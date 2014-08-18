@@ -139,7 +139,7 @@ bool SetupLinearSolver(PreprocessedProblem* pp) {
     // If the user has not supplied a linear solver ordering, then we
     // assume that they are giving all the freedom to us in choosing
     // the best possible ordering. This intent can be indicated by
-    // putting all the parameter block in the same elimination group.
+    // putting all the parameter blocks in the same elimination group.
     options.linear_solver_ordering.reset(
         CreateDefaultLinearSolverOrdering(*pp->reduced_program));
   } else {

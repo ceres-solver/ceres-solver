@@ -167,7 +167,8 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
     problem_.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y_, &z_);
   }
 
-  void Run(const LinearSolverType linear_solver_type) {
+  void PreprocessForGivenLinearSolverAndVerify(
+      const LinearSolverType linear_solver_type) {
     Solver::Options options;
     options.linear_solver_type = linear_solver_type;
     TrustRegionPreprocessor preprocessor;
@@ -188,75 +189,61 @@ class LinearSolverAndEvaluatorCreationTest : public ::testing::Test {
 };
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, DenseQR) {
-  Run(DENSE_QR);
+  PreprocessForGivenLinearSolverAndVerify(DENSE_QR);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, DenseNormalCholesky) {
-  Run(DENSE_NORMAL_CHOLESKY);
+  PreprocessForGivenLinearSolverAndVerify(DENSE_NORMAL_CHOLESKY);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, DenseSchur) {
-  Run(DENSE_SCHUR);
+  PreprocessForGivenLinearSolverAndVerify(DENSE_SCHUR);
 }
 
 #if defined(CERES_USE_EIGEN_SPARSE) || !defined(CERES_NO_SUITE_SPARSE) || !defined(CERES_NO_CX_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseNormalCholesky) {
-  Run(SPARSE_NORMAL_CHOLESKY);
+  PreprocessForGivenLinearSolverAndVerify(SPARSE_NORMAL_CHOLESKY);
 }
 #endif
 
 #if defined(CERES_USE_EIGEN_SPARSE) || !defined(CERES_NO_SUITE_SPARSE) || !defined(CERES_NO_CX_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseSchur) {
-  Run(SPARSE_SCHUR);
+  PreprocessForGivenLinearSolverAndVerify(SPARSE_SCHUR);
 }
 #endif
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, CGNR) {
-  Run(CGNR);
+  PreprocessForGivenLinearSolverAndVerify(CGNR);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, IterativeSchur) {
-  Run(ITERATIVE_SCHUR);
+  PreprocessForGivenLinearSolverAndVerify(ITERATIVE_SCHUR);
 }
 
-TEST(TrustRegionPreprocessor, SchurTypeSolverWithBadOrdering) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-
+TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithBadOrdering) {
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering.reset(new ParameterBlockOrdering);
-  options.linear_solver_ordering->AddElementToGroup(&x, 0);
-  options.linear_solver_ordering->AddElementToGroup(&y, 0);
-  options.linear_solver_ordering->AddElementToGroup(&z, 1);
+  options.linear_solver_ordering->AddElementToGroup(&x_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&z_, 1);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_FALSE(preprocessor.Preprocess(options, &problem_, &pp));
 }
 
-TEST(TrustRegionPreprocessor, SchurTypeSolverWithGoodOrdering) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-
+TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithGoodOrdering) {
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering.reset(new ParameterBlockOrdering);
-  options.linear_solver_ordering->AddElementToGroup(&x, 0);
-  options.linear_solver_ordering->AddElementToGroup(&z, 0);
-  options.linear_solver_ordering->AddElementToGroup(&y, 1);
+  options.linear_solver_ordering->AddElementToGroup(&x_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&z_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y_, 1);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
@@ -264,26 +251,21 @@ TEST(TrustRegionPreprocessor, SchurTypeSolverWithGoodOrdering) {
   EXPECT_TRUE(pp.evaluator.get() != NULL);
 }
 
-TEST(TrustRegionPreprocessor, SchurTypeSolverWithEmptyFirstEliminationGroup) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-  problem.SetParameterBlockConstant(&x);
-  problem.SetParameterBlockConstant(&z);
+TEST_F(LinearSolverAndEvaluatorCreationTest,
+       SchurTypeSolverWithEmptyFirstEliminationGroup) {
+  problem_.SetParameterBlockConstant(&x_);
+  problem_.SetParameterBlockConstant(&z_);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering.reset(new ParameterBlockOrdering);
-  options.linear_solver_ordering->AddElementToGroup(&x, 0);
-  options.linear_solver_ordering->AddElementToGroup(&z, 0);
-  options.linear_solver_ordering->AddElementToGroup(&y, 1);
+  options.linear_solver_ordering->AddElementToGroup(&x_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&z_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y_, 1);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_QR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_QR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_QR);
@@ -291,25 +273,20 @@ TEST(TrustRegionPreprocessor, SchurTypeSolverWithEmptyFirstEliminationGroup) {
   EXPECT_TRUE(pp.evaluator.get() != NULL);
 }
 
-TEST(TrustRegionPreprocessor, SchurTypeSolverWithEmptySecondEliminationGroup) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-  problem.SetParameterBlockConstant(&y);
+TEST_F(LinearSolverAndEvaluatorCreationTest,
+       SchurTypeSolverWithEmptySecondEliminationGroup) {
+  problem_.SetParameterBlockConstant(&y_);
 
   Solver::Options options;
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering.reset(new ParameterBlockOrdering);
-  options.linear_solver_ordering->AddElementToGroup(&x, 0);
-  options.linear_solver_ordering->AddElementToGroup(&z, 0);
-  options.linear_solver_ordering->AddElementToGroup(&y, 1);
+  options.linear_solver_ordering->AddElementToGroup(&x_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&z_, 0);
+  options.linear_solver_ordering->AddElementToGroup(&y_, 1);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
   EXPECT_EQ(pp.options.linear_solver_type, DENSE_SCHUR);
   EXPECT_EQ(pp.linear_solver_options.type, DENSE_SCHUR);
   EXPECT_EQ(pp.evaluator_options.linear_solver_type, DENSE_SCHUR);
@@ -317,7 +294,7 @@ TEST(TrustRegionPreprocessor, SchurTypeSolverWithEmptySecondEliminationGroup) {
   EXPECT_TRUE(pp.evaluator.get() != NULL);
 }
 
-TEST(TrustRegionProcessor, InnerIterationsWithOneParameterBlock) {
+TEST(TrustRegionPreprocessorTest, InnerIterationsWithOneParameterBlock) {
   ProblemImpl problem;
   double x = 1.0;
   problem.AddResidualBlock(new DummyCostFunction<1, 1>, NULL, &x);
@@ -333,63 +310,44 @@ TEST(TrustRegionProcessor, InnerIterationsWithOneParameterBlock) {
   EXPECT_TRUE(pp.inner_iteration_minimizer.get() == NULL);
 }
 
-TEST(TrustRegionProcessor, InnerIterationsWithTwoParameterBlocks) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-
+TEST_F(LinearSolverAndEvaluatorCreationTest,
+       InnerIterationsWithTwoParameterBlocks) {
   Solver::Options options;
   options.use_inner_iterations = true;
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
   EXPECT_TRUE(pp.linear_solver.get() != NULL);
   EXPECT_TRUE(pp.evaluator.get() != NULL);
   EXPECT_TRUE(pp.inner_iteration_minimizer.get() != NULL);
 }
 
-TEST(TrustRegionProcessor, InvalidInnerIterationsOrdering) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-
+TEST_F(LinearSolverAndEvaluatorCreationTest,
+       InvalidInnerIterationsOrdering) {
   Solver::Options options;
   options.use_inner_iterations = true;
   options.inner_iteration_ordering.reset(new ParameterBlockOrdering);
-  options.inner_iteration_ordering->AddElementToGroup(&x, 0);
-  options.inner_iteration_ordering->AddElementToGroup(&z, 0);
-  options.inner_iteration_ordering->AddElementToGroup(&y, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&x_, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&z_, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&y_, 0);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_FALSE(preprocessor.Preprocess(options, &problem_, &pp));
 }
 
-TEST(TrustRegionProcessor, ValidInnerIterationsOrdering) {
-  ProblemImpl problem;
-  double x = 1.0;
-  double y = 1.0;
-  double z = 1.0;
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &x, &y);
-  problem.AddResidualBlock(new DummyCostFunction<1, 1, 1>, NULL, &y, &z);
-
+TEST_F(LinearSolverAndEvaluatorCreationTest, ValidInnerIterationsOrdering) {
   Solver::Options options;
   options.use_inner_iterations = true;
   options.inner_iteration_ordering.reset(new ParameterBlockOrdering);
-  options.inner_iteration_ordering->AddElementToGroup(&x, 0);
-  options.inner_iteration_ordering->AddElementToGroup(&z, 0);
-  options.inner_iteration_ordering->AddElementToGroup(&y, 1);
+  options.inner_iteration_ordering->AddElementToGroup(&x_, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&z_, 0);
+  options.inner_iteration_ordering->AddElementToGroup(&y_, 1);
 
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
-  EXPECT_TRUE(preprocessor.Preprocess(options, &problem, &pp));
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
   EXPECT_TRUE(pp.linear_solver.get() != NULL);
   EXPECT_TRUE(pp.evaluator.get() != NULL);
   EXPECT_TRUE(pp.inner_iteration_minimizer.get() != NULL);

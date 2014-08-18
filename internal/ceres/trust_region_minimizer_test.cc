@@ -227,8 +227,10 @@ void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   minimizer_options.gradient_tolerance = 1e-26;
   minimizer_options.function_tolerance = 1e-26;
   minimizer_options.parameter_tolerance = 1e-26;
-  minimizer_options.evaluator.reset(new PowellEvaluator2<col1, col2, col3, col4>);
-  minimizer_options.jacobian.reset(minimizer_options.evaluator->CreateJacobian());
+  minimizer_options.evaluator.reset(
+      new PowellEvaluator2<col1, col2, col3, col4>);
+  minimizer_options.jacobian.reset(
+      minimizer_options.evaluator->CreateJacobian());
 
   TrustRegionStrategy::Options trust_region_strategy_options;
   trust_region_strategy_options.trust_region_strategy_type = strategy_type;

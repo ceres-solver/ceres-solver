@@ -51,7 +51,7 @@ struct PreprocessedProblem;
 // Given a Problem object and a Solver::Options object indicating the
 // configuration of the solver, the job of the Preprocessor is to
 // analyze the Problem and perform the setup needed to solve it using
-// the desired Minimization algorithm. The setup involves, removing
+// the desired Minimization algorithm. The setup involves removing
 // redundancies in the input problem (inactive parameter and residual
 // blocks), finding fill reducing orderings as needed, configuring and
 // creating various objects needed by the Minimizer to solve the
@@ -105,7 +105,8 @@ struct PreprocessedProblem {
 // Common functions used by various preprocessors.
 
 // If OpenMP support is not available and user has requested more than
-// one threads, then set the *_num_threads options as needed to 1.
+// one threads, then set the *_num_threads options as needed to one
+// thread.
 void ChangeNumThreadsIfNeeded(Solver::Options* options);
 
 // Extract the effective parameter vector from the preprocessed

@@ -131,7 +131,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
   Evaluator* evaluator = CHECK_NOTNULL(options_.evaluator.get());
   SparseMatrix* jacobian = CHECK_NOTNULL(options_.jacobian.get());
-  TrustRegionStrategy* strategy = CHECK_NOTNULL(options_.trust_region_strategy.get());
+  TrustRegionStrategy* strategy =
+      CHECK_NOTNULL(options_.trust_region_strategy.get());
 
   const bool is_not_silent = !options.is_silent;
 

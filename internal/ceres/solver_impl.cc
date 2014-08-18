@@ -111,7 +111,8 @@ void SolverImpl::TrustRegionMinimize(
   trust_region_strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
   trust_region_strategy_options.dogleg_type = options.dogleg_type;
-  minimizer_options.trust_region_strategy.reset(TrustRegionStrategy::Create(trust_region_strategy_options));
+  minimizer_options.trust_region_strategy.reset(
+      TrustRegionStrategy::Create(trust_region_strategy_options));
 
   TrustRegionMinimizer minimizer;
   double minimizer_start_time = WallTimeInSeconds();
