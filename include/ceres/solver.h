@@ -941,6 +941,21 @@ class CERES_EXPORT Solver {
     // no sparse linear algebra library was available.
     LinearSolverType linear_solver_type_used;
 
+    // For Schur type linear solvers, this string describes the
+    // template specialization of the Schur eliminator that was used.
+
+    // This is the Schur template specialization which was detected in the problem.
+    std::string schur_structure_given;
+
+    // This is the Schur template specialization that was actually
+    // instantiated and used. The reason this will be different from
+    // schur_structure_given is because the corresponding template
+    // specialization does not exist.
+    //
+    // Template specializations can be added to ceres by editing
+    // internal/ceres/generate_template_specializations.py
+    std::string schur_structure_used;
+
     // Size of the elimination groups given by the user as hints to
     // the linear solver.
     std::vector<int> linear_solver_ordering_given;
