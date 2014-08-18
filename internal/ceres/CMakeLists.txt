@@ -98,6 +98,7 @@ set(CERES_INTERNAL_SRC
     schur_complement_solver.cc
     schur_eliminator.cc
     schur_jacobi_preconditioner.cc
+    schur_templates.cc
     scratch_evaluate_preparer.cc
     single_linkage_clustering.cc
     solver.cc
