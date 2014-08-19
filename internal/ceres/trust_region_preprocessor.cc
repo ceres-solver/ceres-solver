@@ -289,6 +289,7 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
   const Solver::Options& options = pp->options;
 
   SetupCommonMinimizerOptions(pp);
+  pp->minimizer_options.is_constrained = pp->reduced_program->IsBoundsConstrained();
   pp->minimizer_options.jacobian.reset(pp->evaluator->CreateJacobian());
   pp->minimizer_options.inner_iteration_minimizer =
       pp->inner_iteration_minimizer;
