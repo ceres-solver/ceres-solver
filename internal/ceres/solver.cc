@@ -67,7 +67,7 @@ namespace {
     ss << string("Solver::Options::" #x " = ") << options.x << ". ";    \
     ss << string("Solver::Options::" #y " = ") << options.y << ". ";    \
     ss << "Violated constraint: ";                                      \
-    ss << string("Solver::Options::" #x );                              \
+    ss << string("Solver::Options::" #x);                               \
     ss << string(#OP " Solver::Options::" #y ".");                      \
     *error = ss.str();                                                  \
     return false;                                                       \
@@ -77,8 +77,8 @@ namespace {
 #define OPTION_GT(x, y) OPTION_OP(x, y, >);
 #define OPTION_LE(x, y) OPTION_OP(x, y, <=);
 #define OPTION_LT(x, y) OPTION_OP(x, y, <);
-#define OPTION_LE_OPTION(x, y) OPTION_OP_OPTION(x ,y, <=)
-#define OPTION_LT_OPTION(x, y) OPTION_OP_OPTION(x ,y, <)
+#define OPTION_LE_OPTION(x, y) OPTION_OP_OPTION(x, y, <=)
+#define OPTION_LT_OPTION(x, y) OPTION_OP_OPTION(x, y, <)
 
 bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_GE(max_num_iterations, 0);
@@ -246,7 +246,6 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
   if ((options.line_search_direction_type == ceres::BFGS ||
        options.line_search_direction_type == ceres::LBFGS) &&
       options.line_search_type != ceres::WOLFE) {
-
     *error =
         string("Invalid configuration: Solver::Options::line_search_type = ")
         + string(LineSearchTypeToString(options.line_search_type))
@@ -331,23 +330,23 @@ void PreSolveSummarize(const Solver::Options& options,
   internal::OrderingToGroupSizes(options.inner_iteration_ordering.get(),
                                  &(summary->inner_iteration_ordering_given));
 
-  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;
+  summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  //  NOLINT
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
   summary->inner_iterations_given             = options.use_inner_iterations;
-  summary->line_search_direction_type         = options.line_search_direction_type;
-  summary->line_search_interpolation_type     = options.line_search_interpolation_type;
+  summary->line_search_direction_type         = options.line_search_direction_type;         //  NOLINT
+  summary->line_search_interpolation_type     = options.line_search_interpolation_type;     //  NOLINT
   summary->line_search_type                   = options.line_search_type;
   summary->linear_solver_type_given           = options.linear_solver_type;
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
   summary->minimizer_type                     = options.minimizer_type;
-  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;
-  summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;
+  summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
+  summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;          //  NOLINT
   summary->num_threads_given                  = options.num_threads;
   summary->preconditioner_type_given          = options.preconditioner_type;
-  summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type;
-  summary->trust_region_strategy_type         = options.trust_region_strategy_type;
-  summary->visibility_clustering_type         = options.visibility_clustering_type;
+  summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
+  summary->trust_region_strategy_type         = options.trust_region_strategy_type;         //  NOLINT
+  summary->visibility_clustering_type         = options.visibility_clustering_type;         //  NOLINT
 }
 
 void PostSolveSummarize(const internal::PreprocessedProblem& pp,
@@ -357,11 +356,11 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   internal::OrderingToGroupSizes(pp.options.inner_iteration_ordering.get(),
                                  &(summary->inner_iteration_ordering_used));
 
-  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;
+  summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;     // NOLINT
   summary->linear_solver_type_used        = pp.options.linear_solver_type;
-  summary->num_linear_solver_threads_used = pp.options.num_linear_solver_threads;
+  summary->num_linear_solver_threads_used = pp.options.num_linear_solver_threads;           // NOLINT
   summary->num_threads_used               = pp.options.num_threads;
-  summary->preconditioner_type_used       = pp.options.preconditioner_type;
+  summary->preconditioner_type_used       = pp.options.preconditioner_type;                 // NOLINT
 
   SetSummaryFinalCost(summary);
 
@@ -424,7 +423,7 @@ void Minimize(internal::PreprocessedProblem* pp,
   }
 }
 
-} // namespace
+}  // namespace
 
 bool Solver::Options::IsValid(string* error) const {
   if (!CommonOptionsAreValid(*this, error)) {

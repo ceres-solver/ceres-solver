@@ -97,7 +97,7 @@ TEST(TrustRegionPreprocessor, RemoveParameterBlocksFailed) {
   double x = 3.0;
   problem.AddResidualBlock(new FailingCostFunction, NULL, &x);
   problem.SetParameterBlockConstant(&x);
-   Solver::Options options;
+  Solver::Options options;
   TrustRegionPreprocessor preprocessor;
   PreprocessedProblem pp;
   EXPECT_FALSE(preprocessor.Preprocess(options, &problem, &pp));
@@ -200,13 +200,17 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, DenseSchur) {
   PreprocessForGivenLinearSolverAndVerify(DENSE_SCHUR);
 }
 
-#if defined(CERES_USE_EIGEN_SPARSE) || !defined(CERES_NO_SUITE_SPARSE) || !defined(CERES_NO_CX_SPARSE)
+#if defined(CERES_USE_EIGEN_SPARSE) || \
+  !defined(CERES_NO_SUITE_SPARSE) ||   \
+  !defined(CERES_NO_CX_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseNormalCholesky) {
   PreprocessForGivenLinearSolverAndVerify(SPARSE_NORMAL_CHOLESKY);
 }
 #endif
 
-#if defined(CERES_USE_EIGEN_SPARSE) || !defined(CERES_NO_SUITE_SPARSE) || !defined(CERES_NO_CX_SPARSE)
+#if defined(CERES_USE_EIGEN_SPARSE) || \
+  !defined(CERES_NO_SUITE_SPARSE) ||   \
+  !defined(CERES_NO_CX_SPARSE)
 TEST_F(LinearSolverAndEvaluatorCreationTest, SparseSchur) {
   PreprocessForGivenLinearSolverAndVerify(SPARSE_SCHUR);
 }
@@ -218,6 +222,21 @@ TEST_F(LinearSolverAndEvaluatorCreationTest, CGNR) {
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, IterativeSchur) {
   PreprocessForGivenLinearSolverAndVerify(ITERATIVE_SCHUR);
+}
+
+TEST_F(LinearSolverAndEvaluatorCreationTest, MinimizerIsAwareOfBounds) {
+  problem_.SetParameterLowerBound(&x_, 0, 0.0);
+  Solver::Options options;
+  TrustRegionPreprocessor preprocessor;
+  PreprocessedProblem pp;
+  EXPECT_TRUE(preprocessor.Preprocess(options, &problem_, &pp));
+  EXPECT_EQ(pp.options.linear_solver_type, options.linear_solver_type);
+  EXPECT_EQ(pp.linear_solver_options.type, options.linear_solver_type);
+  EXPECT_EQ(pp.evaluator_options.linear_solver_type,
+            options.linear_solver_type);
+  EXPECT_TRUE(pp.linear_solver.get() != NULL);
+  EXPECT_TRUE(pp.evaluator.get() != NULL);
+  EXPECT_TRUE(pp.minimizer_options.is_constrained);
 }
 
 TEST_F(LinearSolverAndEvaluatorCreationTest, SchurTypeSolverWithBadOrdering) {
