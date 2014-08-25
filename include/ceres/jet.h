@@ -159,6 +159,7 @@
 #include <cmath>
 #include <iosfwd>
 #include <iostream>  // NOLINT
+#include <limits>
 #include <string>
 
 #include "Eigen/Core"
@@ -197,10 +198,9 @@ struct Jet {
   // to be passed in without being fully evaluated until
   // they are assigned to v
   template<typename Derived>
-  Jet(const T& value, const Eigen::DenseBase<Derived> &vIn)
-    : a(value),
-      v(vIn)
-  {
+  Jet(const T& a, const Eigen::DenseBase<Derived> &v)
+    : a(a),
+      v(v) {
   }
 
   // Compound operators
@@ -246,7 +246,7 @@ struct Jet {
 };
 
 // Unary +
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> const& operator+(const Jet<T, N>& f) {
   return f;
 }
@@ -255,70 +255,70 @@ Jet<T, N> const& operator+(const Jet<T, N>& f) {
 // see if it causes a performance increase.
 
 // Unary -
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator-(const Jet<T, N>&f) {
   return Jet<T, N>(-f.a, -f.v);
 }
 
 // Binary +
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator+(const Jet<T, N>& f,
                     const Jet<T, N>& g) {
   return Jet<T, N>(f.a + g.a, f.v + g.v);
 }
 
 // Binary + with a scalar: x + s
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator+(const Jet<T, N>& f, T s) {
   return Jet<T, N>(f.a + s, f.v);
 }
 
 // Binary + with a scalar: s + x
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator+(T s, const Jet<T, N>& f) {
   return Jet<T, N>(f.a + s, f.v);
 }
 
 // Binary -
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator-(const Jet<T, N>& f,
                     const Jet<T, N>& g) {
   return Jet<T, N>(f.a - g.a, f.v - g.v);
 }
 
 // Binary - with a scalar: x - s
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator-(const Jet<T, N>& f, T s) {
   return Jet<T, N>(f.a - s, f.v);
 }
 
 // Binary - with a scalar: s - x
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator-(T s, const Jet<T, N>& f) {
   return Jet<T, N>(s - f.a, -f.v);
 }
 
 // Binary *
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator*(const Jet<T, N>& f,
                     const Jet<T, N>& g) {
   return Jet<T, N>(f.a * g.a, f.a * g.v + f.v * g.a);
 }
 
 // Binary * with a scalar: x * s
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator*(const Jet<T, N>& f, T s) {
   return Jet<T, N>(f.a * s, f.v * s);
 }
 
 // Binary * with a scalar: s * x
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator*(T s, const Jet<T, N>& f) {
   return Jet<T, N>(f.a * s, f.v * s);
 }
 
 // Binary /
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator/(const Jet<T, N>& f,
                     const Jet<T, N>& g) {
   // This uses:
@@ -334,14 +334,14 @@ Jet<T, N> operator/(const Jet<T, N>& f,
 }
 
 // Binary / with a scalar: s / x
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator/(T s, const Jet<T, N>& g) {
   const T minus_s_g_a_inverse2 = -s / (g.a * g.a);
   return Jet<T, N>(s / g.a, g.v * minus_s_g_a_inverse2);
 }
 
 // Binary / with a scalar: x / s
-template<typename T, int N> inline
+template<typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> operator/(const Jet<T, N>& f, T s) {
   const T s_inverse = 1.0 / s;
   return Jet<T, N>(f.a * s_inverse, f.v * s_inverse);
@@ -349,15 +349,15 @@ Jet<T, N> operator/(const Jet<T, N>& f, T s) {
 
 // Binary comparison operators for both scalars and jets.
 #define CERES_DEFINE_JET_COMPARISON_OPERATOR(op) \
-template<typename T, int N> inline \
+template<typename T, int N> EIGEN_STRONG_INLINE \
 bool operator op(const Jet<T, N>& f, const Jet<T, N>& g) { \
   return f.a op g.a; \
 } \
-template<typename T, int N> inline \
+template<typename T, int N> EIGEN_STRONG_INLINE \
 bool operator op(const T& s, const Jet<T, N>& g) { \
   return s op g.a; \
 } \
-template<typename T, int N> inline \
+template<typename T, int N> EIGEN_STRONG_INLINE \
 bool operator op(const Jet<T, N>& f, const T& s) { \
   return f.a op s; \
 }
@@ -376,46 +376,46 @@ CERES_DEFINE_JET_COMPARISON_OPERATOR( != )  // NOLINT
 // Jet-valued functions inside namespace std.
 //
 // TODO(keir): Switch to "using".
-inline double abs     (double x) { return std::abs(x);      }
-inline double log     (double x) { return std::log(x);      }
-inline double exp     (double x) { return std::exp(x);      }
-inline double sqrt    (double x) { return std::sqrt(x);     }
-inline double cos     (double x) { return std::cos(x);      }
-inline double acos    (double x) { return std::acos(x);     }
-inline double sin     (double x) { return std::sin(x);      }
-inline double asin    (double x) { return std::asin(x);     }
-inline double tan     (double x) { return std::tan(x);      }
-inline double atan    (double x) { return std::atan(x);     }
-inline double sinh    (double x) { return std::sinh(x);     }
-inline double cosh    (double x) { return std::cosh(x);     }
-inline double tanh    (double x) { return std::tanh(x);     }
-inline double pow  (double x, double y) { return std::pow(x, y);   }
-inline double atan2(double y, double x) { return std::atan2(y, x); }
+EIGEN_STRONG_INLINE double abs     (double x) { return std::abs(x);      }
+EIGEN_STRONG_INLINE double log     (double x) { return std::log(x);      }
+EIGEN_STRONG_INLINE double exp     (double x) { return std::exp(x);      }
+EIGEN_STRONG_INLINE double sqrt    (double x) { return std::sqrt(x);     }
+EIGEN_STRONG_INLINE double cos     (double x) { return std::cos(x);      }
+EIGEN_STRONG_INLINE double acos    (double x) { return std::acos(x);     }
+EIGEN_STRONG_INLINE double sin     (double x) { return std::sin(x);      }
+EIGEN_STRONG_INLINE double asin    (double x) { return std::asin(x);     }
+EIGEN_STRONG_INLINE double tan     (double x) { return std::tan(x);      }
+EIGEN_STRONG_INLINE double atan    (double x) { return std::atan(x);     }
+EIGEN_STRONG_INLINE double sinh    (double x) { return std::sinh(x);     }
+EIGEN_STRONG_INLINE double cosh    (double x) { return std::cosh(x);     }
+EIGEN_STRONG_INLINE double tanh    (double x) { return std::tanh(x);     }
+EIGEN_STRONG_INLINE double pow  (double x, double y) { return std::pow(x, y);   }  // NOLINT
+EIGEN_STRONG_INLINE double atan2(double y, double x) { return std::atan2(y, x); }  // NOLINT
 
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
 // abs(x + h) ~= x + h or -(x + h)
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> abs(const Jet<T, N>& f) {
   return f.a < T(0.0) ? -f : f;
 }
 
 // log(a + h) ~= log(a) + h / a
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> log(const Jet<T, N>& f) {
   const T a_inverse = T(1.0) / f.a;
   return Jet<T, N>(log(f.a), f.v * a_inverse);
 }
 
 // exp(a + h) ~= exp(a) + exp(a) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> exp(const Jet<T, N>& f) {
   const T tmp = exp(f.a);
   return Jet<T, N>(tmp, tmp * f.v);
 }
 
 // sqrt(a + h) ~= sqrt(a) + h / (2 sqrt(a))
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> sqrt(const Jet<T, N>& f) {
   const T tmp = sqrt(f.a);
   const T two_a_inverse = T(1.0) / (T(2.0) * tmp);
@@ -423,33 +423,33 @@ Jet<T, N> sqrt(const Jet<T, N>& f) {
 }
 
 // cos(a + h) ~= cos(a) - sin(a) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> cos(const Jet<T, N>& f) {
   return Jet<T, N>(cos(f.a), - sin(f.a) * f.v);
 }
 
 // acos(a + h) ~= acos(a) - 1 / sqrt(1 - a^2) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> acos(const Jet<T, N>& f) {
   const T tmp = - T(1.0) / sqrt(T(1.0) - f.a * f.a);
   return Jet<T, N>(acos(f.a), tmp * f.v);
 }
 
 // sin(a + h) ~= sin(a) + cos(a) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> sin(const Jet<T, N>& f) {
   return Jet<T, N>(sin(f.a), cos(f.a) * f.v);
 }
 
 // asin(a + h) ~= asin(a) + 1 / sqrt(1 - a^2) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> asin(const Jet<T, N>& f) {
   const T tmp = T(1.0) / sqrt(T(1.0) - f.a * f.a);
   return Jet<T, N>(asin(f.a), tmp * f.v);
 }
 
 // tan(a + h) ~= tan(a) + (1 + tan(a)^2) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> tan(const Jet<T, N>& f) {
   const T tan_a = tan(f.a);
   const T tmp = T(1.0) + tan_a * tan_a;
@@ -457,26 +457,26 @@ Jet<T, N> tan(const Jet<T, N>& f) {
 }
 
 // atan(a + h) ~= atan(a) + 1 / (1 + a^2) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> atan(const Jet<T, N>& f) {
   const T tmp = T(1.0) / (T(1.0) + f.a * f.a);
   return Jet<T, N>(atan(f.a), tmp * f.v);
 }
 
 // sinh(a + h) ~= sinh(a) + cosh(a) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> sinh(const Jet<T, N>& f) {
   return Jet<T, N>(sinh(f.a), cosh(f.a) * f.v);
 }
 
 // cosh(a + h) ~= cosh(a) + sinh(a) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> cosh(const Jet<T, N>& f) {
   return Jet<T, N>(cosh(f.a), sinh(f.a) * f.v);
 }
 
 // tanh(a + h) ~= tanh(a) + (1 - tanh(a)^2) h
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> tanh(const Jet<T, N>& f) {
   const T tanh_a = tanh(f.a);
   const T tmp = T(1.0) - tanh_a * tanh_a;
@@ -494,7 +494,7 @@ Jet<T, N> tanh(const Jet<T, N>& f) {
 // derivatives are sane.
 
 // The jet is finite if all parts of the jet are finite.
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 bool IsFinite(const Jet<T, N>& f) {
   if (!IsFinite(f.a)) {
     return false;
@@ -508,7 +508,7 @@ bool IsFinite(const Jet<T, N>& f) {
 }
 
 // The jet is infinite if any part of the jet is infinite.
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 bool IsInfinite(const Jet<T, N>& f) {
   if (IsInfinite(f.a)) {
     return true;
@@ -522,7 +522,7 @@ bool IsInfinite(const Jet<T, N>& f) {
 }
 
 // The jet is NaN if any part of the jet is NaN.
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 bool IsNaN(const Jet<T, N>& f) {
   if (IsNaN(f.a)) {
     return true;
@@ -536,7 +536,7 @@ bool IsNaN(const Jet<T, N>& f) {
 }
 
 // The jet is normal if all parts of the jet are normal.
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 bool IsNormal(const Jet<T, N>& f) {
   if (!IsNormal(f.a)) {
     return false;
@@ -553,7 +553,7 @@ bool IsNormal(const Jet<T, N>& f) {
 //
 // In words: the rate of change of theta is 1/r times the rate of
 // change of (x, y) in the positive angular direction.
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
   // Note order of arguments:
   //
@@ -567,7 +567,7 @@ Jet<T, N> atan2(const Jet<T, N>& g, const Jet<T, N>& f) {
 
 // pow -- base is a differentiable function, exponent is a constant.
 // (a+da)^p ~= a^p + p*a^(p-1) da
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> pow(const Jet<T, N>& f, double g) {
   T const tmp = g * pow(f.a, g - T(1.0));
   return Jet<T, N>(pow(f.a, g), tmp * f.v);
@@ -575,7 +575,7 @@ Jet<T, N> pow(const Jet<T, N>& f, double g) {
 
 // pow -- base is a constant, exponent is a differentiable function.
 // (a)^(p+dp) ~= a^p + a^p log(a) dp
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> pow(double f, const Jet<T, N>& g) {
   T const tmp = pow(f, g.a);
   return Jet<T, N>(tmp, log(f) * tmp * g.v);
@@ -584,7 +584,7 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 
 // pow -- both base and exponent are differentiable functions.
 // (a+da)^(b+db) ~= a^b + b * a^(b-1) da + a^b log(a) * db
-template <typename T, int N> inline
+template <typename T, int N> EIGEN_STRONG_INLINE
 Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   T const tmp1 = pow(f.a, g.a);
   T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
@@ -608,28 +608,29 @@ Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
 //
 // TODO(keir): This is an Eigen 2.0 limitation that is lifted in 3.0. When we
 // switch to 3.0, also add the rest of the specialization functionality.
-template<typename T, int N> inline const Jet<T, N>& ei_conj(const Jet<T, N>& x) { return x;              }  // NOLINT
-template<typename T, int N> inline const Jet<T, N>& ei_real(const Jet<T, N>& x) { return x;              }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_imag(const Jet<T, N>&  ) { return Jet<T, N>(0.0); }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_abs (const Jet<T, N>& x) { return fabs(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_abs2(const Jet<T, N>& x) { return x * x;          }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sqrt(const Jet<T, N>& x) { return sqrt(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_exp (const Jet<T, N>& x) { return exp(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_log (const Jet<T, N>& x) { return log(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sin (const Jet<T, N>& x) { return sin(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_cos (const Jet<T, N>& x) { return cos(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_tan (const Jet<T, N>& x) { return tan(x);         }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_atan(const Jet<T, N>& x) { return atan(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_sinh(const Jet<T, N>& x) { return sinh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_cosh(const Jet<T, N>& x) { return cosh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_tanh(const Jet<T, N>& x) { return tanh(x);        }  // NOLINT
-template<typename T, int N> inline       Jet<T, N>  ei_pow (const Jet<T, N>& x, Jet<T, N> y) { return pow(x, y); }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE const Jet<T, N>& ei_conj(const Jet<T, N>& x) { return x;              }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE const Jet<T, N>& ei_real(const Jet<T, N>& x) { return x;              }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_imag(const Jet<T, N>&  ) { return Jet<T, N>(0.0); }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_abs (const Jet<T, N>& x) { return fabs(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_abs2(const Jet<T, N>& x) { return x * x;          }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_sqrt(const Jet<T, N>& x) { return sqrt(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_exp (const Jet<T, N>& x) { return exp(x);         }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_log (const Jet<T, N>& x) { return log(x);         }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_sin (const Jet<T, N>& x) { return sin(x);         }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_cos (const Jet<T, N>& x) { return cos(x);         }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_tan (const Jet<T, N>& x) { return tan(x);         }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_atan(const Jet<T, N>& x) { return atan(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_sinh(const Jet<T, N>& x) { return sinh(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_cosh(const Jet<T, N>& x) { return cosh(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_tanh(const Jet<T, N>& x) { return tanh(x);        }  // NOLINT
+template<typename T, int N> EIGEN_STRONG_INLINE       Jet<T, N>  ei_pow (const Jet<T, N>& x, Jet<T, N> y) { return pow(x, y); }  // NOLINT
 
 // Note: This has to be in the ceres namespace for argument dependent lookup to
 // function correctly. Otherwise statements like CHECK_LE(x, 2.0) fail with
 // strange compile errors.
 template <typename T, int N>
-inline std::ostream &operator<<(std::ostream &s, const Jet<T, N>& z) {
+EIGEN_STRONG_INLINE std::ostream &operator<<(std::ostream &s,
+                                             const Jet<T, N>& z) {
   return s << "[" << z.a << " ; " << z.v.transpose() << "]";
 }
 
@@ -649,7 +650,9 @@ struct NumTraits<ceres::Jet<T, N> > {
     return ceres::Jet<T, N>(1e-12);
   }
 
-  static inline Real epsilon() { return Real(std::numeric_limits<T>::epsilon()); }
+  static EIGEN_STRONG_INLINE Real epsilon() {
+    return Real(std::numeric_limits<T>::epsilon());
+  }
 
   enum {
     IsComplex = 0,
