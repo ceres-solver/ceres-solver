@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c4d562_9e16a165",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-25T16:58:03Z",
+      "side": 1,
+      "message": "Consider making a struct to group these two;\n\nVertex -\u003e struct { weight, edges}\n\nit might be faster",
+      "revId": "dab955928c6d0942d6acc5b5f1c4c11260d0767d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
