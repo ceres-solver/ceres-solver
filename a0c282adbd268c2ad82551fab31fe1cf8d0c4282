@@ -16,6 +16,24 @@
       "revId": "a0c282adbd268c2ad82551fab31fe1cf8d0c4282",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f316958e_9f082b4d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-25T16:49:18Z",
+      "side": 1,
+      "message": "this one does not get called in expressions, well it gets called when we initialize from user data. how about we get this CL checked in, and I will add inline here seperately and have bjorn test it?",
+      "parentUuid": "f3c4d562_5b697bfd",
+      "revId": "a0c282adbd268c2ad82551fab31fe1cf8d0c4282",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
