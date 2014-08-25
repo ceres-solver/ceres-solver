@@ -16,6 +16,24 @@
       "revId": "dab955928c6d0942d6acc5b5f1c4c11260d0767d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "138de944_aee15734",
+        "filename": "internal/ceres/graph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-25T17:02:03Z",
+      "side": 1,
+      "message": "I am happy to do this in a follow up CL. it will affect callsites so I\u0027d rather do this in two steps, split types and then modify weightedgraph",
+      "parentUuid": "f3c4d562_9e16a165",
+      "revId": "dab955928c6d0942d6acc5b5f1c4c11260d0767d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
