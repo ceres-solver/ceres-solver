@@ -50,7 +50,7 @@ TEST(TrustRegionPreprocessor, ZeroProblem) {
 
 TEST(TrustRegionPreprocessor, ProblemWithInvalidParameterBlock) {
   ProblemImpl problem;
-  double x = 1.0/0.0;
+  double x = std::numeric_limits<double>::quiet_NaN();
   problem.AddParameterBlock(&x, 1);
   Solver::Options options;
   TrustRegionPreprocessor preprocessor;
