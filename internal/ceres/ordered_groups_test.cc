@@ -213,7 +213,7 @@ TEST(OrderedGroups, MinNonZeroGroup) {
   ordering.Remove(x + 2);
 
   // No non-zero groups left.
-  EXPECT_DEATH_IF_SUPPORTED(ordering.MinNonZeroGroup(), "NumGroups()");
+  EXPECT_DEATH_IF_SUPPORTED(ordering.MinNonZeroGroup(), "NumGroups");
 }
 }  // namespace internal
 }  // namespace ceres
