@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a121b9_a03e7aa2",
+        "filename": "internal/ceres/graph_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2014-08-26T11:59:41Z",
+      "side": 0,
+      "message": "I simply deleted these lines, as the basic Graph class does not support weighted edges.",
+      "revId": "dab955928c6d0942d6acc5b5f1c4c11260d0767d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
