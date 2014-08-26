@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9382b917_b0d8e002",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-08-26T05:06:43Z",
+      "side": 1,
+      "message": "right now this does not affect the line search minimizer.",
+      "range": {
+        "startLine": 343,
+        "startChar": 8,
+        "endLine": 343,
+        "endChar": 26
+      },
+      "revId": "34f51b2055fe5f8f7d1f027298b603b3920fa54c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9382b917_f0d258de",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-08-26T05:06:43Z",
+      "side": 1,
+      "message": "hmm wow this has been a bug here for a long time.",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "34f51b2055fe5f8f7d1f027298b603b3920fa54c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9382b917_90dbdcfe",
+        "filename": "internal/ceres/graph_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-08-26T05:06:43Z",
+      "side": 1,
+      "message": "hmm how did I manage to check this in :)",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "34f51b2055fe5f8f7d1f027298b603b3920fa54c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9382b917_d0be3499",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-08-26T05:06:43Z",
+      "side": 1,
+      "message": "this needs to be updated too.",
+      "range": {
+        "startLine": 227,
+        "startChar": 24,
+        "endLine": 227,
+        "endChar": 41
+      },
+      "revId": "34f51b2055fe5f8f7d1f027298b603b3920fa54c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
