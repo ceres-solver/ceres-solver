@@ -58,14 +58,10 @@ TEST(Graph, AddVertexIdempotence) {
   Graph<int> graph;
   graph.AddVertex(0);
   graph.AddVertex(1);
-  graph.AddEdge(0, 1)
+  graph.AddEdge(0, 1);
 
   const HashSet<int>& vertices = graph.vertices();
 
-  EXPECT_EQ(vertices.size(), 2);
-
-  // Try adding the vertex again with a new weight.
-  graph.AddVertex(0, 3.0);
   EXPECT_EQ(vertices.size(), 2);
 
   // Rest of the graph remains the same.

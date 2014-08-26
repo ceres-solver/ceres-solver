@@ -460,7 +460,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // Convergence based on parameter_tolerance.
       const double step_size_tolerance =  options_.parameter_tolerance *
           (x_norm + options_.parameter_tolerance);
-      if (iteration_summary.step_norm <= step_size_tolerance) {
+      if (iteration_summary.iteration > options_.min_num_iterations &&
+          iteration_summary.step_norm <= step_size_tolerance) {
         summary->message =
             StringPrintf("Parameter tolerance reached. "
                          "Relative step_norm: %e <= %e.",
@@ -475,7 +476,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       iteration_summary.cost_change =  cost - new_cost;
       const double absolute_function_tolerance =
           options_.function_tolerance * cost;
-      if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+      if (iteration_summary.iteration > options_.min_num_iterations &&
+          fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
         summary->message =
             StringPrintf("Function tolerance reached. "
                          "|cost_change|/cost: %e <= %e",
@@ -601,7 +603,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
       iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
 
-      if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+      if (iteration_summary.iteration > options_.min_num_iterations &&
+          iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
         summary->message = StringPrintf("Gradient tolerance reached. "
                                         "Gradient max norm: %e <= %e",
                                         iteration_summary.gradient_max_norm,

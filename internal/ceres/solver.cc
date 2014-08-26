@@ -81,7 +81,9 @@ namespace {
 #define OPTION_LT_OPTION(x, y) OPTION_OP_OPTION(x, y, <)
 
 bool CommonOptionsAreValid(const Solver::Options& options, string* error) {
+  OPTION_GE(min_num_iterations, 0);
   OPTION_GE(max_num_iterations, 0);
+  OPTION_GE(max_num_iterations, options.min_num_iterations);
   OPTION_GE(max_solver_time_in_seconds, 0.0);
   OPTION_GE(function_tolerance, 0.0);
   OPTION_GE(gradient_tolerance, 0.0);

@@ -1044,6 +1044,16 @@ elimination group [LiSaad]_.
    The window size used by the step selection algorithm to accept
    non-monotonic steps.
 
+.. member:: int Solver::Options::min_num_iterations
+
+   Default: ``0``
+
+   Minimum number of iterations for the minimizer to run for. This value must
+   be smaller than or equal to max_num_iterations. This minimum runtime
+   criterion only overwrites the stop criterions function_tolerance,
+   gradient_tolerance and parameter_tolerance - max_solver_time_in_seconds
+   still bounds the maximum runtime.
+
 .. member:: int Solver::Options::max_num_iterations
 
    Default: ``50``

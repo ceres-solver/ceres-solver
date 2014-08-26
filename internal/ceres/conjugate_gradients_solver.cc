@@ -72,6 +72,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   CHECK_NOTNULL(x);
   CHECK_NOTNULL(b);
   CHECK_EQ(A->num_rows(), A->num_cols());
+  CHECK_GT(options_.max_num_iterations, 0);
+  CHECK_GE(options_.max_num_iterations, options_.min_num_iterations);
 
   LinearSolver::Summary summary;
   summary.termination_type = LINEAR_SOLVER_NO_CONVERGENCE;
@@ -114,6 +116,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double Q0 = -1.0 * xref.dot(bref + r);
 
   for (summary.num_iterations = 1;
+       summary.num_iterations > options_.min_num_iterations &&
        summary.num_iterations < options_.max_num_iterations;
        ++summary.num_iterations) {
     // Apply preconditioner
