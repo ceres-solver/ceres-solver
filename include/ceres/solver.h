@@ -120,7 +120,7 @@ class CERES_EXPORT Solver {
       num_linear_solver_threads = 1;
       use_postordering = false;
       dynamic_sparsity = false;
-      min_linear_solver_iterations = 1;
+      min_linear_solver_iterations = 0;
       max_linear_solver_iterations = 500;
       eta = 1e-1;
       jacobi_scaling = true;

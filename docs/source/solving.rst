@@ -1304,7 +1304,7 @@ elimination group [LiSaad]_.
 
 .. member:: int Solver::Options::min_linear_solver_iterations
 
-   Default: ``1``
+   Default: ``0``
 
    Minimum number of iterations used by the linear solver. This only
    makes sense when the linear solver is an iterative solver, e.g.,

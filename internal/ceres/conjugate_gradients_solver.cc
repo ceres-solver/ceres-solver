@@ -101,7 +101,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   A->RightMultiply(x, tmp.data());
   r = bref - tmp;
   double norm_r = r.norm();
-  if (norm_r <= tol_r) {
+  if (options_.min_num_iteratios == 0 && norm_r <= tol_r) {
     summary.termination_type = LINEAR_SOLVER_SUCCESS;
     summary.message =
         StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
@@ -114,7 +114,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double Q0 = -1.0 * xref.dot(bref + r);
 
   for (summary.num_iterations = 1;
-       summary.num_iterations < options_.max_num_iterations;
+       summary.num_iterations > options_.min_num_iterations &&
+       summary.num_iterations < options_.max_num_iterations
        ++summary.num_iterations) {
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {
