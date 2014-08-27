@@ -114,8 +114,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double Q0 = -1.0 * xref.dot(bref + r);
 
   for (summary.num_iterations = 1;
-       (summary.num_iterations > options_.min_num_iterations &&
-        summary.num_iterations < options_.max_num_iterations);
+       summary.num_iterations < options_.max_num_iterations;
        ++summary.num_iterations) {
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {
@@ -208,7 +207,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     //   124(1-2), 45-59, 2000.
     //
     const double zeta = summary.num_iterations * (Q1 - Q0) / Q1;
-    if (zeta < per_solve_options.q_tolerance) {
+    if (zeta < per_solve_options.q_tolerance &&
+        summary.num_iterations >= options_.min_num_iterations) {
       summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
           StringPrintf("Convergence: zeta = %e < %e",
@@ -220,7 +220,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
 
     // Residual based termination.
     norm_r = r. norm();
-    if (norm_r <= tol_r) {
+    if (norm_r <= tol_r &&
+        summary.num_iterations >= options_.min_num_iterations) {
       summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
           StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
