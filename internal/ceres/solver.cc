@@ -441,6 +441,44 @@ void Minimize(internal::PreprocessedProblem* pp,
   }
 }
 
+string VersionString() {
+  string value = string(CERES_VERSION_STRING);
+
+#ifdef CERES_NO_LAPACK
+  value += "-no_lapack";
+#else
+  value += "-lapack";
+#endif
+
+#ifndef CERES_NO_SUITESPARSE
+  value += "-suitesparse";
+#endif
+
+#ifndef CERES_NO_CXSPARSE
+  value += "-cxsparse";
+#endif
+
+#ifdef CERES_USE_EIGEN_SPARSE
+  value += "-eigensparse";
+#endif
+
+#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
+  value += "-no_schur_specializations";
+#endif
+
+#ifdef CERES_USE_OPENMP
+  value += "-openmp";
+#else
+  value += "-no_openmp";
+#endif
+
+#ifdef CERES_NO_CUSTOM_BLAS
+  value += "-no_custom_blas";
+#endif
+
+  return value;
+}
+
 }  // namespace
 
 bool Solver::Options::IsValid(string* error) const {
@@ -602,10 +640,7 @@ string Solver::Summary::BriefReport() const {
 };
 
 string Solver::Summary::FullReport() const {
-  string report =
-      "\n"
-      "Ceres Solver v" CERES_VERSION_STRING " Solve Report\n"
-      "----------------------------------\n";
+  string report = string("\nSolver Summary (v " + VersionString() + ")\n\n");
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
   StringAppendF(&report, "Parameter blocks    % 25d% 25d\n",

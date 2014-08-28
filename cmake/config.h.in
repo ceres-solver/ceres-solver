@@ -76,10 +76,6 @@
 @CERES_TR1_UNORDERED_MAP@
 @CERES_NO_UNORDERED_MAP@
 
-// If defined Ceres was compiled for Android with noalias() removed from
-// matrix-matrix multiplies to work around a bug in the Android NDK.
-@CERES_WORK_AROUND_ANDROID_NDK_COMPILER_BUG@
-
 // If defined, the memory header is in <tr1/memory>, otherwise <memory>.
 @CERES_TR1_MEMORY_HEADER@
 
