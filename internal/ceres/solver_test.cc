@@ -247,6 +247,14 @@ TEST(Solver, SparseNormalCholeskyNoSuiteSparse) {
   string message;
   EXPECT_FALSE(options.IsValid(&message));
 }
+
+TEST(Solver, SparseSchurNoSuiteSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
+  options.linear_solver_type = SPARSE_SCHUR;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
 #endif
 
 #if defined(CERES_NO_CXSPARSE)
@@ -254,6 +262,32 @@ TEST(Solver, SparseNormalCholeskyNoCXSparse) {
   Solver::Options options;
   options.sparse_linear_algebra_library_type = CX_SPARSE;
   options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, SparseSchurNoCXSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = CX_SPARSE;
+  options.linear_solver_type = SPARSE_SCHUR;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+#endif
+
+#if !defined(CERES_USE_EIGEN_SPARSE)
+TEST(Solver, SparseNormalCholeskyNoEigenSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, SparseSchurNoEigenSparse) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
+  options.linear_solver_type = SPARSE_SCHUR;
   string message;
   EXPECT_FALSE(options.IsValid(&message));
 }
@@ -284,7 +318,9 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
   EXPECT_TRUE(options.IsValid(&message));
 
   options.linear_solver_type = SPARSE_SCHUR;
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE)
+#if defined(CERES_NO_SUITESPARSE) &&            \
+    defined(CERES_NO_CXSPARSE) &&               \
+   !defined(CERES_USE_EIGEN_SPARSE)
   EXPECT_FALSE(options.IsValid(&message));
 #else
   EXPECT_TRUE(options.IsValid(&message));
@@ -311,7 +347,7 @@ class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
 TEST(Solver, FixedCostForConstantProblem) {
   double x = 1.0;
   Problem problem;
-  problem.AddResidualBlock(new DummyCostFunction<2,1>(), NULL, &x);
+  problem.AddResidualBlock(new DummyCostFunction<2, 1>(), NULL, &x);
   problem.SetParameterBlockConstant(&x);
   const double expected_cost = 41.0 / 2.0;  // 1/2 * ((4 + 0)^2 + (4 + 1)^2)
   Solver::Options options;
