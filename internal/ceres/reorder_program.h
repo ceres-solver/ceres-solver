@@ -51,7 +51,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool LexicographicallyOrderResidualBlocks(int num_eliminate_blocks,
+bool LexicographicallyOrderResidualBlocks(int size_of_first_elimination_group,
                                           Program* program,
                                           string* error);
 
