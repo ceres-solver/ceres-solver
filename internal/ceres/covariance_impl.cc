@@ -79,8 +79,17 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
       is_computed_(false),
       is_valid_(false) {
-  evaluate_options_.num_threads = options.num_threads;
-  evaluate_options_.apply_loss_function = options.apply_loss_function;
+#ifndef CERES_USE_OPENMP
+  if (options_.num_threads > 1) {
+    LOG(WARNING)
+        << "OpenMP support is not compiled into this binary; "
+        << "only options.num_threads = 1 is supported. Switching "
+        << "to single threaded mode.";
+    options_.num_threads = 1;
+  }
+#endif
+  evaluate_options_.num_threads = options_.num_threads;
+  evaluate_options_.apply_loss_function = options_.apply_loss_function;
 }
 
 CovarianceImpl::~CovarianceImpl() {
