@@ -51,7 +51,7 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
 // Reorder the residuals for program, if necessary, so that the residuals
 // involving each E block occur together. This is a necessary condition for the
 // Schur eliminator, which works on these "row blocks" in the jacobian.
-bool LexicographicallyOrderResidualBlocks(int num_eliminate_blocks,
+bool LexicographicallyOrderResidualBlocks(int size_of_first_elimination_group,
                                           Program* program,
                                           string* error);
 
@@ -82,7 +82,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
 // Sparse cholesky factorization routines when doing the sparse
 // cholesky factorization of the Jacobian matrix, reorders its
 // columns to reduce the fill-in. Compute this permutation and
-// re-order the parameter blocks.
+// re-order the parameter blocks.u
 //
 // When using SuiteSparse, if the parameter_block_ordering contains
 // more than one elimination group and support for constrained
