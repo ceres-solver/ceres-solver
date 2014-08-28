@@ -61,7 +61,8 @@ TEST(SingleLinkageClustering, GraphHasTwoComponents) {
   ComputeSingleLinkageClustering(options, graph, &membership);
   EXPECT_EQ(membership.size(), kNumVertices);
 
-  EXPECT_EQ(membership[1], membership[0]); EXPECT_EQ(membership[2], membership[0]);
+  EXPECT_EQ(membership[1], membership[0]);
+  EXPECT_EQ(membership[2], membership[0]);
   EXPECT_EQ(membership[3], membership[0]);
   EXPECT_NE(membership[4], membership[0]);
   EXPECT_NE(membership[5], membership[0]);

@@ -74,7 +74,8 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 //
 // Caller acquires ownership of the returned WeightedGraph pointer
 // (heap-allocated).
-WeightedGraph<int>* CreateSchurComplementGraph(const vector<set<int> >& visibility);
+WeightedGraph<int>* CreateSchurComplementGraph(
+    const vector<set<int> >& visibility);
 
 }  // namespace internal
 }  // namespace ceres

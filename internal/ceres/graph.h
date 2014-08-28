@@ -44,7 +44,7 @@ namespace ceres {
 namespace internal {
 
 // A unweighted undirected graph templated over the vertex ids. Vertex
-// should be hashable and comparable.
+// should be hashable.
 template <typename Vertex>
 class Graph {
  public:

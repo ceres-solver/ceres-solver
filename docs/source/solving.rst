@@ -1300,7 +1300,7 @@ elimination group [LiSaad]_.
    then it is probably best to keep this false, otherwise it will
    likely lead to worse performance.
 
-   This settings affects the `SPARSE_NORMAL_CHOLESKY` solver.
+   This setting only affects the `SPARSE_NORMAL_CHOLESKY` solver.
 
 .. member:: int Solver::Options::min_linear_solver_iterations
 

@@ -206,15 +206,15 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   if (options.sparse_linear_algebra_library_type == EIGEN_SPARSE) {
     if (options.linear_solver_type == SPARSE_NORMAL_CHOLESKY) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY with EIGEN_SPARSE because "
-          "Eigen's sparse linear algebra was not enabled when Ceres "
-          " was built.";
+          "Eigen's sparse linear algebra was not enabled when Ceres was "
+          "built.";
       return false;
     }
 
     if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with EIGEN_SPARSE because "
-          "Eigen's sparse linear algebra was not enabled when Ceres "
-          " was built.";
+          "Eigen's sparse linear algebra was not enabled when Ceres was "
+          "built.";
       return false;
     }
   }

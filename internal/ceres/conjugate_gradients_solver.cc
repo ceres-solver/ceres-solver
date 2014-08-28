@@ -114,7 +114,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double Q0 = -1.0 * xref.dot(bref + r);
 
   for (summary.num_iterations = 1;
-       summary.num_iterations < options_.max_num_iterations;
+       summary.num_iterations <= options_.max_num_iterations;
        ++summary.num_iterations) {
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {

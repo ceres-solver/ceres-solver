@@ -172,8 +172,6 @@ int IndependentSetOrdering(const Graph<Vertex>& graph,
 template <typename Vertex>
 int StableIndependentSetOrdering(const Graph<Vertex>& graph,
                                  vector<Vertex>* ordering) {
-  EventLogger event_logger("StableIndependentSetOrdering");
-
   CHECK_NOTNULL(ordering);
   const HashSet<Vertex>& vertices = graph.vertices();
   const int num_vertices = vertices.size();
@@ -188,7 +186,6 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
 
   stable_sort(vertex_queue.begin(), vertex_queue.end(),
               VertexDegreeLessThan<Vertex>(graph));
-  event_logger.AddEvent("StableSort");
 
   // Mark all vertices white.
   HashMap<Vertex, char> vertex_color;
@@ -197,7 +194,6 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
        ++it) {
     vertex_color[*it] = kWhite;
   }
-  event_logger.AddEvent("MarkWhite");
 
   ordering->clear();
   ordering->reserve(num_vertices);
@@ -218,7 +214,6 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
       vertex_color[*it] = kGrey;
     }
   }
-  event_logger.AddEvent("IndependentVertices");
 
   int independent_set_size = ordering->size();
 
@@ -234,7 +229,6 @@ int StableIndependentSetOrdering(const Graph<Vertex>& graph,
       ordering->push_back(vertex);
     }
   }
-  event_logger.AddEvent("DependentVertices");
 
   CHECK_EQ(ordering->size(), num_vertices);
   return independent_set_size;
