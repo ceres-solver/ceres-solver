@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1330897d_0a4a0be9",
+        "filename": "internal/ceres/linear_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-28T16:31:16Z",
+      "side": 1,
+      "message": "I believe these can be stacked with \\s instead of having the long lines.",
+      "revId": "153053610b3a06f87b5fa3a813633180e283c9e0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
