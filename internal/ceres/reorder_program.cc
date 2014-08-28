@@ -257,11 +257,11 @@ bool LexicographicallyOrderResidualBlocks(const int num_eliminate_blocks,
   return true;
 }
 
+// Pre-order the columns corresponding to the schur complement if
+// possible.
 void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering,
     Program* program) {
-  // Pre-order the columns corresponding to the schur complement if
-  // possible.
 #ifndef CERES_NO_SUITESPARSE
   SuiteSparse ss;
   if (!SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
@@ -283,12 +283,9 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   // parameter_blocks.size() - 1].
   MapValuesToContiguousRange(constraints.size(), &constraints[0]);
 
-  // Set the offsets and index for CreateJacobianSparsityTranspose.
-  program->SetParameterOffsetsAndIndex();
   // Compute a block sparse presentation of J'.
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
-
 
   cholmod_sparse* block_jacobian_transpose =
       ss.CreateSparseMatrix(tsm_block_jacobian_transpose.get());
@@ -303,6 +300,8 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
   for (int i = 0; i < program->NumParameterBlocks(); ++i) {
     parameter_blocks[i] = parameter_blocks_copy[ordering[i]];
   }
+
+  program->SetParameterOffsetsAndIndex();
 #endif
 }
 
@@ -373,6 +372,8 @@ bool ReorderProgramForSchurTypeLinearSolver(
     }
   }
 
+  program->SetParameterOffsetsAndIndex();
+
   if (linear_solver_type == SPARSE_SCHUR &&
       sparse_linear_algebra_library_type == SUITE_SPARSE) {
     MaybeReorderSchurComplementColumnsUsingSuiteSparse(
@@ -380,7 +381,8 @@ bool ReorderProgramForSchurTypeLinearSolver(
         program);
   }
 
-  program->SetParameterOffsetsAndIndex();
+
+
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
   const int num_eliminate_blocks =
@@ -391,7 +393,6 @@ bool ReorderProgramForSchurTypeLinearSolver(
     return false;
   }
 
-  program->SetParameterOffsetsAndIndex();
   return true;
 }
 
@@ -400,30 +401,6 @@ bool ReorderProgramForSparseNormalCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     Program* program,
     string* error) {
-
-  if (sparse_linear_algebra_library_type != SUITE_SPARSE &&
-      sparse_linear_algebra_library_type != CX_SPARSE &&
-      sparse_linear_algebra_library_type != EIGEN_SPARSE) {
-    *error = "Unknown sparse linear algebra library.";
-    return false;
-  }
-
-  // For Eigen, there is nothing to do. This is because Eigen in its
-  // current stable version does not expose a method for doing
-  // symbolic analysis on pre-ordered matrices, so a block
-  // pre-ordering is a bit pointless.
-  //
-  // The dev version as recently as July 20, 2014 has support for
-  // pre-ordering. Once this becomes more widespread, or we add
-  // support for detecting Eigen versions, we can add support for this
-  // along the lines of CXSparse.
-  if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-    program->SetParameterOffsetsAndIndex();
-    return true;
-  }
-
-  // Set the offsets and index for CreateJacobianSparsityTranspose.
-  program->SetParameterOffsetsAndIndex();
   // Compute a block sparse presentation of J'.
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
@@ -438,10 +415,23 @@ bool ReorderProgramForSparseNormalCholesky(
         parameter_blocks,
         parameter_block_ordering,
         &ordering[0]);
-  } else if (sparse_linear_algebra_library_type == CX_SPARSE){
+  } else if (sparse_linear_algebra_library_type == CX_SPARSE) {
     OrderingForSparseNormalCholeskyUsingCXSparse(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
+  } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+    // For Eigen, there is nothing to do. This is because Eigen in its
+    // current stable version does not expose a method for doing
+    // symbolic analysis on pre-ordered matrices, so a block
+    // pre-ordering is a bit pointless.
+    //
+    // The dev version as recently as July 20, 2014 has support for
+    // pre-ordering. Once this becomes more widespread, or we add
+    // support for detecting Eigen versions, we can add support for this
+    // along the lines of CXSparse.
+    //
+    // TODO(sameeragarwal): Apply block amd for eigen.
+    return true;
   }
 
   // Apply ordering.
