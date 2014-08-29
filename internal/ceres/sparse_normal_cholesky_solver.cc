@@ -28,9 +28,6 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
-
 #include "ceres/sparse_normal_cholesky_solver.h"
 
 #include <algorithm>
@@ -48,15 +45,71 @@
 #include "ceres/wall_time.h"
 #include "Eigen/SparseCore"
 
+#ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/SparseCholesky"
+#endif
 
 namespace ceres {
 namespace internal {
+namespace {
+
+#ifdef CERES_USE_EIGEN_SPARSE
+// A templated factorized and solve function, which allows us to use
+// the same code independent of whether a AMD or a Natural ordering is
+// used.
+template <typename SimplicialCholeskySolver>
+LinearSolver::Summary SimplicialLDLTSolve(
+    Eigen::MappedSparseMatrix<double, Eigen::ColMajor>& lhs,
+    const bool do_symbolic_analysis,
+    SimplicialCholeskySolver* solver,
+    double* rhs_and_solution,
+    EventLogger* event_logger) {
+  LinearSolver::Summary summary;
+  summary.num_iterations = 1;
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  summary.message = "Success.";
+
+  if (do_symbolic_analysis) {
+    solver->analyzePattern(lhs);
+    event_logger->AddEvent("Analyze");
+    if (solver->info() != Eigen::Success) {
+      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+      summary.message =
+          "Eigen failure. Unable to find symbolic factorization.";
+      return summary;
+    }
+  }
+
+  solver->factorize(lhs);
+  event_logger->AddEvent("Factorize");
+  if (solver->info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    summary.message = "Eigen failure. Unable to find numeric factorization.";
+    return summary;
+  }
+
+  const Vector rhs = VectorRef(rhs_and_solution, lhs.cols());
+
+  VectorRef(rhs_and_solution, lhs.cols()) = solver->solve(rhs);
+  event_logger->AddEvent("Solve");
+  if (solver->info() != Eigen::Success) {
+    summary.termination_type = LINEAR_SOLVER_FAILURE;
+    summary.message = "Eigen failure. Unable to do triangular solve.";
+    return summary;
+  }
+
+  return summary;
+}
+
+#endif  // CERES_USE_EIGEN_SPARSE
+
+}  // namespace
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
     : factor_(NULL),
       cxsparse_factor_(NULL),
-      options_(options){
+      options_(options) {
 }
 
 void SparseNormalCholeskySolver::FreeFactorization() {
@@ -141,12 +194,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
 #else
 
   EventLogger event_logger("SparseNormalCholeskySolver::Eigen::Solve");
-
-  LinearSolver::Summary summary;
-  summary.num_iterations = 1;
-  summary.termination_type = LINEAR_SOLVER_SUCCESS;
-  summary.message = "Success.";
-
   // Compute the normal equations. J'J delta = J'f and solve them
   // using a sparse Cholesky factorization. Notice that when compared
   // to SuiteSparse we have to explicitly compute the normal equations
@@ -178,42 +225,45 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
       outer_product_->mutable_cols(),
       outer_product_->mutable_values());
 
-  const Vector b = VectorRef(rhs_and_solution, outer_product_->num_rows());
-  if (simplicial_ldlt_.get() == NULL || options_.dynamic_sparsity) {
-    simplicial_ldlt_.reset(new SimplicialLDLT);
-    // This is a crappy way to be doing this. But right now Eigen does
-    // not expose a way to do symbolic analysis with a given
-    // permutation pattern, so we cannot use a block analysis of the
-    // Jacobian.
-    simplicial_ldlt_->analyzePattern(AtA);
-    if (simplicial_ldlt_->info() != Eigen::Success) {
-      summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-      summary.message =
-          "Eigen failure. Unable to find symbolic factorization.";
-      return summary;
+  // Dynamic sparsity means that we cannot depend on a static analysis
+  // of sparsity structure of the jacobian, so we compute a new
+  // symbolic factorization every time.
+  if (options_.dynamic_sparsity) {
+    amd_ldlt_.reset(NULL);
+  }
+
+  bool do_symbolic_analysis = false;
+
+  // If using post ordering or dynamic sparsity, or an old version of
+  // Eigen, we cannot depend on a preordered jacobian, so we work with
+  // a SimplicialLDLT decomposition with AMD ordering.
+  if (options_.use_postordering ||
+      options_.dynamic_sparsity ||
+      !EIGEN_VERSION_AT_LEAST(3, 2, 2)) {
+    if (amd_ldlt_.get() == NULL) {
+      amd_ldlt_.reset(new SimplicialLDLTWithAMDOrdering);
+      do_symbolic_analysis = true;
     }
-  }
-  event_logger.AddEvent("Analysis");
 
-  simplicial_ldlt_->factorize(AtA);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to find numeric factorization.";
-    return summary;
+    return SimplicialLDLTSolve(AtA,
+                               do_symbolic_analysis,
+                               amd_ldlt_.get(),
+                               rhs_and_solution,
+                               &event_logger);
   }
 
-  VectorRef(rhs_and_solution, outer_product_->num_rows()) =
-      simplicial_ldlt_->solve(b);
-  if(simplicial_ldlt_->info() != Eigen::Success) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message =
-        "Eigen failure. Unable to do triangular solve.";
-    return summary;
+  // The common case
+  if (natural_ldlt_.get() == NULL) {
+    natural_ldlt_.reset(new SimplicialLDLTWithNaturalOrdering);
+    do_symbolic_analysis = true;
   }
 
-  event_logger.AddEvent("Solve");
-  return summary;
+  return SimplicialLDLTSolve(AtA,
+                             do_symbolic_analysis,
+                             natural_ldlt_.get(),
+                             rhs_and_solution,
+                             &event_logger);
+
 #endif  // EIGEN_USE_EIGEN_SPARSE
 }
 
@@ -291,7 +341,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     summary.message =
         "CXSparse failure. Unable to find symbolic factorization.";
-  } else if (!cxsparse_.SolveCholesky(AtA, cxsparse_factor_, rhs_and_solution)) {
+  } else if (!cxsparse_.SolveCholesky(AtA,
+                                      cxsparse_factor_,
+                                      rhs_and_solution)) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "CXSparse::SolveCholesky failed.";
   }
@@ -341,7 +393,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
       if (options_.dynamic_sparsity) {
         factor_ = ss_.AnalyzeCholesky(&lhs, &summary.message);
       } else {
-        factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.message);
+        factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs,
+                                                         &summary.message);
       }
     }
   }
@@ -359,7 +412,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     return summary;
   }
 
-  cholmod_dense* rhs = ss_.CreateDenseVector(rhs_and_solution, num_cols, num_cols);
+  cholmod_dense* rhs = ss_.CreateDenseVector(rhs_and_solution,
+                                             num_cols,
+                                             num_cols);
   cholmod_dense* solution = ss_.Solve(factor_, rhs, &summary.message);
   event_logger.AddEvent("Solve");
 
