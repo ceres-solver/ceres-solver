@@ -16,6 +16,24 @@
       "revId": "9f7032369ea4e432f0fb507cb6d2209741ee6946",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d37ef124_4c03542e",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-08-29T04:53:39Z",
+      "side": 1,
+      "message": "it cometh\nat cmake time in the next CL.",
+      "parentUuid": "d37ef124_8c093c52",
+      "revId": "9f7032369ea4e432f0fb507cb6d2209741ee6946",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
