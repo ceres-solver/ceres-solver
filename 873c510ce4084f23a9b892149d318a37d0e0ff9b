@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37ef124_8c6dbcd1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-29T05:18:44Z",
+      "side": 1,
+      "message": "This is too friendly. This should be more obnoxious; I suggest an entire line with just \"WARNING\" by itself or similar.",
+      "revId": "873c510ce4084f23a9b892149d318a37d0e0ff9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d37ef124_2c9cc88b",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-29T05:18:44Z",
+      "side": 1,
+      "message": "This function has 4 nearly identical chunks of code caling SimplicialLDLTSolve. Perhaps just capturing the variables for the amd_ldlt_ and natural_ldlt_ would make it possible to shorten this considerably?",
+      "revId": "873c510ce4084f23a9b892149d318a37d0e0ff9b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
