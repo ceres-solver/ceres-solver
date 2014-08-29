@@ -46,6 +46,12 @@
 #include "ceres/suitesparse.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
+#include "Eigen/SparseCore"
+
+#ifdef CERES_USE_EIGEN_SPARSE
+#include "Eigen/OrderingMethods"
+#endif
+
 #include "glog/logging.h"
 
 namespace ceres {
@@ -131,6 +137,53 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
   cxsparse.ApproximateMinimumDegreeOrdering(block_hessian, ordering);
   cxsparse.Free(block_hessian);
 #endif  // CERES_NO_CXSPARSE
+}
+
+void OrderingForSparseNormalCholeskyUsingEigenSparse(
+    const TripletSparseMatrix& tsm_block_jacobian_transpose,
+    int* ordering) {
+#ifndef CERES_USE_EIGEN_SPARSE
+  LOG(FATAL) <<
+      "SPARSE_NORMAL_CHOLESKY cannot be used with EIGEN_SPARSE "
+      "because Ceres was not built with support for "
+      "Eigen's SimplicialLDLT decomposition. "
+      "This requires enabling building with -DEIGENSPARSE=ON.";
+#else
+
+  // This conversion from a TripletSparseMatrix to a Eigen::Triplet
+  // matrix is unfortunate, but unavoidable for now. It is not a
+  // significant performance penalty in the grand scheme of
+  // things. The right thing to do here would be to get a compressed
+  // row sparse matrix representation of the jacobian and go from
+  // there. But that is a project for another day.
+
+  const int* rows = tsm_block_jacobian_transpose.rows();
+  const int* cols = tsm_block_jacobian_transpose.cols();
+
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  typedef Eigen::Triplet<int> Triplet;
+  std::vector<Triplet> triplets;
+  int num_nonzeros = tsm_block_jacobian_transpose.num_nonzeros();
+  triplets.reserve(num_nonzeros);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    triplets.push_back(Triplet(rows[i], cols[i], 1));
+  }
+
+  SparseMatrix block_jacobian_transpose(
+      tsm_block_jacobian_transpose.num_rows(),
+      tsm_block_jacobian_transpose.num_cols());
+  block_jacobian_transpose.setFromTriplets(triplets.begin(),
+                                           triplets.end());
+  SparseMatrix block_hessian =
+      block_jacobian_transpose * block_jacobian_transpose.transpose();
+
+  Eigen::AMDOrdering<int> amd_ordering;
+  Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
+  amd_ordering(block_hessian, perm);
+  for (int i = 0; i < tsm_block_jacobian_transpose.num_rows(); ++i) {
+    ordering[i] = perm.indices()[i];
+  }
+#endif  // CERES_USE_EIGEN_SPARSE
 }
 
 }  // namespace
@@ -423,11 +476,18 @@ bool ReorderProgramForSparseNormalCholesky(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-    // Starting with v3.2.2 Eigen has support for symbolic analysis on
-    // pre-ordered matrices.
-    //
-    // TODO(sameeragarwal): Apply block amd for eigen.
+#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
+       OrderingForSparseNormalCholeskyUsingEigenSparse(
+        *tsm_block_jacobian_transpose,
+        &ordering[0]);
+#else
+    // For Eigen versions less than 3.2.2, there is nothing to do as
+    // older versions of Eigen do not expose a method for doing
+    // symbolic analysis on pre-ordered matrices, so a block
+    // pre-ordering is a bit pointless.
+
     return true;
+#endif
   }
 
   // Apply ordering.
