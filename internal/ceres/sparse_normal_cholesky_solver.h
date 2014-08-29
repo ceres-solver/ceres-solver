@@ -95,17 +95,28 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
   cs_dis* cxsparse_factor_;
 
 #ifdef CERES_USE_EIGEN_SPARSE
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper,
+
+  // The preprocessor gymnastics here are dealing with the fact that
+  // before version 3.2.2, Eigen did not support a third template
+  // parameter to specify the ordering.
+#if EIGEN_VERSION_AT_LEAST(3,2,2)
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper,
                                 Eigen::NaturalOrdering<int> >
   SimplicialLDLTWithNaturalOrdering;
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Upper,
+  scoped_ptr<SimplicialLDLTWithNaturalOrdering> natural_ldlt_;
+
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper,
                                 Eigen::AMDOrdering<int> >
   SimplicialLDLTWithAMDOrdering;
-
-  scoped_ptr<SimplicialLDLTWithNaturalOrdering> natural_ldlt_;
   scoped_ptr<SimplicialLDLTWithAMDOrdering> amd_ldlt_;
+
+#else
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper>
+  SimplicialLDLTWithAMDOrdering;
+
+  scoped_ptr<SimplicialLDLTWithAMDOrdering> amd_ldlt_;
+#endif
+
 #endif
 
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;

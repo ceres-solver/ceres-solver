@@ -252,6 +252,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                                &event_logger);
   }
 
+#if EIGEN_VERSION_AT_LEAST(3,2,2)
   // The common case
   if (natural_ldlt_.get() == NULL) {
     natural_ldlt_.reset(new SimplicialLDLTWithNaturalOrdering);
@@ -263,6 +264,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                              natural_ldlt_.get(),
                              rhs_and_solution,
                              &event_logger);
+#endif
 
 #endif  // EIGEN_USE_EIGEN_SPARSE
 }
