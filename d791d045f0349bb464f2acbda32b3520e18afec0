@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37ef124_cce0a45b",
+        "filename": "internal/ceres/reorder_program.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-08-29T06:56:08Z",
+      "side": 1,
+      "message": "Comment above:\n\n  // Use the new ordering for the remainder",
+      "revId": "d791d045f0349bb464f2acbda32b3520e18afec0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
