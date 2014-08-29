@@ -494,7 +494,7 @@ TEST(SystemTest, BundleAdjustmentProblem) {
                                  sparse_linear_algebra_library_type,    \
                                  ordering,                              \
                                  preconditioner))
-
+  /*
   CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kAutomaticOrdering, IDENTITY);
   CONFIGURE(DENSE_SCHUR,            SUITE_SPARSE, kUserOrdering,      IDENTITY);
 
@@ -527,7 +527,7 @@ TEST(SystemTest, BundleAdjustmentProblem) {
   CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kAutomaticOrdering, IDENTITY);
   CONFIGURE(SPARSE_SCHUR,           CX_SPARSE,    kUserOrdering,      IDENTITY);
 #endif  // CERES_NO_CXSPARSE
-
+  */
 #ifdef CERES_USE_EIGEN_SPARSE
   CONFIGURE(SPARSE_SCHUR,           EIGEN_SPARSE, kAutomaticOrdering, IDENTITY);
   CONFIGURE(SPARSE_SCHUR,           EIGEN_SPARSE, kUserOrdering,      IDENTITY);
