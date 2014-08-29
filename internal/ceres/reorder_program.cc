@@ -78,6 +78,29 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   return min_parameter_block_position;
 }
 
+#ifdef CERES_USE_EIGEN_SPARSE
+Eigen::SparseMatrix<int> CreateBlockJacobian(
+    const TripletSparseMatrix& block_jacobian_transpose) {
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+  typedef Eigen::Triplet<int> Triplet;
+
+  const int* rows = block_jacobian_transpose.rows();
+  const int* cols = block_jacobian_transpose.cols();
+  int num_nonzeros = block_jacobian_transpose.num_nonzeros();
+  std::vector<Triplet> triplets;
+  triplets.reserve(num_nonzeros);
+  for (int i = 0; i < num_nonzeros; ++i) {
+    triplets.push_back(Triplet(cols[i], rows[i], 1));
+  }
+
+  const int num_rows = block_jacobian_transpose.num_rows();
+  const int num_cols = block_jacobian_transpose.num_cols();
+  SparseMatrix block_jacobian(num_cols, num_rows);
+  block_jacobian.setFromTriplets(triplets.begin(), triplets.end());
+  return block_jacobian;
+}
+#endif
+
 void OrderingForSparseNormalCholeskyUsingSuiteSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     const vector<ParameterBlock*>& parameter_blocks,
@@ -157,30 +180,17 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   // row sparse matrix representation of the jacobian and go from
   // there. But that is a project for another day.
 
-  const int* rows = tsm_block_jacobian_transpose.rows();
-  const int* cols = tsm_block_jacobian_transpose.cols();
-
   typedef Eigen::SparseMatrix<int> SparseMatrix;
-  typedef Eigen::Triplet<int> Triplet;
-  std::vector<Triplet> triplets;
-  int num_nonzeros = tsm_block_jacobian_transpose.num_nonzeros();
-  triplets.reserve(num_nonzeros);
-  for (int i = 0; i < num_nonzeros; ++i) {
-    triplets.push_back(Triplet(rows[i], cols[i], 1));
-  }
 
-  SparseMatrix block_jacobian_transpose(
-      tsm_block_jacobian_transpose.num_rows(),
-      tsm_block_jacobian_transpose.num_cols());
-  block_jacobian_transpose.setFromTriplets(triplets.begin(),
-                                           triplets.end());
-  SparseMatrix block_hessian =
-      block_jacobian_transpose * block_jacobian_transpose.transpose();
+  const SparseMatrix block_jacobian =
+      CreateBlockJacobian(tsm_block_jacobian_transpose);
+  const SparseMatrix block_hessian =
+      block_jacobian.transpose() * block_jacobian;
 
   Eigen::AMDOrdering<int> amd_ordering;
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
   amd_ordering(block_hessian, perm);
-  for (int i = 0; i < tsm_block_jacobian_transpose.num_rows(); ++i) {
+  for (int i = 0; i < block_hessian.rows(); ++i) {
     ordering[i] = perm.indices()[i];
   }
 #endif  // CERES_USE_EIGEN_SPARSE
@@ -360,6 +370,54 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
 #endif
 }
 
+void MaybeReorderSchurComplementColumnsUsingEigen(
+    const int size_of_first_elimination_group,
+    const ProblemImpl::ParameterMap& parameter_map,
+    Program* program) {
+#if !EIGEN_VERSION_AT_LEAST(3, 2, 2) || !defined(CERES_USE_EIGEN_SPARSE)
+  return;
+#else
+
+  // Compute a block sparse presentation of J'.
+  scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
+      program->CreateJacobianBlockSparsityTranspose());
+
+  typedef Eigen::SparseMatrix<int> SparseMatrix;
+
+  const SparseMatrix<int> block_jacobian =
+      CreateBlockJacobian(tsm_block_jacobian_transpose);
+  const int num_rows = block_jacobian.rows();
+  const int num_cols = block_jacobian.cols();
+
+  const SparseMatrix E =
+      block_jacobian.block(0, 0,
+                           num_rows, size_of_first_elimination_group);
+  const SparseMatrix F =
+      block_jacobian.block(0, size_of_first_elimination_group,
+                           num_rows, num_cols - size_of_first_elimination_group);
+
+  // Block sparsity pattern of the schur complement.
+  const SparseMatrix block_schur_complement =
+      F.transpose() * F - F.transpose() * E * E.transpose() * F;
+
+  Eigen::AMDOrdering<int> amd_ordering;
+  Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
+  amd_ordering(block_schur_complement, perm);
+  vector<ParameterBlock*> ordering(num_rows);
+  for (int i = 0; i < num_rows; ++i) {
+    const int index =
+        (i < size_of_first_elimination_group)
+        ? i
+        : perm.indices()[i - size_of_first_elimination_group] +
+        size_of_first_elimination_group;
+    ordering[i] = program->parameter_blocks()[index];
+  }
+
+  swap(*program->mutable_parameter_blocks(), ordering);
+  program->SetParameterOffsetsAndIndex();
+#endif
+}
+
 bool ReorderProgramForSchurTypeLinearSolver(
     const LinearSolverType linear_solver_type,
     const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
@@ -430,14 +488,18 @@ bool ReorderProgramForSchurTypeLinearSolver(
 
   program->SetParameterOffsetsAndIndex();
 
-  if (linear_solver_type == SPARSE_SCHUR &&
-      sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    MaybeReorderSchurComplementColumnsUsingSuiteSparse(
-        *parameter_block_ordering,
-        program);
+  if (linear_solver_type == SPARSE_SCHUR) {
+    if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+      MaybeReorderSchurComplementColumnsUsingSuiteSparse(
+          *parameter_block_ordering,
+          program);
+    } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
+      MaybeReorderSchurComplementColumnsUsingEigen(
+          size_of_first_elimination_group,
+          parameter_map,
+          program);
+    }
   }
-
-
 
   // Schur type solvers also require that their residual blocks be
   // lexicographically ordered.
