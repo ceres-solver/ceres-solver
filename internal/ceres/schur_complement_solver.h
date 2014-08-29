@@ -191,16 +191,16 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
 
 #ifdef CERES_USE_EIGEN_SPARSE
 
-  // For Eigen versions less than 3.2.2, we cannot pre-order the
-  // Jacobian, so we must use an AMD ordering.
+  // The preprocessor gymnastics here are dealing with the fact that
+  // before version 3.2.2, Eigen did not support a third template
+  // parameter to specify the ordering.
 #if EIGEN_VERSION_AT_LEAST(3,2,2)
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Lower,
-                                Eigen::NaturalOrdering<int> > SimplicialLDLT;
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Lower,
+                                Eigen::NaturalOrdering<int> >
+  SimplicialLDLT;
 #else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>,
-                                Eigen::Lower,
-                                Eigen::AMDOrdering<int> > SimplicialLDLT;
+  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Lower>
+  SimplicialLDLT;
 #endif
 
   scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
