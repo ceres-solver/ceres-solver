@@ -161,6 +161,8 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
 #endif  // CERES_NO_CXSPARSE
 }
 
+
+#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     int* ordering) {
@@ -178,7 +180,6 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   // things. The right thing to do here would be to get a compressed
   // row sparse matrix representation of the jacobian and go from
   // there. But that is a project for another day.
-
   typedef Eigen::SparseMatrix<int> SparseMatrix;
 
   const SparseMatrix block_jacobian =
@@ -194,6 +195,7 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   }
 #endif  // CERES_USE_EIGEN_SPARSE
 }
+#endif
 
 }  // namespace
 
