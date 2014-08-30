@@ -113,9 +113,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   // Initial value of the quadratic model Q = x'Ax - 2 * b'x.
   double Q0 = -1.0 * xref.dot(bref + r);
 
-  for (summary.num_iterations = 1;
-       summary.num_iterations <= options_.max_num_iterations;
-       ++summary.num_iterations) {
+  for (summary.num_iterations = 1;; ++summary.num_iterations) {
+
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {
       z.setZero();
@@ -225,6 +224,10 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
       summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
           StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
+      break;
+    }
+
+    if (summary.num_iterations >= options_.max_num_iterations) {
       break;
     }
   }
