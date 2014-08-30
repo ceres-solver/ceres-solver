@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f38bf5a0_409f5082",
+        "filename": "internal/ceres/conjugate_gradients_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-08-30T21:53:36Z",
+      "side": 1,
+      "message": "johannes, this creates another bug, where if max_num_iterations is 1, you will never enter this loop.",
+      "range": {
+        "startLine": 118,
+        "startChar": 17,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "e0fbf350940e60fbe7fbd7c4d438e71df123fdf6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
