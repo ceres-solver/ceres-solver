@@ -7,6 +7,13 @@ Releases
 HEAD
 ====
 
+#. Eigen can now be used as sparse linear algebra
+   library. ``EIGEN_SPARSE``.
+
+#. Improve NDK version detection.
+
+#. ceres version macro stuff
+
 #. Added ``Solver::Options::IsValid`` which allows users to validate
    their solver configuration before calling ``Solve``.
 
@@ -19,6 +26,9 @@ Backward Incompatible API Changes
 #. ``NumericDiffFunctor`` has been removed. It's API was broken, and
    the implementation was an unnecessary layer of abstraction over
    ``CostFunctionToFunctor``.
+
+#. ``POLAR_RIBIRERE`` conjugate gradients direction type has been
+   renamed to ``POLAK_RIBIERE``.
 
 #. ``Solver::Options::solver_log`` has been removed. If needed this
     iteration callback can easily be implemented in user code.
@@ -35,6 +45,11 @@ Backward Incompatible API Changes
    ``Solver::Summary::preconditioner_type_given`` and
    ``Solver::Summary::preconditioner_type_used`` to be more consistent
    with how information about the linear solver is communicated.
+
+Bug Fixes
+=========
+
+
 
 1.9.0
 =====
