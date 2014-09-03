@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50583741_8ecd5ff3",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-03T19:36:56Z",
+      "side": 1,
+      "message": "It\u0027s worth showing an example with a \"normal\" function (e.g. unchangable third-party library code that only works with doubles) working with autodiff.\n\nIt\u0027s true that logically this example, combined with numeric diff cost function, can achieve this. And arguably, we should not have to include such an end-to-end example. However I suspect many users will not immediately understand this issue. I suggest expanding this section accordingly. For the \"library\" function, consider even using an obnoxious name (EXTERN_point_project_camera_2xx\") to emphasize that it\u0027s \"not your code\" that you have to interop with it.",
+      "revId": "31f8510e3214fa2da933ad488d36f38c707ddeb3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
