@@ -567,105 +567,15 @@ the corresponding accessors. This information will be verified by the
    As a rule of thumb, try using :class:`NumericDiffCostFunction` before
    you use :class:`DynamicNumericDiffCostFunction`.
 
-
-:class:`NumericDiffFunctor`
----------------------------
-
-.. class:: NumericDiffFunctor
-
-   Sometimes parts of a cost function can be differentiated
-   automatically or analytically but others require numeric
-   differentiation. :class:`NumericDiffFunctor` is a wrapper class
-   that takes a variadic functor evaluating a function, numerically
-   differentiates it and makes it available as a templated functor so
-   that it can be easily used as part of Ceres' automatic
-   differentiation framework.
-
-   For example, let us assume that
-
-   .. code-block:: c++
-
-     struct IntrinsicProjection
-       IntrinsicProjection(const double* observations);
-       bool operator()(const double* calibration,
-                       const double* point,
-                       double* residuals);
-     };
-
-   is a functor that implements the projection of a point in its local
-   coordinate system onto its image plane and subtracts it from the
-   observed point projection.
-
-   Now we would like to compose the action of this functor with the
-   action of camera extrinsics, i.e., rotation and translation, which
-   is given by the following templated function
-
-   .. code-block:: c++
-
-     template<typename T>
-     void RotateAndTranslatePoint(const T* rotation,
-                                  const T* translation,
-                                  const T* point,
-                                  T* result);
-
-   To compose the extrinsics and intrinsics, we can construct a
-   ``CameraProjection`` functor as follows.
-
-   .. code-block:: c++
-
-    struct CameraProjection {
-       typedef NumericDiffFunctor<IntrinsicProjection, CENTRAL, 2, 5, 3>
-          IntrinsicProjectionFunctor;
-
-      CameraProjection(double* observation) {
-        intrinsic_projection_.reset(
-            new IntrinsicProjectionFunctor(observation)) {
-      }
-
-      template <typename T>
-      bool operator()(const T* rotation,
-                      const T* translation,
-                      const T* intrinsics,
-                      const T* point,
-                      T* residuals) const {
-        T transformed_point[3];
-        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
-        return (*intrinsic_projection_)(intrinsics, transformed_point, residual);
-      }
-
-     private:
-      scoped_ptr<IntrinsicProjectionFunctor> intrinsic_projection_;
-    };
-
-   Here, we made the choice of using ``CENTRAL`` differences to compute
-   the jacobian of ``IntrinsicProjection``.
-
-   Now, we are ready to construct an automatically differentiated cost
-   function as
-
-   .. code-block:: c++
-
-    CostFunction* cost_function =
-        new AutoDiffCostFunction<CameraProjection, 2, 3, 3, 5>(
-           new CameraProjection(observations));
-
-   ``cost_function`` now seamlessly integrates automatic
-   differentiation of ``RotateAndTranslatePoint`` with a numerically
-   differentiated version of ``IntrinsicProjection``.
-
-
 :class:`CostFunctionToFunctor`
 ------------------------------
 
 .. class:: CostFunctionToFunctor
 
-   Just like :class:`NumericDiffFunctor` allows numeric
-   differentiation to be mixed with automatic differentiation,
-   :class:`CostFunctionToFunctor` provides an even more general
-   mechanism.  :class:`CostFunctionToFunctor` is an adapter class that
-   allows users to use :class:`CostFunction` objects in templated
-   functors which are to be used for automatic differentiation.  This
-   allows the user to seamlessly mix analytic, numeric and automatic
+   :class:`CostFunctionToFunctor` is an adapter class that allows
+   users to use :class:`CostFunction` objects in templated functors
+   which are to be used for automatic differentiation.  This allows
+   the user to seamlessly mix analytic, numeric and automatic
    differentiation.
 
    For example, let us assume that
@@ -725,7 +635,6 @@ the corresponding accessors. This information will be verified by the
      private:
       scoped_ptr<CostFunctionToFunctor<2,5,3> > intrinsic_projection_;
     };
-
 
 
 :class:`ConditionedCostFunction`
