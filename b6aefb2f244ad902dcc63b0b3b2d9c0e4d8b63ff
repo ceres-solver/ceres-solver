@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50583741_1d12bf2c",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-03T23:29:31Z",
+      "side": 1,
+      "message": "\"Suppose, we that were not\" -\u003e \"If that were not\"",
+      "revId": "b6aefb2f244ad902dcc63b0b3b2d9c0e4d8b63ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50583741_dd7e6731",
+        "filename": "docs/source/modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-03T23:29:31Z",
+      "side": 1,
+      "message": "Making this a struct with similar form to existing cost functions obscures the common case. The common case is calling plain old functions from some external library; this example would be stronger if this was clearly demonstrated. Maybe take the example function to be:\n\n  some_library::some_math_function(double x, double y);\n\nto illustrate how this interoperates with existing libraries.\n\nMaybe this can show the wrapper that calls the external library. That way this example can be written as\n\n1. Wrap your existing function into a form callable like a CostFunction(e.g. arguments as const double*, output as double*)\n2. Wrap the CostFunction with a CostFunctionToCostFunctor",
+      "revId": "b6aefb2f244ad902dcc63b0b3b2d9c0e4d8b63ff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
