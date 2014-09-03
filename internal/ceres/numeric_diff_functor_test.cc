@@ -64,6 +64,14 @@ TEST(NumericDiffCostFunction, EasyCaseCentralDifferences) {
   functor.ExpectCostFunctionEvaluationIsNearlyCorrect(*cost_function, CENTRAL);
 }
 
+TEST(NumericDiffCostFunction, DynamicNumberOfResidualsDeathTest) {
+  typedef NumericDiffFunctor<EasyFunctor, CENTRAL, ceres::DYNAMIC, 5, 5>
+      NumericDiffEasyFunctor;
+
+  EXPECT_DEATH_IF_SUPPORTED(NumericDiffEasyFunctor(new EasyFunctor),
+                            "residuals");
+}
+
 TEST(NumericDiffCostFunction, EasyCaseForwardDifferences) {
   typedef NumericDiffFunctor<EasyFunctor, FORWARD, 3, 5, 5>
       NumericDiffEasyFunctor;

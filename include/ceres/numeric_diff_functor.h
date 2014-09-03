@@ -127,6 +127,8 @@ class NumericDiffFunctor {
                                                           TAKE_OWNERSHIP,
                                                           kNumResiduals,
                                                           relative_step_size)) {
+    CHECK_NE(kNumResiduals, ceres::DYNAMIC)
+        << "NumericDiffFunctor does not support dynamic number of residuals.";
   }
 
   NumericDiffFunctor(Functor* functor, double relative_step_size = 1e-6)
@@ -139,100 +141,8 @@ class NumericDiffFunctor {
                                                  TAKE_OWNERSHIP,
                                                  kNumResiduals,
                                                  relative_step_size)) {
-  }
-
-  bool operator()(const double* x0, double* residuals) const {
-    return functor_(x0, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  double* residuals) const {
-    return functor_(x0, x1, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  const double* x5,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  const double* x5,
-                  const double* x6,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  const double* x5,
-                  const double* x6,
-                  const double* x7,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  const double* x5,
-                  const double* x6,
-                  const double* x7,
-                  const double* x8,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, residuals);
-  }
-
-  bool operator()(const double* x0,
-                  const double* x1,
-                  const double* x2,
-                  const double* x3,
-                  const double* x4,
-                  const double* x5,
-                  const double* x6,
-                  const double* x7,
-                  const double* x8,
-                  const double* x9,
-                  double* residuals) const {
-    return functor_(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, residuals);
+    CHECK_NE(kNumResiduals, ceres::DYNAMIC)
+        << "NumericDiffFunctor does not support dynamic number of residuals.";
   }
 
   template <typename T>
