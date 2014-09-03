@@ -16,6 +16,10 @@ HEAD
 Backward Incompatible API Changes
 ---------------------------------
 
+#. ``NumericDiffFunctor`` has been removed. It's API was broken, and
+   the implementation was an unnecessary layer of abstraction over
+   ``CostFunctionToFunctor``.
+
 #. ``Solver::Options::solver_log`` has been removed. If needed this
     iteration callback can easily be implemented in user code.
 
