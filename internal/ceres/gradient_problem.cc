@@ -26,34 +26,56 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
-
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
-#include "ceres/cost_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_problem.h"
-#include "ceres/gradient_problem_solver.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
 #include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
-#include "ceres/version.h"
+#include "glog/logging.h"
 
-#endif  // CERES_PUBLIC_CERES_H_
+namespace ceres {
+
+GradientProblem::GradientProblem(FirstOrderFunction* function)
+    : function_(function),
+      parameterization_(
+          new IdentityParameterization(function_->NumParameters())),
+      scratch_(new double[function_->NumParameters()]) {
+}
+
+GradientProblem::GradientProblem(FirstOrderFunction* function,
+                                 LocalParameterization* parameterization)
+      : function_(function),
+        parameterization_(parameterization),
+        scratch_(new double[function_->NumParameters()]) {
+  CHECK_EQ(function_->NumParameters(), parameterization_->GlobalSize());
+}
+
+int GradientProblem::NumParameters() const {
+  return function_->NumParameters();
+}
+
+int GradientProblem::NumLocalParameters() const {
+  return parameterization_->LocalSize();
+}
+
+
+bool GradientProblem::Evaluate(const double* parameters,
+                               double* cost,
+                               double* gradient) const {
+  if (gradient == NULL) {
+    return function_->Evaluate(parameters, cost, NULL);
+  }
+
+  return (function_->Evaluate(parameters, cost, scratch_.get()) &&
+          parameterization_->MultiplyByJacobian(parameters,
+                                                1,
+                                                scratch_.get(),
+                                                gradient));
+}
+
+bool GradientProblem::Plus(const double* x,
+                           const double* delta,
+                           double* x_plus_delta) const {
+  return parameterization_->Plus(x, delta, x_plus_delta);
+}
+
+}  // namespace ceres
