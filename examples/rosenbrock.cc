@@ -26,34 +26,49 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
+#include "ceres/ceres.h"
+#include "glog/logging.h"
 
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
-#include "ceres/cost_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
-#include "ceres/gradient_problem.h"
-#include "ceres/gradient_problem_solver.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
-#include "ceres/version.h"
+// f(x,y) = (1-x)^2 + 100(y - x^2)^2;
+class Rosenbrock : public ceres::FirstOrderFunction {
+ public:
+  virtual ~Rosenbrock() {}
 
-#endif  // CERES_PUBLIC_CERES_H_
+  virtual bool Evaluate(const double* parameters,
+                        double* cost,
+                        double* gradient) const {
+    const double x = parameters[0];
+    const double y = parameters[1];
+
+    cost[0] = (1.0 - x) * (1.0 - x) + 100.0 * (y - x * x) * (y - x * x);
+    if (gradient != NULL) {
+      gradient[0] = -2.0 * (1.0 - x) - 200.0 * (y - x * x) * 2.0 * x;
+      gradient[1] = 200.0 * (y - x * x);
+    }
+    return true;
+  }
+
+  virtual int NumParameters() const { return 2; }
+};
+
+
+int main(int argc, char** argv) {
+  google::InitGoogleLogging(argv[0]);
+
+  double parameters[2] = {-1.2, 1.0};
+
+  ceres::GradientProblemSolver::Options options;
+  options.minimizer_progress_to_stdout = true;
+
+  ceres::GradientProblemSolver::Summary summary;
+  ceres::GradientProblem problem(new Rosenbrock());
+  ceres::Solve(options, problem, parameters, &summary);
+
+  std::cout << summary.FullReport() << "\n";
+  std::cout << "Initial x: " << -1.2 << " y: " << 1.0 << "\n";
+  std::cout << "Final   x: " << parameters[0]
+            << " y: " << parameters[1] << "\n";
+  return 0;
+}
