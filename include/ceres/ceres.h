@@ -47,7 +47,6 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/loss_function.h"
 #include "ceres/numeric_diff_cost_function.h"
-#include "ceres/numeric_diff_functor.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/problem.h"
 #include "ceres/sized_cost_function.h"
