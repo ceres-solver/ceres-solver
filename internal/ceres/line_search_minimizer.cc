@@ -375,7 +375,6 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
 
-    summary->iterations.push_back(iteration_summary);
     ++summary->num_successful_steps;
 
     if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
@@ -401,6 +400,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       break;
     }
+
+    summary->iterations.push_back(iteration_summary);
   }
 }
 
