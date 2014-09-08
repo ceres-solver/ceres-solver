@@ -265,7 +265,7 @@ Inner Iterations
 
 Some non-linear least squares problems have additional structure in
 the way the parameter blocks interact that it is beneficial to modify
-the way the trust region step is computed. e.g., consider the
+the way the trust region step is computed. For example, consider the
 following regression problem
 
 .. math::   y = a_1 e^{b_1 x} + a_2 e^{b_3 x^2 + c_1}
@@ -521,7 +521,7 @@ turn implies that the matrix :math:`H` is of the form
 .. math:: H = \left[ \begin{matrix} B & E\\ E^\top & C \end{matrix} \right]\ ,
    :label: hblock
 
-where, :math:`B \in \mathbb{R}^{pc\times pc}` is a block sparse matrix
+where :math:`B \in \mathbb{R}^{pc\times pc}` is a block sparse matrix
 with :math:`p` blocks of size :math:`c\times c` and :math:`C \in
 \mathbb{R}^{qs\times qs}` is a block diagonal matrix with :math:`q` blocks
 of size :math:`s\times s`. :math:`E \in \mathbb{R}^{pc\times qs}` is a
@@ -560,7 +560,7 @@ c`. The block :math:`S_{ij}` corresponding to the pair of images
 observe at least one common point.
 
 
-Now, eq-linear2 can be solved by first forming :math:`S`, solving for
+Now, :eq:`linear2` can be solved by first forming :math:`S`, solving for
 :math:`\Delta y`, and then back-substituting :math:`\Delta y` to
 obtain the value of :math:`\Delta z`.  Thus, the solution of what was
 an :math:`n\times n`, :math:`n=pc+qs` linear system is reduced to the
@@ -622,7 +622,7 @@ Another option for bundle adjustment problems is to apply PCG to the
 reduced camera matrix :math:`S` instead of :math:`H`. One reason to do
 this is that :math:`S` is a much smaller matrix than :math:`H`, but
 more importantly, it can be shown that :math:`\kappa(S)\leq
-\kappa(H)`.  Cseres implements PCG on :math:`S` as the
+\kappa(H)`.  Ceres implements PCG on :math:`S` as the
 ``ITERATIVE_SCHUR`` solver. When the user chooses ``ITERATIVE_SCHUR``
 as the linear solver, Ceres automatically switches from the exact step
 algorithm to an inexact step algorithm.
@@ -709,7 +709,7 @@ these preconditioners and refers to them as ``JACOBI`` and
 For bundle adjustment problems arising in reconstruction from
 community photo collections, more effective preconditioners can be
 constructed by analyzing and exploiting the camera-point visibility
-structure of the scene [KushalAgarwal]. Ceres implements the two
+structure of the scene [KushalAgarwal]_. Ceres implements the two
 visibility based preconditioners described by Kushal & Agarwal as
 ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL``. These are fairly new
 preconditioners and Ceres' implementation of them is in its early
@@ -747,14 +747,14 @@ Given such an ordering, Ceres ensures that the parameter blocks in the
 lowest numbered elimination group are eliminated first, and then the
 parameter blocks in the next lowest numbered elimination group and so
 on. Within each elimination group, Ceres is free to order the
-parameter blocks as it chooses. e.g. Consider the linear system
+parameter blocks as it chooses. For example, consider the linear system
 
 .. math::
   x + y &= 3\\
   2x + 3y &= 7
 
 There are two ways in which it can be solved. First eliminating
-:math:`x` from the two equations, solving for y and then back
+:math:`x` from the two equations, solving for :math:`y` and then back
 substituting for :math:`x`, or first eliminating :math:`y`, solving
 for :math:`x` and back substituting for :math:`y`. The user can
 construct three orderings here.
@@ -1001,7 +1001,7 @@ elimination group [LiSaad]_.
 
    During the bracketing phase of a Wolfe line search, the step size
    is increased until either a point satisfying the Wolfe conditions
-   is found, or an upper bound for a bracket containinqg a point
+   is found, or an upper bound for a bracket containing a point
    satisfying the conditions is found.  Precisely, at each iteration
    of the expansion:
 
@@ -1094,7 +1094,7 @@ elimination group [LiSaad]_.
    Default: ``1e6``
 
    The ``LEVENBERG_MARQUARDT`` strategy, uses a diagonal matrix to
-   regularize the the trust region step. This is the lower bound on
+   regularize the trust region step. This is the lower bound on
    the values of this diagonal matrix.
 
 .. member:: double Solver::Options::max_lm_diagonal
@@ -1102,7 +1102,7 @@ elimination group [LiSaad]_.
    Default:  ``1e32``
 
    The ``LEVENBERG_MARQUARDT`` strategy, uses a diagonal matrix to
-   regularize the the trust region step. This is the upper bound on
+   regularize the trust region step. This is the upper bound on
    the values of this diagonal matrix.
 
 .. member:: int Solver::Options::max_num_consecutive_invalid_steps
@@ -1347,7 +1347,7 @@ elimination group [LiSaad]_.
    on each Newton/Trust region step using a coordinate descent
    algorithm.  For more details, see :ref:`section-inner-iterations`.
 
-.. member:: double Solver::Options::inner_itearation_tolerance
+.. member:: double Solver::Options::inner_iteration_tolerance
 
    Default: ``1e-3``
 
@@ -1410,7 +1410,7 @@ elimination group [LiSaad]_.
    #. ``|gradient|`` is the max norm of the gradient.
    #. ``|step|`` is the change in the parameter vector.
    #. ``tr_ratio`` is the ratio of the actual change in the objective
-      function value to the change in the the value of the trust
+      function value to the change in the value of the trust
       region model.
    #. ``tr_radius`` is the size of the trust region radius.
    #. ``ls_iter`` is the number of linear solver iterations used to
@@ -1419,7 +1419,7 @@ elimination group [LiSaad]_.
       ``ITERATIVE_SCHUR`` it is the number of iterations of the
       Conjugate Gradients algorithm.
    #. ``iter_time`` is the time take by the current iteration.
-   #. ``total_time`` is the the total time taken by the minimizer.
+   #. ``total_time`` is the total time taken by the minimizer.
 
    For ``LINE_SEARCH_MINIMIZER`` the progress display looks like
 
@@ -1438,7 +1438,7 @@ elimination group [LiSaad]_.
    #. ``h`` is the change in the parameter vector.
    #. ``s`` is the optimal step length computed by the line search.
    #. ``it`` is the time take by the current iteration.
-   #. ``tt`` is the the total time taken by the minimizer.
+   #. ``tt`` is the total time taken by the minimizer.
 
 .. member:: vector<int> Solver::Options::trust_region_minimizer_iterations_to_dump
 
@@ -1530,7 +1530,7 @@ elimination group [LiSaad]_.
    Callbacks that are executed at the end of each iteration of the
    :class:`Minimizer`. They are executed in the order that they are
    specified in this vector. By default, parameter blocks are updated
-   only at the end of the optimization, i.e when the
+   only at the end of the optimization, i.e., when the
    :class:`Minimizer` terminates. This behavior is controlled by
    :member:`Solver::Options::update_state_every_variable`. If the user
    wishes to have access to the update parameter blocks when his/her
@@ -1840,7 +1840,7 @@ elimination group [LiSaad]_.
    ``values[rows[i]]`` ... ``values[rows[i + 1] - 1]`` are the values
    of the non-zero columns of row ``i``.
 
-e.g, consider the 3x4 sparse matrix
+e.g., consider the 3x4 sparse matrix
 
 .. code-block:: c++
 
@@ -2078,7 +2078,7 @@ The three arrays will be:
 
    `True` if the user asked for inner iterations to be used as part of
    the optimization and the problem structure was such that they were
-   actually performed. e.g., in a problem with just one parameter
+   actually performed. For example, in a problem with just one parameter
    block, inner iterations are not performed.
 
 .. member:: vector<int> inner_iteration_ordering_given

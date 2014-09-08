@@ -758,8 +758,8 @@ the corresponding accessors. This information will be verified by the
 
    .. math::  cost(x) = ||A(x - b)||^2
 
-   where, the matrix A and the vector b are fixed and x is the
-   variable. In case the user is interested in implementing a cost
+   where, the matrix :math:`A` and the vector :math:`b` are fixed and :math:`x`
+   is the variable. In case the user is interested in implementing a cost
    function of the form
 
   .. math::  cost(x) = (x - \mu)^T S^{-1} (x - \mu)
@@ -913,7 +913,7 @@ their shape graphically. More details can be found in
    Given a loss function :math:`\rho(s)` and a scalar :math:`a`, :class:`ScaledLoss`
    implements the function :math:`a \rho(s)`.
 
-   Since we treat the a ``NULL`` Loss function as the Identity loss
+   Since we treat a ``NULL`` Loss function as the Identity loss
    function, :math:`rho` = ``NULL``: is a valid input and will result
    in the input being scaled by :math:`a`. This provides a simple way
    of implementing a scaled ResidualBlock.
@@ -930,7 +930,7 @@ their shape graphically. More details can be found in
 
    This templated class allows the user to implement a loss function
    whose scale can be mutated after an optimization problem has been
-   constructed. e.g,
+   constructed, e.g,
 
    .. code-block:: c++
 
@@ -1141,7 +1141,7 @@ Instances
      .. math:: x' = \boxplus(x, \Delta x),
 
   For example, Quaternions have a three dimensional local
-  parameterization. It's plus operation can be implemented as (taken
+  parameterization. Its plus operation can be implemented as (taken
   from `internal/ceres/autodiff_local_parameterization_test.cc
   <https://ceres-solver.googlesource.com/ceres-solver/+/master/internal/ceres/autodiff_local_parameterization_test.cc>`_
   )
@@ -1178,7 +1178,7 @@ Instances
         }
       };
 
-  Then given this struct, the auto differentiated local
+  Given this struct, the auto differentiated local
   parameterization can now be constructed as
 
   .. code-block:: c++
@@ -1619,7 +1619,7 @@ within Ceres Solver's automatic differentiation framework.
 
 .. function:: void QuaternionRotatePoint<T>(const T q[4], const T pt[3], T result[3])
 
-   With this function you do not need to assume that q has unit norm.
+   With this function you do not need to assume that :math:`q` has unit norm.
    It does assume that the norm is non-zero.
 
 .. function:: void QuaternionProduct<T>(const T z[4], const T w[4], T zw[4])
