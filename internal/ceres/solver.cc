@@ -34,16 +34,16 @@
 #include <algorithm>
 #include <sstream>   // NOLINT
 #include <vector>
+#include "ceres/gradient_checking_cost_function.h"
 #include "ceres/internal/port.h"
 #include "ceres/parameter_block_ordering.h"
 #include "ceres/preprocessor.h"
-#include "ceres/gradient_checking_cost_function.h"
 #include "ceres/problem.h"
 #include "ceres/problem_impl.h"
 #include "ceres/program.h"
+#include "ceres/solver_utils.h"
 #include "ceres/stringprintf.h"
 #include "ceres/types.h"
-#include "ceres/version.h"
 #include "ceres/wall_time.h"
 
 namespace ceres {
@@ -311,16 +311,6 @@ void StringifyOrdering(const vector<int>& ordering, string* report) {
   internal::StringAppendF(report, "%d", ordering.back());
 }
 
-void SetSummaryFinalCost(Solver::Summary* summary) {
-  summary->final_cost = summary->initial_cost;
-  // We need the loop here, instead of just looking at the last
-  // iteration because the minimizer maybe making non-monotonic steps.
-  for (int i = 0; i < summary->iterations.size(); ++i) {
-    const IterationSummary& iteration_summary = summary->iterations[i];
-    summary->final_cost = min(iteration_summary.cost, summary->final_cost);
-  }
-}
-
 void SummarizeGivenProgram(const internal::Program& program,
                            Solver::Summary* summary) {
   summary->num_parameter_blocks     = program.NumParameterBlocks();
@@ -357,6 +347,8 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->line_search_type                   = options.line_search_type;
   summary->linear_solver_type_given           = options.linear_solver_type;
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
+  LOG(FATAL) << summary->max_lbfgs_rank;
+
   summary->minimizer_type                     = options.minimizer_type;
   summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
   summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;          //  NOLINT
@@ -380,7 +372,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;                 // NOLINT
 
-  SetSummaryFinalCost(summary);
+  internal::SetSummaryFinalCost(summary);
 
   if (pp.reduced_program.get() != NULL) {
     SummarizeReducedProgram(*pp.reduced_program, summary);
@@ -439,44 +431,6 @@ void Minimize(internal::PreprocessedProblem* pp,
     program->StateVectorToParameterBlocks(pp->reduced_parameters.data());
     program->CopyParameterBlockStateToUserState();
   }
-}
-
-string VersionString() {
-  string value = string(CERES_VERSION_STRING);
-
-#ifdef CERES_NO_LAPACK
-  value += "-no_lapack";
-#else
-  value += "-lapack";
-#endif
-
-#ifndef CERES_NO_SUITESPARSE
-  value += "-suitesparse";
-#endif
-
-#ifndef CERES_NO_CXSPARSE
-  value += "-cxsparse";
-#endif
-
-#ifdef CERES_USE_EIGEN_SPARSE
-  value += "-eigensparse";
-#endif
-
-#ifdef CERES_RESTRUCT_SCHUR_SPECIALIZATIONS
-  value += "-no_schur_specializations";
-#endif
-
-#ifdef CERES_USE_OPENMP
-  value += "-openmp";
-#else
-  value += "-no_openmp";
-#endif
-
-#ifdef CERES_NO_CUSTOM_BLAS
-  value += "-no_custom_blas";
-#endif
-
-  return value;
 }
 
 }  // namespace
@@ -640,6 +594,8 @@ string Solver::Summary::BriefReport() const {
 };
 
 string Solver::Summary::FullReport() const {
+  using internal::VersionString;
+
   string report = string("\nSolver Summary (v " + VersionString() + ")\n\n");
 
   StringAppendF(&report, "%45s    %21s\n", "Original", "Reduced");
@@ -840,9 +796,7 @@ string Solver::Summary::FullReport() const {
 };
 
 bool Solver::Summary::IsSolutionUsable() const {
-  return (termination_type == CONVERGENCE ||
-          termination_type == NO_CONVERGENCE ||
-          termination_type == USER_SUCCESS);
+  return internal::IsSolutionUsable(*this);
 }
 
 }  // namespace ceres
