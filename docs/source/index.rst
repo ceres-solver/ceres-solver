@@ -35,7 +35,7 @@ since 2010. At Google, Ceres Solver is used to:
 * Solve `bundle adjustment`_ and SLAM problems in `Project Tango`_.
 
 Outside Google, Ceres is used for solving problems in computer vision,
-computer graphics, astronomy and physics. e.g., `Willow Garage`_ uses
+computer graphics, astronomy and physics. For example, `Willow Garage`_ uses
 it to solve SLAM problems and `Blender`_ uses it for for planar
 tracking and bundle adjustment.
 

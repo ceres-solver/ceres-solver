@@ -500,7 +500,7 @@ Options controlling Ceres configuration
 
 #. ``OPENMP [Default: ON]``: On certain platforms like Android,
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
-   to disable multithreading.
+   to disable multi-threading.
 
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
@@ -623,7 +623,7 @@ Local installations
 
 If Ceres was installed in a non-standard path by specifying
 -DCMAKE_INSTALL_PREFIX="/some/where/local", then the user should add
-the **PATHS** option to the ``FIND_PACKAGE()`` command. e.g.,
+the **PATHS** option to the ``FIND_PACKAGE()`` command, e.g.,
 
 .. code-block:: cmake
 

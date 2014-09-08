@@ -114,7 +114,7 @@ Submitting a change
       git push origin HEAD:refs/for/master
 
    When the push succeeds, the console will display a URL showing the
-   address of the review. Go to the URL and add atleast one of the
+   address of the review. Go to the URL and add at least one of the
    maintainers (Sameer Agarwal, Keir Mierle, or Alex Stewart) as reviewers.
 
 3. Wait for a review.

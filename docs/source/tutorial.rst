@@ -527,7 +527,7 @@ gives us:
 Starting from parameter values :math:`m = 0, c=0` with an initial
 objective function value of :math:`121.173` Ceres finds a solution
 :math:`m= 0.291861, c = 0.131439` with an objective function value of
-:math:`1.05675`. These values are a a bit different than the
+:math:`1.05675`. These values are a bit different than the
 parameters of the original model :math:`m=0.3, c= 0.1`, but this is
 expected. When reconstructing a curve from noisy data, we expect to
 see such deviations. Indeed, if you were to evaluate the objective
@@ -562,9 +562,9 @@ below. Notice how the fitted curve deviates from the ground truth.
    :align: center
 
 To deal with outliers, a standard technique is to use a
-:class:`LossFunction`. Loss functions, reduce the influence of
+:class:`LossFunction`. Loss functions reduce the influence of
 residual blocks with high residuals, usually the ones corresponding to
-outliers. To associate a loss function in a residual block, we change
+outliers. To associate a loss function with a residual block, we change
 
 .. code-block:: c++
 
