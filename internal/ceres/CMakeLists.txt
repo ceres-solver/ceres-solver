@@ -98,6 +98,7 @@ SET(CERES_INTERNAL_SRC
     scratch_evaluate_preparer.cc
     single_linkage_clustering.cc
     solver.cc
+    solver_utils.cc
     sparse_matrix.cc
     sparse_normal_cholesky_solver.cc
     split.cc
