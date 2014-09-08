@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04973a6_6483204b",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-08T03:37:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this is intended.",
+      "revId": "20001da3185b056124de704b814262502ee354e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b04973a6_c4879454",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-08T03:37:51Z",
+      "side": 1,
+      "message": "Why bother with the using? Just call it fully qualified.",
+      "revId": "20001da3185b056124de704b814262502ee354e2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
