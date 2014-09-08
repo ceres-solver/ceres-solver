@@ -347,7 +347,6 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->line_search_type                   = options.line_search_type;
   summary->linear_solver_type_given           = options.linear_solver_type;
   summary->max_lbfgs_rank                     = options.max_lbfgs_rank;
-
   summary->minimizer_type                     = options.minimizer_type;
   summary->nonlinear_conjugate_gradient_type  = options.nonlinear_conjugate_gradient_type;  //  NOLINT
   summary->num_linear_solver_threads_given    = options.num_linear_solver_threads;          //  NOLINT
