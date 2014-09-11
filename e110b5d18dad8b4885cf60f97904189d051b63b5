@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70b9bbd7_ad72551d",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-11T19:15:30Z",
+      "side": 1,
+      "message": "It -\u003e If\n\nFor the second sentence, consider shortening:\n\nReturns NULL if there is no loss function for this residual.",
+      "revId": "e110b5d18dad8b4885cf60f97904189d051b63b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
