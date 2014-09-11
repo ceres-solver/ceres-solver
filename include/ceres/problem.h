@@ -368,6 +368,16 @@ class CERES_EXPORT Problem {
       const ResidualBlockId residual_block,
       vector<double*>* parameter_blocks) const;
 
+  // Get the CostFunction for the given residual block.
+  const CostFunction* GetCostFunctionForResidualBlock(
+      const ResidualBlockId residual_block) const;
+
+  // Get the LossFunction for the given residual block. It no loss
+  // function is associated with this residual block NULL will be
+  // returned.
+  const LossFunction* GetLossFunctionForResidualBlock(
+      const ResidualBlockId residual_block) const;
+
   // Get all the residual blocks that depend on the given parameter block.
   //
   // If Problem::Options::enable_fast_removal is true, then
