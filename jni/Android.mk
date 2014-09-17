@@ -170,6 +170,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/schur_jacobi_preconditioner.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
+                   $(CERES_SRC_PATH)/solver_utils.cc \
                    $(CERES_SRC_PATH)/sparse_matrix.cc \
                    $(CERES_SRC_PATH)/sparse_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/split.cc \
