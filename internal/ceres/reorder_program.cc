@@ -78,7 +78,7 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   return min_parameter_block_position;
 }
 
-#ifdef CERES_USE_EIGEN_SPARSE
+#if EIGEN_VERSION_AT_LEAST(3, 2, 2) && defined(CERES_USE_EIGEN_SPARSE)
 Eigen::SparseMatrix<int> CreateBlockJacobian(
     const TripletSparseMatrix& block_jacobian_transpose) {
   typedef Eigen::SparseMatrix<int> SparseMatrix;
