@@ -161,7 +161,7 @@ FACTORY_CONDITIONAL = """  if ((options.row_block_size == %s) &&
       (options.e_block_size == %s) &&
       (options.f_block_size == %s)) {
     return new PartitionedMatrixView<%s, %s, %s>(
-                 matrix, options.elimination_groups[0]);
+                 matrix, options.elimination_groups[0], options.num_threads);
   }
 """
 

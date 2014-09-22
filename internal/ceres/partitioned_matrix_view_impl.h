@@ -39,6 +39,10 @@
 #include "ceres/small_blas.h"
 #include "glog/logging.h"
 
+#ifdef CERES_USE_OPENMP
+#include <omp.h>
+#endif
+
 namespace ceres {
 namespace internal {
 
@@ -46,9 +50,11 @@ template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 PartitionedMatrixView<kRowBlockSize, kEBlockSize, kFBlockSize>::
 PartitionedMatrixView(
     const BlockSparseMatrix& matrix,
-    int num_col_blocks_e)
+    int num_col_blocks_e,
+    int num_threads)
     : matrix_(matrix),
-      num_col_blocks_e_(num_col_blocks_e) {
+      num_col_blocks_e_(num_col_blocks_e),
+      num_threads_(num_threads) {
   const CompressedRowBlockStructure* bs = matrix_.block_structure();
   CHECK_NOTNULL(bs);
 
@@ -102,17 +108,23 @@ RightMultiplyE(const double* x, double* y) const {
   // Iterate over the first num_row_blocks_e_ row blocks, and multiply
   // by the first cell in each row block.
   const double* values = matrix_.values();
-  for (int r = 0; r < num_row_blocks_e_; ++r) {
-    const Cell& cell = bs->rows[r].cells[0];
-    const int row_block_pos = bs->rows[r].block.position;
-    const int row_block_size = bs->rows[r].block.size;
-    const int col_block_id = cell.block_id;
-    const int col_block_pos = bs->cols[col_block_id].position;
-    const int col_block_size = bs->cols[col_block_id].size;
-    MatrixVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-        values + cell.position, row_block_size, col_block_size,
-        x + col_block_pos,
-        y + row_block_pos);
+
+#pragma omp parallel num_threads(num_threads_)
+  {
+    int r;
+#pragma omp for schedule(static)
+    for (r = 0; r < num_row_blocks_e_; ++r) {
+      const Cell& cell = bs->rows[r].cells[0];
+      const int row_block_pos = bs->rows[r].block.position;
+      const int row_block_size = bs->rows[r].block.size;
+      const int col_block_id = cell.block_id;
+      const int col_block_pos = bs->cols[col_block_id].position;
+      const int col_block_size = bs->cols[col_block_id].size;
+      MatrixVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+          values + cell.position, row_block_size, col_block_size,
+          x + col_block_pos,
+          y + row_block_pos);
+    }
   }
 }
 
@@ -128,18 +140,24 @@ RightMultiplyF(const double* x, double* y) const {
   // num_row_blocks - num_row_blocks_e row blocks), then all the cells
   // are of type F and multiply by them all.
   const double* values = matrix_.values();
-  for (int r = 0; r < num_row_blocks_e_; ++r) {
-    const int row_block_pos = bs->rows[r].block.position;
-    const int row_block_size = bs->rows[r].block.size;
-    const vector<Cell>& cells = bs->rows[r].cells;
-    for (int c = 1; c < cells.size(); ++c) {
-      const int col_block_id = cells[c].block_id;
-      const int col_block_pos = bs->cols[col_block_id].position;
-      const int col_block_size = bs->cols[col_block_id].size;
-      MatrixVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
-          values + cells[c].position, row_block_size, col_block_size,
-          x + col_block_pos - num_cols_e_,
-          y + row_block_pos);
+
+#pragma omp parallel num_threads(num_threads_)
+  {
+    int r;
+#pragma omp for schedule(static)
+    for (r = 0; r < num_row_blocks_e_; ++r) {
+      const int row_block_pos = bs->rows[r].block.position;
+      const int row_block_size = bs->rows[r].block.size;
+      const vector<Cell>& cells = bs->rows[r].cells;
+      for (int c = 1; c < cells.size(); ++c) {
+        const int col_block_id = cells[c].block_id;
+        const int col_block_pos = bs->cols[col_block_id].position;
+        const int col_block_size = bs->cols[col_block_id].size;
+        MatrixVectorMultiply<kRowBlockSize, kFBlockSize, 1>(
+            values + cells[c].position, row_block_size, col_block_size,
+            x + col_block_pos - num_cols_e_,
+            y + row_block_pos);
+      }
     }
   }
 

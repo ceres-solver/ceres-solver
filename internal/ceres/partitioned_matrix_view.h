@@ -116,7 +116,8 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
  public:
   // matrix = [E F], where the matrix E contains the first
   // num_col_blocks_a column blocks.
-  PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e);
+  PartitionedMatrixView(const BlockSparseMatrix& matrix, int num_col_blocks_e,
+                        const int num_threads);
 
   virtual ~PartitionedMatrixView();
   virtual void LeftMultiplyE(const double* x, double* y) const;
@@ -144,6 +145,7 @@ class PartitionedMatrixView : public PartitionedMatrixViewBase {
   int num_col_blocks_f_;
   int num_cols_e_;
   int num_cols_f_;
+  int num_threads_;
 };
 
 }  // namespace internal
