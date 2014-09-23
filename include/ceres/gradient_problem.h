@@ -34,11 +34,11 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/local_parameterization.h"
 
 namespace ceres {
 
 class FirstOrderFunction;
-class LocalParameterization;
 
 // Instances of GradientProblem represent general non-linear
 // optimization problems that must be solved using just the value of
