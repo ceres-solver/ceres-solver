@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037fbc3_389d35e1",
+        "filename": "internal/ceres/block_jacobi_preconditioner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T15:26:47Z",
+      "side": 1,
+      "message": "ordering",
+      "revId": "c9fd1ab9d8ba7df70872b3a85c26fbf95dc2c48f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037fbc3_58aae9f7",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T15:26:47Z",
+      "side": 1,
+      "message": "Is this stable enough?\n\nIt\u0027s not clear that the block access diagonal is actually selfadjoint. In that case we should call this class SelfAdjointBlockRandomAccessMatrix.",
+      "revId": "c9fd1ab9d8ba7df70872b3a85c26fbf95dc2c48f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7037fbc3_78a7ad2e",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T15:26:47Z",
+      "side": 1,
+      "message": "Ah, I see. Perhaps InvertAssumingPositiveDefinite()?",
+      "revId": "c9fd1ab9d8ba7df70872b3a85c26fbf95dc2c48f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
