@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f83838_e6065441",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T22:37:14Z",
+      "side": 1,
+      "message": "Could we not stash away the set\u003cpair\u003cint, int\u003e\u003e?",
+      "revId": "c5ef3527ed68eab9577ebe0235f7a3e25a2e6507",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50f83838_46f068f5",
+        "filename": "internal/ceres/block_random_access_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T22:37:14Z",
+      "side": 1,
+      "message": "Please explain the purpose of having this. It would be nice to include a mention that the naive traversal (random) order leads to 20% slowdown.",
+      "revId": "c5ef3527ed68eab9577ebe0235f7a3e25a2e6507",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
