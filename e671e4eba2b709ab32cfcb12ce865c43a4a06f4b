@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7037fbc3_a3cf36c7",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-09-29T17:27:24Z",
+      "side": 1,
+      "message": "\"Let ...\" -\u003e \"Use an explicit Schur complement matrix with ITERATIVE_SCHUR\"",
+      "revId": "e671e4eba2b709ab32cfcb12ce865c43a4a06f4b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
