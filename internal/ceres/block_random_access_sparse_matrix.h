@@ -111,6 +111,8 @@ class BlockRandomAccessSparseMatrix : public BlockRandomAccessMatrix {
   typedef HashMap<long int, CellInfo* > LayoutType;
   LayoutType layout_;
 
+  // In order traversal of contents of the matrix.
+  vector<pair<pair<int, int>, double*> > cell_values_;
   // The underlying matrix object which actually stores the cells.
   scoped_ptr<TripletSparseMatrix> tsm_;
 
