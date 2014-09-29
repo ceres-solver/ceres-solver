@@ -79,6 +79,8 @@ DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
 DEFINE_string(linear_solver, "sparse_schur", "Options are: "
               "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
               "dense_qr, dense_normal_cholesky and cgnr.");
+DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
+            "then explicitly compute the Schur complement.");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
               "identity, jacobi, schur_jacobi, cluster_jacobi, "
               "cluster_tridiagonal.");
@@ -136,6 +138,7 @@ void SetLinearSolver(Solver::Options* options) {
             FLAGS_dense_linear_algebra_library,
             &options->dense_linear_algebra_library_type));
   options->num_linear_solver_threads = FLAGS_num_threads;
+  options->use_explicit_schur_complement = FLAGS_explicit_schur_complement;
 }
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
