@@ -2,17 +2,20 @@
 
 .. cpp:namespace:: ceres
 
-.. _`chapter-modeling`:
+.. _`chapter-nnls_modeling`:
 
-========
-Modeling
-========
+=================================
+Modeling Non-linear Least Squares
+=================================
+
+Introduction
+============
 
 Ceres solver consists of two distinct parts. A modeling API which
 provides a rich set of tools to construct an optimization problem one
 term at a time and a solver API that controls the minimization
 algorithm. This chapter is devoted to the task of modeling
-optimization problems using Ceres. :ref:`chapter-solving` discusses
+optimization problems using Ceres. :ref:`chapter-nnls_solving` discusses
 the various ways in which an optimization problem can be solved using
 Ceres.
 
@@ -184,7 +187,7 @@ the corresponding accessors. This information will be verified by the
        // Ignore the template parameter kNumResiduals and use
        // num_residuals instead.
        AutoDiffCostFunction(CostFunctor* functor, int num_residuals);
-     }
+     }g
 
    To get an auto differentiated cost function, you must define a
    class with a templated ``operator()`` (a functor) that computes the
@@ -1016,6 +1019,10 @@ problems.
                          const double* delta,
                          double* x_plus_delta) const = 0;
        virtual bool ComputeJacobian(const double* x, double* jacobian) const = 0;
+       virtual bool MultiplyByJacobian(const double* x,
+                                       const int num_rows,
+                                       const double* global_matrix,
+                                       double* local_matrix) const;
        virtual int GlobalSize() const = 0;
        virtual int LocalSize() const = 0;
      };
@@ -1079,6 +1086,17 @@ problems.
    .. math:: J = \left . \frac{\partial }{\partial \Delta x} \boxplus(x,\Delta x)\right|_{\Delta x = 0}
 
    in row major form.
+
+.. function:: bool MultiplyByJacobian(const double* x, const int num_rows, const double* global_matrix, double* local_matrix) const
+
+   local_matrix = global_matrix * jacobian
+
+   global_matrix is a num_rows x GlobalSize  row major matrix.
+   local_matrix is a num_rows x LocalSize row major matrix.
+   jacobian is the matrix returned by :func:`LocalParameterization::ComputeJacobian` at :math:`x`.
+
+   This is only used by GradientProblem. For most normal uses, it is
+   okay to use the default implementation.
 
 Instances
 ^^^^^^^^^
@@ -1459,6 +1477,14 @@ Instances
    on the number of residual blocks. Otherwise, getting the residual
    blocks for a parameter block will incur a scan of the entire
    :class:`Problem` object.
+
+.. function:: const CostFunction* GetCostFunctionForResidualBlock(const ResidualBlockId residual_block) const
+
+   Get the :class:`CostFunction` for the given residual block.
+
+.. function:: const LossFunction* GetLossFunctionForResidualBlock(const ResidualBlockId residual_block) const
+
+   Get the :class:`LossFunction` for the given residual block.
 
 .. function:: bool Problem::Evaluate(const Problem::EvaluateOptions& options, double* cost, vector<double>* residuals, vector<double>* gradient, CRSMatrix* jacobian)
 
