@@ -14,19 +14,23 @@ Ceres Solver
    features
    building
    tutorial
-   modeling
-   solving
+   api
    faqs
    contributing
    version_history
-   history
    bibliography
    license
 
-Ceres Solver is an open source C++ library for modeling and solving
-large complicated `nonlinear least squares`_ problems. It is a feature
+Ceres Solver [#f1]_ is an open source C++ library for modeling and
+solving large, complicated optimization problems. It is a feature
 rich, mature and performant library which has been used in production
-since 2010. At Google, Ceres Solver is used to:
+at Google since 2010. Ceres Solver can solve two kinds of problems.
+
+1. Bounds constrained, robustified `non-linear least squares`_
+   problems.
+2. Gradient based general unconstrained optimization problems.
+
+At Google, Ceres Solver is used to:
 
 * Estimate the pose of `Street View`_ cars, aircrafts, and satellites.
 * Build 3D models for `PhotoTours`_.
@@ -34,12 +38,12 @@ since 2010. At Google, Ceres Solver is used to:
 * Stitch `panoramas`_ or apply `Lens Blur`_ on Android.
 * Solve `bundle adjustment`_ and SLAM problems in `Project Tango`_.
 
-Outside Google, Ceres is used for solving problems in computer vision,
-computer graphics, astronomy and physics. For example, `Willow Garage`_ uses
-it to solve SLAM problems and `Blender`_ uses it for for planar
-tracking and bundle adjustment.
+Outside Google, Ceres Solver is used for solving problems in computer
+vision, computer graphics, astronomy and physics. For example, `Willow
+Garage`_ uses it to solve SLAM problems and `Blender`_ uses it for for
+planar tracking and bundle adjustment.
 
-.. _nonlinear least squares: http://en.wikipedia.org/wiki/Non-linear_least_squares
+.. _non-linear least squares: http://en.wikipedia.org/wiki/Non-linear_least_squares
 .. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
@@ -60,9 +64,7 @@ Getting started
   .. code-block:: bash
 
        git clone https://ceres-solver.googlesource.com/ceres-solver
-
-* Read the :ref:`chapter-tutorial`, browse the chapters on the
-  :ref:`chapter-modeling` API and the :ref:`chapter-solving` API.
+* Read the :ref:`chapter-tutorial` and browse the :ref:`chapter-api`.
 * Join the `mailing list
   <https://groups.google.com/forum/?fromgroups#!forum/ceres-solver>`_
   and ask questions.
@@ -79,3 +81,19 @@ If you use Ceres Solver for a publication, please cite it as::
       title = "Ceres Solver",
       howpublished = "\url{http://ceres-solver.org}",
     }
+
+
+.. rubric:: Footnotes
+
+.. [#f1] While there is some debate as to who invented the method of
+         Least Squares [Stigler]_, there is no questioning the fact
+         that it was `Carl Friedrich Gauss
+         <http://www-groups.dcs.st-and.ac.uk/~history/Biographies/Gauss.html>`_
+         who brought it to the attention of the world. Using just 22
+         observations of the newly discovered asteroid `Ceres
+         <http://en.wikipedia.org/wiki/Ceres_(dwarf_planet)>`_, Gauss
+         used the method of least squares to correctly predict when
+         and where the asteroid will emerge from behind the Sun
+         [TenenbaumDirector]_. We named our solver after Ceres to
+         celebrate this seminal event in the history of astronomy,
+         statistics and optimization.
