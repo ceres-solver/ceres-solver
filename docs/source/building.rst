@@ -31,7 +31,7 @@ optional. For details on customizing the build process, see
   .. NOTE ::
 
     Ceres can also use Eigen as a sparse linear algebra
-    library. Please see the documentation for ``-DEIGENSPARSE`` for
+    library. Please see the documentation for ``-DEIGENSPARSE`` for`
     more details.
 
 - `CMake <http://www.cmake.org>`_ 2.8.0 or later.
@@ -482,6 +482,10 @@ Options controlling Ceres configuration
    the code is licensed under the ``LGPL`` and since ``Eigen`` is a
    header only library, including this code will result in an ``LGPL``
    licensed version of Ceres.
+
+   .. NOTE::
+
+      For good performance, use Eigen version 3.2.2 or later.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
