@@ -483,6 +483,10 @@ Options controlling Ceres configuration
    header only library, including this code will result in an ``LGPL``
    licensed version of Ceres.
 
+   .. NOTE::
+
+      For good performance, use Eigen version 3.2.2 or later.
+
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
    building.

@@ -24,9 +24,13 @@ Ceres Solver
    license
 
 Ceres Solver is an open source C++ library for modeling and solving
-large complicated `nonlinear least squares`_ problems. It is a feature
-rich, mature and performant library which has been used in production
-since 2010. At Google, Ceres Solver is used to:
+large complicated optimization problem. While much of Ceres Solver
+functionality is aimed at solving `nonlinear least squares`_ problems,
+it can also solve more general unconstrained optimization problems. It
+is a feature rich, mature and performant library which has been used
+in production at Google since 2010.
+
+At Google, Ceres Solver is used to:
 
 * Estimate the pose of `Street View`_ cars, aircrafts, and satellites.
 * Build 3D models for `PhotoTours`_.
@@ -35,9 +39,9 @@ since 2010. At Google, Ceres Solver is used to:
 * Solve `bundle adjustment`_ and SLAM problems in `Project Tango`_.
 
 Outside Google, Ceres is used for solving problems in computer vision,
-computer graphics, astronomy and physics. For example, `Willow Garage`_ uses
-it to solve SLAM problems and `Blender`_ uses it for for planar
-tracking and bundle adjustment.
+computer graphics, astronomy and physics. For example, `Willow
+Garage`_ uses it to solve SLAM problems and `Blender`_ uses it for for
+planar tracking and bundle adjustment.
 
 .. _nonlinear least squares: http://en.wikipedia.org/wiki/Non-linear_least_squares
 .. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression

@@ -155,7 +155,6 @@ and parameter settings for Ceres.
 
 .. [#f1] `examples/helloworld.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
-
 .. [#f2] Actually the solver ran for three iterations, and it was
    by looking at the value returned by the linear solver in the third
    iteration, it observed that the update to the parameter block was too
@@ -299,7 +298,6 @@ constructing and computing cost functions.
 
 .. [#f3] `examples/helloworld_numeric_diff.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_numeric_diff.cc>`_.
-
 .. [#f4] `examples/helloworld_analytic_diff.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld_analytic_diff.cc>`_.
 
@@ -437,7 +435,6 @@ It is easy to see that the optimal solution to this problem is at
 :math:`x_1=0, x_2=0, x_3=0, x_4=0` with an objective function value of
 :math:`0`. In 10 iterations, Ceres finds a solution with an objective
 function value of :math:`4\times 10^{-12}`.
-
 
 .. rubric:: Footnotes
 
@@ -755,6 +752,16 @@ directory contains a number of other examples:
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/circle_fit.cc>`_
    shows how to fit data to a circle.
 
+#. `ellipse_approximation.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/ellipse_approximation.cc>`_
+   fits points randomly distributed on an ellipse with an approximate
+   line segment contour. This is done by jointly optimizing the
+   control points of the line segment contour along with the preimage
+   positions for the data points. The purpose of this example is to
+   show an example use case for ``Solver::Options::dynamic_sparsity``,
+   and how it can benefit problems which are numerically dense but
+   dynamically sparse.
+
 #. `denoising.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/denoising.cc>`_
    implements image denoising using the `Fields of Experts
@@ -767,6 +774,48 @@ directory contains a number of other examples:
    <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
    non-linear regression problems.
 
+#. `nist.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
+   implements and attempts to solves the `NIST
+   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
+   non-linear regression problems.
+
+#. `more_garbow_hillstrom.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/more_garbow_hillstrom.cc>`_
+   A subset of the test problems from the paper
+
+   Testing Unconstrained Optimization Software
+   Jorge J. More, Burton S. Garbow and Kenneth E. Hillstrom
+   ACM Transactions on Mathematical Software, 7(1), pp. 17-41, 1981
+
+   which were augmented with bounds and used for testing bounds
+   constrained optimization algorithms by
+
+   A Trust Region Approach to Linearly Constrained Optimization
+   David M. Gay
+   Numerical Analysis (Griffiths, D.F., ed.), pp. 72-105
+   Lecture Notes in Mathematics 1066, Springer Verlag, 1984.
+
+
 #. `libmv_bundle_adjuster.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_bundle_adjuster.cc>`_
    is the bundle adjustment algorithm used by `Blender <www.blender.org>`_/libmv.
+
+#. `libmv_homography.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/libmv_homography.cc>`_
+   This file demonstrates solving for a homography between two sets of
+   points and using a custom exit criterion by having a callback check
+   for image-space error.
+
+#. `robot_pose_mle.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/robot_pose_mle.cc>`_
+   This example demonstrates how to use the ``DynamicAutoDiffCostFunction``
+   variant of CostFunction. The ``DynamicAutoDiffCostFunction`` is meant to
+   be used in cases where the number of parameter blocks or the sizes are not
+   known at compile time.
+
+   This example simulates a robot traversing down a 1-dimension hallway with
+   noise odometry readings and noisy range readings of the end of the hallway.
+   By fusing the noisy odometry and sensor readings this example demonstrates
+   how to compute the maximum likelihood estimate (MLE) of the robot's pose at
+   each timestep.

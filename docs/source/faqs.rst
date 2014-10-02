@@ -142,8 +142,12 @@ Solving
 
    4. For larger bundle adjustment problems with sparse Schur
       Complement/Reduced camera matrices use ``SPARSE_SCHUR``. This
-      requires that you have ``SuiteSparse`` or ``CXSparse``
-      installed.
+      requires that you build Ceres with support for ``SuiteSparse``,
+      ``CXSparse`` or Eigen's sparse linear algebra libraries.
+
+      If you do not have access to these libraries for whatever
+      reason, ``ITERATIVE_SCHUR`` with ``SCHUR_JACOBI`` is an
+      excellent alternative.
 
    5. For large bundle adjustment problems (a few thousand cameras or
       more) use the ``ITERATIVE_SCHUR`` solver. There are a number of
@@ -152,6 +156,13 @@ Solving
       recommended option if you are solving medium sized problems for
       which ``DENSE_SCHUR`` is too slow but ``SuiteSparse`` is not
       available.
+
+      .. NOTE:
+
+	 If you are solving small to medium sized problems, consider
+	 setting
+	 :member:`Solver::Options::use_explicit_schur_complement` to
+	 `true`, it can result in a substantial performance boost.
 
       If you are not satisfied with ``SCHUR_JACOBI``'s performance try
       ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` in that
