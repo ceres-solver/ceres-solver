@@ -19,14 +19,17 @@ Ceres Solver
    faqs
    contributing
    version_history
-   history
    bibliography
    license
 
-Ceres Solver is an open source C++ library for modeling and solving
-large complicated `nonlinear least squares`_ problems. It is a feature
-rich, mature and performant library which has been used in production
-since 2010. At Google, Ceres Solver is used to:
+Ceres Solver [#f1]_ is an open source C++ library for modeling and solving
+large complicated optimization problem. While much of Ceres Solver
+functionality is aimed at solving `nonlinear least squares`_ problems,
+it can also solve more general unconstrained optimization problems. It
+is a feature rich, mature and performant library which has been used
+in production at Google since 2010.
+
+At Google, Ceres Solver is used to:
 
 * Estimate the pose of `Street View`_ cars, aircrafts, and satellites.
 * Build 3D models for `PhotoTours`_.
@@ -35,9 +38,9 @@ since 2010. At Google, Ceres Solver is used to:
 * Solve `bundle adjustment`_ and SLAM problems in `Project Tango`_.
 
 Outside Google, Ceres is used for solving problems in computer vision,
-computer graphics, astronomy and physics. For example, `Willow Garage`_ uses
-it to solve SLAM problems and `Blender`_ uses it for for planar
-tracking and bundle adjustment.
+computer graphics, astronomy and physics. For example, `Willow
+Garage`_ uses it to solve SLAM problems and `Blender`_ uses it for for
+planar tracking and bundle adjustment.
 
 .. _nonlinear least squares: http://en.wikipedia.org/wiki/Non-linear_least_squares
 .. _fitting curves: http://en.wikipedia.org/wiki/Nonlinear_regression
@@ -79,3 +82,19 @@ If you use Ceres Solver for a publication, please cite it as::
       title = "Ceres Solver",
       howpublished = "\url{http://ceres-solver.org}",
     }
+
+
+.. rubic:: Footnotes
+
+.. [#f1] While there is some debate as to who invented the method of
+         Least Squares [Stigler]_, there is no debate that it was
+         `Carl Friedrich Gauss
+         <http://www-groups.dcs.st-and.ac.uk/~history/Biographies/Gauss.html>`_
+         who brought it to the attention of the world. Using just 22
+         observations of the newly discovered asteroid `Ceres
+         <http://en.wikipedia.org/wiki/Ceres_(dwarf_planet)>`_, Gauss
+         used the method of least squares to correctly predict when
+         and where the asteroid will emerge from behind the Sun
+         [TenenbaumDirector]_. We named our solver after Ceres to
+         celebrate this seminal event in the history of astronomy,
+         statistics and optimization.

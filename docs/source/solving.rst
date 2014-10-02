@@ -1262,6 +1262,35 @@ elimination group [LiSaad]_.
 
    See :ref:`section-ordering` for more details.
 
+.. member:: bool Solver::Options::use_explicit_schur_complement
+
+   Default: ``false``
+
+   Use an explicitly computed Schur complement matrix with
+   ``ITERATIVE_SCHUR``.
+
+   By default this option is disabled and ``ITERATIVE_SCHUR``
+   evaluates evaluates matrix-vector products between the Schur
+   complement and a vector implicitly by exploiting the algebraic
+   expression for the Schur complement.
+
+   The cost of this evaluation scales with the number of non-zeros in
+   the Jacobian.
+
+   For small to medium sized problems there is a sweet spot where
+   computing the Schur complement is cheap enough that it is much more
+   efficient to explicitly compute it and use it for evaluating the
+   matrix-vector products.
+
+   Enabling this option tells ``ITERATIVE_SCHUR`` to use an explicitly
+   computed Schur complement. This can improve the performance of the
+   ``ITERATIVE_SCHUR`` solver significantly.
+
+   .. NOTE:
+
+     This option can only be used with the ``SCHUR_JACOBI``
+     preconditioner.
+
 .. member:: bool Solver::Options::use_post_ordering
 
    Default: ``false``
@@ -1865,7 +1894,6 @@ The three arrays will be:
 
    Summary of the various stages of the solver after termination.
 
-
 .. function:: string Solver::Summary::BriefReport() const
 
    A brief one line description of the state of the solver after
@@ -2095,10 +2123,17 @@ The three arrays will be:
    blank and asked for an automatic ordering, or if the problem
    contains some constant or inactive parameter blocks.
 
-.. member:: PreconditionerType Solver::Summary::preconditioner_type
+.. member:: PreconditionerType Solver::Summary::preconditioner_type_given
 
-   Type of preconditioner used for solving the trust region step. Only
-   meaningful when an iterative linear solver is used.
+   Type of the preconditioner requested by the user.
+
+.. member:: PreconditionerType Solver::Summary::preconditioner_type_used
+
+   Type of the preconditioner actually used. This may be different
+   from :member:`Solver::Summary::linear_solver_type_given` if Ceres
+   determines that the problem structure is not compatible with the
+   linear solver requested or if the linear solver requested by the
+   user is not available.
 
 .. member:: VisibilityClusteringType Solver::Summary::visibility_clustering_type
 
