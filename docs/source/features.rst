@@ -4,7 +4,7 @@ Features
 .. _chapter-features:
 
 * **Code Quality** - Ceres Solver has been used in production at
-  Google for more than three years now. It is used to solve a wide
+  Google for more than four years now. It is used to solve a wide
   variety of problems, both in size and complexity. The code runs on
   Google's data centers, desktops and on cellphones. It is clean,
   extensively tested and well documented code that is actively
@@ -17,8 +17,7 @@ Features
   time. And to do so without worrying about how the solver is going to
   deal with the resulting changes in the sparsity/structure of the
   underlying problem. Indeed we take great care to separate the
-  modeling of the optimization problem from solving it. The two can be
-  done more or less completely independently of each other.
+  modeling of the optimization problem from solving it.
 
   - **Derivatives** Supplying derivatives is perhaps the most tedious
     and error prone part of using an optimization library.  Ceres
@@ -35,7 +34,7 @@ Features
   - **Local Parameterization** In many cases, some parameters lie on a
     manifold other than Euclidean space, e.g., rotation matrices. In
     such cases, the user can specify the geometry of the local tangent
-    space by specifying a LocalParameterization object.
+    space by specifying a :class:`LocalParameterization` object.
 
 * **Solver Choice** Depending on the size, sparsity structure, time &
   memory budgets, and solution quality requiremnts, different
@@ -49,8 +48,8 @@ Features
     linear system. To this end Ceres ships with a variety of linear
     solvers - dense QR and dense Cholesky factorization (using
     `Eigen`_ or `LAPACK`_) for dense problems, sparse Cholesky
-    factorization (`SuiteSparse`_ or `CXSparse`_) for large sparse
-    problems custom Schur complement based dense, sparse, and
+    factorization (`SuiteSparse`_, `CXSparse`_ or `Eigen`_) for large
+    sparse problems custom Schur complement based dense, sparse, and
     iterative linear solvers for `bundle adjustment`_ problems.
 
   - **Line Search Solvers** - When the problem size is so large that
