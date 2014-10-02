@@ -3,11 +3,11 @@
 
 .. cpp:namespace:: ceres
 
-.. _chapter-solving:
+.. _chapter-nnls_solving:
 
-=======
-Solving
-=======
+================================
+Solving Non-linear Least Squares
+================================
 
 Introduction
 ============
@@ -618,44 +618,68 @@ step algorithm.
 ``ITERATIVE_SCHUR``
 -------------------
 
-Another option for bundle adjustment problems is to apply PCG to the
-reduced camera matrix :math:`S` instead of :math:`H`. One reason to do
-this is that :math:`S` is a much smaller matrix than :math:`H`, but
-more importantly, it can be shown that :math:`\kappa(S)\leq
-\kappa(H)`.  Ceres implements PCG on :math:`S` as the
+Another option for bundle adjustment problems is to apply
+Preconditioned Conjugate Gradients to the reduced camera matrix
+:math:`S` instead of :math:`H`. One reason to do this is that
+:math:`S` is a much smaller matrix than :math:`H`, but more
+importantly, it can be shown that :math:`\kappa(S)\leq \kappa(H)`.
+Ceres implements Conjugate Gradients on :math:`S` as the
 ``ITERATIVE_SCHUR`` solver. When the user chooses ``ITERATIVE_SCHUR``
 as the linear solver, Ceres automatically switches from the exact step
 algorithm to an inexact step algorithm.
 
-The cost of forming and storing the Schur complement :math:`S` can be
-prohibitive for large problems. Indeed, for an inexact Newton solver
-that computes :math:`S` and runs PCG on it, almost all of its time is
-spent in constructing :math:`S`; the time spent inside the PCG
-algorithm is negligible in comparison. Because PCG only needs access
-to :math:`S` via its product with a vector, one way to evaluate
-:math:`Sx` is to observe that
+The key computational operation when using Conjuagate Gradients is the
+evaluation of the matrix vector product :math:`Sx` for an arbitrary
+vector :math:`x`. There are two ways in which this product can be
+evaluated, and this can be controlled using
+``Solver::Options::use_explicit_schur_complement`. Depending on the
+problem at hand, the performance difference between these two methods
+can be quite substantial.
 
-.. math::  x_1 &= E^\top x
-.. math::  x_2 &= C^{-1} x_1
-.. math::  x_3 &= Ex_2\\
-.. math::  x_4 &= Bx\\
-.. math::   Sx &= x_4 - x_3
-   :label: schurtrick1
+  1. **Implicit** This is default. Implicit evaluation is suitable for
+     large problems where the cost of computing and storing the Schur
+     Complement :math:`S` is prohibitive. Because PCG only needs
+     access to :math:`S` via its product with a vector, one way to
+     evaluate :math:`Sx` is to observe that
 
-Thus, we can run PCG on :math:`S` with the same computational effort
-per iteration as PCG on :math:`H`, while reaping the benefits of a
-more powerful preconditioner. In fact, we do not even need to compute
-:math:`H`, :eq:`schurtrick1` can be implemented using just the columns
-of :math:`J`.
+     .. math::  x_1 &= E^\top x
+     .. math::  x_2 &= C^{-1} x_1
+     .. math::  x_3 &= Ex_2\\
+     .. math::  x_4 &= Bx\\
+     .. math::   Sx &= x_4 - x_3
+        :label: schurtrick1
 
-Equation :eq:`schurtrick1` is closely related to *Domain
-Decomposition methods* for solving large linear systems that arise in
-structural engineering and partial differential equations. In the
-language of Domain Decomposition, each point in a bundle adjustment
-problem is a domain, and the cameras form the interface between these
-domains. The iterative solution of the Schur complement then falls
-within the sub-category of techniques known as Iterative
-Sub-structuring [Saad]_ [Mathew]_.
+     Thus, we can run PCG on :math:`S` with the same computational
+     effort per iteration as PCG on :math:`H`, while reaping the
+     benefits of a more powerful preconditioner. In fact, we do not
+     even need to compute :math:`H`, :eq:`schurtrick1` can be
+     implemented using just the columns of :math:`J`.
+
+     Equation :eq:`schurtrick1` is closely related to *Domain
+     Decomposition methods* for solving large linear systems that
+     arise in structural engineering and partial differential
+     equations. In the language of Domain Decomposition, each point in
+     a bundle adjustment problem is a domain, and the cameras form the
+     interface between these domains. The iterative solution of the
+     Schur complement then falls within the sub-category of techniques
+     known as Iterative Sub-structuring [Saad]_ [Mathew]_.
+
+  2. **Explicit** The complexity of implicit matrix-vector product
+     evaluation scales with the number of non-zeros in the
+     Jacobian. For small to medium sized problems, the cost of
+     constructing the Schur Complement is small enough that it is
+     better to construct it explicitly in memory and use it to
+     evaluate the product :math:`Sx`.
+
+
+  .. NOTE::
+
+     In exact arithmetic, the choice of implicit versus explicit Schur
+     complement would have no impact on solution quality. However, in
+     practice if the Jacobian is poorly conditioned, one may observe
+     (usually small) differences in solution quality. This is a
+     natural consequence of performing computations in finite arithmetic.
+
 
 .. _section-preconditioner:
 
@@ -789,7 +813,7 @@ elimination group [LiSaad]_.
 .. _section-solver-options:
 
 :class:`Solver::Options`
-------------------------
+========================
 
 .. class:: Solver::Options
 
@@ -1262,6 +1286,35 @@ elimination group [LiSaad]_.
 
    See :ref:`section-ordering` for more details.
 
+.. member:: bool Solver::Options::use_explicit_schur_complement
+
+   Default: ``false``
+
+   Use an explicitly computed Schur complement matrix with
+   ``ITERATIVE_SCHUR``.
+
+   By default this option is disabled and ``ITERATIVE_SCHUR``
+   evaluates evaluates matrix-vector products between the Schur
+   complement and a vector implicitly by exploiting the algebraic
+   expression for the Schur complement.
+
+   The cost of this evaluation scales with the number of non-zeros in
+   the Jacobian.
+
+   For small to medium sized problems there is a sweet spot where
+   computing the Schur complement is cheap enough that it is much more
+   efficient to explicitly compute it and use it for evaluating the
+   matrix-vector products.
+
+   Enabling this option tells ``ITERATIVE_SCHUR`` to use an explicitly
+   computed Schur complement. This can improve the performance of the
+   ``ITERATIVE_SCHUR`` solver significantly.
+
+   .. NOTE:
+
+     This option can only be used with the ``SCHUR_JACOBI``
+     preconditioner.
+
 .. member:: bool Solver::Options::use_post_ordering
 
    Default: ``false``
@@ -1549,7 +1602,7 @@ elimination group [LiSaad]_.
    application using Ceres and using an :class:`IterationCallback`.
 
 :class:`ParameterBlockOrdering`
--------------------------------
+===============================
 
 .. class:: ParameterBlockOrdering
 
@@ -1609,7 +1662,7 @@ elimination group [LiSaad]_.
 
 
 :class:`IterationCallback`
---------------------------
+==========================
 
 .. class:: IterationSummary
 
@@ -1802,7 +1855,7 @@ elimination group [LiSaad]_.
 
 
 :class:`CRSMatrix`
-------------------
+==================
 
 .. class:: CRSMatrix
 
@@ -1859,12 +1912,11 @@ The three arrays will be:
 
 
 :class:`Solver::Summary`
-------------------------
+========================
 
 .. class:: Solver::Summary
 
    Summary of the various stages of the solver after termination.
-
 
 .. function:: string Solver::Summary::BriefReport() const
 
@@ -2095,10 +2147,17 @@ The three arrays will be:
    blank and asked for an automatic ordering, or if the problem
    contains some constant or inactive parameter blocks.
 
-.. member:: PreconditionerType Solver::Summary::preconditioner_type
+.. member:: PreconditionerType Solver::Summary::preconditioner_type_given
 
-   Type of preconditioner used for solving the trust region step. Only
-   meaningful when an iterative linear solver is used.
+   Type of the preconditioner requested by the user.
+
+.. member:: PreconditionerType Solver::Summary::preconditioner_type_used
+
+   Type of the preconditioner actually used. This may be different
+   from :member:`Solver::Summary::linear_solver_type_given` if Ceres
+   determines that the problem structure is not compatible with the
+   linear solver requested or if the linear solver requested by the
+   user is not available.
 
 .. member:: VisibilityClusteringType Solver::Summary::visibility_clustering_type
 
