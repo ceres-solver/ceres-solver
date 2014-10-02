@@ -149,7 +149,8 @@ void CoordinateDescentMinimizer::Minimize(
     }
 
 #ifdef CERES_USE_OPENMP
-    const int num_inner_iteration_threads = min(options.num_threads, num_problems);
+    const int num_inner_iteration_threads =
+        min(options.num_threads, num_problems);
     evaluator_options_.num_threads =
         max(1, options.num_threads / num_inner_iteration_threads);
 
