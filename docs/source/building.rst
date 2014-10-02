@@ -9,7 +9,7 @@ Getting the source code
 .. _section-source:
 
 You can start with the `latest stable release
-<http://ceres-solver.org/ceres-solver-1.9.0.tar.gz>`_ . Or if you want
+<http://ceres-solver.org/ceres-solver-1.10.0.tar.gz>`_ . Or if you want
 the latest version, you can clone the git repository
 
 .. code-block:: bash
@@ -31,7 +31,7 @@ optional. For details on customizing the build process, see
   .. NOTE ::
 
     Ceres can also use Eigen as a sparse linear algebra
-    library. Please see the documentation for ``-DEIGENSPARSE`` for
+    library. Please see the documentation for ``-DEIGENSPARSE`` for`
     more details.
 
 - `CMake <http://www.cmake.org>`_ 2.8.0 or later.
@@ -141,10 +141,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
- tar zxf ceres-solver-1.9.0.tar.gz
+ tar zxf ceres-solver-1.10.0.tar.gz
  mkdir ceres-bin
  cd ceres-bin
- cmake ../ceres-solver-1.9.0
+ cmake ../ceres-solver-1.10.0
  make -j3
  make test
  make install
@@ -155,7 +155,7 @@ dataset [Agarwal]_.
 
 .. code-block:: bash
 
- bin/simple_bundle_adjuster ../ceres-solver-1.9.0/data/problem-16-22106-pre.txt
+ bin/simple_bundle_adjuster ../ceres-solver-1.10.0/data/problem-16-22106-pre.txt
 
 This runs Ceres for a maximum of 10 iterations using the
 ``DENSE_SCHUR`` linear solver. The output should look something like
@@ -262,10 +262,10 @@ We are now ready to build, test, and install Ceres.
 
 .. code-block:: bash
 
-   tar zxf ceres-solver-1.9.0.tar.gz
+   tar zxf ceres-solver-1.10.0.tar.gz
    mkdir ceres-bin
    cd ceres-bin
-   cmake ../ceres-solver-1.9.0
+   cmake ../ceres-solver-1.10.0
    make -j3
    make test
    make install
@@ -482,6 +482,10 @@ Options controlling Ceres configuration
    the code is licensed under the ``LGPL`` and since ``Eigen`` is a
    header only library, including this code will result in an ``LGPL``
    licensed version of Ceres.
+
+   .. NOTE::
+
+      For good performance, use Eigen version 3.2.2 or later.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
