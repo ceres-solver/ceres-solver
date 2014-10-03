@@ -674,7 +674,7 @@ ENDIF (MSVC)
 IF (UNIX)
   # GCC is not strict enough by default, so enable most of the warnings.
   SET(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
+    "${CMAKE_CXX_FLAGS} -Werror=all -Werror=extra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
 ENDIF (UNIX)
 
 # Use a larger inlining threshold for Clang, since it hobbles Eigen,
