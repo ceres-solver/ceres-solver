@@ -21,7 +21,7 @@ Rosenbrock's Function
 =====================
 
 We consider the minimization of the famous `Rosenbrock's function
-<http://en.wikipedia.org/wiki/Rosenbrock_function>`_ [#f9]_.
+<http://en.wikipedia.org/wiki/Rosenbrock_function>`_ [#f1]_.
 
 We begin by defining an instance of the ``FirstOrderFunction``
 interface. This is the object that is responsible for computing the

@@ -632,7 +632,7 @@ The key computational operation when using Conjuagate Gradients is the
 evaluation of the matrix vector product :math:`Sx` for an arbitrary
 vector :math:`x`. There are two ways in which this product can be
 evaluated, and this can be controlled using
-``Solver::Options::use_explicit_schur_complement`. Depending on the
+``Solver::Options::use_explicit_schur_complement``. Depending on the
 problem at hand, the performance difference between these two methods
 can be quite substantial.
 

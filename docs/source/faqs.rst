@@ -169,7 +169,7 @@ Solving
       installed. Both of these preconditioners use a clustering
       algorithm. Use ``SINGLE_LINKAGE`` before ``CANONICAL_VIEWS``.
 
-#. Use :function:`Solver::Summary::FullReport` to diagnose performance problems.
+#. Use :func:`Solver::Summary::FullReport` to diagnose performance problems.
 
    When diagnosing Ceres performance issues - runtime and convergence,
    the first place to start is by looking at the output of
