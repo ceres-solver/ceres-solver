@@ -160,8 +160,8 @@ Solving
       .. NOTE::
 
         If you are solving small to medium sized problems, consider
-	setting ``Solver::Options::use_explicit_schur_complement`` to
-	``true``, it can result in a substantial performance boost.
+        setting ``Solver::Options::use_explicit_schur_complement`` to
+        ``true``, it can result in a substantial performance boost.
 
       If you are not satisfied with ``SCHUR_JACOBI``'s performance try
       ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` in that
