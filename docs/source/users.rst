@@ -23,9 +23,12 @@ Users
   multi-view geometry library uses Ceres for `bundle adjustment`_.
 * `Microsoft Research <http://research.microsoft.com/en-us/>`_ uses
   Ceres for nonlinear optimization of objectives involving subdivision
-  surfaces under `skinned control meshes`_
+  surfaces under `skinned control meshes`_.
 * `Matterport <http://www.matterport.com>`_, uses Ceres for global
   alignment of 3D point clouds and for pose graph optimization.
+* `Obvious Engineering <http://obviousengine.com/>`_ uses Ceres for
+  bundle adjustment for their 3D photography app `Seene
+  <http://seene.co/>`_.
 
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
@@ -63,4 +66,5 @@ Ceres Solver is used (and cited) in the following publications:
 #. **Adaptive Structure from Motion with a contrario model
    estimation**, P. Moulon, P. Monasse and R. Marlet, ACCV 2012.
 
-#. **Visibility based preconditioning for bundle adjustment**, A. Kushal and S. Agarwal, CVPR 2012.
+#. **Visibility based preconditioning for bundle
+   adjustment**, A. Kushal and S. Agarwal, CVPR 2012.
