@@ -344,7 +344,7 @@ in the objective functor. Here is the code for evaluating
  };
 
 
-Similarly, we can define classes ``F1``, ``F2`` and ``F4`` to evaluate
+Similarly, we can define classes ``F1``, ``F2`` and ``F3`` to evaluate
 :math:`f_1(x_1, x_2)`, :math:`f_2(x_3, x_4)` and :math:`f_3(x_2, x_3)`
 respectively. Using these, the problem can be constructed as follows:
 
