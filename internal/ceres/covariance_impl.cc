@@ -40,15 +40,27 @@
 #include <vector>
 #include "Eigen/SparseCore"
 
-// Suppress unused local variable warning from Eigen Ordering.h #included by
-// SparseQR in Eigen 3.2.0. This was fixed in Eigen 3.2.1, but 3.2.0 is still
-// widely used (Ubuntu 14.04), and Ceres won't compile otherwise due to -Werror.
+// Suppress various compiler warnings from Eigen/SparseQR.  This affects
+// multiple versions of Eigen (up to and including at least 3.2.2) and
+// Ceres won't compile otherwise due to -Werror.
 #if defined(_MSC_VER)
 #pragma warning( push )
 #pragma warning( disable : 4189 )
+#pragma warning( disable : 4101 )
 #else
 #pragma GCC diagnostic push
+// We explicitly disable warnings about (unused) pragmas first, as different
+// versions of GCC trigger different warnings for the same underlying issues
+// in Eigen/SparseQR.  For ease, we therefore disable the union of all warnings
+// for all versions of GCC and Clang, and rely on the disabling of warnings
+// about unused pragmas to hide any about options that the specific compiler
+// being used does not know about.
+#pragma GCC diagnostic ignored "-Wpragmas"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#pragma GCC diagnostic ignored "-Wno-unused-but-set-variable"
 #endif
 #include "Eigen/SparseQR"
 #if defined(_MSC_VER)
