@@ -528,8 +528,18 @@ INCLUDE_DIRECTORIES(
   include
   internal
   internal/ceres
-  ${GLOG_INCLUDE_DIRS}
-  ${EIGEN_INCLUDE_DIRS})
+  ${GLOG_INCLUDE_DIRS})
+# Eigen SparseQR generates various compiler warnings related to unused and
+# uninitialised local variables, which prevents Ceres compilation as we use
+# -Werror.  To avoid having to individually suppress these warnings around
+# the #include statments for Eigen headers across all GCC/Clang versions, we
+# tell CMake to treat Eigen headers as system headers.  This results in all
+# compiler warnings from them being suppressed.
+#
+# Note that this is *not* propagated to clients, ie CERES_INCLUDE_DIRS
+# used by clients after find_package(Ceres) does not identify Eigen as
+# as system headers.
+INCLUDE_DIRECTORIES(SYSTEM ${EIGEN_INCLUDE_DIRS})
 
 IF (SUITESPARSE)
   INCLUDE_DIRECTORIES(${SUITESPARSE_INCLUDE_DIRS})
