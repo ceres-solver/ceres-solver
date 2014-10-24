@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7580cec4_4ae3a3e8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-10-24T21:07:05Z",
+      "side": 1,
+      "message": "What do you think about making an internal header \"EigenSparse\" that does this warning suppression? Or is this the only place we need it?",
+      "revId": "53bd767a755d3afad1deaaa44ba534ab777eef41",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
