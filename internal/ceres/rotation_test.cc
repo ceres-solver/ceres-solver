@@ -127,8 +127,8 @@ MATCHER_P(IsNearQuaternion, expected, "") {
 }
 
 // Use as:
-// double expected_axis_angle[4];
-// double actual_axis_angle[4];
+// double expected_axis_angle[3];
+// double actual_axis_angle[3];
 // EXPECT_THAT(actual_axis_angle, IsNearAngleAxis(expected_axis_angle));
 MATCHER_P(IsNearAngleAxis, expected, "") {
   if (arg == NULL) {
@@ -136,14 +136,42 @@ MATCHER_P(IsNearAngleAxis, expected, "") {
     return false;
   }
 
-  for (int i = 0; i < 3; i++) {
-    if (fabs(arg[i] - expected[i]) > kTolerance) {
-      *result_listener << "component " << i << " should be " << expected[i];
-      return false;
-    }
+  // The following reads a bit complicated, because two things are
+  // going on here.
+  //
+  // 1. We are computing the relative difference between arg and
+  // expected vectors and checking if it is smaller than kTolerance.
+  //
+  // |arg - expected| < kTolerance * |expected|
+  //
+  // 2. We are doing this comparison modulo Pi, i.e., we make sure
+  // that both angle axis vectors have norms less than Pi.
+  //
+  // Evaluating these two things without performing division leads to
+  // the following mildly unreadable expressions.
+
+  Eigen::Vector3d a(arg[0], arg[1], arg[2]);
+  Eigen::Vector3d e(expected[0], expected[1], expected[2]);
+  const double a_norm = a.norm();
+  const double e_norm = e.norm();
+  const double normalized_a_norm = fmod(a_norm, kPi);
+  const double normalized_e_norm = fmod(e_norm, kPi);
+  const double delta_norm =
+      (a * normalized_a_norm * e_norm  - e * normalized_e_norm * a_norm).norm();
+
+  if (delta_norm <= kLooseTolerance * normalized_e_norm * a_norm * e_norm) {
+    return true;
   }
 
-  return true;
+  *result_listener << " arg:"
+                   << " " << arg[0]
+                   << " " << arg[1]
+                   << " " << arg[2]
+                   << " was expected to be:"
+                   << " " << expected[0]
+                   << " " << expected[1]
+                   << " " << expected[2];
+  return false;
 }
 
 // Use as:
@@ -440,10 +468,7 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
     }
     AngleAxisToRotationMatrix(in_axis_angle, matrix);
     RotationMatrixToAngleAxis(matrix, out_axis_angle);
-
-    for (int i = 0; i < 3; ++i) {
-      EXPECT_NEAR(out_axis_angle[i], in_axis_angle[i], kLooseTolerance);
-    }
+    EXPECT_THAT(in_axis_angle, IsNearAngleAxis(out_axis_angle));
   }
 }
 
@@ -480,7 +505,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
     }
   }
   LOG(INFO) << "Rotation:";
-  LOG(INFO) << "EXPECTED      |        ACTUAL";
+  LOG(INFO) << "EXPECTED        |        ACTUAL";
   for (int i = 0; i < 3; ++i) {
     string line;
     for (int j = 0; j < 3; ++j) {
@@ -1054,6 +1079,39 @@ TEST(MatrixAdapter, ColumnMajor2x4IsCorrect) {
   for (int k = 0; k < 8; ++k) {
     EXPECT_EQ(array[k], expected[k]);
   }
+}
+
+TEST(RotationMatrixToAngleAxis, Case3Example1) {
+  // Example from Tobias Strauss
+  const double rotation_matrix[] = {
+    -0.999807135425239,    -0.0128154391194470,   -0.0148814136745799,
+    -0.0128154391194470,   -0.148441438622958,     0.988838158557669,
+    -0.0148814136745799,    0.988838158557669,     0.148248574048196
+  };
+
+  double angle_axis[3];
+  RotationMatrixToAngleAxis(RowMajorAdapter3x3(rotation_matrix), angle_axis);
+  double round_trip[9];
+  AngleAxisToRotationMatrix(angle_axis, RowMajorAdapter3x3(round_trip));
+  EXPECT_THAT(rotation_matrix, IsNear3x3Matrix(round_trip));
+}
+
+TEST(RotationMatrixToAngleAxis, Case3Example2) {
+  const double theta = 0.0;
+  const double phi = M_PI / 180.0;
+  const double angle = M_PI;
+
+  double angle_axis[3];
+  angle_axis[0] = angle * sin(phi) * cos(theta);
+  angle_axis[1] = angle * sin(phi) * sin(theta);
+  angle_axis[2] = angle * cos(phi);
+
+  double rotation_matrix[9];
+  AngleAxisToRotationMatrix(angle_axis, rotation_matrix);
+
+  double angle_axis_round_trip[3];
+  RotationMatrixToAngleAxis(rotation_matrix, angle_axis_round_trip);
+  EXPECT_THAT(angle_axis_round_trip, IsNearAngleAxis(angle_axis));
 }
 
 }  // namespace internal
