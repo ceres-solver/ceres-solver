@@ -47,6 +47,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include "Eigen/Geometry"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -361,27 +362,22 @@ void RotationMatrixToAngleAxis(
   }
 
   // Case 3: theta ~ pi, this is the hard case. Since theta is large,
-  // and sin(theta) is small. Dividing by theta by sin(theta) will
-  // either give an overflow or worse still numerically meaningless
-  // results. Thus we use an alternate more complicated formula
-  // here.
-
-  // Since cos(theta) is negative, division by (1-cos(theta)) cannot
-  // overflow.
-  const T inv_one_minus_costheta = kOne / (kOne - costheta);
-
-  // We now compute the absolute value of coordinates of the axis
-  // vector using the diagonal entries of R. To resolve the sign of
-  // these entries, we compare the sign of angle_axis[i]*sin(theta)
-  // with the sign of sin(theta). If they are the same, then
-  // angle_axis[i] should be positive, otherwise negative.
+  // and sin(theta) is small. Dividing theta by sin(theta) will either
+  // give an overflow or worse still numerically meaningless
+  // results. Thus we use an alternate more complicated and expensive
+  // formula implemented by Eigen.
+  Eigen::Matrix<T, 3, 3> rotation_matrix;
   for (int i = 0; i < 3; ++i) {
-    angle_axis[i] = theta * sqrt((R(i, i) - costheta) * inv_one_minus_costheta);
-    if (((sintheta < 0.0) && (angle_axis[i] > 0.0)) ||
-        ((sintheta > 0.0) && (angle_axis[i] < 0.0))) {
-      angle_axis[i] = -angle_axis[i];
+    for (int j = 0; j < 3; ++j) {
+      rotation_matrix(i,j) = R(i,j);
     }
   }
+
+  Eigen::AngleAxis<T> aa;
+  aa.fromRotationMatrix(rotation_matrix);
+  angle_axis[0] = aa.angle() * aa.axis()[0];
+  angle_axis[1] = aa.angle() * aa.axis()[1];
+  angle_axis[2] = aa.angle() * aa.axis()[2];
 }
 
 template <typename T>

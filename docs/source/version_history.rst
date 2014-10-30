@@ -77,6 +77,8 @@ Backward Incompatible API Changes
 
 Bug Fixes
 ---------
+#. Fix RotationMatrixToAngleAxis when the angle of rotation is near
+   PI. (Tobias Strauss)
 #. Sometimes gradient norm based convergence would miss a step with a
    substantial solution quality improvement. (Rodney Hoskinson)
 #. Ignore warnings from within Eigen/SparseQR (3.2.2).
