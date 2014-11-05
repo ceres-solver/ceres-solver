@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f56afe64_0a1a1b8f",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-05T22:54:11Z",
+      "side": 1,
+      "message": "\"For correctness\"; perhaps say directly what condition is maintained by doing this at the end of the iteration.",
+      "revId": "fd198cf137a46fb350523b9990a0a84a3377f582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f56afe64_6a0dd753",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-05T22:54:11Z",
+      "side": 1,
+      "message": "should be else if",
+      "revId": "fd198cf137a46fb350523b9990a0a84a3377f582",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
