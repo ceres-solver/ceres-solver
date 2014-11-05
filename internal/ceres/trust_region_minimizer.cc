@@ -586,6 +586,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
+      iteration_summary.cost = cost + summary->fixed_cost;
+
       negative_gradient = -gradient;
       if (!evaluator->Plus(x.data(),
                            negative_gradient.data(),
@@ -598,18 +600,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
 
       iteration_summary.gradient_max_norm =
-        (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+          (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
       iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
-
-      if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-        summary->message = StringPrintf("Gradient tolerance reached. "
-                                        "Gradient max norm: %e <= %e",
-                                        iteration_summary.gradient_max_norm,
-                                        options_.gradient_tolerance);
-        summary->termination_type = CONVERGENCE;
-        VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-        return;
-      }
 
       if (options_.jacobi_scaling) {
         jacobian->ScaleColumns(scale.data());
@@ -666,8 +658,25 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
     }
 
-    iteration_summary.cost = cost + summary->fixed_cost;
     iteration_summary.trust_region_radius = strategy->Radius();
+    iteration_summary.iteration_time_in_seconds =
+        WallTimeInSeconds() - iteration_start_time;
+    iteration_summary.cumulative_time_in_seconds =
+        WallTimeInSeconds() - start_time
+        + summary->preprocessor_time_in_seconds;
+    summary->iterations.push_back(iteration_summary);
+
+    if (iteration_summary.step_is_successful &&
+        iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+      summary->message = StringPrintf("Gradient tolerance reached. "
+                                      "Gradient max norm: %e <= %e",
+                                      iteration_summary.gradient_max_norm,
+                                      options_.gradient_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      return;
+    }
+
     if (iteration_summary.trust_region_radius <
         options_.min_trust_region_radius) {
       summary->message = "Termination. Minimum trust region radius reached.";
@@ -675,13 +684,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       VLOG_IF(1, is_not_silent) << summary->message;
       return;
     }
-
-    iteration_summary.iteration_time_in_seconds =
-        WallTimeInSeconds() - iteration_start_time;
-    iteration_summary.cumulative_time_in_seconds =
-        WallTimeInSeconds() - start_time
-        + summary->preprocessor_time_in_seconds;
-    summary->iterations.push_back(iteration_summary);
   }
 }
 
