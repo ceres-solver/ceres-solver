@@ -598,18 +598,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
 
       iteration_summary.gradient_max_norm =
-        (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+          (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
       iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
-
-      if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
-        summary->message = StringPrintf("Gradient tolerance reached. "
-                                        "Gradient max norm: %e <= %e",
-                                        iteration_summary.gradient_max_norm,
-                                        options_.gradient_tolerance);
-        summary->termination_type = CONVERGENCE;
-        VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
-        return;
-      }
 
       if (options_.jacobi_scaling) {
         jacobian->ScaleColumns(scale.data());
@@ -656,6 +646,16 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           accumulated_reference_model_cost_change =
               accumulated_candidate_model_cost_change;
         }
+      }
+
+      if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+        summary->message = StringPrintf("Gradient tolerance reached. "
+                                        "Gradient max norm: %e <= %e",
+                                        iteration_summary.gradient_max_norm,
+                                        options_.gradient_tolerance);
+        summary->termination_type = CONVERGENCE;
+        VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+        return;
       }
     } else {
       ++summary->num_unsuccessful_steps;
