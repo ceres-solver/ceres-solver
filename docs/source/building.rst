@@ -219,13 +219,15 @@ Mac OS X
 ========
 .. NOTE::
 
- Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a bug in that version of
- Clang.  If you are running Xcode 4.5.x, please update to Xcode >= 4.6.x before attempting to
- build Ceres.
+ Ceres will not compile using Xcode 4.5.x (Clang version 4.1) due to a
+ bug in that version of Clang.  If you are running Xcode 4.5.x, please
+ update to Xcode >= 4.6.x before attempting to build Ceres.
 
 
 On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager to install Ceres.
+<http://mxcl.github.com/homebrew/>`_ package manager to install
+Ceres. Assuming that you have the ``homebrew/science`` [#f1]_ tap
+enabled, then
 
 .. code-block:: bash
 
@@ -272,6 +274,19 @@ We are now ready to build, test, and install Ceres.
 
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
+
+
+.. rubric:: Footnotes
+
+.. [#f1] Ceres and many of its dependencies are in `homebrew/science
+   <https://github.com/Homebrew/homebrew-science>`_ tap. So, if you
+   don't have this tap enabled, then you will need to enable it as
+   follows before executing any of the commands in this section.
+
+   .. code-block:: bash
+
+      brew tap homebrew/science
+
 
 .. _section-windows:
 

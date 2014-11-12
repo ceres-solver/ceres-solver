@@ -77,6 +77,10 @@ Backward Incompatible API Changes
 
 Bug Fixes
 ---------
+#. Sometimes gradient norm based convergence would miss a step with a
+   substantial solution quality improvement. (Rodney Hoskinson)
+#. Ignore warnings from within Eigen/SparseQR (3.2.2).
+#. Fix empty Cache HELPSTRING parsing error on OS X 10.10 Yosemite.
 #. Fix a formatting error TrustRegionMinimizer logging.
 #. Add an explicit include for local_parameterization.h (cooordz)
 #. Fix a number of typos in the documentation (Martin Baeuml)
