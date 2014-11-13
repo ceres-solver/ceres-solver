@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -272,6 +272,25 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
 
  private:
   const double a_, b_, c_;
+};
+
+// This is the Tukey biweight loss function which aggressively
+// attempts to suppress large errors.
+//
+// The term is computed as:
+//
+//   rho(s) = a^2 / 6 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
+//   rho(s) = a^2 / 6                            for s >  a^2.
+//
+// At s = 0: rho = [0, 0.5, -1 / a^2]
+class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
+ public:
+  explicit TukeyLoss(double a) : a_(a), a_squared_(a * a) { }
+  virtual void Evaluate(double, double*) const;
+
+ private:
+  const double a_;
+  const double a_squared_;
 };
 
 // Composition of two loss functions.  The error is the result of first
