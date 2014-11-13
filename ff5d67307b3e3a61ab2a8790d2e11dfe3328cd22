@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baaeb391_d8be6da5",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T06:43:48Z",
+      "side": 1,
+      "message": "There\u0027s an extra \u0027by\u0027 in here.",
+      "revId": "ff5d67307b3e3a61ab2a8790d2e11dfe3328cd22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_a985fd99",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T06:43:48Z",
+      "side": 1,
+      "message": "drop \u0027here\u0027",
+      "revId": "ff5d67307b3e3a61ab2a8790d2e11dfe3328cd22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_c97cb10e",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T06:43:48Z",
+      "side": 1,
+      "message": "\"Case3Example\" is too obscure. Either add a comment or rename the test.",
+      "revId": "ff5d67307b3e3a61ab2a8790d2e11dfe3328cd22",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
