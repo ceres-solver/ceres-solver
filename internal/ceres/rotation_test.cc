@@ -136,29 +136,24 @@ MATCHER_P(IsNearAngleAxis, expected, "") {
     return false;
   }
 
-  // The following reads a bit complicated, here is why:
-  //
-  // 1. We are computing the relative difference between arg and
-  // expected vectors and checking if it is smaller than kTolerance.
-  //
-  // |arg - expected| < kTolerance * |expected|
-  //
-  // 2. We are doing this comparison modulo Pi, i.e., we make sure
-  // that both angle axis vectors have norms less than Pi.
-  //
-  // Evaluating these two things without performing division leads to
-  // the following mildly unreadable expressions.
-
   Eigen::Vector3d a(arg[0], arg[1], arg[2]);
   Eigen::Vector3d e(expected[0], expected[1], expected[2]);
-  const double a_norm = a.norm();
   const double e_norm = e.norm();
-  const double normalized_a_norm = fmod(a_norm, kPi);
-  const double normalized_e_norm = fmod(e_norm, kPi);
-  const double delta_norm =
-      (a * normalized_a_norm * e_norm  - e * normalized_e_norm * a_norm).norm();
 
-  if (delta_norm <= kLooseTolerance * normalized_e_norm * a_norm * e_norm) {
+  double delta_norm = std::numeric_limits<double>::max();
+  if (e_norm > 0) {
+    // Deal with the sign ambiguity near PI. Since the sign can flip,
+    // we take the smaller of the two differences.
+    if (fabs(e_norm - kPi) < kLooseTolerance) {
+      delta_norm = std::min((a - e).norm(), (a + e).norm()) / e_norm;
+    } else {
+      delta_norm = (a - e).norm() / e_norm;
+    }
+  } else {
+    delta_norm = a.norm();
+  }
+
+  if (delta_norm <= kLooseTolerance) {
     return true;
   }
 
@@ -459,7 +454,7 @@ TEST(Rotation, NearPiAngleAxisRoundTrip) {
     norm = sqrt(norm);
 
     // Angle in [pi - kMaxSmallAngle, pi).
-    const double kMaxSmallAngle = 1e-2;
+    const double kMaxSmallAngle = 1e-8;
     double theta = kPi - kMaxSmallAngle * RandDouble();
 
     for (int i = 0; i < 3; i++) {
@@ -1095,11 +1090,9 @@ TEST(RotationMatrixToAngleAxis, NearPiExampleOneFromTobiasStrauss) {
   EXPECT_THAT(rotation_matrix, IsNear3x3Matrix(round_trip));
 }
 
-TEST(RotationMatrixToAngleAxis, AtPi) {
-  const double theta = 0.0;
-  const double phi = M_PI / 180.0;
-  const double angle = M_PI;
-
+void CheckRotationMatrixToAngleAxisRoundTrip(const double theta,
+                                             const double phi,
+                                             const double angle) {
   double angle_axis[3];
   angle_axis[0] = angle * sin(phi) * cos(theta);
   angle_axis[1] = angle * sin(phi) * sin(theta);
@@ -1111,6 +1104,23 @@ TEST(RotationMatrixToAngleAxis, AtPi) {
   double angle_axis_round_trip[3];
   RotationMatrixToAngleAxis(rotation_matrix, angle_axis_round_trip);
   EXPECT_THAT(angle_axis_round_trip, IsNearAngleAxis(angle_axis));
+}
+
+TEST(RotationMatrixToAngleAxis, ExhaustiveRoundTrip) {
+  const double kMaxSmallAngle = 1e-8;
+  for (int i = 0; i < 1000; ++i) {
+    const double theta = static_cast<double>(i) / 100.0 * 2.0 * kPi;
+    for (int j = 0; j < 1000; ++j) {
+      const double phi = static_cast<double>(j) / 100.0 * kPi;
+      CheckRotationMatrixToAngleAxisRoundTrip(theta, phi, kPi);
+      CheckRotationMatrixToAngleAxisRoundTrip(theta,
+                                              phi,
+                                              kPi - kMaxSmallAngle * RandDouble());
+      CheckRotationMatrixToAngleAxisRoundTrip(theta,
+                                              phi,
+                                              kMaxSmallAngle * 2.0 * RandDouble() - 1.0);
+    }
+  }
 }
 
 }  // namespace internal
