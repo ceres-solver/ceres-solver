@@ -114,6 +114,22 @@ void TolerantLoss::Evaluate(double s, double rho[3]) const {
   }
 }
 
+void TukeyLoss::Evaluate(double s, double* rho) const {
+  if (s <= a_squared_) {
+    // Inlier region.
+    const double value = 1.0 - s / a_squared_;
+    const double value_sq = value * value;
+    rho[0] = a_squared_ * (1 - value_sq * value);
+    rho[1] = 3.0 * value_sq;
+    rho[2] = -6.0 / a_squared_ * value;
+  } else {
+    // Outlier region.
+    rho[0] = a_squared_;
+    rho[1] = 0.0;
+    rho[2] = 0.0;
+  }
+}
+
 ComposedLoss::ComposedLoss(const LossFunction* f, Ownership ownership_f,
                            const LossFunction* g, Ownership ownership_g)
     : f_(CHECK_NOTNULL(f)),

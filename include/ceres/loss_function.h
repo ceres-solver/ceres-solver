@@ -274,6 +274,21 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
   const double a_, b_, c_;
 };
 
+// This implements the Tukey loss function:
+//   rho(s) = a^2 * (1 - (1 - s / a^2)^3 )   for s <= a^2,
+//   rho(s) = a^2                            for s >  a^2.
+//
+// At s = 0: rho = [0, 3, -6 / a^2]
+class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
+ public:
+  explicit TukeyLoss(double a) : a_(a), a_squared_(a * a) { }
+  virtual void Evaluate(double, double*) const;
+
+ private:
+  const double a_;
+  const double a_squared_;
+};
+
 // Composition of two loss functions.  The error is the result of first
 // evaluating g followed by f to yield the composition f(g(s)).
 // The loss functions must not be NULL.
