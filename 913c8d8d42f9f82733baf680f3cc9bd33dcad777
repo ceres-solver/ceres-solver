@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adfdb23_739ca275",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-11-13T22:55:52Z",
+      "side": 1,
+      "message": "isn\u0027t there a 1/6 missing here?\n\nhttp://pages.pomona.edu/~jsh04747/Student%20Theses/MaryOwen10.pdf\n\nequation 2.9",
+      "range": {
+        "startLine": 278,
+        "startChar": 17,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "913c8d8d42f9f82733baf680f3cc9bd33dcad777",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
