@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "da2b67c1_4ce3afb1",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T23:06:48Z",
+      "side": 1,
+      "message": "Please change this to 2014 only",
+      "revId": "913c8d8d42f9f82733baf680f3cc9bd33dcad777",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_0ce9b793",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T23:06:48Z",
+      "side": 1,
+      "message": "Maybe add a short explanation of why/when to use it.",
+      "revId": "913c8d8d42f9f82733baf680f3cc9bd33dcad777",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adfdb23_739ca275",
         "filename": "include/ceres/loss_function.h",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2014-11-13T22:55:52Z",
       "side": 1,
       "message": "isn\u0027t there a 1/6 missing here?\n\nhttp://pages.pomona.edu/~jsh04747/Student%20Theses/MaryOwen10.pdf\n\nequation 2.9",
+      "range": {
+        "startLine": 278,
+        "startChar": 17,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "913c8d8d42f9f82733baf680f3cc9bd33dcad777",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_6cde73e7",
+        "filename": "include/ceres/loss_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-13T23:06:48Z",
+      "side": 1,
+      "message": "There should be a comment-blank above this line; see the other examples.",
+      "parentUuid": "7adfdb23_739ca275",
       "range": {
         "startLine": 278,
         "startChar": 17,
