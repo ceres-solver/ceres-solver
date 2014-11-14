@@ -415,6 +415,6 @@ class CERES_EXPORT LossFunctionWrapper : public LossFunction {
 
 }  // namespace ceres
 
-#include "ceres/internal/disable_warnings.h"
+#include "ceres/internal/reenable_warnings.h"
 
 #endif  // CERES_PUBLIC_LOSS_FUNCTION_H_
