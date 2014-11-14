@@ -1108,10 +1108,11 @@ void CheckRotationMatrixToAngleAxisRoundTrip(const double theta,
 
 TEST(RotationMatrixToAngleAxis, ExhaustiveRoundTrip) {
   const double kMaxSmallAngle = 1e-8;
-  for (int i = 0; i < 1000; ++i) {
-    const double theta = static_cast<double>(i) / 100.0 * 2.0 * kPi;
-    for (int j = 0; j < 1000; ++j) {
-      const double phi = static_cast<double>(j) / 100.0 * kPi;
+  const int kNumSteps = 1000;
+  for (int i = 0; i < kNumSteps; ++i) {
+    const double theta = static_cast<double>(i) / kNumSteps * 2.0 * kPi;
+    for (int j = 0; j < kNumSteps; ++j) {
+      const double phi = static_cast<double>(j) / kNumSteps * kPi;
       // Rotations of angle Pi.
       CheckRotationMatrixToAngleAxisRoundTrip(theta, phi, kPi);
       // Rotation of angle approximately Pi.

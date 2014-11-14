@@ -285,11 +285,10 @@ class CERES_EXPORT TolerantLoss : public LossFunction {
 // At s = 0: rho = [0, 0.5, -1 / a^2]
 class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
  public:
-  explicit TukeyLoss(double a) : a_(a), a_squared_(a * a) { }
+  explicit TukeyLoss(double a) : a_squared_(a * a) { }
   virtual void Evaluate(double, double*) const;
 
  private:
-  const double a_;
   const double a_squared_;
 };
 
