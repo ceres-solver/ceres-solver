@@ -125,14 +125,12 @@ bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
 
   if (g == NULL) {
     return (evaluator_->Evaluate(evaluation_point_.data(),
-                                  f, NULL, NULL, NULL) &&
+                                 f, NULL, NULL, NULL) &&
             IsFinite(*f));
   }
 
   if (!evaluator_->Evaluate(evaluation_point_.data(),
-                            f,
-                            NULL,
-                            gradient_.data(), NULL)) {
+                            f, NULL, gradient_.data(), NULL)) {
     return false;
   }
 

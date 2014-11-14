@@ -446,11 +446,16 @@ bool Solver::Options::IsValid(string* error) const {
     return false;
   }
 
-  if (minimizer_type == TRUST_REGION) {
-    return TrustRegionOptionsAreValid(*this, error);
+  if (minimizer_type == TRUST_REGION &&
+      !TrustRegionOptionsAreValid(*this, error)) {
+    return false;
   }
 
-  CHECK_EQ(minimizer_type, LINE_SEARCH);
+  // We do not know if the problem is bounds constrained or not, if it
+  // is then the trust region solver will also use the line search
+  // solver to do a projection onto the box constraints, so make sure
+  // that the line search options are checked independent of what
+  // minimizer algorithm is being used.
   return LineSearchOptionsAreValid(*this, error);
 }
 
