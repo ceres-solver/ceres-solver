@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a941f50_4b9b85d5",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T19:09:00Z",
+      "side": 1,
+      "message": "Combine into a single if with \u0026\u0026",
+      "revId": "67719ddf71c0b83df20a9767643809b6207e6e61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
