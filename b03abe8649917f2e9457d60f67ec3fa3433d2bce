@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2b67c1_0fa7e9c8",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:19:02Z",
+      "side": 1,
+      "message": "I think one line with\n\n\n  WARNING: The rotation matrix is ROW MAJOR\n\n\nis enough (and below)",
+      "revId": "b03abe8649917f2e9457d60f67ec3fa3433d2bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_6f9ca575",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:19:02Z",
+      "side": 1,
+      "message": "Remove unnecessary return.",
+      "revId": "b03abe8649917f2e9457d60f67ec3fa3433d2bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_4fa1e1af",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:19:02Z",
+      "side": 1,
+      "message": "I think i should be j in the cast here.",
+      "revId": "b03abe8649917f2e9457d60f67ec3fa3433d2bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_af95fd47",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:19:02Z",
+      "side": 1,
+      "message": "i -\u003e j",
+      "revId": "b03abe8649917f2e9457d60f67ec3fa3433d2bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_8f92b95b",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:19:02Z",
+      "side": 1,
+      "message": "i -\u003e j",
+      "revId": "b03abe8649917f2e9457d60f67ec3fa3433d2bce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
