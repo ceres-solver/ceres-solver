@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baaeb391_47dc3826",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:53:21Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "3faa763721016dba1d657010f2c2066223b11d32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baaeb391_0737a0d0",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:53:21Z",
+      "side": 1,
+      "message": "Just a single WARNING is OK (and below).",
+      "revId": "3faa763721016dba1d657010f2c2066223b11d32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baaeb391_67e13ce1",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:53:21Z",
+      "side": 1,
+      "message": "Just a single WARNING line is ok.",
+      "revId": "3faa763721016dba1d657010f2c2066223b11d32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baaeb391_e739ccc5",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:53:21Z",
+      "side": 1,
+      "message": "2014 only",
+      "revId": "3faa763721016dba1d657010f2c2066223b11d32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2b67c1_0fa6c9a3",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-14T06:53:21Z",
+      "side": 1,
+      "message": "Still needs comments to illuminate each case better.",
+      "revId": "3faa763721016dba1d657010f2c2066223b11d32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
