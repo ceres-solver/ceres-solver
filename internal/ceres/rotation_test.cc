@@ -1115,13 +1115,11 @@ TEST(RotationMatrixToAngleAxis, ExhaustiveRoundTrip) {
       // Rotations of angle Pi.
       CheckRotationMatrixToAngleAxisRoundTrip(theta, phi, kPi);
       // Rotation of angle approximately Pi.
-      CheckRotationMatrixToAngleAxisRoundTrip(theta,
-                                              phi,
-                                              kPi - kMaxSmallAngle * RandDouble());
+      CheckRotationMatrixToAngleAxisRoundTrip(
+          theta, phi, kPi - kMaxSmallAngle * RandDouble());
       // Rotations of angle approximately zero.
-      CheckRotationMatrixToAngleAxisRoundTrip(theta,
-                                              phi,
-                                              kMaxSmallAngle * 2.0 * RandDouble() - 1.0);
+      CheckRotationMatrixToAngleAxisRoundTrip(
+          theta, phi, kMaxSmallAngle * 2.0 * RandDouble() - 1.0);
     }
   }
 }

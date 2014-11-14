@@ -48,6 +48,7 @@ New Features
    their solver configuration before calling ``Solve``.
 #. Added ``Problem::GetCostFunctionForResidualBlock`` and
    ``Problem::GetLossFunctionForResidualBlock``.
+#. Added Tukey's loss function. (Michael Vitus)
 
 Backward Incompatible API Changes
 ---------------------------------
