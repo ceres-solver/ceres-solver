@@ -86,11 +86,10 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
   line_search_options.function = &line_search_function;
 
   string message;
-  scoped_ptr<LineSearch>
-      line_search(CHECK_NOTNULL(
-                      LineSearch::Create(ceres::ARMIJO,
-                                         line_search_options,
-                                         &message)));
+  scoped_ptr<LineSearch> line_search(
+      CHECK_NOTNULL(LineSearch::Create(ceres::ARMIJO,
+                                       line_search_options,
+                                       &message)));
   LineSearch::Summary summary;
   line_search_function.Init(x, delta);
   // Try the trust region step.
@@ -407,10 +406,10 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       double new_cost = std::numeric_limits<double>::max();
       if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
         if (!evaluator->Evaluate(x_plus_delta.data(),
-                                &new_cost,
-                                NULL,
-                                NULL,
-                                NULL)) {
+                                 &new_cost,
+                                 NULL,
+                                 NULL,
+                                 NULL)) {
           LOG(WARNING) << "Step failed to evaluate. "
                        << "Treating it as a step with infinite cost";
           new_cost = numeric_limits<double>::max();
