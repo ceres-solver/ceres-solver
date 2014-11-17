@@ -92,7 +92,7 @@ DEFINE_string(linear_solver, "dense_qr", "Options are: "
               "cgnr");
 DEFINE_string(preconditioner, "jacobi", "Options are: "
               "identity, jacobi");
-DEFINE_string(line_search, "armijo",
+DEFINE_string(line_search, "wolfe",
               "Line search algorithm to use, choices are: armijo and wolfe.");
 DEFINE_string(line_search_direction, "lbfgs",
               "Line search direction algorithm to use, choices: lbfgs, bfgs");
