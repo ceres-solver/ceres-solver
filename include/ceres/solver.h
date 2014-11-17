@@ -832,6 +832,26 @@ class CERES_EXPORT Solver {
     // Time (in seconds) spent doing inner iterations.
     double inner_iteration_time_in_seconds;
 
+    // Cumulative timing information for line searches performed as part of the
+    // solve.  Note that in addition to the case when the Line Search minimizer
+    // is used, the Trust Region minimizer also uses a line search when
+    // solving a constrained problem.
+
+    // Time (in seconds) spent evaluating the univariate cost function as part
+    // of a line search.
+    double line_search_cost_evaluation_time_in_seconds;
+
+    // Time (in seconds) spent evaluating the gradient of the univariate cost
+    // function as part of a line search.
+    double line_search_gradient_evaluation_time_in_seconds;
+
+    // Time (in seconds) spent minimizing the interpolating polynomial
+    // to compute the next candidate step size as part of a line search.
+    double line_search_polynomial_minimization_time_in_seconds;
+
+    // Total time (in seconds) spent performing line searches.
+    double line_search_total_time_in_seconds;
+
     // Number of parameter blocks in the problem.
     int num_parameter_blocks;
 
@@ -870,6 +890,9 @@ class CERES_EXPORT Solver {
 
     //  Number of residuals in the reduced problem.
     int num_residuals_reduced;
+
+    // Is the reduced problem bounds constrained.
+    bool is_constrained;
 
     //  Number of threads specified by the user for Jacobian and
     //  residual evaluation.
