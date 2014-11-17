@@ -56,54 +56,6 @@
 
 namespace ceres {
 namespace internal {
-namespace {
-
-LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
-                                 const Vector& x,
-                                 const Vector& gradient,
-                                 const double cost,
-                                 const Vector& delta,
-                                 Evaluator* evaluator) {
-  LineSearchFunction line_search_function(evaluator);
-
-  LineSearch::Options line_search_options;
-  line_search_options.is_silent = true;
-  line_search_options.interpolation_type =
-      options.line_search_interpolation_type;
-  line_search_options.min_step_size = options.min_line_search_step_size;
-  line_search_options.sufficient_decrease =
-      options.line_search_sufficient_function_decrease;
-  line_search_options.max_step_contraction =
-      options.max_line_search_step_contraction;
-  line_search_options.min_step_contraction =
-      options.min_line_search_step_contraction;
-  line_search_options.max_num_iterations =
-      options.max_num_line_search_step_size_iterations;
-  line_search_options.sufficient_curvature_decrease =
-      options.line_search_sufficient_curvature_decrease;
-  line_search_options.max_step_expansion =
-      options.max_line_search_step_expansion;
-  line_search_options.function = &line_search_function;
-
-  string message;
-  scoped_ptr<LineSearch> line_search(
-      CHECK_NOTNULL(LineSearch::Create(ceres::ARMIJO,
-                                       line_search_options,
-                                       &message)));
-  LineSearch::Summary summary;
-  line_search_function.Init(x, delta);
-  // Try the trust region step.
-  line_search->Search(1.0, cost, gradient.dot(delta), &summary);
-  if (!summary.success) {
-    // If that was not successful, try the negative gradient as a
-    // search direction.
-    line_search_function.Init(x, -gradient);
-    line_search->Search(1.0, cost, -gradient.squaredNorm(), &summary);
-  }
-  return summary;
-}
-
-}  // namespace
 
 // Compute a scaling vector that is used to improve the conditioning
 // of the Jacobian.
@@ -140,9 +92,37 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   // line search will automatically use a projected test point onto
   // the feasible set, there by guaranteeing the feasibility of the
   // final output.
-  //
-  // TODO(sameeragarwal): Make line search available more generally.
   const bool use_line_search = options.is_constrained;
+  LineSearchFunction line_search_function(evaluator);
+  scoped_ptr<LineSearch> line_search;
+  if (use_line_search) {
+    LineSearch::Options line_search_options;
+    line_search_options.is_silent = true;
+    line_search_options.interpolation_type = BISECTION;//options.line_search_interpolation_type;
+    line_search_options.min_step_size = options.min_line_search_step_size;
+    line_search_options.sufficient_decrease =
+        options.line_search_sufficient_function_decrease;
+    line_search_options.max_step_contraction =
+        options.max_line_search_step_contraction;
+    line_search_options.min_step_contraction =
+        options.min_line_search_step_contraction;
+    line_search_options.max_num_iterations =
+        options.max_num_line_search_step_size_iterations;
+    line_search_options.sufficient_curvature_decrease =
+        options.line_search_sufficient_curvature_decrease;
+    line_search_options.max_step_expansion =
+        options.max_line_search_step_expansion;
+    line_search_options.function = &line_search_function;
+    line_search.reset(LineSearch::Create(ceres::ARMIJO,
+                                         line_search_options,
+                                         &summary->message));
+
+    if (line_search.get() == NULL) {
+      summary->termination_type = FAILURE;
+      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+      return;
+    }
+  }
 
   summary->termination_type = NO_CONVERGENCE;
   summary->num_successful_steps = 0;
@@ -267,6 +247,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       options.inner_iteration_minimizer.get() != NULL;
   while (true) {
     bool inner_iterations_were_useful = false;
+    bool trust_region_step_was_used = true;
     if (!RunCallbacks(options, iteration_summary, summary)) {
       return;
     }
@@ -390,19 +371,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
 
-      // Try improving the step further by using an ARMIJO line
-      // search.
-      //
-      // TODO(sameeragarwal): What happens to trust region sizing as
-      // it interacts with the line search ?
-      if (use_line_search) {
-        const LineSearch::Summary line_search_summary =
-            DoLineSearch(options, x, gradient, cost, delta, evaluator);
-        if (line_search_summary.success) {
-          delta *= line_search_summary.optimal_step_size;
-        }
-      }
-
       double new_cost = std::numeric_limits<double>::max();
       if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
         if (!evaluator->Evaluate(x_plus_delta.data(),
@@ -420,8 +388,78 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       }
 
       if (new_cost < std::numeric_limits<double>::max()) {
+        const double kMinRelativeDecreaseForLineSearch = 0.99995;
+        if (new_cost > kMinRelativeDecreaseForLineSearch * cost &&
+            use_line_search) {
+          // Try the trust region step as the direction of line search.
+          LineSearch::Summary line_search_summary;
+          line_search_function.Init(x, delta);
+          line_search->Search(1.0, cost, gradient.dot(delta), &line_search_summary);
+          if (line_search_summary.success) {
+            VLOG_IF(2, is_not_silent)
+                << "Projected trust region line search step size: "
+                << line_search_summary.optimal_step_size;
+
+            delta *= line_search_summary.optimal_step_size;
+          } else {
+            // The trust region step was not a good idea, use the
+            // negative gradient fall back line search direction.
+            //
+            // Commenting the following block of code out because we
+            // do not have a case yet where taking the projected
+            // gradient step does anything useful.
+            //
+            // TODO(sameeragarwal): Re-enable this code one we have an
+            // example where this code is found to be beneficial.
+
+
+            // VLOG_IF(2, is_not_silent)
+            //     << "Projected trust region line search failed with error: "
+            //     << line_search_summary.error;
+            //
+            // // If that was not successful, try the negative gradient as a
+            // // search direction.
+            // line_search_function.Init(x, negative_gradient);
+            // line_search->Search(1.0, cost, -gradient.squaredNorm(), &line_search_summary);
+            // if (line_search_summary.success) {
+            //   VLOG_IF(2, is_not_silent)
+            //       << "Projected gradient line search step size: "
+            //       << line_search_summary.optimal_step_size;
+            //   delta = line_search_summary.optimal_step_size * negative_gradient;
+            //   // We are going to use this step, but the trust region
+            //   // strategy needs to know that the trust region step was
+            //   // not used, so we keep track of it using this bool.
+            //   trust_region_step_was_used = false;
+            // } else {
+            //   VLOG_IF(2, is_not_silent)
+            //     << "Projected gradient line search failed with error: "
+            //     << line_search_summary.error;
+            // }
+
+          }
+
+          if (line_search_summary.success) {
+            if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+              if (!evaluator->Evaluate(x_plus_delta.data(),
+                                       &new_cost,
+                                       NULL,
+                                       NULL,
+                                       NULL)) {
+                LOG(WARNING) << "Step failed to evaluate. "
+                             << "Treating it as a step with infinite cost";
+                new_cost = numeric_limits<double>::max();
+              }
+            } else {
+              LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. "
+                           << "Treating it as a step with infinite cost";
+            }
+          }
+        }
+
+
         // Check if performing an inner iteration will make it better.
-        if (inner_iterations_are_enabled) {
+        if (new_cost < std::numeric_limits<double>::max() &&
+            inner_iterations_are_enabled) {
           ++summary->num_inner_iteration_steps;
           double inner_iteration_start_time = WallTimeInSeconds();
           const double x_plus_delta_cost = new_cost;
@@ -576,7 +614,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
 
     if (iteration_summary.step_is_successful) {
       ++summary->num_successful_steps;
-      strategy->StepAccepted(iteration_summary.relative_decrease);
+      if (trust_region_step_was_used) {
+        strategy->StepAccepted(iteration_summary.relative_decrease);
+      } else {
+        strategy->StepIsInvalid();
+      }
 
       x = x_plus_delta;
       x_norm = x.norm();
