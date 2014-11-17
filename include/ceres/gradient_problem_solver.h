@@ -303,6 +303,10 @@ class CERES_EXPORT GradientProblemSolver {
     // Time (in seconds) spent evaluating the gradient.
     double gradient_evaluation_time_in_seconds;
 
+    // Time (in seconds) spent minimizing the interpolating polynomial
+    // to compute the next candidate step size as part of a line search.
+    double line_search_polynomial_minimization_time_in_seconds;
+
     // Number of parameters in the probem.
     int num_parameters;
 

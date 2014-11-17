@@ -138,6 +138,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   solver_summary.fixed_cost = 0.0;
   solver_summary.preprocessor_time_in_seconds = 0.0;
   solver_summary.postprocessor_time_in_seconds = 0.0;
+  solver_summary.line_search_polynomial_minimization_time_in_seconds = 0.0;
 
   minimizer->Minimize(minimizer_options, solution.data(), &solver_summary);
 
@@ -146,6 +147,8 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   summary->initial_cost     = solver_summary.initial_cost;
   summary->final_cost       = solver_summary.final_cost;
   summary->iterations       = solver_summary.iterations;
+  summary->line_search_polynomial_minimization_time_in_seconds =
+      solver_summary.line_search_polynomial_minimization_time_in_seconds;
 
   if (summary->IsSolutionUsable()) {
     parameters = solution;
@@ -172,6 +175,7 @@ GradientProblemSolver::Summary::Summary()
       total_time_in_seconds(-1.0),
       cost_evaluation_time_in_seconds(-1.0),
       gradient_evaluation_time_in_seconds(-1.0),
+      line_search_polynomial_minimization_time_in_seconds(-1.0),
       num_parameters(-1),
       num_local_parameters(-1),
       line_search_direction_type(LBFGS),
@@ -250,6 +254,8 @@ string GradientProblemSolver::Summary::FullReport() const {
                 cost_evaluation_time_in_seconds);
   StringAppendF(&report, "  Gradient evaluation %23.3f\n",
                 gradient_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Polynomial minimization   %17.3f\n",
+                line_search_polynomial_minimization_time_in_seconds);
 
   StringAppendF(&report, "Total               %25.3f\n\n",
                 total_time_in_seconds);
