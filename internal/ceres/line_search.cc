@@ -38,6 +38,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/polynomial.h"
 #include "ceres/stringprintf.h"
+#include "ceres/wall_time.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -115,7 +116,9 @@ void LineSearchFunction::Init(const Vector& position,
   direction_ = direction;
 }
 
-bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
+bool LineSearchFunction::Evaluate(double x,
+                                  double* f,
+                                  double* g) {
   scaled_direction_ = x * direction_;
   if (!evaluator_->Plus(position_.data(),
                         scaled_direction_.data(),
@@ -140,6 +143,20 @@ bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
 
 double LineSearchFunction::DirectionInfinityNorm() const {
   return direction_.lpNorm<Eigen::Infinity>();
+}
+
+void LineSearch::Search(double step_size_estimate,
+                        double initial_cost,
+                        double initial_gradient,
+                        Summary* summary) const {
+  const double start_time = WallTimeInSeconds();
+  *CHECK_NOTNULL(summary) = LineSearch::Summary();
+
+  summary->function_evaluation_time_in_seconds = 0.0;
+  summary->polynomial_minimization_time_in_seconds = 0.0;
+
+  this->DoSearch(step_size_estimate, initial_cost, initial_gradient, summary);
+  summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
 
 // Returns step_size \in [min_step_size, max_step_size] which minimizes the
@@ -217,11 +234,10 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
 ArmijoLineSearch::ArmijoLineSearch(const LineSearch::Options& options)
     : LineSearch(options) {}
 
-void ArmijoLineSearch::Search(const double step_size_estimate,
-                              const double initial_cost,
-                              const double initial_gradient,
-                              Summary* summary) {
-  *CHECK_NOTNULL(summary) = LineSearch::Summary();
+void ArmijoLineSearch::DoSearch(const double step_size_estimate,
+                                const double initial_cost,
+                                const double initial_gradient,
+                                Summary* summary) const {
   CHECK_GE(step_size_estimate, 0.0);
   CHECK_GT(options().sufficient_decrease, 0.0);
   CHECK_LT(options().sufficient_decrease, 1.0);
@@ -252,11 +268,14 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
   if (interpolation_uses_gradient_at_current_sample) {
     ++summary->num_gradient_evaluations;
   }
+  double evaluate_start_time = WallTimeInSeconds();
   current.value_is_valid =
       function->Evaluate(current.x,
                          &current.value,
                          interpolation_uses_gradient_at_current_sample
                          ? &current.gradient : NULL);
+  summary->function_evaluation_time_in_seconds +=
+      WallTimeInSeconds() - evaluate_start_time;
   current.gradient_is_valid =
       interpolation_uses_gradient_at_current_sample && current.value_is_valid;
   while (!current.value_is_valid ||
@@ -277,6 +296,7 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
       return;
     }
 
+    const double polynomial_minimization_start_time = WallTimeInSeconds();
     const double step_size =
         this->InterpolatingPolynomialMinimizingStepSize(
             options().interpolation_type,
@@ -285,6 +305,8 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
             current,
             (options().max_step_contraction * current.x),
             (options().min_step_contraction * current.x));
+    summary->polynomial_minimization_time_in_seconds +=
+        (WallTimeInSeconds() - polynomial_minimization_start_time);
 
     if (step_size * descent_direction_max_norm < options().min_step_size) {
       summary->error =
@@ -302,11 +324,14 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
     if (interpolation_uses_gradient_at_current_sample) {
       ++summary->num_gradient_evaluations;
     }
+    evaluate_start_time = WallTimeInSeconds();
     current.value_is_valid =
       function->Evaluate(current.x,
                          &current.value,
                          interpolation_uses_gradient_at_current_sample
                          ? &current.gradient : NULL);
+    summary->function_evaluation_time_in_seconds +=
+        WallTimeInSeconds() - evaluate_start_time;
     current.gradient_is_valid =
         interpolation_uses_gradient_at_current_sample && current.value_is_valid;
   }
@@ -318,11 +343,10 @@ void ArmijoLineSearch::Search(const double step_size_estimate,
 WolfeLineSearch::WolfeLineSearch(const LineSearch::Options& options)
     : LineSearch(options) {}
 
-void WolfeLineSearch::Search(const double step_size_estimate,
-                             const double initial_cost,
-                             const double initial_gradient,
-                             Summary* summary) {
-  *CHECK_NOTNULL(summary) = LineSearch::Summary();
+void WolfeLineSearch::DoSearch(const double step_size_estimate,
+                               const double initial_cost,
+                               const double initial_gradient,
+                               Summary* summary) const {
   // All parameters should have been validated by the Solver, but as
   // invalid values would produce crazy nonsense, hard check them here.
   CHECK_GE(step_size_estimate, 0.0);
@@ -454,7 +478,7 @@ bool WolfeLineSearch::BracketingPhase(
     FunctionSample* bracket_low,
     FunctionSample* bracket_high,
     bool* do_zoom_search,
-    Summary* summary) {
+    Summary* summary) const {
   Function* function = options().function;
 
   FunctionSample previous = initial_position;
@@ -478,10 +502,13 @@ bool WolfeLineSearch::BracketingPhase(
   // issues).
   ++summary->num_function_evaluations;
   ++summary->num_gradient_evaluations;
+  double evaluate_start_time = WallTimeInSeconds();
   current.value_is_valid =
       function->Evaluate(current.x,
                          &current.value,
                          &current.gradient);
+  summary->function_evaluation_time_in_seconds +=
+      WallTimeInSeconds() - evaluate_start_time;
   current.gradient_is_valid = current.value_is_valid;
 
   while (true) {
@@ -592,6 +619,7 @@ bool WolfeLineSearch::BracketingPhase(
     const FunctionSample unused_previous;
     DCHECK(!unused_previous.value_is_valid);
     // Contracts step size if f(current) is not valid.
+    const double polynomial_minimization_start_time = WallTimeInSeconds();
     const double step_size =
         this->InterpolatingPolynomialMinimizingStepSize(
             options().interpolation_type,
@@ -600,6 +628,8 @@ bool WolfeLineSearch::BracketingPhase(
             current,
             previous.x,
             max_step_size);
+    summary->polynomial_minimization_time_in_seconds +=
+        (WallTimeInSeconds() - polynomial_minimization_start_time);
     if (step_size * descent_direction_max_norm < options().min_step_size) {
       summary->error =
           StringPrintf("Line search failed: step_size too small: %.5e "
@@ -614,10 +644,13 @@ bool WolfeLineSearch::BracketingPhase(
 
     ++summary->num_function_evaluations;
     ++summary->num_gradient_evaluations;
+    evaluate_start_time = WallTimeInSeconds();
     current.value_is_valid =
         function->Evaluate(current.x,
                            &current.value,
                            &current.gradient);
+    summary->function_evaluation_time_in_seconds +=
+        WallTimeInSeconds() - evaluate_start_time;
     current.gradient_is_valid = current.value_is_valid;
   }
 
@@ -640,7 +673,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
                                 FunctionSample bracket_low,
                                 FunctionSample bracket_high,
                                 FunctionSample* solution,
-                                Summary* summary) {
+                                Summary* summary) const {
   Function* function = options().function;
 
   CHECK(bracket_low.value_is_valid && bracket_low.gradient_is_valid)
@@ -739,6 +772,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // value that will therefore be ignored.
     const FunctionSample unused_previous;
     DCHECK(!unused_previous.value_is_valid);
+    const double polynomial_minimization_start_time = WallTimeInSeconds();
     solution->x =
         this->InterpolatingPolynomialMinimizingStepSize(
             options().interpolation_type,
@@ -747,6 +781,8 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
             upper_bound_step,
             lower_bound_step.x,
             upper_bound_step.x);
+    summary->polynomial_minimization_time_in_seconds +=
+        (WallTimeInSeconds() - polynomial_minimization_start_time);
     // No check on magnitude of step size being too small here as it is
     // lower-bounded by the initial bracket start point, which was valid.
     //
@@ -761,10 +797,13 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // to numerical issues).
     ++summary->num_function_evaluations;
     ++summary->num_gradient_evaluations;
+    const double evaluate_start_time = WallTimeInSeconds();
     solution->value_is_valid =
         function->Evaluate(solution->x,
                            &solution->value,
                            &solution->gradient);
+    summary->function_evaluation_time_in_seconds +=
+        WallTimeInSeconds() - evaluate_start_time;
     solution->gradient_is_valid = solution->value_is_valid;
     if (!solution->value_is_valid) {
       summary->error =

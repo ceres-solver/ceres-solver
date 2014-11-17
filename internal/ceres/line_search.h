@@ -58,6 +58,7 @@ struct FunctionSample;
 class LineSearch {
  public:
   class Function;
+  struct Summary;
 
   struct Options {
     Options()
@@ -170,7 +171,8 @@ class LineSearch {
     //
     // g is the gradient f'(x) at x.
     //
-    // f must not be null. The gradient is computed only if g is not null.
+    // f must not be null. The gradient is computed only if g is not null,
+    // summary must not be null.
     virtual bool Evaluate(double x, double* f, double* g) = 0;
   };
 
@@ -181,13 +183,23 @@ class LineSearch {
           optimal_step_size(0.0),
           num_function_evaluations(0),
           num_gradient_evaluations(0),
-          num_iterations(0) {}
+          num_iterations(0),
+          function_evaluation_time_in_seconds(-1.0),
+          polynomial_minimization_time_in_seconds(-1.0),
+          total_time_in_seconds(-1.0) {}
 
     bool success;
     double optimal_step_size;
     int num_function_evaluations;
     int num_gradient_evaluations;
     int num_iterations;
+    // Cumulative time spent evaluating the cost function (with & without
+    // the gradient) across all iterations.
+    double function_evaluation_time_in_seconds;
+    // Cumulative time spent minimizing the interpolating polynomial to compute
+    // the next candidate step size across all iterations.
+    double polynomial_minimization_time_in_seconds;
+    double total_time_in_seconds;
     string error;
   };
 
@@ -208,10 +220,10 @@ class LineSearch {
   // search.
   //
   // Summary::success is true if a non-zero step size is found.
-  virtual void Search(double step_size_estimate,
-                      double initial_cost,
-                      double initial_gradient,
-                      Summary* summary) = 0;
+  void Search(double step_size_estimate,
+              double initial_cost,
+              double initial_gradient,
+              Summary* summary) const;
   double InterpolatingPolynomialMinimizingStepSize(
       const LineSearchInterpolationType& interpolation_type,
       const FunctionSample& lowerbound_sample,
@@ -224,6 +236,12 @@ class LineSearch {
   const LineSearch::Options& options() const { return options_; }
 
  private:
+  virtual void DoSearch(double step_size_estimate,
+                        double initial_cost,
+                        double initial_gradient,
+                        Summary* summary) const = 0;
+
+ private:
   LineSearch::Options options_;
 };
 
@@ -232,7 +250,9 @@ class LineSearchFunction : public LineSearch::Function {
   explicit LineSearchFunction(Evaluator* evaluator);
   virtual ~LineSearchFunction() {}
   void Init(const Vector& position, const Vector& direction);
-  virtual bool Evaluate(double x, double* f, double* g);
+  virtual bool Evaluate(double x,
+                        double* f,
+                        double* g);
   double DirectionInfinityNorm() const;
 
  private:
@@ -257,10 +277,12 @@ class ArmijoLineSearch : public LineSearch {
  public:
   explicit ArmijoLineSearch(const LineSearch::Options& options);
   virtual ~ArmijoLineSearch() {}
-  virtual void Search(double step_size_estimate,
-                      double initial_cost,
-                      double initial_gradient,
-                      Summary* summary);
+
+ private:
+  virtual void DoSearch(double step_size_estimate,
+                        double initial_cost,
+                        double initial_gradient,
+                        Summary* summary) const;
 };
 
 // Bracketing / Zoom Strong Wolfe condition line search.  This implementation
@@ -274,23 +296,26 @@ class WolfeLineSearch : public LineSearch {
  public:
   explicit WolfeLineSearch(const LineSearch::Options& options);
   virtual ~WolfeLineSearch() {}
-  virtual void Search(double step_size_estimate,
-                      double initial_cost,
-                      double initial_gradient,
-                      Summary* summary);
+
   // Returns true iff either a valid point, or valid bracket are found.
   bool BracketingPhase(const FunctionSample& initial_position,
                        const double step_size_estimate,
                        FunctionSample* bracket_low,
                        FunctionSample* bracket_high,
                        bool* perform_zoom_search,
-                       Summary* summary);
+                       Summary* summary) const;
   // Returns true iff final_line_sample satisfies strong Wolfe conditions.
   bool ZoomPhase(const FunctionSample& initial_position,
                  FunctionSample bracket_low,
                  FunctionSample bracket_high,
                  FunctionSample* solution,
-                 Summary* summary);
+                 Summary* summary) const;
+
+ private:
+  virtual void DoSearch(double step_size_estimate,
+                        double initial_cost,
+                        double initial_gradient,
+                        Summary* summary) const;
 };
 
 }  // namespace internal
