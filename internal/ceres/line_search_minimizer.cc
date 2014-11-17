@@ -375,6 +375,14 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
 
+    summary->line_search_cost_evaluation_time_in_seconds +=
+        line_search_summary.cost_evaluation_time_in_seconds;
+    summary->line_search_gradient_evaluation_time_in_seconds +=
+        line_search_summary.gradient_evaluation_time_in_seconds;
+    summary->line_search_polynomial_minimization_time_in_seconds +=
+        line_search_summary.polynomial_minimization_time_in_seconds;
+    summary->line_search_total_time_in_seconds +=
+        line_search_summary.total_time_in_seconds;
     ++summary->num_successful_steps;
 
     if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {

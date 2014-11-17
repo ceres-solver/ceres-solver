@@ -85,6 +85,10 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
       options.max_line_search_step_expansion;
   line_search_options.function = &line_search_function;
 
+  // Note that it is important that the LineSearch object be recreated each
+  // time it is used to ensure that the timing information for the line search
+  // cost/gradient evaluation be accurate, as the evaluator is shared with
+  // the trust region minimizer.
   string message;
   scoped_ptr<LineSearch> line_search(
       CHECK_NOTNULL(LineSearch::Create(ceres::ARMIJO,
@@ -147,6 +151,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   summary->termination_type = NO_CONVERGENCE;
   summary->num_successful_steps = 0;
   summary->num_unsuccessful_steps = 0;
+  summary->is_constrained = options.is_constrained;
 
   const int num_parameters = evaluator->NumParameters();
   const int num_effective_parameters = evaluator->NumEffectiveParameters();
@@ -398,6 +403,16 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       if (use_line_search) {
         const LineSearch::Summary line_search_summary =
             DoLineSearch(options, x, gradient, cost, delta, evaluator);
+
+        summary->line_search_cost_evaluation_time_in_seconds +=
+            line_search_summary.cost_evaluation_time_in_seconds;
+        summary->line_search_gradient_evaluation_time_in_seconds +=
+            line_search_summary.gradient_evaluation_time_in_seconds;
+        summary->line_search_polynomial_minimization_time_in_seconds +=
+            line_search_summary.polynomial_minimization_time_in_seconds;
+        summary->line_search_total_time_in_seconds +=
+            line_search_summary.total_time_in_seconds;
+
         if (line_search_summary.success) {
           delta *= line_search_summary.optimal_step_size;
         }
