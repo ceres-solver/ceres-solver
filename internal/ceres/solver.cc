@@ -774,31 +774,31 @@ string Solver::Summary::FullReport() const {
   }
 
   StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(&report, "Preprocessor        %25.3f\n",
+  StringAppendF(&report, "Preprocessor        %25.4f\n",
                 preprocessor_time_in_seconds);
 
-  StringAppendF(&report, "\n  Residual evaluation %23.3f\n",
+  StringAppendF(&report, "\n  Residual evaluation %23.4f\n",
                 residual_evaluation_time_in_seconds);
-  StringAppendF(&report, "  Jacobian evaluation %23.3f\n",
+  StringAppendF(&report, "  Jacobian evaluation %23.4f\n",
                 jacobian_evaluation_time_in_seconds);
 
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report, "  Linear solver       %23.3f\n",
+    StringAppendF(&report, "  Linear solver       %23.4f\n",
                   linear_solver_time_in_seconds);
   }
 
   if (inner_iterations_used) {
-    StringAppendF(&report, "  Inner iterations    %23.3f\n",
+    StringAppendF(&report, "  Inner iterations    %23.4f\n",
                   inner_iteration_time_in_seconds);
   }
 
-  StringAppendF(&report, "Minimizer           %25.3f\n\n",
+  StringAppendF(&report, "Minimizer           %25.4f\n\n",
                 minimizer_time_in_seconds);
 
-  StringAppendF(&report, "Postprocessor        %24.3f\n",
+  StringAppendF(&report, "Postprocessor        %24.4f\n",
                 postprocessor_time_in_seconds);
 
-  StringAppendF(&report, "Total               %25.3f\n\n",
+  StringAppendF(&report, "Total               %25.4f\n\n",
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s (%s)\n",
