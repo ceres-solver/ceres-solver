@@ -349,6 +349,10 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  //  NOLINT
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
+  summary->line_search_cost_evaluation_time_in_seconds = 0.0;
+  summary->line_search_gradient_evaluation_time_in_seconds = 0.0;
+  summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
+  summary->line_search_total_time_in_seconds  = 0.0;
   summary->inner_iterations_given             = options.use_inner_iterations;
   summary->line_search_direction_type         = options.line_search_direction_type;         //  NOLINT
   summary->line_search_interpolation_type     = options.line_search_interpolation_type;     //  NOLINT
@@ -558,6 +562,10 @@ Solver::Summary::Summary()
       residual_evaluation_time_in_seconds(-1.0),
       jacobian_evaluation_time_in_seconds(-1.0),
       inner_iteration_time_in_seconds(-1.0),
+      line_search_cost_evaluation_time_in_seconds(-1.0),
+      line_search_gradient_evaluation_time_in_seconds(-1.0),
+      line_search_polynomial_minimization_time_in_seconds(-1.0),
+      line_search_total_time_in_seconds(-1.0),
       num_parameter_blocks(-1),
       num_parameters(-1),
       num_effective_parameters(-1),
@@ -568,6 +576,7 @@ Solver::Summary::Summary()
       num_effective_parameters_reduced(-1),
       num_residual_blocks_reduced(-1),
       num_residuals_reduced(-1),
+      is_constrained(false),
       num_threads_given(-1),
       num_threads_used(-1),
       num_linear_solver_threads_given(-1),
@@ -773,14 +782,26 @@ string Solver::Summary::FullReport() const {
                   num_inner_iteration_steps);
   }
 
+  const bool print_line_search_timing_information =
+      minimizer_type == LINE_SEARCH ||
+      (minimizer_type == TRUST_REGION && is_constrained);
+
   StringAppendF(&report, "\nTime (in seconds):\n");
   StringAppendF(&report, "Preprocessor        %25.4f\n",
                 preprocessor_time_in_seconds);
 
   StringAppendF(&report, "\n  Residual evaluation %23.4f\n",
                 residual_evaluation_time_in_seconds);
+  if (print_line_search_timing_information) {
+    StringAppendF(&report, "    Line search cost evaluation    %10.4f\n",
+                  line_search_cost_evaluation_time_in_seconds);
+  }
   StringAppendF(&report, "  Jacobian evaluation %23.4f\n",
                 jacobian_evaluation_time_in_seconds);
+  if (print_line_search_timing_information) {
+    StringAppendF(&report, "    Line search gradient evaluation    %6.4f\n",
+                  line_search_gradient_evaluation_time_in_seconds);
+  }
 
   if (minimizer_type == TRUST_REGION) {
     StringAppendF(&report, "  Linear solver       %23.4f\n",
@@ -790,6 +811,11 @@ string Solver::Summary::FullReport() const {
   if (inner_iterations_used) {
     StringAppendF(&report, "  Inner iterations    %23.4f\n",
                   inner_iteration_time_in_seconds);
+  }
+
+  if (print_line_search_timing_information) {
+    StringAppendF(&report, "  Line search polynomial minimization  %.4f\n",
+                  line_search_polynomial_minimization_time_in_seconds);
   }
 
   StringAppendF(&report, "Minimizer           %25.4f\n\n",
