@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a2db728_fb3a076e",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-11-18T17:04:27Z",
+      "side": 1,
+      "message": "err debugging garbage. cleaned up.",
+      "parentUuid": "1a27bf4c_937c1c5a",
+      "revId": "f6ca64c03a4209e78c230ca1d6917ce649fd6bd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa810b4d_f2d1c85d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2014-11-18T16:55:48Z",
       "side": 1,
       "message": "Should there be a CHECK() here or something? Some warning to the user? How will we ever figure this out? I\u0027m not convinced yet.",
+      "revId": "f6ca64c03a4209e78c230ca1d6917ce649fd6bd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2db728_7b27d753",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-11-18T17:04:27Z",
+      "side": 1,
+      "message": "I am going to work on this. This was already not working earlier.\nAll I have done is the equivalent of not doing a fallback and declaring failure earlier instead of trying one more direction.\n\nmy concrete plan is to add more test examples and see if I can come up with a case where this code is triggered via my own debugging and if we can then I wil enable it.\n\nI can just delete this if you feel strongly and work with it in my own client.",
+      "parentUuid": "fa810b4d_f2d1c85d",
       "revId": "f6ca64c03a4209e78c230ca1d6917ce649fd6bd5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
