@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a27bf4c_937c1c5a",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-18T16:55:48Z",
+      "side": 1,
+      "message": "Fix comment and consider explaining why use bisection.",
+      "revId": "f6ca64c03a4209e78c230ca1d6917ce649fd6bd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa810b4d_f2d1c85d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-18T16:55:48Z",
+      "side": 1,
+      "message": "Should there be a CHECK() here or something? Some warning to the user? How will we ever figure this out? I\u0027m not convinced yet.",
+      "revId": "f6ca64c03a4209e78c230ca1d6917ce649fd6bd5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
