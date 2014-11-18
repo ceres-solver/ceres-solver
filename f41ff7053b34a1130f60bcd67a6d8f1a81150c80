@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3afc83c4_e4fd9a7f",
+        "filename": "internal/ceres/gradient_problem_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a47dbec_813d9cb3",
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a47dbec_41ef9492",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2014-11-17T22:53:47Z",
       "side": 1,
       "message": "I do not think you need to modify evaluate for this, just instrument the call site.. there aren\u0027t that many.\nthe code will be simpler too.",
+      "range": {
+        "startLine": 123,
+        "startChar": 45,
+        "endLine": 123,
+        "endChar": 48
+      },
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aff77b8_45c8ea5f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a47dbec_41ef9492",
       "range": {
         "startLine": 123,
         "startChar": 45,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5aff77b8_25d5eef3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a47dbec_6119706a",
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a47dbec_4121d43b",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2014-11-17T22:53:47Z",
       "side": 1,
       "message": "again, isn\u0027t it simpler to instrument the callsite?",
+      "range": {
+        "startLine": 181,
+        "startChar": 30,
+        "endLine": 181,
+        "endChar": 31
+      },
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aff77b8_65cbe65e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a47dbec_4121d43b",
       "range": {
         "startLine": 181,
         "startChar": 30,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3afc83c4_e4a0fa89",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a47dbec_81611cf9",
+      "range": {
+        "startLine": 187,
+        "startChar": 10,
+        "endLine": 187,
+        "endChar": 50
+      },
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a47dbec_61965054",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 1
@@ -116,6 +224,24 @@
       "writtenOn": "2014-11-17T22:53:47Z",
       "side": 1,
       "message": "drop the ( in",
+      "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afc83c4_c4a5fe97",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-18T11:17:22Z",
+      "side": 1,
+      "message": "Note sure what you meant here, removing the inner parens around (minimizer_type \u003d\u003d TRUST_REGION \u0026\u0026 is_constrained) would trigger -Wlogical-op-parentheses...",
+      "parentUuid": "7a47dbec_61965054",
       "revId": "f41ff7053b34a1130f60bcd67a6d8f1a81150c80",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
