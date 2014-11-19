@@ -293,6 +293,12 @@ Like the Linux build, you should now be able to run
 Windows
 =======
 
+.. NOTE::
+
+  If you find the following `CMake` difficult to setup, then you maybe
+  interested in a `Microsoft Visual Studio wrapper
+  <https://www.zemax.com/about-us>`_ for Ceres Solver by Tal Ben-Nun.
+
 On Windows, we support building with Visual Studio 2010 or newer. Note
 that the Windows port is less featureful and less tested than the
 Linux or Mac OS X versions due to the lack of an officially supported
