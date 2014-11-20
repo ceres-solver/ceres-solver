@@ -410,13 +410,15 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                  NULL,
                                  NULL,
                                  NULL)) {
-          LOG(WARNING) << "Step failed to evaluate. "
-                       << "Treating it as a step with infinite cost";
+          LOG_IF(WARNING, is_not_silent)
+              << "Step failed to evaluate. "
+              << "Treating it as a step with infinite cost";
           new_cost = numeric_limits<double>::max();
         }
       } else {
-        LOG(WARNING) << "x_plus_delta = Plus(x, delta) failed. "
-                     << "Treating it as a step with infinite cost";
+        LOG_IF(WARNING, is_not_silent)
+            << "x_plus_delta = Plus(x, delta) failed. "
+            << "Treating it as a step with infinite cost";
       }
 
       if (new_cost < std::numeric_limits<double>::max()) {
