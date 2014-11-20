@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa32ebd1_6d21b13c",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-20T21:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2db728_d8edd151",
+      "revId": "800cea1073a15a6e98908f5da93de769f2cc6c4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2db728_b8ec9552",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2014-11-18T13:49:41Z",
       "side": 1,
       "message": "this can go back to being one line.",
+      "range": {
+        "startLine": 119,
+        "startChar": 42,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "800cea1073a15a6e98908f5da93de769f2cc6c4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa32ebd1_4ddb0dfa",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-20T21:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2db728_b8ec9552",
       "range": {
         "startLine": 119,
         "startChar": 42,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7a3d1b9e_f19022d9",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-20T21:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2db728_98e7596e",
+      "revId": "800cea1073a15a6e98908f5da93de769f2cc6c4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2db728_f8f20d2d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2014-11-18T13:49:41Z",
       "side": 1,
       "message": "see my comment in solver.h about cost function evaluation times.",
+      "revId": "800cea1073a15a6e98908f5da93de769f2cc6c4c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5313fc_930efed7",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-20T21:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2db728_f8f20d2d",
       "revId": "800cea1073a15a6e98908f5da93de769f2cc6c4c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
