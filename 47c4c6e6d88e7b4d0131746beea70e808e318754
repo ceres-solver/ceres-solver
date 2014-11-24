@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7199c8_198d0bc2",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-11-24T17:57:00Z",
+      "side": 1,
+      "message": "why do you need this call at all?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "47c4c6e6d88e7b4d0131746beea70e808e318754",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
