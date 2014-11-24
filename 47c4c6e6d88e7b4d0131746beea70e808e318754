@@ -22,6 +22,30 @@
       "revId": "47c4c6e6d88e7b4d0131746beea70e808e318754",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f448158_2346827f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-24T18:55:30Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "df7199c8_198d0bc2",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "47c4c6e6d88e7b4d0131746beea70e808e318754",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
