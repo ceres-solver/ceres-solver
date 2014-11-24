@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df3a79c4_a5827624",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-24T17:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9ed122_6a722789",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 47
+      },
+      "revId": "19c496904d298ee6cd4f97cad2009d53509209cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f9ed122_caba5baf",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2014-11-24T15:19:08Z",
       "side": 1,
       "message": "so I have a CL which actually does exactly the opposite of this, creates the line search object just once. so I do not think this restriction is a great idea.",
+      "revId": "19c496904d298ee6cd4f97cad2009d53509209cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f526d24_3a28e9ac",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-24T17:06:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9ed122_caba5baf",
       "revId": "19c496904d298ee6cd4f97cad2009d53509209cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
