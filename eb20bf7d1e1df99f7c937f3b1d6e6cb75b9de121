@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7199c8_3c50fd1e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-25T00:00:47Z",
+      "side": 1,
+      "message": "ordering",
+      "revId": "eb20bf7d1e1df99f7c937f3b1d6e6cb75b9de121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df7199c8_dc64610b",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-25T00:00:47Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "eb20bf7d1e1df99f7c937f3b1d6e6cb75b9de121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
