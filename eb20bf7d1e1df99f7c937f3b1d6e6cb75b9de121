@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9f448158_44f98c8e",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-25T21:33:33Z",
+      "side": 1,
+      "message": "Done, and I\u0027ve reordered the glog include too as per the google style guide.",
+      "parentUuid": "df7199c8_df969353",
+      "revId": "eb20bf7d1e1df99f7c937f3b1d6e6cb75b9de121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df7199c8_dc64610b",
         "filename": "internal/ceres/line_search.h",
         "patchSetId": 5
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "So, do you want them in the order in which they are used in this file?  Which would be:\n\nFunctionSample\nLineSearchFunction\nEvaluator",
       "parentUuid": "df7199c8_dc64610b",
+      "revId": "eb20bf7d1e1df99f7c937f3b1d6e6cb75b9de121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fa5f182_c64ec434",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-25T21:33:33Z",
+      "side": 1,
+      "message": "So, I think this is right as is no?  It\u0027s alphabetical in the object name.",
+      "parentUuid": "7f526d24_15f4dee6",
       "revId": "eb20bf7d1e1df99f7c937f3b1d6e6cb75b9de121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
