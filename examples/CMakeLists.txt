@@ -70,6 +70,11 @@ ADD_EXECUTABLE(simple_bundle_adjuster
 TARGET_LINK_LIBRARIES(simple_bundle_adjuster ceres)
 
 IF (GFLAGS)
+  # The CERES_GFLAGS_NAMESPACE compile definition is NOT stored in
+  # CERES_COMPILE_OPTIONS (and thus config.h) as Ceres itself does not
+  # require gflags, only the tests and examples do.
+  ADD_DEFINITIONS(-DCERES_GFLAGS_NAMESPACE=${GFLAGS_NAMESPACE})
+
   ADD_EXECUTABLE(powell powell.cc)
   TARGET_LINK_LIBRARIES(powell ceres ${GFLAGS_LIBRARIES})
 

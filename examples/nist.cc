@@ -566,7 +566,7 @@ void SolveNISTProblems() {
 }  // namespace ceres
 
 int main(int argc, char** argv) {
-  google::ParseCommandLineFlags(&argc, &argv, true);
+  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
   google::InitGoogleLogging(argv[0]);
   ceres::examples::SolveNISTProblems();
   return 0;
