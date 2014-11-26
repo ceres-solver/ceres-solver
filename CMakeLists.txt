@@ -378,7 +378,8 @@ IF (GFLAGS)
   # Don't search with REQUIRED as we can continue without gflags.
   FIND_PACKAGE(Gflags)
   IF (GFLAGS_FOUND)
-    MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIRS}")
+    MESSAGE("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIRS}, "
+      "in namespace: ${GFLAGS_NAMESPACE}")
   ELSE (GFLAGS_FOUND)
     MESSAGE("-- Did not find Google Flags (gflags), Building without gflags "
       "- no tests or tools will be built!")
