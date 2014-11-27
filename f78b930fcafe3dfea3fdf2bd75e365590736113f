@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff265df7_4ae553ed",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-11-27T04:00:29Z",
+      "side": 1,
+      "message": "is this robust? or do you think a compile test maybe better?",
+      "range": {
+        "startLine": 148,
+        "startChar": 24,
+        "endLine": 148,
+        "endChar": 33
+      },
+      "revId": "f78b930fcafe3dfea3fdf2bd75e365590736113f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
