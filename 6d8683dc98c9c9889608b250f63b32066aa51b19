@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2561f1_6a73f711",
+        "filename": "examples/more_garbow_hillstrom.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-29T07:20:12Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "6d8683dc98c9c9889608b250f63b32066aa51b19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f2561f1_aa8ccf94",
+        "filename": "examples/more_garbow_hillstrom.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-29T07:20:12Z",
+      "side": 1,
+      "message": "drop blank",
+      "revId": "6d8683dc98c9c9889608b250f63b32066aa51b19",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
