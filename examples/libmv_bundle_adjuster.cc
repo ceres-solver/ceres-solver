@@ -99,7 +99,8 @@
 #  define close _close
 typedef unsigned __int32 uint32_t;
 #else
-# include <stdint.h>
+#include <stdint.h>
+#include <unistd.h>
 
 // O_BINARY is not defined on unix like platforms, as there is no
 // difference between binary and text files.
