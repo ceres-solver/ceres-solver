@@ -56,54 +56,6 @@
 
 namespace ceres {
 namespace internal {
-namespace {
-
-LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
-                                 const Vector& x,
-                                 const Vector& gradient,
-                                 const double cost,
-                                 const Vector& delta,
-                                 Evaluator* evaluator) {
-  LineSearchFunction line_search_function(evaluator);
-
-  LineSearch::Options line_search_options;
-  line_search_options.is_silent = true;
-  line_search_options.interpolation_type =
-      options.line_search_interpolation_type;
-  line_search_options.min_step_size = options.min_line_search_step_size;
-  line_search_options.sufficient_decrease =
-      options.line_search_sufficient_function_decrease;
-  line_search_options.max_step_contraction =
-      options.max_line_search_step_contraction;
-  line_search_options.min_step_contraction =
-      options.min_line_search_step_contraction;
-  line_search_options.max_num_iterations =
-      options.max_num_line_search_step_size_iterations;
-  line_search_options.sufficient_curvature_decrease =
-      options.line_search_sufficient_curvature_decrease;
-  line_search_options.max_step_expansion =
-      options.max_line_search_step_expansion;
-  line_search_options.function = &line_search_function;
-
-  string message;
-  scoped_ptr<LineSearch> line_search(
-      CHECK_NOTNULL(LineSearch::Create(ceres::ARMIJO,
-                                       line_search_options,
-                                       &message)));
-  LineSearch::Summary summary;
-  line_search_function.Init(x, delta);
-  // Try the trust region step.
-  line_search->Search(1.0, cost, gradient.dot(delta), &summary);
-  if (!summary.success) {
-    // If that was not successful, try the negative gradient as a
-    // search direction.
-    line_search_function.Init(x, -gradient);
-    line_search->Search(1.0, cost, -gradient.squaredNorm(), &summary);
-  }
-  return summary;
-}
-
-}  // namespace
 
 // Compute a scaling vector that is used to improve the conditioning
 // of the Jacobian.
@@ -143,6 +95,32 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   //
   // TODO(sameeragarwal): Make line search available more generally.
   const bool use_line_search = options.is_constrained;
+  LineSearchFunction line_search_function(evaluator);
+  LineSearch::Options line_search_options;
+  line_search_options.is_silent = true;
+  line_search_options.interpolation_type =
+      options.line_search_interpolation_type;
+  line_search_options.min_step_size = options.min_line_search_step_size;
+  line_search_options.sufficient_decrease =
+      options.line_search_sufficient_function_decrease;
+  line_search_options.max_step_contraction =
+      options.max_line_search_step_contraction;
+  line_search_options.min_step_contraction =
+      options.min_line_search_step_contraction;
+  line_search_options.max_num_iterations =
+      options.max_num_line_search_step_size_iterations;
+  line_search_options.sufficient_curvature_decrease =
+      options.line_search_sufficient_curvature_decrease;
+  line_search_options.max_step_expansion =
+      options.max_line_search_step_expansion;
+  line_search_options.function = &line_search_function;
+  scoped_ptr<LineSearch> line_search(LineSearch::Create(ceres::ARMIJO,
+                                                        line_search_options,
+                                                        &summary->message));
+  if (line_search.get() == NULL) {
+    LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
+    return;
+  }
 
   summary->termination_type = NO_CONVERGENCE;
   summary->num_successful_steps = 0;
@@ -391,29 +369,6 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // Undo the Jacobian column scaling.
       delta = (trust_region_step.array() * scale.array()).matrix();
 
-      // Try improving the step further by using an ARMIJO line
-      // search.
-      //
-      // TODO(sameeragarwal): What happens to trust region sizing as
-      // it interacts with the line search ?
-      if (use_line_search) {
-        const LineSearch::Summary line_search_summary =
-            DoLineSearch(options, x, gradient, cost, delta, evaluator);
-
-        summary->line_search_cost_evaluation_time_in_seconds +=
-            line_search_summary.cost_evaluation_time_in_seconds;
-        summary->line_search_gradient_evaluation_time_in_seconds +=
-            line_search_summary.gradient_evaluation_time_in_seconds;
-        summary->line_search_polynomial_minimization_time_in_seconds +=
-            line_search_summary.polynomial_minimization_time_in_seconds;
-        summary->line_search_total_time_in_seconds +=
-            line_search_summary.total_time_in_seconds;
-
-        if (line_search_summary.success) {
-          delta *= line_search_summary.optimal_step_size;
-        }
-      }
-
       double new_cost = std::numeric_limits<double>::max();
       if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
         if (!evaluator->Evaluate(x_plus_delta.data(),
@@ -430,6 +385,87 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         LOG_IF(WARNING, is_not_silent)
             << "x_plus_delta = Plus(x, delta) failed. "
             << "Treating it as a step with infinite cost";
+      }
+
+      // Constants from Kanzow, Yamashita & Fukushima.
+      //
+      // TODO(sameeragarwal): What happens to trust region sizing as
+      // it interacts with the line search ?
+      const double kLineSearchMinRelativeDecrease = 0.99995;
+      const double kLineSearchSufficientDecrease = 1e-8;
+      const double kLineSearchExponent = 2.1;
+      if (use_line_search &&
+          new_cost > kLineSearchMinRelativeDecrease * cost) {
+        LineSearch::Summary line_search_summary;
+        line_search_summary.success = false;
+
+        Vector ls_direction = x_plus_delta - x;
+        const double gradient_dot_lsd = gradient.dot(ls_direction);
+        const double lsd_norm = pow(ls_direction.norm(), kLineSearchExponent);
+        // Try the trust region step.
+        LOG(INFO) << "grad^Tlsd: " << gradient_dot_lsd;
+        if (gradient_dot_lsd <= -kLineSearchSufficientDecrease * lsd_norm) {
+          line_search_function.Init(x, ls_direction);
+          line_search->Search(1.0,
+                              cost,
+                              gradient_dot_lsd,
+                              &line_search_summary);
+          summary->line_search_cost_evaluation_time_in_seconds +=
+              line_search_summary.cost_evaluation_time_in_seconds;
+          summary->line_search_gradient_evaluation_time_in_seconds +=
+              line_search_summary.gradient_evaluation_time_in_seconds;
+          summary->line_search_polynomial_minimization_time_in_seconds +=
+              line_search_summary.polynomial_minimization_time_in_seconds;
+          summary->line_search_total_time_in_seconds +=
+              line_search_summary.total_time_in_seconds;
+          if (line_search_summary.success) {
+            delta = line_search_summary.optimal_step_size * ls_direction;
+          }
+        } else {
+          VLOG_IF(2, is_not_silent)
+              << "Trust region step is not a descent direction. ";
+        }
+
+        // Try the negative gradient.
+        if (!line_search_summary.success) {
+          VLOG_IF(2, is_not_silent) << "Using a projected gradient step.";
+          line_search_function.Init(x, negative_gradient);
+          line_search->Search(1.0,
+                              cost,
+                              -negative_gradient.squaredNorm(),
+                              &line_search_summary);
+          summary->line_search_cost_evaluation_time_in_seconds +=
+              line_search_summary.cost_evaluation_time_in_seconds;
+          summary->line_search_gradient_evaluation_time_in_seconds +=
+              line_search_summary.gradient_evaluation_time_in_seconds;
+          summary->line_search_polynomial_minimization_time_in_seconds +=
+              line_search_summary.polynomial_minimization_time_in_seconds;
+          summary->line_search_total_time_in_seconds +=
+              line_search_summary.total_time_in_seconds;
+          if (line_search_summary.success) {
+            delta = line_search_summary.optimal_step_size * negative_gradient;
+          }
+        }
+
+        if (line_search_summary.success) {
+          new_cost = std::numeric_limits<double>::max();
+          if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+            if (!evaluator->Evaluate(x_plus_delta.data(),
+                                     &new_cost,
+                                     NULL,
+                                     NULL,
+                                     NULL)) {
+              LOG_IF(WARNING, is_not_silent)
+                  << "Step failed to evaluate. "
+                  << "Treating it as a step with infinite cost";
+              new_cost = numeric_limits<double>::max();
+            }
+          } else {
+            LOG_IF(WARNING, is_not_silent)
+                << "x_plus_delta = Plus(x, delta) failed. "
+                << "Treating it as a step with infinite cost";
+          }
+        }
       }
 
       if (new_cost < std::numeric_limits<double>::max()) {
