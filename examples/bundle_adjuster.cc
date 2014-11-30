@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -60,55 +60,19 @@
 
 #include "bal_problem.h"
 #include "ceres/ceres.h"
+#include "flags.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "snavely_reprojection_error.h"
 
 DEFINE_string(input, "", "Input File name");
-DEFINE_string(trust_region_strategy, "levenberg_marquardt",
-              "Options are: levenberg_marquardt, dogleg.");
-DEFINE_string(dogleg, "traditional_dogleg", "Options are: traditional_dogleg,"
-              "subspace_dogleg.");
-
-DEFINE_bool(inner_iterations, false, "Use inner iterations to non-linearly "
-            "refine each successful trust region step.");
-
 DEFINE_string(blocks_for_inner_iterations, "automatic", "Options are: "
             "automatic, cameras, points, cameras,points, points,cameras");
-
-DEFINE_string(linear_solver, "sparse_schur", "Options are: "
-              "sparse_schur, dense_schur, iterative_schur, sparse_normal_cholesky, "
-              "dense_qr, dense_normal_cholesky and cgnr.");
-DEFINE_bool(explicit_schur_complement, false, "If using ITERATIVE_SCHUR "
-            "then explicitly compute the Schur complement.");
-DEFINE_string(preconditioner, "jacobi", "Options are: "
-              "identity, jacobi, schur_jacobi, cluster_jacobi, "
-              "cluster_tridiagonal.");
-DEFINE_string(visibility_clustering, "canonical_views",
-              "single_linkage, canonical_views");
-
-DEFINE_string(sparse_linear_algebra_library, "suite_sparse",
-              "Options are: suite_sparse and cx_sparse.");
-DEFINE_string(dense_linear_algebra_library, "eigen",
-              "Options are: eigen and lapack.");
-DEFINE_string(ordering, "automatic", "Options are: automatic, user.");
-
 DEFINE_bool(use_quaternions, false, "If true, uses quaternions to represent "
             "rotations. If false, angle axis is used.");
 DEFINE_bool(use_local_parameterization, false, "For quaternions, use a local "
             "parameterization.");
 DEFINE_bool(robustify, false, "Use a robust loss function.");
-
-DEFINE_double(eta, 1e-2, "Default value for eta. Eta determines the "
-             "accuracy of each linear solve of the truncated newton step. "
-             "Changing this parameter can affect solve performance.");
-
-DEFINE_int32(num_threads, 1, "Number of threads.");
-DEFINE_int32(num_iterations, 5, "Number of iterations.");
-DEFINE_double(max_solver_time, 1e32, "Maximum solve time in seconds.");
-DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
-            " nonmonotic steps.");
-
 DEFINE_double(rotation_sigma, 0.0, "Standard deviation of camera rotation "
               "perturbation.");
 DEFINE_double(translation_sigma, 0.0, "Standard deviation of the camera "
@@ -118,28 +82,9 @@ DEFINE_double(point_sigma, 0.0, "Standard deviation of the point "
 DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "of the pseudo random number generator used to generate "
              "the pertubations.");
-DEFINE_bool(line_search, false, "Use a line search instead of trust region "
-            "algorithm.");
 
 namespace ceres {
 namespace examples {
-
-void SetLinearSolver(Solver::Options* options) {
-  CHECK(StringToLinearSolverType(FLAGS_linear_solver,
-                                 &options->linear_solver_type));
-  CHECK(StringToPreconditionerType(FLAGS_preconditioner,
-                                   &options->preconditioner_type));
-  CHECK(StringToVisibilityClusteringType(FLAGS_visibility_clustering,
-                                         &options->visibility_clustering_type));
-  CHECK(StringToSparseLinearAlgebraLibraryType(
-            FLAGS_sparse_linear_algebra_library,
-            &options->sparse_linear_algebra_library_type));
-  CHECK(StringToDenseLinearAlgebraLibraryType(
-            FLAGS_dense_linear_algebra_library,
-            &options->dense_linear_algebra_library_type));
-  options->num_linear_solver_threads = FLAGS_num_threads;
-  options->use_explicit_schur_complement = FLAGS_explicit_schur_complement;
-}
 
 void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   const int num_points = bal_problem->num_points();
@@ -226,30 +171,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
   options->linear_solver_ordering.reset(ordering);
 }
 
-void SetMinimizerOptions(Solver::Options* options) {
-  options->max_num_iterations = FLAGS_num_iterations;
-  options->minimizer_progress_to_stdout = true;
-  options->num_threads = FLAGS_num_threads;
-  options->eta = FLAGS_eta;
-  options->max_solver_time_in_seconds = FLAGS_max_solver_time;
-  options->use_nonmonotonic_steps = FLAGS_nonmonotonic_steps;
-  if (FLAGS_line_search) {
-    options->minimizer_type = ceres::LINE_SEARCH;
-  }
-
-  CHECK(StringToTrustRegionStrategyType(FLAGS_trust_region_strategy,
-                                        &options->trust_region_strategy_type));
-  CHECK(StringToDoglegType(FLAGS_dogleg, &options->dogleg_type));
-  options->use_inner_iterations = FLAGS_inner_iterations;
-}
-
-void SetSolverOptionsFromFlags(BALProblem* bal_problem,
-                               Solver::Options* options) {
-  SetMinimizerOptions(options);
-  SetLinearSolver(options);
-  SetOrdering(bal_problem, options);
-}
-
 void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   const int point_block_size = bal_problem->point_block_size();
   const int camera_block_size = bal_problem->camera_block_size();
@@ -321,7 +242,8 @@ void SolveProblem(const char* filename) {
 
   BuildProblem(&bal_problem, &problem);
   Solver::Options options;
-  SetSolverOptionsFromFlags(&bal_problem, &options);
+  SetSolverOptionsFromFlags(&options);
+  SetOrdering(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
   Solver::Summary summary;
@@ -346,3 +268,4 @@ int main(int argc, char** argv) {
   ceres::examples::SolveProblem(FLAGS_input.c_str());
   return 0;
 }
+

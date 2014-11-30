@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+# Copyright 2014 Google Inc. All rights reserved.
 # http://code.google.com/p/ceres-solver/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -89,7 +89,8 @@ IF (GFLAGS)
 
   ADD_EXECUTABLE(bundle_adjuster
                  bundle_adjuster.cc
-                 bal_problem.cc)
+                 bal_problem.cc
+                 flags.cc)
   TARGET_LINK_LIBRARIES(bundle_adjuster ceres ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(libmv_bundle_adjuster
