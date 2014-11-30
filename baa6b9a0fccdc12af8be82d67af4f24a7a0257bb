@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff265df7_6d2791a8",
+        "filename": "examples/flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-11-30T22:34:04Z",
+      "side": 1,
+      "message": "this one is only used by bundle adjuster.",
+      "revId": "baa6b9a0fccdc12af8be82d67af4f24a7a0257bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff265df7_0d3255e6",
+        "filename": "examples/flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-11-30T22:34:04Z",
+      "side": 1,
+      "message": "this should not be a bool anymore.",
+      "revId": "baa6b9a0fccdc12af8be82d67af4f24a7a0257bb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
