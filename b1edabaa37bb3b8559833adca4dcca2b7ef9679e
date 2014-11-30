@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f17698b_6b6c952a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-30T20:53:43Z",
+      "side": 1,
+      "message": "Perhaps this could be clearer?\n\nDo not use gradient direction if line search with TR step fails.",
+      "revId": "b1edabaa37bb3b8559833adca4dcca2b7ef9679e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffcbbd63_c5276c53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-11-30T20:53:43Z",
+      "side": 1,
+      "message": "Nit-pick, but there should be a newline after the title to ensure log doesn\u0027t merge the two.",
+      "revId": "b1edabaa37bb3b8559833adca4dcca2b7ef9679e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
