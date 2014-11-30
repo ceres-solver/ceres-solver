@@ -49,6 +49,11 @@ New Features
 #. Added ``Problem::GetCostFunctionForResidualBlock`` and
    ``Problem::GetLossFunctionForResidualBlock``.
 #. Added Tukey's loss function. (Michael Vitus)
+#. Add RotationMatrixToQuaternion
+#. Compute & report timing information for line searches.
+#. Autodetect gflags namespace.
+#. Expanded ``more_garbow_hillstrom.cc``.
+#. Add a pointer to Tal Ben-Nun's MSVC wrapper to the docs.
 
 Backward Incompatible API Changes
 ---------------------------------
@@ -78,6 +83,11 @@ Backward Incompatible API Changes
 
 Bug Fixes
 ---------
+#. Do not try the gradient step if TR step line search fails.
+#. Fix missing include in libmv_bundle_adjuster on OSX.
+#. Conditionally log evaluation failure warnings.
+#. Runtime uses four digits after the decimal in Summary:FullReport.
+#. Better options checking for TrustRegionMinimizer.
 #. Fix RotationMatrixToAngleAxis when the angle of rotation is near
    PI. (Tobias Strauss)
 #. Sometimes gradient norm based convergence would miss a step with a
