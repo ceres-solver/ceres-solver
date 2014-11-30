@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f2689b6_d911e6c1",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2014-11-30T20:05:40Z",
+      "side": 0,
+      "message": "It would be nice if there was some evidence this is the right change. How did you come to the conclusion this should get dropped?",
+      "revId": "9631c693542b95c4fa5a93dfb99dcf41e03bcab8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
