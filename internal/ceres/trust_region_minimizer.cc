@@ -92,14 +92,7 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
                                        &message)));
   LineSearch::Summary summary;
   line_search_function.Init(x, delta);
-  // Try the trust region step.
   line_search->Search(1.0, cost, gradient.dot(delta), &summary);
-  if (!summary.success) {
-    // If that was not successful, try the negative gradient as a
-    // search direction.
-    line_search_function.Init(x, -gradient);
-    line_search->Search(1.0, cost, -gradient.squaredNorm(), &summary);
-  }
   return summary;
 }
 
