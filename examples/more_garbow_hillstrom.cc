@@ -557,7 +557,7 @@ int main(int argc, char** argv) {
   std::stringstream ss;
 
 #define UNCONSTRAINED_SOLVE(n)                                          \
-  ss << "Unconstrained Problem" << n << " : ";                          \
+  ss << "Unconstrained Problem " << n << " : ";                          \
   if (FLAGS_problem == #n || FLAGS_problem == "all") {                  \
     unconstrained_problems += 3;                                        \
     if (Solve<ceres::examples::TestProblem##n>(false, 0)) {             \

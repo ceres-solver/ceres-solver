@@ -49,11 +49,11 @@ New Features
 #. Added ``Problem::GetCostFunctionForResidualBlock`` and
    ``Problem::GetLossFunctionForResidualBlock``.
 #. Added Tukey's loss function. (Michael Vitus)
-#. Add RotationMatrixToQuaternion
+#. Added RotationMatrixToQuaternion
 #. Compute & report timing information for line searches.
 #. Autodetect gflags namespace.
 #. Expanded ``more_garbow_hillstrom.cc``.
-#. Add a pointer to Tal Ben-Nun's MSVC wrapper to the docs.
+#. Added a pointer to Tal Ben-Nun's MSVC wrapper to the docs.
 
 Backward Incompatible API Changes
 ---------------------------------
