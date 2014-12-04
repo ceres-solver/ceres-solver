@@ -297,7 +297,8 @@ Windows
 
   If you find the following `CMake` difficult to set up, then you may
   be interested in a `Microsoft Visual Studio wrapper
-  <https://www.zemax.com/about-us>`_ for Ceres Solver by Tal Ben-Nun.
+  <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
+  Ben-Nun.
 
 On Windows, we support building with Visual Studio 2010 or newer. Note
 that the Windows port is less featureful and less tested than the
