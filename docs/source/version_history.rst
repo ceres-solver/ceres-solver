@@ -54,6 +54,8 @@ New Features
 #. Autodetect gflags namespace.
 #. Expanded ``more_garbow_hillstrom.cc``.
 #. Added a pointer to Tal Ben-Nun's MSVC wrapper to the docs.
+#. Added the ``<2,3,6>`` Schur template specialization. (Alessandro
+   Dal Grande)
 
 Backward Incompatible API Changes
 ---------------------------------
