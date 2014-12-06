@@ -224,10 +224,19 @@ Mac OS X
  update to Xcode >= 4.6.x before attempting to build Ceres.
 
 
-On OS X, we recommend using the `homebrew
-<http://mxcl.github.com/homebrew/>`_ package manager to install
-Ceres. Assuming that you have the ``homebrew/science`` [#f1]_ tap
-enabled, then
+On OS X, you can either use `MacPorts <https://www.macports.org/>`_ or
+`homebrew <http://mxcl.github.com/homebrew/>`_ to install Ceres Solver.
+
+If using `MacPorts <https://www.macports.org/>`_, then
+
+.. code-block:: bash
+
+   sudo port install ceres-solver
+
+will install the latest version.
+
+If using `homebrew <http://mxcl.github.com/homebrew/>`_ and assuming
+that you have the ``homebrew/science`` [#f1]_ tap enabled, then
 
 .. code-block:: bash
 
