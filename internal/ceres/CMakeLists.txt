@@ -67,7 +67,6 @@ SET(CERES_INTERNAL_SRC
     gradient_problem.cc
     gradient_problem_solver.cc
     implicit_schur_complement.cc
-    incomplete_lq_factorization.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     lapack.cc
@@ -261,7 +260,6 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(graph)
   CERES_TEST(graph_algorithms)
   CERES_TEST(implicit_schur_complement)
-  CERES_TEST(incomplete_lq_factorization)
   CERES_TEST(iterative_schur_complement_solver)
   CERES_TEST(jet)
   CERES_TEST(levenberg_marquardt_strategy)
