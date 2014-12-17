@@ -110,7 +110,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
   *message = "Success";
   return LINEAR_SOLVER_SUCCESS;
 #endif
-};
+}
 
 int LAPACK::EstimateWorkSizeForQR(int num_rows, int num_cols) {
 #ifdef CERES_NO_LAPACK

@@ -44,13 +44,14 @@ namespace ceres {
 namespace internal {
 
 int ComputeStableSchurOrdering(const Program& program,
-                         vector<ParameterBlock*>* ordering) {
+                         std::vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
   EventLogger event_logger("ComputeStableSchurOrdering");
   scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   event_logger.AddEvent("CreateHessianGraph");
 
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   const HashSet<ParameterBlock*>& vertices = graph->vertices();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     if (vertices.count(parameter_blocks[i]) > 0) {
@@ -75,13 +76,13 @@ int ComputeStableSchurOrdering(const Program& program,
 }
 
 int ComputeSchurOrdering(const Program& program,
-                         vector<ParameterBlock*>* ordering) {
+                         std::vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
 
   scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
   int independent_set_size = IndependentSetOrdering(*graph, ordering);
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
-
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   // Add the excluded blocks to back of the ordering vector.
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     ParameterBlock* parameter_block = parameter_blocks[i];
@@ -96,13 +97,14 @@ int ComputeSchurOrdering(const Program& program,
 void ComputeRecursiveIndependentSetOrdering(const Program& program,
                                             ParameterBlockOrdering* ordering) {
   CHECK_NOTNULL(ordering)->Clear();
-  const vector<ParameterBlock*> parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*> parameter_blocks =
+      program.parameter_blocks();
   scoped_ptr<Graph< ParameterBlock*> > graph(CreateHessianGraph(program));
 
   int num_covered = 0;
   int round = 0;
   while (num_covered < parameter_blocks.size()) {
-    vector<ParameterBlock*> independent_set_ordering;
+    std::vector<ParameterBlock*> independent_set_ordering;
     const int independent_set_size =
         IndependentSetOrdering(*graph, &independent_set_ordering);
     for (int i = 0; i < independent_set_size; ++i) {
@@ -117,7 +119,8 @@ void ComputeRecursiveIndependentSetOrdering(const Program& program,
 
 Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
   Graph<ParameterBlock*>* graph = CHECK_NOTNULL(new Graph<ParameterBlock*>);
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     ParameterBlock* parameter_block = parameter_blocks[i];
     if (!parameter_block->IsConstant()) {
@@ -125,7 +128,8 @@ Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
     }
   }
 
-  const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+  const std::vector<ResidualBlock*>& residual_blocks =
+      program.residual_blocks();
   for (int i = 0; i < residual_blocks.size(); ++i) {
     const ResidualBlock* residual_block = residual_blocks[i];
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
@@ -150,17 +154,17 @@ Graph<ParameterBlock*>* CreateHessianGraph(const Program& program) {
 }
 
 void OrderingToGroupSizes(const ParameterBlockOrdering* ordering,
-                          vector<int>* group_sizes) {
+                          std::vector<int>* group_sizes) {
   CHECK_NOTNULL(group_sizes)->clear();
   if (ordering == NULL) {
     return;
   }
 
-  const map<int, set<double*> >& group_to_elements =
+  const std::map<int, std::set<double*> >& group_to_elements =
       ordering->group_to_elements();
-  for (map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-       it != group_to_elements.end();
-       ++it) {
+  std::map<int, std::set<double*> >::const_iterator it =
+      group_to_elements.begin();
+  for (; it != group_to_elements.end(); ++it) {
     group_sizes->push_back(it->second.size());
   }
 }

@@ -79,7 +79,8 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
 
     jacobian->SquaredColumnNorm(diagonal_.data());
     for (int i = 0; i < num_parameters; ++i) {
-      diagonal_[i] = min(max(diagonal_[i], min_diagonal_), max_diagonal_);
+      diagonal_[i] = std::min(std::max(diagonal_[i], min_diagonal_),
+                              max_diagonal_);
     }
   }
 

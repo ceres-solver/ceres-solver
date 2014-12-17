@@ -60,7 +60,7 @@ namespace internal {
 namespace {
 
 class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
-  public:
+ public:
   explicit BlockRandomAccessSparseMatrixAdapter(
       const BlockRandomAccessSparseMatrix& m)
       : m_(m) {
@@ -86,7 +86,7 @@ class BlockRandomAccessSparseMatrixAdapter : public LinearOperator {
 };
 
 class BlockRandomAccessDiagonalMatrixAdapter : public LinearOperator {
-  public:
+ public:
   explicit BlockRandomAccessDiagonalMatrixAdapter(
       const BlockRandomAccessDiagonalMatrix& m)
       : m_(m) {
@@ -130,7 +130,7 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
     eliminator_.reset(CHECK_NOTNULL(SchurEliminatorBase::Create(options_)));
     eliminator_->Init(options_.elimination_groups[0], A->block_structure());
   };
-  fill(x, x + A->num_cols(), 0.0);
+  std::fill(x, x + A->num_cols(), 0.0);
   event_logger.AddEvent("Setup");
 
   eliminator_->Eliminate(A, b, per_solve_options.D, lhs_.get(), rhs_.get());
@@ -156,7 +156,7 @@ void DenseSchurComplementSolver::InitStorage(
   const int num_eliminate_blocks = options().elimination_groups[0];
   const int num_col_blocks = bs->cols.size();
 
-  vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
+  std::vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
   for (int i = num_eliminate_blocks, j = 0;
        i < num_col_blocks;
        ++i, ++j) {
@@ -248,9 +248,9 @@ void SparseSchurComplementSolver::InitStorage(
     blocks_[i - num_eliminate_blocks] = bs->cols[i].size;
   }
 
-  set<pair<int, int> > block_pairs;
+  std::set<std::pair<int, int> > block_pairs;
   for (int i = 0; i < blocks_.size(); ++i) {
-    block_pairs.insert(make_pair(i, i));
+    block_pairs.insert(std::make_pair(i, i));
   }
 
   int r = 0;
@@ -259,7 +259,7 @@ void SparseSchurComplementSolver::InitStorage(
     if (e_block_id >= num_eliminate_blocks) {
       break;
     }
-    vector<int> f_blocks;
+    std::vector<int> f_blocks;
 
     // Add to the chunk until the first block in the row is
     // different than the one in the first row for the chunk.
@@ -281,7 +281,7 @@ void SparseSchurComplementSolver::InitStorage(
     f_blocks.erase(unique(f_blocks.begin(), f_blocks.end()), f_blocks.end());
     for (int i = 0; i < f_blocks.size(); ++i) {
       for (int j = i + 1; j < f_blocks.size(); ++j) {
-        block_pairs.insert(make_pair(f_blocks[i], f_blocks[j]));
+        block_pairs.insert(std::make_pair(f_blocks[i], f_blocks[j]));
       }
     }
   }
@@ -296,7 +296,7 @@ void SparseSchurComplementSolver::InitStorage(
       for (int j = 0; j < row.cells.size(); ++j) {
         int r_block2_id = row.cells[j].block_id - num_eliminate_blocks;
         if (r_block1_id <= r_block2_id) {
-          block_pairs.insert(make_pair(r_block1_id, r_block2_id));
+          block_pairs.insert(std::make_pair(r_block1_id, r_block2_id));
         }
       }
     }

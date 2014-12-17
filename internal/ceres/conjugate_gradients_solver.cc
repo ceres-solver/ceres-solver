@@ -114,7 +114,6 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   double Q0 = -1.0 * xref.dot(bref + r);
 
   for (summary.num_iterations = 1;; ++summary.num_iterations) {
-
     // Apply preconditioner
     if (per_solve_options.preconditioner != NULL) {
       z.setZero();
@@ -129,7 +128,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
       summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message = StringPrintf("Numerical failure. rho = r'z = %e.", rho);
       break;
-    };
+    }
 
     if (summary.num_iterations == 1) {
       p = z;
@@ -233,7 +232,7 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
   }
 
   return summary;
-};
+}
 
 }  // namespace internal
 }  // namespace ceres

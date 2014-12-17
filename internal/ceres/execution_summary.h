@@ -56,15 +56,15 @@ class ExecutionSummary {
     calls_[name] += 1;
   }
 
-  const map<string, double>& times() const { return times_; }
-  const map<string, int>& calls() const { return calls_; }
+  const std::map<string, double>& times() const { return times_; }
+  const std::map<string, int>& calls() const { return calls_; }
 
  private:
   Mutex times_mutex_;
-  map<string, double> times_;
+  std::map<string, double> times_;
 
   Mutex calls_mutex_;
-  map<string, int> calls_;
+  std::map<string, int> calls_;
 };
 
 class ScopedExecutionTimer {

@@ -95,8 +95,8 @@ class Evaluator {
   static bool Evaluate(Program* program,
                        int num_threads,
                        double* cost,
-                       vector<double>* residuals,
-                       vector<double>* gradient,
+                       std::vector<double>* residuals,
+                       std::vector<double>* gradient,
                        CRSMatrix* jacobian);
 
   // Build and return a sparse matrix for storing and working with the Jacobian
@@ -190,12 +190,12 @@ class Evaluator {
   // that the base class implementation does not have to worry about
   // life time issues. Further, these calls are not expected to be
   // frequent or performance sensitive.
-  virtual map<string, int> CallStatistics() const {
-    return map<string, int>();
+  virtual std::map<string, int> CallStatistics() const {
+    return std::map<string, int>();
   }
 
-  virtual map<string, double> TimeStatistics() const {
-    return map<string, double>();
+  virtual std::map<string, double> TimeStatistics() const {
+    return std::map<string, double>();
   }
 };
 

@@ -193,7 +193,7 @@ class ParameterBlock {
     }
 
     upper_bounds_[index] = upper_bound;
-  };
+  }
 
   void SetLowerBound(int index, double lower_bound) {
     CHECK_LT(index, size_);

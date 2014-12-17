@@ -84,7 +84,7 @@ bool IdentityParameterization::MultiplyByJacobian(const double* x,
 
 SubsetParameterization::SubsetParameterization(
     int size,
-    const vector<int>& constant_parameters)
+    const std::vector<int>& constant_parameters)
     : local_size_(size - constant_parameters.size()),
       constancy_mask_(size, 0) {
   CHECK_GT(constant_parameters.size(), 0)
@@ -92,7 +92,7 @@ SubsetParameterization::SubsetParameterization(
       << "one element. If you do not wish to hold any parameters "
       << "constant, then do not use a SubsetParameterization";
 
-  vector<int> constant = constant_parameters;
+  std::vector<int> constant = constant_parameters;
   sort(constant.begin(), constant.end());
   CHECK(unique(constant.begin(), constant.end()) == constant.end())
       << "The set of constant parameters cannot contain duplicates";

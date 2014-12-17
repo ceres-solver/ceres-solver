@@ -45,7 +45,7 @@ Problem::~Problem() {}
 ResidualBlockId Problem::AddResidualBlock(
     CostFunction* cost_function,
     LossFunction* loss_function,
-    const vector<double*>& parameter_blocks) {
+    const std::vector<double*>& parameter_blocks) {
   return problem_impl_->AddResidualBlock(cost_function,
                                          loss_function,
                                          parameter_blocks);
@@ -197,8 +197,8 @@ void Problem::SetParameterUpperBound(double* values,
 
 bool Problem::Evaluate(const EvaluateOptions& evaluate_options,
                        double* cost,
-                       vector<double>* residuals,
-                       vector<double>* gradient,
+                       std::vector<double>* residuals,
+                       std::vector<double>* gradient,
                        CRSMatrix* jacobian) {
   return problem_impl_->Evaluate(evaluate_options,
                                  cost,
@@ -225,28 +225,28 @@ int Problem::NumResiduals() const {
 
 int Problem::ParameterBlockSize(const double* parameter_block) const {
   return problem_impl_->ParameterBlockSize(parameter_block);
-};
+}
 
 int Problem::ParameterBlockLocalSize(const double* parameter_block) const {
   return problem_impl_->ParameterBlockLocalSize(parameter_block);
-};
+}
 
 bool Problem::HasParameterBlock(const double* values) const {
   return problem_impl_->HasParameterBlock(values);
 }
 
-void Problem::GetParameterBlocks(vector<double*>* parameter_blocks) const {
+void Problem::GetParameterBlocks(std::vector<double*>* parameter_blocks) const {
   problem_impl_->GetParameterBlocks(parameter_blocks);
 }
 
 void Problem::GetResidualBlocks(
-    vector<ResidualBlockId>* residual_blocks) const {
+    std::vector<ResidualBlockId>* residual_blocks) const {
   problem_impl_->GetResidualBlocks(residual_blocks);
 }
 
 void Problem::GetParameterBlocksForResidualBlock(
     const ResidualBlockId residual_block,
-    vector<double*>* parameter_blocks) const {
+    std::vector<double*>* parameter_blocks) const {
   problem_impl_->GetParameterBlocksForResidualBlock(residual_block,
                                                     parameter_blocks);
 }
@@ -263,7 +263,7 @@ const LossFunction* Problem::GetLossFunctionForResidualBlock(
 
 void Problem::GetResidualBlocksForParameterBlock(
     const double* values,
-    vector<ResidualBlockId>* residual_blocks) const {
+    std::vector<ResidualBlockId>* residual_blocks) const {
   problem_impl_->GetResidualBlocksForParameterBlock(values,
                                                     residual_blocks);
 }

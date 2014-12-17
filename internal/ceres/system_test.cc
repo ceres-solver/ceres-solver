@@ -122,11 +122,12 @@ struct SolverConfig {
 //       Solver::Options* mutable_solver_options();
 //   };
 template <typename SystemTestProblem>
-void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
-                                 const double max_abs_difference) {
+void RunSolversAndCheckTheyMatch(
+    const std::vector<SolverConfig>& configurations,
+    const double max_abs_difference) {
   int num_configurations = configurations.size();
-  vector<SystemTestProblem*> problems;
-  vector<vector<double> > final_residuals(num_configurations);
+  std::vector<SystemTestProblem*> problems;
+  std::vector<std::vector<double> > final_residuals(num_configurations);
 
   for (int i = 0; i < num_configurations; ++i) {
     SystemTestProblem* system_test_problem = new SystemTestProblem();
@@ -173,8 +174,8 @@ void RunSolversAndCheckTheyMatch(const vector<SolverConfig>& configurations,
     // the same residuals at two completely different positions in
     // parameter space.
     if (i > 0) {
-      const vector<double>& reference_residuals = final_residuals[0];
-      const vector<double>& current_residuals = final_residuals[i];
+      const std::vector<double>& reference_residuals = final_residuals[0];
+      const std::vector<double>& current_residuals = final_residuals[i];
 
       for (int j = 0; j < reference_residuals.size(); ++j) {
         EXPECT_NEAR(current_residuals[j],
@@ -284,7 +285,7 @@ class PowellsFunction {
 };
 
 TEST(SystemTest, PowellsFunction) {
-  vector<SolverConfig> configs;
+  std::vector<SolverConfig> configs;
 #define CONFIGURE(linear_solver, sparse_linear_algebra_library_type, ordering) \
   configs.push_back(SolverConfig(linear_solver,                         \
                                  sparse_linear_algebra_library_type,    \
@@ -348,7 +349,7 @@ class BundleAdjustmentProblem {
 
     if (!fptr) {
       LOG(FATAL) << "File Error: unable to open file " << filename;
-    };
+    }
 
     // This will die horribly on invalid files. Them's the breaks.
     FscanfOrDie(fptr, "%d", &num_cameras_);
@@ -487,7 +488,7 @@ class BundleAdjustmentProblem {
 };
 
 TEST(SystemTest, BundleAdjustmentProblem) {
-  vector<SolverConfig> configs;
+  std::vector<SolverConfig> configs;
 
 #define CONFIGURE(linear_solver, sparse_linear_algebra_library_type, ordering, preconditioner) \
   configs.push_back(SolverConfig(linear_solver,                         \

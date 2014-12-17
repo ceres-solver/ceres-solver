@@ -50,7 +50,7 @@ namespace ceres {
 inline bool IsFinite  (double x) { return _finite(x) != 0;                   }
 inline bool IsInfinite(double x) { return _finite(x) == 0 && _isnan(x) == 0; }
 inline bool IsNaN     (double x) { return _isnan(x) != 0;                    }
-inline bool IsNormal  (double x) {
+inline bool IsNormal  (double x) {  // NOLINT
   int classification = _fpclass(x);
   return classification == _FPCLASS_NN ||
          classification == _FPCLASS_PN;
