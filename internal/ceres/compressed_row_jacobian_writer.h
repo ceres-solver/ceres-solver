@@ -33,6 +33,9 @@
 #ifndef CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_
 #define CERES_INTERNAL_COMPRESSED_ROW_JACOBIAN_WRITER_H_
 
+#include <utility>
+#include <vector>
+
 #include "ceres/evaluator.h"
 #include "ceres/scratch_evaluate_preparer.h"
 
@@ -80,7 +83,7 @@ class CompressedRowJacobianWriter {
   static void GetOrderedParameterBlocks(
       const Program* program,
       int residual_id,
-      vector<pair<int, int> >* evaluated_jacobian_blocks);
+      std::vector<std::pair<int, int> >* evaluated_jacobian_blocks);
 
   // JacobianWriter interface.
 

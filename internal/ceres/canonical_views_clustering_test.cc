@@ -78,7 +78,7 @@ class CanonicalViewsTest : public ::testing::Test {
   WeightedGraph<int> graph_;
 
   CanonicalViewsClusteringOptions options_;
-  vector<int> centers_;
+  std::vector<int> centers_;
   HashMap<int, int> membership_;
 };
 

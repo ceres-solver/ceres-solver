@@ -69,7 +69,6 @@
 
 #include <utility>
 #include "ceres/integral_types.h"
-#include "ceres/internal/port.h"
 
 // Some systems don't have access to unordered_map/unordered_set. In
 // that case, substitute the hash map/set with normal map/set. The

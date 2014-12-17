@@ -38,6 +38,9 @@
 
 namespace ceres {
 
+using std::pair;
+using std::vector;
+
 Covariance::Covariance(const Covariance::Options& options) {
   impl_.reset(new internal::CovarianceImpl(options));
 }

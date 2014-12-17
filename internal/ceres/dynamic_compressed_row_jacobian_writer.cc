@@ -39,6 +39,9 @@
 namespace ceres {
 namespace internal {
 
+using std::pair;
+using std::vector;
+
 ScratchEvaluatePreparer*
 DynamicCompressedRowJacobianWriter::CreateEvaluatePreparers(int num_threads) {
   return ScratchEvaluatePreparer::Create(*program_, num_threads);

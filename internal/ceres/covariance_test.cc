@@ -43,6 +43,11 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::map;
+using std::pair;
+using std::vector;
+
 TEST(CovarianceImpl, ComputeCovarianceSparsity) {
   double parameters[10];
 
@@ -247,7 +252,9 @@ class CovarianceTest : public ::testing::Test {
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
+                                NULL,
+                                z);
     }
 
     {
@@ -319,9 +326,15 @@ class CovarianceTest : public ::testing::Test {
         const double* block1 = covariance_blocks[i].first;
         const double* block2 = covariance_blocks[i].second;
         // block1, block2
-        GetCovarianceBlockAndCompare(block1, block2, covariance, expected_covariance);
+        GetCovarianceBlockAndCompare(block1,
+                                     block2,
+                                     covariance,
+                                     expected_covariance);
         // block2, block1
-        GetCovarianceBlockAndCompare(block2, block1, covariance, expected_covariance);
+        GetCovarianceBlockAndCompare(block2,
+                                     block1,
+                                     covariance,
+                                     expected_covariance);
       }
     }
   }
@@ -590,12 +603,12 @@ TEST_F(CovarianceTest, TruncatedRank) {
   // was obtained by dropping the eigenvector corresponding to this
   // eigenvalue.
   double expected_covariance[] = {
-     5.4135e-02,  -3.5121e-02,   1.7257e-04,   3.4514e-04,   5.1771e-04,  -1.6076e-02,
-    -3.5121e-02,   3.8667e-02,  -1.9288e-03,  -3.8576e-03,  -5.7864e-03,   1.2549e-02,
-     1.7257e-04,  -1.9288e-03,   2.3235e-01,  -3.5297e-02,  -5.2946e-02,  -3.3329e-04,
-     3.4514e-04,  -3.8576e-03,  -3.5297e-02,   1.7941e-01,  -1.0589e-01,  -6.6659e-04,
-     5.1771e-04,  -5.7864e-03,  -5.2946e-02,  -1.0589e-01,   9.1162e-02,  -9.9988e-04,
-    -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02
+     5.4135e-02,  -3.5121e-02,   1.7257e-04,   3.4514e-04,   5.1771e-04,  -1.6076e-02,  // NOLINT
+    -3.5121e-02,   3.8667e-02,  -1.9288e-03,  -3.8576e-03,  -5.7864e-03,   1.2549e-02,  // NOLINT
+     1.7257e-04,  -1.9288e-03,   2.3235e-01,  -3.5297e-02,  -5.2946e-02,  -3.3329e-04,  // NOLINT
+     3.4514e-04,  -3.8576e-03,  -3.5297e-02,   1.7941e-01,  -1.0589e-01,  -6.6659e-04,  // NOLINT
+     5.1771e-04,  -5.7864e-03,  -5.2946e-02,  -1.0589e-01,   9.1162e-02,  -9.9988e-04,  // NOLINT
+    -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02   // NOLINT
   };
 
 
@@ -637,7 +650,9 @@ class RankDeficientCovarianceTest : public CovarianceTest {
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
+                                NULL,
+                                z);
     }
 
     {
@@ -715,7 +730,8 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   virtual void SetUp() {
     num_parameter_blocks_ = 2000;
     parameter_block_size_ = 5;
-    parameters_.reset(new double[parameter_block_size_ * num_parameter_blocks_]);
+    parameters_.reset(
+        new double[parameter_block_size_ * num_parameter_blocks_]);
 
     Matrix jacobian(parameter_block_size_, parameter_block_size_);
     for (int i = 0; i < num_parameter_blocks_; ++i) {

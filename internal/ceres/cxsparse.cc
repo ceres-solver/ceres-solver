@@ -38,12 +38,13 @@
 #include <vector>
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
+
+using std::vector;
 
 CXSparse::CXSparse() : scratch_(NULL), scratch_size_(0) {
 }
@@ -128,7 +129,7 @@ cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
 
   int* ordering = cs_amd(1, &block_matrix);
   vector<int> block_ordering(num_row_blocks, -1);
-  copy(ordering, ordering + num_row_blocks, &block_ordering[0]);
+  std::copy(ordering, ordering + num_row_blocks, &block_ordering[0]);
   cs_free(ordering);
 
   vector<int> scalar_ordering;
@@ -191,7 +192,7 @@ cs_di* CXSparse::CreateSparseMatrix(TripletSparseMatrix* tsm) {
 
 void CXSparse::ApproximateMinimumDegreeOrdering(cs_di* A, int* ordering) {
   int* cs_ordering = cs_amd(1, A);
-  copy(cs_ordering, cs_ordering + A->m, ordering);
+  std::copy(cs_ordering, cs_ordering + A->m, ordering);
   cs_free(cs_ordering);
 }
 

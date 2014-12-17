@@ -41,6 +41,9 @@
 
 namespace ceres {
 namespace internal {
+
+using std::vector;
+
 namespace {
 
 // Given the residual block ordering, build a lookup table to determine which
@@ -57,7 +60,8 @@ void BuildJacobianLayout(const Program& program,
                          int num_eliminate_blocks,
                          vector<int*>* jacobian_layout,
                          vector<int>* jacobian_layout_storage) {
-  const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+  const vector<ResidualBlock*>& residual_blocks =
+      program.residual_blocks();
 
   // Iterate over all the active residual blocks and determine how many E blocks
   // are there. This will determine where the F blocks start in the jacobian

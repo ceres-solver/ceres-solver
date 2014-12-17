@@ -40,6 +40,9 @@
 
 namespace ceres {
 namespace internal {
+
+using std::vector;
+
 namespace {
 
 // For IEEE-754 doubles, machine precision is about 2e-16.

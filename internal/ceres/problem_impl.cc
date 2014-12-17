@@ -55,7 +55,10 @@
 namespace ceres {
 namespace internal {
 
-typedef map<double*, internal::ParameterBlock*> ParameterMap;
+using std::vector;
+using std::map;
+
+typedef std::map<double*, internal::ParameterBlock*> ParameterMap;
 
 namespace {
 internal::ParameterBlock* FindParameterBlockOrDie(
@@ -649,7 +652,8 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     // columns of the jacobian, we need to make sure that they are
     // constant during evaluation and then make them variable again
     // after we are done.
-    vector<ParameterBlock*> all_parameter_blocks(program_->parameter_blocks());
+    vector<ParameterBlock*> all_parameter_blocks(
+        program_->parameter_blocks());
     vector<ParameterBlock*> included_parameter_blocks(
         program.parameter_blocks());
 
@@ -784,19 +788,20 @@ int ProblemImpl::NumResiduals() const {
 int ProblemImpl::ParameterBlockSize(const double* parameter_block) const {
   return FindParameterBlockOrDie(parameter_block_map_,
                                  const_cast<double*>(parameter_block))->Size();
-};
+}
 
 int ProblemImpl::ParameterBlockLocalSize(const double* parameter_block) const {
   return FindParameterBlockOrDie(
       parameter_block_map_, const_cast<double*>(parameter_block))->LocalSize();
-};
+}
 
 bool ProblemImpl::HasParameterBlock(const double* parameter_block) const {
   return (parameter_block_map_.find(const_cast<double*>(parameter_block)) !=
           parameter_block_map_.end());
 }
 
-void ProblemImpl::GetParameterBlocks(vector<double*>* parameter_blocks) const {
+void ProblemImpl::GetParameterBlocks(
+    vector<double*>* parameter_blocks) const {
   CHECK_NOTNULL(parameter_blocks);
   parameter_blocks->resize(0);
   for (ParameterMap::const_iterator it = parameter_block_map_.begin();

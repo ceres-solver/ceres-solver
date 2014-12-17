@@ -45,7 +45,7 @@ namespace ceres {
 // the one it's wrapping.
 ConditionedCostFunction::ConditionedCostFunction(
     CostFunction* wrapped_cost_function,
-    const vector<CostFunction*>& conditioners,
+    const std::vector<CostFunction*>& conditioners,
     Ownership ownership)
     : wrapped_cost_function_(wrapped_cost_function),
       conditioners_(conditioners),

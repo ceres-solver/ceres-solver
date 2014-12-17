@@ -35,6 +35,7 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
 const double kTolerance = 1e-18;
 
 void ExpectCostFunctionsAreEqual(const CostFunction& cost_function,
@@ -109,7 +110,7 @@ void ExpectCostFunctionsAreEqual(const CostFunction& cost_function,
         << "jacobian : " << i << " "
         << jacobians[i] << " " << actual_jacobians[i];
   }
-};
+}
 
 struct OneParameterBlockFunctor {
  public:

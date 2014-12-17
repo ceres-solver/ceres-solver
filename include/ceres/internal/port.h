@@ -46,12 +46,6 @@
 
 namespace ceres {
 
-// It is unfortunate that this import of the entire standard namespace is
-// necessary. The reasons are historical and won't be explained here, but
-// suffice to say it is not a mistake and can't be removed without breaking
-// things outside of the Ceres optimization package.
-using namespace std;
-
 // This is necessary to properly handle the case that there is a different
 // "string" implementation in the global namespace.
 using std::string;
