@@ -85,13 +85,13 @@ TEST(CovarianceImpl, ComputeCovarianceSparsity) {
                          6, 7, 8, 9};
 
 
-  vector<pair<const double*, const double*> > covariance_blocks;
-  covariance_blocks.push_back(make_pair(block1, block1));
-  covariance_blocks.push_back(make_pair(block4, block4));
-  covariance_blocks.push_back(make_pair(block2, block2));
-  covariance_blocks.push_back(make_pair(block3, block3));
-  covariance_blocks.push_back(make_pair(block2, block3));
-  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+  std::vector<std::pair<const double*, const double*> > covariance_blocks;
+  covariance_blocks.push_back(std::make_pair(block1, block1));
+  covariance_blocks.push_back(std::make_pair(block4, block4));
+  covariance_blocks.push_back(std::make_pair(block2, block2));
+  covariance_blocks.push_back(std::make_pair(block3, block3));
+  covariance_blocks.push_back(std::make_pair(block2, block3));
+  covariance_blocks.push_back(std::make_pair(block4, block1));  // reversed
 
   Covariance::Options options;
   CovarianceImpl covariance_impl(options);
@@ -151,7 +151,7 @@ class UnaryCostFunction: public CostFunction {
   }
 
  private:
-  vector<double> jacobian_;
+  std::vector<double> jacobian_;
 };
 
 
@@ -194,8 +194,8 @@ class BinaryCostFunction: public CostFunction {
   }
 
  private:
-  vector<double> jacobian1_;
-  vector<double> jacobian2_;
+  std::vector<double> jacobian1_;
+  std::vector<double> jacobian2_;
 };
 
 // x_plus_delta = delta * x;
@@ -247,7 +247,9 @@ class CovarianceTest : public ::testing::Test {
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
+                                NULL,
+                                z);
     }
 
     {
@@ -270,16 +272,16 @@ class CovarianceTest : public ::testing::Test {
           x);
     }
 
-    all_covariance_blocks_.push_back(make_pair(x, x));
-    all_covariance_blocks_.push_back(make_pair(y, y));
-    all_covariance_blocks_.push_back(make_pair(z, z));
-    all_covariance_blocks_.push_back(make_pair(x, y));
-    all_covariance_blocks_.push_back(make_pair(x, z));
-    all_covariance_blocks_.push_back(make_pair(y, z));
+    all_covariance_blocks_.push_back(std::make_pair(x, x));
+    all_covariance_blocks_.push_back(std::make_pair(y, y));
+    all_covariance_blocks_.push_back(std::make_pair(z, z));
+    all_covariance_blocks_.push_back(std::make_pair(x, y));
+    all_covariance_blocks_.push_back(std::make_pair(x, z));
+    all_covariance_blocks_.push_back(std::make_pair(y, z));
 
-    column_bounds_[x] = make_pair(0, 2);
-    column_bounds_[y] = make_pair(2, 5);
-    column_bounds_[z] = make_pair(5, 6);
+    column_bounds_[x] = std::make_pair(0, 2);
+    column_bounds_[y] = std::make_pair(2, 5);
+    column_bounds_[z] = std::make_pair(5, 6);
   }
 
   void ComputeAndCompareCovarianceBlocks(const Covariance::Options& options,
@@ -287,7 +289,7 @@ class CovarianceTest : public ::testing::Test {
     // Generate all possible combination of block pairs and check if the
     // covariance computation is correct.
     for (int i = 1; i <= 64; ++i) {
-      vector<pair<const double*, const double*> > covariance_blocks;
+      std::vector<std::pair<const double*, const double*> > covariance_blocks;
       if (i & 1) {
         covariance_blocks.push_back(all_covariance_blocks_[0]);
       }
@@ -319,9 +321,15 @@ class CovarianceTest : public ::testing::Test {
         const double* block1 = covariance_blocks[i].first;
         const double* block2 = covariance_blocks[i].second;
         // block1, block2
-        GetCovarianceBlockAndCompare(block1, block2, covariance, expected_covariance);
+        GetCovarianceBlockAndCompare(block1,
+                                     block2,
+                                     covariance,
+                                     expected_covariance);
         // block2, block1
-        GetCovarianceBlockAndCompare(block2, block1, covariance, expected_covariance);
+        GetCovarianceBlockAndCompare(block2,
+                                     block1,
+                                     covariance,
+                                     expected_covariance);
       }
     }
   }
@@ -361,8 +369,8 @@ class CovarianceTest : public ::testing::Test {
 
   double parameters_[10];
   Problem problem_;
-  vector<pair<const double*, const double*> > all_covariance_blocks_;
-  map<const double*, pair<int, int> > column_bounds_;
+  std::vector<std::pair<const double*, const double*> > all_covariance_blocks_;
+  std::map<const double*, std::pair<int, int> > column_bounds_;
 };
 
 
@@ -514,7 +522,7 @@ TEST_F(CovarianceTest, LocalParameterization) {
 
   problem_.SetParameterization(x, new PolynomialParameterization);
 
-  vector<int> subset;
+  std::vector<int> subset;
   subset.push_back(2);
   problem_.SetParameterization(y, new SubsetParameterization(3, subset));
 
@@ -590,12 +598,12 @@ TEST_F(CovarianceTest, TruncatedRank) {
   // was obtained by dropping the eigenvector corresponding to this
   // eigenvalue.
   double expected_covariance[] = {
-     5.4135e-02,  -3.5121e-02,   1.7257e-04,   3.4514e-04,   5.1771e-04,  -1.6076e-02,
-    -3.5121e-02,   3.8667e-02,  -1.9288e-03,  -3.8576e-03,  -5.7864e-03,   1.2549e-02,
-     1.7257e-04,  -1.9288e-03,   2.3235e-01,  -3.5297e-02,  -5.2946e-02,  -3.3329e-04,
-     3.4514e-04,  -3.8576e-03,  -3.5297e-02,   1.7941e-01,  -1.0589e-01,  -6.6659e-04,
-     5.1771e-04,  -5.7864e-03,  -5.2946e-02,  -1.0589e-01,   9.1162e-02,  -9.9988e-04,
-    -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02
+     5.4135e-02,  -3.5121e-02,   1.7257e-04,   3.4514e-04,   5.1771e-04,  -1.6076e-02,  // NOLINT
+    -3.5121e-02,   3.8667e-02,  -1.9288e-03,  -3.8576e-03,  -5.7864e-03,   1.2549e-02,  // NOLINT
+     1.7257e-04,  -1.9288e-03,   2.3235e-01,  -3.5297e-02,  -5.2946e-02,  -3.3329e-04,  // NOLINT
+     3.4514e-04,  -3.8576e-03,  -3.5297e-02,   1.7941e-01,  -1.0589e-01,  -6.6659e-04,  // NOLINT
+     5.1771e-04,  -5.7864e-03,  -5.2946e-02,  -1.0589e-01,   9.1162e-02,  -9.9988e-04,  // NOLINT
+    -1.6076e-02,   1.2549e-02,  -3.3329e-04,  -6.6659e-04,  -9.9988e-04,   3.9539e-02   // NOLINT
   };
 
 
@@ -637,7 +645,9 @@ class RankDeficientCovarianceTest : public CovarianceTest {
 
     {
       double jacobian = 5.0;
-      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian), NULL, z);
+      problem_.AddResidualBlock(new UnaryCostFunction(1, 1, &jacobian),
+                                NULL,
+                                z);
     }
 
     {
@@ -660,16 +670,16 @@ class RankDeficientCovarianceTest : public CovarianceTest {
           x);
     }
 
-    all_covariance_blocks_.push_back(make_pair(x, x));
-    all_covariance_blocks_.push_back(make_pair(y, y));
-    all_covariance_blocks_.push_back(make_pair(z, z));
-    all_covariance_blocks_.push_back(make_pair(x, y));
-    all_covariance_blocks_.push_back(make_pair(x, z));
-    all_covariance_blocks_.push_back(make_pair(y, z));
+    all_covariance_blocks_.push_back(std::make_pair(x, x));
+    all_covariance_blocks_.push_back(std::make_pair(y, y));
+    all_covariance_blocks_.push_back(std::make_pair(z, z));
+    all_covariance_blocks_.push_back(std::make_pair(x, y));
+    all_covariance_blocks_.push_back(std::make_pair(x, z));
+    all_covariance_blocks_.push_back(std::make_pair(y, z));
 
-    column_bounds_[x] = make_pair(0, 2);
-    column_bounds_[y] = make_pair(2, 5);
-    column_bounds_[z] = make_pair(5, 6);
+    column_bounds_[x] = std::make_pair(0, 2);
+    column_bounds_[y] = std::make_pair(2, 5);
+    column_bounds_[z] = std::make_pair(5, 6);
   }
 };
 
@@ -715,7 +725,8 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   virtual void SetUp() {
     num_parameter_blocks_ = 2000;
     parameter_block_size_ = 5;
-    parameters_.reset(new double[parameter_block_size_ * num_parameter_blocks_]);
+    parameters_.reset(
+        new double[parameter_block_size_ * num_parameter_blocks_]);
 
     Matrix jacobian(parameter_block_size_, parameter_block_size_);
     for (int i = 0; i < num_parameter_blocks_; ++i) {
@@ -730,7 +741,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
                                 block_i);
       for (int j = i; j < num_parameter_blocks_; ++j) {
         double* block_j = parameters_.get() + j * parameter_block_size_;
-        all_covariance_blocks_.push_back(make_pair(block_i, block_j));
+        all_covariance_blocks_.push_back(std::make_pair(block_i, block_j));
       }
     }
   }
@@ -775,7 +786,7 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   int num_parameter_blocks_;
 
   Problem problem_;
-  vector<pair<const double*, const double*> > all_covariance_blocks_;
+  std::vector<std::pair<const double*, const double*> > all_covariance_blocks_;
 };
 
 #if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)

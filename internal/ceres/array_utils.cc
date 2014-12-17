@@ -71,7 +71,7 @@ int FindInvalidValue(const int size, const double* x) {
   }
 
   return size;
-};
+}
 
 void InvalidateArray(const int size, double* x) {
   if (x != NULL) {

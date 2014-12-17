@@ -71,20 +71,20 @@ bool CellLessThan(const Cell& lhs, const Cell& rhs);
 
 struct CompressedList {
   Block block;
-  vector<Cell> cells;
+  std::vector<Cell> cells;
 };
 
 typedef CompressedList CompressedRow;
 typedef CompressedList CompressedColumn;
 
 struct CompressedRowBlockStructure {
-  vector<Block> cols;
-  vector<CompressedRow> rows;
+  std::vector<Block> cols;
+  std::vector<CompressedRow> rows;
 };
 
 struct CompressedColumnBlockStructure {
-  vector<Block> rows;
-  vector<CompressedColumn> cols;
+  std::vector<Block> rows;
+  std::vector<CompressedColumn> cols;
 };
 
 }  // namespace internal

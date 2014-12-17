@@ -86,7 +86,7 @@ class NonlinearConjugateGradient : public LineSearchDirection {
       LOG(WARNING) << "Restarting non-linear conjugate gradients: "
                    << directional_derivative;
       *search_direction = -current.gradient;
-    };
+    }
 
     return true;
   }

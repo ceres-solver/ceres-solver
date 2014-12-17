@@ -144,7 +144,7 @@ class LinearSolver {
     // elimination group must form an independent set in the normal
     // equations. The first elimination group corresponds to the
     // num_eliminate_blocks in the Schur type solvers.
-    vector<int> elimination_groups;
+    std::vector<int> elimination_groups;
 
     // Iterative solvers, e.g. Preconditioned Conjugate Gradients
     // maintain a cheap estimate of the residual which may become
@@ -296,12 +296,12 @@ class LinearSolver {
   // that the base class implementation does not have to worry about
   // life time issues. Further, these calls are not expected to be
   // frequent or performance sensitive.
-  virtual map<string, int> CallStatistics() const {
-    return map<string, int>();
+  virtual std::map<string, int> CallStatistics() const {
+    return std::map<string, int>();
   }
 
-  virtual map<string, double> TimeStatistics() const {
-    return map<string, double>();
+  virtual std::map<string, double> TimeStatistics() const {
+    return std::map<string, double>();
   }
 
   // Factory
@@ -331,11 +331,11 @@ class TypedLinearSolver : public LinearSolver {
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
   }
 
-  virtual map<string, int> CallStatistics() const {
+  virtual std::map<string, int> CallStatistics() const {
     return execution_summary_.calls();
   }
 
-  virtual map<string, double> TimeStatistics() const {
+  virtual std::map<string, double> TimeStatistics() const {
     return execution_summary_.times();
   }
 

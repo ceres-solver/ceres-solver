@@ -188,7 +188,7 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
       double* solution);
 
   // Size of the blocks in the Schur complement.
-  vector<int> blocks_;
+  std::vector<int> blocks_;
 
   SuiteSparse ss_;
   // Symbolic factorization of the reduced linear system. Precomputed

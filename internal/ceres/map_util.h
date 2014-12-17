@@ -87,8 +87,8 @@ bool InsertIfNotPresent(
     Collection * const collection,
     const typename Collection::value_type::first_type& key,
     const typename Collection::value_type::second_type& value) {
-  pair<typename Collection::iterator, bool> ret =
-    collection->insert(typename Collection::value_type(key, value));
+  std::pair<typename Collection::iterator, bool> ret =
+      collection->insert(typename Collection::value_type(key, value));
   return ret.second;
 }
 

@@ -30,6 +30,8 @@
 //
 // Utility functions useful for testing.
 
+#include "ceres/test_util.h"
+
 #include <algorithm>
 #include <cmath>
 #include "ceres/file.h"

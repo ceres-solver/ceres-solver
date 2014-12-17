@@ -64,7 +64,7 @@ BlockSparseMatrix::BlockSparseMatrix(
     int row_block_size = block_structure_->rows[i].block.size;
     num_rows_ += row_block_size;
 
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -82,7 +82,7 @@ BlockSparseMatrix::BlockSparseMatrix(
 }
 
 void BlockSparseMatrix::SetZero() {
-  fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
+  std::fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
 }
 
 void BlockSparseMatrix::RightMultiply(const double* x,  double* y) const {
@@ -92,7 +92,7 @@ void BlockSparseMatrix::RightMultiply(const double* x,  double* y) const {
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -112,7 +112,7 @@ void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -130,7 +130,7 @@ void BlockSparseMatrix::SquaredColumnNorm(double* x) const {
   VectorRef(x, num_cols_).setZero();
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -147,7 +147,7 @@ void BlockSparseMatrix::ScaleColumns(const double* scale) {
 
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -169,7 +169,7 @@ void BlockSparseMatrix::ToDenseMatrix(Matrix* dense_matrix) const {
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -192,7 +192,7 @@ void BlockSparseMatrix::ToTripletSparseMatrix(
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
@@ -222,7 +222,7 @@ void BlockSparseMatrix::ToTextFile(FILE* file) const {
   for (int i = 0; i < block_structure_->rows.size(); ++i) {
     const int row_block_pos = block_structure_->rows[i].block.position;
     const int row_block_size = block_structure_->rows[i].block.size;
-    const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const std::vector<Cell>& cells = block_structure_->rows[i].cells;
     for (int j = 0; j < cells.size(); ++j) {
       const int col_block_id = cells[j].block_id;
       const int col_block_size = block_structure_->cols[col_block_id].size;

@@ -71,7 +71,7 @@ TEST(IdentityParameterization, EverythingTest) {
 }
 
 TEST(SubsetParameterization, DeathTests) {
-  vector<int> constant_parameters;
+  std::vector<int> constant_parameters;
   EXPECT_DEATH_IF_SUPPORTED(
       SubsetParameterization parameterization(1, constant_parameters),
       "at least");
@@ -98,7 +98,7 @@ TEST(SubsetParameterization, NormalFunctionTest) {
 
   double x[kGlobalSize] = {1.0, 2.0, 3.0, 4.0};
   for (int i = 0; i < kGlobalSize; ++i) {
-    vector<int> constant_parameters;
+    std::vector<int> constant_parameters;
     constant_parameters.push_back(i);
     SubsetParameterization parameterization(kGlobalSize, constant_parameters);
     double delta[kLocalSize] = {1.0, 2.0, 3.0};
@@ -146,7 +146,7 @@ TEST(SubsetParameterization, NormalFunctionTest) {
     Matrix expected_local_matrix =
         global_matrix * MatrixRef(jacobian, kGlobalSize, kLocalSize);
     EXPECT_EQ((local_matrix - expected_local_matrix).norm(), 0.0);
-  };
+  }
 }
 
 // Functor needed to implement automatically differentiated Plus for

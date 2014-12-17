@@ -138,13 +138,13 @@ VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() {
 // preconditioner matrix.
 void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
     const CompressedRowBlockStructure& bs) {
-  vector<set<int> > visibility;
+  std::vector<std::set<int> > visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
   cluster_pairs_.clear();
   for (int i = 0; i < num_clusters_; ++i) {
-    cluster_pairs_.insert(make_pair(i, i));
+    cluster_pairs_.insert(std::make_pair(i, i));
   }
 }
 
@@ -156,7 +156,7 @@ void VisibilityBasedPreconditioner::ComputeClusterJacobiSparsity(
 // forest. The set of edges in this forest are the cluster pairs.
 void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
     const CompressedRowBlockStructure& bs) {
-  vector<set<int> > visibility;
+  std::vector<std::set<int> > visibility;
   ComputeVisibility(bs, options_.elimination_groups[0], &visibility);
   CHECK_EQ(num_blocks_, visibility.size());
   ClusterCameras(visibility);
@@ -165,7 +165,7 @@ void VisibilityBasedPreconditioner::ComputeClusterTridiagonalSparsity(
   // edges are the number of 3D points/e_blocks visible in both the
   // clusters at the ends of the edge. Return an approximate degree-2
   // maximum spanning forest of this graph.
-  vector<set<int> > cluster_visibility;
+  std::vector<std::set<int> > cluster_visibility;
   ComputeClusterVisibility(visibility, &cluster_visibility);
   scoped_ptr<WeightedGraph<int> > cluster_graph(
       CHECK_NOTNULL(CreateClusterGraph(cluster_visibility)));
@@ -188,14 +188,14 @@ void VisibilityBasedPreconditioner::InitStorage(
 // The cluster_membership_ vector is updated to indicate cluster
 // memberships for each camera block.
 void VisibilityBasedPreconditioner::ClusterCameras(
-    const vector<set<int> >& visibility) {
+    const std::vector<std::set<int> >& visibility) {
   scoped_ptr<WeightedGraph<int> > schur_complement_graph(
       CHECK_NOTNULL(CreateSchurComplementGraph(visibility)));
 
   HashMap<int, int> membership;
 
   if (options_.visibility_clustering_type == CANONICAL_VIEWS) {
-    vector<int> centers;
+    std::vector<int> centers;
     CanonicalViewsClusteringOptions clustering_options;
     clustering_options.size_penalty_weight =
         kCanonicalViewsSizePenaltyWeight;
@@ -246,7 +246,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
     const CompressedRowBlockStructure& bs) {
   block_pairs_.clear();
   for (int i = 0; i < num_blocks_; ++i) {
-    block_pairs_.insert(make_pair(i, i));
+    block_pairs_.insert(std::make_pair(i, i));
   }
 
   int r = 0;
@@ -274,7 +274,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
       break;
     }
 
-    set<int> f_blocks;
+    std::set<int> f_blocks;
     for (; r < num_row_blocks; ++r) {
       const CompressedRow& row = bs.rows[r];
       if (row.cells.front().block_id != e_block_id) {
@@ -292,14 +292,14 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
       }
     }
 
-    for (set<int>::const_iterator block1 = f_blocks.begin();
+    for (std::set<int>::const_iterator block1 = f_blocks.begin();
          block1 != f_blocks.end();
          ++block1) {
-      set<int>::const_iterator block2 = block1;
+      std::set<int>::const_iterator block2 = block1;
       ++block2;
       for (; block2 != f_blocks.end(); ++block2) {
         if (IsBlockPairInPreconditioner(*block1, *block2)) {
-          block_pairs_.insert(make_pair(*block1, *block2));
+          block_pairs_.insert(std::make_pair(*block1, *block2));
         }
       }
     }
@@ -315,7 +315,7 @@ void VisibilityBasedPreconditioner::ComputeBlockPairsInPreconditioner(
         const int block2 = row.cells[j].block_id - num_eliminate_blocks;
         if (block1 <= block2) {
           if (IsBlockPairInPreconditioner(block1, block2)) {
-            block_pairs_.insert(make_pair(block1, block2));
+            block_pairs_.insert(std::make_pair(block1, block2));
           }
         }
       }
@@ -399,9 +399,8 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 // matrix. Scaling these off-diagonal entries by 1/2 forces this
 // matrix to be positive definite.
 void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
-  for (set< pair<int, int> >::const_iterator it = block_pairs_.begin();
-       it != block_pairs_.end();
-       ++it) {
+  std::set< std::pair<int, int> >::const_iterator it = block_pairs_.begin();
+  for (; it != block_pairs_.end(); ++it) {
     const int block1 = it->first;
     const int block2 = it->second;
     if (!IsBlockPairOffDiagonal(block1, block2)) {
@@ -486,7 +485,7 @@ bool VisibilityBasedPreconditioner::IsBlockPairInPreconditioner(
   if (cluster1 > cluster2) {
     std::swap(cluster1, cluster2);
   }
-  return (cluster_pairs_.count(make_pair(cluster1, cluster2)) > 0);
+  return (cluster_pairs_.count(std::make_pair(cluster1, cluster2)) > 0);
 }
 
 bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
@@ -499,7 +498,7 @@ bool VisibilityBasedPreconditioner::IsBlockPairOffDiagonal(
 // each vertex.
 void VisibilityBasedPreconditioner::ForestToClusterPairs(
     const WeightedGraph<int>& forest,
-    HashSet<pair<int, int> >* cluster_pairs) const {
+    HashSet<std::pair<int, int> >* cluster_pairs) const {
   CHECK_NOTNULL(cluster_pairs)->clear();
   const HashSet<int>& vertices = forest.vertices();
   CHECK_EQ(vertices.size(), num_clusters_);
@@ -510,14 +509,14 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
        it1 != vertices.end();
        ++it1) {
     const int cluster1 = *it1;
-    cluster_pairs->insert(make_pair(cluster1, cluster1));
+    cluster_pairs->insert(std::make_pair(cluster1, cluster1));
     const HashSet<int>& neighbors = forest.Neighbors(cluster1);
     for (HashSet<int>::const_iterator it2 = neighbors.begin();
          it2 != neighbors.end();
          ++it2) {
       const int cluster2 = *it2;
       if (cluster1 < cluster2) {
-        cluster_pairs->insert(make_pair(cluster1, cluster2));
+        cluster_pairs->insert(std::make_pair(cluster1, cluster2));
       }
     }
   }
@@ -527,8 +526,8 @@ void VisibilityBasedPreconditioner::ForestToClusterPairs(
 // of all its cameras. In other words, the set of points visible to
 // any camera in the cluster.
 void VisibilityBasedPreconditioner::ComputeClusterVisibility(
-    const vector<set<int> >& visibility,
-    vector<set<int> >* cluster_visibility) const {
+    const std::vector<std::set<int> >& visibility,
+    std::vector<std::set<int> >* cluster_visibility) const {
   CHECK_NOTNULL(cluster_visibility)->resize(0);
   cluster_visibility->resize(num_clusters_);
   for (int i = 0; i < num_blocks_; ++i) {
@@ -542,7 +541,7 @@ void VisibilityBasedPreconditioner::ComputeClusterVisibility(
 // weights are the number of 3D points visible to cameras in both the
 // vertices.
 WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
-    const vector<set<int> >& cluster_visibility) const {
+    const std::vector<std::set<int> >& cluster_visibility) const {
   WeightedGraph<int>* cluster_graph = new WeightedGraph<int>;
 
   for (int i = 0; i < num_clusters_; ++i) {
@@ -550,10 +549,10 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
   }
 
   for (int i = 0; i < num_clusters_; ++i) {
-    const set<int>& cluster_i = cluster_visibility[i];
+    const std::set<int>& cluster_i = cluster_visibility[i];
     for (int j = i+1; j < num_clusters_; ++j) {
-      vector<int> intersection;
-      const set<int>& cluster_j = cluster_visibility[j];
+      std::vector<int> intersection;
+      const std::set<int>& cluster_j = cluster_visibility[j];
       set_intersection(cluster_i.begin(), cluster_i.end(),
                        cluster_j.begin(), cluster_j.end(),
                        back_inserter(intersection));
@@ -581,7 +580,7 @@ WeightedGraph<int>* VisibilityBasedPreconditioner::CreateClusterGraph(
 // of integers so that the cluster ids are in [0, num_clusters_).
 void VisibilityBasedPreconditioner::FlattenMembershipMap(
     const HashMap<int, int>& membership_map,
-    vector<int>* membership_vector) const {
+    std::vector<int>* membership_vector) const {
   CHECK_NOTNULL(membership_vector)->resize(0);
   membership_vector->resize(num_blocks_, -1);
 
