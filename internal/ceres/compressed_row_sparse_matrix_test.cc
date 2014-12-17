@@ -80,11 +80,11 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
     num_rows = tsm->num_rows();
     num_cols = tsm->num_cols();
 
-    vector<int>* row_blocks = crsm->mutable_row_blocks();
+    std::vector<int>* row_blocks = crsm->mutable_row_blocks();
     row_blocks->resize(num_rows);
     std::fill(row_blocks->begin(), row_blocks->end(), 1);
 
-    vector<int>* col_blocks = crsm->mutable_col_blocks();
+    std::vector<int>* col_blocks = crsm->mutable_col_blocks();
     col_blocks->resize(num_cols);
     std::fill(col_blocks->begin(), col_blocks->end(), 1);
   }
@@ -169,16 +169,16 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
 
   scoped_array<double> diagonal(new double[num_diagonal_rows]);
   for (int i = 0; i < num_diagonal_rows; ++i) {
-    diagonal[i] =i;
+    diagonal[i] = i;
   }
 
-  vector<int> row_and_column_blocks;
+  std::vector<int> row_and_column_blocks;
   row_and_column_blocks.push_back(1);
   row_and_column_blocks.push_back(2);
   row_and_column_blocks.push_back(2);
 
-  const vector<int> pre_row_blocks = crsm->row_blocks();
-  const vector<int> pre_col_blocks = crsm->col_blocks();
+  const std::vector<int> pre_row_blocks = crsm->row_blocks();
+  const std::vector<int> pre_col_blocks = crsm->col_blocks();
 
   scoped_ptr<CompressedRowSparseMatrix> appendage(
       CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
@@ -187,15 +187,15 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
 
   crsm->AppendRows(*appendage);
 
-  const vector<int> post_row_blocks = crsm->row_blocks();
-  const vector<int> post_col_blocks = crsm->col_blocks();
+  const std::vector<int> post_row_blocks = crsm->row_blocks();
+  const std::vector<int> post_col_blocks = crsm->col_blocks();
 
-  vector<int> expected_row_blocks = pre_row_blocks;
+  std::vector<int> expected_row_blocks = pre_row_blocks;
   expected_row_blocks.insert(expected_row_blocks.end(),
                              row_and_column_blocks.begin(),
                              row_and_column_blocks.end());
 
-  vector<int> expected_col_blocks = pre_col_blocks;
+  std::vector<int> expected_col_blocks = pre_col_blocks;
 
   EXPECT_EQ(expected_row_blocks, crsm->row_blocks());
   EXPECT_EQ(expected_col_blocks, crsm->col_blocks());
@@ -235,7 +235,7 @@ TEST_F(CompressedRowSparseMatrixTest, ToCRSMatrix) {
 }
 
 TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
-  vector<int> blocks;
+  std::vector<int> blocks;
   blocks.push_back(1);
   blocks.push_back(2);
   blocks.push_back(2);
@@ -384,7 +384,7 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   cols[16] = 2;
   rows[5] = 17;
 
-  copy(values, values + 17, cols);
+  std::copy(values, values + 17, cols);
 
   scoped_ptr<CompressedRowSparseMatrix> transpose(matrix.Transpose());
 
@@ -420,23 +420,23 @@ struct RandomMatrixOptions {
 
 CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
     const RandomMatrixOptions& options) {
-  vector<int> row_blocks;
+  std::vector<int> row_blocks;
   for (int i = 0; i < options.num_row_blocks; ++i) {
     const int delta_block_size =
         Uniform(options.max_row_block_size - options.min_row_block_size);
     row_blocks.push_back(options.min_row_block_size + delta_block_size);
   }
 
-  vector<int> col_blocks;
+  std::vector<int> col_blocks;
   for (int i = 0; i < options.num_col_blocks; ++i) {
     const int delta_block_size =
         Uniform(options.max_col_block_size - options.min_col_block_size);
     col_blocks.push_back(options.min_col_block_size + delta_block_size);
   }
 
-  vector<int> rows;
-  vector<int> cols;
-  vector<double> values;
+  std::vector<int> rows;
+  std::vector<int> cols;
+  std::vector<double> values;
 
   while (values.size() == 0) {
     int row_block_begin = 0;
@@ -478,11 +478,11 @@ void ToDenseMatrix(const cs_di* matrix, Matrix* dense_matrix) {
   dense_matrix->setZero();
 
   for (int c = 0; c < matrix->n; ++c) {
-   for (int idx = matrix->p[c]; idx < matrix->p[c + 1]; ++idx) {
-     const int r = matrix->i[idx];
-     (*dense_matrix)(r, c) = matrix->x[idx];
-   }
- }
+    for (int idx = matrix->p[c]; idx < matrix->p[c + 1]; ++idx) {
+      const int r = matrix->i[idx];
+      (*dense_matrix)(r, c) = matrix->x[idx];
+    }
+  }
 }
 
 TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
@@ -506,8 +506,6 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
          num_col_blocks < kMaxNumColBlocks;
          ++num_col_blocks) {
       for (int trial = 0; trial < kNumTrials; ++trial) {
-
-
         RandomMatrixOptions options;
         options.num_row_blocks = num_row_blocks;
         options.num_col_blocks = num_col_blocks;
@@ -528,12 +526,13 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         scoped_ptr<CompressedRowSparseMatrix> matrix(
             CreateRandomCompressedRowSparseMatrix(options));
 
-        cs_di cs_matrix_transpose = cxsparse.CreateSparseMatrixTransposeView(matrix.get());
+        cs_di cs_matrix_transpose =
+            cxsparse.CreateSparseMatrixTransposeView(matrix.get());
         cs_di* cs_matrix = cxsparse.TransposeMatrix(&cs_matrix_transpose);
         cs_di* expected_outer_product =
             cxsparse.MatrixMatrixMultiply(&cs_matrix_transpose, cs_matrix);
 
-        vector<int> program;
+        std::vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
                 *matrix, &program));
@@ -555,7 +554,8 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         expected_matrix.triangularView<Eigen::StrictlyLower>().setZero();
 
         ToDenseMatrix(&actual_outer_product, &actual_matrix);
-        const double diff_norm = (actual_matrix - expected_matrix).norm() / expected_matrix.norm();
+        const double diff_norm =
+            (actual_matrix - expected_matrix).norm() / expected_matrix.norm();
         ASSERT_NEAR(diff_norm, 0.0, kTolerance)
             << "expected: \n"
             << expected_matrix

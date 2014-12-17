@@ -51,7 +51,7 @@ namespace internal {
 
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        const int num_eliminate_blocks,
-                       vector< set<int> >* visibility) {
+                       std::vector< std::set<int> >* visibility) {
   CHECK_NOTNULL(visibility);
 
   // Clear the visibility vector and resize it to hold a
@@ -60,7 +60,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
   visibility->resize(block_structure.cols.size() - num_eliminate_blocks);
 
   for (int i = 0; i < block_structure.rows.size(); ++i) {
-    const vector<Cell>& cells = block_structure.rows[i].cells;
+    const std::vector<Cell>& cells = block_structure.rows[i].cells;
     int block_id = cells[0].block_id;
     // If the first block is not an e_block, then skip this row block.
     if (block_id >= num_eliminate_blocks) {
@@ -77,7 +77,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 }
 
 WeightedGraph<int>* CreateSchurComplementGraph(
-    const vector<set<int> >& visibility) {
+    const std::vector<std::set<int> >& visibility) {
   const time_t start_time = time(NULL);
   // Compute the number of e_blocks/point blocks. Since the visibility
   // set for each e_block/camera contains the set of e_blocks/points
@@ -85,7 +85,7 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   int num_points = 0;
   for (int i = 0; i < visibility.size(); i++) {
     if (visibility[i].size() > 0) {
-      num_points = max(num_points, (*visibility[i].rbegin()) + 1);
+      num_points = std::max(num_points, (*visibility[i].rbegin()) + 1);
     }
   }
 
@@ -94,10 +94,10 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   // cameras. However, to compute the sparsity structure of the Schur
   // Complement efficiently, its better to have the point->camera
   // mapping.
-  vector<set<int> > inverse_visibility(num_points);
+  std::vector<std::set<int> > inverse_visibility(num_points);
   for (int i = 0; i < visibility.size(); i++) {
-    const set<int>& visibility_set = visibility[i];
-    for (set<int>::const_iterator it = visibility_set.begin();
+    const std::set<int>& visibility_set = visibility[i];
+    for (std::set<int>::const_iterator it = visibility_set.begin();
          it != visibility_set.end();
          ++it) {
       inverse_visibility[*it].insert(i);
@@ -106,19 +106,18 @@ WeightedGraph<int>* CreateSchurComplementGraph(
 
   // Map from camera pairs to number of points visible to both cameras
   // in the pair.
-  HashMap<pair<int, int>, int > camera_pairs;
+  HashMap<std::pair<int, int>, int > camera_pairs;
 
   // Count the number of points visible to each camera/f_block pair.
-  for (vector<set<int> >::const_iterator it = inverse_visibility.begin();
-       it != inverse_visibility.end();
-       ++it) {
-    const set<int>& inverse_visibility_set = *it;
-    for (set<int>::const_iterator camera1 = inverse_visibility_set.begin();
+  std::vector<std::set<int> >::const_iterator it = inverse_visibility.begin();
+  for (; it != inverse_visibility.end(); ++it) {
+    const std::set<int>& inverse_visibility_set = *it;
+    for (std::set<int>::const_iterator camera1 = inverse_visibility_set.begin();
          camera1 != inverse_visibility_set.end();
          ++camera1) {
-      set<int>::const_iterator camera2 = camera1;
+      std::set<int>::const_iterator camera2 = camera1;
       for (++camera2; camera2 != inverse_visibility_set.end(); ++camera2) {
-        ++(camera_pairs[make_pair(*camera1, *camera2)]);
+        ++(camera_pairs[std::make_pair(*camera1, *camera2)]);
       }
     }
   }
@@ -135,19 +134,20 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   }
 
   // Add an edge for each camera pair.
-  for (HashMap<pair<int, int>, int>::const_iterator it = camera_pairs.begin();
-       it != camera_pairs.end();
-       ++it) {
-    const int camera1 = it->first.first;
-    const int camera2 = it->first.second;
-    CHECK_NE(camera1, camera2);
+  {
+    HashMap<std::pair<int, int>, int>::const_iterator it = camera_pairs.begin();
+    for (; it != camera_pairs.end(); ++it) {
+      const int camera1 = it->first.first;
+      const int camera2 = it->first.second;
+      CHECK_NE(camera1, camera2);
 
-    const int count = it->second;
-    // Static cast necessary for Windows.
-    const double weight = static_cast<double>(count) /
-        (sqrt(static_cast<double>(
-                  visibility[camera1].size() * visibility[camera2].size())));
-    graph->AddEdge(camera1, camera2, weight);
+      const int count = it->second;
+      // Static cast necessary for Windows.
+      const double weight = static_cast<double>(count) /
+          (sqrt(static_cast<double>(
+                    visibility[camera1].size() * visibility[camera2].size())));
+      graph->AddEdge(camera1, camera2, weight);
+    }
   }
 
   VLOG(2) << "Schur complement graph time: " << (time(NULL) - start_time);

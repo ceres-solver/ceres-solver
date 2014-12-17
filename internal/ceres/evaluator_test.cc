@@ -159,7 +159,7 @@ struct EvaluatorTest
     ASSERT_EQ(expected_num_rows, jacobian->num_rows());
     ASSERT_EQ(expected_num_cols, jacobian->num_cols());
 
-    vector<double> state(evaluator->NumParameters());
+    std::vector<double> state(evaluator->NumParameters());
 
     ASSERT_TRUE(evaluator->Evaluate(
           &state[0],
@@ -383,12 +383,12 @@ TEST_P(EvaluatorTest, MultipleResidualsWithLocalParameterizations) {
   problem.AddParameterBlock(x,  2);
 
   // Fix y's first dimension.
-  vector<int> y_fixed;
+  std::vector<int> y_fixed;
   y_fixed.push_back(0);
   problem.AddParameterBlock(y, 3, new SubsetParameterization(3, y_fixed));
 
   // Fix z's second dimension.
-  vector<int> z_fixed;
+  std::vector<int> z_fixed;
   z_fixed.push_back(1);
   problem.AddParameterBlock(z, 4, new SubsetParameterization(4, z_fixed));
 
@@ -474,7 +474,7 @@ TEST_P(EvaluatorTest, MultipleResidualProblemWithSomeConstantParameters) {
   // Normally, the preprocessing of the program that happens in solver_impl
   // takes care of this, but we don't want to invoke the solver here.
   Program reduced_program;
-  vector<ParameterBlock*>* parameter_blocks =
+  std::vector<ParameterBlock*>* parameter_blocks =
       problem.mutable_program()->mutable_parameter_blocks();
 
   // "z" is the last parameter; save it for later and pop it off temporarily.

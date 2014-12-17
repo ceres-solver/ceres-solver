@@ -40,7 +40,7 @@ namespace ceres {
 namespace internal {
 
 TEST(_, BlockPermutationToScalarPermutation) {
-  vector<int> blocks;
+  std::vector<int> blocks;
   //  Block structure
   //  0  --1-  ---2---  ---3---  4
   // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -52,7 +52,7 @@ TEST(_, BlockPermutationToScalarPermutation) {
 
   // Block ordering
   // [1, 0, 2, 4, 5]
-  vector<int> block_ordering;
+  std::vector<int> block_ordering;
   block_ordering.push_back(1);
   block_ordering.push_back(0);
   block_ordering.push_back(2);
@@ -61,7 +61,7 @@ TEST(_, BlockPermutationToScalarPermutation) {
 
   // Expected ordering
   // [1, 2, 0, 3, 4, 5, 9, 6, 7, 8]
-  vector<int> expected_scalar_ordering;
+  std::vector<int> expected_scalar_ordering;
   expected_scalar_ordering.push_back(1);
   expected_scalar_ordering.push_back(2);
   expected_scalar_ordering.push_back(0);
@@ -73,7 +73,7 @@ TEST(_, BlockPermutationToScalarPermutation) {
   expected_scalar_ordering.push_back(7);
   expected_scalar_ordering.push_back(8);
 
-  vector<int> scalar_ordering;
+  std::vector<int> scalar_ordering;
   BlockOrderingToScalarOrdering(blocks,
                                 block_ordering,
                                 &scalar_ordering);
@@ -84,8 +84,8 @@ TEST(_, BlockPermutationToScalarPermutation) {
 }
 
 // Helper function to fill the sparsity pattern of a TripletSparseMatrix.
-int FillBlock(const vector<int>& row_blocks,
-              const vector<int>& col_blocks,
+int FillBlock(const std::vector<int>& row_blocks,
+              const std::vector<int>& col_blocks,
               const int row_block_id,
               const int col_block_id,
               int* rows,
@@ -119,13 +119,13 @@ TEST(_, ScalarMatrixToBlockMatrix) {
   // [2]  x x
   // num_nonzeros = 1 + 3 + 4 + 4 + 1 + 2 = 15
 
-  vector<int> col_blocks;
+  std::vector<int> col_blocks;
   col_blocks.push_back(1);
   col_blocks.push_back(2);
   col_blocks.push_back(3);
   col_blocks.push_back(2);
 
-  vector<int> row_blocks;
+  std::vector<int> row_blocks;
   row_blocks.push_back(1);
   row_blocks.push_back(2);
   row_blocks.push_back(2);
@@ -133,7 +133,7 @@ TEST(_, ScalarMatrixToBlockMatrix) {
   TripletSparseMatrix tsm(5, 8, 18);
   int* rows = tsm.mutable_rows();
   int* cols = tsm.mutable_cols();
-  fill(tsm.mutable_values(), tsm.mutable_values() + 18, 1.0);
+  std::fill(tsm.mutable_values(), tsm.mutable_values() + 18, 1.0);
   int offset = 0;
 
 #define CERES_TEST_FILL_BLOCK(row_block_id, col_block_id) \
@@ -154,7 +154,7 @@ TEST(_, ScalarMatrixToBlockMatrix) {
   SuiteSparse ss;
   scoped_ptr<cholmod_sparse> ccsm(ss.CreateSparseMatrix(&tsm));
 
-  vector<int> expected_block_rows;
+  std::vector<int> expected_block_rows;
   expected_block_rows.push_back(0);
   expected_block_rows.push_back(2);
   expected_block_rows.push_back(1);
@@ -162,15 +162,15 @@ TEST(_, ScalarMatrixToBlockMatrix) {
   expected_block_rows.push_back(0);
   expected_block_rows.push_back(1);
 
-  vector<int> expected_block_cols;
+  std::vector<int> expected_block_cols;
   expected_block_cols.push_back(0);
   expected_block_cols.push_back(2);
   expected_block_cols.push_back(4);
   expected_block_cols.push_back(5);
   expected_block_cols.push_back(6);
 
-  vector<int> block_rows;
-  vector<int> block_cols;
+  std::vector<int> block_rows;
+  std::vector<int> block_cols;
   CompressedColumnScalarMatrixToBlockMatrix(
       reinterpret_cast<const int*>(ccsm->i),
       reinterpret_cast<const int*>(ccsm->p),
@@ -225,9 +225,9 @@ class SolveUpperTriangularTest : public ::testing::Test {
     cols[4] = 7;
   }
 
-  vector<int> cols;
-  vector<int> rows;
-  vector<double> values;
+  std::vector<int> cols;
+  std::vector<int> rows;
+  std::vector<double> values;
 };
 
 TEST_F(SolveUpperTriangularTest, SolveInPlace) {

@@ -97,7 +97,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(
   values_.resize(m.max_num_nonzeros(), 0.0);
 
   // index is the list of indices into the TripletSparseMatrix m.
-  vector<int> index(m.num_nonzeros(), 0);
+  std::vector<int> index(m.num_nonzeros(), 0);
   for (int i = 0; i < m.num_nonzeros(); ++i) {
     index[i] = i;
   }
@@ -155,7 +155,7 @@ CompressedRowSparseMatrix::~CompressedRowSparseMatrix() {
 }
 
 void CompressedRowSparseMatrix::SetZero() {
-  fill(values_.begin(), values_.end(), 0);
+  std::fill(values_.begin(), values_.end(), 0);
 }
 
 void CompressedRowSparseMatrix::RightMultiply(const double* x,
@@ -184,7 +184,7 @@ void CompressedRowSparseMatrix::LeftMultiply(const double* x, double* y) const {
 void CompressedRowSparseMatrix::SquaredColumnNorm(double* x) const {
   CHECK_NOTNULL(x);
 
-  fill(x, x + num_cols_, 0.0);
+  std::fill(x, x + num_cols_, 0.0);
   for (int idx = 0; idx < rows_[num_rows_]; ++idx) {
     x[cols_[idx]] += values_[idx] * values_[idx];
   }
@@ -244,20 +244,24 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   }
 
   // Copy the contents of m into this matrix.
-  copy(m.cols(), m.cols() + m.num_nonzeros(), &cols_[num_nonzeros()]);
-  copy(m.values(), m.values() + m.num_nonzeros(), &values_[num_nonzeros()]);
+  std::copy(m.cols(), m.cols() + m.num_nonzeros(), &cols_[num_nonzeros()]);
+  std::copy(m.values(),
+            m.values() + m.num_nonzeros(),
+            &values_[num_nonzeros()]);
   rows_.resize(num_rows_ + m.num_rows() + 1);
   // new_rows = [rows_, m.row() + rows_[num_rows_]]
-  fill(rows_.begin() + num_rows_,
-       rows_.begin() + num_rows_ + m.num_rows() + 1,
-       rows_[num_rows_]);
+  std::fill(rows_.begin() + num_rows_,
+            rows_.begin() + num_rows_ + m.num_rows() + 1,
+            rows_[num_rows_]);
 
   for (int r = 0; r < m.num_rows() + 1; ++r) {
     rows_[num_rows_ + r] += m.rows()[r];
   }
 
   num_rows_ += m.num_rows();
-  row_blocks_.insert(row_blocks_.end(), m.row_blocks().begin(), m.row_blocks().end());
+  row_blocks_.insert(row_blocks_.end(),
+                     m.row_blocks().begin(),
+                     m.row_blocks().end());
 }
 
 void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
@@ -315,7 +319,7 @@ void CompressedRowSparseMatrix::SolveLowerTriangularTransposeInPlace(
 
 CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
     const double* diagonal,
-    const vector<int>& blocks) {
+    const std::vector<int>& blocks) {
   int num_rows = 0;
   int num_nonzeros = 0;
   for (int i = 0; i < blocks.size(); ++i) {
@@ -329,7 +333,7 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
   int* rows = matrix->mutable_rows();
   int* cols = matrix->mutable_cols();
   double* values = matrix->mutable_values();
-  fill(values, values + num_nonzeros, 0.0);
+  std::fill(values, values + num_nonzeros, 0.0);
 
   int idx_cursor = 0;
   int col_cursor = 0;
@@ -416,8 +420,8 @@ struct ProductTerm {
 CompressedRowSparseMatrix*
 CompressAndFillProgram(const int num_rows,
                        const int num_cols,
-                       const vector<ProductTerm>& product,
-                       vector<int>* program) {
+                       const std::vector<ProductTerm>& product,
+                       std::vector<int>* program) {
   CHECK_GT(product.size(), 0);
 
   // Count the number of unique product term, which in turn is the
@@ -479,13 +483,14 @@ CompressAndFillProgram(const int num_rows,
 CompressedRowSparseMatrix*
 CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
       const CompressedRowSparseMatrix& m,
-      vector<int>* program) {
+      std::vector<int>* program) {
   CHECK_NOTNULL(program)->clear();
-  CHECK_GT(m.num_nonzeros(), 0) << "Congratulations, "
-                                << "you found a bug in Ceres. Please report it.";
+  CHECK_GT(m.num_nonzeros(), 0)
+                << "Congratulations, "
+                << "you found a bug in Ceres. Please report it.";
 
-  vector<ProductTerm> product;
-  const vector<int>& row_blocks = m.row_blocks();
+  std::vector<ProductTerm> product;
+  const std::vector<int>& row_blocks = m.row_blocks();
   int row_block_begin = 0;
   // Iterate over row blocks
   for (int row_block = 0; row_block < row_blocks.size(); ++row_block) {
@@ -495,7 +500,9 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
     // Compute the lower triangular part of the product.
     for (int idx1 = m.rows()[r]; idx1 < m.rows()[r + 1]; ++idx1) {
       for (int idx2 = m.rows()[r]; idx2 <= idx1; ++idx2) {
-        product.push_back(ProductTerm(m.cols()[idx1], m.cols()[idx2], product.size()));
+        product.push_back(ProductTerm(m.cols()[idx1],
+                                      m.cols()[idx2],
+                                      product.size()));
       }
     }
     row_block_begin = row_block_end;
@@ -507,11 +514,11 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
 
 void CompressedRowSparseMatrix::ComputeOuterProduct(
     const CompressedRowSparseMatrix& m,
-    const vector<int>& program,
+    const std::vector<int>& program,
     CompressedRowSparseMatrix* result) {
   result->SetZero();
   double* values = result->mutable_values();
-  const vector<int>& row_blocks = m.row_blocks();
+  const std::vector<int>& row_blocks = m.row_blocks();
 
   int cursor = 0;
   int row_block_begin = 0;

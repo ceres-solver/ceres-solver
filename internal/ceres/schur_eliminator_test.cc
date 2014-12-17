@@ -129,7 +129,7 @@ class SchurEliminatorTest : public ::testing::Test {
                                 const double relative_tolerance) {
     const CompressedRowBlockStructure* bs = A->block_structure();
     const int num_col_blocks = bs->cols.size();
-    vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
+    std::vector<int> blocks(num_col_blocks - num_eliminate_blocks, 0);
     for (int i = num_eliminate_blocks; i < num_col_blocks; ++i) {
       blocks[i - num_eliminate_blocks] = bs->cols[i].size;
     }

@@ -39,31 +39,31 @@ namespace ceres {
 namespace internal {
 
 TEST(BlockRandomAccessSparseMatrix, GetCell) {
-  vector<int> blocks;
+  std::vector<int> blocks;
   blocks.push_back(3);
   blocks.push_back(4);
   blocks.push_back(5);
   const int num_rows = 3 + 4 + 5;
 
-  set< pair<int, int> > block_pairs;
+  std::set< std::pair<int, int> > block_pairs;
   int num_nonzeros = 0;
-  block_pairs.insert(make_pair(0, 0));
+  block_pairs.insert(std::make_pair(0, 0));
   num_nonzeros += blocks[0] * blocks[0];
 
-  block_pairs.insert(make_pair(1, 1));
+  block_pairs.insert(std::make_pair(1, 1));
   num_nonzeros += blocks[1] * blocks[1];
 
-  block_pairs.insert(make_pair(1, 2));
+  block_pairs.insert(std::make_pair(1, 2));
   num_nonzeros += blocks[1] * blocks[2];
 
-  block_pairs.insert(make_pair(0, 2));
+  block_pairs.insert(std::make_pair(0, 2));
   num_nonzeros += blocks[2] * blocks[0];
 
   BlockRandomAccessSparseMatrix m(blocks, block_pairs);
   EXPECT_EQ(m.num_rows(), num_rows);
   EXPECT_EQ(m.num_cols(), num_rows);
 
-  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+  for (std::set<std::pair<int, int> >::const_iterator it = block_pairs.begin();
        it != block_pairs.end();
        ++it) {
     const int row_block_id = it->first;
@@ -135,10 +135,10 @@ TEST(BlockRandomAccessSparseMatrix, GetCell) {
 class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
  public:
   virtual void SetUp() {
-    vector<int> blocks;
+    std::vector<int> blocks;
     blocks.push_back(1);
-    set< pair<int, int> > block_pairs;
-    block_pairs.insert(make_pair(0, 0));
+    std::set< std::pair<int, int> > block_pairs;
+    block_pairs.insert(std::make_pair(0, 0));
     m_.reset(new BlockRandomAccessSparseMatrix(blocks, block_pairs));
   }
 
@@ -169,7 +169,8 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
 };
 
 TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {
-  CheckIntPairToLong(numeric_limits<int>::max(), numeric_limits<int>::max());
+  CheckIntPairToLong(std::numeric_limits<int>::max(),
+                     std::numeric_limits<int>::max());
 }
 
 TEST_F(BlockRandomAccessSparseMatrixTest, LongToIntPair) {

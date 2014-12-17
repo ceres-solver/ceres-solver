@@ -115,10 +115,10 @@ class BlockJacobianWriter {
   //
   // which indicates that dr/dx is located at values_[0], and dr/dz is at
   // values_[12]. See BlockEvaluatePreparer::Prepare()'s comments about 'j'.
-  vector<int*> jacobian_layout_;
+  std::vector<int*> jacobian_layout_;
 
   // The pointers in jacobian_layout_ point directly into this vector.
-  vector<int> jacobian_layout_storage_;
+  std::vector<int> jacobian_layout_storage_;
 };
 
 }  // namespace internal

@@ -101,7 +101,7 @@ TEST(VisibilityTest, SimpleMatrix) {
   }
   bs.cols.resize(num_cols);
 
-  vector< set<int> > visibility;
+  std::vector< std::set<int> > visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
   for (int i = 0; i < visibility.size(); ++i) {
@@ -177,7 +177,7 @@ TEST(VisibilityTest, NoEBlocks) {
   }
   bs.cols.resize(num_cols);
 
-  vector<set<int> > visibility;
+  std::vector<std::set<int> > visibility;
   ComputeVisibility(bs, num_eliminate_blocks, &visibility);
   ASSERT_EQ(visibility.size(), num_cols - num_eliminate_blocks);
   for (int i = 0; i < visibility.size(); ++i) {

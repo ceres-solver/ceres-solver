@@ -37,7 +37,7 @@ namespace ceres {
 namespace internal {
 
 TEST(BlockRandomAccessDenseMatrix, GetCell) {
-  vector<int> blocks;
+  std::vector<int> blocks;
   blocks.push_back(3);
   blocks.push_back(4);
   blocks.push_back(5);
@@ -69,7 +69,7 @@ TEST(BlockRandomAccessDenseMatrix, GetCell) {
 }
 
 TEST(BlockRandomAccessDenseMatrix, WriteCell) {
-  vector<int> blocks;
+  std::vector<int> blocks;
   blocks.push_back(3);
   blocks.push_back(4);
   blocks.push_back(5);

@@ -68,7 +68,8 @@ bool Minimizer::RunCallbacks(const Minimizer::Options& options,
       return true;
     case SOLVER_TERMINATE_SUCCESSFULLY:
       summary->termination_type = USER_SUCCESS;
-      summary->message = "User callback returned SOLVER_TERMINATE_SUCCESSFULLY.";
+      summary->message =
+          "User callback returned SOLVER_TERMINATE_SUCCESSFULLY.";
       VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       return false;
     case SOLVER_ABORT:

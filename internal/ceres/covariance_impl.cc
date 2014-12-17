@@ -58,7 +58,7 @@
 namespace ceres {
 namespace internal {
 
-typedef vector<pair<const double*, const double*> > CovarianceBlocks;
+typedef std::vector<std::pair<const double*, const double*> > CovarianceBlocks;
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
@@ -238,11 +238,12 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
 
   // Determine an ordering for the parameter block, by sorting the
   // parameter blocks by their pointers.
-  vector<double*> all_parameter_blocks;
+  std::vector<double*> all_parameter_blocks;
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
   constant_parameter_blocks_.clear();
-  vector<double*>& active_parameter_blocks = evaluate_options_.parameter_blocks;
+  std::vector<double*>& active_parameter_blocks =
+      evaluate_options_.parameter_blocks;
   active_parameter_blocks.clear();
   for (int i = 0; i < all_parameter_blocks.size(); ++i) {
     double* parameter_block = all_parameter_blocks[i];
@@ -255,7 +256,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     }
   }
 
-  sort(active_parameter_blocks.begin(), active_parameter_blocks.end());
+  std::sort(active_parameter_blocks.begin(), active_parameter_blocks.end());
 
   // Compute the number of rows.  Map each parameter block to the
   // first row corresponding to it in the covariance matrix using the
@@ -276,7 +277,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   int num_nonzeros = 0;
   CovarianceBlocks covariance_blocks;
   for (int i = 0; i <  original_covariance_blocks.size(); ++i) {
-    const pair<const double*, const double*>& block_pair =
+    const std::pair<const double*, const double*>& block_pair =
         original_covariance_blocks[i];
     if (constant_parameter_blocks_.count(block_pair.first) > 0 ||
         constant_parameter_blocks_.count(block_pair.second) > 0) {
@@ -291,8 +292,8 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
 
     // Make sure we are constructing a block upper triangular matrix.
     if (index1 > index2) {
-      covariance_blocks.push_back(make_pair(block_pair.second,
-                                            block_pair.first));
+      covariance_blocks.push_back(std::make_pair(block_pair.second,
+                                                 block_pair.first));
     } else {
       covariance_blocks.push_back(block_pair);
     }
@@ -307,7 +308,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // Sort the block pairs. As a consequence we get the covariance
   // blocks as they will occur in the CompressedRowSparseMatrix that
   // will store the covariance.
-  sort(covariance_blocks.begin(), covariance_blocks.end());
+  std::sort(covariance_blocks.begin(), covariance_blocks.end());
 
   // Fill the sparsity pattern of the covariance matrix.
   covariance_matrix_.reset(
@@ -329,10 +330,9 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   // rows of the covariance matrix in order.
   int i = 0;  // index into covariance_blocks.
   int cursor = 0;  // index into the covariance matrix.
-  for (map<const double*, int>::const_iterator it =
-           parameter_block_to_row_index_.begin();
-       it != parameter_block_to_row_index_.end();
-       ++it) {
+  std::map<const double*, int>::const_iterator it =
+      parameter_block_to_row_index_.begin();
+  for (; it != parameter_block_to_row_index_.end(); ++it) {
     const double* row_block =  it->first;
     const int row_block_size = problem->ParameterBlockLocalSize(row_block);
     int row_begin = it->second;
@@ -342,7 +342,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     int num_col_blocks = 0;
     int num_columns = 0;
     for (int j = i; j < covariance_blocks.size(); ++j, ++num_col_blocks) {
-      const pair<const double*, const double*>& block_pair =
+      const std::pair<const double*, const double*>& block_pair =
           covariance_blocks[j];
       if (block_pair.first != row_block) {
         break;
@@ -411,9 +411,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   const int num_cols = jacobian.num_cols;
   const int num_nonzeros = jacobian.values.size();
 
-  vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
-  vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
-  vector<double> transpose_values(num_nonzeros, 0);
+  std::vector<SuiteSparse_long> transpose_rows(num_cols + 1, 0);
+  std::vector<SuiteSparse_long> transpose_cols(num_nonzeros, 0);
+  std::vector<double> transpose_values(num_nonzeros, 0);
 
   for (int idx = 0; idx < num_nonzeros; ++idx) {
     transpose_rows[jacobian.cols[idx] + 1] += 1;
@@ -495,7 +495,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
     return false;
   }
 
-  vector<int> inverse_permutation(num_cols);
+  std::vector<int> inverse_permutation(num_cols);
   for (SuiteSparse_long i = 0; i < num_cols; ++i) {
     inverse_permutation[permutation[i]] = i;
   }
@@ -594,8 +594,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       sqrt(options_.min_reciprocal_condition_number);
 
   const bool automatic_truncation = (options_.null_space_rank < 0);
-  const int max_rank = min(num_singular_values,
-                           num_singular_values - options_.null_space_rank);
+  const int max_rank = std::min(num_singular_values,
+                                num_singular_values - options_.null_space_rank);
 
   // Compute the squared inverse of the singular values. Truncate the
   // computation based on min_singular_value_ratio and
@@ -672,7 +672,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
       qr_solver(sparse_jacobian);
   event_logger.AddEvent("QRDecomposition");
 
-  if(qr_solver.info() != Eigen::Success) {
+  if (qr_solver.info() != Eigen::Success) {
     LOG(ERROR) << "Eigen::SparseQR decomposition failed.";
     return false;
   }
