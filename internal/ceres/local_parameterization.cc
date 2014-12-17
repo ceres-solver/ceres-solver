@@ -36,6 +36,8 @@
 
 namespace ceres {
 
+using std::vector;
+
 LocalParameterization::~LocalParameterization() {
 }
 

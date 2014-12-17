@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // We pick a (non-quadratic) function whose derivative are easy:
 //
 //    f = exp(- a' x).

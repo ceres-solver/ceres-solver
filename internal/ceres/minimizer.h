@@ -132,7 +132,7 @@ class Minimizer {
     bool jacobi_scaling;
     bool use_nonmonotonic_steps;
     int max_consecutive_nonmonotonic_steps;
-    vector<int> trust_region_minimizer_iterations_to_dump;
+    std::vector<int> trust_region_minimizer_iterations_to_dump;
     DumpFormatType trust_region_problem_dump_format_type;
     string trust_region_problem_dump_directory;
     int max_num_consecutive_invalid_steps;
@@ -163,7 +163,7 @@ class Minimizer {
     // of each iteration.
     //
     // The Options struct does not own these pointers.
-    vector<IterationCallback*> callbacks;
+    std::vector<IterationCallback*> callbacks;
 
     // Object responsible for evaluating the cost, residuals and
     // Jacobian matrix.

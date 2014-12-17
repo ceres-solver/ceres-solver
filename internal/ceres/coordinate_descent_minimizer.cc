@@ -48,10 +48,13 @@
 #include "ceres/solver.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
-#include "ceres/parameter_block_ordering.h"
 
 namespace ceres {
 namespace internal {
+
+using std::map;
+using std::set;
+using std::vector;
 
 CoordinateDescentMinimizer::~CoordinateDescentMinimizer() {
 }
@@ -103,8 +106,7 @@ bool CoordinateDescentMinimizer::Init(
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
-      const map<ParameterBlock*, int>::const_iterator it =
-          parameter_block_index.find(parameter_block);
+      const map<ParameterBlock*, int>::const_iterator it = parameter_block_index.find(parameter_block);
       if (it != parameter_block_index.end()) {
         residual_blocks_[it->second].push_back(residual_block);
       }
@@ -244,7 +246,7 @@ bool CoordinateDescentMinimizer::IsOrderingValid(
 
   // Verify that each group is an independent set
   map<int, set<double*> >::const_iterator it = group_to_elements.begin();
-  for ( ; it != group_to_elements.end(); ++it) {
+  for (; it != group_to_elements.end(); ++it) {
     if (!program.IsParameterBlockSetIndependent(it->second)) {
       *message =
           StringPrintf("The user-provided "

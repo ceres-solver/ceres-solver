@@ -58,6 +58,12 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::map;
+using std::pair;
+using std::swap;
+using std::vector;
+
 typedef vector<pair<const double*, const double*> > CovarianceBlocks;
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
@@ -122,7 +128,7 @@ bool CovarianceImpl::GetCovarianceBlock(const double* original_parameter_block1,
   const double* parameter_block2 = original_parameter_block2;
   const bool transpose = parameter_block1 > parameter_block2;
   if (transpose) {
-    std::swap(parameter_block1, parameter_block2);
+    swap(parameter_block1, parameter_block2);
   }
 
   // Find where in the covariance matrix the block is located.
@@ -242,7 +248,8 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
   constant_parameter_blocks_.clear();
-  vector<double*>& active_parameter_blocks = evaluate_options_.parameter_blocks;
+  vector<double*>& active_parameter_blocks =
+      evaluate_options_.parameter_blocks;
   active_parameter_blocks.clear();
   for (int i = 0; i < all_parameter_blocks.size(); ++i) {
     double* parameter_block = all_parameter_blocks[i];
@@ -255,7 +262,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     }
   }
 
-  sort(active_parameter_blocks.begin(), active_parameter_blocks.end());
+  std::sort(active_parameter_blocks.begin(), active_parameter_blocks.end());
 
   // Compute the number of rows.  Map each parameter block to the
   // first row corresponding to it in the covariance matrix using the
@@ -594,8 +601,8 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       sqrt(options_.min_reciprocal_condition_number);
 
   const bool automatic_truncation = (options_.null_space_rank < 0);
-  const int max_rank = min(num_singular_values,
-                           num_singular_values - options_.null_space_rank);
+  const int max_rank = std::min(num_singular_values,
+                                num_singular_values - options_.null_space_rank);
 
   // Compute the squared inverse of the singular values. Truncate the
   // computation based on min_singular_value_ratio and
@@ -672,7 +679,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
       qr_solver(sparse_jacobian);
   event_logger.AddEvent("QRDecomposition");
 
-  if(qr_solver.info() != Eigen::Success) {
+  if (qr_solver.info() != Eigen::Success) {
     LOG(ERROR) << "Eigen::SparseQR decomposition failed.";
     return false;
   }

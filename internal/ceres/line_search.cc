@@ -44,6 +44,11 @@
 
 namespace ceres {
 namespace internal {
+
+using std::map;
+using std::ostream;
+using std::vector;
+
 namespace {
 // Precision used for floating point values in error message output.
 const int kErrorMessageNumericPrecision = 8;
@@ -54,7 +59,7 @@ FunctionSample ValueSample(const double x, const double value) {
   sample.value = value;
   sample.value_is_valid = true;
   return sample;
-};
+}
 
 FunctionSample ValueAndGradientSample(const double x,
                                       const double value,
@@ -66,15 +71,15 @@ FunctionSample ValueAndGradientSample(const double x,
   sample.value_is_valid = true;
   sample.gradient_is_valid = true;
   return sample;
-};
+}
 
 }  // namespace
 
 
-std::ostream& operator<<(std::ostream &os, const FunctionSample& sample);
+ostream& operator<<(ostream &os, const FunctionSample& sample);
 
 // Convenience stream operator for pushing FunctionSamples into log messages.
-std::ostream& operator<<(std::ostream &os, const FunctionSample& sample) {
+ostream& operator<<(ostream &os, const FunctionSample& sample) {
   os << sample.ToDebugString();
   return os;
 }
@@ -208,7 +213,7 @@ double LineSearch::InterpolatingPolynomialMinimizingStepSize(
        max_step_size <= current.x)) {
     // Either: sample is invalid; or we are using BISECTION and contracting
     // the step size.
-    return min(max(current.x * 0.5, min_step_size), max_step_size);
+    return std::min(std::max(current.x * 0.5, min_step_size), max_step_size);
   } else if (interpolation_type == BISECTION) {
     CHECK_GT(max_step_size, current.x);
     // We are expanding the search (during a Wolfe bracketing phase) using

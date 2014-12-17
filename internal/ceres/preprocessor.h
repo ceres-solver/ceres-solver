@@ -31,6 +31,9 @@
 #ifndef CERES_INTERNAL_PREPROCESSOR_H_
 #define CERES_INTERNAL_PREPROCESSOR_H_
 
+#include <string>
+#include <vector>
+
 #include "ceres/coordinate_descent_minimizer.h"
 #include "ceres/evaluator.h"
 #include "ceres/internal/eigen.h"
@@ -65,7 +68,7 @@ struct PreprocessedProblem;
 // The output of the Preprocessor is stored in a PreprocessedProblem
 // object.
 class Preprocessor {
-public:
+ public:
   // Factory.
   static Preprocessor* Create(MinimizerType minimizer_type);
   virtual ~Preprocessor();
@@ -97,7 +100,7 @@ struct PreprocessedProblem {
   shared_ptr<Evaluator> evaluator;
   shared_ptr<CoordinateDescentMinimizer> inner_iteration_minimizer;
 
-  vector<double*> removed_parameter_blocks;
+  std::vector<double*> removed_parameter_blocks;
   Vector reduced_parameters;
   double fixed_cost;
 };

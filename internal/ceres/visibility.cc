@@ -49,6 +49,12 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::max;
+using std::pair;
+using std::set;
+using std::vector;
+
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        const int num_eliminate_blocks,
                        vector< set<int> >* visibility) {

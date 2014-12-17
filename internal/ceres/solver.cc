@@ -49,6 +49,9 @@
 namespace ceres {
 namespace {
 
+using std::vector;
+using std::map;
+
 #define OPTION_OP(x, y, OP)                                             \
   if (!(options.x OP y)) {                                              \
     std::stringstream ss;                                               \
@@ -625,7 +628,7 @@ string Solver::Summary::BriefReport() const {
                       initial_cost,
                       final_cost,
                       TerminationTypeToString(termination_type));
-};
+}
 
 string Solver::Summary::FullReport() const {
   using internal::VersionString;
@@ -844,7 +847,7 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "Termination:        %25s (%s)\n",
                 TerminationTypeToString(termination_type), message.c_str());
   return report;
-};
+}
 
 bool Solver::Summary::IsSolutionUsable() const {
   return internal::IsSolutionUsable(*this);

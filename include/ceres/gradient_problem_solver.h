@@ -261,7 +261,7 @@ class CERES_EXPORT GradientProblemSolver {
     // executed, then set update_state_every_iteration to true.
     //
     // The solver does NOT take ownership of these pointers.
-    vector<IterationCallback*> callbacks;
+    std::vector<IterationCallback*> callbacks;
   };
 
   struct CERES_EXPORT Summary {
@@ -292,7 +292,7 @@ class CERES_EXPORT GradientProblemSolver {
     double final_cost;
 
     // IterationSummary for each minimizer iteration in order.
-    vector<IterationSummary> iterations;
+    std::vector<IterationSummary> iterations;
 
     // Sum total of all time spent inside Ceres when Solve is called.
     double total_time_in_seconds;

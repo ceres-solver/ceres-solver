@@ -297,11 +297,11 @@ class ProgramEvaluator : public Evaluator {
     return program_->NumResiduals();
   }
 
-  virtual map<string, int> CallStatistics() const {
+  virtual std::map<string, int> CallStatistics() const {
     return execution_summary_.calls();
   }
 
-  virtual map<string, double> TimeStatistics() const {
+  virtual std::map<string, double> TimeStatistics() const {
     return execution_summary_.times();
   }
 
@@ -332,8 +332,9 @@ class ProgramEvaluator : public Evaluator {
   };
 
   static void BuildResidualLayout(const Program& program,
-                                  vector<int>* residual_layout) {
-    const vector<ResidualBlock*>& residual_blocks = program.residual_blocks();
+                                  std::vector<int>* residual_layout) {
+    const std::vector<ResidualBlock*>& residual_blocks =
+        program.residual_blocks();
     residual_layout->resize(program.NumResidualBlocks());
     int residual_pos = 0;
     for (int i = 0; i < residual_blocks.size(); ++i) {
@@ -369,7 +370,7 @@ class ProgramEvaluator : public Evaluator {
   JacobianWriter jacobian_writer_;
   scoped_array<EvaluatePreparer> evaluate_preparers_;
   scoped_array<EvaluateScratch> evaluate_scratch_;
-  vector<int> residual_layout_;
+  std::vector<int> residual_layout_;
   ::ceres::internal::ExecutionSummary execution_summary_;
 };
 

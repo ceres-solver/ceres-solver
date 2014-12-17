@@ -43,6 +43,10 @@
 namespace ceres {
 namespace internal {
 
+using std::map;
+using std::set;
+using std::vector;
+
 int ComputeStableSchurOrdering(const Program& program,
                          vector<ParameterBlock*>* ordering) {
   CHECK_NOTNULL(ordering)->clear();
