@@ -173,7 +173,7 @@ class CERES_EXPORT IdentityParameterization : public LocalParameterization {
 class CERES_EXPORT SubsetParameterization : public LocalParameterization {
  public:
   explicit SubsetParameterization(int size,
-                                  const vector<int>& constant_parameters);
+                                  const std::vector<int>& constant_parameters);
   virtual ~SubsetParameterization() {}
   virtual bool Plus(const double* x,
                     const double* delta,
@@ -191,7 +191,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
 
  private:
   const int local_size_;
-  vector<int> constancy_mask_;
+  std::vector<int> constancy_mask_;
 };
 
 // Plus(x, delta) = [cos(|delta|), sin(|delta|) delta / |delta|] * x

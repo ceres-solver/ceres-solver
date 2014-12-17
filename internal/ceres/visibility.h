@@ -59,7 +59,7 @@ struct CompressedRowBlockStructure;
 // points and f_blocks correspond to cameras.
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        int num_eliminate_blocks,
-                       vector<set<int> >* visibility);
+                       std::vector<std::set<int> >* visibility);
 
 // Given f_block visibility as computed by the ComputeVisibility
 // function above, construct and return a graph whose vertices are
@@ -75,7 +75,7 @@ void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
 // Caller acquires ownership of the returned WeightedGraph pointer
 // (heap-allocated).
 WeightedGraph<int>* CreateSchurComplementGraph(
-    const vector<set<int> >& visibility);
+    const std::vector<std::set<int> >& visibility);
 
 }  // namespace internal
 }  // namespace ceres

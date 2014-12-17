@@ -87,7 +87,7 @@ TEST(CostFunctionTest, ConditionedCostFunction) {
   identity.setIdentity();
   NormalPrior* difference_cost_function = new NormalPrior(identity, v2_vector);
 
-  vector<CostFunction*> conditioners;
+  std::vector<CostFunction*> conditioners;
   for (int i = 0; i < kTestCostFunctionSize; i++) {
     conditioners.push_back(new LinearCostFunction(i + 2, i * 7));
   }

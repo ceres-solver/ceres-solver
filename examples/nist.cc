@@ -124,10 +124,17 @@ using Eigen::RowMajor;
 typedef Eigen::Matrix<double, Dynamic, 1> Vector;
 typedef Eigen::Matrix<double, Dynamic, Dynamic, RowMajor> Matrix;
 
+using std::ifstream;
+using std::vector;
+using std::string;
+using std::atoi;
+using std::atof;
+using std::cout;
+
 void SplitStringUsingChar(const string& full,
                           const char delim,
                           vector<string>* result) {
-  back_insert_iterator< vector<string> > it(*result);
+  std::back_insert_iterator< vector<string> > it(*result);
 
   const char* p = full.data();
   const char* end = p + full.size();
@@ -144,15 +151,15 @@ void SplitStringUsingChar(const string& full,
   }
 }
 
-bool GetAndSplitLine(std::ifstream& ifs, std::vector<std::string>* pieces) {
+bool GetAndSplitLine(ifstream& ifs, vector<string>* pieces) {
   pieces->clear();
   char buf[256];
   ifs.getline(buf, 256);
-  SplitStringUsingChar(std::string(buf), ' ', pieces);
+  SplitStringUsingChar(string(buf), ' ', pieces);
   return true;
 }
 
-void SkipLines(std::ifstream& ifs, int num_lines) {
+void SkipLines(ifstream& ifs, int num_lines) {
   char buf[256];
   for (int i = 0; i < num_lines; ++i) {
     ifs.getline(buf, 256);
@@ -161,23 +168,23 @@ void SkipLines(std::ifstream& ifs, int num_lines) {
 
 class NISTProblem {
  public:
-  explicit NISTProblem(const std::string& filename) {
-    std::ifstream ifs(filename.c_str(), std::ifstream::in);
+  explicit NISTProblem(const string& filename) {
+    ifstream ifs(filename.c_str(), ifstream::in);
 
-    std::vector<std::string> pieces;
+    vector<string> pieces;
     SkipLines(ifs, 24);
     GetAndSplitLine(ifs, &pieces);
-    const int kNumResponses = std::atoi(pieces[1].c_str());
+    const int kNumResponses = atoi(pieces[1].c_str());
 
     GetAndSplitLine(ifs, &pieces);
-    const int kNumPredictors = std::atoi(pieces[0].c_str());
+    const int kNumPredictors = atoi(pieces[0].c_str());
 
     GetAndSplitLine(ifs, &pieces);
-    const int kNumObservations = std::atoi(pieces[0].c_str());
+    const int kNumObservations = atoi(pieces[0].c_str());
 
     SkipLines(ifs, 4);
     GetAndSplitLine(ifs, &pieces);
-    const int kNumParameters = std::atoi(pieces[0].c_str());
+    const int kNumParameters = atoi(pieces[0].c_str());
     SkipLines(ifs, 8);
 
     // Get the first line of initial and final parameter values to
@@ -193,24 +200,24 @@ class NISTProblem {
     // Parse the line for parameter b1.
     int parameter_id = 0;
     for (int i = 0; i < kNumTries; ++i) {
-      initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
+      initial_parameters_(i, parameter_id) = atof(pieces[i + 2].c_str());
     }
-    final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
+    final_parameters_(0, parameter_id) = atof(pieces[2 + kNumTries].c_str());
 
     // Parse the remaining parameter lines.
     for (int parameter_id = 1; parameter_id < kNumParameters; ++parameter_id) {
      GetAndSplitLine(ifs, &pieces);
      // b2, b3, ....
      for (int i = 0; i < kNumTries; ++i) {
-       initial_parameters_(i, parameter_id) = std::atof(pieces[i + 2].c_str());
+       initial_parameters_(i, parameter_id) = atof(pieces[i + 2].c_str());
      }
-     final_parameters_(0, parameter_id) = std::atof(pieces[2 + kNumTries].c_str());
+     final_parameters_(0, parameter_id) = atof(pieces[2 + kNumTries].c_str());
     }
 
     // Certfied cost
     SkipLines(ifs, 1);
     GetAndSplitLine(ifs, &pieces);
-    certified_cost_ = std::atof(pieces[4].c_str()) / 2.0;
+    certified_cost_ = atof(pieces[4].c_str()) / 2.0;
 
     // Read the observations.
     SkipLines(ifs, 18 - kNumParameters);
@@ -218,12 +225,12 @@ class NISTProblem {
       GetAndSplitLine(ifs, &pieces);
       // Response.
       for (int j = 0; j < kNumResponses; ++j) {
-        response_(i, j) =  std::atof(pieces[j].c_str());
+        response_(i, j) =  atof(pieces[j].c_str());
       }
 
       // Predictor variables.
       for (int j = 0; j < kNumPredictors; ++j) {
-        predictor_(i, j) =  std::atof(pieces[j + kNumResponses].c_str());
+        predictor_(i, j) =  atof(pieces[j + kNumResponses].c_str());
       }
     }
   }
@@ -404,7 +411,7 @@ struct Nelson {
 };
 
 template <typename Model, int num_residuals, int num_parameters>
-int RegressionDriver(const std::string& filename,
+int RegressionDriver(const string& filename,
                      const ceres::Solver::Options& options) {
   NISTProblem nist_problem(FLAGS_nist_data_dir + filename);
   CHECK_EQ(num_residuals, nist_problem.response_size());
@@ -518,7 +525,7 @@ void SolveNISTProblems() {
   ceres::Solver::Options options;
   SetMinimizerOptions(&options);
 
-  std::cout << "Lower Difficulty\n";
+  cout << "Lower Difficulty\n";
   int easy_success = 0;
   easy_success += RegressionDriver<Misra1a,  1, 2>("Misra1a.dat",  options);
   easy_success += RegressionDriver<Chwirut,  1, 3>("Chwirut1.dat", options);
@@ -529,7 +536,7 @@ void SolveNISTProblems() {
   easy_success += RegressionDriver<DanWood,  1, 2>("DanWood.dat",  options);
   easy_success += RegressionDriver<Misra1b,  1, 2>("Misra1b.dat",  options);
 
-  std::cout << "\nMedium Difficulty\n";
+  cout << "\nMedium Difficulty\n";
   int medium_success = 0;
   medium_success += RegressionDriver<Kirby2,   1, 5>("Kirby2.dat",   options);
   medium_success += RegressionDriver<Hahn1,    1, 7>("Hahn1.dat",    options);
@@ -543,7 +550,7 @@ void SolveNISTProblems() {
   medium_success += RegressionDriver<Roszman1, 1, 4>("Roszman1.dat", options);
   medium_success += RegressionDriver<ENSO,     1, 9>("ENSO.dat",     options);
 
-  std::cout << "\nHigher Difficulty\n";
+  cout << "\nHigher Difficulty\n";
   int hard_success = 0;
   hard_success += RegressionDriver<MGH09,    1, 4>("MGH09.dat",    options);
   hard_success += RegressionDriver<Thurber,  1, 7>("Thurber.dat",  options);
@@ -555,11 +562,11 @@ void SolveNISTProblems() {
   hard_success += RegressionDriver<Rat43,    1, 4>("Rat43.dat",    options);
   hard_success += RegressionDriver<Bennet5,  1, 3>("Bennett5.dat", options);
 
-  std::cout << "\n";
-  std::cout << "Easy    : " << easy_success << "/16\n";
-  std::cout << "Medium  : " << medium_success << "/22\n";
-  std::cout << "Hard    : " << hard_success << "/16\n";
-  std::cout << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
+  cout << "\n";
+  cout << "Easy    : " << easy_success << "/16\n";
+  cout << "Medium  : " << medium_success << "/22\n";
+  cout << "Hard    : " << hard_success << "/16\n";
+  cout << "Total   : " << easy_success + medium_success + hard_success << "/54\n";
 }
 
 }  // namespace examples

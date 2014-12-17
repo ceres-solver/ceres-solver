@@ -48,4 +48,4 @@ struct DynamicCompressedRowJacobianFinalizer {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_INTERNAL_DYNAMIC_COMPRESED_ROW_FINALISER_H_
+#endif  // CERES_INTERNAL_DYNAMIC_COMPRESED_ROW_FINALISER_H_

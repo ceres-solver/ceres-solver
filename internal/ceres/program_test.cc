@@ -42,6 +42,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // A cost function that simply returns its argument.
 class UnaryIdentityCostFunction : public SizedCostFunction<1, 1> {
  public:
@@ -222,7 +224,8 @@ TEST(Program, RemoveFixedBlocksFixedCost) {
   problem.AddResidualBlock(new BinaryCostFunction(), NULL, &x, &y);
   problem.SetParameterBlockConstant(&x);
 
-  ResidualBlock *expected_removed_block = problem.program().residual_blocks()[0];
+  ResidualBlock *expected_removed_block =
+      problem.program().residual_blocks()[0];
   scoped_array<double> scratch(
       new double[expected_removed_block->NumScratchDoublesForEvaluate()]);
   double expected_fixed_cost;
@@ -307,7 +310,7 @@ TEST(Program, CreateJacobianBlockSparsityTranspose) {
 
     rows[13] = 1;
     cols[13] = 7;
-    fill(values, values + 14, 1.0);
+    std::fill(values, values + 14, 1.0);
     expected_block_sparse_jacobian.set_num_nonzeros(14);
   }
 
@@ -374,7 +377,7 @@ TEST(Program, ReallocationInCreateJacobianBlockSparsityTranspose) {
     }
 
     double* values = expected_block_sparse_jacobian.mutable_values();
-    fill(values, values + 20, 1.0);
+    std::fill(values, values + 20, 1.0);
     expected_block_sparse_jacobian.set_num_nonzeros(20);
   }
 

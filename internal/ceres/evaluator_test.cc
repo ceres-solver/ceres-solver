@@ -51,6 +51,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // TODO(keir): Consider pushing this into a common test utils file.
 template<int kFactor, int kNumResiduals,
          int N0 = 0, int N1 = 0, int N2 = 0, bool kSucceeds = true>

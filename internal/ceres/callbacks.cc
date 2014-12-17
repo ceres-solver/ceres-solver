@@ -78,27 +78,27 @@ CallbackReturnType LoggingCallback::operator()(
                           summary.cumulative_time_in_seconds);
   } else if (minimizer_type == TRUST_REGION) {
     if (summary.iteration == 0) {
-      output = "iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n";
+      output = "iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time\n";  // NOLINT
     }
     const char* kReportRowFormat =
-        "% 4d % 8e   % 3.2e   % 3.2e  % 3.2e  % 3.2e % 3.2e     % 4d   % 3.2e   % 3.2e";
+        "% 4d % 8e   % 3.2e   % 3.2e  % 3.2e  % 3.2e % 3.2e     % 4d   % 3.2e   % 3.2e";  // NOLINT
     output += StringPrintf(kReportRowFormat,
-                          summary.iteration,
-                          summary.cost,
-                          summary.cost_change,
-                          summary.gradient_max_norm,
-                          summary.step_norm,
-                          summary.relative_decrease,
-                          summary.trust_region_radius,
-                          summary.linear_solver_iterations,
-                          summary.iteration_time_in_seconds,
-                          summary.cumulative_time_in_seconds);
+                           summary.iteration,
+                           summary.cost,
+                           summary.cost_change,
+                           summary.gradient_max_norm,
+                           summary.step_norm,
+                           summary.relative_decrease,
+                           summary.trust_region_radius,
+                           summary.linear_solver_iterations,
+                           summary.iteration_time_in_seconds,
+                           summary.cumulative_time_in_seconds);
   } else {
     LOG(FATAL) << "Unknown minimizer type.";
   }
 
   if (log_to_stdout_) {
-    cout << output << endl;
+    std::cout << output << std::endl;
   } else {
     VLOG(1) << output;
   }

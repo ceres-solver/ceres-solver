@@ -38,6 +38,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 const double kTolerance = 1e-6;
 
 // Takes 2 parameter blocks:

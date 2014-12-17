@@ -72,7 +72,7 @@ TEST(AutoDiffLocalParameterizationTest, IdentityParameterization) {
 }
 
 struct ScaledPlus {
-  ScaledPlus(const double &scale_factor)
+  explicit ScaledPlus(const double &scale_factor)
      : scale_factor_(scale_factor)
   {}
 

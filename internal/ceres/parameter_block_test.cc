@@ -41,7 +41,7 @@ TEST(ParameterBlock, SetLocalParameterization) {
   ParameterBlock parameter_block(x, 3, -1);
 
   // The indices to set constant within the parameter block (used later).
-  vector<int> indices;
+  std::vector<int> indices;
   indices.push_back(1);
 
   // Can't set the parameterization if the sizes don't match.

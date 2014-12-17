@@ -56,6 +56,11 @@
 
 namespace ceres {
 namespace internal {
+
+using std::map;
+using std::set;
+using std::vector;
+
 namespace {
 
 // Find the minimum index of any parameter block to the given
@@ -87,7 +92,7 @@ Eigen::SparseMatrix<int> CreateBlockJacobian(
   const int* rows = block_jacobian_transpose.rows();
   const int* cols = block_jacobian_transpose.cols();
   int num_nonzeros = block_jacobian_transpose.num_nonzeros();
-  std::vector<Triplet> triplets;
+  vector<Triplet> triplets;
   triplets.reserve(num_nonzeros);
   for (int i = 0; i < num_nonzeros; ++i) {
     triplets.push_back(Triplet(cols[i], rows[i], 1));
@@ -220,13 +225,11 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
   const map<int, set<double*> >& groups =
       ordering.group_to_elements();
 
-  for (map<int, set<double*> >::const_iterator group_it = groups.begin();
-       group_it != groups.end();
-       ++group_it) {
+  map<int, set<double*> >::const_iterator group_it = groups.begin();
+  for ( ; group_it != groups.end(); ++group_it) {
     const set<double*>& group = group_it->second;
-    for (set<double*>::const_iterator parameter_block_ptr_it = group.begin();
-         parameter_block_ptr_it != group.end();
-         ++parameter_block_ptr_it) {
+    set<double*>::const_iterator parameter_block_ptr_it = group.begin();
+    for ( ; parameter_block_ptr_it != group.end(); ++parameter_block_ptr_it) {
       ProblemImpl::ParameterMap::const_iterator parameter_block_it =
           parameter_map.find(*parameter_block_ptr_it);
       if (parameter_block_it == parameter_map.end()) {
@@ -252,8 +255,10 @@ bool LexicographicallyOrderResidualBlocks(
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
-  vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
-  vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
+  vector<int> residual_blocks_per_e_block(
+      size_of_first_elimination_group + 1);
+  vector<ResidualBlock*>* residual_blocks =
+      program->mutable_residual_blocks();
   vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
@@ -409,7 +414,8 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
   amd_ordering(block_schur_complement, perm);
 
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
   vector<ParameterBlock*> ordering(num_cols);
 
   // The ordering of the first size_of_first_elimination_group does

@@ -104,7 +104,7 @@ class DynamicNumericDiffCostFunction : public CostFunction {
         << "You must call DynamicNumericDiffCostFunction::SetNumResiduals() "
         << "before DynamicNumericDiffCostFunction::Evaluate().";
 
-    const vector<int32>& block_sizes = parameter_block_sizes();
+    const std::vector<int32>& block_sizes = parameter_block_sizes();
     CHECK(!block_sizes.empty())
         << "You must call DynamicNumericDiffCostFunction::AddParameterBlock() "
         << "before DynamicNumericDiffCostFunction::Evaluate().";
@@ -116,8 +116,8 @@ class DynamicNumericDiffCostFunction : public CostFunction {
 
     // Create local space for a copy of the parameters which will get mutated.
     int parameters_size = accumulate(block_sizes.begin(), block_sizes.end(), 0);
-    vector<double> parameters_copy(parameters_size);
-    vector<double*> parameters_references_copy(block_sizes.size());
+    std::vector<double> parameters_copy(parameters_size);
+    std::vector<double*> parameters_references_copy(block_sizes.size());
     parameters_references_copy[0] = &parameters_copy[0];
     for (int block = 1; block < block_sizes.size(); ++block) {
       parameters_references_copy[block] = parameters_references_copy[block - 1]

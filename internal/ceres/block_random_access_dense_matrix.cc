@@ -39,7 +39,7 @@ namespace ceres {
 namespace internal {
 
 BlockRandomAccessDenseMatrix::BlockRandomAccessDenseMatrix(
-    const vector<int>& blocks) {
+    const std::vector<int>& blocks) {
   const int num_blocks = blocks.size();
   block_layout_.resize(num_blocks, 0);
   num_rows_ = 0;
