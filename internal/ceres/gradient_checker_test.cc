@@ -101,7 +101,7 @@ class GoodTestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double> > a_;  // our vectors.
+  std::vector<std::vector<double> > a_;  // our vectors.
 };
 
 class BadTestTerm : public CostFunction {
@@ -154,7 +154,7 @@ class BadTestTerm : public CostFunction {
 
  private:
   int arity_;
-  vector<vector<double> > a_;  // our vectors.
+  std::vector<std::vector<double> > a_;  // our vectors.
 };
 
 TEST(GradientChecker, SmokeTest) {

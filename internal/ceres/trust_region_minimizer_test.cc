@@ -252,7 +252,7 @@ void IsTrustRegionSolveSuccessful(TrustRegionStrategyType strategy_type) {
   EXPECT_NEAR(0.0, parameters[1], 0.001);
   EXPECT_NEAR(0.0, parameters[2], 0.001);
   EXPECT_NEAR(0.0, parameters[3], 0.001);
-};
+}
 
 TEST(TrustRegionMinimizer, PowellsSingularFunctionUsingLevenbergMarquardt) {
   // This case is excluded because this has a local minimum and does

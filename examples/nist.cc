@@ -126,8 +126,8 @@ typedef Eigen::Matrix<double, Dynamic, Dynamic, RowMajor> Matrix;
 
 void SplitStringUsingChar(const string& full,
                           const char delim,
-                          vector<string>* result) {
-  back_insert_iterator< vector<string> > it(*result);
+                          std::vector<string>* result) {
+  std::back_insert_iterator< std::vector<string> > it(*result);
 
   const char* p = full.data();
   const char* end = p + full.size();

@@ -45,8 +45,8 @@ namespace ceres {
 namespace internal {
 
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
-    const vector<int>& blocks,
-    const set<pair<int, int> >& block_pairs)
+    const std::vector<int>& blocks,
+    const std::set<std::pair<int, int> >& block_pairs)
     : kMaxRowBlocks(10 * 1000 * 1000),
       blocks_(blocks) {
   CHECK_LT(blocks.size(), kMaxRowBlocks);
@@ -64,7 +64,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   // object for looking into the values array of the
   // TripletSparseMatrix.
   int num_nonzeros = 0;
-  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+  for (std::set<std::pair<int, int> >::const_iterator it = block_pairs.begin();
        it != block_pairs.end();
        ++it) {
     const int row_block_size = blocks_[it->first];
@@ -83,20 +83,20 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
   double* values = tsm_->mutable_values();
 
   int pos = 0;
-  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+  for (std::set<std::pair<int, int> >::const_iterator it = block_pairs.begin();
        it != block_pairs.end();
        ++it) {
     const int row_block_size = blocks_[it->first];
     const int col_block_size = blocks_[it->second];
-    cell_values_.push_back(make_pair(make_pair(it->first, it->second),
-                                     values + pos));
+    cell_values_.push_back(std::make_pair(std::make_pair(it->first, it->second),
+                                          values + pos));
     layout_[IntPairToLong(it->first, it->second)] =
         new CellInfo(values + pos);
     pos += row_block_size * col_block_size;
   }
 
   // Fill the sparsity pattern of the underlying matrix.
-  for (set<pair<int, int> >::const_iterator it = block_pairs.begin();
+  for (std::set<std::pair<int, int> >::const_iterator it = block_pairs.begin();
        it != block_pairs.end();
        ++it) {
     const int row_block_id = it->first;
@@ -158,7 +158,7 @@ void BlockRandomAccessSparseMatrix::SetZero() {
 
 void BlockRandomAccessSparseMatrix::SymmetricRightMultiply(const double* x,
                                                            double* y) const {
-  vector< pair<pair<int, int>, double*> >::const_iterator it =
+  std::vector< std::pair<std::pair<int, int>, double*> >::const_iterator it =
       cell_values_.begin();
   for (; it != cell_values_.end(); ++it) {
     const int row = it->first.first;

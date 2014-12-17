@@ -321,7 +321,7 @@ bool LineSearchOptionsAreValid(const Solver::Options& options, string* error) {
 #undef OPTION_LE_OPTION
 #undef OPTION_LT_OPTION
 
-void StringifyOrdering(const vector<int>& ordering, string* report) {
+void StringifyOrdering(const std::vector<int>& ordering, string* report) {
   if (ordering.size() == 0) {
     internal::StringAppendF(report, "AUTOMATIC");
     return;
@@ -407,7 +407,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // not contain any parameter blocks. Thus, only extract the
   // evaluator statistics if one exists.
   if (pp.evaluator.get() != NULL) {
-    const map<string, double>& evaluator_time_statistics =
+    const std::map<string, double>& evaluator_time_statistics =
         pp.evaluator->TimeStatistics();
     summary->residual_evaluation_time_in_seconds =
         FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
@@ -419,7 +419,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
   // solver from which we can extract run time statistics. In
   // particular the line search solver does not use a linear solver.
   if (pp.linear_solver.get() != NULL) {
-    const map<string, double>& linear_solver_time_statistics =
+    const std::map<string, double>& linear_solver_time_statistics =
         pp.linear_solver->TimeStatistics();
     summary->linear_solver_time_in_seconds =
         FindWithDefault(linear_solver_time_statistics,
@@ -625,7 +625,7 @@ string Solver::Summary::BriefReport() const {
                       initial_cost,
                       final_cost,
                       TerminationTypeToString(termination_type));
-};
+}
 
 string Solver::Summary::FullReport() const {
   using internal::VersionString;
@@ -844,7 +844,7 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "Termination:        %25s (%s)\n",
                 TerminationTypeToString(termination_type), message.c_str());
   return report;
-};
+}
 
 bool Solver::Summary::IsSolutionUsable() const {
   return internal::IsSolutionUsable(*this);

@@ -49,10 +49,11 @@ using Eigen::Dynamic;
 namespace ceres {
 namespace internal {
 
-ResidualBlock::ResidualBlock(const CostFunction* cost_function,
-                             const LossFunction* loss_function,
-                             const vector<ParameterBlock*>& parameter_blocks,
-                             int index)
+ResidualBlock::ResidualBlock(
+    const CostFunction* cost_function,
+    const LossFunction* loss_function,
+    const std::vector<ParameterBlock*>& parameter_blocks,
+    int index)
     : cost_function_(cost_function),
       loss_function_(loss_function),
       parameter_blocks_(

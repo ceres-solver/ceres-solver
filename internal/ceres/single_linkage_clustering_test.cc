@@ -109,7 +109,7 @@ TEST(SingleLinkageClustering, ComponentWithWeakLinkAndStrongLink) {
   //  0-1-2-3 4-5
   graph.AddEdge(0, 1, 1.0);
   graph.AddEdge(1, 2, 1.0);
-  graph.AddEdge(2, 3, 0.5); // Weak link
+  graph.AddEdge(2, 3, 0.5);  // Weak link
   graph.AddEdge(0, 3, 1.0);
 
   // This component should break up into two.

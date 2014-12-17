@@ -85,7 +85,7 @@ TEST(ResidualBlock, EvaluteWithNoLossFunctionOrLocalParameterizations) {
   double values_z[4];
   ParameterBlock z(values_z, 4, -1);
 
-  vector<ParameterBlock*> parameters;
+  std::vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
   parameters.push_back(&y);
   parameters.push_back(&z);
@@ -212,19 +212,19 @@ TEST(ResidualBlock, EvaluteWithLocalParameterizations) {
   double values_z[4];
   ParameterBlock z(values_z, 4, -1);
 
-  vector<ParameterBlock*> parameters;
+  std::vector<ParameterBlock*> parameters;
   parameters.push_back(&x);
   parameters.push_back(&y);
   parameters.push_back(&z);
 
   // Make x have the first component fixed.
-  vector<int> x_fixed;
+  std::vector<int> x_fixed;
   x_fixed.push_back(0);
   SubsetParameterization x_parameterization(2, x_fixed);
   x.SetParameterization(&x_parameterization);
 
   // Make z have the last and last component fixed.
-  vector<int> z_fixed;
+  std::vector<int> z_fixed;
   z_fixed.push_back(2);
   SubsetParameterization z_parameterization(4, z_fixed);
   z.SetParameterization(&z_parameterization);

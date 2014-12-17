@@ -82,7 +82,8 @@ class SchurOrderingTest : public ::testing::Test {
 
 TEST_F(SchurOrderingTest, NoFixed) {
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();
@@ -136,7 +137,8 @@ TEST_F(SchurOrderingTest, OneFixed) {
   problem_.SetParameterBlockConstant(x_);
 
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();
@@ -168,7 +170,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
   }
 
   // The constant parameter block is at the end.
-  vector<ParameterBlock*> ordering;
+  std::vector<ParameterBlock*> ordering;
   ComputeSchurOrdering(program, &ordering);
   EXPECT_EQ(ordering.back(), parameter_blocks[0]);
 }

@@ -38,18 +38,19 @@
 namespace ceres {
 namespace internal {
 
-void CompressedColumnScalarMatrixToBlockMatrix(const int* scalar_rows,
-                                               const int* scalar_cols,
-                                               const vector<int>& row_blocks,
-                                               const vector<int>& col_blocks,
-                                               vector<int>* block_rows,
-                                               vector<int>* block_cols) {
+void CompressedColumnScalarMatrixToBlockMatrix(
+    const int* scalar_rows,
+    const int* scalar_cols,
+    const std::vector<int>& row_blocks,
+    const std::vector<int>& col_blocks,
+    std::vector<int>* block_rows,
+    std::vector<int>* block_cols) {
   CHECK_NOTNULL(block_rows)->clear();
   CHECK_NOTNULL(block_cols)->clear();
   const int num_row_blocks = row_blocks.size();
   const int num_col_blocks = col_blocks.size();
 
-  vector<int> row_block_starts(num_row_blocks);
+  std::vector<int> row_block_starts(num_row_blocks);
   for (int i = 0, cursor = 0; i < num_row_blocks; ++i) {
     row_block_starts[i] = cursor;
     cursor += row_blocks[i];
@@ -66,9 +67,10 @@ void CompressedColumnScalarMatrixToBlockMatrix(const int* scalar_rows,
   for (int col_block = 0; col_block < num_col_blocks; ++col_block) {
     int column_size = 0;
     for (int idx = scalar_cols[c]; idx < scalar_cols[c + 1]; ++idx) {
-      vector<int>::const_iterator it = lower_bound(row_block_starts.begin(),
-                                                   row_block_starts.end(),
-                                                   scalar_rows[idx]);
+      std::vector<int>::const_iterator it =
+          std::lower_bound(row_block_starts.begin(),
+                           row_block_starts.end(),
+                           scalar_rows[idx]);
       // Since we are using lower_bound, it will return the row id
       // where the row block starts. For everything but the first row
       // of the block, where these values will be the same, we can
@@ -90,14 +92,14 @@ void CompressedColumnScalarMatrixToBlockMatrix(const int* scalar_rows,
   }
 }
 
-void BlockOrderingToScalarOrdering(const vector<int>& blocks,
-                                   const vector<int>& block_ordering,
-                                   vector<int>* scalar_ordering) {
+void BlockOrderingToScalarOrdering(const std::vector<int>& blocks,
+                                   const std::vector<int>& block_ordering,
+                                   std::vector<int>* scalar_ordering) {
   CHECK_EQ(blocks.size(), block_ordering.size());
   const int num_blocks = blocks.size();
 
   // block_starts = [0, block1, block1 + block2 ..]
-  vector<int> block_starts(num_blocks);
+  std::vector<int> block_starts(num_blocks);
   for (int i = 0, cursor = 0; i < num_blocks ; ++i) {
     block_starts[i] = cursor;
     cursor += blocks[i];

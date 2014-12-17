@@ -53,7 +53,8 @@ namespace {
 ParameterBlockOrdering* CreateDefaultLinearSolverOrdering(
     const Program& program) {
   ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
-  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program.parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     ordering->AddElementToGroup(
         const_cast<double*>(parameter_blocks[i]->user_state()), 0);
