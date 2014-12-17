@@ -39,6 +39,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // Trivial cost function that accepts three arguments.
 class TernaryCostFunction: public CostFunction {
  public:

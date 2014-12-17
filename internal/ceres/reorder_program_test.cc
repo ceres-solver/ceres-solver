@@ -41,6 +41,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // Templated base class for the CostFunction signatures.
 template <int kNumResiduals, int N0, int N1, int N2>
 class MockCostFunctionBase : public
@@ -158,7 +160,8 @@ TEST(_, ApplyOrderingNormal) {
                             linear_solver_ordering,
                             program,
                             &message));
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);

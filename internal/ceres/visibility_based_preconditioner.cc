@@ -58,6 +58,12 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::pair;
+using std::set;
+using std::swap;
+using std::vector;
+
 // TODO(sameeragarwal): Currently these are magic weights for the
 // preconditioner construction. Move these higher up into the Options
 // struct and provide some guidelines for choosing them.
@@ -399,7 +405,7 @@ bool VisibilityBasedPreconditioner::UpdateImpl(const BlockSparseMatrix& A,
 // matrix. Scaling these off-diagonal entries by 1/2 forces this
 // matrix to be positive definite.
 void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
-  for (set< pair<int, int> >::const_iterator it = block_pairs_.begin();
+  for (set<pair<int, int> >::const_iterator it = block_pairs_.begin();
        it != block_pairs_.end();
        ++it) {
     const int block1 = it->first;
@@ -484,7 +490,7 @@ bool VisibilityBasedPreconditioner::IsBlockPairInPreconditioner(
   int cluster1 = cluster_membership_[block1];
   int cluster2 = cluster_membership_[block2];
   if (cluster1 > cluster2) {
-    std::swap(cluster1, cluster2);
+    swap(cluster1, cluster2);
   }
   return (cluster_pairs_.count(make_pair(cluster1, cluster2)) > 0);
 }

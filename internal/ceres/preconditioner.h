@@ -80,7 +80,7 @@ class Preconditioner : public LinearOperator {
     // elimination group must form an independent set in the normal
     // equations. The first elimination group corresponds to the
     // num_eliminate_blocks in the Schur type solvers.
-    vector<int> elimination_groups;
+    std::vector<int> elimination_groups;
 
     // If the block sizes in a BlockSparseMatrix are fixed, then in
     // some cases the Schur complement based solvers can detect and

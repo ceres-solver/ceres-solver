@@ -39,6 +39,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // Takes 2 parameter blocks:
 //     parameters[0] is size 10.
 //     parameters[1] is size 5.
@@ -212,7 +214,7 @@ TEST(DynamicAutodiffCostFunctionTest, JacobianWithFirstParameterBlockConstant) {
   }
 }
 
-TEST(DynamicAutodiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) {
+TEST(DynamicAutodiffCostFunctionTest, JacobianWithSecondParameterBlockConstant) {  // NOLINT
   // Test the residual counting.
   vector<double> param_block_0(10, 0.0);
   for (int i = 0; i < 10; ++i) {

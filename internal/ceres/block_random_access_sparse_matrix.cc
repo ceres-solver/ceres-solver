@@ -44,6 +44,11 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::pair;
+using std::set;
+using std::vector;
+
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const vector<int>& blocks,
     const set<pair<int, int> >& block_pairs)

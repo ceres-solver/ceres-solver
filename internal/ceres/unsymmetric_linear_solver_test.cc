@@ -57,8 +57,6 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
   }
 
   void TestSolver(const LinearSolver::Options& options) {
-
-
     LinearSolver::PerSolveOptions per_solve_options;
     LinearSolver::Summary unregularized_solve_summary;
     LinearSolver::Summary regularized_solve_summary;
@@ -109,7 +107,8 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
     for (int i = 0; i < A_->num_cols(); ++i) {
       EXPECT_NEAR(sol_unregularized_[i], x_unregularized[i], 1e-8)
           << "\nExpected: "
-          << ConstVectorRef(sol_unregularized_.get(), A_->num_cols()).transpose()
+          << ConstVectorRef(sol_unregularized_.get(),
+                            A_->num_cols()).transpose()
           << "\nActual: " << x_unregularized.transpose();
     }
 

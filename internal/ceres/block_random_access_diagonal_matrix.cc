@@ -45,6 +45,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 // TODO(sameeragarwal): Drop the dependence on TripletSparseMatrix.
 
 BlockRandomAccessDiagonalMatrix::BlockRandomAccessDiagonalMatrix(

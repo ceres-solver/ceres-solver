@@ -41,7 +41,7 @@ namespace ceres {
 // nul-terminated c string. Append the components to 'result'. If there are
 // consecutive delimiters, this function skips over all of them.
 void SplitStringUsing(const string& full, const char* delim,
-                      vector<string>* res);
+                      std::vector<string>* res);
 
 }  // namespace ceres
 

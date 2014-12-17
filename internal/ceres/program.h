@@ -60,10 +60,10 @@ class Program {
   explicit Program(const Program& program);
 
   // The ordered parameter and residual blocks for the program.
-  const vector<ParameterBlock*>& parameter_blocks() const;
-  const vector<ResidualBlock*>& residual_blocks() const;
-  vector<ParameterBlock*>* mutable_parameter_blocks();
-  vector<ResidualBlock*>* mutable_residual_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks() const;
+  const std::vector<ResidualBlock*>& residual_blocks() const;
+  std::vector<ParameterBlock*>* mutable_parameter_blocks();
+  std::vector<ResidualBlock*>* mutable_residual_blocks();
 
   // Serialize to/from the program and update states.
   //
@@ -120,7 +120,8 @@ class Program {
   // blocks in the same residual block are part of
   // parameter_blocks as that would violate the assumption that it
   // is an independent set in the Hessian matrix.
-  bool IsParameterBlockSetIndependent(const set<double*>& independent_set) const;
+  bool IsParameterBlockSetIndependent(
+      const std::set<double*>& independent_set) const;
 
   // Create a TripletSparseMatrix which contains the zero-one
   // structure corresponding to the block sparsity of the transpose of
@@ -142,7 +143,7 @@ class Program {
   // If there was a problem, then the function will return a NULL
   // pointer and error will contain a human readable description of
   // the problem.
-  Program* CreateReducedProgram(vector<double*>* removed_parameter_blocks,
+  Program* CreateReducedProgram(std::vector<double*>* removed_parameter_blocks,
                                 double* fixed_cost,
                                 string* error) const;
 
@@ -174,13 +175,13 @@ class Program {
   //
   // If there was a problem, then the function will return false and
   // error will contain a human readable description of the problem.
-  bool RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
+  bool RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
                          double* fixed_cost,
                          string* message);
 
   // The Program does not own the ParameterBlock or ResidualBlock objects.
-  vector<ParameterBlock*> parameter_blocks_;
-  vector<ResidualBlock*> residual_blocks_;
+  std::vector<ParameterBlock*> parameter_blocks_;
+  std::vector<ResidualBlock*> residual_blocks_;
 
   friend class ProblemImpl;
 };

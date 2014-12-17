@@ -139,7 +139,7 @@ Init(int num_eliminate_blocks, const CompressedRowBlockStructure* bs) {
         }
       }
 
-      buffer_size_ = max(buffer_size, buffer_size_);
+      buffer_size_ = std::max(buffer_size, buffer_size_);
       ++chunk.size;
     }
 
