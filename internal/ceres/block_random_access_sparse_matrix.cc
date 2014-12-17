@@ -44,6 +44,11 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::pair;
+using std::set;
+using std::vector;
+
 BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const vector<int>& blocks,
     const set<pair<int, int> >& block_pairs)
@@ -89,7 +94,7 @@ BlockRandomAccessSparseMatrix::BlockRandomAccessSparseMatrix(
     const int row_block_size = blocks_[it->first];
     const int col_block_size = blocks_[it->second];
     cell_values_.push_back(make_pair(make_pair(it->first, it->second),
-                                     values + pos));
+                                          values + pos));
     layout_[IntPairToLong(it->first, it->second)] =
         new CellInfo(values + pos);
     pos += row_block_size * col_block_size;

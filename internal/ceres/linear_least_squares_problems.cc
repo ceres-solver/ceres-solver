@@ -97,11 +97,11 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem0() {
   int counter = 0;
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j< 2; ++j) {
-      Ai[counter]=i;
-      Aj[counter]=j;
+      Ai[counter] = i;
+      Aj[counter] = j;
       ++counter;
     }
-  };
+  }
 
   Ax[0] = 1.;
   Ax[1] = 2.;
@@ -527,7 +527,7 @@ bool DumpLinearLeastSquaresProblemToConsole(const SparseMatrix* A,
     LOG(INFO) << "x: \n" << ConstVectorRef(x, A->num_cols());
   }
   return true;
-};
+}
 
 void WriteArrayToFileOrDie(const string& filename,
                            const double* x,
@@ -619,7 +619,7 @@ bool DumpLinearLeastSquaresProblem(const string& filename_base,
                                                      num_eliminate_blocks);
     default:
       LOG(FATAL) << "Unknown DumpFormatType " << dump_format_type;
-  };
+  }
 
   return true;
 }

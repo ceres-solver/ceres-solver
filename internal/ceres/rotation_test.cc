@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+using std::swap;
+
 const double kPi = 3.14159265358979323846;
 const double kHalfSqrt2 = 0.707106781186547524401;
 
@@ -53,7 +55,7 @@ double RandDouble() {
 }
 
 // A tolerance value for floating-point comparisons.
-static double const kTolerance = numeric_limits<double>::epsilon() * 10;
+static double const kTolerance = std::numeric_limits<double>::epsilon() * 10;
 
 // Looser tolerance used for numerically unstable conversions.
 static double const kLooseTolerance = 1e-9;
@@ -241,7 +243,7 @@ TEST(Rotation, SmallAngleAxisToQuaternion) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyAngleAxisToQuaternion) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(numeric_limits<double>::min(), 0.75);
+  double theta = pow(std::numeric_limits<double>::min(), 0.75);
   double axis_angle[3] = { theta, 0, 0 };
   double quaternion[4];
   double expected[4] = { cos(theta/2), sin(theta/2.0), 0, 0 };
@@ -302,7 +304,7 @@ TEST(Rotation, SmallQuaternionToAngleAxis) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyQuaternionToAngleAxis) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(numeric_limits<double>::min(), 0.75);
+  double theta = pow(std::numeric_limits<double>::min(), 0.75);
   double quaternion[4] = { cos(theta/2), sin(theta/2.0), 0, 0 };
   double axis_angle[3];
   double expected[3] = { theta, 0, 0 };
@@ -604,9 +606,9 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBackNearZero) {
 
 // Transposes a 3x3 matrix.
 static void Transpose3x3(double m[9]) {
-  std::swap(m[1], m[3]);
-  std::swap(m[2], m[6]);
-  std::swap(m[5], m[7]);
+  swap(m[1], m[3]);
+  swap(m[2], m[6]);
+  swap(m[5], m[7]);
 }
 
 // Convert Euler angles from radians to degrees.
@@ -699,7 +701,7 @@ bool IsClose(double x, double y) {
   if (x == 0 || y == 0) {
     return absdiff <= kTolerance;
   }
-  double reldiff = absdiff / max(fabs(x), fabs(y));
+  double reldiff = absdiff / std::max(fabs(x), fabs(y));
   return reldiff <= kTolerance;
 }
 
@@ -735,11 +737,11 @@ void ExpectJetArraysClose(const Jet<double, N> *x, const Jet<double, N> *y) {
 
 // Log-10 of a value well below machine precision.
 static const int kSmallTinyCutoff =
-    static_cast<int>(2 * log(numeric_limits<double>::epsilon())/log(10.0));
+    static_cast<int>(2 * log(std::numeric_limits<double>::epsilon())/log(10.0));
 
 // Log-10 of a value just below values representable by double.
 static const int kTinyZeroLimit   =
-    static_cast<int>(1 + log(numeric_limits<double>::min())/log(10.0));
+    static_cast<int>(1 + log(std::numeric_limits<double>::min())/log(10.0));
 
 // Test that exact conversion works for small angles when jets are used.
 TEST(Rotation, SmallAngleAxisToQuaternionForJets) {

@@ -43,7 +43,7 @@ namespace internal {
 class BlockRandomAccessDiagonalMatrixTest : public ::testing::Test {
  public:
   void SetUp() {
-    vector<int> blocks;
+    std::vector<int> blocks;
     blocks.push_back(3);
     blocks.push_back(4);
     blocks.push_back(5);

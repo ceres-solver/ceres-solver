@@ -49,6 +49,12 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::max;
+using std::pair;
+using std::set;
+using std::vector;
+
 void ComputeVisibility(const CompressedRowBlockStructure& block_structure,
                        const int num_eliminate_blocks,
                        vector< set<int> >* visibility) {
@@ -109,9 +115,8 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   HashMap<pair<int, int>, int > camera_pairs;
 
   // Count the number of points visible to each camera/f_block pair.
-  for (vector<set<int> >::const_iterator it = inverse_visibility.begin();
-       it != inverse_visibility.end();
-       ++it) {
+  vector<set<int> >::const_iterator it = inverse_visibility.begin();
+  for (; it != inverse_visibility.end(); ++it) {
     const set<int>& inverse_visibility_set = *it;
     for (set<int>::const_iterator camera1 = inverse_visibility_set.begin();
          camera1 != inverse_visibility_set.end();
@@ -135,19 +140,20 @@ WeightedGraph<int>* CreateSchurComplementGraph(
   }
 
   // Add an edge for each camera pair.
-  for (HashMap<pair<int, int>, int>::const_iterator it = camera_pairs.begin();
-       it != camera_pairs.end();
-       ++it) {
-    const int camera1 = it->first.first;
-    const int camera2 = it->first.second;
-    CHECK_NE(camera1, camera2);
+  {
+    HashMap<pair<int, int>, int>::const_iterator it = camera_pairs.begin();
+    for (; it != camera_pairs.end(); ++it) {
+      const int camera1 = it->first.first;
+      const int camera2 = it->first.second;
+      CHECK_NE(camera1, camera2);
 
-    const int count = it->second;
-    // Static cast necessary for Windows.
-    const double weight = static_cast<double>(count) /
-        (sqrt(static_cast<double>(
-                  visibility[camera1].size() * visibility[camera2].size())));
-    graph->AddEdge(camera1, camera2, weight);
+      const int count = it->second;
+      // Static cast necessary for Windows.
+      const double weight = static_cast<double>(count) /
+          (sqrt(static_cast<double>(
+                    visibility[camera1].size() * visibility[camera2].size())));
+      graph->AddEdge(camera1, camera2, weight);
+    }
   }
 
   VLOG(2) << "Schur complement graph time: " << (time(NULL) - start_time);

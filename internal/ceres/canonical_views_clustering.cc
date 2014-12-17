@@ -45,6 +45,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 typedef HashMap<int, int> IntMap;
 typedef HashSet<int> IntSet;
 
@@ -67,8 +69,9 @@ class CanonicalViewsClustering {
 
  private:
   void FindValidViews(IntSet* valid_views) const;
-  double ComputeClusteringQualityDifference(const int candidate,
-                                            const vector<int>& centers) const;
+  double ComputeClusteringQualityDifference(
+      const int candidate,
+      const vector<int>& centers) const;
   void UpdateCanonicalViewAssignments(const int canonical_view);
   void ComputeClusterMembership(const vector<int>& centers,
                                 IntMap* membership) const;

@@ -40,6 +40,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 TEST(IndependentSetOrdering, Chain) {
   Graph<int> graph;
   graph.AddVertex(0);
@@ -238,7 +240,7 @@ TEST(StableIndependentSet, BreakTies) {
     EXPECT_EQ(independent_set_size, 1);
     EXPECT_EQ(ordering[0], 1);
   }
-
 }
+
 }  // namespace internal
 }  // namespace ceres

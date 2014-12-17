@@ -42,6 +42,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 BlockSparseMatrix::~BlockSparseMatrix() {}
 
 BlockSparseMatrix::BlockSparseMatrix(
@@ -82,7 +84,7 @@ BlockSparseMatrix::BlockSparseMatrix(
 }
 
 void BlockSparseMatrix::SetZero() {
-  fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
+  std::fill(values_.get(), values_.get() + num_nonzeros_, 0.0);
 }
 
 void BlockSparseMatrix::RightMultiply(const double* x,  double* y) const {
