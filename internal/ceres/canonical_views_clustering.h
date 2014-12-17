@@ -102,7 +102,7 @@ struct CanonicalViewsClusteringOptions;
 void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
-    vector<int>* centers,
+    std::vector<int>* centers,
     HashMap<int, int>* membership);
 
 struct CanonicalViewsClusteringOptions {

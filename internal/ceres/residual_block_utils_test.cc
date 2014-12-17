@@ -46,7 +46,7 @@ namespace internal {
 void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   double x = 1.0;
   ParameterBlock parameter_block(&x, 1, -1);
-  vector<ParameterBlock*> parameter_blocks;
+  std::vector<ParameterBlock*> parameter_blocks;
   parameter_blocks.push_back(&parameter_block);
 
   ResidualBlock residual_block(&cost_function,

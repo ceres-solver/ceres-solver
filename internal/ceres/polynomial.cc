@@ -42,6 +42,9 @@
 
 namespace ceres {
 namespace internal {
+
+using std::vector;
+
 namespace {
 
 // Balancing function as described by B. N. Parlett and C. Reinsch,

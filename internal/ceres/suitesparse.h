@@ -42,7 +42,6 @@
 #include <string>
 #include <vector>
 
-#include "ceres/internal/port.h"
 #include "ceres/linear_solver.h"
 #include "cholmod.h"
 #include "glog/logging.h"
@@ -147,8 +146,8 @@ class SuiteSparse {
   cholmod_factor* AnalyzeCholesky(cholmod_sparse* A, string* message);
 
   cholmod_factor* BlockAnalyzeCholesky(cholmod_sparse* A,
-                                       const vector<int>& row_blocks,
-                                       const vector<int>& col_blocks,
+                                       const std::vector<int>& row_blocks,
+                                       const std::vector<int>& col_blocks,
                                        string* message);
 
   // If A is symmetric, then compute the symbolic Cholesky
@@ -162,9 +161,10 @@ class SuiteSparse {
   // message contains an explanation of the failures if any.
   //
   // Caller owns the result.
-  cholmod_factor* AnalyzeCholeskyWithUserOrdering(cholmod_sparse* A,
-                                                  const vector<int>& ordering,
-                                                  string* message);
+  cholmod_factor* AnalyzeCholeskyWithUserOrdering(
+      cholmod_sparse* A,
+      const std::vector<int>& ordering,
+      string* message);
 
   // Perform a symbolic factorization of A without re-ordering A. No
   // postordering of the elimination tree is performed. This ensures
@@ -215,9 +215,9 @@ class SuiteSparse {
   // A. If this is the case, only the first sum(col_blocks) are used
   // to compute the ordering.
   bool BlockAMDOrdering(const cholmod_sparse* A,
-                        const vector<int>& row_blocks,
-                        const vector<int>& col_blocks,
-                        vector<int>* ordering);
+                        const std::vector<int>& row_blocks,
+                        const std::vector<int>& col_blocks,
+                        std::vector<int>* ordering);
 
   // Find a fill reducing approximate minimum degree
   // ordering. ordering is expected to be large enough to hold the
@@ -236,7 +236,7 @@ class SuiteSparse {
   // being conservative and choosing the next minor version where
   // things are stable.
   static bool IsConstrainedApproximateMinimumDegreeOrderingAvailable() {
-    return (SUITESPARSE_VERSION>4001);
+    return (SUITESPARSE_VERSION > 4001);
   }
 
   // Find a fill reducing approximate minimum degree
@@ -298,7 +298,7 @@ class SuiteSparse {
     return false;
   }
 
-  void Free(void*) {};
+  void Free(void* arg) {}
 };
 
 #endif  // CERES_NO_SUITESPARSE

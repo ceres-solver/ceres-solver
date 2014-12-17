@@ -30,12 +30,16 @@
 
 #include "ceres/split.h"
 
+#include <iterator>
 #include <string>
 #include <vector>
-#include <iterator>
+
 #include "ceres/internal/port.h"
 
 namespace ceres {
+namespace internal {
+
+using std::vector;
 
 // If we know how much to allocate for a vector of strings, we can allocate the
 // vector<string> only once and directly to the right size. This saves in
@@ -110,8 +114,9 @@ void SplitStringUsing(const string& full,
                       const char* delim,
                       vector<string>* result) {
   result->reserve(result->size() + CalculateReserveForVector(full, delim));
-  back_insert_iterator< vector<string> > it(*result);
+  std::back_insert_iterator<vector<string> > it(*result);
   SplitStringToIteratorUsing(full, delim, it);
 }
 
+}  // namespace internal
 }  // namespace ceres

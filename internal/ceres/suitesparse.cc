@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 SuiteSparse::SuiteSparse() {
   cholmod_start(&cc_);
 }

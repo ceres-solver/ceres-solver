@@ -166,7 +166,7 @@ TEST(OrderedGroups, BulkRemove) {
   ordering.AddElementToGroup(x + 1, 2);
   ordering.AddElementToGroup(x + 2, 2);
 
-  vector<double*> elements_to_remove;
+  std::vector<double*> elements_to_remove;
   elements_to_remove.push_back(x);
   elements_to_remove.push_back(x + 2);
 
@@ -181,7 +181,7 @@ TEST(OrderedGroups, BulkRemoveWithNoElements) {
   ParameterBlockOrdering ordering;
 
   double x[3];
-  vector<double*> elements_to_remove;
+  std::vector<double*> elements_to_remove;
   elements_to_remove.push_back(x);
   elements_to_remove.push_back(x + 2);
 

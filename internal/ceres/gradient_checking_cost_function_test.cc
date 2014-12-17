@@ -48,6 +48,7 @@
 #include "gmock/mock-log.h"
 #include "gtest/gtest.h"
 
+using std::vector;
 using testing::AllOf;
 using testing::AnyNumber;
 using testing::HasSubstr;

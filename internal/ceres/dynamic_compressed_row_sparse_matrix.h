@@ -41,6 +41,8 @@
 #ifndef CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_SPARSE_MATRIX_H_
 #define CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_SPARSE_MATRIX_H_
 
+#include <vector>
+
 #include "ceres/compressed_row_sparse_matrix.h"
 
 namespace ceres {
@@ -89,11 +91,11 @@ class DynamicCompressedRowSparseMatrix : public CompressedRowSparseMatrix {
   void Finalize(int num_additional_elements);
 
  private:
-  vector<vector<int> > dynamic_cols_;
-  vector<vector<double> > dynamic_values_;
+  std::vector<std::vector<int> > dynamic_cols_;
+  std::vector<std::vector<double> > dynamic_values_;
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_SPARSE_MATRIX_H_
+#endif  // CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_SPARSE_MATRIX_H_

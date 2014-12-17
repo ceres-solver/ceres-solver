@@ -112,20 +112,20 @@ class CostFunctionToFunctor {
     // This block breaks the 80 column rule to keep it somewhat readable.
     CHECK((!N1 && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
           ((N1 > 0) && !N2 && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9) ||
-          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0)))
+          ((N1 > 0) && (N2 > 0) && !N3 && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||                                    // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && !N4 && !N5 && !N6 && !N7 && !N8 && !N9) ||                               // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && !N5 && !N6 && !N7 && !N8 && !N9) ||                          // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && !N6 && !N7 && !N8 && !N9) ||                     // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && !N7 && !N8 && !N9) ||                // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && !N8 && !N9) ||           // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && !N9) ||      // NOLINT
+          ((N1 > 0) && (N2 > 0) && (N3 > 0) && (N4 > 0) && (N5 > 0) && (N6 > 0) && (N7 > 0) && (N8 > 0) && (N9 > 0)))   // NOLINT
         << "Zero block cannot precede a non-zero block. Block sizes are "
         << "(ignore trailing 0s): " << N0 << ", " << N1 << ", " << N2 << ", "
         << N3 << ", " << N4 << ", " << N5 << ", " << N6 << ", " << N7 << ", "
         << N8 << ", " << N9;
 
-    const vector<int32>& parameter_block_sizes =
+    const std::vector<int32>& parameter_block_sizes =
         cost_function->parameter_block_sizes();
     const int num_parameter_blocks =
         (N0 > 0) + (N1 > 0) + (N2 > 0) + (N3 > 0) + (N4 > 0) +
@@ -677,7 +677,7 @@ class CostFunctionToFunctor {
   template <typename JetT>
   bool EvaluateWithJets(const JetT** inputs, JetT* output) const {
     const int kNumParameters =  N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
-    const vector<int32>& parameter_block_sizes =
+    const std::vector<int32>& parameter_block_sizes =
         cost_function_->parameter_block_sizes();
     const int num_parameter_blocks = parameter_block_sizes.size();
     const int num_residuals = cost_function_->num_residuals();

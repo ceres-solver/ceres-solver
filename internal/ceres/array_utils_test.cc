@@ -38,6 +38,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 TEST(ArrayUtils, IsArrayValid) {
   double x[3];
   x[0] = 0.0;

@@ -45,6 +45,8 @@
 namespace ceres {
 namespace internal {
 
+using std::vector;
+
 typedef HashMap<int, int> IntMap;
 typedef HashSet<int> IntSet;
 

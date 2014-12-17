@@ -31,6 +31,7 @@
 #include <string>
 
 #include "ceres/internal/port.h"
+#include "ceres/solver_utils.h"
 #include "ceres/version.h"
 
 namespace ceres {

@@ -38,6 +38,11 @@
 namespace ceres {
 namespace internal {
 
+using std::make_pair;
+using std::pair;
+using std::set;
+using std::vector;
+
 TEST(BlockRandomAccessSparseMatrix, GetCell) {
   vector<int> blocks;
   blocks.push_back(3);
@@ -169,7 +174,8 @@ class BlockRandomAccessSparseMatrixTest : public ::testing::Test {
 };
 
 TEST_F(BlockRandomAccessSparseMatrixTest, IntPairToLongOverflow) {
-  CheckIntPairToLong(numeric_limits<int>::max(), numeric_limits<int>::max());
+  CheckIntPairToLong(std::numeric_limits<int>::max(),
+                     std::numeric_limits<int>::max());
 }
 
 TEST_F(BlockRandomAccessSparseMatrixTest, LongToIntPair) {

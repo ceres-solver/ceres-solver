@@ -36,13 +36,15 @@
 #include "ceres/internal/port.h"
 
 namespace ceres {
+namespace internal {
 
 // Split a string using one or more character delimiters, presented as a
 // nul-terminated c string. Append the components to 'result'. If there are
 // consecutive delimiters, this function skips over all of them.
 void SplitStringUsing(const string& full, const char* delim,
-                      vector<string>* res);
+                      std::vector<string>* res);
 
+}  // namespace internal
 }  // namespace ceres
 
 #endif  // CERES_INTERNAL_SPLIT_H_

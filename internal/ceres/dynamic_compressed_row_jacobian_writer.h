@@ -80,4 +80,4 @@ class DynamicCompressedRowJacobianWriter {
 }  // namespace internal
 }  // namespace ceres
 
-#endif // CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_JACOBIAN_WRITER_H_
+#endif  // CERES_INTERNAL_DYNAMIC_COMPRESSED_ROW_JACOBIAN_WRITER_H_

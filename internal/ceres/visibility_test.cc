@@ -47,6 +47,9 @@
 namespace ceres {
 namespace internal {
 
+using std::set;
+using std::vector;
+
 class VisibilityTest : public ::testing::Test {
 };
 

@@ -52,7 +52,7 @@ namespace internal {
 class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
  public:
   // blocks is an array of block sizes.
-  explicit BlockRandomAccessDiagonalMatrix(const vector<int>& blocks);
+  explicit BlockRandomAccessDiagonalMatrix(const std::vector<int>& blocks);
 
   // The destructor is not thread safe. It assumes that no one is
   // modifying any cells when the matrix is being destroyed.
@@ -85,8 +85,8 @@ class BlockRandomAccessDiagonalMatrix : public BlockRandomAccessMatrix {
 
  private:
   // row/column block sizes.
-  const vector<int> blocks_;
-  vector<CellInfo*> layout_;
+  const std::vector<int> blocks_;
+  std::vector<CellInfo*> layout_;
 
   // The underlying matrix object which actually stores the cells.
   scoped_ptr<TripletSparseMatrix> tsm_;
