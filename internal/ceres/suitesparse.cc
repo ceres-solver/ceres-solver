@@ -150,10 +150,10 @@ cholmod_factor* SuiteSparse::AnalyzeCholesky(cholmod_sparse* A,
 
 cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(
     cholmod_sparse* A,
-    const vector<int>& row_blocks,
-    const vector<int>& col_blocks,
+    const std::vector<int>& row_blocks,
+    const std::vector<int>& col_blocks,
     string* message) {
-  vector<int> ordering;
+  std::vector<int> ordering;
   if (!BlockAMDOrdering(A, row_blocks, col_blocks, &ordering)) {
     return NULL;
   }
@@ -162,7 +162,7 @@ cholmod_factor* SuiteSparse::BlockAnalyzeCholesky(
 
 cholmod_factor* SuiteSparse::AnalyzeCholeskyWithUserOrdering(
     cholmod_sparse* A,
-    const vector<int>& ordering,
+    const std::vector<int>& ordering,
     string* message) {
   CHECK_EQ(ordering.size(), A->nrow);
 
@@ -204,16 +204,16 @@ cholmod_factor* SuiteSparse::AnalyzeCholeskyWithNaturalOrdering(
 }
 
 bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
-                                   const vector<int>& row_blocks,
-                                   const vector<int>& col_blocks,
-                                   vector<int>* ordering) {
+                                   const std::vector<int>& row_blocks,
+                                   const std::vector<int>& col_blocks,
+                                   std::vector<int>* ordering) {
   const int num_row_blocks = row_blocks.size();
   const int num_col_blocks = col_blocks.size();
 
   // Arrays storing the compressed column structure of the matrix
   // incoding the block sparsity of A.
-  vector<int> block_cols;
-  vector<int> block_rows;
+  std::vector<int> block_cols;
+  std::vector<int> block_rows;
 
   CompressedColumnScalarMatrixToBlockMatrix(reinterpret_cast<const int*>(A->i),
                                             reinterpret_cast<const int*>(A->p),
@@ -236,7 +236,7 @@ bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
   block_matrix.sorted = 1;
   block_matrix.packed = 1;
 
-  vector<int> block_ordering(num_row_blocks);
+  std::vector<int> block_ordering(num_row_blocks);
   if (!cholmod_amd(&block_matrix, NULL, 0, &block_ordering[0], &cc_)) {
     return false;
   }

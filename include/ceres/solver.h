@@ -92,7 +92,7 @@ class CERES_EXPORT Solver {
       gradient_tolerance = 1e-10;
       parameter_tolerance = 1e-8;
 
-#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && !defined(CERES_ENABLE_LGPL_CODE)
+#if defined(CERES_NO_SUITESPARSE) && defined(CERES_NO_CXSPARSE) && !defined(CERES_ENABLE_LGPL_CODE)  // NOLINT
       linear_solver_type = DENSE_QR;
 #else
       linear_solver_type = SPARSE_NORMAL_CHOLESKY;
@@ -676,7 +676,7 @@ class CERES_EXPORT Solver {
     // List of iterations at which the minimizer should dump the trust
     // region problem. Useful for testing and benchmarking. If empty
     // (default), no problems are dumped.
-    vector<int> trust_region_minimizer_iterations_to_dump;
+    std::vector<int> trust_region_minimizer_iterations_to_dump;
 
     // Directory to which the problems should be written to. Should be
     // non-empty if trust_region_minimizer_iterations_to_dump is
@@ -746,7 +746,7 @@ class CERES_EXPORT Solver {
     // executed, then set update_state_every_iteration to true.
     //
     // The solver does NOT take ownership of these pointers.
-    vector<IterationCallback*> callbacks;
+    std::vector<IterationCallback*> callbacks;
   };
 
   struct CERES_EXPORT Summary {
@@ -784,7 +784,7 @@ class CERES_EXPORT Solver {
     double fixed_cost;
 
     // IterationSummary for each minimizer iteration in order.
-    vector<IterationSummary> iterations;
+    std::vector<IterationSummary> iterations;
 
     // Number of minimizer iterations in which the step was
     // accepted. Unless use_non_monotonic_steps is true this is also
@@ -925,7 +925,7 @@ class CERES_EXPORT Solver {
 
     // Size of the elimination groups given by the user as hints to
     // the linear solver.
-    vector<int> linear_solver_ordering_given;
+    std::vector<int> linear_solver_ordering_given;
 
     // Size of the parameter groups used by the solver when ordering
     // the columns of the Jacobian.  This maybe different from
@@ -933,7 +933,7 @@ class CERES_EXPORT Solver {
     // linear_solver_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive
     // parameter blocks.
-    vector<int> linear_solver_ordering_used;
+    std::vector<int> linear_solver_ordering_used;
 
     // True if the user asked for inner iterations to be used as part
     // of the optimization.
@@ -947,7 +947,7 @@ class CERES_EXPORT Solver {
 
     // Size of the parameter groups given by the user for performing
     // inner iterations.
-    vector<int> inner_iteration_ordering_given;
+    std::vector<int> inner_iteration_ordering_given;
 
     // Size of the parameter groups given used by the solver for
     // performing inner iterations. This maybe different from
@@ -955,7 +955,7 @@ class CERES_EXPORT Solver {
     // inner_iteration_ordering_given blank and asked for an automatic
     // ordering, or if the problem contains some constant or inactive
     // parameter blocks.
-    vector<int> inner_iteration_ordering_used;
+    std::vector<int> inner_iteration_ordering_used;
 
     // Type of the preconditioner requested by the user.
     PreconditionerType preconditioner_type_given;

@@ -79,7 +79,7 @@ struct RememberingCallback : public IterationCallback {
   }
   int calls;
   double *x;
-  vector<double> x_values;
+  std::vector<double> x_values;
 };
 
 TEST(Solver, UpdateStateEveryIterationOption) {

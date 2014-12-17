@@ -32,7 +32,6 @@
 
 #include "ceres/casts.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/casts.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -53,7 +52,7 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     // Set this to some nonzero value to be sure.
     num_additional_elements = 13;
 
-    expected_num_nonzeros = num_rows * num_cols - min(num_rows, num_cols);
+    expected_num_nonzeros = num_rows * num_cols - std::min(num_rows, num_cols);
 
     InitialiseDenseReference();
     InitialiseSparseMatrixReferences();

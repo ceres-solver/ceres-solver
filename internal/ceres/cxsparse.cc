@@ -38,7 +38,6 @@
 #include <vector>
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
-#include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
@@ -104,13 +103,13 @@ cs_dis* CXSparse::AnalyzeCholeskyWithNaturalOrdering(cs_di* A) {
 }
 
 cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
-                                       const vector<int>& row_blocks,
-                                       const vector<int>& col_blocks) {
+                                       const std::vector<int>& row_blocks,
+                                       const std::vector<int>& col_blocks) {
   const int num_row_blocks = row_blocks.size();
   const int num_col_blocks = col_blocks.size();
 
-  vector<int> block_rows;
-  vector<int> block_cols;
+  std::vector<int> block_rows;
+  std::vector<int> block_cols;
   CompressedColumnScalarMatrixToBlockMatrix(A->i,
                                             A->p,
                                             row_blocks,
@@ -127,11 +126,11 @@ cs_dis* CXSparse::BlockAnalyzeCholesky(cs_di* A,
   block_matrix.x = NULL;
 
   int* ordering = cs_amd(1, &block_matrix);
-  vector<int> block_ordering(num_row_blocks, -1);
-  copy(ordering, ordering + num_row_blocks, &block_ordering[0]);
+  std::vector<int> block_ordering(num_row_blocks, -1);
+  std::copy(ordering, ordering + num_row_blocks, &block_ordering[0]);
   cs_free(ordering);
 
-  vector<int> scalar_ordering;
+  std::vector<int> scalar_ordering;
   BlockOrderingToScalarOrdering(row_blocks, block_ordering, &scalar_ordering);
 
   cs_dis* symbolic_factorization =
@@ -191,7 +190,7 @@ cs_di* CXSparse::CreateSparseMatrix(TripletSparseMatrix* tsm) {
 
 void CXSparse::ApproximateMinimumDegreeOrdering(cs_di* A, int* ordering) {
   int* cs_ordering = cs_amd(1, A);
-  copy(cs_ordering, cs_ordering + A->m, ordering);
+  std::copy(cs_ordering, cs_ordering + A->m, ordering);
   cs_free(cs_ordering);
 }
 

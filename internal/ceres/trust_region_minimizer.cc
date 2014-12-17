@@ -31,8 +31,8 @@
 #include "ceres/trust_region_minimizer.h"
 
 #include <algorithm>
-#include <cstdlib>
 #include <cmath>
+#include <cstdlib>
 #include <cstring>
 #include <limits>
 #include <string>
@@ -417,7 +417,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           LOG_IF(WARNING, is_not_silent)
               << "Step failed to evaluate. "
               << "Treating it as a step with infinite cost";
-          new_cost = numeric_limits<double>::max();
+          new_cost = std::numeric_limits<double>::max();
         }
       } else {
         LOG_IF(WARNING, is_not_silent)
@@ -521,7 +521,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       // reference iteration, allowing for non-monotonic steps.
       iteration_summary.relative_decrease =
           options.use_nonmonotonic_steps
-          ? max(relative_decrease, historical_relative_decrease)
+          ? std::max(relative_decrease, historical_relative_decrease)
           : relative_decrease;
 
       // Normally, the quality of a trust region step is measured by

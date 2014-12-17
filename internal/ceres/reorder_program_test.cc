@@ -84,10 +84,10 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   options.linear_solver_type = DENSE_SCHUR;
   options.linear_solver_ordering.reset(linear_solver_ordering);
 
-  const vector<ResidualBlock*>& residual_blocks =
+  const std::vector<ResidualBlock*>& residual_blocks =
       problem.program().residual_blocks();
 
-  vector<ResidualBlock*> expected_residual_blocks;
+  std::vector<ResidualBlock*> expected_residual_blocks;
 
   // This is a bit fragile, but it serves the purpose. We know the
   // bucketing algorithm that the reordering function uses, so we
@@ -158,7 +158,8 @@ TEST(_, ApplyOrderingNormal) {
                             linear_solver_ordering,
                             program,
                             &message));
-  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
+  const std::vector<ParameterBlock*>& parameter_blocks =
+      program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);

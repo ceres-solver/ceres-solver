@@ -46,7 +46,8 @@ Covariance::~Covariance() {
 }
 
 bool Covariance::Compute(
-    const vector<pair<const double*, const double*> >& covariance_blocks,
+    const std::vector<std::pair<const double*,
+                                const double*> >& covariance_blocks,
     Problem* problem) {
   return impl_->Compute(covariance_blocks, problem->problem_impl_.get());
 }

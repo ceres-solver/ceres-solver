@@ -62,15 +62,16 @@ class CanonicalViewsClustering {
   // are assigned to a cluster with id = kInvalidClusterId.
   void ComputeClustering(const CanonicalViewsClusteringOptions& options,
                          const WeightedGraph<int>& graph,
-                         vector<int>* centers,
+                         std::vector<int>* centers,
                          IntMap* membership);
 
  private:
   void FindValidViews(IntSet* valid_views) const;
-  double ComputeClusteringQualityDifference(const int candidate,
-                                            const vector<int>& centers) const;
+  double ComputeClusteringQualityDifference(
+      const int candidate,
+      const std::vector<int>& centers) const;
   void UpdateCanonicalViewAssignments(const int canonical_view);
-  void ComputeClusterMembership(const vector<int>& centers,
+  void ComputeClusterMembership(const std::vector<int>& centers,
                                 IntMap* membership) const;
 
   CanonicalViewsClusteringOptions options_;
@@ -86,7 +87,7 @@ class CanonicalViewsClustering {
 void ComputeCanonicalViewsClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
-    vector<int>* centers,
+    std::vector<int>* centers,
     IntMap* membership) {
   time_t start_time = time(NULL);
   CanonicalViewsClustering cv;
@@ -99,7 +100,7 @@ void ComputeCanonicalViewsClustering(
 void CanonicalViewsClustering::ComputeClustering(
     const CanonicalViewsClusteringOptions& options,
     const WeightedGraph<int>& graph,
-    vector<int>* centers,
+    std::vector<int>* centers,
     IntMap* membership) {
   options_ = options;
   CHECK_NOTNULL(centers)->clear();
@@ -160,7 +161,7 @@ void CanonicalViewsClustering::FindValidViews(
 // added to the set of canonical views.
 double CanonicalViewsClustering::ComputeClusteringQualityDifference(
     const int candidate,
-    const vector<int>& centers) const {
+    const std::vector<int>& centers) const {
   // View score.
   double difference =
       options_.view_score_weight * graph_->VertexWeight(candidate);
@@ -212,7 +213,7 @@ void CanonicalViewsClustering::UpdateCanonicalViewAssignments(
 
 // Assign a cluster id to each view.
 void CanonicalViewsClustering::ComputeClusterMembership(
-    const vector<int>& centers,
+    const std::vector<int>& centers,
     IntMap* membership) const {
   CHECK_NOTNULL(membership)->clear();
 

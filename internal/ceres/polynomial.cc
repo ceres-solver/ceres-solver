@@ -329,7 +329,7 @@ string FunctionSample::ToDebugString() const {
                       x, value, gradient, value_is_valid, gradient_is_valid);
 }
 
-Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
+Vector FindInterpolatingPolynomial(const std::vector<FunctionSample>& samples) {
   const int num_samples = samples.size();
   int num_constraints = 0;
   for (int i = 0; i < num_samples; ++i) {
@@ -369,7 +369,7 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
   return lhs.fullPivLu().solve(rhs);
 }
 
-void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
+void MinimizeInterpolatingPolynomial(const std::vector<FunctionSample>& samples,
                                      double x_min,
                                      double x_max,
                                      double* optimal_x,
