@@ -97,7 +97,7 @@ Modeling
    Algorithmically this means that given :math:`y`, compute :math:`x =
    f^{-1}(y)` by whatever means you can. Evaluate the Jacobian of
    :math:`f` at :math:`x`. If the Jacobian matrix is invertible, then
-   the inverse is the Jacobian of the inverse at :math:`y`.
+   its inverse is the Jacobian of :math:`f^{-1}(y)` at  :math:`y`.
 
    One can put this into practice with the following code fragment.
 
