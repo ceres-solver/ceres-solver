@@ -105,6 +105,7 @@ class CERES_EXPORT Solver {
       // Choose a default sparse linear algebra library in the order:
       //
       //   SUITE_SPARSE > CX_SPARSE > EIGEN_SPARSE
+      sparse_linear_algebra_library_type = DISABLED_NO_SPARSE_LIBRARY;
 #if !defined(CERES_NO_SUITESPARSE)
       sparse_linear_algebra_library_type = SUITE_SPARSE;
 #else
