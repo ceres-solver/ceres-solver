@@ -370,6 +370,16 @@ ELSE (CXSPARSE)
                          CXSPARSE_LIBRARY)
 ENDIF (CXSPARSE)
 
+# Ensure that the user understands they have disabled all sparse libraries.
+IF (NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
+  MESSAGE("   ===============================================================")
+  MESSAGE("   Compiling without any sparse library: SuiteSparse, CXSparse ")
+  MESSAGE("   & Eigen (Sparse) are all disabled or unavailable.  No sparse ")
+  MESSAGE("   linear solvers (SPARSE_NORMAL_CHOLESKY & SPARSE_SCHUR)")
+  MESSAGE("   will be available when Ceres is used.")
+  MESSAGE("   ===============================================================")
+ENDIF(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
+
 # GFlags.
 IF (GFLAGS)
   HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GFLAGS_INCLUDE GFLAGS_INCLUDE_DIR_HINTS)
