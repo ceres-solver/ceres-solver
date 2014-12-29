@@ -293,6 +293,42 @@ TEST(Solver, SparseSchurNoEigenSparse) {
 }
 #endif
 
+TEST(Solver, SparseNormalCholeskyNoSparseLibrary) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = NO_SPARSE;
+  options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, SparseSchurNoSparseLibrary) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = NO_SPARSE;
+  options.linear_solver_type = SPARSE_SCHUR;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, IterativeSchurWithClusterJacobiPerconditionerNoSparseLibrary) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = NO_SPARSE;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  // Requires SuiteSparse.
+  options.preconditioner_type = CLUSTER_JACOBI;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
+TEST(Solver, IterativeSchurWithClusterTridiagonalPerconditionerNoSparseLibrary) {
+  Solver::Options options;
+  options.sparse_linear_algebra_library_type = NO_SPARSE;
+  options.linear_solver_type = ITERATIVE_SCHUR;
+  // Requires SuiteSparse.
+  options.preconditioner_type = CLUSTER_TRIDIAGONAL;
+  string message;
+  EXPECT_FALSE(options.IsValid(&message));
+}
+
 TEST(Solver, IterativeLinearSolverForDogleg) {
   Solver::Options options;
   options.trust_region_strategy_type = DOGLEG;

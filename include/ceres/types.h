@@ -157,7 +157,12 @@ enum SparseLinearAlgebraLibraryType {
 
   // Eigen's sparse linear algebra routines. In particular Ceres uses
   // the Simplicial LDLT routines.
-  EIGEN_SPARSE
+  EIGEN_SPARSE,
+
+  // No sparse linear solver should be used.  This does not necessarily
+  // imply that Ceres was built without any sparse library, although that
+  // is the likely use case, merely that one should not be used.
+  NO_SPARSE
 };
 
 enum DenseLinearAlgebraLibraryType {

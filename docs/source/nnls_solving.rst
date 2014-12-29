@@ -1237,13 +1237,16 @@ elimination group [LiSaad]_.
 
 .. member:: SparseLinearAlgebraLibrary Solver::Options::sparse_linear_algebra_library_type
 
-   Default:``SUITE_SPARSE``
+   Default: The highest available according to: ``SUITE_SPARSE`` >
+   ``CX_SPARSE`` > ``EIGEN_SPARSE`` > ``NO_SPARSE``
 
    Ceres supports the use of three sparse linear algebra libraries,
    ``SuiteSparse``, which is enabled by setting this parameter to
    ``SUITE_SPARSE``, ``CXSparse``, which can be selected by setting
-   this parameter to ```CX_SPARSE`` and ``Eigen`` which is enabled by
-   setting this parameter to ``EIGEN_SPARSE``.
+   this parameter to ``CX_SPARSE`` and ``Eigen`` which is enabled by
+   setting this parameter to ``EIGEN_SPARSE``.  Lastly, ``NO_SPARSE``
+   means that no sparse linear solver should be used; note that this is
+   irrespective of whether Ceres was compiled with support for one.
 
    ``SuiteSparse`` is a sophisticated and complex sparse linear
    algebra library and should be used in general.
