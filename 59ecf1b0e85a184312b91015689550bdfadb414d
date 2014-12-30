@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2147fc3f_f2f74098",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-12-30T21:54:51Z",
+      "side": 1,
+      "message": "This comment is not quite right. The enum does not say what the compilation configuration of Ceres is, the enum is just to indicate that no sparse linear algebra library should be used. \n\nIt is the Solver::Options::sparse_linear_algebra_library_type which has a default value of NO_SPARSE to indicate that it was compiled with no sparse linear algebra libraries. \n\nThe use is of course free to set that enum to this value if  they want (not sure why but they can).",
+      "revId": "59ecf1b0e85a184312b91015689550bdfadb414d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
