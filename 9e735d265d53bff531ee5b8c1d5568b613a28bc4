@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2147fc3f_d2f244ab",
+        "filename": "internal/ceres/trust_region_preprocessor_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2014-12-30T21:54:51Z",
+      "side": 0,
+      "message": "good catch.\n\nin light of this fix, is the larger enum fix still needed?",
+      "range": {
+        "startLine": 205,
+        "startChar": 11,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "9e735d265d53bff531ee5b8c1d5568b613a28bc4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
