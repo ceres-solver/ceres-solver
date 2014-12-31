@@ -22,6 +22,30 @@
       "revId": "9e735d265d53bff531ee5b8c1d5568b613a28bc4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a185ac8b_66be2a34",
+        "filename": "internal/ceres/trust_region_preprocessor_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-31T13:43:35Z",
+      "side": 0,
+      "message": "Yes it is, as otherwise the default value is still undefined and can be garbage and thus the solver_test will still fail.",
+      "parentUuid": "2147fc3f_d2f244ab",
+      "range": {
+        "startLine": 205,
+        "startChar": 11,
+        "endLine": 205,
+        "endChar": 29
+      },
+      "revId": "9e735d265d53bff531ee5b8c1d5568b613a28bc4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
