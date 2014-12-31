@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2147fc3f_d29fa4c4",
+        "filename": "internal/ceres/solver_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2014-12-31T14:50:38Z",
+      "side": 1,
+      "message": "also iterative_schur with cluster_jacobi and cluster_tridiagonal preconditioners",
+      "revId": "9be89b8c994b4e2084514bda02f0e1932d1378d4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
