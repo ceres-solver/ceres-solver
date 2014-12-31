@@ -16,6 +16,24 @@
       "revId": "59ecf1b0e85a184312b91015689550bdfadb414d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c180e07b_2aa30385",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2014-12-31T13:43:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2147fc3f_f2f74098",
+      "revId": "59ecf1b0e85a184312b91015689550bdfadb414d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
