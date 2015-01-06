@@ -31,7 +31,7 @@ optional. For details on customizing the build process, see
   .. NOTE ::
 
     Ceres can also use Eigen as a sparse linear algebra
-    library. Please see the documentation for ``-DEIGENSPARSE`` for`
+    library. Please see the documentation for ``EIGENSPARSE`` for
     more details.
 
 - `CMake <http://www.cmake.org>`_ 2.8.0 or later.
@@ -51,6 +51,14 @@ optional. For details on customizing the build process, see
     **We do not advise using** ``miniglog`` **on platforms other than
     Android due to the various performance and functionality
     compromises in** ``miniglog``.
+
+  .. NOTE ::
+
+     If you are compiling ``glog`` from source, please note that currently,
+     the unit tests for ``glog`` (which are enabled by default) do not compile
+     against a default build of ``gflags`` 2.1 as the gflags namespace changed
+     from ``google::`` to ``gflags::``.  A patch to fix this is available from
+     `here <https://code.google.com/p/google-glog/issues/detail?id=194>`_.
 
 - `Google Flags <http://code.google.com/p/gflags>`_. Needed to build
   examples and tests.
