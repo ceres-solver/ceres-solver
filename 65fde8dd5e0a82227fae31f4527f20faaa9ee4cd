@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee2f91b3_a2c99e39",
+        "filename": "internal/ceres/canonical_views_clustering.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-07T22:17:48Z",
+      "side": 1,
+      "message": "The line break here can get reverted.",
+      "revId": "65fde8dd5e0a82227fae31f4527f20faaa9ee4cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee2f91b3_e2d3a6e1",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-07T22:17:48Z",
+      "side": 1,
+      "message": "I guess a (void) arg; is not needed? I thought we compiled with Wunused.",
+      "revId": "65fde8dd5e0a82227fae31f4527f20faaa9ee4cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee2f91b3_e277263a",
+        "filename": "internal/ceres/solver_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-07T22:17:48Z",
+      "side": 1,
+      "message": "include order",
+      "revId": "65fde8dd5e0a82227fae31f4527f20faaa9ee4cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee2f91b3_424412ec",
+        "filename": "internal/ceres/split.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-07T22:17:48Z",
+      "side": 1,
+      "message": "Unrelated to the change at hand, these should probably be in ::internal.",
+      "revId": "65fde8dd5e0a82227fae31f4527f20faaa9ee4cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
