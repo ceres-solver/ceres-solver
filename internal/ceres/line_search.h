@@ -179,7 +179,7 @@ class LineSearch {
     // the next candidate step size across all iterations.
     double polynomial_minimization_time_in_seconds;
     double total_time_in_seconds;
-    string error;
+    std::string error;
   };
 
   explicit LineSearch(const LineSearch::Options& options);
@@ -187,7 +187,7 @@ class LineSearch {
 
   static LineSearch* Create(const LineSearchType line_search_type,
                             const LineSearch::Options& options,
-                            string* error);
+                            std::string* error);
 
   // Perform the line search.
   //

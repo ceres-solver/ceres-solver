@@ -503,7 +503,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
   LOG(INFO) << "Rotation:";
   LOG(INFO) << "EXPECTED        |        ACTUAL";
   for (int i = 0; i < 3; ++i) {
-    string line;
+    std::string line;
     for (int j = 0; j < 3; ++j) {
       StringAppendF(&line, "%g ", kMatrix[i][j]);
     }

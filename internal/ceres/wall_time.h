@@ -72,14 +72,14 @@ double WallTimeInSeconds();
 //     Total:  time3  time1 + time2 + time3;
 class EventLogger {
  public:
-  explicit EventLogger(const string& logger_name);
+  explicit EventLogger(const std::string& logger_name);
   ~EventLogger();
-  void AddEvent(const string& event_name);
+  void AddEvent(const std::string& event_name);
 
  private:
   const double start_time_;
   double last_event_time_;
-  string events_;
+  std::string events_;
 };
 
 }  // namespace internal

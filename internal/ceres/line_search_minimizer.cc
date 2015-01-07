@@ -69,7 +69,7 @@ namespace {
 bool Evaluate(Evaluator* evaluator,
               const Vector& x,
               LineSearchMinimizer::State* state,
-              string* message) {
+              std::string* message) {
   if (!evaluator->Evaluate(x.data(),
                            &(state->cost),
                            NULL,

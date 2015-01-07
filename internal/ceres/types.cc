@@ -36,6 +36,8 @@
 
 namespace ceres {
 
+using std::string;
+
 #define CASESTR(x) case x: return #x
 #define STRENUM(x) if (value == #x) { *type = x; return true;}
 

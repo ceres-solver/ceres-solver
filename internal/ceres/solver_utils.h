@@ -55,7 +55,7 @@ void SetSummaryFinalCost(SummaryType* summary) {
   }
 }
 
-string VersionString();
+std::string VersionString();
 
 }  // namespace internal
 }  // namespace ceres

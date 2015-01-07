@@ -51,6 +51,7 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
 using std::vector;
 
 // TODO(keir): Consider pushing this into a common test utils file.

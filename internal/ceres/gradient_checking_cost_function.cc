@@ -52,6 +52,7 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
 using std::vector;
 
 namespace {

@@ -84,7 +84,7 @@ struct PreprocessedProblem {
       : fixed_cost(0.0) {
   }
 
-  string error;
+  std::string error;
   Solver::Options options;
   LinearSolver::Options linear_solver_options;
   Evaluator::Options evaluator_options;

@@ -34,8 +34,6 @@
 // This file needs to compile as c code.
 #ifdef __cplusplus
 
-#include <string>
-
 #include "ceres/internal/config.h"
 
 #if defined(CERES_TR1_MEMORY_HEADER)
@@ -45,10 +43,6 @@
 #endif
 
 namespace ceres {
-
-// This is necessary to properly handle the case that there is a different
-// "string" implementation in the global namespace.
-using std::string;
 
 #if defined(CERES_TR1_SHARED_PTR)
 using std::tr1::shared_ptr;

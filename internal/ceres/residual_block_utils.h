@@ -68,11 +68,11 @@ bool IsEvaluationValid(const ResidualBlock& block,
 // Create a string representation of the Residual block containing the
 // value of the parameters, residuals and jacobians if present.
 // Useful for debugging output.
-string EvaluationToString(const ResidualBlock& block,
-                          double const* const* parameters,
-                          double* cost,
-                          double* residuals,
-                          double** jacobians);
+std::string EvaluationToString(const ResidualBlock& block,
+                               double const* const* parameters,
+                               double* cost,
+                               double* residuals,
+                               double** jacobians);
 
 }  // namespace internal
 }  // namespace ceres

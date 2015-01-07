@@ -60,7 +60,7 @@ class CoordinateDescentMinimizer : public Minimizer {
   bool Init(const Program& program,
             const ProblemImpl::ParameterMap& parameter_map,
             const ParameterBlockOrdering& ordering,
-            string* error);
+            std::string* error);
 
   // Minimizer interface.
   virtual ~CoordinateDescentMinimizer();
@@ -71,7 +71,7 @@ class CoordinateDescentMinimizer : public Minimizer {
   // Verify that each group in the ordering forms an independent set.
   static bool IsOrderingValid(const Program& program,
                               const ParameterBlockOrdering& ordering,
-                              string* message);
+                              std::string* message);
 
   // Find a recursive decomposition of the Hessian matrix as a set
   // of independent sets of decreasing size and invert it. This

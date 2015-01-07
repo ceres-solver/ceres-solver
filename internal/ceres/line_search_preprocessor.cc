@@ -42,7 +42,7 @@ namespace ceres {
 namespace internal {
 namespace {
 
-bool IsProgramValid(const Program& program, string* error) {
+bool IsProgramValid(const Program& program, std::string* error) {
   if (program.IsBoundsConstrained()) {
     *error = "LINE_SEARCH Minimizer does not support bounds.";
     return false;

@@ -64,7 +64,7 @@ int FindInvalidValue(const int size, const double* x);
 
 // Utility routine to print an array of doubles to a string. If the
 // array pointer is NULL, it is treated as an array of zeros.
-void AppendArrayToString(const int size, const double* x, string* result);
+void AppendArrayToString(const int size, const double* x, std::string* result);
 
 extern const double kImpossibleValue;
 

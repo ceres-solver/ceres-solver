@@ -47,6 +47,7 @@ namespace internal {
 
 using std::map;
 using std::ostream;
+using std::string;
 using std::vector;
 
 namespace {

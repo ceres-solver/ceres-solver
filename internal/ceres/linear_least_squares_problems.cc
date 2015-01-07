@@ -46,6 +46,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id) {
   switch (id) {
     case 0:

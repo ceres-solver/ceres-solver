@@ -58,7 +58,7 @@ class LAPACK {
       int num_rows,
       const double* lhs,
       double* rhs_and_solution,
-      string* message);
+      std::string* message);
 
   // The SolveUsingQR function requires a buffer for its temporary
   // computation. This function given the size of the lhs matrix will
@@ -91,7 +91,7 @@ class LAPACK {
       int work_size,
       double* work,
       double* rhs_and_solution,
-      string* message);
+      std::string* message);
 };
 
 }  // namespace internal

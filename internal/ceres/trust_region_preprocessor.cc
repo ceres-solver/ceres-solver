@@ -67,7 +67,7 @@ ParameterBlockOrdering* CreateDefaultLinearSolverOrdering(
 
 // Check if all the user supplied values in the parameter blocks are
 // sane or not, and if the program is feasible or not.
-bool IsProgramValid(const Program& program, string* error) {
+bool IsProgramValid(const Program& program, std::string* error) {
   return (program.ParameterBlocksAreFinite(error) &&
           program.IsFeasible(error));
 }
@@ -84,7 +84,7 @@ void AlternateLinearSolverAndPreconditionerForSchurTypeLinearSolver(
   options->linear_solver_type = LinearSolver::LinearSolverForZeroEBlocks(
       linear_solver_type_given);
 
-  string message;
+  std::string message;
   if (linear_solver_type_given == ITERATIVE_SCHUR) {
     options->preconditioner_type = Preconditioner::PreconditionerForZeroEBlocks(
         preconditioner_type_given);

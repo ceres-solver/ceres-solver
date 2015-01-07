@@ -49,8 +49,9 @@
 namespace ceres {
 namespace {
 
-using std::vector;
 using std::map;
+using std::string;
+using std::vector;
 
 #define OPTION_OP(x, y, OP)                                             \
   if (!(options.x OP y)) {                                              \

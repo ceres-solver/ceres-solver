@@ -42,6 +42,7 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
 using std::vector;
 
 // A cost function that simply returns its argument.

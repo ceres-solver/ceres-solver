@@ -41,8 +41,8 @@ namespace internal {
 // Split a string using one or more character delimiters, presented as a
 // nul-terminated c string. Append the components to 'result'. If there are
 // consecutive delimiters, this function skips over all of them.
-void SplitStringUsing(const string& full, const char* delim,
-                      std::vector<string>* res);
+void SplitStringUsing(const std::string& full, const char* delim,
+                      std::vector<std::string>* res);
 
 }  // namespace internal
 }  // namespace ceres

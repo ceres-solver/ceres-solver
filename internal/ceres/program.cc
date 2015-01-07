@@ -51,6 +51,7 @@ namespace ceres {
 namespace internal {
 
 using std::set;
+using std::string;
 using std::vector;
 
 Program::Program() {}

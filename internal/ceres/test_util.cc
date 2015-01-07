@@ -120,7 +120,7 @@ void ExpectArraysClose(int n,
   }
 }
 
-string TestFileAbsolutePath(const string& filename) {
+std::string TestFileAbsolutePath(const std::string& filename) {
   return JoinPath(FLAGS_test_srcdir + CERES_TEST_SRCDIR_SUFFIX,
                   filename);
 }

@@ -105,7 +105,7 @@ TEST(_, ReorderResidualBlockNormalFunction) {
   Program* program = problem.mutable_program();
   program->SetParameterOffsetsAndIndex();
 
-  string message;
+  std::string message;
   EXPECT_TRUE(LexicographicallyOrderResidualBlocks(
                   2,
                   problem.mutable_program(),
@@ -131,7 +131,7 @@ TEST(_, ApplyOrderingOrderingTooSmall) {
   linear_solver_ordering.AddElementToGroup(&y, 1);
 
   Program program(problem.program());
-  string message;
+  std::string message;
   EXPECT_FALSE(ApplyOrdering(problem.parameter_map(),
                              linear_solver_ordering,
                              &program,
@@ -154,7 +154,7 @@ TEST(_, ApplyOrderingNormal) {
   linear_solver_ordering.AddElementToGroup(&z, 1);
 
   Program* program = problem.mutable_program();
-  string message;
+  std::string message;
 
   EXPECT_TRUE(ApplyOrdering(problem.parameter_map(),
                             linear_solver_ordering,

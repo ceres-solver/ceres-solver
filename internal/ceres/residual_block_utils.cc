@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 void InvalidateEvaluation(const ResidualBlock& block,
                           double* cost,
                           double* residuals,

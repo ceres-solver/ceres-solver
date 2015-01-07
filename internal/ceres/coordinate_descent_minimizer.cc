@@ -54,6 +54,7 @@ namespace internal {
 
 using std::map;
 using std::set;
+using std::string;
 using std::vector;
 
 CoordinateDescentMinimizer::~CoordinateDescentMinimizer() {

@@ -39,6 +39,7 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
 using std::vector;
 
 // If we know how much to allocate for a vector of strings, we can allocate the

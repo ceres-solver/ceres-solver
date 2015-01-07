@@ -98,7 +98,7 @@ class TrustRegionStrategy {
     // name starting with dump_filename_base.  If dump_format_type is
     // CONSOLE then dump_filename_base will be ignored and the linear
     // system will be written to the standard error.
-    string dump_filename_base;
+    std::string dump_filename_base;
     DumpFormatType dump_format_type;
   };
 

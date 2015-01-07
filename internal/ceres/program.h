@@ -105,7 +105,7 @@ class Program {
   // offsets) are correct.
   bool IsValid() const;
 
-  bool ParameterBlocksAreFinite(string* message) const;
+  bool ParameterBlocksAreFinite(std::string* message) const;
 
   // Returns true if the program has any non-constant parameter blocks
   // which have non-trivial bounds constraints.
@@ -114,7 +114,7 @@ class Program {
   // Returns false, if the program has any constant parameter blocks
   // which are not feasible, or any variable parameter blocks which
   // have a lower bound greater than or equal to the upper bound.
-  bool IsFeasible(string* message) const;
+  bool IsFeasible(std::string* message) const;
 
   // Loop over each residual block and ensure that no two parameter
   // blocks in the same residual block are part of
@@ -145,7 +145,7 @@ class Program {
   // the problem.
   Program* CreateReducedProgram(std::vector<double*>* removed_parameter_blocks,
                                 double* fixed_cost,
-                                string* error) const;
+                                std::string* error) const;
 
   // See problem.h for what these do.
   int NumParameterBlocks() const;
@@ -161,7 +161,7 @@ class Program {
 
   // A human-readable dump of the parameter blocks for debugging.
   // TODO(keir): If necessary, also dump the residual blocks.
-  string ToString() const;
+  std::string ToString() const;
 
  private:
   // Remove constant parameter blocks and residual blocks with no
@@ -177,7 +177,7 @@ class Program {
   // error will contain a human readable description of the problem.
   bool RemoveFixedBlocks(std::vector<double*>* removed_parameter_blocks,
                          double* fixed_cost,
-                         string* message);
+                         std::string* message);
 
   // The Program does not own the ParameterBlock or ResidualBlock objects.
   std::vector<ParameterBlock*> parameter_blocks_;

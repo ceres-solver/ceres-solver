@@ -37,6 +37,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 StateUpdatingCallback::StateUpdatingCallback(Program* program,
                                              double* parameters)
     : program_(program), parameters_(parameters) {}

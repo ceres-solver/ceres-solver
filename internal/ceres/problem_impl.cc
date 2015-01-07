@@ -55,9 +55,9 @@
 namespace ceres {
 namespace internal {
 
-using std::vector;
 using std::map;
-
+using std::string;
+using std::vector;
 typedef std::map<double*, internal::ParameterBlock*> ParameterMap;
 
 namespace {

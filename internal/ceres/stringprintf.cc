@@ -41,6 +41,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 #ifdef _MSC_VER
 enum { IS_COMPILER_MSVC = 1 };
 #if _MSC_VER < 1800

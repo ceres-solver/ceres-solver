@@ -134,7 +134,7 @@ class Minimizer {
     int max_consecutive_nonmonotonic_steps;
     std::vector<int> trust_region_minimizer_iterations_to_dump;
     DumpFormatType trust_region_problem_dump_format_type;
-    string trust_region_problem_dump_directory;
+    std::string trust_region_problem_dump_directory;
     int max_num_consecutive_invalid_steps;
     double min_trust_region_radius;
     LineSearchDirectionType line_search_direction_type;

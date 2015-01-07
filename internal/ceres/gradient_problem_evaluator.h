@@ -79,11 +79,11 @@ class GradientProblemEvaluator : public Evaluator {
 
   virtual int NumResiduals() const { return 1; }
 
-  virtual std::map<string, int> CallStatistics() const {
+  virtual std::map<std::string, int> CallStatistics() const {
     return execution_summary_.calls();
   }
 
-  virtual std::map<string, double> TimeStatistics() const {
+  virtual std::map<std::string, double> TimeStatistics() const {
     return execution_summary_.times();
   }
 

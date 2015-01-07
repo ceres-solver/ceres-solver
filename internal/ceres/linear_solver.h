@@ -273,7 +273,7 @@ class LinearSolver {
     double residual_norm;
     int num_iterations;
     LinearSolverTerminationType termination_type;
-    string message;
+    std::string message;
   };
 
   // If the optimization problem is such that there are no remaining
@@ -296,12 +296,12 @@ class LinearSolver {
   // that the base class implementation does not have to worry about
   // life time issues. Further, these calls are not expected to be
   // frequent or performance sensitive.
-  virtual std::map<string, int> CallStatistics() const {
-    return std::map<string, int>();
+  virtual std::map<std::string, int> CallStatistics() const {
+    return std::map<std::string, int>();
   }
 
-  virtual std::map<string, double> TimeStatistics() const {
-    return std::map<string, double>();
+  virtual std::map<std::string, double> TimeStatistics() const {
+    return std::map<std::string, double>();
   }
 
   // Factory
@@ -331,11 +331,11 @@ class TypedLinearSolver : public LinearSolver {
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
   }
 
-  virtual std::map<string, int> CallStatistics() const {
+  virtual std::map<std::string, int> CallStatistics() const {
     return execution_summary_.calls();
   }
 
-  virtual std::map<string, double> TimeStatistics() const {
+  virtual std::map<std::string, double> TimeStatistics() const {
     return execution_summary_.times();
   }
 

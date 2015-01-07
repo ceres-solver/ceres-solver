@@ -143,12 +143,12 @@ class SuiteSparse {
   // message contains an explanation of the failures if any.
   //
   // Caller owns the result.
-  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A, string* message);
+  cholmod_factor* AnalyzeCholesky(cholmod_sparse* A, std::string* message);
 
   cholmod_factor* BlockAnalyzeCholesky(cholmod_sparse* A,
                                        const std::vector<int>& row_blocks,
                                        const std::vector<int>& col_blocks,
-                                       string* message);
+                                       std::string* message);
 
   // If A is symmetric, then compute the symbolic Cholesky
   // factorization of A(ordering, ordering). If A is unsymmetric, then
@@ -164,7 +164,7 @@ class SuiteSparse {
   cholmod_factor* AnalyzeCholeskyWithUserOrdering(
       cholmod_sparse* A,
       const std::vector<int>& ordering,
-      string* message);
+      std::string* message);
 
   // Perform a symbolic factorization of A without re-ordering A. No
   // postordering of the elimination tree is performed. This ensures
@@ -173,7 +173,7 @@ class SuiteSparse {
   //
   // message contains an explanation of the failures if any.
   cholmod_factor* AnalyzeCholeskyWithNaturalOrdering(cholmod_sparse* A,
-                                                     string* message);
+                                                     std::string* message);
 
   // Use the symbolic factorization in L, to find the numerical
   // factorization for the matrix A or AA^T. Return true if
@@ -183,14 +183,14 @@ class SuiteSparse {
   // message contains an explanation of the failures if any.
   LinearSolverTerminationType Cholesky(cholmod_sparse* A,
                                        cholmod_factor* L,
-                                       string* message);
+                                       std::string* message);
 
   // Given a Cholesky factorization of a matrix A = LL^T, solve the
   // linear system Ax = b, and return the result. If the Solve fails
   // NULL is returned. Caller owns the result.
   //
   // message contains an explanation of the failures if any.
-  cholmod_dense* Solve(cholmod_factor* L, cholmod_dense* b, string* message);
+  cholmod_dense* Solve(cholmod_factor* L, cholmod_dense* b, std::string* message);
 
   // By virtue of the modeling layer in Ceres being block oriented,
   // all the matrices used by Ceres are also block oriented. When
@@ -260,15 +260,15 @@ class SuiteSparse {
   void Free(cholmod_dense* m)  { cholmod_free_dense(&m, &cc_);  }
   void Free(cholmod_factor* m) { cholmod_free_factor(&m, &cc_); }
 
-  void Print(cholmod_sparse* m, const string& name) {
+  void Print(cholmod_sparse* m, const std::string& name) {
     cholmod_print_sparse(m, const_cast<char*>(name.c_str()), &cc_);
   }
 
-  void Print(cholmod_dense* m, const string& name) {
+  void Print(cholmod_dense* m, const std::string& name) {
     cholmod_print_dense(m, const_cast<char*>(name.c_str()), &cc_);
   }
 
-  void Print(cholmod_triplet* m, const string& name) {
+  void Print(cholmod_triplet* m, const std::string& name) {
     cholmod_print_triplet(m, const_cast<char*>(name.c_str()), &cc_);
   }
 

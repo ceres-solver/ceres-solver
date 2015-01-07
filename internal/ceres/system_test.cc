@@ -60,6 +60,7 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
 using std::vector;
 
 const bool kAutomaticOrdering = true;

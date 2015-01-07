@@ -46,6 +46,7 @@
 namespace ceres {
 using internal::StringPrintf;
 using internal::StringAppendF;
+using std::string;
 
 namespace {
 

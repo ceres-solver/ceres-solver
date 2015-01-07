@@ -61,7 +61,7 @@ CostFunction* CreateGradientCheckingCostFunction(
     const CostFunction* cost_function,
     double relative_step_size,
     double relative_precision,
-    const string& extra_info);
+    const std::string& extra_info);
 
 // Create a new ProblemImpl object from the input problem_impl, where
 // each CostFunctions in problem_impl are wrapped inside a

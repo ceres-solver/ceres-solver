@@ -117,7 +117,7 @@ bool ResidualBlock::Evaluate(const bool apply_loss_function,
                          cost,
                          residuals,
                          eval_jacobians)) {
-    string message =
+    std::string message =
         "\n\n"
         "Error in evaluating the ResidualBlock.\n\n"
         "There are two possible reasons. Either the CostFunction did not evaluate and fill all    \n"  // NOLINT

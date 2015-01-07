@@ -41,6 +41,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 // It is a near impossibility that user code generates this exact
 // value in normal operation, thus we will use it to fill arrays
 // before passing them to user code. If on return an element of the

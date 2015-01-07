@@ -70,7 +70,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingCholesky(
     int num_rows,
     const double* in_lhs,
     double* rhs_and_solution,
-    string* message) {
+    std::string* message) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a BLAS library.";
   return LINEAR_SOLVER_FATAL_ERROR;
@@ -151,7 +151,7 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
     int work_size,
     double* work,
     double* rhs_and_solution,
-    string* message) {
+    std::string* message) {
 #ifdef CERES_NO_LAPACK
   LOG(FATAL) << "Ceres was built without a LAPACK library.";
   return LINEAR_SOLVER_FATAL_ERROR;

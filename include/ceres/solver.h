@@ -141,7 +141,7 @@ class CERES_EXPORT Solver {
     // Returns true if the options struct has a valid
     // configuration. Returns false otherwise, and fills in *error
     // with a message describing the problem.
-    bool IsValid(string* error) const;
+    bool IsValid(std::string* error) const;
 
     // Minimizer options ----------------------------------------
 
@@ -683,7 +683,7 @@ class CERES_EXPORT Solver {
     // non-empty if trust_region_minimizer_iterations_to_dump is
     // non-empty and trust_region_problem_dump_format_type is not
     // CONSOLE.
-    string trust_region_problem_dump_directory;
+    std::string trust_region_problem_dump_directory;
     DumpFormatType trust_region_problem_dump_format_type;
 
     // Finite differences options ----------------------------------------------
@@ -755,11 +755,11 @@ class CERES_EXPORT Solver {
 
     // A brief one line description of the state of the solver after
     // termination.
-    string BriefReport() const;
+    std::string BriefReport() const;
 
     // A full multiline description of the state of the solver after
     // termination.
-    string FullReport() const;
+    std::string FullReport() const;
 
     bool IsSolutionUsable() const;
 
@@ -769,7 +769,7 @@ class CERES_EXPORT Solver {
     TerminationType termination_type;
 
     // Reason why the solver terminated.
-    string message;
+    std::string message;
 
     // Cost of the problem (value of the objective function) before
     // the optimization.

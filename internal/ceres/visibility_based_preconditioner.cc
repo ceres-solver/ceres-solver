@@ -445,7 +445,7 @@ LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   lhs->stype = 1;
 
   // TODO(sameeragarwal): Refactor to pipe this up and out.
-  string status;
+  std::string status;
 
   // Symbolic factorization is computed if we don't already have one handy.
   if (factor_ == NULL) {
@@ -470,7 +470,7 @@ void VisibilityBasedPreconditioner::RightMultiply(const double* x,
   const int num_rows = m_->num_rows();
   memcpy(CHECK_NOTNULL(tmp_rhs_)->x, x, m_->num_rows() * sizeof(*x));
   // TODO(sameeragarwal): Better error handling.
-  string status;
+  std::string status;
   cholmod_dense* solution =
       CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_, &status));
   memcpy(y, solution->x, sizeof(*y) * num_rows);

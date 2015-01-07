@@ -37,8 +37,8 @@
 namespace ceres {
 namespace internal {
 
-string VersionString() {
-  string value = string(CERES_VERSION_STRING);
+std::string VersionString() {
+  std::string value = std::string(CERES_VERSION_STRING);
 
 #ifdef CERES_NO_LAPACK
   value += "-no_lapack";

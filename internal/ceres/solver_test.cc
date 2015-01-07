@@ -43,6 +43,8 @@
 namespace ceres {
 namespace internal {
 
+using std::string;
+
 TEST(SolverOptions, DefaultTrustRegionOptionsAreValid) {
   Solver::Options options;
   options.minimizer_type = TRUST_REGION;

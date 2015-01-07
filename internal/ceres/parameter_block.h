@@ -237,7 +237,7 @@ class ParameterBlock {
     return true;
   }
 
-  string ToString() const {
+  std::string ToString() const {
     return StringPrintf("{ user_state=%p, state=%p, size=%d, "
                         "constant=%d, index=%d, state_offset=%d, "
                         "delta_offset=%d }",

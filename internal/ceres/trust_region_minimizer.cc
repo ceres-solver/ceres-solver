@@ -85,7 +85,7 @@ LineSearch::Summary DoLineSearch(const Minimizer::Options& options,
       options.max_line_search_step_expansion;
   line_search_options.function = &line_search_function;
 
-  string message;
+  std::string message;
   scoped_ptr<LineSearch> line_search(
       CHECK_NOTNULL(LineSearch::Create(ceres::ARMIJO,
                                        line_search_options,

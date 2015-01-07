@@ -63,7 +63,7 @@ void ExpectArraysCloseUptoScale(int n,
 
 // Construct a fully qualified path for the test file depending on the
 // local build/testing environment.
-string TestFileAbsolutePath(const string& filename);
+std::string TestFileAbsolutePath(const std::string& filename);
 
 }  // namespace internal
 }  // namespace ceres
