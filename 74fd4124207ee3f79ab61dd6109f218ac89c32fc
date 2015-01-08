@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb375f9_17a6f4c8",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-08T21:39:52Z",
+      "side": 1,
+      "message": "I\u0027m ok with but not convinced by this change. Perhaps all of these should be in a switch/break.",
+      "revId": "74fd4124207ee3f79ab61dd6109f218ac89c32fc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
