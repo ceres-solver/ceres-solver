@@ -41,8 +41,8 @@
 namespace ceres {
 namespace internal {
 
-using std::vector;
 using std::copy;
+using std::vector;
 
 class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
  protected:

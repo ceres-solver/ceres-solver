@@ -50,6 +50,7 @@
 namespace ceres {
 namespace internal {
 
+using std::max;
 using std::set;
 using std::string;
 using std::vector;
@@ -284,10 +285,9 @@ Program* Program::CreateReducedProgram(
   return reduced_program.release();
 }
 
-bool Program::RemoveFixedBlocks(
-    vector<double*>* removed_parameter_blocks,
-    double* fixed_cost,
-    string* error) {
+bool Program::RemoveFixedBlocks(vector<double*>* removed_parameter_blocks,
+                                double* fixed_cost,
+                                string* error) {
   CHECK_NOTNULL(removed_parameter_blocks);
   CHECK_NOTNULL(fixed_cost);
   CHECK_NOTNULL(error);
@@ -373,8 +373,9 @@ bool Program::IsParameterBlockSetIndependent(
   // blocks in the same residual block are part of
   // parameter_block_ptrs as that would violate the assumption that it
   // is an independent set in the Hessian matrix.
-  vector<ResidualBlock*>::const_iterator it = residual_blocks_.begin();
-  for (; it != residual_blocks_.end(); ++it) {
+  for (vector<ResidualBlock*>::const_iterator it = residual_blocks_.begin();
+       it != residual_blocks_.end();
+       ++it) {
     ParameterBlock* const* parameter_blocks = (*it)->parameter_blocks();
     const int num_parameter_blocks = (*it)->NumParameterBlocks();
     int count = 0;
@@ -469,8 +470,8 @@ int Program::MaxScratchDoublesNeededForEvaluate() const {
   int max_scratch_bytes_for_evaluate = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
     max_scratch_bytes_for_evaluate =
-        std::max(max_scratch_bytes_for_evaluate,
-                 residual_blocks_[i]->NumScratchDoublesForEvaluate());
+        max(max_scratch_bytes_for_evaluate,
+            residual_blocks_[i]->NumScratchDoublesForEvaluate());
   }
   return max_scratch_bytes_for_evaluate;
 }
@@ -485,7 +486,7 @@ int Program::MaxDerivativesPerResidualBlock() const {
       derivatives += residual_block->NumResiduals() *
                      residual_block->parameter_blocks()[j]->LocalSize();
     }
-    max_derivatives = std::max(max_derivatives, derivatives);
+    max_derivatives = max(max_derivatives, derivatives);
   }
   return max_derivatives;
 }
@@ -493,8 +494,8 @@ int Program::MaxDerivativesPerResidualBlock() const {
 int Program::MaxParametersPerResidualBlock() const {
   int max_parameters = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_parameters = std::max(max_parameters,
-                              residual_blocks_[i]->NumParameterBlocks());
+    max_parameters = max(max_parameters,
+                         residual_blocks_[i]->NumParameterBlocks());
   }
   return max_parameters;
 }
@@ -502,8 +503,7 @@ int Program::MaxParametersPerResidualBlock() const {
 int Program::MaxResidualsPerResidualBlock() const {
   int max_residuals = 0;
   for (int i = 0; i < residual_blocks_.size(); ++i) {
-    max_residuals = std::max(max_residuals,
-                             residual_blocks_[i]->NumResiduals());
+    max_residuals = max(max_residuals, residual_blocks_[i]->NumResiduals());
   }
   return max_residuals;
 }

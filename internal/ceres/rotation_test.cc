@@ -44,6 +44,10 @@
 namespace ceres {
 namespace internal {
 
+using std::min;
+using std::max;
+using std::numeric_limits;
+using std::string;
 using std::swap;
 
 const double kPi = 3.14159265358979323846;
@@ -55,7 +59,7 @@ double RandDouble() {
 }
 
 // A tolerance value for floating-point comparisons.
-static double const kTolerance = std::numeric_limits<double>::epsilon() * 10;
+static double const kTolerance = numeric_limits<double>::epsilon() * 10;
 
 // Looser tolerance used for numerically unstable conversions.
 static double const kLooseTolerance = 1e-9;
@@ -142,12 +146,12 @@ MATCHER_P(IsNearAngleAxis, expected, "") {
   Eigen::Vector3d e(expected[0], expected[1], expected[2]);
   const double e_norm = e.norm();
 
-  double delta_norm = std::numeric_limits<double>::max();
+  double delta_norm = numeric_limits<double>::max();
   if (e_norm > 0) {
     // Deal with the sign ambiguity near PI. Since the sign can flip,
     // we take the smaller of the two differences.
     if (fabs(e_norm - kPi) < kLooseTolerance) {
-      delta_norm = std::min((a - e).norm(), (a + e).norm()) / e_norm;
+      delta_norm = min((a - e).norm(), (a + e).norm()) / e_norm;
     } else {
       delta_norm = (a - e).norm() / e_norm;
     }
@@ -243,7 +247,7 @@ TEST(Rotation, SmallAngleAxisToQuaternion) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyAngleAxisToQuaternion) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(std::numeric_limits<double>::min(), 0.75);
+  double theta = pow(numeric_limits<double>::min(), 0.75);
   double axis_angle[3] = { theta, 0, 0 };
   double quaternion[4];
   double expected[4] = { cos(theta/2), sin(theta/2.0), 0, 0 };
@@ -304,7 +308,7 @@ TEST(Rotation, SmallQuaternionToAngleAxis) {
 // Test that approximate conversion works for very small angles.
 TEST(Rotation, TinyQuaternionToAngleAxis) {
   // Very small value that could potentially cause underflow.
-  double theta = pow(std::numeric_limits<double>::min(), 0.75);
+  double theta = pow(numeric_limits<double>::min(), 0.75);
   double quaternion[4] = { cos(theta/2), sin(theta/2.0), 0, 0 };
   double axis_angle[3];
   double expected[3] = { theta, 0, 0 };
@@ -503,7 +507,7 @@ TEST(Rotation, AtPiAngleAxisRoundTrip) {
   LOG(INFO) << "Rotation:";
   LOG(INFO) << "EXPECTED        |        ACTUAL";
   for (int i = 0; i < 3; ++i) {
-    std::string line;
+    string line;
     for (int j = 0; j < 3; ++j) {
       StringAppendF(&line, "%g ", kMatrix[i][j]);
     }
@@ -598,7 +602,7 @@ TEST(Rotation, AngleAxisToRotationMatrixAndBackNearZero) {
 
     for (int i = 0; i < 3; ++i) {
       EXPECT_NEAR(round_trip[i], axis_angle[i],
-                  std::numeric_limits<double>::epsilon());
+                  numeric_limits<double>::epsilon());
     }
   }
 }
@@ -701,7 +705,7 @@ bool IsClose(double x, double y) {
   if (x == 0 || y == 0) {
     return absdiff <= kTolerance;
   }
-  double reldiff = absdiff / std::max(fabs(x), fabs(y));
+  double reldiff = absdiff / max(fabs(x), fabs(y));
   return reldiff <= kTolerance;
 }
 
@@ -737,11 +741,11 @@ void ExpectJetArraysClose(const Jet<double, N> *x, const Jet<double, N> *y) {
 
 // Log-10 of a value well below machine precision.
 static const int kSmallTinyCutoff =
-    static_cast<int>(2 * log(std::numeric_limits<double>::epsilon())/log(10.0));
+    static_cast<int>(2 * log(numeric_limits<double>::epsilon())/log(10.0));
 
 // Log-10 of a value just below values representable by double.
 static const int kTinyZeroLimit   =
-    static_cast<int>(1 + log(std::numeric_limits<double>::min())/log(10.0));
+    static_cast<int>(1 + log(numeric_limits<double>::min())/log(10.0));
 
 // Test that exact conversion works for small angles when jets are used.
 TEST(Rotation, SmallAngleAxisToQuaternionForJets) {

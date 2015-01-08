@@ -41,7 +41,6 @@
 #include "ceres/suitesparse.h"
 
 namespace ceres {
-
 namespace internal {
 
 class CompressedRowSparseMatrix;

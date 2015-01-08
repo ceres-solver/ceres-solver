@@ -160,8 +160,7 @@ TEST(_, ApplyOrderingNormal) {
                             linear_solver_ordering,
                             program,
                             &message));
-  const vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
 
   EXPECT_EQ(parameter_blocks.size(), 3);
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);

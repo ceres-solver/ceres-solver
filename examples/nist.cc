@@ -124,12 +124,12 @@ using Eigen::RowMajor;
 typedef Eigen::Matrix<double, Dynamic, 1> Vector;
 typedef Eigen::Matrix<double, Dynamic, Dynamic, RowMajor> Matrix;
 
-using std::ifstream;
-using std::vector;
-using std::string;
-using std::atoi;
 using std::atof;
+using std::atoi;
 using std::cout;
+using std::ifstream;
+using std::string;
+using std::vector;
 
 void SplitStringUsingChar(const string& full,
                           const char delim,

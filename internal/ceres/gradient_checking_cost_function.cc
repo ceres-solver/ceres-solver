@@ -52,6 +52,8 @@
 namespace ceres {
 namespace internal {
 
+using std::abs;
+using std::max;
 using std::string;
 using std::vector;
 
@@ -71,14 +73,14 @@ bool IsClose(double x, double y, double relative_precision,
   if (!relative_error) {
     relative_error = &local_relative_error;
   }
-  *absolute_error = fabs(x - y);
-  *relative_error = *absolute_error / std::max(fabs(x), fabs(y));
+  *absolute_error = abs(x - y);
+  *relative_error = *absolute_error / max(abs(x), abs(y));
   if (x == 0 || y == 0) {
     // If x or y is exactly zero, then relative difference doesn't have any
     // meaning. Take the absolute difference instead.
     *relative_error = *absolute_error;
   }
-  return fabs(*relative_error) < fabs(relative_precision);
+  return abs(*relative_error) < abs(relative_precision);
 }
 
 class GradientCheckingCostFunction : public CostFunction {
@@ -125,8 +127,7 @@ class GradientCheckingCostFunction : public CostFunction {
     vector<Matrix> term_jacobians(block_sizes.size());
     vector<Matrix> finite_difference_jacobians(block_sizes.size());
     vector<double*> term_jacobian_pointers(block_sizes.size());
-    vector<double*> finite_difference_jacobian_pointers(
-        block_sizes.size());
+    vector<double*> finite_difference_jacobian_pointers(block_sizes.size());
     for (int i = 0; i < block_sizes.size(); i++) {
       term_jacobians[i].resize(num_residuals, block_sizes[i]);
       term_jacobian_pointers[i] = term_jacobians[i].data();
@@ -186,8 +187,7 @@ class GradientCheckingCostFunction : public CostFunction {
                        relative_precision_,
                        &relative_error,
                        &absolute_error);
-          worst_relative_error = std::max(worst_relative_error,
-                                          relative_error);
+          worst_relative_error = max(worst_relative_error, relative_error);
 
           StringAppendF(&m, "%6d %4d %4d %17g %17g %17g %17g %17g %17g",
                         k, i, j,
@@ -264,8 +264,7 @@ ProblemImpl* CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
 
   // For every ParameterBlock in problem_impl, create a new parameter
   // block with the same local parameterization and constancy.
-  const vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
   for (int i = 0; i < parameter_blocks.size(); ++i) {
     ParameterBlock* parameter_block = parameter_blocks[i];
     gradient_checking_problem_impl->AddParameterBlock(
@@ -282,8 +281,7 @@ ProblemImpl* CreateGradientCheckingProblemImpl(ProblemImpl* problem_impl,
   // For every ResidualBlock in problem_impl, create a new
   // ResidualBlock by wrapping its CostFunction inside a
   // GradientCheckingCostFunction.
-  const vector<ResidualBlock*>& residual_blocks =
-      program->residual_blocks();
+  const vector<ResidualBlock*>& residual_blocks = program->residual_blocks();
   for (int i = 0; i < residual_blocks.size(); ++i) {
     ResidualBlock* residual_block = residual_blocks[i];
 

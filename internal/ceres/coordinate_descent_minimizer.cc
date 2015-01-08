@@ -107,7 +107,8 @@ bool CoordinateDescentMinimizer::Init(
     const int num_parameter_blocks = residual_block->NumParameterBlocks();
     for (int j = 0; j < num_parameter_blocks; ++j) {
       ParameterBlock* parameter_block = residual_block->parameter_blocks()[j];
-      const map<ParameterBlock*, int>::const_iterator it = parameter_block_index.find(parameter_block);
+      const map<ParameterBlock*, int>::const_iterator it =
+          parameter_block_index.find(parameter_block);
       if (it != parameter_block_index.end()) {
         residual_blocks_[it->second].push_back(residual_block);
       }

@@ -48,15 +48,15 @@
 #include "gmock/mock-log.h"
 #include "gtest/gtest.h"
 
+namespace ceres {
+namespace internal {
+
 using std::vector;
 using testing::AllOf;
 using testing::AnyNumber;
 using testing::HasSubstr;
 using testing::ScopedMockLog;
 using testing::_;
-
-namespace ceres {
-namespace internal {
 
 // Pick a (non-quadratic) function whose derivative are easy:
 //

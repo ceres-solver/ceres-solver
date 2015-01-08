@@ -151,7 +151,7 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   LinearSolverTerminationType Factorize();
   void ScaleOffDiagonalCells();
 
-  void ClusterCameras(const std::vector< std::set<int> >& visibility);
+  void ClusterCameras(const std::vector<std::set<int> >& visibility);
   void FlattenMembershipMap(const HashMap<int, int>& membership_map,
                             std::vector<int>* membership_vector) const;
   void ComputeClusterVisibility(

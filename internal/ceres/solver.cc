@@ -154,15 +154,11 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       *error = "Can't use DENSE_NORMAL_CHOLESKY with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.linear_solver_type == DENSE_QR) {
+    } else if (options.linear_solver_type == DENSE_QR) {
       *error = "Can't use DENSE_QR with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.linear_solver_type == DENSE_SCHUR) {
+    } else if (options.linear_solver_type == DENSE_SCHUR) {
       *error = "Can't use DENSE_SCHUR with LAPACK because "
           "LAPACK was not enabled when Ceres was built.";
       return false;
@@ -176,21 +172,15 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY with SUITESPARSE because "
              "SuiteSparse was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.linear_solver_type == SPARSE_SCHUR) {
+    } else if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with SUITESPARSE because "
           "SuiteSparse was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.preconditioner_type == CLUSTER_JACOBI) {
+    } else if (options.preconditioner_type == CLUSTER_JACOBI) {
       *error =  "CLUSTER_JACOBI preconditioner not supported. "
           "SuiteSparse was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
+    } else if (options.preconditioner_type == CLUSTER_TRIDIAGONAL) {
       *error =  "CLUSTER_TRIDIAGONAL preconditioner not supported. "
           "SuiteSparse was not enabled when Ceres was built.";
     return false;
@@ -204,9 +194,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY with CX_SPARSE because "
              "CXSparse was not enabled when Ceres was built.";
       return false;
-    }
-
-    if (options.linear_solver_type == SPARSE_SCHUR) {
+    } else if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with CX_SPARSE because "
           "CXSparse was not enabled when Ceres was built.";
       return false;
@@ -221,9 +209,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
           "Eigen's sparse linear algebra was not enabled when Ceres was "
           "built.";
       return false;
-    }
-
-    if (options.linear_solver_type == SPARSE_SCHUR) {
+    } else if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR with EIGEN_SPARSE because "
           "Eigen's sparse linear algebra was not enabled when Ceres was "
           "built.";
@@ -237,9 +223,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       *error = "Can't use SPARSE_NORMAL_CHOLESKY as "
           "sparse_linear_algebra_library_type is NO_SPARSE.";
       return false;
-    }
-
-    if (options.linear_solver_type == SPARSE_SCHUR) {
+    } else if (options.linear_solver_type == SPARSE_SCHUR) {
       *error = "Can't use SPARSE_SCHUR as "
           "sparse_linear_algebra_library_type is NO_SPARSE.";
       return false;

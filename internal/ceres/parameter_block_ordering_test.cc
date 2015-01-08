@@ -84,8 +84,7 @@ class SchurOrderingTest : public ::testing::Test {
 
 TEST_F(SchurOrderingTest, NoFixed) {
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks =
-      program.parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();
@@ -139,8 +138,7 @@ TEST_F(SchurOrderingTest, OneFixed) {
   problem_.SetParameterBlockConstant(x_);
 
   const Program& program = problem_.program();
-  const vector<ParameterBlock*>& parameter_blocks =
-      program.parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks = program.parameter_blocks();
   scoped_ptr<HessianGraph> graph(CreateHessianGraph(program));
 
   const VertexSet& vertices = graph->vertices();

@@ -223,14 +223,14 @@ bool ApplyOrdering(const ProblemImpl::ParameterMap& parameter_map,
       program->mutable_parameter_blocks();
   parameter_blocks->clear();
 
-  const map<int, set<double*> >& groups =
-      ordering.group_to_elements();
-
-  map<int, set<double*> >::const_iterator group_it = groups.begin();
-  for ( ; group_it != groups.end(); ++group_it) {
+  const map<int, set<double*> >& groups = ordering.group_to_elements();
+  for (map<int, set<double*> >::const_iterator group_it = groups.begin();
+       group_it != groups.end();
+       ++group_it) {
     const set<double*>& group = group_it->second;
-    set<double*>::const_iterator parameter_block_ptr_it = group.begin();
-    for ( ; parameter_block_ptr_it != group.end(); ++parameter_block_ptr_it) {
+    for (set<double*>::const_iterator parameter_block_ptr_it = group.begin();
+         parameter_block_ptr_it != group.end();
+         ++parameter_block_ptr_it) {
       ProblemImpl::ParameterMap::const_iterator parameter_block_it =
           parameter_map.find(*parameter_block_ptr_it);
       if (parameter_block_it == parameter_map.end()) {
@@ -256,10 +256,8 @@ bool LexicographicallyOrderResidualBlocks(
 
   // Create a histogram of the number of residuals for each E block. There is an
   // extra bucket at the end to catch all non-eliminated F blocks.
-  vector<int> residual_blocks_per_e_block(
-      size_of_first_elimination_group + 1);
-  vector<ResidualBlock*>* residual_blocks =
-      program->mutable_residual_blocks();
+  vector<int> residual_blocks_per_e_block(size_of_first_elimination_group + 1);
+  vector<ResidualBlock*>* residual_blocks = program->mutable_residual_blocks();
   vector<int> min_position_per_residual(residual_blocks->size());
   for (int i = 0; i < residual_blocks->size(); ++i) {
     ResidualBlock* residual_block = (*residual_blocks)[i];
@@ -415,8 +413,7 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
   Eigen::PermutationMatrix<Eigen::Dynamic, Eigen::Dynamic, int> perm;
   amd_ordering(block_schur_complement, perm);
 
-  const vector<ParameterBlock*>& parameter_blocks =
-      program->parameter_blocks();
+  const vector<ParameterBlock*>& parameter_blocks = program->parameter_blocks();
   vector<ParameterBlock*> ordering(num_cols);
 
   // The ordering of the first size_of_first_elimination_group does
