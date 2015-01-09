@@ -53,6 +53,8 @@ namespace ceres {
 namespace internal {
 
 using std::map;
+using std::max;
+using std::min;
 using std::set;
 using std::string;
 using std::vector;
