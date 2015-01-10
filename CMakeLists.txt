@@ -64,6 +64,23 @@ IF (EXISTS ${LOCAL_GIT_DIRECTORY})
   ENDIF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
 ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
 
+# On OS X, add the Homebrew prefix to the set of prefixes searched by
+# CMake in find_path & find_library.  This should ensure that we can
+# still build Ceres even if Homebrew is installed in a non-standard
+# location (not /usr/local).
+IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+  FIND_PROGRAM(HOMEBREW_EXECUTABLE brew)
+  IF (HOMEBREW_EXECUTABLE)
+    # Detected a Homebrew install, query for its install prefix.
+    EXECUTE_PROCESS(COMMAND ${HOMEBREW_EXECUTABLE} --prefix
+      OUTPUT_VARIABLE HOMEBREW_INSTALL_PREFIX
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    MESSAGE(STATUS "Detected Homebrew with install prefix: "
+      "${HOMEBREW_INSTALL_PREFIX}, adding to CMake search paths.")
+  ENDIF()
+  LIST(APPEND CMAKE_PREFIX_PATH "${HOMEBREW_INSTALL_PREFIX}")
+ENDIF()
+
 # Make CMake aware of the cmake folder for local FindXXX scripts,
 # append rather than set in case the user has passed their own
 # additional paths via -D.
