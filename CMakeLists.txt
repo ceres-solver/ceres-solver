@@ -77,11 +77,8 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
       OUTPUT_STRIP_TRAILING_WHITESPACE)
     MESSAGE(STATUS "Detected Homebrew with install prefix: "
       "${HOMEBREW_INSTALL_PREFIX}, adding to CMake search paths.")
+    LIST(APPEND CMAKE_PREFIX_PATH "${HOMEBREW_INSTALL_PREFIX}")
   ENDIF()
-  # Note that Eigen is stored in <XXX>/include/eigen3/Eigen/XXX.h
-  # as such, the default prefix path on it's own is insufficient.
-  LIST(APPEND CMAKE_PREFIX_PATH "${HOMEBREW_INSTALL_PREFIX}"
-    "${HOMEBREW_INSTALL_PREFIX}/include/eigen3")
 ENDIF()
 
 # Make CMake aware of the cmake folder for local FindXXX scripts,
