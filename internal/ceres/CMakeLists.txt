@@ -291,6 +291,8 @@ IF (BUILD_TESTING AND GFLAGS)
   # independent of SuiteSparse.
   IF (SUITESPARSE AND SUITESPARSE_FOUND)
     CERES_TEST(compressed_col_sparse_matrix_utils)
+    TARGET_LINK_LIBRARIES(compressed_col_sparse_matrix_utils_test
+                          ${SUITESPARSE_LIBRARIES})
   ENDIF (SUITESPARSE AND SUITESPARSE_FOUND)
 
   CERES_TEST(symmetric_linear_solver)
