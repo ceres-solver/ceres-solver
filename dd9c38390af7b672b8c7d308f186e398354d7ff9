@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bae3367_a61aa65d",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-16T19:53:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this indentation change is intended.",
+      "revId": "dd9c38390af7b672b8c7d308f186e398354d7ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
