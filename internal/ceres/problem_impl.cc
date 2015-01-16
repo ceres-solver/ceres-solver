@@ -61,15 +61,6 @@ using std::vector;
 typedef std::map<double*, internal::ParameterBlock*> ParameterMap;
 
 namespace {
-internal::ParameterBlock* FindParameterBlockOrDie(
-    const ParameterMap& parameter_map,
-    double* parameter_block) {
-  ParameterMap::const_iterator it = parameter_map.find(parameter_block);
-  CHECK(it != parameter_map.end())
-      << "Parameter block not found: " << parameter_block;
-  return it->second;
-}
-
 // Returns true if two regions of memory, a and b, with sizes size_a and size_b
 // respectively, overlap.
 bool RegionsAlias(const double* a, int size_a,
@@ -533,7 +524,12 @@ void ProblemImpl::RemoveResidualBlock(ResidualBlock* residual_block) {
 
 void ProblemImpl::RemoveParameterBlock(double* values) {
   ParameterBlock* parameter_block =
-      FindParameterBlockOrDie(parameter_block_map_, values);
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "it can be removed.";
+  }
 
   if (options_.enable_fast_removal) {
     // Copy the dependent residuals from the parameter block because the set of
@@ -565,38 +561,81 @@ void ProblemImpl::RemoveParameterBlock(double* values) {
 }
 
 void ProblemImpl::SetParameterBlockConstant(double* values) {
-  FindParameterBlockOrDie(parameter_block_map_, values)->SetConstant();
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "it can be set constant.";
+  }
+
+  parameter_block->SetConstant();
 }
 
 void ProblemImpl::SetParameterBlockVariable(double* values) {
-  FindParameterBlockOrDie(parameter_block_map_, values)->SetVarying();
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "it can be set varying.";
+  }
+
+  parameter_block->SetVarying();
 }
 
 void ProblemImpl::SetParameterization(
     double* values,
     LocalParameterization* local_parameterization) {
-  FindParameterBlockOrDie(parameter_block_map_, values)
-      ->SetParameterization(local_parameterization);
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can set its local parameterization.";
+  }
+
+  parameter_block->SetParameterization(local_parameterization);
 }
 
 const LocalParameterization* ProblemImpl::GetParameterization(
     double* values) const {
-  return FindParameterBlockOrDie(parameter_block_map_, values)
-      ->local_parameterization();
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can get its local parameterization.";
+  }
+
+  return parameter_block->local_parameterization();
 }
 
 void ProblemImpl::SetParameterLowerBound(double* values,
                                          int index,
                                          double lower_bound) {
-  FindParameterBlockOrDie(parameter_block_map_, values)
-      ->SetLowerBound(index, lower_bound);
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can set a lower bound on one of its components.";
+  }
+
+  parameter_block->SetLowerBound(index, lower_bound);
 }
 
 void ProblemImpl::SetParameterUpperBound(double* values,
                                          int index,
                                          double upper_bound) {
-  FindParameterBlockOrDie(parameter_block_map_, values)
-      ->SetUpperBound(index, upper_bound);
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can set an upper bound on one of its components.";
+  }
+  parameter_block->SetUpperBound(index, upper_bound);
 }
 
 bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
@@ -638,9 +677,14 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
     // 1. Convert double* into ParameterBlock*
     parameter_blocks.resize(parameter_block_ptrs.size());
     for (int i = 0; i < parameter_block_ptrs.size(); ++i) {
-      parameter_blocks[i] =
-          FindParameterBlockOrDie(parameter_block_map_,
-                                  parameter_block_ptrs[i]);
+      parameter_blocks[i] = FindWithDefault(parameter_block_map_,
+                                            parameter_block_ptrs[i],
+                                            NULL);
+      if (parameter_blocks[i] == NULL) {
+        LOG(FATAL) << "No known parameter block for "
+                   << "Problem::Evaluate::Options.parameter_blocks[" << i << "]"
+                   << " = " << parameter_block_ptrs[i];
+      }
     }
 
     // 2. The user may have only supplied a subset of parameter
@@ -766,9 +810,9 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   program_->SetParameterBlockStatePtrsToUserStatePtrs();
   program_->SetParameterOffsetsAndIndex();
   return status;
-}
+  }
 
-int ProblemImpl::NumParameterBlocks() const {
+  int ProblemImpl::NumParameterBlocks() const {
   return program_->NumParameterBlocks();
 }
 
@@ -784,14 +828,28 @@ int ProblemImpl::NumResiduals() const {
   return program_->NumResiduals();
 }
 
-int ProblemImpl::ParameterBlockSize(const double* parameter_block) const {
-  return FindParameterBlockOrDie(parameter_block_map_,
-                                 const_cast<double*>(parameter_block))->Size();
+int ProblemImpl::ParameterBlockSize(const double* values) const {
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can get its size.";
+  }
+
+  return parameter_block->Size();
 }
 
-int ProblemImpl::ParameterBlockLocalSize(const double* parameter_block) const {
-  return FindParameterBlockOrDie(
-      parameter_block_map_, const_cast<double*>(parameter_block))->LocalSize();
+int ProblemImpl::ParameterBlockLocalSize(const double* values) const {
+  ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can get its local size.";
+  }
+
+  return parameter_block->LocalSize();
 }
 
 bool ProblemImpl::HasParameterBlock(const double* parameter_block) const {
@@ -840,8 +898,12 @@ void ProblemImpl::GetResidualBlocksForParameterBlock(
     const double* values,
     vector<ResidualBlockId>* residual_blocks) const {
   ParameterBlock* parameter_block =
-      FindParameterBlockOrDie(parameter_block_map_,
-                              const_cast<double*>(values));
+      FindWithDefault(parameter_block_map_, const_cast<double*>(values), NULL);
+  if (parameter_block == NULL) {
+    LOG(FATAL) << "Parameter block not found: " << values
+               << ". You must add the parameter block to the problem before "
+               << "you can get the residual blocks that depend on it.";
+  }
 
   if (options_.enable_fast_removal) {
     // In this case the residual blocks that depend on the parameter block are
