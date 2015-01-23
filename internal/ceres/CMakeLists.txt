@@ -53,6 +53,7 @@ SET(CERES_INTERNAL_SRC
     corrector.cc
     covariance.cc
     covariance_impl.cc
+    cubic_interpolator.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
@@ -250,6 +251,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(corrector)
   CERES_TEST(cost_function_to_functor)
   CERES_TEST(covariance)
+  CERES_TEST(cubic_interpolator)
   CERES_TEST(dense_sparse_matrix)
   CERES_TEST(dynamic_autodiff_cost_function)
   CERES_TEST(dynamic_compressed_row_sparse_matrix)
