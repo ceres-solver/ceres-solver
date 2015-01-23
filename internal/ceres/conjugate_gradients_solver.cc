@@ -137,7 +137,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
       if (IsZeroOrInfinity(beta)) {
         summary.termination_type = LINEAR_SOLVER_FAILURE;
         summary.message = StringPrintf(
-            "Numerical failure. beta = rho_n / rho_{n-1} = %e.", beta);
+            "Numerical failure. beta = rho_n / rho_{n-1} = %e, "
+            "rho_n = %e, rho_{n-1} = %e", beta, rho, last_rho);
         break;
       }
       p = z + beta * p;
@@ -157,7 +158,8 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     if (IsInfinite(alpha)) {
       summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message =
-          StringPrintf("Numerical failure. alpha = rho / pq = %e", alpha);
+          StringPrintf("Numerical failure. alpha = rho / pq = %e, "
+                       "rho = %e, pq = %e.", alpha, rho, pq);
       break;
     }
 
