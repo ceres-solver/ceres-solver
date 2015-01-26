@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab858b8b_e6123ac5",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_c61d36d6",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_660e2aa8",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "I suggest CubicInterporlator1D instead. 1 and 2 are a bit confusing; often in code you might have a Foo1 and Foo2 to express that you were too lazy to name things properly when evolving a class; that\u0027s not the case here.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_46012677",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Typically in Ceres we pass the array then size in Ceres. Not a big deal but though I\u0027d mention it.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_860b2e95",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "I suggest\n\n  bool Evaluate(const double x, double* f, double *dfdx)\n\nsince \"fx\" isn\u0027t obviously a derivative value.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_26042288",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Split across lines; we generally don\u0027t compact like this in Ceres.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_a61832e7",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Is this needed for this file? Note that eigen is not used in this file.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_462a06e9",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "dfdx",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_0618fee1",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Split across lines.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_262d0200",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Split across lines.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_66270a20",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Swap order",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_a6eaf232",
+        "filename": "internal/ceres/cubic_interpolator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Blank after",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab858b8b_86bdee34",
+        "filename": "internal/ceres/cubic_interpolator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-26T21:28:07Z",
+      "side": 1,
+      "message": "Please add more interesting tests, like for example a 0 1 0 spline and check check that the derivative is zero at 1 and positive at 0.5 and negative at 1.5.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
