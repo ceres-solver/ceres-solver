@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b58c71b_2f988980",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-26T18:07:03Z",
+      "side": 1,
+      "message": "Why the 1? As it\u0027s the 1D case or because it\u0027s working on a single channel of data?",
+      "range": {
+        "startLine": 59,
+        "startChar": 36,
+        "endLine": 59,
+        "endChar": 37
+      },
+      "revId": "685c07577b41f1747f049d5675827d9e9b403002",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b58c71b_0f14a535",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-26T18:07:03Z",
+      "side": 1,
+      "message": "value_x isn\u0027t the most obvious name for the derivative to me - is this a convention in ceres?",
+      "range": {
+        "startLine": 65,
+        "startChar": 56,
+        "endLine": 65,
+        "endChar": 57
+      },
+      "revId": "685c07577b41f1747f049d5675827d9e9b403002",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b58c71b_cfad3d7b",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-26T18:07:03Z",
+      "side": 1,
+      "message": "I guess the user should know, but is it worth letting them query num_values?",
+      "revId": "685c07577b41f1747f049d5675827d9e9b403002",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b58c71b_6f3451c8",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-26T18:07:03Z",
+      "side": 1,
+      "message": "I never know in this case whether it\u0027s more efficient to calculate the terms shared between f and fx once or to do it as you are now.",
+      "revId": "685c07577b41f1747f049d5675827d9e9b403002",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
