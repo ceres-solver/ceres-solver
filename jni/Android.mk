@@ -126,6 +126,8 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/conjugate_gradients_solver.cc \
                    $(CERES_SRC_PATH)/coordinate_descent_minimizer.cc \
                    $(CERES_SRC_PATH)/corrector.cc \
+                   $(CERES_SRC_PATH)/covariance.cc \
+                   $(CERES_SRC_PATH)/covariance_impl.cc \
                    $(CERES_SRC_PATH)/dense_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/dense_qr_solver.cc \
                    $(CERES_SRC_PATH)/dense_sparse_matrix.cc \
