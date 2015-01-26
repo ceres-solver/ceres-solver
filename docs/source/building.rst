@@ -106,12 +106,14 @@ distribution.
 
 .. NOTE::
 
- Up to at least Ubuntu 13.10, the SuiteSparse package in the official
+ Up to at least Ubuntu 14.04, the SuiteSparse package in the official
  package repository (built from SuiteSparse v3.4.0) **cannot** be used
  to build Ceres as a *shared* library.  Thus if you want to build
  Ceres as a shared library using SuiteSparse, you must perform a
- source install of SuiteSparse.  It is recommended that you use the
- current version of SuiteSparse (4.2.1 at the time of writing).
+ source install of SuiteSparse or use an external PPA (see
+ https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214).
+ It is recommended that you use the current version of SuiteSparse
+ (4.2.1 at the time of writing).
 
 
 Start by installing all the dependencies.
@@ -120,18 +122,8 @@ Start by installing all the dependencies.
 
      # CMake
      sudo apt-get install cmake
-     # gflags
-     tar -xvzf gflags-2.0.tar.gz
-     cd gflags-2.0
-     ./configure --prefix=/usr/local
-     make
-     sudo make install.
-     # google-glog must be configured to use the previously installed gflags
-     tar -xvzf glog-0.3.2.tar.gz
-     cd glog-0.3.2
-     ./configure --with-gflags=/usr/local/
-     make
-     sudo make install
+     # google-glog + gflags
+     sudo apt-get install libgoogle-glog-dev
      # BLAS & LAPACK
      sudo apt-get install libatlas-base-dev
      # Eigen3
@@ -142,8 +134,10 @@ Start by installing all the dependencies.
      #   repository:
      sudo apt-get install libsuitesparse-dev
      # - However, if you want to build Ceres as a *shared* library, you must
-     #   perform a source install of SuiteSparse (and uninstall the Ubuntu
-     #   package if it is currently installed.
+     #   add the following PPA:
+     sudo add-apt-repository ppa:bzindovic/suitesparse-bugfix-1319687
+     sudo apt-get update
+     sudo apt-get install libsuitesparse-dev
 
 We are now ready to build, test, and install Ceres.
 
