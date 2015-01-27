@@ -37,9 +37,10 @@ namespace ceres {
 
 // This class takes as input a one dimensional array of values that is
 // assumed to be integer valued samples from a function f(x),
-// evaluated at x = 0, ... , n - 1 and uses Catmull-Rom splines to
+// evaluated at x = 0, ... , n - 1 and uses cubic Hermite splines to
 // produce a smooth approximation to it that can be used to evaluate
-// the f(x) and f'(x) at any point in the interval [0, n-1].
+// the f(x) and f'(x) at any fractional point in the interval [0,
+// n-1].
 //
 // Besides this, the reason this class is included with Ceres is that
 // the Evaluate method is overloaded so that the user can use it as
@@ -50,7 +51,6 @@ namespace ceres {
 // For more details on cubic interpolation see
 //
 // http://en.wikipedia.org/wiki/Cubic_Hermite_spline
-// http://www.paulinternet.nl/?page=bicubic
 //
 // Example usage:
 //
@@ -60,6 +60,9 @@ namespace ceres {
 //  CHECK(interpolator.Evaluator(1.5, &f, &dfdx));
 class CERES_EXPORT CubicInterpolator {
  public:
+  // values is an array containing the values of the function to be
+  // interpolated on the integer lattice [0, num_values - 1].
+  //
   // values should be a valid pointer for the lifetime of this object.
   CubicInterpolator(const double* values, int num_values);
 
@@ -82,6 +85,57 @@ class CERES_EXPORT CubicInterpolator {
  private:
   const double* values_;
   const int num_values_;
+};
+
+// This class takes as input a row-major array of values that is
+// assumed to be integer valued samples from a function f(x),
+// evaluated on the integer lattice [0, num_rows - 1] x [0, num_cols -
+// 1]; and uses the cubic convolution interpolation algorithm of
+// R. Keys, to produce a smooth approximation to it that can be used
+// to evaluate the f(r,c), df(r, c)/dr and df(r,c)/dc at any
+// fractional point inside this lattice.
+//
+// For more details on cubic interpolation see
+//
+// "Cubic convolution interpolation for digital image processing".
+// IEEE Transactions on Acoustics, Speech, and Signal Processing
+// 29 (6): 1153–1160.
+//
+// http://en.wikipedia.org/wiki/Cubic_Hermite_spline
+// http://en.wikipedia.org/wiki/Bicubic_interpolation
+class CERES_EXPORT BiCubicInterpolator {
+ public:
+  // values is a row-major array containing the values of the function
+  // to be interpolated on the integer lattice [0, num_rows - 1] x [0,
+  // num_cols - 1];
+  //
+  // values should be a valid pointer for the lifetime of this object.
+  BiCubicInterpolator(const double* values, int num_rows, int num_cols);
+
+  // Evaluate the interpolated function value and/or its
+  // derivative. Returns false if r or c is out of bounds.
+  bool Evaluate(double r, double c,
+                double* f, double* dfdr, double* dfdc) const;
+
+  // Overload for Jets, which automatically accounts for the chain rule.
+  template<typename JetT> bool Evaluate(const JetT& r,
+                                        const JetT& c,
+                                        JetT* f) const {
+    double dfdr, dfdc;
+    if (!Evaluate(r.a, c.a, &f->a, &dfdr, &dfdc)) {
+      return false;
+    }
+    f->v = dfdr * r.v + dfdc * c.v;
+    return true;
+  }
+
+  int num_rows() const { return num_rows_; }
+  int num_cols() const { return num_cols_; }
+
+ private:
+  const double* values_;
+  const int num_rows_;
+  const int num_cols_;
 };
 
 }  // namespace ceres
