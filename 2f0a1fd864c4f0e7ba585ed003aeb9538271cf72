@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_1f8743a9",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "sorry this was from an old refactor where I was storing data.",
+      "parentUuid": "ab858b8b_e6123ac5",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_c61d36d6",
         "filename": "include/ceres/cubic_interpolator.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Needed?",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_ff7b7f0f",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "probably not anymore.",
+      "parentUuid": "ab858b8b_c61d36d6",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_bf75f71b",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "I initially had it as that, and then decided to get rid of it. Mostly because the D seemed rather redundant. Anyways I can add it back. But before we do that, here is another thought:  We drop the 1 and have CubicInterpolator for one dimensional stuff, BicubicInterpolator for 2 dimensional and TricubicInterpolator if and when we decide to do 3d interpolation on a grid. Which are technically the right names for the interpolation schemes.",
+      "parentUuid": "ab858b8b_660e2aa8",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_46012677",
         "filename": "include/ceres/cubic_interpolator.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Typically in Ceres we pass the array then size in Ceres. Not a big deal but though I\u0027d mention it.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_9f723330",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "in AddParameterBlock we do, but elsewhere we are actually mixed about this.",
+      "parentUuid": "ab858b8b_46012677",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_3f09e7a4",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "it was nice and small :) and actually is quite readable.",
+      "parentUuid": "ab858b8b_26042288",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_a61832e7",
         "filename": "include/ceres/cubic_interpolator.h",
         "patchSetId": 2
@@ -115,6 +205,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Is this needed for this file? Note that eigen is not used in this file.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_ff125fcf",
+        "filename": "include/ceres/cubic_interpolator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "not anymore.",
+      "parentUuid": "ab858b8b_a61832e7",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_7f264f34",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab858b8b_462a06e9",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_0618fee1",
         "filename": "internal/ceres/cubic_interpolator.cc",
         "patchSetId": 2
@@ -149,6 +275,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Split across lines.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_5f2b8bfa",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab858b8b_0618fee1",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_3f20c712",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab858b8b_262d0200",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_66270a20",
         "filename": "internal/ceres/cubic_interpolator.cc",
         "patchSetId": 2
@@ -183,6 +345,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Swap order",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_1f250323",
+        "filename": "internal/ceres/cubic_interpolator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "I do not think we are terribly religious about this across the code base.",
+      "parentUuid": "ab858b8b_66270a20",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_df367b5f",
+        "filename": "internal/ceres/cubic_interpolator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab858b8b_a6eaf232",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab858b8b_86bdee34",
         "filename": "internal/ceres/cubic_interpolator_test.cc",
         "patchSetId": 2
@@ -217,6 +415,24 @@
       "writtenOn": "2015-01-26T21:28:07Z",
       "side": 1,
       "message": "Please add more interesting tests, like for example a 0 1 0 spline and check check that the derivative is zero at 1 and positive at 0.5 and negative at 1.5.",
+      "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_9f30f361",
+        "filename": "internal/ceres/cubic_interpolator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-27T04:33:51Z",
+      "side": 1,
+      "message": "yep that was the plan, I wanted to get the API going first.",
+      "parentUuid": "ab858b8b_86bdee34",
       "revId": "2f0a1fd864c4f0e7ba585ed003aeb9538271cf72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
