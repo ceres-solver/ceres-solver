@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77f61b4b_a2ee00bb",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T06:24:25Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "cd2a625f1c5ca54e27487c7a74dc3b69151cd264",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
