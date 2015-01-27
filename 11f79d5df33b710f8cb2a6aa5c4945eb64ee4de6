@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f82338_e01f5c57",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T19:02:56Z",
+      "side": 1,
+      "message": "I think static is what you want?",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37f82338_803658e3",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T19:02:56Z",
+      "side": 1,
+      "message": "Combine ifs stacked; no point in making them separate.",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37f82338_60090c0d",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T19:02:56Z",
+      "side": 1,
+      "message": "I know it\u0027s in the paper but perhaps put a diagram explaining the approach? e.g. interpolate first vertically at the sample point, then horizontally?",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37f82338_a0295485",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T19:02:56Z",
+      "side": 1,
+      "message": "space after ,",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37f82338_c0f1009f",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-27T19:02:56Z",
+      "side": 1,
+      "message": "Consider rearranging for clarity;\n\ndouble f1, f2, f3, f4;\ndouble df1dc, ...\nCubicHermiteSpline(...)\nCubicHermiteSpline(...)\n...",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
