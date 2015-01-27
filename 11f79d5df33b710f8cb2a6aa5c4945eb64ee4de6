@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb69dfa3_2dfec53a",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "Marked as const in the .cc",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 24
+      },
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bab5bf1_c019aea3",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "\"to produce\", or \"using the cubic convolution interpolation...\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 19
+      },
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb69dfa3_ad09f5d5",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "fractional, i.e. subpixel, position",
+      "range": {
+        "startLine": 94,
+        "startChar": 58,
+        "endLine": 94,
+        "endChar": 63
+      },
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb69dfa3_0d19011f",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "These are const in the .cc",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f82338_e01f5c57",
         "filename": "internal/ceres/cubic_interpolation.cc",
         "patchSetId": 1
@@ -72,6 +164,57 @@
     },
     {
       "key": {
+        "uuid": "cb69dfa3_4dfbf949",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "LOG() here?",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abd02b89_7c318108",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "LOG() here?",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bab5bf1_8031660b",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "Is this not better as an inline method?",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37f82338_60090c0d",
         "filename": "internal/ceres/cubic_interpolation.cc",
         "patchSetId": 1
@@ -101,6 +244,29 @@
       "side": 1,
       "message": "it is described below when I actually do the interpolation.",
       "parentUuid": "37f82338_60090c0d",
+      "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb69dfa3_8d0511b4",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-01-27T19:24:18Z",
+      "side": 1,
+      "message": "Perhaps confusing, as these rows mean in the patch, not the image",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 71
+      },
       "revId": "11f79d5df33b710f8cb2a6aa5c4945eb64ee4de6",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
