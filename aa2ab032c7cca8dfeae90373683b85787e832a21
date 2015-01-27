@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_e2cd2867",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-01-27T06:21:16Z",
+      "side": 1,
+      "message": "because it requires passing, a b c d to it and it was more verbose.",
+      "parentUuid": "77f61b4b_c243442f",
+      "revId": "aa2ab032c7cca8dfeae90373683b85787e832a21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f61b4b_a2404023",
         "filename": "internal/ceres/cubic_interpolation_test.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "77f61b4b_c2da241f",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-01-27T06:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f61b4b_a2404023",
+      "revId": "aa2ab032c7cca8dfeae90373683b85787e832a21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f61b4b_22ec30cf",
         "filename": "internal/ceres/cubic_interpolation_test.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2015-01-27T06:17:00Z",
       "side": 1,
       "message": "I do not understand this test. Please add a comment. Why not do something simple like test a 0 1 0 function and check for a constant 0 derivative at the peak from the jet? \n\n\nI was thinking like:\n\n  double values[] \u003d {0., 1., 0.};\n  Jet\u003cdouble, 1\u003e input, output;\n  input.a \u003d 1.0;\n  input.v[0] \u003d 1.0;\n  EXPECT_TRUE(interpolator.Evaluate(input, \u0026output);\n  EXPECT_NEAR(output.v[0], 0.0);",
+      "revId": "aa2ab032c7cca8dfeae90373683b85787e832a21",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f61b4b_a2d720f5",
+        "filename": "internal/ceres/cubic_interpolation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-01-27T06:21:16Z",
+      "side": 1,
+      "message": "I am doing one better in my test,\nI am making sure if the input jet has the same x as the scalar eval call, then its value will be the same as f.\nand its derivative will follow the chain rule.\nI will add more comments.",
+      "parentUuid": "77f61b4b_22ec30cf",
       "revId": "aa2ab032c7cca8dfeae90373683b85787e832a21",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
