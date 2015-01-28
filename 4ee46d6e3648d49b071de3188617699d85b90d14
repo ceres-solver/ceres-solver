@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "f72f6b8a_8e543b0a",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-28T01:50:18Z",
+      "side": 1,
+      "message": "num_values_ - 1 ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 64,
+        "endLine": 101,
+        "endChar": 66
+      },
+      "revId": "4ee46d6e3648d49b071de3188617699d85b90d14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f72f6b8a_0b14bdeb",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-28T01:50:18Z",
+      "side": 1,
+      "message": "num_rows_ - 1  and num_cols_ - 1 ?",
+      "revId": "4ee46d6e3648d49b071de3188617699d85b90d14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f72f6b8a_6e158f6b",
+        "filename": "internal/ceres/cubic_interpolation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-01-28T01:50:18Z",
+      "side": 1,
+      "message": "What\u0027s this doing? Just left over from earlier?",
+      "range": {
+        "startLine": 251,
+        "startChar": 9,
+        "endLine": 251,
+        "endChar": 17
+      },
+      "revId": "4ee46d6e3648d49b071de3188617699d85b90d14",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17331ff6_acfb83ce",
         "filename": "internal/ceres/cubic_interpolation_test.cc",
         "patchSetId": 5
