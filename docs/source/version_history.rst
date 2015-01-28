@@ -4,6 +4,32 @@
 Version History
 ===============
 
+HEAD
+====
+
+New Features
+------------
+#. Added ``CubicInterpolator`` and ``BiCubicInterpolator`` to allow
+   smooth interpolation of sampled functions and integration with
+   automatic differentiation.
+
+Bug Fixes
+---------
+#. Add covariance related files to the Android build.
+#. Update Ubuntu 14.04 installation instructions. (Filippo Basso)
+#. Improved logging for linear solver failures.
+#. Improved crash messages in ``Problem``.
+#. Hide Homebrew related variables in CMake GUI.
+#. Add SuiteSparse link dependency for compressed_col_sparse_matrix_utils_test.
+#. Autodetect Homebrew install prefix on OSX.
+#. Lint changes from William Rucklidge and Jim Roseborough.
+#. Remove ``using namespace std:`` from ``port.h``
+#. Add note about glog not currently compiling against gflags 2.1.
+#. Add explicit no sparse linear algebra library available option.
+#. Improve some wording in the FAQ. (Vasily Vylkov)
+#. Delete Incomplete LQ Factorization.
+#. Add a pointer to MacPorts. (Markus Moll)
+
 1.10.0
 ======
 
