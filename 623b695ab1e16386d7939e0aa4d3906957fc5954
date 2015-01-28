@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7d6d3d9_d12f64b2",
+        "filename": "examples/sampled_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-28T09:02:34Z",
+      "side": 1,
+      "message": "Maybe pick a better name? InterpolatedCostFunction?",
+      "revId": "623b695ab1e16386d7939e0aa4d3906957fc5954",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7d6d3d9_313b50fc",
+        "filename": "examples/sampled_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-28T09:02:34Z",
+      "side": 1,
+      "message": "Comment adds no value",
+      "revId": "623b695ab1e16386d7939e0aa4d3906957fc5954",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7d6d3d9_9129dcae",
+        "filename": "examples/sampled_function.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-01-28T09:02:34Z",
+      "side": 1,
+      "message": "Part of me thinks this is a good \"unit\" test to have in the suite.",
+      "revId": "623b695ab1e16386d7939e0aa4d3906957fc5954",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
