@@ -65,9 +65,11 @@ TARGET_LINK_LIBRARIES(ellipse_approximation ceres)
 ADD_EXECUTABLE(robust_curve_fitting robust_curve_fitting.cc)
 TARGET_LINK_LIBRARIES(robust_curve_fitting ceres)
 
-ADD_EXECUTABLE(simple_bundle_adjuster
-               simple_bundle_adjuster.cc)
+ADD_EXECUTABLE(simple_bundle_adjuster simple_bundle_adjuster.cc)
 TARGET_LINK_LIBRARIES(simple_bundle_adjuster ceres)
+
+ADD_EXECUTABLE(sampled_function sampled_function.cc)
+TARGET_LINK_LIBRARIES(sampled_function ceres)
 
 IF (GFLAGS)
   # The CERES_GFLAGS_NAMESPACE compile definition is NOT stored in

@@ -70,7 +70,13 @@ class CERES_EXPORT CubicInterpolator {
   // derivative. Returns false if x is out of bounds.
   bool Evaluate(double x, double* f, double* dfdx) const;
 
-  // Overload for Jets, which automatically accounts for the chain rule.
+  // The following two Evaluate overloads are needed for interfacing
+  // with automatic differentiation. The first is for when a scalar
+  // evaluation is done, and the second one is for when Jets are used.
+  bool Evaluate(const double& x, double* f) const {
+    return Evaluate(x, f, NULL);
+  }
+
   template<typename JetT> bool Evaluate(const JetT& x, JetT* f) const {
     double dfdx;
     if (!Evaluate(x.a, &f->a, &dfdx)) {
@@ -117,7 +123,13 @@ class CERES_EXPORT BiCubicInterpolator {
   bool Evaluate(double r, double c,
                 double* f, double* dfdr, double* dfdc) const;
 
-  // Overload for Jets, which automatically accounts for the chain rule.
+  // The following two Evaluate overloads are needed for interfacing
+  // with automatic differentiation. The first is for when a scalar
+  // evaluation is done, and the second one is for when Jets are used.
+  bool Evaluate(const double& r, const double& c, double* f) const {
+    return Evaluate(r, c, f, NULL, NULL);
+  }
+
   template<typename JetT> bool Evaluate(const JetT& r,
                                         const JetT& c,
                                         JetT* f) const {
