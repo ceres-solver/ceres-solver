@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "770c5b78_afc059ae",
+        "filename": "examples/sampled_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2015-01-29T18:25:46Z",
+      "side": 1,
+      "message": "I would change the 10 by kNumSamples",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "2bf6fbcd37988c89c97a1521dd06f3c2574716f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
