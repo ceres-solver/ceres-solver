@@ -22,6 +22,30 @@
       "revId": "2bf6fbcd37988c89c97a1521dd06f3c2574716f9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7025340_74264662",
+        "filename": "examples/sampled_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-01-29T18:34:32Z",
+      "side": 1,
+      "message": "thanks, I will fix this shortly.",
+      "parentUuid": "770c5b78_afc059ae",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "2bf6fbcd37988c89c97a1521dd06f3c2574716f9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
