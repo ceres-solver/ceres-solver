@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
   // Evaluate the function f(x) = (x - 4.5)^2;
   const int kNumSamples = 10;
   double values[kNumSamples];
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < kNumSamples; ++i) {
     values[i] = (i - 4.5) * (i - 4.5);
   }
 
