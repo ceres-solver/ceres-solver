@@ -332,11 +332,12 @@ the corresponding accessors. This information will be verified by the
 
      .. code-block:: c++
 
-       DynamicAutoDiffCostFunction<MyCostFunctor, 4> cost_function(
+       DynamicAutoDiffCostFunction<MyCostFunctor, 4>* cost_function =
+         new DynamicAutoDiffCostFunction<MyCostFunctor, 4>(
            new MyCostFunctor());
-       cost_function.AddParameterBlock(5);
-       cost_function.AddParameterBlock(10);
-       cost_function.SetNumResiduals(21);
+       cost_function->AddParameterBlock(5);
+       cost_function->AddParameterBlock(10);
+       cost_function->SetNumResiduals(21);
 
    Under the hood, the implementation evaluates the cost function
    multiple times, computing a small set of the derivatives (four by
@@ -561,11 +562,11 @@ the corresponding accessors. This information will be verified by the
 
      .. code-block:: c++
 
-       DynamicNumericDiffCostFunction<MyCostFunctor> cost_function(
-           new MyCostFunctor());
-       cost_function.AddParameterBlock(5);
-       cost_function.AddParameterBlock(10);
-       cost_function.SetNumResiduals(21);
+       DynamicNumericDiffCostFunction<MyCostFunctor>* cost_function =
+         new DynamicNumericDiffCostFunction<MyCostFunctor>(new MyCostFunctor);
+       cost_function->AddParameterBlock(5);
+       cost_function->AddParameterBlock(10);
+       cost_function->SetNumResiduals(21);
 
    As a rule of thumb, try using :class:`NumericDiffCostFunction` before
    you use :class:`DynamicNumericDiffCostFunction`.
