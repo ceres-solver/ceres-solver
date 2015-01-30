@@ -94,6 +94,13 @@ class LAPACK {
       std::string* message);
 };
 
+// Compute a LDL Cholesky factorization and invert the matrix. If the
+// matrix is detected to be indefinite, then compute a pseudo inverse
+// by computing an eigenvalue decomposition and truncating all
+// eigenvalues below a threshold:
+//   lambda_max * std::numeric_limits<double>::epsilon().
+void MaybeTruncateAndPseudoInvert(double* values, const int size);
+
 }  // namespace internal
 }  // namespace ceres
 
