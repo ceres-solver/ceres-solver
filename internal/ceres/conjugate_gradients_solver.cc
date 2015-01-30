@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2010, 2011, 2012 Google Inc. All rights reserved.
+// Copyright 2014 Google Inc. All rights reserved.
 // http://code.google.com/p/ceres-solver/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -149,8 +149,11 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
     A->RightMultiply(p.data(), q.data());
     const double pq = p.dot(q);
     if ((pq <= 0) || IsInfinite(pq))  {
-      summary.termination_type = LINEAR_SOLVER_FAILURE;
-      summary.message = StringPrintf("Numerical failure. p'q = %e.", pq);
+      summary.termination_type = LINEAR_SOLVER_NO_CONVERGENCE;
+      summary.message = StringPrintf(
+          "Matrix is indefinite, no more progress can be made. "
+          "p'q = %e. |p| = %e, |q| = %e",
+          pq, p.norm(), q.norm());
       break;
     }
 
@@ -211,9 +214,11 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
         summary.num_iterations >= options_.min_num_iterations) {
       summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
-          StringPrintf("Convergence: zeta = %e < %e",
+          StringPrintf("Iteration: %d Convergence: zeta = %e < %e. |r| = %e",
+                       summary.num_iterations,
                        zeta,
-                       per_solve_options.q_tolerance);
+                       per_solve_options.q_tolerance,
+                       r.norm());
       break;
     }
     Q0 = Q1;
@@ -224,7 +229,10 @@ LinearSolver::Summary ConjugateGradientsSolver::Solve(
         summary.num_iterations >= options_.min_num_iterations) {
       summary.termination_type = LINEAR_SOLVER_SUCCESS;
       summary.message =
-          StringPrintf("Convergence. |r| = %e <= %e.", norm_r, tol_r);
+          StringPrintf("Iteration: %d Convergence. |r| = %e <= %e.",
+                       summary.num_iterations,
+                       norm_r,
+                       tol_r);
       break;
     }
 
