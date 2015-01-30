@@ -30,8 +30,10 @@
 
 #include "ceres/lapack.h"
 
+#include <limits>
 #include "ceres/internal/port.h"
 #include "ceres/linear_solver.h"
+#include "Eigen/Dense"
 #include "glog/logging.h"
 
 // C interface to the LAPACK Cholesky factorization and triangular solve.
@@ -187,6 +189,33 @@ LinearSolverTerminationType LAPACK::SolveInPlaceUsingQR(
   *message = "Success.";
   return LINEAR_SOLVER_SUCCESS;
 #endif
+}
+
+void MaybeTruncateAndPseudoInvert(double* values, const int size) {
+  MatrixRef m(values, size, size);
+  Eigen::LDLT<Matrix> ldlt(m.selfadjointView<Eigen::Upper>());
+  if (ldlt.isPositive()) {
+    m = ldlt.solve(Matrix::Identity(size, size));
+    if (ldlt.info() == Eigen::Success) {
+      return;
+    }
+  }
+
+  Eigen::SelfAdjointEigenSolver<Matrix> es(m.selfadjointView<Eigen::Upper>());
+  const double kThreshold = es.eigenvalues().maxCoeff() *
+      std::numeric_limits<double>::epsilon();
+  VLOG(2) << "\nIndefiniteness : "
+          << es.eigenvalues().transpose()
+          << "\nTruncated      : "
+          << (es.eigenvalues().array() > kThreshold).select(
+              es.eigenvalues().array(), 0).transpose();
+
+  m = es.eigenvectors() *
+      ((es.eigenvalues().array() > kThreshold)
+       .select(es.eigenvalues().array().inverse(), 0)
+       .matrix()
+       .asDiagonal()) *
+      es.eigenvectors().adjoint();
 }
 
 }  // namespace internal
