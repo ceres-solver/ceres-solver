@@ -34,9 +34,9 @@
 #include <set>
 #include <utility>
 #include <vector>
-#include "Eigen/Dense"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/lapack.cc"
 #include "ceres/stl_util.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -125,12 +125,7 @@ void BlockRandomAccessDiagonalMatrix::Invert() {
   double* values = tsm_->mutable_values();
   for (int i = 0; i < blocks_.size(); ++i) {
     const int block_size = blocks_[i];
-    MatrixRef block(values, block_size, block_size);
-    block =
-        block
-        .selfadjointView<Eigen::Upper>()
-        .llt()
-        .solve(Matrix::Identity(block_size, block_size));
+    MaybeTruncateAndPseudoInvert(values, block_size);
     values += block_size * block_size;
   }
 }
