@@ -30,11 +30,11 @@
 
 #include "ceres/implicit_schur_complement.h"
 
-#include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/lapack.h"
 #include "ceres/linear_solver.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -148,18 +148,15 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
     const int row_block_pos = block_diagonal_structure->rows[r].block.position;
     const int row_block_size = block_diagonal_structure->rows[r].block.size;
     const Cell& cell = block_diagonal_structure->rows[r].cells[0];
-    MatrixRef m(block_diagonal->mutable_values() + cell.position,
-                row_block_size, row_block_size);
-
+    double* values = block_diagonal->mutable_values() + cell.position;
     if (D != NULL) {
-      ConstVectorRef d(D + row_block_pos, row_block_size);
-      m += d.array().square().matrix().asDiagonal();
+      for (int i = 0; i < row_block_size; ++i) {
+        const double d = D[row_block_pos + i];
+        values[i * (row_block_size + 1)] += d * d;
+      }
     }
 
-    m = m
-        .selfadjointView<Eigen::Upper>()
-        .llt()
-        .solve(Matrix::Identity(row_block_size, row_block_size));
+    MaybeTruncateAndPseudoInvert(values, row_block_size);
   }
 }
 
