@@ -46,13 +46,12 @@ namespace {
 // Evaluate the cubic Hermite spline (also known as the Catmull-Rom
 // spline) at a point x that lies in the interval [0, 1].
 //
-// This is also the interpolation kernel proposed by R. Keys, in:
+// This is also the interpolation kernel (for the case of a = 0.5) as
+// proposed by R. Keys, in:
 //
 // "Cubic convolution interpolation for digital image processing".
 // IEEE Transactions on Acoustics, Speech, and Signal Processing
 // 29 (6): 1153–1160.
-//
-// For the case of a = -0.5.
 //
 // For more details see
 //
@@ -190,7 +189,7 @@ bool BiCubicInterpolator::Evaluate(const double r,
   const double p23 = (col < num_cols_ - 2) ? v(row + 1, col + 2) : 2 * p22 - p21;  // NOLINT
 
   // The four corners of the block require a bit more care.  Let us
-  // consider the evaluation of p00, the other four corners follow in
+  // consider the evaluation of p00, the other three corners follow in
   // the same manner.
   //
   // There are four cases in which we need to evaluate p00.

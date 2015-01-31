@@ -108,7 +108,7 @@ TEST(CubicInterpolator, JetEvaluation) {
   EXPECT_TRUE(interpolator.Evaluate(x, &f, &dfdx));
 
   // Create a Jet with the same scalar part as x, so that the output
-  // Jet will be evaluate at x.
+  // Jet will be evaluated at x.
   Jet<double, 4> x_jet;
   x_jet.a = x;
   x_jet.v(0) = 1.0;
@@ -272,7 +272,7 @@ TEST(BiCubicInterpolator, JetEvaluation) {
   EXPECT_TRUE(interpolator.Evaluate(r, c, &f, &dfdr, &dfdc));
 
   // Create a Jet with the same scalar part as x, so that the output
-  // Jet will be evaluate at x.
+  // Jet will be evaluated at x.
   Jet<double, 4> r_jet;
   r_jet.a = r;
   r_jet.v(0) = 1.0;
