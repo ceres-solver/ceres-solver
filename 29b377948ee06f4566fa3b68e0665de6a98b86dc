@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978b8f6f_9f82bfdf",
+        "filename": "internal/ceres/lapack.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-02T05:53:38Z",
+      "side": 1,
+      "message": "Row major?",
+      "revId": "29b377948ee06f4566fa3b68e0665de6a98b86dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "978b8f6f_bf8783ee",
+        "filename": "internal/ceres/lapack.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-02T05:53:38Z",
+      "side": 1,
+      "message": "Comment blanks around",
+      "revId": "29b377948ee06f4566fa3b68e0665de6a98b86dc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
