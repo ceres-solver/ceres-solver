@@ -271,7 +271,7 @@ Eliminate(const BlockSparseMatrix* A,
     typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
         ete
         .template selfadjointView<Eigen::Upper>()
-        .llt()
+        .ldlt()
         .solve(Matrix::Identity(e_block_size, e_block_size));
 
     // For the current chunk compute and update the rhs of the reduced
@@ -361,7 +361,7 @@ BackSubstitute(const BlockSparseMatrix* A,
               ete.data(), 0, 0, e_block_size, e_block_size);
     }
 
-    ete.llt().solveInPlace(y_block);
+    ete.ldlt().solveInPlace(y_block);
   }
 }
 

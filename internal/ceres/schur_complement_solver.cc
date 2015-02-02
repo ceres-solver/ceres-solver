@@ -198,18 +198,17 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(
   summary.num_iterations = 1;
 
   if (options().dense_linear_algebra_library_type == EIGEN) {
-    Eigen::LLT<Matrix, Eigen::Upper> llt =
+    Eigen::LDLT<Matrix, Eigen::Upper> ldlt =
         ConstMatrixRef(m->values(), num_rows, num_rows)
         .selfadjointView<Eigen::Upper>()
-        .llt();
-    if (llt.info() != Eigen::Success) {
+        .ldlt();
+    if (!ldlt.isPositive()) {
       summary.termination_type = LINEAR_SOLVER_FAILURE;
-      summary.message =
-          "Eigen failure. Unable to perform dense Cholesky factorization.";
+      summary.message = "Matrix is indefinite.";
       return summary;
     }
 
-    VectorRef(solution, num_rows) = llt.solve(ConstVectorRef(rhs(), num_rows));
+    VectorRef(solution, num_rows) = ldlt.solve(ConstVectorRef(rhs(), num_rows));
   } else {
     VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
     summary.termination_type =

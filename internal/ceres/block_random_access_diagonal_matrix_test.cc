@@ -148,7 +148,7 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
   Matrix dense;
   tsm->ToDenseMatrix(&dense);
   Matrix expected_inverse =
-      dense.llt().solve(Matrix::Identity(dense.rows(), dense.rows()));
+      dense.ldlt().solve(Matrix::Identity(dense.rows(), dense.rows()));
 
   m_->Invert();
   tsm->ToDenseMatrix(&dense);
