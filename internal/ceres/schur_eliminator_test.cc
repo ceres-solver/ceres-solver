@@ -112,7 +112,7 @@ class SchurEliminatorTest : public ::testing::Test {
       P.block(row, row,  block_size, block_size) =
           P
           .block(row, row,  block_size, block_size)
-          .llt()
+          .ldlt()
           .solve(Matrix::Identity(block_size, block_size));
       row += block_size;
     }
@@ -121,7 +121,7 @@ class SchurEliminatorTest : public ::testing::Test {
         .triangularView<Eigen::Upper>() = R - Q.transpose() * P * Q;
     rhs_expected =
         g.tail(schur_size) - Q.transpose() * P * g.head(num_eliminate_cols);
-    sol_expected = H.llt().solve(g);
+    sol_expected = H.ldlt().solve(g);
   }
 
   void EliminateSolveAndCompare(const VectorRef& diagonal,
@@ -160,7 +160,7 @@ class SchurEliminatorTest : public ::testing::Test {
     Vector reduced_sol  =
         lhs_ref
         .selfadjointView<Eigen::Upper>()
-        .llt()
+        .ldlt()
         .solve(rhs);
 
     // Solution to the linear least squares problem.

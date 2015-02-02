@@ -96,18 +96,18 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
-  Eigen::LLT<Matrix, Eigen::Upper> llt =
-      lhs.selfadjointView<Eigen::Upper>().llt();
+  Eigen::LDLT<Matrix, Eigen::Upper> ldlt =
+      lhs.selfadjointView<Eigen::Upper>().ldlt();
 
-  if (llt.info() != Eigen::Success) {
+  if (!ldlt.isPositive()) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message = "Eigen LLT decomposition failed.";
+    summary.message = "Matrix is indefinite.";
   } else {
     summary.termination_type = LINEAR_SOLVER_SUCCESS;
     summary.message = "Success.";
   }
 
-  VectorRef(x, num_cols) = llt.solve(rhs);
+  VectorRef(x, num_cols) = ldlt.solve(rhs);
   event_logger.AddEvent("Solve");
   return summary;
 }
