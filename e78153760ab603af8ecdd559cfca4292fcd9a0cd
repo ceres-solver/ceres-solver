@@ -16,6 +16,24 @@
       "revId": "e78153760ab603af8ecdd559cfca4292fcd9a0cd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17515fa8_905164cd",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-02-03T04:39:45Z",
+      "side": 1,
+      "message": "err brain damage.",
+      "parentUuid": "17515fa8_c5241029",
+      "revId": "e78153760ab603af8ecdd559cfca4292fcd9a0cd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
