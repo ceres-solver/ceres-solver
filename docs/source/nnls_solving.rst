@@ -494,6 +494,31 @@ Professor Tim Davis' ``SuiteSparse`` or ``CXSparse`` packages [Chen]_
 or the sparse Cholesky factorization algorithm in ``Eigen`` (which
 incidently is a port of the algorithm implemented inside ``CXSparse``)
 
+.. _section-cgnr:
+
+``CGNR``
+--------
+
+For general sparse problems, if the problem is too large for
+``CHOLMOD`` or a sparse linear algebra library is not linked into
+Ceres, another option is the ``CGNR`` solver. This solver uses the
+Conjugate Gradients solver on the *normal equations*, but without
+forming the normal equations explicitly. It exploits the relation
+
+.. math::
+    H x = J^\top J x = J^\top(J x)
+
+The convergence of Conjugate Gradients depends on the conditioner
+number :math:`\kappa(H)`. Usually :math:`H` is poorly conditioned and
+a :ref:`section-preconditioner` must be used to get reasonable
+performance. Currently only the ``JACOBI`` preconditioner is available
+for use with ``CGNR``. It uses the block diagonal of :math:`H` to
+preconditioner the normal equations.
+
+When the user chooses ``CGNR`` as the linear solver, Ceres
+automatically switches from the exact step algorithm to an inexact
+step algorithm.
+
 .. _section-schur:
 
 ``DENSE_SCHUR`` & ``SPARSE_SCHUR``
@@ -594,25 +619,6 @@ complement, allow bundle adjustment algorithms to significantly scale
 up over those based on dense factorization. Ceres implements this
 strategy as the ``SPARSE_SCHUR`` solver.
 
-.. _section-cgnr:
-
-``CGNR``
---------
-
-For general sparse problems, if the problem is too large for
-``CHOLMOD`` or a sparse linear algebra library is not linked into
-Ceres, another option is the ``CGNR`` solver. This solver uses the
-Conjugate Gradients solver on the *normal equations*, but without
-forming the normal equations explicitly. It exploits the relation
-
-.. math::
-    H x = J^\top J x = J^\top(J x)
-
-
-When the user chooses ``ITERATIVE_SCHUR`` as the linear solver, Ceres
-automatically switches from the exact step algorithm to an inexact
-step algorithm.
-
 .. _section-iterative_schur:
 
 ``ITERATIVE_SCHUR``
@@ -671,6 +677,9 @@ can be quite substantial.
      better to construct it explicitly in memory and use it to
      evaluate the product :math:`Sx`.
 
+When the user chooses ``ITERATIVE_SCHUR`` as the linear solver, Ceres
+automatically switches from the exact step algorithm to an inexact
+step algorithm.
 
   .. NOTE::
 
@@ -717,18 +726,19 @@ expensive it is use. For example, Incomplete Cholesky factorization
 based preconditioners have much better convergence behavior than the
 Jacobi preconditioner, but are also much more expensive.
 
-
 The simplest of all preconditioners is the diagonal or Jacobi
 preconditioner, i.e., :math:`M=\operatorname{diag}(A)`, which for
 block structured matrices like :math:`H` can be generalized to the
-block Jacobi preconditioner.
+block Jacobi preconditioner. Ceres implements the block Jacobi
+preconditioner and refers to it as ``JACOBI``. When used with
+:ref:`section-cgnr` it refers to the block diagonal of :math:`H` and
+when used with :ref:`section-iterative_schur` it refers to the block
+diagonal of :math:`B` [Mandel]_.
 
-For ``ITERATIVE_SCHUR`` there are two obvious choices for block
-diagonal preconditioners for :math:`S`. The block diagonal of the
-matrix :math:`B` [Mandel]_ and the block diagonal :math:`S`, i.e, the
-block Jacobi preconditioner for :math:`S`. Ceres's implements both of
-these preconditioners and refers to them as ``JACOBI`` and
-``SCHUR_JACOBI`` respectively.
+Another obvious choice for :ref:`section-iterative_schur` is the block
+diagonal of the Schur complement matrix :math:`S`, i.e, the block
+Jacobi preconditioner for :math:`S`. Ceres implements it and refers to
+is as the ``SCHUR_JACOBI`` preconditioner.
 
 For bundle adjustment problems arising in reconstruction from
 community photo collections, more effective preconditioners can be
