@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17515fa8_106eb41a",
+        "filename": "internal/ceres/dense_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-03T07:18:07Z",
+      "side": 1,
+      "message": "I have reservations about this change due to performance concerns; in the past this was LDLT and we switched it to LLT since it was so much faster, and didn\u0027t have precision problems in practice.\n\nDiscuss.",
+      "revId": "60d55663ec927f89ca8f68929eaf07ff516953ef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
