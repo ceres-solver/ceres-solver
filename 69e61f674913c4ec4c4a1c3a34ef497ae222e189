@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17515fa8_b00820a2",
+        "filename": "internal/ceres/block_random_access_diagonal_matrix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-03T06:22:50Z",
+      "side": 1,
+      "message": "How about naming this InvertOrTruncatePsuedoInvert()?",
+      "revId": "69e61f674913c4ec4c4a1c3a34ef497ae222e189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17515fa8_301df0de",
+        "filename": "internal/ceres/lapack.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-03T06:22:50Z",
+      "side": 1,
+      "message": "Perhaps comment that the eigen LDLT is not blocked, but this is necessary for the numerical correctness.",
+      "revId": "69e61f674913c4ec4c4a1c3a34ef497ae222e189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17515fa8_901084c8",
+        "filename": "internal/ceres/lapack.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-03T06:22:50Z",
+      "side": 1,
+      "message": "It\u0027s not totally clear what this block is doing; perhaps add a comment. You could intersperse the comment inside the expression.",
+      "revId": "69e61f674913c4ec4c4a1c3a34ef497ae222e189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17515fa8_102b14fc",
+        "filename": "internal/ceres/lapack_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-03T06:22:50Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be -1?",
+      "revId": "69e61f674913c4ec4c4a1c3a34ef497ae222e189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
