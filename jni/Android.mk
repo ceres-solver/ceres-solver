@@ -102,9 +102,18 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_LAPACK \
                 -DCERES_NO_SUITESPARSE \
-                -DCERES_NO_THREADS \
                 -DCERES_NO_CXSPARSE \
                 -DCERES_STD_UNORDERED_MAP
+
+
+# If the user did not enable threads in CERES_EXTRA_DEFINES, then add
+# CERES_NO_THREADS.
+#
+# TODO(sameeragarwal): Update comments here and in the docs to
+# demonstrate how OpenMP can be used by the user.
+ifeq (,$(findstring CERES_HAVE_PTHREAD, $(LOCAL_CFLAGS)))
+  LOCAL_CFLAGS += -DCERES_NO_THREADS
+endif
 
 LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/blas.cc \
