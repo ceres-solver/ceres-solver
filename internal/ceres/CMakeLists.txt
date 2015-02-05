@@ -53,7 +53,6 @@ SET(CERES_INTERNAL_SRC
     corrector.cc
     covariance.cc
     covariance_impl.cc
-    cubic_interpolation.cc
     cxsparse.cc
     dense_normal_cholesky_solver.cc
     dense_qr_solver.cc
