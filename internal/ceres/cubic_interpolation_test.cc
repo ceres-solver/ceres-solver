@@ -37,12 +37,6 @@
 namespace ceres {
 namespace internal {
 
-TEST(CubicInterpolator, NeedsAtleastTwoValues) {
-  double x[] = {1};
-  EXPECT_DEATH_IF_SUPPORTED(CubicInterpolator c(x, 0), "num_values > 1");
-  EXPECT_DEATH_IF_SUPPORTED(CubicInterpolator c(x, 1), "num_values > 1");
-}
-
 static const double kTolerance = 1e-12;
 
 class CubicInterpolatorTest : public ::testing::Test {
@@ -55,7 +49,8 @@ class CubicInterpolatorTest : public ::testing::Test {
       values_[x] = a * x * x * x + b * x * x + c * x + d;
     }
 
-    CubicInterpolator interpolator(values_, kNumSamples);
+    Array1D<double> array(values_, kNumSamples);
+    CubicInterpolator<Array1D<double> > interpolator(array);
 
     // Check values in the all the cells but the first and the last
     // ones. In these cells, the interpolated function values should
@@ -100,9 +95,13 @@ TEST_F(CubicInterpolatorTest, QuadraticFunction) {
   RunPolynomialInterpolationTest(0.0, 0.4, 1.0, 0.5);
 }
 
+
 TEST(CubicInterpolator, JetEvaluation) {
   const double values[] = {1.0, 2.0, 2.0, 3.0};
-  CubicInterpolator interpolator(values, 4);
+
+  Array1D<double> array(values, 4);
+  CubicInterpolator<Array1D<double> > interpolator(array);
+
   double f, dfdx;
   const double x = 2.5;
   EXPECT_TRUE(interpolator.Evaluate(x, &f, &dfdx));
@@ -137,7 +136,9 @@ class BiCubicInterpolatorTest : public ::testing::Test {
         *v++ = EvaluateF(r, c);
       }
     }
-    BiCubicInterpolator interpolator(values_, kNumRows, kNumCols);
+
+    Array2D<double> array(values_, kNumRows, kNumCols);
+    BiCubicInterpolator<Array2D<double> > interpolator(array);
 
     for (int j = 0; j < kNumRowSamples; ++j) {
       const double r = 1.0 + 7.0 / (kNumRowSamples - 1) * j;
@@ -265,7 +266,10 @@ TEST_F(BiCubicInterpolatorTest, Degree22Function) {
 TEST(BiCubicInterpolator, JetEvaluation) {
   const double values[] = {1.0, 2.0, 2.0, 3.0,
                            1.0, 2.0, 2.0, 3.0};
-  BiCubicInterpolator interpolator(values, 2, 4);
+
+  Array2D<double> array(values, 2, 4);
+  BiCubicInterpolator<Array2D<double> > interpolator(array);
+
   double f, dfdr, dfdc;
   const double r = 0.5;
   const double c = 2.5;
