@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c19e830_b53cc0f4",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Ceres header should come after external libraries.",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c07e0cb_97126453",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Is there a reason these header guards are after the #includes?",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc0dd8eb_5942c32d",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "CHECK_GE(x, 0.0) \u0026 CHECK_LE(x, 1.0) ?",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf830d4_43f58652",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 4
@@ -70,6 +121,63 @@
       "writtenOn": "2015-02-06T20:56:14Z",
       "side": 1,
       "message": "spacing",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc0dd8eb_79f347a8",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Perhaps add an explicit note in the comments that this is the dimension of each element in the array, not the number of dimensions of the array (to emphasise distinction from BiCubicInterpolator)?\n\nOr perhaps kDimension --\u003e kDataDimension?",
+      "range": {
+        "startLine": 122,
+        "startChar": 29,
+        "endLine": 122,
+        "endChar": 39
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd60c82_0af63b98",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Perhaps add the same description as in the BiCubicInterpolator case, along the lines of: \"If we are in rows \u003e\u003d 1, then choose the element from the row - 1, otherwise linearly interpolate from row and row + 1.\"",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd60c82_6af377a8",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Same comment as before about same comment as in BiCubicInterpolator case.",
       "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -145,6 +253,52 @@
     },
     {
       "key": {
+        "uuid": "dcd60c82_6ada5720",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Same comment as before, perhaps kDataDimension to emphasise distinction from # of index dimensions for the array?  Otherwise it is perhaps confusing with BiCubicInterpolator\u003c kDimension \u003d 1 \u003e",
+      "range": {
+        "startLine": 219,
+        "startChar": 29,
+        "endLine": 219,
+        "endChar": 39
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cd52078_67a1f284",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Perhaps add enclosing parentheses: \u003c\u003c \" (\" \u003c\u003c r \u003c\u003c \", \" \u003c\u003c c \u003c\u003c \") \"",
+      "range": {
+        "startLine": 236,
+        "startChar": 33,
+        "endLine": 236,
+        "endChar": 50
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf830d4_c39e16cf",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 4
@@ -162,6 +316,115 @@
     },
     {
       "key": {
+        "uuid": "dcd60c82_4af0339a",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "This should fit on the previous line, no?",
+      "range": {
+        "startLine": 291,
+        "startChar": 7,
+        "endLine": 291,
+        "endChar": 9
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cd52078_674f3225",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Should this not be col \u003e 0?",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 23
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cc728d7_8509820f",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "The code logic is: row \u003e 0, which I think is right.",
+      "range": {
+        "startLine": 325,
+        "startChar": 7,
+        "endLine": 325,
+        "endChar": 14
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd60c82_6ac89744",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Again, perhaps kDataDimension",
+      "range": {
+        "startLine": 425,
+        "startChar": 26,
+        "endLine": 425,
+        "endChar": 36
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc7b6c5e_42d75248",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "LOG(ERROR) here as in CubicInterpolator?",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf830d4_23edea8f",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 4
@@ -173,6 +436,63 @@
       "writtenOn": "2015-02-06T20:56:14Z",
       "side": 1,
       "message": "Comment blank after",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cd52078_67d452c3",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Perhaps note the example that typical RGB (or BGR in OpenCV) images are stored in interleaved format, just to lead them to it.",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd60c82_4ac5d32a",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "Again, perhaps kDataDimension",
+      "range": {
+        "startLine": 470,
+        "startChar": 14,
+        "endLine": 470,
+        "endChar": 24
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcd60c82_ea8c871d",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-06T21:49:15Z",
+      "side": 1,
+      "message": "LOG(ERROR) here as in CubicInterpolator?",
       "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
