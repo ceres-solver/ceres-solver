@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcf830d4_43f58652",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T20:56:14Z",
+      "side": 1,
+      "message": "Weird indentation",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf830d4_a30d5ae1",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T20:56:14Z",
+      "side": 1,
+      "message": "Indent the comment-code 2 spaces",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfd04e9_fccf49ae",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 4
@@ -19,6 +53,23 @@
         "endLine": 96,
         "endChar": 9
       },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf830d4_e33a3268",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T20:56:14Z",
+      "side": 1,
+      "message": "spacing",
       "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -88,6 +139,40 @@
         "endLine": 209,
         "endChar": 37
       },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf830d4_c39e16cf",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T20:56:14Z",
+      "side": 1,
+      "message": "Yikes this code. I see error-prone lines everywhere :(",
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf830d4_23edea8f",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T20:56:14Z",
+      "side": 1,
+      "message": "Comment blank after",
       "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
