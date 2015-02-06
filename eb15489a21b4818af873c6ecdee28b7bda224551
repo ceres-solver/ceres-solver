@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcfd2c74_3bdf8bde",
+        "filename": "include/ceres/fpclassify.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T00:39:54Z",
+      "side": 0,
+      "message": "What\u0027s the reason for removing this? We\u0027ll lose compatibility with older NDKs, and for no good reason.",
+      "revId": "eb15489a21b4818af873c6ecdee28b7bda224551",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
