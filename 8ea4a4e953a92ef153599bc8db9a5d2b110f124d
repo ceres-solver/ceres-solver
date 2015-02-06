@@ -16,6 +16,24 @@
       "revId": "8ea4a4e953a92ef153599bc8db9a5d2b110f124d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c02d4b9_d891ad37",
+        "filename": "jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-02-06T18:15:21Z",
+      "side": 1,
+      "message": "I will add an entire section on this, once r10e is external. Right now there is no way to do that stuff outside google. There are some complications relating to static and shared library linking, I will have carlos write an elaborate explanation that will go here and in the docs.",
+      "parentUuid": "fcf830d4_83ddbee2",
+      "revId": "8ea4a4e953a92ef153599bc8db9a5d2b110f124d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
