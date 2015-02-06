@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfd04e9_fccf49ae",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-02-06T17:39:30Z",
+      "side": 1,
+      "message": "You never actually use the return value of this function. Your interpolator code always guarantees you\u0027re sampling from within a valid range which makes the extra test in GetValue redundant.",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cfd04e9_bcc5c194",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-02-06T17:39:30Z",
+      "side": 1,
+      "message": "Again this return value is never used.",
+      "range": {
+        "startLine": 194,
+        "startChar": 5,
+        "endLine": 194,
+        "endChar": 9
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cfd04e9_9c660511",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-02-06T17:39:30Z",
+      "side": 1,
+      "message": "NumCols() - 1",
+      "range": {
+        "startLine": 202,
+        "startChar": 47,
+        "endLine": 202,
+        "endChar": 50
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cfd04e9_dc708dc8",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5455
+      },
+      "writtenOn": "2015-02-06T17:39:30Z",
+      "side": 1,
+      "message": "NumCols() - 1",
+      "range": {
+        "startLine": 209,
+        "startChar": 30,
+        "endLine": 209,
+        "endChar": 37
+      },
+      "revId": "88d4fbc91f275ca49de130c2366e917c8a5c510c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
