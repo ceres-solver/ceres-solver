@@ -513,7 +513,7 @@ number :math:`\kappa(H)`. Usually :math:`H` is poorly conditioned and
 a :ref:`section-preconditioner` must be used to get reasonable
 performance. Currently only the ``JACOBI`` preconditioner is available
 for use with ``CGNR``. It uses the block diagonal of :math:`H` to
-preconditioner the normal equations.
+precondition the normal equations.
 
 When the user chooses ``CGNR`` as the linear solver, Ceres
 automatically switches from the exact step algorithm to an inexact
