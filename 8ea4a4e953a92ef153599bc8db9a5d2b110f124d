@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf830d4_83ddbee2",
+        "filename": "jni/Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-06T18:11:42Z",
+      "side": 1,
+      "message": "Consider expanding this comment to explain exactly how to do this; e.g.\n\n\n  CERES_EXTRA_DEFINES\u003dCERES_HAVE_PTHREAD ndk-build\n\n\nNo point in making people reach for the docs.",
+      "revId": "8ea4a4e953a92ef153599bc8db9a5d2b110f124d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
