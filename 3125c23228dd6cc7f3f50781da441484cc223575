@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1013bf4_fefffdb9",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-02-08T18:26:50Z",
+      "side": 1,
+      "message": "How performance sensitive is this code? I wonder if all the checking will have a negative impact.",
+      "revId": "3125c23228dd6cc7f3f50781da441484cc223575",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
