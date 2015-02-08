@@ -35,6 +35,7 @@
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
 
+using ceres::Array1D;
 using ceres::CubicInterpolator;
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;
@@ -45,7 +46,8 @@ using ceres::Solve;
 // A simple cost functor that interfaces an interpolated table of
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
-  explicit InterpolatedCostFunctor(const CubicInterpolator& interpolator)
+  explicit InterpolatedCostFunctor(
+      const CubicInterpolator<Array1D<double> >& interpolator)
       : interpolator_(interpolator) {
   }
 
@@ -53,13 +55,14 @@ struct InterpolatedCostFunctor {
     return interpolator_.Evaluate(*x, residuals);
   }
 
-  static CostFunction* Create(const CubicInterpolator& interpolator) {
+  static CostFunction* Create(
+      const CubicInterpolator<Array1D<double> >& interpolator) {
     return new AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
         new InterpolatedCostFunctor(interpolator));
   }
 
  private:
-  const CubicInterpolator& interpolator_;
+  const CubicInterpolator<Array1D<double> >& interpolator_;
 };
 
 int main(int argc, char** argv) {
@@ -72,11 +75,13 @@ int main(int argc, char** argv) {
     values[i] = (i - 4.5) * (i - 4.5);
   }
 
-  CubicInterpolator interpolator(values, kNumSamples);
+  Array1D<double> array(values, kNumSamples);
+  CubicInterpolator<Array1D<double> > interpolator(array);
 
   double x = 1.0;
   Problem problem;
   CostFunction* cost_function = InterpolatedCostFunctor::Create(interpolator);
+
   problem.AddResidualBlock(cost_function, NULL, &x);
 
   Solver::Options options;
