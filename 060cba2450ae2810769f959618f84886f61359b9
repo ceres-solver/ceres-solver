@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7190eb99_8f2db590",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-02-10T13:54:31Z",
+      "side": 1,
+      "message": "Please add an empty line after the first sentence, it makes the git-log output look pretty.",
+      "range": {
+        "startLine": 7,
+        "startChar": 72,
+        "endLine": 8,
+        "endChar": 69
+      },
+      "revId": "060cba2450ae2810769f959618f84886f61359b9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
