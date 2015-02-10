@@ -92,7 +92,7 @@ MACRO(CERES_REPORT_NOT_FOUND REASON_MSG)
 ENDMACRO(CERES_REPORT_NOT_FOUND)
 
 # Get the (current, i.e. installed) directory containing this file.
-GET_FILENAME_COMPONENT(CURRENT_CONFIG_INSTALL_DIR
+GET_FILENAME_COMPONENT(CERES_CURRENT_CONFIG_INSTALL_DIR
   "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 # Record the state of the CMake module path when this script was
@@ -103,19 +103,19 @@ SET(CALLERS_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
 # script, thus we will use the FindPackage() scripts shipped with
 # Ceres to find Ceres' dependencies, even if the user has equivalently
 # named FindPackage() scripts in their project.
-SET(CMAKE_MODULE_PATH ${CURRENT_CONFIG_INSTALL_DIR})
+SET(CMAKE_MODULE_PATH ${CERES_CURRENT_CONFIG_INSTALL_DIR})
 
 # Build the absolute root install directory as a relative path
 # (determined when Ceres was configured & built) from the current
 # install directory for this this file.  This allows for the install
 # tree to be relocated, after Ceres was built, outside of CMake.
 GET_FILENAME_COMPONENT(CURRENT_ROOT_INSTALL_DIR
-  ${CURRENT_CONFIG_INSTALL_DIR}/@INSTALL_ROOT_REL_CONFIG_INSTALL_DIR@ ABSOLUTE)
+  ${CERES_CURRENT_CONFIG_INSTALL_DIR}/@INSTALL_ROOT_REL_CONFIG_INSTALL_DIR@ ABSOLUTE)
 IF (NOT EXISTS ${CURRENT_ROOT_INSTALL_DIR})
   CERES_REPORT_NOT_FOUND(
     "Ceres install root: ${CURRENT_ROOT_INSTALL_DIR}, "
     "determined from relative path from CeresConfg.cmake install location: "
-    "${CURRENT_CONFIG_INSTALL_DIR}, does not exist. Either the install "
+    "${CERES_CURRENT_CONFIG_INSTALL_DIR}, does not exist. Either the install "
     "directory was deleted, or the install tree was only partially relocated "
     "outside of CMake after Ceres was built.")
 ENDIF (NOT EXISTS ${CURRENT_ROOT_INSTALL_DIR})
@@ -129,7 +129,7 @@ IF (NOT EXISTS ${CERES_INCLUDE_DIR}/ceres/ceres.h)
   CERES_REPORT_NOT_FOUND(
     "Ceres install root: ${CURRENT_ROOT_INSTALL_DIR}, "
     "determined from relative path from CeresConfg.cmake install location: "
-    "${CURRENT_CONFIG_INSTALL_DIR}, does not contain Ceres headers. "
+    "${CERES_CURRENT_CONFIG_INSTALL_DIR}, does not contain Ceres headers. "
     "Either the install directory was deleted, or the install tree was only "
     "partially relocated outside of CMake after Ceres was built.")
 ENDIF (NOT EXISTS ${CERES_INCLUDE_DIR}/ceres/ceres.h)
@@ -193,7 +193,7 @@ ENDIF (CERES_USES_MINIGLOG)
 
 # Import exported Ceres targets.
 IF (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
-  INCLUDE(${CURRENT_CONFIG_INSTALL_DIR}/CeresTargets.cmake)
+  INCLUDE(${CERES_CURRENT_CONFIG_INSTALL_DIR}/CeresTargets.cmake)
 ENDIF (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 # Set the expected XX_LIBRARIES variable for FindPackage().
 SET(CERES_LIBRARIES ceres)
