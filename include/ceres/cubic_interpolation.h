@@ -462,10 +462,8 @@ struct Array1D {
   }
 
   void GetValue(const int n, double* f) const {
-    if (n < 0 || n > num_values_ - 1) {
-      LOG(FATAL) << "n =  " << n
-                 << " is not in the interval [0, " << num_values_ - 1 << "].";
-    }
+    DCHECK_GE(n, 0);
+    DCHECK_LT(n, num_values_);
 
     for (int i = 0; i < kDataDimension; ++i) {
       if (kInterleaved) {
@@ -507,7 +505,7 @@ template <typename T,
           bool kRowMajor = true,
           bool kInterleaved = true>
 struct Array2D {
-  enum Foo { DATA_DIMENSION = kDataDimension };
+  enum { DATA_DIMENSION = kDataDimension };
 
   Array2D(const T* data, const int num_rows, const int num_cols)
       : data_(data), num_rows_(num_rows), num_cols_(num_cols) {
@@ -515,11 +513,10 @@ struct Array2D {
   }
 
   void GetValue(const int r, const int c, double* f) const {
-    if (r < 0 || r > num_rows_ - 1 || c < 0 || c > num_cols_ - 1) {
-      LOG(FATAL) << "(r, c) =  (" << r << ", " << c << ")"
-                 << " is not in the square defined by [0, 0] "
-                 << " and [" << num_rows_ - 1 << ", " << num_cols_ - 1 << "]";
-    }
+    DCHECK_GE(r, 0);
+    DCHECK_LT(r, num_rows_);
+    DCHECK_GE(c, 0);
+    DCHECK_LT(c, num_cols_);
 
     const int n = (kRowMajor) ? num_cols_ * r + c : num_rows_ * c + r;
     for (int i = 0; i < kDataDimension; ++i) {
