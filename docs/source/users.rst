@@ -29,6 +29,12 @@ Users
 * `Obvious Engineering <http://obviousengine.com/>`_ uses Ceres for
   bundle adjustment for their 3D photography app `Seene
   <http://seene.co/>`_.
+* The `Autonomous Systems Lab <http://www.asl.ethz.ch/>`_ at ETH
+  Zurich uses Ceres for
+
+  * Camera and Camera/IMU Calibration.
+  * Large scale optimization of visual, inertial, gps and
+    wheel-odometry data for long term autonomy.
 
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
