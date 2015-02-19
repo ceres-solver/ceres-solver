@@ -20,7 +20,7 @@ Building
    performance. `google-glog <http://code.google.com/p/google-glog>`_
    allows you to control its behaviour from the command line `flags
    <http://google-glog.googlecode.com/svn/trunk/doc/glog.html>`_. Starting
-   with ``-logtostdterr`` you can add ``-v=N`` for increasing values
+   with ``-logtostderr`` you can add ``-v=N`` for increasing values
    of ``N`` to get more and more verbose and detailed information
    about Ceres internals.
 
