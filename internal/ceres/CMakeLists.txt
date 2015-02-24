@@ -51,6 +51,7 @@ SET(CERES_INTERNAL_SRC
     conjugate_gradients_solver.cc
     coordinate_descent_minimizer.cc
     corrector.cc
+    composed_cost_function.cc
     covariance.cc
     covariance_impl.cc
     cxsparse.cc
@@ -249,6 +250,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(conditioned_cost_function)
   CERES_TEST(corrector)
   CERES_TEST(cost_function_to_functor)
+  CERES_TEST(composed_cost_function)
   CERES_TEST(covariance)
   CERES_TEST(cubic_interpolation)
   CERES_TEST(dense_sparse_matrix)
