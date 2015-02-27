@@ -322,7 +322,7 @@ class CERES_EXPORT BiCubicInterpolator {
       array_.GetValue(row + 2, col,     p31.data());
       array_.GetValue(row + 2, col + 1, p32.data());
     } else {
-      p31 = 2 * p21 - p22;
+      p31 = 2 * p21 - p11;
       p32 = 2 * p22 - p12;
     }
 
