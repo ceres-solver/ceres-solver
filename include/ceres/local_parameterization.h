@@ -210,8 +210,29 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
   virtual int LocalSize() const { return 3; }
 };
 
+// Plus(x, delta) =
+//    H(x) * [sin(0.5 * |delta|) * delta / |delta|, cos(0.5 * |delta|)]
+// with H(x) being the Householder matrix. Here we assume that the last element
+// of x is the scalar component. We also assume that the homogeneous vector x is
+// norm 1. The homogeneous vector must be size greater than 1.
+template <int N>
+class CERES_EXPORT HomogeneousVectorParameterization :
+      public LocalParameterization {
+ public:
+  HomogeneousVectorParameterization();
+  virtual ~HomogeneousVectorParameterization() {}
+  virtual bool Plus(const double* x,
+                    const double* delta,
+                    double* x_plus_delta) const;
+  virtual bool ComputeJacobian(const double* x,
+                               double* jacobian) const;
+  virtual int GlobalSize() const { return N; }
+  virtual int LocalSize() const { return N - 1; }
+};
+
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"
+#include "ceres/local_parameterization_impl.h"
 
 #endif  // CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
