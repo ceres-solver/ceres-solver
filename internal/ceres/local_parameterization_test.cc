@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <cmath>
+#include "ceres/autodiff_local_parameterization.h"
 #include "ceres/fpclassify.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
@@ -244,6 +245,17 @@ void QuaternionParameterizationTestHelper(const double* x,
   EXPECT_EQ((local_matrix - expected_local_matrix).norm(), 0.0);
 }
 
+template <int N>
+void normalize(double* x) {
+  double norm_x = 0.0;
+  for (int i = 0; i < N; ++i)
+    norm_x += x[i] * x[i];
+  norm_x = sqrt(norm_x);
+
+  for (int i = 0; i < N; ++i)
+    x[i] /= norm_x;
+}
+
 TEST(QuaternionParameterization, ZeroTest) {
   double x[4] = {0.5, 0.5, 0.5, 0.5};
   double delta[3] = {0.0, 0.0, 0.0};
@@ -254,13 +266,7 @@ TEST(QuaternionParameterization, ZeroTest) {
 
 TEST(QuaternionParameterization, NearZeroTest) {
   double x[4] = {0.52, 0.25, 0.15, 0.45};
-  double norm_x = sqrt(x[0] * x[0] +
-                       x[1] * x[1] +
-                       x[2] * x[2] +
-                       x[3] * x[3]);
-  for (int i = 0; i < 4; ++i) {
-    x[i] = x[i] / norm_x;
-  }
+  normalize<4>(x);
 
   double delta[3] = {0.24, 0.15, 0.10};
   for (int i = 0; i < 3; ++i) {
@@ -278,14 +284,7 @@ TEST(QuaternionParameterization, NearZeroTest) {
 
 TEST(QuaternionParameterization, AwayFromZeroTest) {
   double x[4] = {0.52, 0.25, 0.15, 0.45};
-  double norm_x = sqrt(x[0] * x[0] +
-                       x[1] * x[1] +
-                       x[2] * x[2] +
-                       x[3] * x[3]);
-
-  for (int i = 0; i < 4; ++i) {
-    x[i] = x[i] / norm_x;
-  }
+  normalize<4>(x);
 
   double delta[3] = {0.24, 0.15, 0.10};
   const double delta_norm = sqrt(delta[0] * delta[0] +
@@ -300,6 +299,169 @@ TEST(QuaternionParameterization, AwayFromZeroTest) {
   QuaternionParameterizationTestHelper(x, delta, q_delta);
 }
 
+// Compute the Householder vector for vectors of size 4.
+template <typename Scalar>
+void ComputeHouseholderVector(const Scalar* x, Scalar* v, Scalar* beta) {
+  CHECK_NOTNULL(x);
+  CHECK_NOTNULL(v);
+  CHECK_NOTNULL(beta);
+
+  const int kLength = 4;
+  Scalar sigma = Scalar(0.0);
+  for (int i = 0; i < kLength - 1; ++i) {
+    sigma += x[i] * x[i];
+    v[i] = x[i];
+  }
+  v[kLength - 1] = Scalar(1.0);
+
+  *beta = Scalar(0.0);
+  const Scalar& x_pivot = x[kLength - 1];
+
+  if (sigma <= Scalar(std::numeric_limits<double>::epsilon())) {
+    if (x_pivot < Scalar(0.0))
+      *beta = Scalar(-2.0);
+  } else {
+    const Scalar mu = sqrt(x_pivot * x_pivot + sigma);
+    Scalar v_pivot = v[kLength - 1];
+
+    if (x_pivot <= Scalar(0.0))
+      v_pivot = x_pivot - mu;
+    else
+      v_pivot = -sigma / (x_pivot + mu);
+
+    *beta = Scalar(2.0) * v_pivot * v_pivot / (sigma + v_pivot * v_pivot);
+
+    for (int i = 0; i < kLength - 1; ++i) {
+      v[i] /= v_pivot;
+    }
+  }
+}
+
+// Functor needed to implement automatically differentiated Plus for
+// homogeneous vectors. Note this explicitly defined for vectors of size 4.
+struct HomogeneousVectorParameterizationPlus {
+  template<typename Scalar>
+  bool operator()(const Scalar* p_x, const Scalar* p_delta,
+                  Scalar* p_x_plus_delta) const {
+    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1> > x(p_x);
+    Eigen::Map<const Eigen::Matrix<Scalar, 3, 1> > delta(p_delta);
+    Eigen::Map<Eigen::Matrix<Scalar, 4, 1> > x_plus_delta(p_x_plus_delta);
+
+    const Scalar squared_norm_delta =
+        delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
+
+    Eigen::Matrix<Scalar, 4, 1> y;
+    Scalar one_half(0.5);
+    if (squared_norm_delta > Scalar(0.0)) {
+      Scalar norm_delta = sqrt(squared_norm_delta);
+      Scalar norm_delta_div_2 = 0.5 * norm_delta;
+      const Scalar sin_delta_by_delta = sin(norm_delta_div_2) /
+          norm_delta_div_2;
+      y[0] = sin_delta_by_delta * delta[0] * one_half;
+      y[1] = sin_delta_by_delta * delta[1] * one_half;
+      y[2] = sin_delta_by_delta * delta[2] * one_half;
+      y[3] = cos(norm_delta_div_2);
+
+    } else {
+      // We do not just use y = [0,0,0,1] here because that is a
+      // constant and when used for automatic differentiation will
+      // lead to a zero derivative. Instead we take a first order
+      // approximation and evaluate it at zero.
+      y[0] = delta[0] * one_half;
+      y[1] = delta[1] * one_half;
+      y[2] = delta[2] * one_half;
+      y[3] = Scalar(1.0);
+    }
+
+    Scalar v[4];
+    Scalar beta;
+    ComputeHouseholderVector(p_x, v, &beta);
+
+    Eigen::Map<const Eigen::Matrix<Scalar, 4, 1> > v_eigen(v);
+    x_plus_delta = y - beta * v_eigen * v_eigen.dot(y);
+
+    return true;
+  }
+};
+
+void HomogeneousVectorParameterizationHelper(const double* x,
+                                             const double* delta) {
+  const double kTolerance = 1e-14;
+
+  HomogeneousVectorParameterization homogeneous_vector_parameterization(4);
+
+  // Ensure the update maintains the norm = 1 requirement.
+  double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
+  homogeneous_vector_parameterization.Plus(x, delta, x_plus_delta);
+
+  const double x_plus_delta_norm =
+      sqrt(x_plus_delta[0] * x_plus_delta[0] +
+           x_plus_delta[1] * x_plus_delta[1] +
+           x_plus_delta[2] * x_plus_delta[2] +
+           x_plus_delta[3] * x_plus_delta[3]);
+
+  EXPECT_NEAR(x_plus_delta_norm, 1.0, kTolerance);
+
+  // Autodiff jacobian at delta_x = 0.
+  AutoDiffLocalParameterization<HomogeneousVectorParameterizationPlus, 4, 3>
+      autodiff_jacobian;
+
+  double jacobian_autodiff[12];
+  double jacobian_analytic[12];
+
+  homogeneous_vector_parameterization.ComputeJacobian(x, jacobian_analytic);
+  autodiff_jacobian.ComputeJacobian(x, jacobian_autodiff);
+
+  for (int i = 0; i < 12; ++i) {
+    EXPECT_TRUE(ceres::IsFinite(jacobian_analytic[i]));
+    EXPECT_NEAR(jacobian_analytic[i], jacobian_autodiff[i], kTolerance)
+        << "Jacobian mismatch: i = " << i << jacobian_analytic[i] << " "
+        << jacobian_autodiff[i];
+  }
+}
+
+TEST(HomogeneousVectorParameterization, ZeroTest) {
+  double x[4] = {0.0, 0.0, 0.0, 1.0};
+  normalize<4>(x);
+  double delta[3] = {0.0, 0.0, 0.0};
+
+  HomogeneousVectorParameterizationHelper(x, delta);
+}
+
+TEST(HomogeneousVectorParameterization, NearZeroTest) {
+  double x[4] = {1e-5, 1e-5, 1e-5, 1.0};
+  normalize<4>(x);
+  double delta[3] = {0.0, 1.0, 0.0};
+
+  HomogeneousVectorParameterizationHelper(x, delta);
+}
+
+TEST(HomogeneousVectorParameterization, AwayFromZeroTest1) {
+  double x[4] = {0.52, 0.25, 0.15, 0.45};
+  normalize<4>(x);
+  double delta[3] = {0.0, 1.0, -0.5};
+
+  HomogeneousVectorParameterizationHelper(x, delta);
+}
+
+TEST(HomogeneousVectorParameterization, AwayFromZeroTest2) {
+  double x[4] = {0.87, -0.25, -0.34, 0.45};
+  normalize<4>(x);
+  double delta[3] = {0.0, 0.0, -0.5};
+
+  HomogeneousVectorParameterizationHelper(x, delta);
+}
+
+TEST(HomogeneousVectorParameterization, DeathTests) {
+  double x[4] = {0.52, 0.25, 0.15, 1.45};
+  double delta[3] = {0.0, 1.0, -0.5};
+
+  EXPECT_DEATH_IF_SUPPORTED(
+      HomogeneousVectorParameterizationHelper(x, delta),
+      "unit norm");
+
+  EXPECT_DEATH_IF_SUPPORTED(HomogeneousVectorParameterization x(1), "size");
+}
 
 }  // namespace internal
 }  // namespace ceres
