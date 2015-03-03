@@ -66,6 +66,7 @@ SET(CERES_INTERNAL_SRC
     gradient_checking_cost_function.cc
     gradient_problem.cc
     gradient_problem_solver.cc
+    householder_vector.cc
     implicit_schur_complement.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
@@ -260,6 +261,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(gradient_checking_cost_function)
   CERES_TEST(graph)
   CERES_TEST(graph_algorithms)
+  CERES_TEST(householder_vector)
   CERES_TEST(implicit_schur_complement)
   CERES_TEST(iterative_schur_complement_solver)
   CERES_TEST(jet)
