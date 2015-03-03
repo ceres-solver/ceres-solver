@@ -210,6 +210,37 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
   virtual int LocalSize() const { return 3; }
 };
 
+
+// This provides a parameterization for homogeneous vectors which are commonly
+// used in Structure for Motion problems.  One example where they are used is
+// in representing points whose triangulation is ill-conditioned. Here
+// it is advantageous to use an over-parameterization since homogeneous vectors
+// can represent points at infinity.
+//
+// The plus operator is defined as
+// Plus(x, delta) =
+//    [sin(0.5 * |delta|) * delta / |delta|, cos(0.5 * |delta|)] * x
+// with * defined as an operator which applies the update orthogonal to x to
+// remain on the sphere. We assume that the last element of x is the scalar
+// component. The size of the homogeneous vector is required to be greater than
+// 1.
+class CERES_EXPORT HomogeneousVectorParameterization :
+      public LocalParameterization {
+ public:
+  explicit HomogeneousVectorParameterization(int size);
+  virtual ~HomogeneousVectorParameterization() {}
+  virtual bool Plus(const double* x_ptr,
+                    const double* delta_ptr,
+                    double* x_plus_delta_ptr) const;
+  virtual bool ComputeJacobian(const double* x_ptr,
+                               double* jacobian_ptr) const;
+  virtual int GlobalSize() const { return size_; }
+  virtual int LocalSize() const { return size_ - 1; }
+
+ private:
+  const int size_;
+};
+
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"
