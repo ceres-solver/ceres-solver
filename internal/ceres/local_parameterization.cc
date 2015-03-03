@@ -30,6 +30,7 @@
 
 #include "ceres/local_parameterization.h"
 
+#include "ceres/householder_vector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
@@ -179,6 +180,70 @@ bool QuaternionParameterization::ComputeJacobian(const double* x,
   jacobian[3] =  x[0]; jacobian[4]  =  x[3]; jacobian[5]  = -x[2];  // NOLINT
   jacobian[6] = -x[3]; jacobian[7]  =  x[0]; jacobian[8]  =  x[1];  // NOLINT
   jacobian[9] =  x[2]; jacobian[10] = -x[1]; jacobian[11] =  x[0];  // NOLINT
+  return true;
+}
+
+HomogeneousVectorParameterization::HomogeneousVectorParameterization(int size)
+    : size_(size) {
+  CHECK_GT(size_, 1) << "The size of the homogeneous vector needs to be "
+                     << "greater than 1.";
+}
+
+bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
+                                             const double* delta_ptr,
+                                             double* x_plus_delta_ptr) const {
+  ConstVectorRef x(x_ptr, size_);
+  ConstVectorRef delta(delta_ptr, size_ - 1);
+  VectorRef x_plus_delta(x_plus_delta_ptr, size_);
+
+  const double norm_delta = delta.norm();
+
+  if (norm_delta == 0.0) {
+    x_plus_delta = x;
+    return true;
+  }
+
+  // Map the delta from the minimum representation to the over parameterized
+  // homogeneous vector. See section A6.9.2 on page 624 of Hartley & Zisserman
+  // (2nd Edition) for a detailed description.  Note there is a typo on Page
+  // 625, line 4 so check the book errata.
+  const double norm_delta_div_2 = 0.5 * norm_delta;
+  const double sin_delta_by_delta = sin(norm_delta_div_2) /
+      norm_delta_div_2;
+
+  Vector y(size_);
+  y.head(size_ - 1) = 0.5 * sin_delta_by_delta * delta;
+  y(size_ - 1) = cos(norm_delta_div_2);
+
+  Vector v(size_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(x, &v, &beta);
+
+  // Apply the delta update to remain on the unit sphere. See section A6.9.3
+  // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
+  // description.
+  x_plus_delta = x.norm() * (y -  v * (beta *(v.transpose() * y)));
+
+  return true;
+}
+
+bool HomogeneousVectorParameterization::ComputeJacobian(
+    const double* x_ptr, double* jacobian_ptr) const {
+  ConstVectorRef x(x_ptr, size_);
+  MatrixRef jacobian(jacobian_ptr, size_, size_ - 1);
+
+  Vector v(size_);
+  double beta;
+  internal::ComputeHouseholderVector<double>(x, &v, &beta);
+
+  // The Jacobian is equal to J = 0.5 * H.leftCols(size_ - 1) where H is the
+  // Householder matrix (H = I - beta * v * v').
+  for (int i = 0; i < size_ - 1; ++i) {
+    jacobian.col(i) = -0.5 * beta * v(i) * v;
+    jacobian.col(i)(i) += 0.5;
+  }
+  jacobian *= x.norm();
+
   return true;
 }
 
