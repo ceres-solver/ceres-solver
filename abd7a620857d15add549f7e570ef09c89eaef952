@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "921726fb_d5a17c78",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T07:02:08Z",
+      "side": 1,
+      "message": "It\u0027s unclear if the last element must be the scalar in the math equation or the implementation. In practice you could end up with e.g. x[-1] \u003d\u003d 0; how does this implementation deal with this?\n\nAlso please include a note about where this is useful; e.g. is it good for projective camera matrix estimation?",
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32091ade_fa00e901",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 1
