@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "921726fb_f5e598d4",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T06:53:58Z",
+      "side": 1,
+      "message": "I suggest the name \"ComposedCostFunction\" instead",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "921726fb_55d72ce5",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T06:53:58Z",
+      "side": 1,
+      "message": "It\u0027s not totally clear what the requirements on f are just from the interface. I take it f should take as input one parameter block for each input CF?",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "921726fb_35e0b0c1",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T06:53:58Z",
+      "side": 1,
+      "message": "In Ceres, we support automatically adding parameter blocks that appear in cost functions. Is the reason to not do that here that ordering is important?",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "921726fb_d5ea1ca4",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T06:53:58Z",
+      "side": 1,
+      "message": "In general, it\u0027s best to avoid \"state spaces\" for objects. How bad would it be if this object took the input cost functions \u0026 parameter blocks an constructor arguments? Then the object is either invalid on construction (and explodes) or is valid, with no need for client code to invoke Finalize().\n\nI can be convinced either way, but wanted to bring this up.",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "921726fb_15ddb407",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-04T06:53:58Z",
+      "side": 1,
+      "message": "Is this actually needed?",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
