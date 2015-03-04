@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32091ade_9a944d40",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "I am wondering if these methods should be templated. Why templatize the LocalParameterization for homogeneous vectors only to use dynamically sized vectors in these two functions.",
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32091ade_dab7e5eb",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "This documentation is not terribly informative.\nIn that it requires knowing what a householder matrix is. also it is not clear when you would use this parameterization.\n\nSo the actual use should be described first and then the technical details of what the plus operation is, preferably without mentioning the householder matrix.",
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32091ade_fa00e901",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "also please updated the web documentation.",
+      "range": {
+        "startLine": 218,
+        "startChar": 15,
+        "endLine": 218,
+        "endChar": 16
+      },
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32091ade_7a7e9998",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "I am not sure how I feel about having an impl file in the public API directory. I think it is okay to just have the implementation at the bottom of this file. We do this for rotation.h.",
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32091ade_9afbad94",
+        "filename": "include/ceres/local_parameterization_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "document the implementation please.",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32091ade_1a815df9",
+        "filename": "include/ceres/local_parameterization_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-04T03:33:52Z",
+      "side": 1,
+      "message": "why compute the matrix at all, why not just return the vector and then assign into the jacobian directly instead of first computing into H and making a copy ?\n\nthe code for the matrix itself is rather simple and only used at this one place here.",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 10
+      },
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
