@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32091ade_7a5fb9f7",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-04T04:45:24Z",
+      "side": 1,
+      "message": "You\u0027re right, I missed the typedefs for the known size matrices; it should be templated as well.  With that said, I was looking through the local parameterization file again and noticed that the other parameterizations (identity and subset) are dynamically sized.  For consistency it might make sense to make it dynamic, and take the performance hit.  I am ambivalent to either choice, so I will defer to you.  What do you think?",
+      "parentUuid": "32091ade_9a944d40",
+      "revId": "abd7a620857d15add549f7e570ef09c89eaef952",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32091ade_dab7e5eb",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 1
