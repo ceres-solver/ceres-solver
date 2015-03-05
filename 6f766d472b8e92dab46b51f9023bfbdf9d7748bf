@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d790b00b_1fc8839e",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-05T19:30:01Z",
+      "side": 1,
+      "message": "I have a question.  The local parameterization assumes the homogeneous vector is unit norm and I have a check to ensure that.  This update will maintain the unit norm. However, I am wondering if I should renormalize it after the update to avoid any numerical error? Do I need to worry about this?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
