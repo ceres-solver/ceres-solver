@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "579cc029_3b423769",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "this file does not need to live in include/internal anymore. It can move into internal/ceres where local_parameterization.cc.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_dc422dc7",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "what happens if the n^th element is zero?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_7c4af912",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "I think the term \"homogeneous vector\" is a bit confusing. Perhaps it is worth clarifying that you are talking about points in the real projective space P^n, represented as homogeneous vectors of size n + 1.",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 214,
+        "endChar": 35
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3233dad8_3039d0a8",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "are there any other approaches that can be used for this parameterization? worth talking about here as to why you chose these?",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 6
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3233dad8_703348c6",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "what happens when norm of delta is small? or near zero are you guarding against that?",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d790b00b_3f422769",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 2
@@ -19,6 +128,195 @@
     },
     {
       "key": {
+        "uuid": "77a1c45d_dc0a2dd6",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "in fact it should perfectly be okay that w \u003d 0, and the point is at infinity.",
+      "parentUuid": "d790b00b_3f422769",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_bce8817f",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "is that actually a requirement? isn\u0027t it the case that this will just preserve whatever norm the vector x has ?",
+      "range": {
+        "startLine": 225,
+        "startChar": 65,
+        "endLine": 225,
+        "endChar": 69
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "376d8ced_3a348111",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "you are assuming that the last coordinate is non-zero here.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "376d8ced_5a5a955d",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "braces, always.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_fc3fe939",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "also you can early return here, saving on nesting below.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_9c3ca547",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "braces. or use a ternary operator of you prefer.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_dcc78dbe",
+        "filename": "internal/ceres/householder_matrix_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "isn\u0027t it simpler to actually just apply the householder matrix here, instead of first computing the matrix, which is actually more expensive, since it does a quadratic number of operations.\n\nso just do result \u003d x - beta * v * (v.transpose() * x);",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_7c90b99b",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "name these as x_ptr etc and that way your refs don\u0027t need to have _ref and the main code becomes simpler and shorter to read.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_5c705d10",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "I do not think this check is needed.",
+      "range": {
+        "startLine": 199,
+        "startChar": 11,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_1c7ad5ee",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "deal with the zero case and return early first at the very top and then do the rest.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d790b00b_1fc8839e",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -30,6 +328,41 @@
       "writtenOn": "2015-03-05T19:30:01Z",
       "side": 1,
       "message": "I have a question.  The local parameterization assumes the homogeneous vector is unit norm and I have a check to ensure that.  This update will maintain the unit norm. However, I am wondering if I should renormalize it after the update to avoid any numerical error? Do I need to worry about this?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_9cea651f",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "no I\u0027d say just maintain the norm instead of demanding that the input have unit norm.",
+      "parentUuid": "d790b00b_1fc8839e",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77a1c45d_5c8b7d6e",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-05T20:15:37Z",
+      "side": 1,
+      "message": "why not write as an expression instead of a loop?",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
