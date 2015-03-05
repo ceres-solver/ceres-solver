@@ -177,7 +177,8 @@ class CERES_EXPORT CubicInterpolator {
       p3 = 2 * p2 - p1;
     }
 
-    CubicHermiteSpline(p0, p1, p2, p3, x - n, f, dfdx);
+    CubicHermiteSpline<Array::DATA_DIMENSION>(p0, p1, p2, p3, x - n, f, dfdx);
+
     return true;
   }
 
@@ -391,17 +392,23 @@ class CERES_EXPORT BiCubicInterpolator {
     // value and the horizontal derivative in each row.
     Eigen::Matrix<double, Array::DATA_DIMENSION, 1> f0, f1, f2, f3;
     Eigen::Matrix<double, Array::DATA_DIMENSION, 1> df0dc, df1dc, df2dc, df3dc;
-    CubicHermiteSpline(p00, p01, p02, p03, c - col, f0.data(), df0dc.data());
-    CubicHermiteSpline(p10, p11, p12, p13, c - col, f1.data(), df1dc.data());
-    CubicHermiteSpline(p20, p21, p22, p23, c - col, f2.data(), df2dc.data());
-    CubicHermiteSpline(p30, p31, p32, p33, c - col, f3.data(), df3dc.data());
+
+    CubicHermiteSpline<Array::DATA_DIMENSION>(p00, p01, p02, p03, c - col,
+                                              f0.data(), df0dc.data());
+    CubicHermiteSpline<Array::DATA_DIMENSION>(p10, p11, p12, p13, c - col,
+                                              f1.data(), df1dc.data());
+    CubicHermiteSpline<Array::DATA_DIMENSION>(p20, p21, p22, p23, c - col,
+                                              f2.data(), df2dc.data());
+    CubicHermiteSpline<Array::DATA_DIMENSION>(p30, p31, p32, p33, c - col,
+                                              f3.data(), df3dc.data());
 
     // Interpolate vertically the interpolated value from each row and
     // compute the derivative along the columns.
-    CubicHermiteSpline(f0, f1, f2, f3, r - row, f, dfdr);
+    CubicHermiteSpline<Array::DATA_DIMENSION>(f0, f1, f2, f3, r - row, f, dfdr);
     if (dfdc != NULL) {
       // Interpolate vertically the derivative along the columns.
-      CubicHermiteSpline(df0dc, df1dc, df2dc, df3dc, r - row, dfdc, NULL);
+      CubicHermiteSpline<Array::DATA_DIMENSION>(df0dc, df1dc, df2dc, df3dc,
+                                                r - row, dfdc, NULL);
     }
 
     return true;
