@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d790b00b_3f422769",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-05T19:35:58Z",
+      "side": 1,
+      "message": "To respond to Keir\u0027s question. As an example, for a 3D Euclidean vector [x y z] I am assuming a 4D homogeneous vector is represented by [x y z w] where w is the scalar part. The local parameterization doesn\u0027t care if w \u003d\u003d 0 as there are no divisions by w.  However, if someone were to use homogeneous points to represent landmarks in a bundle adjustment problem, you would have to take care in defining your residual cost function to not divide by w.  This can be done by rewriting the projection to multiply by w instead which would avoid the division by zero problem. Does this clarify the comment?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d790b00b_1fc8839e",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
