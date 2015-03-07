@@ -168,91 +168,18 @@ class ProgramEvaluator : public Evaluator {
     // This bool is used to disable the loop if an error is encountered
     // without breaking out of it. The remaining loop iterations are still run,
     // but with an empty body, and so will finish quickly.
-    bool abort = false;
+    residual_evaluation_aborted_ = false;
     int num_residual_blocks = program_->NumResidualBlocks();
 #pragma omp parallel for num_threads(options_.num_threads)
     for (int i = 0; i < num_residual_blocks; ++i) {
-// Disable the loop instead of breaking, as required by OpenMP.
-#pragma omp flush(abort)
-      if (abort) {
-        continue;
-      }
-
-#ifdef CERES_USE_OPENMP
-      int thread_id = omp_get_thread_num();
-#else
-      int thread_id = 0;
-#endif
-      EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
-      EvaluateScratch* scratch = &evaluate_scratch_[thread_id];
-
-      // Prepare block residuals if requested.
-      const ResidualBlock* residual_block = program_->residual_blocks()[i];
-      double* block_residuals = NULL;
-      if (residuals != NULL) {
-        block_residuals = residuals + residual_layout_[i];
-      } else if (gradient != NULL) {
-        block_residuals = scratch->residual_block_residuals.get();
-      }
-
-      // Prepare block jacobians if requested.
-      double** block_jacobians = NULL;
-      if (jacobian != NULL || gradient != NULL) {
-        preparer->Prepare(residual_block,
-                          i,
-                          jacobian,
-                          scratch->jacobian_block_ptrs.get());
-        block_jacobians = scratch->jacobian_block_ptrs.get();
-      }
-
-      // Evaluate the cost, residuals, and jacobians.
-      double block_cost;
-      if (!residual_block->Evaluate(
-              evaluate_options.apply_loss_function,
-              &block_cost,
-              block_residuals,
-              block_jacobians,
-              scratch->residual_block_evaluate_scratch.get())) {
-        abort = true;
-// This ensures that the OpenMP threads have a consistent view of 'abort'. Do
-// the flush inside the failure case so that there is usually only one
-// synchronization point per loop iteration instead of two.
-#pragma omp flush(abort)
-        continue;
-      }
-
-      scratch->cost += block_cost;
-
-      // Store the jacobians, if they were requested.
-      if (jacobian != NULL) {
-        jacobian_writer_.Write(i,
-                               residual_layout_[i],
-                               block_jacobians,
-                               jacobian);
-      }
-
-      // Compute and store the gradient, if it was requested.
-      if (gradient != NULL) {
-        int num_residuals = residual_block->NumResiduals();
-        int num_parameter_blocks = residual_block->NumParameterBlocks();
-        for (int j = 0; j < num_parameter_blocks; ++j) {
-          const ParameterBlock* parameter_block =
-              residual_block->parameter_blocks()[j];
-          if (parameter_block->IsConstant()) {
-            continue;
-          }
-
-          MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-              block_jacobians[j],
-              num_residuals,
-              parameter_block->LocalSize(),
-              block_residuals,
-              scratch->gradient.get() + parameter_block->delta_offset());
-        }
-      }
+      EvaluateResidualBlock(i,
+                            evaluate_options.apply_loss_function,
+                            residuals,
+                            gradient,
+                            jacobian);
     }
 
-    if (!abort) {
+    if (!residual_evaluation_aborted_) {
       const int num_parameters = program_->NumEffectiveParameters();
 
       // Sum the cost and gradient (if requested) from each thread.
@@ -277,7 +204,94 @@ class ProgramEvaluator : public Evaluator {
         f(jacobian, num_parameters);
       }
     }
-    return !abort;
+    return !residual_evaluation_aborted_;
+  }
+
+  void EvaluateResidualBlock(const int residual_block_id,
+                             const bool apply_loss_function,
+                             double* residuals,
+                             double* gradient,
+                             SparseMatrix* jacobian) {
+    // Disable the evaluation instead of breaking, as required by OpenMP.
+#pragma omp flush(residual_evaluation_aborted_)
+    if (residual_evaluation_aborted_) {
+      return;
+    }
+
+#ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+#else
+    int thread_id = 0;
+#endif
+    EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
+    EvaluateScratch* scratch = &evaluate_scratch_[thread_id];
+
+    // Prepare block residuals if requested.
+    const ResidualBlock* residual_block =
+        program_->residual_blocks()[residual_block_id];
+    double* block_residuals = NULL;
+    if (residuals != NULL) {
+      block_residuals = residuals + residual_layout_[residual_block_id];
+    } else if (gradient != NULL) {
+      block_residuals = scratch->residual_block_residuals.get();
+    }
+
+    // Prepare block jacobians if requested.
+    double** block_jacobians = NULL;
+    if (jacobian != NULL || gradient != NULL) {
+      preparer->Prepare(residual_block,
+                        residual_block_id,
+                        jacobian,
+                        scratch->jacobian_block_ptrs.get());
+      block_jacobians = scratch->jacobian_block_ptrs.get();
+    }
+
+    // Evaluate the cost, residuals, and jacobians.
+    double block_cost;
+    if (!residual_block->Evaluate(
+            apply_loss_function,
+            &block_cost,
+            block_residuals,
+            block_jacobians,
+            scratch->residual_block_evaluate_scratch.get())) {
+      residual_evaluation_aborted_ = true;
+      // This ensures that the OpenMP threads have a consistent view of
+      // 'residual_evaluation_aborted_'. Do the flush inside the failure case so
+      // that there is usually only one synchronization point per loop iteration
+      // instead of two.
+#pragma omp flush(residual_evaluation_aborted_)
+      return;
+    }
+
+    scratch->cost += block_cost;
+
+    // Store the jacobians, if they were requested.
+    if (jacobian != NULL) {
+      jacobian_writer_.Write(residual_block_id,
+                             residual_layout_[residual_block_id],
+                             block_jacobians,
+                             jacobian);
+    }
+
+    // Compute and store the gradient, if it was requested.
+    if (gradient != NULL) {
+      const int num_residuals = residual_block->NumResiduals();
+      const int num_parameter_blocks = residual_block->NumParameterBlocks();
+      for (int j = 0; j < num_parameter_blocks; ++j) {
+        const ParameterBlock* parameter_block =
+            residual_block->parameter_blocks()[j];
+        if (parameter_block->IsConstant()) {
+          continue;
+        }
+
+        MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+            block_jacobians[j],
+            num_residuals,
+            parameter_block->LocalSize(),
+            block_residuals,
+            scratch->gradient.get() + parameter_block->delta_offset());
+      }
+    }
   }
 
   bool Plus(const double* state,
@@ -371,6 +385,7 @@ class ProgramEvaluator : public Evaluator {
   scoped_array<EvaluateScratch> evaluate_scratch_;
   vector<int> residual_layout_;
   ::ceres::internal::ExecutionSummary execution_summary_;
+  bool residual_evaluation_aborted_;
 };
 
 }  // namespace internal
