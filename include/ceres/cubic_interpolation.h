@@ -246,7 +246,7 @@ private:
 template<typename Array>
 class CERES_EXPORT BiCubicInterpolator {
  public:
-  BiCubicInterpolator(const Array& array)
+  explicit BiCubicInterpolator(const Array& array)
       : array_(array) {
     CHECK_GT(array.NumRows(), 1);
     CHECK_GT(array.NumCols(), 1);
