@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "7c4d29ae_fcda2964",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "It is stable as there are no divisions by zero. I already have a test where the last element is 0 and it passes.",
+      "parentUuid": "77a1c45d_dc422dc7",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a1c45d_7c4af912",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 2
@@ -88,6 +106,30 @@
     },
     {
       "key": {
+        "uuid": "7c4d29ae_fc0ce96c",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I included one such example from CV as requested.  I am sure there are many examples from non-CV fields but I don\u0027t think it makes sense to list them all.",
+      "parentUuid": "3233dad8_3039d0a8",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 6
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3233dad8_703348c6",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 2
@@ -99,6 +141,30 @@
       "writtenOn": "2015-03-05T20:15:37Z",
       "side": 1,
       "message": "what happens when norm of delta is small? or near zero are you guarding against that?",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 25
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c4d29ae_9cf4c5d6",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I am guarding against it the same way the quaternion parameterization does.",
+      "parentUuid": "3233dad8_703348c6",
       "range": {
         "startLine": 222,
         "startChar": 23,
@@ -146,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "7c4d29ae_1c143574",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "that is correct and nothing in this is prevent that.  in fact, that is why we made this parameterization to allow points at infinity.",
+      "parentUuid": "77a1c45d_dc0a2dd6",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a1c45d_bce8817f",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 2
@@ -169,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "7c4d29ae_5c1ebd95",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I\u0027ll have to rederive the Jacobian to verify this is possible as it might be different for non unit norm.",
+      "parentUuid": "77a1c45d_bce8817f",
+      "range": {
+        "startLine": 225,
+        "startChar": 65,
+        "endLine": 225,
+        "endChar": 69
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376d8ced_3a348111",
         "filename": "internal/ceres/householder_matrix.cc",
         "patchSetId": 2
@@ -180,6 +288,24 @@
       "writtenOn": "2015-03-05T20:15:37Z",
       "side": 1,
       "message": "you are assuming that the last coordinate is non-zero here.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c4d29ae_1ce9d503",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "No.  Can you explain why?",
+      "parentUuid": "376d8ced_3a348111",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -300,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "7c4d29ae_3c36511b",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I\u0027ll need to rederive the Jacobian to verify.",
+      "parentUuid": "77a1c45d_5c705d10",
+      "range": {
+        "startLine": 199,
+        "startChar": 11,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a1c45d_1c7ad5ee",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -311,6 +461,24 @@
       "writtenOn": "2015-03-05T20:15:37Z",
       "side": 1,
       "message": "deal with the zero case and return early first at the very top and then do the rest.",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c4d29ae_5c351d0a",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I followed the same convention that the quaternion parameterization uses.  Should I still change this?",
+      "parentUuid": "77a1c45d_1c7ad5ee",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -363,6 +531,24 @@
       "writtenOn": "2015-03-05T20:15:37Z",
       "side": 1,
       "message": "why not write as an expression instead of a loop?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c4d29ae_9c2685e6",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-10T04:02:18Z",
+      "side": 1,
+      "message": "I might have misunderstood your previous comment.  You said to get rid of the temporary.  Granted I had a function call, but I would be surprised if eigen could eliminate the temporary in:\n\n0.5 * (I + beta * v * v\u0027).leftCols(size_ - 1)\n\nDo you still prefer the expression?",
+      "parentUuid": "77a1c45d_5c8b7d6e",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
