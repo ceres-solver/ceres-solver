@@ -44,6 +44,10 @@ Bibliography
    with indeterminacy**, *IEEE Transactions on Information Theory*
    47(5):2017-2028, 2001.
 
+.. [Keys] R. G. Keys, **Cubic convolution interpolation for digital
+   image processing**, *IEEE Trans. on Acoustics, Speech, and Signal
+   Processing*, 29(6), 1981.
+
 .. [KushalAgarwal] A. Kushal and S. Agarwal, **Visibility based
    preconditioning for bundle adjustment**, *In Proceedings of the
    IEEE Conference on Computer Vision and Pattern Recognition*, 2012.

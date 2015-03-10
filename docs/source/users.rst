@@ -48,29 +48,3 @@ Users
 .. _calibrating robot-camera systems:
    http://rosindustrial.org/news/2014/9/24/industrial-calibration-library-update-and-presentation
 .. _skinned control meshes: http://research.microsoft.com/en-us/projects/handmodelingfrommonoculardepth/
-
-
-Publications
-============
-
-Ceres Solver is used (and cited) in the following publications:
-
-#. **User-Specific Hand Modeling from Monocular Depth
-   Sequences**, J. Taylor, R. Stebbing, V. Ramakrishna, C. Keskin, J. Shotton, S. Izadi, A. Hertzmann,
-   and A. Fitzgibbon, CVPR 2014.
-
-#. **Global Fusion of Relative Motions for Robust, Accurate and
-   Scalable Structure from Motion**, P. Moulon, P. Monasse
-   and R. Marlet, ICCV 2013.
-
-#. **Recurrent neural networks for voice activity
-   detection**, T. Hughes and K. Mierle, ICASSP 2013.
-
-#. **Street View Motion-from-Structure-from-Motion**, B. Klingner, D. Martin
-   and J. Roseborough, ICCV 2013.
-
-#. **Adaptive Structure from Motion with a contrario model
-   estimation**, P. Moulon, P. Monasse and R. Marlet, ACCV 2012.
-
-#. **Visibility based preconditioning for bundle
-   adjustment**, A. Kushal and S. Agarwal, CVPR 2012.

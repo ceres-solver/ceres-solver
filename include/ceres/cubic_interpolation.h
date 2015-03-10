@@ -122,9 +122,9 @@ void CubicHermiteSpline(const Eigen::Matrix<double, kDataDimension, 1>& p0,
 //
 // Example usage:
 //
-//  const double x[] = {1.0, 2.0, 5.0, 6.0};
-//  Array1D data(x, 4);
-//  CubicInterpolator interpolator(data);
+//  const double data[] = {1.0, 2.0, 5.0, 6.0};
+//  Array1D<double, 1> array(x, 4);
+//  CubicInterpolator<Array1D<double, 1> > interpolator(array);
 //  double f, dfdx;
 //  CHECK(interpolator.Evaluator(1.5, &f, &dfdx));
 template<typename Array>
@@ -243,6 +243,17 @@ private:
 //
 // http://en.wikipedia.org/wiki/Cubic_Hermite_spline
 // http://en.wikipedia.org/wiki/Bicubic_interpolation
+//
+// Example usage:
+//
+// const double data[] = {1.0, 3.0, -1.0, 4.0,
+//                         3.6, 2.1,  4.2, 2.0,
+//                        2.0, 1.0,  3.1, 5.2};
+//  Array2D<double, 1>  array(data, 3, 4);
+//  BiCubicInterpolator<Array2D<double, 1> > interpolator(array);
+//  double f, dfdr, dfdc;
+//  CHECK(interpolator.Evaluate(1.2, 2.5, &f, &dfdr, &dfdc));
+
 template<typename Array>
 class CERES_EXPORT BiCubicInterpolator {
  public:
