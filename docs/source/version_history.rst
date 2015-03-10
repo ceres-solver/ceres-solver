@@ -12,15 +12,41 @@ New Features
 #. Added ``CubicInterpolator`` and ``BiCubicInterpolator`` to allow
    smooth interpolation of sampled functions and integration with
    automatic differentiation.
+#. Add method to return covariance in tangent space. (Michael Vitus &
+   Steve Hsu)
+#. Add Homogeneous vector parameterization. (Michael Vitus)
 
-Bug Fixes
----------
+Bug Fixes & Minor Changes
+-------------------------
+#. Update the code to point to ceres-solver.org.
+#. Update documentation to point to the GitHub issue tracker.
+#. Disable ``LAPACK`` for iOS builds. (Greg Coombe)
+#. Force use of single-thread in ``Problem::Evaluate()`` without OpenMP.
+#. Less strict check for multithreading. (Chris Sweeney)
+#. Update tolerances in small_blas_test.cc (Philipp Hubner)
+#. Documentation corrections (Steve Hsu)
+#. Fixed ``sampled_function.cc`` (Pablo Speciale)
+#. Fix example code in the documentation. (Rodney Hoskinson)
+#. Improve the error handling in Conjugate Gradients.
+#. Improve preconditioner documentation.
+#. Remove dead code from fpclassify.h.
+#. Make Android.mk threads sensitive.
+#. Changed the ``CURRENT_CONFIG_INSTALL_DIR`` to be a variable local
+   to Ceres. (Chris Sweeney)
+#. Fix typo in the comments in ``Jet.h``. (Julius Ziegler)
+#. Add the ASL at ETH Zurich to the list of users.
+#. Fixed a typo in the documentation. (Richard Stebbing)
+#. Fixed a boundary handling bug in the BiCubic interpolation
+   code. (Bernhard Zeisl)
+#. Fixed a ``MSVC`` compilation bug in the cubic interpolation code
+   (Johannes Schönberger)
 #. Add covariance related files to the Android build.
 #. Update Ubuntu 14.04 installation instructions. (Filippo Basso)
 #. Improved logging for linear solver failures.
 #. Improved crash messages in ``Problem``.
 #. Hide Homebrew related variables in CMake GUI.
-#. Add SuiteSparse link dependency for compressed_col_sparse_matrix_utils_test.
+#. Add SuiteSparse link dependency for
+   compressed_col_sparse_matrix_utils_test.
 #. Autodetect Homebrew install prefix on OSX.
 #. Lint changes from William Rucklidge and Jim Roseborough.
 #. Remove ``using namespace std:`` from ``port.h``
