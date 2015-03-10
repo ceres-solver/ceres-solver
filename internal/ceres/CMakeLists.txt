@@ -286,6 +286,7 @@ IF (BUILD_TESTING AND GFLAGS)
   CERES_TEST(schur_eliminator)
   CERES_TEST(single_linkage_clustering)
   CERES_TEST(small_blas)
+  CERES_TEST(small_solver)
   CERES_TEST(solver)
 
   # TODO(sameeragarwal): This test should ultimately be made
