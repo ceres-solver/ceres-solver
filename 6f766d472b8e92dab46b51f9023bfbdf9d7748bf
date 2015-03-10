@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c98118f_e23a46fe",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "Please give a reference to where you got this idea from.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 27,
+        "endLine": 1156,
+        "endChar": 33
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca119bb_e03a42fe",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "I do not think you should assume unit norm. Especially since you give triangulation as an example, where the generally speaking you try and work with points of the form [x, y, z, 1]",
+      "range": {
+        "startLine": 1162,
+        "startChar": 30,
+        "endLine": 1162,
+        "endChar": 34
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579cc029_3b423769",
         "filename": "include/ceres/internal/householder_matrix.h",
         "patchSetId": 2
@@ -53,6 +99,24 @@
       "writtenOn": "2015-03-10T04:02:18Z",
       "side": 1,
       "message": "It is stable as there are no divisions by zero. I already have a test where the last element is 0 and it passes.",
+      "parentUuid": "77a1c45d_dc422dc7",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca119bb_00408662",
+        "filename": "include/ceres/internal/householder_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "sorry I misread the documentation.",
       "parentUuid": "77a1c45d_dc422dc7",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
@@ -277,6 +341,23 @@
     },
     {
       "key": {
+        "uuid": "7cb529f7_3c7731d2",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "also this filename should probably be called householdervector now?",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376d8ced_3a348111",
         "filename": "internal/ceres/householder_matrix.cc",
         "patchSetId": 2
@@ -306,6 +387,24 @@
       "side": 1,
       "message": "No.  Can you explain why?",
       "parentUuid": "376d8ced_3a348111",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cb529f7_fcaae988",
+        "filename": "internal/ceres/householder_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "no my misreading of the algorithm, sorry.",
+      "parentUuid": "7c4d29ae_1ce9d503",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -450,6 +549,30 @@
     },
     {
       "key": {
+        "uuid": "3cc1f16c_fa58a964",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "please do.",
+      "parentUuid": "7c4d29ae_3c36511b",
+      "range": {
+        "startLine": 199,
+        "startChar": 11,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a1c45d_1c7ad5ee",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 2
@@ -479,6 +602,24 @@
       "side": 1,
       "message": "I followed the same convention that the quaternion parameterization uses.  Should I still change this?",
       "parentUuid": "77a1c45d_1c7ad5ee",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c98118f_22d94e18",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "yeah, I will probably clean up the quaternion code too.",
+      "parentUuid": "7c4d29ae_5c351d0a",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -549,6 +690,24 @@
       "side": 1,
       "message": "I might have misunderstood your previous comment.  You said to get rid of the temporary.  Granted I had a function call, but I would be surprised if eigen could eliminate the temporary in:\n\n0.5 * (I + beta * v * v\u0027).leftCols(size_ - 1)\n\nDo you still prefer the expression?",
       "parentUuid": "77a1c45d_5c8b7d6e",
+      "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcbd35e7_57008c2e",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-03-10T18:25:24Z",
+      "side": 1,
+      "message": "hmm maybe not. also you are already doing the columnwise expressions\nso this is fine.",
+      "parentUuid": "7c4d29ae_9c2685e6",
       "revId": "6f766d472b8e92dab46b51f9023bfbdf9d7748bf",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
