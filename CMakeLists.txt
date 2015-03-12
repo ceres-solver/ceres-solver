@@ -420,7 +420,8 @@ ELSE (GFLAGS)
   # made search variables visible in GUI for user to set, but then user disables
   # GFLAGS instead of setting them.
   MARK_AS_ADVANCED(FORCE GFLAGS_INCLUDE_DIR
-                         GFLAGS_LIBRARY)
+                         GFLAGS_LIBRARY
+                         GFLAGS_NAMESPACE)
 ENDIF (GFLAGS)
 
 # MiniGLog.
