@@ -1071,7 +1071,7 @@ problems.
    The dimension of the ambient space in which the parameter block
    :math:`x` lives.
 
-.. function:: int LocalParamterization::LocaLocalSize()
+.. function:: int LocalParameterization::LocalSize()
 
    The size of the tangent space
    that :math:`\Delta x` lives in.

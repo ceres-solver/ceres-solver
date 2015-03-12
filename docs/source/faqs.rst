@@ -76,8 +76,8 @@ Modeling
    function is the Coordinate transformation between the `ECEF
    <http://en.wikipedia.org/wiki/ECEF>`_ and the `WGS84
    <http://en.wikipedia.org/wiki/World_Geodetic_System>`_ where the
-   conversion from WGS84 from ECEF is analytic, but the conversion
-   back to ECEF uses an iterative algorithm. So how do you compute the
+   conversion from WGS84 to ECEF is analytic, but the conversion
+   back to WGS84 uses an iterative algorithm. So how do you compute the
    derivative of the ECEF to WGS84 transformation?
 
    One obvious approach would be to numerically
