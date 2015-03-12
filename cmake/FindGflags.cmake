@@ -130,6 +130,19 @@ IF (NOT GFLAGS_LIBRARY OR
 ENDIF (NOT GFLAGS_LIBRARY OR
        NOT EXISTS ${GFLAGS_LIBRARY})
 
+# gflags typically requires a threading library (which is OS dependent), note
+# that this defines the CMAKE_THREAD_LIBS_INIT variable.  If we are able to
+# detect threads, we assume that gflags requires it.
+FIND_PACKAGE(Threads QUIET)
+SET(GFLAGS_LINK_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+# On Windows, the Shlwapi library is used by gflags if available.
+IF (MSVC)
+  CHECK_INCLUDE_FILE_CXX("shlwapi.h" HAVE_SHLWAPI)
+  IF (HAVE_SHLWAPI)
+    LIST(APPEND GFLAGS_LINK_LIBRARIES shlwapi.lib)
+  ENDIF(HAVE_SHLWAPI)
+ENDIF (MSVC)
+
 # Mark internally as found, then verify. GFLAGS_REPORT_NOT_FOUND() unsets
 # if called.
 SET(GFLAGS_FOUND TRUE)
@@ -140,7 +153,7 @@ IF (GFLAGS_INCLUDE_DIR)
   INCLUDE(CheckCXXSourceCompiles)
   # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES
   SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-  SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY})
+  SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
   CHECK_CXX_SOURCE_COMPILES(
     "#include <gflags/gflags.h>
      int main(int argc, char * argv[]) {
@@ -155,7 +168,7 @@ IF (GFLAGS_INCLUDE_DIR)
     #
     # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES
     SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-    SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY})
+    SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
     CHECK_CXX_SOURCE_COMPILES(
       "#include <gflags/gflags.h>
        int main(int argc, char * argv[]) {
@@ -202,7 +215,7 @@ ENDIF (GFLAGS_LIBRARY AND
 # Set standard CMake FindPackage variables if found.
 IF (GFLAGS_FOUND)
   SET(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
-  SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY})
+  SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
 ENDIF (GFLAGS_FOUND)
 
 # Handle REQUIRED / QUIET optional arguments.
