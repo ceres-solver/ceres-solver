@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1caaedd_c666e229",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-12T17:33:33Z",
+      "side": 1,
+      "message": "There is also an ifdef for eigen sparse QR; it\u0027s not always available. Please fix.",
+      "revId": "c180fe52e9a4e28320fc18c99fd0244f730cf0c5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
