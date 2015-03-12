@@ -90,6 +90,83 @@ MACRO(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
   ENDIF ()
 ENDMACRO(GFLAGS_REPORT_NOT_FOUND)
 
+# A cut down version of CMake's check_cxx_source_compiles() macro, which
+# supports specification of the CMAKE_BUILD_TYPE with which the test should
+# be compiled (but not REGEX matching of the output).  This is important
+# on Windows.
+#
+# As per the CMake check_cxx_source_compiles() macro, we assume the following
+# variables can be set before this is invoked:
+#
+#    CMAKE_REQUIRED_FLAGS - String of compile command line flags.
+#    CMAKE_REQUIRED_DEFINITIONS - List of macros to define (-DFOO=bar).
+#    CMAKE_REQUIRED_INCLUDES - List of include directories.
+#    CMAKE_REQUIRED_LIBRARIES - List of libraries to link.
+#
+# This macro is a derivative of the CMake check_cxx_source_compiles() macro
+# distributed under the BSD License, Copyright 2005-2009 Kitware, Inc.
+MACRO(CHECK_CXX_SOURCE_COMPILES_WITH_BUILD_TYPE
+    SOURCE BUILD_TYPE VAR)
+  # Do not rerun test if output variable has an assigned value, ie is not
+  # an empty string.
+  IF ("${VAR}" MATCHES "^${VAR}$")
+    # Verify that the BUILD_TYPE is sane.
+    IF (NOT "${BUILD_TYPE}" STREQUAL "Release" AND
+        NOT "${BUILD_TYPE}" STREQUAL "Debug" AND
+        NOT "${BUILD_TYPE}" STREQUAL "RelWithDebInfo" AND
+        NOT "${BUILD_TYPE}" STREQUAL "MinSizeRel" AND
+        NOT "${BUILD_TYPE}" STREQUAL "")
+      MESSAGE(FATAL_ERROR "Invalid BUILD_TYPE: ${BUILD_TYPE}, is not a "
+        "valid CMAKE_BUILD_TYPE option.")
+    ENDIF()
+
+    SET(MACRO_CHECK_FUNCTION_DEFINITIONS
+      "-D${VAR} ${CMAKE_REQUIRED_FLAGS}")
+
+    SET(CHECK_CXX_SOURCE_COMPILES_ADD_LIBRARIES)
+    IF (CMAKE_REQUIRED_LIBRARIES)
+      SET(CHECK_CXX_SOURCE_COMPILES_ADD_LIBRARIES
+        LINK_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
+    ENDIF()
+
+    SET(CHECK_CXX_SOURCE_COMPILES_ADD_INCLUDES)
+    IF (CMAKE_REQUIRED_INCLUDES)
+      SET(CHECK_CXX_SOURCE_COMPILES_ADD_INCLUDES
+        "-DINCLUDE_DIRECTORIES:STRING=${CMAKE_REQUIRED_INCLUDES}")
+    ENDIF()
+
+    FILE(WRITE "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.cxx"
+      "${SOURCE}\n")
+
+    MESSAGE(STATUS "Performing Test ${VAR}")
+    TRY_COMPILE(${VAR}
+      ${CMAKE_BINARY_DIR}
+      ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeTmp/src.cxx
+      COMPILE_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS}
+      ${CHECK_CXX_SOURCE_COMPILES_ADD_LIBRARIES}
+      CMAKE_FLAGS -DCOMPILE_DEFINITIONS:STRING=${MACRO_CHECK_FUNCTION_DEFINITIONS}
+      "-DCMAKE_BUILD_TYPE:STRING=${BUILD_TYPE}"
+      "${CHECK_CXX_SOURCE_COMPILES_ADD_INCLUDES}"
+      OUTPUT_VARIABLE OUTPUT)
+
+    IF (${VAR})
+      MESSAGE(STATUS "Performing Test ${VAR} - Success")
+      SET(${VAR} 1 CACHE INTERNAL "Test ${VAR}")
+      FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
+        "Performing C++ SOURCE FILE Test ${VAR} succeded with the following output:\n"
+        "${OUTPUT}\n"
+        "Source file was:\n${SOURCE}\n")
+    ELSE()
+      MESSAGE(STATUS "Performing Test ${VAR} - Failed")
+      SET(${VAR} "" CACHE INTERNAL "Test ${VAR}")
+      FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+        "Performing C++ SOURCE FILE Test ${VAR} failed with the following output:\n"
+        "${OUTPUT}\n"
+        "Source file was:\n${SOURCE}\n")
+    ENDIF()
+  ENDIF()
+ENDMACRO()
+
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
 #
@@ -130,48 +207,76 @@ IF (NOT GFLAGS_LIBRARY OR
 ENDIF (NOT GFLAGS_LIBRARY OR
        NOT EXISTS ${GFLAGS_LIBRARY})
 
+# gflags typically requires a threading library (which is OS dependent), note
+# that this defines the CMAKE_THREAD_LIBS_INIT variable.  If we are able to
+# detect threads, we assume that gflags requires it.
+FIND_PACKAGE(Threads QUIET)
+SET(GFLAGS_LINK_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+# On Windows, the Shlwapi library is used by gflags if available.
+IF (MSVC)
+  INCLUDE(CheckIncludeFileCXX)
+  CHECK_INCLUDE_FILE_CXX("shlwapi.h" HAVE_SHLWAPI)
+  IF (HAVE_SHLWAPI)
+    LIST(APPEND GFLAGS_LINK_LIBRARIES shlwapi.lib)
+  ENDIF(HAVE_SHLWAPI)
+ENDIF (MSVC)
+
 # Mark internally as found, then verify. GFLAGS_REPORT_NOT_FOUND() unsets
 # if called.
 SET(GFLAGS_FOUND TRUE)
 
 # Identify what namespace gflags was built with.
 IF (GFLAGS_INCLUDE_DIR)
-  # First try the (older) google namespace.
   INCLUDE(CheckCXXSourceCompiles)
-  # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES
-  SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-  SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY})
-  CHECK_CXX_SOURCE_COMPILES(
-    "#include <gflags/gflags.h>
+
+  # On Windows, it is required that the build type of the test app match that
+  # of gflags, as CMAKE_BUILD_TYPE may not be defined when this is called, we
+  # try each in turn.
+  LIST(APPEND TEST_BUILD_TYPES Release Debug)
+  FOREACH(BUILD_TYPE ${TEST_BUILD_TYPES})
+    STRING(TOUPPER "${BUILD_TYPE}" BUILD_TYPE_UPPERCASE)
+    # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES.
+    SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
+    SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
+    # First try the (older) google namespace.  Note that the output variable
+    # MUST be unique to the build type as otherwise the test is not repeated as
+    # it is assumed to have already been performed.
+    CHECK_CXX_SOURCE_COMPILES_WITH_BUILD_TYPE(
+      "#include <gflags/gflags.h>
      int main(int argc, char * argv[]) {
        google::ParseCommandLineFlags(&argc, &argv, true);
        return 0;
      }"
-     GFLAGS_IN_GOOGLE_NAMESPACE)
-  IF (GFLAGS_IN_GOOGLE_NAMESPACE)
-    SET(GFLAGS_NAMESPACE google)
-  ELSE (GFLAGS_IN_GOOGLE_NAMESPACE)
-    # Try (newer) gflags namespace instead.
-    #
-    # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES
-    SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-    SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY})
-    CHECK_CXX_SOURCE_COMPILES(
-      "#include <gflags/gflags.h>
+     ${BUILD_TYPE}
+     GFLAGS_IN_GOOGLE_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+   IF (GFLAGS_IN_GOOGLE_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+     SET(GFLAGS_NAMESPACE google)
+     BREAK()
+   ELSE (GFLAGS_IN_GOOGLE_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+     # Try (newer) gflags namespace instead.  Note that the output variable
+     # MUST be unique to the build type as otherwise the test is not repeated as
+     # it is assumed to have already been performed.
+     SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
+     SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
+     CHECK_CXX_SOURCE_COMPILES_WITH_BUILD_TYPE(
+       "#include <gflags/gflags.h>
        int main(int argc, char * argv[]) {
          gflags::ParseCommandLineFlags(&argc, &argv, true);
          return 0;
        }"
-       GFLAGS_IN_GFLAGS_NAMESPACE)
-    IF (GFLAGS_IN_GFLAGS_NAMESPACE)
-      SET(GFLAGS_NAMESPACE gflags)
-    ENDIF (GFLAGS_IN_GFLAGS_NAMESPACE)
-  ENDIF (GFLAGS_IN_GOOGLE_NAMESPACE)
+       ${BUILD_TYPE}
+       GFLAGS_IN_GFLAGS_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+     IF (GFLAGS_IN_GFLAGS_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+       SET(GFLAGS_NAMESPACE gflags)
+       BREAK()
+     ENDIF (GFLAGS_IN_GFLAGS_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+   ENDIF (GFLAGS_IN_GOOGLE_NAMESPACE_${BUILD_TYPE_UPPERCASE})
+ ENDFOREACH()
 
-  IF (NOT GFLAGS_NAMESPACE)
-    GFLAGS_REPORT_NOT_FOUND(
-      "Failed to determine gflags namespace, it is not google or gflags.")
-  ENDIF (NOT GFLAGS_NAMESPACE)
+ IF (NOT GFLAGS_NAMESPACE)
+   GFLAGS_REPORT_NOT_FOUND(
+     "Failed to determine gflags namespace, it is not google or gflags.")
+ ENDIF (NOT GFLAGS_NAMESPACE)
 ENDIF (GFLAGS_INCLUDE_DIR)
 
 # gflags does not seem to provide any record of the version in its
@@ -202,7 +307,7 @@ ENDIF (GFLAGS_LIBRARY AND
 # Set standard CMake FindPackage variables if found.
 IF (GFLAGS_FOUND)
   SET(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
-  SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY})
+  SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
 ENDIF (GFLAGS_FOUND)
 
 # Handle REQUIRED / QUIET optional arguments.
