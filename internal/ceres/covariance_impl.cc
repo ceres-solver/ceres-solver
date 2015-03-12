@@ -97,9 +97,11 @@ bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
   return is_valid_;
 }
 
-bool CovarianceImpl::GetCovarianceBlock(const double* original_parameter_block1,
-                                        const double* original_parameter_block2,
-                                        double* covariance_block) const {
+bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
+    const double* original_parameter_block1,
+    const double* original_parameter_block2,
+    bool lift_covariance_to_ambient_space,
+    double* covariance_block) const {
   CHECK(is_computed_)
       << "Covariance::GetCovarianceBlock called before Covariance::Compute";
   CHECK(is_valid_)
@@ -172,14 +174,17 @@ bool CovarianceImpl::GetCovarianceBlock(const double* original_parameter_block1,
                      block1_size,
                      row_size);
 
-  // Fast path when there are no local parameterizations.
-  if (local_param1 == NULL && local_param2 == NULL) {
+  // Fast path when there are no local parameterizations or if the
+  // user does not want it lifted to the ambient space.
+  if ((local_param1 == NULL && local_param2 == NULL) ||
+      !lift_covariance_to_ambient_space) {
     if (transpose) {
-      MatrixRef(covariance_block, block2_size, block1_size) =
-          cov.block(0, offset, block1_size, block2_size).transpose();
+      MatrixRef(covariance_block, block2_local_size, block1_local_size) =
+          cov.block(0, offset, block1_local_size,
+                    block2_local_size).transpose();
     } else {
-      MatrixRef(covariance_block, block1_size, block2_size) =
-          cov.block(0, offset, block1_size, block2_size);
+      MatrixRef(covariance_block, block1_local_size, block2_local_size) =
+          cov.block(0, offset, block1_local_size, block2_local_size);
     }
     return true;
   }

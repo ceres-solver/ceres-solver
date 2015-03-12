@@ -357,7 +357,7 @@ class CERES_EXPORT Covariance {
                                   const double*> >& covariance_blocks,
       Problem* problem);
 
-  // Return the block of the covariance matrix corresponding to
+  // Return the block of the cross-covariance matrix corresponding to
   // parameter_block1 and parameter_block2.
   //
   // Compute must be called before the first call to
@@ -373,6 +373,26 @@ class CERES_EXPORT Covariance {
   bool GetCovarianceBlock(const double* parameter_block1,
                           const double* parameter_block2,
                           double* covariance_block) const;
+
+  // Return the block of the cross-covariance matrix corresponding to
+  // parameter_block1 and parameter_block2.
+  // Returns cross-covariance in the tangent space if a local
+  // parameterization is associated with either parameter block;
+  // else returns cross-covariance in the ambient space.
+  //
+  // Compute must be called before the first call to
+  // GetCovarianceBlock and the pair <parameter_block1,
+  // parameter_block2> OR the pair <parameter_block2,
+  // parameter_block1> must have been present in the vector
+  // covariance_blocks when Compute was called. Otherwise
+  // GetCovarianceBlock will return false.
+  //
+  // covariance_block must point to a memory location that can store a
+  // parameter_block1_local_size x parameter_block2_local_size matrix. The
+  // returned covariance will be a row-major matrix.
+  bool GetCovarianceBlockInTangentSpace(const double* parameter_block1,
+                                        const double* parameter_block2,
+                                        double* covariance_block) const;
 
  private:
   internal::scoped_ptr<internal::CovarianceImpl> impl_;

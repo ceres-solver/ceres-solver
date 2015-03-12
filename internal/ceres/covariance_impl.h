@@ -55,9 +55,11 @@ class CovarianceImpl {
                                   const double*> >& covariance_blocks,
       ProblemImpl* problem);
 
-  bool GetCovarianceBlock(const double* parameter_block1,
-                          const double* parameter_block2,
-                          double* covariance_block) const;
+  bool GetCovarianceBlockInTangentOrAmbientSpace(
+      const double* parameter_block1,
+      const double* parameter_block2,
+      bool lift_covariance_to_ambient_space,
+      double* covariance_block) const;
 
   bool ComputeCovarianceSparsity(
       const std::vector<std::pair<const double*,
