@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a624f0ad_13f19464",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-14T22:37:21Z",
+      "side": 1,
+      "message": "here in the interface you can drop the ptr suffix and just use it in the implementation.\n\nbetter readability.",
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a624f0ad_d302ecc0",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-14T22:37:21Z",
+      "side": 1,
+      "message": "silly optimization comment, but I think you will get better performance by multiply beta to (v.transpose() * y) and then multiplying that scalar into v.",
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a624f0ad_93fc643b",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-14T22:37:21Z",
+      "side": 1,
+      "message": "Normalize",
+      "range": {
+        "startLine": 249,
+        "startChar": 5,
+        "endLine": 249,
+        "endChar": 14
+      },
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a624f0ad_7319f833",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-14T22:37:21Z",
+      "side": 1,
+      "message": "VectorRef(x, N).normalize() will work.\n\nhttp://eigen.tuxfamily.org/dox/classEigen_1_1MatrixBase.html#acd0de676568888d848beb97dcc53ae47",
+      "range": {
+        "startLine": 252,
+        "startChar": 11,
+        "endLine": 252,
+        "endChar": 13
+      },
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a624f0ad_13287436",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-14T22:37:21Z",
+      "side": 1,
+      "message": "hmm this duplication of householder vector computation is unfortunate.\nat the risk of increasing work for you, do you think its worth just templating the householdervector compute so that it can be used here and local_parameterization.cc ?",
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
