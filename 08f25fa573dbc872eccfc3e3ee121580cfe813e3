@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a624f0ad_216e76fd",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-15T22:07:50Z",
+      "side": 1,
+      "message": "this comment should be updated to just say a sparse linear algebra backend since we can do things with EIGEN_SPARSE.",
+      "range": {
+        "startLine": 729,
+        "startChar": 23,
+        "endLine": 729,
+        "endChar": 27
+      },
+      "revId": "08f25fa573dbc872eccfc3e3ee121580cfe813e3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
