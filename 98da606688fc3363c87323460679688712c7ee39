@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a624f0ad_565b8adc",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-15T14:59:51Z",
+      "side": 1,
+      "message": "oh man, this is so miserable :/",
+      "revId": "98da606688fc3363c87323460679688712c7ee39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a624f0ad_3650feb4",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-15T14:59:51Z",
+      "side": 1,
+      "message": "why not just make the input list upper case?",
+      "revId": "98da606688fc3363c87323460679688712c7ee39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
