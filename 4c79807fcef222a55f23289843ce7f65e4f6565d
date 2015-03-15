@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a624f0ad_01a13aa1",
+        "filename": "include/ceres/composed_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-15T22:27:03Z",
+      "side": 1,
+      "message": "My principal problem with this design is that it binds parameter blocks to cost functions, whereas this binding is supposed to be performed by the problem object. \n\nit also makes reusing the same CostFunction impossible.",
+      "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
