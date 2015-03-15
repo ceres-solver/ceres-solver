@@ -116,9 +116,13 @@ class ProgramEvaluator : public Evaluator {
         evaluate_preparers_(
             jacobian_writer_.CreateEvaluatePreparers(options.num_threads)) {
 #ifndef CERES_USE_OPENMP
-    CHECK_EQ(1, options_.num_threads)
-        << "OpenMP support is not compiled into this binary; "
-        << "only options.num_threads=1 is supported.";
+    if (options_.num_threads > 1) {
+      LOG(WARNING)
+          << "OpenMP support is not compiled into this binary; "
+          << "only options.num_threads = 1 is supported. Switching "
+          << "to single threaded mode.";
+      options_.num_threads = 1;
+    }
 #endif
 
     BuildResidualLayout(*program, &residual_layout_);
