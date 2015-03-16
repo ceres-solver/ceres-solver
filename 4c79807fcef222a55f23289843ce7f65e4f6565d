@@ -16,6 +16,24 @@
       "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "662e7892_6b7ea16b",
+        "filename": "include/ceres/composed_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-03-16T00:33:06Z",
+      "side": 1,
+      "message": "Perhaps I\u0027m misunderstanding something, but the raw pointers are only used to determine the parameter mapping; they are not relied upon in `Evaluate`. As such, I\u0027m not sure I see why the same `ComposedCostFunction cannot be reused --- the caller only has to provide a different `parameter_blocks` argument to `AddResidualBlock`.\n \nE.g. `ComposedCostFunction` is setup with the first set of parameters and the `parameter_blocks` method is called to determine the expected parameter ordering. Then, for each subsequent residual, a `parameter_blocks` vector is constructed/modified with some/all parameters exchanged as necessary (before being passed to `AddResidualBlock`).",
+      "parentUuid": "a624f0ad_01a13aa1",
+      "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
