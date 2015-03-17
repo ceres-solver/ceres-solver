@@ -32,6 +32,7 @@
 #include "ceres/internal/port.h"
 #include "glog/logging.h"
 
+#ifdef CERES_NO_LAPACK
 extern "C" void dsyrk_(char* uplo,
                        char* trans,
                        int* n,
@@ -42,6 +43,7 @@ extern "C" void dsyrk_(char* uplo,
                        double* beta,
                        double* c,
                        int* ldc);
+#endif
 
 namespace ceres {
 namespace internal {
