@@ -32,7 +32,7 @@
 #include "ceres/internal/port.h"
 #include "glog/logging.h"
 
-#ifdef CERES_NO_LAPACK
+#ifndef CERES_NO_LAPACK
 extern "C" void dsyrk_(char* uplo,
                        char* trans,
                        int* n,
