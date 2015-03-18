@@ -47,8 +47,8 @@ Getting started
 * Join the `mailing list
   <https://groups.google.com/forum/?fromgroups#!forum/ceres-solver>`_
   and ask questions.
-* File bugs, feature requests in the `issue tracker
-  <https://code.google.com/p/ceres-solver/issues/list>`_.
+* File bugs, feature requests on `GitHub
+  <https://github.com/ceres-solver/ceres-solver/issues>`_.
 
 
 Cite Us
