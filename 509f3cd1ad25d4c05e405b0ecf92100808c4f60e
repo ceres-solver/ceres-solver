@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e67fc8e4_6114da42",
+        "filename": "README.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-18T04:30:44Z",
+      "side": 1,
+      "message": "Ceres does development with Gerrit - reads quite odd, because well Ceres is not a person. How about\n\nCeres development happens on Gerrit, including both repository hosting and code reviews. The GitHub Repository is a continuously updated mirror which is primarily meant for issue tracking.",
+      "revId": "509f3cd1ad25d4c05e405b0ecf92100808c4f60e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
