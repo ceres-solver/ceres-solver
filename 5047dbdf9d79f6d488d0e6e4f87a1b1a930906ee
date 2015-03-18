@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e67fc8e4_012b1e29",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-18T05:39:25Z",
+      "side": 1,
+      "message": "Raw tab; intended?",
+      "revId": "5047dbdf9d79f6d488d0e6e4f87a1b1a930906ee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
