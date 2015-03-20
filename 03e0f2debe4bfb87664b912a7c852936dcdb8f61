@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "068cdc85_96dcda11",
+        "filename": "internal/ceres/householder_vector_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-20T21:54:20Z",
+      "side": 1,
+      "message": "no need to split into separate file. This is a small enough function that you can just have the implementation in the same file.",
+      "revId": "03e0f2debe4bfb87664b912a7c852936dcdb8f61",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
