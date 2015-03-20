@@ -96,6 +96,24 @@
       "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "068cdc85_067e8369",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2015-03-20T16:45:38Z",
+      "side": 1,
+      "message": "I agree, this should be fix. In terms of style, I am not sure what the best approach is because they all have their caveats.  In order to not have to redo work, I\u0027d like your opinion.\n\nShould I do:\n\nsolution 1:\n\ntemplate \u003ctypename Scalar\u003e\nvoid ComputeHouseholderVector(\n    const Eigen::Matrix\u003cScalar, Eigen::Dynamic, 1\u003e\u0026 x,\n    Eigen::Matrix\u003cScalar, Eigen::Dynamic, 1\u003e* v, \n    Scalar* beta);\n\nthis has the negative that it doesn\u0027t use the typedefs in internal/eigen.h.  To be able to use the typedefs, I would either have to add another template parameter to \n\nsolution 2:\n\ntemplate \u003cint num_rows \u003d Eigen::Dynamic, int num_cols \u003d Eigen::Dynamic, typename Scalar \u003d double\u003e\nstruct EigenTypes \n\nbut this has the negative that the order is opposite the Eigen specification, but the positive is that I wouldn\u0027t need to touch the entire code base.\n\nOr create another struct:\n\nsolution 3:\n\ntemplate \u003ctypename Scalar, int num_rows \u003d Eigen::Dynamic, int num_cols \u003d Eigen::Dynamic\u003e\nstruct EigenTemplatedTypes \n\nI am leaning toward solution 2.  What do you think?",
+      "parentUuid": "a624f0ad_13287436",
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
