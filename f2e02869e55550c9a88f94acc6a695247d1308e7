@@ -114,6 +114,24 @@
       "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "068cdc85_a6e9b72b",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-20T17:07:14Z",
+      "side": 1,
+      "message": "I do not think there is anything sacrosanct about the internal/eigen.h. I think option 1 is quite nice and simple, I\u0027d go with it.\n\nThe only thing that looks complicated here will be compute_householder_vector.h, all call sites will be simple so it should be no problem at all.\n\nwhat do you think?",
+      "parentUuid": "068cdc85_067e8369",
+      "revId": "f2e02869e55550c9a88f94acc6a695247d1308e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
