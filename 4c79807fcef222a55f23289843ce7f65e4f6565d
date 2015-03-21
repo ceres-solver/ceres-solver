@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a69cf0d8_62d6fc46",
+        "filename": "include/ceres/composed_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:46:31Z",
+      "side": 1,
+      "message": "Please update to ceres-solver.org (see recent change to update all of these)",
+      "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a624f0ad_01a13aa1",
         "filename": "include/ceres/composed_cost_function.h",
         "patchSetId": 3
@@ -31,6 +48,40 @@
       "side": 1,
       "message": "Perhaps I\u0027m misunderstanding something, but the raw pointers are only used to determine the parameter mapping; they are not relied upon in `Evaluate`. As such, I\u0027m not sure I see why the same `ComposedCostFunction cannot be reused --- the caller only has to provide a different `parameter_blocks` argument to `AddResidualBlock`.\n \nE.g. `ComposedCostFunction` is setup with the first set of parameters and the `parameter_blocks` method is called to determine the expected parameter ordering. Then, for each subsequent residual, a `parameter_blocks` vector is constructed/modified with some/all parameters exchanged as necessary (before being passed to `AddResidualBlock`).",
       "parentUuid": "a624f0ad_01a13aa1",
+      "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_c2e1b017",
+        "filename": "internal/ceres/composed_cost_function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:46:31Z",
+      "side": 1,
+      "message": "update",
+      "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_a2e6242b",
+        "filename": "internal/ceres/composed_cost_function_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:46:31Z",
+      "side": 1,
+      "message": "update",
       "revId": "4c79807fcef222a55f23289843ce7f65e4f6565d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
