@@ -222,7 +222,7 @@ bool HomogeneousVectorParameterization::Plus(const double* x_ptr,
   // Apply the delta update to remain on the unit sphere. See section A6.9.3
   // on page 625 of Hartley & Zisserman (2nd Edition) for a detailed
   // description.
-  x_plus_delta = x.norm() * (y -  v * (beta *(v.transpose() * y)));
+  x_plus_delta = x.norm() * (y -  v * (beta * (v.transpose() * y)));
 
   return true;
 }

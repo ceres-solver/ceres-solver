@@ -1152,7 +1152,7 @@ Instances
 
    When using homogeneous vectors it is useful to only make updates
    orthogonal to that :math:`n`-vector defining the homogeneous
-   vector [HartleyZisserman]_. One way to do this is to let :math:`\Delta x` 
+   vector [HartleyZisserman]_. One way to do this is to let :math:`\Delta x`
    be a :math:`n-1` dimensional vector and define :math:`\boxplus` to be
 
     .. math:: \boxplus(x, \Delta x) = \left[ \frac{\sin\left(0.5 |\Delta x|\right)}{|\Delta x|} \Delta x, \cos(0.5 |\Delta x|) \right] * x
@@ -1160,7 +1160,7 @@ Instances
    The multiplication between the two vectors on the right hand side
    is defined as an operator which applies the update orthogonal to
    :math:`x` to remain on the sphere. Note, it is assumed that
-   last element of :math:`x` is the scalar component of the homogeneous 
+   last element of :math:`x` is the scalar component of the homogeneous
    vector.
 
 
