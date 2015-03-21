@@ -122,6 +122,10 @@ class OrderedGroups {
 
   // Reverse the order of the groups in place.
   void Reverse() {
+    if (NumGroups() == 0) {
+      return;
+    }
+
     typename std::map<int, std::set<T> >::reverse_iterator it =
         group_to_elements_.rbegin();
     std::map<int, std::set<T> > new_group_to_elements;
