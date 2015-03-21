@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69cf0d8_6770ce05",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Colud this large block be as simple as \"Don\u0027t mix numeric diff cost function with local parameterizations\"?",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_a707569c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "This text isn\u0027t sufficiently clear on the point that the NumericDiffCostFunction doesn\u0027t properly support this at the moment.",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_07562a62",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1734,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Not sure what wording to use, but I suggest mentioning that the interpolator supports multiple \"channels\".",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_c75b828c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Raw tabs",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_a760f631",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Double blanks intended?",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_47503264",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "as long as it can be... ?",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_874a1ab0",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Tabs",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69cf0d8_67472ea8",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this example take the Array type as a template argument? This applies to the .rst docs as well and the 1d example.",
+      "revId": "b586cd09096b9089509889806d3c4bf57afc5265",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a69cf0d8_274d26ca",
+        "filename": "docs/source/users.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-21T11:33:41Z",
+      "side": 0,
+      "message": "I\u0027m not a  fan of removing this section. Perhaps the above text can say something like \"here\u0027s a sampling of publications that use Ceres\" and also, \"Send a patch to add your paper here please!\"",
+      "revId": "649f5c22b8c76fd2d8155ad5f37efbae9f38eeb3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
