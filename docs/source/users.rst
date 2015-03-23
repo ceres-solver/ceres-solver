@@ -35,6 +35,14 @@ Users
   * Camera and Camera/IMU Calibration.
   * Large scale optimization of visual, inertial, gps and
     wheel-odometry data for long term autonomy.
+    
+* `OpenPTrack <http://openptrack.org/>`_ uses Ceres for camera 
+  calibration.
+* The `Intelligent Autonomous System Lab <http://robotics.dei.unipd.it/>`_
+  at University of Padova, Italy, uses Ceres for
+  
+  * Camera/Depth Sensors Network Calibration.
+  * Depth Sensor Intrinsics Calibration.
 
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
