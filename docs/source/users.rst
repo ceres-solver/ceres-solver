@@ -15,7 +15,7 @@ Users
     Tango`_.
 
 * `Willow Garage`_ uses Ceres to solve `SLAM`_ problems.
-* `Southwest Research Insitute <http://www.swri.org/>`_ uses Ceres for
+* `Southwest Research Institute <http://www.swri.org/>`_ uses Ceres for
   `calibrating robot-camera systems`_.
 * `Blender <http://www.blender.org>`_ uses Ceres for `planar
   tracking`_ and `bundle adjustment`_.
@@ -35,6 +35,14 @@ Users
   * Camera and Camera/IMU Calibration.
   * Large scale optimization of visual, inertial, gps and
     wheel-odometry data for long term autonomy.
+    
+* `OpenPTrack <http://openptrack.org/>`_ uses Ceres for camera 
+  calibration.
+* The `Intelligent Autonomous System Lab <http://robotics.dei.unipd.it/>`_
+  at University of Padova, Italy, uses Ceres for
+  
+  * Camera/depth sensors network calibration.
+  * Depth sensor distortion map estimation.
 
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
