@@ -16,6 +16,24 @@
       "revId": "b611bdea11386e23390ee3d84335aa4c547a1fb9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8647ec3d_4c2ebf3a",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-03-24T18:40:46Z",
+      "side": 1,
+      "message": "Also don\u0027t forget that Clang is coming to windows :)",
+      "parentUuid": "a3f6a249_c3922ad3",
+      "revId": "b611bdea11386e23390ee3d84335aa4c547a1fb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
