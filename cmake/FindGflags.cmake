@@ -222,14 +222,15 @@ ENDIF (NOT GFLAGS_LIBRARY OR
 # detect threads, we assume that gflags requires it.
 FIND_PACKAGE(Threads QUIET)
 SET(GFLAGS_LINK_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
-# On Windows, the Shlwapi library is used by gflags if available.
-IF (MSVC)
+# On Windows (including MinGW), the Shlwapi library is used by gflags if
+# available.
+IF (WIN32)
   INCLUDE(CheckIncludeFileCXX)
   CHECK_INCLUDE_FILE_CXX("shlwapi.h" HAVE_SHLWAPI)
   IF (HAVE_SHLWAPI)
     LIST(APPEND GFLAGS_LINK_LIBRARIES shlwapi.lib)
   ENDIF(HAVE_SHLWAPI)
-ENDIF (MSVC)
+ENDIF (WIN32)
 
 # Mark internally as found, then verify. GFLAGS_REPORT_NOT_FOUND() unsets
 # if called.
