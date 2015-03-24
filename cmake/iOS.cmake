@@ -84,10 +84,8 @@ if (CMAKE_UNAME)
 	string (REGEX REPLACE "^([0-9]+)\\.([0-9]+).*$" "\\1" DARWIN_MAJOR_VERSION "${CMAKE_HOST_SYSTEM_VERSION}")
 endif (CMAKE_UNAME)
 
-# Force the compilers to gcc for iOS
-include (CMakeForceCompiler)
-CMAKE_FORCE_C_COMPILER (clang Apple)
-CMAKE_FORCE_CXX_COMPILER (clang++ Apple)
+set(CMAKE_C_COMPIER clang)
+set(CMAKE_CXX_COMPIER clang++)
 set(CMAKE_AR ar CACHE FILEPATH "" FORCE)
 
 # Skip the platform compiler checks for cross compiling
