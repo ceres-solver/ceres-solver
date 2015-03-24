@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f6a249_c3922ad3",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-24T18:28:02Z",
+      "side": 1,
+      "message": "are there any other place where we need to worry about the distinction between MSVC/WIN32 distinction?",
+      "revId": "b611bdea11386e23390ee3d84335aa4c547a1fb9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
