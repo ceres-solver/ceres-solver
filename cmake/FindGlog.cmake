@@ -71,6 +71,13 @@ MACRO(GLOG_REPORT_NOT_FOUND REASON_MSG)
   # been found so that user does not have to toggle to advanced view.
   MARK_AS_ADVANCED(CLEAR GLOG_INCLUDE_DIR
                          GLOG_LIBRARY)
+
+  IF (MSVC)
+    # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+    # FindGlog was invoked.
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  ENDIF (MSVC)
+
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
   IF (Glog_FIND_QUIETLY)
@@ -83,6 +90,16 @@ MACRO(GLOG_REPORT_NOT_FOUND REASON_MSG)
     MESSAGE("-- Failed to find glog - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(GLOG_REPORT_NOT_FOUND)
+
+# Handle possible presence of lib prefix for libraries on MSVC.
+IF (MSVC)
+  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
+  # s/t we can set it back before returning.
+  SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  # The empty string in this list is important, it represents the case when
+  # the libraries have no prefix (shared libraries / DLLs).
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
@@ -158,6 +175,12 @@ IF (GLOG_FOUND)
   SET(GLOG_INCLUDE_DIRS ${GLOG_INCLUDE_DIR})
   SET(GLOG_LIBRARIES ${GLOG_LIBRARY})
 ENDIF (GLOG_FOUND)
+
+IF (MSVC)
+  # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+  # FindGlog was invoked.
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Handle REQUIRED / QUIET optional arguments.
 INCLUDE(FindPackageHandleStandardArgs)

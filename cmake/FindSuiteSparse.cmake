@@ -125,6 +125,12 @@ MACRO(SUITESPARSE_REPORT_NOT_FOUND REASON_MSG)
   # FindPackageHandleStandardArgs() to generate the automatic error message on
   # failure which highlights which components are missing.
 
+  IF (MSVC)
+    # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+    # FindSuiteSparse was invoked.
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  ENDIF (MSVC)
+
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
   IF (SuiteSparse_FIND_QUIETLY)
@@ -139,6 +145,16 @@ MACRO(SUITESPARSE_REPORT_NOT_FOUND REASON_MSG)
 
   # Do not call RETURN(), s/t we keep processing if not called with REQUIRED.
 ENDMACRO(SUITESPARSE_REPORT_NOT_FOUND)
+
+# Handle possible presence of lib prefix for libraries on MSVC.
+IF (MSVC)
+  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
+  # s/t we can set it back before returning.
+  SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  # The empty string in this list is important, it represents the case when
+  # the libraries have no prefix (shared libraries / DLLs).
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Specify search directories for include files and libraries (this is the union
 # of the search directories for all OSs).  Search user-specified hint
@@ -610,6 +626,12 @@ IF (CMAKE_SYSTEM_NAME MATCHES "Linux" AND
   ENDIF (LSB_RELEASE_EXECUTABLE)
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux" AND
   SUITESPARSE_VERSION VERSION_EQUAL 3.4.0)
+
+IF (MSVC)
+  # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+  # FindSuiteSparse was invoked.
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Handle REQUIRED and QUIET arguments to FIND_PACKAGE
 INCLUDE(FindPackageHandleStandardArgs)

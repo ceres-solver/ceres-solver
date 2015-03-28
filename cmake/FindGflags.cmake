@@ -82,6 +82,13 @@ MACRO(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
   MARK_AS_ADVANCED(CLEAR GFLAGS_INCLUDE_DIR
                          GFLAGS_LIBRARY
                          GFLAGS_NAMESPACE)
+
+  IF (MSVC)
+    # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+    # FindGflags was invoked.
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  ENDIF (MSVC)
+
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
   IF (Gflags_FIND_QUIETLY)
@@ -176,6 +183,16 @@ MACRO(CHECK_CXX_SOURCE_COMPILES_WITH_BUILD_TYPE
     ENDIF()
   ENDIF()
 ENDMACRO()
+
+# Handle possible presence of lib prefix for libraries on MSVC.
+IF (MSVC)
+  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
+  # s/t we can set it back before returning.
+  SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  # The empty string in this list is important, it represents the case when
+  # the libraries have no prefix (shared libraries / DLLs).
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
@@ -395,6 +412,12 @@ IF (GFLAGS_FOUND)
   SET(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
   SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
 ENDIF (GFLAGS_FOUND)
+
+IF (MSVC)
+  # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+  # FindGflags was invoked.
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Handle REQUIRED / QUIET optional arguments.
 INCLUDE(FindPackageHandleStandardArgs)
