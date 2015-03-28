@@ -67,6 +67,14 @@
 # CXSPARSE_LIBRARY: CXSparse library, not including the libraries of any
 #                   dependencies.
 
+# Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+# FindCXSparse was invoked.
+MACRO(CXSPARSE_RESET_FIND_LIBRARY_PREFIX)
+  IF (MSVC)
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  ENDIF (MSVC)
+ENDMACRO(CXSPARSE_RESET_FIND_LIBRARY_PREFIX)
+
 # Called if we failed to find CXSparse or any of it's required dependencies,
 # unsets all public (designed to be used externally) variables and reports
 # error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
@@ -78,6 +86,9 @@ MACRO(CXSPARSE_REPORT_NOT_FOUND REASON_MSG)
   # been found so that user does not have to toggle to advanced view.
   MARK_AS_ADVANCED(CLEAR CXSPARSE_INCLUDE_DIR
                          CXSPARSE_LIBRARY)
+
+  CXSPARSE_RESET_FIND_LIBRARY_PREFIX()
+
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
   IF (CXSparse_FIND_QUIETLY)
@@ -90,6 +101,17 @@ MACRO(CXSPARSE_REPORT_NOT_FOUND REASON_MSG)
     MESSAGE("-- Failed to find CXSparse - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(CXSPARSE_REPORT_NOT_FOUND)
+
+# Handle possible presence of lib prefix for libraries on MSVC, see
+# also CXSPARSE_RESET_FIND_LIBRARY_PREFIX().
+IF (MSVC)
+  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
+  # s/t we can set it back before returning.
+  SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  # The empty string in this list is important, it represents the case when
+  # the libraries have no prefix (shared libraries / DLLs).
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
@@ -189,6 +211,8 @@ IF (CXSPARSE_FOUND)
   SET(CXSPARSE_INCLUDE_DIRS ${CXSPARSE_INCLUDE_DIR})
   SET(CXSPARSE_LIBRARIES ${CXSPARSE_LIBRARY})
 ENDIF (CXSPARSE_FOUND)
+
+CXSPARSE_RESET_FIND_LIBRARY_PREFIX()
 
 # Handle REQUIRED / QUIET optional arguments and version.
 INCLUDE(FindPackageHandleStandardArgs)

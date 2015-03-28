@@ -60,6 +60,14 @@
 # GLOG_LIBRARY: glog library, not including the libraries of any
 #               dependencies.
 
+# Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when
+# FindGlog was invoked.
+MACRO(GLOG_RESET_FIND_LIBRARY_PREFIX)
+  IF (MSVC)
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  ENDIF (MSVC)
+ENDMACRO(GLOG_RESET_FIND_LIBRARY_PREFIX)
+
 # Called if we failed to find glog or any of it's required dependencies,
 # unsets all public (designed to be used externally) variables and reports
 # error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
@@ -71,6 +79,9 @@ MACRO(GLOG_REPORT_NOT_FOUND REASON_MSG)
   # been found so that user does not have to toggle to advanced view.
   MARK_AS_ADVANCED(CLEAR GLOG_INCLUDE_DIR
                          GLOG_LIBRARY)
+
+  GLOG_RESET_FIND_LIBRARY_PREFIX()
+
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
   IF (Glog_FIND_QUIETLY)
@@ -83,6 +94,17 @@ MACRO(GLOG_REPORT_NOT_FOUND REASON_MSG)
     MESSAGE("-- Failed to find glog - " ${REASON_MSG} ${ARGN})
   ENDIF ()
 ENDMACRO(GLOG_REPORT_NOT_FOUND)
+
+# Handle possible presence of lib prefix for libraries on MSVC, see
+# also GLOG_RESET_FIND_LIBRARY_PREFIX().
+IF (MSVC)
+  # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
+  # s/t we can set it back before returning.
+  SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  # The empty string in this list is important, it represents the case when
+  # the libraries have no prefix (shared libraries / DLLs).
+  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+ENDIF (MSVC)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
@@ -158,6 +180,8 @@ IF (GLOG_FOUND)
   SET(GLOG_INCLUDE_DIRS ${GLOG_INCLUDE_DIR})
   SET(GLOG_LIBRARIES ${GLOG_LIBRARY})
 ENDIF (GLOG_FOUND)
+
+GLOG_RESET_FIND_LIBRARY_PREFIX()
 
 # Handle REQUIRED / QUIET optional arguments.
 INCLUDE(FindPackageHandleStandardArgs)
