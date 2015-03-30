@@ -50,6 +50,9 @@
 // If defined, Ceres was compiled without SuiteSparse.
 @CERES_NO_SUITESPARSE@
 
+// If defined, Ceres was compiled without the SuiteSparseQR component.
+@CERES_NO_SUITESPARSE_QR@
+
 // If defined, Ceres was compiled without CXSparse.
 @CERES_NO_CXSPARSE@
 
