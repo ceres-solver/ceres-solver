@@ -660,6 +660,17 @@ ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
 
+IF (MINGW)
+  # MinGW produces code that segfaults when performing matrix multiplications
+  # in Eigen when compiled with -O3 (see [1]), as such force the use of -O2
+  # which works.
+  #
+  # [1] http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556
+  MESSAGE("-- MinGW detected, forcing use of -O2 not -O3 in Release for Eigen.")
+  STRING(REPLACE "-O3" "-O2" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+  UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+ENDIF (MINGW)
+
 # After the tweaks for the compile settings, disable some warnings on MSVC.
 IF (MSVC)
   # Disable signed/unsigned int conversion warnings.
