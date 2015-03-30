@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ece2ce_4d6d79fe",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "This block should be inside the IF (SUITESPARSE_FOUND) block above line 357 as you cannot have SuiteSparseQR without SuiteSparse.",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_4e6d73fe",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "This is inconsistent with the SUITESPARSEQR_FOUND variable in FindSuiteSparse.  IMO, I can see that SUITESPARSE_QR is more readable, so please can you change SUITESPARSEQR --\u003e SUITESPARSE_QR in FindSuiteSparse (docs \u0026 code).",
+      "range": {
+        "startLine": 365,
+        "startChar": 5,
+        "endLine": 365,
+        "endChar": 25
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_ad24dddb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "Please combine into a single string, i.e. remove the \" \".",
+      "range": {
+        "startLine": 366,
+        "startChar": 37,
+        "endLine": 366,
+        "endChar": 40
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_2e5e2755",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "Please add a message about SuiteSparseQR not being found, and thus SuiteSparseQR support is disabled.",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_0d4c11a0",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "SUITESPARSEQR --\u003e SUITESPARSE_QR",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 23
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_8e6e3bf8",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "SUITESPARSEQR --\u003e SUITESPARSE_QR here and elsewhere.",
+      "range": {
+        "startLine": 314,
+        "startChar": 4,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_0e636b17",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "MESSAGE(STATUS \"Could ...",
+      "range": {
+        "startLine": 320,
+        "startChar": 2,
+        "endLine": 320,
+        "endChar": 14
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83fb5e85_6c2b1bad",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "MESSAGE(STATUS \"Could ...",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 14
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_ee7b7fb8",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "Please add a comment that SuiteSparse is GPL, but that the reset of SuiteSparse is LGPL.",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_ce7843bf",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "#if !defined(CERES_NO_SUITESPARSE) \u0026\u0026 !defined(CERES_NO_SUITESPARSE_QR)",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_6d415568",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T20:01:21Z",
+      "side": 1,
+      "message": "/**/ --\u003e // \u0026 update to match #if",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
