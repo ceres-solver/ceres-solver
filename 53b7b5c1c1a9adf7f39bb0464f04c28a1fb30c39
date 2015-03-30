@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "83fb5e85_4c945f42",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "Add CERES_NO_SUITESPARSE_QR, that way all #ifdef checks can just check CERES_NO_SUITESPARSE_QR.",
+      "range": {
+        "startLine": 362,
+        "startChar": 38,
+        "endLine": 362,
+        "endChar": 58
+      },
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ece2ce_4d6d79fe",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -76,6 +99,29 @@
       "writtenOn": "2015-03-30T20:01:21Z",
       "side": 1,
       "message": "Please add a message about SuiteSparseQR not being found, and thus SuiteSparseQR support is disabled.",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_ed826500",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "Add CERES_NO_SUITESPARSE_QR",
+      "range": {
+        "startLine": 372,
+        "startChar": 36,
+        "endLine": 372,
+        "endChar": 56
+      },
       "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -191,6 +237,74 @@
     },
     {
       "key": {
+        "uuid": "83fb5e85_ac886322",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "With CERES_NO_SUITESPARSE_QR defined whenever SuiteSparse is not present in the main CMakeLists, this can just be:\n\n#ifndef CERES_NO_SUITESPARSE_QR",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_8e859b0c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "As above, can become just: #ifndef CERES_NO_SUITESPARSE_QR",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_ee825f00",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "As above: #ifndef CERES_NO_SUITESPARSE_QR",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83fb5e85_ec826b00",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "As above: #ifndef CERES_NO_SUITESPARSE_QR",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f1d6a3_ce7843bf",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 1
@@ -202,6 +316,24 @@
       "writtenOn": "2015-03-30T20:01:21Z",
       "side": 1,
       "message": "#if !defined(CERES_NO_SUITESPARSE) \u0026\u0026 !defined(CERES_NO_SUITESPARSE_QR)",
+      "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83fb5e85_cc7faf8c",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-30T22:07:05Z",
+      "side": 1,
+      "message": "Ignore my previous comment, #ifndef CERES_NO_SUITESPARSE_QR should be fine after mods to the main CMakeLists",
+      "parentUuid": "c3f1d6a3_ce7843bf",
       "revId": "53b7b5c1c1a9adf7f39bb0464f04c28a1fb30c39",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
