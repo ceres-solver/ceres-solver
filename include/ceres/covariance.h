@@ -201,7 +201,7 @@ class CERES_EXPORT Covariance {
  public:
   struct CERES_EXPORT Options {
     Options()
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
         : algorithm_type(SUITE_SPARSE_QR),
 #else
         : algorithm_type(EIGEN_SPARSE_QR),

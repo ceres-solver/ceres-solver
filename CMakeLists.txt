@@ -134,6 +134,15 @@ OPTION(EIGENSPARSE
    depends on the sparse QR factorization algorithm, which is licensed
    under the MPL."
   OFF)
+OPTION(SUITESPARSE_QR
+  "Enable the use of the SuiteSparse QR decomposition library for
+   the covariance estimation algorithm. Enabling this option will result
+   in a GPL licensed version of Ceres Solver, as the SuiteSparse QR
+   decomposition is licensed under the GPL.
+   Note that some of the other SuiteSparse components (such as Cholmod)
+   that are used by Ceres also may include GPL-licensed parts, depending
+   on how SuiteSparse was built."
+  OFF)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -351,13 +360,38 @@ IF (SUITESPARSE)
     # built with SuiteSparse support.
     MESSAGE("-- Found SuiteSparse ${SUITESPARSE_VERSION}, "
             "building with SuiteSparse.")
+
+    # separately check for SUITESPARSE_QR
+    MESSAGE("")
+    MESSAGE("   ===============================================================")
+    IF (SUITESPARSE_QR)
+      MESSAGE("   Enabling the use of the SuiteSparse QR decomposition library for")
+      MESSAGE("   the covariance estimation algorithm. Enabling this option will")
+      MESSAGE("   result in a GPL licensed version of Ceres Solver, as the")
+      MESSAGE("   SuiteSparse QR decomposition is licensed under the GPL.")
+
+      IF (SUITESPARSE_QR_FOUND)
+        MESSAGE("-- Found SuiteSparseQR, building with SuiteSparseQR.")
+      ELSE (SUITESPARSE_QR_FOUND)
+        MESSAGE("-- Did not find SuiteSparseQR, building without SuiteSparseQR.")
+        LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE_QR)
+      ENDIF (SUITESPARSE_QR_FOUND)
+    ELSE (SUITESPARSE_QR)
+      MESSAGE("   Disabling the use of SuiteSparseQR as a sparse QR decomposition")
+      MESSAGE("   library for the covariance estimation. Default fallback is the")
+      MESSAGE("   EIGEN_SPARSE_QR algorithm.")
+      LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE_QR)
+    ENDIF (SUITESPARSE_QR)
+    MESSAGE("   ===============================================================")
+    MESSAGE("")
   ELSE (SUITESPARSE_FOUND)
     # Disable use of SuiteSparse if it cannot be found and continue.
     MESSAGE("-- Did not find all SuiteSparse dependencies, disabling "
       "SuiteSparse support.")
     UPDATE_CACHE_VARIABLE(SUITESPARSE OFF)
-    LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
+    LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE CERES_NO_SUITESPARSE_QR)
   ENDIF (SUITESPARSE_FOUND)
+
 ELSE (SUITESPARSE)
   MESSAGE("-- Building without SuiteSparse.")
   LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE)
