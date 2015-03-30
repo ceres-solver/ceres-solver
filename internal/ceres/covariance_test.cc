@@ -454,10 +454,10 @@ TEST_F(CovarianceTest, NormalBehavior) {
 
   Covariance::Options options;
 
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
   options.algorithm_type = SUITE_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -502,10 +502,10 @@ TEST_F(CovarianceTest, ThreadedNormalBehavior) {
   Covariance::Options options;
   options.num_threads = 4;
 
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
   options.algorithm_type = SUITE_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -551,10 +551,10 @@ TEST_F(CovarianceTest, ConstantParameterBlock) {
 
   Covariance::Options options;
 
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
   options.algorithm_type = SUITE_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -606,10 +606,10 @@ TEST_F(CovarianceTest, LocalParameterization) {
 
   Covariance::Options options;
 
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
   options.algorithm_type = SUITE_SPARSE_QR;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocks(options, expected_covariance);
@@ -664,10 +664,10 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpace) {
 
   Covariance::Options options;
 
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
   options.algorithm_type = SUITE_SPARSE_QR;
   ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
 
   options.algorithm_type = DENSE_SVD;
   ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
@@ -893,13 +893,13 @@ class LargeScaleCovarianceTest : public ::testing::Test {
   vector<pair<const double*, const double*> > all_covariance_blocks_;
 };
 
-#if !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+#if !defined(CERES_NO_SUITESPARSE_QR) && defined(CERES_USE_OPENMP)
 
 TEST_F(LargeScaleCovarianceTest, Parallel) {
   ComputeAndCompare(SUITE_SPARSE_QR, 4);
 }
 
-#endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+#endif  // !defined(CERES_NO_SUITESPARSE_QR) && defined(CERES_USE_OPENMP)
 
 }  // namespace internal
 }  // namespace ceres

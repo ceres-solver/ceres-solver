@@ -50,6 +50,12 @@
 // If defined, Ceres was compiled without SuiteSparse.
 @CERES_NO_SUITESPARSE@
 
+// If defined, Ceres was compiled without the GPL-licensed SuiteSparseQR component
+// Note that some of the other SuiteSparse components (such as Cholmod)
+// that are used by Ceres also may include GPL-licensed parts, depending
+// on how SuiteSparse was built.
+@CERES_NO_SUITESPARSE_QR@
+
 // If defined, Ceres was compiled without CXSparse.
 @CERES_NO_CXSPARSE@
 

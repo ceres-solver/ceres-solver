@@ -201,11 +201,11 @@ class CERES_EXPORT Covariance {
  public:
   struct CERES_EXPORT Options {
     Options()
-#ifndef CERES_NO_SUITESPARSE
+#ifndef CERES_NO_SUITESPARSE_QR
         : algorithm_type(SUITE_SPARSE_QR),
-#else
+#else  // CERES_NO_SUITESPARSE_QR
         : algorithm_type(EIGEN_SPARSE_QR),
-#endif
+#endif  // CERES_NO_SUITESPARSE_QR
           min_reciprocal_condition_number(1e-14),
           null_space_rank(0),
           num_threads(1),

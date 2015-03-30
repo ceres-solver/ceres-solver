@@ -45,7 +45,10 @@
 #include "ceres/linear_solver.h"
 #include "cholmod.h"
 #include "glog/logging.h"
+
+#ifndef CERES_NO_SUITESPARSE_QR
 #include "SuiteSparseQR.hpp"
+#endif // CERES_NO_SUITESPARSE_QR
 
 // Before SuiteSparse version 4.2.0, cholmod_camd was only enabled
 // if SuiteSparse was compiled with Metis support. This makes
