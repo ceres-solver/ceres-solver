@@ -386,11 +386,11 @@ bool CovarianceImpl::ComputeCovarianceValues() {
   switch (options_.algorithm_type) {
     case DENSE_SVD:
       return ComputeCovarianceValuesUsingDenseSVD();
-#ifndef CERES_NO_SUITESPARSE
+#if !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_SUITESPARSE_QR)
     case SUITE_SPARSE_QR:
       return ComputeCovarianceValuesUsingSuiteSparseQR();
 #else
-      LOG(ERROR) << "SuiteSparse is required to use the "
+      LOG(ERROR) << "SuiteSparse with SuiteSparseQR is required to use the "
                  << "SUITE_SPARSE_QR algorithm.";
       return false;
 #endif
@@ -408,7 +408,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   EventLogger event_logger(
       "CovarianceImpl::ComputeCovarianceValuesUsingSparseQR");
 
-#ifndef CERES_NO_SUITESPARSE
+#if !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_SUITESPARSE_QR)
   if (covariance_matrix_.get() == NULL) {
     // Nothing to do, all zeros covariance matrix.
     return true;
@@ -562,11 +562,11 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   event_logger.AddEvent("Inversion");
   return true;
 
-#else  // CERES_NO_SUITESPARSE
+#else  // !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_SUITESPARSE_QR)
 
   return false;
 
-#endif  // CERES_NO_SUITESPARSE
+#endif  // !defined(CERES_NO_SUITESPARSE) && !defined(CERES_NO_SUITESPARSE_QR)
 }
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
