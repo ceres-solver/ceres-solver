@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83143e89_9954c7e1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-31T12:30:52Z",
+      "side": 1,
+      "message": "The comment is not strictly true. it depends on how you built suitesparse.\nthe simplicial cholesky I believe is lgpl but the supernodal cholesky factorization is GPL right?",
+      "revId": "40cd70b089e8787bcb2424998791d55ee496861d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
