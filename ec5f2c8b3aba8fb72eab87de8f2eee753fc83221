@@ -22,6 +22,115 @@
       "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_9403ecc5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-31T18:31:18Z",
+      "side": 1,
+      "message": "So I think this flow should be slightly different:\n\nIF (SUITESPARSE_QR)\n  IF (SUITESPARSE_QR_FOUND)\n     MESSAGE(\"  Enabling the use of ...\")\n  ELSE (SUITESPARSE_QR_FOUND)\n     MESSAGE(\"-- Did not find SuiteSparseQR ... \")\n     \u003cDisable the option in the cache \u0026 thus GUI\u003e\n     UPDATE_CACHE_VARIABLE(SUITESPARSE_QR OFF)\n  ENDIF (SUITESPARSE_QR_FOUND)\nELSE (SUITESPARSE_QR)\n  MESSAGE(\"  Disabling the use of ...\")\n  LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_SUITESPARSE_QR)\nENDIF (SUITESPARSE_QR)\n\nThis way the \"Enabling ...\" message is only sent when we are actually going to enable the option.  Note also the use of UPDATE_CACHE_VARIABLE() to set SUITESPARSE_QR to OFF s/t the user can see the effects in the GUI.",
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_54f2246b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-31T18:31:18Z",
+      "side": 1,
+      "message": "+ CERES_NO_SUITESPARSE_QR here - as otherwise the #ifndef CERES_NO_SUITESPARSE_QR checks will pass when SuiteSparse is not being used.",
+      "range": {
+        "startLine": 397,
+        "startChar": 36,
+        "endLine": 397,
+        "endChar": 56
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_5327dc68",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-31T18:31:18Z",
+      "side": 1,
+      "message": "Repeated s.",
+      "range": {
+        "startLine": 351,
+        "startChar": 38,
+        "endLine": 351,
+        "endChar": 40
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_b30ba0d5",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-31T18:31:18Z",
+      "side": 1,
+      "message": "Missing space: // (",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 3
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3f1d6a3_f40070ba",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-03-31T18:31:18Z",
+      "side": 1,
+      "message": "// CERES_NO_SUITESPARSE_QR",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
