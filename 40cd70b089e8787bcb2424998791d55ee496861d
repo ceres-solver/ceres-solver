@@ -16,6 +16,24 @@
       "revId": "40cd70b089e8787bcb2424998791d55ee496861d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ece2ce_f03a3e95",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-03-31T13:45:08Z",
+      "side": 1,
+      "message": "Done\n\nYou are of course right, I had totally forgotten about that. I\u0027ll update the comment.",
+      "parentUuid": "83143e89_9954c7e1",
+      "revId": "40cd70b089e8787bcb2424998791d55ee496861d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
