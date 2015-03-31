@@ -207,7 +207,7 @@ ENDIF (IOS)
 # <DEPENDENCY>_LIB / <DEPENDENCY>_INCLUDE.  Since then, Ceres now has
 # FindPackage() scripts for all of its dependencies which obey the standard
 # CMake variables: <DEPENDENCY>_LIBRARIES & <DEPENDENCY>_INCLUDE_DIRS.  In order
-# to ensure backwards compatibility, we use convert any legacy variables to
+# to ensure backwards compatibility, convert any legacy variables to
 # _directory_ hints for the FindPackage() scripts.
 MACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT
     LEGACY_VAR DIRECTORY_HINT_VAR)
@@ -221,8 +221,7 @@ MACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT
       "Please use either the search directory hints variable: "
       "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_INCLUDE_DIR to specify "
       "exactly the directory used (no search performed), see: "
-      "http://homes.cs.washington.edu/~sagarwal/ceres-solver/dev/building.html "
-      "for more information.")
+      "http://ceres-solver.org/building.html for more information.")
     LIST(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
   ENDIF (DEFINED ${LEGACY_VAR})
 ENDMACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT)
@@ -239,8 +238,7 @@ MACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT
       "Please use either the search directory hints variable: "
       "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_LIBRARY to specify "
       "exactly the library used (no search performed), see: "
-      "http://homes.cs.washington.edu/~sagarwal/ceres-solver/dev/building.html "
-      "for more information.")
+      "http://ceres-solver.org/building.html for more information.")
     IF (EXISTS ${${LEGACY_VAR}} AND
         NOT IS_DIRECTORY ${${LEGACY_VAR}})
       # User specified an explicit (library) file using the legacy variable
@@ -345,8 +343,7 @@ IF (SUITESPARSE)
         "you should uninstall the system install of SuiteSparse "
         "(libsuitesparse-dev) and perform a source install of SuiteSparse "
         "(we recommend that you use the latest version), "
-        "see: http://homes.cs.washington.edu/~sagarwal"
-        "/ceres-solver/dev/building.html for more information.")
+        "see http://ceres-solver.org/building.html for more information.")
     ENDIF (BUILD_SHARED_LIBS AND
       SUITESPARSE_IS_BROKEN_SHARED_LINKING_UBUNTU_SYSTEM_VERSION)
 
@@ -666,7 +663,8 @@ IF (MINGW)
   # which works.
   #
   # [1] http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556
-  MESSAGE("-- MinGW detected, forcing use of -O2 not -O3 in Release for Eigen.")
+  MESSAGE("-- MinGW detected, forcing -O2 instead of -O3 in Release for Eigen due "
+          "to a MinGW bug: http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556")
   STRING(REPLACE "-O3" "-O2" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
   UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 ENDIF (MINGW)
