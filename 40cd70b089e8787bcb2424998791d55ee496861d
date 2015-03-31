@@ -34,6 +34,29 @@
       "revId": "40cd70b089e8787bcb2424998791d55ee496861d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83143e89_d9b63f6a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-03-31T13:53:29Z",
+      "side": 1,
+      "message": "sorry to be nitpicky but this is not true either. we use whatever is the default factorization type that CHOLMOD recommends. \nso if your suitesparse implementation is built with supernodal cholesky enabled, then the resulting version of ceres is also GPL.\n\nI think this requires a broader fix in general, perhaps FindSuiteSparse needs to be modified to check if SuiteSparse has GPL code in it..",
+      "range": {
+        "startLine": 142,
+        "startChar": 17,
+        "endLine": 142,
+        "endChar": 23
+      },
+      "revId": "40cd70b089e8787bcb2424998791d55ee496861d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
