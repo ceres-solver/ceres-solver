@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ece2ce_30020690",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-03-31T14:28:41Z",
+      "side": 1,
+      "message": "I think the comment as it is in patch revision 3 should be correct. Which part of it is the of your nitpicking?\n\nOf course I do agree that a more general fix would be nice, though that may also be quite tricky to implement",
+      "range": {
+        "startLine": 142,
+        "startChar": 3,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
