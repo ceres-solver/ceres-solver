@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "03af6e90_fb2b2b25",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-04-01T14:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f1d6a3_9403ecc5",
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f1d6a3_54f2246b",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -53,6 +71,30 @@
       "writtenOn": "2015-03-31T18:31:18Z",
       "side": 1,
       "message": "+ CERES_NO_SUITESPARSE_QR here - as otherwise the #ifndef CERES_NO_SUITESPARSE_QR checks will pass when SuiteSparse is not being used.",
+      "range": {
+        "startLine": 397,
+        "startChar": 36,
+        "endLine": 397,
+        "endChar": 56
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03af6e90_5b789741",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-04-01T14:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f1d6a3_54f2246b",
       "range": {
         "startLine": 397,
         "startChar": 36,
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "03af6e90_7b7d5b30",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-04-01T14:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ece2ce_5327dc68",
+      "range": {
+        "startLine": 351,
+        "startChar": 38,
+        "endLine": 351,
+        "endChar": 40
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ece2ce_b30ba0d5",
         "filename": "cmake/config.h.in",
         "patchSetId": 3
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "03af6e90_bb7e132a",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-04-01T14:49:41Z",
+      "side": 1,
+      "message": "Done\n\nActually I have now put the full text as in the CMakeLists output, as the current text here might be misleading.",
+      "parentUuid": "a3ece2ce_b30ba0d5",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 3
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f1d6a3_f40070ba",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 3
@@ -122,6 +212,30 @@
       "writtenOn": "2015-03-31T18:31:18Z",
       "side": 1,
       "message": "// CERES_NO_SUITESPARSE_QR",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "ec5f2c8b3aba8fb72eab87de8f2eee753fc83221",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03af6e90_db8bc7b2",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-04-01T14:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f1d6a3_f40070ba",
       "range": {
         "startLine": 51,
         "startChar": 7,
