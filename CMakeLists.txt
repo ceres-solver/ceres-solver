@@ -775,7 +775,12 @@ LIST(REMOVE_DUPLICATES CERES_COMPILE_OPTIONS)
 INCLUDE(CreateCeresConfig)
 CREATE_CERES_CONFIG("${CERES_COMPILE_OPTIONS}"
   ${CMAKE_CURRENT_BINARY_DIR}/config/ceres/internal)
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/config)
+# Force the location containing the configured config.h to the front of the
+# include_directories list (by default it is appended to the back) to ensure
+# that if the user has an installed version of Ceres in the same location as one
+# of the dependencies (e.g. /usr/local) that we find the config.h we just
+# configured, not the (older) installed config.h.
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR}/config)
 
 ADD_SUBDIRECTORY(internal/ceres)
 
