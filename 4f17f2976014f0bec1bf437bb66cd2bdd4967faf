@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3d4e237_f3944846",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_958904be",
+      "range": {
+        "startLine": 647,
+        "startChar": 1,
+        "endLine": 647,
+        "endChar": 68
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61f9053_f569586b",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a3d4e237_309d26b2",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_f569586b",
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61f9053_157e142f",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2015-03-16T09:01:58Z",
       "side": 1,
       "message": "This wording is a bit confusing... It would help if you properly define what a \"target\" is either here or above (for people not versed in CMake). A target is an encapsulation of a library and all of its dependencies. So, when the ceres target is imported, the dependency libraries are also added and linked.",
+      "range": {
+        "startLine": 690,
+        "startChar": 71,
+        "endLine": 694,
+        "endChar": 43
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2312b2d8_4f9da169",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_157e142f",
       "range": {
         "startLine": 690,
         "startChar": 71,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2312b2d8_8f7dd96a",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_f5827899",
+      "range": {
+        "startLine": 696,
+        "startChar": 0,
+        "endLine": 699,
+        "endChar": 22
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61f9053_b58c00ce",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2015-03-16T09:01:58Z",
       "side": 1,
       "message": "that uses",
+      "range": {
+        "startLine": 701,
+        "startChar": 33,
+        "endLine": 701,
+        "endChar": 38
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2312b2d8_2faa6d7d",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_b58c00ce",
       "range": {
         "startLine": 701,
         "startChar": 33,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "83e35e1e_6f686d1e",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_755668b6",
+      "range": {
+        "startLine": 718,
+        "startChar": 42,
+        "endLine": 718,
+        "endChar": 51
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61f9053_555b6cdc",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2015-03-16T09:01:58Z",
       "side": 1,
       "message": "remove comma -\u003e (the compiled Ceres library)",
+      "range": {
+        "startLine": 719,
+        "startChar": 27,
+        "endLine": 719,
+        "endChar": 55
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d4e237_d0614237",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_555b6cdc",
       "range": {
         "startLine": 719,
         "startChar": 27,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a3d4e237_b056b661",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_3550f0b4",
+      "range": {
+        "startLine": 721,
+        "startChar": 17,
+        "endLine": 721,
+        "endChar": 21
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61f9053_1555f4a4",
         "filename": "docs/source/building.rst",
         "patchSetId": 1
@@ -191,6 +377,30 @@
       "writtenOn": "2015-03-16T09:01:58Z",
       "side": 1,
       "message": "for ``Foo`` (i.e., the project that uses Ceres)",
+      "range": {
+        "startLine": 724,
+        "startChar": 24,
+        "endLine": 724,
+        "endChar": 35
+      },
+      "revId": "4f17f2976014f0bec1bf437bb66cd2bdd4967faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83e35e1e_4f65b144",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-04T14:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61f9053_1555f4a4",
       "range": {
         "startLine": 724,
         "startChar": 24,
