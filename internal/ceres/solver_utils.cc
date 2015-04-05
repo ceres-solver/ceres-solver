@@ -40,6 +40,8 @@ namespace internal {
 std::string VersionString() {
   std::string value = std::string(CERES_VERSION_STRING);
 
+  value += "-eigen-(" + std::string(CERES_EIGEN_VERSION) + ")";
+
 #ifdef CERES_NO_LAPACK
   value += "-no_lapack";
 #else
@@ -47,11 +49,11 @@ std::string VersionString() {
 #endif
 
 #ifndef CERES_NO_SUITESPARSE
-  value += "-suitesparse";
+  value += "-suitesparse-(" + std::string(CERES_SUITESPARSE_VERSION) + ")";
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-  value += "-cxsparse";
+  value += "-cxsparse-(" + std::string(CERES_CXSPARSE_VERSION) + ")";
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
