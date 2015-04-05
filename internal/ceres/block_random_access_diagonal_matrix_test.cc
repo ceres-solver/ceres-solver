@@ -32,10 +32,10 @@
 #include <vector>
 
 #include "ceres/block_random_access_diagonal_matrix.h"
+#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
-#include "Eigen/Cholesky"
 
 namespace ceres {
 namespace internal {
@@ -147,9 +147,10 @@ TEST_F(BlockRandomAccessDiagonalMatrixTest, Invert) {
   const TripletSparseMatrix* tsm = m_->matrix();
   Matrix dense;
   tsm->ToDenseMatrix(&dense);
-  Matrix expected_inverse =
-      dense.llt().solve(Matrix::Identity(dense.rows(), dense.rows()));
-
+  Matrix expected_inverse(dense.rows(), dense.rows());
+  InvertUpperTriangularUsingCholesky(dense.rows(),
+                                     dense.data(),
+                                     expected_inverse.data());
   m_->Invert();
   tsm->ToDenseMatrix(&dense);
 
