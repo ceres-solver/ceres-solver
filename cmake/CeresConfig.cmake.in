@@ -146,10 +146,20 @@ SET(CERES_EIGEN_VERSION @EIGEN_VERSION@)
 # Append the locations of Eigen when Ceres was built to the search path hints.
 LIST(APPEND EIGEN_INCLUDE_DIR_HINTS @EIGEN_INCLUDE_DIR@)
 # Search quietly s/t we control the timing of the error message if not found.
-FIND_PACKAGE(Eigen ${CERES_EIGEN_VERSION} EXACT QUIET)
+FIND_PACKAGE(Eigen ${CERES_EIGEN_VERSION} QUIET)
 IF (EIGEN_FOUND)
   MESSAGE(STATUS "Found required Ceres dependency: "
     "Eigen version ${CERES_EIGEN_VERSION} in ${EIGEN_INCLUDE_DIRS}")
+  # CMake's VERSION check in FIND_PACKAGE() will accept any version >= the
+  # specified version, as such we do not have to protect against the detected
+  # version being < CERES_EIGEN_VERSION here.
+  IF (NOT EIGEN_VERSION VERSION_EQUAL CERES_EIGEN_VERSION)
+    MESSAGE(STATUS "Warning: Detected Eigen version: ${EIGEN_VERSION} "
+      "is not equal to the version with which Ceres was compiled: "
+      "${CERES_EIGEN_VERSION}.  It is recommended that you recompile "
+      "Ceres so that it is compiled against the same version of Eigen "
+      "with which it will be used in client code to ensure ABI compatibility.")
+  ENDIF ()
 ELSE (EIGEN_FOUND)
   CERES_REPORT_NOT_FOUND("Missing required Ceres "
     "dependency: Eigen version ${CERES_EIGEN_VERSION}, please set "
