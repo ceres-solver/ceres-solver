@@ -187,7 +187,6 @@ IF (IOS)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow you
   # to submit to the Apple Store if the symbol is present.
   UPDATE_CACHE_VARIABLE(LAPACK OFF)
-  
   MESSAGE(STATUS "Building for iOS: SuiteSparse, CXSparse, LAPACK, gflags, and OpenMP are not available.")
 
   UPDATE_CACHE_VARIABLE(BUILD_EXAMPLES OFF)

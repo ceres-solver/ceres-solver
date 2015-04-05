@@ -31,10 +31,10 @@
 #include "ceres/implicit_schur_complement.h"
 
 #include <cstddef>
-#include "Eigen/Dense"
 #include "ceres/block_random_access_dense_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -107,11 +107,16 @@ class ImplicitSchurComplementTest : public ::testing::Test {
 
     solution->resize(num_cols_);
     solution->setZero();
-    VectorRef schur_solution(solution->data() + num_cols_ - num_schur_rows,
-                             num_schur_rows);
-    schur_solution = lhs->selfadjointView<Eigen::Upper>().llt().solve(*rhs);
-    eliminator->BackSubstitute(A_.get(), b_.get(), D,
-                               schur_solution.data(), solution->data());
+    double* schur_solution =  solution->data() + num_cols_ - num_schur_rows;
+    SolveUpperTriangularUsingCholesky(num_schur_rows,
+                                      lhs->data(),
+                                      rhs->data(),
+                                      schur_solution);
+    eliminator->BackSubstitute(A_.get(),
+                               b_.get(),
+                               D,
+                               schur_solution,
+                               solution->data());
   }
 
   AssertionResult TestImplicitSchurComplement(double* D) {
@@ -158,8 +163,11 @@ class ImplicitSchurComplementTest : public ::testing::Test {
     }
 
     // Reference solution to the f_block.
-    const Vector reference_f_sol =
-        lhs.selfadjointView<Eigen::Upper>().llt().solve(rhs);
+    Vector reference_f_sol(rhs.rows());
+    SolveUpperTriangularUsingCholesky(lhs.rows(),
+                                      lhs.data(),
+                                      rhs.data(),
+                                      reference_f_sol.data());
 
     // Backsubstituted solution from the implicit schur solver using the
     // reference solution to the f_block.
