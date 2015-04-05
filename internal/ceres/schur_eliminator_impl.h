@@ -57,6 +57,7 @@
 #include "ceres/block_random_access_matrix.h"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
+#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -268,11 +269,9 @@ Eliminate(const BlockSparseMatrix* A,
     // which case its much faster to compute the inverse once and
     // use it to multiply other matrices/vectors instead of doing a
     // Solve call over and over again.
-    typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix inverse_ete =
-        ete
-        .template selfadjointView<Eigen::Upper>()
-        .llt()
-        .solve(Matrix::Identity(e_block_size, e_block_size));
+    typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix
+        inverse_ete(e_block_size, e_block_size);
+    InvertUpperTriangularUsingCholesky(e_block_size, ete.data(), inverse_ete.data());
 
     // For the current chunk compute and update the rhs of the reduced
     // linear system.
@@ -361,7 +360,7 @@ BackSubstitute(const BlockSparseMatrix* A,
               ete.data(), 0, 0, e_block_size, e_block_size);
     }
 
-    ete.llt().solveInPlace(y_block);
+    SolveUpperTriangularUsingCholesky(e_block_size, ete.data(), y_ptr, y_ptr);
   }
 }
 
