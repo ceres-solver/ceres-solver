@@ -360,7 +360,18 @@ BackSubstitute(const BlockSparseMatrix* A,
               ete.data(), 0, 0, e_block_size, e_block_size);
     }
 
-    SolveUpperTriangularUsingCholesky(e_block_size, ete.data(), y_ptr, y_ptr);
+    // On ARM we have experienced significant numerical problems with
+    // Eigen's LLT implementation. Defining
+    // CERES_USE_LDLT_FOR_EIGEN_CHOLESKY switches to using the slightly
+    // more expensive but much more numerically well behaved LDLT
+    // factorization algorithm.
+
+#ifdef CERES_USE_LDLT_FOR_EIGEN_CHOLESKY
+    ete.ldlt().solveInPlace(y_block);
+#else
+    ete.llt().solveInPlace(y_block);
+#endif
+
   }
 }
 
