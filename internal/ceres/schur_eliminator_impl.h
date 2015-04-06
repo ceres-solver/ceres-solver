@@ -271,7 +271,9 @@ Eliminate(const BlockSparseMatrix* A,
     // Solve call over and over again.
     typename EigenTypes<kEBlockSize, kEBlockSize>::Matrix
         inverse_ete(e_block_size, e_block_size);
-    InvertUpperTriangularUsingCholesky(e_block_size, ete.data(), inverse_ete.data());
+    InvertUpperTriangularUsingCholesky(e_block_size,
+                                       ete.data(),
+                                       inverse_ete.data());
 
     // For the current chunk compute and update the rhs of the reduced
     // linear system.
