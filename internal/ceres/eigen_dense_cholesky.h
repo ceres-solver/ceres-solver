@@ -57,8 +57,8 @@ InvertUpperTriangularUsingCholesky(int size,
 // factorization. rhs_values and solution can point to the same array.
 Eigen::ComputationInfo
 SolveUpperTriangularUsingCholesky(int size,
-                                  const double* lhs_values,
-                                  const double* rhs_values,
+                                  const double* lhs,
+                                  const double* rhs,
                                   double* solution);
 
 }  // namespace internal
