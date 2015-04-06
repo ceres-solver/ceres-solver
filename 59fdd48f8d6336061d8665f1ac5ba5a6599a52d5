@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83519eaa_11e8f6f7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T18:32:09Z",
+      "side": 1,
+      "message": "Add Eigen version to message.",
+      "revId": "59fdd48f8d6336061d8665f1ac5ba5a6599a52d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83519eaa_110d566c",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T18:32:09Z",
+      "side": 1,
+      "message": "Actually this raises an interesting question - does this bug exist on 64-bit ARM?",
+      "revId": "59fdd48f8d6336061d8665f1ac5ba5a6599a52d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
