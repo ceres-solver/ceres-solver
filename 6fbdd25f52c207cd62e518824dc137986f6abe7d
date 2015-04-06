@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d4e237_135fd4fa",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-06T16:17:56Z",
+      "side": 1,
+      "message": "If someone knows a way to force Sphinx to put these on the same line without having them be on the same line in the source please let me know.",
+      "revId": "6fbdd25f52c207cd62e518824dc137986f6abe7d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
