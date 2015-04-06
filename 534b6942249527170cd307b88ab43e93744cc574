@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3bdfae6_dfa59d2b",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-06T00:20:33Z",
+      "side": 1,
+      "message": "LDLT is another name for cholesky factorization. \nso if you drop the redundant cholesky, we are left with\n\nCERES_USE_LDLT_FOR_EIGEN\n\nwhich is better phrase as\n\nCERES_USE_EIGEN_LDLT",
+      "parentUuid": "e3bdfae6_9fc605e8",
+      "revId": "534b6942249527170cd307b88ab43e93744cc574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3bdfae6_3faed911",
         "filename": "internal/ceres/eigen_dense_cholesky.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2015-04-06T00:15:29Z",
       "side": 1,
       "message": "Please include a comment about LLT stability problems on ARM.",
+      "revId": "534b6942249527170cd307b88ab43e93744cc574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3bdfae6_3f97f9c5",
+        "filename": "internal/ceres/eigen_dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-06T00:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3bdfae6_3faed911",
       "revId": "534b6942249527170cd307b88ab43e93744cc574",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
