@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3bdfae6_bab1d7f9",
+        "filename": "jni/Android.mk",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T05:44:37Z",
+      "side": 1,
+      "message": "Outdated",
+      "revId": "837d18405549b7b216b3e44b1a57e0c25216f552",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
