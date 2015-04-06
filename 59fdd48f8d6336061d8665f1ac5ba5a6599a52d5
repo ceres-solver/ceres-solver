@@ -33,6 +33,24 @@
       "revId": "59fdd48f8d6336061d8665f1ac5ba5a6599a52d5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83519eaa_a332199f",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-06T19:15:10Z",
+      "side": 1,
+      "message": "I will check and get back to you guys,\nit is also entirely possible this whole brouhaha is due to some internal edits to the code. hold off on this for a bit.",
+      "parentUuid": "83519eaa_110d566c",
+      "revId": "59fdd48f8d6336061d8665f1ac5ba5a6599a52d5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
