@@ -16,6 +16,24 @@
       "revId": "6fbdd25f52c207cd62e518824dc137986f6abe7d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83519eaa_62fc12b4",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-06T16:20:58Z",
+      "side": 1,
+      "message": "you could go ahead and submit this, and I can look into it in a follow up CL.",
+      "parentUuid": "a3d4e237_135fd4fa",
+      "revId": "6fbdd25f52c207cd62e518824dc137986f6abe7d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
