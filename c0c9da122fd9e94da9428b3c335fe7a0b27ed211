@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83519eaa_fc075e4d",
+        "filename": "cmake/UpdateCompilerAndLinkerFlags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T20:22:04Z",
+      "side": 1,
+      "message": "I can\u0027t believe I\u0027m suggesting this but these functions need tests :(\n\nYou know if your build code needs unit tests you\u0027ve done something. Not sure if it\u0027s right or wrong :)",
+      "revId": "c0c9da122fd9e94da9428b3c335fe7a0b27ed211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83519eaa_7c726ee3",
+        "filename": "cmake/UpdateCompilerAndLinkerFlags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T20:22:04Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this is for even with the comment.",
+      "revId": "c0c9da122fd9e94da9428b3c335fe7a0b27ed211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83519eaa_dcbaa2d1",
+        "filename": "cmake/UpdateCompilerAndLinkerFlags.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T20:22:04Z",
+      "side": 1,
+      "message": "Unfortunately the order of some of these flags matters (link). Maybe it makes no difference in this context though.",
+      "revId": "c0c9da122fd9e94da9428b3c335fe7a0b27ed211",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
