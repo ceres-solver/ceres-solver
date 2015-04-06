@@ -151,6 +151,8 @@ IF (MSVC)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
 
+UNSET(CERES_COMPILE_OPTIONS)
+
 # Use ios-cmake to build a static library for iOS
 #
 # We need to add isysroot to force cmake to find the toolchains from the iOS SDK
@@ -255,8 +257,6 @@ MACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT
     ENDIF()
   ENDIF (DEFINED ${LEGACY_VAR})
 ENDMACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT)
-
-UNSET(CERES_COMPILE_OPTIONS)
 
 # Eigen.
 HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
@@ -772,6 +772,17 @@ IF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   ENDIF (CLANG_VERSION VERSION_GREATER 4.0 AND
     CLANG_VERSION VERSION_LESS 4.2)
 ENDIF (APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+
+# In at least version 3.2.4 of Eigen, the LLT Cholesky factorization has a bug
+# when running on ARM processors, so we force the use of LDLT instead when
+# the target architecture is ARM.
+INCLUDE(CheckForARM)
+CHECK_FOR_ARM(TARGET_CPU_IS_ARM)
+IF (TARGET_CPU_IS_ARM)
+  LIST(APPEND CERES_COMPILE_OPTIONS CERES_USE_LDLT_FOR_EIGEN_CHOLESKY)
+  MESSAGE("-- Target CPU platform is ARM, enabling use of LDLT factorization "
+    "instead of LLT due to a bug in Eigen on ARM architectures.")
+ENDIF (TARGET_CPU_IS_ARM)
 
 # Configure the Ceres config.h compile options header using the current
 # compile options and put the configured header into the Ceres build
