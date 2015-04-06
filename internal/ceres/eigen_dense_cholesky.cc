@@ -35,7 +35,7 @@ Eigen::ComputationInfo
 SolveUpperTriangularUsingCholesky(int size,
                                   const double* lhs_values,
                                   const double* rhs_values,
-                                  double* solution) {
+                                  double* solution_values) {
   ConstMatrixRef lhs(lhs_values, size, size);
 
   // On ARM we have experienced significant numerical problems with
@@ -51,8 +51,13 @@ SolveUpperTriangularUsingCholesky(int size,
 #endif
 
   if (cholesky.info() == Eigen::Success) {
-    ConstVectorRef rhs(rhs_values, size);
-    VectorRef(solution, size) = cholesky.solve(rhs);
+    VectorRef solution(solution_values, size);
+    if (solution_values == rhs_values) {
+      cholesky.solveInPlace(solution);
+    } else {
+      ConstVectorRef rhs(rhs_values, size);
+      solution = cholesky.solve(rhs);
+    }
   }
 
   return cholesky.info();
