@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83519eaa_3fd4e3e4",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 5085
+      },
+      "writtenOn": "2015-04-06T15:31:47Z",
+      "side": 1,
+      "message": "the required public link dependencies of Ceres",
+      "range": {
+        "startLine": 770,
+        "startChar": 56,
+        "endLine": 771,
+        "endChar": 17
+      },
+      "revId": "e77f2389f80ae9818f7bde5864950a6a8698a10c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
