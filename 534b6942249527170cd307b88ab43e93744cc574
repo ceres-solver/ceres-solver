@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3bdfae6_9fc605e8",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T00:15:29Z",
+      "side": 1,
+      "message": "Consider\n\nCERES_USE_LDLT_FOR_EIGEN_CHOLESKY?",
+      "revId": "534b6942249527170cd307b88ab43e93744cc574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3bdfae6_3faed911",
+        "filename": "internal/ceres/eigen_dense_cholesky.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-06T00:15:29Z",
+      "side": 1,
+      "message": "Please include a comment about LLT stability problems on ARM.",
+      "revId": "534b6942249527170cd307b88ab43e93744cc574",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
