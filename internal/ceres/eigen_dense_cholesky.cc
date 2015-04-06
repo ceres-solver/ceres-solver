@@ -50,14 +50,12 @@ SolveUpperTriangularUsingCholesky(int size,
   Eigen::LLT<Matrix, Upper> cholesky = lhs.selfadjointView<Upper>().llt();
 #endif
 
-  if (cholesky.info() == Eigen::Success) {
-    VectorRef solution(solution_values, size);
-    if (solution_values == rhs_values) {
-      cholesky.solveInPlace(solution);
-    } else {
-      ConstVectorRef rhs(rhs_values, size);
-      solution = cholesky.solve(rhs);
-    }
+  VectorRef solution(solution_values, size);
+  if (solution_values == rhs_values) {
+    cholesky.solveInPlace(solution);
+  } else {
+    ConstVectorRef rhs(rhs_values, size);
+    solution = cholesky.solve(rhs);
   }
 
   return cholesky.info();
