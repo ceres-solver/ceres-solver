@@ -132,9 +132,6 @@ ENDIF ()
 # Also depend on the header files so that they appear in IDEs.
 FILE(GLOB CERES_INTERNAL_HDRS *.h)
 
-# Define version information for use in Solver::FullReport.
-ADD_DEFINITIONS(-DCERES_EIGEN_VERSION="${EIGEN_VERSION}")
-
 # Include the specialized schur solvers.
 IF (SCHUR_SPECIALIZATIONS)
   FILE(GLOB CERES_INTERNAL_SCHUR_FILES generated/*.cc)
