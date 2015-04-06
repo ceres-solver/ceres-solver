@@ -183,21 +183,23 @@ IF (IOS)
   UPDATE_CACHE_VARIABLE(CXSPARSE OFF)
   UPDATE_CACHE_VARIABLE(GFLAGS OFF)
   UPDATE_CACHE_VARIABLE(OPENMP OFF)
-
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow you
   # to submit to the Apple Store if the symbol is present.
   UPDATE_CACHE_VARIABLE(LAPACK OFF)
-  
   MESSAGE(STATUS "Building for iOS: SuiteSparse, CXSparse, LAPACK, gflags, and OpenMP are not available.")
 
   UPDATE_CACHE_VARIABLE(BUILD_EXAMPLES OFF)
   MESSAGE(STATUS "Building for iOS, will not build examples.")
 
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
+  UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
+    "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
+  UPDATE_CACHE_VARIABLE(CMAKE_C_FLAGS
+    "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
 
-  IF (${IOS_PLATFORM} STREQUAL "SIMULATOR" OR ${IOS_PLATFORM} STREQUAL "SIMULATOR64")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=6.0")
+  IF (${IOS_PLATFORM} STREQUAL "SIMULATOR" OR
+      ${IOS_PLATFORM} STREQUAL "SIMULATOR64")
+    UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=6.0")
   ENDIF()
 ENDIF (IOS)
 
@@ -475,7 +477,8 @@ IF (OPENMP)
     IF (OPENMP_FOUND)
       MESSAGE("-- Building with OpenMP.")
       LIST(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
-      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+      UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
+        "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
       IF (UNIX)
         # At least on Linux, we need pthreads to be enabled for mutex to
         # compile.  This may not work on Windows or Android.
@@ -655,7 +658,8 @@ IF (CMAKE_BUILD_TYPE STREQUAL "Release")
   ENDIF ()
 ENDIF (CMAKE_BUILD_TYPE STREQUAL "Release")
 
-SET (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
+UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS_RELEASE
+  "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
 
 IF (MINGW)
   # MinGW produces code that segfaults when performing matrix multiplications
@@ -695,7 +699,8 @@ IF (MSVC)
   # Google Flags doesn't have their DLL import/export stuff set up correctly,
   # which results in linker warnings. This is irrelevant for Ceres, so ignore
   # the warnings.
-  SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
+  UPDATE_CACHE_VARIABLE(CMAKE_EXE_LINKER_FLAGS
+    "${CMAKE_EXE_LINKER_FLAGS} /ignore:4049")
 
   # Update the C/CXX flags for MSVC to use either the static or shared
   # C-Run Time (CRT) library based on the user option: MSVC_USE_STATIC_CRT.
@@ -711,11 +716,13 @@ IF (MSVC)
       # Use static CRT.
       IF (${FLAG_VAR} MATCHES "/MD")
         STRING(REGEX REPLACE "/MD" "/MT" ${FLAG_VAR} "${${FLAG_VAR}}")
+        UPDATE_CACHE_VARIABLE(${FLAG_VAR} "${${FLAG_VAR}}")
       ENDIF (${FLAG_VAR} MATCHES "/MD")
     ELSE (MSVC_USE_STATIC_CRT)
       # Use shared, not static, CRT.
       IF (${FLAG_VAR} MATCHES "/MT")
         STRING(REGEX REPLACE "/MT" "/MD" ${FLAG_VAR} "${${FLAG_VAR}}")
+        UPDATE_CACHE_VARIABLE(${FLAG_VAR} "${${FLAG_VAR}}")
       ENDIF (${FLAG_VAR} MATCHES "/MT")
     ENDIF (MSVC_USE_STATIC_CRT)
   ENDFOREACH()
@@ -726,7 +733,7 @@ ENDIF (MSVC)
 
 IF (UNIX)
   # GCC is not strict enough by default, so enable most of the warnings.
-  SET(CMAKE_CXX_FLAGS
+  UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} -Werror=all -Werror=extra -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
 ENDIF (UNIX)
 
@@ -735,7 +742,7 @@ ENDIF (UNIX)
 # -Qunused-arguments is needed because CMake passes the inline
 # threshold to the linker and clang complains about it and dies.
 IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  SET(CMAKE_CXX_FLAGS
+  UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
       "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
   # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
   # option, so check for its presence before adding it to the default flags set.
@@ -743,7 +750,8 @@ IF (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   CHECK_CXX_COMPILER_FLAG("-Wno-return-type-c-linkage"
                           HAVE_RETURN_TYPE_C_LINKAGE)
   IF (HAVE_RETURN_TYPE_C_LINKAGE)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
+    UPDATE_CACHE_VARIABLE(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -Wno-return-type-c-linkage")
   ENDIF(HAVE_RETURN_TYPE_C_LINKAGE)
 ENDIF ()
 
