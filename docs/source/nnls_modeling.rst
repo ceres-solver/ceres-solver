@@ -606,7 +606,7 @@ Numeric Differentiation & LocalParameterization
 
    **WARNING** The same caution about mixing local parameterizations
    with numeric differentiation applies as is the case with
-   :class:`NumericDiffCostFunction``.
+   :class:`NumericDiffCostFunction`.
 
 :class:`CostFunctionToFunctor`
 ==============================
