@@ -105,12 +105,6 @@ LOCAL_CFLAGS := $(CERES_EXTRA_DEFINES) \
                 -DCERES_NO_CXSPARSE \
                 -DCERES_STD_UNORDERED_MAP
 
-# On ARM we have experienced significant numerical problems with
-# Eigen's LLT implementation. Defining
-# CERES_USE_LDLT_FOR_EIGEN_CHOLESKY switches to using the slightly
-# more expensive but much more numerically well behaved LDLT
-# factorization algorithm.
-LOCAL_CFLAGS += -DCERES_USE_LDLT_FOR_EIGEN_CHOLESKY
 
 # If the user did not enable threads in CERES_EXTRA_DEFINES, then add
 # CERES_NO_THREADS.
@@ -150,7 +144,6 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/dogleg_strategy.cc \
                    $(CERES_SRC_PATH)/dynamic_compressed_row_jacobian_writer.cc \
                    $(CERES_SRC_PATH)/dynamic_compressed_row_sparse_matrix.cc \
-                   $(CERES_SRC_PATH)/eigen_dense_cholesky.cc \
                    $(CERES_SRC_PATH)/evaluator.cc \
                    $(CERES_SRC_PATH)/file.cc \
                    $(CERES_SRC_PATH)/gradient_checking_cost_function.cc \

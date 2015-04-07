@@ -44,10 +44,6 @@
 // If defined, use the LGPL code in Eigen.
 @CERES_USE_EIGEN_SPARSE@
 
-// If defined, use Eigen's LDLT factorization instead of LLT
-// factorization.
-@CERES_USE_LDLT_FOR_EIGEN_CHOLESKY@
-
 // If defined, Ceres was compiled without LAPACK.
 @CERES_NO_LAPACK@
 
