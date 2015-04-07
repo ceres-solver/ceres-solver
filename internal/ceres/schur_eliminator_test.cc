@@ -35,7 +35,6 @@
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
 #include "ceres/detect_structure.h"
-#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -122,10 +121,7 @@ class SchurEliminatorTest : public ::testing::Test {
         .triangularView<Eigen::Upper>() = R - Q.transpose() * P * Q;
     rhs_expected =
         g.tail(schur_size) - Q.transpose() * P * g.head(num_eliminate_cols);
-    SolveUpperTriangularUsingCholesky(H.rows(),
-                                      H.data(),
-                                      g.data(),
-                                      sol_expected.data());
+    sol_expected = H.llt().solve(g);
   }
 
   void EliminateSolveAndCompare(const VectorRef& diagonal,
@@ -161,11 +157,11 @@ class SchurEliminatorTest : public ::testing::Test {
     eliminator->Eliminate(A.get(), b.get(), diagonal.data(), &lhs, rhs.data());
 
     MatrixRef lhs_ref(lhs.mutable_values(), lhs.num_rows(), lhs.num_cols());
-    Vector reduced_sol(lhs.num_rows());
-    SolveUpperTriangularUsingCholesky(lhs.num_cols(),
-                                      lhs.values(),
-                                      rhs.data(),
-                                      reduced_sol.data());
+    Vector reduced_sol  =
+        lhs_ref
+        .selfadjointView<Eigen::Upper>()
+        .llt()
+        .solve(rhs);
 
     // Solution to the linear least squares problem.
     Vector sol(num_cols);

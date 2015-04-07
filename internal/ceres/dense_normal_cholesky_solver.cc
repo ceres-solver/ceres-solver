@@ -32,9 +32,9 @@
 
 #include <cstddef>
 
+#include "Eigen/Dense"
 #include "ceres/blas.h"
 #include "ceres/dense_sparse_matrix.h"
-#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/lapack.h"
@@ -95,8 +95,11 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
 
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
-  if (SolveUpperTriangularUsingCholesky(num_cols, lhs.data(), rhs.data(), x)
-      != Eigen::Success) {
+  summary.termination_type = LINEAR_SOLVER_SUCCESS;
+  Eigen::LLT<Matrix, Eigen::Upper> llt =
+      lhs.selfadjointView<Eigen::Upper>().llt();
+
+  if (llt.info() != Eigen::Success) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "Eigen LLT decomposition failed.";
   } else {
@@ -104,6 +107,7 @@ LinearSolver::Summary DenseNormalCholeskySolver::SolveUsingEigen(
     summary.message = "Success.";
   }
 
+  VectorRef(x, num_cols) = llt.solve(rhs);
   event_logger.AddEvent("Solve");
   return summary;
 }

@@ -43,7 +43,6 @@
 #include "ceres/conjugate_gradients_solver.h"
 #include "ceres/cxsparse.h"
 #include "ceres/detect_structure.h"
-#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/lapack.h"
@@ -53,6 +52,7 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
+#include "Eigen/Dense"
 #include "Eigen/SparseCore"
 
 namespace ceres {
@@ -198,13 +198,18 @@ DenseSchurComplementSolver::SolveReducedLinearSystem(
   summary.num_iterations = 1;
 
   if (options().dense_linear_algebra_library_type == EIGEN) {
-    if (SolveUpperTriangularUsingCholesky(num_rows, m->values(), rhs(), solution)
-        != Eigen::Success) {
+    Eigen::LLT<Matrix, Eigen::Upper> llt =
+        ConstMatrixRef(m->values(), num_rows, num_rows)
+        .selfadjointView<Eigen::Upper>()
+        .llt();
+    if (llt.info() != Eigen::Success) {
       summary.termination_type = LINEAR_SOLVER_FAILURE;
       summary.message =
           "Eigen failure. Unable to perform dense Cholesky factorization.";
       return summary;
     }
+
+    VectorRef(solution, num_rows) = llt.solve(ConstVectorRef(rhs(), num_rows));
   } else {
     VectorRef(solution, num_rows) = ConstVectorRef(rhs(), num_rows);
     summary.termination_type =

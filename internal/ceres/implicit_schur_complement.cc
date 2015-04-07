@@ -30,9 +30,9 @@
 
 #include "ceres/implicit_schur_complement.h"
 
+#include "Eigen/Dense"
 #include "ceres/block_sparse_matrix.h"
 #include "ceres/block_structure.h"
-#include "ceres/eigen_dense_cholesky.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
@@ -148,16 +148,18 @@ void ImplicitSchurComplement::AddDiagonalAndInvert(
     const int row_block_pos = block_diagonal_structure->rows[r].block.position;
     const int row_block_size = block_diagonal_structure->rows[r].block.size;
     const Cell& cell = block_diagonal_structure->rows[r].cells[0];
-    double* block_values = block_diagonal->mutable_values() + cell.position;
-    MatrixRef m(block_values, row_block_size, row_block_size);
+    MatrixRef m(block_diagonal->mutable_values() + cell.position,
+                row_block_size, row_block_size);
+
     if (D != NULL) {
       ConstVectorRef d(D + row_block_pos, row_block_size);
       m += d.array().square().matrix().asDiagonal();
     }
 
-    InvertUpperTriangularUsingCholesky(row_block_size,
-                                       block_values,
-                                       block_values);
+    m = m
+        .selfadjointView<Eigen::Upper>()
+        .llt()
+        .solve(Matrix::Identity(row_block_size, row_block_size));
   }
 }
 
