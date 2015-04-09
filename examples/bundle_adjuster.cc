@@ -120,6 +120,9 @@ DEFINE_int32(random_seed, 38401, "Random seed used to set the state "
              "the pertubations.");
 DEFINE_bool(line_search, false, "Use a line search instead of trust region "
             "algorithm.");
+DEFINE_bool(initial_ply, false, "Export the BAL file data as a PLY file.");
+DEFINE_bool(final_ply, false, "Export the refined BAL file data as a PLY "
+            "file.");
 
 namespace ceres {
 namespace examples {
@@ -311,6 +314,10 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
 
 void SolveProblem(const char* filename) {
   BALProblem bal_problem(filename, FLAGS_use_quaternions);
+
+  if (FLAGS_initial_ply)
+    bal_problem.WriteToPLYFile("InitialScene.ply");
+
   Problem problem;
 
   srand(FLAGS_random_seed);
@@ -327,6 +334,9 @@ void SolveProblem(const char* filename) {
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
+
+  if (FLAGS_final_ply)
+    bal_problem.WriteToPLYFile("RefinedScene.ply");
 }
 
 }  // namespace examples
