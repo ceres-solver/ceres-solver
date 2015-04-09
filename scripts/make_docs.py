@@ -41,7 +41,7 @@ import sys
 N = len(sys.argv)
 
 if N < 3:
-  print 'make_docs.py src_root destination_root'
+  print('make_docs.py src_root destination_root')
   sys.exit(1)
 
 src_dir    = sys.argv[1] + '/docs/source'
@@ -100,7 +100,7 @@ breadcrumb_end = \
 </div>'''
 
 for name in glob.glob('%s/*.html' % html_dir):
-  print 'Postprocessing: ', name
+  print('Postprocessing: ', name)
   with open(name) as fptr:
     out = fptr.read()
 
@@ -113,10 +113,10 @@ for name in glob.glob('%s/*.html' % html_dir):
                        else breadcrumb_start_other
     pre_breadcrumb_start, post_breadcrumb_start = out.split(breadcrumb_start)
     title, post_breadcrumb_end = post_breadcrumb_start.split(breadcrumb_end)
-    print 'Stripping breadcrumb for -', title
+    print('Stripping breadcrumb for -', title)
     out = pre_breadcrumb_start + post_breadcrumb_end
   except ValueError:
-    print 'Skipping breadcrumb strip for', name
+    print('Skipping breadcrumb strip for', name)
 
   with open(name, 'w') as fptr:
     fptr.write(out)
