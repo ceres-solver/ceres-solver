@@ -311,6 +311,9 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
 
 void SolveProblem(const char* filename) {
   BALProblem bal_problem(filename, FLAGS_use_quaternions);
+
+  bal_problem.WriteToPLYFile("InitialScene.ply");
+
   Problem problem;
 
   srand(FLAGS_random_seed);
@@ -327,6 +330,8 @@ void SolveProblem(const char* filename) {
   Solver::Summary summary;
   Solve(options, &problem, &summary);
   std::cout << summary.FullReport() << "\n";
+
+  bal_problem.WriteToPLYFile("RefinedScene.ply");
 }
 
 }  // namespace examples

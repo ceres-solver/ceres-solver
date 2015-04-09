@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <fstream>
 #include "Eigen/Core"
 #include "ceres/rotation.h"
 #include "glog/logging.h"
@@ -176,9 +177,49 @@ void BALProblem::WriteToFile(const std::string& filename) const {
   fclose(fptr);
 }
 
+// This function writes the problem to a PLY file that you can open in 
+// Meshlab or CloudCompare
+void BALProblem::WriteToPLYFile(const std::string& filename) const {
+
+  std::ofstream of(filename.c_str());
+
+  of << "ply"
+      << '\n' << "format ascii 1.0"
+      << '\n' << "element vertex " << num_cameras_ + num_points_
+      << '\n' << "property float x"
+      << '\n' << "property float y"
+      << '\n' << "property float z"
+      << '\n' << "property uchar red"
+      << '\n' << "property uchar green"
+      << '\n' << "property uchar blue"
+      << '\n' << "end_header" << std::endl;
+
+  // Extrinsic data (camera centers)
+  const double* cameras = mutable_cameras();
+  double angle_axis[3];
+  double center[3];
+  for (int i = 0; i < num_cameras(); ++i)  {
+    const double* camera = cameras + camera_block_size() * i;
+    CameraToAngleAxisAndCenter(camera, angle_axis, center);
+    of << center[0] << ' ' << center[1] << ' ' << center[2]
+      << " 0 255 0" << '\n';
+  }
+
+  // Structure (3D Points)
+  const double* points = parameters_ + camera_block_size() * num_cameras_;
+  for (int i = 0; i < num_points(); ++i) {
+    const double* point = points + i * point_block_size();
+    for (int j = 0; j < point_block_size(); ++j) {
+      of << point[j] << ' ';
+    }
+    of << "255 255 255\n";
+  }
+  of.close();
+}
+
 void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
                                             double* angle_axis,
-                                            double* center) {
+                                            double* center) const {
   VectorRef angle_axis_ref(angle_axis, 3);
   if (use_quaternions_) {
     QuaternionToAngleAxis(camera, angle_axis);
@@ -196,7 +237,7 @@ void BALProblem::CameraToAngleAxisAndCenter(const double* camera,
 
 void BALProblem::AngleAxisAndCenterToCamera(const double* angle_axis,
                                             const double* center,
-                                            double* camera) {
+                                            double* camera) const {
   ConstVectorRef angle_axis_ref(angle_axis, 3);
   if (use_quaternions_) {
     AngleAxisToQuaternion(angle_axis, camera);
