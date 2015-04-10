@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "234d525a_1f576560",
+        "filename": "examples/bal_problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-10T13:22:07Z",
+      "side": 1,
+      "message": "this should be called just cameras() as per the google style guide.",
+      "revId": "39ee7c5cfde1e91776b7566db9c33ebdb4393db0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_3f5c2980",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-10T13:22:07Z",
+      "side": 1,
+      "message": "better to make this a string flag, which is a path to where the file should be written check for non-emptiness of the flag.",
+      "range": {
+        "startLine": 123,
+        "startChar": 25,
+        "endLine": 123,
+        "endChar": 30
+      },
+      "revId": "39ee7c5cfde1e91776b7566db9c33ebdb4393db0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
