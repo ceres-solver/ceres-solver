@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83999efb_dfc5ffdd",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-10T04:12:58Z",
+      "side": 1,
+      "message": "just cameras() should do here.",
+      "range": {
+        "startLine": 198,
+        "startChar": 26,
+        "endLine": 198,
+        "endChar": 41
+      },
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_bfc033cf",
+        "filename": "examples/bal_problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-10T04:12:58Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_ffcabbea",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-10T04:12:58Z",
+      "side": 1,
+      "message": "we should not always write these out.  have two flags one for initial ply and one for final ply and only write the files out when the corresponding flag is non-empty.",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
