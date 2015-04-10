@@ -70,10 +70,7 @@ class DenseJacobianWriter {
              int residual_offset,
              double **jacobians,
              SparseMatrix* jacobian) {
-    DenseSparseMatrix* dense_jacobian;
-    if (jacobian != NULL) {
-      dense_jacobian = down_cast<DenseSparseMatrix*>(jacobian);
-    }
+    DenseSparseMatrix* dense_jacobian = down_cast<DenseSparseMatrix*>(jacobian);
     const ResidualBlock* residual_block =
         program_->residual_blocks()[residual_id];
     int num_parameter_blocks = residual_block->NumParameterBlocks();
