@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "234d525a_ff21c255",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Sort order",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_bf173a00",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Trailing whitespace. Instead of saying \"this function\" just state what it does; for example\n\n// Write the problem to a PLY file for inspection in Matlab or CloudCompare.",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_df1cfe24",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "No blank at the start of a block.",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_ff29db03",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Align all the \u003c\u003cs vertically.",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83999efb_dfc5ffdd",
         "filename": "examples/bal_problem.cc",
         "patchSetId": 1
@@ -19,6 +87,57 @@
         "endLine": 198,
         "endChar": 41
       },
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "234d525a_5f09eedb",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Perhaps explain what this is for in a comment; I presume this is making the points green?",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_5f39ef50",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Comments should be full sentences and end with a period.",
+      "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_7f36ab63",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T05:07:19Z",
+      "side": 1,
+      "message": "Please comment that this is making the structure white.",
       "revId": "a40896f1bf989d602ec1b32d4f23d21b6e87dc9e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
