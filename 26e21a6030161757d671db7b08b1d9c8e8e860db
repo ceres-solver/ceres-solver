@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83999efb_e2c5c2dd",
+        "filename": "examples/bal_problem.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T17:31:55Z",
+      "side": 1,
+      "message": "nit: Align \u003c\u003cs vertically.",
+      "revId": "26e21a6030161757d671db7b08b1d9c8e8e860db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_02cb8ef0",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T17:31:55Z",
+      "side": 1,
+      "message": "Use {}s always",
+      "revId": "26e21a6030161757d671db7b08b1d9c8e8e860db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83999efb_62ba9250",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-10T17:31:55Z",
+      "side": 1,
+      "message": "Use {}s always",
+      "revId": "26e21a6030161757d671db7b08b1d9c8e8e860db",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
