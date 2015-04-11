@@ -779,6 +779,7 @@ defined as an imported target when CMake processes ``Bar``.  An example of the
 required modifications to ``FooConfig.cmake`` are show below:
 
 .. code-block:: cmake
+    :caption: Importing Ceres in FooConfig.cmake using CMake 2.8.x style
 
     # When configure_file() is used to generate FooConfig.cmake from
     # FooConfig.cmake.in, @Ceres_DIR@ will be replaced with the current
@@ -796,12 +797,17 @@ required modifications to ``FooConfig.cmake`` are show below:
        find_package(Ceres HINTS ${CERES_DIR_HINTS})
     endif()
 
-    # Add Ceres to the list of dependencies for Foo, which will be used
-    # by the calling project when adding Foo as a dependency to a target.
-    if (CERES_FOUND)
-      list(APPEND FOO_INCLUDE_DIRS ${CERES_INCLUDE_DIRS})
-      list(APPEND FOO_LIBRARIES ${CERES_INCLUDE_DIRS})
-    endif()
+.. code-block:: cmake
+    :caption: Importing Ceres in FooConfig.cmake using CMake 3.x style
+
+    # In CMake v3.x, the find_dependency() macro exists to forward the REQUIRED
+    # / QUIET parameters to find_package() when searching for dependencies.
+    #
+    # Note that find_dependency() does not take a path hint, so if Ceres was
+    # installed in a non-standard location, that location must be added to
+    # CMake's search list before this call.
+    include(CMakeFindDependencyMacro)
+    find_dependency(Ceres)
 
 Specify Ceres version
 ---------------------
