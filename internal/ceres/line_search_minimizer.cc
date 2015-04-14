@@ -333,6 +333,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_solver_time_in_seconds =
         WallTimeInSeconds() - iteration_start_time;
 
+    const double x_norm = x.norm();
+
     if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
       summary->termination_type = FAILURE;
       summary->message =
@@ -384,6 +386,21 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     summary->line_search_total_time_in_seconds +=
         line_search_summary.total_time_in_seconds;
     ++summary->num_successful_steps;
+
+    const double step_size_tolerance = options.parameter_tolerance *
+                                       (x_norm + options.parameter_tolerance);
+    if (iteration_summary.iteration >= options.min_num_iterations &&
+        iteration_summary.step_norm <= step_size_tolerance) {
+      summary->message =
+          StringPrintf("Parameter tolerance reached. "
+                       "Relative step_norm: %e <= %e.",
+                       (iteration_summary.step_norm /
+                        (x_norm + options.parameter_tolerance)),
+                       options.parameter_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      return;
+    }
 
     if (iteration_summary.iteration >= options.min_num_iterations &&
         iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
