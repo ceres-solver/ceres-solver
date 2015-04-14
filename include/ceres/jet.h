@@ -573,23 +573,61 @@ Jet<T, N> pow(const Jet<T, N>& f, double g) {
 }
 
 // pow -- base is a constant, exponent is a differentiable function.
-// (a)^(p+dp) ~= a^p + a^p log(a) dp
+// For a>0 we have: (a)^(p+dp) ~= a^p + a^p log(a) dp
+// For a==0 and p>0 we have: (a)^(p+dp) ~= 0
 template <typename T, int N> inline
 Jet<T, N> pow(double f, const Jet<T, N>& g) {
-  T const tmp = pow(f, g.a);
-  return Jet<T, N>(tmp, log(f) * tmp * g.v);
+  if (f == 0 && g.a > 0) {
+    return Jet<T, N>(T(0.0));
+  } else {
+    T const tmp = pow(f, g.a);
+    return Jet<T, N>(tmp, log(f) * tmp * g.v);
+  }
 }
 
+// pow -- both base and exponent are differentiable functions. This has a
+// variety of special cases that require careful handling.
+//
+// * For a>0: (a+da)^(b+db) ~= a^b + a^(b-1) * (b*da + a*log(a)*db)
+//   The numerical evaluation of a*log(a) for a>0 is well behaved, even for
+//   extremely small values (e.g. 1e-99).
+//
+// * For a==0 and b>1: (a+da)^(b+db) ~= 0
+//   This cases is needed because log(0) can not be evaluated in the a>0
+//   expression. However the function a*log(a) is well behaved around a==0 and
+//   its limit as a-->0 is zero.
+//
+// * For a==0 and b==1: (a+da)^(b+db) ~= 0 + da
+//
+// * For a==0 and 0 < b < 1: The value is finite but the derivatives are not.
+//
+// * For a==0 and b<0: The value and derivatives of a^b are not finite.
+//
+// * For a==0 and b==0: The C standard incorrectly defines 0^0 to be 1 "because
+//   there are applications that can exploit this definition". We (arbitrarily)
+//   decree that the derivatives will be nonfinite, since that is consistent
+//   with the behavior for b<0 and 0<b<1. Practically any definition could have
+//   been justified because mathematical consistency has been lost at this
+//   point.
 
-// pow -- both base and exponent are differentiable functions.
-// (a+da)^(b+db) ~= a^b + b * a^(b-1) da + a^b log(a) * db
 template <typename T, int N> inline
 Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
-  T const tmp1 = pow(f.a, g.a);
-  T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
-  T const tmp3 = tmp1 * log(f.a);
-
-  return Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
+  if (f.a == 0 && g.a >= 1) {
+    // Handle the various special cases when f == 0.
+    if (g.a > 1) {
+      return Jet<T, N>(T(0.0));
+    } else {
+      return Jet<T, N>(T(0.0), f.v);
+    }
+  } else {
+    // Handle the generic case for f != 0. We also handle f==0,g<1 here and
+    // allow the log() function to generate -HUGE_VAL, since this results in a
+    // nonfinite derivative.
+    T const tmp1 = pow(f.a, g.a);
+    T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
+    T const tmp3 = tmp1 * log(f.a);
+    return Jet<T, N>(tmp1, tmp2 * f.v + tmp3 * g.v);
+  }
 }
 
 // Define the helper functions Eigen needs to embed Jet types.
