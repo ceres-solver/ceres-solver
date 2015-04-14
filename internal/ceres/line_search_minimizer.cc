@@ -145,7 +145,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
   iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
 
-  if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+  if (iteration_summary.iteration >= options.min_num_iterations &&
+      iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
     summary->message = StringPrintf("Gradient tolerance reached. "
                                     "Gradient max norm: %e <= %e",
                                     iteration_summary.gradient_max_norm,
@@ -385,7 +386,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         line_search_summary.total_time_in_seconds;
     ++summary->num_successful_steps;
 
-    if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
+    if (iteration_summary.iteration >= options.min_num_iterations &&
+        iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
       summary->message = StringPrintf("Gradient tolerance reached. "
                                       "Gradient max norm: %e <= %e",
                                       iteration_summary.gradient_max_norm,
@@ -397,7 +399,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     const double absolute_function_tolerance =
         options.function_tolerance * previous_state.cost;
-    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+    if (iteration_summary.iteration >= options.min_num_iterations &&
+        fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
       summary->message =
           StringPrintf("Function tolerance reached. "
                        "|cost_change|/cost: %e <= %e",

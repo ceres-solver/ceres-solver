@@ -78,6 +78,7 @@ class CERES_EXPORT Solver {
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
       max_consecutive_nonmonotonic_steps = 5;
+      min_num_iterations = 0;
       max_num_iterations = 50;
       max_solver_time_in_seconds = 1e9;
       num_threads = 1;
@@ -336,7 +337,8 @@ class CERES_EXPORT Solver {
     bool use_nonmonotonic_steps;
     int max_consecutive_nonmonotonic_steps;
 
-    // Maximum number of iterations for the minimizer to run for.
+    // Minimum and maximum number of iterations for the minimizer to run for.
+    int min_num_iterations;
     int max_num_iterations;
 
     // Maximum time for which the minimizer should run for.

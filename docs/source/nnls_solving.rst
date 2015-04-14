@@ -1084,6 +1084,16 @@ elimination group [LiSaad]_.
 
    Maximum number of iterations for which the solver should run.
 
+.. member:: int Solver::Options::min_num_iterations
+
+   Default: ``0``
+
+   Minimum number of iterations for which the solver should run. This forces
+   the minimizer to run for a minimum number of iterations by ignoring the
+   options `function_tolerance`, `gradient_tolerance`, `parameter_tolerance`
+   for the first `min_num_iterations`. The option is useful if a bad
+   initial trust region radius causes the solver to prematurely converge.
+
 .. member:: double Solver::Options::max_solver_time_in_seconds
 
    Default: ``1e6``

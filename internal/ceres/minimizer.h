@@ -63,6 +63,7 @@ class Minimizer {
 
     void Init(const Solver::Options& options) {
       num_threads = options.num_threads;
+      min_num_iterations = options.min_num_iterations;
       max_num_iterations = options.max_num_iterations;
       max_solver_time_in_seconds = options.max_solver_time_in_seconds;
       max_step_solver_retries = 5;
@@ -114,6 +115,7 @@ class Minimizer {
       callbacks = options.callbacks;
     }
 
+    int min_num_iterations;
     int max_num_iterations;
     double max_solver_time_in_seconds;
     int num_threads;

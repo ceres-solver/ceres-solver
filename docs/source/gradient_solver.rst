@@ -310,6 +310,16 @@ Solving
 
    .. math:: \text{max_step_expansion} > 1.0
 
+.. member:: int Solver::Options::min_num_iterations
+
+   Default: ``0``
+
+   Minimum number of iterations for which the solver should run. This forces
+   the minimizer to run for a minimum number of iterations by ignoring the
+   options `function_tolerance`, `gradient_tolerance`, `parameter_tolerance`
+   for the first `min_num_iterations`. The option is useful if a bad
+   initial step size causes the solver to prematurely converge.
+
 .. member:: int GradientProblemSolver::Options::max_num_iterations
 
    Default: ``50``
