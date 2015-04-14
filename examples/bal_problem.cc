@@ -177,7 +177,7 @@ void BALProblem::WriteToFile(const std::string& filename) const {
   fclose(fptr);
 }
 
-// Write the problem to a PLY file for inspection in Matlab or CloudCompare.
+// Write the problem to a PLY file for inspection in Meshlab or CloudCompare.
 void BALProblem::WriteToPLYFile(const std::string& filename) const {
   std::ofstream of(filename.c_str());
 
