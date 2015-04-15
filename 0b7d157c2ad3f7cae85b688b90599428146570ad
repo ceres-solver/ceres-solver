@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506daeeb_4095c239",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-15T01:09:20Z",
+      "side": 1,
+      "message": "This is a nice writeup but the different cases are run together and some are split out. Consider making a \"bullet list\" style enumeration of the cases and their handling.",
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "506daeeb_a0837e05",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-15T01:09:20Z",
+      "side": 1,
+      "message": "Please add tests for the nonfinite cases.",
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
