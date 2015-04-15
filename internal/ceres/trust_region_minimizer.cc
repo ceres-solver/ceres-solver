@@ -489,7 +489,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       iteration_summary.cost_change =  cost - new_cost;
       const double absolute_function_tolerance =
           options_.function_tolerance * cost;
-      if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+      if (fabs(iteration_summary.cost_change) <= absolute_function_tolerance) {
         summary->message =
             StringPrintf("Function tolerance reached. "
                          "|cost_change|/cost: %e <= %e",
