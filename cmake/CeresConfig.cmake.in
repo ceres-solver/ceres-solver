@@ -145,9 +145,22 @@ SET(CERES_INCLUDE_DIRS ${CERES_INCLUDE_DIR})
 SET(CERES_EIGEN_VERSION @EIGEN_VERSION@)
 # Append the locations of Eigen when Ceres was built to the search path hints.
 LIST(APPEND EIGEN_INCLUDE_DIR_HINTS @EIGEN_INCLUDE_DIR@)
-# Search quietly s/t we control the timing of the error message if not found.
-FIND_PACKAGE(Eigen ${CERES_EIGEN_VERSION} EXACT QUIET)
+# Search quietly to control the timing of the error message if not found. The
+# search should be for an exact match, but for usability reasons do a soft
+# match and reject with an explanation below.
+FIND_PACKAGE(Eigen ${CERES_EIGEN_VERSION} QUIET)
 IF (EIGEN_FOUND)
+  IF (NOT EIGEN_VERSION VERSION_EQUAL CERES_EIGEN_VERSION)
+    # CMake's VERSION check in FIND_PACKAGE() will accept any version >= the
+    # specified version. However, only version = is supported. Improve
+    # usability by explaining why we don't accept non-exact version matching.
+    CERES_REPORT_NOT_FOUND("Found Eigen dependency, but the version of Eigen "
+      "found (${EIGEN_VERSION}) does not exactly match the version of Eigen "
+      "Ceres was compiled with (${CERES_EIGEN_VERSION}). This can cause subtle "
+      "bugs by triggering violations of the One Definition Rule. See the "
+      "Wikipedia article http://en.wikipedia.org/wiki/One_Definition_Rule "
+      "for more details")
+  ENDIF ()
   MESSAGE(STATUS "Found required Ceres dependency: "
     "Eigen version ${CERES_EIGEN_VERSION} in ${EIGEN_INCLUDE_DIRS}")
 ELSE (EIGEN_FOUND)
