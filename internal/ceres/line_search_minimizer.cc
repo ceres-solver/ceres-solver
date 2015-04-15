@@ -412,7 +412,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
     const double absolute_function_tolerance =
         options.function_tolerance * previous_state.cost;
-    if (fabs(iteration_summary.cost_change) < absolute_function_tolerance) {
+    if (fabs(iteration_summary.cost_change) <= absolute_function_tolerance) {
       summary->message =
           StringPrintf("Function tolerance reached. "
                        "|cost_change|/cost: %e <= %e",
