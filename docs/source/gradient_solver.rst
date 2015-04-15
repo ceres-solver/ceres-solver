@@ -327,11 +327,10 @@ Solving
 
    Solver terminates if
 
-   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} < \text{function_tolerance}
+   .. math:: \frac{|\Delta \text{cost}|}{\text{cost}} <= \text{function_tolerance}
 
    where, :math:`\Delta \text{cost}` is the change in objective
-   function value (up or down) in the current iteration of
-   Levenberg-Marquardt.
+   function value (up or down) in the current iteration of the line search.
 
 .. member:: double GradientProblemSolver::Options::gradient_tolerance
 
@@ -339,12 +338,23 @@ Solving
 
    Solver terminates if
 
-   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty < \text{gradient_tolerance}
+   .. math:: \|x - \Pi \boxplus(x, -g(x))\|_\infty <= \text{gradient_tolerance}
 
    where :math:`\|\cdot\|_\infty` refers to the max norm, :math:`\Pi`
    is projection onto the bounds constraints and :math:`\boxplus` is
    Plus operation for the overall local parameterization associated
    with the parameter vector.
+
+.. member:: double GradientProblemSolver::Options::parameter_tolerance
+
+   Default: ``1e-8``
+
+   Solver terminates if
+
+   .. math:: \|\Delta x\| <= (\|x\| + \text{parameter_tolerance}) * \text{parameter_tolerance}
+
+   where :math:`\Delta x` is the step computed by the linear solver in
+   the current iteration of the line search.
 
 .. member:: LoggingType GradientProblemSolver::Options::logging_type
 
