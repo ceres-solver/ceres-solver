@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0242aae_90179143",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-15T05:13:10Z",
+      "side": 1,
+      "message": "0 ?",
+      "range": {
+        "startLine": 577,
+        "startChar": 44,
+        "endLine": 577,
+        "endChar": 45
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0242aae_5002490c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-15T05:13:10Z",
+      "side": 1,
+      "message": "why compute anything at all,  if we know f \u003d\u003d 0 ? just Jet\u003cT, N\u003e(0.0) ?\nmove the tmp computation into the branch below.",
+      "range": {
+        "startLine": 582,
+        "startChar": 24,
+        "endLine": 582,
+        "endChar": 26
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_4095c239",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -13,6 +59,52 @@
       "writtenOn": "2015-04-15T01:09:20Z",
       "side": 1,
       "message": "This is a nice writeup but the different cases are run together and some are split out. Consider making a \"bullet list\" style enumeration of the cases and their handling.",
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "506daeeb_a0937ed3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-15T05:13:10Z",
+      "side": 1,
+      "message": "in both cases, the value of a^b is finite, and the derivative is not finite, so why not unify into one? a \u003d\u003d 0, b \u003c 1 ?",
+      "range": {
+        "startLine": 606,
+        "startChar": 31,
+        "endLine": 606,
+        "endChar": 42
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "506daeeb_6001e68a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-15T05:13:10Z",
+      "side": 1,
+      "message": "early return and reduce nesting.",
+      "range": {
+        "startLine": 616,
+        "startChar": 4,
+        "endLine": 616,
+        "endChar": 5
+      },
       "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
