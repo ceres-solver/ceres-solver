@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b07b4aac_08ddaae2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "b0242aae_90179143",
+      "range": {
+        "startLine": 577,
+        "startChar": 44,
+        "endLine": 577,
+        "endChar": 45
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0242aae_5002490c",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-04-15T05:13:10Z",
       "side": 1,
       "message": "why compute anything at all,  if we know f \u003d\u003d 0 ? just Jet\u003cT, N\u003e(0.0) ?\nmove the tmp computation into the branch below.",
+      "range": {
+        "startLine": 582,
+        "startChar": 24,
+        "endLine": 582,
+        "endChar": 26
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07b4aac_c8e6d2b2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "b0242aae_5002490c",
       "range": {
         "startLine": 582,
         "startChar": 24,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b07b4aac_63dfa155",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "Fixed. Found and documented a new corner case, thankyou to C standards committees.",
+      "parentUuid": "506daeeb_4095c239",
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_a0937ed3",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2015-04-15T05:13:10Z",
       "side": 1,
       "message": "in both cases, the value of a^b is finite, and the derivative is not finite, so why not unify into one? a \u003d\u003d 0, b \u003c 1 ?",
+      "range": {
+        "startLine": 606,
+        "startChar": 31,
+        "endLine": 606,
+        "endChar": 42
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07b4aac_6841bef7",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "The derivatives are computed uniformly for a\u003d\u003d0,b\u003c1, but the value is different for b\u003c0,b\u003d\u003d0 and 0\u003cb\u003c1. \u0027man pow\u0027 shows these and many more special cases. I will clarify the description to remove confusion.",
+      "parentUuid": "506daeeb_a0937ed3",
       "range": {
         "startLine": 606,
         "startChar": 31,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b07b4aac_c82fb236",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean here.",
+      "parentUuid": "506daeeb_6001e68a",
+      "range": {
+        "startLine": 616,
+        "startChar": 4,
+        "endLine": 616,
+        "endChar": 5
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_a0837e05",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
@@ -122,6 +236,24 @@
       "writtenOn": "2015-04-15T01:09:20Z",
       "side": 1,
       "message": "Please add tests for the nonfinite cases.",
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b07b4aac_e30e5037",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-15T23:01:54Z",
+      "side": 1,
+      "message": "Done. I\u0027m glad you suggested this, I discovered a new corner case (documented in jet.h).",
+      "parentUuid": "506daeeb_a0837e05",
       "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
