@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0926a12_f1807095",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-15T20:36:18Z",
+      "side": 1,
+      "message": "The docs actually state this is \u003c, but in the TR minimiser we use \u003c\u003d.  We should update the docs.",
+      "range": {
+        "startLine": 393,
+        "startChar": 36,
+        "endLine": 393,
+        "endChar": 38
+      },
+      "revId": "d28dcdf34193dbc27440e90413e84be14cbbc00f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
