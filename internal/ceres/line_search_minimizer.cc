@@ -361,7 +361,6 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.step_norm = delta.norm();
     iteration_summary.step_is_valid = true;
     iteration_summary.step_is_successful = true;
-    iteration_summary.step_norm = delta.norm();
     iteration_summary.step_size =  current_state.step_size;
     iteration_summary.line_search_function_evaluations =
         line_search_summary.num_function_evaluations;
