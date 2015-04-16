@@ -616,7 +616,7 @@ Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
     if (g.a > 1) {
       return Jet<T, N>(T(0.0));
     }
-    return Jet<T, N>(T(0.0), f.v);
+    return f;
   }
   // Handle the generic case for f != 0. We also handle f == 0, g < 1 here and
   // allow the log() function to generate -HUGE_VAL, since this results in a

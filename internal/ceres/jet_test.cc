@@ -244,7 +244,7 @@ TEST(Jet, Jet) {
     ExpectJetsClose(v, u);
   }
 
-  { // Check that pow(0,y) == 1 for y>1, with both arguments Jets.
+  { // Check that pow(0, y) == 0 for y > 1, with both arguments Jets.
     // This tests special case handling inside pow().
     J a = MakeJet(0, 1, 2);
     J b = MakeJet(2, 3, 4);
@@ -256,7 +256,7 @@ TEST(Jet, Jet) {
     ExpectJetsClose(c, MakeJet(0, 0, 0));
   }
 
-  { // Check that pow(0,y) == 1 for y==1, with both arguments Jets.
+  { // Check that pow(0, y) == 0 for y == 1, with both arguments Jets.
     // This tests special case handling inside pow().
     J a = MakeJet(0, 1, 2);
     J b = MakeJet(1, 3, 4);
@@ -268,10 +268,10 @@ TEST(Jet, Jet) {
     ExpectJetsClose(c, MakeJet(0, 1, 2));
   }
 
-  { // Check that pow(0,<1) is not finite, with both arguments Jets.
+  { // Check that pow(0, <1) is not finite, with both arguments Jets.
     for (int i = 1; i < 10; i++) {
       J a = MakeJet(0, 1, 2);
-      J b = MakeJet(i*0.1, 3, 4);       // b=0.1 ... 0.9
+      J b = MakeJet(i*0.1, 3, 4);       // b = 0.1 ... 0.9
       VL << "a = " << a;
       VL << "b = " << b;
 
@@ -283,7 +283,7 @@ TEST(Jet, Jet) {
     }
     for (int i = -10; i < 0; i++) {
       J a = MakeJet(0, 1, 2);
-      J b = MakeJet(i*0.1, 3, 4);       // b=-1,-0.9 ... 0
+      J b = MakeJet(i*0.1, 3, 4);       // b = -0.1,-0.9 ... 0
       VL << "a = " << a;
       VL << "b = " << b;
 
@@ -293,8 +293,9 @@ TEST(Jet, Jet) {
       EXPECT_FALSE(IsFinite(c.v[0]));
       EXPECT_FALSE(IsFinite(c.v[1]));
     }
+
     {
-      // The special case of 0^0=1 defined by the C standard.
+      // The special case of 0^0 = 1 defined by the C standard.
       J a = MakeJet(0, 1, 2);
       J b = MakeJet(0, 3, 4);
       VL << "a = " << a;
@@ -308,8 +309,9 @@ TEST(Jet, Jet) {
     }
   }
 
-  { // Check that pow(0,y) == 1 for y==2, with the second argument a Jets.
-    // This tests special case handling inside pow().
+  {
+    // Check that pow(0,y) == 0 for y == 2, with the second argument a
+    // Jet.  This tests special case handling inside pow().
     double a = 0;
     J b = MakeJet(2, 3, 4);
     VL << "a = " << a;

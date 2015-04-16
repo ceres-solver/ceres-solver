@@ -122,7 +122,7 @@ DEFINE_bool(line_search, false, "Use a line search instead of trust region "
             "algorithm.");
 DEFINE_string(initial_ply, "", "Export the BAL file data as a PLY file.");
 DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
-            "file.");
+              "file.");
 
 namespace ceres {
 namespace examples {
