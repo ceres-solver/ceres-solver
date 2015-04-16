@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "506daeeb_0e293b83",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-16T03:53:01Z",
+      "side": 1,
+      "message": "space around \u003c and other binary operators.",
+      "range": {
+        "startLine": 603,
+        "startChar": 19,
+        "endLine": 603,
+        "endChar": 20
+      },
+      "revId": "d2457409ab4ddbc3c1ac5bb02f3ff173eb6800de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_aeaccf9b",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
