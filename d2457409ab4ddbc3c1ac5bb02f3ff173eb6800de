@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30d59acf_706789d5",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-16T17:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506daeeb_0e293b83",
+      "range": {
+        "startLine": 603,
+        "startChar": 19,
+        "endLine": 603,
+        "endChar": 20
+      },
+      "revId": "d2457409ab4ddbc3c1ac5bb02f3ff173eb6800de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_aeaccf9b",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2015-04-16T03:29:09Z",
       "side": 1,
       "message": "Drop this else block as well.",
+      "revId": "d2457409ab4ddbc3c1ac5bb02f3ff173eb6800de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30d59acf_3071018c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-16T17:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506daeeb_aeaccf9b",
       "revId": "d2457409ab4ddbc3c1ac5bb02f3ff173eb6800de",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
