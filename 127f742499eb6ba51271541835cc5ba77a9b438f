@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709c722a_95beb4f5",
+        "filename": "docs/source/gradient_solver.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-16T19:15:46Z",
+      "side": 1,
+      "message": "GradientProblemSolver",
+      "range": {
+        "startLine": 348,
+        "startChar": 19,
+        "endLine": 348,
+        "endChar": 25
+      },
+      "revId": "127f742499eb6ba51271541835cc5ba77a9b438f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "709c722a_35c3208c",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-04-16T19:15:46Z",
+      "side": 1,
+      "message": "Remove, as now this applies to the line search case too.",
+      "range": {
+        "startLine": 1187,
+        "startChar": 25,
+        "endLine": 1187,
+        "endChar": 47
+      },
+      "revId": "127f742499eb6ba51271541835cc5ba77a9b438f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
