@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "707552b8_f60b7ed6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-16T03:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506daeeb_23c9b8fa",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_c3b9dc58",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "506daeeb_6ee0f713",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-16T03:15:25Z",
+      "side": 1,
+      "message": "Since I\u0027ve changed the behavior of pow(), and not just the implementation, it\u0027s certainly possible that I broke someone\u0027s code. It\u0027s not likely though as I have only changed derivatives from NaN to finite in the 0^b cases. Users would have to already be testing for isnan(0^b) or assuming that NaNs propagated from 0^b cases throughout their code ... possible, but not terribly likely.\n\nThe prior output of pow(0,0) was a Jet with a\u003d1, v\u003dNaNs.\nThe new behavior is the same.",
+      "parentUuid": "506daeeb_c3b9dc58",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_43ce2c04",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2015-04-16T00:14:35Z",
       "side": 1,
       "message": "Drop else since earlier code is a return. This is the Ceres style.",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "707552b8_96180a2a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 5510
+      },
+      "writtenOn": "2015-04-16T03:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506daeeb_43ce2c04",
       "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
