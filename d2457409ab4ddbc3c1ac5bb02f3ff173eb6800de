@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506daeeb_aeaccf9b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-16T03:29:09Z",
+      "side": 1,
+      "message": "Drop this else block as well.",
+      "revId": "d2457409ab4ddbc3c1ac5bb02f3ff173eb6800de",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
