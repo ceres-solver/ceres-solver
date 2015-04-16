@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506daeeb_23c9b8fa",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-16T00:14:35Z",
+      "side": 1,
+      "message": "Since the earlier code is a return, drop the else to reduce indentation.",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "506daeeb_c3b9dc58",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-16T00:14:35Z",
+      "side": 1,
+      "message": "What was the previous behaviour? Jets and autodiff in Ceres are one of the most popular features, so I\u0027d like to understand what will change for other users of this code. Do you think some cost functions could break with the new case handling (even if they were doing something mathematically nonsensical)?",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "506daeeb_43ce2c04",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-16T00:14:35Z",
+      "side": 1,
+      "message": "Drop else since earlier code is a return. This is the Ceres style.",
+      "revId": "e07ed59a655815e9349e6bf3f0f8b167251c6a6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
