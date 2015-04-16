@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "506daeeb_0397d4c2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-16T00:16:05Z",
+      "side": 1,
+      "message": "No:\n\n  if (...) {\n    return foo;\n  } else {\n    ...\n  }\n\nYes:\n\n  if (...) {\n    return foo;\n  }\n  ...",
+      "parentUuid": "b07b4aac_c82fb236",
+      "range": {
+        "startLine": 616,
+        "startChar": 4,
+        "endLine": 616,
+        "endChar": 5
+      },
+      "revId": "0b7d157c2ad3f7cae85b688b90599428146570ad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506daeeb_a0837e05",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
