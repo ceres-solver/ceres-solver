@@ -605,9 +605,19 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 // * For a == 0 and b == 0: The C standard incorrectly defines 0^0 to be 1
 //   "because there are applications that can exploit this definition". We
 //   (arbitrarily) decree that derivatives here will be nonfinite, since that
-//   is consistent with the behavior for b < 0 and 0 < b < 1. Practically any
-//   definition could have been justified because mathematical consistency has
-//   been lost at this point.
+//   is consistent with the behavior for a==0, b < 0 and 0 < b < 1. Practically
+//   any definition could have been justified because mathematical consistency
+//   has been lost at this point.
+//
+// * For a < 0, b integer, db == 0: (a + da)^(b + db) ~= a^b + b * a^(b - 1) da
+//   This is equivalent to the case where a is a differentiable function and b
+//   is a constant (to first order).
+//
+// * For a < 0, b integer, db != 0: The value is finite but the derivatives are
+//   not, because any change in the value of b moves us away from the point
+//   with a real-valued answer into the region with complex-valued answers.
+//
+// * For a < 0, b noninteger: The value and derivatives of a^b are not finite.
 
 template <typename T, int N> inline
 Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
@@ -617,6 +627,17 @@ Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
       return Jet<T, N>(T(0.0));
     }
     return f;
+  }
+  if (f.a < 0 && g.a == floor(g.a)) {
+    // Handle the special case when f < 0, g integer.
+    T const tmp = g.a * pow(f.a, g.a - T(1.0));
+    Jet<T, N> ret(pow(f.a, g.a), tmp * f.v);
+    for (int i = 0; i < N; i++) {
+      if (g.v[i] != T(0.0)) {
+        ret.v[i] = T(0.0 / 0.0);  // Return a NaN when g.v != 0
+      }
+    }
+    return ret;
   }
   // Handle the generic case for f != 0. We also handle f == 0, g < 1 here and
   // allow the log() function to generate -HUGE_VAL, since this results in a

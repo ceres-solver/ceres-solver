@@ -283,7 +283,7 @@ TEST(Jet, Jet) {
     }
     for (int i = -10; i < 0; i++) {
       J a = MakeJet(0, 1, 2);
-      J b = MakeJet(i*0.1, 3, 4);       // b = -0.1,-0.9 ... 0
+      J b = MakeJet(i*0.1, 3, 4);       // b = -1,-0.9 ... -0.1
       VL << "a = " << a;
       VL << "b = " << b;
 
@@ -307,6 +307,39 @@ TEST(Jet, Jet) {
       EXPECT_FALSE(IsFinite(c.v[0]));
       EXPECT_FALSE(IsFinite(c.v[1]));
     }
+  }
+
+  { // Check that pow(<0, b) is correct for integer b.
+    // This tests special case handling inside pow().
+    J a = MakeJet(-1.5, 3, 4);
+
+    // b integer:
+    for (int i = -10; i < 10; i++) {
+      J b = MakeJet(i, 0, 5);
+      VL << "a = " << a;
+      VL << "b = " << b;
+
+      J c = pow(a, b);
+      VL << "a^b = " << c;
+      ExpectClose(c.a, pow(-1.5, i), kTolerance);
+      EXPECT_TRUE(IsFinite(c.v[0]));
+      EXPECT_FALSE(IsFinite(c.v[1]));
+      ExpectClose(c.v[0], i * pow(-1.5, i - 1) * 3.0, kTolerance);
+    }
+  }
+
+  { // Check that pow(<0, b) is correct for noninteger b.
+    // This tests special case handling inside pow().
+    J a = MakeJet(-1.5, 3, 4);
+    J b = MakeJet(-2.5, 0, 5);
+    VL << "a = " << a;
+    VL << "b = " << b;
+
+    J c = pow(a, b);
+    VL << "a^b = " << c;
+    EXPECT_FALSE(IsFinite(c.a));
+    EXPECT_FALSE(IsFinite(c.v[0]));
+    EXPECT_FALSE(IsFinite(c.v[1]));
   }
 
   {
