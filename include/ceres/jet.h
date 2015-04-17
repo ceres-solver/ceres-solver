@@ -573,13 +573,33 @@ Jet<T, N> pow(const Jet<T, N>& f, double g) {
 }
 
 // pow -- base is a constant, exponent is a differentiable function.
-// For a > 0 we have: (a)^(p + dp) ~= a^p + a^p log(a) dp
-// For a == 0 and p > 0 we have: (a)^(p + dp) ~= 0
+// We have various special cases, see the comment for pow(Jet, Jet) for
+// analysis:
+//
+// 1. For a > 0 we have: (a)^(p + dp) ~= a^p + a^p log(a) dp
+//
+// 2. For a == 0 and p > 0 we have: (a)^(p + dp) ~= a^p
+//
+// 3. For a < 0 and integer p we have: (a)^(p + dp) ~= a^p
+
 template <typename T, int N> inline
 Jet<T, N> pow(double f, const Jet<T, N>& g) {
   if (f == 0 && g.a > 0) {
+    // Handle case 2.
     return Jet<T, N>(T(0.0));
   }
+  if (f < 0 && g.a == floor(g.a)) {
+    // Handle case 3.
+    Jet<T, N> ret(pow(f, g.a));
+    for (int i = 0; i < N; i++) {
+      if (g.v[i] != T(0.0)) {
+        // Return a NaN when g.v != 0.
+        ret.v[i] = std::numeric_limits<T>::quiet_NaN();
+      }
+    }
+    return ret;
+  }
+  // Handle case 1.
   T const tmp = pow(f, g.a);
   return Jet<T, N>(tmp, log(f) * tmp * g.v);
 }
@@ -587,40 +607,62 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 // pow -- both base and exponent are differentiable functions. This has a
 // variety of special cases that require careful handling.
 //
-// * For a > 0: (a + da)^(b + db) ~= a^b + a^(b - 1) * (b*da + a*log(a)*db)
-//   The numerical evaluation of a*log(a) for a > 0 is well behaved, even for
-//   extremely small values (e.g. 1e-99).
+// 1. For a > 0: (a + da)^(b + db) ~= a^b + a^(b - 1) * (b*da + a*log(a)*db)
+//    The numerical evaluation of a*log(a) for a > 0 is well behaved, even for
+//    extremely small values (e.g. 1e-99).
 //
-// * For a == 0 and b > 1: (a + da)^(b + db) ~= 0
-//   This cases is needed because log(0) can not be evaluated in the a > 0
-//   expression. However the function a*log(a) is well behaved around a == 0
-//   and its limit as a-->0 is zero.
+// 2. For a == 0 and b > 1: (a + da)^(b + db) ~= 0
+//    This cases is needed because log(0) can not be evaluated in the a > 0
+//    expression. However the function a*log(a) is well behaved around a == 0
+//    and its limit as a-->0 is zero.
 //
-// * For a == 0 and b == 1: (a + da)^(b + db) ~= 0 + da
+// 3. For a == 0 and b == 1: (a + da)^(b + db) ~= 0 + da
 //
-// * For a == 0 and 0 < b < 1: The value is finite but the derivatives are not.
+// 4. For a == 0 and 0 < b < 1: The value is finite but the derivatives are not.
 //
-// * For a == 0 and b < 0: The value and derivatives of a^b are not finite.
+// 5. For a == 0 and b < 0: The value and derivatives of a^b are not finite.
 //
-// * For a == 0 and b == 0: The C standard incorrectly defines 0^0 to be 1
-//   "because there are applications that can exploit this definition". We
-//   (arbitrarily) decree that derivatives here will be nonfinite, since that
-//   is consistent with the behavior for b < 0 and 0 < b < 1. Practically any
-//   definition could have been justified because mathematical consistency has
-//   been lost at this point.
+// 6. For a == 0 and b == 0: The C standard incorrectly defines 0^0 to be 1
+//    "because there are applications that can exploit this definition". We
+//    (arbitrarily) decree that derivatives here will be nonfinite, since that
+//    is consistent with the behavior for a==0, b < 0 and 0 < b < 1. Practically
+//    any definition could have been justified because mathematical consistency
+//    has been lost at this point.
+//
+// 7. For a < 0, b integer, db == 0: (a + da)^(b + db) ~= a^b + b * a^(b - 1) da
+//    This is equivalent to the case where a is a differentiable function and b
+//    is a constant (to first order).
+//
+// 8. For a < 0, b integer, db != 0: The value is finite but the derivatives are
+//    not, because any change in the value of b moves us away from the point
+//    with a real-valued answer into the region with complex-valued answers.
+//
+// 9. For a < 0, b noninteger: The value and derivatives of a^b are not finite.
 
 template <typename T, int N> inline
 Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
   if (f.a == 0 && g.a >= 1) {
-    // Handle the special cases when f == 0.
+    // Handle cases 2 and 3.
     if (g.a > 1) {
       return Jet<T, N>(T(0.0));
     }
     return f;
   }
-  // Handle the generic case for f != 0. We also handle f == 0, g < 1 here and
-  // allow the log() function to generate -HUGE_VAL, since this results in a
-  // nonfinite derivative.
+  if (f.a < 0 && g.a == floor(g.a)) {
+    // Handle cases 7 and 8.
+    T const tmp = g.a * pow(f.a, g.a - T(1.0));
+    Jet<T, N> ret(pow(f.a, g.a), tmp * f.v);
+    for (int i = 0; i < N; i++) {
+      if (g.v[i] != T(0.0)) {
+        // Return a NaN when g.v != 0.
+        ret.v[i] = std::numeric_limits<T>::quiet_NaN();
+      }
+    }
+    return ret;
+  }
+  // Handle the remaining cases. For cases 4,5,6,9 we allow the log() function
+  // to generate -HUGE_VAL or NaN, since those cases result in a nonfinite
+  // derivative.
   T const tmp1 = pow(f.a, g.a);
   T const tmp2 = g.a * pow(f.a, g.a - T(1.0));
   T const tmp3 = tmp1 * log(f.a);
