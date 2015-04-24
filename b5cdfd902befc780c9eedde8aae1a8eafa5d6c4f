@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9070061a_9f768482",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-24T15:52:12Z",
+      "side": 1,
+      "message": "Is triggering FPE the right idea here? I guess there is a question about what the right behaviour is. You could explicitly return std::numeric_limits\u003cT\u003e::quiet_NaN() to avoid triggering. It may not be defined for Jets but probably should be.\n\nI\u0027ll continue thinking about this, since I can see arguments for both approaches.",
+      "revId": "b5cdfd902befc780c9eedde8aae1a8eafa5d6c4f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
