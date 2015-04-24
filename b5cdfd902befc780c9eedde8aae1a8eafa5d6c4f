@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0d43e30_02c407e1",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-24T15:55:37Z",
+      "side": 1,
+      "message": "thank you for fixing this.\nMy only comment here is to unify the documentation of these function into one hunk and label each case by integers and then annotate the implementation with the various cases.\nit took me a while to make complete sense of the implementation.",
+      "revId": "b5cdfd902befc780c9eedde8aae1a8eafa5d6c4f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9070061a_9f768482",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
