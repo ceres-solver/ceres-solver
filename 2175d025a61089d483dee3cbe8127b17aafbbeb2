@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f00b02a7_ca2ce319",
+        "filename": "examples/robust_curve_fitting.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-27T15:25:50Z",
+      "side": 1,
+      "message": "Nice catch. Do the docs (and graph) need updating?",
+      "revId": "2175d025a61089d483dee3cbe8127b17aafbbeb2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
