@@ -147,7 +147,9 @@ int main(int argc, char** argv) {
     CostFunction* cost_function =
         new AutoDiffCostFunction<ExponentialResidual, 1, 1, 1>(
             new ExponentialResidual(data[2 * i], data[2 * i + 1]));
-    problem.AddResidualBlock(cost_function, NULL, &m, &c);
+    problem.AddResidualBlock(cost_function,
+                             new CauchyLoss(0.5),
+                             &m, &c);
   }
 
   Solver::Options options;
