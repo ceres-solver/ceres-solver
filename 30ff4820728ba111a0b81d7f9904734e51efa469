@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "100336c0_dbcd2707",
+        "filename": "internal/ceres/gradient_problem_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-30T13:54:45Z",
+      "side": 1,
+      "message": "might be worth adding a reference or wikipedia link to this function as a comment.",
+      "range": {
+        "startLine": 39,
+        "startChar": 33,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "30ff4820728ba111a0b81d7f9904734e51efa469",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100336c0_3bb3837c",
+        "filename": "internal/ceres/gradient_problem_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-30T13:54:45Z",
+      "side": 1,
+      "message": "only 1e-5 ? we don\u0027t do better than that?\nalso make a const variable out of tolerance instead of repeating it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "30ff4820728ba111a0b81d7f9904734e51efa469",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
