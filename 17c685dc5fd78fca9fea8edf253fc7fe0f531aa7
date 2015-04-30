@@ -22,6 +22,64 @@
       "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100336c0_7e0fa933",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-30T17:29:36Z",
+      "side": 1,
+      "message": "Naming:\n\nEvaluationWithoutParameterizationOrGradient",
+      "parentUuid": "100336c0_9bc3afdb",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100336c0_5e0c653d",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-30T17:29:36Z",
+      "side": 1,
+      "message": "EvalutaionWithParameterizationAndNoGradient",
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100336c0_be178145",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-30T17:29:36Z",
+      "side": 1,
+      "message": "Ah, maybe make the ordering of gradient/parameterization consistent.",
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
