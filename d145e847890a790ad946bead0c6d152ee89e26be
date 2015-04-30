@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "100336c0_7e2689b3",
+        "filename": "include/ceres/dynamic_adaptive_numeric_diff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-30T17:34:25Z",
+      "side": 1,
+      "message": "But T is not used?",
+      "revId": "d145e847890a790ad946bead0c6d152ee89e26be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "100336c0_ded19500",
+        "filename": "include/ceres/dynamic_adaptive_numeric_diff_cost_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-04-30T17:34:25Z",
+      "side": 1,
+      "message": "I\u0027m not excited to introduce another interface. Why not just support the regular CostFunctor interface? Or wrap a normal CostFunction implementation?",
+      "revId": "d145e847890a790ad946bead0c6d152ee89e26be",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
