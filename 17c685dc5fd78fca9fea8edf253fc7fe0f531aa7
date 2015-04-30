@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "100336c0_9bc3afdb",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-04-30T13:53:11Z",
+      "side": 1,
+      "message": "Parametrization -\u003e Parameterization here and below.",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
