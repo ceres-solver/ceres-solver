@@ -52,6 +52,10 @@ TARGET_LINK_LIBRARIES(rosenbrock ceres)
 
 ADD_EXECUTABLE(curve_fitting_c curve_fitting.c)
 TARGET_LINK_LIBRARIES(curve_fitting_c ceres)
+# Force CMake to link curve_fitting_c using the C linker, this is important
+# when Ceres was compiled using C++11 to ensure that -std=c++11 is not passed
+# through.
+SET_TARGET_PROPERTIES(curve_fitting_c PROPERTIES LINKER_LANGUAGE C)
 # As this is a C file #including <math.h> we have to explicitly add the math
 # library (libm). Although some compilers (dependent upon options) will accept
 # the indirect link to libm via Ceres, at least GCC 4.8 on pure Debian won't.

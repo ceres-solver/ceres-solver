@@ -40,6 +40,15 @@
 # otherwise it's assumed to be defined in std namespace.
 
 MACRO(FIND_SHARED_PTR)
+  # To support CXX11 option, clear the results of all check_xxx() functions
+  # s/t we always perform the checks each time, otherwise CMake fails to
+  # detect that the tests should be performed again after CXX11 is toggled.
+  UNSET(HAVE_STD_MEMORY_HEADER CACHE)
+  UNSET(HAVE_SHARED_PTR_IN_STD_NAMESPACE CACHE)
+  UNSET(HAVE_SHARED_PTR_IN_TR1_NAMESPACE CACHE)
+  UNSET(HAVE_TR1_MEMORY_HEADER CACHE)
+  UNSET(HAVE_SHARED_PTR_IN_TR1_NAMESPACE_FROM_TR1_MEMORY_HEADER CACHE)
+
   SET(SHARED_PTR_FOUND FALSE)
   CHECK_INCLUDE_FILE_CXX(memory HAVE_STD_MEMORY_HEADER)
   IF (HAVE_STD_MEMORY_HEADER)

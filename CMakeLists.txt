@@ -135,6 +135,7 @@ OPTION(EIGENSPARSE
    depends on the sparse QR factorization algorithm, which is licensed
    under the MPL."
   OFF)
+OPTION(CXX11 "Enable use of C++11 if available (requires client code use C++11)." OFF)
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -495,53 +496,38 @@ ELSE (OPENMP)
   LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
 ENDIF (OPENMP)
 
-INCLUDE(CheckIncludeFileCXX)
-CHECK_INCLUDE_FILE_CXX(unordered_map HAVE_STD_UNORDERED_MAP_HEADER)
-IF (HAVE_STD_UNORDERED_MAP_HEADER)
-  # Finding the unordered_map header doesn't mean that unordered_map
-  # is in std namespace.
-  #
-  # In particular, MSVC 2008 has unordered_map declared in std::tr1.
-  # In order to support this, we do an extra check to see which
-  # namespace should be used.
-  INCLUDE(CheckCXXSourceCompiles)
-  CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
-                             int main() {
-                               std::unordered_map<int, int> map;
-                               return 0;
-                             }"
-                            HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+# MSVC supports (in some sense) C++11, but does not use the -std=c++11 flag.
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_HAS_CXX11_FLAG)
+IF (CXX11)
+  # For some compilers (at least GCC 4.8), shared_ptr & unordered_map exist in
+  # two places, as the TR1 versions are still present.  In order to avoid any
+  # conflicts in user code linking against Ceres which uses C++11, we enable
+  # C++11 (which is required when using the non-TR1 versions) if it is available
+  # before searching for shared_ptr & unordered_map.
+  IF (COMPILER_HAS_CXX11_FLAG)
+    # CMAKE_REQUIRED_FLAGS is used by CheckCXXSourceCompiles.
+    SET(CMAKE_REQUIRED_FLAGS -std=c++11)
+  ENDIF (COMPILER_HAS_CXX11_FLAG)
+ENDIF (CXX11)
+
+INCLUDE(FindUnorderedMap)
+FIND_UNORDERED_MAP()
+IF (UNORDERED_MAP_FOUND)
   IF (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP)
-    MESSAGE("-- Found unordered_map/set in std namespace.")
-  ELSE (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
-                               int main() {
-                                 std::tr1::unordered_map<int, int> map;
-                                 return 0;
-                               }"
-                              HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    IF (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      LIST(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      MESSAGE("-- Found unordered_map/set in std::tr1 namespace.")
-    ELSE (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      MESSAGE("-- Found <unordered_map> but cannot find either std::unordered_map "
-              "or std::tr1::unordered_map.")
-      MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
-      LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
-    ENDIF (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  ENDIF (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-ELSE (HAVE_STD_UNORDERED_MAP_HEADER)
-  CHECK_INCLUDE_FILE_CXX("tr1/unordered_map" HAVE_TR1_UNORDERED_MAP_HEADER)
-  IF (HAVE_TR1_UNORDERED_MAP_HEADER)
+  ENDIF(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+  IF (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    LIST(APPEND CERES_COMPILE_OPTIONS CERES_STD_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  ENDIF(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  IF (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_TR1_UNORDERED_MAP)
-    MESSAGE("-- Found tr1/unordered_map/set in std::tr1 namespace.")
-  ELSE (HAVE_TR1_UNORDERED_MAP_HEADE)
-    MESSAGE("-- Unable to find <unordered_map> or <tr1/unordered_map>. ")
-    MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!)")
-    LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
-  ENDIF (HAVE_TR1_UNORDERED_MAP_HEADER)
-ENDIF (HAVE_STD_UNORDERED_MAP_HEADER)
+  ENDIF(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+ELSE (UNORDERED_MAP_FOUND)
+  MESSAGE("-- Replacing unordered_map/set with map/set (warning: slower!), "
+    "try enabling CXX11 option if you expect C++11 to be available.")
+  LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
+ENDIF()
 
 INCLUDE(FindSharedPtr)
 FIND_SHARED_PTR()
@@ -553,8 +539,30 @@ IF (SHARED_PTR_FOUND)
     LIST(APPEND CERES_COMPILE_OPTIONS CERES_TR1_SHARED_PTR)
   ENDIF (SHARED_PTR_TR1_NAMESPACE)
 ELSE (SHARED_PTR_FOUND)
-  MESSAGE(FATAL_ERROR "Unable to find shared_ptr.")
+  MESSAGE(FATAL_ERROR "Unable to find shared_ptr, try enabling CXX11 option "
+    "if you expect C++11 to be available.")
 ENDIF (SHARED_PTR_FOUND)
+
+# To ensure that CXX11 accurately captures whether we are using C++11, even on
+# MSVC, check if it is required given where the potentially C++11 features Ceres
+# uses were found, and disable it if C++11 is not being used.
+IF (CXX11)
+  IF (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
+      NOT HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+    MESSAGE("-- Failed to find C++11 components in C++11 locations & "
+      "namespaces, disabling CXX11.")
+    UPDATE_CACHE_VARIABLE(CXX11 OFF)
+  ELSE()
+    MESSAGE("   ==============================================================")
+    MESSAGE("   Compiling Ceres using C++11.  This will result in a version ")
+    MESSAGE("   of Ceres that will require the use of C++11 in client code.")
+    MESSAGE("   ==============================================================")
+    LIST(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
+    IF (COMPILER_HAS_CXX11_FLAG)
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    ENDIF()
+  ENDIF()
+ENDIF(CXX11)
 
 INCLUDE_DIRECTORIES(
   include
