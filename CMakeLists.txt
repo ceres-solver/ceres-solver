@@ -494,6 +494,19 @@ ELSE (OPENMP)
   LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
 ENDIF (OPENMP)
 
+# For some compilers (at least GCC 4.8 & MSVC 2013), shared_ptr & unordered_map
+# exist in two places, as the TR1 versions are still present.  In order to avoid
+# any conflicts in user code linking against Ceres which uses C++11, we enable
+# C++11 (which is required when using the non-TR1 versions) if it is
+# available before searching for shared_ptr & unordered_map, even though
+# Ceres itself does not currently use C++11 (shared_ptr & unordered_map
+# excepted).
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+IF (COMPILER_SUPPORTS_CXX11)
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ENDIF (COMPILER_SUPPORTS_CXX11)
+
 INCLUDE(CheckIncludeFileCXX)
 CHECK_INCLUDE_FILE_CXX(unordered_map HAVE_STD_UNORDERED_MAP_HEADER)
 IF (HAVE_STD_UNORDERED_MAP_HEADER)
