@@ -184,6 +184,24 @@ SET_TARGET_PROPERTIES(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR}
 )
+IF (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+  IF (CMAKE_VERSION VERSION_LESS "2.8.12")
+    MESSAGE("-- Warning: detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
+      "which is the minimum required for compile options to be included in an "
+      "exported CMake target, but CERES_USE_CXX11 is enabled and the detected. "
+      "compiler requires -std=c++11.  The client is responsible for adding "
+      "-std=c++11 when using Ceres.")
+  ELSE ()
+    # If Ceres is compiled using C++11, and the compiler requires -std=c++11
+    # to be set, then ensure that this requirement is rolled into the exported
+    # CMake target, s/t client code which uses Ceres will inherit it (if the
+    # CMake version supports it), iff they are NOT compiling for C.  We check
+    # for not C, rather than C++ as LINKER_LANGUAGE is often NOTFOUND and then
+    # uses the default (C++).
+    TARGET_COMPILE_OPTIONS(ceres PUBLIC
+      $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,C>>:-std=c++11>)
+  ENDIF()
+ENDIF()
 
 IF (BUILD_SHARED_LIBS)
   # When building a shared library, mark all external libraries as
