@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f056a2ec_cf753d81",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-05-04T07:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "100336c0_7e0fa933",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "100336c0_5e0c653d",
         "filename": "internal/ceres/gradient_problem_test.cc",
         "patchSetId": 1
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f056a2ec_ef7a0170",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-05-04T07:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "100336c0_5e0c653d",
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "100336c0_be178145",
         "filename": "internal/ceres/gradient_problem_test.cc",
         "patchSetId": 1
@@ -77,6 +119,24 @@
       "writtenOn": "2015-04-30T17:29:36Z",
       "side": 1,
       "message": "Ah, maybe make the ordering of gradient/parameterization consistent.",
+      "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f056a2ec_0f902519",
+        "filename": "internal/ceres/gradient_problem_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-05-04T07:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "100336c0_be178145",
       "revId": "17c685dc5fd78fca9fea8edf253fc7fe0f531aa7",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
