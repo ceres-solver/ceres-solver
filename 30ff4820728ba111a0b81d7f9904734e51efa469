@@ -45,6 +45,30 @@
       "revId": "30ff4820728ba111a0b81d7f9904734e51efa469",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f056a2ec_6fb0d1bb",
+        "filename": "internal/ceres/gradient_problem_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-05-04T07:17:19Z",
+      "side": 1,
+      "message": "We do much better than that. But if we should test the convergence behavior I would like to keep the settings fixed. This tests that the default settings are sane.\n\nI lowered the tolerance significantly, though.",
+      "parentUuid": "100336c0_3bb3837c",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "30ff4820728ba111a0b81d7f9904734e51efa469",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
