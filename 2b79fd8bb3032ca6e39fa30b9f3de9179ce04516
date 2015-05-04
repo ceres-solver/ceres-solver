@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0734a93_384fe5c5",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-05-04T13:57:29Z",
+      "side": 1,
+      "message": "epic.",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 24
+      },
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
