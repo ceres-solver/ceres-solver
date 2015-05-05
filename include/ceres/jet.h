@@ -608,7 +608,8 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 // pow -- both base and exponent are differentiable functions. This has a
 // variety of special cases that require careful handling.
 //
-// 1. For f > 0: (f + df)^(g + dg) ~= f^g + f^(g - 1) * (g * df + f * log(f) * dg)
+// 1. For f > 0:
+//    (f + df)^(g + dg) ~= f^g + f^(g - 1) * (g * df + f * log(f) * dg)
 //    The numerical evaluation of f * log(f) for f > 0 is well behaved, even for
 //    extremely small values (e.g. 1e-99).
 //
@@ -626,9 +627,9 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 // 6. For f == 0 and g == 0: The C standard incorrectly defines 0^0 to be 1
 //    "because there are applications that can exploit this definition". We
 //    (arbitrarily) decree that derivatives here will be nonfinite, since that
-//    is consistent with the behavior for f == 0, g < 0 and 0 < g < 1. Practically
-//    any definition could have been justified because mathematical consistency
-//    has been lost at this point.
+//    is consistent with the behavior for f == 0, g < 0 and 0 < g < 1.
+//    Practically any definition could have been justified because mathematical
+//    consistency has been lost at this point.
 //
 // 7. For f < 0, g integer, dg == 0: (f + df)^(g + dg) ~= f^g + g * f^(g - 1) df
 //    This is equivalent to the case where f is a differentiable function and g
