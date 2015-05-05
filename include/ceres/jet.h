@@ -576,11 +576,12 @@ Jet<T, N> pow(const Jet<T, N>& f, double g) {
 // We have various special cases, see the comment for pow(Jet, Jet) for
 // analysis:
 //
-// 1. For a > 0 we have: (a)^(p + dp) ~= a^p + a^p log(a) dp
+// 1. For f > 0 we have: (f)^(g + dg) ~= f^g + f^g log(f) dg
 //
-// 2. For a == 0 and p > 0 we have: (a)^(p + dp) ~= a^p
+// 2. For f == 0 and g > 0 we have: (f)^(g + dg) ~= f^g
 //
-// 3. For a < 0 and integer p we have: (a)^(p + dp) ~= a^p
+// 3. For f < 0 and integer g we have: (f)^(g + dg) ~= f^g but if dg
+// != 0, the derivatives are not defined and we return NaN.
 
 template <typename T, int N> inline
 Jet<T, N> pow(double f, const Jet<T, N>& g) {
@@ -607,37 +608,37 @@ Jet<T, N> pow(double f, const Jet<T, N>& g) {
 // pow -- both base and exponent are differentiable functions. This has a
 // variety of special cases that require careful handling.
 //
-// 1. For a > 0: (a + da)^(b + db) ~= a^b + a^(b - 1) * (b*da + a*log(a)*db)
-//    The numerical evaluation of a*log(a) for a > 0 is well behaved, even for
+// 1. For f > 0: (f + df)^(g + dg) ~= f^g + f^(g - 1) * (g * df + f * log(f) * dg)
+//    The numerical evaluation of f * log(f) for f > 0 is well behaved, even for
 //    extremely small values (e.g. 1e-99).
 //
-// 2. For a == 0 and b > 1: (a + da)^(b + db) ~= 0
-//    This cases is needed because log(0) can not be evaluated in the a > 0
-//    expression. However the function a*log(a) is well behaved around a == 0
-//    and its limit as a-->0 is zero.
+// 2. For f == 0 and g > 1: (f + df)^(g + dg) ~= 0
+//    This cases is needed because log(0) can not be evaluated in the f > 0
+//    expression. However the function f*log(f) is well behaved around f == 0
+//    and its limit as f-->0 is zero.
 //
-// 3. For a == 0 and b == 1: (a + da)^(b + db) ~= 0 + da
+// 3. For f == 0 and g == 1: (f + df)^(g + dg) ~= 0 + df
 //
-// 4. For a == 0 and 0 < b < 1: The value is finite but the derivatives are not.
+// 4. For f == 0 and 0 < g < 1: The value is finite but the derivatives are not.
 //
-// 5. For a == 0 and b < 0: The value and derivatives of a^b are not finite.
+// 5. For f == 0 and g < 0: The value and derivatives of f^g are not finite.
 //
-// 6. For a == 0 and b == 0: The C standard incorrectly defines 0^0 to be 1
+// 6. For f == 0 and g == 0: The C standard incorrectly defines 0^0 to be 1
 //    "because there are applications that can exploit this definition". We
 //    (arbitrarily) decree that derivatives here will be nonfinite, since that
-//    is consistent with the behavior for a==0, b < 0 and 0 < b < 1. Practically
+//    is consistent with the behavior for f == 0, g < 0 and 0 < g < 1. Practically
 //    any definition could have been justified because mathematical consistency
 //    has been lost at this point.
 //
-// 7. For a < 0, b integer, db == 0: (a + da)^(b + db) ~= a^b + b * a^(b - 1) da
-//    This is equivalent to the case where a is a differentiable function and b
+// 7. For f < 0, g integer, dg == 0: (f + df)^(g + dg) ~= f^g + g * f^(g - 1) df
+//    This is equivalent to the case where f is a differentiable function and g
 //    is a constant (to first order).
 //
-// 8. For a < 0, b integer, db != 0: The value is finite but the derivatives are
-//    not, because any change in the value of b moves us away from the point
+// 8. For f < 0, g integer, dg != 0: The value is finite but the derivatives are
+//    not, because any change in the value of g moves us away from the point
 //    with a real-valued answer into the region with complex-valued answers.
 //
-// 9. For a < 0, b noninteger: The value and derivatives of a^b are not finite.
+// 9. For f < 0, g noninteger: The value and derivatives of f^g are not finite.
 
 template <typename T, int N> inline
 Jet<T, N> pow(const Jet<T, N>& f, const Jet<T, N>& g) {
