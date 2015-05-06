@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d36f5df_75432206",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-06T21:36:51Z",
+      "side": 1,
+      "message": "I forgot about the complication due to the naming. Generally we avoid abbreviating names unless there is a good reason to. The num_residuals_internal is a good name, but for these two I propose\n\nparameter_block_index_internal\nparemeter_block_size_internal\n\nIt\u0027s longer, but doesn\u0027t majorly impact the readability of the code.",
+      "revId": "4176f6f0410d5fd8233b5314f9fae57a410fbeaa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
