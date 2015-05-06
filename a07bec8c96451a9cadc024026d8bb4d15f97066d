@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d36f5df_d529ae83",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-06T18:52:35Z",
+      "side": 1,
+      "message": "Generally we don\u0027t use default parameters. See the Google C++ style guide for more details.\n\nhttps://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Default_Arguments",
+      "revId": "a07bec8c96451a9cadc024026d8bb4d15f97066d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d36f5df_75c2023b",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-06T18:52:35Z",
+      "side": 1,
+      "message": "This is incorrectly named with UPPER_CASE. It\u0027s neither a macro nor an enum. Please change both NUM_RESIDUALS as well as PARAMETER_BLOCK_INDEX and PARAMETER_BLOCK_SIZE to just normal naming - num_residuals, etc.\n\nI am a bit ashamed since it was me who made this originally!",
+      "revId": "a07bec8c96451a9cadc024026d8bb4d15f97066d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
