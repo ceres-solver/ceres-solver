@@ -779,8 +779,9 @@ defined as an imported target when CMake processes ``Bar``.  An example of the
 required modifications to ``FooConfig.cmake`` are show below:
 
 .. code-block:: cmake
-    :caption: Importing Ceres in FooConfig.cmake using CMake 2.8.x style
 
+    # Importing Ceres in FooConfig.cmake using CMake 2.8.x style.
+    #
     # When configure_file() is used to generate FooConfig.cmake from
     # FooConfig.cmake.in, @Ceres_DIR@ will be replaced with the current
     # value of Ceres_DIR being used by Foo.  This should be passed as a hint
@@ -798,8 +799,9 @@ required modifications to ``FooConfig.cmake`` are show below:
     endif()
 
 .. code-block:: cmake
-    :caption: Importing Ceres in FooConfig.cmake using CMake 3.x style
 
+    # Importing Ceres in FooConfig.cmake using CMake 3.x style.
+    #
     # In CMake v3.x, the find_dependency() macro exists to forward the REQUIRED
     # / QUIET parameters to find_package() when searching for dependencies.
     #
