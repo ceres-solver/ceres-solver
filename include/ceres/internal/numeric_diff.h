@@ -92,7 +92,9 @@ struct NumericDiff {
       const double relative_step_size,
       int num_residuals,
       double **parameters,
-      double *jacobian) {
+      double *jacobian,
+      int parameter_block = kParameterBlock,
+      int parameter_block_size = kParameterBlockSize) {
     using Eigen::Map;
     using Eigen::Matrix;
     using Eigen::RowMajor;
@@ -100,6 +102,11 @@ struct NumericDiff {
 
     const int NUM_RESIDUALS =
         (kNumResiduals != ceres::DYNAMIC ? kNumResiduals : num_residuals);
+    const int PARAMETER_BLOCK_INDEX =
+        (kParameterBlock != ceres::DYNAMIC ? kParameterBlock : parameter_block);
+    const int PARAMETER_BLOCK_SIZE =
+        (kParameterBlockSize != ceres::DYNAMIC ? kParameterBlockSize :
+                                                 parameter_block_size);
 
     typedef Matrix<double, kNumResiduals, 1> ResidualVector;
     typedef Matrix<double, kParameterBlockSize, 1> ParameterVector;
@@ -116,11 +123,11 @@ struct NumericDiff {
 
     Map<JacobianMatrix> parameter_jacobian(jacobian,
                                            NUM_RESIDUALS,
-                                           kParameterBlockSize);
+                                           PARAMETER_BLOCK_SIZE);
 
     // Mutate 1 element at a time and then restore.
-    Map<ParameterVector> x_plus_delta(parameters[kParameterBlock],
-                                      kParameterBlockSize);
+    Map<ParameterVector> x_plus_delta(parameters[PARAMETER_BLOCK_INDEX],
+                                      PARAMETER_BLOCK_SIZE);
     ParameterVector x(x_plus_delta);
     ParameterVector step_size = x.array().abs() * relative_step_size;
 
@@ -137,7 +144,7 @@ struct NumericDiff {
     // compute the derivative for that parameter.
 
     ResidualVector residuals(NUM_RESIDUALS);
-    for (int j = 0; j < kParameterBlockSize; ++j) {
+    for (int j = 0; j < PARAMETER_BLOCK_SIZE; ++j) {
       const double delta =
           (step_size(j) == 0.0) ? fallback_step_size : step_size(j);
 
