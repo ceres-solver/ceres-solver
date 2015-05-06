@@ -29,6 +29,7 @@
 // Author: mierle@gmail.com (Keir Mierle)
 //         sameeragarwal@google.com (Sameer Agarwal)
 //         thadh@gmail.com (Thad Hughes)
+//         tbennun@gmail.com (Tal Ben-Nun)
 //
 // This numeric diff implementation differs from the one found in
 // numeric_diff_cost_function.h by supporting numericdiff on cost
@@ -41,7 +42,6 @@
 // numeric diff; the expected interface for the cost functors is:
 //
 //   struct MyCostFunctor {
-//     template<typename T>
 //     bool operator()(double const* const* parameters, double* residuals) const {
 //       // Use parameters[i] to access the i'th parameter block.
 //     }
@@ -100,6 +100,7 @@ class DynamicNumericDiffCostFunction : public CostFunction {
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
                         double** jacobians) const {
+    using internal::NumericDiff;
     CHECK_GT(num_residuals(), 0)
         << "You must call DynamicNumericDiffCostFunction::SetNumResiduals() "
         << "before DynamicNumericDiffCostFunction::Evaluate().";
@@ -133,12 +134,18 @@ class DynamicNumericDiffCostFunction : public CostFunction {
 
     for (int block = 0; block < block_sizes.size(); ++block) {
       if (jacobians[block] != NULL &&
-          !EvaluateJacobianForParameterBlock(block_sizes[block],
-                                             block,
-                                             relative_step_size_,
+          !NumericDiff<CostFunctor, method, DYNAMIC,
+                       DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC,
+                       DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC,
+                       DYNAMIC, DYNAMIC>::EvaluateJacobianForParameterBlock(
+                                             functor_.get(),
                                              residuals,
+                                             relative_step_size_,
+                                             this->num_residuals(),
+                                             block,
+                                             block_sizes[block],
                                              &parameters_references_copy[0],
-                                             jacobians)) {
+                                             jacobians[block])) {
         return false;
       }
     }
@@ -146,91 +153,6 @@ class DynamicNumericDiffCostFunction : public CostFunction {
   }
 
  private:
-  bool EvaluateJacobianForParameterBlock(const int parameter_block_size,
-                                         const int parameter_block,
-                                         const double relative_step_size,
-                                         double const* residuals_at_eval_point,
-                                         double** parameters,
-                                         double** jacobians) const {
-    using Eigen::Map;
-    using Eigen::Matrix;
-    using Eigen::Dynamic;
-    using Eigen::RowMajor;
-
-    typedef Matrix<double, Dynamic, 1> ResidualVector;
-    typedef Matrix<double, Dynamic, 1> ParameterVector;
-    typedef Matrix<double, Dynamic, Dynamic, RowMajor> JacobianMatrix;
-
-    int num_residuals = this->num_residuals();
-
-    Map<JacobianMatrix> parameter_jacobian(jacobians[parameter_block],
-                                           num_residuals,
-                                           parameter_block_size);
-
-    // Mutate one element at a time and then restore.
-    Map<ParameterVector> x_plus_delta(parameters[parameter_block],
-                                      parameter_block_size);
-    ParameterVector x(x_plus_delta);
-    ParameterVector step_size = x.array().abs() * relative_step_size;
-
-    // To handle cases where a paremeter is exactly zero, instead use
-    // the mean step_size for the other dimensions.
-    double fallback_step_size = step_size.sum() / step_size.rows();
-    if (fallback_step_size == 0.0) {
-      // If all the parameters are zero, there's no good answer. Use the given
-      // relative step_size as absolute step_size and hope for the best.
-      fallback_step_size = relative_step_size;
-    }
-
-    // For each parameter in the parameter block, use finite
-    // differences to compute the derivative for that parameter.
-    for (int j = 0; j < parameter_block_size; ++j) {
-      if (step_size(j) == 0.0) {
-        // The parameter is exactly zero, so compromise and use the
-        // mean step_size from the other parameters. This can break in
-        // many cases, but it's hard to pick a good number without
-        // problem specific knowledge.
-        step_size(j) = fallback_step_size;
-      }
-      x_plus_delta(j) = x(j) + step_size(j);
-
-      ResidualVector residuals(num_residuals);
-      if (!EvaluateCostFunctor(parameters, &residuals[0])) {
-        // Something went wrong; bail.
-        return false;
-      }
-
-      // Compute this column of the jacobian in 3 steps:
-      // 1. Store residuals for the forward part.
-      // 2. Subtract residuals for the backward (or 0) part.
-      // 3. Divide out the run.
-      parameter_jacobian.col(j).matrix() = residuals;
-
-      double one_over_h = 1 / step_size(j);
-      if (method == CENTRAL) {
-        // Compute the function on the other side of x(j).
-        x_plus_delta(j) = x(j) - step_size(j);
-
-        if (!EvaluateCostFunctor(parameters, &residuals[0])) {
-          // Something went wrong; bail.
-          return false;
-        }
-
-        parameter_jacobian.col(j) -= residuals;
-        one_over_h /= 2;
-      } else {
-        // Forward difference only; reuse existing residuals evaluation.
-        parameter_jacobian.col(j) -=
-            Map<const ResidualVector>(residuals_at_eval_point, num_residuals);
-      }
-      x_plus_delta(j) = x(j);  // Restore x_plus_delta.
-
-      // Divide out the run to get slope.
-      parameter_jacobian.col(j) *= one_over_h;
-    }
-    return true;
-  }
-
   bool EvaluateCostFunctor(double const* const* parameters,
                            double* residuals) const {
     return EvaluateCostFunctorImpl(functor_.get(),

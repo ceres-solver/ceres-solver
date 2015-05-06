@@ -282,6 +282,8 @@ class NumericDiffCostFunction
                           SizedCostFunction<kNumResiduals,              \
                            N0, N1, N2, N3, N4,                          \
                            N5, N6, N7, N8, N9>::num_residuals(),        \
+                           block,                                       \
+                           N ## block,                                  \
                            parameters_reference_copy.get(),             \
                            jacobians[block])) {                         \
         return false;                                                   \
