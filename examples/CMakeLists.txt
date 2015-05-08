@@ -50,6 +50,9 @@ TARGET_LINK_LIBRARIES(curve_fitting ceres)
 ADD_EXECUTABLE(rosenbrock rosenbrock.cc)
 TARGET_LINK_LIBRARIES(rosenbrock ceres)
 
+ADD_EXECUTABLE(gaussial_ml gaussian_ml.cc)
+TARGET_LINK_LIBRARIES(gaussial_ml ceres)
+
 ADD_EXECUTABLE(curve_fitting_c curve_fitting.c)
 TARGET_LINK_LIBRARIES(curve_fitting_c ceres)
 # As this is a C file #including <math.h> we have to explicitly add the math
