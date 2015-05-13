@@ -284,6 +284,27 @@ bool StringToCovarianceAlgorithmType(
   return false;
 }
 
+const char* NumericDiffMethodTypeToString(
+    NumericDiffMethodType type) {
+  switch (type) {
+    CASESTR(CENTRAL);
+    CASESTR(FORWARD);
+    CASESTR(RIDDERS);
+    default:
+      return "UNKNOWN";
+  }
+}
+
+bool StringToNumericDiffMethodType(
+    string value,
+    NumericDiffMethodType* type) {
+  UpperCase(&value);
+  STRENUM(CENTRAL);
+  STRENUM(FORWARD);
+  STRENUM(RIDDERS);
+  return false;
+}
+
 const char* VisibilityClusteringTypeToString(
     VisibilityClusteringType type) {
   switch (type) {

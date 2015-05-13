@@ -397,9 +397,19 @@ enum DimensionType {
   DYNAMIC = -1
 };
 
-enum NumericDiffMethod {
+// The differentiation method used to compute numerical derivatives in
+// NumericDiffCostFunction and DynamicNumericDiffCostFunction.
+enum NumericDiffMethodType {
+  // Compute central finite difference: f'(x) ~ (f(x+h) - f(x-h)) / 2h.
   CENTRAL,
-  FORWARD
+
+  // Compute forward finite difference: f'(x) ~ (f(x+h) - f(x)) / h.
+  FORWARD,
+
+  // Adaptive numerical differentiation using Ridders' method. Provides more
+  // accurate and robust derivatives at the expense of additional cost
+  // function evaluations.
+  RIDDERS
 };
 
 enum LineSearchInterpolationType {
@@ -476,6 +486,12 @@ CERES_EXPORT const char* CovarianceAlgorithmTypeToString(
 CERES_EXPORT bool StringToCovarianceAlgorithmType(
     std::string value,
     CovarianceAlgorithmType* type);
+
+CERES_EXPORT const char* NumericDiffMethodTypeToString(
+    NumericDiffMethodType type);
+CERES_EXPORT bool StringToNumericDiffMethodType(
+    std::string value,
+    NumericDiffMethodType* type);
 
 CERES_EXPORT const char* TerminationTypeToString(TerminationType type);
 
