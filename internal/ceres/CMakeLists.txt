@@ -238,6 +238,7 @@ IF (BUILD_TESTING AND GFLAGS)
              ${CMAKE_SOURCE_DIR}/data)
   ENDMACRO (CERES_TEST)
 
+  CERES_TEST(adaptive_numeric_diff)
   CERES_TEST(array_utils)
   CERES_TEST(autodiff)
   CERES_TEST(autodiff_cost_function)

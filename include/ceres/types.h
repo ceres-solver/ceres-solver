@@ -399,7 +399,8 @@ enum DimensionType {
 
 enum NumericDiffMethod {
   CENTRAL,
-  FORWARD
+  FORWARD,
+  ADAPTIVE
 };
 
 enum LineSearchInterpolationType {
