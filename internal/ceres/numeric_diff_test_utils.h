@@ -46,7 +46,7 @@ class EasyFunctor {
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
       const CostFunction& cost_function,
-      NumericDiffMethod method) const;
+      NumericDiffMethodType method) const;
 };
 
 class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
@@ -71,7 +71,7 @@ class TranscendentalFunctor {
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
       const CostFunction& cost_function,
-      NumericDiffMethod method) const;
+      NumericDiffMethodType method) const;
 };
 
 class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {

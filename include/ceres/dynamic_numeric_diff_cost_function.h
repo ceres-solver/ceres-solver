@@ -72,15 +72,24 @@
 
 namespace ceres {
 
-template <typename CostFunctor, NumericDiffMethod method = CENTRAL>
+template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
 class DynamicNumericDiffCostFunction : public CostFunction {
  public:
-  explicit DynamicNumericDiffCostFunction(const CostFunctor* functor,
-                                          Ownership ownership = TAKE_OWNERSHIP,
-                                          double relative_step_size = 1e-6)
+  explicit DynamicNumericDiffCostFunction(
+      const CostFunctor* functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const double relative_step_size = 1e-6,
+      const int adaptive_max_extrapolations = 10,
+      const double adaptive_epsilon = 1e-12,
+      const double adaptive_step_shrink_factor = 2.0,
+      const bool adaptive_relative_error = false)
       : functor_(functor),
         ownership_(ownership),
-        relative_step_size_(relative_step_size) {
+        relative_step_size_(relative_step_size),
+        adaptive_max_extrapolations_(adaptive_max_extrapolations),
+        adaptive_epsilon_(adaptive_epsilon),
+        adaptive_step_shrink_factor_(adaptive_step_shrink_factor),
+        adaptive_relative_error_(adaptive_relative_error) {
   }
 
   virtual ~DynamicNumericDiffCostFunction() {
@@ -141,6 +150,10 @@ class DynamicNumericDiffCostFunction : public CostFunction {
                                              functor_.get(),
                                              residuals,
                                              relative_step_size_,
+                                             adaptive_max_extrapolations_,
+                                             adaptive_epsilon_,
+                                             adaptive_step_shrink_factor_,
+                                             adaptive_relative_error_,
                                              this->num_residuals(),
                                              block,
                                              block_sizes[block],
@@ -180,6 +193,10 @@ class DynamicNumericDiffCostFunction : public CostFunction {
   internal::scoped_ptr<const CostFunctor> functor_;
   Ownership ownership_;
   const double relative_step_size_;
+  const int adaptive_max_extrapolations_;
+  const double adaptive_epsilon_;
+  const double adaptive_step_shrink_factor_;
+  const bool adaptive_relative_error_;
 };
 
 }  // namespace ceres

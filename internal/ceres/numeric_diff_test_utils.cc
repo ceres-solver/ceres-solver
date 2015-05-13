@@ -56,7 +56,7 @@ bool EasyFunctor::operator()(const double* x1,
 
 void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
-    NumericDiffMethod method) const {
+    NumericDiffMethodType method) const {
   // The x1[0] is made deliberately small to test the performance near
   // zero.
   double x1[] = { 1e-64, 2.0, 3.0, 4.0, 5.0 };
@@ -106,7 +106,7 @@ bool TranscendentalFunctor::operator()(const double* x1,
 
 void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
-    NumericDiffMethod method) const {
+    NumericDiffMethodType method) const {
   struct {
     double x1[5];
     double x2[5];
