@@ -86,7 +86,7 @@ bool IsClose(double x, double y, double relative_precision,
 class GradientCheckingCostFunction : public CostFunction {
  public:
   GradientCheckingCostFunction(const CostFunction* function,
-                               double relative_step_size,
+                               const NumericDiffOptions& options,
                                double relative_precision,
                                const string& extra_info)
       : function_(function),
@@ -97,7 +97,37 @@ class GradientCheckingCostFunction : public CostFunction {
         new DynamicNumericDiffCostFunction<CostFunction, CENTRAL>(
             function,
             DO_NOT_TAKE_OWNERSHIP,
-            relative_step_size);
+            options);
+
+    const vector<int32>& parameter_block_sizes =
+        function->parameter_block_sizes();
+    for (int i = 0; i < parameter_block_sizes.size(); ++i) {
+      finite_diff_cost_function->AddParameterBlock(parameter_block_sizes[i]);
+    }
+    *mutable_parameter_block_sizes() = parameter_block_sizes;
+    set_num_residuals(function->num_residuals());
+    finite_diff_cost_function->SetNumResiduals(num_residuals());
+    finite_diff_cost_function_.reset(finite_diff_cost_function);
+  }
+
+  // Deprecated. New users should avoid using this constructor. Instead, use the
+  // constructor with NumericDiffOptions.
+  GradientCheckingCostFunction(const CostFunction* function,
+                               double relative_step_size,
+                               double relative_precision,
+                               const string& extra_info)
+      : function_(function),
+        relative_precision_(relative_precision),
+        extra_info_(extra_info) {
+    NumericDiffOptions options;
+    options.relative_step_size = relative_step_size;
+
+    DynamicNumericDiffCostFunction<CostFunction, CENTRAL>*
+        finite_diff_cost_function =
+        new DynamicNumericDiffCostFunction<CostFunction, CENTRAL>(
+            function,
+            DO_NOT_TAKE_OWNERSHIP,
+            options);
 
     const vector<int32>& parameter_block_sizes =
         function->parameter_block_sizes();
