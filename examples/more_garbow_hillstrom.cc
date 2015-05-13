@@ -63,6 +63,19 @@ DEFINE_string(problem, "all", "Which problem to solve");
 DEFINE_bool(use_numeric_diff, false,
             "Use numeric differentiation instead of automatic "
             "differentiation.");
+DEFINE_string(numeric_diff_method, "ridders", "When using numeric "
+              "differentiation, selects algorithm. Options are: central, "
+              "forward, ridders.");
+DEFINE_double(relative_step_size, 1e-6, "Initial step size for non-Ridders "
+              "numeric differentiation.");
+DEFINE_double(ridders_step_size, 1e-2, "Initial step size for Ridders "
+              "numeric differentiation.");
+DEFINE_int32(ridders_extrapolations, 3, "Maximal number of Ridders "
+             "extrapolations.");
+DEFINE_double(ridders_epsilon, 1e-12, "Convergence criterion for Ridders "
+              "numeric differentiation.");
+DEFINE_double(ridders_shrink_factor, 2.0, "Shrink factor for Ridders "
+              "numeric differentiation.");
 
 
 namespace ceres {
@@ -70,27 +83,57 @@ namespace examples {
 
 const double kDoubleMax = std::numeric_limits<double>::max();
 
-#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)          \
-  struct name {                                                         \
-    static const int kNumParameters = num_parameters;                   \
-    static const double initial_x[kNumParameters];                      \
-    static const double lower_bounds[kNumParameters];                   \
-    static const double upper_bounds[kNumParameters];                   \
-    static const double constrained_optimal_cost;                       \
-    static const double unconstrained_optimal_cost;                     \
-    static CostFunction* Create() {                                     \
-      if (FLAGS_use_numeric_diff) {                                     \
-        return new NumericDiffCostFunction<name,                        \
-                                           CENTRAL,                     \
-                                           num_residuals,               \
-                                           num_parameters>(new name);   \
-      } else {                                                          \
-        return new AutoDiffCostFunction<name,                           \
-                                        num_residuals,                  \
-                                        num_parameters>(new name);      \
-      }                                                                 \
-    }                                                                   \
-    template <typename T>                                               \
+void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
+  options->max_num_ridders_extrapolations = FLAGS_ridders_extrapolations;
+  options->ridders_step_shrink_factor = FLAGS_ridders_shrink_factor;
+  options->ridders_epsilon = FLAGS_ridders_epsilon;
+  options->relative_step_size = FLAGS_relative_step_size;
+  options->ridders_relative_initial_step_size = FLAGS_ridders_step_size;
+}
+
+#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)            \
+  struct name {                                                           \
+    static const int kNumParameters = num_parameters;                     \
+    static const double initial_x[kNumParameters];                        \
+    static const double lower_bounds[kNumParameters];                     \
+    static const double upper_bounds[kNumParameters];                     \
+    static const double constrained_optimal_cost;                         \
+    static const double unconstrained_optimal_cost;                       \
+    static CostFunction* Create() {                                       \
+      if (FLAGS_use_numeric_diff) {                                       \
+        ceres::NumericDiffMethodType diff_method = ceres::CENTRAL;        \
+        CHECK(ceres::StringToNumericDiffMethodType(                       \
+            FLAGS_numeric_diff_method, &diff_method));                    \
+        ceres::NumericDiffOptions options;                                \
+        SetNumericDiffOptions(&options);                                  \
+        switch (diff_method) {                                            \
+          default:                                                        \
+          case ceres::CENTRAL:                                            \
+            return new NumericDiffCostFunction<name,                      \
+                                               ceres::CENTRAL,            \
+                                               num_residuals,             \
+                                               num_parameters>(           \
+                new name, ceres::TAKE_OWNERSHIP, num_residuals, options); \
+          case ceres::FORWARD:                                            \
+            return new NumericDiffCostFunction<name,                      \
+                                               ceres::FORWARD,            \
+                                               num_residuals,             \
+                                               num_parameters>(           \
+                new name, ceres::TAKE_OWNERSHIP, num_residuals, options); \
+          case ceres::RIDDERS:                                            \
+            return new NumericDiffCostFunction<name,                      \
+                                               ceres::RIDDERS,            \
+                                               num_residuals,             \
+                                               num_parameters>(           \
+                new name, ceres::TAKE_OWNERSHIP, num_residuals, options); \
+        }                                                                 \
+      } else {                                                            \
+        return new AutoDiffCostFunction<name,                             \
+                                        num_residuals,                    \
+                                        num_parameters>(new name);        \
+      }                                                                   \
+    }                                                                     \
+    template <typename T>                                                 \
     bool operator()(const T* const x, T* residual) const {
 
 #define END_MGH_PROBLEM return true; } };  // NOLINT

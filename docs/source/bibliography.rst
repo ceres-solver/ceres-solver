@@ -94,6 +94,9 @@ Bibliography
    Part II: Implementation and Experiments**, Management Science,
    20(5), 863-874, 1974.
 
+.. [Ridders] C. J. F. Ridders, **Accurate computation of F'(x) and
+   F'(x) F"(x)**, Advances in Engineering Software 4(2), 75-76, 1978.
+
 .. [RuheWedin] A. Ruhe and P.Å. Wedin, **Algorithms for separable
    nonlinear least squares problems**, Siam Review, 22(3):318–337,
    1980.
