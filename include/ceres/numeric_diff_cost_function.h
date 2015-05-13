@@ -132,7 +132,7 @@
 //
 // ALTERNATE INTERFACE
 //
-// For a variety of reason, including compatibility with legacy code,
+// For a variety of reasons, including compatibility with legacy code,
 // NumericDiffCostFunction can also take CostFunction objects as
 // input. The following describes how.
 //
@@ -192,10 +192,18 @@ class NumericDiffCostFunction
   NumericDiffCostFunction(CostFunctor* functor,
                           Ownership ownership = TAKE_OWNERSHIP,
                           int num_residuals = kNumResiduals,
-                          const double relative_step_size = 1e-6)
+                          const double relative_step_size = 1e-6,
+                          const int adaptive_max_extrapolations = 10,
+                          const double adaptive_epsilon = 1e-12,
+                          const double adaptive_step_shrink_factor = 2.0,
+                          const bool adaptive_relative_error = false)
       :functor_(functor),
        ownership_(ownership),
-       relative_step_size_(relative_step_size) {
+       relative_step_size_(relative_step_size),
+       adaptive_max_extrapolations_(adaptive_max_extrapolations),
+       adaptive_epsilon_(adaptive_epsilon),
+       adaptive_step_shrink_factor_(adaptive_step_shrink_factor),
+       adaptive_relative_error_(adaptive_relative_error) {
     if (kNumResiduals == DYNAMIC) {
       SizedCostFunction<kNumResiduals,
                         N0, N1, N2, N3, N4,
@@ -279,6 +287,10 @@ class NumericDiffCostFunction
                            functor_.get(),                              \
                            residuals,                                   \
                            relative_step_size_,                         \
+                           adaptive_max_extrapolations_,                \
+                           adaptive_epsilon_,                           \
+                           adaptive_step_shrink_factor_,                \
+                           adaptive_relative_error_,                    \
                           SizedCostFunction<kNumResiduals,              \
                            N0, N1, N2, N3, N4,                          \
                            N5, N6, N7, N8, N9>::num_residuals(),        \
@@ -310,6 +322,10 @@ class NumericDiffCostFunction
   internal::scoped_ptr<CostFunctor> functor_;
   Ownership ownership_;
   const double relative_step_size_;
+  const int adaptive_max_extrapolations_;
+  const double adaptive_epsilon_;
+  const double adaptive_step_shrink_factor_;
+  const bool adaptive_relative_error_;
 };
 
 }  // namespace ceres
