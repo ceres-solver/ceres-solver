@@ -44,6 +44,10 @@ Users
   * Camera/depth sensors network calibration.
   * Depth sensor distortion map estimation.
 
+* `Theia <http://cs.ucsb.edu/~cmsweeney/theia>`_ is an open source
+  Structure from Motion library that uses Ceres for `bundle adjustment`_
+  and camera pose estimation.
+
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
 .. _PhotoTours: http://google-latlong.blogspot.com/2012/04/visit-global-landmarks-with-photo-tours.html
