@@ -367,7 +367,7 @@ the corresponding accessors. This information will be verified by the
     .. code-block:: c++
 
       template <typename CostFunctor,
-                NumericDiffMethod method = CENTRAL,
+                NumericDiffMethodType method = CENTRAL,
                 int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
                 int N0,       // Number of parameters in block 0.
                 int N1 = 0,   // Number of parameters in block 1.
@@ -481,10 +481,30 @@ the corresponding accessors. This information will be verified by the
    independent variables, and there is no limit on the dimensionality
    of each of them.
 
-   The ``CENTRAL`` difference method is considerably more accurate at
+   There are three available numeric differentiation schemes in ceres-solver:
+
+   The ``FORWARD`` difference method, which approximates :math:`f'(x)`
+   by computing :math:`\frac{f(x+h)-f(x)}{h}`, computes the cost function
+   one additional time at :math:`x+h`. It is the fastest but least accurate
+   method.
+
+   The ``CENTRAL`` difference method is more accurate at
    the cost of twice as many function evaluations than forward
-   difference. Consider using central differences begin with, and only
-   after that works, trying forward difference to improve performance.
+   difference, estimating :math:`f'(x)` by computing
+   :math:`\frac{f(x+h)-f(x-h)}{2h}`.
+
+   The ``RIDDERS`` difference method[Ridders]_ is an adaptive scheme that
+   estimates derivatives by performing multiple central differences
+   at varying scales. Specifically, the algorithm starts at a certain
+   :math:`h` and as the derivative is estimated, this step size decreases.
+   To conserve function evaluations and estimate the derivative error, the 
+   method performs Richardson extrapolations between the tested step sizes.
+   The algorithm exhibits considerably higher accuracy, but does so by
+   additional evaluations of the cost function.
+
+   Consider using ``CENTRAL`` differences to begin with. Based on the
+   results, either try forward difference to improve performance or
+   Ridders' method to improve accuracy.
 
    **WARNING** A common beginner's error when first using
    NumericDiffCostFunction is to get the sizing wrong. In particular,
@@ -530,7 +550,7 @@ Numeric Differentiation & LocalParameterization
 
    **Alternate Interface**
 
-   For a variety of reason, including compatibility with legacy code,
+   For a variety of reasons, including compatibility with legacy code,
    :class:`NumericDiffCostFunction` can also take
    :class:`CostFunction` objects as input. The following describes
    how.
@@ -571,7 +591,7 @@ Numeric Differentiation & LocalParameterization
 
      .. code-block:: c++
 
-      template <typename CostFunctor, NumericDiffMethod method = CENTRAL>
+      template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
       class DynamicNumericDiffCostFunction : public CostFunction {
       };
 

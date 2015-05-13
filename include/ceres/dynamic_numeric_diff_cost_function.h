@@ -68,19 +68,37 @@
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/numeric_diff.h"
+#include "ceres/numeric_diff_options.h"
 #include "glog/logging.h"
 
 namespace ceres {
 
-template <typename CostFunctor, NumericDiffMethod method = CENTRAL>
+template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
 class DynamicNumericDiffCostFunction : public CostFunction {
  public:
-  explicit DynamicNumericDiffCostFunction(const CostFunctor* functor,
-                                          Ownership ownership = TAKE_OWNERSHIP,
-                                          double relative_step_size = 1e-6)
+  explicit DynamicNumericDiffCostFunction(
+      const CostFunctor* functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      const NumericDiffOptions& options = NumericDiffOptions())
       : functor_(functor),
         ownership_(ownership),
-        relative_step_size_(relative_step_size) {
+        options_(options) {
+  }
+
+  // Deprecated. New users should avoid using this constructor. Instead, use the
+  // constructor with NumericDiffOptions.
+  DynamicNumericDiffCostFunction(
+      const CostFunctor* functor,
+      Ownership ownership,
+      double relative_step_size)
+      : functor_(functor),
+        ownership_(ownership),
+        options_() {
+    LOG(WARNING) << "This constructor is deprecated and will be removed in "
+                    "a future version. Please use the NumericDiffOptions "
+                    "constructor instead.";
+
+    options_.relative_step_size = relative_step_size;
   }
 
   virtual ~DynamicNumericDiffCostFunction() {
@@ -140,7 +158,7 @@ class DynamicNumericDiffCostFunction : public CostFunction {
                        DYNAMIC, DYNAMIC>::EvaluateJacobianForParameterBlock(
                                              functor_.get(),
                                              residuals,
-                                             relative_step_size_,
+                                             options_,
                                              this->num_residuals(),
                                              block,
                                              block_sizes[block],
@@ -179,7 +197,7 @@ class DynamicNumericDiffCostFunction : public CostFunction {
 
   internal::scoped_ptr<const CostFunctor> functor_;
   Ownership ownership_;
-  const double relative_step_size_;
+  NumericDiffOptions options_;
 };
 
 }  // namespace ceres

@@ -86,7 +86,7 @@ bool IsClose(double x, double y, double relative_precision,
 class GradientCheckingCostFunction : public CostFunction {
  public:
   GradientCheckingCostFunction(const CostFunction* function,
-                               double relative_step_size,
+                               const NumericDiffOptions& options,
                                double relative_precision,
                                const string& extra_info)
       : function_(function),
@@ -97,7 +97,7 @@ class GradientCheckingCostFunction : public CostFunction {
         new DynamicNumericDiffCostFunction<CostFunction, CENTRAL>(
             function,
             DO_NOT_TAKE_OWNERSHIP,
-            relative_step_size);
+            options);
 
     const vector<int32>& parameter_block_sizes =
         function->parameter_block_sizes();
@@ -235,8 +235,11 @@ CostFunction *CreateGradientCheckingCostFunction(
     double relative_step_size,
     double relative_precision,
     const string& extra_info) {
+  NumericDiffOptions numeric_diff_options;
+  numeric_diff_options.relative_step_size = relative_step_size;
+
   return new GradientCheckingCostFunction(cost_function,
-                                          relative_step_size,
+                                          numeric_diff_options,
                                           relative_precision,
                                           extra_info);
 }

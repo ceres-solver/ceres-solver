@@ -63,34 +63,62 @@ DEFINE_string(problem, "all", "Which problem to solve");
 DEFINE_bool(use_numeric_diff, false,
             "Use numeric differentiation instead of automatic "
             "differentiation.");
-
+DEFINE_string(numeric_diff_method, "ridders", "When using numeric "
+              "differentiation, selects algorithm. Options are: central, "
+              "forward, ridders.");
+DEFINE_int32(ridders_extrapolations, 3, "Maximal number of extrapolations in "
+             "Ridders' method.");
 
 namespace ceres {
 namespace examples {
 
 const double kDoubleMax = std::numeric_limits<double>::max();
 
-#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)          \
-  struct name {                                                         \
-    static const int kNumParameters = num_parameters;                   \
-    static const double initial_x[kNumParameters];                      \
-    static const double lower_bounds[kNumParameters];                   \
-    static const double upper_bounds[kNumParameters];                   \
-    static const double constrained_optimal_cost;                       \
-    static const double unconstrained_optimal_cost;                     \
-    static CostFunction* Create() {                                     \
-      if (FLAGS_use_numeric_diff) {                                     \
-        return new NumericDiffCostFunction<name,                        \
-                                           CENTRAL,                     \
-                                           num_residuals,               \
-                                           num_parameters>(new name);   \
-      } else {                                                          \
-        return new AutoDiffCostFunction<name,                           \
-                                        num_residuals,                  \
-                                        num_parameters>(new name);      \
-      }                                                                 \
-    }                                                                   \
-    template <typename T>                                               \
+static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
+  options->max_num_ridders_extrapolations = FLAGS_ridders_extrapolations;
+}
+
+#define BEGIN_MGH_PROBLEM(name, num_parameters, num_residuals)            \
+  struct name {                                                           \
+    static const int kNumParameters = num_parameters;                     \
+    static const double initial_x[kNumParameters];                        \
+    static const double lower_bounds[kNumParameters];                     \
+    static const double upper_bounds[kNumParameters];                     \
+    static const double constrained_optimal_cost;                         \
+    static const double unconstrained_optimal_cost;                       \
+    static CostFunction* Create() {                                       \
+      if (FLAGS_use_numeric_diff) {                                       \
+        ceres::NumericDiffOptions options;                                \
+        SetNumericDiffOptions(&options);                                  \
+        if (FLAGS_numeric_diff_method == "central") {                     \
+          return new NumericDiffCostFunction<name,                        \
+                                             ceres::CENTRAL,              \
+                                             num_residuals,               \
+                                             num_parameters>(             \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);   \
+        } else if (FLAGS_numeric_diff_method == "forward") {              \
+          return new NumericDiffCostFunction<name,                        \
+                                             ceres::FORWARD,              \
+                                             num_residuals,               \
+                                             num_parameters>(             \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);   \
+        } else if (FLAGS_numeric_diff_method == "ridders") {              \
+          return new NumericDiffCostFunction<name,                        \
+                                             ceres::RIDDERS,              \
+                                             num_residuals,               \
+                                             num_parameters>(             \
+              new name, ceres::TAKE_OWNERSHIP, num_residuals, options);   \
+        } else {                                                          \
+          LOG(ERROR) << "Invalid numeric diff method specified";          \
+          return NULL;                                                    \
+        }                                                                 \
+      } else {                                                            \
+        return new AutoDiffCostFunction<name,                             \
+                                        num_residuals,                    \
+                                        num_parameters>(new name);        \
+      }                                                                   \
+    }                                                                     \
+    template <typename T>                                                 \
     bool operator()(const T* const x, T* residual) const {
 
 #define END_MGH_PROBLEM return true; } };  // NOLINT

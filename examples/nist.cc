@@ -65,7 +65,7 @@
 // solver had the highest LRE.
 
 // In this file, we implement the same evaluation methodology using
-// Ceres. Currently using Levenberg-Marquard with DENSE_QR, we get
+// Ceres. Currently using Levenberg-Marquardt with DENSE_QR, we get
 //
 //               Excel  Gnuplot  GaussFit  HBN  MinPack  Ceres
 // Average LRE     2.3      4.3       4.0  6.8      4.4    9.4
@@ -118,6 +118,13 @@ DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
 DEFINE_bool(use_numeric_diff, false,
             "Use numeric differentiation instead of automatic "
             "differentiation.");
+DEFINE_string(numeric_diff_method, "ridders", "When using numeric "
+              "differentiation, selects algorithm. Options are: central, "
+              "forward, ridders.");
+DEFINE_double(ridders_step_size, 1e-9, "Initial step size for Ridders "
+              "numeric differentiation.");
+DEFINE_int32(ridders_extrapolations, 3, "Maximal number of Ridders "
+             "extrapolations.");
 
 namespace ceres {
 namespace examples {
@@ -413,6 +420,11 @@ struct Nelson {
   double y_;
 };
 
+static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
+  options->max_num_ridders_extrapolations = FLAGS_ridders_extrapolations;
+  options->ridders_relative_initial_step_size = FLAGS_ridders_step_size;
+}
+
 template <typename Model, int num_residuals, int num_parameters>
 int RegressionDriver(const string& filename,
                      const ceres::Solver::Options& options) {
@@ -439,11 +451,30 @@ int RegressionDriver(const string& filename,
           response.data() + nist_problem.response_size() * i);
       ceres::CostFunction* cost_function = NULL;
       if (FLAGS_use_numeric_diff) {
-        cost_function =
-            new ceres::NumericDiffCostFunction<Model,
-                                               ceres::CENTRAL,
-                                               num_residuals,
-                                               num_parameters>(model);
+        ceres::NumericDiffOptions options;
+        SetNumericDiffOptions(&options);
+        if (FLAGS_numeric_diff_method == "central") {
+          cost_function = new NumericDiffCostFunction<Model,
+                                                      ceres::CENTRAL,
+                                                      num_residuals,
+                                                      num_parameters>(
+              model, ceres::TAKE_OWNERSHIP, num_residuals, options);
+        } else if (FLAGS_numeric_diff_method == "forward") {
+          cost_function = new NumericDiffCostFunction<Model,
+                                                      ceres::FORWARD,
+                                                      num_residuals,
+                                                      num_parameters>(
+              model, ceres::TAKE_OWNERSHIP, num_residuals, options);
+        } else if (FLAGS_numeric_diff_method == "ridders") {
+          cost_function = new NumericDiffCostFunction<Model,
+                                                      ceres::RIDDERS,
+                                                      num_residuals,
+                                                      num_parameters>(
+              model, ceres::TAKE_OWNERSHIP, num_residuals, options);
+        } else {
+          LOG(ERROR) << "Invalid numeric diff method specified";
+          return 0;
+        }
       } else {
          cost_function =
              new ceres::AutoDiffCostFunction<Model,

@@ -132,7 +132,7 @@
 //
 // ALTERNATE INTERFACE
 //
-// For a variety of reason, including compatibility with legacy code,
+// For a variety of reasons, including compatibility with legacy code,
 // NumericDiffCostFunction can also take CostFunction objects as
 // input. The following describes how.
 //
@@ -165,6 +165,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/internal/numeric_diff.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/numeric_diff_options.h"
 #include "ceres/sized_cost_function.h"
 #include "ceres/types.h"
 #include "glog/logging.h"
@@ -172,7 +173,7 @@
 namespace ceres {
 
 template <typename CostFunctor,
-          NumericDiffMethod method = CENTRAL,
+          NumericDiffMethodType method = CENTRAL,
           int kNumResiduals = 0,  // Number of residuals, or ceres::DYNAMIC
           int N0 = 0,   // Number of parameters in block 0.
           int N1 = 0,   // Number of parameters in block 1.
@@ -189,19 +190,43 @@ class NumericDiffCostFunction
                                N0, N1, N2, N3, N4,
                                N5, N6, N7, N8, N9> {
  public:
-  NumericDiffCostFunction(CostFunctor* functor,
-                          Ownership ownership = TAKE_OWNERSHIP,
-                          int num_residuals = kNumResiduals,
-                          const double relative_step_size = 1e-6)
-      :functor_(functor),
-       ownership_(ownership),
-       relative_step_size_(relative_step_size) {
+  NumericDiffCostFunction(
+      CostFunctor* functor,
+      Ownership ownership = TAKE_OWNERSHIP,
+      int num_residuals = kNumResiduals,
+      const NumericDiffOptions& options = NumericDiffOptions())
+      : functor_(functor),
+        ownership_(ownership),
+        options_(options) {
     if (kNumResiduals == DYNAMIC) {
       SizedCostFunction<kNumResiduals,
                         N0, N1, N2, N3, N4,
                         N5, N6, N7, N8, N9>
           ::set_num_residuals(num_residuals);
     }
+  }
+
+  // Deprecated. New users should avoid using this constructor. Instead, use the
+  // constructor with NumericDiffOptions.
+  NumericDiffCostFunction(CostFunctor* functor,
+                          Ownership ownership,
+                          int num_residuals,
+                          const double relative_step_size)
+      :functor_(functor),
+       ownership_(ownership),
+       options_() {
+    LOG(WARNING) << "This constructor is deprecated and will be removed in "
+                    "a future version. Please use the NumericDiffOptions "
+                    "constructor instead.";
+
+    if (kNumResiduals == DYNAMIC) {
+      SizedCostFunction<kNumResiduals,
+                        N0, N1, N2, N3, N4,
+                        N5, N6, N7, N8, N9>
+          ::set_num_residuals(num_residuals);
+    }
+
+    options_.relative_step_size = relative_step_size;
   }
 
   ~NumericDiffCostFunction() {
@@ -278,7 +303,7 @@ class NumericDiffCostFunction
                        N ## block >::EvaluateJacobianForParameterBlock( \
                            functor_.get(),                              \
                            residuals,                                   \
-                           relative_step_size_,                         \
+                           options_,                                    \
                           SizedCostFunction<kNumResiduals,              \
                            N0, N1, N2, N3, N4,                          \
                            N5, N6, N7, N8, N9>::num_residuals(),        \
@@ -309,7 +334,7 @@ class NumericDiffCostFunction
  private:
   internal::scoped_ptr<CostFunctor> functor_;
   Ownership ownership_;
-  const double relative_step_size_;
+  NumericDiffOptions options_;
 };
 
 }  // namespace ceres
