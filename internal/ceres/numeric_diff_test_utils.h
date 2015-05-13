@@ -38,6 +38,9 @@
 namespace ceres {
 namespace internal {
 
+// Noise factor for randomized cost function.
+static const double kNoiseFactor = 0.01;
+
 // y1 = x1'x2      -> dy1/dx1 = x2,               dy1/dx2 = x1
 // y2 = (x1'x2)^2  -> dy2/dx1 = 2 * x2 * (x1'x2), dy2/dx2 = 2 * x1 * (x1'x2)
 // y3 = x2'x2      -> dy3/dx1 = 0,                dy3/dx2 = 2 * x2
@@ -46,7 +49,7 @@ class EasyFunctor {
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
       const CostFunction& cost_function,
-      NumericDiffMethod method) const;
+      NumericDiffMethodType method) const;
 };
 
 class EasyCostFunction : public SizedCostFunction<3, 5, 5> {
@@ -71,7 +74,7 @@ class TranscendentalFunctor {
   bool operator()(const double* x1, const double* x2, double* residuals) const;
   void ExpectCostFunctionEvaluationIsNearlyCorrect(
       const CostFunction& cost_function,
-      NumericDiffMethod method) const;
+      NumericDiffMethodType method) const;
 };
 
 class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {
@@ -84,6 +87,58 @@ class TranscendentalCostFunction : public SizedCostFunction<2, 5, 5> {
  private:
   TranscendentalFunctor functor_;
 };
+
+// y = exp(x), dy/dx = exp(x)
+class ExponentialFunctor {
+ public:
+  bool operator()(const double* x1, double* residuals) const;
+  void ExpectCostFunctionEvaluationIsNearlyCorrect(
+      const CostFunction& cost_function) const;
+};
+
+class ExponentialCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** /* not used */) const {
+    return functor_(parameters[0], residuals);
+  }
+
+ private:
+  ExponentialFunctor functor_;
+};
+
+// Test adaptive numeric differentiation by synthetically adding random noise
+// to a functor.
+// y = x^2 + [random noise], dy/dx ~ 2x
+class RandomizedFunctor {
+ public:
+  RandomizedFunctor(double noise_factor) : noise_factor_(noise_factor) {
+  }
+
+  bool operator()(const double* x1, double* residuals) const;
+  void ExpectCostFunctionEvaluationIsNearlyCorrect(
+      const CostFunction& cost_function) const;
+
+ private:
+  double noise_factor_;
+};
+
+class RandomizedCostFunction : public SizedCostFunction<1, 1> {
+ public:
+  RandomizedCostFunction(double noise_factor) : functor_(noise_factor) {
+  }
+
+  virtual bool Evaluate(double const* const* parameters,
+                        double* residuals,
+                        double** /* not used */) const {
+    return functor_(parameters[0], residuals);
+  }
+
+ private:
+  RandomizedFunctor functor_;
+};
+
 
 }  // namespace internal
 }  // namespace ceres

@@ -27,6 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
+//         tbennun@gmail.com (Tal Ben-Nun)
 
 #include "ceres/numeric_diff_test_utils.h"
 
@@ -56,7 +57,7 @@ bool EasyFunctor::operator()(const double* x1,
 
 void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
-    NumericDiffMethod method) const {
+    NumericDiffMethodType method) const {
   // The x1[0] is made deliberately small to test the performance near
   // zero.
   double x1[] = { 1e-64, 2.0, 3.0, 4.0, 5.0 };
@@ -106,7 +107,7 @@ bool TranscendentalFunctor::operator()(const double* x1,
 
 void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
-    NumericDiffMethod method) const {
+    NumericDiffMethodType method) const {
   struct {
     double x1[5];
     double x2[5];
@@ -158,6 +159,78 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
       ExpectClose(-x2[i] * exp(-x1x2 / 10.) / 10., dydx1[5 * 1 + i], tolerance);
       ExpectClose(-x1[i] * exp(-x1x2 / 10.) / 10., dydx2[5 * 1 + i], tolerance);
     }
+  }
+}
+
+bool ExponentialFunctor::operator()(const double* x1,
+                                    double* residuals) const {
+  residuals[0] = exp(x1[0]);
+  return true;
+}
+
+void ExponentialFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
+    const CostFunction& cost_function) const {
+  // Evaluating the functor at specific points for testing.
+  double kTests[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+
+  const double kTolerance = 9e-14;
+
+  for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
+    double *parameters[] = { &kTests[k] };
+    double dydx;
+    double *jacobians[1] = { &dydx };
+    double residual;
+
+    ASSERT_TRUE(cost_function.Evaluate(&parameters[0],
+                                       &residual,
+                                       &jacobians[0]));
+
+
+    double expected_result = exp(kTests[k]);
+
+    // Expect residual to be close to exp(x).
+    ExpectClose(residual, expected_result, kTolerance);
+
+    // Check evaluated differences. dydx should also be close to exp(x).
+    ExpectClose(dydx, expected_result, kTolerance);
+  }
+}
+
+bool RandomizedFunctor::operator()(const double* x1,
+                                   double* residuals) const {
+  double random_value = static_cast<double>(rand()) /
+      static_cast<double>(RAND_MAX);
+
+  // Normalize noise to [-factor, factor].
+  random_value *= 2.0;
+  random_value -= 1.0;
+  random_value *= noise_factor_;
+
+  residuals[0] = x1[0] * x1[0] + random_value;
+  return true;
+}
+
+void RandomizedFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
+    const CostFunction& cost_function) const {
+  double kTests[] = { 0.0, 1.0, 3.0, 4.0, 50.0 };
+
+  const double kTolerance = 2e-4;
+
+  for (int k = 0; k < CERES_ARRAYSIZE(kTests); ++k) {
+    double *parameters[] = { &kTests[k] };
+    double dydx;
+    double *jacobians[1] = { &dydx };
+    double residual;
+
+    ASSERT_TRUE(cost_function.Evaluate(&parameters[0],
+                                       &residual,
+                                       &jacobians[0]));
+
+    // Expect residual to be close to x^2 w.r.t. noise factor.
+    ExpectClose(residual, kTests[k] * kTests[k], noise_factor_);
+
+    // Check evaluated differences. (dy/dx = ~2x)
+    ExpectClose(dydx, 2 * kTests[k], kTolerance);
   }
 }
 

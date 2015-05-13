@@ -367,7 +367,7 @@ the corresponding accessors. This information will be verified by the
     .. code-block:: c++
 
       template <typename CostFunctor,
-                NumericDiffMethod method = CENTRAL,
+                NumericDiffMethodType method = CENTRAL,
                 int kNumResiduals,  // Number of residuals, or ceres::DYNAMIC.
                 int N0,       // Number of parameters in block 0.
                 int N1 = 0,   // Number of parameters in block 1.
@@ -571,7 +571,7 @@ Numeric Differentiation & LocalParameterization
 
      .. code-block:: c++
 
-      template <typename CostFunctor, NumericDiffMethod method = CENTRAL>
+      template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
       class DynamicNumericDiffCostFunction : public CostFunction {
       };
 

@@ -92,12 +92,15 @@ class GradientCheckingCostFunction : public CostFunction {
       : function_(function),
         relative_precision_(relative_precision),
         extra_info_(extra_info) {
+    NumericDiffOptions options;
+    options.relative_step_size = relative_step_size;
+
     DynamicNumericDiffCostFunction<CostFunction, CENTRAL>*
         finite_diff_cost_function =
         new DynamicNumericDiffCostFunction<CostFunction, CENTRAL>(
             function,
             DO_NOT_TAKE_OWNERSHIP,
-            relative_step_size);
+            options);
 
     const vector<int32>& parameter_block_sizes =
         function->parameter_block_sizes();
