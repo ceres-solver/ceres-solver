@@ -1,0 +1,565 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc2ad55_1a661dda",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Comment adds no value; delete or change into something illuminating.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_5a709588",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "The number of parameters to this method makes me uncomfortable. Consider giving this an options struct.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_7a755177",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "\"ind\"? Please pick a better name.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_ba5609e5",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Comment isn\u0027t informative. Perhaps something like\n\nAs the derivative is estimated, the step size changes. Start the step size at delta (typically 1e-16 or machine eps) and the algorithm will adapt it from there.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_da63c5c1",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "I\u0027m skeptical this is a good idea.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_77ff2a78",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "( should go on previous line. Follow on lines should be indented 4. Same for next statement.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_fa6081b7",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Naming: current, previous",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1a4ffd49",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Naming: err -\u003e error\n\nPerhaps explain what \"norm error\" is as a comment.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_3a54b9d9",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Space after for",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1af1bd66",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "this is always doing cur_candidates[0]; is this expected? Perhaps move the resize outside of he loop?",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_5aeb3576",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "missing i?",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_b7870214",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Use {}s always.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_fae2419d",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "4 space continuations",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_d7847e11",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Space before ( in loops, if. Please fix throughout.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_9a422d1c",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Reflow comment (can be 1 line I think)",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_dae585a8",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "temp_error is not a great name - I believe there is a better one. How about new_error? error_of_new_proposal?",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_7ad711c5",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "{}s always (throughout change)",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1ac8dd26",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Perhaps instead\n\nCheck to see if the current gradient estimate is stable enough. If so, we\u0027re done; bail out and return.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_5ad255d6",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Please comment on the two different exit conditions",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_ba3fe984",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "else ... if -\u003e elseif\n\n} else if (...) {",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_37f5b29a",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Comment adds no value; remove.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1aeb7da9",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Consider making a NumericDiffOptions struct for these and sharing it.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_5ae5f5d1",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Please add documentation to adaptive (and the others as well while you\u0027re here).",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_dad8251a",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Please move this into the numeric_diff_test.cc file; there isn\u0027t a need to split this out separately.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_da8ae5e9",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "I think this only works if the cost_function is the exp function? Perhaps name cost_function exp_cost_function to make this explicit.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_ba8d2905",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Are these the points to check evaluations at? Perhaps add a comment to that effect.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_5a77b589",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "What are these constants? Should these be named expected_residuals (and above expected_jacobians?)",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1a945d1a",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Please use {}s always.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_dab105c2",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "What about the seed? I guess this should work no matter the seed.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_fa87a1e0",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "There is a bunch of copying here; please factor it out instead.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_faaec160",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "{}s",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_1a7d3d6a",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "Construct the cost function with the argument instead of doing a reset immediately after construction (throughout).",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dc2ad55_7aa3917e",
+        "filename": "internal/ceres/adaptive_numeric_diff_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-05-14T08:32:33Z",
+      "side": 1,
+      "message": "I don\u0027t see anything \"Central\" about this test :) Please go through all these test names and make sure they match.",
+      "revId": "720a845a60f7b7124d12b0d0ee660aed4103d07e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
