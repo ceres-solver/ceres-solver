@@ -57,7 +57,9 @@ bool EasyFunctor::operator()(const double* x1,
 void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
     const CostFunction& cost_function,
     NumericDiffMethod method) const {
-  double x1[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+  // The x1[0] is made deliberately small to test the performance near
+  // zero.
+  double x1[] = { 1e-64, 2.0, 3.0, 4.0, 5.0 };
   double x2[] = { 9.0, 9.0, 5.0, 5.0, 1.0 };
   double *parameters[] = { &x1[0], &x2[0] };
 
@@ -71,9 +73,12 @@ void EasyFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
                                      &residuals[0],
                                      &jacobians[0]));
 
-  EXPECT_EQ(residuals[0], 67);
-  EXPECT_EQ(residuals[1], 4489);
-  EXPECT_EQ(residuals[2], 213);
+  double expected_residuals[3];
+  EasyFunctor functor;
+  functor(x1, x2, expected_residuals);
+  EXPECT_EQ(expected_residuals[0], residuals[0]);
+  EXPECT_EQ(expected_residuals[1], residuals[1]);
+  EXPECT_EQ(expected_residuals[2], residuals[2]);
 
   const double tolerance = (method == CENTRAL)? 3e-9 : 2e-5;
 
@@ -145,7 +150,7 @@ void TranscendentalFunctor::ExpectCostFunctionEvaluationIsNearlyCorrect(
       x1x2 += x1[i] * x2[i];
     }
 
-    const double tolerance = (method == CENTRAL)? 3e-9 : 2e-5;
+    const double tolerance = (method == CENTRAL)? 2e-7 : 2e-5;
 
     for (int i = 0; i < 5; ++i) {
       ExpectClose( x2[i] * cos(x1x2),              dydx1[5 * 0 + i], tolerance);

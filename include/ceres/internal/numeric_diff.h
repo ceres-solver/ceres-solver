@@ -133,23 +133,18 @@ struct NumericDiff {
     ParameterVector x(x_plus_delta);
     ParameterVector step_size = x.array().abs() * relative_step_size;
 
-    // To handle cases where a parameter is exactly zero, instead use
-    // the mean step_size for the other dimensions. If all the
-    // parameters are zero, there's no good answer. Take
-    // relative_step_size as a guess and hope for the best.
-    const double fallback_step_size =
-        (step_size.sum() == 0)
-        ? relative_step_size
-        : step_size.sum() / step_size.rows();
+    // It is not a good idea to make the step size arbitrarily
+    // small. This will lead to problems with round off and numerical
+    // instability when dividing by the step size. The general
+    // recommendation is to not go down below sqrt(epsilon).
+    const double min_step_size =
+        std::sqrt(std::numeric_limits<double>::epsilon());
 
     // For each parameter in the parameter block, use finite differences to
     // compute the derivative for that parameter.
-
     ResidualVector residuals(num_residuals_internal);
     for (int j = 0; j < parameter_block_size_internal; ++j) {
-      const double delta =
-          (step_size(j) == 0.0) ? fallback_step_size : step_size(j);
-
+      const double delta = std::max(min_step_size, step_size(j));
       x_plus_delta(j) = x(j) + delta;
 
       if (!EvaluateImpl<CostFunctor, N0, N1, N2, N3, N4, N5, N6, N7, N8, N9>(
