@@ -358,6 +358,9 @@ class CERES_EXPORT ScaledLoss : public LossFunction {
 // whose scale can be mutated after an optimization problem has been
 // constructed.
 //
+// Since we treat the a NULL Loss function as the Identity loss
+// function, rho = NULL is a valid input.
+//
 // Example usage
 //
 //  Problem problem;
@@ -394,8 +397,9 @@ class CERES_EXPORT LossFunctionWrapper : public LossFunction {
   }
 
   virtual void Evaluate(double sq_norm, double out[3]) const {
-    CHECK_NOTNULL(rho_.get());
-    rho_->Evaluate(sq_norm, out);
+    if (rho_.get() != NULL) {
+      rho_->Evaluate(sq_norm, out);
+    }
   }
 
   void Reset(LossFunction* rho, Ownership ownership) {
