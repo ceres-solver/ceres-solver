@@ -228,6 +228,24 @@ TEST(LossFunction, LossFunctionWrapper) {
   for (int i = 0; i < 3; ++i) {
     EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
   }
+
+  // Set to NULL
+  TrivialLoss loss_function4;
+  loss_function_wrapper.Reset(NULL, TAKE_OWNERSHIP);
+  loss_function_wrapper.Evaluate(s, rho);
+  loss_function4.Evaluate(s, rho_gold);
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
+  }
+
+  // Set to NULL, not taking ownership
+  loss_function_wrapper.Reset(NULL, DO_NOT_TAKE_OWNERSHIP);
+  loss_function_wrapper.Evaluate(s, rho);
+  loss_function4.Evaluate(s, rho_gold);
+  for (int i = 0; i < 3; ++i) {
+    EXPECT_NEAR(rho[i], rho_gold[i], 1e-12);
+  }
+
 }
 
 }  // namespace internal
