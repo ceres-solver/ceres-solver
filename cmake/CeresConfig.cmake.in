@@ -37,7 +37,7 @@
 #
 # This module defines the following variables:
 #
-# Ceres_FOUND / CERES_FOUND: True iff Ceres has been successfully
+# Ceres_FOUND / CERES_FOUND: True if Ceres has been successfully
 #                            found. Both variables are set as although
 #                            FindPackage() only references Ceres_FOUND
 #                            in Config mode, given the conventions for
