@@ -37,7 +37,7 @@
 #
 # This module defines the following variables:
 #
-# Ceres_FOUND / CERES_FOUND: True iff Ceres has been successfully
+# Ceres_FOUND / CERES_FOUND: True if Ceres has been successfully
 #                            found. Both variables are set as although
 #                            FindPackage() only references Ceres_FOUND
 #                            in Config mode, given the conventions for
@@ -51,11 +51,12 @@
 # CERES_INCLUDE_DIRS: Include directories for Ceres and the
 #                     dependencies which appear in the Ceres public
 #                     API and are thus required to use Ceres.
-#                     CERES_LIBRARIES: Libraries for Ceres and all
-#                     dependencies against which Ceres was
-#                     compiled. This will not include any optional
-#                     dependencies that were disabled when Ceres was
-#                     compiled.
+#
+# CERES_LIBRARIES: Libraries for Ceres and all
+#                  dependencies against which Ceres was
+#                  compiled. This will not include any optional
+#                  dependencies that were disabled when Ceres was
+#                  compiled.
 #
 # The following variables are also defined for legacy compatibility
 # only.  Any new code should not use them as they do not conform to
@@ -114,7 +115,7 @@ GET_FILENAME_COMPONENT(CURRENT_ROOT_INSTALL_DIR
 IF (NOT EXISTS ${CURRENT_ROOT_INSTALL_DIR})
   CERES_REPORT_NOT_FOUND(
     "Ceres install root: ${CURRENT_ROOT_INSTALL_DIR}, "
-    "determined from relative path from CeresConfg.cmake install location: "
+    "determined from relative path from CeresConfig.cmake install location: "
     "${CERES_CURRENT_CONFIG_INSTALL_DIR}, does not exist. Either the install "
     "directory was deleted, or the install tree was only partially relocated "
     "outside of CMake after Ceres was built.")
@@ -128,7 +129,7 @@ SET(CERES_INCLUDE_DIR "${CURRENT_ROOT_INSTALL_DIR}/include")
 IF (NOT EXISTS ${CERES_INCLUDE_DIR}/ceres/ceres.h)
   CERES_REPORT_NOT_FOUND(
     "Ceres install root: ${CURRENT_ROOT_INSTALL_DIR}, "
-    "determined from relative path from CeresConfg.cmake install location: "
+    "determined from relative path from CeresConfig.cmake install location: "
     "${CERES_CURRENT_CONFIG_INSTALL_DIR}, does not contain Ceres headers. "
     "Either the install directory was deleted, or the install tree was only "
     "partially relocated outside of CMake after Ceres was built.")
