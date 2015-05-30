@@ -187,7 +187,7 @@ IF (IOS)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow you
   # to submit to the Apple Store if the symbol is present.
   UPDATE_CACHE_VARIABLE(LAPACK OFF)
-  
+
   MESSAGE(STATUS "Building for iOS: SuiteSparse, CXSparse, LAPACK, gflags, and OpenMP are not available.")
 
   UPDATE_CACHE_VARIABLE(BUILD_EXAMPLES OFF)
@@ -785,11 +785,16 @@ INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR}/config)
 ADD_SUBDIRECTORY(internal/ceres)
 
 IF (BUILD_DOCUMENTATION)
-  MESSAGE("-- Documentation building is enabled")
-
-  # Generate the User's Guide (html).
-  # The corresponding target is UserGuide, but is included in ALL.
-  ADD_SUBDIRECTORY(docs)
+  FIND_PACKAGE(Sphinx QUIET)
+  IF (NOT SPHINX_FOUND)
+    MESSAGE("-- Failed to find Sphinx, disabling build of documentation.")
+    UPDATE_CACHE_VARIABLE(BUILD_DOCUMENTATION OFF)
+  ELSE()
+    # Generate the User's Guide (html).
+    # The corresponding target is ceres_docs, but is included in ALL.
+    MESSAGE("-- Build the HTML documentation.")
+    ADD_SUBDIRECTORY(docs)
+  ENDIF()
 ENDIF (BUILD_DOCUMENTATION)
 
 IF (BUILD_EXAMPLES)
