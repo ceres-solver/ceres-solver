@@ -54,7 +54,7 @@ IF (NOT SPHINX_EXECUTABLE)
                  PATHS
                    /usr/bin
                    /usr/local/bin
-                   /opt/loca/bin
+                   /opt/local/bin
                  DOC "Sphinx documentation generator")
   ENDFOREACH ()
 ENDIF ()
