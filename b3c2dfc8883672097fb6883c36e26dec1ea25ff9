@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99c18d9_b6394e07",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "Thanks for updating the docs, please also add documentation for NumericDiffOptions.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_1692e25f",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "I am not sure if this code - computation of delta is worth having here, instead of folding them into the corresponding Evaluate methods.\n\nThe computation is not expensive, so I do not see any performance penalty either.\n\nI think the code out of the loop should just be non-method related stuff and everything else method specific should go in the particular evaluation related method call.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_769fe667",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "stack parameters the same way between the two calls.",
+      "range": {
+        "startLine": 169,
+        "startChar": 51,
+        "endLine": 169,
+        "endChar": 52
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_325ab001",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "NumericDiffOptions\u0026",
+      "range": {
+        "startLine": 423,
+        "startChar": 30,
+        "endLine": 423,
+        "endChar": 31
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_963ed2ea",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "Drop\n\"This data structures contains various\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_f633d620",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "Just \"Default constructor\" will do.",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_d6385a00",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "max_num_adaptive_extrapolations.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_364efe8b",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "these options are named adaptive, but the algorithm is ridders. is this still the best naming?\n\nalso does adding adaptive as the prefix really help?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_f2f2e894",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "how does this relate to relative_step_size above?\nalso from the explanation it sounds that the magnitude of this number is actually relative.  Should be named appropriately.",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 7
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_52e2d4c1",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "Is it worth providing the actual expression for checking convergence here? it gives people something to reason with.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_f2a90869",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "worth explaining some more here.\nwhat is the error being minimized?",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_92819cd8",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "This is fine for now as there are users of this API. But going forward it maybe worth exposing the full power of numeric diff going forward.\n\nAtleast worth adding a TODO here.",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594a3c43_9268bca0",
+        "filename": "internal/ceres/numeric_diff_test_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-15T14:15:11Z",
+      "side": 1,
+      "message": "any reason for this particular magic number?",
+      "range": {
+        "startLine": 176,
+        "startChar": 30,
+        "endLine": 176,
+        "endChar": 31
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
