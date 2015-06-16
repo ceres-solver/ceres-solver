@@ -29,7 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
 // CostFunctionToFunctor is an adapter class that allows users to use
-// CostFunction objects in templated functors which are to be used for
+// SizedCostFunction objects in templated functors which are to be used for
 // automatic differentiation.  This allows the user to seamlessly mix
 // analytic, numeric and automatic differentiation.
 //
@@ -93,6 +93,7 @@
 #include <vector>
 
 #include "ceres/cost_function.h"
+#include "ceres/dynamic_cost_function_to_functor.h"
 #include "ceres/internal/fixed_array.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -105,7 +106,7 @@ template <int kNumResiduals,
 class CostFunctionToFunctor {
  public:
   explicit CostFunctionToFunctor(CostFunction* cost_function)
-  : cost_function_(cost_function) {
+  : cost_functor_(cost_function) {
     CHECK_NOTNULL(cost_function);
     CHECK(kNumResiduals > 0 || kNumResiduals == DYNAMIC);
 
@@ -160,7 +161,7 @@ class CostFunctionToFunctor {
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
 
-    return cost_function_->Evaluate(&x0, residuals, NULL);
+    return cost_functor_(&x0, residuals);
   }
 
   bool operator()(const double* x0,
@@ -179,7 +180,7 @@ class CostFunctionToFunctor {
     internal::FixedArray<const double*> parameter_blocks(2);
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -200,7 +201,7 @@ class CostFunctionToFunctor {
     parameter_blocks[0] = x0;
     parameter_blocks[1] = x1;
     parameter_blocks[2] = x2;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -223,7 +224,7 @@ class CostFunctionToFunctor {
     parameter_blocks[1] = x1;
     parameter_blocks[2] = x2;
     parameter_blocks[3] = x3;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -248,7 +249,7 @@ class CostFunctionToFunctor {
     parameter_blocks[2] = x2;
     parameter_blocks[3] = x3;
     parameter_blocks[4] = x4;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -275,7 +276,7 @@ class CostFunctionToFunctor {
     parameter_blocks[3] = x3;
     parameter_blocks[4] = x4;
     parameter_blocks[5] = x5;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -304,7 +305,7 @@ class CostFunctionToFunctor {
     parameter_blocks[4] = x4;
     parameter_blocks[5] = x5;
     parameter_blocks[6] = x6;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -335,7 +336,7 @@ class CostFunctionToFunctor {
     parameter_blocks[5] = x5;
     parameter_blocks[6] = x6;
     parameter_blocks[7] = x7;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -368,7 +369,7 @@ class CostFunctionToFunctor {
     parameter_blocks[6] = x6;
     parameter_blocks[7] = x7;
     parameter_blocks[8] = x8;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   bool operator()(const double* x0,
@@ -403,7 +404,7 @@ class CostFunctionToFunctor {
     parameter_blocks[7] = x7;
     parameter_blocks[8] = x8;
     parameter_blocks[9] = x9;
-    return cost_function_->Evaluate(parameter_blocks.get(), residuals, NULL);
+    return cost_functor_(parameter_blocks.get(), residuals);
   }
 
   template <typename JetT>
@@ -418,7 +419,7 @@ class CostFunctionToFunctor {
     CHECK_EQ(N7, 0);
     CHECK_EQ(N8, 0);
     CHECK_EQ(N9, 0);
-    return EvaluateWithJets(&x0, residuals);
+    return cost_functor_(&x0, residuals);
   }
 
   template <typename JetT>
@@ -438,7 +439,7 @@ class CostFunctionToFunctor {
     internal::FixedArray<const JetT*> jets(2);
     jets[0] = x0;
     jets[1] = x1;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -460,7 +461,7 @@ class CostFunctionToFunctor {
     jets[0] = x0;
     jets[1] = x1;
     jets[2] = x2;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -484,7 +485,7 @@ class CostFunctionToFunctor {
     jets[1] = x1;
     jets[2] = x2;
     jets[3] = x3;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -510,7 +511,7 @@ class CostFunctionToFunctor {
     jets[2] = x2;
     jets[3] = x3;
     jets[4] = x4;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -538,7 +539,7 @@ class CostFunctionToFunctor {
     jets[3] = x3;
     jets[4] = x4;
     jets[5] = x5;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -568,7 +569,7 @@ class CostFunctionToFunctor {
     jets[4] = x4;
     jets[5] = x5;
     jets[6] = x6;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -600,7 +601,7 @@ class CostFunctionToFunctor {
     jets[5] = x5;
     jets[6] = x6;
     jets[7] = x7;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -634,7 +635,7 @@ class CostFunctionToFunctor {
     jets[6] = x6;
     jets[7] = x7;
     jets[8] = x8;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
   template <typename JetT>
@@ -670,79 +671,11 @@ class CostFunctionToFunctor {
     jets[7] = x7;
     jets[8] = x8;
     jets[9] = x9;
-    return EvaluateWithJets(jets.get(), residuals);
+    return cost_functor_(jets.get(), residuals);
   }
 
  private:
-  template <typename JetT>
-  bool EvaluateWithJets(const JetT** inputs, JetT* output) const {
-    const int kNumParameters =  N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
-    const std::vector<int32>& parameter_block_sizes =
-        cost_function_->parameter_block_sizes();
-    const int num_parameter_blocks = parameter_block_sizes.size();
-    const int num_residuals = cost_function_->num_residuals();
-
-    internal::FixedArray<double> parameters(kNumParameters);
-    internal::FixedArray<double*> parameter_blocks(num_parameter_blocks);
-    internal::FixedArray<double> jacobians(num_residuals * kNumParameters);
-    internal::FixedArray<double*> jacobian_blocks(num_parameter_blocks);
-    internal::FixedArray<double> residuals(num_residuals);
-
-    // Build a set of arrays to get the residuals and jacobians from
-    // the CostFunction wrapped by this functor.
-    double* parameter_ptr = parameters.get();
-    double* jacobian_ptr = jacobians.get();
-    for (int i = 0; i < num_parameter_blocks; ++i) {
-      parameter_blocks[i] = parameter_ptr;
-      jacobian_blocks[i] = jacobian_ptr;
-      for (int j = 0; j < parameter_block_sizes[i]; ++j) {
-        *parameter_ptr++ = inputs[i][j].a;
-      }
-      jacobian_ptr += num_residuals * parameter_block_sizes[i];
-    }
-
-    if (!cost_function_->Evaluate(parameter_blocks.get(),
-                                  residuals.get(),
-                                  jacobian_blocks.get())) {
-      return false;
-    }
-
-    // Now that we have the incoming Jets, which are carrying the
-    // partial derivatives of each of the inputs w.r.t to some other
-    // underlying parameters. The derivative of the outputs of the
-    // cost function w.r.t to the same underlying parameters can now
-    // be computed by applying the chain rule.
-    //
-    //  d output[i]               d output[i]   d input[j]
-    //  --------------  = sum_j   ----------- * ------------
-    //  d parameter[k]            d input[j]    d parameter[k]
-    //
-    // d input[j]
-    // --------------  = inputs[j], so
-    // d parameter[k]
-    //
-    //  outputJet[i]  = sum_k jacobian[i][k] * inputJet[k]
-    //
-    // The following loop, iterates over the residuals, computing one
-    // output jet at a time.
-    for (int i = 0; i < num_residuals; ++i) {
-      output[i].a = residuals[i];
-      output[i].v.setZero();
-
-      for (int j = 0; j < num_parameter_blocks; ++j) {
-        const int32 block_size = parameter_block_sizes[j];
-        for (int k = 0; k < parameter_block_sizes[j]; ++k) {
-          output[i].v +=
-              jacobian_blocks[j][i * block_size + k] * inputs[j][k].v;
-        }
-      }
-    }
-
-    return true;
-  }
-
- private:
-  internal::scoped_ptr<CostFunction> cost_function_;
+  DynamicCostFunctionToFunctor cost_functor_;
 };
 
 }  // namespace ceres
