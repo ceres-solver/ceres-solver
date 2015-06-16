@@ -625,7 +625,7 @@ Numeric Differentiation & LocalParameterization
 
      class IntrinsicProjection : public SizedCostFunction<2, 5, 3> {
        public:
-         IntrinsicProjection(const double* observations);
+         IntrinsicProjection(const double* observation);
          virtual bool Evaluate(double const* const* parameters,
                                double* residuals,
                                double** jacobians) const;
@@ -656,7 +656,7 @@ Numeric Differentiation & LocalParameterization
 
     struct CameraProjection {
       CameraProjection(double* observation)
-      : intrinsic_projection_(new IntrinsicProjection(observation_)) {
+      : intrinsic_projection_(new IntrinsicProjection(observation)) {
       }
 
       template <typename T>
@@ -677,6 +677,8 @@ Numeric Differentiation & LocalParameterization
       CostFunctionToFunctor<2,5,3> intrinsic_projection_;
     };
 
+   Note that :class:`CostFunctionToFunctor` takes ownership of the 
+   :class:`CostFunction` that was passed in to the constructor.
 
    In the above example, we assumed that ``IntrinsicProjection`` is a
    ``CostFunction`` capable of evaluating its value and its
@@ -686,9 +688,9 @@ Numeric Differentiation & LocalParameterization
    .. code-block:: c++
 
     struct IntrinsicProjection
-      IntrinsicProjection(const double* observations) {
-        observations_[0] = observations[0];
-        observations_[1] = observations[1];
+      IntrinsicProjection(const double* observation) {
+        observation_[0] = observation[0];
+        observation_[1] = observation[1];
       }
 
       bool operator()(const double* calibration,
@@ -696,11 +698,11 @@ Numeric Differentiation & LocalParameterization
                       double* residuals) {
         double projection[2];
         ThirdPartyProjectionFunction(calibration, point, projection);
-        residuals[0] = observations_[0] - projection[0];
-        residuals[1] = observations_[1] - projection[1];
+        residuals[0] = observation_[0] - projection[0];
+        residuals[1] = observation_[1] - projection[1];
         return true;
       }
-     double observations_[2];
+     double observation_[2];
     };
 
 
@@ -717,7 +719,7 @@ Numeric Differentiation & LocalParameterization
      CameraProjection(double* observation)
        intrinsic_projection_(
          new NumericDiffCostFunction<IntrinsicProjection, CENTRAL, 2, 5, 3>(
-           new IntrinsicProjection(observations)) {
+           new IntrinsicProjection(observation)) {
      }
 
      template <typename T>
@@ -735,6 +737,74 @@ Numeric Differentiation & LocalParameterization
      CostFunctionToFunctor<2,5,3> intrinsic_projection_;
    };
 
+:class:`DynamicCostFunctionToFunctor`
+=====================================
+
+.. class:: DynamicCostFunctionToFunctor
+
+   :class:`DynamicCostFunctionToFunctor` provides the same functionality as
+   :class:`CostFunctionToFunctor` for cases where the number and size of the
+   parameter vectors and residuals are not known at compile-time. The API
+   provided by :class:`DynamicCostFunctionToFunctor` matches what would be
+   expected by :class:`DynamicAutoDiffCostFunction`, i.e. it provides a
+   templated functor of this form:
+
+   .. code-block:: c++
+
+    template<typename T>
+    bool operator()(T const* const* parameters, T* residuals) const;
+
+   Similar to the example given for :class:`CostFunctionToFunctor`, let us
+   assume that
+
+   .. code-block:: c++
+
+     class IntrinsicProjection : public CostFunction {
+       public:
+         IntrinsicProjection(const double* observation);
+         virtual bool Evaluate(double const* const* parameters,
+                               double* residuals,
+                               double** jacobians) const;
+     };
+
+   is a :class:`CostFunction` that projects a point in its local coordinate
+   system onto its image plane and subtracts it from the observed point
+   projection.
+
+   Using this :class:`CostFunction` in a templated functor would then look like
+   this:
+
+   .. code-block:: c++
+
+    struct CameraProjection {
+      CameraProjection(double* observation)
+          : intrinsic_projection_(new IntrinsicProjection(observation)) {
+      }
+
+      template <typename T>
+      bool operator()(T const* const* parameters,
+                      T* residual) const {
+        const T* rotation = parameters[0];
+        const T* translation = parameters[1];
+        const T* intrinsics = parameters[2];
+        const T* point = parameters[3];
+
+        T transformed_point[3];
+        RotateAndTranslatePoint(rotation, translation, point, transformed_point);
+
+        const T* projection_parameters[2];
+        projection_parameters[0] = intrinsics;
+        projection_parameters[1] = transformed_point;
+        return intrinsic_projection_(projection_parameters, residual);
+      }
+
+     private:
+      DynamicCostFunctionToFunctor intrinsic_projection_;
+    };
+
+   Like :class:`CostFunctionToFunctor`, :class:`DynamicCostFunctionToFunctor`
+   takes ownership of the :class:`CostFunction` that was passed in to the
+   constructor.
 
 :class:`ConditionedCostFunction`
 ================================
