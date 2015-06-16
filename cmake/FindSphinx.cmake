@@ -43,6 +43,8 @@ FIND_PROGRAM(SPHINX_EXECUTABLE
                /opt/local/bin
              DOC "Sphinx documentation generator")
 
+MESSAGE(STATUS "Found sphinx: ${SPHINX_EXECUTABLE}")
+
 IF (NOT SPHINX_EXECUTABLE)
   SET(_Python_VERSIONS 2.7 2.6 2.5 2.4 2.3 2.2 2.1 2.0 1.6 1.5)
 
