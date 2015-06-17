@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b99c18d9_99ec3e06",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "This change is unfortunate - it will break existing uses. This will lead to people forking Ceres by never updating. Please add an overloaded constructor - even though it is banned by our style guide - to maintain backwards compatibility. The old constructor can simply put the old default step size into the options struct.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99c18d9_1692e25f",
         "filename": "include/ceres/internal/numeric_diff.h",
         "patchSetId": 5
@@ -59,6 +76,40 @@
     },
     {
       "key": {
+        "uuid": "b99c18d9_190fae6a",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Please stack each parameter instead of putting them on the same line.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_59f936c0",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Please reflow this comment block.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594a3c43_325ab001",
         "filename": "include/ceres/internal/numeric_diff.h",
         "patchSetId": 5
@@ -76,6 +127,40 @@
         "endLine": 423,
         "endChar": 31
       },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_39642a14",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Please add a compatibility constructor so that existing code doesn\u0027t break. Include a comment that new users should avoid using the old constructor.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_39f6eacf",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "This comment can get dropped since it\u0027s pretty clear this is the case.",
       "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -116,6 +201,30 @@
       "writtenOn": "2015-06-15T14:15:11Z",
       "side": 1,
       "message": "Just \"Default constructor\" will do.",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_79007233",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "I\u0027d argue this comment can get dropped entirely; it doesn\u0027t add value.",
+      "parentUuid": "b99c18d9_f633d620",
       "range": {
         "startLine": 42,
         "startChar": 31,
@@ -197,6 +306,23 @@
     },
     {
       "key": {
+        "uuid": "b99c18d9_592016d2",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "adaptive_relative_initial_step_size",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594a3c43_52e2d4c1",
         "filename": "include/ceres/numeric_diff_options.h",
         "patchSetId": 5
@@ -208,6 +334,30 @@
       "writtenOn": "2015-06-15T14:15:11Z",
       "side": 1,
       "message": "Is it worth providing the actual expression for checking convergence here? it gives people something to reason with.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_d92b66ba",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "I agree; what is the criterion?",
+      "parentUuid": "594a3c43_52e2d4c1",
       "range": {
         "startLine": 74,
         "startChar": 9,
@@ -237,6 +387,41 @@
     },
     {
       "key": {
+        "uuid": "b99c18d9_b9301a28",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "The comment is confusing. Consider naming with \u0027use\u0027?\n\nuse_adaptive_relative_error?\n\nAlso consider an enum - personally I view most booleans as antipatterns since the use is typically a 2-value enum. Function calls with enum args instead of booleans are easier to read also:\n\n  foo(a, b, METHOD_A) is better than\n  foo(a, b, false)",
+      "parentUuid": "594a3c43_f2a90869",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_7917d275",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Somewhere there needs to be some guidance on how to select these methods, aimed toward an applications audience.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594a3c43_92819cd8",
         "filename": "internal/ceres/gradient_checking_cost_function.cc",
         "patchSetId": 5
@@ -260,6 +445,115 @@
     },
     {
       "key": {
+        "uuid": "b99c18d9_b93e5aea",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Or just add a constructor to expose the new functionality.",
+      "parentUuid": "594a3c43_92819cd8",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_1934ce08",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Please revert the change to make everything fixturized. It\u0027s an unneeded dependency for the majority of these tests.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_394b8a7c",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Please make the RandomizedCostFunctor do this instead - do we want truly random cost functions? I think we always want the same seed in practice.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_9948be7e",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs the fixture either.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_79451262",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Remove fixture (and remove postfixed \"Test\" name).",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_d9a086b0",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Perhaps explain why 1000 is chosen.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594a3c43_9268bca0",
         "filename": "internal/ceres/numeric_diff_test_utils.cc",
         "patchSetId": 5
@@ -277,6 +571,23 @@
         "endLine": 176,
         "endChar": 31
       },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99c18d9_b9a5babe",
+        "filename": "internal/ceres/numeric_diff_test_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T01:16:58Z",
+      "side": 1,
+      "message": "Fix the seed",
       "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
