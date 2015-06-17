@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e114241_faf269e4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-17T20:02:22Z",
+      "side": 1,
+      "message": "Well, if C++11 is required, and they don\u0027t have it then things won\u0027t compile, so in a manner of speaking that\u0027s a check :P, although Clang on OS X at least is a bit laissez faire about this and silently adds it if you required.\n\n*However* the spells in internal/ceres/CMakeLists mean that if they are running CMake \u003e\u003d 2.8.12, then we can roll the requirement to compile with c++11 on GCC/Clang into the CMake Ceres target, so whenever they add it as a dependency, they will inherit the c++11 flag automatically, they don\u0027t have to do a thing.  Unfortunately, I know of now way to recreate this in any non-nuclear (add_definitions()) way for CMake versions \u003c 2.8.11, so in that case it\u0027s up to the user to add themselves manually in their project.",
+      "parentUuid": "b0734a93_588bc1b7",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0734a93_78887dba",
         "filename": "cmake/FindSharedPtr.cmake",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e00c6ef_1bc51b80",
+        "filename": "cmake/FindSharedPtr.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-17T20:02:22Z",
+      "side": 1,
+      "message": "That\u0027s not quite what\u0027s happening here.  CMake caches the results of any check_xxx() (or try_compile()) etc commands, so that it doesn\u0027t have to re-run them each time a user configures.  Generally this would be great, unfortunately CMake can\u0027t tell when they *should* be re-run because the circumstances have changed, i.e. in this case when the user has enabled CXX11 after it was previously off (or vice versa) in which case we are adding (resp. removing) the c++11 flag to the operations used by check_xxx() and the result will be different to before, so the cached versions must not be used.\n\nThis code forcibly unsets the cached results of check_xxx() which are set after this function is run, to ensure that it always reruns the tests, and never uses the cached values.  This is safe, as it mirrors the behaviour of the first ever configure every time.\n\nWithout this, things get really nasty - the user can toggle CXX11 in the GUI and things *don\u0027t* change when they should, because CMake just references the cached version with whatever configuration existed at the start, irrespective of what it is now - which is really confusing :(\n\nI think this is the best we can do, as it means in effect that these functions are stateless, so in fact it ensures that they are *not* dependent on what happened before / after them, as they clear anything that they set / create at the start.",
+      "parentUuid": "b0734a93_78887dba",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0734a93_985399c2",
         "filename": "cmake/FindUnorderedMap.cmake",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-17T05:56:59Z",
       "side": 1,
       "message": "This seems suboptimal.",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e114241_1ade3d4e",
+        "filename": "cmake/FindUnorderedMap.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-06-17T20:02:22Z",
+      "side": 1,
+      "message": "See previous response.",
+      "parentUuid": "b0734a93_985399c2",
       "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
