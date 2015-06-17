@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0734a93_588bc1b7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T05:56:59Z",
+      "side": 1,
+      "message": "Can we detect when this is violated in user code? I imagine we could drop a config variable and check using the preprocessor. Unfortunately it appears detecting C++11 mode is not so easy :(",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0734a93_78887dba",
+        "filename": "cmake/FindSharedPtr.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T05:56:59Z",
+      "side": 1,
+      "message": "This sort of action at a distance worries me, since what happens in the build is order-dependent on the other includes. Could we instead require the user to explicitly pick the C++11 case and then delete this section?",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0734a93_985399c2",
+        "filename": "cmake/FindUnorderedMap.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-17T05:56:59Z",
+      "side": 1,
+      "message": "This seems suboptimal.",
+      "revId": "2b79fd8bb3032ca6e39fa30b9f3de9179ce04516",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0734a93_384fe5c5",
         "filename": "internal/ceres/CMakeLists.txt",
         "patchSetId": 2
