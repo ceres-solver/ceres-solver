@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99c18d9_d95fe66b",
+        "filename": "include/ceres/dynamic_cost_function_to_functor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-06-17T04:04:07Z",
+      "side": 1,
+      "message": "document transfer of ownership here and in costfunctiontofunctor also. This was an oversight on my part.",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 107,
+        "endChar": 8
+      },
+      "revId": "009a23340f961464d2f01e9ea3a2332b1215bdad",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
