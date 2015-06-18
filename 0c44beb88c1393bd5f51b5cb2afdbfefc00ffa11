@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de29b286_8e9d5bb7",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Should be indented 4.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_cea363fd",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Remove trailing space.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_aea017f1",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Should be indented 4.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_31c00a70",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Remove trailing space.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_d1c6668a",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_3127eaef",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "I think this should be straight on the object and not via scoped pointer, which introduces needless allocations. I should have caught this the first time these docs went in.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_d1f426ca",
+        "filename": "include/ceres/cost_function_to_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Should be indented 4.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_712d72cd",
+        "filename": "include/ceres/dynamic_cost_function_to_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "What\u0027s the point of making this a scoped pointer? It seems it would be better allocated directly in the object.",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de29b286_112ceecd",
+        "filename": "include/ceres/dynamic_cost_function_to_functor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-18T02:47:01Z",
+      "side": 1,
+      "message": "Indentation",
+      "revId": "0c44beb88c1393bd5f51b5cb2afdbfefc00ffa11",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
