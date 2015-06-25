@@ -539,6 +539,43 @@ Options controlling Ceres configuration
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
    to disable multi-threading.
 
+#. ``CXX11 [Default: OFF]``: Although Ceres does not currently use C++11,
+   it does use ``shared_ptr`` (required) and ``unordered_map`` (if
+   available); both of which existed in the previous iterations of what became
+   the C++11 standard: TR1 & C++0x.  As such, Ceres can compile on pre-C++11
+   compilers, using the TR1/C++0x versions of ``shared_ptr`` &
+   ``unordered_map``.
+
+   Crucially, on Linux (GCC & Clang), compiling against the TR1/C++0x versions,
+   even on C++11 compliant versions of GCC & Clang, *does not* require
+   ``-std=c++11`` when compiling Ceres, *nor* does it require that any client
+   code using Ceres use ``-std=c++11``.
+
+   On C++11 compliant versions of GCC & Clang on Linux, using the C++11
+   versions of ``shared_ptr`` & ``unordered_map`` *does* require the use of
+   ``-std=c++11``, both in Ceres and also in client code that uses Ceres.
+
+   On Linux, with ``CXX11=OFF`` (the default), Ceres will use the TR1/C++0x
+   versions of ``shared_ptr`` & ``unordered_map``, thus imposing no requirement
+   to use ``-std=c++11``.  Note that this also requires that no client code
+   which uses Ceres use the C++11 versions, or else there will be a conflict.
+
+   On Linux, enabling this option: ``CXX11=ON`` forces Ceres to use the C++11
+   versions of ``shared_ptr`` & ``unordered_map`` if they are available, and
+   thus imposes the requirement that all client code using Ceres (also)
+   compile with ``-std=c++11``.  This requirement is handled automatically
+   through CMake target properties on the exported Ceres target for CMake >=
+   2.8.12 (when it was introduced).  Thus, any client code which uses CMake will
+   automatically be compiled with ``-std=c++11``.  **On CMake versions <
+   2.8.12, you are responsible for ensuring that any code which uses Ceres is
+   compiled with** ``-std=c++11``.
+
+   On OS X, Clang will use the C++11 versions of ``shared_ptr`` &
+   ``unordered_map`` without ``-std=c++11`` and so this option is not relevant.
+   On MSVC, whatever new C++ features are implemented are enabled by default,
+   and there is no equivalent of ``-std=c++11``, and so again this option is not
+   relevant.
+
 #. ``BUILD_SHARED_LIBS [Default: OFF]``: By default Ceres is built as
    a static library, turn this ``ON`` to instead build Ceres as a
    shared library.
