@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eabbaef_4c74dfad",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-25T22:20:11Z",
+      "side": 1,
+      "message": "Overall this block of text is hard to parse. What about making a table instead? That way it would be much easier to index and get the relevant information for your OS. There can be rows for Windows and OS X that can say \"not relevant\" etc. I\u0027m imagining the following\n\nRows:\nLinux CXX11\u003dON\nLinux CXX11\u003dOFF\nMac OS X\nWindows\n\nColumns:\nClient code must use -cstd11 YES/NO\nComment\n\nWhat\u0027s sort of annoying is that our public interfaces use the shared ptr type (in solver.h) and so whatever choice is used here must also get used by client code.",
+      "revId": "b0f32105a7c30f293c047fd47c3353116a2fe577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eabbaef_cc872f17",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-25T22:20:11Z",
+      "side": 1,
+      "message": "In this paragraph vs the one after, it\u0027s hard to understand the distinction in the flags without looking really carefully. It may be worth either making a table, or somehow combining them and highlighting what\u0027s different in a single sentence. Perhaps what makes this paragraph harder to understand is that the \"even on C++11 complain versions of GCC \u0026 Clang\" - this makes it seem like both configurations are in C++11 mode.\n\nThink about it; if nothing better comes to mind we can merge this as is.",
+      "revId": "b0f32105a7c30f293c047fd47c3353116a2fe577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eabbaef_0c7ad79b",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-06-25T22:20:11Z",
+      "side": 1,
+      "message": "Can the Ceres headers detect this mismatch via the config? E.g. check that Ceres was configured with C++11, but the current compiler is not.",
+      "revId": "b0f32105a7c30f293c047fd47c3353116a2fe577",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
