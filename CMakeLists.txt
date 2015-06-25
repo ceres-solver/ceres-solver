@@ -135,7 +135,21 @@ OPTION(EIGENSPARSE
    depends on the sparse QR factorization algorithm, which is licensed
    under the MPL."
   OFF)
-OPTION(CXX11 "Enable use of C++11 if available (requires client code use C++11)." OFF)
+# Ceres does not use C++11 internally, however it does use shared_ptr (required)
+# and unordered_map (if available), both of which were present in previous
+# iterations of what became C++11.  GCC & Clang can have both TR1 & C++11
+# versions of both shared_ptr & unordered_map and by default on Linux, we will
+# detect the TR1 versions if they exist, as they do NOT require -std=c++11 to be
+# passed when compiling Ceres, and any client code that uses Ceres.  This will
+# result in conflicts if the client code uses C++11.  Enabling this option
+# forces the use of the C++11 versions (& -std=c++11) if available.
+#
+# This option is not available on Windows, as there any new (C++11 etc) features
+# available are on by default, and there is no analogue to -std=c++11.
+IF (NOT WIN32)
+  OPTION(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
+ENDIF()
+
 OPTION(BUILD_TESTING "Enable tests" ON)
 OPTION(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 OPTION(BUILD_EXAMPLES "Build examples" ON)
@@ -147,8 +161,7 @@ IF (MSVC)
   IF (BUILD_TESTING AND BUILD_SHARED_LIBS)
     MESSAGE(
       "-- Disabling tests. The flags BUILD_TESTING and BUILD_SHARED_LIBS"
-      " are incompatible with MSVC."
-      )
+      " are incompatible with MSVC.")
     UPDATE_CACHE_VARIABLE(BUILD_TESTING OFF)
   ENDIF (BUILD_TESTING AND BUILD_SHARED_LIBS)
 ENDIF (MSVC)
@@ -496,20 +509,14 @@ ELSE (OPENMP)
   LIST(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
 ENDIF (OPENMP)
 
-# MSVC supports (in some sense) C++11, but does not use the -std=c++11 flag.
 INCLUDE(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_HAS_CXX11_FLAG)
-IF (CXX11)
-  # For some compilers (at least GCC 4.8), shared_ptr & unordered_map exist in
-  # two places, as the TR1 versions are still present.  In order to avoid any
-  # conflicts in user code linking against Ceres which uses C++11, we enable
-  # C++11 (which is required when using the non-TR1 versions) if it is available
-  # before searching for shared_ptr & unordered_map.
-  IF (COMPILER_HAS_CXX11_FLAG)
-    # CMAKE_REQUIRED_FLAGS is used by CheckCXXSourceCompiles.
-    SET(CMAKE_REQUIRED_FLAGS -std=c++11)
-  ENDIF (COMPILER_HAS_CXX11_FLAG)
-ENDIF (CXX11)
+IF (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+  # Update CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles to include
+  # -std=c++11 s/t we will detect the C++11 versions of unordered_map &
+  # shared_ptr if they exist.
+  SET(CMAKE_REQUIRED_FLAGS -std=c++11)
+ENDIF (CXX11 AND COMPILER_HAS_CXX11_FLAG)
 
 INCLUDE(FindUnorderedMap)
 FIND_UNORDERED_MAP()
@@ -543,8 +550,8 @@ ELSE (SHARED_PTR_FOUND)
     "if you expect C++11 to be available.")
 ENDIF (SHARED_PTR_FOUND)
 
-# To ensure that CXX11 accurately captures whether we are using C++11, even on
-# MSVC, check if it is required given where the potentially C++11 features Ceres
+# To ensure that CXX11 accurately reflects whether we are using C++11,
+# check if it is required given where the potentially C++11 features Ceres
 # uses were found, and disable it if C++11 is not being used.
 IF (CXX11)
   IF (NOT HAVE_SHARED_PTR_IN_STD_NAMESPACE AND
