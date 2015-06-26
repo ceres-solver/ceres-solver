@@ -262,6 +262,12 @@ UNSET(CERES_COMPILE_OPTIONS)
 HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
 FIND_PACKAGE(Eigen REQUIRED)
 IF (EIGEN_FOUND)
+  IF (EIGEN_VERSION VERSION_LESS 3.1.0)
+    MESSAGE(FATAL_ERROR "-- Ceres requires Eigen version >= 3.1.0 in order "
+      "that Eigen/SparseCore be available, detected version of Eigen is: "
+      "$EIGEN_VERSION")
+  ENDIF (EIGEN_VERSION VERSION_LESS 3.1.0)
+
   MESSAGE("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
   # Ensure that only MPL2 licensed code is part of the default build.
   MESSAGE("")
