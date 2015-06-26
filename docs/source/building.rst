@@ -26,7 +26,7 @@ optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-  3.2.1 or later.  **Required**
+  3.2.2 or later **strongly** recommended, 3.1.0 or later **required**.
 
   .. NOTE ::
 
