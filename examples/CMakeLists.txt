@@ -81,38 +81,47 @@ IF (GFLAGS)
   # require gflags, only the tests and examples do.
   ADD_DEFINITIONS(-DCERES_GFLAGS_NAMESPACE=${GFLAGS_NAMESPACE})
 
+  # With the latest gflags (2.1.2) & glog (0.3.4), gflags is compiled statically
+  # by default, and glog is compiled dynamically.  On Linux this combination is
+  # forbidden, as glog will refuse to link.  However on OS X (and in Homebrew)
+  # it is allowed, but with the perverse result that the gflags defined by glog
+  # are not visible unless glog appears explicitly before gflags when compiling
+  # an executable.  Thus we explicitly add GLOG_LIBRARIES to the link list
+  # *before* GFLAGS_LIBRARIES for each gflags dependent example to ensure that
+  # the gflags for glog should always be available.
+
   ADD_EXECUTABLE(powell powell.cc)
-  TARGET_LINK_LIBRARIES(powell ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(powell ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(nist nist.cc)
-  TARGET_LINK_LIBRARIES(nist ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(nist ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(more_garbow_hillstrom more_garbow_hillstrom.cc)
-  TARGET_LINK_LIBRARIES(more_garbow_hillstrom ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(more_garbow_hillstrom ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(circle_fit circle_fit.cc)
-  TARGET_LINK_LIBRARIES(circle_fit ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(circle_fit ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(bundle_adjuster
                  bundle_adjuster.cc
                  bal_problem.cc)
-  TARGET_LINK_LIBRARIES(bundle_adjuster ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(bundle_adjuster ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(libmv_bundle_adjuster
                  libmv_bundle_adjuster.cc)
-  TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(libmv_bundle_adjuster ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(libmv_homography
                  libmv_homography.cc)
-  TARGET_LINK_LIBRARIES(libmv_homography ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(libmv_homography ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(denoising
                  denoising.cc
                  fields_of_experts.cc)
-  TARGET_LINK_LIBRARIES(denoising ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(denoising ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
   ADD_EXECUTABLE(robot_pose_mle
                  robot_pose_mle.cc)
-  TARGET_LINK_LIBRARIES(robot_pose_mle ceres ${GFLAGS_LIBRARIES})
+  TARGET_LINK_LIBRARIES(robot_pose_mle ceres ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
 ENDIF (GFLAGS)
