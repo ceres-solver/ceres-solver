@@ -64,11 +64,11 @@ optional. For details on customizing the build process, see
   examples and tests.
 
 - `SuiteSparse
-  <http://www.cise.ufl.edu/research/sparse/SuiteSparse/>`_. Needed for
+  <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_. Needed for
   solving large sparse linear systems. **Optional; strongly recomended
   for large scale bundle adjustment**
 
-- `CXSparse <http://www.cise.ufl.edu/research/sparse/CXSparse/>`_.
+- `CXSparse <http://faculty.cse.tamu.edu/davis/suitesparse.html>`_.
   Similar to ``SuiteSparse`` but simpler and slower. CXSparse has
   no dependencies on ``LAPACK`` and ``BLAS``. This makes for a simpler
   build process and a smaller binary. **Optional**
