@@ -265,7 +265,7 @@ IF (EIGEN_FOUND)
   IF (EIGEN_VERSION VERSION_LESS 3.1.0)
     MESSAGE(FATAL_ERROR "-- Ceres requires Eigen version >= 3.1.0 in order "
       "that Eigen/SparseCore be available, detected version of Eigen is: "
-      "$EIGEN_VERSION")
+      "${EIGEN_VERSION}")
   ENDIF (EIGEN_VERSION VERSION_LESS 3.1.0)
 
   MESSAGE("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
