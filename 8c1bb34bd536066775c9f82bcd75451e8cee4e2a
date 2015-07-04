@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f801fb_3e652514",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-04T04:29:37Z",
+      "side": 1,
+      "message": "at this point is it worth making a separate gerrit submodule out of this and the following bits of code?",
+      "revId": "8c1bb34bd536066775c9f82bcd75451e8cee4e2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
