@@ -111,7 +111,7 @@ distribution.
  to build Ceres as a *shared* library.  Thus if you want to build
  Ceres as a shared library using SuiteSparse, you must perform a
  source install of SuiteSparse or use an external PPA (see
- https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214).
+ `bug report here <https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214>`_).
  It is recommended that you use the current version of SuiteSparse
  (4.2.1 at the time of writing).
 
