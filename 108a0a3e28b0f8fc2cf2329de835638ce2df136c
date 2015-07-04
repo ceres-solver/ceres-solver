@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f801fb_3e97e54f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-04T21:21:08Z",
+      "side": 1,
+      "message": "file",
+      "range": {
+        "startLine": 841,
+        "startChar": 36,
+        "endLine": 841,
+        "endChar": 40
+      },
+      "revId": "108a0a3e28b0f8fc2cf2329de835638ce2df136c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
