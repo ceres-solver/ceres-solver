@@ -831,7 +831,6 @@ INSTALL(FILES ${CERES_PUBLIC_INTERNAL_HDRS} DESTINATION include/ceres/internal)
 INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/config/ceres/internal/config.h
         DESTINATION include/ceres/internal)
 
-
 IF (MINIGLOG)
   # Install miniglog header if being used as logging #includes appear in
   # installed public Ceres headers.
@@ -839,14 +838,13 @@ IF (MINIGLOG)
           DESTINATION include/ceres/internal/miniglog/glog)
 ENDIF (MINIGLOG)
 
-# Add an uninstall target to remove all installed files.
-CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
-               "${CMAKE_BINARY_DIR}/cmake/uninstall.cmake"
-               IMMEDIATE @ONLY)
+# Create a CeresConfigVersion.cmake fiel containing the version information,
+# used by both export() & install().
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY)
 
-ADD_CUSTOM_TARGET(uninstall
-                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)
-
+# Create the install target for Ceres.
+#
 # Set relative install paths, which are appended to CMAKE_INSTALL_PREFIX to
 # generate the absolute install paths.
 IF (WIN32)
@@ -855,9 +853,9 @@ ELSE ()
   SET(RELATIVE_CMAKECONFIG_INSTALL_DIR share/Ceres)
 ENDIF ()
 
-# This "exports" all targets which have been put into the export set
-# "CeresExport". This means that CMake generates a file with the given
-# filename, which can later on be loaded by projects using this package.
+# This "exports" for installation, all targets which have been put into the
+# export set "CeresExport". This means that CMake generates a file with the
+# given filename, which can later on be loaded by projects using this package.
 # This file contains ADD_LIBRARY(bar IMPORTED) statements for each target
 # in the export set, so when loaded later on CMake will create "imported"
 # library targets from these, which can be used in many ways in the same way
@@ -873,24 +871,50 @@ FILE(RELATIVE_PATH INSTALL_ROOT_REL_CONFIG_INSTALL_DIR
      ${CMAKE_INSTALL_PREFIX}/${RELATIVE_CMAKECONFIG_INSTALL_DIR}
      ${CMAKE_INSTALL_PREFIX})
 
-# Create a CeresConfig.cmake file. <name>Config.cmake files are searched by
-# FIND_PACKAGE() automatically. We configure that file so that we can put any
-# information we want in it, e.g. version numbers, include directories, etc.
+# Create a CeresConfig.cmake file for an installed version of Ceres.
+#
+# NOTE: As cmake/CeresConfig.cmake.in can be configured for both an installed
+#       version of Ceres, and one exported from the build directory, we
+#       have to explicitly choose which option we wish to configure for.
+SET(SETUP_CERES_CONFIG_FOR_INSTALLATION TRUE)
 CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfig.cmake.in"
-               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake" @ONLY)
-
-# Additionally, when CMake has found a CeresConfig.cmake, it can check for a
-# CeresConfigVersion.cmake in the same directory when figuring out the version
-# of the package when a version has been specified in the FIND_PACKAGE() call,
-# e.g. FIND_PACKAGE(Ceres [1.4.2] REQUIRED). The version argument is optional.
-CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
-               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake" @ONLY)
+               "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig-install.cmake" @ONLY)
 
 # Install these files into the same directory as the generated exports-file,
 # we include the FindPackage scripts for libraries whose headers are included
 # in the public API of Ceres and should thus be present in CERES_INCLUDE_DIRS.
-INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfig-install.cmake"
+        RENAME CeresConfig.cmake
+        DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/CeresConfigVersion.cmake"
               "${CMAKE_SOURCE_DIR}/cmake/FindEigen.cmake"
               "${CMAKE_SOURCE_DIR}/cmake/FindGlog.cmake"
         DESTINATION ${RELATIVE_CMAKECONFIG_INSTALL_DIR})
+
+# Add an uninstall target to remove all installed files.
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/uninstall.cmake.in"
+               "${CMAKE_BINARY_DIR}/cmake/uninstall.cmake"
+               @ONLY)
+ADD_CUSTOM_TARGET(uninstall
+                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/cmake/uninstall.cmake)
+
+# Export the Ceres build directory into CMake's local package registry
+# (~/.cmake/packages on *nix & OS X), this allows the detection & use of Ceres
+# *without* requiring that it be installed.
+FILE(RELATIVE_PATH INSTALL_ROOT_REL_CONFIG_INSTALL_DIR
+     ${CMAKE_BINARY_DIR}
+     ${CMAKE_SOURCE_DIR})
+
+# Analogously to install(EXPORT ...), export the Ceres target from the build
+# directory as a package called Ceres into the local CMake package registry.
+EXPORT(TARGETS ceres FILE ${CMAKE_BINARY_DIR}/CeresTargets.cmake)
+EXPORT(PACKAGE Ceres)
+
+# Create a CeresConfig.cmake file for the export of the Ceres build directory.
+#
+# NOTE: As cmake/CeresConfig.cmake.in can be configured for both an installed
+#       version of Ceres, and one exported from the build directory, we
+#       have to explicitly choose which option we wish to configure for.
+SET(SETUP_CERES_CONFIG_FOR_INSTALLATION FALSE)
+CONFIGURE_FILE("${CMAKE_SOURCE_DIR}/cmake/CeresConfig.cmake.in"
+               "${CMAKE_BINARY_DIR}/CeresConfig.cmake" @ONLY)
