@@ -86,7 +86,7 @@ optional. For details on customizing the build process, see
   <https://github.com/xianyi/OpenBLAS/wiki/faq#wiki-multi-threaded>`_
   inside ``OpenBLAS`` as it conflicts with use of threads in Ceres.
 
-  MAC OS X ships with an optimized ``LAPACK`` and ``BLAS``
+  Mac OS X ships with an optimized ``LAPACK`` and ``BLAS``
   implementation as part of the ``Accelerate`` framework. The Ceres
   build system will automatically detect and use it.
 
@@ -111,7 +111,7 @@ distribution.
  to build Ceres as a *shared* library.  Thus if you want to build
  Ceres as a shared library using SuiteSparse, you must perform a
  source install of SuiteSparse or use an external PPA (see
- https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214).
+ `bug report here <https://bugs.launchpad.net/ubuntu/+source/suitesparse/+bug/1333214>`_).
  It is recommended that you use the current version of SuiteSparse
  (4.2.1 at the time of writing).
 
@@ -149,6 +149,9 @@ We are now ready to build, test, and install Ceres.
  cmake ../ceres-solver-1.10.0
  make -j3
  make test
+ # Optionally install Ceres, it can also be exported using CMake which
+ # allows Ceres to be used without requiring installation, see the documentation
+ # for the EXPORT_BUILD_DIR option for more information.
  make install
 
 You can also try running the command line bundling application with one of the
@@ -227,7 +230,7 @@ Mac OS X
 
 
 On OS X, you can either use `MacPorts <https://www.macports.org/>`_ or
-`homebrew <http://mxcl.github.com/homebrew/>`_ to install Ceres Solver.
+`Homebrew <http://mxcl.github.com/homebrew/>`_ to install Ceres Solver.
 
 If using `MacPorts <https://www.macports.org/>`_, then
 
@@ -237,7 +240,7 @@ If using `MacPorts <https://www.macports.org/>`_, then
 
 will install the latest version.
 
-If using `homebrew <http://mxcl.github.com/homebrew/>`_ and assuming
+If using `Homebrew <http://mxcl.github.com/homebrew/>`_ and assuming
 that you have the ``homebrew/science`` [#f1]_ tap enabled, then
 
 .. code-block:: bash
@@ -253,7 +256,7 @@ dependencies and
 
 will install the latest version in the git repo.
 
-You can also install each of the dependencies by hand using `homebrew
+You can also install each of the dependencies by hand using `Homebrew
 <http://mxcl.github.com/homebrew/>`_. There is no need to install
 ``BLAS`` or ``LAPACK`` separately as OS X ships with optimized
 ``BLAS`` and ``LAPACK`` routines as part of the `vecLib
@@ -281,6 +284,9 @@ We are now ready to build, test, and install Ceres.
    cmake ../ceres-solver-1.10.0
    make -j3
    make test
+   # Optionally install Ceres, it can also be exported using CMake which
+   # allows Ceres to be used without requiring installation, see the
+   # documentation for the EXPORT_BUILD_DIR option for more information.
    make install
 
 Like the Linux build, you should now be able to run
@@ -306,7 +312,7 @@ Windows
 
 .. NOTE::
 
-  If you find the following `CMake` difficult to set up, then you may
+  If you find the following CMake difficult to set up, then you may
   be interested in a `Microsoft Visual Studio wrapper
   <https://github.com/tbennun/ceres-windows>`_ for Ceres Solver by Tal
   Ben-Nun.
@@ -461,7 +467,7 @@ used), this should be sufficient for solving small to moderate sized problems
 ``CLUSTER_JACOBI`` and ``CLUSTER_TRIDIAGONAL`` preconditioners).
 
 If you decide to use ``LAPACK`` and ``BLAS``, then you also need to add
-``Accelerate.framework`` to your XCode project's linking dependency.
+``Accelerate.framework`` to your Xcode project's linking dependency.
 
 .. _section-customizing:
 
@@ -543,6 +549,14 @@ Options controlling Ceres configuration
    a static library, turn this ``ON`` to instead build Ceres as a
    shared library.
 
+#. ``EXPORT_BUILD_DIR [Default: OFF]``: By default Ceres is configured solely
+   for installation, and so must be installed in order for clients to use it.
+   Turn this ``ON`` to export Ceres' build directory location into the
+   `user's local CMake package registry <http://www.cmake.org/cmake/help/v3.2/manual/cmake-packages.7.html#user-package-registry>`_
+   where it will be detected **without requiring installation** in a client
+   project using CMake when `find_package(Ceres) <http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+   is invoked.
+
 #. ``BUILD_DOCUMENTATION [Default: OFF]``: Use this to enable building
    the documentation, requires `Sphinx <http://sphinx-doc.org/>`_ and the
    `sphinx_rtd_theme <https://pypi.python.org/pypi/sphinx_rtd_theme>`_
@@ -620,13 +634,26 @@ used by ``SuiteSparse`` and Ceres should be the same.
 Using Ceres with CMake
 ======================
 
-Once the library is installed with ``make install``, it is possible to
-use CMake with `find_package()
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
-in order to compile **user code** against Ceres. For example, to compile
-`examples/helloworld.cc
+In order to use Ceres in client code with CMake using
+`find_package() <http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+then either:
+
+#. Ceres must have been installed with ``make install``.
+    If the install location is non-standard (i.e. is not in CMake's default
+    search paths) then it will not be detected by default, see:
+    :ref:`section-local-installations`.
+
+    Note that if you are using a non-standard install location you should
+    consider exporting Ceres instead, as this will not require any extra
+    information to be provided in client code for Ceres to be detected.
+
+#. Or Ceres' build directory must have been exported
+    by enabling the ``EXPORT_BUILD_DIR`` option when Ceres was configured.
+
+
+As an example of how to use Ceres, to compile `examples/helloworld.cc
 <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/helloworld.cc>`_
-in a separate, standalone project, the following CMakeList.txt can be used:
+in a separate standalone project, the following CMakeList.txt can be used:
 
 .. code-block:: cmake
 
@@ -640,6 +667,45 @@ in a separate, standalone project, the following CMakeList.txt can be used:
     # helloworld
     add_executable(helloworld helloworld.cc)
     target_link_libraries(helloworld ${CERES_LIBRARIES})
+
+Irrespective of whether Ceres was installed or exported, if multiple versions
+are detected, set: ``Ceres_DIR`` to control which is used.  If Ceres was
+installed ``Ceres_DIR`` should be the path to the directory containing the
+installed ``CeresConfig.cmake`` file (e.g. ``/usr/local/share/Ceres``).  If
+Ceres was exported, then ``Ceres_DIR`` should be the path to the exported
+Ceres build directory.
+
+Specify Ceres version
+---------------------
+
+Additionally, when CMake has found Ceres it can optionally check the package
+version, if it has been specified in the `find_package()
+<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
+call.  For example:
+
+.. code-block:: cmake
+
+    find_package(Ceres 1.2.3 REQUIRED)
+
+.. _section-local-installations:
+
+Local installations
+-------------------
+
+If Ceres was installed in a non-standard path by specifying
+``-DCMAKE_INSTALL_PREFIX="/some/where/local"``, then the user should add
+the **PATHS** option to the ``find_package()`` command, e.g.,
+
+.. code-block:: cmake
+
+   find_package(Ceres REQUIRED PATHS "/some/where/local/")
+
+Note that this can be used to have multiple versions of Ceres
+installed.  However, particularly if you have only a single version of Ceres
+which you want to use but do not wish to install to a system location, you
+should consider exporting Ceres using the ``EXPORT_BUILD_DIR`` option instead
+of a local install, as exported versions of Ceres will be automatically detected
+by CMake, irrespective of their location.
 
 Understanding the CMake Package System
 ----------------------------------------
@@ -679,15 +745,18 @@ very useful:
     ``A``, and CMake will understand that this means that ``B`` also depends on
     all of the public dependencies of ``A``.
 
-When a project like Ceres is installed using CMake, in addition to the
-public headers and compiled libraries, a set of CMake-specific project
-configuration files are also installed to: ``<INSTALL_ROOT>/share/Ceres``.
-When `find_package
+When a project like Ceres is installed using CMake, or its build directory is
+exported into the local CMake package registry
+(see :ref:`section-install-vs-export`), in addition to the public
+headers and compiled libraries, a set of CMake-specific project configuration
+files are also installed to: ``<INSTALL_ROOT>/share/Ceres`` (if Ceres is
+installed), or created in the build directory (if Ceres' build directory is
+exported).  When `find_package
 <http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
 is invoked, CMake checks various standard install locations (including
-``/usr/local`` on Linux & UNIX systems), for installed CMake configuration files
-for the project to be found (i.e. Ceres in the case of ``find_package(Ceres)``).
-Specifically it looks for:
+``/usr/local`` on Linux & UNIX systems), and the local CMake package registry
+for CMake configuration files for the project to be found (i.e. Ceres in the
+case of ``find_package(Ceres)``).  Specifically it looks for:
 
 - ``<PROJECT_NAME>Config.cmake`` (or ``<lower_case_project_name>-config.cmake``)
 
@@ -708,7 +777,7 @@ the same location:
 An **imported target** contains the same information about a library as a CMake
 target that was declared locally in the current CMake project using
 ``add_library()``.  However, imported targets refer to objects that have already
-been built previously by a different CMake project.  Principally, an imported
+been built by a different CMake project.  Principally, an imported
 target contains the location of the compiled object and all of its public
 dependencies required to link against it.  Any locally declared target can
 depend on an imported target, and CMake will manage the dependency chain, just
@@ -735,20 +804,30 @@ as a dependency of another target by CMake.  In this case, linking only against
 ``libceres.a/so/dylib/lib`` without these other public dependencies would
 result in a linker error.
 
-Although this description covers projects that are **installed** using CMake, it
-also holds for projects that are **exported** using CMake using
+Note that this description applies both to projects that are **installed**
+using CMake, and to those whose **build directory is exported** using
 `export() <http://www.cmake.org/cmake/help/v3.2/command/export.html>`_
-instead of
-`install() <http://www.cmake.org/cmake/help/v3.2/command/install.html>`_.
-When a project is *installed*, the compiled libraries and headers are copied
+(instead of
+`install() <http://www.cmake.org/cmake/help/v3.2/command/install.html>`_).
+Ceres supports both installation and export of its build directory if the
+``EXPORT_BUILD_DIR`` option is enabled, see :ref:`section-customizing`.
+
+.. _section-install-vs-export:
+
+Installing a project with CMake vs Exporting its build directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When a project is **installed**, the compiled libraries and headers are copied
 from the source & build directory to the install location, and it is these
-copied files that are used by any client code.  When a project is *exported*,
-instead of copying the compiled libraries and headers, CMake creates an entry
-for the project in ``<USER_HOME>/.cmake/packages`` which contains the path to
+copied files that are used by any client code.  When a project's build directory
+is **exported**, instead of copying the compiled libraries and headers, CMake
+creates an entry for the project in the
+`user's local CMake package registry <http://www.cmake.org/cmake/help/v3.2/manual/cmake-packages.7.html#user-package-registry>`_,
+``<USER_HOME>/.cmake/packages`` on Linux & OS X, which contains the path to
 the project's build directory which will be checked by CMake during a call to
 ``find_package()``.  The effect of which is that any client code uses the
-compiled libraries and headers in the build directory directly, thus not
-requiring the project to be installed to be used.
+compiled libraries and headers in the build directory directly, **thus not
+requiring the project to be installed to be used**.
 
 Installing / Exporting a project that uses Ceres
 --------------------------------------------------
@@ -810,31 +889,3 @@ required modifications to ``FooConfig.cmake`` are show below:
     # CMake's search list before this call.
     include(CMakeFindDependencyMacro)
     find_dependency(Ceres)
-
-Specify Ceres version
----------------------
-
-Additionally, when CMake has found Ceres it can check the package
-version, if it has been specified in the `find_package()
-<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_
-call.  For example:
-
-.. code-block:: cmake
-
-    find_package(Ceres 1.2.3 REQUIRED)
-
-The version is an optional argument.
-
-Local installations
--------------------
-
-If Ceres was installed in a non-standard path by specifying
-``-DCMAKE_INSTALL_PREFIX="/some/where/local"``, then the user should add
-the **PATHS** option to the ``find_package()`` command, e.g.,
-
-.. code-block:: cmake
-
-   find_package(Ceres REQUIRED PATHS "/some/where/local/")
-
-Note that this can be used to have multiple versions of Ceres
-installed.
