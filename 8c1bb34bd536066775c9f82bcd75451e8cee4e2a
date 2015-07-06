@@ -52,6 +52,23 @@
       "revId": "8c1bb34bd536066775c9f82bcd75451e8cee4e2a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_9e56f9d3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2015-07-06T15:39:55Z",
+      "side": 1,
+      "message": "Perhaps this should indicate that a submodule was detected?",
+      "revId": "8c1bb34bd536066775c9f82bcd75451e8cee4e2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
