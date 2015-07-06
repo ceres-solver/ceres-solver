@@ -34,6 +34,24 @@
       "revId": "8c1bb34bd536066775c9f82bcd75451e8cee4e2a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_5e6631ce",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2015-07-06T15:20:27Z",
+      "side": 1,
+      "message": "Please, no submodules. We used them extensively at my last company and they were a necessary evil. They are error prone and unfriendly to non-git experts who want to contribute. Unless we have a really great reason to use them, let\u0027s not.",
+      "parentUuid": "b317d9fa_7b1b377a",
+      "revId": "8c1bb34bd536066775c9f82bcd75451e8cee4e2a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
