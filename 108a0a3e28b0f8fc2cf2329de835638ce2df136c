@@ -22,6 +22,23 @@
       "revId": "108a0a3e28b0f8fc2cf2329de835638ce2df136c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3219987_28e7a3d4",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-07T05:41:39Z",
+      "side": 1,
+      "message": "This seems a bit odd that we have to do so much gymnastics to enable export \u0026 install.",
+      "revId": "108a0a3e28b0f8fc2cf2329de835638ce2df136c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
