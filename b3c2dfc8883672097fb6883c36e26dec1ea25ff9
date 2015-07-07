@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "73f801fb_9b428bf2",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "const reference",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99c18d9_1692e25f",
         "filename": "include/ceres/internal/numeric_diff.h",
         "patchSetId": 5
@@ -47,6 +70,63 @@
       "writtenOn": "2015-06-15T14:15:11Z",
       "side": 1,
       "message": "I am not sure if this code - computation of delta is worth having here, instead of folding them into the corresponding Evaluate methods.\n\nThe computation is not expensive, so I do not see any performance penalty either.\n\nI think the code out of the loop should just be non-method related stuff and everything else method specific should go in the particular evaluation related method call.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_fb20ef5f",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "the documentation refers to relative_step_size but you are using adaptive_initial_step_size.\n\nalso adaptive seems to be a remanent of the time when the method was called adaptive instead of ridders.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_db25336e",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "also this depends on the invariant that adaptive_initial_step_size is always greater than sqrt(epsilon). I think you need a max of the two here to be sure.",
+      "range": {
+        "startLine": 146,
+        "startChar": 16,
+        "endLine": 146,
+        "endChar": 42
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_3b0b77df",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "why allocate temp_residuals and residuals here? it seems odd to have it here uninitialized vectors which are passed to these functions and below the thing that gets added to the jacobian matrix is a residual vector.\n\nalso maybe worth using a FixedArray here to save on some memory allocations.",
       "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +150,92 @@
         "endLine": 169,
         "endChar": 52
       },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_7b15fff2",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "Need a better name for this and the function below, as what they are really doing is just evaluating one column of the jacobian matrix.",
+      "range": {
+        "startLine": 184,
+        "startChar": 14,
+        "endLine": 184,
+        "endChar": 33
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_1b083bdf",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "stack all arguments vertically.",
+      "range": {
+        "startLine": 185,
+        "startChar": 54,
+        "endLine": 185,
+        "endChar": 55
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_5b12c30c",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "The ordering of these parameters is odd. it should be.\n\ncost functor\ninteger parameters\nconstant pointers\nmutable pointers",
+      "range": {
+        "startLine": 186,
+        "startChar": 38,
+        "endLine": 186,
+        "endChar": 51
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73f801fb_bb3dc780",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "we use const double* instead of double const * in ceres.",
       "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +270,75 @@
       "writtenOn": "2015-06-17T01:16:58Z",
       "side": 1,
       "message": "Please reflow this comment block.",
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3219987_88c41709",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "maybe factor is not such a great name for it, since so many things are factors here.",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 12
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3219987_c8ce0f27",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "pull these tests into these convergence tests into their own inlined functions for better readabilty and reuse here and below.",
+      "range": {
+        "startLine": 359,
+        "startChar": 26,
+        "endLine": 359,
+        "endChar": 27
+      },
+      "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3219987_48405f06",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-07-07T07:06:39Z",
+      "side": 1,
+      "message": "explicitly compare to zero.",
+      "range": {
+        "startLine": 393,
+        "startChar": 20,
+        "endLine": 393,
+        "endChar": 43
+      },
       "revId": "b3c2dfc8883672097fb6883c36e26dec1ea25ff9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
