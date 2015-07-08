@@ -167,7 +167,7 @@ TEST(Polynomial, QuadraticPolynomialWithTwoNegativeRootsWorks) {
 
 TEST(Polynomial, QuadraticPolynomialWithCloseRootsWorks) {
   const double roots[2] = { 42.42, 42.43 };
-  RunPolynomialTestRealRoots(roots, true, false, 2 * psilonLoose);
+  RunPolynomialTestRealRoots(roots, true, false, 2 * kEpsilonLoose);
 }
 
 TEST(Polynomial, QuadraticPolynomialWithComplexRootsWorks) {
