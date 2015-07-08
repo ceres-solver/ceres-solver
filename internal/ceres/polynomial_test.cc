@@ -47,7 +47,7 @@ namespace {
 
 // For IEEE-754 doubles, machine precision is about 2e-16.
 const double kEpsilon = 1e-13;
-const double kEpsilonLoose = 1e-9;
+const double kEpsilonLoose = 2e-9;
 
 // Return the constant polynomial p(x) = 1.23.
 Vector ConstantPolynomial(double value) {
