@@ -167,7 +167,7 @@ TEST(Polynomial, QuadraticPolynomialWithTwoNegativeRootsWorks) {
 
 TEST(Polynomial, QuadraticPolynomialWithCloseRootsWorks) {
   const double roots[2] = { 42.42, 42.43 };
-  RunPolynomialTestRealRoots(roots, true, false, 2 * kEpsilonLoose);
+  RunPolynomialTestRealRoots(roots, true, false, kEpsilonLoose);
 }
 
 TEST(Polynomial, QuadraticPolynomialWithComplexRootsWorks) {
@@ -200,7 +200,7 @@ TEST(Polynomial, QuarticPolynomialWithTwoClustersOfCloseRootsWorks) {
 
 TEST(Polynomial, QuarticPolynomialWithTwoZeroRootsWorks) {
   const double roots[4] = { -42.42, 0.0, 0.0, 42.42 };
-  RunPolynomialTestRealRoots(roots, true, true, kEpsilonLoose);
+  RunPolynomialTestRealRoots(roots, true, true, 2 * kEpsilonLoose);
 }
 
 TEST(Polynomial, QuarticMonomialWorks) {
