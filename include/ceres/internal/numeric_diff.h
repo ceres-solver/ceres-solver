@@ -204,6 +204,15 @@ struct NumericDiff<CostFunctor, kMethod, kNumResiduals,
       const int parameter_block_size,
       double **parameters,
       double *jacobian) {
+    // Silence unused parameter compiler warnings.
+    (void)functor;
+    (void)residuals_at_eval_point;
+    (void)relative_step_size;
+    (void)num_residuals;
+    (void)parameter_block_index;
+    (void)parameter_block_size;
+    (void)parameters;
+    (void)jacobian;
     LOG(FATAL) << "Control should never reach here.";
     return true;
   }
