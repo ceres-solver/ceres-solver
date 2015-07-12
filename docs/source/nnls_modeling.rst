@@ -1846,75 +1846,70 @@ Pascal Getreuer.
 
 .. class:: CubicInterpolator
 
-Given as input a one dimensional array like object, which provides
-the following interface.
+Given as input an infinite one dimensional grid, which provides the
+following interface.
 
 .. code::
 
-  struct Array {
+  struct Grid1D {
     enum { DATA_DIMENSION = 2; };
     void GetValue(int n, double* f) const;
-    int NumValues() const;
   };
 
 Where, ``GetValue`` gives us the value of a function :math:`f`
-(possibly vector valued) on the integers :code:`{0, ..., NumValues() -
-1}` and the enum ``DATA_DIMENSION`` indicates the dimensionality of
-the function being interpolated. For example if you are interpolating
-a color image with three channels (Red, Green & Blue), then
-``DATA_DIMENSION = 3``.
+(possibly vector valued) for any integer :math:`n` and the enum
+``DATA_DIMENSION`` indicates the dimensionality of the function being
+interpolated. For example if you are interpolating rotations in
+axis-angle format over time, then ``DATA_DIMENSION = 3``.
 
 :class:`CubicInterpolator` uses Cubic Hermite splines to produce a
 smooth approximation to it that can be used to evaluate the
-:math:`f(x)` and :math:`f'(x)` at any real valued point in the
-interval :code:`[0, NumValues() - 1]`. For example, the following code
-interpolates an array of four numbers.
+:math:`f(x)` and :math:`f'(x)` at any point on the real number
+line. For example, the following code interpolates an array of four
+numbers.
 
 .. code::
 
   const double data[] = {1.0, 2.0, 5.0, 6.0};
-  Array1D<double, 1> array(x, 4);
+  Grid1D<double, 1> array(x, 0, 4);
   CubicInterpolator interpolator(array);
   double f, dfdx;
-  CHECK(interpolator.Evaluate(1.5, &f, &dfdx));
+  interpolator.Evaluate(1.5, &f, &dfdx);
 
 
-In the above code we use ``Array1D`` a templated helper class that
+In the above code we use ``Grid1D`` a templated helper class that
 allows easy interfacing between ``C++`` arrays and
 :class:`CubicInterpolator`.
 
-``Array1D`` supports vector valued functions where the various
+``Grid1D`` supports vector valued functions where the various
 coordinates of the function can be interleaved or stacked. It also
 allows the use of any numeric type as input, as long as it can be
 safely cast to a double.
 
 .. class:: BiCubicInterpolator
 
-Given as input a two dimensional array like object, which provides
-the following interface:
+Given as input an infinite two dimensional grid, which provides the
+following interface:
 
 .. code::
 
-  struct Array {
-    enum { DATA_DIMENSION = 1 };
+  struct Grid2D {
+    enum { DATA_DIMENSION = 2 };
     void GetValue(int row, int col, double* f) const;
-    int NumRows() const;
-    int NumCols() const;
   };
 
 Where, ``GetValue`` gives us the value of a function :math:`f`
-(possibly vector valued) on the integer grid :code:`{0, ...,
-NumRows() - 1} x {0, ..., NumCols() - 1}` and the enum
-``DATA_DIMENSION`` indicates the dimensionality of the function being
-interpolated. For example if you are interpolating a color image with
-three channels (Red, Green & Blue), then ``DATA_DIMENSION = 3``.
+(possibly vector valued) for any pair of integers :code:`row` and
+:code:`col` and the enum ``DATA_DIMENSION`` indicates the
+dimensionality of the function being interpolated. For example if you
+are interpolating a color image with three channels (Red, Green &
+Blue), then ``DATA_DIMENSION = 3``.
 
 :class:`BiCubicInterpolator` uses the cubic convolution interpolation
 algorithm of R. Keys [Keys]_, to produce a smooth approximation to it
 that can be used to evaluate the :math:`f(r,c)`, :math:`\frac{\partial
 f(r,c)}{\partial r}` and :math:`\frac{\partial f(r,c)}{\partial c}` at
-any real valued point in the quad :code:`[0, NumRows() - 1] x [0,
-NumCols() - 1]`.
+any any point in the real plane.
 
 For example the following code interpolates a two dimensional array.
 
@@ -1923,16 +1918,16 @@ For example the following code interpolates a two dimensional array.
    const double data[] = {1.0, 3.0, -1.0, 4.0,
                           3.6, 2.1,  4.2, 2.0,
                           2.0, 1.0,  3.1, 5.2};
-   Array2D<double, 1>  array(data, 3, 4);
+   Grid2D<double, 1>  array(data, 0, 3, 0, 4);
    BiCubicInterpolator interpolator(array);
    double f, dfdr, dfdc;
-   CHECK(interpolator.Evaluate(1.2, 2.5, &f, &dfdr, &dfdc));
+   interpolator.Evaluate(1.2, 2.5, &f, &dfdr, &dfdc);
 
-In the above code, the templated helper class ``Array2D`` is used to
+In the above code, the templated helper class ``Grid2D`` is used to
 make a ``C++`` array look like a two dimensional table to
 :class:`BiCubicInterpolator`.
 
-``Array2D`` supports row or column major layouts. It also supports
+``Grid2D`` supports row or column major layouts. It also supports
 vector valued functions where the individual coordinates of the
 function may be interleaved or stacked. It also allows the use of any
 numeric type as input, as long as it can be safely cast to double.

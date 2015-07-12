@@ -35,7 +35,7 @@
 #include "ceres/cubic_interpolation.h"
 #include "glog/logging.h"
 
-using ceres::Array1D;
+using ceres::Grid1D;
 using ceres::CubicInterpolator;
 using ceres::AutoDiffCostFunction;
 using ceres::CostFunction;
@@ -47,22 +47,23 @@ using ceres::Solve;
 // values with automatic differentiation.
 struct InterpolatedCostFunctor {
   explicit InterpolatedCostFunctor(
-      const CubicInterpolator<Array1D<double> >& interpolator)
+      const CubicInterpolator<Grid1D<double> >& interpolator)
       : interpolator_(interpolator) {
   }
 
   template<typename T> bool operator()(const T* x, T* residuals) const {
-    return interpolator_.Evaluate(*x, residuals);
+    interpolator_.Evaluate(*x, residuals);
+    return true;
   }
 
   static CostFunction* Create(
-      const CubicInterpolator<Array1D<double> >& interpolator) {
+      const CubicInterpolator<Grid1D<double> >& interpolator) {
     return new AutoDiffCostFunction<InterpolatedCostFunctor, 1, 1>(
         new InterpolatedCostFunctor(interpolator));
   }
 
  private:
-  const CubicInterpolator<Array1D<double> >& interpolator_;
+  const CubicInterpolator<Grid1D<double> >& interpolator_;
 };
 
 int main(int argc, char** argv) {
@@ -75,8 +76,8 @@ int main(int argc, char** argv) {
     values[i] = (i - 4.5) * (i - 4.5);
   }
 
-  Array1D<double> array(values, kNumSamples);
-  CubicInterpolator<Array1D<double> > interpolator(array);
+  Grid1D<double> array(values, 0, kNumSamples);
+  CubicInterpolator<Grid1D<double> > interpolator(array);
 
   double x = 1.0;
   Problem problem;
