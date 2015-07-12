@@ -40,119 +40,168 @@ namespace internal {
 
 static const double kTolerance = 1e-12;
 
-TEST(Array1D, OneDataDimension) {
+TEST(Grid1D, OneDataDimension) {
   int x[] = {1, 2, 3};
-  Array1D<int, 1> array(x, 3);
+  Grid1D<int, 1> grid(x, 0, 3);
   for (int i = 0; i < 3; ++i) {
     double value;
-    array.GetValue(i, &value);
+    grid.GetValue(i, &value);
     EXPECT_EQ(value, static_cast<double>(i + 1));
   }
 }
 
-TEST(Array1D, TwoDataDimensionIntegerDataInterleaved) {
+TEST(Grid1D, OneDataDimensionOutOfBounds) {
+  int x[] = {1, 2, 3};
+  Grid1D<int, 1> grid(x, 0, 3);
+  double value;
+  grid.GetValue(-1, &value);
+  EXPECT_EQ(value, x[0]);
+  grid.GetValue(-2, &value);
+  EXPECT_EQ(value, x[0]);
+  grid.GetValue(3, &value);
+  EXPECT_EQ(value, x[2]);
+  grid.GetValue(4, &value);
+  EXPECT_EQ(value, x[2]);
+}
+
+TEST(Grid1D, TwoDataDimensionIntegerDataInterleaved) {
   int x[] = {1, 5,
              2, 6,
              3, 7};
 
-  Array1D<int, 2, true> array(x, 3);
+  Grid1D<int, 2, true> grid(x, 0, 3);
   for (int i = 0; i < 3; ++i) {
     double value[2];
-    array.GetValue(i, value);
+    grid.GetValue(i, value);
     EXPECT_EQ(value[0], static_cast<double>(i + 1));
     EXPECT_EQ(value[1], static_cast<double>(i + 5));
   }
 }
 
-TEST(Array1D, TwoDataDimensionIntegerDataStacked) {
+
+TEST(Grid1D, TwoDataDimensionIntegerDataStacked) {
   int x[] = {1, 2, 3,
              5, 6, 7};
 
-  Array1D<int, 2, false> array(x, 3);
+  Grid1D<int, 2, false> grid(x, 0, 3);
   for (int i = 0; i < 3; ++i) {
     double value[2];
-    array.GetValue(i, value);
+    grid.GetValue(i, value);
     EXPECT_EQ(value[0], static_cast<double>(i + 1));
     EXPECT_EQ(value[1], static_cast<double>(i + 5));
   }
 }
 
-TEST(Array2D, OneDataDimensionRowMajor) {
+TEST(Grid2D, OneDataDimensionRowMajor) {
   int x[] = {1, 2, 3,
              2, 3, 4};
-  Array2D<int, 1, true, true> array(x, 2, 3);
+  Grid2D<int, 1, true, true> grid(x, 0, 2, 0, 3);
   for (int r = 0; r < 2; ++r) {
     for (int c = 0; c < 3; ++c) {
       double value;
-      array.GetValue(r, c, &value);
+      grid.GetValue(r, c, &value);
       EXPECT_EQ(value, static_cast<double>(r + c + 1));
     }
   }
 }
 
-TEST(Array2D, TwoDataDimensionRowMajorInterleaved) {
+TEST(Grid2D, OneDataDimensionRowMajorOutOfBounds) {
+  int x[] = {1, 2, 3,
+             2, 3, 4};
+  Grid2D<int, 1, true, true> grid(x, 0, 2, 0, 3);
+  double value;
+  grid.GetValue(-1, -1, &value);
+  EXPECT_EQ(value, x[0]);
+  grid.GetValue(-1, 0, &value);
+  EXPECT_EQ(value, x[0]);
+  grid.GetValue(-1, 1, &value);
+  EXPECT_EQ(value, x[1]);
+  grid.GetValue(-1, 2, &value);
+  EXPECT_EQ(value, x[2]);
+  grid.GetValue(-1, 3, &value);
+  EXPECT_EQ(value, x[2]);
+  grid.GetValue(0, 3, &value);
+  EXPECT_EQ(value, x[2]);
+  grid.GetValue(1, 3, &value);
+  EXPECT_EQ(value, x[5]);
+  grid.GetValue(2, 3, &value);
+  EXPECT_EQ(value, x[5]);
+  grid.GetValue(2, 2, &value);
+  EXPECT_EQ(value, x[5]);
+  grid.GetValue(2, 1, &value);
+  EXPECT_EQ(value, x[4]);
+  grid.GetValue(2, 0, &value);
+  EXPECT_EQ(value, x[3]);
+  grid.GetValue(2, -1, &value);
+  EXPECT_EQ(value, x[3]);
+  grid.GetValue(1, -1, &value);
+  EXPECT_EQ(value, x[3]);
+  grid.GetValue(0, -1, &value);
+  EXPECT_EQ(value, x[0]);
+}
+
+TEST(Grid2D, TwoDataDimensionRowMajorInterleaved) {
   int x[] = {1, 4, 2, 8, 3, 12,
              2, 8, 3, 12, 4, 16};
-  Array2D<int, 2, true, true> array(x, 2, 3);
+  Grid2D<int, 2, true, true> grid(x, 0, 2, 0, 3);
   for (int r = 0; r < 2; ++r) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
-      array.GetValue(r, c, value);
+      grid.GetValue(r, c, value);
       EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
       EXPECT_EQ(value[1], static_cast<double>(4 *(r + c + 1)));
     }
   }
 }
 
-TEST(Array2D, TwoDataDimensionRowMajorStacked) {
+TEST(Grid2D, TwoDataDimensionRowMajorStacked) {
   int x[] = {1,  2,  3,
              2,  3,  4,
              4,  8, 12,
              8, 12, 16};
-  Array2D<int, 2, true, false> array(x, 2, 3);
+  Grid2D<int, 2, true, false> grid(x, 0, 2, 0, 3);
   for (int r = 0; r < 2; ++r) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
-      array.GetValue(r, c, value);
+      grid.GetValue(r, c, value);
       EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
       EXPECT_EQ(value[1], static_cast<double>(4 *(r + c + 1)));
     }
   }
 }
 
-TEST(Array2D, TwoDataDimensionColMajorInterleaved) {
+TEST(Grid2D, TwoDataDimensionColMajorInterleaved) {
   int x[] = { 1,  4, 2,  8,
               2,  8, 3, 12,
               3, 12, 4, 16};
-  Array2D<int, 2, false, true> array(x, 2, 3);
+  Grid2D<int, 2, false, true> grid(x, 0, 2, 0, 3);
   for (int r = 0; r < 2; ++r) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
-      array.GetValue(r, c, value);
+      grid.GetValue(r, c, value);
       EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
       EXPECT_EQ(value[1], static_cast<double>(4 *(r + c + 1)));
     }
   }
 }
 
-TEST(Array2D, TwoDataDimensionColMajorStacked) {
+TEST(Grid2D, TwoDataDimensionColMajorStacked) {
   int x[] = {1,   2,
              2,   3,
              3,   4,
              4,   8,
              8,  12,
              12, 16};
-  Array2D<int, 2, false, false> array(x, 2, 3);
+  Grid2D<int, 2, false, false> grid(x, 0, 2, 0, 3);
   for (int r = 0; r < 2; ++r) {
     for (int c = 0; c < 3; ++c) {
       double value[2];
-      array.GetValue(r, c, value);
+      grid.GetValue(r, c, value);
       EXPECT_EQ(value[0], static_cast<double>(r + c + 1));
       EXPECT_EQ(value[1], static_cast<double>(4 *(r + c + 1)));
     }
   }
 }
-
 
 class CubicInterpolatorTest : public ::testing::Test {
  public:
@@ -170,8 +219,8 @@ class CubicInterpolatorTest : public ::testing::Test {
       }
     }
 
-    Array1D<double, kDataDimension> array(values_.get(), kNumSamples);
-    CubicInterpolator<Array1D<double, kDataDimension> > interpolator(array);
+    Grid1D<double, kDataDimension> grid(values_.get(), 0, kNumSamples);
+    CubicInterpolator<Grid1D<double, kDataDimension> > interpolator(grid);
 
     // Check values in the all the cells but the first and the last
     // ones. In these cells, the interpolated function values should
@@ -191,7 +240,7 @@ class CubicInterpolatorTest : public ::testing::Test {
         expected_dfdx[dim] = (dim * dim + 1) * (3.0 * a * x * x + 2.0 * b * x + c);
       }
 
-      EXPECT_TRUE(interpolator.Evaluate(x, f, dfdx));
+      interpolator.Evaluate(x, f, dfdx);
       for (int dim = 0; dim < kDataDimension; ++dim) {
         EXPECT_NEAR(f[dim], expected_f[dim], kTolerance)
             << "x: " << x << " dim: " << dim
@@ -233,12 +282,12 @@ TEST_F(CubicInterpolatorTest, QuadraticFunction) {
 TEST(CubicInterpolator, JetEvaluation) {
   const double values[] = {1.0, 2.0, 2.0, 5.0, 3.0, 9.0, 2.0, 7.0};
 
-  Array1D<double, 2, true> array(values, 4);
-  CubicInterpolator<Array1D<double, 2, true> > interpolator(array);
+  Grid1D<double, 2, true> grid(values, 0, 4);
+  CubicInterpolator<Grid1D<double, 2, true> > interpolator(grid);
 
   double f[2], dfdx[2];
   const double x = 2.5;
-  EXPECT_TRUE(interpolator.Evaluate(x, f, dfdx));
+  interpolator.Evaluate(x, f, dfdx);
 
   // Create a Jet with the same scalar part as x, so that the output
   // Jet will be evaluated at x.
@@ -250,7 +299,7 @@ TEST(CubicInterpolator, JetEvaluation) {
   x_jet.v(3) = 1.3;
 
   Jet<double, 4> f_jets[2];
-  EXPECT_TRUE(interpolator.Evaluate(x_jet, f_jets));
+  interpolator.Evaluate(x_jet, f_jets);
 
   // Check that the scalar part of the Jet is f(x).
   EXPECT_EQ(f_jets[0].a, f[0]);
@@ -277,15 +326,15 @@ class BiCubicInterpolatorTest : public ::testing::Test {
       }
     }
 
-    Array2D<double, kDataDimension> array(values_.get(), kNumRows, kNumCols);
-    BiCubicInterpolator<Array2D<double, kDataDimension> > interpolator(array);
+    Grid2D<double, kDataDimension> grid(values_.get(), 0, kNumRows, 0, kNumCols);
+    BiCubicInterpolator<Grid2D<double, kDataDimension> > interpolator(grid);
 
     for (int j = 0; j < kNumRowSamples; ++j) {
       const double r = 1.0 + 7.0 / (kNumRowSamples - 1) * j;
       for (int k = 0; k < kNumColSamples; ++k) {
         const double c = 1.0 + 7.0 / (kNumColSamples - 1) * k;
         double f[kDataDimension], dfdr[kDataDimension], dfdc[kDataDimension];
-        EXPECT_TRUE(interpolator.Evaluate(r, c, f, dfdr, dfdc));
+        interpolator.Evaluate(r, c, f, dfdr, dfdc);
         for (int dim = 0; dim < kDataDimension; ++dim) {
           EXPECT_NEAR(f[dim], (dim * dim + 1) * EvaluateF(r, c), kTolerance);
           EXPECT_NEAR(dfdr[dim], (dim * dim + 1) * EvaluatedFdr(r, c), kTolerance);
@@ -421,13 +470,13 @@ TEST(BiCubicInterpolator, JetEvaluation) {
   const double values[] = {1.0, 5.0, 2.0, 10.0, 2.0, 6.0, 3.0, 5.0,
                            1.0, 2.0, 2.0,  2.0, 2.0, 2.0, 3.0, 1.0};
 
-  Array2D<double, 2> array(values, 2, 4);
-  BiCubicInterpolator<Array2D<double, 2> > interpolator(array);
+  Grid2D<double, 2> grid(values, 0, 2, 0, 4);
+  BiCubicInterpolator<Grid2D<double, 2> > interpolator(grid);
 
   double f[2], dfdr[2], dfdc[2];
   const double r = 0.5;
   const double c = 2.5;
-  EXPECT_TRUE(interpolator.Evaluate(r, c, f, dfdr, dfdc));
+  interpolator.Evaluate(r, c, f, dfdr, dfdc);
 
   // Create a Jet with the same scalar part as x, so that the output
   // Jet will be evaluated at x.
@@ -446,7 +495,7 @@ TEST(BiCubicInterpolator, JetEvaluation) {
   c_jet.v(3) = 5.3;
 
   Jet<double, 4> f_jets[2];
-  EXPECT_TRUE(interpolator.Evaluate(r_jet, c_jet, f_jets));
+  interpolator.Evaluate(r_jet, c_jet, f_jets);
   EXPECT_EQ(f_jets[0].a, f[0]);
   EXPECT_EQ(f_jets[1].a, f[1]);
   EXPECT_NEAR((f_jets[0].v - dfdr[0] * r_jet.v - dfdc[0] * c_jet.v).norm(),
