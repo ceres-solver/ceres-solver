@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58feba70_3235f067",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-13T02:30:43Z",
+      "side": 1,
+      "message": "Will this change affect anything?",
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58feba70_123a6c55",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-13T02:30:43Z",
+      "side": 1,
+      "message": "Generally we don\u0027t use ----------- and other such markers in Ceres code. I suggest instead having two titles:\n\n  # Install method #1: Put Ceres in /usr/local or equivalent\n  ...\n  # Install method #2: Put Ceres build into local CMake registry",
+      "range": {
+        "startLine": 869,
+        "startChar": 0,
+        "endLine": 869,
+        "endChar": 1
+      },
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58feba70_722f7817",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-13T02:30:43Z",
+      "side": 1,
+      "message": "Remove comma",
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
