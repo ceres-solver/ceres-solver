@@ -35,6 +35,7 @@
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/random.h"
 #include "ceres/rotation.h"
 #include "gtest/gtest.h"
 
@@ -440,6 +441,196 @@ TEST(HomogeneousVectorParameterization, AwayFromZeroTest5) {
 
 TEST(HomogeneousVectorParameterization, DeathTests) {
   EXPECT_DEATH_IF_SUPPORTED(HomogeneousVectorParameterization x(1), "size");
+}
+
+
+class ProductParameterizationTest : public ::testing::Test {
+ protected :
+  virtual void SetUp() {
+    const int global_size1 = 5;
+    std::vector<int> constant_parameters1;
+    constant_parameters1.push_back(2);
+    param1_.reset(new SubsetParameterization(global_size1,
+                                             constant_parameters1));
+
+    const int global_size2 = 3;
+    std::vector<int> constant_parameters2;
+    constant_parameters2.push_back(0);
+    constant_parameters2.push_back(1);
+    param2_.reset(new SubsetParameterization(global_size2,
+                                             constant_parameters2));
+
+    const int global_size3 = 4;
+    std::vector<int> constant_parameters3;
+    constant_parameters3.push_back(1);
+    param3_.reset(new SubsetParameterization(global_size3,
+                                             constant_parameters3));
+
+    const int global_size4 = 2;
+    std::vector<int> constant_parameters4;
+    constant_parameters4.push_back(1);
+    param4_.reset(new SubsetParameterization(global_size4,
+                                             constant_parameters4));
+  }
+
+  scoped_ptr<LocalParameterization> param1_;
+  scoped_ptr<LocalParameterization> param2_;
+  scoped_ptr<LocalParameterization> param3_;
+  scoped_ptr<LocalParameterization> param4_;
+};
+
+TEST_F(ProductParameterizationTest, LocalAndGlobalSize2) {
+  LocalParameterization* param1 = param1_.release();
+  LocalParameterization* param2 = param2_.release();
+
+  ProductParameterization product_param(param1, param2);
+  EXPECT_EQ(product_param.LocalSize(),
+            param1->LocalSize() + param2->LocalSize());
+  EXPECT_EQ(product_param.GlobalSize(),
+            param1->GlobalSize() + param2->GlobalSize());
+}
+
+
+TEST_F(ProductParameterizationTest, LocalAndGlobalSize3) {
+  LocalParameterization* param1 = param1_.release();
+  LocalParameterization* param2 = param2_.release();
+  LocalParameterization* param3 = param3_.release();
+
+  ProductParameterization product_param(param1, param2, param3);
+  EXPECT_EQ(product_param.LocalSize(),
+            param1->LocalSize() + param2->LocalSize() + param3->LocalSize());
+  EXPECT_EQ(product_param.GlobalSize(),
+            param1->GlobalSize() + param2->GlobalSize() + param3->GlobalSize());
+}
+
+TEST_F(ProductParameterizationTest, LocalAndGlobalSize4) {
+  LocalParameterization* param1 = param1_.release();
+  LocalParameterization* param2 = param2_.release();
+  LocalParameterization* param3 = param3_.release();
+  LocalParameterization* param4 = param4_.release();
+
+  ProductParameterization product_param(param1, param2, param3, param4);
+  EXPECT_EQ(product_param.LocalSize(),
+            param1->LocalSize() +
+            param2->LocalSize() +
+            param3->LocalSize() +
+            param4->LocalSize());
+  EXPECT_EQ(product_param.GlobalSize(),
+            param1->GlobalSize() +
+            param2->GlobalSize() +
+            param3->GlobalSize() +
+            param4->GlobalSize());
+}
+
+TEST_F(ProductParameterizationTest, Plus) {
+  LocalParameterization* param1 = param1_.release();
+  LocalParameterization* param2 = param2_.release();
+  LocalParameterization* param3 = param3_.release();
+  LocalParameterization* param4 = param4_.release();
+
+  ProductParameterization product_param(param1, param2, param3, param4);
+  std::vector<double> x(product_param.GlobalSize(), 0.0);
+  std::vector<double> delta(product_param.LocalSize(), 0.0);
+  std::vector<double> x_plus_delta_expected(product_param.GlobalSize(), 0.0);
+  std::vector<double> x_plus_delta(product_param.GlobalSize(), 0.0);
+
+  for (int i = 0; i < product_param.GlobalSize(); ++i) {
+    x[i] = RandNormal();
+  }
+
+  for (int i = 0; i < product_param.LocalSize(); ++i) {
+    delta[i] = RandNormal();
+  }
+
+  EXPECT_TRUE(product_param.Plus(&x[0], &delta[0], &x_plus_delta_expected[0]));
+  int x_cursor = 0;
+  int delta_cursor = 0;
+
+  EXPECT_TRUE(param1->Plus(&x[x_cursor],
+                           &delta[delta_cursor],
+                           &x_plus_delta[x_cursor]));
+  x_cursor += param1->GlobalSize();
+  delta_cursor += param1->LocalSize();
+
+  EXPECT_TRUE(param2->Plus(&x[x_cursor],
+                           &delta[delta_cursor],
+                           &x_plus_delta[x_cursor]));
+  x_cursor += param2->GlobalSize();
+  delta_cursor += param2->LocalSize();
+
+  EXPECT_TRUE(param3->Plus(&x[x_cursor],
+                           &delta[delta_cursor],
+                           &x_plus_delta[x_cursor]));
+  x_cursor += param3->GlobalSize();
+  delta_cursor += param3->LocalSize();
+
+  EXPECT_TRUE(param4->Plus(&x[x_cursor],
+                           &delta[delta_cursor],
+                           &x_plus_delta[x_cursor]));
+  x_cursor += param4->GlobalSize();
+  delta_cursor += param4->LocalSize();
+
+  for (int i = 0; i < x.size(); ++i) {
+    EXPECT_EQ(x_plus_delta[i], x_plus_delta_expected[i]);
+  }
+}
+
+TEST_F(ProductParameterizationTest, ComputeJacobian) {
+  LocalParameterization* param1 = param1_.release();
+  LocalParameterization* param2 = param2_.release();
+  LocalParameterization* param3 = param3_.release();
+  LocalParameterization* param4 = param4_.release();
+
+  ProductParameterization product_param(param1, param2, param3, param4);
+  std::vector<double> x(product_param.GlobalSize(), 0.0);
+
+  for (int i = 0; i < product_param.GlobalSize(); ++i) {
+    x[i] = RandNormal();
+  }
+
+  Matrix jacobian = Matrix::Random(product_param.GlobalSize(),
+                                   product_param.LocalSize());
+  EXPECT_TRUE(product_param.ComputeJacobian(&x[0], jacobian.data()));
+  int x_cursor = 0;
+  int delta_cursor = 0;
+
+  Matrix jacobian1(param1->GlobalSize(), param1->LocalSize());
+  EXPECT_TRUE(param1->ComputeJacobian(&x[x_cursor], jacobian1.data()));
+  jacobian.block(x_cursor, delta_cursor,
+                 param1->GlobalSize(),
+                 param1->LocalSize())
+      -= jacobian1;
+  x_cursor += param1->GlobalSize();
+  delta_cursor += param1->LocalSize();
+
+  Matrix jacobian2(param2->GlobalSize(), param2->LocalSize());
+  EXPECT_TRUE(param2->ComputeJacobian(&x[x_cursor], jacobian2.data()));
+  jacobian.block(x_cursor, delta_cursor,
+                 param2->GlobalSize(),
+                 param2->LocalSize())
+      -= jacobian2;
+  x_cursor += param2->GlobalSize();
+  delta_cursor += param2->LocalSize();
+
+  Matrix jacobian3(param3->GlobalSize(), param3->LocalSize());
+  EXPECT_TRUE(param3->ComputeJacobian(&x[x_cursor], jacobian3.data()));
+  jacobian.block(x_cursor, delta_cursor,
+                 param3->GlobalSize(),
+                 param3->LocalSize())
+      -= jacobian3;
+  x_cursor += param3->GlobalSize();
+  delta_cursor += param3->LocalSize();
+
+  Matrix jacobian4(param4->GlobalSize(), param4->LocalSize());
+  EXPECT_TRUE(param4->ComputeJacobian(&x[x_cursor], jacobian4.data()));
+  jacobian.block(x_cursor, delta_cursor,
+                 param4->GlobalSize(),
+                 param4->LocalSize())
+      -= jacobian4;
+  x_cursor += param4->GlobalSize();
+  delta_cursor += param4->LocalSize();
+
+  EXPECT_NEAR(jacobian.norm(), 0.0, std::numeric_limits<double>::epsilon());
 }
 
 }  // namespace internal

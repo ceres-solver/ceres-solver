@@ -33,9 +33,9 @@
 #ifndef CERES_PUBLIC_AUTODIFF_LOCAL_PARAMETERIZATION_H_
 #define CERES_PUBLIC_AUTODIFF_LOCAL_PARAMETERIZATION_H_
 
+#include "ceres/local_parameterization.h"
 #include "ceres/internal/autodiff.h"
 #include "ceres/internal/scoped_ptr.h"
-#include "ceres/local_parameterization.h"
 
 namespace ceres {
 
