@@ -677,7 +677,7 @@ Numeric Differentiation & LocalParameterization
       CostFunctionToFunctor<2,5,3> intrinsic_projection_;
     };
 
-   Note that :class:`CostFunctionToFunctor` takes ownership of the 
+   Note that :class:`CostFunctionToFunctor` takes ownership of the
    :class:`CostFunction` that was passed in to the constructor.
 
    In the above example, we assumed that ``IntrinsicProjection`` is a
@@ -1270,6 +1270,23 @@ Instances
    last element of :math:`x` is the scalar component of the homogeneous
    vector.
 
+
+.. class:: ProductParameterization
+
+   Often a parameter block is the Cartesian product of a number of
+   manifolds. For example, a rigid transformation :math:`SE(3) = SO(3)
+   x R^3`.  In such cases, where you have the local parameterization
+   of the individual manifolds available,
+   :class:`ProductParameterization` can be used to construct a local
+   parameterization of the cartesian product. For the case of the
+   rigid transformation, where say you have a parameter block of size
+   7, where the first four entries represent the rotation as a
+   quaternion, a local parameterization can be constructed as
+
+   .. code-block:: c++
+
+     ProductParameterization product_param(new QuaternionParameterization(),
+                                           new IdentityTransformation(3));
 
 
 :class:`AutoDiffLocalParameterization`
