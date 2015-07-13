@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58feba70_721658d7",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-13T02:22:33Z",
+      "side": 1,
+      "message": "then then (on next line)",
+      "revId": "58d8d19bb6c390ba10cdcf053b5d724b47fc9267",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
