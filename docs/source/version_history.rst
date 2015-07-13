@@ -9,12 +9,14 @@ HEAD
 
 New Features
 ------------
-#. Added ``CubicInterpolator`` and ``BiCubicInterpolator`` to allow
+#. Add ``CubicInterpolator`` and ``BiCubicInterpolator`` to allow
    smooth interpolation of sampled functions and integration with
    automatic differentiation.
 #. Add method to return covariance in tangent space. (Michael Vitus &
    Steve Hsu)
 #. Add Homogeneous vector parameterization. (Michael Vitus)
+#. Add a local parameterization that can be constructed as a cartesian
+   product of other local parameterization.
 
 Bug Fixes & Minor Changes
 -------------------------
