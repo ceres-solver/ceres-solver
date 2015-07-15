@@ -108,25 +108,37 @@ ENDIF (MSVC)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
-#
-# TODO: Add standard Windows search locations for glog.
 LIST(APPEND GLOG_CHECK_INCLUDE_DIRS
   /usr/local/include
   /usr/local/homebrew/include # Mac OS X
   /opt/local/var/macports/software # Mac OS X.
   /opt/local/include
   /usr/include)
+# Windows (for C:/Program Files prefix).
+LIST(APPEND GLOG_CHECK_PATH_SUFFIXES
+  glog/include
+  glog/Include
+  Glog/include
+  Glog/Include)
+
 LIST(APPEND GLOG_CHECK_LIBRARY_DIRS
   /usr/local/lib
   /usr/local/homebrew/lib # Mac OS X.
   /opt/local/lib
   /usr/lib)
+# Windows (for C:/Program Files prefix).
+LIST(APPEND GLOG_CHECK_LIBRARY_SUFFIXES
+  glog/lib
+  glog/Lib
+  Glog/lib
+  Glog/Lib)
 
 # Search supplied hint directories first if supplied.
 FIND_PATH(GLOG_INCLUDE_DIR
   NAMES glog/logging.h
   PATHS ${GLOG_INCLUDE_DIR_HINTS}
-  ${GLOG_CHECK_INCLUDE_DIRS})
+  ${GLOG_CHECK_INCLUDE_DIRS}
+  PATH_SUFFIXES ${GLOG_CHECK_PATH_SUFFIXES})
 IF (NOT GLOG_INCLUDE_DIR OR
     NOT EXISTS ${GLOG_INCLUDE_DIR})
   GLOG_REPORT_NOT_FOUND(
@@ -137,7 +149,8 @@ ENDIF (NOT GLOG_INCLUDE_DIR OR
 
 FIND_LIBRARY(GLOG_LIBRARY NAMES glog
   PATHS ${GLOG_LIBRARY_DIR_HINTS}
-  ${GLOG_CHECK_LIBRARY_DIRS})
+  ${GLOG_CHECK_LIBRARY_DIRS}
+  PATH_SUFFIXES ${GLOG_CHECK_LIBRARY_SUFFIXES})
 IF (NOT GLOG_LIBRARY OR
     NOT EXISTS ${GLOG_LIBRARY})
   GLOG_REPORT_NOT_FOUND(
