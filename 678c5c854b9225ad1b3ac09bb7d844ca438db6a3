@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58823a52_cc78a36d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-18T17:02:22Z",
+      "side": 1,
+      "message": "many",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "678c5c854b9225ad1b3ac09bb7d844ca438db6a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58823a52_6c5e57f4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-18T17:02:22Z",
+      "side": 1,
+      "message": "many ?\n\nor do you mean to drop \"there\"\nor a coma after there.",
+      "range": {
+        "startLine": 147,
+        "startChar": 52,
+        "endLine": 147,
+        "endChar": 55
+      },
+      "revId": "678c5c854b9225ad1b3ac09bb7d844ca438db6a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58823a52_8c5b7b01",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-07-18T17:02:22Z",
+      "side": 1,
+      "message": "The linux table seems to have swapped rows. if CXX11 is on, shouldn\u0027t it be std ?",
+      "revId": "678c5c854b9225ad1b3ac09bb7d844ca438db6a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
