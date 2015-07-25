@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2dbb86f3_d8cded5e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-07-25T17:45:31Z",
+      "side": 1,
+      "message": "It shouldn\u0027t, it allows the use of PROJECT_NAME / CMAKE_PROJECT_NAME elsewhere in the code, and given that the names of exported CMake configuration files should be \u003cProjectName\u003eConfig.cmake or \u003cprojectname\u003e-config.cmake, and we use CeresConfig.cmake it\u0027s really an anachronism that we had CERES, it also means that we are down to two case variants: Ceres \u0026 ceres from three :).",
+      "parentUuid": "58feba70_3235f067",
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58feba70_123a6c55",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4dc43a7d_193feb8f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-07-25T17:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58feba70_123a6c55",
+      "range": {
+        "startLine": 869,
+        "startChar": 0,
+        "endLine": 869,
+        "endChar": 1
+      },
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58feba70_722f7817",
         "filename": "CMakeLists.txt",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2015-07-13T02:30:43Z",
       "side": 1,
       "message": "Remove comma",
+      "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cda66ad5_1d2d9393",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-07-25T17:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58feba70_722f7817",
       "revId": "d1b652128922f4c44072190f668b321ef51bf64a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
