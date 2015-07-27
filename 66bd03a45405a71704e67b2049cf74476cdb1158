@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3837466d_875b6a01",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-27T18:35:56Z",
+      "side": 1,
+      "message": "Consider opening with the most common use case so that people don\u0027t gloss over this class. When one reads \"ProductParameterization\", that you may want to use this for rigid transformations is not immediately obvious.",
+      "revId": "66bd03a45405a71704e67b2049cf74476cdb1158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d3e264a_a00a1a5c",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-27T18:35:56Z",
+      "side": 1,
+      "message": "Perhaps add the use case here - I suspect some users who might use this feature won\u0027t because it\u0027s not obvious this is applicable for the common location + quat camera representation.",
+      "revId": "66bd03a45405a71704e67b2049cf74476cdb1158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d37da6b_21ffeea0",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-27T18:35:56Z",
+      "side": 1,
+      "message": "sorting",
+      "revId": "66bd03a45405a71704e67b2049cf74476cdb1158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad5136aa_fcb76921",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-07-27T18:35:56Z",
+      "side": 1,
+      "message": "It\u0027s too bad this can\u0027t be shared across computations :(\n\nThe problem is that Ceres may invoke this across threads, but we offer no facility for these objects to have local storage.",
+      "revId": "66bd03a45405a71704e67b2049cf74476cdb1158",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
