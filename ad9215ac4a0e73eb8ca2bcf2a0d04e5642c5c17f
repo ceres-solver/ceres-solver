@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "02a1235e_3f21c3cd",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "I\u0027d call it ComposedCostFunction or CompoundCostFunction?",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921726fb_f5e598d4",
         "filename": "include/ceres/cost_function_composition.h",
         "patchSetId": 1
@@ -54,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "027a03aa_34e81000",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "I\u0027d start with a rather thorough description/documentation of the interface here. Sometimes naming/documenting things shows problems with the design.",
+      "range": {
+        "startLine": 44,
+        "startChar": 26,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02a1235e_1c6e55e7",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "Same comment as below about associating parameter blocks with cost functions.",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921726fb_35e0b0c1",
         "filename": "include/ceres/cost_function_composition.h",
         "patchSetId": 1
@@ -71,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "02a1235e_bc0c0166",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "cost functions do not associate with particular parameter blocks, that association is done by the Problem object.",
+      "range": {
+        "startLine": 53,
+        "startChar": 7,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921726fb_d5ea1ca4",
         "filename": "include/ceres/cost_function_composition.h",
         "patchSetId": 1
@@ -82,6 +168,52 @@
       "writtenOn": "2015-03-04T06:53:58Z",
       "side": 1,
       "message": "In general, it\u0027s best to avoid \"state spaces\" for objects. How bad would it be if this object took the input cost functions \u0026 parameter blocks an constructor arguments? Then the object is either invalid on construction (and explodes) or is valid, with no need for client code to invoke Finalize().\n\nI can be convinced either way, but wanted to bring this up.",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2d1cbe3_323a70f0",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "The presence of Finalize seems to indicate that perhaps this should actually be two objects, one a builder object which takes ownership of all the objects passed to it and composes them into a single cost function and a cost function object that is actually spit out by such a builder object.\n\nJust a thought.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62e01fb0_cfd33d5e",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T16:37:31Z",
+      "side": 1,
+      "message": "see comments above.",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 26
+      },
       "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
