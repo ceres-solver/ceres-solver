@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21362ac8_cc61bf14",
+        "filename": "include/ceres/cost_function_composition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-03T16:18:37Z",
+      "side": 1,
+      "message": "That\u0027s a much better name. I\u0027ll include the rename in the next upload.",
+      "parentUuid": "921726fb_f5e598d4",
+      "revId": "ad9215ac4a0e73eb8ca2bcf2a0d04e5642c5c17f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921726fb_55d72ce5",
         "filename": "include/ceres/cost_function_composition.h",
         "patchSetId": 1
