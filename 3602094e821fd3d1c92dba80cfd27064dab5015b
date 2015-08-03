@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a01803c_77764881",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "Maybe add a compile time warning that tells the users to move to the other constructor? too heavy handed ?",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a24e8f1_a79a4a42",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "same comment about compile time message as the other file.",
+      "range": {
+        "startLine": 218,
+        "startChar": 32,
+        "endLine": 218,
+        "endChar": 33
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a5c2064_df875397",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "I am loathe to introduce two different ways of measuring these errors. We should just do the right thing for the user and make a choice. They are not going to have enough information to do the right thing here.\n\nAlso as you mentioned you are doing this mostly for your use case, I\u0027d argue for a simpler API if possible.",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea6cf416_b0a72806",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "guidance on setting this value?",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a0b0862_751da06d",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "define the expression that is used to diagnose convergence? otherwise the user has no idea how to set this value.",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a24e8f1_e7944219",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "do we expect users to change this value? is it worth exposing?",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a24e8f1_477b8e65",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-03T19:52:56Z",
+      "side": 1,
+      "message": "this is internal code, you can go ahead and just drop this constructor.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
