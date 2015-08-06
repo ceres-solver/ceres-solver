@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "2ab8cc3c_440e6e3f",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_935a5e56",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab8cc3c_d364e615",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 5
@@ -64,6 +82,24 @@
       "writtenOn": "2015-08-06T06:32:08Z",
       "side": 1,
       "message": "Grid1DT? Grid is a bit overloaded. It\u0027s unfortunate that Grid1D is already taken. What about renaming the current Grid1D to ArrayGrid1D? Since it\u0027s an array-backed grid. Then this template argument can be Grid1D (in the abstract sense).",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_64157249",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "I agree Grid is a bit overloaded, but I do not think it is that big of a deal. All the other options seem convoluted in some sense.\n\nGrid1DType ?",
+      "parentUuid": "2ab8cc3c_d364e615",
       "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "2ab8cc3c_a4275ab9",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_13678e17",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab8cc3c_537116d1",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 5
@@ -98,6 +152,24 @@
       "writtenOn": "2015-08-06T06:32:08Z",
       "side": 1,
       "message": "This is constant for the life of the object. Store the stride instead?",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_642e1291",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_537116d1",
       "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "2ab8cc3c_843176f5",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_b33e82e6",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab8cc3c_93437e6a",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 5
@@ -132,6 +222,24 @@
       "writtenOn": "2015-08-06T06:32:08Z",
       "side": 1,
       "message": "Grid2D, then rename Grid2D to ArrayGrid2D? I\u0027m not totally convinced either way.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_84c6963b",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "I vote for keeping this to be Grid",
+      "parentUuid": "2ab8cc3c_93437e6a",
       "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "2ab8cc3c_a4f59a7d",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_13502e2b",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab8cc3c_d33d06ea",
         "filename": "include/ceres/cubic_interpolation.h",
         "patchSetId": 5
@@ -166,6 +292,24 @@
       "writtenOn": "2015-08-06T06:32:08Z",
       "side": 1,
       "message": "Same comment about hoisting here.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_04ebc69d",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-06T21:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab8cc3c_d33d06ea",
       "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
