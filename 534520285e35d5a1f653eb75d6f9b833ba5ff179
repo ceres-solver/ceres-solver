@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab8cc3c_53147675",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1862,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "This is a bit confusing since the example is a Grid1D.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_b355e22a",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "The image example makes sense here :)",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_935a5e56",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "This is not a good example for a 1D grid.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_d364e615",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "Grid1DT? Grid is a bit overloaded. It\u0027s unfortunate that Grid1D is already taken. What about renaming the current Grid1D to ArrayGrid1D? Since it\u0027s an array-backed grid. Then this template argument can be Grid1D (in the abstract sense).",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_13678e17",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "start -\u003e begin to be consistent with the constructor arguments",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_537116d1",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "This is constant for the life of the object. Store the stride instead?",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_b33e82e6",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "Hopefully the compiler will hoist this outside the loop, but I\u0027ve seen this not get optimized. I only pick on this since this is probably at the center of the inner loop.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_93437e6a",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "Grid2D, then rename Grid2D to ArrayGrid2D? I\u0027m not totally convinced either way.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_13502e2b",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "If performance of this matters, I\u0027m curious if adding the equivalent of EIGEN_STRONG_INLINE will help this. Then the compiler could turn some of these into constants.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ab8cc3c_d33d06ea",
+        "filename": "include/ceres/cubic_interpolation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-06T06:32:08Z",
+      "side": 1,
+      "message": "Same comment about hoisting here.",
+      "revId": "534520285e35d5a1f653eb75d6f9b833ba5ff179",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
