@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e797cf00_becb9995",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2015-08-07T15:21:39Z",
+      "side": 1,
+      "message": "Is there any standardized way to do that?",
+      "parentUuid": "4a01803c_77764881",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a24e8f1_a79a4a42",
         "filename": "include/ceres/numeric_diff_cost_function.h",
         "patchSetId": 7
@@ -128,6 +152,30 @@
       "writtenOn": "2015-08-03T19:52:56Z",
       "side": 1,
       "message": "do we expect users to change this value? is it worth exposing?",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4787bbd1_e133c6f8",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2015-08-07T15:21:39Z",
+      "side": 1,
+      "message": "I\u0027ve seen this value modified in some instances of the algorithm. I thought it was better to keep this mutable instead of as a constant in the code. What is your opinion on the matter?",
+      "parentUuid": "0a24e8f1_e7944219",
       "range": {
         "startLine": 91,
         "startChar": 9,
