@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea26b49b_ec9bdff7",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-07T16:30:02Z",
+      "side": 1,
+      "message": "actually, I think I screwed up with this comment. I was thinking of the #warning directive, but that will trigger independent of whether this constructor is being used or not.\n\nI think a simpler thing to do is, add a LOG(WARNING) message to this constructor, which will be triggered at runtime.",
+      "parentUuid": "e797cf00_becb9995",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a24e8f1_a79a4a42",
         "filename": "include/ceres/numeric_diff_cost_function.h",
         "patchSetId": 7
@@ -176,6 +200,30 @@
       "side": 1,
       "message": "I\u0027ve seen this value modified in some instances of the algorithm. I thought it was better to keep this mutable instead of as a constant in the code. What is your opinion on the matter?",
       "parentUuid": "0a24e8f1_e7944219",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "3602094e821fd3d1c92dba80cfd27064dab5015b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea26b49b_8c098bbc",
+        "filename": "include/ceres/numeric_diff_options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-07T16:30:02Z",
+      "side": 1,
+      "message": "Stuff like this is always a judgement call.\nBut my rule of thumb here is \n\nif you have an option that is exposed to the end user, then two things must be true.\n\n1. The default value for this option can cause unaccepatble failures which will require the end user to change this value.\n2. There is a reasonably sane explanation for how to determine a value for this parameter.\n\nNow (2) is not always easy and we have plenty of stuff in ceres which does not obey this, but this is the ideal I would like to strive for.\n\nSo some documentation of what this does, what kind of failures an improper value can cause, what to look for and how to set the new value would be great.",
+      "parentUuid": "4787bbd1_e133c6f8",
       "range": {
         "startLine": 91,
         "startChar": 9,
