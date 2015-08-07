@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea26b49b_4f4dc58e",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-08-07T17:05:04Z",
+      "side": 1,
+      "message": "At least I had enough foresight to see that this maybe a problem :) but my comment only referred to performance problems not correctness.\n\nA downside to this fix is that doing this pre-compute is quite expensive if it is not being reused, so this will make the performance for dynamic sparsity quite bad.\n\nI think it maybe better to just wrap the matrix in mapped eigen sparse matrix and do the product using it instead of using this mechanism",
+      "range": {
+        "startLine": 204,
+        "startChar": 10,
+        "endLine": 204,
+        "endChar": 23
+      },
+      "revId": "fba218f952829071b0a1a5c1937e95385b6094ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea26b49b_afa8f991",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-08-07T17:05:04Z",
+      "side": 1,
+      "message": "see my comment above.",
+      "range": {
+        "startLine": 308,
+        "startChar": 42,
+        "endLine": 308,
+        "endChar": 47
+      },
+      "revId": "fba218f952829071b0a1a5c1937e95385b6094ce",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
