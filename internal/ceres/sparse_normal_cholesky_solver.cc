@@ -203,7 +203,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   //
   // TODO(sameeragarwal): See note about how this maybe a bad idea for
   // dynamic sparsity.
-  if (outer_product_.get() == NULL) {
+  if (outer_product_.get() == NULL || options_.dynamic_sparsity) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
             *A, &pattern_));
@@ -306,7 +306,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // TODO(sameeragarwal): If dynamic sparsity is enabled, then this is
   // not a good idea performance wise, since the jacobian has far too
   // many entries and the program will go crazy with memory.
-  if (outer_product_.get() == NULL) {
+  if (outer_product_.get() == NULL || options_.dynamic_sparsity) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
             *A, &pattern_));
