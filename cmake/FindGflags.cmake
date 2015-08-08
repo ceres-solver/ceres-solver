@@ -336,6 +336,47 @@ IF (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   ENDIF(gflags_FOUND)
 
   SET(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION ${gflags_FOUND})
+
+  # gflags v2.1 - 2.1.2 shipped with a bug in their gflags-config.cmake [1]
+  # whereby gflags_LIBRARIES = "gflags", but there was no imported target
+  # called "gflags", they were called: gflags[_nothreads]-[static/shared].
+  # As this causes linker errors when gflags is not installed in a location
+  # on the current library paths, detect if this problem is present and
+  # fix it.
+  #
+  # [1] https://github.com/gflags/gflags/issues/110
+  IF (gflags_FOUND AND
+      ${gflags_VERSION} VERSION_LESS 2.1.3 AND
+      NOT TARGET ${gflags_LIBRARIES})
+    MESSAGE(STATUS "Detected broken gflags install in: ${gflags_DIR}, "
+      "version: ${gflags_VERSION} <= 2.1.2 which defines gflags_LIBRARIES = "
+      "${gflags_LIBRARIES} which is not an imported CMake target, see: "
+      "https://github.com/gflags/gflags/issues/110.  Attempting to fix by "
+      "detecting correct gflags target.")
+    # Ordering here expresses preference for detection, specifically we do not
+    # want to use the _nothreads variants if the full library is available.
+    LIST(APPEND CHECK_GFLAGS_IMPORTED_TARGET_NAMES
+      gflags-shared gflags-static
+      gflags_nothreads-shared gflags_nothreads-static)
+    FOREACH(CHECK_GFLAGS_TARGET ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES})
+      IF (TARGET ${CHECK_GFLAGS_TARGET})
+        MESSAGE(STATUS "Found valid gflags target: ${CHECK_GFLAGS_TARGET}, "
+          "updating gflags_LIBRARIES.")
+        SET(gflags_LIBRARIES ${CHECK_GFLAGS_TARGET})
+        BREAK()
+      ENDIF()
+    ENDFOREACH()
+    IF (NOT TARGET ${gflags_LIBRARIES})
+      MESSAGE(STATUS "Failed to fix detected broken gflags install in: "
+        "${gflags_DIR}, version: ${gflags_VERSION} <= 2.1.2, none of the "
+        "imported targets for gflags: ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES} "
+        "are defined.  Will continue with a manual search for gflags "
+        "components.  We recommend you build/install a version of gflags > "
+        "2.1.2 (or master).")
+      SET(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION FALSE)
+    ENDIF()
+  ENDIF()
+
   IF (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
     MESSAGE(STATUS "Detected gflags version: ${gflags_VERSION}")
     SET(GFLAGS_FOUND ${gflags_FOUND})
