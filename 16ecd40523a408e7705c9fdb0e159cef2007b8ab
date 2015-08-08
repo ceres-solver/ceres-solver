@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c11f6c_baba3108",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-08-08T17:53:11Z",
+      "side": 1,
+      "message": "Thank you so much for doing this, and jesus christ this gflags thing is a clusterfuck.",
+      "revId": "16ecd40523a408e7705c9fdb0e159cef2007b8ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67c11f6c_9abf6df8",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-08-08T17:53:11Z",
+      "side": 1,
+      "message": "do we need to worry about static/shared here depending on what our build mode is?",
+      "revId": "16ecd40523a408e7705c9fdb0e159cef2007b8ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
