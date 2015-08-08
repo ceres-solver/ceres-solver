@@ -104,15 +104,15 @@ OPTION(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 OPTION(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
+# Enable the use of Eigen as a sparse linear algebra library for
+# solving the nonlinear least squares problems. Enabling this
+# option will result in an LGPL licensed version of Ceres Solver
+# as the Simplicial Cholesky factorization in Eigen is licensed under the LGPL.
+# This does not affect the covariance estimation algorithm, as it
+# depends on the sparse QR factorization algorithm, which is licensed
+# under the MPL.
 OPTION(EIGENSPARSE
-  "Enable the use of Eigen as a sparse linear algebra library for
-   solving the nonlinear least squares problems. Enabling this
-   option will result in an LGPL licensed version of Ceres Solver
-   as the Simplicial Cholesky factorization in Eigen is licensed under the LGPL.
-   This does not affect the covariance estimation algorithm, as it
-   depends on the sparse QR factorization algorithm, which is licensed
-   under the MPL."
-  OFF)
+  "Enable Eigen as a sparse linear algebra library (results in LGPL Ceres)." OFF)
 IF (NOT WIN32)
   # Ceres does not use C++11 internally, however it does use shared_ptr
   # (required) and unordered_map (if available), both of which were present in
@@ -196,63 +196,9 @@ IF (IOS)
   ENDIF()
 ENDIF (IOS)
 
-# Prior to October 2013, Ceres used some non-CMake standardised variables to
-# hold user-specified (as opposed to FindPackage found) include directory and
-# library paths for Ceres dependencies.  These were were of the form:
-# <DEPENDENCY>_LIB / <DEPENDENCY>_INCLUDE.  Since then, Ceres now has
-# FindPackage() scripts for all of its dependencies which obey the standard
-# CMake variables: <DEPENDENCY>_LIBRARIES & <DEPENDENCY>_INCLUDE_DIRS.  In order
-# to ensure backwards compatibility, convert any legacy variables to
-# _directory_ hints for the FindPackage() scripts.
-MACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT
-    LEGACY_VAR DIRECTORY_HINT_VAR)
-  IF (DEFINED ${LEGACY_VAR})
-    # Get the dependency name (all caps) from the hint directory variable
-    # for the warning message.
-    STRING(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
-    MESSAGE(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
-      "to specify the include directory for ${DEPENDENCY_NAME}.  This is "
-      "deprecated and support for it will be removed in a future release. "
-      "Please use either the search directory hints variable: "
-      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_INCLUDE_DIR to specify "
-      "exactly the directory used (no search performed), see: "
-      "http://ceres-solver.org/building.html for more information.")
-    LIST(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
-  ENDIF (DEFINED ${LEGACY_VAR})
-ENDMACRO(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT)
-
-MACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT
-    LEGACY_VAR DIRECTORY_HINT_VAR)
-  IF (DEFINED ${LEGACY_VAR})
-    # Get the dependency name (all caps) from the hint directory variable
-    # for the warning message.
-    STRING(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
-    MESSAGE(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
-      "to specify the library for ${DEPENDENCY_NAME}.  This is "
-      "deprecated and support for it will be removed in a future release. "
-      "Please use either the search directory hints variable: "
-      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_LIBRARY to specify "
-      "exactly the library used (no search performed), see: "
-      "http://ceres-solver.org/building.html for more information.")
-    IF (EXISTS ${${LEGACY_VAR}} AND
-        NOT IS_DIRECTORY ${${LEGACY_VAR}})
-      # User specified an explicit (library) file using the legacy variable
-      # interface, hints to FindPackage() scripts are directories so add the
-      # parent directory of the specified file.
-      GET_FILENAME_COMPONENT(DIR_HINT ${${LEGACY_VAR}} PATH)
-      LIST(APPEND ${DIRECTORY_HINT_VAR} ${DIR_HINT})
-    ELSEIF (EXISTS ${${LEGACY_VAR}} AND
-            IS_DIRECTORY ${${LEGACY_VAR}})
-      # User specified a directory hint using the legacy variable, use it.
-      LIST(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
-    ENDIF()
-  ENDIF (DEFINED ${LEGACY_VAR})
-ENDMACRO(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT)
-
 UNSET(CERES_COMPILE_OPTIONS)
 
 # Eigen.
-HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
 FIND_PACKAGE(Eigen REQUIRED)
 IF (EIGEN_FOUND)
   IF (EIGEN_VERSION VERSION_LESS 3.1.0)
@@ -402,9 +348,6 @@ ENDIF(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
 # GFlags.
 IF (GFLAGS)
-  HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GFLAGS_INCLUDE GFLAGS_INCLUDE_DIR_HINTS)
-  HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT(GFLAGS_LIB GFLAGS_LIBRARY_DIR_HINTS)
-
   # Don't search with REQUIRED as we can continue without gflags.
   FIND_PACKAGE(Gflags)
   IF (GFLAGS_FOUND)
@@ -439,9 +382,6 @@ IF (MINIGLOG)
   MARK_AS_ADVANCED(FORCE GLOG_INCLUDE_DIR
                          GLOG_LIBRARY)
 ELSE (MINIGLOG)
-  HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT(GLOG_INCLUDE GLOG_INCLUDE_DIR_HINTS)
-  HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT(GLOG_LIB GLOG_LIBRARY_DIR_HINTS)
-
   # Don't search with REQUIRED so that configuration continues if not found and
   # we can output an error messages explaining MINIGLOG option.
   FIND_PACKAGE(Glog)
