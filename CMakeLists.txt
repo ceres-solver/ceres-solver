@@ -104,15 +104,15 @@ option(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
-option(EIGENSPARSE
-  "Enable the use of Eigen as a sparse linear algebra library for
-   solving the nonlinear least squares problems. Enabling this
-   option will result in an LGPL licensed version of Ceres Solver
-   as the Simplicial Cholesky factorization in Eigen is licensed under the LGPL.
-   This does not affect the covariance estimation algorithm, as it
-   depends on the sparse QR factorization algorithm, which is licensed
-   under the MPL."
-  OFF)
+# Enable the use of Eigen as a sparse linear algebra library for
+# solving the nonlinear least squares problems. Enabling this
+# option will result in an LGPL licensed version of Ceres Solver
+# as the Simplicial Cholesky factorization in Eigen is licensed under the LGPL.
+# This does not affect the covariance estimation algorithm, as it
+# depends on the sparse QR factorization algorithm, which is licensed
+# under the MPL.
+OPTION(EIGENSPARSE
+  "Enable Eigen as a sparse linear algebra library, WARNING: results in an LGPL licensed Ceres." OFF)
 if (NOT WIN32)
   # Ceres does not use C++11 internally, however it does use shared_ptr
   # (required) and unordered_map (if available), both of which were present in
@@ -220,7 +220,7 @@ if (EIGEN_FOUND)
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_EIGEN_SPARSE)
     message("   Enabling the use of Eigen as a sparse linear algebra library ")
     message("   for solving the nonlinear least squares problems. Enabling ")
-    message("   this option will result in an LGPL licensed version of ")
+    message("   this option results in an LGPL licensed version of ")
     message("   Ceres Solver as the Simplicial Cholesky factorization in Eigen")
     message("   is licensed under the LGPL. ")
 
