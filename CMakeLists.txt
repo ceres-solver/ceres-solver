@@ -201,63 +201,9 @@ if (IOS)
    endif()
 endif (IOS)
 
-# Prior to October 2013, Ceres used some non-CMake standardised variables to
-# hold user-specified (as opposed to FindPackage found) include directory and
-# library paths for Ceres dependencies.  These were were of the form:
-# <DEPENDENCY>_LIB / <DEPENDENCY>_INCLUDE.  Since then, Ceres now has
-# FindPackage() scripts for all of its dependencies which obey the standard
-# CMake variables: <DEPENDENCY>_LIBRARIES & <DEPENDENCY>_INCLUDE_DIRS.  In order
-# to ensure backwards compatibility, convert any legacy variables to
-# _directory_ hints for the FindPackage() scripts.
-macro(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT
-    LEGACY_VAR DIRECTORY_HINT_VAR)
-  if (DEFINED ${LEGACY_VAR})
-    # Get the dependency name (all caps) from the hint directory variable
-    # for the warning message.
-    string(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
-    message(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
-      "to specify the include directory for ${DEPENDENCY_NAME}.  This is "
-      "deprecated and support for it will be removed in a future release. "
-      "Please use either the search directory hints variable: "
-      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_INCLUDE_DIR to specify "
-      "exactly the directory used (no search performed), see: "
-      "http://ceres-solver.org/building.html for more information.")
-    list(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
-  endif (DEFINED ${LEGACY_VAR})
-endmacro(HANDLE_LEGACY_INCLUDE_DEPENDENCY_HINT)
-
-macro(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT
-    LEGACY_VAR DIRECTORY_HINT_VAR)
-  if (DEFINED ${LEGACY_VAR})
-    # Get the dependency name (all caps) from the hint directory variable
-    # for the warning message.
-    string(REGEX MATCH "^[^_]*" DEPENDENCY_NAME ${DIRECTORY_HINT_VAR})
-    message(WARNING "You are defining a legacy variable ${LEGACY_VAR} "
-      "to specify the library for ${DEPENDENCY_NAME}.  This is "
-      "deprecated and support for it will be removed in a future release. "
-      "Please use either the search directory hints variable: "
-      "${DIRECTORY_HINT_VAR} or ${DEPENDENCY_NAME}_LIBRARY to specify "
-      "exactly the library used (no search performed), see: "
-      "http://ceres-solver.org/building.html for more information.")
-    if (EXISTS ${${LEGACY_VAR}} AND
-        NOT IS_DIRECTORY ${${LEGACY_VAR}})
-      # User specified an explicit (library) file using the legacy variable
-      # interface, hints to FindPackage() scripts are directories so add the
-      # parent directory of the specified file.
-      get_filename_component(DIR_HINT ${${LEGACY_VAR}} PATH)
-      list(APPEND ${DIRECTORY_HINT_VAR} ${DIR_HINT})
-    elseif (EXISTS ${${LEGACY_VAR}} AND
-            IS_DIRECTORY ${${LEGACY_VAR}})
-      # User specified a directory hint using the legacy variable, use it.
-      list(APPEND ${DIRECTORY_HINT_VAR} ${${LEGACY_VAR}})
-    endif()
-  endif (DEFINED ${LEGACY_VAR})
-endmacro(HANDLE_LEGACY_LIBRARY_DEPENDENCY_HINT)
-
 unset(CERES_COMPILE_OPTIONS)
 
 # Eigen.
-handle_legacy_include_dependency_hint(EIGEN_INCLUDE EIGEN_INCLUDE_DIR_HINTS)
 find_package(Eigen REQUIRED)
 if (EIGEN_FOUND)
   if (EIGEN_VERSION VERSION_LESS 3.1.0)
@@ -407,9 +353,6 @@ endif(NOT SUITESPARSE AND NOT CXSPARSE AND NOT EIGENSPARSE)
 
 # GFlags.
 if (GFLAGS)
-  handle_legacy_include_dependency_hint(GFLAGS_INCLUDE GFLAGS_INCLUDE_DIR_HINTS)
-  handle_legacy_library_dependency_hint(GFLAGS_LIB GFLAGS_LIBRARY_DIR_HINTS)
-
   # Don't search with REQUIRED as we can continue without gflags.
   find_package(Gflags)
   if (GFLAGS_FOUND)
@@ -444,9 +387,6 @@ if (MINIGLOG)
   mark_as_advanced(FORCE GLOG_INCLUDE_DIR
                          GLOG_LIBRARY)
 else (MINIGLOG)
-  handle_legacy_include_dependency_hint(GLOG_INCLUDE GLOG_INCLUDE_DIR_HINTS)
-  handle_legacy_library_dependency_hint(GLOG_LIB GLOG_LIBRARY_DIR_HINTS)
-
   # Don't search with REQUIRED so that configuration continues if not found and
   # we can output an error messages explaining MINIGLOG option.
   find_package(Glog)
