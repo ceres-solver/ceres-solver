@@ -323,8 +323,8 @@ if (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   else(gflags_FOUND)
     # Failed to find an installed version of gflags, repeat search allowing
     # exported build directories.
-    message(STATUS "Failed to find installed version of gflags, searching for "
-      "gflags build directories exported with CMake.")
+    message(STATUS "Failed to find installed gflags CMake configuration, "
+      "searching for gflags build directories exported with CMake.")
     # Again pass NO_CMAKE_BUILDS_PATH, as we know that gflags is exported and
     # do not want to treat projects built with the CMake GUI preferentially.
     find_package(gflags QUIET
@@ -345,35 +345,39 @@ if (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   # fix it.
   #
   # [1] https://github.com/gflags/gflags/issues/110
-  if (gflags_FOUND AND
-      ${gflags_VERSION} VERSION_LESS 2.1.3 AND
-      NOT TARGET ${gflags_LIBRARIES})
-    message(STATUS "Detected broken gflags install in: ${gflags_DIR}, "
-      "version: ${gflags_VERSION} <= 2.1.2 which defines gflags_LIBRARIES = "
-      "${gflags_LIBRARIES} which is not an imported CMake target, see: "
-      "https://github.com/gflags/gflags/issues/110.  Attempting to fix by "
-      "detecting correct gflags target.")
-    # Ordering here expresses preference for detection, specifically we do not
-    # want to use the _nothreads variants if the full library is available.
-    list(APPEND CHECK_GFLAGS_IMPORTED_TARGET_NAMES
-      gflags-shared gflags-static
-      gflags_nothreads-shared gflags_nothreads-static)
-    foreach(CHECK_GFLAGS_TARGET ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES})
-      if (TARGET ${CHECK_GFLAGS_TARGET})
-        message(STATUS "Found valid gflags target: ${CHECK_GFLAGS_TARGET}, "
-          "updating gflags_LIBRARIES.")
-        set(gflags_LIBRARIES ${CHECK_GFLAGS_TARGET})
-        break()
+  if (gflags_FOUND)
+    # NOTE: This is not written as additional conditions in the outer
+    #       if (gflags_FOUND) as the NOT TARGET "${gflags_LIBRARIES}"
+    #       condition causes problems if gflags is not found.
+    if (${gflags_VERSION} VERSION_LESS 2.1.3 AND
+        NOT TARGET "${gflags_LIBRARIES}")
+      message(STATUS "Detected broken gflags install in: ${gflags_DIR}, "
+        "version: ${gflags_VERSION} <= 2.1.2 which defines gflags_LIBRARIES = "
+        "${gflags_LIBRARIES} which is not an imported CMake target, see: "
+        "https://github.com/gflags/gflags/issues/110.  Attempting to fix by "
+        "detecting correct gflags target.")
+      # Ordering here expresses preference for detection, specifically we do not
+      # want to use the _nothreads variants if the full library is available.
+      list(APPEND CHECK_GFLAGS_IMPORTED_TARGET_NAMES
+        gflags-shared gflags-static
+        gflags_nothreads-shared gflags_nothreads-static)
+      foreach(CHECK_GFLAGS_TARGET ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES})
+        if (TARGET ${CHECK_GFLAGS_TARGET})
+          message(STATUS "Found valid gflags target: ${CHECK_GFLAGS_TARGET}, "
+            "updating gflags_LIBRARIES.")
+          set(gflags_LIBRARIES ${CHECK_GFLAGS_TARGET})
+          break()
+        endif()
+      endforeach()
+      if (NOT TARGET ${gflags_LIBRARIES})
+        message(STATUS "Failed to fix detected broken gflags install in: "
+          "${gflags_DIR}, version: ${gflags_VERSION} <= 2.1.2, none of the "
+          "imported targets for gflags: ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES} "
+          "are defined.  Will continue with a manual search for gflags "
+          "components.  We recommend you build/install a version of gflags > "
+          "2.1.2 (or master).")
+        set(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION FALSE)
       endif()
-    endforeach()
-    if (NOT TARGET ${gflags_LIBRARIES})
-      message(STATUS "Failed to fix detected broken gflags install in: "
-        "${gflags_DIR}, version: ${gflags_VERSION} <= 2.1.2, none of the "
-        "imported targets for gflags: ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES} "
-        "are defined.  Will continue with a manual search for gflags "
-        "components.  We recommend you build/install a version of gflags > "
-        "2.1.2 (or master).")
-      set(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION FALSE)
     endif()
   endif()
 
