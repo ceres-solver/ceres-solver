@@ -84,54 +84,54 @@
 
 # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when FindGflags was
 # invoked, necessary for MSVC.
-MACRO(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
-  IF (MSVC)
-    SET(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
-  ENDIF (MSVC)
-ENDMACRO(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
+macro(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
+  if (MSVC)
+    set(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
+  endif (MSVC)
+endmacro(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
 
 # Called if we failed to find gflags or any of it's required dependencies,
 # unsets all public (designed to be used externally) variables and reports
 # error message at priority depending upon [REQUIRED/QUIET/<NONE>] argument.
-MACRO(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
-  UNSET(GFLAGS_FOUND)
-  UNSET(GFLAGS_INCLUDE_DIRS)
-  UNSET(GFLAGS_LIBRARIES)
+macro(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
+  unset(GFLAGS_FOUND)
+  unset(GFLAGS_INCLUDE_DIRS)
+  unset(GFLAGS_LIBRARIES)
   # Do not use unset, as we want to keep GFLAGS_NAMESPACE in the cache,
   # but simply clear its value.
-  SET(GFLAGS_NAMESPACE "" CACHE STRING
+  set(GFLAGS_NAMESPACE "" CACHE STRING
     "gflags namespace (google or gflags)" FORCE)
 
   # Make results of search visible in the CMake GUI if gflags has not
   # been found so that user does not have to toggle to advanced view.
-  MARK_AS_ADVANCED(CLEAR GFLAGS_INCLUDE_DIR
+  mark_as_advanced(CLEAR GFLAGS_INCLUDE_DIR
                          GFLAGS_LIBRARY
                          GFLAGS_NAMESPACE)
 
-  GFLAGS_RESET_FIND_LIBRARY_PREFIX()
+  gflags_reset_find_library_prefix()
 
   # Note <package>_FIND_[REQUIRED/QUIETLY] variables defined by FindPackage()
   # use the camelcase library name, not uppercase.
-  IF (Gflags_FIND_QUIETLY)
-    MESSAGE(STATUS "Failed to find gflags - " ${REASON_MSG} ${ARGN})
-  ELSEIF (Gflags_FIND_REQUIRED)
-    MESSAGE(FATAL_ERROR "Failed to find gflags - " ${REASON_MSG} ${ARGN})
-  ELSE()
+  if (Gflags_FIND_QUIETLY)
+    message(STATUS "Failed to find gflags - " ${REASON_MSG} ${ARGN})
+  elseif (Gflags_FIND_REQUIRED)
+    message(FATAL_ERROR "Failed to find gflags - " ${REASON_MSG} ${ARGN})
+  else()
     # Neither QUIETLY nor REQUIRED, use no priority which emits a message
     # but continues configuration and allows generation.
-    MESSAGE("-- Failed to find gflags - " ${REASON_MSG} ${ARGN})
-  ENDIF ()
-ENDMACRO(GFLAGS_REPORT_NOT_FOUND)
+    message("-- Failed to find gflags - " ${REASON_MSG} ${ARGN})
+  endif ()
+endmacro(GFLAGS_REPORT_NOT_FOUND)
 
 # Verify that all variable names passed as arguments are defined (can be empty
 # but must be defined) or raise a fatal error.
-MACRO(GFLAGS_CHECK_VARS_DEFINED)
-  FOREACH(CHECK_VAR ${ARGN})
-    IF (NOT DEFINED ${CHECK_VAR})
-      MESSAGE(FATAL_ERROR "Ceres Bug: ${CHECK_VAR} is not defined.")
-    ENDIF()
-  ENDFOREACH()
-ENDMACRO(GFLAGS_CHECK_VARS_DEFINED)
+macro(GFLAGS_CHECK_VARS_DEFINED)
+  foreach(CHECK_VAR ${ARGN})
+    if (NOT DEFINED ${CHECK_VAR})
+      message(FATAL_ERROR "Ceres Bug: ${CHECK_VAR} is not defined.")
+    endif()
+  endforeach()
+endmacro(GFLAGS_CHECK_VARS_DEFINED)
 
 # Use check_cxx_source_compiles() to compile trivial test programs to determine
 # the gflags namespace.  This works on all OSs except Windows.  If using Visual
@@ -143,50 +143,50 @@ ENDMACRO(GFLAGS_CHECK_VARS_DEFINED)
 # Defines: GFLAGS_NAMESPACE in the caller's scope with the detected namespace,
 #          which is blank (empty string, will test FALSE is CMake conditionals)
 #          if detection failed.
-FUNCTION(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE)
+function(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE)
   # Verify that all required variables are defined.
-  GFLAGS_CHECK_VARS_DEFINED(
+  gflags_check_vars_defined(
     GFLAGS_INCLUDE_DIR GFLAGS_LIBRARY)
   # Ensure that GFLAGS_NAMESPACE is always unset on completion unless
   # we explicitly set if after having the correct namespace.
-  SET(GFLAGS_NAMESPACE "" PARENT_SCOPE)
+  set(GFLAGS_NAMESPACE "" PARENT_SCOPE)
 
-  INCLUDE(CheckCXXSourceCompiles)
+  include(CheckCXXSourceCompiles)
   # Setup include path & link library for gflags for CHECK_CXX_SOURCE_COMPILES.
-  SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-  SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
+  set(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
   # First try the (older) google namespace.  Note that the output variable
   # MUST be unique to the build type as otherwise the test is not repeated as
   # it is assumed to have already been performed.
-  CHECK_CXX_SOURCE_COMPILES(
+  check_cxx_source_compiles(
     "#include <gflags/gflags.h>
      int main(int argc, char * argv[]) {
        google::ParseCommandLineFlags(&argc, &argv, true);
        return 0;
      }"
      GFLAGS_IN_GOOGLE_NAMESPACE)
-  IF (GFLAGS_IN_GOOGLE_NAMESPACE)
-    SET(GFLAGS_NAMESPACE google PARENT_SCOPE)
-    RETURN()
-  ENDIF()
+  if (GFLAGS_IN_GOOGLE_NAMESPACE)
+    set(GFLAGS_NAMESPACE google PARENT_SCOPE)
+    return()
+  endif()
 
   # Try (newer) gflags namespace instead.  Note that the output variable
   # MUST be unique to the build type as otherwise the test is not repeated as
   # it is assumed to have already been performed.
-  SET(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
-  SET(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
-  CHECK_CXX_SOURCE_COMPILES(
+  set(CMAKE_REQUIRED_INCLUDES ${GFLAGS_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
+  check_cxx_source_compiles(
     "#include <gflags/gflags.h>
      int main(int argc, char * argv[]) {
         gflags::ParseCommandLineFlags(&argc, &argv, true);
         return 0;
      }"
      GFLAGS_IN_GFLAGS_NAMESPACE)
-  IF (GFLAGS_IN_GFLAGS_NAMESPACE)
-    SET(GFLAGS_NAMESPACE gflags PARENT_SCOPE)
-    RETURN()
-  ENDIF (GFLAGS_IN_GFLAGS_NAMESPACE)
-ENDFUNCTION(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE)
+  if (GFLAGS_IN_GFLAGS_NAMESPACE)
+    set(GFLAGS_NAMESPACE gflags PARENT_SCOPE)
+    return()
+  endif (GFLAGS_IN_GFLAGS_NAMESPACE)
+endfunction(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE)
 
 # Use regex on the gflags headers to attempt to determine the gflags namespace.
 # Checks both gflags.h (contained namespace on versions < 2.1.2) and
@@ -198,91 +198,91 @@ ENDFUNCTION(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE)
 # Defines: GFLAGS_NAMESPACE in the caller's scope with the detected namespace,
 #          which is blank (empty string, will test FALSE is CMake conditionals)
 #          if detection failed.
-FUNCTION(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
+function(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
   # Verify that all required variables are defined.
-  GFLAGS_CHECK_VARS_DEFINED(GFLAGS_INCLUDE_DIR)
+  gflags_check_vars_defined(GFLAGS_INCLUDE_DIR)
   # Ensure that GFLAGS_NAMESPACE is always undefined on completion unless
   # we explicitly set if after having the correct namespace.
-  SET(GFLAGS_NAMESPACE "" PARENT_SCOPE)
+  set(GFLAGS_NAMESPACE "" PARENT_SCOPE)
 
   # Scan gflags.h to identify what namespace gflags was built with.  On
   # versions of gflags < 2.1.2, gflags.h was configured with the namespace
   # directly, on >= 2.1.2, gflags.h uses the GFLAGS_NAMESPACE #define which
   # is defined in gflags_declare.h, we try each location in turn.
-  SET(GFLAGS_HEADER_FILE ${GFLAGS_INCLUDE_DIR}/gflags/gflags.h)
-  IF (NOT EXISTS ${GFLAGS_HEADER_FILE})
-    GFLAGS_REPORT_NOT_FOUND(
+  set(GFLAGS_HEADER_FILE ${GFLAGS_INCLUDE_DIR}/gflags/gflags.h)
+  if (NOT EXISTS ${GFLAGS_HEADER_FILE})
+    gflags_report_not_found(
       "Could not find file: ${GFLAGS_HEADER_FILE} "
       "containing namespace information in gflags install located at: "
       "${GFLAGS_INCLUDE_DIR}.")
-  ENDIF()
-  FILE(READ ${GFLAGS_HEADER_FILE} GFLAGS_HEADER_FILE_CONTENTS)
+  endif()
+  file(READ ${GFLAGS_HEADER_FILE} GFLAGS_HEADER_FILE_CONTENTS)
 
-  STRING(REGEX MATCH "namespace [A-Za-z]+"
+  string(REGEX MATCH "namespace [A-Za-z]+"
     GFLAGS_NAMESPACE "${GFLAGS_HEADER_FILE_CONTENTS}")
-  STRING(REGEX REPLACE "namespace ([A-Za-z]+)" "\\1"
+  string(REGEX REPLACE "namespace ([A-Za-z]+)" "\\1"
     GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}")
 
-  IF (NOT GFLAGS_NAMESPACE)
-    GFLAGS_REPORT_NOT_FOUND(
+  if (NOT GFLAGS_NAMESPACE)
+    gflags_report_not_found(
       "Failed to extract gflags namespace from header file: "
       "${GFLAGS_HEADER_FILE}.")
-  ENDIF (NOT GFLAGS_NAMESPACE)
+  endif (NOT GFLAGS_NAMESPACE)
 
-  IF (GFLAGS_NAMESPACE STREQUAL "google" OR
+  if (GFLAGS_NAMESPACE STREQUAL "google" OR
       GFLAGS_NAMESPACE STREQUAL "gflags")
     # Found valid gflags namespace from gflags.h.
-    SET(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" PARENT_SCOPE)
-    RETURN()
-  ENDIF()
+    set(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" PARENT_SCOPE)
+    return()
+  endif()
 
   # Failed to find gflags namespace from gflags.h, gflags is likely a new
   # version, check gflags_declare.h, which in newer versions (>= 2.1.2) contains
   # the GFLAGS_NAMESPACE #define, which is then referenced in gflags.h.
-  SET(GFLAGS_DECLARE_FILE ${GFLAGS_INCLUDE_DIR}/gflags/gflags_declare.h)
-  IF (NOT EXISTS ${GFLAGS_DECLARE_FILE})
-    GFLAGS_REPORT_NOT_FOUND(
+  set(GFLAGS_DECLARE_FILE ${GFLAGS_INCLUDE_DIR}/gflags/gflags_declare.h)
+  if (NOT EXISTS ${GFLAGS_DECLARE_FILE})
+    gflags_report_not_found(
       "Could not find file: ${GFLAGS_DECLARE_FILE} "
       "containing namespace information in gflags install located at: "
       "${GFLAGS_INCLUDE_DIR}.")
-  ENDIF()
-  FILE(READ ${GFLAGS_DECLARE_FILE} GFLAGS_DECLARE_FILE_CONTENTS)
+  endif()
+  file(READ ${GFLAGS_DECLARE_FILE} GFLAGS_DECLARE_FILE_CONTENTS)
 
-  STRING(REGEX MATCH "#define GFLAGS_NAMESPACE [A-Za-z]+"
+  string(REGEX MATCH "#define GFLAGS_NAMESPACE [A-Za-z]+"
     GFLAGS_NAMESPACE "${GFLAGS_DECLARE_FILE_CONTENTS}")
-  STRING(REGEX REPLACE "#define GFLAGS_NAMESPACE ([A-Za-z]+)" "\\1"
+  string(REGEX REPLACE "#define GFLAGS_NAMESPACE ([A-Za-z]+)" "\\1"
     GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}")
 
-  IF (NOT GFLAGS_NAMESPACE)
-    GFLAGS_REPORT_NOT_FOUND(
+  if (NOT GFLAGS_NAMESPACE)
+    gflags_report_not_found(
       "Failed to extract gflags namespace from declare file: "
       "${GFLAGS_DECLARE_FILE}.")
-  ENDIF (NOT GFLAGS_NAMESPACE)
+  endif (NOT GFLAGS_NAMESPACE)
 
-  IF (GFLAGS_NAMESPACE STREQUAL "google" OR
+  if (GFLAGS_NAMESPACE STREQUAL "google" OR
       GFLAGS_NAMESPACE STREQUAL "gflags")
     # Found valid gflags namespace from gflags.h.
-    SET(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" PARENT_SCOPE)
-    RETURN()
-  ENDIF()
-ENDFUNCTION(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
+    set(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" PARENT_SCOPE)
+    return()
+  endif()
+endfunction(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
 
 # -----------------------------------------------------------------
 # By default, if the user has expressed no preference for using an exported
 # gflags CMake configuration over performing a search for the installed
 # components, and has not specified any hints for the search locations, then
 # prefer a gflags exported configuration if available.
-IF (NOT DEFINED GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION
+if (NOT DEFINED GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION
     AND NOT GFLAGS_INCLUDE_DIR_HINTS
     AND NOT GFLAGS_LIBRARY_DIR_HINTS)
-  MESSAGE(STATUS "No preference for use of exported gflags CMake configuration "
+  message(STATUS "No preference for use of exported gflags CMake configuration "
     "set, and no hints for include/library directories provided. "
     "Defaulting to preferring an installed/exported gflags CMake configuration "
     "if available.")
-  SET(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION TRUE)
-ENDIF()
+  set(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION TRUE)
+endif()
 
-IF (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
+if (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   # Try to find an exported CMake configuration for gflags, as generated by
   # gflags versions >= 2.1.
   #
@@ -314,28 +314,28 @@ IF (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   # version if available.
   #
   # [1] http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:find_package
-  FIND_PACKAGE(gflags QUIET
+  find_package(gflags QUIET
                       NO_MODULE
                       NO_CMAKE_PACKAGE_REGISTRY
                       NO_CMAKE_BUILDS_PATH)
-  IF (gflags_FOUND)
-    MESSAGE(STATUS "Found installed version of gflags: ${gflags_DIR}")
-  ELSE(gflags_FOUND)
+  if (gflags_FOUND)
+    message(STATUS "Found installed version of gflags: ${gflags_DIR}")
+  else(gflags_FOUND)
     # Failed to find an installed version of gflags, repeat search allowing
     # exported build directories.
-    MESSAGE(STATUS "Failed to find installed version of gflags, searching for "
+    message(STATUS "Failed to find installed version of gflags, searching for "
       "gflags build directories exported with CMake.")
     # Again pass NO_CMAKE_BUILDS_PATH, as we know that gflags is exported and
     # do not want to treat projects built with the CMake GUI preferentially.
-    FIND_PACKAGE(gflags QUIET
+    find_package(gflags QUIET
                         NO_MODULE
                         NO_CMAKE_BUILDS_PATH)
-    IF (gflags_FOUND)
-      MESSAGE(STATUS "Found exported gflags build directory: ${gflags_DIR}")
-    ENDIF(gflags_FOUND)
-  ENDIF(gflags_FOUND)
+    if (gflags_FOUND)
+      message(STATUS "Found exported gflags build directory: ${gflags_DIR}")
+    endif(gflags_FOUND)
+  endif(gflags_FOUND)
 
-  SET(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION ${gflags_FOUND})
+  set(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION ${gflags_FOUND})
 
   # gflags v2.1 - 2.1.2 shipped with a bug in their gflags-config.cmake [1]
   # whereby gflags_LIBRARIES = "gflags", but there was no imported target
@@ -345,43 +345,43 @@ IF (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
   # fix it.
   #
   # [1] https://github.com/gflags/gflags/issues/110
-  IF (gflags_FOUND AND
+  if (gflags_FOUND AND
       ${gflags_VERSION} VERSION_LESS 2.1.3 AND
       NOT TARGET ${gflags_LIBRARIES})
-    MESSAGE(STATUS "Detected broken gflags install in: ${gflags_DIR}, "
+    message(STATUS "Detected broken gflags install in: ${gflags_DIR}, "
       "version: ${gflags_VERSION} <= 2.1.2 which defines gflags_LIBRARIES = "
       "${gflags_LIBRARIES} which is not an imported CMake target, see: "
       "https://github.com/gflags/gflags/issues/110.  Attempting to fix by "
       "detecting correct gflags target.")
     # Ordering here expresses preference for detection, specifically we do not
     # want to use the _nothreads variants if the full library is available.
-    LIST(APPEND CHECK_GFLAGS_IMPORTED_TARGET_NAMES
+    list(APPEND CHECK_GFLAGS_IMPORTED_TARGET_NAMES
       gflags-shared gflags-static
       gflags_nothreads-shared gflags_nothreads-static)
-    FOREACH(CHECK_GFLAGS_TARGET ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES})
-      IF (TARGET ${CHECK_GFLAGS_TARGET})
-        MESSAGE(STATUS "Found valid gflags target: ${CHECK_GFLAGS_TARGET}, "
+    foreach(CHECK_GFLAGS_TARGET ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES})
+      if (TARGET ${CHECK_GFLAGS_TARGET})
+        message(STATUS "Found valid gflags target: ${CHECK_GFLAGS_TARGET}, "
           "updating gflags_LIBRARIES.")
-        SET(gflags_LIBRARIES ${CHECK_GFLAGS_TARGET})
-        BREAK()
-      ENDIF()
-    ENDFOREACH()
-    IF (NOT TARGET ${gflags_LIBRARIES})
-      MESSAGE(STATUS "Failed to fix detected broken gflags install in: "
+        set(gflags_LIBRARIES ${CHECK_GFLAGS_TARGET})
+        break()
+      endif()
+    endforeach()
+    if (NOT TARGET ${gflags_LIBRARIES})
+      message(STATUS "Failed to fix detected broken gflags install in: "
         "${gflags_DIR}, version: ${gflags_VERSION} <= 2.1.2, none of the "
         "imported targets for gflags: ${CHECK_GFLAGS_IMPORTED_TARGET_NAMES} "
         "are defined.  Will continue with a manual search for gflags "
         "components.  We recommend you build/install a version of gflags > "
         "2.1.2 (or master).")
-      SET(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION FALSE)
-    ENDIF()
-  ENDIF()
+      set(FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION FALSE)
+    endif()
+  endif()
 
-  IF (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
-    MESSAGE(STATUS "Detected gflags version: ${gflags_VERSION}")
-    SET(GFLAGS_FOUND ${gflags_FOUND})
-    SET(GFLAGS_INCLUDE_DIR ${gflags_INCLUDE_DIR})
-    SET(GFLAGS_LIBRARY ${gflags_LIBRARIES})
+  if (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
+    message(STATUS "Detected gflags version: ${gflags_VERSION}")
+    set(GFLAGS_FOUND ${gflags_FOUND})
+    set(GFLAGS_INCLUDE_DIR ${gflags_INCLUDE_DIR})
+    set(GFLAGS_LIBRARY ${gflags_LIBRARIES})
 
     # gflags does not export the namespace in their CMake configuration, so
     # use our function to determine what it should be, as it can be either
@@ -390,102 +390,102 @@ IF (GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
     # NOTE: We use the regex method to determine the namespace here, as
     #       check_cxx_source_compiles() will not use imported targets, which
     #       is what gflags will be in this case.
-    GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX()
+    gflags_check_gflags_namespace_using_regex()
 
-    IF (NOT GFLAGS_NAMESPACE)
-      GFLAGS_REPORT_NOT_FOUND(
+    if (NOT GFLAGS_NAMESPACE)
+      gflags_report_not_found(
         "Failed to determine gflags namespace using regex for gflags "
         "version: ${gflags_VERSION} exported here: ${gflags_DIR} using CMake.")
-    ENDIF (NOT GFLAGS_NAMESPACE)
-  ELSE (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
-    MESSAGE(STATUS "Failed to find an installed/exported CMake configuration "
+    endif (NOT GFLAGS_NAMESPACE)
+  else (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
+    message(STATUS "Failed to find an installed/exported CMake configuration "
       "for gflags, will perform search for installed gflags components.")
-  ENDIF (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
-ENDIF(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
+  endif (FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION)
+endif(GFLAGS_PREFER_EXPORTED_GFLAGS_CMAKE_CONFIGURATION)
 
-IF (NOT GFLAGS_FOUND)
+if (NOT GFLAGS_FOUND)
   # Either failed to find an exported gflags CMake configuration, or user
   # told us not to use one.  Perform a manual search for all gflags components.
 
   # Handle possible presence of lib prefix for libraries on MSVC, see
   # also GFLAGS_RESET_FIND_LIBRARY_PREFIX().
-  IF (MSVC)
+  if (MSVC)
     # Preserve the caller's original values for CMAKE_FIND_LIBRARY_PREFIXES
     # s/t we can set it back before returning.
-    SET(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
+    set(CALLERS_CMAKE_FIND_LIBRARY_PREFIXES "${CMAKE_FIND_LIBRARY_PREFIXES}")
     # The empty string in this list is important, it represents the case when
     # the libraries have no prefix (shared libraries / DLLs).
-    SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
-  ENDIF (MSVC)
+    set(CMAKE_FIND_LIBRARY_PREFIXES "lib" "" "${CMAKE_FIND_LIBRARY_PREFIXES}")
+  endif (MSVC)
 
   # Search user-installed locations first, so that we prefer user installs
   # to system installs where both exist.
-  LIST(APPEND GFLAGS_CHECK_INCLUDE_DIRS
+  list(APPEND GFLAGS_CHECK_INCLUDE_DIRS
     /usr/local/include
     /usr/local/homebrew/include # Mac OS X
     /opt/local/var/macports/software # Mac OS X.
     /opt/local/include
     /usr/include)
-  LIST(APPEND GFLAGS_CHECK_PATH_SUFFIXES
+  list(APPEND GFLAGS_CHECK_PATH_SUFFIXES
     gflags/include # Windows (for C:/Program Files prefix).
     gflags/Include ) # Windows (for C:/Program Files prefix).
 
-  LIST(APPEND GFLAGS_CHECK_LIBRARY_DIRS
+  list(APPEND GFLAGS_CHECK_LIBRARY_DIRS
     /usr/local/lib
     /usr/local/homebrew/lib # Mac OS X.
     /opt/local/lib
     /usr/lib)
-  LIST(APPEND GFLAGS_CHECK_LIBRARY_SUFFIXES
+  list(APPEND GFLAGS_CHECK_LIBRARY_SUFFIXES
     gflags/lib # Windows (for C:/Program Files prefix).
     gflags/Lib ) # Windows (for C:/Program Files prefix).
 
   # Search supplied hint directories first if supplied.
-  FIND_PATH(GFLAGS_INCLUDE_DIR
+  find_path(GFLAGS_INCLUDE_DIR
     NAMES gflags/gflags.h
     PATHS ${GFLAGS_INCLUDE_DIR_HINTS}
     ${GFLAGS_CHECK_INCLUDE_DIRS}
     PATH_SUFFIXES ${GFLAGS_CHECK_PATH_SUFFIXES})
-  IF (NOT GFLAGS_INCLUDE_DIR OR
+  if (NOT GFLAGS_INCLUDE_DIR OR
       NOT EXISTS ${GFLAGS_INCLUDE_DIR})
-    GFLAGS_REPORT_NOT_FOUND(
+    gflags_report_not_found(
       "Could not find gflags include directory, set GFLAGS_INCLUDE_DIR "
       "to directory containing gflags/gflags.h")
-  ENDIF (NOT GFLAGS_INCLUDE_DIR OR
+  endif (NOT GFLAGS_INCLUDE_DIR OR
     NOT EXISTS ${GFLAGS_INCLUDE_DIR})
 
-  FIND_LIBRARY(GFLAGS_LIBRARY NAMES gflags
+  find_library(GFLAGS_LIBRARY NAMES gflags
     PATHS ${GFLAGS_LIBRARY_DIR_HINTS}
     ${GFLAGS_CHECK_LIBRARY_DIRS}
     PATH_SUFFIXES ${GFLAGS_CHECK_LIBRARY_SUFFIXES})
-  IF (NOT GFLAGS_LIBRARY OR
+  if (NOT GFLAGS_LIBRARY OR
       NOT EXISTS ${GFLAGS_LIBRARY})
-    GFLAGS_REPORT_NOT_FOUND(
+    gflags_report_not_found(
       "Could not find gflags library, set GFLAGS_LIBRARY "
       "to full path to libgflags.")
-  ENDIF (NOT GFLAGS_LIBRARY OR
+  endif (NOT GFLAGS_LIBRARY OR
     NOT EXISTS ${GFLAGS_LIBRARY})
 
   # gflags typically requires a threading library (which is OS dependent), note
   # that this defines the CMAKE_THREAD_LIBS_INIT variable.  If we are able to
   # detect threads, we assume that gflags requires it.
-  FIND_PACKAGE(Threads QUIET)
-  SET(GFLAGS_LINK_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+  find_package(Threads QUIET)
+  set(GFLAGS_LINK_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
   # On Windows (including MinGW), the Shlwapi library is used by gflags if
   # available.
-  IF (WIN32)
-    INCLUDE(CheckIncludeFileCXX)
-    CHECK_INCLUDE_FILE_CXX("shlwapi.h" HAVE_SHLWAPI)
-    IF (HAVE_SHLWAPI)
-      LIST(APPEND GFLAGS_LINK_LIBRARIES shlwapi.lib)
-    ENDIF(HAVE_SHLWAPI)
-  ENDIF (WIN32)
+  if (WIN32)
+    include(CheckIncludeFileCXX)
+    check_include_file_cxx("shlwapi.h" HAVE_SHLWAPI)
+    if (HAVE_SHLWAPI)
+      list(APPEND GFLAGS_LINK_LIBRARIES shlwapi.lib)
+    endif(HAVE_SHLWAPI)
+  endif (WIN32)
 
   # Mark internally as found, then verify. GFLAGS_REPORT_NOT_FOUND() unsets
   # if called.
-  SET(GFLAGS_FOUND TRUE)
+  set(GFLAGS_FOUND TRUE)
 
   # Identify what namespace gflags was built with.
-  IF (GFLAGS_INCLUDE_DIR AND NOT GFLAGS_NAMESPACE)
+  if (GFLAGS_INCLUDE_DIR AND NOT GFLAGS_NAMESPACE)
     # To handle Windows peculiarities / CMake bugs on MSVC we try two approaches
     # to detect the gflags namespace:
     #
@@ -495,27 +495,27 @@ IF (NOT GFLAGS_FOUND)
     # 2) [In the event 1) fails] Use regex on the gflags headers to try to
     #    determine the gflags namespace.  Whilst this is less robust than 1),
     #    it does avoid any interaction with msbuild.
-    GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_TRY_COMPILE()
+    gflags_check_gflags_namespace_using_try_compile()
 
-    IF (NOT GFLAGS_NAMESPACE)
+    if (NOT GFLAGS_NAMESPACE)
       # Failed to determine gflags namespace using check_cxx_source_compiles()
       # method, try and obtain it using regex on the gflags headers instead.
-      MESSAGE(STATUS "Failed to find gflags namespace using using "
+      message(STATUS "Failed to find gflags namespace using using "
         "check_cxx_source_compiles(), trying namespace regex instead, "
         "this is expected on Windows.")
-      GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX()
+      gflags_check_gflags_namespace_using_regex()
 
-      IF (NOT GFLAGS_NAMESPACE)
-        GFLAGS_REPORT_NOT_FOUND(
+      if (NOT GFLAGS_NAMESPACE)
+        gflags_report_not_found(
           "Failed to determine gflags namespace either by "
           "check_cxx_source_compiles(), or namespace regex.")
-      ENDIF (NOT GFLAGS_NAMESPACE)
-    ENDIF (NOT GFLAGS_NAMESPACE)
-  ENDIF (GFLAGS_INCLUDE_DIR AND NOT GFLAGS_NAMESPACE)
+      endif (NOT GFLAGS_NAMESPACE)
+    endif (NOT GFLAGS_NAMESPACE)
+  endif (GFLAGS_INCLUDE_DIR AND NOT GFLAGS_NAMESPACE)
 
   # Make the GFLAGS_NAMESPACE a cache variable s/t the user can view it, and could
   # overwrite it in the CMake GUI.
-  SET(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" CACHE STRING
+  set(GFLAGS_NAMESPACE "${GFLAGS_NAMESPACE}" CACHE STRING
     "gflags namespace (google or gflags)" FORCE)
 
   # gflags does not seem to provide any record of the version in its
@@ -523,55 +523,55 @@ IF (NOT GFLAGS_FOUND)
 
   # Catch case when caller has set GFLAGS_NAMESPACE in the cache / GUI
   # with an invalid value.
-  IF (GFLAGS_NAMESPACE AND
+  if (GFLAGS_NAMESPACE AND
       NOT GFLAGS_NAMESPACE STREQUAL "google" AND
       NOT GFLAGS_NAMESPACE STREQUAL "gflags")
-    GFLAGS_REPORT_NOT_FOUND(
+    gflags_report_not_found(
       "Caller defined GFLAGS_NAMESPACE:"
       " ${GFLAGS_NAMESPACE} is not valid, not google or gflags.")
-  ENDIF ()
+  endif ()
   # Catch case when caller has set GFLAGS_INCLUDE_DIR in the cache / GUI and
   # thus FIND_[PATH/LIBRARY] are not called, but specified locations are
   # invalid, otherwise we would report the library as found.
-  IF (GFLAGS_INCLUDE_DIR AND
+  if (GFLAGS_INCLUDE_DIR AND
       NOT EXISTS ${GFLAGS_INCLUDE_DIR}/gflags/gflags.h)
-    GFLAGS_REPORT_NOT_FOUND(
+    gflags_report_not_found(
       "Caller defined GFLAGS_INCLUDE_DIR:"
       " ${GFLAGS_INCLUDE_DIR} does not contain gflags/gflags.h header.")
-  ENDIF (GFLAGS_INCLUDE_DIR AND
+  endif (GFLAGS_INCLUDE_DIR AND
     NOT EXISTS ${GFLAGS_INCLUDE_DIR}/gflags/gflags.h)
   # TODO: This regex for gflags library is pretty primitive, we use lowercase
   #       for comparison to handle Windows using CamelCase library names, could
   #       this check be better?
-  STRING(TOLOWER "${GFLAGS_LIBRARY}" LOWERCASE_GFLAGS_LIBRARY)
-  IF (GFLAGS_LIBRARY AND
+  string(TOLOWER "${GFLAGS_LIBRARY}" LOWERCASE_GFLAGS_LIBRARY)
+  if (GFLAGS_LIBRARY AND
       NOT "${LOWERCASE_GFLAGS_LIBRARY}" MATCHES ".*gflags[^/]*")
-    GFLAGS_REPORT_NOT_FOUND(
+    gflags_report_not_found(
       "Caller defined GFLAGS_LIBRARY: "
       "${GFLAGS_LIBRARY} does not match gflags.")
-  ENDIF (GFLAGS_LIBRARY AND
+  endif (GFLAGS_LIBRARY AND
     NOT "${LOWERCASE_GFLAGS_LIBRARY}" MATCHES ".*gflags[^/]*")
 
-  GFLAGS_RESET_FIND_LIBRARY_PREFIX()
+  gflags_reset_find_library_prefix()
 
-ENDIF(NOT GFLAGS_FOUND)
+endif(NOT GFLAGS_FOUND)
 
 # Set standard CMake FindPackage variables if found.
-IF (GFLAGS_FOUND)
-  SET(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
-  SET(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
-ENDIF (GFLAGS_FOUND)
+if (GFLAGS_FOUND)
+  set(GFLAGS_INCLUDE_DIRS ${GFLAGS_INCLUDE_DIR})
+  set(GFLAGS_LIBRARIES ${GFLAGS_LIBRARY} ${GFLAGS_LINK_LIBRARIES})
+endif (GFLAGS_FOUND)
 
 # Handle REQUIRED / QUIET optional arguments.
-INCLUDE(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(Gflags DEFAULT_MSG
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Gflags DEFAULT_MSG
   GFLAGS_INCLUDE_DIRS GFLAGS_LIBRARIES GFLAGS_NAMESPACE)
 
 # Only mark internal variables as advanced if we found gflags, otherwise
 # leave them visible in the standard GUI for the user to set manually.
-IF (GFLAGS_FOUND)
-  MARK_AS_ADVANCED(FORCE GFLAGS_INCLUDE_DIR
+if (GFLAGS_FOUND)
+  mark_as_advanced(FORCE GFLAGS_INCLUDE_DIR
     GFLAGS_LIBRARY
     GFLAGS_NAMESPACE
     gflags_DIR) # Autogenerated by find_package(gflags)
-ENDIF (GFLAGS_FOUND)
+endif (GFLAGS_FOUND)

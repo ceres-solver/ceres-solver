@@ -30,47 +30,47 @@
 #          alexs.mac@gmail.com (Alex Stewart)
 
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
-FUNCTION(ADD_GERRIT_COMMIT_HOOK)
-  UNSET (LOCAL_GIT_DIRECTORY)
-  IF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
-    IF (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
+function(ADD_GERRIT_COMMIT_HOOK)
+  unset (LOCAL_GIT_DIRECTORY)
+  if (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+    if (IS_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
       # .git directory can be found on Unix based system, or on Windows with
       # Git Bash (shipped with msysgit).
-      SET (LOCAL_GIT_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
-    ELSE(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
+      set (LOCAL_GIT_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
+    else(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
       # .git is a file, this means Ceres is a git submodule of another project
       # and our .git file contains the path to the git directory which manages
       # Ceres, so we should add the gerrit hook there.
-      FILE(READ ${CMAKE_SOURCE_DIR}/.git GIT_SUBMODULE_FILE_CONTENTS)
+      file(READ ${CMAKE_SOURCE_DIR}/.git GIT_SUBMODULE_FILE_CONTENTS)
       # Strip any trailing newline characters, s/t we get a valid path.
-      STRING(REGEX REPLACE "gitdir:[ ]*([^$].*)[\n].*" "${CMAKE_SOURCE_DIR}/\\1"
+      string(REGEX REPLACE "gitdir:[ ]*([^$].*)[\n].*" "${CMAKE_SOURCE_DIR}/\\1"
         GIT_SUBMODULE_GIT_DIRECTORY_PATH "${GIT_SUBMODULE_FILE_CONTENTS}")
-      GET_FILENAME_COMPONENT(GIT_SUBMODULE_GIT_DIRECTORY_PATH
+      get_filename_component(GIT_SUBMODULE_GIT_DIRECTORY_PATH
         "${GIT_SUBMODULE_GIT_DIRECTORY_PATH}" ABSOLUTE)
-      IF (EXISTS ${GIT_SUBMODULE_GIT_DIRECTORY_PATH}
+      if (EXISTS ${GIT_SUBMODULE_GIT_DIRECTORY_PATH}
           AND IS_DIRECTORY ${GIT_SUBMODULE_GIT_DIRECTORY_PATH})
-        SET(LOCAL_GIT_DIRECTORY "${GIT_SUBMODULE_GIT_DIRECTORY_PATH}")
-      ENDIF()
-    ENDIF()
-  ELSE (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+        set(LOCAL_GIT_DIRECTORY "${GIT_SUBMODULE_GIT_DIRECTORY_PATH}")
+      endif()
+    endif()
+  else (EXISTS ${CMAKE_SOURCE_DIR}/.git)
     # TODO(keir) Add proper Windows support.
-  ENDIF (EXISTS ${CMAKE_SOURCE_DIR}/.git)
+  endif (EXISTS ${CMAKE_SOURCE_DIR}/.git)
 
-  IF (EXISTS ${LOCAL_GIT_DIRECTORY})
-    IF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
-      MESSAGE(STATUS "Detected Ceres being used as a git submodule, adding "
+  if (EXISTS ${LOCAL_GIT_DIRECTORY})
+    if (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+      message(STATUS "Detected Ceres being used as a git submodule, adding "
         "commit hook for Gerrit to: ${LOCAL_GIT_DIRECTORY}")
       # Download the hook only if it is not already present.
-      FILE(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
+      file(DOWNLOAD https://ceres-solver-review.googlesource.com/tools/hooks/commit-msg
         ${CMAKE_BINARY_DIR}/commit-msg)
 
       # Make the downloaded file executable, since it is not by default.
-      FILE(COPY ${CMAKE_BINARY_DIR}/commit-msg
+      file(COPY ${CMAKE_BINARY_DIR}/commit-msg
         DESTINATION ${LOCAL_GIT_DIRECTORY}/hooks/
         FILE_PERMISSIONS
         OWNER_READ OWNER_WRITE OWNER_EXECUTE
         GROUP_READ GROUP_WRITE GROUP_EXECUTE
         WORLD_READ WORLD_EXECUTE)
-    ENDIF (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
-  ENDIF (EXISTS ${LOCAL_GIT_DIRECTORY})
-ENDFUNCTION()
+    endif (NOT EXISTS ${LOCAL_GIT_DIRECTORY}/hooks/commit-msg)
+  endif (EXISTS ${LOCAL_GIT_DIRECTORY})
+endfunction()

@@ -37,58 +37,58 @@
 # HAVE_UNORDERED_MAP_IN_STD_NAMESPACE: Use <unordered_map> & std.
 # HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE: Use <unordered_map> & std::tr1.
 # HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE: <tr1/unordered_map> & std::tr1.
-MACRO(FIND_UNORDERED_MAP)
+macro(FIND_UNORDERED_MAP)
   # To support CXX11 option, clear the results of all check_xxx() functions
   # s/t we always perform the checks each time, otherwise CMake fails to
   # detect that the tests should be performed again after CXX11 is toggled.
-  UNSET(HAVE_STD_UNORDERED_MAP_HEADER CACHE)
-  UNSET(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE CACHE)
-  UNSET(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE CACHE)
-  UNSET(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE CACHE)
+  unset(HAVE_STD_UNORDERED_MAP_HEADER CACHE)
+  unset(HAVE_UNORDERED_MAP_IN_STD_NAMESPACE CACHE)
+  unset(HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE CACHE)
+  unset(HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE CACHE)
 
-  SET(UNORDERED_MAP_FOUND FALSE)
-  INCLUDE(CheckIncludeFileCXX)
-  CHECK_INCLUDE_FILE_CXX(unordered_map HAVE_STD_UNORDERED_MAP_HEADER)
-  IF (HAVE_STD_UNORDERED_MAP_HEADER)
+  set(UNORDERED_MAP_FOUND FALSE)
+  include(CheckIncludeFileCXX)
+  check_include_file_cxx(unordered_map HAVE_STD_UNORDERED_MAP_HEADER)
+  if (HAVE_STD_UNORDERED_MAP_HEADER)
     # Finding the unordered_map header doesn't mean that unordered_map
     # is in std namespace.
     #
     # In particular, MSVC 2008 has unordered_map declared in std::tr1.
     # In order to support this, we do an extra check to see which
     # namespace should be used.
-    INCLUDE(CheckCXXSourceCompiles)
-    CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
+    include(CheckCXXSourceCompiles)
+    check_cxx_source_compiles("#include <unordered_map>
                                int main() {
                                  std::unordered_map<int, int> map;
                                  return 0;
                                }"
                                HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-    IF (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-      SET(UNORDERED_MAP_FOUND TRUE)
-      MESSAGE("-- Found unordered_map/set in std namespace.")
-    ELSE (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-      CHECK_CXX_SOURCE_COMPILES("#include <unordered_map>
+    if (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+      set(UNORDERED_MAP_FOUND TRUE)
+      message("-- Found unordered_map/set in std namespace.")
+    else (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+      check_cxx_source_compiles("#include <unordered_map>
                                  int main() {
                                    std::tr1::unordered_map<int, int> map;
                                    return 0;
                                  }"
                                  HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      IF (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-        SET(UNORDERED_MAP_FOUND TRUE)
-        MESSAGE("-- Found unordered_map/set in std::tr1 namespace.")
-      ELSE (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-        MESSAGE("-- Found <unordered_map> but cannot find either "
+      if (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+        set(UNORDERED_MAP_FOUND TRUE)
+        message("-- Found unordered_map/set in std::tr1 namespace.")
+      else (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+        message("-- Found <unordered_map> but cannot find either "
           "std::unordered_map or std::tr1::unordered_map.")
-      ENDIF (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    ENDIF (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
-  ELSE (HAVE_STD_UNORDERED_MAP_HEADER)
-    CHECK_INCLUDE_FILE_CXX("tr1/unordered_map"
+      endif (HAVE_UNORDERED_MAP_IN_TR1_NAMESPACE)
+    endif (HAVE_UNORDERED_MAP_IN_STD_NAMESPACE)
+  else (HAVE_STD_UNORDERED_MAP_HEADER)
+    check_include_file_cxx("tr1/unordered_map"
       HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-    IF (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      SET(UNORDERED_MAP_FOUND TRUE)
-      MESSAGE("-- Found tr1/unordered_map/set in std::tr1 namespace.")
-    ELSE (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-      MESSAGE("-- Unable to find <unordered_map> or <tr1/unordered_map>.")
-    ENDIF (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
-  ENDIF (HAVE_STD_UNORDERED_MAP_HEADER)
-ENDMACRO(FIND_UNORDERED_MAP)
+    if (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+      set(UNORDERED_MAP_FOUND TRUE)
+      message("-- Found tr1/unordered_map/set in std::tr1 namespace.")
+    else (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+      message("-- Unable to find <unordered_map> or <tr1/unordered_map>.")
+    endif (HAVE_TR1_UNORDERED_MAP_IN_TR1_NAMESPACE)
+  endif (HAVE_STD_UNORDERED_MAP_HEADER)
+endmacro(FIND_UNORDERED_MAP)
