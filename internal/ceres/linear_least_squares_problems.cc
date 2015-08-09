@@ -58,6 +58,8 @@ LinearLeastSquaresProblem* CreateLinearLeastSquaresProblemFromId(int id) {
       return LinearLeastSquaresProblem2();
     case 3:
       return LinearLeastSquaresProblem3();
+    case 4:
+      return LinearLeastSquaresProblem4();
     default:
       LOG(FATAL) << "Unknown problem id requested " << id;
   }
@@ -502,6 +504,106 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem3() {
 
   problem->A.reset(A);
 
+  return problem;
+}
+
+/*
+      A = [1 2 0 0 0 1 1
+           1 4 0 0 0 5 6
+           0 0 9 0 0 3 1]
+
+      b = [0
+           1
+           2]
+*/
+// BlockSparseMatrix version
+//
+// This problem has the unique property that it has two different
+// sized f-blocks, but only one of them occurs in the rows involving
+// the one e-block. So performing Schur elimination on this problem
+// tests the Schur Eliminator's ability to handle non-e-block rows
+// correctly when their structure does not conform to the static
+// structure determined by DetectStructure.
+//
+// NOTE: This problem is too small and rank deficient to be solved without
+// the diagonal regularization.
+LinearLeastSquaresProblem* LinearLeastSquaresProblem4() {
+  int num_rows = 3;
+  int num_cols = 7;
+
+  LinearLeastSquaresProblem* problem = new LinearLeastSquaresProblem;
+
+  problem->b.reset(new double[num_rows]);
+  problem->D.reset(new double[num_cols]);
+  problem->num_eliminate_blocks = 1;
+
+  CompressedRowBlockStructure* bs = new CompressedRowBlockStructure;
+  scoped_array<double> values(new double[num_rows * num_cols]);
+
+  // Column block structure
+  bs->cols.push_back(Block());
+  bs->cols.back().size = 2;
+  bs->cols.back().position = 0;
+
+  bs->cols.push_back(Block());
+  bs->cols.back().size = 3;
+  bs->cols.back().position = 2;
+
+  bs->cols.push_back(Block());
+  bs->cols.back().size = 2;
+  bs->cols.back().position = 5;
+
+  int nnz = 0;
+
+  // Row 1 & 2
+  {
+    bs->rows.push_back(CompressedRow());
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 2;
+    row.block.position = 0;
+
+    row.cells.push_back(Cell(0, nnz));
+    values[nnz++] = 1;
+    values[nnz++] = 2;
+    values[nnz++] = 1;
+    values[nnz++] = 4;
+
+    row.cells.push_back(Cell(2, nnz));
+    values[nnz++] = 1;
+    values[nnz++] = 1;
+    values[nnz++] = 5;
+    values[nnz++] = 6;
+  }
+
+  // Row 3
+  {
+    bs->rows.push_back(CompressedRow());
+    CompressedRow& row = bs->rows.back();
+    row.block.size = 1;
+    row.block.position = 2;
+
+    row.cells.push_back(Cell(1, nnz));
+    values[nnz++] = 9;
+    values[nnz++] = 0;
+    values[nnz++] = 0;
+
+    row.cells.push_back(Cell(2, nnz));
+    values[nnz++] = 3;
+    values[nnz++] = 1;
+  }
+
+  BlockSparseMatrix* A = new BlockSparseMatrix(bs);
+  memcpy(A->mutable_values(), values.get(), nnz * sizeof(*A->values()));
+
+  for (int i = 0; i < num_cols; ++i) {
+    problem->D.get()[i] = (i + 1) * 100;
+  }
+
+  for (int i = 0; i < num_rows; ++i) {
+    problem->b.get()[i] = i;
+  }
+
+  problem->A.reset(A);
   return problem;
 }
 
