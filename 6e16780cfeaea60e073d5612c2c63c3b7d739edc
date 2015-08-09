@@ -22,6 +22,30 @@
       "revId": "6e16780cfeaea60e073d5612c2c63c3b7d739edc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47209b2d_99d19b42",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-08-09T14:30:34Z",
+      "side": 1,
+      "message": "Well, without this change, you see nothing in the ncurses GUI for the option at all... It also prints out extensive information in the CMake messages log (which the user has to confirm if using the GUI, or comes out loud and clear if they are using the terminal in the log output).",
+      "parentUuid": "67c11f6c_daaba58f",
+      "range": {
+        "startLine": 115,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 15
+      },
+      "revId": "6e16780cfeaea60e073d5612c2c63c3b7d739edc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
