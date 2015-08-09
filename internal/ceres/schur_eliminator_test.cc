@@ -193,7 +193,7 @@ class SchurEliminatorTest : public ::testing::Test {
   Vector sol_expected;
 };
 
-TEST_F(SchurEliminatorTest, ScalarProblem) {
+TEST_F(SchurEliminatorTest, ScalarProblemNoRegularization) {
   SetUpFromId(2);
   Vector zero(A->num_cols());
   zero.setZero();
@@ -201,9 +201,24 @@ TEST_F(SchurEliminatorTest, ScalarProblem) {
   ComputeReferenceSolution(VectorRef(zero.data(), A->num_cols()));
   EliminateSolveAndCompare(VectorRef(zero.data(), A->num_cols()), true, 1e-14);
   EliminateSolveAndCompare(VectorRef(zero.data(), A->num_cols()), false, 1e-14);
+}
 
+TEST_F(SchurEliminatorTest, ScalarProblemWithRegularization) {
+  SetUpFromId(2);
   ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), true, 1e-14);
+  EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), false, 1e-14);
+}
+
+TEST_F(SchurEliminatorTest, VaryingFBlockSizeWithStaticStructure) {
+  SetUpFromId(4);
+  ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));
+  EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), true, 1e-14);
+}
+
+TEST_F(SchurEliminatorTest, VaryingFBlockSizeWithoutStaticStructure) {
+  SetUpFromId(4);
+  ComputeReferenceSolution(VectorRef(D.get(), A->num_cols()));
   EliminateSolveAndCompare(VectorRef(D.get(), A->num_cols()), false, 1e-14);
 }
 

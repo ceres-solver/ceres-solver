@@ -59,9 +59,9 @@ class SchurComplementSolverTest : public ::testing::Test {
     num_rows = A->num_rows();
     num_eliminate_blocks = problem->num_eliminate_blocks;
 
-    x.reset(new double[num_cols]);
-    sol.reset(new double[num_cols]);
-    sol_d.reset(new double[num_cols]);
+    x.resize(num_cols);
+    sol.resize(num_cols);
+    sol_d.resize(num_cols);
 
     LinearSolver::Options options;
     options.type = DENSE_QR;
@@ -75,12 +75,12 @@ class SchurComplementSolverTest : public ::testing::Test {
 
     // Gold standard solutions using dense QR factorization.
     DenseSparseMatrix dense_A(triplet_A);
-    qr->Solve(&dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.get());
+    qr->Solve(&dense_A, b.get(), LinearSolver::PerSolveOptions(), sol.data());
 
     // Gold standard solution with appended diagonal.
     LinearSolver::PerSolveOptions per_solve_options;
     per_solve_options.D = D.get();
-    qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.get());
+    qr->Solve(&dense_A, b.get(), per_solve_options, sol_d.data());
   }
 
   void ComputeAndCompareSolutions(
@@ -110,16 +110,17 @@ class SchurComplementSolverTest : public ::testing::Test {
       per_solve_options.D = D.get();
     }
 
-    summary = solver->Solve(A.get(), b.get(), per_solve_options, x.get());
+    summary = solver->Solve(A.get(), b.get(), per_solve_options, x.data());
+    EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
 
     if (regularization) {
-      for (int i = 0; i < num_cols; ++i) {
-        ASSERT_NEAR(sol_d.get()[i], x[i], 1e-10);
-      }
+      ASSERT_NEAR((sol_d - x).norm() / num_cols, 0, 1e-10)
+          << "Expected solution: " << sol_d.transpose()
+          << " Actual solution: " << x.transpose();
     } else {
-      for (int i = 0; i < num_cols; ++i) {
-        ASSERT_NEAR(sol.get()[i], x[i], 1e-10);
-      }
+      ASSERT_NEAR((sol - x).norm() / num_cols, 0, 1e-10)
+          << "Expected solution: " << sol.transpose()
+          << " Actual solution: " << x.transpose();
     }
   }
 
@@ -129,10 +130,10 @@ class SchurComplementSolverTest : public ::testing::Test {
 
   scoped_ptr<BlockSparseMatrix> A;
   scoped_array<double> b;
-  scoped_array<double> x;
   scoped_array<double> D;
-  scoped_array<double> sol;
-  scoped_array<double> sol_d;
+  Vector x;
+  Vector sol;
+  Vector sol_d;
 };
 
 TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithSmallProblem) {
@@ -143,6 +144,10 @@ TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithSmallProblem) {
 TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithLargeProblem) {
   ComputeAndCompareSolutions(3, false, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(3, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
+}
+
+TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithVaryingFBlockSize) {
+  ComputeAndCompareSolutions(4, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
 }
 
 #ifndef CERES_NO_LAPACK
