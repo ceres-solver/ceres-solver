@@ -440,7 +440,7 @@ iOS
 
 .. NOTE::
 
-   You need iOS version 6.0 or higher to build Ceres Solver.
+   You need iOS version 7.0 or higher to build Ceres Solver.
 
 To build Ceres for iOS, we need to force ``CMake`` to find the toolchains from
 the iOS SDK instead of using the standard ones. For example:
