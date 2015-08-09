@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47209b2d_b9bfbff7",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-08-09T11:39:03Z",
+      "side": 1,
+      "message": "Indeed :-/",
+      "parentUuid": "67c11f6c_baba3108",
+      "revId": "16ecd40523a408e7705c9fdb0e159cef2007b8ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67c11f6c_9abf6df8",
         "filename": "cmake/FindGflags.cmake",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-08-08T17:53:11Z",
       "side": 1,
       "message": "do we need to worry about static/shared here depending on what our build mode is?",
+      "revId": "16ecd40523a408e7705c9fdb0e159cef2007b8ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47209b2d_99bafb08",
+        "filename": "cmake/FindGflags.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-08-09T11:39:03Z",
+      "side": 1,
+      "message": "So... that depends.  First off, gflags is only built as either static or shared, so only one set of targets will ever exist (static or shared) for a given gflags export/install.\n\nThe issue that arises with gflags is related to glog, remember the issue when gflags was built static (its default) but glog is build shared (its default) which resulted in the glog flags missing which I fixed in Homebrew (s/t gflags is built shared by default there)?  Although this problem only affects OS X (possibly Windows), as on Linux Clang \u0026 GCC will refuse to compile glog as a shared library against a static gflags.\n\nAs we fixed Homebrew s/t gflags is now shared by default, this problem should not occur (and it\u0027s pretty easy to identify if it does, and it only affects the examples).  So I think we are covered.",
+      "parentUuid": "67c11f6c_9abf6df8",
       "revId": "16ecd40523a408e7705c9fdb0e159cef2007b8ab",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
