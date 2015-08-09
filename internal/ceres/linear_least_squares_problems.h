@@ -68,6 +68,7 @@ LinearLeastSquaresProblem* LinearLeastSquaresProblem0();
 LinearLeastSquaresProblem* LinearLeastSquaresProblem1();
 LinearLeastSquaresProblem* LinearLeastSquaresProblem2();
 LinearLeastSquaresProblem* LinearLeastSquaresProblem3();
+LinearLeastSquaresProblem* LinearLeastSquaresProblem4();
 
 // Write the linear least squares problem to disk. The exact format
 // depends on dump_format_type.

@@ -54,7 +54,6 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
     if (row.cells.front().block_id >= num_eliminate_blocks) {
       break;
     }
-    const int e_block_id = row.cells.front().block_id;
 
     if (*row_block_size == 0) {
       *row_block_size = row.block.size;
@@ -66,7 +65,7 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
       *row_block_size = Eigen::Dynamic;
     }
 
-
+    const int e_block_id = row.cells.front().block_id;
     if (*e_block_size == 0) {
       *e_block_size = bs.cols[e_block_id].size;
     } else if (*e_block_size != Eigen::Dynamic &&
