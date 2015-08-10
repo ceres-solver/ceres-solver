@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c9b39e_f3c0d0f9",
+        "filename": "internal/ceres/detect_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-10T01:32:47Z",
+      "side": 1,
+      "message": "Remove \u0027Indeed\u0027",
+      "revId": "39219d6d75c530ceeb0bd8dc93639358b0c49900",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47c41b7d_597fa386",
+        "filename": "internal/ceres/detect_structure.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-10T01:32:47Z",
+      "side": 1,
+      "message": "nd -\u003e and",
+      "revId": "39219d6d75c530ceeb0bd8dc93639358b0c49900",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7cf2b9d_d5cffc56",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-10T01:32:47Z",
+      "side": 1,
+      "message": "While this is now correct and it wasn\u0027t before, the performance may now be worse. I wonder what the impact will be.",
+      "revId": "39219d6d75c530ceeb0bd8dc93639358b0c49900",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
