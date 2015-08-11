@@ -36,6 +36,7 @@
 
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/autodiff_local_parameterization.h"
+#include "ceres/composite_first_order_function.h"
 #include "ceres/cost_function.h"
 #include "ceres/cost_function_to_functor.h"
 #include "ceres/covariance.h"
