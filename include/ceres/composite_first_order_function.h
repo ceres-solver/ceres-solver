@@ -26,35 +26,41 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: keir@google.com (Keir Mierle)
-//
-// This is a forwarding header containing the public symbols exported from
-// Ceres. Anything in the "ceres" namespace is available for use.
+// Author: standmark@google.com (Petter Strandmark)
 
-#ifndef CERES_PUBLIC_CERES_H_
-#define CERES_PUBLIC_CERES_H_
+#ifndef CERES_PUBLIC_COMPOSITE_FIRST_ORDER_FUNCTION_H_
+#define CERES_PUBLIC_COMPOSITE_FIRST_ORDER_FUNCTION_H_
 
-#include "ceres/autodiff_cost_function.h"
-#include "ceres/autodiff_local_parameterization.h"
-#include "ceres/composite_first_order_function.h"
-#include "ceres/cost_function.h"
-#include "ceres/cost_function_to_functor.h"
-#include "ceres/covariance.h"
-#include "ceres/crs_matrix.h"
-#include "ceres/dynamic_autodiff_cost_function.h"
-#include "ceres/dynamic_numeric_diff_cost_function.h"
 #include "ceres/gradient_problem.h"
-#include "ceres/gradient_problem_solver.h"
-#include "ceres/iteration_callback.h"
-#include "ceres/jet.h"
-#include "ceres/local_parameterization.h"
-#include "ceres/loss_function.h"
-#include "ceres/numeric_diff_cost_function.h"
-#include "ceres/ordered_groups.h"
-#include "ceres/problem.h"
-#include "ceres/sized_cost_function.h"
-#include "ceres/solver.h"
-#include "ceres/types.h"
-#include "ceres/version.h"
 
-#endif  // CERES_PUBLIC_CERES_H_
+namespace ceres {
+
+// A first-order function representing a sum of terms, each of which is
+// computed from a CostFunction.
+class CERES_EXPORT CompositeFirstOrderFunction : public FirstOrderFunction {
+ public:
+  CompositeFirstOrderFunction();
+  virtual ~CompositeFirstOrderFunction();
+
+  virtual bool Evaluate(const double* const parameters, double* cost,
+                        double* gradient) const;
+  virtual int NumParameters() const;
+
+  // Adds a term to the function. the CostFunction must expose exactly one
+  // residual, which is added to the function.
+  void AddTerm(CostFunction* cost_function, double* x0);
+  void AddTerm(CostFunction* cost_function, double* x0, double* x1);
+  void AddTerm(CostFunction* cost_function, double* x0, double* x1, double* x2);
+
+  // Writes the parameters used to create the function to one vector suitable
+  // for use with GradientProblemSolver.
+  void InitialSolution(double* all_parameters);
+
+  // Sets the parameters used to create the function from a vector with all
+  // parameters packed together.
+  void ParseSolution(const double* const all_parameters) const;
+};
+
+}  // namespace ceres
+
+#endif  // CERES_PUBLIC_COMPOSITE_FIRST_ORDER_FUNCTION_H_
