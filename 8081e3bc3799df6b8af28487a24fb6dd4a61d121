@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "045ce134_672132a8",
+        "filename": "include/ceres/composite_first_order_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-08-12T13:59:10Z",
+      "side": 1,
+      "message": "I guess we could sum the residuals if there are more than one. OK?",
+      "parentUuid": "875373c9_433486e1",
+      "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67091fdd_da3a45f0",
         "filename": "include/ceres/composite_first_order_function.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-08-11T16:22:25Z",
       "side": 1,
       "message": "What about ownership? Document.",
+      "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "045ce134_47262ec2",
+        "filename": "include/ceres/composite_first_order_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-08-12T13:59:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67091fdd_da3a45f0",
       "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "045ce134_271b3a7a",
+        "filename": "include/ceres/composite_first_order_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-08-12T13:59:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e97bf9_a6079c24",
+      "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d42f30_a06313bc",
         "filename": "include/ceres/composite_first_order_function.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2015-08-11T16:22:25Z",
       "side": 1,
       "message": "Sets the parameters where? To the ones passed with the initial calls to AddTerm()? This needs more documentation.",
+      "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "045ce134_072036a0",
+        "filename": "include/ceres/composite_first_order_function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5030
+      },
+      "writtenOn": "2015-08-12T13:59:10Z",
+      "side": 1,
+      "message": "I hope this is clearer.",
+      "parentUuid": "e7d42f30_a06313bc",
       "revId": "8081e3bc3799df6b8af28487a24fb6dd4a61d121",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
