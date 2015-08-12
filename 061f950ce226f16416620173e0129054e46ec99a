@@ -39,6 +39,30 @@
       "revId": "061f950ce226f16416620173e0129054e46ec99a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f5c13c_c5c7ce3a",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-12T03:16:22Z",
+      "side": 1,
+      "message": "already in the ceres namespace.",
+      "parentUuid": "446259ef_29baed08",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "061f950ce226f16416620173e0129054e46ec99a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
