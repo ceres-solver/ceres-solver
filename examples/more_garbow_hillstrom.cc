@@ -60,6 +60,10 @@
 #include "glog/logging.h"
 
 DEFINE_string(problem, "all", "Which problem to solve");
+DEFINE_bool(use_numeric_diff, false,
+            "Use numeric differentiation instead of automatic "
+            "differentiation.");
+
 
 namespace ceres {
 namespace examples {
@@ -75,9 +79,16 @@ const double kDoubleMax = std::numeric_limits<double>::max();
     static const double constrained_optimal_cost;                       \
     static const double unconstrained_optimal_cost;                     \
     static CostFunction* Create() {                                     \
-      return new AutoDiffCostFunction<name,                             \
-                                      num_residuals,                    \
-                                      num_parameters>(new name);        \
+      if (FLAGS_use_numeric_diff) {                                     \
+        return new NumericDiffCostFunction<name,                        \
+                                           CENTRAL,                     \
+                                           num_residuals,               \
+                                           num_parameters>(new name);   \
+      } else {                                                          \
+        return new AutoDiffCostFunction<name,                           \
+                                        num_residuals,                  \
+                                        num_parameters>(new name);      \
+      }                                                                 \
     }                                                                   \
     template <typename T>                                               \
     bool operator()(const T* const x, T* residual) const {
