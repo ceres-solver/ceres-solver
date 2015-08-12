@@ -182,8 +182,21 @@ endif (MINIGLOG)
 add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
-  SOVERSION ${CERES_VERSION_MAJOR}
-)
+  SOVERSION ${CERES_VERSION_MAJOR})
+# Always build position-independent code (PIC), even when building Ceres as a
+# static library so that shared libraries can link against it, not just
+# executables (PIC does not apply on Windows).
+if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
+  # Use the explicit POSITION_INDEPENDENT_CODE target property on CMake versions
+  # that support it (>= 2.8.9).  Otherwise, manually add the -fPIC flag as an
+  # additional compile definitions for the target.
+  if (CMAKE_VERSION VERSION_LESS "2.8.9")
+    set_target_properties(ceres PROPERTIES COMPILE_FLAGS "-fPIC")
+  else()
+    set_target_properties(ceres PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  endif()
+endif()
+
 if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
   if (CMAKE_VERSION VERSION_LESS "2.8.12")
     message("-- Warning: detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
