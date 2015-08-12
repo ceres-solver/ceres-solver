@@ -115,6 +115,9 @@ DEFINE_int32(num_iterations, 10000, "Number of iterations");
 DEFINE_bool(nonmonotonic_steps, false, "Trust region algorithm can use"
             " nonmonotic steps");
 DEFINE_double(initial_trust_region_radius, 1e4, "Initial trust region radius");
+DEFINE_bool(use_numeric_diff, false,
+            "Use numeric differentiation instead of automatic "
+            "differentiation.");
 
 namespace ceres {
 namespace examples {
@@ -431,12 +434,25 @@ int RegressionDriver(const string& filename,
 
     ceres::Problem problem;
     for (int i = 0; i < nist_problem.num_observations(); ++i) {
-      problem.AddResidualBlock(
-          new ceres::AutoDiffCostFunction<Model, num_residuals, num_parameters>(
-              new Model(predictor.data() + nist_problem.predictor_size() * i,
-                        response.data() + nist_problem.response_size() * i)),
-          NULL,
-          initial_parameters.data());
+      Model* model = new Model(predictor.data() + nist_problem.predictor_size() * i,
+                               response.data() + nist_problem.response_size() * i);
+      CostFunction* cost_function = NULL;
+      if (FLAGS_use_numeric_diff) {
+        cost_function =
+            new ceres::NumericDiffCostFunction<Model,
+                                               ceres::CENTRAL,
+                                               num_residuals,
+                                               num_parameters>(model);
+      } else {
+         cost_function =
+             new ceres::AutoDiffCostFunction<Model,
+                                             num_residuals,
+                                             num_parameters>(model);
+      }
+
+      problem.AddResidualBlock(cost_function,
+                               NULL,
+                               initial_parameters.data());
     }
 
     ceres::Solver::Summary summary;
