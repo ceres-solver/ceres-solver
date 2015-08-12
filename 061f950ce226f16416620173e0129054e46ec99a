@@ -16,6 +16,29 @@
       "revId": "061f950ce226f16416620173e0129054e46ec99a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "446259ef_29baed08",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2015-08-12T01:18:41Z",
+      "side": 1,
+      "message": "nit: ceres::CostFunction.",
+      "range": {
+        "startLine": 439,
+        "startChar": 6,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "061f950ce226f16416620173e0129054e46ec99a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
