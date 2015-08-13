@@ -295,7 +295,7 @@ class CERES_EXPORT TukeyLoss : public ceres::LossFunction {
 // Composition of two loss functions.  The error is the result of first
 // evaluating g followed by f to yield the composition f(g(s)).
 // The loss functions must not be NULL.
-class ComposedLoss : public LossFunction {
+class CERES_EXPORT ComposedLoss : public LossFunction {
  public:
   explicit ComposedLoss(const LossFunction* f, Ownership ownership_f,
                         const LossFunction* g, Ownership ownership_g);
