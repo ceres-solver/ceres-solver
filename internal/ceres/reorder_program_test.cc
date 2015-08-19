@@ -36,6 +36,7 @@
 #include "ceres/sized_cost_function.h"
 #include "ceres/solver.h"
 
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -166,6 +167,81 @@ TEST(_, ApplyOrderingNormal) {
   EXPECT_EQ(parameter_blocks[0]->user_state(), &x);
   EXPECT_EQ(parameter_blocks[1]->user_state(), &z);
   EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
+}
+
+
+class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest : public ::testing::Test {
+ protected:
+  void SetUp() {
+    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &x_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &z_, &x_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &z_, &y_);
+    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &z_);
+    problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &x_, &y_);
+    problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &y_);
+  };
+
+  void ComputeAndValidateOrdering(const ParameterBlockOrdering& linear_solver_ordering) {
+    Program* program = problem_.mutable_program();
+    vector<ParameterBlock*> unordered_parameter_blocks =
+        program->parameter_blocks();
+
+    std::string error;
+    EXPECT_TRUE(ReorderProgramForSparseNormalCholesky(
+                    ceres::SUITE_SPARSE,
+                    linear_solver_ordering,
+                    program,
+                    &error));
+    const vector<ParameterBlock*>& ordered_parameter_blocks =
+        program->parameter_blocks();
+    EXPECT_EQ(ordered_parameter_blocks.size(),
+              unordered_parameter_blocks.size());
+
+    EXPECT_THAT(unordered_parameter_blocks,
+                ::testing::UnorderedElementsAreArray(ordered_parameter_blocks));
+  }
+
+  ProblemImpl problem_;
+  double x_;
+  double y_;
+  double z_;
+};
+
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, EverythingInGroupZero) {
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x_, 0);
+  linear_solver_ordering.AddElementToGroup(&y_, 0);
+  linear_solver_ordering.AddElementToGroup(&z_, 0);
+
+  ComputeAndValidateOrdering(linear_solver_ordering);
+}
+
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, ContiguousGroups) {
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x_, 0);
+  linear_solver_ordering.AddElementToGroup(&y_, 1);
+  linear_solver_ordering.AddElementToGroup(&z_, 2);
+
+  ComputeAndValidateOrdering(linear_solver_ordering);
+}
+
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x_, 0);
+  linear_solver_ordering.AddElementToGroup(&y_, 2);
+  linear_solver_ordering.AddElementToGroup(&z_, 2);
+
+  ComputeAndValidateOrdering(linear_solver_ordering);
+}
+
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+       NonContiguousStartingAtTwo) {
+  ParameterBlockOrdering linear_solver_ordering;
+  linear_solver_ordering.AddElementToGroup(&x_, 2);
+  linear_solver_ordering.AddElementToGroup(&y_, 4);
+  linear_solver_ordering.AddElementToGroup(&z_, 4);
+
+  ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
 }  // namespace internal
