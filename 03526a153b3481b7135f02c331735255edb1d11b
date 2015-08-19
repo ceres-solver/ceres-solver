@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b861a5_bf593d62",
+        "filename": "docs/source/bibliography.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "so technically there are better references that are more approachable, this is a rather poorly typeset cryptic paper.",
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_1f6889e6",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "maybe mention richardson extrapolation here? and give a pointer to the general idea.",
+      "range": {
+        "startLine": 497,
+        "startChar": 48,
+        "endLine": 497,
+        "endChar": 55
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_ff6ed5f0",
+        "filename": "examples/more_garbow_hillstrom.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "I do not think its worth adding this many flags, unless you expect the defaults to be varied quite a bit. I generally speaking use this to test the default performance of the solver.",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_9f3d59ec",
+        "filename": "examples/more_garbow_hillstrom.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "No point first converting to enum and them switching over it, it is the same if you just do an if statement around the actual flag value.",
+      "range": {
+        "startLine": 104,
+        "startChar": 37,
+        "endLine": 104,
+        "endChar": 48
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_bf429d66",
+        "filename": "examples/nist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "same comment as previous file.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_5f37e109",
+        "filename": "examples/nist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "same comment as previous file.",
+      "range": {
+        "startLine": 465,
+        "startChar": 15,
+        "endLine": 465,
+        "endChar": 36
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_7f3c25eb",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "and will be removed",
+      "range": {
+        "startLine": 97,
+        "startChar": 56,
+        "endLine": 97,
+        "endChar": 59
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_dfa3d1b1",
+        "filename": "include/ceres/numeric_diff_cost_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-19T00:12:13Z",
+      "side": 1,
+      "message": "may -\u003e will",
+      "range": {
+        "startLine": 218,
+        "startChar": 60,
+        "endLine": 218,
+        "endChar": 62
+      },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
