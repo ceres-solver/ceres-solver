@@ -132,6 +132,11 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
           parameter_block_ordering.GroupId(
               parameter_blocks[i]->mutable_user_state()));
     }
+
+    // Renumber the entries of constraints to be contiguous integers
+    // as CAMD requires that the group ids be in the range [0,
+    // parameter_blocks.size() - 1].
+    MapValuesToContiguousRange(constraints.size(), &constraints[0]);
     ss.ConstrainedApproximateMinimumDegreeOrdering(block_jacobian_transpose,
                                                    &constraints[0],
                                                    ordering);
@@ -348,8 +353,8 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
             parameter_blocks[i]->mutable_user_state()));
   }
 
-  // Renumber the entries of constraints to be contiguous integers
-  // as camd requires that the group ids be in the range [0,
+  // Renumber the entries of constraints to be contiguous integers as
+  // CAMD requires that the group ids be in the range [0,
   // parameter_blocks.size() - 1].
   MapValuesToContiguousRange(constraints.size(), &constraints[0]);
 
@@ -535,6 +540,15 @@ bool ReorderProgramForSparseNormalCholesky(
     const ParameterBlockOrdering& parameter_block_ordering,
     Program* program,
     string* error) {
+  if (parameter_block_ordering.NumElements() != program->NumParameterBlocks()) {
+    *error = StringPrintf(
+        "The program has %d parameter blocks, but the parameter block "
+        "ordering has %d parameter blocks.",
+        program->NumParameterBlocks(),
+        parameter_block_ordering.NumElements());
+    return false;
+  }
+
   // Compute a block sparse presentation of J'.
   scoped_ptr<TripletSparseMatrix> tsm_block_jacobian_transpose(
       program->CreateJacobianBlockSparsityTranspose());
