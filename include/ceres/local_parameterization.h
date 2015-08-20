@@ -192,7 +192,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
 
  private:
   const int local_size_;
-  std::vector<int> constancy_mask_;
+  std::vector<char> constancy_mask_;
 };
 
 // Plus(x, delta) = [cos(|delta|), sin(|delta|) delta / |delta|] * x
