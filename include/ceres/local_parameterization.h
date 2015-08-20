@@ -33,6 +33,7 @@
 #define CERES_PUBLIC_LOCAL_PARAMETERIZATION_H_
 
 #include <vector>
+#include "ceres/integral_types.h"
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/internal/disable_warnings.h"
@@ -192,7 +193,7 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
 
  private:
   const int local_size_;
-  std::vector<int> constancy_mask_;
+  std::vector<internal::int8> constancy_mask_;
 };
 
 // Plus(x, delta) = [cos(|delta|), sin(|delta|) delta / |delta|] * x
