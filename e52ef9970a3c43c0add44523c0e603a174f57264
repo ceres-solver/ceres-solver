@@ -22,6 +22,30 @@
       "revId": "e52ef9970a3c43c0add44523c0e603a174f57264",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4026d8c_691f4193",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5205
+      },
+      "writtenOn": "2015-08-21T13:18:50Z",
+      "side": 1,
+      "message": "It is a vector of bytes, that represent boolean values (0, 1) for each parameter and not a list of parameter indices. How does this bound the number of parameters? Alternatively, you could also use std::vector\u003cbool\u003e, if you want to use bitmasks.",
+      "parentUuid": "e430ad80_507f541b",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 13
+      },
+      "revId": "e52ef9970a3c43c0add44523c0e603a174f57264",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
