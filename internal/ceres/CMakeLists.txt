@@ -183,6 +183,7 @@ add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR})
+
 # Always build position-independent code (PIC), even when building Ceres as a
 # static library so that shared libraries can link against it, not just
 # executables (PIC does not apply on Windows).
@@ -197,23 +198,60 @@ if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
   endif()
 endif()
 
-if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-  if (CMAKE_VERSION VERSION_LESS "2.8.12")
-    message("-- Warning: detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
+if (CMAKE_VERSION VERSION_LESS "2.8.12")
+  # CMake version < 2.8.12 does not support target_compile_options(), warn
+  # user that they will have to add compile flags to their own projects
+  # manually if required.
+  if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
+    message("-- Warning: Detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
       "which is the minimum required for compile options to be included in an "
       "exported CMake target, but CERES_USE_CXX11 is enabled and the detected. "
-      "compiler requires -std=c++11.  The client is responsible for adding "
+      "compiler requires -std=c++11. The client is responsible for adding "
       "-std=c++11 when using Ceres.")
-  else ()
+  endif()
+
+  message("-- Warning: Detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
+    "which is the minimum required for compile options to be included in an "
+    "exported CMake target, and the detected compiler is Clang. Cannot add "
+    "increased -inline-threshold compile flag to exported Ceres target, but "
+    "this is recommended to improve Eigen's performance on Clang. You will "
+    "have to add this manually to targets using Ceres if desired.")
+else()
+  # CMake version >= 2.8.12 supports target_compile_options().
+  if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
     # If Ceres is compiled using C++11, and the compiler requires -std=c++11
     # to be set, then ensure that this requirement is rolled into the exported
-    # CMake target, s/t client code which uses Ceres will inherit it (if the
-    # CMake version supports it), iff they are NOT compiling for C.  We check
-    # for not C, rather than C++ as LINKER_LANGUAGE is often NOTFOUND and then
-    # uses the default (C++).
+    # CMake target, such that client code which uses Ceres will inherit it (if
+    # the CMake version supports it), iff they are NOT compiling for C.  We
+    # check for not C, rather than C++ as LINKER_LANGUAGE is often NOTFOUND and
+    # then uses the default (C++).
     target_compile_options(ceres PUBLIC
       $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,C>>:-std=c++11>)
   endif()
+
+  # Export the use of a larger inlining threshold for Clang into the
+  # exported Ceres target.  The default setting for Clang hobbles Eigen and
+  # increasing this can result in very significant performance improvements,
+  # particularly in auto-diffed CostFunctions.  Exporting this setting into
+  # the Ceres target means any user code linking against Ceres (via CMake)
+  # will use it.  The -Qunused-arguments is needed because CMake passes the
+  # inline threshold to the linker and clang complains about it and dies.
+  #
+  # We use a generator expression such that irrespective of whether Ceres was
+  # compiled using Clang, if user code using Ceres is compiled with Clang
+  # it will still inherit the flags (e.g. if Ceres compiled with GCC to get
+  # OpenMP, but user code compiled with Clang).
+  #
+  # We use INTERFACE (not PUBLIC) here, and add the same flags to
+  # CMAKE_CXX_FLAGS in the root Ceres CMakeLists such that even if
+  # CMake < 2.8.12 is being used to compile Ceres with Clang, we will compile
+  # Ceres, and all of the examples with the increased inline threshold.
+  message("-- Adding compile flags to increase inline threshold to exported "
+    "Ceres CMake target (improves Eigen performance). These will *only* be "
+    "used if Clang is used to compile client code linking against Ceres (using "
+    "CMake). They are not required, and will not be used, for GCC or MSVC.")
+  target_compile_options(ceres INTERFACE
+    $<$<CXX_COMPILER_ID:Clang>:-Qunused-arguments -mllvm -inline-threshold=600>)
 endif()
 
 if (BUILD_SHARED_LIBS)
