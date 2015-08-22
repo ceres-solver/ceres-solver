@@ -683,7 +683,8 @@ endif (UNIX)
 # threshold to the linker and clang complains about it and dies.
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
+    "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
+
   # Older versions of Clang (<= 2.9) do not support the 'return-type-c-linkage'
   # option, so check for its presence before adding it to the default flags set.
   include(CheckCXXCompilerFlag)

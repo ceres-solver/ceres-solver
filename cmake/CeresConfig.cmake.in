@@ -258,6 +258,36 @@ endif (NOT TARGET ceres AND NOT Ceres_BINARY_DIR)
 # Set the expected XX_LIBRARIES variable for FindPackage().
 set(CERES_LIBRARIES ceres)
 
+# Make user aware of any compile flags that will be added to their targets
+# which use Ceres (i.e. flags exported in the Ceres target).  Only CMake
+# versions >= 2.8.12 support target_compile_options().
+if (TARGET ${CERES_LIBRARIES} AND
+    NOT CMAKE_VERSION VERSION_LESS "2.8.12")
+  get_target_property(CERES_INTERFACE_COMPILE_OPTIONS
+    ${CERES_LIBRARIES} INTERFACE_COMPILE_OPTIONS)
+
+  if (CERES_WAS_INSTALLED)
+    set(CERES_LOCATION "${CURRENT_ROOT_INSTALL_DIR}")
+  else()
+    set(CERES_LOCATION "${CERES_EXPORTED_BUILD_DIR}")
+  endif()
+
+  # Check for -std=c++11 flags.
+  if (CERES_INTERFACE_COMPILE_OPTIONS MATCHES ".*std=c\\+\\+11.*")
+    message(STATUS "Ceres version ${CERES_VERSION} detected here: "
+      "${CERES_LOCATION} was built with C++11. Ceres target will add "
+      "C++11 flags to compile options for targets using it.")
+  endif()
+  # Check for -inline-threshold Clang-specific flags.
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND
+      CERES_INTERFACE_COMPILE_OPTIONS MATCHES ".*inline\\-threshold.*")
+    message(STATUS "Ceres version ${CERES_VERSION} detected here: "
+      "${CERES_LOCATION} will add flags to increase inline threshold "
+      "to compile options for targets using it and are compiled with "
+      "Clang (improves Eigen performance).")
+  endif()
+endif()
+
 # Set legacy include directories variable for backwards compatibility.
 set(CERES_INCLUDES ${CERES_INCLUDE_DIRS})
 
