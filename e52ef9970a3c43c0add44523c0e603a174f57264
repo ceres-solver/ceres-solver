@@ -46,6 +46,29 @@
       "revId": "e52ef9970a3c43c0add44523c0e603a174f57264",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_16deb151",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-08-22T14:22:59Z",
+      "side": 1,
+      "message": "char instead of internal::int8.\n\n1. no reason to expose internals.\n2. char is simpler than an opaque type like internal::int8.",
+      "range": {
+        "startLine": 196,
+        "startChar": 14,
+        "endLine": 196,
+        "endChar": 22
+      },
+      "revId": "e52ef9970a3c43c0add44523c0e603a174f57264",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
