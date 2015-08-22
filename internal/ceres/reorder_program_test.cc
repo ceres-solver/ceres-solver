@@ -169,7 +169,7 @@ TEST(_, ApplyOrderingNormal) {
   EXPECT_EQ(parameter_blocks[2]->user_state(), &y);
 }
 
-
+#ifndef CERES_NO_SUITESPARSE
 class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest : public ::testing::Test {
  protected:
   void SetUp() {
@@ -243,6 +243,7 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
 
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
+#endif  // CERES_NO_SUITESPARSE
 
 }  // namespace internal
 }  // namespace ceres
