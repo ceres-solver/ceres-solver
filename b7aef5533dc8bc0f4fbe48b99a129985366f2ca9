@@ -46,6 +46,30 @@
       "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_d62fd90f",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-24T13:40:24Z",
+      "side": 1,
+      "message": "sorry I did not mean to combine help outputs. I\u0027d say keep them separate, but the reasoning around 2.8.12 can be combined into a single block, so when we need to get rid of it, we just remote it at one place. your call though.",
+      "parentUuid": "845371c9_06721cd6",
+      "range": {
+        "startLine": 188,
+        "startChar": 6,
+        "endLine": 188,
+        "endChar": 19
+      },
+      "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
