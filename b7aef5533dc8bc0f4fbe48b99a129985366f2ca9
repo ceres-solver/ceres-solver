@@ -22,6 +22,30 @@
       "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "845371c9_06721cd6",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-08-24T11:06:00Z",
+      "side": 1,
+      "message": "I\u0027ll experiment, the main concern I had was trying to keep the help output specific enough in each case, which meant that you either have separate blocks, or multiple conditionals for COMPILER_HAS_CXX11_FLAG.",
+      "parentUuid": "e430ad80_f620d5a6",
+      "range": {
+        "startLine": 188,
+        "startChar": 6,
+        "endLine": 188,
+        "endChar": 19
+      },
+      "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
