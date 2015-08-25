@@ -55,6 +55,7 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
       break;
     }
 
+    // Detect fixed or dynamic row block size.
     if (*row_block_size == 0) {
       *row_block_size = row.block.size;
     } else if (*row_block_size != Eigen::Dynamic &&
@@ -65,6 +66,7 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
       *row_block_size = Eigen::Dynamic;
     }
 
+    // Detect fixed or dynamic e-block size.
     const int e_block_id = row.cells.front().block_id;
     if (*e_block_size == 0) {
       *e_block_size = bs.cols[e_block_id].size;
@@ -76,19 +78,24 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
       *e_block_size = Eigen::Dynamic;
     }
 
-    if (*f_block_size == 0) {
-      if (row.cells.size() > 1) {
+    // Detect fixed or dynamic f-block size. We are only interested in
+    // rows with e-blocks, and the e-block is always the first block,
+    // so only rows of size greater than 1 are of interest.
+    if (row.cells.size() > 1) {
+      if (*f_block_size == 0) {
         const int f_block_id = row.cells[1].block_id;
         *f_block_size = bs.cols[f_block_id].size;
       }
-    } else if (*f_block_size != Eigen::Dynamic) {
-      for (int c = 1; c < row.cells.size(); ++c) {
-        if (*f_block_size != bs.cols[row.cells[c].block_id].size) {
+
+      for (int c = 1;
+           (c < row.cells.size()) && (*f_block_size != Eigen::Dynamic);
+           ++c) {
+        const int f_block_id = row.cells[c].block_id;
+        if (*f_block_size != bs.cols[f_block_id].size) {
           VLOG(2) << "Dynamic f block size because the block size "
                   << "changed from " << *f_block_size << " to "
-                  << bs.cols[row.cells[c].block_id].size;
+                  << bs.cols[f_block_id].size;
           *f_block_size = Eigen::Dynamic;
-          break;
         }
       }
     }
