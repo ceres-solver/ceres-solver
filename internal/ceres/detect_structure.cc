@@ -76,19 +76,21 @@ void DetectStructure(const CompressedRowBlockStructure& bs,
       *e_block_size = Eigen::Dynamic;
     }
 
-    if (*f_block_size == 0) {
-      if (row.cells.size() > 1) {
+    if (row.cells.size() > 1) {
+      if (*f_block_size == 0) {
         const int f_block_id = row.cells[1].block_id;
         *f_block_size = bs.cols[f_block_id].size;
       }
-    } else if (*f_block_size != Eigen::Dynamic) {
-      for (int c = 1; c < row.cells.size(); ++c) {
-        if (*f_block_size != bs.cols[row.cells[c].block_id].size) {
+
+      for (int c = 1;
+           (c < row.cells.size()) && (*f_block_size != Eigen::Dynamic);
+           ++c) {
+        const int f_block_id = row.cells[c].block_id;
+        if (*f_block_size != bs.cols[f_block_id].size) {
           VLOG(2) << "Dynamic f block size because the block size "
                   << "changed from " << *f_block_size << " to "
-                  << bs.cols[row.cells[c].block_id].size;
+                  << bs.cols[f_block_id].size;
           *f_block_size = Eigen::Dynamic;
-          break;
         }
       }
     }
