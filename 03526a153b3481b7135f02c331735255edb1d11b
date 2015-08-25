@@ -134,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "04b861a5_9ac56c0a",
+        "filename": "examples/nist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:31:17Z",
+      "side": 1,
+      "message": "Remove blank.",
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04b861a5_7f3c25eb",
         "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
         "patchSetId": 8
@@ -151,6 +168,40 @@
         "endLine": 97,
         "endChar": 59
       },
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_fad348cd",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:31:17Z",
+      "side": 1,
+      "message": "This is an aggressive change that could break existing applications. Typical users instantiate thousands of these objects, and having such a log statement could break their application. I\u0027m not sure what the right solution is, but I don\u0027t think this is a good idea.",
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04b861a5_baddd0d9",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:31:17Z",
+      "side": 1,
+      "message": "Why use a vector here and not a normal eigen matrix? It seems the size is fixed at runtime, so there is no need for the vector push back / capacity machinery. In the past we\u0027ve had problems with the aligned allocators, and so try to avoid using them. I would imagine each row would be a different extrapolation.",
       "revId": "03526a153b3481b7135f02c331735255edb1d11b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
