@@ -70,6 +70,40 @@
       "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_878a86a0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:26:57Z",
+      "side": 1,
+      "message": "Please expand s/t",
+      "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_a71c62f6",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:26:57Z",
+      "side": 1,
+      "message": "Maybe we should display a message that this will get added for users; we are blindly slapping on compiler flags into users code.",
+      "revId": "b7aef5533dc8bc0f4fbe48b99a129985366f2ca9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
