@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e430ad80_87260669",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-25T18:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e430ad80_870da6f2",
+      "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e430ad80_273b7288",
         "filename": "internal/ceres/detect_structure.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2015-08-25T18:10:23Z",
       "side": 1,
       "message": "Comment: Detect fixed or dynamic F block size.",
+      "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_67296a39",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-25T18:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e430ad80_273b7288",
       "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
