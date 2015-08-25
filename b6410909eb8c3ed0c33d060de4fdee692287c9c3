@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e430ad80_a706a2d7",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:10:23Z",
+      "side": 1,
+      "message": "Comment above here: Detect fixed or dynamic row block size.",
+      "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_870da6f2",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:10:23Z",
+      "side": 1,
+      "message": "Comment: Detect fixed or dynamic E block size",
+      "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e430ad80_273b7288",
+        "filename": "internal/ceres/detect_structure.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-08-25T18:10:23Z",
+      "side": 1,
+      "message": "Comment: Detect fixed or dynamic F block size.",
+      "revId": "b6410909eb8c3ed0c33d060de4fdee692287c9c3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
