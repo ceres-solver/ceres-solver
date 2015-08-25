@@ -170,7 +170,8 @@ TEST(_, ApplyOrderingNormal) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
-class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest : public ::testing::Test {
+class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest :
+      public ::testing::Test {
  protected:
   void SetUp() {
     problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &x_);
@@ -179,9 +180,10 @@ class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest : public ::testi
     problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &z_);
     problem_.AddResidualBlock(new BinaryCostFunction(), NULL, &x_, &y_);
     problem_.AddResidualBlock(new UnaryCostFunction(), NULL, &y_);
-  };
+  }
 
-  void ComputeAndValidateOrdering(const ParameterBlockOrdering& linear_solver_ordering) {
+  void ComputeAndValidateOrdering(
+      const ParameterBlockOrdering& linear_solver_ordering) {
     Program* program = problem_.mutable_program();
     vector<ParameterBlock*> unordered_parameter_blocks =
         program->parameter_blocks();
@@ -207,7 +209,8 @@ class ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest : public ::testi
   double z_;
 };
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, EverythingInGroupZero) {
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+       EverythingInGroupZero) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 0);
@@ -216,7 +219,8 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, EverythingInGr
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, ContiguousGroups) {
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+       ContiguousGroups) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 1);
@@ -225,7 +229,8 @@ TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, ContiguousGrou
   ComputeAndValidateOrdering(linear_solver_ordering);
 }
 
-TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest, GroupsWithGaps) {
+TEST_F(ReorderProgramForSparseNormalCholeskyUsingSuiteSparseTest,
+       GroupsWithGaps) {
   ParameterBlockOrdering linear_solver_ordering;
   linear_solver_ordering.AddElementToGroup(&x_, 0);
   linear_solver_ordering.AddElementToGroup(&y_, 2);
