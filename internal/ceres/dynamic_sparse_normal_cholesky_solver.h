@@ -28,11 +28,13 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
-// A solver for sparse linear least squares problem based on solving
-// the normal equations via a sparse cholesky factorization.
+// A solver for sparse linear least squares problem with dynamic
+// sparsity, i.e. the sparsity is not constant across calls. In every
+// call to Solve, the normal equations are computed and factorized
+// using a sparse Cholesky factorization.
 
-#ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-#define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#ifndef CERES_INTERNAL_DYNAMIC_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#define CERES_INTERNAL_DYNAMIC_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
 
 #include <vector>
 
@@ -41,12 +43,6 @@
 
 #include "ceres/internal/macros.h"
 #include "ceres/linear_solver.h"
-#include "ceres/suitesparse.h"
-#include "ceres/cxsparse.h"
-
-#ifdef CERES_USE_EIGEN_SPARSE
-#include "Eigen/SparseCholesky"
-#endif
 
 namespace ceres {
 namespace internal {
@@ -55,10 +51,12 @@ class CompressedRowSparseMatrix;
 
 // Solves the normal equations (A'A + D'D) x = A'b, using the CHOLMOD sparse
 // cholesky solver.
-class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
+class DynamicSparseNormalCholeskySolver :
+      public CompressedRowSparseMatrixSolver {
  public:
-  explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
-  virtual ~SparseNormalCholeskySolver();
+  explicit DynamicSparseNormalCholeskySolver(
+      const LinearSolver::Options& options);
+  virtual ~DynamicSparseNormalCholeskySolver();
 
  private:
   virtual LinearSolver::Summary SolveImpl(
@@ -82,45 +80,8 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
-  void FreeFactorization();
-
-  SuiteSparse ss_;
-  // Cached factorization
-  cholmod_factor* factor_;
-
-  CXSparse cxsparse_;
-  // Cached factorization
-  cs_dis* cxsparse_factor_;
-
-#ifdef CERES_USE_EIGEN_SPARSE
-
-  // The preprocessor gymnastics here are dealing with the fact that
-  // before version 3.2.2, Eigen did not support a third template
-  // parameter to specify the ordering.
-#if EIGEN_VERSION_AT_LEAST(3,2,2)
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper,
-                                Eigen::NaturalOrdering<int> >
-  SimplicialLDLTWithNaturalOrdering;
-  scoped_ptr<SimplicialLDLTWithNaturalOrdering> natural_ldlt_;
-
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper,
-                                Eigen::AMDOrdering<int> >
-  SimplicialLDLTWithAMDOrdering;
-  scoped_ptr<SimplicialLDLTWithAMDOrdering> amd_ldlt_;
-
-#else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Upper>
-  SimplicialLDLTWithAMDOrdering;
-
-  scoped_ptr<SimplicialLDLTWithAMDOrdering> amd_ldlt_;
-#endif
-
-#endif
-
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
   const LinearSolver::Options options_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
+  CERES_DISALLOW_COPY_AND_ASSIGN(DynamicSparseNormalCholeskySolver);
 };
 
 }  // namespace internal
