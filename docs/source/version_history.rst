@@ -20,7 +20,10 @@ New Features
    can be constructed as a cartesian product of other local
    parameterization.
 #. Add DynamicCostFunctionToFunctor. (David Gossow)
-#. Optionally export Ceres build directory into local CMake package registry.
+#. Optionally export Ceres build directory into local CMake package
+   registry.
+#. Faster ``SPARSE_NORMAL_CHOLESKY`` in the presence of dynamic
+   sparsity.
 
 Bug Fixes & Minor Changes
 -------------------------
