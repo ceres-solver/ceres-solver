@@ -69,19 +69,15 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
   LinearSolver::Summary SolveImplUsingSuiteSparse(
       CompressedRowSparseMatrix* A,
-      const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
-  // Crashes if CSparse is not installed.
+
   LinearSolver::Summary SolveImplUsingCXSparse(
       CompressedRowSparseMatrix* A,
-      const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
-  // Crashes if CERES_USE_EIGEN_SPARSE is not defined.
   LinearSolver::Summary SolveImplUsingEigen(
       CompressedRowSparseMatrix* A,
-      const LinearSolver::PerSolveOptions& options,
       double* rhs_and_solution);
 
   void FreeFactorization();
