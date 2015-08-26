@@ -110,6 +110,7 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     : factor_(NULL),
       cxsparse_factor_(NULL),
       options_(options) {
+  CHECK(!options_.dynamic_sparsity);
 }
 
 void SparseNormalCholeskySolver::FreeFactorization() {
@@ -200,10 +201,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   // before they can be factorized. CHOLMOD/SuiteSparse on the other
   // hand can just work off of Jt to compute the Cholesky
   // factorization of the normal equations.
-  //
-  // TODO(sameeragarwal): See note about how this maybe a bad idea for
-  // dynamic sparsity.
-  if (outer_product_.get() == NULL || options_.dynamic_sparsity) {
+  if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
             *A, &pattern_));
@@ -225,20 +223,12 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
       outer_product_->mutable_cols(),
       outer_product_->mutable_values());
 
-  // Dynamic sparsity means that we cannot depend on a static analysis
-  // of sparsity structure of the jacobian, so we compute a new
-  // symbolic factorization every time.
-  if (options_.dynamic_sparsity) {
-    amd_ldlt_.reset(NULL);
-  }
-
   bool do_symbolic_analysis = false;
 
-  // If using post ordering or dynamic sparsity, or an old version of
-  // Eigen, we cannot depend on a preordered jacobian, so we work with
-  // a SimplicialLDLT decomposition with AMD ordering.
+  // If using post ordering or an old version of Eigen, we cannot
+  // depend on a preordered jacobian, so we work with a SimplicialLDLT
+  // decomposition with AMD ordering.
   if (options_.use_postordering ||
-      options_.dynamic_sparsity ||
       !EIGEN_VERSION_AT_LEAST(3, 2, 2)) {
     if (amd_ldlt_.get() == NULL) {
       amd_ldlt_.reset(new SimplicialLDLTWithAMDOrdering);
@@ -302,11 +292,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // before they can be factorized. CHOLMOD/SuiteSparse on the other
   // hand can just work off of Jt to compute the Cholesky
   // factorization of the normal equations.
-  //
-  // TODO(sameeragarwal): If dynamic sparsity is enabled, then this is
-  // not a good idea performance wise, since the jacobian has far too
-  // many entries and the program will go crazy with memory.
-  if (outer_product_.get() == NULL || options_.dynamic_sparsity) {
+  if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
             *A, &pattern_));
@@ -321,20 +307,13 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   event_logger.AddEvent("Setup");
 
   // Compute symbolic factorization if not available.
-  if (options_.dynamic_sparsity) {
-    FreeFactorization();
-  }
   if (cxsparse_factor_ == NULL) {
     if (options_.use_postordering) {
       cxsparse_factor_ = cxsparse_.BlockAnalyzeCholesky(AtA,
                                                         A->col_blocks(),
                                                         A->col_blocks());
     } else {
-      if (options_.dynamic_sparsity) {
-        cxsparse_factor_ = cxsparse_.AnalyzeCholesky(AtA);
-      } else {
-        cxsparse_factor_ = cxsparse_.AnalyzeCholeskyWithNaturalOrdering(AtA);
-      }
+      cxsparse_factor_ = cxsparse_.AnalyzeCholeskyWithNaturalOrdering(AtA);
     }
   }
   event_logger.AddEvent("Analysis");
@@ -382,9 +361,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   cholmod_sparse lhs = ss_.CreateSparseMatrixTransposeView(A);
   event_logger.AddEvent("Setup");
 
-  if (options_.dynamic_sparsity) {
-    FreeFactorization();
-  }
   if (factor_ == NULL) {
     if (options_.use_postordering) {
       factor_ = ss_.BlockAnalyzeCholesky(&lhs,
@@ -392,12 +368,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
                                          A->row_blocks(),
                                          &summary.message);
     } else {
-      if (options_.dynamic_sparsity) {
-        factor_ = ss_.AnalyzeCholesky(&lhs, &summary.message);
-      } else {
-        factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs,
-                                                         &summary.message);
-      }
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs,
+                                                       &summary.message);
     }
   }
   event_logger.AddEvent("Analysis");
