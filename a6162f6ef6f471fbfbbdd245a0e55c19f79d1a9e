@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240006ef_fb738fde",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Are there any sensible checks on `options` that could be added in here?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_db5b336b",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Instead of the duplication from here to the end of the function, would things be easier to grok if you reuse `SimplicialLDLTSolve` from sparse_normal_cholesky_solver.cc by moving it to a common internal header file?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_fb45cf7e",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Is there any reason for solving to an intermediate `solution` vector instead of directly to `rhs_and_solution` (as in `SimplicialLDLTSolve`)?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_7b99bf6f",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Would it be worth hanging the arguments identically to how it was done previously in `SparseNormalCholeskySolver` in sparse_normal_cholesky_solver.cc? I\u0027m not sure if either style is \"more correct\", but since this block is a copy from that function I think it\u0027s easier to parse if it is as close to identical as possible.",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_bb962739",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Missing `ss.Free(factor)`?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_3ba337a2",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "`memcpy` was used in `SparseNormalCholeskySolver`. Is it worth making an update there to make these two functions consistent?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240006ef_db421375",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5220
+      },
+      "writtenOn": "2015-08-31T16:33:05Z",
+      "side": 1,
+      "message": "Is this copy necessary?",
+      "revId": "a6162f6ef6f471fbfbbdd245a0e55c19f79d1a9e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
