@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046221c0_6080c304",
+        "filename": "include/ceres/internal/numeric_diff.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-31T04:09:47Z",
+      "side": 1,
+      "message": "Eigen::Dynamic",
+      "range": {
+        "startLine": 289,
+        "startChar": 42,
+        "endLine": 289,
+        "endChar": 49
+      },
+      "revId": "4f049db7c2a3ee8cf9910c6eac96be6a28a5999c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
