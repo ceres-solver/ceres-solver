@@ -175,12 +175,12 @@ struct NumericDiff {
           return false;
         }
       } else {
-        if (!EvaluateJacobianColumn(functor, j, delta, 
+        if (!EvaluateJacobianColumn(functor, j, delta,
                                     num_residuals_internal,
                                     parameter_block_size_internal,
                                     x.data(),
                                     residuals_at_eval_point,
-                                    parameters, 
+                                    parameters,
                                     x_plus_delta.data(),
                                     temp_residual_array.get(),
                                     residual_array.get())) {
@@ -194,7 +194,7 @@ struct NumericDiff {
   }
 
   static bool EvaluateJacobianColumn(const CostFunctor* functor,
-                                     int parameter_index, 
+                                     int parameter_index,
                                      double delta,
                                      int num_residuals,
                                      int parameter_block_size,
@@ -270,7 +270,7 @@ struct NumericDiff {
   // http://dx.doi.org/10.1016/S0141-1195(82)80057-0.
   static bool EvaluateRiddersJacobianColumn(
       const CostFunctor* functor,
-      int parameter_index, 
+      int parameter_index,
       double delta,
       const NumericDiffOptions& options,
       int num_residuals,
@@ -286,7 +286,7 @@ struct NumericDiff {
     using Eigen::aligned_allocator;
 
     typedef Matrix<double, kNumResiduals, 1> ResidualVector;
-    typedef Matrix<double, kNumResiduals, DYNAMIC> ResidualCandidateMatrix;
+    typedef Matrix<double, kNumResiduals, Eigen::Dynamic> ResidualCandidateMatrix;
     typedef Matrix<double, kParameterBlockSize, 1> ParameterVector;
 
     Map<const ParameterVector> x(x_ptr, parameter_block_size);
