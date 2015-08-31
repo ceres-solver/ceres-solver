@@ -23,7 +23,8 @@ New Features
 
 Bug Fixes & Minor Changes
 -------------------------
-#. Build position independent code when compiling Ceres statically.
+#. Build position independent code when compiling Ceres statically
+   (Alexander Alekhin).
 #. Fix a bug in DetectStructure (Johannes Schonberger).
 #. Reduce memory footprint of SubsetParameterization (Johannes
    Schonberger).
@@ -45,17 +46,19 @@ Bug Fixes & Minor Changes
 #. Fix a typo in small_blas.h (Werber Trobin).
 #. Export Ceres build directory into local CMake package registry.
 #. Cleanup FindGflags & use installed gflags CMake config if present.
-#. Add default glog install location on Windows to search paths.
-#. Add default Eigen install location on Windows to search paths.
+#. Add default glog install location on Windows to search paths (bvanevery).
+#. Add default Eigen install location on Windows to search paths (bvanevery).
 #. Fix explanation of config.h generation in bare config.h.
-#. Fix unused parameter compiler warnings in numeric_diff.h
+#. Fix unused parameter compiler warnings in numeric_diff.h.
 #. Increase tolerance for a test in polynomial_test (Taylor Braun
    Jones).
-#. Fix addition of Gerrit commit hook when Ceres is a git submodule.
+#. Fix addition of Gerrit commit hook when Ceres is a git submodule
+   (Chris Cooper).
 #. Fix missing EIGEN_VERSION expansion typo.
 #. Fix links to SuiteSparse & CXSparse (Henrique Mendonça).
 #. Ensure Eigen is at least 3.1.0 for Eigen/SparseCore.
-#. Add option to use C++11 (not TR1) shared_ptr & unordered_map.
+#. Add option to use C++11 (not TR1) shared_ptr & unordered_map
+   (Norman Goldstein).
 #. Fix an incorrect usage message in bundle_adjuster.cc
 #. Gracefully disable docs if Sphinx is not found.
 #. Explicitly use (new) default OS X rpath policy if present.
@@ -79,7 +82,7 @@ Bug Fixes & Minor Changes
 #. Fix bug where pow(JetA,JetB) returned wrong result for JetA==0
    (Russell Smith).
 #. Remove duplicate step norm computation (Johannes Schonberger).
-#. Enhance usability when encountering Eigen version mismatches.
+#. Enhance usability when encountering Eigen version mismatches (Andrew Hundt).
 #. Add PLY file logger before and after BA in order to ease visual
    comparison (Pierre Moulon).
 #. Fix CMake config file docs to include 2.8.x & 3.x styles.
@@ -91,12 +94,13 @@ Bug Fixes & Minor Changes
 #. Add versions of dependencies used to FullReport().
 #. Ensure local config.h is used if Ceres is already installed.
 #. Small messaging and comment updates in CMake
-#. Handle possible presence of library prefixes in MSVC.
-#. Use -O2 not -O3 on MinGW to workaround issue with Eigen.
-#. Increase tolerance in small_blas test for Cygwin.
+#. Handle possible presence of library prefixes in MSVC (Sylvain Duchêne).
+#. Use -O2 not -O3 on MinGW to workaround issue with Eigen (s1m3mu3@gmail.com).
+#. Increase tolerance in small_blas test for Cygwin (s1m3mu3@gmail.com).
 #. Fix iOS cmake file for cmake 3.0 (Jack Feng)
 #. Fix missing gflags shlwapi dependency on MinGW (s1m3mu3@gmail.com).
-#. Add thread dependency & fix namespace detection on Windows for gflags.
+#. Add thread dependency & fix namespace detection on Windows for gflags
+   (arrigo.benedetti@gmail.com).
 #. Rename macros in the public API to have a ``CERES_`` prefix.
 #. Fix ``OrderedGroup::Reverse()`` when it is empty (Chris Sweeney).
 #. Update the code to point to ceres-solver.org.
