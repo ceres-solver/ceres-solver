@@ -9,19 +9,96 @@ HEAD
 
 New Features
 ------------
+#. Adaptive numeric differentiation using Ridders' method. (Tal Ben-Nun)
 #. Add ``CubicInterpolator`` and ``BiCubicInterpolator`` to allow
    smooth interpolation of sampled functions and integration with
    automatic differentiation.
 #. Add method to return covariance in tangent space. (Michael Vitus &
    Steve Hsu)
 #. Add Homogeneous vector parameterization. (Michael Vitus)
-#. Add a local parameterization that can be constructed as a cartesian
-   product of other local parameterization.
+#. Add a ``ProductParameterization``, a local parameterization that
+   can be constructed as a cartesian product of other local
+   parameterization.
+#. Add DynamicCostFunctionToFunctor. (David Gossow)
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Build position independent code when compiling Ceres statically.
+#. Fix a bug in DetectStructure (Johannes Schonberger).
+#. Reduce memory footprint of SubsetParameterization (Johannes
+   Schonberger).
+#. Fix for reorder program unit test when built without suitesparse
+   (Sergey Sharybin).
+#. Fix a bug in the Schur eliminator (Werner Trobin).
+#. Fix a bug in the reordering code (Bernhard Zeisl).
+#. Add missing CERES_EXPORT to ComposedLoss (Simon Rutishauser).
+#. Add the option to use numeric differentiation to ``nist`` and
+   ``more_garbow_hillstrom``.
+#. Fix EIGENSPARSE option help s/t it displays in CMake ncurses GUI.
+#. Fix SparseNormalCholeskySolver with dynamic sparsity (Richie Stebbing).
+#. Remove legacy dependency detection macros.
+#. Fix failed if() condition expansion if gflags is not found.
+#. Update all CMake to lowercase function name style.
+#. Update minimum iOS version to 7.0 for shared_ptr/unordered_map.
+#. Fix bug in gflags' <= 2.1.2 exported CMake configuration.
+#. Remove the spec file needed for generating RPMs.
+#. Fix a typo in small_blas.h (Werber Trobin).
+#. Export Ceres build directory into local CMake package registry.
+#. Cleanup FindGflags & use installed gflags CMake config if present.
+#. Add default glog install location on Windows to search paths.
+#. Add default Eigen install location on Windows to search paths.
+#. Fix explanation of config.h generation in bare config.h.
+#. Fix unused parameter compiler warnings in numeric_diff.h
+#. Increase tolerance for a test in polynomial_test (Taylor Braun
+   Jones).
+#. Fix addition of Gerrit commit hook when Ceres is a git submodule.
+#. Fix missing EIGEN_VERSION expansion typo.
+#. Fix links to SuiteSparse & CXSparse (Henrique Mendonça).
+#. Ensure Eigen is at least 3.1.0 for Eigen/SparseCore.
+#. Add option to use C++11 (not TR1) shared_ptr & unordered_map.
+#. Fix an incorrect usage message in bundle_adjuster.cc
+#. Gracefully disable docs if Sphinx is not found.
+#. Explicitly use (new) default OS X rpath policy if present.
+#. Add support of EIGEN_SPARSE type in
+   IsSparseLinearAlgebraLibraryTypeAvailable function (Pierre Moulon).
+#. Allow the LossFunction contained in a LossFunctionWrapper to be
+   NULL. This is consistent with how NULL LossFunctions are treated
+   everywhere else. (Simon Rutishauser).
+#. Improve numeric differentation near zero.
+#. Refactored DynamicNumericDiffCostFunction to use NumericDiff (Tal
+   Ben-Nun).
+#. Remove use of :caption tag in Sphinx.
+#. Add a small test to make sure GradientProblemSolver works correctly
+   (Petter Strandmark).
+#. Add simple unit tests for GradientProblem (Petter Strandmark).
+#. Make the robust curve fitting example robust.
+#. Homogenize convergence operators in docs and code (Johannes
+   Schonberger).
+#. Add parameter_tolerance convergence to line search minimizer
+   (Johannes Schonberger).
+#. Fix bug where pow(JetA,JetB) returned wrong result for JetA==0
+   (Russell Smith).
+#. Remove duplicate step norm computation (Johannes Schonberger).
+#. Enhance usability when encountering Eigen version mismatches.
+#. Add PLY file logger before and after BA in order to ease visual
+   comparison (Pierre Moulon).
+#. Fix CMake config file docs to include 2.8.x & 3.x styles.
+#. Python3 fixes (Markus Moll).
+#. Remove confusing code from DenseJacobianWriter (Michael Vitus).
+#. Add documentation on CMake package installation process.
+#. Revert a call to SolveUpperTriangularUsingCholesky.
+#. Make CERES_EIGEN_VERSION macro independent of CMake.
+#. Add versions of dependencies used to FullReport().
+#. Ensure local config.h is used if Ceres is already installed.
+#. Small messaging and comment updates in CMake
+#. Handle possible presence of library prefixes in MSVC.
+#. Use -O2 not -O3 on MinGW to workaround issue with Eigen.
+#. Increase tolerance in small_blas test for Cygwin.
+#. Fix iOS cmake file for cmake 3.0 (Jack Feng)
+#. Fix missing gflags shlwapi dependency on MinGW (s1m3mu3@gmail.com).
+#. Add thread dependency & fix namespace detection on Windows for gflags.
 #. Rename macros in the public API to have a ``CERES_`` prefix.
-#. Fix ``OrderedGroup::Reverse()`` when it is empty.
+#. Fix ``OrderedGroup::Reverse()`` when it is empty (Chris Sweeney).
 #. Update the code to point to ceres-solver.org.
 #. Update documentation to point to the GitHub issue tracker.
 #. Disable ``LAPACK`` for iOS builds. (Greg Coombe)
