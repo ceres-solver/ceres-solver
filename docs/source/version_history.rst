@@ -20,6 +20,7 @@ New Features
    can be constructed as a cartesian product of other local
    parameterization.
 #. Add DynamicCostFunctionToFunctor. (David Gossow)
+#. Optionally export Ceres build directory into local CMake package registry.
 
 Bug Fixes & Minor Changes
 -------------------------
@@ -44,7 +45,6 @@ Bug Fixes & Minor Changes
 #. Fix bug in gflags' <= 2.1.2 exported CMake configuration.
 #. Remove the spec file needed for generating RPMs.
 #. Fix a typo in small_blas.h (Werber Trobin).
-#. Export Ceres build directory into local CMake package registry.
 #. Cleanup FindGflags & use installed gflags CMake config if present.
 #. Add default glog install location on Windows to search paths (bvanevery).
 #. Add default Eigen install location on Windows to search paths (bvanevery).
