@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "046221c0_4083bf11",
+        "filename": "include/ceres/dynamic_numeric_diff_cost_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-08-31T04:09:47Z",
+      "side": 1,
+      "message": "I am open to ideas. I am also open to just getting rid of this constructor. I do not think this is a terribly well used constructor anyways.",
+      "parentUuid": "04b861a5_fad348cd",
+      "revId": "03526a153b3481b7135f02c331735255edb1d11b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04b861a5_baddd0d9",
         "filename": "include/ceres/internal/numeric_diff.h",
         "patchSetId": 8
