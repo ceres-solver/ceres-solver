@@ -32,9 +32,8 @@
 #define CERES_PUBLIC_VERSION_H_
 
 #define CERES_VERSION_MAJOR 1
-#define CERES_VERSION_MINOR 10
+#define CERES_VERSION_MINOR 11
 #define CERES_VERSION_REVISION 0
-#define CERES_VERSION_ABI 1
 
 // Classic CPP stringifcation; the extra level of indirection allows the
 // preprocessor to expand the macro before being converted to a string.

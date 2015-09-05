@@ -40,29 +40,18 @@ fi
 
 TMP="/tmp/ceres-solver-$1"
 DOCS_TMP="/tmp/ceres-solver-docs-$1"
-VERSION=$(grep 'SET(CERES_VERSION_' CMakeLists.txt | \
+VERSION=$(grep 'set(CERES_VERSION_' CMakeLists.txt | \
           sed -e 's/\(.*\) \(.*\))/\2/' | \
           tr '\n' '.' | sed -e 's/.$//')
-ABI_VERSION=$(grep 'SET(CERES_ABI_VERSION' CMakeLists.txt | \
-              sed -e 's/SET(CERES_ABI_VERSION //' | \
+ABI_VERSION=$(grep 'set(CERES_ABI_VERSION' CMakeLists.txt | \
+              sed -e 's/set(CERES_ABI_VERSION //' | \
               sed -e 's/)//')
-VERSION_IN_SPEC=$(grep '^Version:' scripts/ceres-solver.spec | \
-                  sed -e 's/Version: *//')
 GIT_COMMIT=$(git log -1 HEAD |grep commit)
 
 if [[ $1 != $VERSION ]] ; then
   echo "ERROR: Version from the command line $1 does not match CERES_VERSION"
   echo "       in CMakeLists.txt, which is $VERSION. You may not be in the "
   echo "       toplevel source dir."
-  exit 1
-fi
-
-if [[ $VERSION_IN_SPEC != $VERSION ]] ; then
-  echo "ERROR: Version string from scripts/ceres-solver.spec, which is"
-  echo "       $VERSION_IN_SPEC, does not match the version"
-  echo "       from the toplevel CMakeLists.txt, which is $ABI_VERSION."
-  echo "       You may not be in the toplevel source directory, or the"
-  echo "       versions are out of sync."
   exit 1
 fi
 
