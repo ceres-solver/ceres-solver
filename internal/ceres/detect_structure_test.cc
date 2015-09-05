@@ -271,8 +271,8 @@ TEST(DetectStructure, DynamicFBlockSameRow) {
     row.block.size = 2;
     row.block.position = 0;
     row.cells.push_back(Cell(0, 0));
+    row.cells.push_back(Cell(1, 0));
     row.cells.push_back(Cell(2, 0));
-    row.cells.push_back(Cell(3, 0));
   }
 
   int row_block_size = 0;
