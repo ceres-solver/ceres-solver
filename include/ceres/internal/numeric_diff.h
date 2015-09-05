@@ -346,7 +346,7 @@ struct NumericDiff {
 
       // Store initial results.
       if (i == 0) {
-        residuals = current_candidates[0];
+        residuals = current_candidates->col(0);
       }
 
       // Shrink differentiation step size.
