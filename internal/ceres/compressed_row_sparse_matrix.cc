@@ -241,12 +241,17 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
       << "The matrix being appended has: " << m.row_blocks().size()
       << " row blocks.";
 
+  if (m.num_nonzeros() == 0) {
+    return;
+  }
+
   if (cols_.size() < num_nonzeros() + m.num_nonzeros()) {
     cols_.resize(num_nonzeros() + m.num_nonzeros());
     values_.resize(num_nonzeros() + m.num_nonzeros());
   }
 
   // Copy the contents of m into this matrix.
+  DCHECK_LT(num_nonzeros(), cols_.size());
   std::copy(m.cols(), m.cols() + m.num_nonzeros(), &cols_[num_nonzeros()]);
   std::copy(m.values(),
             m.values() + m.num_nonzeros(),
