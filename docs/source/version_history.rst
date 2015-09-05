@@ -27,6 +27,9 @@ New Features
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Fix invalid memory access bug in
+   ``CompressedRowSparseMatrix::AppendRows`` when it was called with a
+   matrix of size zero.
 #. Build position independent code when compiling Ceres statically
    (Alexander Alekhin).
 #. Fix a bug in DetectStructure (Johannes Schonberger).
