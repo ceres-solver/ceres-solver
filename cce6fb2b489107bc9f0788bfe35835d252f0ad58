@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cce27b_1d69a404",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-05T22:43:54Z",
+      "side": 1,
+      "message": "This seems weird -- shouldn\u0027t the size of the matrix still change? Not that this would happen in practice, but this doesn\u0027t actually expand the size of the matrix.",
+      "revId": "cce6fb2b489107bc9f0788bfe35835d252f0ad58",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
