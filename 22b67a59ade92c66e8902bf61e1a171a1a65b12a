@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04cce27b_bda8b87c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-05T23:55:09Z",
+      "side": 1,
+      "message": "This should get dropped? Or set to the same thing as CERES_VERSION",
+      "revId": "22b67a59ade92c66e8902bf61e1a171a1a65b12a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
