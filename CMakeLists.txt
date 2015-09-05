@@ -78,15 +78,11 @@ set(CMAKE_DEBUG_POSTFIX "-debug")
 # release that changes the ABI. The ABI changes for almost any modification to
 # include/ceres (e.g. the public API). If you are unsure about whether
 # something is an ABI change, please ask on the list.
-#
-# For versions without ABI changes, bump the smallest number in CERES_VERSION,
-# but leave the CERES_ABI_VERSION unchanged.
 set(CERES_VERSION_MAJOR 1)
-set(CERES_VERSION_MINOR 10)
+set(CERES_VERSION_MINOR 11)
 set(CERES_VERSION_PATCH 0)
 set(CERES_VERSION
     ${CERES_VERSION_MAJOR}.${CERES_VERSION_MINOR}.${CERES_VERSION_PATCH})
-set(CERES_ABI_VERSION 1.10.0)
 
 enable_testing()
 

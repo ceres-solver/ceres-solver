@@ -4,8 +4,8 @@
 Version History
 ===============
 
-HEAD
-====
+1.11.0
+======
 
 New Features
 ------------
