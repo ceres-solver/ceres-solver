@@ -278,14 +278,6 @@ if (TARGET ${CERES_LIBRARIES} AND
       "${CERES_LOCATION} was built with C++11. Ceres target will add "
       "C++11 flags to compile options for targets using it.")
   endif()
-  # Check for -inline-threshold Clang-specific flags.
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND
-      CERES_INTERFACE_COMPILE_OPTIONS MATCHES ".*inline\\-threshold.*")
-    message(STATUS "Ceres version ${CERES_VERSION} detected here: "
-      "${CERES_LOCATION} will add flags to increase inline threshold "
-      "to compile options for targets using it and are compiled with "
-      "Clang (improves Eigen performance).")
-  endif()
 endif()
 
 # Set legacy include directories variable for backwards compatibility.

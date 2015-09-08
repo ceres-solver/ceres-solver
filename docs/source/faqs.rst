@@ -40,19 +40,29 @@ Building
    poor performance.
 
    Ceres itself will always be compiled with an increased inline threshold
-   (currently 600) when compiled with Clang.  This increased threshold is also
-   added to the interface flags for the exported Ceres CMake target provided
-   that the CMake version is >= 2.8.12 (from which this was supported).  This
-   means that **any user code that links against Ceres using CMake >= 2.8.12
-   (and is compiled with Clang, irrespective of what Ceres was compiled with)
-   will automatically be compiled with the same increased inlining threshold
-   used to compile Ceres**.
-
-   If you are using CMake < 2.8.12 and Clang in your own code which uses Ceres
-   we recommend that you increase the inlining threshold yourself using:
+   (currently 600) when compiled with Clang.  To experiment with this in your
+   own code, you can use the following:
 
 .. code-block:: cmake
 
+    # If using CMake >= 2.8.12:
+    # We recommend you use target_compile_options() to add the inlining flags
+    # to specific targets for fine grained control:
+    #
+    # Use a larger inlining threshold for Clang, since it can hobble Eigen,
+    # resulting in reduced performance. The -Qunused-arguments is needed because
+    # CMake passes the inline threshold to the linker and clang complains about
+    # it (and dies, if compiling with -Werror).
+    target_compile_options(<YOUR_TARGET_NAME> PUBLIC
+      $<$<CXX_COMPILER_ID:Clang>:-Qunused-arguments -mllvm -inline-threshold=600>)
+
+.. code-block:: cmake
+
+    # If using CMake < 2.8.12:
+    # On CMake < 2.8.12 target_compile_options() is not available, so you
+    # cannot add the flags only on a per-target level and must instead set them
+    # for all targets declared after the flags are updated:
+    #
     # Use a larger inlining threshold for Clang, since it can hobble Eigen,
     # resulting in reduced performance. The -Qunused-arguments is needed because
     # CMake passes the inline threshold to the linker and clang complains about
