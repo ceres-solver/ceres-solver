@@ -36,6 +36,7 @@
 #include <cmath>
 #include "ceres/file.h"
 #include "ceres/stringprintf.h"
+#include "ceres/types.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -125,6 +126,18 @@ std::string TestFileAbsolutePath(const std::string& filename) {
                   filename);
 }
 
+SolverConfig ThreadedSolverConfig(
+    LinearSolverType linear_solver_type,
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    bool use_automatic_ordering,
+    PreconditionerType preconditioner_type) {
+  const int kNumThreads = 4;
+  return SolverConfig(linear_solver_type,
+                      sparse_linear_algebra_library_type,
+                      use_automatic_ordering,
+                      preconditioner_type,
+                      kNumThreads);
+}
 
 }  // namespace internal
 }  // namespace ceres
