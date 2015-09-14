@@ -179,7 +179,8 @@ class BundleAdjustmentProblem {
   // Templated pinhole camera model.  The camera is parameterized
   // using 9 parameters. 3 for rotation, 3 for translation, 1 for
   // focal length and 2 for radial distortion. The principal point is
-  // not modeled (i.e. it is assumed be located at the image center).
+  // not modeled (i.e. it is assumed to be located at the image
+  // center).
   struct BundlerResidual {
     // (u, v): the position of the observation with respect to the image
     // center point.

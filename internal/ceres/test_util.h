@@ -74,7 +74,8 @@ std::string TestFileAbsolutePath(const std::string& filename);
 struct SolverConfig {
   SolverConfig(
       LinearSolverType linear_solver_type,
-      SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type = NO_SPARSE,
+      SparseLinearAlgebraLibraryType
+      sparse_linear_algebra_library_type = NO_SPARSE,
       bool use_automatic_ordering = true,
       PreconditionerType preconditioner_type = IDENTITY,
       int num_threads = 1)
@@ -118,7 +119,8 @@ struct SolverConfig {
 
 SolverConfig ThreadedSolverConfig(
     LinearSolverType linear_solver_type,
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type = NO_SPARSE,
+    SparseLinearAlgebraLibraryType
+    sparse_linear_algebra_library_type = NO_SPARSE,
     bool use_automatic_ordering = true,
     PreconditionerType preconditioner_type = IDENTITY);
 
