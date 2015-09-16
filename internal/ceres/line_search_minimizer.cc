@@ -119,6 +119,17 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   Vector delta(num_effective_parameters);
   Vector x_plus_delta(num_parameters);
 
+  LineSearchDirection::Options line_search_direction_options;
+  line_search_direction_options.num_parameters = num_effective_parameters;
+  line_search_direction_options.type = options.line_search_direction_type;
+  line_search_direction_options.nonlinear_conjugate_gradient_type =
+      options.nonlinear_conjugate_gradient_type;
+  line_search_direction_options.max_lbfgs_rank = options.max_lbfgs_rank;
+  line_search_direction_options.use_approximate_eigenvalue_bfgs_scaling =
+      options.use_approximate_eigenvalue_bfgs_scaling;
+  scoped_ptr<LineSearchDirection> line_search_direction(
+      LineSearchDirection::Create(line_search_direction_options));
+
   IterationSummary iteration_summary;
   iteration_summary.iteration = 0;
   iteration_summary.step_is_valid = false;
@@ -155,23 +166,25 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  if (options.line_search_direction_type == ceres::BFGS) {
+    iteration_summary.bfgs_inverse_hessian.
+        resize(num_parameters * num_parameters, 0);
+    MatrixRef inverse_hessian(&iteration_summary.bfgs_inverse_hessian[0],
+                              num_parameters, num_parameters);
+    // BFGS only maintains the LOWER triangular portion of the inverse Hessian
+    // for speed as it is symmetric.  Ensure that we always return a full
+    // matrix in the iteration summary.
+    inverse_hessian =
+        static_cast<BFGS*>(line_search_direction.get())->
+        inverse_hessian().selfadjointView<Eigen::Lower>();
+  }
+
   iteration_summary.iteration_time_in_seconds =
       WallTimeInSeconds() - iteration_start_time;
   iteration_summary.cumulative_time_in_seconds =
       WallTimeInSeconds() - start_time
       + summary->preprocessor_time_in_seconds;
   summary->iterations.push_back(iteration_summary);
-
-  LineSearchDirection::Options line_search_direction_options;
-  line_search_direction_options.num_parameters = num_effective_parameters;
-  line_search_direction_options.type = options.line_search_direction_type;
-  line_search_direction_options.nonlinear_conjugate_gradient_type =
-      options.nonlinear_conjugate_gradient_type;
-  line_search_direction_options.max_lbfgs_rank = options.max_lbfgs_rank;
-  line_search_direction_options.use_approximate_eigenvalue_bfgs_scaling =
-      options.use_approximate_eigenvalue_bfgs_scaling;
-  scoped_ptr<LineSearchDirection> line_search_direction(
-      LineSearchDirection::Create(line_search_direction_options));
 
   LineSearchFunction line_search_function(evaluator);
 
@@ -375,6 +388,18 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.cumulative_time_in_seconds =
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
+    if (options.line_search_direction_type == ceres::BFGS) {
+      iteration_summary.bfgs_inverse_hessian.
+          resize(num_parameters * num_parameters, 0);
+      MatrixRef inverse_hessian(&iteration_summary.bfgs_inverse_hessian[0],
+                                num_parameters, num_parameters);
+    // BFGS only maintains the LOWER triangular portion of the inverse Hessian
+    // for speed as it is symmetric.  Ensure that we always return a full
+    // matrix in the iteration summary.
+      inverse_hessian =
+          static_cast<BFGS*>(line_search_direction.get())->
+          inverse_hessian().selfadjointView<Eigen::Lower>();
+    }
 
     // Iterations inside the line search algorithm are considered
     // 'steps' in the broader context, to distinguish these inner

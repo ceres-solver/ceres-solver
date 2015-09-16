@@ -35,6 +35,8 @@
 #ifndef CERES_PUBLIC_ITERATION_CALLBACK_H_
 #define CERES_PUBLIC_ITERATION_CALLBACK_H_
 
+#include <vector>
+
 #include "ceres/types.h"
 #include "ceres/internal/disable_warnings.h"
 
@@ -152,6 +154,10 @@ struct CERES_EXPORT IterationSummary {
 
   // Time (in seconds) since the user called Solve().
   double cumulative_time_in_seconds;
+
+  // If using BFGS line search solver, then this is the row-major inverse
+  // Hessian approximation.
+  std::vector<double> bfgs_inverse_hessian;
 };
 
 // Interface for specifying callbacks that are executed at the end of

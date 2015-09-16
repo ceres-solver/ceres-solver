@@ -66,6 +66,26 @@ class LineSearchDirection {
                              Vector* search_direction) = 0;
 };
 
+class BFGS : public LineSearchDirection {
+ public:
+  BFGS(const int num_parameters,
+       const bool use_approximate_eigenvalue_scaling);
+  virtual ~BFGS() {}
+
+  bool NextDirection(const LineSearchMinimizer::State& previous,
+                     const LineSearchMinimizer::State& current,
+                     Vector* search_direction);
+
+  const Matrix & inverse_hessian() const { return inverse_hessian_; }
+
+ private:
+  const int num_parameters_;
+  const bool use_approximate_eigenvalue_scaling_;
+  Matrix inverse_hessian_;
+  bool initialized_;
+  bool is_positive_definite_;
+};
+
 }  // namespace internal
 }  // namespace ceres
 
