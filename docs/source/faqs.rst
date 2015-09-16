@@ -33,44 +33,6 @@ Building
    NDK. It has worse performance than the full fledged glog library
    and is much harder to control and use.
 
-#. Increase the inlining threshold in Clang for Eigen.
-
-   By default, the inlining threshold (evaluated on a heuristic used by LLVM to
-   guess how expensive a function will be to inline) can hobble Eigen, resulting in
-   poor performance.
-
-   Ceres itself will always be compiled with an increased inline threshold
-   (currently 600) when compiled with Clang.  To experiment with this in your
-   own code, you can use the following:
-
-.. code-block:: cmake
-
-    # If using CMake >= 2.8.12:
-    # We recommend you use target_compile_options() to add the inlining flags
-    # to specific targets for fine grained control:
-    #
-    # Use a larger inlining threshold for Clang, since it can hobble Eigen,
-    # resulting in reduced performance. The -Qunused-arguments is needed because
-    # CMake passes the inline threshold to the linker and clang complains about
-    # it (and dies, if compiling with -Werror).
-    target_compile_options(<YOUR_TARGET_NAME> PUBLIC
-      $<$<CXX_COMPILER_ID:Clang>:-Qunused-arguments -mllvm -inline-threshold=600>)
-
-.. code-block:: cmake
-
-    # If using CMake < 2.8.12:
-    # On CMake < 2.8.12 target_compile_options() is not available, so you
-    # cannot add the flags only on a per-target level and must instead set them
-    # for all targets declared after the flags are updated:
-    #
-    # Use a larger inlining threshold for Clang, since it can hobble Eigen,
-    # resulting in reduced performance. The -Qunused-arguments is needed because
-    # CMake passes the inline threshold to the linker and clang complains about
-    # it (and dies, if compiling with -Werror).
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-      set(CMAKE_CXX_FLAGS
-          "${CMAKE_CXX_FLAGS} -Qunused-arguments -mllvm -inline-threshold=600")
-    endif()
 
 Modeling
 ========
