@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dad736_c91a2438",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-20T17:35:49Z",
+      "side": 1,
+      "message": "I think this is missing a number: \"not available in iOS version ??? and the ...\"",
+      "revId": "93032dac30fe5f53316b7dfd02967bc04461fd48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69dad736_e917e00e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-20T17:35:49Z",
+      "side": 1,
+      "message": "This is a big sentence; perhaps break in two or three? I find it hard to parse.\n\nAlso, is there some way to get CMake to pass the -D flags? Maybe there is an easier solution; it\u0027d be nice to keep this logic isolated in FindSharedPtr.",
+      "revId": "93032dac30fe5f53316b7dfd02967bc04461fd48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
