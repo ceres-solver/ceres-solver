@@ -142,59 +142,32 @@ if (MSVC)
   endif (BUILD_TESTING AND BUILD_SHARED_LIBS)
 endif (MSVC)
 
-# Use ios-cmake to build a static library for iOS
-#
-# We need to add isysroot to force cmake to find the toolchains from the iOS SDK
-# instead of using the standard ones. And add flag mios-simulator-version so
-# clang knows we are building for ios simulator but not mac.
-#
-# You can build for OS (armv7, armv7s, arm64), SIMULATOR (i386) or SIMULATOR64
-# (x86_64) separately and use lipo to merge them into one static library.
-#
-# There are some features/algorithms are not available in iOS version and the
-# minimum supported iOS version is now 7.0.
-#
-# Use cmake ../ceres-solver -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
-# -DIOS_PLATFORM=PLATFORM -DEIGEN_INCLUDE_DIR=/path/to/eigen/header
-# to config the cmake. The PLATFORM can be one of OS, SIMULATOR and SIMULATOR64.
-# Check the documentation in iOS.cmake to find more options.
-#
-# After building, you will get a single library: libceres.a, which
-# you need to add to your Xcode project.
-#
-# If you use the lapack and blas, then you also need to add Accelerate.framework
-# to your Xcode project's linking dependency.
+# IOS is defined iff using the iOS.cmake CMake toolchain to build a static
+# library for iOS.
 if (IOS)
   message(STATUS "Building Ceres for iOS platform: ${IOS_PLATFORM}")
 
+  # Ceres requires at least iOS 7.0+.
+  if (IOS_SDK_VERSION VERSION_LESS 7.0)
+    message(FATAL_ERROR "Unsupported iOS SDK version: ${IOS_SDK_VERSION}, Ceres "
+      "required at least iOS version 7.0")
+  endif()
+
   update_cache_variable(MINIGLOG ON)
-  message(STATUS "Building for iOS, forcing use of miniglog instead of glog.")
+  message(STATUS "Building for iOS: Forcing use of miniglog instead of glog.")
 
   update_cache_variable(SUITESPARSE OFF)
   update_cache_variable(CXSPARSE OFF)
   update_cache_variable(GFLAGS OFF)
   update_cache_variable(OPENMP OFF)
-
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
-
   message(STATUS "Building for iOS: SuiteSparse, CXSparse, LAPACK, gflags, "
     "and OpenMP are not available.")
 
   update_cache_variable(BUILD_EXAMPLES OFF)
-  message(STATUS "Building for iOS, will not build examples.")
-
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fobjc-abi-version=2 -fobjc-arc -isysroot ${CMAKE_OSX_SYSROOT}")
-
-   if (${IOS_PLATFORM} STREQUAL "SIMULATOR" OR
-       ${IOS_PLATFORM} STREQUAL "SIMULATOR64")
-     # By default, the minimum version is < 7.0, which causes problems with
-     # detection of shared_ptr & unordered_map as pre-7.0 used libstdc++
-     # but 7.0+ uses libc++ (also LLVM-GCC was removed from Xcode 5).
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mios-simulator-version-min=7.0")
-   endif()
+  message(STATUS "Building for iOS: Will not build examples.")
 endif (IOS)
 
 unset(CERES_COMPILE_OPTIONS)
@@ -445,6 +418,7 @@ if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
   set(CMAKE_REQUIRED_FLAGS -std=c++11)
 endif (CXX11 AND COMPILER_HAS_CXX11_FLAG)
 
+# Set the Ceres compile definitions for the unordered_map configuration.
 include(FindUnorderedMap)
 find_unordered_map()
 if (UNORDERED_MAP_FOUND)
@@ -463,6 +437,7 @@ else (UNORDERED_MAP_FOUND)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_UNORDERED_MAP)
 endif()
 
+# Set the Ceres compile definitions for the shared_ptr configuration.
 include(FindSharedPtr)
 find_shared_ptr()
 if (SHARED_PTR_FOUND)
