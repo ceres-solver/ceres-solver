@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dad736_693110bb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-20T18:27:41Z",
+      "side": 1,
+      "message": "See comment in first patch.",
+      "revId": "7579fdabb526bdaebe341ae6a8c04d94e90e5a42",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
