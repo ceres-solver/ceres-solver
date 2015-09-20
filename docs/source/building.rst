@@ -447,14 +447,15 @@ the iOS SDK instead of using the standard ones. For example:
 
 .. code-block:: bash
 
-   cmake ../ceres-solver \
+   cmake \
    -DCMAKE_TOOLCHAIN_FILE=../ceres-solver/cmake/iOS.cmake \
    -DEIGEN_INCLUDE_DIR=/path/to/eigen/header \
-   -DIOS_PLATFORM=<PLATFORM>
+   -DIOS_PLATFORM=<PLATFORM> \
+   <PATH_TO_CERES_SOURCE>
 
-``PLATFORM`` can be one of ``OS``, ``SIMULATOR`` and ``SIMULATOR64``. You can
+``PLATFORM`` can be: ``OS``, ``SIMULATOR`` or ``SIMULATOR64``. You can
 build for ``OS`` (``armv7``, ``armv7s``, ``arm64``), ``SIMULATOR`` (``i386``) or
-``SIMULATOR64`` (``x86_64``) separately and use ``LIPO`` to merge them into
+``SIMULATOR64`` (``x86_64``) separately and use ``lipo`` to merge them into
 one static library.  See ``cmake/iOS.cmake`` for more options.
 
 After building, you will get a ``libceres.a`` library, which you will need to
