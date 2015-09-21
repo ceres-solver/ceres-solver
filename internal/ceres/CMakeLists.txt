@@ -252,6 +252,12 @@ if (BUILD_TESTING AND GFLAGS)
   add_definitions(-DCERES_GFLAGS_NAMESPACE=${GFLAGS_NAMESPACE})
 
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
+  if (BUILD_SHARED_LIBS)
+    # Define gtest-specific shared library flags for compilation.
+    set_target_properties(gtest PROPERTIES COMPILE_DEFINITIONS
+      GTEST_CREATE_SHARED_LIBRARY)
+  endif()
+
   add_library(test_util
               evaluator_test_utils.cc
               numeric_diff_test_utils.cc
@@ -270,6 +276,11 @@ if (BUILD_TESTING AND GFLAGS)
   macro (CERES_TEST NAME)
     add_executable(${NAME}_test ${NAME}_test.cc)
     target_link_libraries(${NAME}_test test_util ceres gtest)
+    if (BUILD_SHARED_LIBS)
+      # Define gtest-specific shared library flags for linking.
+      set_target_properties(${NAME}_test PROPERTIES COMPILE_DEFINITIONS
+        GTEST_LINKED_AS_SHARED_LIBRARY)
+    endif()
     add_test(NAME ${NAME}_test
              COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
