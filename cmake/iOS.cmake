@@ -59,6 +59,7 @@
 #
 # This toolchain defines the following variables for use externally:
 #
+# XCODE_VERSION: Version number (not including Build version) of Xcode detected.
 # IOS_SDK_VERSION: Version of iOS SDK being used.
 # CMAKE_OSX_ARCHITECTURES: Architectures being compiled for (generated from
 #    IOS_PLATFORM).
@@ -73,6 +74,15 @@
 #   A macro used to find executable programs on the host system, not within the
 #   iOS environment.  Thanks to the android-cmake project for providing the
 #   command.
+
+# Get the Xcode version being used.
+execute_process(COMMAND xcodebuild -version
+  OUTPUT_VARIABLE XCODE_VERSION
+  ERROR_QUIET
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
+string(REGEX MATCH "Xcode [0-9\\.]+" XCODE_VERSION "${XCODE_VERSION}")
+string(REGEX REPLACE "Xcode ([0-9\\.]+)" "\\1" XCODE_VERSION "${XCODE_VERSION}")
+message(STATUS "Building with Xcode version: ${XCODE_VERSION}")
 
 # Default to building for iPhoneOS if not specified otherwise, and we cannot
 # determine the platform from the CMAKE_OSX_ARCHITECTURES variable.  The use
@@ -110,7 +120,6 @@ elseif(IOS_PLATFORM STREQUAL "SIMULATOR64")
 else()
   message(FATAL_ERROR "Invalid IOS_PLATFORM: ${IOS_PLATFORM}")
 endif()
-
 message(STATUS "Configuring iOS build for platform: ${IOS_PLATFORM}, "
   "architecture(s): ${IOS_ARCH}")
 
@@ -213,16 +222,33 @@ set(CMAKE_C_OSX_CURRENT_VERSION_FLAG "-current_version ")
 set(CMAKE_CXX_OSX_COMPATIBILITY_VERSION_FLAG "${CMAKE_C_OSX_COMPATIBILITY_VERSION_FLAG}")
 set(CMAKE_CXX_OSX_CURRENT_VERSION_FLAG "${CMAKE_C_OSX_CURRENT_VERSION_FLAG}")
 
-# Specify minimum version as latest SDK version.
+# Specify minimum version as latest SDK version.  Note that only Xcode 7+
+# supports the newer more specific: -m${XCODE_IOS_PLATFORM}-version-min flags,
+# older versions of Xcode use: -m(ios/ios-simulator)-version-min instead.
+if (XCODE_VERSION VERSION_LESS 7.0)
+  if (IOS_PLATFORM STREQUAL "OS")
+    set(XCODE_IOS_PLATFORM_VERSION_FLAGS
+      "-mios-version-min=${IOS_SDK_VERSION}")
+  else()
+    # SIMULATOR or SIMULATOR64 both use -mios-simulator-version-min.
+    set(XCODE_IOS_PLATFORM_VERSION_FLAGS
+      "-mios-simulator-version-min=${IOS_SDK_VERSION}")
+  endif()
+else()
+  # Xcode 7.0+ uses flags we can build directly from XCODE_IOS_PLATFORM.
+  set(XCODE_IOS_PLATFORM_VERSION_FLAGS
+    "-m${XCODE_IOS_PLATFORM}-version-min=${IOS_SDK_VERSION}")
+endif()
+
 set(CMAKE_C_FLAGS
-  "-m${XCODE_IOS_PLATFORM}-version-min=${IOS_SDK_VERSION} -fobjc-abi-version=2 -fobjc-arc ${CMAKE_C_FLAGS}")
+  "${XCODE_IOS_PLATFORM_VERSION_FLAGS} -fobjc-abi-version=2 -fobjc-arc ${CMAKE_C_FLAGS}")
 # Hidden visibilty is required for C++ on iOS.
 set(CMAKE_CXX_FLAGS
-  "-m${XCODE_IOS_PLATFORM}-version-min=${IOS_SDK_VERSION} -fvisibility=hidden -fvisibility-inlines-hidden -fobjc-abi-version=2 -fobjc-arc ${CMAKE_CXX_FLAGS}")
+  "${XCODE_IOS_PLATFORM_VERSION_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden -fobjc-abi-version=2 -fobjc-arc ${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3 -fomit-frame-pointer -ffast-math ${CMAKE_CXX_FLAGS_RELEASE}")
 
-set(CMAKE_C_LINK_FLAGS "-m${XCODE_IOS_PLATFORM}-version-min=${IOS_SDK_VERSION} -Wl,-search_paths_first ${CMAKE_C_LINK_FLAGS}")
-set(CMAKE_CXX_LINK_FLAGS "-m${XCODE_IOS_PLATFORM}-version-min=${IOS_SDK_VERSION}  -Wl,-search_paths_first ${CMAKE_CXX_LINK_FLAGS}")
+set(CMAKE_C_LINK_FLAGS "${XCODE_IOS_PLATFORM_VERSION_FLAGS} -Wl,-search_paths_first ${CMAKE_C_LINK_FLAGS}")
+set(CMAKE_CXX_LINK_FLAGS "${XCODE_IOS_PLATFORM_VERSION_FLAGS}  -Wl,-search_paths_first ${CMAKE_CXX_LINK_FLAGS}")
 
 # In order to ensure that the updated compiler flags are used in try_compile()
 # tests, we have to forcibly set them in the CMake cache, not merely set them
