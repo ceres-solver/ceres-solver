@@ -482,6 +482,41 @@ Jet<T, N> tanh(const Jet<T, N>& f) {
   return Jet<T, N>(tanh_a, tmp * f.v);
 }
 
+// Bessel functions of the first kind with integer order equal to 0, 1, n.
+inline double BesselJ0(double x) { return j0(x); }
+inline double BesselJ1(double x) { return j1(x); }
+inline double BesselJn(int n, double x) { return jn(n, x); }
+
+// For the formulae of the derivatives of the Bessel functions see the book:
+// Olver, Lozier, Boisvert, Clark, NIST Handbook of Mathematical Functions,
+// Cambridge University Press 2010.
+//
+// Formulae are also available at http://dlmf.nist.gov
+
+// See formula http://dlmf.nist.gov/10.6#E3
+// j0(a + h) ~= j0(a) - j1(a) h
+template <typename T, int N> inline
+Jet<T, N> BesselJ0(const Jet<T, N>& f) {
+  return Jet<T, N>(BesselJ0(f.a),
+                   -BesselJ1(f.a) * f.v);
+}
+
+// See formula http://dlmf.nist.gov/10.6#E1
+// j1(a + h) ~= j1(a) + 0.5 ( j0(a) - j2(a) ) h
+template <typename T, int N> inline
+Jet<T, N> BesselJ1(const Jet<T, N>& f) {
+  return Jet<T, N>(BesselJ1(f.a),
+                   T(0.5) * (BesselJ0(f.a) - BesselJn(2, f.a)) * f.v);
+}
+
+// See formula http://dlmf.nist.gov/10.6#E1
+// j_n(a + h) ~= j_n(a) + 0.5 ( j_{n-1}(a) - j_{n+1}(a) ) h
+template <typename T, int N> inline
+Jet<T, N> BesselJn(int n, const Jet<T, N>& f) {
+  return Jet<T, N>(BesselJn(n, f.a),
+                   T(0.5) * (BesselJn(n - 1, f.a) - BesselJn(n + 1, f.a)) * f.v);
+}
+
 // Jet Classification. It is not clear what the appropriate semantics are for
 // these classifications. This picks that IsFinite and isnormal are "all"
 // operations, i.e. all elements of the jet must be finite for the jet itself
