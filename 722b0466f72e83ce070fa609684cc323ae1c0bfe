@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891c6b20_8aa07b62",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-09-23T20:45:45Z",
+      "side": 1,
+      "message": "BesselJ0 etc instead of the interleaved underscores.\nyou also have trailing spaces at the end of some of the lines.\n\nand please add tests for each of these functions, including boundary conditions.",
+      "range": {
+        "startLine": 486,
+        "startChar": 14,
+        "endLine": 486,
+        "endChar": 24
+      },
+      "revId": "722b0466f72e83ce070fa609684cc323ae1c0bfe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
