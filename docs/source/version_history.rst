@@ -27,6 +27,12 @@ New Features
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Use old minimum iOS version flags on Xcode < 7.0.
+#. Add gtest-specific flags when building/using as a shared library.
+#. Clean up iOS.cmake to use xcrun/xcodebuild & libtool.
+#. Import the latest version of ``googletest``.
+#. Refactored ``system_test`` into ``bundle_adjustment_test`` and
+   ``system_test``, where each test case is its own test.
 #. Fix invalid memory access bug in
    ``CompressedRowSparseMatrix::AppendRows`` when it was called with a
    matrix of size zero.
