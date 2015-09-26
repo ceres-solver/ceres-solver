@@ -97,8 +97,8 @@ The basic trust region algorithm looks something like this.
       \|F(x)\|^2}{\displaystyle \|J(x)\Delta x + F(x)\|^2 -
       \|F(x)\|^2}`
    4. if :math:`\rho > \epsilon` then  :math:`x = x + \Delta x`.
-   5. if :math:`\rho > \eta_1` then :math:`\rho = 2  \rho`
-   6. else if :math:`\rho < \eta_2` then :math:`\rho = 0.5 * \rho`
+   5. if :math:`\rho > \eta_1` then :math:`\mu = 2  \mu`
+   6. else if :math:`\rho < \eta_2` then :math:`\mu = 0.5 * \mu`
    7. Go to 2.
 
 Here, :math:`\mu` is the trust region radius, :math:`D(x)` is some

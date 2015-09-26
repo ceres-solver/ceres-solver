@@ -48,6 +48,11 @@ Users
   Structure from Motion library that uses Ceres for `bundle adjustment`_
   and camera pose estimation.
 
+* The `Applied Research Laboratory <https://www.arl.psu.edu/>`_ at
+  Pennsylvania State University uses in their synthetic aperture Sonar
+  beamforming engine, called ASASIN , for estimating platform
+  kinematics.
+
 .. _bundle adjustment: http://en.wikipedia.org/wiki/Structure_from_motion
 .. _Street View: http://youtu.be/z00ORu4bU-A
 .. _PhotoTours: http://google-latlong.blogspot.com/2012/04/visit-global-landmarks-with-photo-tours.html
