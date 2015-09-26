@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e5fa128_25ab255b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-09-26T20:57:50Z",
+      "side": 1,
+      "message": "comment does not reflect the name of the function here and below.",
+      "range": {
+        "startLine": 485,
+        "startChar": 6,
+        "endLine": 485,
+        "endChar": 8
+      },
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e5fa128_05a8215a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-09-26T20:57:50Z",
+      "side": 1,
+      "message": "please add tests, especially for any boundary conditions where these formulae break down numerically.",
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e5fa128_e5b4edb5",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-09-26T20:57:50Z",
+      "side": 1,
+      "message": "spaces around all binary operators.",
+      "range": {
+        "startLine": 517,
+        "startChar": 42,
+        "endLine": 517,
+        "endChar": 44
+      },
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e5fa128_c5b1e9c3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-09-26T20:57:50Z",
+      "side": 1,
+      "message": "what happens as a approaches zero?",
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
