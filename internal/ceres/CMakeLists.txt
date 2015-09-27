@@ -198,6 +198,23 @@ if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
   endif()
 endif()
 
+# Use of -flto requires use of gold linker & LLVM-gold plugin, which might
+# well not be present / in use and without which files will compile, but
+# not link ('file not recognized') so explicitly check for support.
+#
+# Only use link-time optimisation (LTO) flags when building Ceres itself, as it
+# causes an issue with type_info::operator==() in gtest's
+# CheckedDowncastToActualType() in levenberg_marquardt_strategy_test &
+# gradient_checking_cost_function_test if enabled for the tests as well.
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-flto" HAVE_LTO_SUPPORT)
+if (HAVE_LTO_SUPPORT)
+  message(STATUS "Enabling link-time optimization (-flto)")
+  set_target_properties(ceres PROPERTIES COMPILE_FLAGS "-flto")
+else ()
+  message(STATUS "Compiler/linker does not support link-time optimization (-flto).")
+endif (HAVE_LTO_SUPPORT)
+
 if (CMAKE_VERSION VERSION_LESS "2.8.12")
   # CMake version < 2.8.12 does not support target_compile_options(), warn
   # user that they will have to add compile flags to their own projects

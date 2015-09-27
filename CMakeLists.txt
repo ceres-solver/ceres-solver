@@ -558,19 +558,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
       endif (GCC_VERSION VERSION_LESS 4.3)
     endif (CMAKE_SYSTEM_NAME MATCHES "Darwin")
   endif (CMAKE_COMPILER_IS_GNUCXX)
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    # Use of -flto requires use of gold linker & LLVM-gold plugin, which might
-    # well not be present / in use and without which files will compile, but
-    # not link ('file not recognized') so explicitly check for support
-    include(CheckCXXCompilerFlag)
-    check_cxx_compiler_flag("-flto" HAVE_LTO_SUPPORT)
-    if (HAVE_LTO_SUPPORT)
-      message(STATUS "Enabling link-time optimization (-flto)")
-      set(CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -flto")
-    else ()
-      message(STATUS "Compiler/linker does not support link-time optimization (-flto), disabling.")
-    endif (HAVE_LTO_SUPPORT)
-  endif ()
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
