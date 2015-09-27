@@ -184,6 +184,7 @@ set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}
   SOVERSION ${CERES_VERSION_MAJOR})
 
+include(AppendTargetProperty)
 # Always build position-independent code (PIC), even when building Ceres as a
 # static library so that shared libraries can link against it, not just
 # executables (PIC does not apply on Windows).
@@ -192,11 +193,30 @@ if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
   # that support it (>= 2.8.9).  Otherwise, manually add the -fPIC flag as an
   # additional compile definitions for the target.
   if (CMAKE_VERSION VERSION_LESS "2.8.9")
-    set_target_properties(ceres PROPERTIES COMPILE_FLAGS "-fPIC")
+    append_target_property(ceres COMPILE_FLAGS "-fPIC")
   else()
+    # Use set_target_properties() not append_target_property() here as
+    # POSITION_INDEPENDENT_CODE is a binary ON/OFF switch.
     set_target_properties(ceres PROPERTIES POSITION_INDEPENDENT_CODE ON)
   endif()
 endif()
+
+# Use of -flto requires use of gold linker & LLVM-gold plugin, which might
+# well not be present / in use and without which files will compile, but
+# not link ('file not recognized') so explicitly check for support.
+#
+# Only use link-time optimisation (LTO) flags when building Ceres itself, as it
+# causes an issue with type_info::operator==() in gtest's
+# CheckedDowncastToActualType() in levenberg_marquardt_strategy_test &
+# gradient_checking_cost_function_test if enabled for the tests as well.
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-flto" HAVE_LTO_SUPPORT)
+if (HAVE_LTO_SUPPORT)
+  message(STATUS "Enabling link-time optimization (-flto)")
+  append_target_property(ceres COMPILE_FLAGS "-flto")
+else ()
+  message(STATUS "Compiler/linker does not support link-time optimization (-flto).")
+endif (HAVE_LTO_SUPPORT)
 
 if (CMAKE_VERSION VERSION_LESS "2.8.12")
   # CMake version < 2.8.12 does not support target_compile_options(), warn
@@ -254,7 +274,7 @@ if (BUILD_TESTING AND GFLAGS)
   add_library(gtest gmock_gtest_all.cc gmock_main.cc)
   if (BUILD_SHARED_LIBS)
     # Define gtest-specific shared library flags for compilation.
-    set_target_properties(gtest PROPERTIES COMPILE_DEFINITIONS
+    append_target_property(gtest COMPILE_DEFINITIONS
       GTEST_CREATE_SHARED_LIBRARY)
   endif()
 
@@ -278,7 +298,7 @@ if (BUILD_TESTING AND GFLAGS)
     target_link_libraries(${NAME}_test test_util ceres gtest)
     if (BUILD_SHARED_LIBS)
       # Define gtest-specific shared library flags for linking.
-      set_target_properties(${NAME}_test PROPERTIES COMPILE_DEFINITIONS
+      append_target_property(${NAME}_test COMPILE_DEFINITIONS
         GTEST_LINKED_AS_SHARED_LIBRARY)
     endif()
     add_test(NAME ${NAME}_test
