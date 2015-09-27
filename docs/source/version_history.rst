@@ -27,6 +27,8 @@ New Features
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Use link-time optimisation (LTO) only when compiling Ceres itself,
+   not tests or examples, to bypass gtest / type_info::operator== issue.
 #. Use old minimum iOS version flags on Xcode < 7.0.
 #. Add gtest-specific flags when building/using as a shared library.
 #. Clean up iOS.cmake to use xcrun/xcodebuild & libtool.
