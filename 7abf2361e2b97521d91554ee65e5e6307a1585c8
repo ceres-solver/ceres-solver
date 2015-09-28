@@ -22,6 +22,30 @@
       "revId": "7abf2361e2b97521d91554ee65e5e6307a1585c8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce074951_73365a7a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-28T14:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5fa128_6508fda2",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "7abf2361e2b97521d91554ee65e5e6307a1585c8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
