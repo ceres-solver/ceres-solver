@@ -209,14 +209,21 @@ endif()
 # causes an issue with type_info::operator==() in gtest's
 # CheckedDowncastToActualType() in levenberg_marquardt_strategy_test &
 # gradient_checking_cost_function_test if enabled for the tests as well.
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-flto" HAVE_LTO_SUPPORT)
-if (HAVE_LTO_SUPPORT)
-  message(STATUS "Enabling link-time optimization (-flto)")
-  append_target_property(ceres COMPILE_FLAGS "-flto")
-else ()
-  message(STATUS "Compiler/linker does not support link-time optimization (-flto).")
-endif (HAVE_LTO_SUPPORT)
+#
+# Use our custom CheckCXXCompilerFlagForLibrary, not standard CMake
+# CheckCXXCompilerFlag to catch case when -flto would be reported as supported
+# when compiling an executable, but fail when compiling a library due to
+# ar / gcc-ar differences.
+if (NOT WIN32)
+  include(CheckCXXCompilerFlagForLibrary)
+  check_cxx_compiler_flag_for_library("-flto" HAVE_LTO_SUPPORT)
+  if (HAVE_LTO_SUPPORT)
+    message(STATUS "Enabling link-time optimization (-flto)")
+    append_target_property(ceres COMPILE_FLAGS "-flto")
+  else ()
+    message(STATUS "Compiler/linker does not support link-time optimization (-flto).")
+  endif (HAVE_LTO_SUPPORT)
+endif()
 
 if (CMAKE_VERSION VERSION_LESS "2.8.12")
   # CMake version < 2.8.12 does not support target_compile_options(), warn
