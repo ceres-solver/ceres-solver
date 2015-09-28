@@ -27,6 +27,7 @@ New Features
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Remove use of link-time optimisation (LTO) for all compilers.
 #. Use link-time optimisation (LTO) only when compiling Ceres itself,
    not tests or examples, to bypass gtest / type_info::operator== issue.
 #. Use old minimum iOS version flags on Xcode < 7.0.
