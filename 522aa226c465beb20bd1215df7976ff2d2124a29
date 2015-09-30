@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a33681_2366aaad",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-30T16:12:45Z",
+      "side": 1,
+      "message": "See the Google style guide; comments should end with a period.",
+      "revId": "522aa226c465beb20bd1215df7976ff2d2124a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15a33681_e3773257",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-30T16:12:45Z",
+      "side": 1,
+      "message": "Weird spacing.\n\nI suggest stacking these functions with just one comment \n\n// Bessel functions of the first kind with integer order equal to 0, 1, n.\n\nNo need to repeat the function name in the comment.",
+      "revId": "522aa226c465beb20bd1215df7976ff2d2124a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15a33681_83743e54",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-30T16:12:45Z",
+      "side": 1,
+      "message": "See how we\u0027ve done references elsewhere in Ceres (e.g. with a big line and commas instead of a break for each section).",
+      "revId": "522aa226c465beb20bd1215df7976ff2d2124a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15a33681_a3713a63",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-30T16:12:45Z",
+      "side": 1,
+      "message": "Generally we don\u0027t add spaces after ( or before ).",
+      "revId": "522aa226c465beb20bd1215df7976ff2d2124a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15a33681_43cc06fa",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-09-30T16:12:45Z",
+      "side": 1,
+      "message": "See the Google Style guide for spacing suggestions.",
+      "revId": "522aa226c465beb20bd1215df7976ff2d2124a29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
