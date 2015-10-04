@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f597825c_65a1a071",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5390
+      },
+      "writtenOn": "2015-10-04T13:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5fa128_25ab255b",
+      "range": {
+        "startLine": 485,
+        "startChar": 6,
+        "endLine": 485,
+        "endChar": 8
+      },
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e5fa128_05a8215a",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "55eccecd_d322ac63",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5390
+      },
+      "writtenOn": "2015-10-04T13:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5fa128_e5b4edb5",
+      "range": {
+        "startLine": 517,
+        "startChar": 42,
+        "endLine": 517,
+        "endChar": 44
+      },
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e5fa128_c5b1e9c3",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -76,6 +124,24 @@
       "writtenOn": "2015-09-26T20:57:50Z",
       "side": 1,
       "message": "what happens as a approaches zero?",
+      "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "156b3632_46d6148d",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 5390
+      },
+      "writtenOn": "2015-10-04T13:34:08Z",
+      "side": 1,
+      "message": "I changed the formula with a different one that does not need the inverse of f.a.",
+      "parentUuid": "0e5fa128_c5b1e9c3",
       "revId": "da9a491a0562576b55a188f4f26d26e505a0cb8f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
