@@ -164,6 +164,7 @@
 
 #include "Eigen/Core"
 #include "ceres/fpclassify.h"
+#include "ceres/internal/port.h"
 
 namespace ceres {
 
@@ -227,21 +228,8 @@ struct Jet {
   T a;
 
   // The infinitesimal part.
-  //
-  // Note the Eigen::DontAlign bit is needed here because this object
-  // gets allocated on the stack and as part of other arrays and
-  // structs. Forcing the right alignment there is the source of much
-  // pain and suffering. Even if that works, passing Jets around to
-  // functions by value has problems because the C++ ABI does not
-  // guarantee alignment for function arguments.
-  //
-  // Setting the DontAlign bit prevents Eigen from using SSE for the
-  // various operations on Jets. This is a small performance penalty
-  // since the AutoDiff code will still expose much of the code as
-  // statically sized loops to the compiler. But given the subtle
-  // issues that arise due to alignment, especially when dealing with
-  // multiple platforms, it seems to be a trade off worth making.
-  Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
+  // See ceres/include/internal/port.h for meaning of the #defines here.
+  CERES_ALIGNMENT_SPECIFIER Eigen::Matrix<T, N, 1, CERES_MATRIX_ALIGN_HINT> v;
 };
 
 // Unary +
