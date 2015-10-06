@@ -228,6 +228,30 @@ struct Jet {
 
   // The infinitesimal part.
   //
+
+#ifdef CERES_CXX11
+  // Eigen Matrix objects must be aligned to 16 byte boundaries
+  // (unless passed the DontAlign flag.)  We can ensure this by
+  // marking with alignas, but only if the system fully supports
+  // 16-byte alignment.)  Do a bit of typedef magic here to pick the
+  // appropriate usage.
+
+  // work around a GCC 4.8 bug:
+#if defined (__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ = 8
+  static constexpr bool kShouldAlign = 16 <= alignof(::max_align_t);
+#else
+  static constexpr bool kShouldAlign = 16 <= alignof(std::max_align_t);
+#endif
+  typedef typename std::conditional<kShouldAlign, Eigen::Matrix<T, N, 1>,
+                           Eigen::Matrix<T, N, 1, Eigen::DontAlign>>::type
+      MatrixType;
+
+  // Use 16 if we safely can. Otherwise use 1 -- alignas(1) is a no-op.
+  static constexpr size_t kMatrixAlignment = kShouldAlign ? 16 : 1;
+
+  alignas(kMatrixAlignment) MatrixType v;
+
+#else
   // Note the Eigen::DontAlign bit is needed here because this object
   // gets allocated on the stack and as part of other arrays and
   // structs. Forcing the right alignment there is the source of much
@@ -242,6 +266,7 @@ struct Jet {
   // issues that arise due to alignment, especially when dealing with
   // multiple platforms, it seems to be a trade off worth making.
   Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
+#endif
 };
 
 // Unary +
