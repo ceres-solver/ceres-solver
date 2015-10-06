@@ -441,6 +441,20 @@ TEST(Jet, Jet) {
     ExpectJetsClose(sin(asin(b)), b);
     ExpectJetsClose(asin(sin(b)), b);
   }
+
+  {
+    J z = MakeJet(0.1, -2.7, 1e-3);
+
+    // Check that J0(z) == Jn(0,z).
+    ExpectJetsClose(BesselJ0(z), BesselJn(0, z));
+
+    // Check that J1(z) == Jn(1,z).
+    ExpectJetsClose(BesselJ1(z), BesselJn(1, z));
+
+    // Check that J0(z)+J2(z) == (2/z)*J1(z).
+    // See formula http://dlmf.nist.gov/10.6.E1
+    ExpectJetsClose(BesselJ0(z) + BesselJn(2, z), (2.0 / z) * BesselJ1(z));
+  }
 }
 
 TEST(Jet, JetsInEigenMatrices) {
