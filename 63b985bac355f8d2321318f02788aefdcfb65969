@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ec99cf_0df9b1b2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2015-10-07T09:25:33Z",
+      "side": 1,
+      "message": "I believe the right way to do this is append to CERES_COMPILE_OPTIONS.\n\nso that things like the android compile and the google3 compile which do not depend on this cmake file will do the right thing.",
+      "revId": "63b985bac355f8d2321318f02788aefdcfb65969",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
