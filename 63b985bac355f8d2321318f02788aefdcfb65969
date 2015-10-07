@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0435d80_c7d83402",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-10-07T15:43:15Z",
+      "side": 1,
+      "message": "I am a little confused by your suggestion: using config.h is obviously easy and I can do that, but having not worked with Android.mk builds or JNI I\u0027m a bit confused. Do you want me to add a new set of subdirectories to jni for config/ceres/internal ? And what would go in there, just CERES_USE_CXX11?",
+      "parentUuid": "506b0131_43fe069c",
+      "revId": "63b985bac355f8d2321318f02788aefdcfb65969",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506b0131_23f90ab3",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
