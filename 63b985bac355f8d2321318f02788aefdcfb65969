@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "30fe8d70_b2b60030",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-10-08T20:12:33Z",
+      "side": 1,
+      "message": "I think the config.h change should happen independent of this CL and before this CL.",
+      "parentUuid": "b0435d80_c7d83402",
+      "revId": "63b985bac355f8d2321318f02788aefdcfb65969",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506b0131_23f90ab3",
         "filename": "include/ceres/jet.h",
         "patchSetId": 3
