@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e55355fb_4539280d",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-11T04:05:10Z",
+      "side": 1,
+      "message": "Please put a comment line above here to mark this block as a glorified CHECK; otherwise in scanning it seems like it might be doing something in the normal flow of code.",
+      "revId": "69cdcaee4f464b37b45e7d8f23f7267f6b3ab11d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e55355fb_65362c1e",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-11T04:05:10Z",
+      "side": 1,
+      "message": "Weird indentation",
+      "revId": "69cdcaee4f464b37b45e7d8f23f7267f6b3ab11d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e55355fb_8533102b",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-11T04:05:10Z",
+      "side": 1,
+      "message": "I think you meant to insert a space after the ToString(); otherwise the \"Parameter\" will get run into this.",
+      "revId": "69cdcaee4f464b37b45e7d8f23f7267f6b3ab11d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
