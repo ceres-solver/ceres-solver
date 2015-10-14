@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb462b2_3db4790a",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-14T23:54:32Z",
+      "side": 1,
+      "message": "Capitalize Windows. End sentence with a period.",
+      "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfb462b2_9a748b01",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-14T23:54:32Z",
+      "side": 1,
+      "message": "Is this still correct on Windows systems? Was this broken before?",
+      "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
