@@ -16,6 +16,24 @@
       "revId": "e6230244ee8089325b368bcae6c582eb559c0aa8",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9924caa5_96eb4c62",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 5390
+      },
+      "writtenOn": "2015-10-15T18:19:44Z",
+      "side": 1,
+      "message": "Hello Sameer, as a guideline I had a look in this file for function like asin or acos and I did not find a lot of tests. \n\nMaybe asin and acos are in standard and so we can rely more on them? j0, j1 and jn are not in the standard but they are tested anyway for example in GNU C Library (see http://sourceware.org/git/?p\u003dglibc.git;a\u003dblob;f\u003dmath/libm-test.inc;h\u003d54f62f8a32ce46eeb9fce7847d24416e358f2f53;hb\u003dHEAD ).\n\nAm I missing something?\n\nThank you.",
+      "parentUuid": "90ec99cf_6dfe759c",
+      "revId": "e6230244ee8089325b368bcae6c582eb559c0aa8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
