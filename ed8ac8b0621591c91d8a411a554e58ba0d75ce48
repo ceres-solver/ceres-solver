@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f66155ea_8cea075c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-22T16:00:44Z",
+      "side": 1,
+      "message": "You include the formula here and in the previous function, but not in the subsequent function; why?",
+      "revId": "ed8ac8b0621591c91d8a411a554e58ba0d75ce48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f66155ea_acedcb77",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-22T16:00:44Z",
+      "side": 1,
+      "message": "Spaces around + and -",
+      "revId": "ed8ac8b0621591c91d8a411a554e58ba0d75ce48",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
