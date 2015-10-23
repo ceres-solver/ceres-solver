@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "797b96ad_15c2b466",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-10-23T06:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb462b2_3db4790a",
+      "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb462b2_9a748b01",
         "filename": "internal/ceres/miniglog/glog/logging.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2015-10-14T23:54:32Z",
       "side": 1,
       "message": "Is this still correct on Windows systems? Was this broken before?",
+      "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f913064a_d9d8d353",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5500
+      },
+      "writtenOn": "2015-10-23T06:09:07Z",
+      "side": 1,
+      "message": "It is still correct on Windows (compiling at least). This was fine before as well.\n\nThe difference is that before on Windows you had to allocate the \"tm\" on the stack, whereas on other systems it was a static variable (hence the lack of thread safety). The \"tm*\" was there to access the data in both cases in an uniform way.\n\nNow \"tm\" is on the stack on all systems. There is no need for using a \"tm*\" anymore.\n\n(Somehow I think the actual code is much more straightforward than my explication)",
+      "parentUuid": "dfb462b2_9a748b01",
       "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
