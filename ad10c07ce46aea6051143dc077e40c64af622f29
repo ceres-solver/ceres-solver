@@ -69,6 +69,24 @@
       "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "763e45ee_3df92f36",
+        "filename": "internal/ceres/miniglog/glog/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-10-23T16:14:04Z",
+      "side": 1,
+      "message": "I realized that was what was happening earlier, and that\u0027s why I merged :) I must have not had my coffee when I first reviewed the patch.\n\nThanks again!",
+      "parentUuid": "f913064a_d9d8d353",
+      "revId": "ad10c07ce46aea6051143dc077e40c64af622f29",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
