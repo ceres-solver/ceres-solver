@@ -148,7 +148,7 @@ if (IOS)
   message(STATUS "Building Ceres for iOS platform: ${IOS_PLATFORM}")
 
   # Ceres requires at least iOS 7.0+.
-  if (IOS_SDK_VERSION VERSION_LESS 7.0)
+  if (IOS_DEPLOYMENT_TARGET VERSION_LESS 7.0)
     message(FATAL_ERROR "Unsupported iOS SDK version: ${IOS_SDK_VERSION}, Ceres "
       "required at least iOS version 7.0")
   endif()
