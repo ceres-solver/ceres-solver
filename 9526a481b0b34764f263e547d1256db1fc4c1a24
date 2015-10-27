@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c1896c_daee0527",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-27T21:43:00Z",
+      "side": 1,
+      "message": "Nitpick - please break this line at 80 cols.",
+      "revId": "9526a481b0b34764f263e547d1256db1fc4c1a24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1683491e_2aef1f25",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-27T21:43:00Z",
+      "side": 1,
+      "message": "This should be:\n\nset(IOS_DEPLOYMENT_TARGET \"${IOS_SDK_VERSION}\" CACHE STRING \"Minimum iOS version to build for.\" )\n\nnote the value is passed as the second argument to set(), not the last - in the case of CACHE, that\u0027s the helpstring as above.",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 58
+      },
+      "revId": "9526a481b0b34764f263e547d1256db1fc4c1a24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36b04d09_fb730f6e",
+        "filename": "cmake/iOS.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-27T21:43:00Z",
+      "side": 1,
+      "message": "Please add a: message(STATUS \"Building for minimum iOS version: ${IOS_DEPLOYMENT_TARGET} (SDK version: ${IOS_SDK_VERSION})\") here.",
+      "revId": "9526a481b0b34764f263e547d1256db1fc4c1a24",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
