@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Ceres Solver'
-copyright = u'2014 Google Inc'
+copyright = u'2015 Google Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -185,7 +185,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'CeresSolver.tex', u'Ceres Solver',
-   u'Sameer Agarwal \\& Keir Mierle', 'manual'),
+   u'Sameer Agarwal, Keir Mierle & Others', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -215,7 +215,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'ceressolver', u'Ceres Solver',
-     [u'Sameer Agarwal & Keir Mierle'], 1)
+     [u'Sameer Agarwal, Keir Mierle & Others'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -229,7 +229,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'CeresSolver', u'Ceres Solver',
-   u'Sameer Agarwal & Keir Mierle', 'CeresSolver', 'One line description of project.',
+   u'Sameer Agarwal, Keir Mierle & Others', 'CeresSolver', 'One line description of project.',
    'Miscellaneous'),
 ]
 

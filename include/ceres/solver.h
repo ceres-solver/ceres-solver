@@ -701,10 +701,20 @@ class CERES_EXPORT Solver {
     // this number, then the jacobian for that cost term is dumped.
     double gradient_check_relative_precision;
 
-    // Relative shift used for taking numeric derivatives. For finite
-    // differencing, each dimension is evaluated at slightly shifted
-    // values; for the case of central difference, this is what gets
-    // evaluated:
+    // WARNING: This option only applies to the to the numeric
+    // differentiation used for checking the user provided derivatives
+    // when when Solver::Options::check_gradients is true. If you are
+    // using NumericDiffCostFunction and are interested in changing
+    // the step size for numeric differentiation in your cost
+    // function, please have a look at
+    // include/ceres/numeric_diff_options.h.
+    //
+    // Relative shift used for taking numeric derivatives when
+    // Solver::Options::check_gradients is true.
+    //
+    // For finite differencing, each dimension is evaluated at
+    // slightly shifted values; for the case of central difference,
+    // this is what gets evaluated:
     //
     //   delta = numeric_derivative_relative_step_size;
     //   f_initial  = f(x)
