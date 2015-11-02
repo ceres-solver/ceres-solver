@@ -85,22 +85,6 @@ class DynamicNumericDiffCostFunction : public CostFunction {
         options_(options) {
   }
 
-  // Deprecated. New users should avoid using this constructor. Instead, use the
-  // constructor with NumericDiffOptions.
-  DynamicNumericDiffCostFunction(
-      const CostFunctor* functor,
-      Ownership ownership,
-      double relative_step_size)
-      : functor_(functor),
-        ownership_(ownership),
-        options_() {
-    LOG(WARNING) << "This constructor is deprecated and will be removed in "
-                    "a future version. Please use the NumericDiffOptions "
-                    "constructor instead.";
-
-    options_.relative_step_size = relative_step_size;
-  }
-
   virtual ~DynamicNumericDiffCostFunction() {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();

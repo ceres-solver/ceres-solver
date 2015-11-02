@@ -364,6 +364,12 @@ the corresponding accessors. This information will be verified by the
   <http://en.wikipedia.org/wiki/Numerical_differentiation>`_ can be
   used.
 
+  .. NOTE ::
+
+    TODO(sameeragarwal): Add documentation for the constructor and for
+    NumericDiffOptions. Update DynamicNumericDiffOptions in a similar
+    manner.
+
     .. code-block:: c++
 
       template <typename CostFunctor,
@@ -497,7 +503,7 @@ the corresponding accessors. This information will be verified by the
    estimates derivatives by performing multiple central differences
    at varying scales. Specifically, the algorithm starts at a certain
    :math:`h` and as the derivative is estimated, this step size decreases.
-   To conserve function evaluations and estimate the derivative error, the 
+   To conserve function evaluations and estimate the derivative error, the
    method performs Richardson extrapolations between the tested step sizes.
    The algorithm exhibits considerably higher accuracy, but does so by
    additional evaluations of the cost function.
