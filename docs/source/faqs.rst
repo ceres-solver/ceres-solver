@@ -66,6 +66,54 @@ Modeling
    automatic and numeric differentiation. See
    :class:`CostFunctionToFunctor`.
 
+#. When using Quaternions,  consider using :class:`QuaternionParameterization`.
+
+   `Quaternions <https://en.wikipedia.org/wiki/Quaternion>`_ are a
+   four dimensional parameterization of the space of three dimensional
+   rotations :math:`SO(3)`.  However, the :math:`SO(3)` is a three
+   dimensional set, and so is the tangent space of a
+   Quaternion. Therefore, it is sometimes (not always) benefecial to
+   associate a local parameterization with parameter blocks
+   representing a Quaternion. Assuming that the order of entries in
+   your parameter block is :math:`w,x,y,z`, you can use
+   :class:`QuaternionParameterization`.
+
+   If however, you are using `Eigen's Quaternion
+   <http://eigen.tuxfamily.org/dox/classEigen_1_1Quaternion.html>`_
+   object, whose layout is :math:`x,y,z,w`, then we recommend you use
+   Lloyd Hughes's `Ceres Extensions
+   <https://github.com/system123/ceres_extensions>`_.
+
+#. How do I solve problems with general linear & non-linear
+   **inequality** constraints with Ceres Solver?
+
+   Currently, Ceres Solver only supports upper and lower bounds
+   constraints on the parameter blocks.
+
+   A crude way of dealing with inequality constraints is have one or
+   more of your cost functions check if the inequalities you are
+   interested in are satisfied, and if not return false instead of
+   true. This will prevent the solver from ever stepping into an
+   infeasible region.
+
+   This requires that the starting point for the optimization be a
+   feasible point.  You also risk pre-mature convergence using this
+   method.
+
+#. How do I solve problems with general linear & non-linear **equality**
+   constraints with Ceres Solver?
+
+   There is no built in support in ceres for solving problems with
+   equality constraints.  Currently, Ceres Solver only supports upper
+   and lower bounds constraints on the parameter blocks.
+
+   The trick described above for dealing with inequality
+   constraints will **not** work for equality constraints.
+
+#. How do I set one or more components of a parameter block constant?
+
+   Using :class:`SubsetParameterization`.
+
 #. Putting `Inverse Function Theorem
    <http://en.wikipedia.org/wiki/Inverse_function_theorem>`_ to use.
 
@@ -112,16 +160,13 @@ Modeling
       Eigen::Matrix3d ecef_to_lla_jacobian;
       lla_to_ecef_jacobian.computeInverseWithCheck(ecef_to_lla_jacobian, invertible);
 
-#. When using Quaternions, use :class:`QuaternionParameterization`.
-
-   TBD
-
-#. How to choose a parameter block size?
-
-   TBD
 
 Solving
 =======
+
+#. How do I evaluate the Jacobian for a solver problem?
+
+   Using :func:`Problem::Evaluate`.
 
 #. Choosing a linear solver.
 

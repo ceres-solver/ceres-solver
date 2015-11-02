@@ -1574,9 +1574,21 @@ elimination group [LiSaad]_.
 
    Default: ``1e-6``
 
-   Relative shift used for taking numeric derivatives. For finite
-   differencing, each dimension is evaluated at slightly shifted
-   values, e.g., for forward differences, the numerical derivative is
+   .. NOTE::
+
+      This option only applies to the numeric differentiation used for
+      checking the user provided derivatives when when
+      `Solver::Options::check_gradients` is true. If you are using
+      :class:`NumericDiffCostFunction` and are interested in changing
+      the step size for numeric differentiation in your cost function,
+      please have a look at :class:`NumericDiffOptions`.
+
+   Relative shift used for taking numeric derivatives when
+   `Solver::Options::check_gradients` is `true`.
+
+   For finite differencing, each dimension is evaluated at slightly
+   shifted values, e.g., for forward differences, the numerical
+   derivative is
 
    .. math::
 
