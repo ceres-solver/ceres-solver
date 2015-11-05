@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b637de6a_c14ba23b",
+        "filename": "docs/source/faqs.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-05T19:35:28Z",
+      "side": 1,
+      "message": "Perhaps emphasis in bold?",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "1ad1d872c33c47296b24cbac0e8b2fb6b443e746",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b637de6a_613176c7",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-05T19:35:28Z",
+      "side": 1,
+      "message": "Perhaps add the: \"when Solver::Options::check_gradients is true\" suffix here that you added in the solver.h documentation?",
+      "range": {
+        "startLine": 1586,
+        "startChar": 3,
+        "endLine": 1586,
+        "endChar": 53
+      },
+      "revId": "1ad1d872c33c47296b24cbac0e8b2fb6b443e746",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
