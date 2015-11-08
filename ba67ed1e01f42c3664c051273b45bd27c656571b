@@ -16,6 +16,24 @@
       "revId": "ba67ed1e01f42c3664c051273b45bd27c656571b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_304f463e",
+        "filename": "docs/source/conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-11-08T22:16:51Z",
+      "side": 1,
+      "message": "actually this is for texinfo, we do not do anything with this.",
+      "parentUuid": "36712e54_10248a8a",
+      "revId": "ba67ed1e01f42c3664c051273b45bd27c656571b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
