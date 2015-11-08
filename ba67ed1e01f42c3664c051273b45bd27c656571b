@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36712e54_10248a8a",
+        "filename": "docs/source/conf.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-11-08T19:49:33Z",
+      "side": 1,
+      "message": "\"one line description of the project\u0027 -- should we update this?",
+      "revId": "ba67ed1e01f42c3664c051273b45bd27c656571b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
