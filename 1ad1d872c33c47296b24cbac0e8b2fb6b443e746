@@ -45,6 +45,30 @@
       "revId": "1ad1d872c33c47296b24cbac0e8b2fb6b443e746",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36712e54_100d6a14",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-11-08T18:59:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b637de6a_613176c7",
+      "range": {
+        "startLine": 1586,
+        "startChar": 3,
+        "endLine": 1586,
+        "endChar": 53
+      },
+      "revId": "1ad1d872c33c47296b24cbac0e8b2fb6b443e746",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
