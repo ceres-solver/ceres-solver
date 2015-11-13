@@ -120,9 +120,17 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
     ParameterBlock* block2 =
         FindOrDie(parameter_map,
                   const_cast<double*>(original_parameter_block2));
+    
     const int block1_size = block1->Size();
     const int block2_size = block2->Size();
-    MatrixRef(covariance_block, block1_size, block2_size).setZero();
+    const int block1_local_size = block1->LocalSize();
+    const int block2_local_size = block2->LocalSize();
+    if (!lift_covariance_to_ambient_space) {
+      MatrixRef(covariance_block, block1_local_size, block2_local_size)
+          .setZero();
+    } else {
+      MatrixRef(covariance_block, block1_size, block2_size).setZero();
+    }
     return true;
   }
 

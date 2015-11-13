@@ -318,7 +318,7 @@ class CovarianceTest : public ::testing::Test {
       const double* expected_covariance) {
     // Generate all possible combination of block pairs and check if the
     // covariance computation is correct.
-    for (int i = 1; i <= 64; ++i) {
+    for (int i = 0; i <= 64; ++i) {
       vector<pair<const double*, const double*> > covariance_blocks;
       if (i & 1) {
         covariance_blocks.push_back(all_covariance_blocks_[0]);
@@ -676,6 +676,65 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpace) {
   ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
 }
 
+TEST_F(CovarianceTest, LocalParameterizationInTangentSpaceWithConstantBlocks) {
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+
+  problem_.SetParameterization(x, new PolynomialParameterization);
+  problem_.SetParameterBlockConstant(x);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetParameterization(y, new SubsetParameterization(3, subset));
+  problem_.SetParameterBlockConstant(y);
+
+  local_column_bounds_[x] = make_pair(0, 1);
+  local_column_bounds_[y] = make_pair(1, 3);
+  local_column_bounds_[z] = make_pair(3, 4);
+
+  // Raw Jacobian: J
+  //
+  //   1   0  0  0  0  0
+  //   0   1  0  0  0  0
+  //   0   0  2  0  0  0
+  //   0   0  0  2  0  0
+  //   0   0  0  0  2  0
+  //   0   0  0  0  0  5
+  //  -5  -6  1  2  3  0
+  //   3  -2  0  0  0  2
+
+  // Local to global jacobian: A
+  //
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   0
+  //  0   0   0   1
+
+  // inv((J*A)'*(J*A))
+  // Computed using octave.
+  double expected_covariance[] = {
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.034482 // NOLINT
+  };
+
+  Covariance::Options options;
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SUITE_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+}
 
 TEST_F(CovarianceTest, TruncatedRank) {
   // J
