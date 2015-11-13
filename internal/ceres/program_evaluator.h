@@ -290,6 +290,10 @@ class ProgramEvaluator : public Evaluator {
     return program_->Plus(state, delta, state_plus_delta);
   }
 
+  void Project(const double* state, double* projected_state) const {
+    program_->Project(state, projected_state);
+  }
+
   int NumParameters() const {
     return program_->NumParameters();
   }

@@ -87,6 +87,8 @@ class Program {
             const double* delta,
             double* state_plus_delta) const;
 
+  void Project(const double* state, double* projected_state) const;
+
   // Set the parameter indices and offsets. This permits mapping backward
   // from a ParameterBlock* to an index in the parameter_blocks() vector. For
   // any parameter block p, after calling SetParameterOffsetsAndIndex(), it

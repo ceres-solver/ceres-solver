@@ -197,16 +197,15 @@ TEST(ParameterBlock, SetBounds) {
   EXPECT_EQ(parameter_block.UpperBoundForParameter(1), 1.0);
 }
 
-TEST(ParameterBlock, PlusWithBoundsConstraints) {
-  double x[] = {1.0, 0.0};
-  double delta[] = {2.0, -10.0};
+TEST(ParameterBlock, Project) {
+  double x[] = {3.0, -10.0};
   ParameterBlock parameter_block(x, 2, -1, NULL);
   parameter_block.SetUpperBound(0, 2.0);
   parameter_block.SetLowerBound(1, -1.0);
-  double x_plus_delta[2];
-  parameter_block.Plus(x, delta, x_plus_delta);
-  EXPECT_EQ(x_plus_delta[0], 2.0);
-  EXPECT_EQ(x_plus_delta[1], -1.0);
+  double projected_x[2];
+  parameter_block.Project(x, projected_x);
+  EXPECT_EQ(projected_x[0], 2.0);
+  EXPECT_EQ(projected_x[1], -1.0);
 }
 
 }  // namespace internal

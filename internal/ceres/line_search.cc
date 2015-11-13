@@ -112,6 +112,7 @@ LineSearchFunction::LineSearchFunction(Evaluator* evaluator)
     : evaluator_(evaluator),
       position_(evaluator->NumParameters()),
       direction_(evaluator->NumEffectiveParameters()),
+      position_plus_direction_(evaluator->NumParameters()),
       evaluation_point_(evaluator->NumParameters()),
       scaled_direction_(evaluator->NumEffectiveParameters()),
       gradient_(evaluator->NumEffectiveParameters()),
@@ -128,9 +129,12 @@ bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
   scaled_direction_ = x * direction_;
   if (!evaluator_->Plus(position_.data(),
                         scaled_direction_.data(),
-                        evaluation_point_.data())) {
+                        position_plus_direction_.data())) {
     return false;
   }
+
+  evaluator_->Project(position_plus_direction_.data(),
+                      evaluation_point_.data());
 
   if (g == NULL) {
     return (evaluator_->Evaluate(evaluation_point_.data(),

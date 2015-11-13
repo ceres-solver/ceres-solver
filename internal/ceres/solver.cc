@@ -351,6 +351,7 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  //  NOLINT
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
+  summary->num_line_search_iterations         = 0;
   summary->line_search_cost_evaluation_time_in_seconds = 0.0;
   summary->line_search_gradient_evaluation_time_in_seconds = 0.0;
   summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
@@ -564,6 +565,7 @@ Solver::Summary::Summary()
       residual_evaluation_time_in_seconds(-1.0),
       jacobian_evaluation_time_in_seconds(-1.0),
       inner_iteration_time_in_seconds(-1.0),
+      num_line_search_iterations(-1),
       line_search_cost_evaluation_time_in_seconds(-1.0),
       line_search_gradient_evaluation_time_in_seconds(-1.0),
       line_search_polynomial_minimization_time_in_seconds(-1.0),
@@ -794,6 +796,10 @@ string Solver::Summary::FullReport() const {
 
   StringAppendF(&report, "\n  Residual evaluation %23.4f\n",
                 residual_evaluation_time_in_seconds);
+  if (minimizer_type == TRUST_REGION && is_constrained) {
+    StringAppendF(&report, "    Line search iterations        %14d\n",
+                  num_line_search_iterations);
+  }
   if (print_line_search_timing_information) {
     StringAppendF(&report, "    Line search cost evaluation    %10.4f\n",
                   line_search_cost_evaluation_time_in_seconds);

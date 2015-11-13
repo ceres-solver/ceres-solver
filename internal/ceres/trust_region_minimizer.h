@@ -56,7 +56,6 @@ class TrustRegionMinimizer : public Minimizer {
                                           const SparseMatrix* jacobian,
                                           const double* residuals,
                                           const double* step) const;
-
   Minimizer::Options options_;
 };
 
