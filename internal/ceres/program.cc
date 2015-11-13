@@ -126,6 +126,14 @@ bool Program::Plus(const double* state,
   return true;
 }
 
+void Program::Project(const double* state, double* projected_state) const {
+  for (int i = 0; i < parameter_blocks_.size(); ++i) {
+    parameter_blocks_[i]->Project(state, projected_state);
+    state += parameter_blocks_[i]->Size();
+    projected_state += parameter_blocks_[i]->Size();
+  }
+}
+
 void Program::SetParameterOffsetsAndIndex() {
   // Set positions for all parameters appearing as arguments to residuals to one
   // past the end of the parameter block array.

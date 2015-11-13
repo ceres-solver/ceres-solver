@@ -208,9 +208,7 @@ class ParameterBlock {
     lower_bounds_[index] = lower_bound;
   }
 
-  // Generalization of the addition operation. This is the same as
-  // LocalParameterization::Plus() followed by projection onto the
-  // hyper cube implied by the bounds constraints.
+  // Generalization of the addition operation.
   bool Plus(const double *x, const double* delta, double* x_plus_delta) {
     if (local_parameterization_ != NULL) {
       if (!local_parameterization_->Plus(x, delta, x_plus_delta)) {
@@ -221,20 +219,23 @@ class ParameterBlock {
                                        ConstVectorRef(delta,  size_);
     }
 
-    // Project onto the box constraints.
+    return true;
+  }
+
+  // Project onto the box constraints.
+  void Project(const double *x, double* projected_x) {
+    std::copy(x, x + size_, projected_x);
     if (lower_bounds_.get() != NULL) {
       for (int i = 0; i < size_; ++i) {
-        x_plus_delta[i] = std::max(x_plus_delta[i], lower_bounds_[i]);
+        projected_x[i] = std::max(projected_x[i], lower_bounds_[i]);
       }
     }
 
     if (upper_bounds_.get() != NULL) {
       for (int i = 0; i < size_; ++i) {
-        x_plus_delta[i] = std::min(x_plus_delta[i], upper_bounds_[i]);
+        projected_x[i] = std::min(projected_x[i], upper_bounds_[i]);
       }
     }
-
-    return true;
   }
 
   std::string ToString() const {

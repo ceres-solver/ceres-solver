@@ -69,6 +69,11 @@ class GradientProblemEvaluator : public Evaluator {
     return problem_.Plus(state, delta, state_plus_delta);
   }
 
+  virtual void Project(const double* state,
+                       double* projected_state) const {
+    std::copy(state, state + NumParameters(), projected_state);
+  }
+
   virtual int NumParameters() const {
     return problem_.NumParameters();
   }

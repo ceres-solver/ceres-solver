@@ -199,6 +199,7 @@ class PowellEvaluator2 : public Evaluator {
     return true;
   }
 
+  virtual void Project(const double* x, double* projected_x) const {}
   virtual int NumEffectiveParameters() const { return num_active_cols_; }
   virtual int NumParameters()          const { return 4; }
   virtual int NumResiduals()           const { return 4; }

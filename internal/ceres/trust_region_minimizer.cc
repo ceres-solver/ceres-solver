@@ -154,6 +154,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   Vector model_residuals(num_residuals);
   Vector scale(num_effective_parameters);
   Vector negative_gradient(num_effective_parameters);
+  Vector x_plus_foo(num_parameters);
   Vector projected_gradient_step(num_parameters);
 
   IterationSummary iteration_summary;
@@ -174,16 +175,8 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
   Vector x = x_min;
   // Project onto the feasible set.
   if (options.is_constrained) {
-    delta.setZero();
-    if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-      summary->message =
-          "Unable to project initial point onto the feasible set.";
-      summary->termination_type = FAILURE;
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
-      return;
-    }
-    x_min = x_plus_delta;
-    x = x_plus_delta;
+    evaluator->Project(x.data(), x_min.data());
+    x = x_min;
   }
 
   double x_norm = x.norm();
@@ -201,18 +194,20 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
     return;
   }
 
+  summary->initial_cost = cost + summary->fixed_cost;
+  iteration_summary.cost = cost + summary->fixed_cost;
+
   negative_gradient = -gradient;
   if (!evaluator->Plus(x.data(),
                        negative_gradient.data(),
-                       projected_gradient_step.data())) {
+                       x_plus_foo.data())) {
     summary->message = "Unable to compute gradient step.";
     summary->termination_type = FAILURE;
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
+  evaluator->Project(x_plus_foo.data(), projected_gradient_step.data());
 
-  summary->initial_cost = cost + summary->fixed_cost;
-  iteration_summary.cost = cost + summary->fixed_cost;
   iteration_summary.gradient_max_norm =
     (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
   iteration_summary.gradient_norm = (x - projected_gradient_step).norm();
@@ -389,28 +384,44 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
       //
       // TODO(sameeragarwal): What happens to trust region sizing as
       // it interacts with the line search ?
+      bool x_plus_delta_is_computed = false;
       if (use_line_search) {
-        const LineSearch::Summary line_search_summary =
-            DoLineSearch(options, x, gradient, cost, delta, evaluator);
+        if (evaluator->Plus(x.data(), delta.data(), x_plus_foo.data())) {
+          evaluator->Project(x_plus_foo.data(), x_plus_delta.data());
+          x_plus_delta_is_computed = true;
+          if ((x_plus_foo - x_plus_delta).norm() / x_plus_foo.norm() >=
+              std::numeric_limits<double>::epsilon()) {
+            const LineSearch::Summary line_search_summary =
+                DoLineSearch(options, x, gradient, cost, delta, evaluator);
 
-        summary->line_search_cost_evaluation_time_in_seconds +=
-            line_search_summary.cost_evaluation_time_in_seconds;
-        summary->line_search_gradient_evaluation_time_in_seconds +=
-            line_search_summary.gradient_evaluation_time_in_seconds;
-        summary->line_search_polynomial_minimization_time_in_seconds +=
-            line_search_summary.polynomial_minimization_time_in_seconds;
-        summary->line_search_total_time_in_seconds +=
-            line_search_summary.total_time_in_seconds;
+            summary->line_search_cost_evaluation_time_in_seconds +=
+                line_search_summary.cost_evaluation_time_in_seconds;
+            summary->line_search_gradient_evaluation_time_in_seconds +=
+                line_search_summary.gradient_evaluation_time_in_seconds;
+            summary->line_search_polynomial_minimization_time_in_seconds +=
+                line_search_summary.polynomial_minimization_time_in_seconds;
+            summary->line_search_total_time_in_seconds +=
+                line_search_summary.total_time_in_seconds;
 
-        if (line_search_summary.success) {
-          delta *= line_search_summary.optimal_step_size;
+            if (line_search_summary.success) {
+              delta *= line_search_summary.optimal_step_size;
+              x_plus_delta_is_computed = false;
+            }
+          }
+        }
+      }
+
+      if (!x_plus_delta_is_computed) {
+        if (evaluator->Plus(x.data(), delta.data(), x_plus_foo.data())) {
+          evaluator->Project(x_plus_foo.data(), x_plus_delta.data());
+          x_plus_delta_is_computed = true;
         }
       }
 
       double new_cost = std::numeric_limits<double>::max();
-      if (evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
+      if (x_plus_delta_is_computed) {
         if (!evaluator->Evaluate(x_plus_delta.data(),
-                                 &new_cost,
+                               &new_cost,
                                  NULL,
                                  NULL,
                                  NULL)) {
@@ -424,6 +435,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
             << "x_plus_delta = Plus(x, delta) failed. "
             << "Treating it as a step with infinite cost";
       }
+
 
       if (new_cost < std::numeric_limits<double>::max()) {
         // Check if performing an inner iteration will make it better.
@@ -600,16 +612,18 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         return;
       }
 
+
       negative_gradient = -gradient;
       if (!evaluator->Plus(x.data(),
                            negative_gradient.data(),
-                           projected_gradient_step.data())) {
+                           x_plus_foo.data())) {
         summary->message =
             "projected_gradient_step = Plus(x, -gradient) failed.";
         summary->termination_type = FAILURE;
         LOG(ERROR) << "Terminating: " << summary->message;
         return;
       }
+      evaluator->Project(x_plus_foo.data(), projected_gradient_step.data());
 
       iteration_summary.gradient_max_norm =
           (x - projected_gradient_step).lpNorm<Eigen::Infinity>();

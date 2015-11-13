@@ -576,7 +576,8 @@ template<typename TestProblem> bool Solve(bool is_constrained, int trial) {
             << " actual: " << 2.0 * summary.final_cost
             << " " << success
             << " in " << summary.total_time_in_seconds
-            << " seconds";
+            << " seconds."
+            << " LRE: " << log_relative_error << " < " << kMinLogRelativeError;
   return success;
 }
 

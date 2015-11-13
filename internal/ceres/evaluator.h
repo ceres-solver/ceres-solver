@@ -176,6 +176,8 @@ class Evaluator {
                     const double* delta,
                     double* state_plus_delta) const = 0;
 
+  virtual void Project(const double* state, double* projected_state) const = 0;
+
   // The number of parameters in the optimization problem.
   virtual int NumParameters() const = 0;
 

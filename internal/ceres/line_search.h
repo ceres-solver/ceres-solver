@@ -255,10 +255,9 @@ class LineSearchFunction {
   Evaluator* evaluator_;
   Vector position_;
   Vector direction_;
-
-  // evaluation_point = Evaluator::Plus(position_,  x * direction_);
+  // Evaluator::Plus(position_,  x * direction_);
+  Vector position_plus_direction_;
   Vector evaluation_point_;
-
   // scaled_direction = x * direction_;
   Vector scaled_direction_;
   Vector gradient_;
