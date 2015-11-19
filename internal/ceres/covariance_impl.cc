@@ -120,7 +120,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
     ParameterBlock* block2 =
         FindOrDie(parameter_map,
                   const_cast<double*>(original_parameter_block2));
-    
+
     const int block1_size = block1->Size();
     const int block2_size = block2->Size();
     const int block1_local_size = block1->LocalSize();

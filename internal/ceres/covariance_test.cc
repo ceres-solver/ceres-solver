@@ -713,7 +713,7 @@ TEST_F(CovarianceTest, LocalParameterizationInTangentSpaceWithConstantBlocks) {
   //  0   0   0   0
   //  0   0   0   1
 
-  // inv((J*A)'*(J*A))
+  // pinv((J*A)'*(J*A))
   // Computed using octave.
   double expected_covariance[] = {
     0.0, 0.0, 0.0, 0.0,
