@@ -151,6 +151,24 @@
       "revId": "63b985bac355f8d2321318f02788aefdcfb65969",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16ac2a06_15b01602",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-11-29T23:01:58Z",
+      "side": 1,
+      "message": "agreed.",
+      "parentUuid": "506b0131_83e71e0b",
+      "revId": "63b985bac355f8d2321318f02788aefdcfb65969",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
