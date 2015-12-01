@@ -2012,6 +2012,14 @@ The three arrays will be:
 
    Number of times inner iterations were performed.
 
+ .. member:: int Solver::Summary::num_line_search_steps
+
+    Total number of iterations inside the line search algorithm across
+    all invocations. We call these iterations "steps" to distinguish
+    them from the outer iterations of the line search and trust region
+    minimizer algorithms which call the line search algorithm as a
+    subroutine.
+
 .. member:: double Solver::Summary::preprocessor_time_in_seconds
 
    Time (in seconds) spent in the preprocessor.

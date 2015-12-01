@@ -376,6 +376,13 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
 
+    // Iterations inside the line search algorithm are considered
+    // 'steps' in the broader context, to distinguish these inner
+    // iterations from from the outer iterations of the line search
+    // minimizer. The number of line search steps is the total number
+    // of inner line search iterations (or steps) across the entire
+    // minimization.
+    summary->num_line_search_steps +=  line_search_summary.num_iterations;
     summary->line_search_cost_evaluation_time_in_seconds +=
         line_search_summary.cost_evaluation_time_in_seconds;
     summary->line_search_gradient_evaluation_time_in_seconds +=

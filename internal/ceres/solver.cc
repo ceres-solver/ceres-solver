@@ -351,6 +351,7 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->dense_linear_algebra_library_type  = options.dense_linear_algebra_library_type;  //  NOLINT
   summary->dogleg_type                        = options.dogleg_type;
   summary->inner_iteration_time_in_seconds    = 0.0;
+  summary->num_line_search_steps              = 0;
   summary->line_search_cost_evaluation_time_in_seconds = 0.0;
   summary->line_search_gradient_evaluation_time_in_seconds = 0.0;
   summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
@@ -556,6 +557,7 @@ Solver::Summary::Summary()
       num_successful_steps(-1),
       num_unsuccessful_steps(-1),
       num_inner_iteration_steps(-1),
+      num_line_search_steps(-1),
       preprocessor_time_in_seconds(-1.0),
       minimizer_time_in_seconds(-1.0),
       postprocessor_time_in_seconds(-1.0),
@@ -784,9 +786,14 @@ string Solver::Summary::FullReport() const {
                   num_inner_iteration_steps);
   }
 
-  const bool print_line_search_timing_information =
-      minimizer_type == LINE_SEARCH ||
-      (minimizer_type == TRUST_REGION && is_constrained);
+  const bool line_search_used =
+      (minimizer_type == LINE_SEARCH ||
+       (minimizer_type == TRUST_REGION && is_constrained));
+
+  if (line_search_used) {
+    StringAppendF(&report, "Line search steps              % 14d\n",
+                  num_line_search_steps);
+  }
 
   StringAppendF(&report, "\nTime (in seconds):\n");
   StringAppendF(&report, "Preprocessor        %25.4f\n",
@@ -794,13 +801,13 @@ string Solver::Summary::FullReport() const {
 
   StringAppendF(&report, "\n  Residual evaluation %23.4f\n",
                 residual_evaluation_time_in_seconds);
-  if (print_line_search_timing_information) {
+  if (line_search_used) {
     StringAppendF(&report, "    Line search cost evaluation    %10.4f\n",
                   line_search_cost_evaluation_time_in_seconds);
   }
   StringAppendF(&report, "  Jacobian evaluation %23.4f\n",
                 jacobian_evaluation_time_in_seconds);
-  if (print_line_search_timing_information) {
+  if (line_search_used) {
     StringAppendF(&report, "    Line search gradient evaluation    %6.4f\n",
                   line_search_gradient_evaluation_time_in_seconds);
   }
@@ -815,7 +822,7 @@ string Solver::Summary::FullReport() const {
                   inner_iteration_time_in_seconds);
   }
 
-  if (print_line_search_timing_information) {
+  if (line_search_used) {
     StringAppendF(&report, "  Line search polynomial minimization  %.4f\n",
                   line_search_polynomial_minimization_time_in_seconds);
   }

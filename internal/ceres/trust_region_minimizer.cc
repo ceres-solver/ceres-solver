@@ -393,6 +393,13 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         const LineSearch::Summary line_search_summary =
             DoLineSearch(options, x, gradient, cost, delta, evaluator);
 
+        // Iterations inside the line search algorithm are considered
+        // 'steps' in the broader context, to distinguish these inner
+        // iterations from from the outer iterations of the trust
+        // region minimizer The number of line search steps is the
+        // total number of inner line search iterations (or steps)
+        // across the entire minimization.
+        summary->num_line_search_steps += line_search_summary.num_iterations;
         summary->line_search_cost_evaluation_time_in_seconds +=
             line_search_summary.cost_evaluation_time_in_seconds;
         summary->line_search_gradient_evaluation_time_in_seconds +=
