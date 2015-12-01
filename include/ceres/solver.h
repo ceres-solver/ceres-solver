@@ -811,6 +811,13 @@ class CERES_EXPORT Solver {
     // Number of times inner iterations were performed.
     int num_inner_iteration_steps;
 
+    // Total number of iterations inside the line search algorithm
+    // across all invocations. We call these iterations "steps" to
+    // distinguish them from the outer iterations of the line search
+    // and trust region minimizer algorithms which call the line
+    // search algorithm as a subroutine.
+    int num_line_search_steps;
+
     // All times reported below are wall times.
 
     // When the user calls Solve, before the actual optimization
