@@ -16,6 +16,24 @@
       "revId": "6dabd4a5b20514853bf2eef28a3dcdd6445f42cc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_8134bc20",
+        "filename": "cmake/ReadCeresVersionFromSource.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T20:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1deb19_b6ede877",
+      "revId": "6dabd4a5b20514853bf2eef28a3dcdd6445f42cc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
