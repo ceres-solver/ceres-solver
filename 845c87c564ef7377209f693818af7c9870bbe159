@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b1deb19_f6f76045",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-01T20:40:53Z",
+      "side": 1,
+      "message": "Why is this in this patch?",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_d6fce42a",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-01T20:40:53Z",
+      "side": 1,
+      "message": "all line search invocations.\n\nConsider adding the larger comment from the other files here to more accurately define this - what is a step? is it only a successful step? what about rejected steps? is this different than the number of jacobian or function evals in practice?",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_b6168827",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-01T20:40:53Z",
+      "side": 1,
+      "message": "First sentence is confusing. Consider changing this to something like\n\nIterations inside the line search algorithm are considered \u0027steps\u0027 in the broader context, to distinguish the inner iterations from from the outer iterations of the line search minimizer. The number of line search steps is the total number of inner line search iterations (or steps) across the entire minimization.",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_961b8c4f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-01T20:40:53Z",
+      "side": 1,
+      "message": "Alignment",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_f610002d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-01T20:40:53Z",
+      "side": 1,
+      "message": "See earlier comment from the line search minimizer.",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
