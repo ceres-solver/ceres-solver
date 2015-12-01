@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_76251088",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T22:20:22Z",
+      "side": 1,
+      "message": "because we are changing the ABI.",
+      "parentUuid": "5b1deb19_f6f76045",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1deb19_d6fce42a",
         "filename": "include/ceres/solver.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-01T20:40:53Z",
       "side": 1,
       "message": "all line search invocations.\n\nConsider adding the larger comment from the other files here to more accurately define this - what is a step? is it only a successful step? what about rejected steps? is this different than the number of jacobian or function evals in practice?",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_9669cca3",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T22:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1deb19_d6fce42a",
       "revId": "845c87c564ef7377209f693818af7c9870bbe159",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_9640ac1b",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T22:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1deb19_b6168827",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1deb19_961b8c4f",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_f645a029",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T22:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1deb19_961b8c4f",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1deb19_f610002d",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2015-12-01T20:40:53Z",
       "side": 1,
       "message": "See earlier comment from the line search minimizer.",
+      "revId": "845c87c564ef7377209f693818af7c9870bbe159",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_3630b8c4",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T22:20:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1deb19_f610002d",
       "revId": "845c87c564ef7377209f693818af7c9870bbe159",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
