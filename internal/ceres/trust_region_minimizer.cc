@@ -393,6 +393,11 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
         const LineSearch::Summary line_search_summary =
             DoLineSearch(options, x, gradient, cost, delta, evaluator);
 
+        // What are iterations inside the line search algorithm are
+        // called steps outside. Also we are only interested in the
+        // number of steps taken by the algorithm across all
+        // invocations, therefore we are accumulating it here.
+        summary->num_line_search_steps += line_search_summary.num_iterations;
         summary->line_search_cost_evaluation_time_in_seconds +=
             line_search_summary.cost_evaluation_time_in_seconds;
         summary->line_search_gradient_evaluation_time_in_seconds +=
