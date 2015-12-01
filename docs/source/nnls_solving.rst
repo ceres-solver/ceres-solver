@@ -2012,6 +2012,10 @@ The three arrays will be:
 
    Number of times inner iterations were performed.
 
+ .. member:: int Solver::Summary::num_line_search_steps
+   Total number of steps taken by the line search algorithm across all
+   invocations.
+
 .. member:: double Solver::Summary::preprocessor_time_in_seconds
 
    Time (in seconds) spent in the preprocessor.

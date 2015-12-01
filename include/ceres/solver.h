@@ -843,6 +843,10 @@ class CERES_EXPORT Solver {
     // Time (in seconds) spent doing inner iterations.
     double inner_iteration_time_in_seconds;
 
+    // Total number of steps taken by the line search algorithm across
+    // all invocations.
+    int num_line_search_steps;
+
     // Cumulative timing information for line searches performed as part of the
     // solve.  Note that in addition to the case when the Line Search minimizer
     // is used, the Trust Region minimizer also uses a line search when
