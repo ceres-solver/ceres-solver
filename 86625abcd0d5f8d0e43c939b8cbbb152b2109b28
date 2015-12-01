@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b488bfd_e114a092",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:55:58Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 794,
+        "startChar": 40,
+        "endLine": 794,
+        "endChar": 50
+      },
+      "revId": "86625abcd0d5f8d0e43c939b8cbbb152b2109b28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
