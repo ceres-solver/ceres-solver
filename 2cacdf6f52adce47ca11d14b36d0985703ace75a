@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_36b2780e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_a1c0d851",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b488bfd_81d83c48",
         "filename": "include/ceres/solver.h",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2015-12-01T18:37:51Z",
       "side": 1,
       "message": "steps",
+      "range": {
+        "startLine": 848,
+        "startChar": 24,
+        "endLine": 848,
+        "endChar": 34
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_16af7ca2",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_81d83c48",
       "range": {
         "startLine": 848,
         "startChar": 24,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_f6c00053",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_21d5a80e",
+      "range": {
+        "startLine": 379,
+        "startChar": 29,
+        "endLine": 379,
+        "endChar": 39
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b488bfd_41d23428",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2015-12-01T18:37:51Z",
       "side": 1,
       "message": "steps",
+      "range": {
+        "startLine": 354,
+        "startChar": 27,
+        "endLine": 354,
+        "endChar": 37
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_d6c50461",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_41d23428",
       "range": {
         "startLine": 354,
         "startChar": 27,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_16d81c46",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_e1eb40d1",
+      "range": {
+        "startLine": 568,
+        "startChar": 22,
+        "endLine": 568,
+        "endChar": 32
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b488bfd_01f18cc3",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "5b1deb19_56d29427",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_01f18cc3",
+      "range": {
+        "startLine": 794,
+        "startChar": 40,
+        "endLine": 794,
+        "endChar": 50
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b488bfd_a1f538b0",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2
@@ -174,6 +318,30 @@
       "writtenOn": "2015-12-01T18:37:51Z",
       "side": 1,
       "message": "steps",
+      "range": {
+        "startLine": 795,
+        "startChar": 34,
+        "endLine": 795,
+        "endChar": 44
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b1deb19_76d5100e",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-01T18:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b488bfd_a1f538b0",
       "range": {
         "startLine": 795,
         "startChar": 34,
