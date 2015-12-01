@@ -376,6 +376,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
 
+    summary->num_line_search_iterations +=  line_search_summary.num_iterations;
     summary->line_search_cost_evaluation_time_in_seconds +=
         line_search_summary.cost_evaluation_time_in_seconds;
     summary->line_search_gradient_evaluation_time_in_seconds +=
