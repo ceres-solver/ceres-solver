@@ -74,15 +74,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RELEASE_POSTFIX "")
 set(CMAKE_DEBUG_POSTFIX "-debug")
 
-# Important: Always bump the second number (e.g. 1.3.x to 1.4.0) for any
-# release that changes the ABI. The ABI changes for almost any modification to
-# include/ceres (e.g. the public API). If you are unsure about whether
-# something is an ABI change, please ask on the list.
-set(CERES_VERSION_MAJOR 1)
-set(CERES_VERSION_MINOR 11)
-set(CERES_VERSION_PATCH 0)
-set(CERES_VERSION
-    ${CERES_VERSION_MAJOR}.${CERES_VERSION_MINOR}.${CERES_VERSION_PATCH})
+# Read the Ceres version from the source, such that we only ever have a single
+# definition of the Ceres version.
+include(ReadCeresVersionFromSource)
+read_ceres_version_from_source(${CMAKE_SOURCE_DIR})
 
 enable_testing()
 
