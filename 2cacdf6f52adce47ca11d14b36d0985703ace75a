@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b488bfd_c1c5e460",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_a1c0d851",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps - seeing as we\u0027re making that distinction now :P",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_81d83c48",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 848,
+        "startChar": 24,
+        "endLine": 848,
+        "endChar": 34
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_21d5a80e",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps\n\nMaybe also a comment here about why we go from steps -\u003e iterations, as we are accumulating the number of steps across all line search directions, not the number of line search directions explored?",
+      "range": {
+        "startLine": 379,
+        "startChar": 29,
+        "endLine": 379,
+        "endChar": 39
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_41d23428",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 354,
+        "startChar": 27,
+        "endLine": 354,
+        "endChar": 37
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_e1eb40d1",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 568,
+        "startChar": 22,
+        "endLine": 568,
+        "endChar": 32
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_01f18cc3",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 794,
+        "startChar": 40,
+        "endLine": 794,
+        "endChar": 50
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_a1f538b0",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps",
+      "range": {
+        "startLine": 795,
+        "startChar": 34,
+        "endLine": 795,
+        "endChar": 44
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b488bfd_61e090eb",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-12-01T18:37:51Z",
+      "side": 1,
+      "message": "steps\n\nMaybe also a comment here about why we go from steps -\u003e iterations, as we are accumulating the number of steps across all line search directions, not the number of line search directions explored?",
+      "range": {
+        "startLine": 396,
+        "startChar": 33,
+        "endLine": 396,
+        "endChar": 43
+      },
+      "revId": "2cacdf6f52adce47ca11d14b36d0985703ace75a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
