@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "204d6487_f84c99c6",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-04T17:52:34Z",
+      "side": 1,
+      "message": "tis what it is. This is not the higher order bit in this computation so I am not too worried about this.",
+      "parentUuid": "204d6487_6d7a2d09",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204d6487_cd83612a",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "204d6487_b856214f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-04T17:52:34Z",
+      "side": 1,
+      "message": "I need to think about it, and when I was looking at it, it was not clear what the right thing to do here is. which is why I left a todo, I will resolve this soon, just good to notice what needs fixed.",
+      "parentUuid": "204d6487_cd83612a",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204d6487_2d743517",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-12-04T17:01:10Z",
       "side": 1,
       "message": "I suggest putting a big X for non-zero, and a \u0027.\u0027 for zero. It would make these diagrams easier to read (since the 0 and x visually parse very similar).",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "204d6487_9885a5ef",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-04T17:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204d6487_2d743517",
       "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
