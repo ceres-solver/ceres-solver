@@ -43,6 +43,7 @@
 #include "Eigen/SparseQR"
 #include "Eigen/SVD"
 
+#include "ceres/collections_port.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/covariance.h"
@@ -51,6 +52,7 @@
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
 #include "ceres/problem_impl.h"
+#include "ceres/residual_block.h"
 #include "ceres/suitesparse.h"
 #include "ceres/wall_time.h"
 #include "glog/logging.h"
@@ -260,18 +262,28 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   vector<double*> all_parameter_blocks;
   problem->GetParameterBlocks(&all_parameter_blocks);
   const ProblemImpl::ParameterMap& parameter_map = problem->parameter_map();
+  HashSet<ParameterBlock*> parameter_blocks_in_use;
+  vector<ResidualBlock*> residual_blocks;
+  problem->GetResidualBlocks(&residual_blocks);
+
+  for (int i = 0; i < residual_blocks.size(); ++i) {
+    ResidualBlock* residual_block = residual_blocks[i];
+    parameter_blocks_in_use.insert(residual_block->parameter_blocks(),
+                                   residual_block->parameter_blocks() +
+                                   residual_block->NumParameterBlocks());
+  }
+
   constant_parameter_blocks_.clear();
   vector<double*>& active_parameter_blocks =
       evaluate_options_.parameter_blocks;
   active_parameter_blocks.clear();
   for (int i = 0; i < all_parameter_blocks.size(); ++i) {
     double* parameter_block = all_parameter_blocks[i];
-
     ParameterBlock* block = FindOrDie(parameter_map, parameter_block);
-    if (block->IsConstant()) {
-      constant_parameter_blocks_.insert(parameter_block);
-    } else {
+    if (!block->IsConstant() && (parameter_blocks_in_use.count(block) > 0)) {
       active_parameter_blocks.push_back(parameter_block);
+    } else {
+      constant_parameter_blocks_.insert(parameter_block);
     }
   }
 
@@ -632,7 +644,10 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingDenseSVD() {
       if (automatic_truncation) {
         break;
       } else {
-        LOG(ERROR) << "Cholesky factorization of J'J is not reliable. "
+        LOG(ERROR) << "Error: Covariance matrix is near rank deficient "
+                   << "and the user did not specify a non-zero"
+                   << "Covariance::Options::null_space_rank "
+                   << "to enable the computation of a Pseudo-Inverse. "
                    << "Reciprocal condition number: "
                    << singular_value_ratio * singular_value_ratio << " "
                    << "min_reciprocal_condition_number: "
