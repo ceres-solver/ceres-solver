@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204d6487_6d7a2d09",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-04T17:01:10Z",
+      "side": 1,
+      "message": "Too bad we need a hash set. In practice I bet this will be a a good fraction of all the blocks.",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "204d6487_cd83612a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-04T17:01:10Z",
+      "side": 1,
+      "message": "Delete comment; just fix this instead or make a separate CL.",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "204d6487_2d743517",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-04T17:01:10Z",
+      "side": 1,
+      "message": "I suggest putting a big X for non-zero, and a \u0027.\u0027 for zero. It would make these diagrams easier to read (since the 0 and x visually parse very similar).",
+      "revId": "b7a5b3dd78750a2be6d72fa61003299e36e148bc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
