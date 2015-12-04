@@ -50,85 +50,6 @@ using std::map;
 using std::pair;
 using std::vector;
 
-TEST(CovarianceImpl, ComputeCovarianceSparsity) {
-  double parameters[10];
-
-  double* block1 = parameters;
-  double* block2 = block1 + 1;
-  double* block3 = block2 + 2;
-  double* block4 = block3 + 3;
-
-  ProblemImpl problem;
-
-  // Add in random order
-  problem.AddParameterBlock(block1, 1);
-  problem.AddParameterBlock(block4, 4);
-  problem.AddParameterBlock(block3, 3);
-  problem.AddParameterBlock(block2, 2);
-
-  // Sparsity pattern
-  //
-  //  x 0 0 0 0 0 x x x x
-  //  0 x x x x x 0 0 0 0
-  //  0 x x x x x 0 0 0 0
-  //  0 0 0 x x x 0 0 0 0
-  //  0 0 0 x x x 0 0 0 0
-  //  0 0 0 x x x 0 0 0 0
-  //  0 0 0 0 0 0 x x x x
-  //  0 0 0 0 0 0 x x x x
-  //  0 0 0 0 0 0 x x x x
-  //  0 0 0 0 0 0 x x x x
-
-  int expected_rows[] = {0, 5, 10, 15, 18, 21, 24, 28, 32, 36, 40};
-  int expected_cols[] = {0, 6, 7, 8, 9,
-                         1, 2, 3, 4, 5,
-                         1, 2, 3, 4, 5,
-                         3, 4, 5,
-                         3, 4, 5,
-                         3, 4, 5,
-                         6, 7, 8, 9,
-                         6, 7, 8, 9,
-                         6, 7, 8, 9,
-                         6, 7, 8, 9};
-
-
-  vector<pair<const double*, const double*> > covariance_blocks;
-  covariance_blocks.push_back(make_pair(block1, block1));
-  covariance_blocks.push_back(make_pair(block4, block4));
-  covariance_blocks.push_back(make_pair(block2, block2));
-  covariance_blocks.push_back(make_pair(block3, block3));
-  covariance_blocks.push_back(make_pair(block2, block3));
-  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
-
-  Covariance::Options options;
-  CovarianceImpl covariance_impl(options);
-  EXPECT_TRUE(covariance_impl
-              .ComputeCovarianceSparsity(covariance_blocks, &problem));
-
-  const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
-
-  EXPECT_EQ(crsm->num_rows(), 10);
-  EXPECT_EQ(crsm->num_cols(), 10);
-  EXPECT_EQ(crsm->num_nonzeros(), 40);
-
-  const int* rows = crsm->rows();
-  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
-    EXPECT_EQ(rows[r], expected_rows[r])
-        << r << " "
-        << rows[r] << " "
-        << expected_rows[r];
-  }
-
-  const int* cols = crsm->cols();
-  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
-    EXPECT_EQ(cols[c], expected_cols[c])
-        << c << " "
-        << cols[c] << " "
-        << expected_cols[c];
-  }
-}
-
-
 class UnaryCostFunction: public CostFunction {
  public:
   UnaryCostFunction(const int num_residuals,
@@ -227,6 +148,259 @@ class PolynomialParameterization : public LocalParameterization {
   virtual int GlobalSize() const { return 2; }
   virtual int LocalSize() const { return 1; }
 };
+
+TEST(CovarianceImpl, ComputeCovarianceSparsity) {
+  double parameters[10];
+
+  double* block1 = parameters;
+  double* block2 = block1 + 1;
+  double* block3 = block2 + 2;
+  double* block4 = block3 + 3;
+
+  ProblemImpl problem;
+
+  // Add in random order
+  Vector junk_jacobian = Vector::Zero(10);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 3, junk_jacobian.data()), NULL, block3);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+
+  // Sparsity pattern
+  //
+  // Note that the problem structure does not imply this sparsity
+  // pattern since all the residual blocks are unary. But the
+  // ComputeCovarianceSparsity function in its current incarnation
+  // does not pay attention to this fact and only looks at the
+  // parameter block pairs that the user provides.
+  //
+  //  X . . . . . X X X X
+  //  . X X X X X . . . .
+  //  . X X X X X . . . .
+  //  . . . X X X . . . .
+  //  . . . X X X . . . .
+  //  . . . X X X . . . .
+  //  . . . . . . X X X X
+  //  . . . . . . X X X X
+  //  . . . . . . X X X X
+  //  . . . . . . X X X X
+
+  int expected_rows[] = {0, 5, 10, 15, 18, 21, 24, 28, 32, 36, 40};
+  int expected_cols[] = {0, 6, 7, 8, 9,
+                         1, 2, 3, 4, 5,
+                         1, 2, 3, 4, 5,
+                         3, 4, 5,
+                         3, 4, 5,
+                         3, 4, 5,
+                         6, 7, 8, 9,
+                         6, 7, 8, 9,
+                         6, 7, 8, 9,
+                         6, 7, 8, 9};
+
+
+  vector<pair<const double*, const double*> > covariance_blocks;
+  covariance_blocks.push_back(make_pair(block1, block1));
+  covariance_blocks.push_back(make_pair(block4, block4));
+  covariance_blocks.push_back(make_pair(block2, block2));
+  covariance_blocks.push_back(make_pair(block3, block3));
+  covariance_blocks.push_back(make_pair(block2, block3));
+  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+
+  Covariance::Options options;
+  CovarianceImpl covariance_impl(options);
+  EXPECT_TRUE(covariance_impl
+              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+
+  const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
+
+  EXPECT_EQ(crsm->num_rows(), 10);
+  EXPECT_EQ(crsm->num_cols(), 10);
+  EXPECT_EQ(crsm->num_nonzeros(), 40);
+
+  const int* rows = crsm->rows();
+  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
+    EXPECT_EQ(rows[r], expected_rows[r])
+        << r << " "
+        << rows[r] << " "
+        << expected_rows[r];
+  }
+
+  const int* cols = crsm->cols();
+  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
+    EXPECT_EQ(cols[c], expected_cols[c])
+        << c << " "
+        << cols[c] << " "
+        << expected_cols[c];
+  }
+}
+
+TEST(CovarianceImpl, ComputeCovarianceSparsityWithConstantParameterBlock) {
+  double parameters[10];
+
+  double* block1 = parameters;
+  double* block2 = block1 + 1;
+  double* block3 = block2 + 2;
+  double* block4 = block3 + 3;
+
+  ProblemImpl problem;
+
+  // Add in random order
+  Vector junk_jacobian = Vector::Zero(10);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 3, junk_jacobian.data()), NULL, block3);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+  problem.SetParameterBlockConstant(block3);
+
+  // Sparsity pattern
+  //
+  // Note that the problem structure does not imply this sparsity
+  // pattern since all the residual blocks are unary. But the
+  // ComputeCovarianceSparsity function in its current incarnation
+  // does not pay attention to this fact and only looks at the
+  // parameter block pairs that the user provides.
+  //
+  //  X . . X X X X
+  //  . X X . . . .
+  //  . X X . . . .
+  //  . . . X X X X
+  //  . . . X X X X
+  //  . . . X X X X
+  //  . . . X X X X
+
+  int expected_rows[] = {0, 5, 7, 9, 13, 17, 21, 25};
+  int expected_cols[] = {0, 3, 4, 5, 6,
+                         1, 2,
+                         1, 2,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6};
+
+  vector<pair<const double*, const double*> > covariance_blocks;
+  covariance_blocks.push_back(make_pair(block1, block1));
+  covariance_blocks.push_back(make_pair(block4, block4));
+  covariance_blocks.push_back(make_pair(block2, block2));
+  covariance_blocks.push_back(make_pair(block3, block3));
+  covariance_blocks.push_back(make_pair(block2, block3));
+  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+
+  Covariance::Options options;
+  CovarianceImpl covariance_impl(options);
+  EXPECT_TRUE(covariance_impl
+              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+
+  const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
+
+  EXPECT_EQ(crsm->num_rows(), 7);
+  EXPECT_EQ(crsm->num_cols(), 7);
+  EXPECT_EQ(crsm->num_nonzeros(), 25);
+
+  const int* rows = crsm->rows();
+  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
+    EXPECT_EQ(rows[r], expected_rows[r])
+        << r << " "
+        << rows[r] << " "
+        << expected_rows[r];
+  }
+
+  const int* cols = crsm->cols();
+  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
+    EXPECT_EQ(cols[c], expected_cols[c])
+        << c << " "
+        << cols[c] << " "
+        << expected_cols[c];
+  }
+}
+
+TEST(CovarianceImpl, ComputeCovarianceSparsityWithFreeParameterBlock) {
+  double parameters[10];
+
+  double* block1 = parameters;
+  double* block2 = block1 + 1;
+  double* block3 = block2 + 2;
+  double* block4 = block3 + 3;
+
+  ProblemImpl problem;
+
+  // Add in random order
+  Vector junk_jacobian = Vector::Zero(10);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 1, junk_jacobian.data()), NULL, block1);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 4, junk_jacobian.data()), NULL, block4);
+  problem.AddParameterBlock(block3, 3);
+  problem.AddResidualBlock(
+      new UnaryCostFunction(1, 2, junk_jacobian.data()), NULL, block2);
+
+  // Sparsity pattern
+  //
+  // Note that the problem structure does not imply this sparsity
+  // pattern since all the residual blocks are unary. But the
+  // ComputeCovarianceSparsity function in its current incarnation
+  // does not pay attention to this fact and only looks at the
+  // parameter block pairs that the user provides.
+  //
+  //  X . . X X X X
+  //  . X X . . . .
+  //  . X X . . . .
+  //  . . . X X X X
+  //  . . . X X X X
+  //  . . . X X X X
+  //  . . . X X X X
+
+  int expected_rows[] = {0, 5, 7, 9, 13, 17, 21, 25};
+  int expected_cols[] = {0, 3, 4, 5, 6,
+                         1, 2,
+                         1, 2,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6,
+                         3, 4, 5, 6};
+
+  vector<pair<const double*, const double*> > covariance_blocks;
+  covariance_blocks.push_back(make_pair(block1, block1));
+  covariance_blocks.push_back(make_pair(block4, block4));
+  covariance_blocks.push_back(make_pair(block2, block2));
+  covariance_blocks.push_back(make_pair(block3, block3));
+  covariance_blocks.push_back(make_pair(block2, block3));
+  covariance_blocks.push_back(make_pair(block4, block1));  // reversed
+
+  Covariance::Options options;
+  CovarianceImpl covariance_impl(options);
+  EXPECT_TRUE(covariance_impl
+              .ComputeCovarianceSparsity(covariance_blocks, &problem));
+
+  const CompressedRowSparseMatrix* crsm = covariance_impl.covariance_matrix();
+
+  EXPECT_EQ(crsm->num_rows(), 7);
+  EXPECT_EQ(crsm->num_cols(), 7);
+  EXPECT_EQ(crsm->num_nonzeros(), 25);
+
+  const int* rows = crsm->rows();
+  for (int r = 0; r < crsm->num_rows() + 1; ++r) {
+    EXPECT_EQ(rows[r], expected_rows[r])
+        << r << " "
+        << rows[r] << " "
+        << expected_rows[r];
+  }
+
+  const int* cols = crsm->cols();
+  for (int c = 0; c < crsm->num_nonzeros(); ++c) {
+    EXPECT_EQ(cols[c], expected_cols[c])
+        << c << " "
+        << cols[c] << " "
+        << expected_cols[c];
+  }
+}
 
 class CovarianceTest : public ::testing::Test {
  protected:
