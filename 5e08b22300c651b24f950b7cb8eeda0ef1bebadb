@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80d9b040_085deb53",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "These constants pollute the global namespace, so I want *really* unique names.\n\n(I wanted to scope them inside a struct as statics, but that runs into some nasty corners of template rules and isn\u0027t legal.)\n\nI\u0027ll change the namespace if you\u0027re sure you don\u0027t mind, but...",
+      "parentUuid": "80d9b040_e8036750",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_28162f97",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-07T23:31:46Z",
       "side": 1,
       "message": "I suggest kMaxAlignBytes",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_28d54fda",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_28162f97",
       "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80d9b040_68df57fa",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_c8df8325",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_88fe5b8f",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2015-12-07T23:31:46Z",
       "side": 1,
       "message": "Google style indents after the # mark for preprocessor statements.\n\n  #if ...\n    ...\n  #  if ...\n    ...\n  #  else ...\n    ...\n  #  endif\n    ...\n  #endif",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_e8f2878f",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "Uh...where does the style guide say this?\n\nI can point you to half a dozen places Google code doesn\u0027t indent #ifdefs, though I don\u0027t want to link them here (since they\u0027re internal links...)\n\nI don\u0027t necessarily hate this style idea but I don\u0027t know where it\u0027s coming from.",
+      "parentUuid": "80d9b040_88fe5b8f",
       "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "80d9b040_08f08b85",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_68f917a8",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_c806a363",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2015-12-07T23:31:46Z",
       "side": 1,
       "message": "Indent within defines\n\n  #  define CERES_ALIGNMENT_SPECIFIER",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_28fc6f62",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-07T23:43:24Z",
+      "side": 1,
+      "message": "ditto above",
+      "parentUuid": "80d9b040_c806a363",
       "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
