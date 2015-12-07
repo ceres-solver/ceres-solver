@@ -65,6 +65,7 @@ using std::map;
 using std::pair;
 using std::swap;
 using std::vector;
+using std::sort;
 
 typedef vector<pair<const double*, const double*> > CovarianceBlocks;
 
@@ -90,6 +91,13 @@ CovarianceImpl::~CovarianceImpl() {
 
 bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
                              ProblemImpl* problem) {
+  CovarianceBlocks covariance_blocks_copy(covariance_blocks);
+  sort(covariance_blocks_copy.begin(), covariance_blocks_copy.end());
+  bool has_duplicate_blocks = std::adjacent_find(
+      covariance_blocks_copy.begin(), covariance_blocks_copy.end()) ==
+      covariance_blocks_copy.end();
+  CHECK(has_duplicate_blocks)
+      << "Covariance::Compute called with duplicate blocks";
   problem_ = problem;
   parameter_block_to_row_index_.clear();
   covariance_matrix_.reset(NULL);
@@ -97,6 +105,18 @@ bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
                ComputeCovarianceValues());
   is_computed_ = true;
   return is_valid_;
+}
+
+bool CovarianceImpl::Compute(const vector<const double*>& parameter_blocks,
+                             ProblemImpl* problem) {
+  vector<pair<const double*, const double*> > covariance_blocks;
+  for (int i = 0; i < parameter_blocks.size(); ++i) {
+    for (int j = i; j < parameter_blocks.size(); ++j) {
+      covariance_blocks.push_back(make_pair(parameter_blocks[i],
+                                            parameter_blocks[j]));
+    }
+  }
+  return this->Compute(covariance_blocks, problem);
 }
 
 bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
@@ -247,6 +267,79 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
         block2_jacobian.transpose();
   }
 
+  return true;
+}
+
+bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
+    const vector<const double*>& parameters,
+    bool lift_covariance_to_ambient_space,
+    double* covariance_matrix) const {
+  CHECK(is_computed_)
+      << "Covariance::GetCovarianceMatrix called before Covariance::Compute";
+  CHECK(is_valid_)
+      << "Covariance::GetCovarianceMatrix called when Covariance::Compute "
+      << "returned false.";
+  const ProblemImpl::ParameterMap& parameter_map = problem_->parameter_map();
+
+  int covariance_size = 0;
+  int max_covariance_block_size = 0;
+  for (int i = 0; i < parameters.size(); ++i) {
+    ParameterBlock* block = FindOrDie(parameter_map,
+                                      const_cast<double*>(parameters[i]));
+    if (lift_covariance_to_ambient_space) {
+      covariance_size += block->Size();
+      max_covariance_block_size = std::max(max_covariance_block_size,
+                                           block->Size());
+    } else {
+      covariance_size += block->LocalSize();
+      max_covariance_block_size = std::max(max_covariance_block_size,
+                                           block->LocalSize());
+    }
+  }
+  // Assemble the blocks in the covariance matrix.
+  MatrixRef covariance(covariance_matrix, covariance_size, covariance_size);
+  Vector covariance_block(max_covariance_block_size *
+      max_covariance_block_size);
+  int covariance_row_idx = 0;
+  int covariance_col_idx = 0;
+  for (int i = 0; i < parameters.size(); ++i) {
+    ParameterBlock* block_i = FindOrDie(parameter_map,
+                                        const_cast<double*>(parameters[i]));
+    int size_i;
+    if (lift_covariance_to_ambient_space) {
+      size_i = block_i->Size();
+    } else {
+      size_i = block_i->LocalSize();
+    }
+    for (int j = i; j < parameters.size(); ++j) {
+      ParameterBlock* block_j = FindOrDie(parameter_map,
+                                          const_cast<double*>(parameters[j]));
+      int size_j;
+      if (lift_covariance_to_ambient_space) {
+        size_j = block_j->Size();
+      } else {
+        size_j = block_j->LocalSize();
+      }
+      if (!GetCovarianceBlockInTangentOrAmbientSpace(
+               parameters[i],
+               parameters[j],
+               lift_covariance_to_ambient_space,
+               covariance_block.data())) {
+        return false;
+      }
+      covariance.block(covariance_row_idx, covariance_col_idx, size_i,
+                       size_j) = MatrixRef(covariance_block.data(), size_i,
+                                           size_j);
+      if (i != j) {
+        covariance.block(covariance_col_idx, covariance_row_idx, size_j,
+                         size_i) = MatrixRef(covariance_block.data(), size_i,
+                      size_j).transpose();
+      }
+      covariance_col_idx += size_j;
+    }
+    covariance_row_idx += size_i;
+    covariance_col_idx = covariance_row_idx;
+  }
   return true;
 }
 
