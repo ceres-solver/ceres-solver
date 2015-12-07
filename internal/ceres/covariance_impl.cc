@@ -248,6 +248,68 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   return true;
 }
 
+bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
+    const vector<const double*>& parameters,
+    bool lift_covariance_to_ambient_space,
+    double *covariance_matrix) const {
+  CHECK(is_computed_)
+  << "Covariance::GetCovarianceMatrix called before Covariance::Compute";
+  CHECK(is_valid_)
+  << "Covariance::GetCovarianceMatrix called when Covariance::Compute "
+      << "returned false.";
+  const ProblemImpl::ParameterMap& parameter_map = problem_->parameter_map();
+
+  int cov_size = 0;
+  for (int i = 0; i < parameters.size(); ++i) {
+    ParameterBlock* block = FindOrDie(parameter_map,
+                                      const_cast<double*>(parameters[i]));
+    if (lift_covariance_to_ambient_space) {
+      cov_size += block->Size();
+    } else {
+      cov_size += block->LocalSize();
+    }
+  }
+  // Assemble the blocks in the covariance matrix
+  Matrix cov(cov_size, cov_size);
+  int cov_row_idx = 0;
+  int cov_col_idx = 0;
+  for (int i = 0; i < parameters.size(); ++i) {
+    ParameterBlock* block_i = FindOrDie(parameter_map,
+                                        const_cast<double*>(parameters[i]));
+    int size_i;
+    if (lift_covariance_to_ambient_space) {
+      size_i = block_i->Size();
+    } else {
+      size_i = block_i->LocalSize();
+    }
+    for (int j = i; j < parameters.size(); ++j) {
+      ParameterBlock* block_j = FindOrDie(parameter_map,
+                                          const_cast<double*>(parameters[j]));
+      int size_j;
+      if (lift_covariance_to_ambient_space) {
+        size_j = block_j->Size();
+      } else {
+        size_j = block_j->LocalSize();
+      }
+      Matrix cov_block(size_i, size_j);
+      if (!GetCovarianceBlockInTangentOrAmbientSpace(
+           parameters[i], parameters[j],
+           lift_covariance_to_ambient_space, cov_block.data()))
+        return false;
+      cov.block(cov_row_idx, cov_col_idx, size_i, size_j) = cov_block;
+      if (i != j) {
+        cov.block(cov_col_idx, cov_row_idx, size_j, size_i) =
+            cov_block.transpose();
+      }
+      cov_col_idx += size_j;
+    }
+    cov_row_idx += size_i;
+    cov_col_idx = cov_row_idx;
+  }
+  MatrixRef(covariance_matrix, cov_size, cov_size) = cov;
+  return true;
+}
+
 // Determine the sparsity pattern of the covariance matrix based on
 // the block pairs requested by the user.
 bool CovarianceImpl::ComputeCovarianceSparsity(

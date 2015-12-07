@@ -38,6 +38,7 @@
 
 namespace ceres {
 
+using std::make_pair;
 using std::pair;
 using std::vector;
 
@@ -51,6 +52,19 @@ Covariance::~Covariance() {
 bool Covariance::Compute(
     const vector<pair<const double*, const double*> >& covariance_blocks,
     Problem* problem) {
+  return impl_->Compute(covariance_blocks, problem->problem_impl_.get());
+}
+
+bool Covariance::Compute(
+    const std::vector<const double*>& parameter_blocks,
+    Problem* problem) {
+  vector<pair<const double*, const double*> > covariance_blocks;
+  for (int i = 0; i < parameter_blocks.size(); ++i) {
+    for (int j = i; j < parameter_blocks.size(); ++j) {
+      covariance_blocks.push_back(make_pair(parameter_blocks[i],
+                                            parameter_blocks[j]));
+    }
+  }
   return impl_->Compute(covariance_blocks, problem->problem_impl_.get());
 }
 
@@ -71,6 +85,22 @@ bool Covariance::GetCovarianceBlockInTangentSpace(
                                                           parameter_block2,
                                                           false,  // tangent
                                                           covariance_block);
+}
+
+bool Covariance::GetCovarianceMatrix(
+    const vector<const double*>& parameter_blocks,
+    double* covariance_matrix) {
+  return impl_->GetCovarianceMatrixInTangentOrAmbientSpace(parameter_blocks,
+                                                           true,  // ambient
+                                                           covariance_matrix);
+}
+
+bool Covariance::GetCovarianceMatrixInTangentSpace(
+    const std::vector<const double *>& parameter_blocks,
+    double *covariance_matrix) {
+  return impl_->GetCovarianceMatrixInTangentOrAmbientSpace(parameter_blocks,
+                                                           false,  // tangent
+                                                           covariance_matrix);
 }
 
 }  // namespace ceres
