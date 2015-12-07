@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d9b040_ffa15f65",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-07T18:13:12Z",
+      "side": 1,
+      "message": "openmp parallelize the loop?",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 17
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_5fc88b2a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-07T18:13:12Z",
+      "side": 1,
+      "message": "worth pulling this allocation out of the loop and use a large buffer instead?",
+      "range": {
+        "startLine": 294,
+        "startChar": 13,
+        "endLine": 294,
+        "endChar": 22
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_dfa49b78",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-07T18:13:12Z",
+      "side": 1,
+      "message": "why do this, why not just create a matrixref object at the top and write into it?",
+      "range": {
+        "startLine": 309,
+        "startChar": 29,
+        "endLine": 309,
+        "endChar": 30
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
