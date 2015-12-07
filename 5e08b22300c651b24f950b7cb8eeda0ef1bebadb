@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d9b040_e8036750",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "I suggest this be \"internal\" instead of constants. I\u0027m not sure there is benefit to creating the new namespace.",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_28162f97",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "I suggest kMaxAlignBytes",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_c8df8325",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "Capitalize, etc.",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_88fe5b8f",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "Google style indents after the # mark for preprocessor statements.\n\n  #if ...\n    ...\n  #  if ...\n    ...\n  #  else ...\n    ...\n  #  endif\n    ...\n  #endif",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_68f917a8",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "The variable \"kHint\" is rather uninformative by itself; perhaps kEigenAlignmentHint?",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d9b040_c806a363",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-07T23:31:46Z",
+      "side": 1,
+      "message": "Indent within defines\n\n  #  define CERES_ALIGNMENT_SPECIFIER",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
