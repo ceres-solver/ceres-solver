@@ -963,6 +963,120 @@ TEST_F(CovarianceTest, TruncatedRank) {
   }
 }
 
+TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParameters) {
+  Covariance::Options options;
+  Covariance covariance(options);
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+  vector<const double*> parameter_blocks;
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(y);
+  parameter_blocks.push_back(z);
+  covariance.Compute(parameter_blocks, &problem_);
+  double expected_covariance[36];
+  covariance.GetCovarianceMatrix(parameter_blocks, expected_covariance);
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SUITE_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersThreaded) {
+  Covariance::Options options;
+  options.num_threads = 4;
+  Covariance covariance(options);
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+  vector<const double*> parameter_blocks;
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(y);
+  parameter_blocks.push_back(z);
+  covariance.Compute(parameter_blocks, &problem_);
+  double expected_covariance[36];
+  covariance.GetCovarianceMatrix(parameter_blocks, expected_covariance);
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SUITE_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocks(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, DenseCovarianceMatrixFromSetOfParametersInTangentSpace) {
+  Covariance::Options options;
+  Covariance covariance(options);
+  double* x = parameters_;
+  double* y = x + 2;
+  double* z = y + 3;
+
+  problem_.SetParameterization(x, new PolynomialParameterization);
+
+  vector<int> subset;
+  subset.push_back(2);
+  problem_.SetParameterization(y, new SubsetParameterization(3, subset));
+
+  local_column_bounds_[x] = make_pair(0, 1);
+  local_column_bounds_[y] = make_pair(1, 3);
+  local_column_bounds_[z] = make_pair(3, 4);
+
+  vector<const double*> parameter_blocks;
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(y);
+  parameter_blocks.push_back(z);
+  covariance.Compute(parameter_blocks, &problem_);
+  double expected_covariance[16];
+  covariance.GetCovarianceMatrixInTangentSpace(parameter_blocks,
+                                               expected_covariance);
+
+#ifndef CERES_NO_SUITESPARSE
+  options.algorithm_type = SUITE_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+#endif
+
+  options.algorithm_type = DENSE_SVD;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+
+  options.algorithm_type = EIGEN_SPARSE_QR;
+  ComputeAndCompareCovarianceBlocksInTangentSpace(options, expected_covariance);
+}
+
+TEST_F(CovarianceTest, ComputeCovarianceFailure) {
+  Covariance::Options options;
+  Covariance covariance(options);
+  double* x = parameters_;
+  double* y = x + 2;
+  vector<const double*> parameter_blocks;
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(x);
+  parameter_blocks.push_back(y);
+  parameter_blocks.push_back(y);
+  EXPECT_DEATH_IF_SUPPORTED(covariance.Compute(parameter_blocks, &problem_),
+                            "Covariance::Compute called with duplicate blocks "
+                            "at indices \\(0, 1\\) and \\(2, 3\\)");
+  vector<pair<const double*, const double*> > covariance_blocks;
+  covariance_blocks.push_back(make_pair(x, x));
+  covariance_blocks.push_back(make_pair(x, x));
+  covariance_blocks.push_back(make_pair(y, y));
+  covariance_blocks.push_back(make_pair(y, y));
+  EXPECT_DEATH_IF_SUPPORTED(covariance.Compute(covariance_blocks, &problem_),
+                            "Covariance::Compute called with duplicate blocks "
+                            "at indices \\(0, 1\\) and \\(2, 3\\)");
+}
+
 class RankDeficientCovarianceTest : public CovarianceTest {
  protected:
   virtual void SetUp() {
