@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "80d9b040_b3339035",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-08T01:04:27Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Preprocessor_Directives",
+      "parentUuid": "80d9b040_e8f2878f",
+      "revId": "5e08b22300c651b24f950b7cb8eeda0ef1bebadb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_68f917a8",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 4
