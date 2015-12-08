@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_b49c2edc",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done. I had to make a copy of the vector though to check for duplicates. I also added a unit test for this.",
+      "parentUuid": "80d9b040_3f2ae728",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_df42dbed",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-07T19:14:41Z",
       "side": 1,
       "message": "Please describe the expected size.",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_94992aec",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_df42dbed",
       "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_549862e7",
+        "filename": "internal/ceres/covariance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_7f4b8f06",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_9fce93dc",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2015-12-07T19:14:41Z",
       "side": 1,
       "message": "* next to type",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_746006b6",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_9fce93dc",
       "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_546502c4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_3f758765",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_bfcb57cb",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2015-12-07T19:14:41Z",
       "side": 1,
       "message": "Alignment",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_b459ce0c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_bfcb57cb",
       "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_94564ad8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_7f6f0f97",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_3fc747bd",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_f45356e6",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_3fc747bd",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_ffa15f65",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -149,6 +293,30 @@
       "writtenOn": "2015-12-07T18:13:12Z",
       "side": 1,
       "message": "openmp parallelize the loop?",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 17
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_146b7a9d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "I have no experience here, will have a closer look tomorrow.",
+      "parentUuid": "80d9b040_ffa15f65",
       "range": {
         "startLine": 276,
         "startChar": 16,
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_d450d2dc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_5fc88b2a",
+      "range": {
+        "startLine": 294,
+        "startChar": 13,
+        "endLine": 294,
+        "endChar": 22
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_5fe5eb5c",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -195,6 +387,24 @@
       "writtenOn": "2015-12-07T19:14:41Z",
       "side": 1,
       "message": "Nit: please stack arguments 1 per line, indented 4 spaces after the Get (see other Ceres code).",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_34895ea1",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_5fe5eb5c",
       "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "c001e83e_148edaa8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_1fdb63a0",
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_dfa49b78",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -229,6 +457,30 @@
       "writtenOn": "2015-12-07T18:13:12Z",
       "side": 1,
       "message": "why do this, why not just create a matrixref object at the top and write into it?",
+      "range": {
+        "startLine": 309,
+        "startChar": 29,
+        "endLine": 309,
+        "endChar": 30
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c001e83e_7493e6cc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-08T16:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d9b040_dfa49b78",
       "range": {
         "startLine": 309,
         "startChar": 29,
