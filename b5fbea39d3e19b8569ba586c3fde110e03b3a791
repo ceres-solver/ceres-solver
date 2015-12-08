@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d5f831_ad0d3d14",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-08T18:56:29Z",
+      "side": 1,
+      "message": "no reason to crash when you can return false here.",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "b5fbea39d3e19b8569ba586c3fde110e03b3a791",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
