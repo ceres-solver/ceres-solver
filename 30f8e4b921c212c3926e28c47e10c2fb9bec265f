@@ -329,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "65fcce2b_dee68548",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-10T14:49:13Z",
+      "side": 1,
+      "message": "Done. In order to collapse the double for loop both counters should start at 0. I had to add an if statement in the body of the loop.",
+      "parentUuid": "c001e83e_146b7a9d",
+      "range": {
+        "startLine": 276,
+        "startChar": 16,
+        "endLine": 276,
+        "endChar": 17
+      },
+      "revId": "30f8e4b921c212c3926e28c47e10c2fb9bec265f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80d9b040_5fc88b2a",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
