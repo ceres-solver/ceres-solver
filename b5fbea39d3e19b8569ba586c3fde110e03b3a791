@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65fcce2b_3e00c991",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-10T14:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d5f831_4d81396a",
+      "revId": "b5fbea39d3e19b8569ba586c3fde110e03b3a791",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d5f831_ad0d3d14",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 3
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "I disagree. Sending duplicate blocks is a programmer error and should get fixed. Failure due to numerical issues and related is actionable in code, this is not.",
       "parentUuid": "40d5f831_ad0d3d14",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "b5fbea39d3e19b8569ba586c3fde110e03b3a791",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65fcce2b_1e050da2",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-10T14:49:13Z",
+      "side": 1,
+      "message": "I have no strong feelings about this. I leave the decision up to the developers.",
+      "parentUuid": "40d5f831_cd74096b",
       "range": {
         "startLine": 99,
         "startChar": 8,
