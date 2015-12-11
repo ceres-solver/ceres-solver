@@ -33,9 +33,8 @@
 
 // This file needs to compile as c code.
 #ifdef __cplusplus
-
+#include <cstddef>
 #include "ceres/internal/config.h"
-#include "Eigen/Core"
 #if defined(CERES_TR1_MEMORY_HEADER)
 #include <tr1/memory>
 #else
@@ -57,7 +56,6 @@ using std::shared_ptr;
 // what case we're in and write macros that do the right thing.
 #ifdef CERES_USE_CXX11
 namespace port_constants {
-
 static constexpr size_t kMaxAlignBytes =
     // Work around a GCC 4.8 bug
     // (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56019) where
@@ -67,22 +65,7 @@ static constexpr size_t kMaxAlignBytes =
 #else
     alignof(std::max_align_t);
 #endif
-
-static constexpr bool kShouldAlignMatrix = 16 <= kMaxAlignBytes;
-static constexpr size_t kAlignment = kShouldAlignMatrix ? 16 : 1;
-
-static constexpr int kEigenAlignmentHint =
-    kShouldAlignMatrix ? Eigen::AutoAlign : Eigen::DontAlign;
 }  // namespace port_constants
-
-#define CERES_ALIGNMENT_SPECIFIER alignas(::ceres::port_constants::kAlignment)
-#define CERES_MATRIX_ALIGN_HINT ::ceres::port_constants::kEigenAlignmentHint
-
-#else // !CXX_11
-
-#define CERES_ALIGNMENT_SPECIFIER
-#define CERES_MATRIX_ALIGN_HINT Eigen::DontAlign
-
 #endif
 
 }  // namespace ceres
