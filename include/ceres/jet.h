@@ -228,8 +228,23 @@ struct Jet {
   T a;
 
   // The infinitesimal part.
-  // See ceres/include/internal/port.h for meaning of the #defines here.
-  CERES_ALIGNMENT_SPECIFIER Eigen::Matrix<T, N, 1, CERES_MATRIX_ALIGN_HINT> v;
+
+  // We allocate Jets on the stack and other places they
+  // might not be aligned to 16-byte boundaries.  If we have C++11, we
+  // can specify their alignment anyway, and thus can safely enable
+  // vectorization on those matrices; in C++99, we are out of luck.  Figure out
+  // what case we're in and do the right thing.
+#ifndef CERES_USE_CXX11
+  // fall back to safe version:
+  Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
+#else
+  static constexpr bool kShouldAlignMatrix =
+      16 <= ::ceres::port_constants::kMaxAlignBytes;
+  static constexpr int kAlignHint = kShouldAlignMatrix ?
+      Eigen::AutoAlign : Eigen::DontAlign;
+  static constexpr size_t kAlignment = kShouldAlignMatrix ? 16 : 1;
+  alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignHint> v;
+#endif
 };
 
 // Unary +
