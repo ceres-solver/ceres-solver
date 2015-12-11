@@ -22,6 +22,30 @@
       "revId": "fec375387906f4b6e5fba9514d7c6f059c34fcee",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05107294_a6d88846",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5546
+      },
+      "writtenOn": "2015-12-11T22:49:45Z",
+      "side": 1,
+      "message": "definition of max_align_t (we were picking it up from Eigen/Core somewhere before.)",
+      "parentUuid": "05107294_e38f124d",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 18
+      },
+      "revId": "fec375387906f4b6e5fba9514d7c6f059c34fcee",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
