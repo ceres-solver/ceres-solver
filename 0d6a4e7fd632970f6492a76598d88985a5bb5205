@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05107294_6c42ef94",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05107294_464714a3",
+      "revId": "0d6a4e7fd632970f6492a76598d88985a5bb5205",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05107294_8648ecaf",
         "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-11T23:01:08Z",
       "side": 1,
       "message": "Consider adding a newline after the residual block information.",
+      "revId": "0d6a4e7fd632970f6492a76598d88985a5bb5205",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05107294_4c4733a3",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T23:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05107294_8648ecaf",
       "revId": "0d6a4e7fd632970f6492a76598d88985a5bb5205",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
