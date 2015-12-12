@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05107294_ac0a2766",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T22:25:49Z",
+      "side": 1,
+      "message": "const",
+      "revId": "beec93558174730bf204f8bf1d6375663c2b2748",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05107294_6c114f9c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T22:25:49Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 301,
+        "endChar": 5
+      },
+      "revId": "beec93558174730bf204f8bf1d6375663c2b2748",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05107294_4c161396",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T22:25:49Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 303,
+        "endChar": 5
+      },
+      "revId": "beec93558174730bf204f8bf1d6375663c2b2748",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05107294_8c076b60",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-12T22:25:49Z",
+      "side": 1,
+      "message": "this creates problems on windows so a better macro is\n\nEXPECT_DEATH_IF_SUPPORTED",
+      "range": {
+        "startLine": 1064,
+        "startChar": 2,
+        "endLine": 1064,
+        "endChar": 14
+      },
+      "revId": "beec93558174730bf204f8bf1d6375663c2b2748",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
