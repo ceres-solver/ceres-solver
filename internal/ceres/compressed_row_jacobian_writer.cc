@@ -30,6 +30,7 @@
 
 #include "ceres/compressed_row_jacobian_writer.h"
 
+#include <algorithm>
 #include <utility>
 #include <vector>
 
@@ -140,12 +141,12 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
 
     // Sort the parameters by their position in the state vector.
     sort(parameter_indices.begin(), parameter_indices.end());
-    CHECK(unique(parameter_indices.begin(), parameter_indices.end()) ==
-          parameter_indices.end())
-          << "Ceres internal error:  "
-          << "Duplicate parameter blocks detected in a cost function. "
-          << "This should never happen. Please report this to "
-          << "the Ceres developers.";
+    CHECK(std::adjacent_find(parameter_indices.begin(), parameter_indices.end())
+          == parameter_indices.end())
+        << "Ceres internal error:  "
+        << "Duplicate parameter blocks detected in a cost function. "
+        << "This should never happen. Please report this to "
+        << "the Ceres developers.";
 
     // Update the row indices.
     const int num_residuals = residual_block->NumResiduals();

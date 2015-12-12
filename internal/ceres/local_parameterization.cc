@@ -30,6 +30,7 @@
 
 #include "ceres/local_parameterization.h"
 
+#include <algorithm>
 #include "ceres/householder_vector.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/fixed_array.h"
@@ -98,7 +99,7 @@ SubsetParameterization::SubsetParameterization(
 
   vector<int> constant = constant_parameters;
   sort(constant.begin(), constant.end());
-  CHECK(unique(constant.begin(), constant.end()) == constant.end())
+  CHECK(std::adjacent_find(constant.begin(), constant.end()) == constant.end())
       << "The set of constant parameters cannot contain duplicates";
   CHECK_LT(constant_parameters.size(), size)
       << "Number of parameters held constant should be less "
