@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0512320e_87619619",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:03:45Z",
+      "side": 1,
+      "message": "Nit: I think most of Ceres has the \u003d\u003d on the end.",
+      "revId": "0a6c4096a818f115de86928aa15f1088adfbce65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0512320e_675efa50",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:03:45Z",
+      "side": 1,
+      "message": "Outer parentheses are not needed",
+      "revId": "0a6c4096a818f115de86928aa15f1088adfbce65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
