@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0512320e_079c668a",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-17T19:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0512320e_27e522cc",
+      "revId": "fae24ce182b861fb2880e07819f7856f1299b011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0512320e_47e81ea4",
         "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2015-12-17T18:08:28Z",
       "side": 1,
       "message": "Put the \\ns on the previous line with the other strings to make this more reflective of printed text.",
+      "revId": "fae24ce182b861fb2880e07819f7856f1299b011",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0512320e_e7a04ac8",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-17T19:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0512320e_47e81ea4",
       "revId": "fae24ce182b861fb2880e07819f7856f1299b011",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
