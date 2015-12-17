@@ -253,7 +253,7 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
         (std::adjacent_find(sorted_parameter_blocks.begin(),
                             sorted_parameter_blocks.end())
          != sorted_parameter_blocks.end());
-    if has_duplicate_items {
+    if (has_duplicate_items) {
       string blocks;
       for (int i = 0; i < parameter_blocks.size(); ++i) {
         blocks += StringPrintf(" %p ", parameter_blocks[i]);
