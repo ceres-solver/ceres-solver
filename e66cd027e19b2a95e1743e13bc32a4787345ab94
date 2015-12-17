@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0512320e_477e5ebf",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:01:30Z",
+      "side": 1,
+      "message": "Sameer and myself chatted and decided that the CHECK() is good for now. However, can you please include the duplicate blocks in the CHECK() failure?",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0512320e_c7726eef",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:01:30Z",
+      "side": 1,
+      "message": "Perhaps comment somewhere that these need to get sized first for OMP compatability below.",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0512320e_a77772dd",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:01:30Z",
+      "side": 1,
+      "message": "omp -\u003e OpenMP\n\nCan you include a short explanation of this in the comment?",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0512320e_47677e2d",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2015-12-17T18:01:30Z",
+      "side": 1,
+      "message": "I bet that OpenMP will still chose to use just 1 thread for this problem. So this gives me less confidence that the parallel code is getting exercised properly. Do you have some other way to test larger problems? Maybe adding more code to one of the example applications?",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
