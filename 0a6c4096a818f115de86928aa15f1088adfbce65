@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0512320e_2783622e",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2015-12-17T19:54:32Z",
+      "side": 1,
+      "message": "I fixed this in the other CL the code overlaps, I am actually going to pull this CL out of this.",
+      "parentUuid": "0512320e_87619619",
+      "revId": "0a6c4096a818f115de86928aa15f1088adfbce65",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0512320e_675efa50",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 1
