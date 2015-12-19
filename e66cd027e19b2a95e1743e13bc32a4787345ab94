@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aadcd3fd_50fa8c66",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-19T13:26:51Z",
+      "side": 1,
+      "message": "Done. Adding the duplicate blocks in the CHECK() failure was not so trivial and the solution is probably not the cleanest. I added a function CheckForDuplicates that in the case of duplicates collects all duplicate blocks.",
+      "parentUuid": "0512320e_477e5ebf",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0512320e_c7726eef",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2015-12-17T18:01:30Z",
       "side": 1,
       "message": "Perhaps comment somewhere that these need to get sized first for OMP compatability below.",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ead24be6_d21f644c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-19T13:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0512320e_c7726eef",
       "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4a7c37a4_75cd283d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-19T13:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0512320e_a77772dd",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0512320e_47677e2d",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2015-12-17T18:01:30Z",
       "side": 1,
       "message": "I bet that OpenMP will still chose to use just 1 thread for this problem. So this gives me less confidence that the parallel code is getting exercised properly. Do you have some other way to test larger problems? Maybe adding more code to one of the example applications?",
+      "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a6aafd7_f70aa039",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 5560
+      },
+      "writtenOn": "2015-12-19T13:26:51Z",
+      "side": 1,
+      "message": "I actually checked the thread_id on my machine and it uses all 4 threads. So I\u0027m not sure if I should test on an example applicatioin.",
+      "parentUuid": "0512320e_47677e2d",
       "revId": "e66cd027e19b2a95e1743e13bc32a4787345ab94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
