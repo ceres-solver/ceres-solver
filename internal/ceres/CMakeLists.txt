@@ -108,6 +108,7 @@ set(CERES_INTERNAL_SRC
     triplet_sparse_matrix.cc
     trust_region_preprocessor.cc
     trust_region_minimizer.cc
+    trust_region_step_evaluator.cc
     trust_region_strategy.cc
     types.cc
     visibility.cc
