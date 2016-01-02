@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2016 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -31,15 +31,19 @@
 #ifndef CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 #define CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
 
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/scoped_ptr.h"
 #include "ceres/minimizer.h"
 #include "ceres/solver.h"
+#include "ceres/sparse_matrix.h"
+#include "ceres/trust_region_step_evaluator.h"
+#include "ceres/trust_region_strategy.h"
 #include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
-// Generic trust region minimization algorithm. The heavy lifting is
-// done by a TrustRegionStrategy object passed in as part of options.
+// Generic trust region minimization algorithm.
 //
 // For example usage, see SolverImpl::Minimize.
 class TrustRegionMinimizer : public Minimizer {
@@ -47,19 +51,63 @@ class TrustRegionMinimizer : public Minimizer {
   ~TrustRegionMinimizer() {}
   virtual void Minimize(const Minimizer::Options& options,
                         double* parameters,
-                        Solver::Summary* summary);
+                        Solver::Summary* solver_summary);
 
  private:
-  void Init(const Minimizer::Options& options);
-  void EstimateScale(const SparseMatrix& jacobian, double* scale) const;
-  bool MaybeDumpLinearLeastSquaresProblem(const int iteration,
-                                          const SparseMatrix* jacobian,
-                                          const double* residuals,
-                                          const double* step) const;
+  void Init(const Minimizer::Options& options,
+            const double* initial_x,
+            Solver::Summary* solver_summary);
+  bool IterationZero();
+  bool EvaluateGradientAndJacobian();
+  bool ComputeTrustRegionStep();
+  bool HandleInvalidStep();
+  bool FinalizeIterationAndCheckIfMinimizerCanContinue();
+  double DoInnerIterations(Vector* x);
+  void DoLineSearch(const Vector& x,
+                    const Vector& gradient,
+                    const double cost,
+                    Vector* delta);
 
   Minimizer::Options options_;
+
+  Solver::Summary* solver_summary_;
+  Evaluator* evaluator_;
+  SparseMatrix* jacobian_;
+  TrustRegionStrategy* strategy_;
+  scoped_ptr<TrustRegionStepEvaluator> step_evaluator_;
+
+  IterationSummary iteration_summary_;
+
+  int num_parameters_;
+  int num_effective_parameters_;
+  int num_residuals_;
+
+  Vector delta_;
+  Vector gradient_;
+  Vector inner_iteration_x_;
+  Vector model_residuals_;
+  Vector negative_gradient_;
+  Vector projected_gradient_step_;
+  Vector residuals_;
+  Vector scale_;
+  Vector trust_region_step_;
+  Vector x_;
+  Vector x_plus_delta_;
+
+  bool is_not_silent_;
+  bool inner_iterations_are_enabled_;
+  bool inner_iterations_were_useful_;
+
+  double x_norm_;
+  double x_cost_;
+  double model_cost_change_;
+
+  double start_time_;
+  double iteration_start_time_;
+  int num_consecutive_invalid_steps_;
 };
 
 }  // namespace internal
 }  // namespace ceres
+
 #endif  // CERES_INTERNAL_TRUST_REGION_MINIMIZER_H_
