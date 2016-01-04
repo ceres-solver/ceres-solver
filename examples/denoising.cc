@@ -85,6 +85,8 @@ class QuadraticCostFunction : public ceres::SizedCostFunction<1, 1> {
   double sqrta_, b_;
 };
 
+namespace {
+
 // Creates a Fields of Experts MAP inference problem.
 void CreateProblem(const FieldsOfExperts& foe,
                    const PGMImage<double>& image,
@@ -167,6 +169,7 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
     }
   }
 }
+}  // namespace
 }  // namespace examples
 }  // namespace ceres
 

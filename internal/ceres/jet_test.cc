@@ -49,7 +49,7 @@ const double kE = 2.71828182845904523536;
 typedef Jet<double, 2> J;
 
 // Convenient shorthand for making a jet.
-J MakeJet(double a, double v0, double v1) {
+static J MakeJet(double a, double v0, double v1) {
   J z;
   z.a = a;
   z.v[0] = v0;
@@ -60,7 +60,7 @@ J MakeJet(double a, double v0, double v1) {
 // On a 32-bit optimized build, the mismatch is about 1.4e-14.
 double const kTolerance = 1e-13;
 
-void ExpectJetsClose(const J &x, const J &y) {
+static void ExpectJetsClose(const J &x, const J &y) {
   ExpectClose(x.a, y.a, kTolerance);
   ExpectClose(x.v[0], y.v[0], kTolerance);
   ExpectClose(x.v[1], y.v[1], kTolerance);

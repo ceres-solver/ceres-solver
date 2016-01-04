@@ -53,7 +53,7 @@ using std::swap;
 const double kPi = 3.14159265358979323846;
 const double kHalfSqrt2 = 0.707106781186547524401;
 
-double RandDouble() {
+static double RandDouble() {
   double r = rand();
   return r / RAND_MAX;
 }
@@ -678,6 +678,8 @@ TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
 typedef Jet<double, 3> J3;
 typedef Jet<double, 4> J4;
 
+namespace {
+
 J3 MakeJ3(double a, double v0, double v1, double v2) {
   J3 j;
   j.a = a;
@@ -708,6 +710,8 @@ bool IsClose(double x, double y) {
   double reldiff = absdiff / max(fabs(x), fabs(y));
   return reldiff <= kTolerance;
 }
+
+}  // namespace
 
 template <int N>
 bool IsClose(const Jet<double, N> &x, const Jet<double, N> &y) {
@@ -1096,9 +1100,9 @@ TEST(RotationMatrixToAngleAxis, NearPiExampleOneFromTobiasStrauss) {
   EXPECT_THAT(rotation_matrix, IsNear3x3Matrix(round_trip));
 }
 
-void CheckRotationMatrixToAngleAxisRoundTrip(const double theta,
-                                             const double phi,
-                                             const double angle) {
+static void CheckRotationMatrixToAngleAxisRoundTrip(const double theta,
+                                                    const double phi,
+                                                    const double angle) {
   double angle_axis[3];
   angle_axis[0] = angle * sin(phi) * cos(theta);
   angle_axis[1] = angle * sin(phi) * sin(theta);

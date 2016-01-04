@@ -356,9 +356,9 @@ struct EuclideanDistanceFunctor {
   const double sqrt_weight_;
 };
 
-bool SolveWithFullReport(ceres::Solver::Options options,
-                         ceres::Problem* problem,
-                         bool dynamic_sparsity) {
+static bool SolveWithFullReport(ceres::Solver::Options options,
+                                ceres::Problem* problem,
+                                bool dynamic_sparsity) {
   options.dynamic_sparsity = dynamic_sparsity;
 
   ceres::Solver::Summary summary;

@@ -141,6 +141,8 @@ using std::ifstream;
 using std::string;
 using std::vector;
 
+namespace {
+
 void SplitStringUsingChar(const string& full,
                           const char delim,
                           vector<string>* result) {
@@ -175,6 +177,8 @@ void SkipLines(ifstream& ifs, int num_lines) {
     ifs.getline(buf, 256);
   }
 }
+
+}  // namespace
 
 class NISTProblem {
  public:
@@ -527,6 +531,8 @@ int RegressionDriver(const string& filename,
   return num_success;
 }
 
+namespace {
+
 void SetMinimizerOptions(ceres::Solver::Options* options) {
   CHECK(ceres::StringToMinimizerType(FLAGS_minimizer,
                                      &options->minimizer_type));
@@ -617,7 +623,7 @@ void SolveNISTProblems() {
   cout << "Total   : "
        << easy_success + medium_success + hard_success << "/54\n";
 }
-
+}  // namespace
 }  // namespace examples
 }  // namespace ceres
 

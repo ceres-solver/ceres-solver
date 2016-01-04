@@ -184,9 +184,9 @@ struct QuaternionPlus {
   }
 };
 
-void QuaternionParameterizationTestHelper(const double* x,
-                                          const double* delta,
-                                          const double* q_delta) {
+static void QuaternionParameterizationTestHelper(const double* x,
+                                                 const double* delta,
+                                                 const double* q_delta) {
   const int kGlobalSize = 4;
   const int kLocalSize = 3;
 
@@ -340,8 +340,8 @@ struct HomogeneousVectorParameterizationPlus {
   }
 };
 
-void HomogeneousVectorParameterizationHelper(const double* x,
-                                             const double* delta) {
+static void HomogeneousVectorParameterizationHelper(const double* x,
+                                                    const double* delta) {
   const double kTolerance = 1e-14;
 
   HomogeneousVectorParameterization homogeneous_vector_parameterization(4);

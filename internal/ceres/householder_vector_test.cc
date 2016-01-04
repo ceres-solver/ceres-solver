@@ -36,7 +36,7 @@
 namespace ceres {
 namespace internal {
 
-void HouseholderTestHelper(const Vector& x) {
+static void HouseholderTestHelper(const Vector& x) {
   const double kTolerance = 1e-14;
 
   // Check to ensure that H * x = ||x|| * [0 ... 0 1]'.
