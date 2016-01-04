@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eafecb6e_d90da454",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-04T20:29:42Z",
+      "side": 1,
+      "message": "Does this import the anonymous parts from the namespace? I\u0027m not sure this works.",
+      "revId": "40a630f3fb205661cb1c83c17dfc98591a82885e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
