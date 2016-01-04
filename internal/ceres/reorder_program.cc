@@ -332,6 +332,8 @@ bool LexicographicallyOrderResidualBlocks(
   return true;
 }
 
+namespace {
+
 // Pre-order the columns corresponding to the schur complement if
 // possible.
 void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
@@ -437,6 +439,8 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
   program->SetParameterOffsetsAndIndex();
 #endif
 }
+
+}  // namespace
 
 bool ReorderProgramForSchurTypeLinearSolver(
     const LinearSolverType linear_solver_type,

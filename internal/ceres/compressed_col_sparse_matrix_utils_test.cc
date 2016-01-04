@@ -86,12 +86,12 @@ TEST(_, BlockPermutationToScalarPermutation) {
 }
 
 // Helper function to fill the sparsity pattern of a TripletSparseMatrix.
-int FillBlock(const vector<int>& row_blocks,
-              const vector<int>& col_blocks,
-              const int row_block_id,
-              const int col_block_id,
-              int* rows,
-              int* cols) {
+static int FillBlock(const vector<int>& row_blocks,
+                     const vector<int>& col_blocks,
+                     const int row_block_id,
+                     const int col_block_id,
+                     int* rows,
+                     int* cols) {
   int row_pos = 0;
   for (int i = 0; i < row_block_id; ++i) {
     row_pos += row_blocks[i];
