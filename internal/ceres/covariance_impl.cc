@@ -93,18 +93,19 @@ CovarianceImpl::~CovarianceImpl() {
 
 template <typename T> void CheckForDuplicates(vector<T> blocks) {
   sort(blocks.begin(), blocks.end());
-  typename vector<T>::iterator it = std::adjacent_find(blocks.begin(), blocks
-      .end());
+  typename vector<T>::iterator it =
+      std::adjacent_find(blocks.begin(), blocks.end());
   if (it != blocks.end()) {
     // In case there are duplicates, we search for their location.
     map<T, vector<int> > blocks_map;
-    for (int i=0; i < blocks.size(); ++i) {
+    for (int i = 0; i < blocks.size(); ++i) {
       blocks_map[blocks[i]].push_back(i);
     }
+
     std::ostringstream duplicates;
     while (it != blocks.end()) {
       duplicates << "(";
-      for (int i=0; i < blocks_map[*it].size()-1; ++i) {
+      for (int i = 0; i < blocks_map[*it].size() - 1; ++i) {
         duplicates << blocks_map[*it][i] << ", ";
       }
       duplicates << blocks_map[*it].back() << ")";
@@ -113,9 +114,9 @@ template <typename T> void CheckForDuplicates(vector<T> blocks) {
         duplicates << " and ";
       }
     }
-    CHECK(false) << "Covariance::Compute called with duplicate blocks at "
-                 << "indices "
-                 << duplicates.str();
+
+    LOG(FATAL) << "Covariance::Compute called with duplicate blocks at "
+               << "indices " << duplicates.str();
   }
 }
 
@@ -303,8 +304,7 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
 
 bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
     const vector<const double*>& parameters,
-    bool lift_covariance_to_ambient_space,
-    double* covariance_matrix) const {
+    bool lift_covariance_to_ambient_space, double* covariance_matrix) const {
   CHECK(is_computed_)
       << "Covariance::GetCovarianceMatrix called before Covariance::Compute";
   CHECK(is_valid_)
@@ -319,8 +319,8 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   cum_parameter_size.resize(parameters.size() + 1);
   cum_parameter_size[0] = 0;
   for (int i = 0; i < parameters.size(); ++i) {
-    ParameterBlock* block = FindOrDie(parameter_map,
-                                      const_cast<double*>(parameters[i]));
+    ParameterBlock* block =
+        FindOrDie(parameter_map, const_cast<double*>(parameters[i]));
     if (lift_covariance_to_ambient_space) {
       parameter_sizes.push_back(block->Size());
     } else {
@@ -329,19 +329,19 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
   }
   std::partial_sum(parameter_sizes.begin(), parameter_sizes.end(),
                    cum_parameter_size.begin() + 1);
-  const int max_covariance_block_size = *std::max_element(
-      parameter_sizes.begin(),
-      parameter_sizes.end());
+  const int max_covariance_block_size =
+      *std::max_element(parameter_sizes.begin(), parameter_sizes.end());
   const int covariance_size = cum_parameter_size.back();
 
   // Assemble the blocks in the covariance matrix.
   MatrixRef covariance(covariance_matrix, covariance_size, covariance_size);
   const int num_threads = options_.num_threads;
-  scoped_array<double> workspace(new double[num_threads *
-      max_covariance_block_size * max_covariance_block_size]);
+  scoped_array<double> workspace(
+      new double[num_threads * max_covariance_block_size *
+                 max_covariance_block_size]);
 
   bool success = true;
-#pragma omp parallel for num_threads (num_threads) schedule(dynamic) collapse(2)
+#pragma omp parallel for num_threads(num_threads) schedule(dynamic) collapse(2)
   for (int i = 0; i < parameters.size(); ++i) {
     for (int j = 0; j < parameters.size(); ++j) {
       // The second loop can't start from j = i for compatibility with OpenMP
@@ -356,21 +356,20 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #else
         int thread_id = 0;
 #endif
-        double* covariance_block = workspace.get() + thread_id *
-            max_covariance_block_size * max_covariance_block_size;
+        double* covariance_block =
+            workspace.get() +
+            thread_id * max_covariance_block_size * max_covariance_block_size;
         if (!GetCovarianceBlockInTangentOrAmbientSpace(
-            parameters[i],
-            parameters[j],
-            lift_covariance_to_ambient_space,
-            covariance_block)) {
+                parameters[i], parameters[j], lift_covariance_to_ambient_space,
+                covariance_block)) {
           success = false;
         }
         covariance.block(covariance_row_idx, covariance_col_idx, size_i,
                          size_j) = MatrixRef(covariance_block, size_i, size_j);
         if (i != j) {
           covariance.block(covariance_col_idx, covariance_row_idx, size_j,
-                           size_i) = MatrixRef(covariance_block, size_i,
-                                               size_j).transpose();
+                           size_i) =
+              MatrixRef(covariance_block, size_i, size_j).transpose();
         }
       }
     }
