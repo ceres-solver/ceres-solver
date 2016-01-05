@@ -420,16 +420,16 @@ class CERES_EXPORT Covariance {
   //
   // Compute must be called before calling GetCovarianceMatrix and all
   // parameter_blocks must have been present in the vector
-  // parameters_blocks when Compute was called. Otherwise
+  // parameter_blocks when Compute was called. Otherwise
   // GetCovarianceMatrix returns false.
   //
   // covariance_matrix must point to a memory location that can store
-  // the size of the covariance matrix. The size of the covariance
-  // matrix corresponds the sum of the sizes of the individual
-  // parameter blocks. The covariance matrix will be a row-major
-  // matrix.
-  bool GetCovarianceMatrix(const std::vector<const double*>& parameter_blocks,
-                           double* covariance_matrix);
+  // the size of the covariance matrix. The covariance matrix will be
+  // a square matrix whose row and column count is equal to the sum of
+  // the sizes of the individual parameter blocks. The covariance
+  // matrix will be a row-major matrix.
+  bool GetCovarianceMatrix(const std::vector<const double *> &parameter_blocks,
+                           double *covariance_matrix);
 
   // Return the covariance matrix corresponding to parameter_blocks
   // in the tangent space if a local parameterization is associated
@@ -442,10 +442,10 @@ class CERES_EXPORT Covariance {
   // GetCovarianceMatrix returns false.
   //
   // covariance_matrix must point to a memory location that can store
-  // the size of the covariance matrix. The size of the covariance
-  // matrix corresponds the sum of the sizes of the individual
-  // parameter blocks. The covariance matrix will be a row-major
-  // matrix.
+  // the size of the covariance matrix. The covariance matrix will be
+  // a square matrix whose row and column count is equal to the sum of
+  // the sizes of the tangent spaces of the individual parameter
+  // blocks. The covariance matrix will be a row-major matrix.
   bool GetCovarianceMatrixInTangentSpace(
       const std::vector<const double*>& parameter_blocks,
       double* covariance_matrix);

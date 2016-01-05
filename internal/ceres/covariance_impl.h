@@ -79,6 +79,8 @@ class CovarianceImpl {
   bool ComputeCovarianceValuesUsingDenseSVD();
   bool ComputeCovarianceValuesUsingSuiteSparseQR();
   bool ComputeCovarianceValuesUsingEigenSparseQR();
+  std::vector<pair<const double*, const double*> > CovarianceBlocksFromParameterBlocks(
+      const std::vector<const double*>& parameter_blocks) {
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
     return covariance_matrix_.get();
