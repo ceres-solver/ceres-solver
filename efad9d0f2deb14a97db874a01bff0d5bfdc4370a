@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a41cfd9_336ae02e",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T19:00:37Z",
+      "side": 1,
+      "message": "I concur, which is one of the reasons why I had it in the FinalizeIteration function earlier.\nbut since I split out the other two tests, which do the same thing, I was trying to do the symmetric thing here.",
+      "parentUuid": "8a41cfd9_f394786d",
+      "revId": "efad9d0f2deb14a97db874a01bff0d5bfdc4370a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a41cfd9_b39ef089",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2016-01-06T18:55:30Z",
       "side": 1,
       "message": "Two space indent for this function.",
+      "revId": "efad9d0f2deb14a97db874a01bff0d5bfdc4370a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_ee9a4f89",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T19:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a41cfd9_b39ef089",
       "revId": "efad9d0f2deb14a97db874a01bff0d5bfdc4370a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
