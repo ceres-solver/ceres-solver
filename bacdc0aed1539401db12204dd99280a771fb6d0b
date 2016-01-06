@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a41cfd9_93516ce9",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a41cfd9_680cf7c6",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a41cfd9_a8faffd9",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2016-01-06T17:14:03Z",
       "side": 1,
       "message": "Nice shrink! The core loop is readable! Wow!",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_334e6046",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a41cfd9_a8faffd9",
       "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a41cfd9_b39830f0",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it like this for now, this is going to change quite substantially very soon.",
+      "parentUuid": "8a41cfd9_08f68bf7",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a41cfd9_c8ff43c9",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2016-01-06T17:14:03Z",
       "side": 1,
       "message": "Move the if logic inside. Rename function \"MaybeDoInnerIterations\".",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_137b1c5a",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a41cfd9_c8ff43c9",
       "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8a41cfd9_d374d466",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a41cfd9_e8ad67c3",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a41cfd9_08b3eb28",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 7
@@ -98,6 +188,24 @@
       "writtenOn": "2016-01-06T17:14:03Z",
       "side": 1,
       "message": "Shouldn\u0027t this get updated before the if statement above?",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_3384207b",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-06T18:49:26Z",
+      "side": 1,
+      "message": "actually no. because we are going to terminate the iteration there, and no more iteration_summary objects will be added, in this case however we will actually be updating the list of iteration summary objects.\n\nbut since you bring this up, I have a better place to put this counter increment.",
+      "parentUuid": "8a41cfd9_08b3eb28",
       "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
