@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a41cfd9_680cf7c6",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "nice :)",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_a8faffd9",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "Nice shrink! The core loop is readable! Wow!",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_08f68bf7",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "DoConstrainedProjectedLineSearch(...) and drop comment?",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_c8ff43c9",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "Move the if logic inside. Rename function \"MaybeDoInnerIterations\".",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_e8ad67c3",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "consecutive instead of successive",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_08b3eb28",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T17:14:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this get updated before the if statement above?",
+      "revId": "bacdc0aed1539401db12204dd99280a771fb6d0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
