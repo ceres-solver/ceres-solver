@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a41cfd9_f394786d",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T18:55:30Z",
+      "side": 1,
+      "message": "While the code is cleaned up, it\u0027s weird that a function that appears to be read only mutates the global state. I\u0027m having trouble coming up with a better name though.",
+      "revId": "efad9d0f2deb14a97db874a01bff0d5bfdc4370a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41cfd9_b39ef089",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-01-06T18:55:30Z",
+      "side": 1,
+      "message": "Two space indent for this function.",
+      "revId": "efad9d0f2deb14a97db874a01bff0d5bfdc4370a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
