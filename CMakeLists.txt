@@ -759,7 +759,7 @@ configure_file("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
 if (WIN32)
   set(RELATIVE_CMAKECONFIG_INSTALL_DIR CMake)
 else ()
-  set(RELATIVE_CMAKECONFIG_INSTALL_DIR share/Ceres)
+  set(RELATIVE_CMAKECONFIG_INSTALL_DIR lib/cmake/Ceres)
 endif ()
 
 # This "exports" for installation all targets which have been put into the
