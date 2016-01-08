@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a3997b3_ad439d98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-01-08T21:06:12Z",
+      "side": 1,
+      "message": "documentation install directory.",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "2bb98158ba991776576d25524c72a61497ef2faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3997b3_cd48e9b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-01-08T21:06:12Z",
+      "side": 1,
+      "message": "*dent",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "2bb98158ba991776576d25524c72a61497ef2faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3997b3_6dfb7593",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-01-08T21:06:12Z",
+      "side": 1,
+      "message": "Please move this to line 689 after the if (BUILD_DOCUMENTATION) conditional.  As this is also documentation-specific (see later comment) I think:\n\nset(CERES_DOCS_INSTALL_DIR \"share/doc/ceres\" CACHE STRING\n    \"Ceres docs install path relative to CMAKE_INSTALL_PREFIX\")\n\nis better.",
+      "revId": "2bb98158ba991776576d25524c72a61497ef2faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a3997b3_8d3ee107",
+        "filename": "docs/source/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-01-08T21:06:12Z",
+      "side": 1,
+      "message": "Replace with: ${CERES_DOCS_INSTALL_DIR}",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 44
+      },
+      "revId": "2bb98158ba991776576d25524c72a61497ef2faf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
