@@ -686,6 +686,9 @@ include_directories(BEFORE ${CMAKE_BINARY_DIR}/config)
 add_subdirectory(internal/ceres)
 
 if (BUILD_DOCUMENTATION)
+  set(CERES_DOCS_INSTALL_DIR "share/doc/ceres" CACHE STRING
+      "Ceres docs install path relative to CMAKE_INSTALL_PREFIX")
+
   find_package(Sphinx QUIET)
   if (NOT SPHINX_FOUND)
     message("-- Failed to find Sphinx, disabling build of documentation.")

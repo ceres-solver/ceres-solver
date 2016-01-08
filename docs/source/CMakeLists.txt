@@ -5,7 +5,7 @@ set(SPHINX_HTML_DIR "${CMAKE_BINARY_DIR}/docs/html")
 
 # Install documentation
 install(DIRECTORY ${SPHINX_HTML_DIR}
-        DESTINATION share/doc/ceres
+        DESTINATION "${CERES_DOCS_INSTALL_DIR}"
         COMPONENT Doc
         PATTERN "${SPHINX_HTML_DIR}/*")
 
