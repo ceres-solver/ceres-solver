@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "274e5eac_8da3e6cb",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_cdb96e94",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274e5eac_8d85a6c6",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2016-01-14T18:15:32Z",
       "side": 1,
       "message": "Maybe comment that this behaviour is different between cost fail vs jacobian fail-- just for reader understanding.",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07f87ad1_23e4ca27",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_8d85a6c6",
       "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07f87ad1_03e1ce17",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_6d765abb",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274e5eac_ed370ad8",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2016-01-14T18:15:32Z",
       "side": 1,
       "message": "Put this check first",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "274e5eac_cd84ce38",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_ed370ad8",
       "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "07f87ad1_e3aeb2bd",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_0d18765f",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274e5eac_6deada5b",
         "filename": "internal/ceres/trust_region_minimizer.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2016-01-14T18:15:32Z",
       "side": 1,
       "message": "Include number of iterations reached.",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07f87ad1_c3b3b627",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_6deada5b",
       "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "07f87ad1_a3a8bab0",
+        "filename": "internal/ceres/trust_region_minimizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_4def1e6a",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274e5eac_adaa223e",
         "filename": "internal/ceres/trust_region_minimizer.h",
         "patchSetId": 10
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "07f87ad1_63dac26e",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_adaa223e",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274e5eac_4da55e71",
         "filename": "internal/ceres/trust_region_minimizer.h",
         "patchSetId": 10
@@ -149,6 +293,24 @@
       "writtenOn": "2016-01-14T18:15:32Z",
       "side": 1,
       "message": "Document ownership semantics",
+      "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07f87ad1_43d7c644",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-01-15T02:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274e5eac_4da55e71",
       "revId": "7d95ffd9bb7e6ebc6ca2ad1d7192f15835eb1d23",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
