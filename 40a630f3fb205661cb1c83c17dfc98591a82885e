@@ -16,6 +16,24 @@
       "revId": "40a630f3fb205661cb1c83c17dfc98591a82885e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e798c691_08754bd4",
+        "filename": "examples/denoising.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2016-01-16T09:16:06Z",
+      "side": 1,
+      "message": "Seems to work here. Alternatively we can make utility functions (problem construction and solving) static, so there\u0027s no questionable aspects at all.",
+      "parentUuid": "eafecb6e_d90da454",
+      "revId": "40a630f3fb205661cb1c83c17dfc98591a82885e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
