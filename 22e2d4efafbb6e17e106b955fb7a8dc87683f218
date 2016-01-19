@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0726ba4f_b37b5805",
+        "filename": "internal/ceres/stringprintf.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2016-01-19T21:48:07Z",
+      "side": 1,
+      "message": "how about having a single block for not defined va_copy and then individual caes for msc and gcc inside it? perhaps better readability?",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "22e2d4efafbb6e17e106b955fb7a8dc87683f218",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
