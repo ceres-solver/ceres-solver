@@ -43,13 +43,24 @@ namespace internal {
 
 using std::string;
 
-#ifdef _MSC_VER
-enum { IS_COMPILER_MSVC = 1 };
-#if _MSC_VER < 1800
+// va_copy() was defined in the C99 standard.  However, it did not appear in the
+// C++ standard until C++11.  This means that if Ceres is being compiled with a
+// strict pre-C++11 standard (e.g. -std=c++03), va_copy() will NOT be defined,
+// as we are using the C++ compiler (it would however be defined if we were
+// using the C compiler).  Note however that both GCC & Clang will in fact
+// define va_copy() when compiling for C++ if the C++ standard is not explicitly
+// specified (i.e. no -std=c++<XX> arg), even though it should not strictly be
+// defined unless -std=c++11 (or greater) was passed.
+//
+// Some older versions of MSVC do not have va_copy(), in which case define it.
+#if defined (_MSC_VER) && !defined(va_copy)
 #define va_copy(d, s) ((d) = (s))
 #endif
-#else
-enum { IS_COMPILER_MSVC = 0 };
+// On GCC/Clang, if va_copy() is not defined (C++ standard < C++11 explicitly
+// specified), use the internal __va_copy() version, which should be present
+// in even very old GCC versions.
+#if defined (__GNUC__) && !defined(va_copy)
+#define va_copy(d, s) __va_copy(d, s)
 #endif
 
 void StringAppendV(string* dst, const char* format, va_list ap) {
@@ -71,13 +82,13 @@ void StringAppendV(string* dst, const char* format, va_list ap) {
       return;
     }
 
-    if (IS_COMPILER_MSVC) {
-      // Error or MSVC running out of space.  MSVC 8.0 and higher
-      // can be asked about space needed with the special idiom below:
-      va_copy(backup_ap, ap);
-      result = vsnprintf(NULL, 0, format, backup_ap);
-      va_end(backup_ap);
-    }
+#if defined (_MSC_VER)
+    // Error or MSVC running out of space.  MSVC 8.0 and higher
+    // can be asked about space needed with the special idiom below:
+    va_copy(backup_ap, ap);
+    result = vsnprintf(NULL, 0, format, backup_ap);
+    va_end(backup_ap);
+#endif
 
     if (result < 0) {
       // Just an error.
