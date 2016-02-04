@@ -190,6 +190,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \
                    $(CERES_SRC_PATH)/trust_region_preprocessor.cc \
+                   $(CERES_SRC_PATH)/trust_region_step_evaluator.cc \
                    $(CERES_SRC_PATH)/trust_region_strategy.cc \
                    $(CERES_SRC_PATH)/types.cc \
                    $(CERES_SRC_PATH)/visibility_based_preconditioner.cc \
