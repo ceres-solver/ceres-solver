@@ -469,6 +469,7 @@ bool TrustRegionMinimizer::HandleInvalidStep() {
 // point, and if the optimization is successful, candidate_x_ will be
 // updated with the optimized parameters.
 void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
+  inner_iterations_were_useful_ = false;
   if (!inner_iterations_are_enabled_ ||
       candidate_cost_ >= std::numeric_limits<double>::max()) {
     return;
