@@ -80,6 +80,7 @@ macro(EIGEN_REPORT_NOT_FOUND REASON_MSG)
     # but continues configuration and allows generation.
     message("-- Failed to find Eigen - " ${REASON_MSG} ${ARGN})
   endif ()
+  return()
 endmacro(EIGEN_REPORT_NOT_FOUND)
 
 # Search user-installed locations first, so that we prefer user installs

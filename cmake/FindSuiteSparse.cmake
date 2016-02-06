@@ -147,7 +147,9 @@ macro(SUITESPARSE_REPORT_NOT_FOUND REASON_MSG)
     message("-- Failed to find SuiteSparse - " ${REASON_MSG} ${ARGN})
   endif (SuiteSparse_FIND_QUIETLY)
 
-  # Do not call RETURN(), s/t we keep processing if not called with REQUIRED.
+  # Do not call return(), s/t we keep processing if not called with REQUIRED
+  # and report all missing components, rather than bailing after failing to find
+  # the first.
 endmacro(SUITESPARSE_REPORT_NOT_FOUND)
 
 # Handle possible presence of lib prefix for libraries on MSVC, see

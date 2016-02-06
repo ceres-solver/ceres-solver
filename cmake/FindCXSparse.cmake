@@ -100,6 +100,7 @@ macro(CXSPARSE_REPORT_NOT_FOUND REASON_MSG)
     # but continues configuration and allows generation.
     message("-- Failed to find CXSparse - " ${REASON_MSG} ${ARGN})
   endif ()
+  return()
 endmacro(CXSPARSE_REPORT_NOT_FOUND)
 
 # Handle possible presence of lib prefix for libraries on MSVC, see

@@ -121,6 +121,7 @@ macro(GFLAGS_REPORT_NOT_FOUND REASON_MSG)
     # but continues configuration and allows generation.
     message("-- Failed to find gflags - " ${REASON_MSG} ${ARGN})
   endif ()
+  return()
 endmacro(GFLAGS_REPORT_NOT_FOUND)
 
 # Verify that all variable names passed as arguments are defined (can be empty

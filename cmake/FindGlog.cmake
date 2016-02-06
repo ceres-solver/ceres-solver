@@ -93,6 +93,7 @@ macro(GLOG_REPORT_NOT_FOUND REASON_MSG)
     # but continues configuration and allows generation.
     message("-- Failed to find glog - " ${REASON_MSG} ${ARGN})
   endif ()
+  return()
 endmacro(GLOG_REPORT_NOT_FOUND)
 
 # Handle possible presence of lib prefix for libraries on MSVC, see
