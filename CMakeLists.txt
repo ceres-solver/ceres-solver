@@ -104,7 +104,7 @@ option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
 # under the MPL.
 OPTION(EIGENSPARSE
   "Enable Eigen as a sparse linear algebra library, WARNING: results in an LGPL licensed Ceres." OFF)
-if (NOT WIN32)
+if (NOT MSVC)
   # Ceres does not use C++11 internally, however it does use shared_ptr
   # (required) and unordered_map (if available), both of which were present in
   # previous iterations of what became C++11.  GCC & Clang can have both TR1 &
@@ -115,10 +115,12 @@ if (NOT WIN32)
   # Enabling this option forces the use of the C++11 versions (& -std=c++11) if
   # available.
   #
-  # This option is not available on Windows, as there, any new (C++11 etc)
-  # features available are on by default and there is no analogue to -std=c++11.
+  # This option is not available on Windows when using MSVC, as there, any new
+  # (C++11 etc) features available are on by default and there is no analogue to
+  # -std=c++11.  It will however be available for MinGW & CygWin, which can
+  # support -std=c++11.
   option(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
-endif(NOT WIN32)
+endif(NOT MSVC)
 option(EXPORT_BUILD_DIR
   "Export build directory using CMake (enables external use without install)." OFF)
 option(BUILD_TESTING "Enable tests" ON)
