@@ -614,6 +614,20 @@ Options controlling Ceres configuration
    Ceres will use the Visual Studio default, *shared* C-Run Time (CRT) library.
    Turn this ``ON`` to use the *static* C-Run Time library instead.
 
+#. ``LIB_SUFFIX [Default: "64" on non-Debian/Arch based 64-bit Linux, otherwise: ""]``:
+   The suffix to append to the library install directory, built from:
+   ``${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}``.
+
+   The filesystem hierarchy standard recommends that 64-bit systems install
+   native libraries to lib64 rather than lib.  Most Linux distributions follow
+   this convention, but Debian and Arch based distros do not.  Note that the
+   only generally sensible values for ``LIB_SUFFIX`` are "" and "64".
+
+   Although by default Ceres will auto-detect non-Debian/Arch based 64-bit
+   Linux distributions and default ``LIB_SUFFIX`` to "64", this can always be
+   overridden by manually specifying LIB_SUFFIX using: ``-DLIB_SUFFIX=<VALUE>``
+   when invoking CMake.
+
 
 Options controlling Ceres dependency locations
 ----------------------------------------------

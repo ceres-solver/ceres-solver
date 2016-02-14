@@ -138,6 +138,30 @@ if (MSVC)
     update_cache_variable(BUILD_TESTING OFF)
   endif (BUILD_TESTING AND BUILD_SHARED_LIBS)
 endif (MSVC)
+# Allow user to specify a suffix for the library install directory, the only
+# really sensible option (other than "") being "64", such that:
+# ${CMAKE_INSTALL_PREFIX}/lib -> ${CMAKE_INSTALL_PREFIX}/lib64.
+#
+# Heuristic for determining LIB_SUFFIX. FHS recommends that 64-bit systems
+# install native libraries to lib64 rather than lib. Most distros seem to
+# follow this convention with a couple notable exceptions (Debian-based and
+# Arch-based distros) which we try to detect here.
+if (CMAKE_SYSTEM_NAME MATCHES "Linux" AND
+    NOT DEFINED LIB_SUFFIX AND
+    NOT CMAKE_CROSSCOMPILING AND
+    CMAKE_SIZEOF_VOID_P EQUAL "8" AND
+    NOT EXISTS "/etc/debian_version" AND
+    NOT EXISTS "/etc/arch-release")
+  message("-- Detected non-Debian/Arch-based 64-bit Linux distribution. "
+    "Defaulting to library install directory: lib${LIB_SUFFIX}. You can "
+    "override this by specifying LIB_SUFFIX.")
+  set(LIB_SUFFIX "64")
+endif ()
+# Only create the cache variable (for the CMake GUI) after attempting to detect
+# the suffix *if not specified by the user* (NOT DEFINED LIB_SUFFIX in if())
+# s/t the user could override our autodetected suffix with "" if desired.
+set(LIB_SUFFIX "${LIB_SUFFIX}" CACHE STRING
+  "Suffix of library install directory (to support lib/lib64)." FORCE)
 
 # IOS is defined iff using the iOS.cmake CMake toolchain to build a static
 # library for iOS.
@@ -762,7 +786,7 @@ configure_file("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
 if (WIN32)
   set(RELATIVE_CMAKECONFIG_INSTALL_DIR CMake)
 else ()
-  set(RELATIVE_CMAKECONFIG_INSTALL_DIR lib/cmake/Ceres)
+  set(RELATIVE_CMAKECONFIG_INSTALL_DIR lib${LIB_SUFFIX}/cmake/Ceres)
 endif ()
 
 # This "exports" for installation all targets which have been put into the
