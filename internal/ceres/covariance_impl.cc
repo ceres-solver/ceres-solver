@@ -533,8 +533,8 @@ bool CovarianceImpl::ComputeCovarianceValues() {
   switch (options_.algorithm_type) {
     case DENSE_SVD:
       return ComputeCovarianceValuesUsingDenseSVD();
-#ifndef CERES_NO_SUITESPARSE
     case SUITE_SPARSE_QR:
+#ifndef CERES_NO_SUITESPARSE
       return ComputeCovarianceValuesUsingSuiteSparseQR();
 #else
       LOG(ERROR) << "SuiteSparse is required to use the "
