@@ -66,8 +66,8 @@ TrustRegionMinimizer::~TrustRegionMinimizer() {}
 void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
                                     double* parameters,
                                     Solver::Summary* solver_summary) {
-  start_time_ = WallTimeInSeconds();
-  iteration_start_time_ = start_time_;
+  start_time_in_secs_ = WallTimeInSeconds();
+  iteration_start_time_in_secs_ = start_time_in_secs_;
   Init(options, parameters, solver_summary);
   RETURN_IF_ERROR_AND_LOG(IterationZero());
 
@@ -81,7 +81,7 @@ void TrustRegionMinimizer::Minimize(const Minimizer::Options& options,
           : 0));
 
   while (FinalizeIterationAndCheckIfMinimizerCanContinue()) {
-    iteration_start_time_ = WallTimeInSeconds();
+    iteration_start_time_in_secs_ = WallTimeInSeconds();
     iteration_summary_ = IterationSummary();
     iteration_summary_.iteration =
         solver_summary->iterations.back().iteration + 1;
@@ -304,9 +304,9 @@ bool TrustRegionMinimizer::FinalizeIterationAndCheckIfMinimizerCanContinue() {
 
   iteration_summary_.trust_region_radius = strategy_->Radius();
   iteration_summary_.iteration_time_in_seconds =
-      WallTimeInSeconds() - iteration_start_time_;
+      WallTimeInSeconds() - iteration_start_time_in_secs_;
   iteration_summary_.cumulative_time_in_seconds =
-      WallTimeInSeconds() - start_time_ +
+      WallTimeInSeconds() - start_time_in_secs_ +
       solver_summary_->preprocessor_time_in_seconds;
 
   solver_summary_->iterations.push_back(iteration_summary_);
@@ -590,9 +590,12 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
   }
 }
 
+// Check if the maximum amount of time allowed by the user for the
+// solver has been exceeded, and if so return false after updating
+// Solver::Summary::message.
 bool TrustRegionMinimizer::MaxSolverTimeReached() {
   const double total_solver_time =
-      WallTimeInSeconds() - start_time_ +
+      WallTimeInSeconds() - start_time_in_secs_ +
       solver_summary_->preprocessor_time_in_seconds;
   if (total_solver_time < options_.max_solver_time_in_seconds) {
     return false;
@@ -607,6 +610,9 @@ bool TrustRegionMinimizer::MaxSolverTimeReached() {
   return true;
 }
 
+// Check if the maximum number of iterations allowed by the user for
+// the solver has been exceeded, and if so return false after updating
+// Solver::Summary::message.
 bool TrustRegionMinimizer::MaxSolverIterationsReached() {
   if (iteration_summary_.iteration < options_.max_num_iterations) {
     return false;
@@ -622,6 +628,8 @@ bool TrustRegionMinimizer::MaxSolverIterationsReached() {
   return true;
 }
 
+// Check convergence based on the max norm of the gradient (only for
+// iterations where the step was declared successful).
 bool TrustRegionMinimizer::GradientToleranceReached() {
   if (!iteration_summary_.step_is_successful ||
       iteration_summary_.gradient_max_norm > options_.gradient_tolerance) {
@@ -638,6 +646,7 @@ bool TrustRegionMinimizer::GradientToleranceReached() {
   return true;
 }
 
+// Check convergence based the size of the trust region radius.
 bool TrustRegionMinimizer::MinTrustRegionRadiusReached() {
   if (iteration_summary_.trust_region_radius >
       options_.min_trust_region_radius) {
@@ -751,6 +760,9 @@ bool TrustRegionMinimizer::IsStepSuccessful() {
               options_.min_relative_decrease);
 }
 
+// Declare the step successful, move to candidate_x, update the
+// derivatives and let the trust region strategy and the step
+// evaluator know that the step has been accepted.
 bool TrustRegionMinimizer::HandleSuccessfulStep() {
   x_ = candidate_x_;
   x_norm_ = x_.norm();
@@ -765,6 +777,7 @@ bool TrustRegionMinimizer::HandleSuccessfulStep() {
   return true;
 }
 
+// Declare the step unsuccessful and inform the trust region strategy.
 void TrustRegionMinimizer::HandleUnsuccessfulStep() {
   iteration_summary_.step_is_successful = false;
   strategy_->StepRejected(iteration_summary_.relative_decrease);

@@ -103,30 +103,60 @@ class TrustRegionMinimizer : public Minimizer {
   // Summary of the current iteration.
   IterationSummary iteration_summary_;
 
+  // Dimensionality of the problem in the ambient space.
   int num_parameters_;
+  // Dimensionality of the problem in the tangent space. This is the
+  // number of columns in the Jacobian.
   int num_effective_parameters_;
+  // Length of the residual vector, also the number of rows in the Jacobian.
   int num_residuals_;
 
-  Vector delta_;
+  // Current point.
+  Vector x_;
+  // Residuals at x_;
+  Vector residuals_;
+  // Gradient at x_.
   Vector gradient_;
+  // Solution computed by the inner iterations.
   Vector inner_iteration_x_;
+  // model_residuals = J * trust_region_step
   Vector model_residuals_;
   Vector negative_gradient_;
+  // projected_gradient_step = Plus(x, -gradient), an intermediate
+  // quantity used to compute the projected gradient norm.
   Vector projected_gradient_step_;
-  Vector residuals_;
+  // The step computed by the trust region strategy. If Jacobi scaling
+  // is enabled, this is a vector in the scaled space.
   Vector trust_region_step_;
-  Vector x_;
+  // The current proposal for how far the trust region algorithm
+  // thinks we should move. In the most basic case, it is just the
+  // trust_region_step_ with the Jacobi scaling undone. If bounds
+  // constraints are present, then it is the result of the projected
+  // line search.
+  Vector delta_;
+  // candidate_x  = Plus(x, delta)
   Vector candidate_x_;
+  // Scaling vector to scale the columns of the Jacobian.
   Vector jacobian_scaling_;
 
+  // Euclidean norm of x_.
   double x_norm_;
+  // Cost at x_.
   double x_cost_;
+  // Minimum cost encountered up till now.
   double minimum_cost_;
+  // How much did the trust region strategy reduce the cost of the
+  // linearized Gauss-Newton model.
   double model_cost_change_;
+  // Cost at candidate_x_.
   double candidate_cost_;
 
-  double start_time_;
-  double iteration_start_time_;
+  // Time at which the minimizer was started.
+  double start_time_in_secs_;
+  // Time at which the current iteration was started.
+  double iteration_start_time_in_secs_;
+  // Number of consecutive steps where the minimizer loop computed a
+  // numerically invalid step.
   int num_consecutive_invalid_steps_;
 };
 
