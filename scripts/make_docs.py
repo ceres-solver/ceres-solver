@@ -35,6 +35,7 @@
 
 from __future__ import print_function
 import glob
+import io
 import os
 import sys
 
@@ -102,7 +103,7 @@ breadcrumb_end = \
 
 for name in glob.glob('%s/*.html' % html_dir):
   print('Postprocessing: ', name)
-  with open(name) as fptr:
+  with io.open(name, encoding="utf-8") as fptr:
     out = fptr.read()
 
   for input_pattern, output_pattern in replacements:
@@ -119,5 +120,5 @@ for name in glob.glob('%s/*.html' % html_dir):
   except ValueError:
     print('Skipping breadcrumb strip for', name)
 
-  with open(name, 'w') as fptr:
+  with io.open(name, 'w', encoding="utf-8") as fptr:
     fptr.write(out)
