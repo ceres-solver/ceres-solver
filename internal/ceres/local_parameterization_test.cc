@@ -29,6 +29,7 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include <cmath>
+#include <limits>
 #include "ceres/autodiff_local_parameterization.h"
 #include "ceres/fpclassify.h"
 #include "ceres/householder_vector.h"
@@ -244,7 +245,9 @@ void QuaternionParameterizationTestHelper(const double* x,
                                       local_matrix.data());
   Matrix expected_local_matrix =
       global_matrix * MatrixRef(jacobian, kGlobalSize, kLocalSize);
-  EXPECT_EQ((local_matrix - expected_local_matrix).norm(), 0.0);
+  EXPECT_NEAR((local_matrix - expected_local_matrix).norm(),
+              0.0,
+              std::numeric_limits<double>::epsilon());
 }
 
 template <int N>
