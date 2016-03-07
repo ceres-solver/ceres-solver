@@ -1,5 +1,5 @@
-Ceres Solver - A large scale non-linear optimization library
-============================================================
+Ceres Solver
+============
 
 Ceres Solver is an open source C++ library for modeling and solving
 large, complicated optimization problems. It is a feature rich, mature
