@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17f7d148_83266253",
+        "filename": "internal/ceres/trust_region_minimizer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-03-07T05:08:43Z",
+      "side": 1,
+      "message": "seconds?",
+      "revId": "c813d6f8c4439618c09f3ed0ba459ba68774e19c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
