@@ -736,6 +736,53 @@ installed ``CeresConfig.cmake`` file (e.g. ``/usr/local/share/Ceres``).  If
 Ceres was exported, then ``Ceres_DIR`` should be the path to the exported
 Ceres build directory.
 
+Specify Ceres components
+-------------------------------------
+
+You can specify particular Ceres components that you require (in order for Ceres
+to be reported as found) when invoking ``find_package(Ceres)``.  This allows you
+to specify, for example, that you require a version of Ceres built with
+SuiteSparse support.  By definition, if you do not specify any components when
+calling ``find_package(Ceres)`` (the default) any version of Ceres detected will
+be reported as found, irrespective of which components it was built with.
+
+The Ceres components which can be specified are:
+
+#. ``LAPACK``: Ceres built using LAPACK (``LAPACK=ON``).
+
+#. ``SuiteSparse``: Ceres built with SuiteSparse (``SUITESPARSE=ON``).
+
+#. ``CXSparse``: Ceres built with CXSparse (``CXSPARSE=ON``).
+
+#. ``EigenSparse``: Ceres built with Eigen's sparse Cholesky factorization
+   (``EIGENSPARSE=ON``).
+
+#. ``SparseLinearAlgebraLibrary``: Ceres built with *at least one* sparse linear
+   algebra library.  This is equivalent to ``SuiteSparse`` **OR** ``CXSparse``
+   **OR** ``EigenSparse``.
+
+#. ``SchurSpecializations``: Ceres built with Schur specializations
+   (``SCHUR_SPECIALIZATIONS=ON``).
+
+#. ``OpenMP``: Ceres built with OpenMP (``OPENMP=ON``).
+
+#. ``C++11``: Ceres built with C++11 (``CXX11=ON``).
+
+To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
+`find_package()
+<http://www.cmake.org/cmake/help/v3.2/command/find_package.html>`_ like so:
+
+.. code-block:: cmake
+
+    # Find a version of Ceres compiled with SuiteSparse & EigenSparse support.
+    #
+    # NOTE: This will report Ceres as **not** found if the detected version of
+    #            Ceres was not compiled with both SuiteSparse & EigenSparse.
+    #            Remember, if you have multiple versions of Ceres installed, you
+    #            can use Ceres_DIR to specify which should be used.
+    find_package(Ceres REQUIRED COMPONENTS SuiteSparse EigenSparse)
+
+
 Specify Ceres version
 ---------------------
 
