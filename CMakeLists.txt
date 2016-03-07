@@ -750,6 +750,12 @@ endif (MINIGLOG)
 #       path is present in CMAKE_MODULE_PATH when find_package(Ceres) is called,
 #       the installed version is preferred.
 
+# Build the list of Ceres components for CeresConfig.cmake from the current set
+# of compile options.
+include(CeresCompileOptionsToComponents)
+ceres_compile_options_to_components("${CERES_COMPILE_OPTIONS}"
+  CERES_COMPILED_COMPONENTS)
+
 # Create a CeresConfigVersion.cmake file containing the version information,
 # used by both export() & install().
 configure_file("${CMAKE_SOURCE_DIR}/cmake/CeresConfigVersion.cmake.in"
