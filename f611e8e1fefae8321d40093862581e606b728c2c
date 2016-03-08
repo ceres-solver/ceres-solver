@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17aa7153_255a2e21",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-03-08T00:59:21Z",
+      "side": 1,
+      "message": "Is this duplicated below? It seems weird to have such similar code.",
+      "revId": "f611e8e1fefae8321d40093862581e606b728c2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
