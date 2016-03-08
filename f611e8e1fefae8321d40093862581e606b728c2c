@@ -16,6 +16,24 @@
       "revId": "f611e8e1fefae8321d40093862581e606b728c2c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b7c1a56e_9aa3edc9",
+        "filename": "cmake/CeresCompileOptionsToComponents.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-03-08T22:09:49Z",
+      "side": 1,
+      "message": "It\u0027s not quite duplicated, it was s/t we could cleanly deal with the USE_XXX (positive) and NO_XXX (negative) option types below - I will upload another attempt.",
+      "parentUuid": "17aa7153_255a2e21",
+      "revId": "f611e8e1fefae8321d40093862581e606b728c2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
