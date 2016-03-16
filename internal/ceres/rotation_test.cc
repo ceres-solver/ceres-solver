@@ -711,11 +711,12 @@ bool IsClose(double x, double y) {
 
 template <int N>
 bool IsClose(const Jet<double, N> &x, const Jet<double, N> &y) {
-  if (IsClose(x.a, y.a)) {
-    for (int i = 0; i < N; i++) {
-      if (!IsClose(x.v[i], y.v[i])) {
-        return false;
-      }
+  if (!IsClose(x.a, y.a)) {
+    return false;
+  }
+  for (int i = 0; i < N; i++) {
+    if (!IsClose(x.v[i], y.v[i])) {
+      return false;
     }
   }
   return true;
@@ -814,9 +815,9 @@ TEST(Rotation, SmallQuaternionToAngleAxisForJets) {
     J4 quaternion[4] = { J4(c, 0), J4(s, 1), J4(0, 2), J4(0, 3) };
     J4 axis_angle[3];
     J4 expected[3] = {
-        MakeJ4(s, -2*theta, 2*theta*c, 0, 0),
-        MakeJ4(0, 0, 0, 2*theta/s, 0),
-        MakeJ4(0, 0, 0, 0, 2*theta/s),
+        MakeJ4(2*theta, -2*s, 2*c,  0,         0),
+        MakeJ4(0,        0,   0,    2*theta/s, 0),
+        MakeJ4(0,        0,   0,    0,         2*theta/s),
     };
     QuaternionToAngleAxis(quaternion, axis_angle);
     ExpectJetArraysClose<3, 4>(axis_angle, expected);
@@ -837,9 +838,9 @@ TEST(Rotation, TinyQuaternionToAngleAxisForJets) {
     // a finite expansion is used here, which will
     // be exact up to machine precision for the test values used.
     J4 expected[3] = {
-        MakeJ4(theta, -2*theta, 2.0, 0, 0),
-        MakeJ4(0, 0, 0, 2.0, 0),
-        MakeJ4(0, 0, 0, 0, 2.0),
+        MakeJ4(2*theta, -2*s, 2.0, 0,   0),
+        MakeJ4(0,        0,   0,   2.0, 0),
+        MakeJ4(0,        0,   0,   0,   2.0),
     };
     QuaternionToAngleAxis(quaternion, axis_angle);
     ExpectJetArraysClose<3, 4>(axis_angle, expected);
