@@ -746,7 +746,15 @@ template<typename T, int N> inline       Jet<T, N>  ei_pow (const Jet<T, N>& x, 
 // strange compile errors.
 template <typename T, int N>
 inline std::ostream &operator<<(std::ostream &s, const Jet<T, N>& z) {
-  return s << "[" << z.a << " ; " << z.v.transpose() << "]";
+  s << "[" << z.a << " ; ";
+  for (int i = 0; i < N; ++i) {
+    s << z.v[i];
+    if (i != N - 1) {
+      s << ", ";
+    }
+  }
+  s << "]";
+  return s;
 }
 
 }  // namespace ceres
