@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6a4eda_1d3ad31c",
+        "filename": "internal/ceres/rotation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2016-03-16T18:36:47Z",
+      "side": 1,
+      "message": "just rotation_matrix",
+      "range": {
+        "startLine": 670,
+        "startChar": 11,
+        "endLine": 670,
+        "endChar": 38
+      },
+      "revId": "2a6330396b445c02203f59c4ed68b9190bff4d5f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
