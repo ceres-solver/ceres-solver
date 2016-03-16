@@ -616,9 +616,10 @@ static void Transpose3x3(double m[9]) {
 }
 
 // Convert Euler angles from radians to degrees.
-static void ToDegrees(double ea[3]) {
-  for (int i = 0; i < 3; ++i)
-    ea[i] *= 180.0 / kPi;
+static void ToDegrees(double euler_angles[3]) {
+  for (int i = 0; i < 3; ++i) {
+    euler_angles[i] *= 180.0 / kPi;
+  }
 }
 
 // Compare the 3x3 rotation matrices produced by the axis-angle
@@ -662,13 +663,13 @@ TEST(EulerAnglesToRotationMatrix, OnAxis) {
 TEST(EulerAnglesToRotationMatrix, IsOrthonormal) {
   srand(5);
   for (int trial = 0; trial < kNumTrials; ++trial) {
-    double ea[3];
-    for (int i = 0; i < 3; ++i)
-      ea[i] = 360.0 * (RandDouble() * 2.0 - 1.0);
-    double ea_matrix[9];
-    ToDegrees(ea);  // Radians to degrees.
-    EulerAnglesToRotationMatrix(ea, 3, ea_matrix);
-    EXPECT_THAT(ea_matrix, IsOrthonormal());
+    double euler_angles_degrees[3];
+    for (int i = 0; i < 3; ++i) {
+      euler_angles_degrees[i] = RandDouble() * 360.0 - 180.0;
+    }
+    double rotation_matrix[9];
+    EulerAnglesToRotationMatrix(euler_angles_degrees, 3, rotation_matrix);
+    EXPECT_THAT(rotation_matrix, IsOrthonormal());
   }
 }
 
@@ -696,7 +697,6 @@ J4 MakeJ4(double a, double v0, double v1, double v2, double v3) {
   j.v[3] = v3;
   return j;
 }
-
 
 bool IsClose(double x, double y) {
   EXPECT_FALSE(IsNaN(x));
