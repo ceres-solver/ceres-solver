@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71f3bdea_35607873",
+        "filename": "docs/source/building.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-03-28T20:35:04Z",
+      "side": 1,
+      "message": "I wonder if it would be best to support simply \"SparseCholesky\" instead of these specific packages. For example, I don\u0027t care if CHOLMOD or EigenSparse is used; more that the installed Ceres version is capable of dealing with large sparse systems.\n\nDo we really want to support detecting LAPACK on/off? I suggest we restrict these flags to ones where there is a reasonable use case.",
+      "revId": "643e04e649edf09909897d00fe8575122c627359",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
