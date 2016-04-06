@@ -573,6 +573,16 @@ void ProblemImpl::SetParameterBlockConstant(double* values) {
   parameter_block->SetConstant();
 }
 
+bool ProblemImpl::IsParameterBlockConstant(double* values) const {
+  const ParameterBlock* parameter_block =
+      FindWithDefault(parameter_block_map_, values, NULL);
+  CHECK(parameter_block != NULL)
+    << "Parameter block not found: " << values << ". You must add the "
+    << "parameter block to the problem before it can be queried.";
+
+  return parameter_block->IsConstant();
+}
+
 void ProblemImpl::SetParameterBlockVariable(double* values) {
   ParameterBlock* parameter_block =
       FindWithDefault(parameter_block_map_, values, NULL);
