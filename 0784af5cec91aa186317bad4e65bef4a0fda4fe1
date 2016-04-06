@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea598c6_c86d1e90",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-04-06T12:21:36Z",
+      "side": 1,
+      "message": "\"during optimization\" is not true, since that requires a call to solve. So dropping those two words is better.",
+      "revId": "0784af5cec91aa186317bad4e65bef4a0fda4fe1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
