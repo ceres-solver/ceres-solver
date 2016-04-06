@@ -104,6 +104,24 @@
       "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ea598c6_2d92547a",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-06T21:45:46Z",
+      "side": 1,
+      "message": "Ah, sorry you\u0027re right. Yes, use CHECK(x!\u003dNULL)\n\nNote that we don\u0027t require C++11 so use NULL instead of nullptr.",
+      "parentUuid": "4e31b481_1648fc06",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
