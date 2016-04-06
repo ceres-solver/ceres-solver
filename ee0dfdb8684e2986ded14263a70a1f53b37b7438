@@ -36,6 +36,42 @@
     },
     {
       "key": {
+        "uuid": "0e2b3c19_f43458c1",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5555
+      },
+      "writtenOn": "2016-04-06T21:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea598c6_3253d1bf",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee4c2816_1edec926",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5555
+      },
+      "writtenOn": "2016-04-06T21:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea598c6_1258cdd5",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea598c6_d25145b3",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2016-04-06T21:28:56Z",
       "side": 1,
       "message": "Instead use CHECK_NOTNULL(parameter_block) \u003c\u003c ...",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e31b481_1648fc06",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5555
+      },
+      "writtenOn": "2016-04-06T21:42:33Z",
+      "side": 1,
+      "message": "CHECK_NOTNULL will not work as it forwards the pointer and does not accept a stream message.\n\nShould I use \"CHECK(x !\u003d nullptr) \u003c\u003c ...\" instead?",
+      "parentUuid": "6ea598c6_d25145b3",
       "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
