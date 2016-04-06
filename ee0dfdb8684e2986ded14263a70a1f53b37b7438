@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea598c6_1258cdd5",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-06T21:28:56Z",
+      "side": 1,
+      "message": "Please use\n\n  // Returns true if a parameter block is constant and false otherwise.\n\nsince CHECK() is a macro inside Ceres that faults.",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ea598c6_3253d1bf",
+        "filename": "include/ceres/problem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-06T21:28:56Z",
+      "side": 1,
+      "message": "// Returns true if a parameter block is set constant, and false otherwise.\n\nIn Ceres, CHECK() is a macro that causes a fault, so we try to be strict on language.",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ea598c6_d25145b3",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-06T21:28:56Z",
+      "side": 1,
+      "message": "Instead use CHECK_NOTNULL(parameter_block) \u003c\u003c ...",
+      "revId": "ee0dfdb8684e2986ded14263a70a1f53b37b7438",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
