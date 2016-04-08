@@ -187,7 +187,7 @@ the corresponding accessors. This information will be verified by the
        // Ignore the template parameter kNumResiduals and use
        // num_residuals instead.
        AutoDiffCostFunction(CostFunctor* functor, int num_residuals);
-     }g
+     };
 
    To get an auto differentiated cost function, you must define a
    class with a templated ``operator()`` (a functor) that computes the
