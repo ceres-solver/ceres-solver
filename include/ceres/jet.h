@@ -391,6 +391,8 @@ inline double atan    (double x) { return std::atan(x);     }
 inline double sinh    (double x) { return std::sinh(x);     }
 inline double cosh    (double x) { return std::cosh(x);     }
 inline double tanh    (double x) { return std::tanh(x);     }
+inline double floor   (double x) { return std::floor(x);    }
+inline double ceil    (double x) { return std::ceil(x);     }
 inline double pow  (double x, double y) { return std::pow(x, y);   }
 inline double atan2(double y, double x) { return std::atan2(y, x); }
 
@@ -483,6 +485,24 @@ Jet<T, N> tanh(const Jet<T, N>& f) {
   const T tanh_a = tanh(f.a);
   const T tmp = T(1.0) - tanh_a * tanh_a;
   return Jet<T, N>(tanh_a, tmp * f.v);
+}
+
+// The floor function should be used with extreme care as this operation will
+// result in a zero derivative which provides no information to the solver.
+//
+// floor(a + h) ~= floor(a) + 0
+template <typename T, int N> inline
+Jet<T, N> floor(const Jet<T, N>& f) {
+  return Jet<T, N>(floor(f.a));
+}
+
+// The ceil function should be used with extreme care as this operation will
+// result in a zero derivative which provides no information to the solver.
+//
+// ceil(a + h) ~= ceil(a) + 0
+template <typename T, int N> inline
+Jet<T, N> ceil(const Jet<T, N>& f) {
+  return Jet<T, N>(ceil(f.a));
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.

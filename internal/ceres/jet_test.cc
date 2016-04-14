@@ -469,6 +469,48 @@ TEST(Jet, Jet) {
     // See formula http://dlmf.nist.gov/10.6.E1
     ExpectJetsClose(BesselJ0(z) + BesselJn(2, z), (2.0 / z) * BesselJ1(z));
   }
+
+  { // Check that floor of a positive number works.
+    J a = MakeJet(0.1, -2.7, 1e-3);
+    J b = floor(a);
+    J expected = MakeJet(floor(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
+
+  { // Check that floor of a negative number works.
+    J a = MakeJet(-1.1, -2.7, 1e-3);
+    J b = floor(a);
+    J expected = MakeJet(floor(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
+
+  { // Check that floor of a positive number works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = floor(a);
+    J expected = MakeJet(floor(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
+
+  { // Check that ceil of a positive number works.
+    J a = MakeJet(0.1, -2.7, 1e-3);
+    J b = ceil(a);
+    J expected = MakeJet(ceil(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
+
+  { // Check that ceil of a negative number works.
+    J a = MakeJet(-1.1, -2.7, 1e-3);
+    J b = ceil(a);
+    J expected = MakeJet(ceil(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
+
+  { // Check that ceil of a positive number works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = ceil(a);
+    J expected = MakeJet(ceil(a.a), 0.0, 0.0);
+    ExpectJetsClose(expected, b);
+  }
 }
 
 TEST(Jet, JetsInEigenMatrices) {
