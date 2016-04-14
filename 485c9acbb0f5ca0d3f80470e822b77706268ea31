@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bcb66e2_e1281d37",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-14T18:39:26Z",
+      "side": 1,
+      "message": "Put these above with the other single-argument functions and match indents",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb66e2_0138d97e",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-14T18:39:26Z",
+      "side": 1,
+      "message": "Wow, I hope this works! At boundaries it\u0027s wrong.",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb66e2_014f390f",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-14T18:39:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this constructor does what you think it does.",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb66e2_61ef0d12",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-14T18:39:26Z",
+      "side": 1,
+      "message": "This is not checking the derivative component, nor do the others. Please extend the tests.",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
