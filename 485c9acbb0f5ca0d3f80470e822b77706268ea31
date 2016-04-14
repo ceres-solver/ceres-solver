@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4bcb66e2_5c7bdac3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-04-14T19:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcb66e2_e1281d37",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bcb66e2_0138d97e",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-04-14T18:39:26Z",
       "side": 1,
       "message": "Wow, I hope this works! At boundaries it\u0027s wrong.",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb66e2_bce5ae84",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-04-14T19:44:03Z",
+      "side": 1,
+      "message": "I know the boundaries are wrong. I compared this to how the other AD libraries (autograd, torch, stan math, julia) and they all implement the derivative as zero everywhere.\n\nNote, you encounter the same thing with the way abs is defined. At 0 it is undefined and wrong.",
+      "parentUuid": "4bcb66e2_0138d97e",
       "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4bcb66e2_fc6c4607",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-04-14T19:44:03Z",
+      "side": 1,
+      "message": "Thank you for the catch, I didn\u0027t realize the other constructor was defined for eigen types.",
+      "parentUuid": "4bcb66e2_014f390f",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bcb66e2_61ef0d12",
         "filename": "internal/ceres/jet_test.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2016-04-14T18:39:26Z",
       "side": 1,
       "message": "This is not checking the derivative component, nor do the others. Please extend the tests.",
+      "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb66e2_5ccbdac9",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-04-14T19:44:03Z",
+      "side": 1,
+      "message": "I should never forget Sameer\u0027s wisdom \"if it isn\u0027t unit tested it is provably wrong.\"",
+      "parentUuid": "4bcb66e2_61ef0d12",
       "revId": "485c9acbb0f5ca0d3f80470e822b77706268ea31",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
