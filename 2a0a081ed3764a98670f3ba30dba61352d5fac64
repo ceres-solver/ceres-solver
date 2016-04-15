@@ -46,6 +46,30 @@
       "revId": "2a0a081ed3764a98670f3ba30dba61352d5fac64",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b39d2b4_364b7e32",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-15T01:12:11Z",
+      "side": 1,
+      "message": "I\u0027m OK with merging this. If you have a real use case for this function, you probably won\u0027t be the last.",
+      "parentUuid": "2b39d2b4_3627fea8",
+      "range": {
+        "startLine": 490,
+        "startChar": 30,
+        "endLine": 490,
+        "endChar": 31
+      },
+      "revId": "2a0a081ed3764a98670f3ba30dba61352d5fac64",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
