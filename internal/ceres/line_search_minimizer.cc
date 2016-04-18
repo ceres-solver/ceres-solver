@@ -341,10 +341,12 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           "as the step was valid when it was selected by the line search.";
       LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
       break;
-    } else if (!Evaluate(evaluator,
-                         x_plus_delta,
-                         &current_state,
-                         &summary->message)) {
+    }
+
+    if (!Evaluate(evaluator,
+                  x_plus_delta,
+                  &current_state,
+                  &summary->message)) {
       summary->termination_type = FAILURE;
       summary->message =
           "Step failed to evaluate. This should not happen as the step was "
@@ -352,15 +354,16 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
           summary->message;
       LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
       break;
-    } else {
-      x = x_plus_delta;
     }
+
+    iteration_summary.step_norm = (x_plus_delta - x).norm();
+    x = x_plus_delta;
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
     iteration_summary.cost_change = previous_state.cost - current_state.cost;
     iteration_summary.cost = current_state.cost + summary->fixed_cost;
-    iteration_summary.step_norm = delta.norm();
+
     iteration_summary.step_is_valid = true;
     iteration_summary.step_is_successful = true;
     iteration_summary.step_size =  current_state.step_size;
