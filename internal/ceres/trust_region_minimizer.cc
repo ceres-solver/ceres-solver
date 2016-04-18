@@ -665,6 +665,7 @@ bool TrustRegionMinimizer::MinTrustRegionRadiusReached() {
 
 // Solver::Options::parameter_tolerance based convergence check.
 bool TrustRegionMinimizer::ParameterToleranceReached() {
+  // Compute the norm of the step in the ambient space.
   iteration_summary_.step_norm = (x_ - candidate_x_).norm();
   const double step_size_tolerance =
       options_.parameter_tolerance * (x_norm_ + options_.parameter_tolerance);
