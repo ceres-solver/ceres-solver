@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8275cf3_706928f5",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-19T00:02:13Z",
+      "side": 1,
+      "message": "Perhaps comment that this is done in ambient space instead of local space, on purpose. Likely a matching comment should get put in the TR loop as well.",
+      "revId": "a757307a6f48bec4b38b659d16d3416f9cba26b2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
