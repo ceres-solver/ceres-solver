@@ -474,42 +474,42 @@ TEST(Jet, Jet) {
     J a = MakeJet(0.1, -2.7, 1e-3);
     J b = floor(a);
     J expected = MakeJet(floor(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 
   { // Check that floor of a negative number works.
     J a = MakeJet(-1.1, -2.7, 1e-3);
     J b = floor(a);
     J expected = MakeJet(floor(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 
   { // Check that floor of a positive number works.
     J a = MakeJet(10.123, -2.7, 1e-3);
     J b = floor(a);
     J expected = MakeJet(floor(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 
   { // Check that ceil of a positive number works.
     J a = MakeJet(0.1, -2.7, 1e-3);
     J b = ceil(a);
     J expected = MakeJet(ceil(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 
   { // Check that ceil of a negative number works.
     J a = MakeJet(-1.1, -2.7, 1e-3);
     J b = ceil(a);
     J expected = MakeJet(ceil(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 
   { // Check that ceil of a positive number works.
     J a = MakeJet(10.123, -2.7, 1e-3);
     J b = ceil(a);
     J expected = MakeJet(ceil(a.a), 0.0, 0.0);
-    ExpectJetsClose(expected, b);
+    EXPECT_EQ(expected, b);
   }
 }
 
