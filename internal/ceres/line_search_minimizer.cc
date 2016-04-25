@@ -191,6 +191,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       options.line_search_sufficient_curvature_decrease;
   line_search_options.max_step_expansion =
       options.max_line_search_step_expansion;
+  line_search_options.is_silent = options.is_silent;
   line_search_options.function = &line_search_function;
 
   scoped_ptr<LineSearch>
