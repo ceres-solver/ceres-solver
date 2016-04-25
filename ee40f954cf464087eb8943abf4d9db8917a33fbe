@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "085974e9_4b5a3dfd",
+        "filename": "docs/source/users.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-25T05:43:29Z",
+      "side": 1,
+      "message": "Extra \u0027l\u0027",
+      "revId": "ee40f954cf464087eb8943abf4d9db8917a33fbe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "085974e9_2b5581cc",
+        "filename": "docs/source/users.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-04-25T05:43:29Z",
+      "side": 1,
+      "message": "Maybe this should be indented?",
+      "revId": "ee40f954cf464087eb8943abf4d9db8917a33fbe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
