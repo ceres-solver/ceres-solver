@@ -296,7 +296,8 @@ class SchurEliminator : public SchurEliminatorBase {
                  const double* inverse_ete_g,
                  double* rhs);
 
-  void ChunkOuterProduct(const CompressedRowBlockStructure* bs,
+  void ChunkOuterProduct(int thread_id,
+                         const CompressedRowBlockStructure* bs,
                          const Matrix& inverse_eet,
                          const double* buffer,
                          const BufferLayoutType& buffer_layout,

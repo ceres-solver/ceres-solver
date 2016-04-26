@@ -385,7 +385,7 @@ TEST_F(BundleAdjustmentTest, SparseSchurWithUserOrderingUsingEigenSparse) {
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
-#ifdef CERES_USE_OPENMP
+#ifndef CERES_NO_THREADS
 
 TEST_F(BundleAdjustmentTest, MultiThreadedDenseSchurWithAutomaticOrdering) {
   RunSolverForConfigAndExpectResidualsMatch(
@@ -555,7 +555,7 @@ TEST_F(BundleAdjustmentTest,
       ThreadedSolverConfig(SPARSE_SCHUR, EIGEN_SPARSE, kUserOrdering));
 }
 #endif  // CERES_USE_EIGEN_SPARSE
-#endif  // CERES_USE_OPENMP
+#endif  // !CERES_NO_THREADS
 
 }  // namespace internal
 }  // namespace ceres
