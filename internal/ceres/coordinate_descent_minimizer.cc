@@ -29,9 +29,11 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/coordinate_descent_minimizer.h"
+#include "ceres/thread_id.h"
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
+#ifdef CERES_USE_TBB
+#include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
 #endif
 
 #include <iterator>
@@ -154,24 +156,42 @@ void CoordinateDescentMinimizer::Minimize(
       continue;
     }
 
-#ifdef CERES_USE_OPENMP
+    ThreadId tid;
+
+#ifndef CERES_NO_THREADS
     const int num_inner_iteration_threads =
         min(options.num_threads, num_problems);
     evaluator_options_.num_threads =
         max(1, options.num_threads / num_inner_iteration_threads);
+#endif // !CERES_NO_THREADS
 
+
+#ifdef CERES_USE_OPENMP
     // The parameter blocks in each independent set can be optimized
     // in parallel, since they do not co-occur in any residual block.
 #pragma omp parallel for num_threads(num_inner_iteration_threads)
-#endif
     for (int j = independent_set_offsets_[i];
          j < independent_set_offsets_[i + 1];
          ++j) {
-#ifdef CERES_USE_OPENMP
-      const int thread_id = omp_get_thread_num();
-#else
-      const int thread_id = 0;
-#endif
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_USE_TBB
+    tbb::task_scheduler_init tbb_tsi = {num_inner_iteration_threads};
+    tbb::parallel_for(independent_set_offsets_[i],
+                      independent_set_offsets_[i + 1],
+                      [&](int j) {
+#endif // CERES_USE_TBB
+
+#ifdef CERES_NO_THREADS
+    for (int j = independent_set_offsets_[i];
+         j < independent_set_offsets_[i + 1];
+         ++j) {
+#endif // CERES_NO_THREADS
+
+      const int thread_id = tid.id();
+#ifndef CERES_NO_THREADS
+      assert(thread_id < num_inner_iteration_threads && "Too many threads");
+#endif // !CERES_NO_THREADS
 
       ParameterBlock* parameter_block = parameter_blocks_[j];
       const int old_index = parameter_block->index();
@@ -203,6 +223,9 @@ void CoordinateDescentMinimizer::Minimize(
       parameter_block->SetState(parameters + parameter_block->state_offset());
       parameter_block->SetConstant();
     }
+#ifdef CERES_USE_TBB
+  );
+#endif
   }
 
   for (int i =  0; i < parameter_blocks_.size(); ++i) {

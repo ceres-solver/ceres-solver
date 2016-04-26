@@ -48,10 +48,6 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
-#endif
-
 #include <algorithm>
 #include <map>
 #include "ceres/block_random_access_matrix.h"
@@ -65,8 +61,14 @@
 #include "ceres/schur_eliminator.h"
 #include "ceres/small_blas.h"
 #include "ceres/stl_util.h"
+#include "ceres/thread_id.h"
 #include "Eigen/Dense"
 #include "glog/logging.h"
+
+#ifdef CERES_USE_TBB
+#include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
+#endif
 
 namespace ceres {
 namespace internal {
@@ -208,6 +210,9 @@ Eliminate(const BlockSparseMatrix* A,
     }
   }
 
+  ThreadId tid;
+
+#ifdef CERES_USE_OPENMP
   // Eliminate y blocks one chunk at a time.  For each chunk, compute
   // the entries of the normal equations and the gradient vector block
   // corresponding to the y block and then apply Gaussian elimination
@@ -223,11 +228,20 @@ Eliminate(const BlockSparseMatrix* A,
   // for the lhs of the reduced linear system.
 #pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
   for (int i = 0; i < chunks_.size(); ++i) {
-#ifdef CERES_USE_OPENMP
-    const int thread_id = omp_get_thread_num();
-#else
-    const int thread_id = 0;
-#endif
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_USE_TBB
+  tbb::task_scheduler_init tbb_tsi = {num_threads_};
+  tbb::parallel_for(0, int(chunks_.size()), [&](int i) {
+#endif // CERES_USE_TBB
+
+#ifdef CERES_NO_THREADS
+  for (int i = 0; i < chunks_.size(); ++i) {
+#endif // CERES_NO_THREADS
+
+    const int thread_id = tid.id();
+    assert(thread_id < num_threads_ && "Too many threads");
+
     double* buffer = buffer_.get() + thread_id * buffer_size_;
     const Chunk& chunk = chunks_[i];
     const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
@@ -289,8 +303,12 @@ Eliminate(const BlockSparseMatrix* A,
     UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
 
     // S -= F'E(E'E)^{-1}E'F
-    ChunkOuterProduct(bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
+    ChunkOuterProduct(
+        thread_id, bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
   }
+#ifdef CERES_USE_TBB
+    );
+#endif // CERES_USE_TBB
 
   // For rows with no e_blocks, the schur complement update reduces to
   // S += F'F.
@@ -496,7 +514,8 @@ ChunkDiagonalBlockAndGradient(
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void
 SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
-ChunkOuterProduct(const CompressedRowBlockStructure* bs,
+ChunkOuterProduct(int thread_id,
+                  const CompressedRowBlockStructure* bs,
                   const Matrix& inverse_ete,
                   const double* buffer,
                   const BufferLayoutType& buffer_layout,
@@ -508,11 +527,6 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
   const int e_block_size = inverse_ete.rows();
   BufferLayoutType::const_iterator it1 = buffer_layout.begin();
 
-#ifdef CERES_USE_OPENMP
-  const int thread_id = omp_get_thread_num();
-#else
-  const int thread_id = 0;
-#endif
   double* b1_transpose_inverse_ete =
       chunk_outer_product_buffer_.get() + thread_id * buffer_size_;
 

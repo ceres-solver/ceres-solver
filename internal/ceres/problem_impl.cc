@@ -746,7 +746,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   // the Evaluator decides the storage for the Jacobian based on the
   // type of linear solver being used.
   evaluator_options.linear_solver_type = SPARSE_NORMAL_CHOLESKY;
-#ifndef CERES_USE_OPENMP
+#ifdef CERES_NO_THREADS
   LOG_IF(WARNING, evaluate_options.num_threads > 1)
       << "OpenMP support is not compiled into this binary; "
       << "only evaluate_options.num_threads = 1 is supported. Switching "
@@ -754,7 +754,7 @@ bool ProblemImpl::Evaluate(const Problem::EvaluateOptions& evaluate_options,
   evaluator_options.num_threads = 1;
 #else
   evaluator_options.num_threads = evaluate_options.num_threads;
-#endif  // CERES_USE_OPENMP
+#endif  // CERES_NO_THREADS
 
   scoped_ptr<Evaluator> evaluator(
       new ProgramEvaluator<ScratchEvaluatePreparer,

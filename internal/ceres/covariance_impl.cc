@@ -29,9 +29,11 @@
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
 #include "ceres/covariance_impl.h"
+#include "ceres/thread_id.h"
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
+#ifdef CERES_USE_TBB
+#include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
 #endif
 
 #include <algorithm>
@@ -75,7 +77,7 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
       is_computed_(false),
       is_valid_(false) {
-#ifndef CERES_USE_OPENMP
+#ifdef CERES_NO_THREADS
   if (options_.num_threads > 1) {
     LOG(WARNING)
         << "OpenMP support is not compiled into this binary; "
@@ -339,6 +341,9 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   bool success = true;
 
+  ThreadId tid;
+
+#ifdef CERES_USE_OPENMP
 // The collapse() directive is only supported in OpenMP 3.0 and higher. OpenMP
 // 3.0 was released in May 2008 (hence the version number).
 #if _OPENMP >= 200805
@@ -348,6 +353,19 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #endif
   for (int i = 0; i < num_parameters; ++i) {
     for (int j = 0; j < num_parameters; ++j) {
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_USE_TBB
+  tbb::task_scheduler_init tbb_tsi = {num_threads};
+  tbb::parallel_for(0, num_parameters, [&](int i) {
+    tbb::parallel_for(i, num_parameters, [&](int j) {
+#endif // CERES_USE_TBB
+
+#ifdef CERES_NO_THREADS
+  for (int i = 0; i < num_parameters; ++i) {
+    for (int j = i; j < num_parameters; ++j) {
+#endif // CERES_NO_THREADS
+
       // The second loop can't start from j = i for compatibility with OpenMP
       // collapse command. The conditional serves as a workaround
       if (j >= i) {
@@ -355,11 +373,8 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
         int covariance_col_idx = cum_parameter_size[j];
         int size_i = parameter_sizes[i];
         int size_j = parameter_sizes[j];
-#ifdef CERES_USE_OPENMP
-        const int thread_id = omp_get_thread_num();
-#else
-        const int thread_id = 0;
-#endif
+        const int thread_id = tid.id();
+        assert(thread_id < num_threads && "Too many threads");
         double* covariance_block =
             workspace.get() +
             thread_id * max_covariance_block_size * max_covariance_block_size;
@@ -381,7 +396,13 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
         }
       }
     }
+#ifdef CERES_USE_TBB
+    );
+#endif // CERES_USE_TBB
   }
+#ifdef CERES_USE_TBB
+  );
+#endif // CERES_USE_TBB
   return success;
 }
 
@@ -696,33 +717,45 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
 
+  ThreadId tid;
+
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
   for (int r = 0; r < num_cols; ++r) {
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_USE_TBB
+  tbb::task_scheduler_init tbb_tsi = {num_threads};
+  tbb::parallel_for(0, num_cols, [&](int r) {
+#endif // CERES_USE_TBB
+
+#ifdef CERES_NO_THREADS
+  for (int r = 0; r < num_cols; ++r) {
+#endif // CERES_NO_THREADS
+
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
-    if (row_end == row_begin) {
-      continue;
-    }
+    if (row_end != row_begin) {
+      const int thread_id = tid.id();
+      assert(thread_id < num_threads && "Too many threads");
 
-#  ifdef CERES_USE_OPENMP
-    const int thread_id = omp_get_thread_num();
-#  else
-    const int thread_id = 0;
-#  endif
-
-    double* solution = workspace.get() + thread_id * num_cols;
-    SolveRTRWithSparseRHS<SuiteSparse_long>(
-        num_cols,
-        static_cast<SuiteSparse_long*>(R->i),
-        static_cast<SuiteSparse_long*>(R->p),
-        static_cast<double*>(R->x),
-        inverse_permutation[r],
-        solution);
-    for (int idx = row_begin; idx < row_end; ++idx) {
-     const int c = cols[idx];
-     values[idx] = solution[inverse_permutation[c]];
+      double* solution = workspace.get() + thread_id * num_cols;
+      SolveRTRWithSparseRHS<SuiteSparse_long>(
+          num_cols,
+          static_cast<SuiteSparse_long*>(R->i),
+          static_cast<SuiteSparse_long*>(R->p),
+          static_cast<double*>(R->x),
+          inverse_permutation[r],
+          solution);
+      for (int idx = row_begin; idx < row_end; ++idx) {
+        const int c = cols[idx];
+        values[idx] = solution[inverse_permutation[c]];
+      }
     }
   }
+#ifdef CERES_USE_TBB
+  );
+#endif // CERES_USE_TBB
 
   free(permutation);
   cholmod_l_free_sparse(&R, &cc);
@@ -888,36 +921,49 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
 
+  ThreadId tid;
+
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
   for (int r = 0; r < num_cols; ++r) {
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_USE_TBB
+  tbb::task_scheduler_init tbb_tsi = {num_threads};
+  tbb::parallel_for(0, num_cols, [&](int r) {
+#endif // CERES_USE_TBB
+
+#ifdef CERES_NO_THREADS
+  for (int r = 0; r < num_cols; ++r) {
+#endif // CERES_NO_THREADS
+
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
-    if (row_end == row_begin) {
-      continue;
-    }
+    if (row_end != row_begin) {
+      const int thread_id = tid.id();
+      assert(thread_id < num_threads && "Too many threads");
 
-#  ifdef CERES_USE_OPENMP
-    const int thread_id = omp_get_thread_num();
-#  else
-    const int thread_id = 0;
-#  endif
+      double* solution = workspace.get() + thread_id * num_cols;
+      SolveRTRWithSparseRHS<int>(
+          num_cols,
+          qr_solver.matrixR().innerIndexPtr(),
+          qr_solver.matrixR().outerIndexPtr(),
+          &qr_solver.matrixR().data().value(0),
+          inverse_permutation.indices().coeff(r),
+          solution);
 
-    double* solution = workspace.get() + thread_id * num_cols;
-    SolveRTRWithSparseRHS<int>(
-        num_cols,
-        qr_solver.matrixR().innerIndexPtr(),
-        qr_solver.matrixR().outerIndexPtr(),
-        &qr_solver.matrixR().data().value(0),
-        inverse_permutation.indices().coeff(r),
-        solution);
-
-    // Assign the values of the computed covariance using the
-    // inverse permutation used in the QR factorization.
-    for (int idx = row_begin; idx < row_end; ++idx) {
-     const int c = cols[idx];
-     values[idx] = solution[inverse_permutation.indices().coeff(c)];
+      // Assign the values of the computed covariance using the
+      // inverse permutation used in the QR factorization.
+      for (int idx = row_begin; idx < row_end; ++idx) {
+       const int c = cols[idx];
+       values[idx] = solution[inverse_permutation.indices().coeff(c)];
+      }
     }
   }
+
+#ifdef CERES_USE_TBB
+  );
+#endif // CERES_USE_TBB
 
   event_logger.AddEvent("Inverse");
 
