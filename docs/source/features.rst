@@ -54,8 +54,8 @@ Why?
     of Non-linear Conjugate Gradients, BFGS and LBFGS.
 
 * **Speed** - Ceres Solver has been extensively optimized, with C++
-  templating, hand written linear algebra routines and OpenMP based
-  multithreading of the Jacobian evaluation and the linear solvers.
+  templating, hand written linear algebra routines and OpenMP or TBB
+  based multithreading of the Jacobian evaluation and the linear solvers.
 
 * **Solution Quality** Ceres is the `best performing`_ solver on the NIST
   problem set used by Mondragon and Borchers for benchmarking
