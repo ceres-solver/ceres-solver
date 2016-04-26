@@ -43,7 +43,7 @@
 // residual jacobians are written directly into their final position in the
 // block sparse matrix by the user's CostFunction; there is no copying.
 //
-// The evaluation is threaded with OpenMP.
+// The evaluation is threaded with OpenMP or TBB.
 //
 // The EvaluatePreparer and JacobianWriter interfaces are as follows:
 //
@@ -82,10 +82,6 @@
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
-#endif
-
 #include <map>
 #include <string>
 #include <vector>
@@ -95,7 +91,16 @@
 #include "ceres/parameter_block.h"
 #include "ceres/program.h"
 #include "ceres/residual_block.h"
+#include "ceres/scoped_thread_token.h"
 #include "ceres/small_blas.h"
+#include "ceres/thread_token_provider.h"
+
+#ifdef CERES_USE_TBB
+#include <atomic>
+
+#include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
+#endif
 
 namespace ceres {
 namespace internal {
@@ -115,15 +120,15 @@ class ProgramEvaluator : public Evaluator {
         jacobian_writer_(options, program),
         evaluate_preparers_(
             jacobian_writer_.CreateEvaluatePreparers(options.num_threads)) {
-#ifndef CERES_USE_OPENMP
+#ifdef CERES_NO_THREADS
     if (options_.num_threads > 1) {
       LOG(WARNING)
-          << "OpenMP support is not compiled into this binary; "
+          << "Neither OpenMP nor TBB support is compiled into this binary; "
           << "only options.num_threads = 1 is supported. Switching "
           << "to single threaded mode.";
       options_.num_threads = 1;
     }
-#endif
+#endif // CERES_NO_THREADS
 
     BuildResidualLayout(*program, &residual_layout_);
     evaluate_scratch_.reset(CreateEvaluatorScratch(*program,
@@ -169,24 +174,43 @@ class ProgramEvaluator : public Evaluator {
       }
     }
 
+    const int num_residual_blocks = program_->NumResidualBlocks();
+
+    ThreadTokenProvider thread_token_provider(options_.num_threads);
+
+#ifdef CERES_USE_OPENMP
     // This bool is used to disable the loop if an error is encountered
     // without breaking out of it. The remaining loop iterations are still run,
     // but with an empty body, and so will finish quickly.
     bool abort = false;
-    int num_residual_blocks = program_->NumResidualBlocks();
 #pragma omp parallel for num_threads(options_.num_threads)
     for (int i = 0; i < num_residual_blocks; ++i) {
 // Disable the loop instead of breaking, as required by OpenMP.
 #pragma omp flush(abort)
+#endif // CERES_USE_OPENMP
+
+#ifdef CERES_NO_THREADS
+    bool abort = false;
+    for (int i = 0; i < num_residual_blocks; ++i) {
+#endif // CERES_NO_THREADS
+
+#ifdef CERES_USE_TBB
+    std::atomic_bool abort(false);
+    tbb::task_scheduler_init tbb_task_scheduler_init(options_.num_threads);
+    tbb::parallel_for(0, num_residual_blocks, [&](int i) {
+#endif // CERES_USE_TBB
+
       if (abort) {
+#ifndef CERES_USE_TBB
         continue;
+#else
+        return;
+#endif // !CERES_USE_TBB
       }
 
-#ifdef CERES_USE_OPENMP
-      const int thread_id = omp_get_thread_num();
-#else
-      const int thread_id = 0;
-#endif
+      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
+      const int thread_id = scoped_thread_token.token();
+
       EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
       EvaluateScratch* scratch = &evaluate_scratch_[thread_id];
 
@@ -218,11 +242,18 @@ class ProgramEvaluator : public Evaluator {
               block_jacobians,
               scratch->residual_block_evaluate_scratch.get())) {
         abort = true;
+#ifdef CERES_USE_OPENMP
 // This ensures that the OpenMP threads have a consistent view of 'abort'. Do
 // the flush inside the failure case so that there is usually only one
 // synchronization point per loop iteration instead of two.
 #pragma omp flush(abort)
+#endif // CERES_USE_OPENMP
+
+#ifndef CERES_USE_TBB
         continue;
+#else
+        return;
+#endif // !CERES_USE_TBB
       }
 
       scratch->cost += block_cost;
@@ -255,6 +286,9 @@ class ProgramEvaluator : public Evaluator {
         }
       }
     }
+#ifdef CERES_USE_TBB
+    );
+#endif // CERES_USE_TBB
 
     if (!abort) {
       const int num_parameters = program_->NumEffectiveParameters();

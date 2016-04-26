@@ -30,8 +30,9 @@
 
 #include "ceres/coordinate_descent_minimizer.h"
 
-#ifdef CERES_USE_OPENMP
-#include <omp.h>
+#ifdef CERES_USE_TBB
+#include <tbb/parallel_for.h>
+#include <tbb/task_scheduler_init.h>
 #endif
 
 #include <iterator>
@@ -48,6 +49,8 @@
 #include "ceres/solver.h"
 #include "ceres/trust_region_minimizer.h"
 #include "ceres/trust_region_strategy.h"
+#include "ceres/thread_token_provider.h"
+#include "ceres/scoped_thread_token.h"
 
 namespace ceres {
 namespace internal {
@@ -148,30 +151,39 @@ void CoordinateDescentMinimizer::Minimize(
   for (int i = 0; i < independent_set_offsets_.size() - 1; ++i) {
     const int num_problems =
         independent_set_offsets_[i + 1] - independent_set_offsets_[i];
-    // No point paying the price for an OpemMP call if the set is of
-    // size zero.
+    // Avoid parallelization overhead call if the set is empty.
     if (num_problems == 0) {
       continue;
     }
 
-#ifdef CERES_USE_OPENMP
+
     const int num_inner_iteration_threads =
         min(options.num_threads, num_problems);
     evaluator_options_.num_threads =
         max(1, options.num_threads / num_inner_iteration_threads);
 
+    ThreadTokenProvider thread_token_provider(num_inner_iteration_threads);
+
+#ifdef CERES_USE_OPENMP
     // The parameter blocks in each independent set can be optimized
     // in parallel, since they do not co-occur in any residual block.
 #pragma omp parallel for num_threads(num_inner_iteration_threads)
 #endif
+
+#ifndef CERES_USE_TBB
     for (int j = independent_set_offsets_[i];
          j < independent_set_offsets_[i + 1];
          ++j) {
-#ifdef CERES_USE_OPENMP
-      const int thread_id = omp_get_thread_num();
 #else
-      const int thread_id = 0;
-#endif
+    tbb::task_scheduler_init tbb_task_scheduler_init(
+        num_inner_iteration_threads);
+    tbb::parallel_for(independent_set_offsets_[i],
+                      independent_set_offsets_[i + 1],
+                      [&](int j) {
+#endif // !CERES_USE_TBB
+
+      const ScopedThreadToken scoped_thread_token(&thread_token_provider);
+      const int thread_id = scoped_thread_token.token();
 
       ParameterBlock* parameter_block = parameter_blocks_[j];
       const int old_index = parameter_block->index();
@@ -203,6 +215,9 @@ void CoordinateDescentMinimizer::Minimize(
       parameter_block->SetState(parameters + parameter_block->state_offset());
       parameter_block->SetConstant();
     }
+#ifdef CERES_USE_TBB
+  );
+#endif
   }
 
   for (int i =  0; i < parameter_blocks_.size(); ++i) {

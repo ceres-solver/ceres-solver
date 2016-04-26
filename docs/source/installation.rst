@@ -89,6 +89,10 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
+-  `TBB <https://www.threadingbuildingblocks.org/>`_ is a C++11 template
+  library for parallel programming that optionally can be used as an alternative
+  to OpenMP. **Optional**
+
   On ``UNIX`` OSes other than Mac OS X we recommend `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and
   ``LAPACK`` routines. It is also possible to use `OpenBLAS
@@ -611,9 +615,12 @@ Options controlling Ceres configuration
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
    to disable multi-threading.
 
+#. ``TBB [Default: OFF]``: An alternative to ``OpenMP`` threading library that
+   requires C++11. This option is mutually exclusive to ``OpenMP``.
+
 #. ``CXX11 [Default: OFF]`` *Non-MSVC compilers only*.
 
-   Although Ceres does not currently use C++11, it does use
+   Although Ceres does not currently require C++11, it does use
    ``shared_ptr`` (required) and ``unordered_map`` (if available);
    both of which existed in the previous iterations of what became the
    C++11 standard: TR1 & C++0x.  As such, Ceres can compile on

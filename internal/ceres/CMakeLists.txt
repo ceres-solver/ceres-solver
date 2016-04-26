@@ -113,6 +113,7 @@ set(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    thread_token_provider.cc
     triplet_sparse_matrix.cc
     trust_region_preprocessor.cc
     trust_region_minimizer.cc
@@ -181,6 +182,13 @@ if (OPENMP_FOUND)
     list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
   endif()
 endif (OPENMP_FOUND)
+
+if (TBB_FOUND)
+  list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${TBB_tbb_LIBRARY})
+  if (NOT MSVC)
+    list(APPEND CERES_LIBRARY_PRIVATE_DEPENDENCIES ${CMAKE_THREAD_LIBS_INIT})
+  endif (NOT MSVC)
+endif (TBB_FOUND)
 
 set(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
