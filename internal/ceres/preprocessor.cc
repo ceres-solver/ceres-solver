@@ -56,7 +56,7 @@ Preprocessor::~Preprocessor() {
 }
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
-#ifndef CERES_USE_OPENMP
+#if !(defined(CERES_USE_OPENMP) || defined(CERES_USE_TBB))
   if (options->num_threads > 1) {
     LOG(WARNING)
         << "OpenMP support is not compiled into this binary; "
@@ -74,7 +74,7 @@ void ChangeNumThreadsIfNeeded(Solver::Options* options) {
         << "to single threaded mode.";
     options->num_linear_solver_threads = 1;
   }
-#endif  // CERES_USE_OPENMP
+#endif  // ((defined CERES_USE_OPENMP) || (defined CERES_USE_TBB))
 }
 
 void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {

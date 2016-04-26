@@ -35,31 +35,31 @@
 #include "glog/logging.h"
 
 // C interface to the LAPACK Cholesky factorization and triangular solve.
-extern "C" void dpotrf_(char* uplo,
-                       int* n,
-                       double* a,
-                       int* lda,
-                       int* info);
-
-extern "C" void dpotrs_(char* uplo,
-                        int* n,
-                        int* nrhs,
+extern "C" void dpotrf_(const char* uplo,
+                        const int* n,
                         double* a,
-                        int* lda,
-                        double* b,
-                        int* ldb,
+                        const int* lda,
                         int* info);
 
-extern "C" void dgels_(char* uplo,
-                       int* m,
-                       int* n,
-                       int* nrhs,
+extern "C" void dpotrs_(const char* uplo,
+                        const int* n,
+                        const int* nrhs,
+                        const double* a,
+                        const int* lda,
+                        double* b,
+                        const int* ldb,
+                        int* info);
+
+extern "C" void dgels_(const char* uplo,
+                       const int* m,
+                       const int* n,
+                       const int* nrhs,
                        double* a,
-                       int* lda,
+                       const int* lda,
                        double* b,
-                       int* ldb,
+                       const int* ldb,
                        double* work,
-                       int* lwork,
+                       const int* lwork,
                        int* info);
 
 

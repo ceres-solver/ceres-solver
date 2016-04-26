@@ -52,6 +52,10 @@
 #include <omp.h>
 #endif
 
+#ifdef CERES_USE_TBB
+#include <tbb/tbb.h>
+#endif
+
 #include <algorithm>
 #include <map>
 #include "ceres/block_random_access_matrix.h"
@@ -185,8 +189,18 @@ Eliminate(const BlockSparseMatrix* A,
 
   // Add the diagonal to the schur complement.
   if (D != NULL) {
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
+#endif
+#ifndef CERES_USE_TBB
     for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {
+#else
+    int tbb_first = num_eliminate_blocks_;
+    int tbb_last = num_col_blocks;
+    int tbb_threads = num_threads_;
+    tbb::parallel_for(0, tbb_threads, 1, [&](int thread_i) {
+    for(int i = tbb_first + thread_i; i < tbb_last; i += tbb_threads) {
+#endif
       const int block_id = i - num_eliminate_blocks_;
       int r, c, row_stride, col_stride;
       CellInfo* cell_info = lhs->GetCell(block_id, block_id,
@@ -203,6 +217,9 @@ Eliminate(const BlockSparseMatrix* A,
             += diag.array().square().matrix();
       }
     }
+#ifdef CERES_USE_TBB
+    });
+#endif
   }
 
   // Eliminate y blocks one chunk at a time.  For each chunk, compute
@@ -218,12 +235,26 @@ Eliminate(const BlockSparseMatrix* A,
   // z blocks that share a row block/residual term with the y
   // block. EliminateRowOuterProduct does the corresponding operation
   // for the lhs of the reduced linear system.
-#pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
-  for (int i = 0; i < chunks_.size(); ++i) {
 #ifdef CERES_USE_OPENMP
-    int thread_id = omp_get_thread_num();
+#pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
+#endif
+#ifndef CERES_USE_TBB
+  for (int i = 0; i < chunks_.size(); ++i) {
 #else
-    int thread_id = 0;
+  int tbb_first = 0;
+  int tbb_last = chunks_.size();
+  int tbb_threads = num_threads_;
+  tbb::parallel_for(0, tbb_threads, 1, [&](int thread_i) {
+  for(int i = tbb_first + thread_i; i < tbb_last; i += tbb_threads) {
+#endif
+#ifdef CERES_USE_OPENMP
+        int thread_id = omp_get_thread_num();
+#endif
+#ifdef CERES_USE_TBB
+        int thread_id = thread_i;
+#endif
+#ifdef CERES_NO_THREADS
+        int thread_id = 0;
 #endif
     double* buffer = buffer_.get() + thread_id * buffer_size_;
     const Chunk& chunk = chunks_[i];
@@ -289,8 +320,12 @@ Eliminate(const BlockSparseMatrix* A,
     UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
 
     // S -= F'E(E'E)^{-1}E'F
-    ChunkOuterProduct(bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
+    ChunkOuterProduct(thread_id, bs, inverse_ete, buffer, chunk.buffer_layout,
+                      lhs);
   }
+#ifdef CERES_USE_TBB
+  });
+#endif
 
   // For rows with no e_blocks, the schur complement update reduces to
   // S += F'F.
@@ -306,8 +341,18 @@ BackSubstitute(const BlockSparseMatrix* A,
                const double* z,
                double* y) {
   const CompressedRowBlockStructure* bs = A->block_structure();
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
+#endif
+#ifndef CERES_USE_TBB
   for (int i = 0; i < chunks_.size(); ++i) {
+#else
+  int tbb_first = 0;
+  int tbb_last = chunks_.size();
+  int tbb_threads = num_threads_;
+  tbb::parallel_for(0, tbb_threads, 1, [&](int thread_i) {
+  for(int i = tbb_first + thread_i; i < tbb_last; i += tbb_threads) {
+#endif
     const Chunk& chunk = chunks_[i];
     const int e_block_id = bs->rows[chunk.start].cells.front().block_id;
     const int e_block_size = bs->cols[e_block_id].size;
@@ -362,6 +407,9 @@ BackSubstitute(const BlockSparseMatrix* A,
 
     ete.llt().solveInPlace(y_block);
   }
+#ifdef CERES_USE_TBB
+  });
+#endif
 }
 
 // Update the rhs of the reduced linear system. Compute
@@ -495,7 +543,8 @@ ChunkDiagonalBlockAndGradient(
 template <int kRowBlockSize, int kEBlockSize, int kFBlockSize>
 void
 SchurEliminator<kRowBlockSize, kEBlockSize, kFBlockSize>::
-ChunkOuterProduct(const CompressedRowBlockStructure* bs,
+ChunkOuterProduct(int thread_id,
+                  const CompressedRowBlockStructure* bs,
                   const Matrix& inverse_ete,
                   const double* buffer,
                   const BufferLayoutType& buffer_layout,
@@ -507,11 +556,6 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
   const int e_block_size = inverse_ete.rows();
   BufferLayoutType::const_iterator it1 = buffer_layout.begin();
 
-#ifdef CERES_USE_OPENMP
-  int thread_id = omp_get_thread_num();
-#else
-  int thread_id = 0;
-#endif
   double* b1_transpose_inverse_ete =
       chunk_outer_product_buffer_.get() + thread_id * buffer_size_;
 
