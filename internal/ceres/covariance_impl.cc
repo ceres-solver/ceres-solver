@@ -34,6 +34,10 @@
 #include <omp.h>
 #endif
 
+#ifdef CERES_USE_TBB
+#include <tbb/tbb.h>
+#endif
+
 #include <algorithm>
 #include <cstdlib>
 #include <numeric>
@@ -75,7 +79,7 @@ CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
       is_computed_(false),
       is_valid_(false) {
-#ifndef CERES_USE_OPENMP
+#if !(defined(CERES_USE_OPENMP) || defined(CERES_USE_TBB))
   if (options_.num_threads > 1) {
     LOG(WARNING)
         << "OpenMP support is not compiled into this binary; "
@@ -339,6 +343,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   bool success = true;
 
+#ifdef CERES_USE_OPENMP
 // The collapse() directive is only supported in OpenMP 3.0 and higher. OpenMP
 // 3.0 was released in May 2008 (hence the version number).
 #if _OPENMP >= 200805
@@ -346,8 +351,16 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #else
 #  pragma omp parallel for num_threads(num_threads) schedule(dynamic)
 #endif
-  for (int i = 0; i < num_parameters; ++i) {
-    for (int j = 0; j < num_parameters; ++j) {
+#endif
+#ifndef CERES_USE_TBB
+  for (int i = 0; i < parameters.size(); ++i) {
+#else
+  tbb::parallel_for(0, num_threads, 1, [&](int thread_i) {
+  for(int i = thread_i;
+      i < parameters.size();
+      i += num_threads) {
+#endif
+    for (int j = 0; j < parameters.size(); ++j) {
       // The second loop can't start from j = i for compatibility with OpenMP
       // collapse command. The conditional serves as a workaround
       if (j >= i) {
@@ -355,10 +368,15 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
         int covariance_col_idx = cum_parameter_size[j];
         int size_i = parameter_sizes[i];
         int size_j = parameter_sizes[j];
+
 #ifdef CERES_USE_OPENMP
-        const int thread_id = omp_get_thread_num();
-#else
-        const int thread_id = 0;
+        int thread_id = omp_get_thread_num();
+#endif
+#ifdef CERES_USE_TBB
+        int thread_id = thread_i;
+#endif
+#ifdef CERES_NO_THREADS
+        int thread_id = 0;
 #endif
         double* covariance_block =
             workspace.get() +
@@ -382,6 +400,9 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
       }
     }
   }
+#ifdef CERES_USE_TBB
+  });
+#endif
   return success;
 }
 
@@ -695,20 +716,32 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   // are equal.
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
-
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
+#endif
+#ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
+#else
+  tbb::parallel_for(0, num_threads, 1, [&](int thread_i) {
+  for(int r = thread_i;
+      r < num_cols;
+      r += num_threads) {
+#endif
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
     if (row_end == row_begin) {
       continue;
     }
 
-#  ifdef CERES_USE_OPENMP
-    const int thread_id = omp_get_thread_num();
-#  else
-    const int thread_id = 0;
-#  endif
+#ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+#endif
+#ifdef CERES_USE_TBB
+    int thread_id = thread_i;
+#endif
+#ifdef CERES_NO_THREADS
+    int thread_id = 0;
+#endif
 
     double* solution = workspace.get() + thread_id * num_cols;
     SolveRTRWithSparseRHS<SuiteSparse_long>(
@@ -723,6 +756,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
      values[idx] = solution[inverse_permutation[c]];
     }
   }
+#ifdef CERES_USE_TBB
+  });
+#endif
 
   free(permutation);
   cholmod_l_free_sparse(&R, &cc);
@@ -888,19 +924,32 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
   const int num_threads = options_.num_threads;
   scoped_array<double> workspace(new double[num_threads * num_cols]);
 
+#ifdef CERES_USE_OPENMP
 #pragma omp parallel for num_threads(num_threads) schedule(dynamic)
+#endif
+#ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
+#else
+  tbb::parallel_for(0, num_threads, 1, [&](int thread_i) {
+  for(int r = thread_i;
+      r < num_cols;
+      r += num_threads) {
+#endif
     const int row_begin = rows[r];
     const int row_end = rows[r + 1];
     if (row_end == row_begin) {
       continue;
     }
 
-#  ifdef CERES_USE_OPENMP
-    const int thread_id = omp_get_thread_num();
-#  else
-    const int thread_id = 0;
-#  endif
+#ifdef CERES_USE_OPENMP
+    int thread_id = omp_get_thread_num();
+#endif
+#ifdef CERES_USE_TBB
+    int thread_id = thread_i;
+#endif
+#ifdef CERES_NO_THREADS
+    int thread_id = 0;
+#endif
 
     double* solution = workspace.get() + thread_id * num_cols;
     SolveRTRWithSparseRHS<int>(
@@ -918,6 +967,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
      values[idx] = solution[inverse_permutation.indices().coeff(c)];
     }
   }
+#ifdef CERES_USE_TBB
+  });
+#endif
 
   event_logger.AddEvent("Inverse");
 

@@ -611,6 +611,9 @@ Options controlling Ceres configuration
    multi-threading with ``OpenMP`` is not supported. Turn this ``OFF``
    to disable multi-threading.
 
+#. ``TBB [Default: OFF]``: An alternative threading to ``OpenMP``. This option
+   is mutually exclusive to ``OpenMP``.
+
 #. ``CXX11 [Default: OFF]`` *Non-MSVC compilers only*.
 
    Although Ceres does not currently use C++11, it does use

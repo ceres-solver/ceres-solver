@@ -86,6 +86,11 @@
 #include <omp.h>
 #endif
 
+#ifdef CERES_USE_TBB
+#include <tbb/tbb.h>
+#include <atomic>
+#endif
+
 #include <map>
 #include <string>
 #include <vector>
@@ -115,7 +120,7 @@ class ProgramEvaluator : public Evaluator {
         jacobian_writer_(options, program),
         evaluate_preparers_(
             jacobian_writer_.CreateEvaluatePreparers(options.num_threads)) {
-#ifndef CERES_USE_OPENMP
+#if !(defined(CERES_USE_OPENMP) || defined(CERES_USE_TBB))
     if (options_.num_threads > 1) {
       LOG(WARNING)
           << "OpenMP support is not compiled into this binary; "
@@ -169,24 +174,44 @@ class ProgramEvaluator : public Evaluator {
       }
     }
 
+    int num_residual_blocks = program_->NumResidualBlocks();
+#ifdef CERES_USE_TBB
+    std::atomic_bool abort = {false};
+#else
+    bool abort = false;
+#endif
+#ifdef CERES_USE_OPENMP
+#pragma omp parallel for num_threads(options_.num_threads)
+#endif
+#ifndef CERES_USE_TBB
     // This bool is used to disable the loop if an error is encountered
     // without breaking out of it. The remaining loop iterations are still run,
     // but with an empty body, and so will finish quickly.
-    bool abort = false;
-    int num_residual_blocks = program_->NumResidualBlocks();
-#pragma omp parallel for num_threads(options_.num_threads)
     for (int i = 0; i < num_residual_blocks; ++i) {
+#else
+    tbb::parallel_for(0, options_.num_threads, 1, [&](int thread_i) {
+    for(int i = thread_i;
+        i < num_residual_blocks;
+        i += options_.num_threads) {
+#endif
 // Disable the loop instead of breaking, as required by OpenMP.
+#ifdef CERES_USE_OPENMP
 #pragma omp flush(abort)
+#endif
       if (abort) {
         continue;
       }
 
 #ifdef CERES_USE_OPENMP
-      const int thread_id = omp_get_thread_num();
-#else
-      const int thread_id = 0;
+        int thread_id = omp_get_thread_num();
 #endif
+#ifdef CERES_USE_TBB
+        int thread_id = thread_i;
+#endif
+#ifdef CERES_NO_THREADS
+        int thread_id = 0;
+#endif
+
       EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
       EvaluateScratch* scratch = &evaluate_scratch_[thread_id];
 
@@ -218,10 +243,12 @@ class ProgramEvaluator : public Evaluator {
               block_jacobians,
               scratch->residual_block_evaluate_scratch.get())) {
         abort = true;
+#ifdef CERES_USE_OPENMP
 // This ensures that the OpenMP threads have a consistent view of 'abort'. Do
 // the flush inside the failure case so that there is usually only one
 // synchronization point per loop iteration instead of two.
 #pragma omp flush(abort)
+#endif
         continue;
       }
 
@@ -255,6 +282,9 @@ class ProgramEvaluator : public Evaluator {
         }
       }
     }
+#ifdef CERES_USE_TBB
+    });
+#endif
 
     if (!abort) {
       const int num_parameters = program_->NumEffectiveParameters();
