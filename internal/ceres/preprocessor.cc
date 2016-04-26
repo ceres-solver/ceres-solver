@@ -56,10 +56,10 @@ Preprocessor::~Preprocessor() {
 }
 
 void ChangeNumThreadsIfNeeded(Solver::Options* options) {
-#ifndef CERES_USE_OPENMP
+#ifdef CERES_NO_THREADS
   if (options->num_threads > 1) {
     LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
+        << "Neither OpenMP nor TBB support is compiled into this binary; "
         << "only options.num_threads = 1 is supported. Switching "
         << "to single threaded mode.";
     options->num_threads = 1;
@@ -69,12 +69,12 @@ void ChangeNumThreadsIfNeeded(Solver::Options* options) {
   if (options->minimizer_type == TRUST_REGION &&
       options->num_linear_solver_threads > 1) {
     LOG(WARNING)
-        << "OpenMP support is not compiled into this binary; "
+        << "Neither OpenMP nor TBB support is compiled into this binary; "
         << "only options.num_linear_solver_threads=1 is supported. Switching "
         << "to single threaded mode.";
     options->num_linear_solver_threads = 1;
   }
-#endif  // CERES_USE_OPENMP
+#endif  // CERES_NO_THREADS
 }
 
 void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {

@@ -2111,8 +2111,8 @@ The three arrays will be:
 
    Number of threads actually used by the solver for Jacobian and
    residual evaluation. This number is not equal to
-   :member:`Solver::Summary::num_threads_given` if `OpenMP` is not
-   available.
+   :member:`Solver::Summary::num_threads_given` if neither `OpenMP` nor `TBB`
+   is available.
 
 .. member:: int Solver::Summary::num_linear_solver_threads_given
 
@@ -2123,8 +2123,8 @@ The three arrays will be:
 
    Number of threads actually used by the solver for solving the trust
    region problem. This number is not equal to
-   :member:`Solver::Summary::num_linear_solver_threads_given` if
-   `OpenMP` is not available.
+   :member:`Solver::Summary::num_linear_solver_threads_given` if neither
+   `OpenMP` nor `TBB` is available.
 
 .. member:: LinearSolverType Solver::Summary::linear_solver_type_given
 
