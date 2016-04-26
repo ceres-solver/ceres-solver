@@ -104,6 +104,8 @@ option(CUSTOM_BLAS
        ON)
 # Multithreading using OpenMP
 option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
+# Multithreading using TBB
+option(TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF)
 # Enable the use of Eigen as a sparse linear algebra library for
 # solving the nonlinear least squares problems. Enabling this
 # option will result in an LGPL licensed version of Ceres Solver
@@ -190,6 +192,7 @@ if (IOS)
   update_cache_variable(CXSPARSE OFF)
   update_cache_variable(GFLAGS OFF)
   update_cache_variable(OPENMP OFF)
+  update_cache_variable(TBB OFF)
   # Apple claims that the BLAS call dsyrk_ is a private API, and will not allow
   # you to submit to the Apple Store if the symbol is present.
   update_cache_variable(LAPACK OFF)
@@ -404,6 +407,14 @@ if (NOT CUSTOM_BLAS)
   message("-- Disabling custom blas")
 endif (NOT CUSTOM_BLAS)
 
+# OpenMP and TBB are mutually exclusive options. OpenMP is on by default thus
+# disable it if the user requested TBB.
+if (TBB AND OPENMP)
+  update_cache_variable(OPENMP OFF)
+  message("-- Intel TBB enabled; disabling OpenMP support (they are mutually "
+    "exclusive)")
+endif (TBB AND OPENMP)
+
 if (OPENMP)
   # Find quietly, as we can continue without OpenMP if it is not found.
   find_package(OpenMP QUIET)
@@ -412,13 +423,6 @@ if (OPENMP)
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    if (UNIX)
-      # At least on Linux, we need pthreads to be enabled for mutex to
-      # compile.  This may not work on Windows or Android.
-      find_package(Threads REQUIRED)
-      list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
-      list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
-    endif (UNIX)
   else (OPENMP_FOUND)
     message("-- Failed to find OpenMP, disabling. This is expected on "
       "Clang < 3.8, and at least Xcode <= 8.  See Ceres documentation for "
@@ -427,14 +431,40 @@ if (OPENMP)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
   endif (OPENMP_FOUND)
 else (OPENMP)
-  message("-- Building without OpenMP (disabling multithreading).")
-  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
+  message("-- Building without OpenMP, disabling.")
 endif (OPENMP)
 
 # Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
 # contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
 # they are used when discovering shared_ptr/unordered_map.
 set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
+
+if (TBB)
+  find_package(TBB REQUIRED)
+  if (TBB_FOUND)
+    message("-- Building with TBB.")
+    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_TBB)
+    include_directories(${TBB_INCLUDE_DIRS})
+    # TBB requires C++11
+    update_cache_variable(CXX11 ON)
+  else (TBB_FOUND)
+    message("-- Failed to find TBB, disabling.")
+    update_cache_variable(TBB OFF)
+  endif (TBB_FOUND)
+endif (TBB)
+
+if (NOT OPENMP AND NOT TBB)
+  message("-- Nor OpenMP neither TBB is used, disabling multithreading.")
+  list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
+else (NOT OPENMP AND NOT TBB)
+  if (UNIX)
+    # At least on Linux, we need pthreads to be enabled for mutex to
+    # compile.  This may not work on Windows or Android.
+    find_package(Threads REQUIRED)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
+    list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
+  endif (UNIX)
+endif (NOT OPENMP AND NOT TBB)
 
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
