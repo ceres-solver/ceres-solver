@@ -873,6 +873,56 @@ Numeric Differentiation & LocalParameterization
    and the Jacobian will be affected appropriately.
 
 
+:class:`GradientChecker`
+================================
+
+.. class:: GradientChecker
+
+    This class compares the Jacobians returned by a cost function against
+    derivatives estimated using finite differencing. It is meant as a tool for
+    unit testing, giving you more fine-grained control than the check_gradients
+    option in the solver options.
+
+    The condition enforced is that
+
+    .. math:: \forall{i,j}: \frac{J_{ij} - J'_{ij}}{max_{ij}(J_{ij} - J'_{ij})} < r
+
+    where :math:`J_{ij}` is the jacobian as computed by the supplied cost
+    function (by the user) multiplied by the local parameterization Jacobian,
+    :math:`J'_{ij}` is the jacobian as computed by finite differences,
+    multiplied by the local parameterization Jacobian as well, and :math:`r`
+    is the relative precision.
+
+   Usage:
+
+   .. code-block:: c++
+
+       //  my_cost_function takes two parameter blocks. The first has a local
+       //  parameterization associated with it.
+       CostFunction* my_cost_function = ...
+       LocalParameterization* my_parameterization = ...
+       NumericDiffOptions numeric_diff_options;
+
+       std::vector<LocalParameterization*> local_parameterizations;
+       local_parameterizations.push_back(my_parameterization);
+       local_parameterizations.push_back(NULL);
+
+       std::vector parameter1;
+       std::vector parameter2;
+       // Fill parameter 1 & 2 with test data...
+
+       std::vector<double*> parameter_blocks;
+       parameter_blocks.push_back(parameter1.data());
+       parameter_blocks.push_back(parameter2.data());
+
+       GradientChecker gradient_checker(my_cost_function,
+           local_parameterizations, numeric_diff_options);
+       GradientCheckResults results;
+       if (!gradient_checker.Probe(parameter_blocks.data(), 1e-9, &results) {
+         LOG(ERROR) << "An error has occured:\n" << results.error_log;
+       }
+
+
 :class:`NormalPrior`
 ====================
 
