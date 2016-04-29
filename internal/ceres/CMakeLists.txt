@@ -63,10 +63,12 @@ set(CERES_INTERNAL_SRC
     dynamic_compressed_row_sparse_matrix.cc
     evaluator.cc
     file.cc
+    gradient_checker.cc
     gradient_checking_cost_function.cc
     gradient_problem.cc
     gradient_problem_solver.cc
     implicit_schur_complement.cc
+    is_close.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
     lapack.cc
@@ -309,6 +311,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(graph)
   ceres_test(graph_algorithms)
   ceres_test(householder_vector)
+  ceres_test(is_close)
   ceres_test(implicit_schur_complement)
   ceres_test(iterative_schur_complement_solver)
   ceres_test(jet)

@@ -1559,8 +1559,8 @@ elimination group [LiSaad]_.
    differences. This is expensive since it involves computing the
    derivative by normal means (e.g. user specified, autodiff, etc),
    then also computing it using finite differences. The results are
-   compared, and if they differ substantially, details are printed to
-   the log.
+   compared, and if they differ substantially, the optimization fails
+   and the details are stored in the solver summary.
 
 .. member:: double Solver::Options::gradient_check_relative_precision
 
