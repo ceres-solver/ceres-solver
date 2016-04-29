@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8594975_d069f916",
+        "filename": "internal/ceres/lapack.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-04-29T19:06:36Z",
+      "side": 1,
+      "message": "these changes should not be part of this changelist.",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8594975_307795f4",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-04-29T19:06:36Z",
+      "side": 1,
+      "message": "I think it would be better to define a new preprocessor macro which is a union of these two to indicate whether threading is available.\n\nCERES_USE_MULTIPLE_THREADS perhaps?",
+      "range": {
+        "startLine": 745,
+        "startChar": 56,
+        "endLine": 745,
+        "endChar": 58
+      },
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8594975_107411ec",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-04-29T19:06:36Z",
+      "side": 1,
+      "message": "lambdas require c++11, which is something we would like to avoid.",
+      "range": {
+        "startLine": 192,
+        "startChar": 49,
+        "endLine": 192,
+        "endChar": 50
+      },
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8594975_7060ed25",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-04-29T19:06:36Z",
+      "side": 1,
+      "message": "c++11 is a problem.",
+      "range": {
+        "startLine": 201,
+        "startChar": 48,
+        "endLine": 201,
+        "endChar": 49
+      },
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
