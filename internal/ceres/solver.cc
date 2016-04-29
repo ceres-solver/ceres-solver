@@ -496,21 +496,28 @@ void Solver::Solve(const Solver::Options& options,
   // values provided by the user.
   program->SetParameterBlockStatePtrsToUserStatePtrs();
 
+  // If gradient_checking is enabled, wrap all cost functions in a
+  // gradient checker and install a callback that terminates if any gradient
+  // error is detected.
   scoped_ptr<internal::ProblemImpl> gradient_checking_problem;
+  internal::GradientCheckingIterationCallback gradient_checking_callback;
+  Solver::Options modified_options = options;
   if (options.check_gradients) {
+    modified_options.callbacks.push_back(&gradient_checking_callback);
     gradient_checking_problem.reset(
         CreateGradientCheckingProblemImpl(
             problem_impl,
             options.numeric_derivative_relative_step_size,
-            options.gradient_check_relative_precision));
+            options.gradient_check_relative_precision,
+            &gradient_checking_callback));
     problem_impl = gradient_checking_problem.get();
     program = problem_impl->mutable_program();
   }
 
   scoped_ptr<Preprocessor> preprocessor(
-      Preprocessor::Create(options.minimizer_type));
+      Preprocessor::Create(modified_options.minimizer_type));
   PreprocessedProblem pp;
-  const bool status = preprocessor->Preprocess(options, problem_impl, &pp);
+  const bool status = preprocessor->Preprocess(modified_options, problem_impl, &pp);
   summary->fixed_cost = pp.fixed_cost;
   summary->preprocessor_time_in_seconds = WallTimeInSeconds() - start_time;
 
@@ -534,6 +541,13 @@ void Solver::Solve(const Solver::Options& options,
   PostSolveSummarize(pp, summary);
   summary->postprocessor_time_in_seconds =
       WallTimeInSeconds() - postprocessor_start_time;
+
+  // If the gradient checker reported an error, we want to report FAILURE
+  // instead of USER_FAILURE and provide the error log.
+  if (gradient_checking_callback.gradient_error_detected()) {
+    summary->termination_type = FAILURE;
+    summary->message = gradient_checking_callback.error_log();
+  }
 
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
