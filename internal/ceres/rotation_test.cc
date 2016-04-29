@@ -32,6 +32,7 @@
 #include <limits>
 #include <string>
 #include "ceres/internal/eigen.h"
+#include "ceres/is_close.h"
 #include "ceres/internal/port.h"
 #include "ceres/jet.h"
 #include "ceres/rotation.h"
@@ -701,12 +702,7 @@ J4 MakeJ4(double a, double v0, double v1, double v2, double v3) {
 bool IsClose(double x, double y) {
   EXPECT_FALSE(IsNaN(x));
   EXPECT_FALSE(IsNaN(y));
-  double absdiff = fabs(x - y);
-  if (x == 0 || y == 0) {
-    return absdiff <= kTolerance;
-  }
-  double reldiff = absdiff / max(fabs(x), fabs(y));
-  return reldiff <= kTolerance;
+  return internal::IsClose(x, y, kTolerance, NULL, NULL);
 }
 
 template <int N>
