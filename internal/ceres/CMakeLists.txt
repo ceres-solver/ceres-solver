@@ -63,6 +63,7 @@ set(CERES_INTERNAL_SRC
     dynamic_compressed_row_sparse_matrix.cc
     evaluator.cc
     file.cc
+    gradient_checker.cc
     gradient_checking_cost_function.cc
     gradient_problem.cc
     gradient_problem_solver.cc
