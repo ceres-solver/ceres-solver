@@ -698,16 +698,14 @@ string Solver::Summary::FullReport() const {
                   num_linear_solver_threads_given,
                   num_linear_solver_threads_used);
 
-    if (IsSchurType(linear_solver_type_used)) {
-      string given;
-      StringifyOrdering(linear_solver_ordering_given, &given);
-      string used;
-      StringifyOrdering(linear_solver_ordering_used, &used);
-      StringAppendF(&report,
-                    "Linear solver ordering %22s %24s\n",
-                    given.c_str(),
-                    used.c_str());
-    }
+    string given;
+    StringifyOrdering(linear_solver_ordering_given, &given);
+    string used;
+    StringifyOrdering(linear_solver_ordering_used, &used);
+    StringAppendF(&report,
+                  "Linear solver ordering %22s %24s\n",
+                  given.c_str(),
+                  used.c_str());
 
     if (inner_iterations_given) {
       StringAppendF(&report,

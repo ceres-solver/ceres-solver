@@ -124,8 +124,10 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
   // use regular AMD.
   if (parameter_block_ordering.NumGroups() <= 1 ||
       !SuiteSparse::IsConstrainedApproximateMinimumDegreeOrderingAvailable()) {
+    VLOG(2) << "Using AMD to reorder the columns of the Jacobian.";
     ss.ApproximateMinimumDegreeOrdering(block_jacobian_transpose, &ordering[0]);
   } else {
+    VLOG(2) << "Using CAMD to reorder the columns of the Jacobian.";
     vector<int> constraints;
     for (int i = 0; i < parameter_blocks.size(); ++i) {
       constraints.push_back(
@@ -141,6 +143,11 @@ void OrderingForSparseNormalCholeskyUsingSuiteSparse(
                                                    &constraints[0],
                                                    ordering);
   }
+
+  VLOG(2) << "Block ordering stats: "
+          << " flops: " << ss.mutable_cc()->fl
+          << " lnz  : " << ss.mutable_cc()->lnz
+          << " anz  : " << ss.mutable_cc()->anz;
 
   ss.Free(block_jacobian_transpose);
 #endif  // CERES_NO_SUITESPARSE
