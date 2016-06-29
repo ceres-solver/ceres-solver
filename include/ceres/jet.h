@@ -506,9 +506,32 @@ Jet<T, N> ceil(const Jet<T, N>& f) {
 }
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
-inline double BesselJ0(double x) { return j0(x); }
-inline double BesselJ1(double x) { return j1(x); }
-inline double BesselJn(int n, double x) { return jn(n, x); }
+//
+// Microsoft has deprecated the j[0,1,n]() POSIX Bessel functions in favour of
+// _j[0,1,n]().  Where available on MSVC, use _j[0,1,n]() to avoid deprecated
+// function errors in client code (the specific warning is suppressed when
+// Ceres itself is built).
+inline double BesselJ0(double x) {
+#if defined(_MSC_VER) && defined(_j0)
+  return _j0(x);
+#else
+  return j0(x);
+#endif
+}
+inline double BesselJ1(double x) {
+#if defined(_MSC_VER) && defined(_j1)
+  return _j1(x);
+#else
+  return j1(x);
+#endif
+}
+inline double BesselJn(int n, double x) {
+#if defined(_MSC_VER) && defined(_jn)
+  return _jn(n, x);
+#else
+  return jn(n, x);
+#endif
+}
 
 // For the formulae of the derivatives of the Bessel functions see the book:
 // Olver, Lozier, Boisvert, Clark, NIST Handbook of Mathematical Functions,
