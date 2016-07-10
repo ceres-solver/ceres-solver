@@ -400,31 +400,25 @@ if (NOT CUSTOM_BLAS)
 endif (NOT CUSTOM_BLAS)
 
 if (OPENMP)
-  # Clang does not (yet) support OpenMP.
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  # Find quietly s/t as we can continue without OpenMP if it is not found.
+  find_package(OpenMP QUIET)
+  if (OPENMP_FOUND)
+    message("-- Building with OpenMP.")
+    list(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    if (UNIX)
+      # At least on Linux, we need pthreads to be enabled for mutex to
+      # compile.  This may not work on Windows or Android.
+      find_package(Threads REQUIRED)
+      list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
+      list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
+    endif (UNIX)
+  else (OPENMP_FOUND)
+    message("-- Failed to find OpenMP, disabling. This is expected on "
+      "Clang < 3.8, and at least Xcode <= 7.")
     update_cache_variable(OPENMP OFF)
-    message("-- Compiler is Clang, disabling OpenMP.")
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
-  else (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    # Find quietly s/t as we can continue without OpenMP if it is not found.
-    find_package(OpenMP QUIET)
-    if (OPENMP_FOUND)
-      message("-- Building with OpenMP.")
-      list(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-      if (UNIX)
-        # At least on Linux, we need pthreads to be enabled for mutex to
-        # compile.  This may not work on Windows or Android.
-        find_package(Threads REQUIRED)
-        list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_PTHREAD)
-        list(APPEND CERES_COMPILE_OPTIONS CERES_HAVE_RWLOCK)
-      endif (UNIX)
-    else (OPENMP_FOUND)
-      message("-- Failed to find OpenMP, disabling.")
-      update_cache_variable(OPENMP OFF)
-      list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
-    endif (OPENMP_FOUND)
-  endif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  endif (OPENMP_FOUND)
 else (OPENMP)
   message("-- Building without OpenMP (disabling multithreading).")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
