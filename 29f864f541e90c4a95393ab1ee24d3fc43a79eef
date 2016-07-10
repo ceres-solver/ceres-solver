@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a005cf1_9a97dc5f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-10T13:27:27Z",
+      "side": 1,
+      "message": "the second part of the sentence seems overkill.",
+      "range": {
+        "startLine": 418,
+        "startChar": 39,
+        "endLine": 418,
+        "endChar": 41
+      },
+      "revId": "29f864f541e90c4a95393ab1ee24d3fc43a79eef",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
