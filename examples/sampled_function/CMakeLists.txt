@@ -28,12 +28,5 @@
 #
 # Author: vitus@google.com (Michael Vitus)
 
-# Only Ceres itself should be compiled with CERES_BUILDING_SHARED_LIBRARY
-# defined, any users of Ceres will have CERES_USING_SHARED_LIBRARY defined
-# for them in Ceres' config.h if appropriate.
-if (BUILD_SHARED_LIBS)
-  remove_definitions(-DCERES_BUILDING_SHARED_LIBRARY)
-endif()
-
 add_executable(sampled_function sampled_function.cc)
 target_link_libraries(sampled_function ceres)
