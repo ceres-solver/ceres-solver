@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baab60ef_52e634e3",
+        "filename": "examples/sampled_function/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-15T00:23:32Z",
+      "side": 1,
+      "message": "does this indicate a wart in our build system that we need to do this?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "a04490be97800e78e59db5eb67fa46226738ffba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
