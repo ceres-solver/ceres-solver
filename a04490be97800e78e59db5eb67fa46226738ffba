@@ -22,6 +22,30 @@
       "revId": "a04490be97800e78e59db5eb67fa46226738ffba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baab60ef_727410e1",
+        "filename": "examples/sampled_function/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-15T00:27:01Z",
+      "side": 1,
+      "message": "I kept this because it was also in examples/CMakeList.txt. I am not a cmake expert so I will defer to Alex.",
+      "parentUuid": "baab60ef_52e634e3",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "a04490be97800e78e59db5eb67fa46226738ffba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
