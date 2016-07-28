@@ -1,0 +1,313 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f05714a_8a729f15",
+        "filename": "examples/slam/pose_graph_2d/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "instead of using png for the equations, why not do what the rest of the docs in ceres do and actually use sphinx to generate equations from actual latex?",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_68b85fc3",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "why do you need a default constructor?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_88bb8bc0",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "CHECKs here are not a great idea. Also you don\u0027t really need to check for non-null here, this code is called by ceres and not the user.",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_08cc3b64",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "its odd to split the responsibility of computing the normalization into NormalizeAngle but have the responsibility of computing its derivative separate from it.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_28b257e3",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "drop blank.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_e8d0cffd",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "I am curious as to why you do not use autodiff to define the local parameterization to begin with?",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_a8dac717",
+        "filename": "examples/slam/pose_graph_2d/normalize_angle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "It is never really Scalar but could be a scalar or Jet, just calling it T is better.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_a82887eb",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "file level docs even though they may be a repeat of the readme.md",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_c823d310",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "main function at the bottom of the file. so no need to declare the two functions.",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_e81e8fc6",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "set the linear solver to sparse_normal_cholesky ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 26
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_28e017bf",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "why not use autodiff?",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_88e94bb0",
+        "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "log an error.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_68e61fe0",
+        "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "break into sub function for the two cases.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_88c02b28",
+        "filename": "examples/slam/pose_graph_2d/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "document struct. not sure what id_begin and id_end mean.",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efda7963_68bdffa9",
+        "filename": "examples/slam/pose_graph_2d/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-28T06:17:29Z",
+      "side": 1,
+      "message": "is this a covariance matrix? or the inverse of it ? I do not understand.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
