@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_2345029f",
+        "filename": "examples/slam/pose_graph_2d/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Initially, I wanted it so that if it was viewed from github the readme would be displayed without any need to build anything.\n\nUsing sphinx is a good idea. Would you recommend having the example readmes be part of the main Ceres documentation or a separate local version?",
+      "parentUuid": "2f05714a_8a729f15",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_68b85fc3",
         "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "why do you need a default constructor?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_125cca82",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_68b85fc3",
       "range": {
         "startLine": 15,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_3259ce93",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_88bb8bc0",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_08cc3b64",
         "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_f58c902c",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "That\u0027s a fair point. I had it here because it is the Jacobian of the Plus(theta, delta_theta), but you\u0027re right I should have a function in the normalize_angle header.",
+      "parentUuid": "efda7963_08cc3b64",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_28b257e3",
         "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "drop blank.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_b255be55",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_28b257e3",
       "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_32a1cea6",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "A longer explanation in the other comment, but mainly for speed. Here it probably doesn\u0027t matter since the derivative is pretty simple, but it is pretty easy to implement.",
+      "parentUuid": "efda7963_e8d0cffd",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_a8dac717",
         "filename": "examples/slam/pose_graph_2d/normalize_angle.h",
         "patchSetId": 2
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_92b51a9b",
+        "filename": "examples/slam/pose_graph_2d/normalize_angle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_a8dac717",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_a82887eb",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 2
@@ -156,6 +306,30 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "file level docs even though they may be a repeat of the readme.md",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_92519a43",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_a82887eb",
       "range": {
         "startLine": 2,
         "startChar": 18,
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_92835aaf",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_c823d310",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_e81e8fc6",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 2
@@ -202,6 +400,30 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "set the linear solver to sparse_normal_cholesky ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 26
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_32638e18",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_e81e8fc6",
       "range": {
         "startLine": 118,
         "startChar": 25,
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_32faae14",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "The reason for not using autodiff boils down to speed. I would love it if ceres/examples grows into a huge collection of commonly used cost functions for users to be able to incorporate into their problem formulation. I really love autodiff for very fast prototyping and trying out different formulations; it provides a huge amount of value. With that said, I think it would be great if these cost function formulations use analytical Jacobians so that users get the best out of the box experience which includes solving their problems as fast as possible.\n\nI benchmarked the analytical and autodiff formulations for two problems and the Jacobian calculation was about the same for the 2D formulation. However, for the 3D formulation the autodiff formulation is 2X slower than analytical.",
+      "parentUuid": "efda7963_28e017bf",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_88e94bb0",
         "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
         "patchSetId": 2
@@ -248,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_b23bfed2",
+        "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_88e94bb0",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_68e61fe0",
         "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
         "patchSetId": 2
@@ -259,6 +517,30 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "break into sub function for the two cases.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_d23082f1",
+        "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_68e61fe0",
       "range": {
         "startLine": 31,
         "startChar": 8,
@@ -294,6 +576,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_923c3a7d",
+        "filename": "examples/slam/pose_graph_2d/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda7963_88c02b28",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_68bdffa9",
         "filename": "examples/slam/pose_graph_2d/types.h",
         "patchSetId": 2
@@ -305,6 +611,24 @@
       "writtenOn": "2016-07-28T06:17:29Z",
       "side": 1,
       "message": "is this a covariance matrix? or the inverse of it ? I do not understand.",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_32762ea1",
+        "filename": "examples/slam/pose_graph_2d/types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-07-29T16:30:32Z",
+      "side": 1,
+      "message": "The information matrix is the inverse of the covariance matrix. I have updated the comment to better explain.",
+      "parentUuid": "efda7963_68bdffa9",
       "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
