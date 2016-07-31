@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8db5b7_637d3649",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "stack instead of pack.",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 20
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_e34f8636",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "I believe a form of this function already exists (maybe in the tests for rotation or linear algebra stuff). worth looking around in the source code, also this function should likely exist on its own instead of being anonymous here. it would also be useful to test this function on its own.",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_035552c9",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "std::max and std::abs etc?",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 41
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_235a4ef9",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "this function has considerable overlap with ResidualBlock::Evaluate.\nit is likely worth comparing the two implementations to see what can be shared.",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_837a4250",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "stack instead of pack.",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 22
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_43575ad0",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "why let this pointer sit on its own and assign it to the scoped_ptr at the end of the function, why not start by setting the scopted_ptr and using it?",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_636456bd",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "GradientCheckerResults to be more consistent?",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_836162ae",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "explicit comparison with null.",
+      "range": {
+        "startLine": 177,
+        "startChar": 19,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_a313be10",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "stack not pack.",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_c318ca2d",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "stack not pack.",
+      "range": {
+        "startLine": 116,
+        "startChar": 40,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_e368668e",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "I have wondered if the name numeric_derivative_relative_step_size is a bad name it seems to imply that we control numeric differentiation with it, but actually it is only used when we are checking gradients. perhaps its worth changing that option name to be more explicit too?",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_23832e35",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "in ceres we stack instead of packing the variables.",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 29
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_e3da2672",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "this is a bit odd and I guess indicates a problem with the iterationcallback API where we want to distinguish between iterationcallbacks that are internal and ones which are external.",
+      "range": {
+        "startLine": 547,
+        "startChar": 6,
+        "endLine": 547,
+        "endChar": 32
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf8db5b7_03e0f222",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-07-31T19:38:48Z",
+      "side": 1,
+      "message": "this should likely be in a CL of its own as this has nothing to do with this CL.",
+      "range": {
+        "startLine": 610,
+        "startChar": 36,
+        "endLine": 610,
+        "endChar": 38
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
