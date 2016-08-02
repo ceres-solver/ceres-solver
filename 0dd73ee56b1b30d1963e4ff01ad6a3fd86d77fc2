@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0f56eded_67754ddb",
+        "filename": "examples/slam/pose_graph_2d/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-02T18:51:58Z",
+      "side": 1,
+      "message": "So this is a dance between having docs with code and docs that stay by themselves, and TBH there are conflicting requirements here because sphinx requires a compile pass.\n\n\nGiven that you cannot render rest anyways and you need a renderer, I\u0027d say, we should have it part of the main docs. \n\ncurrently it is buried at \n\nhttps://ceres-solver.googlesource.com/ceres-solver/+/master/docs/source/nnls_tutorial.rst#741\n\nas part of the tutorial. so might as well make it part of it. \n\nthis also means a part of these docs will have to move into the main cc file \n\nalso latex equations are actually easier to read in text than embedded png files if you are actually downloading the code.",
+      "parentUuid": "0f56eded_2345029f",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_68b85fc3",
         "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
         "patchSetId": 2
@@ -248,6 +272,30 @@
       "side": 1,
       "message": "A longer explanation in the other comment, but mainly for speed. Here it probably doesn\u0027t matter since the derivative is pretty simple, but it is pretty easy to implement.",
       "parentUuid": "efda7963_e8d0cffd",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_e7b13d95",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-02T18:51:58Z",
+      "side": 1,
+      "message": "easy for you :) who knows what is going on, but given the discontinuity it is a little bit subtle",
+      "parentUuid": "0f56eded_32a1cea6",
       "range": {
         "startLine": 15,
         "startChar": 7,
@@ -465,6 +513,24 @@
       "side": 1,
       "message": "The reason for not using autodiff boils down to speed. I would love it if ceres/examples grows into a huge collection of commonly used cost functions for users to be able to incorporate into their problem formulation. I really love autodiff for very fast prototyping and trying out different formulations; it provides a huge amount of value. With that said, I think it would be great if these cost function formulations use analytical Jacobians so that users get the best out of the box experience which includes solving their problems as fast as possible.\n\nI benchmarked the analytical and autodiff formulations for two problems and the Jacobian calculation was about the same for the 2D formulation. However, for the 3D formulation the autodiff formulation is 2X slower than analytical.",
       "parentUuid": "efda7963_28e017bf",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f56eded_a742d542",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-02T18:51:58Z",
+      "side": 1,
+      "message": "couple of things here.\nthe example code can serve two purposes.\none to teach the other to offer code for reuse and performance is where things start to diverge. \n\nmy concern here is that by showing them analytic derivatives like this as part of the example code, we are actually telling people that they need to basically start with analytic derivatives which is scary and hard.\n\nI\u0027d argue that we should use example code for its pedagogical value, performance is very subjective, depends on platform, compiler etc and we can have some examples of how to get better performance and think about a high performance library of reusable code, but trying to acheive the two at the same time is likely not optimal.\n\nhere is another way to think about this,\nif we were shipping this cost functions as a library to re-use then the example code would be an example of how to use it.. in which case it doesn\u0027t really matter how the cost function is implemented.\n\nhowever, we are showing them as an example of modeling a problem with ceres so pedagogy wins.",
+      "parentUuid": "0f56eded_32faae14",
       "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
