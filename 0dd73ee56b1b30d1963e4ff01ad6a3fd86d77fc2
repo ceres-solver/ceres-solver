@@ -537,6 +537,24 @@
     },
     {
       "key": {
+        "uuid": "9474b6be_c2f55ce8",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-03T03:10:55Z",
+      "side": 1,
+      "message": "I completely agree that we should not scare users away from Ceres because they think they must implement analytical derivatives. I do agree that having a complex example to teach someone who is just learning nonlinear least squares is not the right thing to do.\n\nI disagree that if someone has some optimization knowledge but doesn\u0027t know SLAM (in this instance) they would not be able to learn from a more complex example. I am a perfect example for this. When I was learning SLAM I read papers but if there would have been an example in Ceres I would have loved to read the documentation and code.\n\nI do think there is a huge value in having a library of reusable cost functions. I have seen times when people have used a competing library because they implemented something they needed. I have also seen many times on the Ceres user forums people implementing the same cost function. I do understand that performance is subjective, but providing the hard part of analytical derivatives and allowing the user to optimize the computation for their platform, compiler, etc is great. I think this is a great opportunity to do the same thing Eigen and Ceres has already done, eliminating the need for people to reinvent the wheel and allow non-experts a chance to solve problems they face.\n\nI am perfectly fine with simplifying this example (and others forthcoming) to not scare away potential Ceres users. I would like to still explore the potential for having a reusable library.\n\np.s. sorry for the long reply :-).",
+      "parentUuid": "0f56eded_a742d542",
+      "revId": "0dd73ee56b1b30d1963e4ff01ad6a3fd86d77fc2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efda7963_88e94bb0",
         "filename": "examples/slam/pose_graph_2d/read_g2o.cc",
         "patchSetId": 2
