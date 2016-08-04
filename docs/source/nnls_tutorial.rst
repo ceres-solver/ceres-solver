@@ -776,12 +776,6 @@ directory contains a number of other examples:
    <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
    non-linear regression problems.
 
-#. `nist.cc
-   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/nist.cc>`_
-   implements and attempts to solves the `NIST
-   <http://www.itl.nist.gov/div898/strd/nls/nls_main.shtm>`_
-   non-linear regression problems.
-
 #. `more_garbow_hillstrom.cc
    <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/more_garbow_hillstrom.cc>`_
    A subset of the test problems from the paper
