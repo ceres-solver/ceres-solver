@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7483c255_9b4e573e",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "At some point of time in the future, its likely a good idea to split this file, say with each example living in a chapter of its own, but we will figure that out later.",
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_bb531be3",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "maybe start with SLAM and then go to posegraph as one example of a SLAM problem instead of starting with posegraph?",
+      "range": {
+        "startLine": 829,
+        "startChar": 32,
+        "endLine": 829,
+        "endChar": 43
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_7b5613d3",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "we want to estimate",
+      "range": {
+        "startLine": 839,
+        "startChar": 28,
+        "endLine": 839,
+        "endChar": 29
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_1b6347b8",
+        "filename": "examples/slam/pose_graph_2d/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "maybe add a note that here or in the cost function file that this is code shown for purposes of illustration, it can be made considerably faster with more engineering/analytic derivatives?",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_3b608ba8",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "I\u0027d say we don\u0027t need such a deep namespace and staying in examples might be okay?",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_db6b7f8c",
+        "filename": "examples/slam/pose_graph_2d/plot_results.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "how about\n\ninitial_poses\nfinal_poses or optimized_poses",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_fb70c376",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "if you define BuildOptimizationProblemAndSolve in the same nested namespace as others you may be able to skip all these using statements.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_bb6a3b85",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "Add a verbose error as to what might have happened for all check failures.",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_9b65f7b7",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "I recommend splitting the building and solving into separate functions.\nit shows the separation between modeling and solving clearly and offers more control over the solve without making the API for this function complicated.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_7b7db348",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "why bother with setting the threads?",
+      "range": {
+        "startLine": 114,
+        "startChar": 10,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_1b7a6752",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "should this function be part of the same library as reading the poses?",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 16
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_7b0853d8",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "RotationMatrix2D ?",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_1b1587eb",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "variable names need to be lower case ?  I know this goes against linear algebra notation though.",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_bb3c7b78",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "for variable naming, I have found that its better readability if you use the type as the suffix rather than the prefix, so that the thing that distinguishes them comes first.",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_fb4203fb",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "you don\u0027t need this temporary, I think you are better off just computing the transpose inline in the expression where you use it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7483c255_db3dbf77",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-04T14:03:47Z",
+      "side": 1,
+      "message": "this is not used anywhere. so you could just call residuals_map residuals.",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
