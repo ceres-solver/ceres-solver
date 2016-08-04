@@ -811,6 +811,7 @@ struct NumTraits<ceres::Jet<T, N> > {
   typedef ceres::Jet<T, N> Real;
   typedef ceres::Jet<T, N> NonInteger;
   typedef ceres::Jet<T, N> Nested;
+  typedef ceres::Jet<T, N> Literal;
 
   static typename ceres::Jet<T, N> dummy_precision() {
     return ceres::Jet<T, N>(1e-12);
@@ -830,6 +831,14 @@ struct NumTraits<ceres::Jet<T, N> > {
     MulCost = 3,
     HasFloatingPoint = 1,
     RequireInitialization = 1
+  };
+
+  template<bool Vectorized>
+  struct Div {
+    enum {
+      AVX = false,
+      Cost = 1
+    };
   };
 };
 
