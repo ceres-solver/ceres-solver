@@ -38,6 +38,7 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/random.h"
 #include "ceres/rotation.h"
+#include "Eigen/Geometry"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -280,21 +281,125 @@ TEST(QuaternionParameterization, NearZeroTest) {
   QuaternionParameterizationTestHelper(x, delta, q_delta);
 }
 
-TEST(QuaternionParameterization, AwayFromZeroTest) {
-  double x[4] = {0.52, 0.25, 0.15, 0.45};
-  Normalize<4>(x);
+// Functor needed to implement automatically differentiated Plus for
+// Eigen quaternions.
+struct EigenQuaternionPlus {
+  template<typename T>
+  bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
+    const T norm_delta =
+        sqrt(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+
+    Eigen::Quaternion<T> q_delta;
+    if (norm_delta > T(0.0)) {
+      const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
+      q_delta.coeffs() << sin_delta_by_delta * delta[0],
+          sin_delta_by_delta * delta[1], sin_delta_by_delta * delta[2],
+          cos(norm_delta);
+    } else {
+      // We do not just use q_delta = [0,0,0,1] here because that is a
+      // constant and when used for automatic differentiation will
+      // lead to a zero derivative. Instead we take a first order
+      // approximation and evaluate it at zero.
+      q_delta.coeffs() <<  delta[0], delta[1], delta[2], T(1.0);
+    }
+
+    Eigen::Map<Eigen::Quaternion<T> > x_plus_delta_ref(x_plus_delta);
+    Eigen::Map<const Eigen::Quaternion<T> > x_ref(x);
+    x_plus_delta_ref = q_delta * x_ref;
+    return true;
+  }
+};
+
+void EigenQuaternionParameterizationTestHelper(
+    const Eigen::Quaterniond& x, const double* delta,
+    const Eigen::Quaterniond& q_delta) {
+  const int kGlobalSize = 4;
+  const int kLocalSize = 3;
+
+  const double kTolerance = 1e-14;
+  Eigen::Quaterniond x_plus_delta_ref = q_delta * x;
+
+  double x_plus_delta[kGlobalSize] = {0.0, 0.0, 0.0, 0.0};
+  EigenQuaternionParameterization parameterization;
+  parameterization.Plus(x.coeffs().data(), delta, x_plus_delta);
+  for (int i = 0; i < kGlobalSize; ++i) {
+    EXPECT_NEAR(x_plus_delta[i], x_plus_delta_ref.coeffs()[i], kTolerance);
+  }
+
+  const double x_plus_delta_norm =
+      sqrt(x_plus_delta[0] * x_plus_delta[0] +
+           x_plus_delta[1] * x_plus_delta[1] +
+           x_plus_delta[2] * x_plus_delta[2] +
+           x_plus_delta[3] * x_plus_delta[3]);
+
+  EXPECT_NEAR(x_plus_delta_norm, 1.0, kTolerance);
+
+  double jacobian_ref[12];
+  double zero_delta[kLocalSize] = {0.0, 0.0, 0.0};
+  const double* parameters[2] = {x.coeffs().data(), zero_delta};
+  double* jacobian_array[2] = { NULL, jacobian_ref };
+
+  // Autodiff jacobian at delta_x = 0.
+  internal::AutoDiff<EigenQuaternionPlus,
+                     double,
+                     kGlobalSize,
+                     kLocalSize>::Differentiate(EigenQuaternionPlus(),
+                                                parameters,
+                                                kGlobalSize,
+                                                x_plus_delta,
+                                                jacobian_array);
+
+  double jacobian[12];
+  parameterization.ComputeJacobian(x.coeffs().data(), jacobian);
+  for (int i = 0; i < 12; ++i) {
+    EXPECT_TRUE(IsFinite(jacobian[i]));
+    EXPECT_NEAR(jacobian[i], jacobian_ref[i], kTolerance)
+        << "Jacobian mismatch: i = " << i
+        << "\n Expected \n"
+        << ConstMatrixRef(jacobian_ref, kGlobalSize, kLocalSize)
+        << "\n Actual \n"
+        << ConstMatrixRef(jacobian, kGlobalSize, kLocalSize);
+  }
+}
+
+TEST(EigenQuaternionParameterization, ZeroTest) {
+  Eigen::Quaterniond x(0.5, 0.5, 0.5, 0.5);
+  double delta[3] = {0.0, 0.0, 0.0};
+  Eigen::Quaterniond q_delta(1.0, 0.0, 0.0, 0.0);
+  EigenQuaternionParameterizationTestHelper(x, delta, q_delta);
+}
+
+TEST(EigenQuaternionParameterization, NearZeroTest) {
+  Eigen::Quaterniond x(0.52, 0.25, 0.15, 0.45);
+  x.normalize();
+
+  double delta[3] = {0.24, 0.15, 0.10};
+  for (int i = 0; i < 3; ++i) {
+    delta[i] = delta[i] * 1e-14;
+  }
+
+  // Note: w is first in the constructor.
+  Eigen::Quaterniond q_delta(1.0, delta[0], delta[1], delta[2]);
+
+  EigenQuaternionParameterizationTestHelper(x, delta, q_delta);
+}
+
+TEST(EigenQuaternionParameterization, AwayFromZeroTest) {
+  Eigen::Quaterniond x(0.52, 0.25, 0.15, 0.45);
+  x.normalize();
 
   double delta[3] = {0.24, 0.15, 0.10};
   const double delta_norm = sqrt(delta[0] * delta[0] +
                                  delta[1] * delta[1] +
                                  delta[2] * delta[2]);
-  double q_delta[4];
-  q_delta[0] = cos(delta_norm);
-  q_delta[1] = sin(delta_norm) / delta_norm * delta[0];
-  q_delta[2] = sin(delta_norm) / delta_norm * delta[1];
-  q_delta[3] = sin(delta_norm) / delta_norm * delta[2];
 
-  QuaternionParameterizationTestHelper(x, delta, q_delta);
+  // Note: w is first in the constructor.
+  Eigen::Quaterniond q_delta(cos(delta_norm),
+                             sin(delta_norm) / delta_norm * delta[0],
+                             sin(delta_norm) / delta_norm * delta[1],
+                             sin(delta_norm) / delta_norm * delta[2]);
+
+  EigenQuaternionParameterizationTestHelper(x, delta, q_delta);
 }
 
 // Functor needed to implement automatically differentiated Plus for

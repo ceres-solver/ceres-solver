@@ -211,6 +211,22 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
   virtual int LocalSize() const { return 3; }
 };
 
+// Implements the quaternion local parameterization for Eigen's
+// representation of the quaternion. Eigen uses a different element
+// ordering as compared with Ceres's rotation representation. Eigen
+// stores the real part last whereas Ceres's stores it first.
+//
+// Plus(x, delta) = [sin(|delta|) delta / |delta|, cos(|delta|)] * x
+// with * being the quaternion multiplication operator.
+class EigenQuaternionParameterization : public ceres::LocalParameterization {
+ public:
+  virtual ~EigenQuaternionParameterization() {}
+  virtual bool Plus(const double* x, const double* delta,
+                    double* x_plus_delta) const;
+  virtual bool ComputeJacobian(const double* x, double* jacobian) const;
+  virtual int GlobalSize() const { return 4; }
+  virtual int LocalSize() const { return 3; }
+};
 
 // This provides a parameterization for homogeneous vectors which are commonly
 // used in Structure for Motion problems.  One example where they are used is
