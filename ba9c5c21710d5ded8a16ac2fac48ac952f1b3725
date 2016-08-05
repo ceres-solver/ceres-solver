@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54507eef_fa09ddfe",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "I completely agree. I can follow up later with that change once we figure out the correct structure.",
+      "parentUuid": "7483c255_9b4e573e",
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_bb531be3",
         "filename": "docs/source/nnls_tutorial.rst",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "maybe start with SLAM and then go to posegraph as one example of a SLAM problem instead of starting with posegraph?",
+      "range": {
+        "startLine": 829,
+        "startChar": 32,
+        "endLine": 829,
+        "endChar": 43
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_bae67541",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_bb531be3",
       "range": {
         "startLine": 829,
         "startChar": 32,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_3aec4527",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_7b5613d3",
+      "range": {
+        "startLine": 839,
+        "startChar": 28,
+        "endLine": 839,
+        "endChar": 29
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_1b6347b8",
         "filename": "examples/slam/pose_graph_2d/README.md",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "maybe add a note that here or in the cost function file that this is code shown for purposes of illustration, it can be made considerably faster with more engineering/analytic derivatives?",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_9afa91de",
+        "filename": "examples/slam/pose_graph_2d/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "full disclosure. Analytical derivatives didn\u0027t make a difference here for the 2d version, but in 3d they do. I added the comment anyways so people will know paths to attempt to speed up their code.",
+      "parentUuid": "7483c255_1b6347b8",
       "range": {
         "startLine": 12,
         "startChar": 38,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_ba3cb5ea",
+        "filename": "examples/slam/pose_graph_2d/angle_local_parameterization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "agreed, I did this thinking of the re-usable cost function use case and that users might want to include multiple cost functions and I didn\u0027t want them to conflict.",
+      "parentUuid": "7483c255_3b608ba8",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_db6b7f8c",
         "filename": "examples/slam/pose_graph_2d/plot_results.py",
         "patchSetId": 6
@@ -122,6 +236,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "how about\n\ninitial_poses\nfinal_poses or optimized_poses",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_fa31dd07",
+        "filename": "examples/slam/pose_graph_2d/plot_results.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_db6b7f8c",
       "range": {
         "startLine": 18,
         "startChar": 21,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_fa08fd33",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_fb70c376",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 11
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_bb6a3b85",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 6
@@ -168,6 +330,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "Add a verbose error as to what might have happened for all check failures.",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 25
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_ba111557",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_bb6a3b85",
       "range": {
         "startLine": 76,
         "startChar": 10,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_fa1b9d72",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_9b65f7b7",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_7b7db348",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 6
@@ -214,6 +424,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "why bother with setting the threads?",
+      "range": {
+        "startLine": 114,
+        "startChar": 10,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_da16d94b",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_7b7db348",
       "range": {
         "startLine": 114,
         "startChar": 10,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_dadb3974",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "The reason I didn\u0027t is because it doesn\u0027t use the same g2o format.",
+      "parentUuid": "7483c255_1b7a6752",
+      "range": {
+        "startLine": 125,
+        "startChar": 5,
+        "endLine": 125,
+        "endChar": 16
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_7b0853d8",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "patchSetId": 6
@@ -260,6 +518,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "RotationMatrix2D ?",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_fa32bdf2",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_7b0853d8",
       "range": {
         "startLine": 43,
         "startChar": 28,
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_3a45254f",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_1b1587eb",
+      "range": {
+        "startLine": 64,
+        "startChar": 23,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_bb3c7b78",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "patchSetId": 6
@@ -306,6 +612,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "for variable naming, I have found that its better readability if you use the type as the suffix rather than the prefix, so that the thing that distinguishes them comes first.",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_fa8e3d7d",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_bb3c7b78",
       "range": {
         "startLine": 71,
         "startChar": 38,
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "54507eef_9a8ff17c",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_fb4203fb",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7483c255_db3dbf77",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "patchSetId": 6
@@ -352,6 +706,30 @@
       "writtenOn": "2016-08-04T14:03:47Z",
       "side": 1,
       "message": "this is not used anywhere. so you could just call residuals_map residuals.",
+      "range": {
+        "startLine": 86,
+        "startChar": 32,
+        "endLine": 86,
+        "endChar": 41
+      },
+      "revId": "ba9c5c21710d5ded8a16ac2fac48ac952f1b3725",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54507eef_9a85316e",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T02:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7483c255_db3dbf77",
       "range": {
         "startLine": 86,
         "startChar": 32,
