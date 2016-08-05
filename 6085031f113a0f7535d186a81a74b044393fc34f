@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5936f710_211d8ec9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-08-05T21:03:28Z",
+      "side": 1,
+      "message": "Why is this related to Xcode? It is just a particular IDE, I wouldn\u0027t mention it in the message.\n\nI would just say:\n\"-- Failed to find OpenMP, disabling. Expected on Clang \u003c 3.8.\"",
+      "revId": "6085031f113a0f7535d186a81a74b044393fc34f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
