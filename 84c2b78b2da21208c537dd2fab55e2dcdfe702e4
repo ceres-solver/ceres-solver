@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1969dfe4_e080982a",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T21:24:23Z",
+      "side": 1,
+      "message": "ah, sorry, I missed that in the last review.",
+      "parentUuid": "1969dfe4_605ec820",
+      "range": {
+        "startLine": 853,
+        "startChar": 44,
+        "endLine": 853,
+        "endChar": 55
+      },
+      "revId": "84c2b78b2da21208c537dd2fab55e2dcdfe702e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1969dfe4_808c3c98",
         "filename": "docs/source/nnls_tutorial.rst",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2016-08-05T21:00:13Z",
       "side": 1,
       "message": "this does not need to go in this CL, but it would be good to structure this paragraph around the fact that we are sitting on a manifold and you need a local parameterization for that manifold.. rather than starting with the local parameterization that normalizes.",
+      "revId": "84c2b78b2da21208c537dd2fab55e2dcdfe702e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1969dfe4_a07aa04e",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 9
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T21:24:23Z",
+      "side": 1,
+      "message": "acknowledged.",
+      "parentUuid": "1969dfe4_808c3c98",
       "revId": "84c2b78b2da21208c537dd2fab55e2dcdfe702e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1969dfe4_0007ccc9",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T21:24:23Z",
+      "side": 1,
+      "message": "Shoot. I thought there was one, but I looked for a function that took the termination type instead...",
+      "parentUuid": "1969dfe4_e0bbb824",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "84c2b78b2da21208c537dd2fab55e2dcdfe702e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1969dfe4_a0c5c0a8",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
         "patchSetId": 9
@@ -76,6 +142,30 @@
       "writtenOn": "2016-08-05T21:00:13Z",
       "side": 1,
       "message": "all of these members can be const?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 8
+      },
+      "revId": "84c2b78b2da21208c537dd2fab55e2dcdfe702e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1969dfe4_60c9e87e",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d_error_term.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T21:24:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1969dfe4_a0c5c0a8",
       "range": {
         "startLine": 104,
         "startChar": 2,
