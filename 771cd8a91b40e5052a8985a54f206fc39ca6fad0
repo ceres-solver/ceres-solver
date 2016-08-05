@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1969dfe4_575eec1f",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T18:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54507eef_a5a3b69b",
+      "range": {
+        "startLine": 853,
+        "startChar": 6,
+        "endLine": 853,
+        "endChar": 15
+      },
+      "revId": "771cd8a91b40e5052a8985a54f206fc39ca6fad0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54507eef_c5a8ba7a",
         "filename": "docs/source/nnls_tutorial.rst",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-05T04:32:30Z",
       "side": 1,
       "message": "are the variables in the actual code named the same  as in the math here?",
+      "range": {
+        "startLine": 862,
+        "startChar": 58,
+        "endLine": 862,
+        "endChar": 59
+      },
+      "revId": "771cd8a91b40e5052a8985a54f206fc39ca6fad0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1969dfe4_f74e206b",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T18:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54507eef_c5a8ba7a",
       "range": {
         "startLine": 862,
         "startChar": 58,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1969dfe4_778c5097",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 8
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T18:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54507eef_e59dbe51",
+      "range": {
+        "startLine": 903,
+        "startChar": 60,
+        "endLine": 903,
+        "endChar": 64
+      },
+      "revId": "771cd8a91b40e5052a8985a54f206fc39ca6fad0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54507eef_e5221e0e",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2016-08-05T04:32:30Z",
       "side": 1,
       "message": "ideally this should condition itself on the solve being successful..",
+      "range": {
+        "startLine": 172,
+        "startChar": 12,
+        "endLine": 172,
+        "endChar": 14
+      },
+      "revId": "771cd8a91b40e5052a8985a54f206fc39ca6fad0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1969dfe4_fd5a7f84",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-05T18:35:08Z",
+      "side": 1,
+      "message": "Done. I said the solve was successful if it didn\u0027t fail, but allow NO_CONVERGENCE because I wan\u0027t to allow the user to visualize the results for a small number of iterations.",
+      "parentUuid": "54507eef_e5221e0e",
       "range": {
         "startLine": 172,
         "startChar": 12,
