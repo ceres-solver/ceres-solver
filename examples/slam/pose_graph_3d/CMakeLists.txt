@@ -27,5 +27,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 # Author: vitus@google.com (Michael Vitus)
-add_subdirectory(pose_graph_2d)
-add_subdirectory(pose_graph_3d)
+
+add_executable(pose_graph_3d
+  eigen_quaternion_parameterization.cc
+  pose_graph_3d.cc
+  read_g2o.cc
+  )
+target_link_libraries(pose_graph_3d ceres)
