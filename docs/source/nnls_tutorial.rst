@@ -917,13 +917,11 @@ directory contains a number of other examples:
 
      /path/to/bin/pose_graph_2d /path/to/dataset/dataset.g2o
 
-  where this assumes the install directory is located in the repository.
-
   A python script is provided to visualize the resulting output files.
 
   .. code-block:: bash
 
-     /path/to/repo/robotics/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
+     /path/to/repo/examples/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
 
   As an example, a standard synthetic benchmark dataset [#f10]_ created by Edwin
   Olson which has 3500 nodes in a grid world with a total of 5598 edges was

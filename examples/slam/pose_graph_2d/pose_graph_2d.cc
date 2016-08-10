@@ -49,7 +49,7 @@ namespace ceres {
 namespace examples {
 
 // Constructs the nonlinear least squares optimization problem from the pose
-// graph constraints and solves it.
+// graph constraints.
 void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
                               std::map<int, Pose2d>* poses,
                               ceres::Problem* problem) {

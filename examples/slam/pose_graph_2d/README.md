@@ -18,7 +18,7 @@ Running
 This package includes an executable `pose_graph_2d` that will read a problem
 definition file. This executable can work with any 2D problem definition that
 uses the g2o format. It would be relatively straightforward to implement a new
-reader for a different format such as toro or others. `pose_graph_2d` will print
+reader for a different format such as TORO or others. `pose_graph_2d` will print
 the Ceres solver full summary and then output to disk the original and optimized
 poses (`poses_original.txt` and `poses_optimized.txt`, respectively) of the
 robot in the following format:
@@ -33,16 +33,14 @@ pose_id x y yaw_radians
 where `pose_id` is the corresponding integer ID from the file definition. Note,
 the file will be sorted in ascending order for the `pose_id`.
 
-The executable `solve_pose_graph_2d` expects the first argument to be the path
-to the problem definition. To run the executable,
+The executable `pose_graph_2d` expects the first argument to be the path to the
+problem definition. To run the executable,
 
 ```
 /path/to/bin/pose_graph_2d /path/to/dataset/dataset.g2o
 ```
 
-where this assumes the install directory is located in the repository.
-
 A python script is provided to visualize the resulting output files.
 ```
-/path/to/repo/robotics/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
+/path/to/repo/examples/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
 ```
