@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3be95b_8f43814d",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "same comment as the header file.",
+      "range": {
+        "startLine": 957,
+        "startChar": 23,
+        "endLine": 957,
+        "endChar": 24
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_2f40353f",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "you maybe better off naming the input variables as p_a_ptr and so on and having the maps be just p_a, that way the actual expressions are much smaller and easier to read.",
+      "range": {
+        "startLine": 79,
+        "startChar": 38,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_4f3d79bc",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "what does the suffix _est mean? estimated?\nI\u0027d go ahead and call it that.",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_ef580d3b",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "meas is not a great abbreviation, t_ab_measured_ is better.",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_cf198983",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "\"Ceres\u0027 rotation representation\" maybe a bad phrase. Its more that eigen\u0027s internal ordering is just a different one from the one which is \"usually\" used by some definition of usually.  Giving ceres credit for this decision makes the quaternions we are using sound weird.",
+      "range": {
+        "startLine": 216,
+        "startChar": 29,
+        "endLine": 216,
+        "endChar": 34
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_6f1f1d66",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "stack instead of pack.",
+      "range": {
+        "startLine": 224,
+        "startChar": 26,
+        "endLine": 224,
+        "endChar": 32
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_2f291589",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "sin_delta_by_delta like the other implementation.",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_ef31edf0",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "this -\u003e the",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 20
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e3be95b_6f463d60",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-14T06:23:30Z",
+      "side": 1,
+      "message": "it would be nice if this and the code below could be refactored to share code.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
