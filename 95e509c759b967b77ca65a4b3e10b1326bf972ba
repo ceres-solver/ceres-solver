@@ -25,6 +25,80 @@
     },
     {
       "key": {
+        "uuid": "def1ed14_3d752fd8",
+        "filename": "examples/slam/pose_graph_3d/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "I would move this closing paren to the end of the previous line.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1eec653b_ff28dfea",
+        "filename": "examples/slam/pose_graph_3d/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "Include a link?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1eec653b_df2d1bf9",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "I would use glog \u0026 gflags here (with the necessary initialisation calls) as gflags is already a dependency for the examples, and it means the glog output from Ceres will be nicely formatted and controllable via the flags as well as making the flag parsing clearer \u0026 more extensible.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "def1ed14_1d72f3ef",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "If using glog, then things like this could be CHECK()\u0027s or LOG_IF(FATAL), which IMO is more compact / cleaner (also colours nicely when run with -colorlogtostderr).",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_2f40353f",
         "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
         "patchSetId": 3
@@ -94,6 +168,23 @@
     },
     {
       "key": {
+        "uuid": "fe1dd11b_3633985e",
+        "filename": "examples/slam/pose_graph_3d/read_g2o.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "IMO this would be better via glog.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_cf198983",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 3
@@ -140,6 +231,23 @@
     },
     {
       "key": {
+        "uuid": "fe1dd11b_d62d04f9",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "I think it makes sense to keep this #include here, as if user code is using EIgen::Quaternions, they should explicitly #include it themselves, and as they don\u0027t appear in our public API, I don\u0027t think their header should either.  \n\nI also think it\u0027s potentially more confusing to have an Eigen::Quaterniond typedef in the public Ceres Eigen header (ala Matrix \u0026 Vector), as then that really muddies the water as to the difference between an Eigen Quaternion vs a Ceres Quaternion (in terms of the ordering).",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_2f291589",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 3
@@ -180,6 +288,23 @@
         "endLine": 200,
         "endChar": 20
       },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e0049b2_78e86175",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-14T15:22:03Z",
+      "side": 1,
+      "message": "What about maintaining the normalisation of the quaternion?  Eigen will I think allow you to construct an un-normalised quaternion, and it does not normalise the result of operator*().  So I would see two potential failure modes: 1) The user doesn\u0027t supply a normalised quaternion to begin with, and 2) After repeated updates the resulting quaternion is not normalised.\n\nIt\u0027s interesting to note that Sophus has a lot of calls to normalize() (including in operator*\u003d()) to try to keep everything normalised throughout.",
       "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
