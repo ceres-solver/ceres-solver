@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7bbc9397_6a44777a",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:13:48Z",
+      "side": 1,
+      "message": "I\u0027ve added unit tests and changed rotation_test.cc to call this function as well.\n\nAlso removed the now-unused duplicate of this from gradient_checking_cost_function.cc.",
+      "parentUuid": "cf8db5b7_e34f8636",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8db5b7_035552c9",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 3
@@ -82,6 +106,30 @@
       "writtenOn": "2016-07-31T19:38:48Z",
       "side": 1,
       "message": "this function has considerable overlap with ResidualBlock::Evaluate.\nit is likely worth comparing the two implementations to see what can be shared.",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fee071e2_92520ce4",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:13:48Z",
+      "side": 1,
+      "message": "This would be a significant refactor with limited usefulness. The data structures used to store all the Jacobian matrices are different, mostly because GradienChecker returns all the Jacobian matrices in its results, while ResidualBlock just uses temporary storage in a big pre-allocated scratch space. ResidualBock also has access to the \"ParameterBlock\" objects and uses them directly, which is not the case here. And most of this function is just allocating matrices. So, I\u0027d prefer not to try to refactor this.",
+      "parentUuid": "cf8db5b7_235a4ef9",
       "range": {
         "startLine": 79,
         "startChar": 25,
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "fee071e2_3e72e913",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:13:48Z",
+      "side": 1,
+      "message": "finite_diff_cost_function_ is of type internal::scoped_ptr\u003cCostFunction\u003e, so you can\u0027t call AddParameterBlock or SetNumResiduals on it.",
+      "parentUuid": "cf8db5b7_43575ad0",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8db5b7_636456bd",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 3
@@ -151,6 +223,30 @@
       "writtenOn": "2016-07-31T19:38:48Z",
       "side": 1,
       "message": "GradientCheckerResults to be more consistent?",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fee071e2_de6ae514",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:13:48Z",
+      "side": 1,
+      "message": "Actually, I think this should be called ProbeResults since it\u0027s the result of calling Probe()",
+      "parentUuid": "cf8db5b7_636456bd",
       "range": {
         "startLine": 175,
         "startChar": 2,
@@ -289,6 +385,30 @@
       "writtenOn": "2016-07-31T19:38:48Z",
       "side": 1,
       "message": "this is a bit odd and I guess indicates a problem with the iterationcallback API where we want to distinguish between iterationcallbacks that are internal and ones which are external.",
+      "range": {
+        "startLine": 547,
+        "startChar": 6,
+        "endLine": 547,
+        "endChar": 32
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fee071e2_92f68cc4",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:13:48Z",
+      "side": 1,
+      "message": "Correct. The upside of the current implementation is however that you don\u0027t need to introduce any special logic outside of this function -- to the rest of the system, this is just a regular problem with a user callback.",
+      "parentUuid": "cf8db5b7_e3da2672",
       "range": {
         "startLine": 547,
         "startChar": 6,
