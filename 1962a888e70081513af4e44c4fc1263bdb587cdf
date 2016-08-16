@@ -351,6 +351,30 @@
     },
     {
       "key": {
+        "uuid": "7bbc9397_aaaeef8d",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T00:22:40Z",
+      "side": 1,
+      "message": "Yes, perhaps \"gradient_check_relative_step_size\", analogous to \"gradient_check_relative_precision\"? I\u0027d consider this outside the scope of this change though, and it would break the public API of Solver...",
+      "parentUuid": "cf8db5b7_e368668e",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 95,
+        "endChar": 43
+      },
+      "revId": "1962a888e70081513af4e44c4fc1263bdb587cdf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8db5b7_23832e35",
         "filename": "internal/ceres/gradient_checking_cost_function.h",
         "patchSetId": 3
