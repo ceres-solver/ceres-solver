@@ -329,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "7b2813c6_8aa74bfe",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T18:37:54Z",
+      "side": 1,
+      "message": "two things here IMO.\n\n1. The local parameterization should preserve the norm of the quaternion to whatever it is. so the current implementation is fine by me, it is the same in the other \"normal\" quaternion implementation.\n\n2. The bigger issue is that people will start the optimization with quaternions which are not normalized, or do not associated a parameterization with one and then forget to normalize.\n\nand there is some interaction between the second issue and the first one. \n\n(2) requires a broader discussion (and is an important issue) and should not hold up this CL IMO.",
+      "parentUuid": "7bbc9397_1ea3bd46",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_6f463d60",
         "filename": "internal/ceres/local_parameterization_test.cc",
         "patchSetId": 3
