@@ -311,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "7bbc9397_1ea3bd46",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-16T16:43:20Z",
+      "side": 1,
+      "message": "I have always wanted to have this discussion about how, where and when to account for numerical error so I am happy this came up. \n\nWith regard to #2 and maintaining unit norm. I ran a simulation where I generated 10 million unit quaternions and multiplied them in sequence. At the end 1 - ||q|| \u003d 1e-13 which is about machine epsilon. \n\nI ran the same simulation where the quaternions were normalized to 1 - delta and at the end \n\ndelta,           1 - ||q||\n\n1e-15,          1e-8\n\n1e-14,          1e-7\n\n1e-13,          1e-6\n\n1e-12,          1e-5\n\nSo if the quaternions are normalized on input, it doesn\u0027t seem like you need to worry about the product every time. When the quaternions are near unit norm it seems like it could lead to trouble after a while. \n\nIn the cost function, if you apply normalization after every product then when you use AD you will end up differentiating the normalization which is there only to account for numerical errors. So this will end up disagreeing with analytical derivatives which assumes perfect operations. For me, it isn\u0027t clear who is \"correct\" in this scenario. \n\nSo we can either normalize after every product, or only in the quaternion local parameterization update function to try to eliminate the potential for it drifting over many multiplications. This may be overthinking it as well because most optimizations probably terminate \u003c1000 iterations.\n\nWhatever we decide here, we should also update the ceres::QuaternionLocalParameterization because it doesn\u0027t normalize the quaternion after the product either.\n\nWith regard to #1, it is always tricky with how much to guard against user error. We can always normalize the quaternions on input (same question about AD), return false if the input is not normalized, or assume it is valid. The last is probably the worst.\n\nLet me know what you think.",
+      "parentUuid": "3e0049b2_78e86175",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_6f463d60",
         "filename": "internal/ceres/local_parameterization_test.cc",
         "patchSetId": 3
