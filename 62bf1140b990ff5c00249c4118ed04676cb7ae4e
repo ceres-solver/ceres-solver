@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bbc9397_93a486fa",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "drop tabs please.",
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_b3a18ae9",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "parameter_blocks",
+      "range": {
+        "startLine": 914,
+        "startChar": 28,
+        "endLine": 914,
+        "endChar": 38
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_130656f2",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "stack",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_331fda17",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "move this below the constructor, as it is better next to the probe function call itself?",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_93f9e6e3",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "\"return_value\" is not a great name but I do not have a great alternative suggestion either.",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 21
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_b3f66af1",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "maximum_relative_error is a better name.",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 31
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_b30aeacd",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 7
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_733eb271",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "in the ceres code base I think we are still a bit behind the times wr.t the google style guide. is size_t the new recommendation for loop variables like this? I forget, otherwise we use ints everywhere.",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_8a290b33",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "isn\u0027t there a problem with std::vector of eigen Matrix objects.. I vaguely remember this being an issue.. maybe it has been resolved?",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_ea26c760",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "why not use IsClose here.. would be good to use the same logic everywhere.",
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_aa032fbe",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "its odd to have a non-const argument as the last one here. goes against the style guide. It should at least come before the options.\n\nalso I am wondering if the last four arguments to the constructor should be their own struct..",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_ea0d27e9",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_0a3ebb6f",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "stack instead of pack.",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 15
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_6a33f7a7",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "stack instead of pack.",
+      "range": {
+        "startLine": 241,
+        "startChar": 41,
+        "endLine": 241,
+        "endChar": 61
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_d32c3e44",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "no need for inline here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b2813c6_8a7bcb52",
+        "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "I am scared of fuzzy bananas..",
+      "range": {
+        "startLine": 232,
+        "startChar": 49,
+        "endLine": 232,
+        "endChar": 55
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_d0d8b47d",
+        "filename": "internal/ceres/is_close.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "document the case where x or y is exactly zero.",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbc9397_30e4b033",
+        "filename": "internal/ceres/is_close_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-16T19:00:37Z",
+      "side": 1,
+      "message": "bad idea to have multiple tests inside a single test, I recommend breaking this up into smaller tests.",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
