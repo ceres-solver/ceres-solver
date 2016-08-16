@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_3e710910",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_93a486fa",
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbc9397_b3a18ae9",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "parameter_blocks",
+      "range": {
+        "startLine": 914,
+        "startChar": 28,
+        "endLine": 914,
+        "endChar": 38
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_5e76d508",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_b3a18ae9",
       "range": {
         "startLine": 914,
         "startChar": 28,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_7e7b91ed",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_130656f2",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbc9397_331fda17",
         "filename": "include/ceres/gradient_checker.h",
         "patchSetId": 5
@@ -76,6 +142,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "move this below the constructor, as it is better next to the probe function call itself?",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_9e5f7d7c",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_331fda17",
       "range": {
         "startLine": 69,
         "startChar": 9,
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_be5c3988",
+        "filename": "include/ceres/gradient_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_b3f66af1",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 31
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bbc9397_b30aeacd",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 5
@@ -145,6 +259,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "const int",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 7
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_de97453a",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "can\u0027t be const, since it\u0027s conditionally re-assigned below",
+      "parentUuid": "7bbc9397_b30aeacd",
       "range": {
         "startLine": 74,
         "startChar": 4,
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_7e89d11d",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "So.. if you use int here, you will get a compiler warning (depending on your settings), since block_sizes.size() is of type size_t which is unsigned. In our project, this will be an error. If you use int, you have to do a cast:\n\nfor (int i \u003d 0; i \u003c static_cast\u003cint\u003e(block_sizes.size()); i++) {\n\nThis feels a little cumbersome to me. Also, the Google style guide permits using size_t where \"appropriate\":\n\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types\n\nHowever in keeping with the existing style in Ceres I\u0027ll make an int variable for the size and use int as iterator.\n\nconst int num_parameter_blocks \u003d block_sizes.size();",
+      "parentUuid": "7bbc9397_733eb271",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2813c6_8a290b33",
         "filename": "internal/ceres/gradient_checker.cc",
         "patchSetId": 5
@@ -191,6 +353,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "isn\u0027t there a problem with std::vector of eigen Matrix objects.. I vaguely remember this being an issue.. maybe it has been resolved?",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_1ea36d98",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Matrix is a typedef on a dynamically-sized Eigen matrix - those are heap allocated, so don\u0027t need to be memory aligned like some of the fixed-size matrices.\n\nhttps://eigen.tuxfamily.org/dox/group__TopicStlContainers.html",
+      "parentUuid": "7b2813c6_8a290b33",
       "range": {
         "startLine": 169,
         "startChar": 8,
@@ -220,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_5ed25508",
+        "filename": "internal/ceres/gradient_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2813c6_ea26c760",
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2813c6_aa032fbe",
         "filename": "internal/ceres/gradient_checking_cost_function.cc",
         "patchSetId": 5
@@ -231,6 +435,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "its odd to have a non-const argument as the last one here. goes against the style guide. It should at least come before the options.\n\nalso I am wondering if the last four arguments to the constructor should be their own struct..",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_fedb2113",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "I was following this rule, which puts output arguments last:\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering\n\nSince this is a local definition only used in this cc file, I\u0027d say a struct for this would be overkill.",
+      "parentUuid": "7b2813c6_aa032fbe",
       "range": {
         "startLine": 70,
         "startChar": 6,
@@ -266,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_fe1161ae",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2813c6_ea0d27e9",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2813c6_0a3ebb6f",
         "filename": "internal/ceres/gradient_checking_cost_function.cc",
         "patchSetId": 5
@@ -289,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_9e1a1dcb",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2813c6_0a3ebb6f",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 15
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2813c6_6a33f7a7",
         "filename": "internal/ceres/gradient_checking_cost_function.cc",
         "patchSetId": 5
@@ -300,6 +576,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "stack instead of pack.",
+      "range": {
+        "startLine": 241,
+        "startChar": 41,
+        "endLine": 241,
+        "endChar": 61
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_be17d9a3",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2813c6_6a33f7a7",
       "range": {
         "startLine": 241,
         "startChar": 41,
@@ -392,6 +692,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "bad idea to have multiple tests inside a single test, I recommend breaking this up into smaller tests.",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_7e38f180",
+        "filename": "internal/ceres/is_close_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_30e4b033",
       "range": {
         "startLine": 38,
         "startChar": 14,
