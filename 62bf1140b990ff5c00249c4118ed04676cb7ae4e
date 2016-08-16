@@ -635,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "fbe083e2_de03c5ab",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_d32c3e44",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b2813c6_8a7bcb52",
         "filename": "internal/ceres/gradient_checking_cost_function_test.cc",
         "patchSetId": 5
@@ -669,6 +693,30 @@
       "writtenOn": "2016-08-16T19:00:37Z",
       "side": 1,
       "message": "document the case where x or y is exactly zero.",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "62bf1140b990ff5c00249c4118ed04676cb7ae4e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe083e2_9ef93db6",
+        "filename": "internal/ceres/is_close.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-16T21:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbc9397_d0d8b47d",
       "range": {
         "startLine": 39,
         "startChar": 32,
