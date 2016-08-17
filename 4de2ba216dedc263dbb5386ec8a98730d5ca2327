@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb944b51_4670d673",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1278,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-17T20:47:02Z",
+      "side": 1,
+      "message": "minor comment, \nit maybe worth clarifying that when you construct the quaternion it is still w,x,y,z, its the internal layout which is xyzw and since ceres is operating on parameter blocks which are raw double pointers, this difference matters even though on the surface if you are using the constructor the distinction is not apparent.",
+      "range": {
+        "startLine": 1278,
+        "startChar": 16,
+        "endLine": 1278,
+        "endChar": 25
+      },
+      "revId": "4de2ba216dedc263dbb5386ec8a98730d5ca2327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb944b51_c67be651",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-17T20:47:02Z",
+      "side": 1,
+      "message": "same comment as in the docs.",
+      "range": {
+        "startLine": 215,
+        "startChar": 24,
+        "endLine": 215,
+        "endChar": 25
+      },
+      "revId": "4de2ba216dedc263dbb5386ec8a98730d5ca2327",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
