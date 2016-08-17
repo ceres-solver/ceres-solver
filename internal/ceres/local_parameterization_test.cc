@@ -30,6 +30,7 @@
 
 #include <cmath>
 #include <limits>
+#include "Eigen/Geometry"
 #include "ceres/autodiff_local_parameterization.h"
 #include "ceres/fpclassify.h"
 #include "ceres/householder_vector.h"
@@ -185,21 +186,20 @@ struct QuaternionPlus {
   }
 };
 
-void QuaternionParameterizationTestHelper(const double* x,
-                                          const double* delta,
-                                          const double* q_delta) {
+template<typename Parameterization, typename Plus>
+void QuaternionParameterizationTestHelper(
+    const double* x, const double* delta,
+    const double* x_plus_delta_ref) {
   const int kGlobalSize = 4;
   const int kLocalSize = 3;
 
   const double kTolerance = 1e-14;
-  double x_plus_delta_ref[kGlobalSize] = {0.0, 0.0, 0.0, 0.0};
-  QuaternionProduct(q_delta, x, x_plus_delta_ref);
 
   double x_plus_delta[kGlobalSize] = {0.0, 0.0, 0.0, 0.0};
-  QuaternionParameterization parameterization;
+  Parameterization parameterization;
   parameterization.Plus(x, delta, x_plus_delta);
   for (int i = 0; i < kGlobalSize; ++i) {
-    EXPECT_NEAR(x_plus_delta[i], x_plus_delta_ref[i], kTolerance);
+    EXPECT_NEAR(x_plus_delta[i], x_plus_delta[i], kTolerance);
   }
 
   const double x_plus_delta_norm =
@@ -216,10 +216,10 @@ void QuaternionParameterizationTestHelper(const double* x,
   double* jacobian_array[2] = { NULL, jacobian_ref };
 
   // Autodiff jacobian at delta_x = 0.
-  internal::AutoDiff<QuaternionPlus,
+  internal::AutoDiff<Plus,
                      double,
                      kGlobalSize,
-                     kLocalSize>::Differentiate(QuaternionPlus(),
+                     kLocalSize>::Differentiate(Plus(),
                                                 parameters,
                                                 kGlobalSize,
                                                 x_plus_delta,
@@ -259,7 +259,10 @@ TEST(QuaternionParameterization, ZeroTest) {
   double x[4] = {0.5, 0.5, 0.5, 0.5};
   double delta[3] = {0.0, 0.0, 0.0};
   double q_delta[4] = {1.0, 0.0, 0.0, 0.0};
-  QuaternionParameterizationTestHelper(x, delta, q_delta);
+  double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
+  QuaternionProduct(q_delta, x, x_plus_delta);
+  QuaternionParameterizationTestHelper<QuaternionParameterization,
+                                       QuaternionPlus>(x, delta, x_plus_delta);
 }
 
 TEST(QuaternionParameterization, NearZeroTest) {
@@ -277,7 +280,10 @@ TEST(QuaternionParameterization, NearZeroTest) {
   q_delta[2] = delta[1];
   q_delta[3] = delta[2];
 
-  QuaternionParameterizationTestHelper(x, delta, q_delta);
+  double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
+  QuaternionProduct(q_delta, x, x_plus_delta);
+  QuaternionParameterizationTestHelper<QuaternionParameterization,
+                                       QuaternionPlus>(x, delta, x_plus_delta);
 }
 
 TEST(QuaternionParameterization, AwayFromZeroTest) {
@@ -294,7 +300,88 @@ TEST(QuaternionParameterization, AwayFromZeroTest) {
   q_delta[2] = sin(delta_norm) / delta_norm * delta[1];
   q_delta[3] = sin(delta_norm) / delta_norm * delta[2];
 
-  QuaternionParameterizationTestHelper(x, delta, q_delta);
+  double x_plus_delta[4] = {0.0, 0.0, 0.0, 0.0};
+  QuaternionProduct(q_delta, x, x_plus_delta);
+  QuaternionParameterizationTestHelper<QuaternionParameterization,
+                                       QuaternionPlus>(x, delta, x_plus_delta);
+}
+
+// Functor needed to implement automatically differentiated Plus for
+// Eigen's quaternion.
+struct EigenQuaternionPlus {
+  template<typename T>
+  bool operator()(const T* x, const T* delta, T* x_plus_delta) const {
+    const T norm_delta =
+        sqrt(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
+
+    Eigen::Quaternion<T> q_delta;
+    if (norm_delta > T(0.0)) {
+      const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
+      q_delta.coeffs() << sin_delta_by_delta * delta[0],
+          sin_delta_by_delta * delta[1], sin_delta_by_delta * delta[2],
+          cos(norm_delta);
+    } else {
+      // We do not just use q_delta = [0,0,0,1] here because that is a
+      // constant and when used for automatic differentiation will
+      // lead to a zero derivative. Instead we take a first order
+      // approximation and evaluate it at zero.
+      q_delta.coeffs() <<  delta[0], delta[1], delta[2], T(1.0);
+    }
+
+    Eigen::Map<Eigen::Quaternion<T> > x_plus_delta_ref(x_plus_delta);
+    Eigen::Map<const Eigen::Quaternion<T> > x_ref(x);
+    x_plus_delta_ref = q_delta * x_ref;
+    return true;
+  }
+};
+
+TEST(EigenQuaternionParameterization, ZeroTest) {
+  Eigen::Quaterniond x(0.5, 0.5, 0.5, 0.5);
+  double delta[3] = {0.0, 0.0, 0.0};
+  Eigen::Quaterniond q_delta(1.0, 0.0, 0.0, 0.0);
+  Eigen::Quaterniond x_plus_delta = q_delta * x;
+  QuaternionParameterizationTestHelper<EigenQuaternionParameterization,
+                                       EigenQuaternionPlus>(
+      x.coeffs().data(), delta, x_plus_delta.coeffs().data());
+}
+
+TEST(EigenQuaternionParameterization, NearZeroTest) {
+  Eigen::Quaterniond x(0.52, 0.25, 0.15, 0.45);
+  x.normalize();
+
+  double delta[3] = {0.24, 0.15, 0.10};
+  for (int i = 0; i < 3; ++i) {
+    delta[i] = delta[i] * 1e-14;
+  }
+
+  // Note: w is first in the constructor.
+  Eigen::Quaterniond q_delta(1.0, delta[0], delta[1], delta[2]);
+
+  Eigen::Quaterniond x_plus_delta = q_delta * x;
+  QuaternionParameterizationTestHelper<EigenQuaternionParameterization,
+                                       EigenQuaternionPlus>(
+      x.coeffs().data(), delta, x_plus_delta.coeffs().data());
+}
+
+TEST(EigenQuaternionParameterization, AwayFromZeroTest) {
+  Eigen::Quaterniond x(0.52, 0.25, 0.15, 0.45);
+  x.normalize();
+
+  double delta[3] = {0.24, 0.15, 0.10};
+  const double delta_norm = sqrt(delta[0] * delta[0] +
+                                 delta[1] * delta[1] +
+                                 delta[2] * delta[2]);
+
+  // Note: w is first in the constructor.
+  Eigen::Quaterniond q_delta(cos(delta_norm),
+                             sin(delta_norm) / delta_norm * delta[0],
+                             sin(delta_norm) / delta_norm * delta[1],
+                             sin(delta_norm) / delta_norm * delta[2]);
+
+  Eigen::Quaterniond x_plus_delta = q_delta * x;
+  QuaternionParameterizationTestHelper<EigenQuaternionParameterization,
+                                       EigenQuaternionPlus>(
+      x.coeffs().data(), delta, x_plus_delta.coeffs().data());
 }
 
 // Functor needed to implement automatically differentiated Plus for

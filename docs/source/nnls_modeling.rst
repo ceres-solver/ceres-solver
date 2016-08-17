@@ -1273,6 +1273,15 @@ Instances
    product. :class:`QuaternionParameterization` is an implementation
    of :eq:`quaternion`.
 
+.. class:: EigenQuaternionParameterization
+
+   Eigen uses a different ordering for the elements of the quaternion
+   than what is commonly used. Specifically, Eigen stores the real part
+   last whereas it is typically stored first.
+   :class:`EigenQuaternionParameterization` uses the same update as
+   :class:`QuaternionParameterization` but takes into account Eigen's
+   element ordering.
+
 .. class:: HomogeneousVectorParameterization
 
    In computer vision, homogeneous vectors are commonly used to
