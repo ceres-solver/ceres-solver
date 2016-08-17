@@ -1273,6 +1273,19 @@ Instances
    product. :class:`QuaternionParameterization` is an implementation
    of :eq:`quaternion`.
 
+.. class:: EigenQuaternionParameterization
+
+   Eigen uses a different internal memory layout for the elements of the
+   quaternion than what is commonly used. Specifically, Eigen stores the
+   elements in memory as [x, y, z, w] where the real part is last
+   whereas it is typically stored first. Note, when creating an Eigen
+   quaternion through the constructor the elements are accepted in w, x,
+   y, z order. Since Ceres operates on parameter blocks which are raw
+   double pointers this difference is important and requires a different
+   parameterization. :class:`EigenQuaternionParameterization` uses the
+   same update as :class:`QuaternionParameterization` but takes into
+   account Eigen's internal memory element ordering.
+
 .. class:: HomogeneousVectorParameterization
 
    In computer vision, homogeneous vectors are commonly used to
