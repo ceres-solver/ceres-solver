@@ -208,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "bb944b51_867b9eec",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-17T20:40:35Z",
+      "side": 1,
+      "message": "I didn\u0027t mean to come across as Ceres\u0027s convention is weird. I called out Ceres to make it clear to the reader where they should pay attention to this difference. I changed the wording.",
+      "parentUuid": "3e3be95b_cf198983",
+      "range": {
+        "startLine": 216,
+        "startChar": 29,
+        "endLine": 216,
+        "endChar": 34
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_6f1f1d66",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 3
@@ -219,6 +243,30 @@
       "writtenOn": "2016-08-14T06:23:30Z",
       "side": 1,
       "message": "stack instead of pack.",
+      "range": {
+        "startLine": 224,
+        "startChar": 26,
+        "endLine": 224,
+        "endChar": 32
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb944b51_a65fba7b",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-17T20:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_6f1f1d66",
       "range": {
         "startLine": 224,
         "startChar": 26,
