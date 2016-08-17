@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb944b51_af7075e8",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-17T17:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe083e2_8489ea20",
+      "range": {
+        "startLine": 892,
+        "startChar": 70,
+        "endLine": 892,
+        "endChar": 71
+      },
+      "revId": "fcb2faed5a31264b8e629b07847485da8643647e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbe083e2_a48d062c",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bb944b51_8f73b9f4",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-17T17:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe083e2_a48d062c",
+      "range": {
+        "startLine": 915,
+        "startChar": 53,
+        "endLine": 915,
+        "endChar": 54
+      },
+      "revId": "fcb2faed5a31264b8e629b07847485da8643647e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbe083e2_e4970e3a",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2016-08-16T23:50:30Z",
       "side": 1,
       "message": "errant space/tab.",
+      "range": {
+        "startLine": 918,
+        "startChar": 57,
+        "endLine": 918,
+        "endChar": 58
+      },
+      "revId": "fcb2faed5a31264b8e629b07847485da8643647e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb944b51_4f8ab1c5",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 7
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-17T17:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbe083e2_e4970e3a",
       "range": {
         "startLine": 918,
         "startChar": 57,
