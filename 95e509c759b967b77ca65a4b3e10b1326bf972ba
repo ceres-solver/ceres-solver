@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db249f97_0b5661d9",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_8f43814d",
+      "range": {
+        "startLine": 957,
+        "startChar": 23,
+        "endLine": 957,
+        "endChar": 24
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "def1ed14_3d752fd8",
         "filename": "examples/slam/pose_graph_3d/CMakeLists.txt",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2016-08-14T15:22:03Z",
       "side": 1,
       "message": "I would move this closing paren to the end of the previous line.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_6b5d15f0",
+        "filename": "examples/slam/pose_graph_3d/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def1ed14_3d752fd8",
       "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "db249f97_ce9c575c",
+        "filename": "examples/slam/pose_graph_3d/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "There isn\u0027t really a good link that describes the format.",
+      "parentUuid": "1eec653b_ff28dfea",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eec653b_df2d1bf9",
         "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2016-08-14T15:22:03Z",
       "side": 1,
       "message": "I would use glog \u0026 gflags here (with the necessary initialisation calls) as gflags is already a dependency for the examples, and it means the glog output from Ceres will be nicely formatted and controllable via the flags as well as making the flag parsing clearer \u0026 more extensible.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_2bf79dc1",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1eec653b_df2d1bf9",
       "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "db249f97_ab3d4d74",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Thanks it does look better.",
+      "parentUuid": "def1ed14_1d72f3ef",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_2f40353f",
         "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
         "patchSetId": 3
@@ -110,6 +212,30 @@
       "writtenOn": "2016-08-14T06:23:30Z",
       "side": 1,
       "message": "you maybe better off naming the input variables as p_a_ptr and so on and having the maps be just p_a, that way the actual expressions are much smaller and easier to read.",
+      "range": {
+        "startLine": 79,
+        "startChar": 38,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_2bd6bd50",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_2f40353f",
       "range": {
         "startLine": 79,
         "startChar": 38,
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "db249f97_8b417115",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_4f3d79bc",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_ef580d3b",
         "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
         "patchSetId": 3
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "db249f97_ab462d28",
+        "filename": "examples/slam/pose_graph_3d/pose_graph_3d_error_term.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_ef580d3b",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1dd11b_3633985e",
         "filename": "examples/slam/pose_graph_3d/read_g2o.cc",
         "patchSetId": 3
@@ -179,6 +353,24 @@
       "writtenOn": "2016-08-14T15:22:03Z",
       "side": 1,
       "message": "IMO this would be better via glog.",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_0b2d813d",
+        "filename": "examples/slam/pose_graph_3d/read_g2o.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1dd11b_3633985e",
       "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -296,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "db249f97_ab6f0d90",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1dd11b_d62d04f9",
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_2f291589",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 3
@@ -319,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "db249f97_cb6449b7",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_2f291589",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3be95b_ef31edf0",
         "filename": "internal/ceres/local_parameterization.cc",
         "patchSetId": 3
@@ -330,6 +564,30 @@
       "writtenOn": "2016-08-14T06:23:30Z",
       "side": 1,
       "message": "this -\u003e the",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 20
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_eb69058c",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_ef31edf0",
       "range": {
         "startLine": 200,
         "startChar": 16,
@@ -406,6 +664,30 @@
       "writtenOn": "2016-08-14T06:23:30Z",
       "side": 1,
       "message": "it would be nice if this and the code below could be refactored to share code.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "95e509c759b967b77ca65a4b3e10b1326bf972ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db249f97_4b793959",
+        "filename": "internal/ceres/local_parameterization_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-19T03:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3be95b_6f463d60",
       "range": {
         "startLine": 190,
         "startChar": 0,
