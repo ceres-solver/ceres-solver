@@ -28,11 +28,5 @@
 #
 # Author: vitus@google.com (Michael Vitus)
 
-add_executable(pose_graph_2d
-  angle_local_parameterization.h
-  normalize_angle.h
-  pose_graph_2d.cc
-  pose_graph_2d_error_term.h
-  types.h)
-target_link_libraries(pose_graph_2d ceres)
-
+add_executable(pose_graph_3d pose_graph_3d.cc)
+target_link_libraries(pose_graph_3d ceres ${GFLAGS_LIBRARIES})

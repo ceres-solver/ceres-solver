@@ -913,36 +913,125 @@ directory contains a number of other examples:
    The executable :member:`pose_graph_2d` expects the first argument to be
    the path to the problem definition. To run the executable,
 
-  .. code-block:: bash
+   .. code-block:: bash
 
-     /path/to/bin/pose_graph_2d /path/to/dataset/dataset.g2o
+      /path/to/bin/pose_graph_2d /path/to/dataset/dataset.g2o
 
-  A python script is provided to visualize the resulting output files.
+   A python script is provided to visualize the resulting output files.
 
-  .. code-block:: bash
+   .. code-block:: bash
 
-     /path/to/repo/examples/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
+      /path/to/repo/examples/slam/pose_graph_2d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
 
-  As an example, a standard synthetic benchmark dataset [#f10]_ created by Edwin
-  Olson which has 3500 nodes in a grid world with a total of 5598 edges was
-  solved.  Visualizing the results with the provided script produces:
+   As an example, a standard synthetic benchmark dataset [#f10]_ created by
+   Edwin Olson which has 3500 nodes in a grid world with a total of 5598 edges
+   was solved.  Visualizing the results with the provided script produces:
 
-  .. figure:: manhattan_olson_3500_result.png
-     :figwidth: 600px
-     :height: 600px
-     :align: center
+   .. figure:: manhattan_olson_3500_result.png
+      :figwidth: 600px
+      :height: 600px
+      :align: center
 
-  with the original poses in green and the optimized poses in blue. As shown,
-  the optimized poses more closely match the underlying grid world. Note, the
-  left side of the graph has a small yaw drift due to a lack of relative
-  constraints to provide enough information to reconstruct the trajectory.
+   with the original poses in green and the optimized poses in blue. As shown,
+   the optimized poses more closely match the underlying grid world. Note, the
+   left side of the graph has a small yaw drift due to a lack of relative
+   constraints to provide enough information to reconstruct the trajectory.
 
-  .. rubric:: Footnotes
+   .. rubric:: Footnotes
 
-  .. [#f9] Giorgio Grisetti, Rainer Kummerle, Cyrill Stachniss, Wolfram
-     Burgard. A Tutorial on Graph-Based SLAM. IEEE Intelligent Transportation
-     Systems Magazine, 52(3):199–222, 2010.
+   .. [#f9] Giorgio Grisetti, Rainer Kummerle, Cyrill Stachniss, Wolfram
+      Burgard. A Tutorial on Graph-Based SLAM. IEEE Intelligent Transportation
+      Systems Magazine, 52(3):199–222, 2010.
 
-  .. [#f10] E. Olson, J. Leonard, and S. Teller, “Fast iterative optimization of
-     pose graphs with poor initial estimates,” in Robotics and Automation
-     (ICRA), IEEE International Conference on, 2006, pp. 2262–2269.
+   .. [#f10] E. Olson, J. Leonard, and S. Teller, “Fast iterative optimization of
+      pose graphs with poor initial estimates,” in Robotics and Automation
+      (ICRA), IEEE International Conference on, 2006, pp. 2262–2269.
+
+#. `slam/pose_graph_3d/pose_graph_3d.cc
+   <https://ceres-solver.googlesource.com/ceres-solver/+/master/examples/slam/pose_graph_3d/pose_graph_3d.cc>`_
+   The following explains how to formulate the pose graph based SLAM problem in
+   3-Dimensions with relative pose constraints. The example also illustrates how
+   to use Eigen's geometry module with Ceres's automatic differentiation
+   functionality. 
+
+   The robot at timestamp :math:`t` has state :math:`x_t = [p^T, q^T]^T` where
+   :math:`p` is a 3D vector that represents the position and :math:`q` is the
+   orientation represented as an Eigen quaternion. The measurement of the
+   relative transform between the robot state at two timestamps :math:`a` and
+   :math:`b` is given as: :math:`z_{ab} = [\hat{p}_{ab}^T, \hat{q}_{ab}^T]^T`.
+   The residual implemented in the Ceres cost function which computes the error
+   between the measurement and the predicted measurement is:
+
+   .. math:: r_{ab} =
+             \left[
+             \begin{array}{c}
+                R(q_a)^{T} (p_b - p_a) - \hat{p}_{ab} \\
+                2.0 \mathrm{vec}\left((q_a^{-1} q_b) \hat{q}_{ab}^{-1}\right)
+             \end{array}
+             \right]
+
+   where the function :math:`\mathrm{vec}()` returns the vector part of the
+   quaternion, i.e. :math:`[q_x, q_y, q_z]`, and :math:`R(q)` is the rotation
+   matrix for the quaternion.
+
+   To finish the cost function, we need to weight the residual by the
+   uncertainty of the measurement. Hence, we pre-multiply the residual by the
+   inverse square root of the covariance matrix for the measurement,
+   i.e. :math:`\Sigma_{ab}^{-\frac{1}{2}} r_{ab}` where :math:`\Sigma_{ab}` is
+   the covariance.
+
+   Given that we are using a quaternion to represent the orientation, we need to
+   use a local parameterization (:class:`EigenQuaternionParameterization`) to
+   only apply updates orthogonal to the 4-vector defining the
+   quaternion. Eigen's quaternion uses a different internal memory layout for
+   the elements of the quaternion than what is commonly used. Specifically,
+   Eigen stores the elements in memory as :math:`[x, y, z, w]` where the real
+   part is last whereas it is typically stored first. Note, when creating an
+   Eigen quaternion through the constructor the elements are accepted in
+   :math:`w`, :math:`x`, :math:`y`, :math:`z` order. Since Ceres operates on
+   parameter blocks which are raw double pointers this difference is important
+   and requires a different parameterization.
+
+   This package includes an executable :member:`pose_graph_3d` that will read a
+   problem definition file. This executable can work with any 3D problem
+   definition that uses the g2o format with quaternions used for the orientation
+   representation. It would be relatively straightforward to implement a new
+   reader for a different format such as TORO or others. :member:`pose_graph_3d`
+   will print the Ceres solver full summary and then output to disk the original
+   and optimized poses (``poses_original.txt`` and ``poses_optimized.txt``,
+   respectively) of the robot in the following format:
+
+   .. code-block:: bash
+
+      pose_id x y z q_x q_y q_z q_w
+      pose_id x y z q_x q_y q_z q_w
+      pose_id x y z q_x q_y q_z q_w
+      ...
+
+   where ``pose_id`` is the corresponding integer ID from the file
+   definition. Note, the file will be sorted in ascending order for the
+   ``pose_id``.
+
+   The executable :member:`pose_graph_3d` expects the first argument to be the
+   path to the problem definition. The executable can be run via
+
+   .. code-block:: bash
+
+      /path/to/bin/pose_graph_3d /path/to/dataset/dataset.g2o
+
+   A script is provided to visualize the resulting output files. There is also
+   an option to enable equal axes using ``--axes_equal``
+
+   .. code-block:: bash
+
+      /path/to/repo/examples/slam/pose_graph_3d/plot_results.py --optimized_poses ./poses_optimized.txt --initial_poses ./poses_original.txt
+
+   As an example, a standard synthetic benchmark dataset [#f9]_ where the robot is
+   traveling on the surface of a sphere which has 2500 nodes with a total of
+   4949 edges was solved. Visualizing the results with the provided script
+   produces:
+
+   .. figure:: pose_graph_3d_ex.png
+      :figwidth: 600px
+      :height: 300px
+      :align: center

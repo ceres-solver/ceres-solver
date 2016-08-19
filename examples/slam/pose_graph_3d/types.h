@@ -27,79 +27,88 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: vitus@google.com (Michael Vitus)
-//
-// Defines the types used in the 2D pose graph SLAM formulation. Each vertex of
-// the graph has a unique integer ID with a position and orientation. There are
-// delta transformation constraints between two vertices.
 
-#ifndef CERES_EXAMPLES_POSE_GRAPH_2D_TYPES_H_
-#define CERES_EXAMPLES_POSE_GRAPH_2D_TYPES_H_
+#ifndef EXAMPLES_CERES_TYPES_H_
+#define EXAMPLES_CERES_TYPES_H_
 
-#include <fstream>
+#include <istream>
+#include <map>
+#include <string>
+#include <vector>
 
 #include "Eigen/Core"
-#include "normalize_angle.h"
+#include "Eigen/Geometry"
 
 namespace ceres {
 namespace examples {
 
-// The state for each vertex in the pose graph.
-struct Pose2d {
-  double x;
-  double y;
-  double yaw_radians;
+struct Pose3d {
+  Eigen::Vector3d p;
+  Eigen::Quaterniond q;
 
   // The name of the data type in the g2o file format.
   static std::string name() {
-    return "VERTEX_SE2";
+    return "VERTEX_SE3:QUAT";
   }
+
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-std::istream& operator>>(std::istream& input, Pose2d& pose) {
-  input >> pose.x >> pose.y >> pose.yaw_radians;
-  // Normalize the angle between -pi to pi.
-  pose.yaw_radians = NormalizeAngle(pose.yaw_radians);
+std::istream& operator>>(std::istream& input, Pose3d& pose) {
+  input >> pose.p.x() >> pose.p.y() >> pose.p.z() >> pose.q.x() >>
+      pose.q.y() >> pose.q.z() >> pose.q.w();
+  // Normalize the quaternion to account for precision loss due to
+  // serialization.
+  pose.q.normalize();
   return input;
 }
+
+typedef std::map<int, Pose3d, std::less<int>,
+                 Eigen::aligned_allocator<std::pair<const int, Pose3d> > >
+    MapOfPoses;
 
 // The constraint between two vertices in the pose graph. The constraint is the
 // transformation from vertex id_begin to vertex id_end.
-struct Constraint2d {
+struct Constraint3d {
   int id_begin;
   int id_end;
 
-  double x;
-  double y;
-  double yaw_radians;
+  // The transformation that represents the pose of the end frame E w.r.t. the
+  // begin frame B. In other words, it transforms a vector in the E frame to
+  // the B frame.
+  Pose3d t_be;
 
   // The inverse of the covariance matrix for the measurement. The order of the
-  // entries are x, y, and yaw.
-  Eigen::Matrix3d information;
+  // entries are x, y, z, delta orientation.
+  Eigen::Matrix<double, 6, 6> information;
 
   // The name of the data type in the g2o file format.
   static std::string name() {
-    return "EDGE_SE2";
+    return "EDGE_SE3:QUAT";
   }
+
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
 
-std::istream& operator>>(std::istream& input, Constraint2d& constraint) {
-  input >> constraint.id_begin >> constraint.id_end >> constraint.x >>
-      constraint.y >> constraint.yaw_radians >>
-      constraint.information(0, 0) >> constraint.information(0, 1) >>
-      constraint.information(0, 2) >> constraint.information(1, 1) >>
-      constraint.information(1, 2) >> constraint.information(2, 2);
+std::istream& operator>>(std::istream& input, Constraint3d& constraint) {
+  Pose3d& t_be = constraint.t_be;
+  input >> constraint.id_begin >> constraint.id_end >> t_be;
 
-  // Set the lower triangular part of the information matrix.
-  constraint.information(1, 0) = constraint.information(0, 1);
-  constraint.information(2, 0) = constraint.information(0, 2);
-  constraint.information(2, 1) = constraint.information(1, 2);
-
-  // Normalize the angle between -pi to pi.
-  constraint.yaw_radians = NormalizeAngle(constraint.yaw_radians);
+  for (int i = 0; i < 6 && input.good(); ++i) {
+    for (int j = i; j < 6 && input.good(); ++j) {
+      input >> constraint.information(i, j);
+      if (i != j) {
+        constraint.information(j, i) = constraint.information(i, j);
+      }
+    }
+  }
   return input;
 }
+
+typedef std::vector<Constraint3d, Eigen::aligned_allocator<Constraint3d> >
+    VectorOfConstraints;
 
 }  // namespace examples
 }  // namespace ceres
 
-#endif  // CERES_EXAMPLES_POSE_GRAPH_2D_TYPES_H_
+#endif  // EXAMPLES_CERES_TYPES_H_
