@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db249f97_0e182f8b",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-19T06:35:40Z",
+      "side": 1,
+      "message": "I recommend making the quaternion thing one section on its own below, since it is a feature of this example but not the sole purpose of it.\n\nthe mathematical description has nothing to do with eigen v/s ceres parameterizations, so I recommend moving these bits to the bottom and just compactifying them into one whole.",
+      "range": {
+        "startLine": 955,
+        "startChar": 35,
+        "endLine": 955,
+        "endChar": 46
+      },
+      "revId": "31dbc4976e7b6c78ae2dc1f7c753aa5b0a2fd0bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
