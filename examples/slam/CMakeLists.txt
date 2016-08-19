@@ -27,4 +27,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 # Author: vitus@google.com (Michael Vitus)
+include_directories(./)
+
 add_subdirectory(pose_graph_2d)
+
+if (GFLAGS)
+  add_subdirectory(pose_graph_3d)
+endif (GFLAGS)

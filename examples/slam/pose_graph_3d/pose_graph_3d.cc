@@ -27,87 +27,79 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: vitus@google.com (Michael Vitus)
-//
-// An example of solving a graph-based formulation of Simultaneous Localization
-// and Mapping (SLAM). It reads a 2D pose graph problem definition file in the
-// g2o format, formulates and solves the Ceres optimization problem, and outputs
-// the original and optimized poses to file for plotting.
 
-#include <fstream>
 #include <iostream>
-#include <map>
+#include <fstream>
 #include <string>
-#include <vector>
 
-#include "angle_local_parameterization.h"
 #include "ceres/ceres.h"
 #include "common/read_g2o.h"
-#include "pose_graph_2d_error_term.h"
+#include "glog/logging.h"
+#include "pose_graph_3d_error_term.h"
 #include "types.h"
+
+DEFINE_string(input_filename, "",
+              "The pose graph definition filename in g2o format.");
 
 namespace ceres {
 namespace examples {
 
 // Constructs the nonlinear least squares optimization problem from the pose
 // graph constraints.
-void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
-                              std::map<int, Pose2d>* poses,
-                              ceres::Problem* problem) {
+void BuildOptimizationProblem(const VectorOfConstraints& constraints,
+                              MapOfPoses* poses, ceres::Problem* problem) {
   CHECK(poses != NULL);
   CHECK(problem != NULL);
   if (constraints.empty()) {
-    std::cout << "No constraints, no problem to optimize.\n";
+    LOG(INFO) << "No constraints, no problem to optimize.";
     return;
   }
 
   ceres::LossFunction* loss_function = NULL;
-  ceres::LocalParameterization* angle_local_parameterization =
-      AngleLocalParameterization::Create();
+  ceres::LocalParameterization* quaternion_local_parameterization =
+      new EigenQuaternionParameterization;
 
-  for (std::vector<Constraint2d>::const_iterator constraints_iter =
+  for (VectorOfConstraints::const_iterator constraints_iter =
            constraints.begin();
        constraints_iter != constraints.end(); ++constraints_iter) {
-    const Constraint2d& constraint = *constraints_iter;
+    const Constraint3d& constraint = *constraints_iter;
 
-    std::map<int, Pose2d>::iterator pose_begin_iter =
-        poses->find(constraint.id_begin);
+    MapOfPoses::iterator pose_begin_iter = poses->find(constraint.id_begin);
     CHECK(pose_begin_iter != poses->end())
         << "Pose with ID: " << constraint.id_begin << " not found.";
-    std::map<int, Pose2d>::iterator pose_end_iter =
-        poses->find(constraint.id_end);
+    MapOfPoses::iterator pose_end_iter = poses->find(constraint.id_end);
     CHECK(pose_end_iter != poses->end())
         << "Pose with ID: " << constraint.id_end << " not found.";
 
-    const Eigen::Matrix3d sqrt_information =
+    const Eigen::Matrix<double, 6, 6> sqrt_information =
         constraint.information.llt().matrixL();
     // Ceres will take ownership of the pointer.
-    ceres::CostFunction* cost_function = PoseGraph2dErrorTerm::Create(
-        constraint.x, constraint.y, constraint.yaw_radians, sqrt_information);
-    problem->AddResidualBlock(
-        cost_function, loss_function, &pose_begin_iter->second.x,
-        &pose_begin_iter->second.y, &pose_begin_iter->second.yaw_radians,
-        &pose_end_iter->second.x, &pose_end_iter->second.y,
-        &pose_end_iter->second.yaw_radians);
+    ceres::CostFunction* cost_function =
+        PoseGraph3dErrorTerm::Create(constraint.t_be, sqrt_information);
 
-    problem->SetParameterization(&pose_begin_iter->second.yaw_radians,
-                                angle_local_parameterization);
-    problem->SetParameterization(&pose_end_iter->second.yaw_radians,
-                                angle_local_parameterization);
+    problem->AddResidualBlock(cost_function, loss_function,
+                              pose_begin_iter->second.p.data(),
+                              pose_begin_iter->second.q.coeffs().data(),
+                              pose_end_iter->second.p.data(),
+                              pose_end_iter->second.q.coeffs().data());
+
+    problem->SetParameterization(pose_begin_iter->second.q.coeffs().data(),
+                                 quaternion_local_parameterization);
+    problem->SetParameterization(pose_end_iter->second.q.coeffs().data(),
+                                 quaternion_local_parameterization);
   }
 
-  // The pose graph optimization problem has three DOFs that are not fully
+  // The pose graph optimization problem has six DOFs that are not fully
   // constrained. This is typically referred to as gauge freedom. You can apply
   // a rigid body transformation to all the nodes and the optimization problem
   // will still have the exact same cost. The Levenberg-Marquardt algorithm has
-  // internal damping which mitigate this issue, but it is better to properly
+  // internal damping which mitigates this issue, but it is better to properly
   // constrain the gauge freedom. This can be done by setting one of the poses
   // as constant so the optimizer cannot change it.
-  std::map<int, Pose2d>::iterator pose_start_iter =
-      poses->begin();
+  MapOfPoses::iterator pose_start_iter = poses->begin();
   CHECK(pose_start_iter != poses->end()) << "There are no poses.";
-  problem->SetParameterBlockConstant(&pose_start_iter->second.x);
-  problem->SetParameterBlockConstant(&pose_start_iter->second.y);
-  problem->SetParameterBlockConstant(&pose_start_iter->second.yaw_radians);
+  problem->SetParameterBlockConstant(pose_start_iter->second.p.data());
+  problem->SetParameterBlockConstant(pose_start_iter->second.q.coeffs().data());
 }
 
 // Returns true if the solve was successful.
@@ -115,7 +107,7 @@ bool SolveOptimizationProblem(ceres::Problem* problem) {
   CHECK(problem != NULL);
 
   ceres::Solver::Options options;
-  options.max_num_iterations = 100;
+  options.max_num_iterations = 200;
   options.linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
 
   ceres::Solver::Summary summary;
@@ -126,20 +118,24 @@ bool SolveOptimizationProblem(ceres::Problem* problem) {
   return summary.IsSolutionUsable();
 }
 
-// Output the poses to the file with format: ID x y yaw_radians.
-bool OutputPoses(const std::string& filename,
-                 const std::map<int, Pose2d>& poses) {
+// Output the poses to the file with format: id x y z q_x q_y q_z q_w.
+bool OutputPoses(const std::string& filename, const MapOfPoses& poses) {
   std::fstream outfile;
   outfile.open(filename.c_str(), std::istream::out);
   if (!outfile) {
-    std::cerr << "Error opening the file: " << filename << '\n';
+    LOG(ERROR) << "Error opening the file: " << filename;
     return false;
   }
-  for (std::map<int, Pose2d>::const_iterator poses_iter = poses.begin();
+  for (std::map<int, Pose3d, std::less<int>,
+                Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
+           const_iterator poses_iter = poses.begin();
        poses_iter != poses.end(); ++poses_iter) {
-    const std::map<int, Pose2d>::value_type& pair = *poses_iter;
-    outfile <<  pair.first << " " << pair.second.x << " " << pair.second.y
-            << ' ' << pair.second.yaw_radians << '\n';
+    const std::map<int, Pose3d, std::less<int>,
+                   Eigen::aligned_allocator<std::pair<const int, Pose3d> > >::
+        value_type& pair = *poses_iter;
+    outfile << pair.first << " " << pair.second.p.transpose() << " "
+            << pair.second.q.x() << " " << pair.second.q.y() << " "
+            << pair.second.q.z() << " " << pair.second.q.w() << '\n';
   }
   return true;
 }
@@ -148,37 +144,32 @@ bool OutputPoses(const std::string& filename,
 }  // namespace ceres
 
 int main(int argc, char** argv) {
-  if (argc != 2) {
-    std::cerr << "Need to specify the filename to read as the first and only "
-              << "argument.\n";
-    return -1;
-  }
+  google::InitGoogleLogging(argv[0]);
+  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 
-  std::map<int, ceres::examples::Pose2d> poses;
-  std::vector<ceres::examples::Constraint2d> constraints;
+  CHECK(FLAGS_input_filename != "") << "Need to specify the filename to read.";
 
-  if (!ceres::examples::ReadG2oFile(argv[1], &poses, &constraints)) {
-    return -1;
-  }
+  ceres::examples::MapOfPoses poses;
+  ceres::examples::VectorOfConstraints constraints;
+
+  CHECK(
+      ceres::examples::ReadG2oFile(FLAGS_input_filename, &poses, &constraints))
+      << "Error reading the file: " << FLAGS_input_filename;
 
   std::cout << "Number of poses: " << poses.size() << '\n';
   std::cout << "Number of constraints: " << constraints.size() << '\n';
 
-  if (!ceres::examples::OutputPoses("poses_original.txt", poses)) {
-    return -1;
-  }
+  CHECK(ceres::examples::OutputPoses("poses_original.txt", poses))
+      << "Error outputting to poses_original.txt";
 
   ceres::Problem problem;
   ceres::examples::BuildOptimizationProblem(constraints, &poses, &problem);
 
-  if (!ceres::examples::SolveOptimizationProblem(&problem)) {
-    std::cout << "The solve was not successful, exiting.\n";
-    return -1;
-  }
+  CHECK(ceres::examples::SolveOptimizationProblem(&problem))
+      << "The solve was not successful, exiting.";
 
-  if (!ceres::examples::OutputPoses("poses_optimized.txt", poses)) {
-    return -1;
-  }
+  CHECK(ceres::examples::OutputPoses("poses_optimized.txt", poses))
+      << "Error outputting to poses_original.txt";
 
   return 0;
 }
