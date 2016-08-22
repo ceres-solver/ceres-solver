@@ -22,6 +22,30 @@
       "revId": "31dbc4976e7b6c78ae2dc1f7c753aa5b0a2fd0bd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8dd172d_e0261cba",
+        "filename": "docs/source/nnls_tutorial.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-22T22:27:09Z",
+      "side": 1,
+      "message": "This is a good suggestion thanks.",
+      "parentUuid": "db249f97_0e182f8b",
+      "range": {
+        "startLine": 955,
+        "startChar": 35,
+        "endLine": 955,
+        "endChar": 46
+      },
+      "revId": "31dbc4976e7b6c78ae2dc1f7c753aa5b0a2fd0bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
