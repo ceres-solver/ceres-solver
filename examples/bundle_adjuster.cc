@@ -219,11 +219,6 @@ void SetOrdering(BALProblem* bal_problem, Solver::Options* options) {
     // When using axis-angle, there is a single parameter block for
     // the entire camera.
     ordering->AddElementToGroup(cameras + camera_block_size * i, 1);
-    // If quaternions are used, there are two blocks, so add the
-    // second block to the ordering.
-    if (FLAGS_use_quaternions) {
-      ordering->AddElementToGroup(cameras + camera_block_size * i + 4, 1);
-    }
   }
 
   options->linear_solver_ordering.reset(ordering);
@@ -263,6 +258,12 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
   // [u_1, u_2, ... , u_n], where each u_i is two dimensional, the x
   // and y positions of the observation.
   const double* observations = bal_problem->observations();
+  LocalParameterization* camera_parameterization = NULL;
+  if (FLAGS_use_quaternions && FLAGS_use_local_parameterization) {
+    camera_parameterization =  new ProductParameterization(
+        new QuaternionParameterization(),
+        new IdentityParameterization(6));
+  }
 
   for (int i = 0; i < bal_problem->num_observations(); ++i) {
     CostFunction* cost_function;
@@ -286,28 +287,13 @@ void BuildProblem(BALProblem* bal_problem, Problem* problem) {
     double* camera =
         cameras + camera_block_size * bal_problem->camera_index()[i];
     double* point = points + point_block_size * bal_problem->point_index()[i];
-
-    if (FLAGS_use_quaternions) {
-      // When using quaternions, we split the camera into two
-      // parameter blocks. One of size 4 for the quaternion and the
-      // other of size 6 containing the translation, focal length and
-      // the radial distortion parameters.
-      problem->AddResidualBlock(cost_function,
-                                loss_function,
-                                camera,
-                                camera + 4,
-                                point);
-    } else {
-      problem->AddResidualBlock(cost_function, loss_function, camera, point);
-    }
+    problem->AddResidualBlock(cost_function, loss_function, camera, point);
   }
 
   if (FLAGS_use_quaternions && FLAGS_use_local_parameterization) {
-    LocalParameterization* quaternion_parameterization =
-         new QuaternionParameterization;
     for (int i = 0; i < bal_problem->num_cameras(); ++i) {
       problem->SetParameterization(cameras + camera_block_size * i,
-                                   quaternion_parameterization);
+                                   camera_parameterization);
     }
   }
 }
