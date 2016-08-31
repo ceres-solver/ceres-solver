@@ -69,6 +69,24 @@
       "revId": "9eaf3f859828be6e7320cf25361b8b37c2d02348",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "310a415e_cf231dc2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T13:09:06Z",
+      "side": 1,
+      "message": "I thought it was just the relative operator ordering that mattered - I didn\u0027t think these values were dependent upon the size of the data?",
+      "parentUuid": "11453d84_121b7c2c",
+      "revId": "9eaf3f859828be6e7320cf25361b8b37c2d02348",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
