@@ -122,19 +122,19 @@ class DynamicNumericDiffCostFunction : public CostFunction {
     std::vector<double> parameters_copy(parameters_size);
     std::vector<double*> parameters_references_copy(block_sizes.size());
     parameters_references_copy[0] = &parameters_copy[0];
-    for (int block = 1; block < block_sizes.size(); ++block) {
+    for (size_t block = 1; block < block_sizes.size(); ++block) {
       parameters_references_copy[block] = parameters_references_copy[block - 1]
           + block_sizes[block - 1];
     }
 
     // Copy the parameters into the local temp space.
-    for (int block = 0; block < block_sizes.size(); ++block) {
+    for (size_t block = 0; block < block_sizes.size(); ++block) {
       memcpy(parameters_references_copy[block],
              parameters[block],
              block_sizes[block] * sizeof(*parameters[block]));
     }
 
-    for (int block = 0; block < block_sizes.size(); ++block) {
+    for (size_t block = 0; block < block_sizes.size(); ++block) {
       if (jacobians[block] != NULL &&
           !NumericDiff<CostFunctor, method, DYNAMIC,
                        DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC, DYNAMIC,
