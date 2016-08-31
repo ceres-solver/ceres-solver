@@ -1570,7 +1570,7 @@ elimination group [LiSaad]_.
    difference between an element in a Jacobian exceeds this number,
    then the Jacobian for that cost term is dumped.
 
-.. member:: double Solver::Options::numeric_derivative_relative_step_size
+.. member:: double Solver::Options::gradient_check_numeric_derivative_relative_step_size
 
    Default: ``1e-6``
 
@@ -1592,7 +1592,7 @@ elimination group [LiSaad]_.
 
    .. math::
 
-     \delta &= numeric\_derivative\_relative\_step\_size\\
+     \delta &= gradient\_check\_numeric\_derivative\_relative\_step\_size\\
      \Delta f &= \frac{f((1 + \delta)  x) - f(x)}{\delta x}
 
    The finite differencing is done along each dimension. The reason to
