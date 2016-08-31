@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "111c5dae_66984e6b",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T09:00:03Z",
+      "side": 1,
+      "message": "Can this not be moved into the:\n\nif (FLAGS_use_quaternions \u0026\u0026 FLAGS_use_local_parameterization)\n\nblock on line 293?  I don\u0027t think it is used anywhere else?",
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b160f11c_33ecc8ba",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T09:00:03Z",
+      "side": 1,
+      "message": "Should this really be an option?  Would we ever not want someone to use an appropriate local parameterisation when working with quaternions?",
+      "range": {
+        "startLine": 262,
+        "startChar": 31,
+        "endLine": 262,
+        "endChar": 63
+      },
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91ff6d6b_d25bc480",
+        "filename": "examples/snavely_reprojection_error.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T09:00:03Z",
+      "side": 1,
+      "message": "Perhaps add a note here that the quaternion is stored first in camera - QuaternionRotatePoint isn\u0027t using any other components of the camera / special knowledge of the layout (before with camera_rotation it was perhaps more explicit)?",
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
