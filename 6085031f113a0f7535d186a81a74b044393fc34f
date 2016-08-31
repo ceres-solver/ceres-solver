@@ -16,6 +16,24 @@
       "revId": "6085031f113a0f7535d186a81a74b044393fc34f",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9a53384_8440c68f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T08:07:03Z",
+      "side": 1,
+      "message": "Apple doesn\u0027t identify their builds of Clang by externally recognisable versions.  On Xcode 7 for example you will see something like this: \"Apple LLVM version 7.0.2 (clang-700.1.81)\" - so saying 3.8 alone isn\u0027t meaningful to people running OS X.  In practice, those people just want to know the Xcode version required, as they are not going to separately install Clang.",
+      "parentUuid": "5936f710_211d8ec9",
+      "revId": "6085031f113a0f7535d186a81a74b044393fc34f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
