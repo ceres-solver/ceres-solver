@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11453d84_92702c6f",
+        "filename": "internal/ceres/gradient_checking_cost_function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T12:45:05Z",
+      "side": 1,
+      "message": "I understand that this will only ever be set to the same value, but why not protect it using the mutex also.",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 26
+      },
+      "revId": "3fb4638538ecee083475b4defcf17dde502b0eb4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
