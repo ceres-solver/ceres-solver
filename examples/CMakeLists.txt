@@ -112,7 +112,7 @@ if (GFLAGS)
                  robot_pose_mle.cc)
   target_link_libraries(robot_pose_mle ceres ${GFLAGS_LIBRARIES})
 
+  add_subdirectory(slam)
 endif (GFLAGS)
 
 add_subdirectory(sampled_function)
-add_subdirectory(slam)
