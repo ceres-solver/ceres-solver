@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11453d84_f28a501b",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T13:57:37Z",
+      "side": 1,
+      "message": "change this mutex to be more generally named maybe just mutex since it is protecting all the data in this class.",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "99db2745feebe5c9f631c4a9f2f47068e391e3ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
