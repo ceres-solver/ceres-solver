@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11453d84_f217f0fb",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T13:05:56Z",
+      "side": 1,
+      "message": "oh I had just copied code from the eigen example. I will update it to be more ceres style.",
+      "parentUuid": "b160f11c_13470c73",
+      "revId": "9eaf3f859828be6e7320cf25361b8b37c2d02348",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ff6d6b_72849864",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2016-08-31T13:01:42Z",
       "side": 1,
       "message": "Should this be explicitly defined as: 2 * MulCost rather than 6?",
+      "revId": "9eaf3f859828be6e7320cf25361b8b37c2d02348",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11453d84_121b7c2c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T13:05:56Z",
+      "side": 1,
+      "message": "totally made up number.. not sure its worth being fancy, if we are going to go down that route then making this depend on N is the right thing to do.",
+      "parentUuid": "91ff6d6b_72849864",
       "revId": "9eaf3f859828be6e7320cf25361b8b37c2d02348",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
