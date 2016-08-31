@@ -37,6 +37,7 @@
 #include "ceres/cost_function.h"
 #include "ceres/iteration_callback.h"
 #include "ceres/local_parameterization.h"
+#include "ceres/mutex.h"
 
 namespace ceres {
 namespace internal {
@@ -60,6 +61,7 @@ class GradientCheckingIterationCallback : public IterationCallback {
   const std::string& error_log() const { return error_log_; }
  private:
   bool gradient_error_detected_;
+  ceres::internal::Mutex error_log_mutex_;
   std::string error_log_;
 };
 
