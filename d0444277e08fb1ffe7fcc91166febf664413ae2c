@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d163a525_d421fcab",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T14:28:32Z",
+      "side": 1,
+      "message": "Should this not use the RST markup for Note boxes?\n\n  .. NOTE ::",
+      "revId": "d0444277e08fb1ffe7fcc91166febf664413ae2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "310a415e_6f28318d",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T14:28:32Z",
+      "side": 1,
+      "message": "This seems to end mid-flow?",
+      "range": {
+        "startLine": 1742,
+        "startChar": 44,
+        "endLine": 1742,
+        "endChar": 47
+      },
+      "revId": "d0444277e08fb1ffe7fcc91166febf664413ae2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "312321ee_4789ce7a",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-08-31T14:28:32Z",
+      "side": 1,
+      "message": "See above - use RST Note box markup?",
+      "revId": "d0444277e08fb1ffe7fcc91166febf664413ae2c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
