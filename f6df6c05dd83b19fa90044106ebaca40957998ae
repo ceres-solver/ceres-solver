@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11453d84_5e75155c",
+        "filename": "examples/slam/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T00:17:54Z",
+      "side": 1,
+      "message": "will you be making the same changes that alex suggested to this code based about logging and flags to the 2d slam example too?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "f6df6c05dd83b19fa90044106ebaca40957998ae",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
