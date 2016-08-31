@@ -39,8 +39,7 @@
 #include "pose_graph_3d_error_term.h"
 #include "types.h"
 
-DEFINE_string(input_filename, "",
-              "The pose graph definition filename in g2o format.");
+DEFINE_string(input, "", "The pose graph definition filename in g2o format.");
 
 namespace ceres {
 namespace examples {
@@ -148,14 +147,13 @@ int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
   CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
 
-  CHECK(FLAGS_input_filename != "") << "Need to specify the filename to read.";
+  CHECK(FLAGS_input != "") << "Need to specify the filename to read.";
 
   ceres::examples::MapOfPoses poses;
   ceres::examples::VectorOfConstraints constraints;
 
-  CHECK(
-      ceres::examples::ReadG2oFile(FLAGS_input_filename, &poses, &constraints))
-      << "Error reading the file: " << FLAGS_input_filename;
+  CHECK(ceres::examples::ReadG2oFile(FLAGS_input, &poses, &constraints))
+      << "Error reading the file: " << FLAGS_input;
 
   std::cout << "Number of poses: " << poses.size() << '\n';
   std::cout << "Number of constraints: " << constraints.size() << '\n';

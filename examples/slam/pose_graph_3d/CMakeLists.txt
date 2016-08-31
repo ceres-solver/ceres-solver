@@ -28,5 +28,7 @@
 #
 # Author: vitus@google.com (Michael Vitus)
 
-add_executable(pose_graph_3d pose_graph_3d.cc)
-target_link_libraries(pose_graph_3d ceres ${GFLAGS_LIBRARIES})
+if (GFLAGS)
+  add_executable(pose_graph_3d pose_graph_3d.cc)
+  target_link_libraries(pose_graph_3d ceres ${GFLAGS_LIBRARIES})
+endif (GFLAGS)
