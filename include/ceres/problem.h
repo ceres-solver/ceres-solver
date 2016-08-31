@@ -464,6 +464,10 @@ class CERES_EXPORT Problem {
   // parameter block has a local parameterization, then it contributes
   // "LocalSize" entries to the gradient vector (and the number of
   // columns in the jacobian).
+  //
+  // Note 3: This function cannot be called while the problem is being
+  // solved, for example it cannot be called from an IterationCallback
+  // at the end of an iteration during a solve.
   bool Evaluate(const EvaluateOptions& options,
                 double* cost,
                 std::vector<double>* residuals,

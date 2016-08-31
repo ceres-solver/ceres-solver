@@ -1737,6 +1737,10 @@ Instances
    `NULL`. Which residual blocks and parameter blocks are used is
    controlled by the :class:`Problem::EvaluateOptions` struct below.
 
+   **NOTE** The evaluation will use the values stored in the memory
+   locations pointed to by the parameter block pointers used at the
+   time of the construction of the problem. i.e
+
    .. code-block:: c++
 
      Problem problem;
@@ -1760,6 +1764,10 @@ Instances
    the gradient vector is the sum of the sizes of all the parameter
    blocks. If a parameter block has a local parameterization, then
    it contributes "LocalSize" entries to the gradient vector.
+
+   **NOTE** This function cannot be called while the problem is being
+   solved, for example it cannot be called from an :class:`IterationCallback`
+   at the end of an iteration during a solve.
 
 .. class:: Problem::EvaluateOptions
 
