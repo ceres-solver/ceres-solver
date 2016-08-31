@@ -134,7 +134,7 @@ class CERES_EXPORT Solver {
       trust_region_problem_dump_format_type = TEXTFILE;
       check_gradients = false;
       gradient_check_relative_precision = 1e-8;
-      numeric_derivative_relative_step_size = 1e-6;
+      gradient_check_numeric_derivative_relative_step_size = 1e-6;
       update_state_every_iteration = false;
     }
 
@@ -716,7 +716,7 @@ class CERES_EXPORT Solver {
     // slightly shifted values; for the case of central difference,
     // this is what gets evaluated:
     //
-    //   delta = numeric_derivative_relative_step_size;
+    //   delta = gradient_check_numeric_derivative_relative_step_size;
     //   f_initial  = f(x)
     //   f_forward  = f((1 + delta) * x)
     //   f_backward = f((1 - delta) * x)
@@ -733,7 +733,7 @@ class CERES_EXPORT Solver {
     // theory a good choice is sqrt(eps) * x, which for doubles means
     // about 1e-8 * x. However, I have found this number too
     // optimistic. This number should be exposed for users to change.
-    double numeric_derivative_relative_step_size;
+    double gradient_check_numeric_derivative_relative_step_size;
 
     // If true, the user's parameter blocks are updated at the end of
     // every Minimizer iteration, otherwise they are updated when the
