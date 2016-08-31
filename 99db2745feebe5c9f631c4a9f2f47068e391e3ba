@@ -22,6 +22,30 @@
       "revId": "99db2745feebe5c9f631c4a9f2f47068e391e3ba",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7104b94d_f1f36864",
+        "filename": "internal/ceres/gradient_checking_cost_function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-08-31T14:22:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11453d84_f28a501b",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 17
+      },
+      "revId": "99db2745feebe5c9f631c4a9f2f47068e391e3ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
