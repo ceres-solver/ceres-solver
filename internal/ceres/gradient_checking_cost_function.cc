@@ -148,8 +148,10 @@ CallbackReturnType GradientCheckingIterationCallback::operator()(
 }
 void GradientCheckingIterationCallback::SetGradientErrorDetected(
     std::string& error_log) {
+  error_log_mutex_.Lock();
   gradient_error_detected_ = true;
   error_log_ += "\n" + error_log;
+  error_log_mutex_.Unlock();
 }
 
 CostFunction* CreateGradientCheckingCostFunction(
