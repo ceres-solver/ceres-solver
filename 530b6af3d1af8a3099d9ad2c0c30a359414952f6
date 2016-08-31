@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1bc71cf_f6dc1e34",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-31T20:57:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1bc71cf_f62ede43",
+      "range": {
+        "startLine": 115,
+        "startChar": 18,
+        "endLine": 115,
+        "endChar": 19
+      },
+      "revId": "530b6af3d1af8a3099d9ad2c0c30a359414952f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1bc71cf_16eb5adc",
         "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-08-31T20:50:13Z",
       "side": 1,
       "message": "just input works, here and elsewhere.",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "530b6af3d1af8a3099d9ad2c0c30a359414952f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1bc71cf_36be96d5",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2016-08-31T20:57:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1bc71cf_16eb5adc",
       "range": {
         "startLine": 50,
         "startChar": 14,
