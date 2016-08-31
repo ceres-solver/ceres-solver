@@ -30,7 +30,4 @@
 include_directories(./)
 
 add_subdirectory(pose_graph_2d)
-
-if (GFLAGS)
-  add_subdirectory(pose_graph_3d)
-endif (GFLAGS)
+add_subdirectory(pose_graph_3d)

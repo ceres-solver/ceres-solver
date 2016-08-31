@@ -34,5 +34,5 @@ add_executable(pose_graph_2d
   pose_graph_2d.cc
   pose_graph_2d_error_term.h
   types.h)
-target_link_libraries(pose_graph_2d ceres)
+target_link_libraries(pose_graph_2d ceres ${GFLAGS_LIBRARIES})
 

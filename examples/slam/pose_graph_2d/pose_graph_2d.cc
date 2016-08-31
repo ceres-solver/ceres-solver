@@ -42,8 +42,13 @@
 #include "angle_local_parameterization.h"
 #include "ceres/ceres.h"
 #include "common/read_g2o.h"
+#include "gflags/gflags.h"
+#include "glog/logging.h"
 #include "pose_graph_2d_error_term.h"
 #include "types.h"
+
+DEFINE_string(input_filename, "",
+              "The pose graph definition filename in g2o format.");
 
 namespace ceres {
 namespace examples {
@@ -56,7 +61,7 @@ void BuildOptimizationProblem(const std::vector<Constraint2d>& constraints,
   CHECK(poses != NULL);
   CHECK(problem != NULL);
   if (constraints.empty()) {
-    std::cout << "No constraints, no problem to optimize.\n";
+    LOG(INFO) << "No constraints, no problem to optimize.";
     return;
   }
 
@@ -148,37 +153,32 @@ bool OutputPoses(const std::string& filename,
 }  // namespace ceres
 
 int main(int argc, char** argv) {
-  if (argc != 2) {
-    std::cerr << "Need to specify the filename to read as the first and only "
-              << "argument.\n";
-    return -1;
-  }
+  google::InitGoogleLogging(argv[0]);
+  CERES_GFLAGS_NAMESPACE::ParseCommandLineFlags(&argc, &argv, true);
+
+  CHECK(FLAGS_input_filename != "") << "Need to specify the filename to read.";
 
   std::map<int, ceres::examples::Pose2d> poses;
   std::vector<ceres::examples::Constraint2d> constraints;
 
-  if (!ceres::examples::ReadG2oFile(argv[1], &poses, &constraints)) {
-    return -1;
-  }
+  CHECK(
+      ceres::examples::ReadG2oFile(FLAGS_input_filename, &poses, &constraints))
+      << "Error reading the file: " << FLAGS_input_filename;
 
   std::cout << "Number of poses: " << poses.size() << '\n';
   std::cout << "Number of constraints: " << constraints.size() << '\n';
 
-  if (!ceres::examples::OutputPoses("poses_original.txt", poses)) {
-    return -1;
-  }
+  CHECK(ceres::examples::OutputPoses("poses_original.txt", poses))
+      << "Error outputting to poses_original.txt";
 
   ceres::Problem problem;
   ceres::examples::BuildOptimizationProblem(constraints, &poses, &problem);
 
-  if (!ceres::examples::SolveOptimizationProblem(&problem)) {
-    std::cout << "The solve was not successful, exiting.\n";
-    return -1;
-  }
+  CHECK(ceres::examples::SolveOptimizationProblem(&problem))
+      << "The solve was not successful, exiting.";
 
-  if (!ceres::examples::OutputPoses("poses_optimized.txt", poses)) {
-    return -1;
-  }
+  CHECK(ceres::examples::OutputPoses("poses_optimized.txt", poses))
+      << "Error outputting to poses_original.txt";
 
   return 0;
 }
