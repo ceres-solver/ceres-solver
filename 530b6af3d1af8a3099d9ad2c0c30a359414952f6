@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1bc71cf_f62ede43",
+        "filename": "examples/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T20:50:13Z",
+      "side": 1,
+      "message": "I do not think it is a good idea to conditionally include directories like this. It is better that the gflags dependency is visible closer to the actual user inside the corresponding cmake file.",
+      "range": {
+        "startLine": 115,
+        "startChar": 18,
+        "endLine": 115,
+        "endChar": 19
+      },
+      "revId": "530b6af3d1af8a3099d9ad2c0c30a359414952f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1bc71cf_16eb5adc",
+        "filename": "examples/slam/pose_graph_2d/pose_graph_2d.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T20:50:13Z",
+      "side": 1,
+      "message": "just input works, here and elsewhere.",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 28
+      },
+      "revId": "530b6af3d1af8a3099d9ad2c0c30a359414952f6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
