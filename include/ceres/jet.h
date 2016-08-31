@@ -836,8 +836,15 @@ struct NumTraits<ceres::Jet<T, N> > {
   template<bool Vectorized>
   struct Div {
     enum {
+#ifdef EIGEN_VECTORIZE_AVX
+      AVX = true,
+#else
       AVX = false,
-      Cost = 1
+#endif
+      // Assuming that for Jets, division is twice as expensive as
+      // multiplication. It is likely that this and AddCost and
+      // MulCost should depend on N in some form.
+      Cost = 6
     };
   };
 };
