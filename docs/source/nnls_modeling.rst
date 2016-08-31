@@ -1737,29 +1737,45 @@ Instances
    `NULL`. Which residual blocks and parameter blocks are used is
    controlled by the :class:`Problem::EvaluateOptions` struct below.
 
-   .. code-block:: c++
+   .. NOTE::
 
-     Problem problem;
-     double x = 1;
-     problem.Add(new MyCostFunction, NULL, &x);
+      The evaluation will use the values stored in the memory
+      locations pointed to by the parameter block pointers used at the
+      time of the construction of the problem, for example in the
+      following code:
 
-     double cost = 0.0;
-     problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+      .. code-block:: c++
 
-   The cost is evaluated at `x = 1`. If you wish to evaluate the
-   problem at `x = 2`, then
+        Problem problem;
+        double x = 1;
+        problem.Add(new MyCostFunction, NULL, &x);
 
-   .. code-block:: c++
+        double cost = 0.0;
+        problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
 
-      x = 2;
-      problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+      The cost is evaluated at `x = 1`. If you wish to evaluate the
+      problem at `x = 2`, then
 
-   is the way to do so.
+      .. code-block:: c++
 
-   **NOTE** If no local parameterizations are used, then the size of
-   the gradient vector is the sum of the sizes of all the parameter
-   blocks. If a parameter block has a local parameterization, then
-   it contributes "LocalSize" entries to the gradient vector.
+         x = 2;
+         problem.Evaluate(Problem::EvaluateOptions(), &cost, NULL, NULL, NULL);
+
+      is the way to do so.
+
+   .. NOTE::
+
+      If no local parameterizations are used, then the size of
+      the gradient vector is the sum of the sizes of all the parameter
+      blocks. If a parameter block has a local parameterization, then
+      it contributes "LocalSize" entries to the gradient vector.
+
+   .. NOTE::
+
+      This function cannot be called while the problem is being
+      solved, for example it cannot be called from an
+      :class:`IterationCallback` at the end of an iteration during a
+      solve.
 
 .. class:: Problem::EvaluateOptions
 
