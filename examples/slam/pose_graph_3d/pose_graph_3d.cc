@@ -35,6 +35,7 @@
 #include "ceres/ceres.h"
 #include "common/read_g2o.h"
 #include "glog/logging.h"
+#include "gflags/gflags.h"
 #include "pose_graph_3d_error_term.h"
 #include "types.h"
 
