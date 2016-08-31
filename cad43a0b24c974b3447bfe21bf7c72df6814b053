@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11453d84_b2c8c89e",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T12:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "111c5dae_66984e6b",
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b160f11c_33ecc8ba",
         "filename": "examples/bundle_adjuster.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "11453d84_12c6dc90",
+        "filename": "examples/bundle_adjuster.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T12:37:37Z",
+      "side": 1,
+      "message": "The idea was for the user to be able to experiment with the lack of a parameterization.",
+      "parentUuid": "b160f11c_33ecc8ba",
+      "range": {
+        "startLine": 262,
+        "startChar": 31,
+        "endLine": 262,
+        "endChar": 63
+      },
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ff6d6b_d25bc480",
         "filename": "examples/snavely_reprojection_error.h",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2016-08-31T09:00:03Z",
       "side": 1,
       "message": "Perhaps add a note here that the quaternion is stored first in camera - QuaternionRotatePoint isn\u0027t using any other components of the camera / special knowledge of the layout (before with camera_rotation it was perhaps more explicit)?",
+      "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11453d84_f2c2507a",
+        "filename": "examples/snavely_reprojection_error.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-08-31T12:37:37Z",
+      "side": 1,
+      "message": "its the same pattern as the non-quaternion code, but I will add a note in both cases.",
+      "parentUuid": "91ff6d6b_d25bc480",
       "revId": "cad43a0b24c974b3447bfe21bf7c72df6814b053",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
