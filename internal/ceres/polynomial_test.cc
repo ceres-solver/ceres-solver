@@ -108,14 +108,18 @@ void RunPolynomialTestRealRoots(const double (&real_roots)[N],
   if (use_real) {
     EXPECT_EQ(real.size(), N);
     real = SortVector(real);
-    ExpectArraysClose(N, real.data(), real_roots, epsilon);
+    for (int i = 0; i < N; ++i) {
+      ExpectClose(real[i], real_roots[i], epsilon);
+    }
   }
   if (use_imaginary) {
     EXPECT_EQ(imaginary.size(), N);
-    const Vector zeros = Vector::Zero(N);
-    ExpectArraysClose(N, imaginary.data(), zeros.data(), epsilon);
+    for (int i = 0; i < N; ++i) {
+      ExpectClose(imaginary[i], 0.0, epsilon);
+    }
   }
 }
+
 }  // namespace
 
 TEST(Polynomial, InvalidPolynomialOfZeroLengthIsRejected) {
