@@ -111,8 +111,8 @@ class GoodTestTerm : public CostFunction {
   }
 
  private:
-  bool return_value_;
   int arity_;
+  bool return_value_;
   vector<vector<double> > a_;  // our vectors.
 };
 
@@ -382,13 +382,9 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   Eigen::Vector3d param0(1.0, 2.0, 3.0);
   Eigen::Vector2d param1(4.0, 5.0);
 
-  int const arity = 2;
-  const int dim[2] = {3, 2};
-
   cost_function.AddParameter(j0);
   cost_function.AddParameter(j1);
 
-  int const num_parameters = 2;
   std::vector<int> parameter_sizes(2);
   parameter_sizes[0] = 3;
   parameter_sizes[1] = 2;
