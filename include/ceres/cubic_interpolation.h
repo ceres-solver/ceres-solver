@@ -135,6 +135,8 @@ class CERES_EXPORT CubicInterpolator {
 
   void Evaluate(double x, double* f, double* dfdx) const {
     const int n = std::floor(x);
+    LOG(INFO) << x << " " << n << " " << x -n;
+
     Eigen::Matrix<double, Grid::DATA_DIMENSION, 1> p0, p1, p2, p3;
     grid_.GetValue(n - 1, p0.data());
     grid_.GetValue(n,     p1.data());

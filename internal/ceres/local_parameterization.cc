@@ -93,11 +93,7 @@ SubsetParameterization::SubsetParameterization(
     const vector<int>& constant_parameters)
     : local_size_(size - constant_parameters.size()),
       constancy_mask_(size, 0) {
-  CHECK_GT(constant_parameters.size(), 0)
-      << "The set of constant parameters should contain at least "
-      << "one element. If you do not wish to hold any parameters "
-      << "constant, then do not use a SubsetParameterization";
-
+  CHECK_GE(constant_parameters.size(), 0);
   vector<int> constant = constant_parameters;
   sort(constant.begin(), constant.end());
   CHECK(std::adjacent_find(constant.begin(), constant.end()) == constant.end())
