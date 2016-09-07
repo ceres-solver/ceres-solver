@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f645ffe5_e39ee657",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-09-07T22:28:15Z",
+      "side": 1,
+      "message": "You can use ExpectArraysClose in test_util.h",
+      "range": {
+        "startLine": 469,
+        "startChar": 44,
+        "endLine": 469,
+        "endChar": 52
+      },
+      "revId": "3990f55b222d7bdf2f1f4f79f47a2ca3287dc2e7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
