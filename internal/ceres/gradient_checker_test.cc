@@ -466,7 +466,8 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ASSERT_EQ(results.return_value, true);
   ASSERT_TRUE(results.residuals == residual);
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
-  EXPECT_TRUE(results.local_jacobians.at(0) == j0 * global_J_local);
+  EXPECT_TRUE(results.local_jacobians.at(0).isApprox(j0 * global_J_local,
+                                                     kTolerance));
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
   EXPECT_TRUE(results.local_numeric_jacobians.at(0).isApprox(
       j0 * global_J_local, kTolerance));
@@ -504,13 +505,14 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  EXPECT_TRUE(results.local_jacobians.at(0) == (j0 + j0_offset) * global_J_local);
+  EXPECT_TRUE(results.local_jacobians.at(0).isApprox(
+      (j0 + j0_offset) * global_J_local, kTolerance));
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
   EXPECT_TRUE(
       results.local_numeric_jacobians.at(0).isApprox(j0 * global_J_local,
                                                      kTolerance));
   EXPECT_TRUE(results.local_numeric_jacobians.at(1).isApprox(j1, kTolerance));
-  EXPECT_TRUE(results.jacobians.at(0) == j0 + j0_offset);
+  EXPECT_TRUE(results.jacobians.at(0).isApprox(j0 + j0_offset, kTolerance));
   EXPECT_TRUE(results.jacobians.at(1) == j1);
   EXPECT_TRUE(results.numeric_jacobians.at(0).isApprox(j0, kTolerance));
   EXPECT_TRUE(results.numeric_jacobians.at(1).isApprox(j1, kTolerance));
@@ -538,13 +540,13 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  EXPECT_TRUE(results.local_jacobians.at(0) ==
-      (j0 + j0_offset) * parameterization.global_J_local);
+  EXPECT_TRUE(results.local_jacobians.at(0).isApprox(
+      (j0 + j0_offset) * parameterization.global_J_local, kTolerance));
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
   EXPECT_TRUE(results.local_numeric_jacobians.at(0).isApprox(
       j0 * parameterization.global_J_local, kTolerance));
   EXPECT_TRUE(results.local_numeric_jacobians.at(1).isApprox(j1, kTolerance));
-  EXPECT_TRUE(results.jacobians.at(0) == j0 + j0_offset);
+  EXPECT_TRUE(results.jacobians.at(0).isApprox(j0 + j0_offset, kTolerance));
   EXPECT_TRUE(results.jacobians.at(1) == j1);
   EXPECT_TRUE(results.numeric_jacobians.at(0).isApprox(j0, kTolerance));
   EXPECT_TRUE(results.numeric_jacobians.at(1).isApprox(j1, kTolerance));
