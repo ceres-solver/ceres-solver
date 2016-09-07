@@ -37,9 +37,10 @@
 #include <vector>
 
 #include "ceres/cost_function.h"
+#include "ceres/problem.h"
 #include "ceres/random.h"
 #include "ceres/solver.h"
-#include "ceres/problem.h"
+#include "ceres/test_util.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
@@ -366,6 +367,13 @@ class MatrixParameterization : public LocalParameterization {
   Matrix global_J_local;
 };
 
+// Helper function to compare two Eigen matrices (used in the test below).
+void ExpectMatricesClose(Matrix p, Matrix q, double tolerance) {
+  ASSERT_EQ(p.rows(), q.rows());
+  ASSERT_EQ(p.cols(), q.cols());
+  ExpectArraysClose(p.size(), p.data(), q.data(), tolerance);
+}
+
 TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   // Create cost function.
   Eigen::Vector3d residual_offset(100.0, 200.0, 300.0);
@@ -395,7 +403,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   // Test cost function for correctness.
   Eigen::Matrix<double, 3, 3, Eigen::RowMajor> j1_out;
   Eigen::Matrix<double, 3, 2, Eigen::RowMajor> j2_out;
-  Eigen::VectorXd residual(3);
+  Eigen::Vector3d residual;
   std::vector<const double*> parameters(2);
   parameters[0] = param0.data();
   parameters[1] = param1.data();
@@ -408,7 +416,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
 
   EXPECT_TRUE(j1_out == j0);
   EXPECT_TRUE(j2_out == j1);
-  EXPECT_TRUE(residual.isApprox(residual_expected, kTolerance));
+  ExpectMatricesClose(residual, residual_expected, kTolerance);
 
   // Create local parameterization.
   Eigen::Matrix<double, 3, 2, Eigen::RowMajor> global_J_local;
@@ -430,7 +438,7 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   Eigen::Vector3d x_plus_delta;
   parameterization.Plus(x.data(), delta.data(), x_plus_delta.data());
   Eigen::Vector3d x_plus_delta_expected = x + (global_J_local * delta);
-  EXPECT_TRUE(x_plus_delta.isApprox(x_plus_delta_expected, kTolerance));
+  ExpectMatricesClose(x_plus_delta, x_plus_delta_expected, kTolerance);
 
   // Now test GradientChecker.
   std::vector<const LocalParameterization*> parameterizations(2);
@@ -466,18 +474,16 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   ASSERT_EQ(results.return_value, true);
   ASSERT_TRUE(results.residuals == residual);
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
-  EXPECT_TRUE(results.local_jacobians.at(0) == j0 * global_J_local);
+  ExpectMatricesClose(results.local_jacobians.at(0), j0 * global_J_local,
+                      kTolerance);
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
-  EXPECT_TRUE(results.local_numeric_jacobians.at(0).isApprox(
-      j0 * global_J_local, kTolerance));
-  EXPECT_TRUE(results.local_numeric_jacobians.at(1).isApprox(
-      j1, kTolerance));
+  ExpectMatricesClose(results.local_numeric_jacobians.at(0),
+                      j0 * global_J_local, kTolerance);
+  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
   EXPECT_TRUE(results.jacobians.at(0) == j0);
   EXPECT_TRUE(results.jacobians.at(1) == j1);
-  EXPECT_TRUE(results.numeric_jacobians.at(0).isApprox(
-      j0, kTolerance));
-  EXPECT_TRUE(results.numeric_jacobians.at(1).isApprox(
-      j1, kTolerance));
+  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
+  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
   EXPECT_GE(results.maximum_relative_error, 0.0);
   EXPECT_TRUE(results.error_log.empty());
 
@@ -504,16 +510,16 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  EXPECT_TRUE(results.local_jacobians.at(0) == (j0 + j0_offset) * global_J_local);
+  ExpectMatricesClose(results.local_jacobians.at(0),
+                      (j0 + j0_offset) * global_J_local, kTolerance);
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
-  EXPECT_TRUE(
-      results.local_numeric_jacobians.at(0).isApprox(j0 * global_J_local,
-                                                     kTolerance));
-  EXPECT_TRUE(results.local_numeric_jacobians.at(1).isApprox(j1, kTolerance));
-  EXPECT_TRUE(results.jacobians.at(0) == j0 + j0_offset);
+  ExpectMatricesClose(results.local_numeric_jacobians.at(0),
+                      j0 * global_J_local, kTolerance);
+  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
+  ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
   EXPECT_TRUE(results.jacobians.at(1) == j1);
-  EXPECT_TRUE(results.numeric_jacobians.at(0).isApprox(j0, kTolerance));
-  EXPECT_TRUE(results.numeric_jacobians.at(1).isApprox(j1, kTolerance));
+  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
+  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
   EXPECT_GT(results.maximum_relative_error, 0.0);
   EXPECT_FALSE(results.error_log.empty());
 
@@ -538,16 +544,17 @@ TEST(GradientChecker, TestCorrectnessWithLocalParameterizations) {
   CheckDimensions(results, parameter_sizes, local_parameter_sizes, 3);
   ASSERT_EQ(results.local_jacobians.size(), 2);
   ASSERT_EQ(results.local_numeric_jacobians.size(), 2);
-  EXPECT_TRUE(results.local_jacobians.at(0) ==
-      (j0 + j0_offset) * parameterization.global_J_local);
+  ExpectMatricesClose(results.local_jacobians.at(0),
+                      (j0 + j0_offset) * parameterization.global_J_local,
+                      kTolerance);
   EXPECT_TRUE(results.local_jacobians.at(1) == j1);
-  EXPECT_TRUE(results.local_numeric_jacobians.at(0).isApprox(
-      j0 * parameterization.global_J_local, kTolerance));
-  EXPECT_TRUE(results.local_numeric_jacobians.at(1).isApprox(j1, kTolerance));
-  EXPECT_TRUE(results.jacobians.at(0) == j0 + j0_offset);
+  ExpectMatricesClose(results.local_numeric_jacobians.at(0),
+                      j0 * parameterization.global_J_local, kTolerance);
+  ExpectMatricesClose(results.local_numeric_jacobians.at(1), j1, kTolerance);
+  ExpectMatricesClose(results.jacobians.at(0), j0 + j0_offset, kTolerance);
   EXPECT_TRUE(results.jacobians.at(1) == j1);
-  EXPECT_TRUE(results.numeric_jacobians.at(0).isApprox(j0, kTolerance));
-  EXPECT_TRUE(results.numeric_jacobians.at(1).isApprox(j1, kTolerance));
+  ExpectMatricesClose(results.numeric_jacobians.at(0), j0, kTolerance);
+  ExpectMatricesClose(results.numeric_jacobians.at(1), j1, kTolerance);
   EXPECT_GE(results.maximum_relative_error, 0.0);
   EXPECT_TRUE(results.error_log.empty());
 
