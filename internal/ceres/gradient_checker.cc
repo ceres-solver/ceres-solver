@@ -31,7 +31,6 @@
 //          dgossow@google.com (David Gossow)
 
 #include "ceres/gradient_checker.h"
-#include "ceres/is_close.h"
 
 #include <algorithm>
 #include <cmath>
