@@ -644,9 +644,10 @@ if (MSVC)
 endif (MSVC)
 
 if (UNIX)
-  # GCC is not strict enough by default, so enable most of the warnings.
+  # GCC is not strict enough by default, so enable most of the warnings and
+  # treat them as errors.
   set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
+    "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers -Werror")
 endif (UNIX)
 
 # Use a larger inlining threshold for Clang, since it hobbles Eigen,
