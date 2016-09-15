@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0462f6a_63c6c243",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-09-15T21:20:33Z",
+      "side": 1,
+      "message": "Not sure if this should be in test_util.h (?). It\u0027s using Eigen types, that\u0027s why I only put this here.\n\nI\u0027m not using references (and/or a templatized signature) to force evaluation of whatever expression is passed in. You incur a memory allocation and copy, but in the context of this unit test this doesn\u0027t really make a difference.",
+      "revId": "af055362986322bba18846a2e365af9dd20456f7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
