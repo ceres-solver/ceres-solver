@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d09643c8_90bb642b",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2016-09-23T03:24:18Z",
+      "side": 1,
+      "message": "Perhaps list current local param pointer.",
+      "revId": "8fefdd1e8d6af187884a4ffe1149419b7e755266",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
