@@ -309,12 +309,13 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 
   const ProblemImpl::ParameterMap& parameter_map = problem_->parameter_map();
   // For OpenMP compatibility we need to define these vectors in advance
+  const int num_parameters = parameters.size();
   vector<int> parameter_sizes;
   vector<int> cum_parameter_size;
-  parameter_sizes.reserve(parameters.size());
-  cum_parameter_size.resize(parameters.size() + 1);
+  parameter_sizes.reserve(num_parameters);
+  cum_parameter_size.resize(num_parameters + 1);
   cum_parameter_size[0] = 0;
-  for (int i = 0; i < parameters.size(); ++i) {
+  for (int i = 0; i < num_parameters; ++i) {
     ParameterBlock* block =
         FindOrDie(parameter_map, const_cast<double*>(parameters[i]));
     if (lift_covariance_to_ambient_space) {
@@ -345,8 +346,8 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #else
 #  pragma omp parallel for num_threads(num_threads) schedule(dynamic)
 #endif
-  for (int i = 0; i < parameters.size(); ++i) {
-    for (int j = 0; j < parameters.size(); ++j) {
+  for (int i = 0; i < num_parameters; ++i) {
+    for (int j = 0; j < num_parameters; ++j) {
       // The second loop can't start from j = i for compatibility with OpenMP
       // collapse command. The conditional serves as a workaround
       if (j >= i) {
