@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff600e4_003417fb",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-10-10T14:39:58Z",
+      "side": 1,
+      "message": "const Matrix\u0026 to save on copy?",
+      "range": {
+        "startLine": 371,
+        "startChar": 25,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "8ca8ac850523c8c11ec0d7698e44f4b486f70184",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
