@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df13b40f_1412d461",
+        "filename": "package.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5705
+      },
+      "writtenOn": "2016-10-10T14:54:04Z",
+      "side": 1,
+      "message": "Removed it and verified that it still compiles.",
+      "parentUuid": "bff600e4_2044b372",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "a1f80c55a8e69dfc4b575b81535b44b95992c728",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff600e4_0049b78b",
         "filename": "package.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-10T14:17:25Z",
       "side": 1,
       "message": "there is no separate dev package for suitesparse?",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "a1f80c55a8e69dfc4b575b81535b44b95992c728",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dffad4f1_9cb6058c",
+        "filename": "package.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5705
+      },
+      "writtenOn": "2016-10-10T14:54:04Z",
+      "side": 1,
+      "message": "These are aliases for dependencies on various platforms. This one is defined here:\n\nhttps://github.com/ros/rosdistro/blob/master/rosdep/base.yaml#L3629",
+      "parentUuid": "bff600e4_0049b78b",
       "range": {
         "startLine": 49,
         "startChar": 10,
