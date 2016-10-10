@@ -22,6 +22,30 @@
       "revId": "8ca8ac850523c8c11ec0d7698e44f4b486f70184",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df13b40f_f40ab82e",
+        "filename": "internal/ceres/gradient_checker_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2016-10-10T14:49:40Z",
+      "side": 1,
+      "message": "const Matrix\u0026 wouldn\u0027t work, since I\u0027m sometimes passing in the result of an operation. \n\nEssentially, you could get around the extra copy, but it would make the code a good bit more complicated and since this is a unit test, I didn\u0027t think that would be worth it.",
+      "parentUuid": "bff600e4_003417fb",
+      "range": {
+        "startLine": 371,
+        "startChar": 25,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "8ca8ac850523c8c11ec0d7698e44f4b486f70184",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
