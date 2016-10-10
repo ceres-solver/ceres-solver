@@ -41,7 +41,6 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <depend>atlas</depend>
-  <depend>libblas-dev</depend>
   <depend>eigen</depend>
   <depend>gfortran</depend>
   <depend>libgflags-dev</depend>
