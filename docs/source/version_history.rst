@@ -27,6 +27,10 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Relaxing Jacobian matching in Gradient Checker test. (David Gossow)
+#. Allow SubsetParameterization to hold all parameters constant
+   (Sameer Agarwal)
+#. Fix an Intel compiler error in covariance_impl.cc (Je Hyeong Hong)
 #. Removing duplicate include directive. (David Gossow)
 #. Remove two DCHECKs from CubicHermiteSpline. (Sameer Agarwal)
 #. Fix some compiler warnings. (Richard Trieu)
@@ -52,7 +56,7 @@ Bug Fixes & Minor Changes
 #. Remove use of -Werror when compiling Ceres. (Alex Stewart)
 #. Report Ceres compile options as components in find_package(). (Alex
    Stewart)
-#. ix a spelling error in nnls_modeling.rst (Timer)
+#. Fix a spelling error in nnls_modeling.rst (Timer)
 #. Only use collapse() directive with OpenMP 3.0 or higher. (Keir Mierle)
 #. Fix install path for CeresConfig.cmake to be architecture-aware.
 #. Fix double conversion to degrees in rotation_test (Keir
