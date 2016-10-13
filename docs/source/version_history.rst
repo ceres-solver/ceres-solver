@@ -4,8 +4,11 @@
 Version History
 ===============
 
-HEAD
-====
+1.12.0
+======
+
+New Features
+------------
 #. Aligned ``Jet`` matrices for improved automatic differentiation
    performance. (Andrew Hunter)
 #. Auto-differentiable implementations of Bessel functions, ``floor``,
@@ -27,6 +30,7 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Add ``package.xml`` to enable Catkin builds. (Damon Kohler)
 #. Relaxing Jacobian matching in Gradient Checker test. (David Gossow)
 #. Allow SubsetParameterization to hold all parameters constant
    (Sameer Agarwal)

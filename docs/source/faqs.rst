@@ -232,7 +232,7 @@ Solving
         4  1.803857e+04    5.58e+02    2.69e+04   8.66e+01   9.93e-01  3.69e+05       1    1.61e-01    1.03e+00
         5  1.803391e+04    4.66e+00    3.11e+02   1.02e+01   1.00e+00  1.11e+06       1    1.49e-01    1.18e+00
 
-     Ceres Solver v1.11.0 Solve Report
+     Ceres Solver v1.12.0 Solve Report
      ----------------------------------
                                           Original                  Reduced
      Parameter blocks                        22122                    22122
