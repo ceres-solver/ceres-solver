@@ -30,6 +30,7 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Fix documentation source for templated function in ``rotation.h``.
 #. Add ``package.xml`` to enable Catkin builds. (Damon Kohler)
 #. Relaxing Jacobian matching in Gradient Checker test. (David Gossow)
 #. Allow SubsetParameterization to hold all parameters constant

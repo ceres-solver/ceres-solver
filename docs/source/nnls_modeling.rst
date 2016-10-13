@@ -1815,7 +1815,7 @@ quaternion and matrix) we provide a handy set of templated
 functions. These functions are templated so that the user can use them
 within Ceres Solver's automatic differentiation framework.
 
-.. function:: void AngleAxisToQuaternion<T>(T const* angle_axis, T* quaternion)
+.. function:: template <typename T> void AngleAxisToQuaternion(T const* angle_axis, T* quaternion)
 
    Convert a value in combined axis-angle representation to a
    quaternion.
@@ -1824,7 +1824,7 @@ within Ceres Solver's automatic differentiation framework.
    and whose direction is aligned with the axis of rotation, and
    ``quaternion`` is a 4-tuple that will contain the resulting quaternion.
 
-.. function:: void QuaternionToAngleAxis<T>(T const* quaternion, T* angle_axis)
+.. function::  template <typename T> void QuaternionToAngleAxis(T const* quaternion, T* angle_axis)
 
    Convert a quaternion to the equivalent combined axis-angle
    representation.
@@ -1834,17 +1834,17 @@ within Ceres Solver's automatic differentiation framework.
    whose norm is the angle of rotation in radians, and whose direction
    is the axis of rotation.
 
-.. function:: void RotationMatrixToAngleAxis<T, row_stride, col_stride>(const MatrixAdapter<const T, row_stride, col_stride>& R, T * angle_axis)
-.. function:: void AngleAxisToRotationMatrix<T, row_stride, col_stride>(T const * angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R)
-.. function:: void RotationMatrixToAngleAxis<T>(T const * R, T * angle_axis)
-.. function:: void AngleAxisToRotationMatrix<T>(T const * angle_axis, T * R)
+.. function:: template <typename T, int row_stride, int col_stride> void RotationMatrixToAngleAxis(const MatrixAdapter<const T, row_stride, col_stride>& R, T * angle_axis)
+.. function:: template <typename T, int row_stride, int col_stride> void AngleAxisToRotationMatrix(T const * angle_axis, const MatrixAdapter<T, row_stride, col_stride>& R)
+.. function:: template <typename T> void RotationMatrixToAngleAxis(T const * R, T * angle_axis)
+.. function:: template <typename T> void AngleAxisToRotationMatrix(T const * angle_axis, T * R)
 
    Conversions between 3x3 rotation matrix with given column and row strides and
    axis-angle rotation representations. The functions that take a pointer to T instead
    of a MatrixAdapter assume a column major representation with unit row stride and a column stride of 3.
 
-.. function:: void EulerAnglesToRotationMatrix<T, row_stride, col_stride>(const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R)
-.. function:: void EulerAnglesToRotationMatrix<T>(const T* euler, int row_stride, T* R)
+.. function:: template <typename T, int row_stride, int col_stride> void EulerAnglesToRotationMatrix(const T* euler, const MatrixAdapter<T, row_stride, col_stride>& R)
+.. function:: template <typename T> void EulerAnglesToRotationMatrix(const T* euler, int row_stride, T* R)
 
    Conversions between 3x3 rotation matrix with given column and row strides and
    Euler angle (in degrees) rotation representations.
@@ -1857,8 +1857,8 @@ within Ceres Solver's automatic differentiation framework.
    major representation with unit column stride and a row stride of 3.
    The additional parameter row_stride is required to be 3.
 
-.. function:: void QuaternionToScaledRotation<T, row_stride, col_stride>(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
-.. function:: void QuaternionToScaledRotation<T>(const T q[4], T R[3 * 3])
+.. function:: template <typename T, int row_stride, int col_stride> void QuaternionToScaledRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
+.. function:: template <typename T> void QuaternionToScaledRotation(const T q[4], T R[3 * 3])
 
    Convert a 4-vector to a 3x3 scaled rotation matrix.
 
@@ -1887,13 +1887,13 @@ within Ceres Solver's automatic differentiation framework.
    such that :math:`\det(Q) = 1` and :math:`Q*Q' = I`.
 
 
-.. function:: void QuaternionToRotation<T>(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
-.. function:: void QuaternionToRotation<T>(const T q[4], T R[3 * 3])
+.. function:: template <typename T> void QuaternionToRotation(const T q[4], const MatrixAdapter<T, row_stride, col_stride>& R)
+.. function:: template <typename T> void QuaternionToRotation(const T q[4], T R[3 * 3])
 
    Same as above except that the rotation matrix is normalized by the
    Frobenius norm, so that :math:`R R' = I` (and :math:`\det(R) = 1`).
 
-.. function:: void UnitQuaternionRotatePoint<T>(const T q[4], const T pt[3], T result[3])
+.. function:: template <typename T> void UnitQuaternionRotatePoint(const T q[4], const T pt[3], T result[3])
 
    Rotates a point pt by a quaternion q:
 
@@ -1904,23 +1904,23 @@ within Ceres Solver's automatic differentiation framework.
    result you get for a unit quaternion.
 
 
-.. function:: void QuaternionRotatePoint<T>(const T q[4], const T pt[3], T result[3])
+.. function:: template <typename T> void QuaternionRotatePoint(const T q[4], const T pt[3], T result[3])
 
    With this function you do not need to assume that :math:`q` has unit norm.
    It does assume that the norm is non-zero.
 
-.. function:: void QuaternionProduct<T>(const T z[4], const T w[4], T zw[4])
+.. function:: template <typename T> void QuaternionProduct(const T z[4], const T w[4], T zw[4])
 
    .. math:: zw = z * w
 
    where :math:`*` is the Quaternion product between 4-vectors.
 
 
-.. function:: void CrossProduct<T>(const T x[3], const T y[3], T x_cross_y[3])
+.. function:: template <typename T> void CrossProduct(const T x[3], const T y[3], T x_cross_y[3])
 
    .. math:: \text{x_cross_y} = x \times y
 
-.. function:: void AngleAxisRotatePoint<T>(const T angle_axis[3], const T pt[3], T result[3])
+.. function:: template <typename T> void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3])
 
    .. math:: y = R(\text{angle_axis}) x
 
