@@ -74,6 +74,7 @@ class LevenbergMarquardtStrategy : public TrustRegionStrategy {
   const double max_diagonal_;
   double decrease_factor_;
   bool reuse_diagonal_;
+  DampingType damping_type_;
   Vector diagonal_;   // diagonal_ =  diag(J'J)
   // Scaled copy of diagonal_. Stored here as optimization to prevent
   // allocations in every iteration and reuse when a step fails and
