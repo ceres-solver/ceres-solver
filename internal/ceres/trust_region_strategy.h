@@ -58,6 +58,7 @@ class TrustRegionStrategy {
   struct Options {
     Options()
         : trust_region_strategy_type(LEVENBERG_MARQUARDT),
+          lm_damping_type(MARQUARDT),
           initial_radius(1e4),
           max_radius(1e32),
           min_lm_diagonal(1e-6),
@@ -66,6 +67,8 @@ class TrustRegionStrategy {
     }
 
     TrustRegionStrategyType trust_region_strategy_type;
+    DampingType lm_damping_type;
+    
     // Linear solver used for actually solving the trust region step.
     LinearSolver* linear_solver;
     double initial_radius;
