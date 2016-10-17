@@ -75,6 +75,7 @@ class CERES_EXPORT Solver {
       line_search_sufficient_curvature_decrease = 0.9;
       max_line_search_step_expansion = 10.0;
       trust_region_strategy_type = LEVENBERG_MARQUARDT;
+      lm_damping_type = MARQUARDT;
       dogleg_type = TRADITIONAL_DOGLEG;
       use_nonmonotonic_steps = false;
       max_consecutive_nonmonotonic_steps = 5;
@@ -305,6 +306,9 @@ class CERES_EXPORT Solver {
 
     TrustRegionStrategyType trust_region_strategy_type;
 
+    // Type of damping to use for LevenbergMarquardtStrategy.
+    DampingType lm_damping_type;
+    
     // Type of dogleg strategy to use.
     DoglegType dogleg_type;
 
@@ -993,6 +997,9 @@ class CERES_EXPORT Solver {
     //  Type of trust region strategy.
     TrustRegionStrategyType trust_region_strategy_type;
 
+    // Type of damping to use for LevenbergMarquardtStrategy.
+    DampingType lm_damping_type;
+    
     //  Type of dogleg strategy used for solving the trust region
     //  problem.
     DoglegType dogleg_type;

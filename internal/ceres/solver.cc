@@ -117,6 +117,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
   OPTION_LE_OPTION(min_linear_solver_iterations, max_linear_solver_iterations);
 
   if (options.use_inner_iterations) {
+    OPTION_GE(max_num_inner_iterations, 0);
     OPTION_GE(inner_iteration_tolerance, 0.0);
   }
 
@@ -357,6 +358,10 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->line_search_polynomial_minimization_time_in_seconds = 0.0;
   summary->line_search_total_time_in_seconds  = 0.0;
   summary->inner_iterations_given             = options.use_inner_iterations;
+  summary->inner_iteration_type               = options.inner_iteration_type;
+  summary->linear_inner_iterations            = options.use_linear_inner_iterations;
+  summary->block_qr_for_rw2                   = options.use_block_qr_for_rw2;
+  summary->initialize_with_inner_iteration    = options.initialize_with_inner_iteration;
   summary->line_search_direction_type         = options.line_search_direction_type;         //  NOLINT
   summary->line_search_interpolation_type     = options.line_search_interpolation_type;     //  NOLINT
   summary->line_search_type                   = options.line_search_type;
@@ -369,6 +374,9 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->preconditioner_type_given          = options.preconditioner_type;
   summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
   summary->trust_region_strategy_type         = options.trust_region_strategy_type;         //  NOLINT
+  summary->trust_region_radius_update_type    = options.trust_region_radius_update_type;
+  summary->infinite_trust_region_radius       = options.infinite_trust_region_radius;
+  summary->lm_damping_type                    = options.lm_damping_type;
   summary->visibility_clustering_type         = options.visibility_clustering_type;         //  NOLINT
 }
 
@@ -603,10 +611,14 @@ Solver::Summary::Summary()
       linear_solver_type_used(SPARSE_NORMAL_CHOLESKY),
       inner_iterations_given(false),
       inner_iterations_used(false),
+      inner_iteration_type(EMBEDDED_POINT_ITERATION),
       preconditioner_type_given(IDENTITY),
       preconditioner_type_used(IDENTITY),
       visibility_clustering_type(CANONICAL_VIEWS),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
+      trust_region_radius_update_type(TRUST_REGION_UPDATE),
+      infinite_trust_region_radius(false),
+      lm_damping_type(MARQUARDT),
       dense_linear_algebra_library_type(EIGEN),
       sparse_linear_algebra_library_type(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
@@ -676,12 +688,19 @@ string Solver::Summary::FullReport() const {
     StringAppendF(&report, "Trust region strategy     %19s",
                   TrustRegionStrategyTypeToString(
                       trust_region_strategy_type));
-    if (trust_region_strategy_type == DOGLEG) {
-      if (dogleg_type == TRADITIONAL_DOGLEG) {
-        StringAppendF(&report, " (TRADITIONAL)");
-      } else {
-        StringAppendF(&report, " (SUBSPACE)");
-      }
+    switch(trust_region_strategy_type) {
+      case DOGLEG:
+        if (dogleg_type == TRADITIONAL_DOGLEG) {
+          StringAppendF(&report, " (TRADITIONAL)");
+        } else {
+          StringAppendF(&report, " (SUBSPACE)");
+        }
+        break;
+      case LEVENBERG_MARQUARDT:
+        StringAppendF(&report, "\nDamping type     %28s",
+                      DampingTypeToString(lm_damping_type));
+        StringAppendF(&report, "\nRadius update type       %20s",
+                      RadiusUpdateTypeToString(trust_region_radius_update_type));
     }
     StringAppendF(&report, "\n");
     StringAppendF(&report, "\n");
@@ -733,10 +752,24 @@ string Solver::Summary::FullReport() const {
       StringifyOrdering(inner_iteration_ordering_given, &given);
       string used;
       StringifyOrdering(inner_iteration_ordering_used, &used);
-    StringAppendF(&report,
-                  "Inner iteration ordering %20s %24s\n",
-                  given.c_str(),
-                  used.c_str());
+      StringAppendF(&report,
+                    "Inner iteration ordering %20s %24s\n",
+                    given.c_str(),
+                    used.c_str());
+      StringAppendF(&report,
+                    "Inner iteration type %24s\n",
+                    InnerIterationTypeToString(inner_iteration_type));
+      StringAppendF(&report,
+                    "Use linear inner iterations %17s\n",
+                    linear_inner_iterations ? "True" : "False");
+      if (inner_iteration_type == RUHE_WEDIN_ALGORITHM_2) {
+        StringAppendF(&report,
+                      "Use block QR for RW2 %24s\n",
+                      block_qr_for_rw2 ? "True" : "False");
+      }
+      StringAppendF(&report,
+                    "Initialize with inner iteration %13s\n",
+                    initialize_with_inner_iteration ? "True" : "False");
     }
   } else {
     // LINE_SEARCH HEADER
