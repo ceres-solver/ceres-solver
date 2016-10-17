@@ -52,7 +52,8 @@ LevenbergMarquardtStrategy::LevenbergMarquardtStrategy(
       min_diagonal_(options.min_lm_diagonal),
       max_diagonal_(options.max_lm_diagonal),
       decrease_factor_(2.0),
-      reuse_diagonal_(false) {
+      reuse_diagonal_(false),
+      damping_type_(options.lm_damping_type) {
   CHECK_NOTNULL(linear_solver_);
   CHECK_GT(min_diagonal_, 0.0);
   CHECK_LE(min_diagonal_, max_diagonal_);
@@ -77,7 +78,17 @@ TrustRegionStrategy::Summary LevenbergMarquardtStrategy::ComputeStep(
       diagonal_.resize(num_parameters, 1);
     }
 
-    jacobian->SquaredColumnNorm(diagonal_.data());
+    switch(damping_type_) {
+      case LEVENBERG:
+        // Levenberg damping = eye(size(JTJ)).
+        // Reuse this every time.
+        diagonal_.setOnes();
+        break;
+      case MARQUARDT:
+        // Marquardt damping = diag(diag(JTJ)).
+        jacobian->SquaredColumnNorm(diagonal_.data());
+        break;
+    }
     for (int i = 0; i < num_parameters; ++i) {
       diagonal_[i] = std::min(std::max(diagonal_[i], min_diagonal_),
                               max_diagonal_);
