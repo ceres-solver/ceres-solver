@@ -369,6 +369,7 @@ void PreSolveSummarize(const Solver::Options& options,
   summary->preconditioner_type_given          = options.preconditioner_type;
   summary->sparse_linear_algebra_library_type = options.sparse_linear_algebra_library_type; //  NOLINT
   summary->trust_region_strategy_type         = options.trust_region_strategy_type;         //  NOLINT
+  summary->lm_damping_type                    = options.lm_damping_type;
   summary->visibility_clustering_type         = options.visibility_clustering_type;         //  NOLINT
 }
 
@@ -607,6 +608,7 @@ Solver::Summary::Summary()
       preconditioner_type_used(IDENTITY),
       visibility_clustering_type(CANONICAL_VIEWS),
       trust_region_strategy_type(LEVENBERG_MARQUARDT),
+      lm_damping_type(MARQUARDT),
       dense_linear_algebra_library_type(EIGEN),
       sparse_linear_algebra_library_type(SUITE_SPARSE),
       line_search_direction_type(LBFGS),
@@ -676,12 +678,17 @@ string Solver::Summary::FullReport() const {
     StringAppendF(&report, "Trust region strategy     %19s",
                   TrustRegionStrategyTypeToString(
                       trust_region_strategy_type));
-    if (trust_region_strategy_type == DOGLEG) {
-      if (dogleg_type == TRADITIONAL_DOGLEG) {
-        StringAppendF(&report, " (TRADITIONAL)");
-      } else {
-        StringAppendF(&report, " (SUBSPACE)");
-      }
+    switch(trust_region_strategy_type) {
+      case DOGLEG:
+        if (dogleg_type == TRADITIONAL_DOGLEG) {
+          StringAppendF(&report, " (TRADITIONAL)");
+        } else {
+          StringAppendF(&report, " (SUBSPACE)");
+        }
+        break;
+      case LEVENBERG_MARQUARDT:
+        StringAppendF(&report, "\nDamping type     %28s",
+                      DampingTypeToString(lm_damping_type));
     }
     StringAppendF(&report, "\n");
     StringAppendF(&report, "\n");

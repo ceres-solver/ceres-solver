@@ -310,6 +310,7 @@ void SetupMinimizerOptions(PreprocessedProblem* pp) {
   strategy_options.max_lm_diagonal = options.max_lm_diagonal;
   strategy_options.trust_region_strategy_type =
       options.trust_region_strategy_type;
+  strategy_options.lm_damping_type = options.lm_damping_type;
   strategy_options.dogleg_type = options.dogleg_type;
   pp->minimizer_options.trust_region_strategy.reset(
       CHECK_NOTNULL(TrustRegionStrategy::Create(strategy_options)));
