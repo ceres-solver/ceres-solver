@@ -152,6 +152,22 @@ bool StringToTrustRegionStrategyType(string value,
   return false;
 }
 
+const char* DampingTypeToString(DampingType type) {
+  switch(type) {
+      CASESTR(LEVENBERG);
+      CASESTR(MARQUARDT);
+    default:
+      return "UNKNOWN";
+  }
+}
+  
+bool StringToDampingType(string value, DampingType* type) {
+  UpperCase(&value);
+  STRENUM(LEVENBERG);
+  STRENUM(MARQUARDT);
+  return false;
+}
+  
 const char* DoglegTypeToString(DoglegType type) {
   switch (type) {
     CASESTR(TRADITIONAL_DOGLEG);
