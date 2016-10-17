@@ -293,6 +293,15 @@ enum TrustRegionStrategyType {
   // DENSE_SCHUR, DENSE_QR and SPARSE_NORMAL_CHOLESKY.
   DOGLEG
 };
+  
+// Ceres supports two types of damping for LevenbergMarquardtStrategy.
+enum DampingType {
+  // Levenberg uses eye(size(JTJ)).
+  LEVENBERG,
+  
+  // Marquardt uses diag(diag(JTJ)).
+  MARQUARDT,
+};
 
 // Ceres supports two different dogleg strategies.
 // The "traditional" dogleg method by Powell and the
@@ -462,6 +471,9 @@ CERES_EXPORT const char* TrustRegionStrategyTypeToString(
 CERES_EXPORT bool StringToTrustRegionStrategyType(std::string value,
                                      TrustRegionStrategyType* type);
 
+CERES_EXPORT const char* DampingTypeToString(DampingType type);
+CERES_EXPORT bool StringToDampingType(std::string value, DampingType* type);
+  
 CERES_EXPORT const char* DoglegTypeToString(DoglegType type);
 CERES_EXPORT bool StringToDoglegType(std::string value, DoglegType* type);
 
