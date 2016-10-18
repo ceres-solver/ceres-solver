@@ -295,7 +295,7 @@ void QuaternionParameterizationTestHelper(
       global_matrix * MatrixRef(jacobian, kGlobalSize, kLocalSize);
   EXPECT_NEAR((local_matrix - expected_local_matrix).norm(),
               0.0,
-              std::numeric_limits<double>::epsilon());
+              10.0 * std::numeric_limits<double>::epsilon());
 }
 
 template <int N>
