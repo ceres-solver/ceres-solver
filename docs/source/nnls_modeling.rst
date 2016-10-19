@@ -919,7 +919,7 @@ Numeric Differentiation & LocalParameterization
            local_parameterizations, numeric_diff_options);
        GradientCheckResults results;
        if (!gradient_checker.Probe(parameter_blocks.data(), 1e-9, &results) {
-         LOG(ERROR) << "An error has occured:\n" << results.error_log;
+         LOG(ERROR) << "An error has occurred:\n" << results.error_log;
        }
 
 

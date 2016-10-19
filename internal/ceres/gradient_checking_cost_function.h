@@ -54,7 +54,7 @@ class GradientCheckingIterationCallback : public IterationCallback {
   // then return SOLVER_ABORT.
   virtual CallbackReturnType operator()(const IterationSummary& summary);
 
-  // Notify this that a gradient error has occured (thread safe).
+  // Notify this that a gradient error has occurred (thread safe).
   void SetGradientErrorDetected(std::string& error_log);
 
   // Retrieve error status (not thread safe).
