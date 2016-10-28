@@ -140,6 +140,22 @@ class CERES_EXPORT CostFunction {
   CERES_DISALLOW_COPY_AND_ASSIGN(CostFunction);
 };
 
+// A common base class for DynamicAutoDiffCostFunction and
+// DynamicNumericDiffCostFunction which depend on methods that can add
+// parameter blocks and set the number of residuals at run time.
+class DynamicCostFunction : public CostFunction {
+ public:
+  ~DynamicCostFunction() {}
+
+  virtual void AddParameterBlock(int size) {
+    mutable_parameter_block_sizes()->push_back(size);
+  }
+
+  virtual void SetNumResiduals(int num_residuals) {
+    set_num_residuals(num_residuals);
+  }
+};
+
 }  // namespace ceres
 
 #include "ceres/internal/reenable_warnings.h"
