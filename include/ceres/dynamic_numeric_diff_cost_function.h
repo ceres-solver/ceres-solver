@@ -30,7 +30,23 @@
 //         sameeragarwal@google.com (Sameer Agarwal)
 //         thadh@gmail.com (Thad Hughes)
 //         tbennun@gmail.com (Tal Ben-Nun)
-//
+
+#ifndef CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
+#define CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
+
+#include <cmath>
+#include <numeric>
+#include <vector>
+
+#include "ceres/dynamic_cost_function.h"
+#include "ceres/internal/scoped_ptr.h"
+#include "ceres/internal/eigen.h"
+#include "ceres/internal/numeric_diff.h"
+#include "ceres/numeric_diff_options.h"
+#include "glog/logging.h"
+
+namespace ceres {
+
 // This numeric diff implementation differs from the one found in
 // numeric_diff_cost_function.h by supporting numericdiff on cost
 // functions with variable numbers of parameters with variable
@@ -56,25 +72,8 @@
 //   cost_function.AddParameterBlock(5);
 //   cost_function.AddParameterBlock(10);
 //   cost_function.SetNumResiduals(21);
-
-#ifndef CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
-#define CERES_PUBLIC_DYNAMIC_NUMERIC_DIFF_COST_FUNCTION_H_
-
-#include <cmath>
-#include <numeric>
-#include <vector>
-
-#include "ceres/cost_function.h"
-#include "ceres/internal/scoped_ptr.h"
-#include "ceres/internal/eigen.h"
-#include "ceres/internal/numeric_diff.h"
-#include "ceres/numeric_diff_options.h"
-#include "glog/logging.h"
-
-namespace ceres {
-
 template <typename CostFunctor, NumericDiffMethodType method = CENTRAL>
-class DynamicNumericDiffCostFunction : public CostFunction {
+class DynamicNumericDiffCostFunction : public DynamicCostFunction {
  public:
   explicit DynamicNumericDiffCostFunction(
       const CostFunctor* functor,
@@ -89,14 +88,6 @@ class DynamicNumericDiffCostFunction : public CostFunction {
     if (ownership_ != TAKE_OWNERSHIP) {
       functor_.release();
     }
-  }
-
-  void AddParameterBlock(int size) {
-    mutable_parameter_block_sizes()->push_back(size);
-  }
-
-  void SetNumResiduals(int num_residuals) {
-    set_num_residuals(num_residuals);
   }
 
   virtual bool Evaluate(double const* const* parameters,
