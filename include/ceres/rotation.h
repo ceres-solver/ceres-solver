@@ -576,7 +576,7 @@ void AngleAxisRotatePoint(const T angle_axis[3], const T pt[3], T result[3]) {
     const T theta = sqrt(theta2);
     const T costheta = cos(theta);
     const T sintheta = sin(theta);
-    const T theta_inverse = 1.0 / theta;
+    const T theta_inverse = T(1.0) / theta;
 
     const T w[3] = { angle_axis[0] * theta_inverse,
                      angle_axis[1] * theta_inverse,
