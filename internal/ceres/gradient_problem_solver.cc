@@ -72,6 +72,7 @@ Solver::Options GradientProblemSolverOptionsToSolverOptions(
   COPY_OPTION(max_line_search_step_expansion);
   COPY_OPTION(max_num_iterations);
   COPY_OPTION(max_solver_time_in_seconds);
+  COPY_OPTION(parameter_tolerance);
   COPY_OPTION(function_tolerance);
   COPY_OPTION(gradient_tolerance);
   COPY_OPTION(logging_type);
