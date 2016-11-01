@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86149ad5_98e99595",
+        "filename": "include/ceres/rotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-11-01T13:17:52Z",
+      "side": 0,
+      "message": "Assert maybe? I\u0027m not excited about losing these checks entirely.",
+      "revId": "e892499e8d8977b9178a760348bdd201ec5f3489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
