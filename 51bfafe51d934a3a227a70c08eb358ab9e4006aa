@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8e57b3_72317e4c",
+        "filename": "include/ceres/dynamic_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-11-11T01:59:26Z",
+      "side": 1,
+      "message": "Why is this needed? The below code is not doing funky eigen stuff.",
+      "revId": "51bfafe51d934a3a227a70c08eb358ab9e4006aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b8e57b3_922e0aec",
+        "filename": "include/ceres/dynamic_cost_function.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-11-11T01:59:26Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "51bfafe51d934a3a227a70c08eb358ab9e4006aa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
