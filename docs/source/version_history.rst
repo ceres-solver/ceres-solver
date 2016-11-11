@@ -30,6 +30,18 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Introduce a common base class for DynamicAutoDiffCostFunction and
+   DynamicNumericDiffCostFunction. (Sameer Agarwal)
+#. Fix an exact equality test causing breakage in
+   gradient_checker_test. (Sameer Agarwal)
+#. Add GradientProblemSolver::Options::parameter_tolerance. (Sameer
+   Agarwal)
+#. Add missing T() wrappers for constants. (Rob Carroll)
+#. Remove two checks from rotation.h (Sameer Agarwal)
+#. Relax the tolerance in QuaternionParameterizationTestHelper. (Je
+   Hyeong Hong)
+#. Occured -> Occurred. (Sameer Agarwal)
+#. Fix a test error in autodiff_test.cc. (Je Hyeong Hong)
 #. Fix documentation source for templated function in ``rotation.h``.
 #. Add ``package.xml`` to enable Catkin builds. (Damon Kohler)
 #. Relaxing Jacobian matching in Gradient Checker test. (David Gossow)
