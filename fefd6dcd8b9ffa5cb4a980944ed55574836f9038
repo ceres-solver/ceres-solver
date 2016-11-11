@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b78b3b0_db39c493",
+        "filename": "include/ceres/cost_function.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2016-11-11T01:59:26Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of putting this into the main cost_function.h file. Cost function is our core object; it deserves its own file.",
+      "revId": "fefd6dcd8b9ffa5cb4a980944ed55574836f9038",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
