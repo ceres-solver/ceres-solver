@@ -85,9 +85,9 @@
 # Reset CALLERS_CMAKE_FIND_LIBRARY_PREFIXES to its value when FindGflags was
 # invoked, necessary for MSVC.
 macro(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
-  if (MSVC)
+  if (MSVC AND CALLERS_CMAKE_FIND_LIBRARY_PREFIXES)
     set(CMAKE_FIND_LIBRARY_PREFIXES "${CALLERS_CMAKE_FIND_LIBRARY_PREFIXES}")
-  endif (MSVC)
+  endif()
 endmacro(GFLAGS_RESET_FIND_LIBRARY_PREFIX)
 
 # Called if we failed to find gflags or any of it's required dependencies,
