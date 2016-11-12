@@ -348,6 +348,7 @@ if (GFLAGS)
   if (GFLAGS_FOUND)
     message("-- Found Google Flags header in: ${GFLAGS_INCLUDE_DIRS}, "
       "in namespace: ${GFLAGS_NAMESPACE}")
+    add_definitions(-DCERES_GFLAGS_NAMESPACE=${GFLAGS_NAMESPACE})
   else (GFLAGS_FOUND)
     message("-- Did not find Google Flags (gflags), Building without gflags "
       "- no tests or tools will be built!")
@@ -381,7 +382,19 @@ else (MINIGLOG)
   # we can output an error messages explaining MINIGLOG option.
   find_package(Glog)
   if (GLOG_FOUND)
-    message("-- Found Google Log header in: ${GLOG_INCLUDE_DIRS}")
+    # By default, assume gflags was found, updating the message if it was not.
+    set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
+      " Assuming glog was built with gflags support as gflags was found. "
+      "This will make gflags a public dependency of Ceres.")
+    if (NOT GFLAGS_FOUND)
+      set(GLOG_GFLAGS_DEPENDENCY_MESSAGE
+        " Assuming glog was NOT built with gflags support as gflags was "
+        "not found.  If glog was built with gflags, please set the "
+        "gflags search locations such that it can be found by Ceres.  "
+        "Otherwise, Ceres may fail to link due to missing gflags symbols.")
+    endif()
+    message("-- Found Google Log header in: ${GLOG_INCLUDE_DIRS}. "
+      ${GLOG_GFLAGS_DEPENDENCY_MESSAGE})
   else (GLOG_FOUND)
     message(FATAL_ERROR "Can't find Google Log. Please set GLOG_INCLUDE_DIR & "
       "GLOG_LIBRARY or enable MINIGLOG option to use minimal glog "
