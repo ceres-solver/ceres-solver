@@ -244,9 +244,10 @@ struct Jet {
       16 <= ::ceres::port_constants::kMaxAlignBytes;
   static constexpr int kAlignHint = kShouldAlignMatrix ?
       Eigen::AutoAlign : Eigen::DontAlign;
-  // alignas(0) should always be ignored, in which case this definition of
-  // v should be equivalent to the non-C++11 case.
-  static constexpr size_t kAlignment = kShouldAlignMatrix ? 16 : 0;
+  // Default to the native alignment of double if 16-byte alignment is not
+  // supported.  We cannot use alignof(T) as if we do, GCC complains that the
+  // alignment 'is not an integer constant', although Clang accepts it.
+  static constexpr size_t kAlignment = kShouldAlignMatrix ? 16 : alignof(double);
   alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignHint> v;
 #endif
 };
