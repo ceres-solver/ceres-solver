@@ -380,13 +380,12 @@ else (MINIGLOG)
   # Don't search with REQUIRED so that configuration continues if not found and
   # we can output an error messages explaining MINIGLOG option.
   find_package(Glog)
-  if (GLOG_FOUND)
-    message("-- Found Google Log header in: ${GLOG_INCLUDE_DIRS}")
-  else (GLOG_FOUND)
-    message(FATAL_ERROR "Can't find Google Log. Please set GLOG_INCLUDE_DIR & "
+  if (NOT GLOG_FOUND)
+    message(FATAL_ERROR "Can't find Google Log (glog). Please set either: "
+      "glog_DIR (newer CMake built versions of glog) or GLOG_INCLUDE_DIR & "
       "GLOG_LIBRARY or enable MINIGLOG option to use minimal glog "
       "implementation.")
-  endif (GLOG_FOUND)
+  endif()
 endif (MINIGLOG)
 
 if (NOT SCHUR_SPECIALIZATIONS)
