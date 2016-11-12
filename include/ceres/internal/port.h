@@ -51,9 +51,13 @@ using std::shared_ptr;
 
 // We allocate some Eigen objects on the stack and other places they
 // might not be aligned to 16-byte boundaries.  If we have C++11, we
-// can specify their alignment anyway, and thus can safely enable
-// vectorization on those matrices; in C++99, we are out of luck.  Figure out
-// what case we're in and write macros that do the right thing.
+// can specify their alignment (which is desirable, as it means we can safely
+// enable vectorisation on matrices).  However, the standard gives wide
+// lattitude as to what alignments are legal.  It must be the case that
+// alignments up to alignof(std::max_align_t) are valid, but this might be < 16
+// on some platforms, in which case even if using C++11, on these platforms
+// we should not attempt to align to 16-byte boundaries.  If using < C++11,
+// we cannot specify the alignment.
 #ifdef CERES_USE_CXX11
 namespace port_constants {
 static constexpr size_t kMaxAlignBytes =
