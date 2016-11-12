@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8e57b3_1a804392",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-11-12T22:05:06Z",
+      "side": 1,
+      "message": "that is wierd, that you cannot use alignof(T), shouldn\u0027t it evaluate to the same thing a alignof(double) for us?",
+      "range": {
+        "startLine": 248,
+        "startChar": 31,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "6519e78920c96fc68b9341f43dde333da603ad0b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
