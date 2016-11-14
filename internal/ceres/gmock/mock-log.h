@@ -47,7 +47,12 @@
 // Needed to make the scoped mock log tests work without modification.
 namespace ceres {
 namespace internal {
+// Handle possible absence of abbreviated log severities on Windows.
+#ifndef GLOG_NO_ABBREVIATED_SEVERITIES
 using google::WARNING;
+#else
+enum { WARNING = google::GLOG_WARNING };
+#endif
 }  // namespace internal
 }  // namespace ceres
 
