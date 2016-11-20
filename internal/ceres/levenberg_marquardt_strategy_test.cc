@@ -145,7 +145,9 @@ TEST(LevenbergMarquardtStrategy, CorrectDiagonalToLinearSolver) {
   {
     ScopedMockLog log;
     EXPECT_CALL(log, Log(_, _, _)).Times(AnyNumber());
-    EXPECT_CALL(log, Log(WARNING, _,
+    // Use GLOG_WARNING to support MSVC if GLOG_NO_ABBREVIATED_SEVERITIES
+    // is defined.
+    EXPECT_CALL(log, Log(google::GLOG_WARNING, _,
                          HasSubstr("Failed to compute a step")));
 
     TrustRegionStrategy::Summary summary =
