@@ -45,7 +45,6 @@
 #include "ceres/types.h"
 #include "glog/logging.h"
 #include "gmock/gmock.h"
-#include "gmock/mock-log.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -55,7 +54,6 @@ using std::vector;
 using testing::AllOf;
 using testing::AnyNumber;
 using testing::HasSubstr;
-using testing::ScopedMockLog;
 using testing::_;
 
 // Pick a (non-quadratic) function whose derivative are easy:
