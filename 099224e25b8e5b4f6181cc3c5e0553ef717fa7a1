@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b010f8cf_740835da",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-11-20T19:15:40Z",
+      "side": 1,
+      "message": "why not be consistent with the way we are terminating endifs?",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 9
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b010f8cf_4a88e840",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-11-20T19:15:40Z",
+      "side": 1,
+      "message": "why have this flag at all? is there a case where this will not be true?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
