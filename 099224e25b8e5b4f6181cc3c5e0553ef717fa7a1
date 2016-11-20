@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "30496802_1eb7adb7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-11-20T19:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b010f8cf_0a21d065",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 9
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b010f8cf_4a88e840",
         "filename": "cmake/FindGlog.cmake",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "how would this happen? and would they even know that this is the case?",
       "parentUuid": "70eda006_b0c8f8b5",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30db286a_ceaac3ba",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-11-20T19:26:06Z",
+      "side": 1,
+      "message": "Most likely they didn\u0027t realise what the export option did, or were experimenting with a new version of glog which they have not installed.  They would know because we tell them.",
+      "parentUuid": "b010f8cf_ea255c71",
       "range": {
         "startLine": 42,
         "startChar": 2,
