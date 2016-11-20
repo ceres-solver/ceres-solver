@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b010f8cf_0a21d065",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-11-20T19:21:31Z",
+      "side": 1,
+      "message": "lets be consistent with the rest of the file for now. we can come back to this style revision later on.",
+      "parentUuid": "70eda006_d0c37c98",
+      "range": {
+        "startLine": 388,
+        "startChar": 7,
+        "endLine": 388,
+        "endChar": 9
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b010f8cf_4a88e840",
         "filename": "cmake/FindGlog.cmake",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If someone installed an older version, but have a newer version exported into the CMake package registry",
       "parentUuid": "b010f8cf_4a88e840",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "099224e25b8e5b4f6181cc3c5e0553ef717fa7a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b010f8cf_ea255c71",
+        "filename": "cmake/FindGlog.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2016-11-20T19:21:31Z",
+      "side": 1,
+      "message": "how would this happen? and would they even know that this is the case?",
+      "parentUuid": "70eda006_b0c8f8b5",
       "range": {
         "startLine": 42,
         "startChar": 2,
