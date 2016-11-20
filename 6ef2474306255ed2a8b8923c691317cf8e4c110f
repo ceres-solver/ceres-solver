@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f25ce7_2f15c9f1",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-11-20T20:12:08Z",
+      "side": 1,
+      "message": "( ?  Should this be: (Sameer Agarwal)",
+      "range": {
+        "startLine": 38,
+        "startChar": 74,
+        "endLine": 38,
+        "endChar": 75
+      },
+      "revId": "6ef2474306255ed2a8b8923c691317cf8e4c110f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
