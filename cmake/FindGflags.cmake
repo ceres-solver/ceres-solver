@@ -47,6 +47,9 @@
 #                   by default gflags, although can be configured when building
 #                   gflags to be something else (i.e. google for legacy
 #                   compatibility).
+# FOUND_INSTALLED_GFLAGS_CMAKE_CONFIGURATION: True iff the version of gflags
+#                                             found was built & installed /
+#                                             exported as a CMake package.
 #
 # The following variables control the behaviour of this module when an exported
 # gflags CMake configuration is not found.

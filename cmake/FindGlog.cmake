@@ -36,6 +36,9 @@
 # GLOG_FOUND: TRUE iff glog is found.
 # GLOG_INCLUDE_DIRS: Include directories for glog.
 # GLOG_LIBRARIES: Libraries required to link glog.
+# FOUND_INSTALLED_GLOG_CMAKE_CONFIGURATION: True iff the version of glog found
+#                                           was built & installed / exported
+#                                           as a CMake package.
 #
 # The following variables control the behaviour of this module:
 #
