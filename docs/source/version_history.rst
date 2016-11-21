@@ -30,6 +30,8 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Fix missing gflags imported target definition in
+   CeresConfig.cmake. (Alex Stewart)
 #. Make gflags a public dependency of Ceres if it and glog are
    found. (Alex Stewart)
 #. Add support for glog exported CMake target. (Alex Stewart)
