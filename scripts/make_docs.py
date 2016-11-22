@@ -76,7 +76,7 @@ replacements = [
 
   # The title for the homepage is not ideal, so change it.
   ('<title>Ceres Solver &mdash; Ceres Solver</title>',
-   '<title>Ceres Solver &mdash; A Nonlinear Least Squares Minimizer</title>')
+   '<title>Ceres Solver &mdash; A Large Scale Non-linear Optimization Library</title>')
 ]
 
 # This is a nasty hack to strip the breadcrumb navigation. A better strategy is
@@ -86,7 +86,7 @@ breadcrumb_start_other = \
 '''<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
-      
+
     <li>'''
 
 # The index page has a slightly different breadcrumb.
@@ -95,7 +95,7 @@ breadcrumb_start_index = breadcrumb_start_other.replace('index.html', '#')
 breadcrumb_end = \
 '''</li>
       <li class="wy-breadcrumbs-aside">
-        
+
       </li>
   </ul>
   <hr/>
