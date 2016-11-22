@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Ceres Solver'
-copyright = u'2015 Google Inc'
+copyright = u'2016 Google Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -85,7 +85,6 @@ pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
-
 
 # -- Options for HTML output ---------------------------------------------------
 
