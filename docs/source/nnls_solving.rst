@@ -141,7 +141,7 @@ setting :member:`Solver::Options::trust_region_strategy_type`.
 Levenberg-Marquardt
 -------------------
 
-The Levenberg-Marquardt algorithm [Levenberg]_ [Marquardt]_ is the
+The Levenberg-Marquardt algorithm [Levenberg]_  [Marquardt]_ is the
 most popular algorithm for solving non-linear least squares problems.
 It was also the first trust region algorithm to be developed
 [Levenberg]_ [Marquardt]_. Ceres implements an exact step [Madsen]_
