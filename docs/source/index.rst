@@ -23,6 +23,7 @@ reports and feature requests.
 
    installation
    tutorial
+   derivatives
    guide
    features
    faqs
