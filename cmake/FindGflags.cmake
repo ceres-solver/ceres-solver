@@ -271,6 +271,12 @@ function(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
   endif()
 endfunction(GFLAGS_CHECK_GFLAGS_NAMESPACE_USING_REGEX)
 
+# Protect against any alternative find_package scripts for this library having
+# been called previously (in a client project) which set GFLAGS_FOUND, but not
+# the other variables we require / set here which could cause the search logic
+# here to fail.
+unset(GFLAGS_FOUND)
+
 # -----------------------------------------------------------------
 # By default, if the user has expressed no preference for using an exported
 # gflags CMake configuration over performing a search for the installed

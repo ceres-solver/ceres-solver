@@ -109,6 +109,12 @@ macro(GLOG_REPORT_NOT_FOUND REASON_MSG)
   return()
 endmacro(GLOG_REPORT_NOT_FOUND)
 
+# Protect against any alternative find_package scripts for this library having
+# been called previously (in a client project) which set GLOG_FOUND, but not
+# the other variables we require / set here which could cause the search logic
+# here to fail.
+unset(GLOG_FOUND)
+
 # -----------------------------------------------------------------
 # By default, if the user has expressed no preference for using an exported
 # glog CMake configuration over performing a search for the installed

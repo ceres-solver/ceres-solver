@@ -152,6 +152,12 @@ macro(SUITESPARSE_REPORT_NOT_FOUND REASON_MSG)
   # the first.
 endmacro(SUITESPARSE_REPORT_NOT_FOUND)
 
+# Protect against any alternative find_package scripts for this library having
+# been called previously (in a client project) which set SUITESPARSE_FOUND, but
+# not the other variables we require / set here which could cause the search
+# logic here to fail.
+unset(SUITESPARSE_FOUND)
+
 # Handle possible presence of lib prefix for libraries on MSVC, see
 # also SUITESPARSE_RESET_FIND_LIBRARY_PREFIX().
 if (MSVC)

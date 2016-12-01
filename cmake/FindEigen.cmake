@@ -83,6 +83,12 @@ macro(EIGEN_REPORT_NOT_FOUND REASON_MSG)
   return()
 endmacro(EIGEN_REPORT_NOT_FOUND)
 
+# Protect against any alternative find_package scripts for this library having
+# been called previously (in a client project) which set EIGEN_FOUND, but not
+# the other variables we require / set here which could cause the search logic
+# here to fail.
+unset(EIGEN_FOUND)
+
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
 #
