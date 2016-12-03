@@ -342,8 +342,8 @@ struct EuclideanDistanceFunctor {
 
   template <typename T>
   bool operator()(const T* x0, const T* x1, T* residuals) const {
-    residuals[0] = T(sqrt_weight_) * (x0[0] - x1[0]);
-    residuals[1] = T(sqrt_weight_) * (x0[1] - x1[1]);
+    residuals[0] = sqrt_weight_ * (x0[0] - x1[0]);
+    residuals[1] = sqrt_weight_ * (x0[1] - x1[1]);
     return true;
   }
 
