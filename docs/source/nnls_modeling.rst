@@ -223,7 +223,7 @@ the corresponding accessors. This information will be verified by the
 
       template <typename T>
       bool operator()(const T* const x , const T* const y, T* e) const {
-        e[0] = T(k_) - x[0] * y[0] - x[1] * y[1];
+        e[0] = k_ - x[0] * y[0] - x[1] * y[1];
         return true;
       }
 
@@ -280,12 +280,6 @@ the corresponding accessors. This information will be verified by the
    The framework can currently accommodate cost functions of up to 10
    independent variables, and there is no limit on the dimensionality
    of each of them.
-
-   **WARNING 1** Since the functor will get instantiated with
-   different types for ``T``, you must convert from other numeric
-   types to ``T`` before mixing computations with other variables
-   of type ``T``. In the example above, this is seen where instead of
-   using ``k_`` directly, ``k_`` is wrapped with ``T(k_)``.
 
    **WARNING 2** A common beginner's error when first using
    :class:`AutoDiffCostFunction` is to get the sizing wrong. In particular,
@@ -1420,7 +1414,7 @@ Instances
               delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2];
 
           T q_delta[4];
-          if (squared_norm_delta > T(0.0)) {
+          if (squared_norm_delta > 0.0) {
             T norm_delta = sqrt(squared_norm_delta);
             const T sin_delta_by_delta = sin(norm_delta) / norm_delta;
             q_delta[0] = cos(norm_delta);
@@ -1453,12 +1447,6 @@ Instances
                                                            |  |
                                 Global Size ---------------+  |
                                 Local Size -------------------+
-
-  **WARNING:** Since the functor will get instantiated with different
-  types for ``T``, you must to convert from other numeric types to
-  ``T`` before mixing computations with other variables of type
-  ``T``. In the example above, this is seen where instead of using
-  ``k_`` directly, ``k_`` is wrapped with ``T(k_)``.
 
 
 :class:`Problem`
