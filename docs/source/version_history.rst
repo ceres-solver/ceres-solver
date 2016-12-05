@@ -30,6 +30,8 @@ Backward Incompatible API Changes
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Clear XXX_FOUND in Find<XXX>.cmake prior to searching. (Alex Stewart)
+#. Fix versioning in the documentation (Sameer Agarwal)
 #. Fix missing gflags imported target definition in
    CeresConfig.cmake. (Alex Stewart)
 #. Make gflags a public dependency of Ceres if it and glog are
