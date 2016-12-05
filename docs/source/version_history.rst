@@ -14,7 +14,7 @@ New Features
 #. Auto-differentiable implementations of Bessel functions, ``floor``,
    and ``ceil`` (Alessandro Gentilini & Michael Vitus)
 #. New 2D and 3D SLAM examples. (Michael Vitus)
-#. Added``EigenQuaternionParameterization``. (Michael Vitus)
+#. Added ``EigenQuaternionParameterization``. (Michael Vitus)
 #. Added ``Problem::IsParameterBlockConstant`` (Thomas Schneider)
 #. A complete refactoring of ``TrustRegionMinimizer``. (Sameer Agarwal)
 #. Gradient checking cleanup and local parameterization bugfix (David
