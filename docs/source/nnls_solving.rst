@@ -114,9 +114,9 @@ The key computational step in a trust-region algorithm is the solution
 of the constrained optimization problem
 
 .. math::
-   \arg \min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
-   \text{such that} &\|D(x)\Delta x\|^2 \le \mu\\
-    &L \le x + \Delta x \le U.
+   \arg \min_{\Delta x}&\quad \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 \\
+   \text{such that} &\quad \|D(x)\Delta x\|^2 \le \mu\\
+    &\quad L \le x + \Delta x \le U.
    :label: trp
 
 There are a number of different ways of solving this problem, each
@@ -151,12 +151,12 @@ and an inexact step variant of the Levenberg-Marquardt algorithm
 It can be shown, that the solution to :eq:`trp` can be obtained by
 solving an unconstrained optimization of the form
 
-.. math:: \arg\min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 +\lambda  \|D(x)\Delta x\|^2
+.. math:: \arg\min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 +\lambda  \|D(x)\Delta x\|^2
 
 Where, :math:`\lambda` is a Lagrange multiplier that is inverse
 related to :math:`\mu`. In Ceres, we solve for
 
-.. math:: \arg\min_{\Delta x}& \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 + \frac{1}{\mu} \|D(x)\Delta x\|^2
+.. math:: \arg\min_{\Delta x} \frac{1}{2}\|J(x)\Delta x + F(x)\|^2 + \frac{1}{\mu} \|D(x)\Delta x\|^2
    :label: lsqr
 
 The matrix :math:`D(x)` is a non-negative diagonal matrix, typically
