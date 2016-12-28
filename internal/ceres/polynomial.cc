@@ -370,7 +370,20 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
     }
   }
 
-  return lhs.fullPivLu().solve(rhs);
+  Eigen::FullPivLU<Matrix> lu(lhs.rows(), lhs.cols());
+  lu.compute(lhs);
+  if (lu.rank() == lhs.cols()) {
+    // If the matrix is full rank, return the solution.
+    return lu.solve(rhs);
+  }
+
+  // If the matrix is rank deficient, use QR factorization to solve a
+  // reduced linear system withe right most "rank" columns. This is
+  // equivalent to assuming that a lower degree polynomial
+  // interpolates through the values and computing it.
+  Eigen::ColPivHouseholderQR<Matrix> qr(lhs.rows(), lu.rank());
+  qr.compute(lhs.rightCols(lu.rank()));
+  return qr.solve(rhs);
 }
 
 void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
