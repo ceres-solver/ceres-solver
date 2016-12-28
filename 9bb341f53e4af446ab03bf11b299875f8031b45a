@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a2c67b_9f3b02dc",
+        "filename": "internal/ceres/polynomial.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 5775
+      },
+      "writtenOn": "2016-12-28T16:51:42Z",
+      "side": 1,
+      "message": "You may want to check that the QR factorization was successful by checking that qr.info \u003d\u003d Eigen::Success\n\nhttp://eigen.tuxfamily.org/dox/classEigen_1_1ColPivHouseholderQR.html",
+      "revId": "9bb341f53e4af446ab03bf11b299875f8031b45a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
