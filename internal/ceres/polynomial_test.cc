@@ -512,5 +512,56 @@ TEST(Polynomial, CubicInterpolatingPolynomialFromValuesAndGradients) {
   EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
 }
 
+TEST(Polynomial, CubicInterpolatingPolynomialFromRepeatedValuesAndGradients) {
+  // p(x) = x^3 + 2x^2 + 3x + 2
+  Vector true_polynomial(4);
+  true_polynomial << 1.0, 2.0, 3.0, 2.0;
+  Vector true_gradient_polynomial = DifferentiatePolynomial(true_polynomial);
+
+  vector<FunctionSample> samples;
+  {
+    FunctionSample sample;
+    sample.x = -3.0;
+    sample.value = EvaluatePolynomial(true_polynomial, sample.x);
+    sample.value_is_valid = true;
+    sample.gradient = EvaluatePolynomial(true_gradient_polynomial, sample.x);
+    sample.gradient_is_valid = true;
+    samples.push_back(sample);
+  }
+
+  {
+    FunctionSample sample;
+    sample.x = 2.0;
+    sample.value = EvaluatePolynomial(true_polynomial, sample.x);
+    sample.value_is_valid = true;
+    sample.gradient = EvaluatePolynomial(true_gradient_polynomial, sample.x);
+    sample.gradient_is_valid = true;
+    samples.push_back(sample);
+  }
+
+  {
+    FunctionSample sample;
+    sample.x = -3.0;
+    sample.value = EvaluatePolynomial(true_polynomial, sample.x);
+    sample.value_is_valid = true;
+    sample.gradient = EvaluatePolynomial(true_gradient_polynomial, sample.x);
+    sample.gradient_is_valid = true;
+    samples.push_back(sample);
+  }
+
+  {
+    FunctionSample sample;
+    sample.x = 2.0;
+    sample.value = EvaluatePolynomial(true_polynomial, sample.x);
+    sample.value_is_valid = true;
+    sample.gradient = EvaluatePolynomial(true_gradient_polynomial, sample.x);
+    sample.gradient_is_valid = true;
+    samples.push_back(sample);
+  }
+
+  const Vector polynomial = FindInterpolatingPolynomial(samples);
+  EXPECT_NEAR((true_polynomial - polynomial).norm(), 0.0, 1e-14);
+}
+
 }  // namespace internal
 }  // namespace ceres
