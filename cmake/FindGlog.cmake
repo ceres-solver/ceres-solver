@@ -225,7 +225,9 @@ if (NOT GLOG_FOUND)
     glog/include
     glog/Include
     Glog/include
-    Glog/Include)
+    Glog/Include
+    google-glog/include # CMake installs with project name prefix.
+    google-glog/Include)
 
   list(APPEND GLOG_CHECK_LIBRARY_DIRS
     /usr/local/lib
@@ -237,7 +239,9 @@ if (NOT GLOG_FOUND)
     glog/lib
     glog/Lib
     Glog/lib
-    Glog/Lib)
+    Glog/Lib
+    google-glog/lib # CMake installs with project name prefix.
+    google-glog/Lib)
 
   # Search supplied hint directories first if supplied.
   find_path(GLOG_INCLUDE_DIR

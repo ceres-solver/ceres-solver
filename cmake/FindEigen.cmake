@@ -91,8 +91,6 @@ unset(EIGEN_FOUND)
 
 # Search user-installed locations first, so that we prefer user installs
 # to system installs where both exist.
-#
-# TODO: Add standard Windows search locations for Eigen.
 list(APPEND EIGEN_CHECK_INCLUDE_DIRS
   /usr/local/include
   /usr/local/homebrew/include # Mac OS X
@@ -102,7 +100,8 @@ list(APPEND EIGEN_CHECK_INCLUDE_DIRS
 # Additional suffixes to try appending to each search path.
 list(APPEND EIGEN_CHECK_PATH_SUFFIXES
   eigen3 # Default root directory for Eigen.
-  Eigen/include/eigen3 ) # Windows (for C:/Program Files prefix).
+  Eigen/include/eigen3 # Windows (for C:/Program Files prefix) < 3.3
+  Eigen3/include/eigen3 ) # Windows (for C:/Program Files prefix) >= 3.3
 
 # Search supplied hint directories first if supplied.
 find_path(EIGEN_INCLUDE_DIR
