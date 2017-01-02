@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a2c67b_42c28999",
+        "filename": "cmake/FindEigen.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-02T13:47:49Z",
+      "side": 1,
+      "message": "clearly this was the right thing to do .. wtf??",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "adb5f8e92c9f2df2746e94bca20060a62f9e64ba",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
