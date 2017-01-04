@@ -228,27 +228,50 @@ struct Jet {
   T a;
 
   // The infinitesimal part.
-
+  //
   // We allocate Jets on the stack and other places they might not be aligned
-  // to 16-byte boundaries, which would prevent the safe use of vectorisation.
-  // If we have C++11, we can specify the alignment.  However, the standard
-  // gives wide lattitude as to what alignments are valid, and it might be that
-  // the maximum supported alignment is < 16, in which case even with C++11, we
-  // cannot specify 16-byte alignment.  If using < C++11, we cannot specify
-  // alignment.
+  // to X(=16 [SSE], 32 [AVX] etc)-byte boundaries, which would prevent the safe
+  // use of vectorisation.  If we have C++11, we can specify the alignment.
+  // However, the standard gives wide lattitude as to what alignments are valid,
+  // and it might be that the maximum supported alignment *guaranteed* to be
+  // supported is < 16, in which case we do not specify an alignment, as this
+  // implies the host is not a modern x86 machine.  If using < C++11, we cannot
+  // specify alignment.
 #ifndef CERES_USE_CXX11
-  // fall back to safe version:
+  // Without >= C++11, we cannot specify the alignment so fall back to safe,
+  // unvectorised version.
   Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
 #else
-  static constexpr bool kShouldAlignMatrix =
-      16 <= ::ceres::port_constants::kMaxAlignBytes;
-  static constexpr int kAlignHint = kShouldAlignMatrix ?
-      Eigen::AutoAlign : Eigen::DontAlign;
-  // Default to the native alignment of double if 16-byte alignment is not
-  // supported.  We cannot use alignof(T) as if we do, GCC complains that the
-  // alignment 'is not an integer constant', although Clang accepts it.
-  static constexpr size_t kAlignment = kShouldAlignMatrix ? 16 : alignof(double);
-  alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignHint> v;
+  // Enable vectorisation iff the maximum supported scalar alignment is >=
+  // 16 bytes, as this is the minimum required by Eigen for any vectorisation.
+  //
+  // NOTE: It might be the case that we could get >= 16-byte alignment even if
+  //       kMaxAlignBytes < 16.  However we can't guarantee that this
+  //       would happen (and it should not for any modern x86 machine) and if it
+  //       didn't, we could get misaligned Jets.
+  static constexpr int kAlignOrNot =
+      16 <= ::ceres::port_constants::kMaxAlignBytes
+            ? Eigen::AutoAlign : Eigen::DontAlign;
+#if defined(EIGEN_MAX_ALIGN_BYTES)
+  // Eigen >= 3.3 supports AVX & FMA instructions that require 32-byte alignment
+  // (greater for AVX512).  Rather than duplicating the detection logic, use
+  // Eigen's macro for the alignment size.
+  //
+  // NOTE: EIGEN_MAX_ALIGN_BYTES can be > 16 (e.g. 32 for AVX), even though
+  //       kMaxAlignBytes will max out at 16.  We are therefore relying on
+  //       Eigen's detection logic to ensure that this does not result in
+  //       misaligned Jets.
+#define CERES_JET_ALIGN_BYTES EIGEN_MAX_ALIGN_BYTES
+#else
+  // Eigen < 3.3 only supported 16-byte alignment.
+#define CERES_JET_ALIGN_BYTES 16
+#endif
+  // Default to the native alignment if 16-byte alignment is not guaranteed to
+  // be supported.  We cannot use alignof(T) as if we do, GCC 4.8 complains that
+  // the alignment 'is not an integer constant', although Clang accepts it.
+  static constexpr size_t kAlignment = kAlignOrNot == Eigen::AutoAlign
+            ? CERES_JET_ALIGN_BYTES : alignof(double);
+  alignas(kAlignment) Eigen::Matrix<T, N, 1, kAlignOrNot> v;
 #endif
 };
 
