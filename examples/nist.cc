@@ -180,6 +180,7 @@ class NISTProblem {
  public:
   explicit NISTProblem(const string& filename) {
     ifstream ifs(filename.c_str(), ifstream::in);
+    LOG_IF(FATAL, !ifs.is_open()) << "Failed to open problem file: " << filename;
 
     vector<string> pieces;
     SkipLines(ifs, 24);
@@ -428,6 +429,12 @@ static void SetNumericDiffOptions(ceres::NumericDiffOptions* options) {
 template <typename Model, int num_residuals, int num_parameters>
 int RegressionDriver(const string& filename,
                      const ceres::Solver::Options& options) {
+  // Add a trailing / to the data directory path if required before
+  // concatonating the filename.
+  CHECK(!FLAGS_nist_data_dir.empty());
+  if (*FLAGS_nist_data_dir.rbegin() != '/') {
+    FLAGS_nist_data_dir.push_back('/');
+  }
   NISTProblem nist_problem(FLAGS_nist_data_dir + filename);
   CHECK_EQ(num_residuals, nist_problem.response_size());
   CHECK_EQ(num_parameters, nist_problem.num_parameters());
