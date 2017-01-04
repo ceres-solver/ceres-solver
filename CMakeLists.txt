@@ -120,6 +120,8 @@ if (NOT MSVC)
   # -std=c++11.  It will however be available for MinGW & CygWin, which can
   # support -std=c++11.
   option(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
+  option(ENABLE_NATIVE_SIMD_EXTENSIONS
+    "Enable all SIMD instructions available for host (-march=native)." OFF)
 endif(NOT MSVC)
 option(EXPORT_BUILD_DIR
   "Export build directory using CMake (enables external use without install)." OFF)
@@ -499,6 +501,11 @@ if (CXX11)
     endif()
   endif()
 endif(CXX11)
+
+if (ENABLE_NATIVE_SIMD_EXTENSIONS)
+  # TODO: Check compiler supports -march=native.
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+endif()
 
 include_directories(
   include
