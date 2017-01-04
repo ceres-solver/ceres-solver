@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e3a6ee_8fc9054b",
+        "filename": "examples/nist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-04T17:42:37Z",
+      "side": 1,
+      "message": "I wonder how you came across this one, because I think I Have a patch somewhere to do exactly this too. \n\nthat said, this does not seem like the right place for this.\nthere is a check for non-emptiness below and likely the flag should get modified there too.\n\nanother way to do this is to use JoinPath instead of just string concatenation..",
+      "range": {
+        "startLine": 434,
+        "startChar": 9,
+        "endLine": 434,
+        "endChar": 28
+      },
+      "revId": "44d65d87fb0073b4403442a7bcaa8593db53ff28",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
