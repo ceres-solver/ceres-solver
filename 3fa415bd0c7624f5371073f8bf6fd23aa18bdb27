@@ -34,6 +34,24 @@
       "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e3a6ee_8e5ade0a",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-01-05T19:23:41Z",
+      "side": 1,
+      "message": "Hopefully this makes it clearer:\n\nhttps://google.github.io/styleguide/cppguide.html#Preprocessor_Directives\n\nEssentially, preprocessor defines have their own indenting independent of the C++.",
+      "parentUuid": "773d9abc_bf8843b2",
+      "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
