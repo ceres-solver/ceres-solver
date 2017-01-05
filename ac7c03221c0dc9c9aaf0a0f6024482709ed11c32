@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e3a6ee_3833d009",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-05T12:54:10Z",
+      "side": 1,
+      "message": "I do not think we should have this option at all, I think if the user wishes to enable mvx, they can do so by passing flags to the compiler via standard cmake variables, why do we want to add one more variable here?",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e3a6ee_58417c5b",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-05T12:54:10Z",
+      "side": 1,
+      "message": "I do not understand what the word Scalar adds here, and its not explained in the docs.",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 44
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e3a6ee_384cb08c",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-05T12:54:10Z",
+      "side": 1,
+      "message": "why not combine these two constexpr into one as\n\nstatic constexpr int kAlignOrNot \u003d 16 \u003c\u003d ::ceres::port_constants::kScalarMaxAlignBytes ? Eigen::AutoAlign : Eigen::DontAlign;\n\nand then pull out the logic for eigen_max_align_bytes\n#if defined(EIGEN_MAX_ALIGN_BYTES)\n#define CERES_MAX_ALIGN_BYTES EIGEN_MAX_ALIGN_BYTES\n#else\n#define CERES_MAX_ALIGN_BYTES 16\n#endif\n\nstatic constexpr size_t kAlignment \u003d kAlignOrNot \u003d\u003d Eigen::AutoAlign ? CERES_MAX_ALIGN_BYTES : alignof(double);",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
