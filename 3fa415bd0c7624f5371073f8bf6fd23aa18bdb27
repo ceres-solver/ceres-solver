@@ -16,6 +16,24 @@
       "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "773d9abc_bf8843b2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-05T19:21:19Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t follow - is the indenting to match the code indent level, or something else?  Would \"#ifndef CERES_USE_CXX11\" also be indented differently?",
+      "parentUuid": "d7e3a6ee_2e7e2a80",
+      "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
