@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7e3a6ee_6ea59253",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-01-05T18:43:58Z",
+      "side": 1,
+      "message": "Because most users will not know the flag; this way at least it\u0027s inside the user-readable CMake variables (e.g. shows up in CCMake or the cmake gui).\n\nArguably, I suggest we should turn this on by default.",
+      "parentUuid": "d7e3a6ee_3833d009",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e3a6ee_58417c5b",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 1
