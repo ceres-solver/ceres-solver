@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "773d9abc_ff65ab39",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-05T18:55:17Z",
+      "side": 1,
+      "message": "My one concern about this is portability - all bets \u003d off if using -march\u003dnative, as any instructions your specific CPU supports is fair game - is this a problem?  Also, I\u0027m still not sure of the problems that might occur if Ceres was compiled with -march\u003dnative, but used by a client library (that used Eigen) that wasn\u0027t.  For a start the Jets would not be compiled using AVX etc (as they would see the client code flags), but would we still get weird ODR violations in Eigen?\n\nAll this makes me wary, perhaps we should just add something in the documentation instead, with a note about what this means in practice?",
+      "parentUuid": "d7e3a6ee_6ea59253",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e3a6ee_58417c5b",
         "filename": "include/ceres/internal/port.h",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2017-01-05T12:54:10Z",
       "side": 1,
       "message": "I do not understand what the word Scalar adds here, and its not explained in the docs.",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 44
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "773d9abc_5fa0372b",
+        "filename": "include/ceres/internal/port.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-05T18:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e3a6ee_58417c5b",
       "range": {
         "startLine": 63,
         "startChar": 24,
@@ -106,6 +154,30 @@
       "writtenOn": "2017-01-05T12:59:09Z",
       "side": 1,
       "message": "another suggestion is to move CERES_MAX_ALIGN_BYTES to port.h",
+      "parentUuid": "d7e3a6ee_384cb08c",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "773d9abc_3f9573cd",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-05T18:55:17Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "d7e3a6ee_384cb08c",
       "range": {
         "startLine": 251,
