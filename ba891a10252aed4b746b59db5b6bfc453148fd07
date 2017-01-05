@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e3a6ee_aedcfa2f",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-01-05T20:32:50Z",
+      "side": 1,
+      "message": "Is the google namespace guaranteed to be defined? Glog and gflags have their own non-Google namespace in the OSS builds.",
+      "revId": "ba891a10252aed4b746b59db5b6bfc453148fd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e3a6ee_2e0f0ae3",
+        "filename": "internal/ceres/levenberg_marquardt_strategy_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-01-05T20:32:50Z",
+      "side": 1,
+      "message": "hmm; shouldn\u0027t this just check for the define GLOG_NO_ABBREVIATED_SEVERITIES instead of _MSC_VER? Is there some reason this is this way?",
+      "revId": "ba891a10252aed4b746b59db5b6bfc453148fd07",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
