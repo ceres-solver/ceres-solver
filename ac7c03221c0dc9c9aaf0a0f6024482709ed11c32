@@ -68,6 +68,30 @@
       "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7e3a6ee_9874e4ae",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-05T12:59:09Z",
+      "side": 1,
+      "message": "another suggestion is to move CERES_MAX_ALIGN_BYTES to port.h",
+      "parentUuid": "d7e3a6ee_384cb08c",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "ac7c03221c0dc9c9aaf0a0f6024482709ed11c32",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
