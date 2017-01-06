@@ -52,6 +52,24 @@
       "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "773d9abc_3ff9f30b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-06T09:25:52Z",
+      "side": 1,
+      "message": "But that link shows that the preferred solution is no indenting?",
+      "parentUuid": "d7e3a6ee_8e5ade0a",
+      "revId": "3fa415bd0c7624f5371073f8bf6fd23aa18bdb27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
