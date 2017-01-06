@@ -161,8 +161,21 @@ if (GLOG_PREFER_EXPORTED_GLOG_CMAKE_CONFIGURATION)
   # recently with the CMake GUI to ensure that we always prefer an installed
   # version if available.
   #
+  # NOTE: We use the NAMES option as glog erroneously uses 'google-glog' as its
+  #       project name when built with CMake, but exports itself as just 'glog'.
+  #       On Linux/OS X this does not break detection as the project name is
+  #       not used as part of the install path for the CMake package files,
+  #       e.g. /usr/local/lib/cmake/glog, where the <glog> suffix is hardcoded
+  #       in glog's CMakeLists.  However, on Windows the project name *is*
+  #       part of the install prefix: C:/Program Files/google-glog/[include,lib].
+  #       However, by default CMake checks:
+  #       C:/Program Files/<FIND_PACKAGE_ARGUMENT_NAME='glog'> which does not
+  #       exist and thus detection fails.  Thus we use the NAMES to force the
+  #       search to use both google-glog & glog.
+  #
   # [1] http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:find_package
   find_package(glog QUIET
+                    NAMES google-glog glog
                     NO_MODULE
                     NO_CMAKE_PACKAGE_REGISTRY
                     NO_CMAKE_BUILDS_PATH)
@@ -176,6 +189,7 @@ if (GLOG_PREFER_EXPORTED_GLOG_CMAKE_CONFIGURATION)
     # Again pass NO_CMAKE_BUILDS_PATH, as we know that glog is exported and
     # do not want to treat projects built with the CMake GUI preferentially.
     find_package(glog QUIET
+                      NAMES google-glog glog
                       NO_MODULE
                       NO_CMAKE_BUILDS_PATH)
     if (glog_FOUND)
