@@ -37,23 +37,17 @@
 #include <vector>
 #include "ceres/fpclassify.h"
 #include "ceres/stringprintf.h"
+#include "ceres/types.h"
 
 namespace ceres {
 namespace internal {
 
 using std::string;
 
-// It is a near impossibility that user code generates this exact
-// value in normal operation, thus we will use it to fill arrays
-// before passing them to user code. If on return an element of the
-// array still contains this value, we will assume that the user code
-// did not write to that memory location.
-const double kImpossibleValue = 1e302;
-
 bool IsArrayValid(const int size, const double* x) {
   if (x != NULL) {
     for (int i = 0; i < size; ++i) {
-      if (!IsFinite(x[i]) || (x[i] == kImpossibleValue))  {
+      if (!IsFinite(x[i]) || (x[i] == CERES_IMPOSSIBLE_VALUE))  {
         return false;
       }
     }
@@ -67,7 +61,7 @@ int FindInvalidValue(const int size, const double* x) {
   }
 
   for (int i = 0; i < size; ++i) {
-    if (!IsFinite(x[i]) || (x[i] == kImpossibleValue))  {
+    if (!IsFinite(x[i]) || (x[i] == CERES_IMPOSSIBLE_VALUE))  {
       return i;
     }
   }
@@ -78,7 +72,7 @@ int FindInvalidValue(const int size, const double* x) {
 void InvalidateArray(const int size, double* x) {
   if (x != NULL) {
     for (int i = 0; i < size; ++i) {
-      x[i] = kImpossibleValue;
+      x[i] = CERES_IMPOSSIBLE_VALUE;
     }
   }
 }
@@ -88,7 +82,7 @@ void AppendArrayToString(const int size, const double* x, string* result) {
     if (x == NULL) {
       StringAppendF(result, "Not Computed  ");
     } else {
-      if (x[i] == kImpossibleValue) {
+      if (x[i] == CERES_IMPOSSIBLE_VALUE) {
         StringAppendF(result, "Uninitialized ");
       } else {
         StringAppendF(result, "%12g ", x[i]);
