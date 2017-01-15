@@ -259,6 +259,16 @@ struct AutoDiff {
 
     JetT* output = x.get() + N0 + N1 + N2 + N3 + N4 + N5 + N6 + N7 + N8 + N9;
 
+    // 1e302 is defined as kImpossibleValue in array_utils.h but we do
+    // not want to include that internal header here, so we will just
+    // use that value directly. Tests in autodiff_cost_function_test
+    // will ensure that kImpossibleValue does not change without
+    // triggering a failure.
+    for (int i = 0; i < num_outputs; ++i) {
+      output[i].a = 1e302;
+      output[i].v.setConstant(1e302);
+    }
+
 #define CERES_MAKE_1ST_ORDER_PERTURBATION(i)                            \
     if (N ## i) {                                                       \
       internal::Make1stOrderPerturbation<JetT, T, N ## i>(              \
