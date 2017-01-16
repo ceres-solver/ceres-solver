@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233125ed_15761642",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-16T16:45:31Z",
+      "side": 1,
+      "message": "This still makes me feel a bit ~ can we move the definition of kImpossibleValue to ceres/types.h perhaps?",
+      "revId": "80b5555f6001cd152d3735c6b46abd42190b19f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "233125ed_55937e3f",
+        "filename": "internal/ceres/autodiff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-16T16:45:31Z",
+      "side": 1,
+      "message": "Line break?",
+      "revId": "80b5555f6001cd152d3735c6b46abd42190b19f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6354fd0e_2c0b170f",
+        "filename": "internal/ceres/numeric_diff_cost_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-16T16:45:31Z",
+      "side": 1,
+      "message": "Perhaps add a note here about why we are not checking the jacobians, just the residuals.",
+      "revId": "80b5555f6001cd152d3735c6b46abd42190b19f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
