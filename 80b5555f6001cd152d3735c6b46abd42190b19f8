@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "631cfdaf_09324dc7",
+        "filename": "include/ceres/internal/autodiff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-16T17:06:04Z",
+      "side": 1,
+      "message": "I don\u0027t think it shouldn\u0027t result in any violations, as const objects have internal linkage by default unless you explicitly make then have external linkage via extern.  So const double kImpossibleValue \u003d 1e302; should be fine in a header.",
+      "parentUuid": "23c0454e_3486853f",
+      "revId": "80b5555f6001cd152d3735c6b46abd42190b19f8",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233125ed_55937e3f",
         "filename": "internal/ceres/autodiff_cost_function_test.cc",
         "patchSetId": 1
