@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "68993a37_de0d45ef",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2017-01-19T19:53:05Z",
+      "side": 1,
+      "message": "is",
+      "range": {
+        "startLine": 227,
+        "startChar": 26,
+        "endLine": 227,
+        "endChar": 27
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_cf947065",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -174,6 +197,29 @@
     },
     {
       "key": {
+        "uuid": "68993a37_7ee8b1c4",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2017-01-19T19:53:05Z",
+      "side": 1,
+      "message": "A few examples where the quality of differentiation matters:\n\nFine-grained optimization steps (small regions); functions that are non-deterministic and can confuse the optimizer (e.g., functions whose evaluation depends on numerical integration); functions (or external functions) that are highly oscillatory (or noisy), where the value of `h` must be carefully chosen. In the latter case, it is better to use a convergent process to produce an accurate numerical derivative, avoiding `h` values that are too large on one hand and numerical (floating-point) inaccuracies on the other.",
+      "range": {
+        "startLine": 660,
+        "startChar": 3,
+        "endLine": 661,
+        "endChar": 26
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_cfc5903e",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -190,6 +236,29 @@
         "startChar": 30,
         "endLine": 709,
         "endChar": 33
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68993a37_3e09c9e2",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2017-01-19T19:53:05Z",
+      "side": 1,
+      "message": "\\epsilon^3",
+      "range": {
+        "startLine": 805,
+        "startChar": 49,
+        "endLine": 805,
+        "endChar": 50
       },
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
@@ -259,6 +328,29 @@
         "startChar": 4,
         "endLine": 1122,
         "endChar": 13
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68993a37_1e040dcc",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2017-01-19T19:53:05Z",
+      "side": 1,
+      "message": "Link doesn\u0027t show up properly in HTML here as well.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 0,
+        "endLine": 1207,
+        "endChar": 60
       },
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
