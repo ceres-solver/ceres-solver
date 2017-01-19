@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0847de68_4f68809b",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "I know why you are saying this from a probabilistic perspective, but in the context of explaining derivatives it is a bit orthogonal. I don\u0027t think the novice reader will understand the context of this statement. If you want to keep it, I would add a sentence on why this matters to the reader.",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_cf947065",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "It would be good to add a note here that you can use Automatic Differentiation to verify your analytical derivatives.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_af781469",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "delete.",
+      "range": {
+        "startLine": 250,
+        "startChar": 58,
+        "endLine": 250,
+        "endChar": 63
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_af3ff480",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "Is it worth showing the ceres code before this paragraph to instantiate a a NumericDiffCostFunction as you did below for changing from forward to central? \n\nI know it brings up the topic of forward, central before you talk about it, but maybe you can leave that generic.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_cf291055",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "Might be worth making this a named constant since you refer to it below.",
+      "range": {
+        "startLine": 377,
+        "startChar": 37,
+        "endLine": 377,
+        "endChar": 41
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_af26d482",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "Add a sentence on why as the novice reader wouldn\u0027t understand it.",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 32
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_2f09c4e2",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 508,
+        "startChar": 17,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_ef0a8cd4",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 583,
+        "startChar": 45,
+        "endLine": 583,
+        "endChar": 47
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_cfc5903e",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "Does this need to be T(1.0)? Same thing with x_, -1.0, and y_ later.",
+      "range": {
+        "startLine": 709,
+        "startChar": 30,
+        "endLine": 709,
+        "endChar": 33
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_2fb0a4e4",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "T(1.0)?",
+      "range": {
+        "startLine": 952,
+        "startChar": 21,
+        "endLine": 952,
+        "endChar": 24
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_2fd784fc",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "this doesn\u0027t show up correctly in the html",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 974,
+        "endChar": 96
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_42705746",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-01-19T17:39:10Z",
+      "side": 1,
+      "message": "optionally",
+      "range": {
+        "startLine": 1122,
+        "startChar": 4,
+        "endLine": 1122,
+        "endChar": 13
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
