@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0847de68_967c4dd5",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "Here or somewhere else, I\u0027d add a one-sentence description of these three methods - I don\u0027t think this is immediately clear to the uninitiated. \n\nSuggestion:\n1. Analytic/Symbolic Differentiation: The user figures out the derivative herself, by hand or using a math tool, and implements it in the CostFunction.\n2. Numerical Differentiation: Ceres numerically computes the derivative using finite differences.\n3. Automatic Differentiation: Ceres automatically computes the analytic derivative.\n\nAlso, linking to the later sections on each would be useful here.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_d69c054c",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "Nit: I\u0027d link to the later section on the topic here.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_56701546",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "small nit: I think there should be a period after \"Avoid numeric differentiation\".",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_4f68809b",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -19,6 +70,47 @@
         "endLine": 110,
         "endChar": 54
       },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_764f91a2",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "suggestion: put it in parenthesis and link to a footnote",
+      "parentUuid": "0847de68_4f68809b",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_d6b1a5cf",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "nit: const double vs. double const",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -88,6 +180,23 @@
     },
     {
       "key": {
+        "uuid": "0847de68_3600f91e",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "This looks strange in the html.\n\nsuggestion: ``C++`` -\u003e C++ code",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_af3ff480",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -145,6 +254,80 @@
         "endLine": 396,
         "endChar": 32
       },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_f64f0174",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "nit: When using :class:`NumericDiffCostFunction`, this is ...\n\nRight now, it\u0027s a little confusing that this and the next sentence actually refer to NumericDiffCostFunction and not the example - when I read this, I went back to the code and looked for the if statement.",
+      "range": {
+        "startLine": 397,
+        "startChar": 25,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_96b20d48",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "suggestion: in the order of O(h) (I guess you mean the big-O notation here, but you don\u0027t specify that anywhere)",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_369a39b2",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "... graph:",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_f60a61d4",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "\"Central differences converges much more quickly to a\nmore accurate estimate of the derivative with decreasing step size (from right to left).\"",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -266,6 +449,23 @@
     },
     {
       "key": {
+        "uuid": "0847de68_1e962fdd",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "nit: ``C++`` -\u003e C++\n\nEverywhere this formatting is used to denote C++ class names, but \"C++\" does not fall into that category, which is why I find this confusing.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_2fb0a4e4",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -329,6 +529,40 @@
         "endLine": 1122,
         "endChar": 13
       },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_7efbe302",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "nit: bi-linear -\u003e linear (the example a one-dimensional array)",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_9e1b3f8f",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 5530
+      },
+      "writtenOn": "2017-01-20T02:27:41Z",
+      "side": 1,
+      "message": "same here",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
