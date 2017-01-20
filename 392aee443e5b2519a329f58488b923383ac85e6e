@@ -357,6 +357,29 @@
     },
     {
       "key": {
+        "uuid": "68993a37_81f0bc70",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5485
+      },
+      "writtenOn": "2017-01-20T11:33:54Z",
+      "side": 1,
+      "message": "Redundant parenthesis",
+      "range": {
+        "startLine": 519,
+        "startChar": 5,
+        "endLine": 519,
+        "endChar": 6
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_ef0a8cd4",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
