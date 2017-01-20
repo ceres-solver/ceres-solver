@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_4f2513cb",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_967c4dd5",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_d69c054c",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_af6487fb",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_d69c054c",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_56701546",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-01-20T02:27:41Z",
       "side": 1,
       "message": "small nit: I think there should be a period after \"Avoid numeric differentiation\".",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_ef4cbf81",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_56701546",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -100,6 +154,54 @@
     },
     {
       "key": {
+        "uuid": "0847de68_cf490370",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_4f68809b",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_cfcc63b9",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "added a more detailed footnote, LMK what you guys think.",
+      "parentUuid": "0847de68_764f91a2",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_d6b1a5cf",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -111,6 +213,24 @@
       "writtenOn": "2017-01-20T02:27:41Z",
       "side": 1,
       "message": "nit: const double vs. double const",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_6f6e8fda",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_d6b1a5cf",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_cf5ea321",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68993a37_de0d45ef",
+      "range": {
+        "startLine": 227,
+        "startChar": 26,
+        "endLine": 227,
+        "endChar": 27
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_cf947065",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -151,6 +295,24 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "It would be good to add a note here that you can use Automatic Differentiation to verify your analytical derivatives.",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_af9b67b7",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Given that I haven\u0027t really introduced automatic differentiation at this point, it would be odd to refer to it for purposes of validation.",
+      "parentUuid": "0847de68_cf947065",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_cf77c3a1",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_af781469",
+      "range": {
+        "startLine": 250,
+        "startChar": 58,
+        "endLine": 250,
+        "endChar": 63
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_3600f91e",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -191,6 +377,24 @@
       "writtenOn": "2017-01-20T02:27:41Z",
       "side": 1,
       "message": "This looks strange in the html.\n\nsuggestion: ``C++`` -\u003e C++ code",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_0f7efb7f",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_3600f91e",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_0facbbdb",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "There is exactly that code fragment in the code fragment just above. \n\nCostFunction* cost_function \u003d\n    new NumericDiffCostFunction\u003cRat43CostFunctor, FORWARD, 1, 4\u003e(\n      new Rat43CostFunctor(x, y));\n\nor did you mean something else?",
+      "parentUuid": "0847de68_af3ff480",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_cf291055",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -225,6 +447,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "Might be worth making this a named constant since you refer to it below.",
+      "range": {
+        "startLine": 377,
+        "startChar": 37,
+        "endLine": 377,
+        "endChar": 41
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_6199030b",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_cf291055",
       "range": {
         "startLine": 377,
         "startChar": 37,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_345b4765",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "re-worked the sentence and added references. LMK what you think.",
+      "parentUuid": "0847de68_af26d482",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 32
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_f64f0174",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -271,6 +541,30 @@
       "writtenOn": "2017-01-20T02:27:41Z",
       "side": 1,
       "message": "nit: When using :class:`NumericDiffCostFunction`, this is ...\n\nRight now, it\u0027s a little confusing that this and the next sentence actually refer to NumericDiffCostFunction and not the example - when I read this, I went back to the code and looked for the if statement.",
+      "range": {
+        "startLine": 397,
+        "startChar": 25,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_5716c5c6",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "re-worked it PTAL.",
+      "parentUuid": "0847de68_f64f0174",
       "range": {
         "startLine": 397,
         "startChar": 25,
@@ -300,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_f7649125",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "added a footnote that explains the notation, I tried doing it in line and it became a mess. let me know what you think.",
+      "parentUuid": "0847de68_96b20d48",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_369a39b2",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -311,6 +623,24 @@
       "writtenOn": "2017-01-20T02:27:41Z",
       "side": 1,
       "message": "... graph:",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_777301c3",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_369a39b2",
       "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -334,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_b238670f",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_f60a61d4",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_2f09c4e2",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -345,6 +693,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "the",
+      "range": {
+        "startLine": 508,
+        "startChar": 17,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_922d6bce",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_2f09c4e2",
       "range": {
         "startLine": 508,
         "startChar": 17,
@@ -380,6 +752,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_5247f37f",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68993a37_81f0bc70",
+      "range": {
+        "startLine": 519,
+        "startChar": 5,
+        "endLine": 519,
+        "endChar": 6
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_ef0a8cd4",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -391,6 +787,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "the",
+      "range": {
+        "startLine": 583,
+        "startChar": 45,
+        "endLine": 583,
+        "endChar": 47
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_f23dbff9",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_ef0a8cd4",
       "range": {
         "startLine": 583,
         "startChar": 45,
@@ -426,6 +846,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_32091751",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Tal, do you have any examples handy that I can use for this?",
+      "parentUuid": "68993a37_7ee8b1c4",
+      "range": {
+        "startLine": 660,
+        "startChar": 3,
+        "endLine": 661,
+        "endChar": 26
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_cfc5903e",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -437,6 +881,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "Does this need to be T(1.0)? Same thing with x_, -1.0, and y_ later.",
+      "range": {
+        "startLine": 709,
+        "startChar": 30,
+        "endLine": 709,
+        "endChar": 33
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_9220cbbd",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "No, this is actually a mistake in a lot of the example code in ceres, and I have a change out to fix this, we define the appropriate binary operators that take care of this. see for example https://github.com/ceres-solver/ceres-solver/blob/master/include/ceres/jet.h#L308",
+      "parentUuid": "0847de68_cfc5903e",
       "range": {
         "startLine": 709,
         "startChar": 30,
@@ -472,6 +940,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_b23187c5",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68993a37_3e09c9e2",
+      "range": {
+        "startLine": 805,
+        "startChar": 49,
+        "endLine": 805,
+        "endChar": 50
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_1e962fdd",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -489,6 +981,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_92368bba",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_1e962fdd",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_2fb0a4e4",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -500,6 +1010,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "T(1.0)?",
+      "range": {
+        "startLine": 952,
+        "startChar": 21,
+        "endLine": 952,
+        "endChar": 24
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_321d972f",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "0847de68_2fb0a4e4",
       "range": {
         "startLine": 952,
         "startChar": 21,
@@ -535,6 +1069,30 @@
     },
     {
       "key": {
+        "uuid": "0847de68_924fab28",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_2fd784fc",
+      "range": {
+        "startLine": 974,
+        "startChar": 0,
+        "endLine": 974,
+        "endChar": 96
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_42705746",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -546,6 +1104,30 @@
       "writtenOn": "2017-01-19T17:39:10Z",
       "side": 1,
       "message": "optionally",
+      "range": {
+        "startLine": 1122,
+        "startChar": 4,
+        "endLine": 1122,
+        "endChar": 13
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_af0007eb",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_42705746",
       "range": {
         "startLine": 1122,
         "startChar": 4,
@@ -575,6 +1157,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_6f0a0f0a",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_7efbe302",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0847de68_9e1b3f8f",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -592,6 +1192,24 @@
     },
     {
       "key": {
+        "uuid": "0847de68_4f0f5318",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0847de68_9e1b3f8f",
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68993a37_1e040dcc",
         "filename": "docs/source/derivatives.rst",
         "patchSetId": 4
@@ -603,6 +1221,30 @@
       "writtenOn": "2017-01-19T19:53:05Z",
       "side": 1,
       "message": "Link doesn\u0027t show up properly in HTML here as well.",
+      "range": {
+        "startLine": 1206,
+        "startChar": 0,
+        "endLine": 1207,
+        "endChar": 60
+      },
+      "revId": "392aee443e5b2519a329f58488b923383ac85e6e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0847de68_8f054bfc",
+        "filename": "docs/source/derivatives.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-01-20T20:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68993a37_1e040dcc",
       "range": {
         "startLine": 1206,
         "startChar": 0,
