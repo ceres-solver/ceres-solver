@@ -541,21 +541,21 @@ Jet<T, N> ceil(const Jet<T, N>& f) {
 // function errors in client code (the specific warning is suppressed when
 // Ceres itself is built).
 inline double BesselJ0(double x) {
-#if defined(_MSC_VER) && defined(_j0)
+#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _j0(x);
 #else
   return j0(x);
 #endif
 }
 inline double BesselJ1(double x) {
-#if defined(_MSC_VER) && defined(_j1)
+#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _j1(x);
 #else
   return j1(x);
 #endif
 }
 inline double BesselJn(int n, double x) {
-#if defined(_MSC_VER) && defined(_jn)
+#if defined(CERES_MSVC_USE_UNDERSCORE_PREFIXED_BESSEL_FUNCTIONS)
   return _jn(n, x);
 #else
   return jn(n, x);
