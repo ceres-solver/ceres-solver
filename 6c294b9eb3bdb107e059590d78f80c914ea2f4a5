@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd566b70_d16ab93f",
+        "filename": "cmake/CheckIfUnderscorePrefixedBesselFunctionsExist.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2017-01-27T21:29:48Z",
+      "side": 1,
+      "message": "Hm... the point of the `check_cxx_source_compiles` is to avoid littering your cmake code with platform tests like this. If gcc were to adopt the same approach of prefixing j0, j1, and jn then `check_cxx_source_compiles` would tell us so and it would make sense to use them.",
+      "revId": "6c294b9eb3bdb107e059590d78f80c914ea2f4a5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
