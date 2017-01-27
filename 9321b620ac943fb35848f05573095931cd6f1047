@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e521f61_2897b92b",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5150
+      },
+      "writtenOn": "2017-01-27T22:39:51Z",
+      "side": 1,
+      "message": "The comment that MSVC \u003e\u003d 2005 is one known platform that provides underscore-prefixed bessel functions is nice, but shouldn\u0027t _MSVC be dropped from the macro name?",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 94,
+        "endChar": 11
+      },
+      "revId": "9321b620ac943fb35848f05573095931cd6f1047",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
