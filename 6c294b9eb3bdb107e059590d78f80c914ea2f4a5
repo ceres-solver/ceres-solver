@@ -16,6 +16,23 @@
       "revId": "6c294b9eb3bdb107e059590d78f80c914ea2f4a5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff5416b0_1e171c60",
+        "filename": "cmake/CheckIfUnderscorePrefixedBesselFunctionsExist.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-01-27T22:32:33Z",
+      "side": 1,
+      "message": "This check is indeed unnecessary, I\u0027ve removed it.",
+      "revId": "6c294b9eb3bdb107e059590d78f80c914ea2f4a5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
