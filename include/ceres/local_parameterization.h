@@ -222,7 +222,7 @@ class CERES_EXPORT QuaternionParameterization : public LocalParameterization {
 //
 // Plus(x, delta) = [sin(|delta|) delta / |delta|, cos(|delta|)] * x
 // with * being the quaternion multiplication operator.
-class EigenQuaternionParameterization : public ceres::LocalParameterization {
+class CERES_EXPORT EigenQuaternionParameterization : public ceres::LocalParameterization {
  public:
   virtual ~EigenQuaternionParameterization() {}
   virtual bool Plus(const double* x,
