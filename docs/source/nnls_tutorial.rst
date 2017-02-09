@@ -210,8 +210,8 @@ Which is added to the :class:`Problem` as:
 .. code-block:: c++
 
   CostFunction* cost_function =
-    new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1, 1>(
-        new NumericDiffCostFunctor)
+    new NumericDiffCostFunction<NumericDiffCostFunctor, ceres::CENTRAL, 1, 1>(
+        new NumericDiffCostFunctor);
   problem.AddResidualBlock(cost_function, NULL, &x);
 
 Notice the parallel from when we were using automatic differentiation
