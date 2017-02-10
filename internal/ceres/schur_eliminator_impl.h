@@ -177,7 +177,9 @@ Eliminate(const BlockSparseMatrix* A,
           double* rhs) {
   if (lhs->num_rows() > 0) {
     lhs->SetZero();
-    VectorRef(rhs, lhs->num_rows()).setZero();
+    if (rhs != NULL) {
+      VectorRef(rhs, lhs->num_rows()).setZero();
+    }
   }
 
   const CompressedRowBlockStructure* bs = A->block_structure();
@@ -278,15 +280,17 @@ Eliminate(const BlockSparseMatrix* A,
     //
     //   rhs = F'b - F'E(E'E)^(-1) E'b
 
-    FixedArray<double, 8> inverse_ete_g(e_block_size);
-    MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
-        inverse_ete.data(),
-        e_block_size,
-        e_block_size,
-        g.get(),
-        inverse_ete_g.get());
+    if (rhs != NULL && b != NULL) {
+      FixedArray<double, 8> inverse_ete_g(e_block_size);
+      MatrixVectorMultiply<kEBlockSize, kEBlockSize, 0>(
+            inverse_ete.data(),
+            e_block_size,
+            e_block_size,
+            g.get(),
+            inverse_ete_g.get());
 
-    UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
+      UpdateRhs(chunk, A, b, chunk.start, inverse_ete_g.get(), rhs);
+    }
 
     // S -= F'E(E'E)^{-1}E'F
     ChunkOuterProduct(bs, inverse_ete, buffer, chunk.buffer_layout, lhs);
@@ -415,11 +419,11 @@ UpdateRhs(const Chunk& chunk,
 //      [ y11   0   0   0 |  z11     0    0   0    z51]
 //      [ y12   0   0   0 |  z12   z22    0   0      0]
 //
-// this function computes twp matrices. The diagonal block matrix
+// this function computes two matrices. The diagonal block matrix
 //
 //   ete = y11 * y11' + y12 * y12'
 //
-// and the off diagonal blocks in the Guass Newton Hessian.
+// and the off diagonal blocks in the Gauss-Newton Hessian.
 //
 //   buffer = [y11'(z11 + z12), y12' * z22, y11' * z51]
 //
@@ -465,10 +469,12 @@ ChunkDiagonalBlockAndGradient(
             ete->data(), 0, 0, e_block_size, e_block_size);
 
     // g += E_i' b_i
-    MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
-        values + e_cell.position, row.block.size, e_block_size,
-        b + b_pos,
-        g);
+    if (b != NULL) {
+      MatrixTransposeVectorMultiply<kRowBlockSize, kEBlockSize, 1>(
+            values + e_cell.position, row.block.size, e_block_size,
+            b + b_pos,
+            g);
+    }
 
 
     // buffer = E'F. This computation is done by iterating over the
@@ -561,14 +567,16 @@ NoEBlockRowsUpdate(const BlockSparseMatrix* A,
   const double* values = A->values();
   for (; row_block_counter < bs->rows.size(); ++row_block_counter) {
     const CompressedRow& row = bs->rows[row_block_counter];
-    for (int c = 0; c < row.cells.size(); ++c) {
-      const int block_id = row.cells[c].block_id;
-      const int block_size = bs->cols[block_id].size;
-      const int block = block_id - num_eliminate_blocks_;
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values + row.cells[c].position, row.block.size, block_size,
-          b + row.block.position,
-          rhs + lhs_row_layout_[block]);
+    if (b != NULL && rhs != NULL) {
+      for (int c = 0; c < row.cells.size(); ++c) {
+        const int block_id = row.cells[c].block_id;
+        const int block_size = bs->cols[block_id].size;
+        const int block = block_id - num_eliminate_blocks_;
+        MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+              values + row.cells[c].position, row.block.size, block_size,
+              b + row.block.position,
+              rhs + lhs_row_layout_[block]);
+      }
     }
     NoEBlockRowOuterProduct(A, row_block_counter, lhs);
   }

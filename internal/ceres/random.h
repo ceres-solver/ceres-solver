@@ -51,6 +51,12 @@ inline double RandDouble() {
   return r / RAND_MAX;
 }
 
+// Uniform in range [-n n]
+inline double RandDoubleUniform(double n) {
+  double r = static_cast<double>(rand());
+  return (2 * (r / RAND_MAX) - 1) * n;
+}
+
 // Box-Muller algorithm for normal random number generation.
 // http://en.wikipedia.org/wiki/Box-Muller_transform
 inline double RandNormal() {
