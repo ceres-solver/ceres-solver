@@ -878,6 +878,20 @@ struct NumTraits<ceres::Jet<T, N> > {
   };
 };
 
+// Specifying the return type of binary operations between Jets and scalar types
+// allows you to perform matrix/array operations such as addition, subtraction,
+// multiplication, and division where one Eigen matrix/array is of type Jet and
+// the other is a scalar type. This improves performance by using the optimized
+// scalar-to-Jet binary operations.
+template <typename BinaryOp, typename T, int N>
+struct ScalarBinaryOpTraits<ceres::Jet<T, N>, T, BinaryOp> {
+  typedef ceres::Jet<T, N> ReturnType;
+};
+template <typename BinaryOp, typename T, int N>
+struct ScalarBinaryOpTraits<T, ceres::Jet<T, N>, BinaryOp> {
+  typedef ceres::Jet<T, N> ReturnType;
+};
+
 }  // namespace Eigen
 
 #endif  // CERES_PUBLIC_JET_H_

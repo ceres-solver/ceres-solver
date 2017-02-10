@@ -577,5 +577,83 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_FALSE(IsNaN(a));
 }
 
+TEST(JetTraitsTest, MatrixScalarUnaryOps) {
+  const J x = MakeJet(2.3, -2.7, 1e-3);
+  const J y = MakeJet(1.7,  0.5, 1e+2);
+  Eigen::Matrix<J, 2, 1> a;
+  a << x, y;
+
+  const J sum = a.sum();
+  const J sum2 = a(0) + a(1);
+  ExpectJetsClose(sum, sum2);
+}
+
+TEST(JetTraitsTest, MatrixScalarBinaryOps) {
+  const J x = MakeJet(2.3, -2.7, 1e-3);
+  const J y = MakeJet(1.7,  0.5, 1e+2);
+  const J z = MakeJet(5.3, -4.7, 1e-3);
+  const J w = MakeJet(9.7,  1.5, 10.1);
+
+  Eigen::Matrix<J, 2, 2> M;
+  Eigen::Vector2d v;
+
+  M << x, y, z, w;
+  v << 0.6, -2.1;
+
+  // Check that M * v == M * v.cast<J>().
+  const Eigen::Matrix<J, 2, 1> r1 = M * v;
+  const Eigen::Matrix<J, 2, 1> r2 = M * v.cast<J>();
+
+  ExpectJetsClose(r1(0), r2(0));
+  ExpectJetsClose(r1(1), r2(1));
+
+  // Check that M * a == M * T(a).
+  const double a = 3.1;
+  const Eigen::Matrix<J, 2, 2> r3 = M * a;
+  const Eigen::Matrix<J, 2, 2> r4 = M * J(a);
+
+  ExpectJetsClose(r3(0, 0), r4(0, 0));
+  ExpectJetsClose(r3(1, 0), r4(1, 0));
+  ExpectJetsClose(r3(0, 1), r4(0, 1));
+  ExpectJetsClose(r3(1, 1), r4(1, 1));
+}
+
+TEST(JetTraitsTest, ArrayScalarUnaryOps) {
+  const J x = MakeJet(2.3, -2.7, 1e-3);
+  const J y = MakeJet(1.7,  0.5, 1e+2);
+  Eigen::Array<J, 2, 1> a;
+  a << x, y;
+
+  const J sum = a.sum();
+  const J sum2 = a(0) + a(1);
+  ExpectJetsClose(sum, sum2);
+}
+
+TEST(JetTraitsTest, ArrayScalarBinaryOps) {
+  const J x = MakeJet(2.3, -2.7, 1e-3);
+  const J y = MakeJet(1.7,  0.5, 1e+2);
+
+  Eigen::Array<J, 2, 1> a;
+  Eigen::Array2d b;
+
+  a << x, y;
+  b << 0.6, -2.1;
+
+  // Check that a * b == a * b.cast<T>()
+  const Eigen::Array<J, 2, 1> r1 = a * b;
+  const Eigen::Array<J, 2, 1> r2 = a * b.cast<J>();
+
+  ExpectJetsClose(r1(0), r2(0));
+  ExpectJetsClose(r1(1), r2(1));
+
+  // Check that a + c == a * T(c).
+  const double c = 3.1;
+  const Eigen::Array<J, 2, 1> r3 = a * c;
+  const Eigen::Array<J, 2, 1> r4 = a * J(c);
+
+  ExpectJetsClose(r3(0), r3(0));
+  ExpectJetsClose(r4(1), r4(1));
+}
+
 }  // namespace internal
 }  // namespace ceres
