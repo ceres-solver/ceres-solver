@@ -260,12 +260,16 @@ class ProgramEvaluator : public Evaluator {
       const int num_parameters = program_->NumEffectiveParameters();
 
       // Sum the cost and gradient (if requested) from each thread.
-      (*cost) = 0.0;
+      if (cost != NULL) {
+        (*cost) = 0.0;
+      }
       if (gradient != NULL) {
         VectorRef(gradient, num_parameters).setZero();
       }
       for (int i = 0; i < options_.num_threads; ++i) {
-        (*cost) += evaluate_scratch_[i].cost;
+        if (cost != NULL) {
+          (*cost) += evaluate_scratch_[i].cost;
+        }
         if (gradient != NULL) {
           VectorRef(gradient, num_parameters) +=
               VectorRef(evaluate_scratch_[i].gradient.get(), num_parameters);

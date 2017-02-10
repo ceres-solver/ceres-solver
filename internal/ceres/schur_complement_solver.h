@@ -220,6 +220,11 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
 
+void ComputeSparseSchurStorage(const CompressedRowBlockStructure* bs,
+                               const int num_eliminate_blocks,
+                               std::vector<int>& blocks,
+                               std::set<std::pair<int, int> >& block_pairs);
+
 }  // namespace internal
 }  // namespace ceres
 

@@ -40,6 +40,10 @@
 #include "ceres/local_parameterization.h"
 #include "ceres/map_util.h"
 #include "ceres/problem_impl.h"
+#include "ceres/autodiff_cost_function.h"
+#include "ceres/loss_function.h"
+#include "ceres/solver.h"
+#include "ceres/random.h"
 #include "gtest/gtest.h"
 
 namespace ceres {
@@ -1247,6 +1251,405 @@ TEST_F(LargeScaleCovarianceTest, Parallel) {
 }
 
 #endif  // !defined(CERES_NO_SUITESPARSE) && defined(CERES_USE_OPENMP)
+
+
+#ifndef CERES_NO_SUITESPARSE
+
+/* Simple bundle adjust problem with cameras and points to test covariance
+ * on Schur reduced system.
+ *
+ * A pinhole camera model with a three intrinsic parameters (f, cx, cy) is used.
+ * Projection is simply im = f * cam + c.
+ *
+ * The points line on the XY plane (with some 3DOF noise). The cameras are
+ * situated pointing down at the XY plane, giving them positive Z values.
+ * Each camera is parameterized only as a 3DOF camera center and focal length.
+ *
+ * In this scene, f is designed to be unconstrained.
+ */
+
+typedef Eigen::Vector3d Vector3;
+typedef Eigen::Vector2d Vector2;
+
+struct Intrinsics {
+  enum { NumParameters = 3 };
+
+  union {
+    double params[NumParameters];
+    struct {
+      double f, cx, cy;
+    };
+  };
+
+  inline Vector2 Project(const Vector3& cam) const {
+    return f * cam.head<2>() + Vector2(cx, cy);
+  }
+};
+
+struct Point {
+  Vector3 P;
+};
+
+struct Camera {
+  Vector3 C;
+};
+
+struct Observation {
+  Observation(const Vector2& _im, const size_t _camera, const size_t _point)
+    : im(_im), camera(_camera), point(_point) {}
+  Vector2 im;
+  size_t camera;
+  size_t point;
+};
+
+typedef std::vector<Camera> Cameras;
+typedef std::vector<Point> Points;
+typedef std::vector<Observation> Observations;
+
+struct Scene {
+  Intrinsics intrinsics;
+  Cameras cameras;
+  Points points;
+  Observations observations;
+  std::vector<Vector3> gps;
+};
+
+Vector3 RandomVector3() {
+  Vector3 v(RandDoubleUniform(1), RandDoubleUniform(1), RandDoubleUniform(1));
+  v.normalize();
+  return v;
+}
+
+Vector2 RandomVector2() {
+  Vector2 v(RandDoubleUniform(1), RandDoubleUniform(1));
+  v.normalize();
+  return v;
+}
+
+inline Scene CreateScene(int num_cameras, int num_points) {
+  SetRandomState(1);
+
+  // XY plane size.
+  const double width = 100;
+  const double height = 50;
+
+  Scene s;
+
+  // 45 deg field of view, sensor size of 1.
+  const double fov = 60;
+  const double f = 0.5 / std::tan(.5 * M_PI/180 * fov);
+  s.intrinsics.f = f;
+  s.intrinsics.cx = s.intrinsics.cy = 0;
+
+  // Create points on XY plane.
+  s.points.resize(num_points);
+  for (size_t i = 0; i < s.points.size(); ++i) {
+    Point& p = s.points[i];
+    p.P.x() = RandDouble() * width;
+    p.P.y() = RandDouble() * height;
+    p.P.z() = 0;
+  }
+
+  // For sufficient overlap, each camera should see ~20% of the scene
+  const double desired_area = .2 * width * height;
+  const double Z = std::sqrt(desired_area) * s.intrinsics.f;
+
+  // Create a border so camera frustum is inside scene
+  const double border = .5 / s.intrinsics.f * Z;
+  const double cam_width = width - 2 * border;
+  const double cam_height = height - 2 * border;
+
+  // Create cameras looking at XY plane
+  s.cameras.resize(num_cameras);
+  for (size_t i = 0; i < s.cameras.size(); ++i) {
+    Camera& c = s.cameras[i];
+    c.C.x() = RandDouble() * cam_width + border;
+    c.C.y() = RandDouble() * cam_height + border;
+    c.C.z() = Z;
+  }
+
+  // Create observations
+  s.observations.reserve(num_cameras * num_points * .2);
+  const double im_noise = 2 / 4000.0;
+  for (size_t pi = 0; pi < s.points.size(); ++pi) {
+    const Point& p = s.points[pi];
+    size_t start = s.observations.size();
+    for (size_t ci = 0; ci < s.cameras.size(); ++ci) {
+      Camera& c = s.cameras[ci];
+
+      Vector3 cam = c.C - p.P;
+      cam /= cam.z();
+
+      Vector2 im = s.intrinsics.Project(cam);
+      if (im.x() < -.5 || im.x() > .5
+          || im.y() < -.5 || im.y() > .5) {
+        // outside image
+        continue;
+      }
+
+      // add some noise to image measurements
+      Vector2 nvec = RandomVector2() * RandNormal() * im_noise;
+      im += nvec;
+
+      s.observations.push_back(Observation(im, ci, pi));
+    }
+
+    if (s.observations.size() - start < 3) {
+      // point needs at least two cameras to constrain
+      s.observations.erase(s.observations.begin() + start, s.observations.end());
+    }
+  }
+
+  // Create "GPS" measurements near the cameras but increase the Z
+  s.gps.reserve(s.cameras.size());
+  for (size_t i = 0; i < s.cameras.size(); ++i) {
+    Camera& c = s.cameras[i];
+    Vector3 gps = c.C;
+    gps.z() += 1;
+    s.gps.push_back(gps);
+  }
+
+  // Perturb parameters to allow for optimization to do something
+  const double point_noise = 1;
+  for (size_t i = 0; i < s.points.size(); ++i) {
+    Point& p = s.points[i];
+    p.P += RandomVector3() * RandNormal() * point_noise;
+  }
+  const double cam_noise = 1;
+  for (size_t i = 0; i < s.cameras.size(); ++i) {
+    Camera& c = s.cameras[i];
+    c.C += RandomVector3() * RandNormal() * cam_noise;
+  }
+  const double gps_noise = 1;
+  for (size_t i = 0; i < s.gps.size(); ++i) {
+    Vector3& g = s.gps[i];
+    g += RandomVector3() * RandNormal() * gps_noise;
+  }
+  s.intrinsics.f += .5 / std::atan(.5 * M_PI/180.0 * (fov - 10.0));
+
+  return s;
+}
+
+struct ObservationPointIC  {
+  enum {
+    NumResiduals = 2,
+    NumParams = 3
+  };
+
+  // the observation coordinates in image plane
+  inline ObservationPointIC(const Vector2& _pos) : pos(_pos) {}
+
+  template <typename T>
+  void Project(const T _cx[2], const T* intrinsics, T x[2]) const {
+    // compute projection in image coordinates
+    const T& f = intrinsics[0];
+    const T& cx = intrinsics[1];
+    const T& cy = intrinsics[2];
+    x[0] = f * _cx[0] + cx;
+    x[1] = f * _cx[1] + cy;
+  }
+
+  // cost function for regular cameras
+  template <typename T>
+  bool operator()(const T* const intrinsics, const T* const center,
+                  const T* const point, T* residuals) const
+  {
+    // translate point to camera position
+    T x[3] = {
+      center[0] - point[0],
+      center[1] - point[1],
+      center[2] - point[2]
+    };
+
+    // transform the point in camera space to inhomogeneous coordinates
+    x[0] /= x[2];
+    x[1] /= x[2];
+
+    // transform the point to image plane
+    T m[2] = { T(pos.x()), T(pos.y()) };
+    Project(x, intrinsics, x);
+
+    // the reprojection error is the difference between the predicted and observed position
+    residuals[0] = x[0] - m[0];
+    residuals[1] = x[1] - m[1];
+
+    return true;
+  }
+
+  Vector2 pos;
+};
+
+struct APrioriCameraPosition  {
+  enum { NumResiduals = 3 };
+
+  // the observation coordinates in image plane
+  inline APrioriCameraPosition(const Vector3& _pos) : pos(_pos) {}
+
+  // cost function for regular cameras
+  template <typename T>
+  bool operator()(const T* const center, T* residuals) const
+  {
+    residuals[0] = center[0] - pos[0];
+    residuals[1] = center[1] - pos[1];
+    residuals[2] = center[2] - pos[2];
+
+    return true;
+  }
+
+  Vector3 pos;
+};
+
+typedef AutoDiffCostFunction<
+  ObservationPointIC,
+  ObservationPointIC::NumResiduals,
+  ObservationPointIC::NumParams,
+  3,
+  3> PointCostFunction;
+
+typedef AutoDiffCostFunction<
+  APrioriCameraPosition,
+  APrioriCameraPosition::NumResiduals,
+  3> GPSCostFunction;
+
+class FastSchurCovarianceTest : public ::testing::Test {
+ protected:
+
+  ParameterBlockOrdering* AddResidualBlocks(Problem& problem, Scene& s)
+  {
+    std::set<size_t> point_indices, camera_indices;
+    for (size_t i = 0; i < s.observations.size(); ++i) {
+      const Observation& ob = s.observations[i];
+      problem.AddResidualBlock(new PointCostFunction(new ObservationPointIC(ob.im)),
+                               0, /* loss function == squared error */
+                               s.intrinsics.params,
+                               &s.cameras[ob.camera].C.x(),
+          &s.points[ob.point].P.x());
+      point_indices.insert(ob.point);
+      camera_indices.insert(ob.camera);
+    }
+
+    for (size_t c = 0; c < s.gps.size(); ++c) {
+      problem.AddResidualBlock(new GPSCostFunction(new APrioriCameraPosition(s.gps[c])),
+                               0, /* loss function == squared error */
+                               &s.cameras[c].C.x());
+    }
+
+    // Create explicit parameter blocks
+    // points, cameras, then intrinsics
+    ParameterBlockOrdering* ordering = new ParameterBlockOrdering;
+    for (std::set<size_t>::iterator it = point_indices.begin();
+         it != point_indices.end(); ++it) {
+      ordering->AddElementToGroup(&s.points[*it].P.x(), 0);
+    }
+    for (std::set<size_t>::iterator it = camera_indices.begin();
+         it != camera_indices.end(); ++it) {
+      ordering->AddElementToGroup(&s.cameras[*it].C.x(), 1);
+    }
+    ordering->AddElementToGroup(s.intrinsics.params, 2);
+
+    return ordering;
+  }
+
+  Scene scene;
+  shared_ptr<Problem> problem;
+  shared_ptr<ParameterBlockOrdering> ordering;
+  Solver::Options options;
+
+  typedef std::pair<const double*, const double*> covblock_t;
+  std::vector<covblock_t> covariance_blocks;
+
+  virtual void SetUp() {
+    scene = CreateScene(20, 500);
+
+    problem.reset(new Problem);
+
+    ordering.reset(AddResidualBlocks(*problem, scene));
+
+    options.linear_solver_type = SPARSE_SCHUR;
+    options.preconditioner_type = SCHUR_JACOBI;
+    options.max_num_iterations = 1;
+    options.num_threads = 1;
+    options.num_linear_solver_threads = options.num_threads;
+    options.linear_solver_ordering.reset(new ParameterBlockOrdering(*ordering));
+
+    // we want covariance for cameras and focal length
+    std::set<double*> elements = ordering->group_to_elements().at(1);
+    for (std::set<double*>::const_iterator it = elements.begin();
+         it != elements.end(); ++it) {
+      covariance_blocks.push_back(std::make_pair(*it, *it));
+    }
+    elements = ordering->group_to_elements().at(2);
+    for (std::set<double*>::const_iterator it = elements.begin();
+         it != elements.end(); ++it) {
+      covariance_blocks.push_back(std::make_pair(*it, *it));
+    }
+  }
+
+  void CompareCovariance() {
+    // get covariance using sparse schur method
+    Covariance::Options coptions_schur;
+    coptions_schur.linear_solver_ordering.reset(new ParameterBlockOrdering(*ordering));
+    if (IsSchurType(options.linear_solver_type)) {
+      coptions_schur.algorithm_type = SUITE_SPARSE_SCHUR_CHOLESKY;
+    }
+    Covariance cov_schur(coptions_schur);
+    ASSERT_TRUE(cov_schur.Compute(covariance_blocks, problem.get()));
+
+    Covariance::Options coptions;
+    coptions.num_threads = options.num_threads;
+    Covariance cov(coptions);
+    ASSERT_TRUE(cov.Compute(covariance_blocks, problem.get()));
+
+    double camCov[3*3], camCovSchur[3*3];
+    std::set<double*> elements = ordering->group_to_elements().at(1);
+    for (std::set<double*>::const_iterator it = elements.begin();
+         it != elements.end(); ++it) {
+      double* cam = *it;
+      cov.GetCovarianceBlock(cam, cam, camCov);
+      cov_schur.GetCovarianceBlock(cam, cam, camCovSchur);
+      for (int i = 0; i < 9; ++i) {
+        ASSERT_NEAR(camCov[i], camCovSchur[i], 1e-10);
+      }
+    }
+
+    const unsigned iCovSize = Intrinsics::NumParameters * Intrinsics::NumParameters;
+    double fCov[iCovSize], fCovSchur[iCovSize];
+    elements = ordering->group_to_elements().at(2);
+    for (std::set<double*>::const_iterator it = elements.begin();
+         it != elements.end(); ++it) {
+      double* i = *it;
+      cov.GetCovarianceBlock(i, i, fCov);
+      cov_schur.GetCovarianceBlock(i, i, fCovSchur);
+      for (unsigned i = 0; i < iCovSize; ++i) {
+        ASSERT_NEAR(fCov[i], fCovSchur[i], 1e-10);
+      }
+    }
+  }
+};
+
+TEST_F(FastSchurCovarianceTest, Basic)
+{
+  Solver::Summary summary;
+  Solve(options, problem.get(), &summary);
+  CompareCovariance();
+
+  // Ensure that constant parameters work.
+  problem->SetParameterBlockConstant(scene.intrinsics.params);
+  CompareCovariance();
+
+  // Ensure that covariance computation doesn't break the problem structure
+  problem->SetParameterBlockVariable(scene.intrinsics.params);
+  CompareCovariance();
+
+  // Ensure that partial constant parameters work.
+  std::vector<int> consts;
+  consts.push_back(1);
+  problem->SetParameterization(scene.intrinsics.params,
+                              new SubsetParameterization(scene.intrinsics.NumParameters,
+                                                         consts));
+  CompareCovariance();
+}
+#endif // CERES_NO_SUITESPARSE
 
 }  // namespace internal
 }  // namespace ceres

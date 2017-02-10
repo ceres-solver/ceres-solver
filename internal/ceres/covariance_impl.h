@@ -44,15 +44,18 @@ namespace ceres {
 namespace internal {
 
 class CompressedRowSparseMatrix;
+class TriangularMatrix;
 
 class CovarianceImpl {
  public:
+  typedef std::pair<const double*, const double*> CovarianceBlock;
+  typedef std::vector<CovarianceBlock> CovarianceBlocks;
+
   explicit CovarianceImpl(const Covariance::Options& options);
   ~CovarianceImpl();
 
   bool Compute(
-      const std::vector<std::pair<const double*,
-                                  const double*> >& covariance_blocks,
+      const CovarianceBlocks& covariance_blocks,
       ProblemImpl* problem);
 
   bool Compute(
@@ -65,6 +68,11 @@ class CovarianceImpl {
       bool lift_covariance_to_ambient_space,
       double* covariance_block) const;
 
+  bool GetCovarianceBlockSparseSchur(
+      const double* parameter_block1,
+      const double* parameter_block2,
+      double* covariance_block) const;
+
   bool GetCovarianceMatrixInTangentOrAmbientSpace(
       const std::vector<const double*>& parameters,
       bool lift_covariance_to_ambient_space,
@@ -75,16 +83,18 @@ class CovarianceImpl {
                                   const double*> >& covariance_blocks,
       ProblemImpl* problem);
 
-  bool ComputeCovarianceValues();
+  bool ComputeCovarianceValues(const CovarianceBlocks& blocks);
   bool ComputeCovarianceValuesUsingDenseSVD();
   bool ComputeCovarianceValuesUsingSuiteSparseQR();
   bool ComputeCovarianceValuesUsingEigenSparseQR();
+  bool ComputeCovarianceValuesUsingSuiteSparseSchurCholesky(const CovarianceBlocks& blocks);
 
   const CompressedRowSparseMatrix* covariance_matrix() const {
     return covariance_matrix_.get();
   }
 
  private:
+
   ProblemImpl* problem_;
   Covariance::Options options_;
   Problem::EvaluateOptions evaluate_options_;
@@ -93,6 +103,7 @@ class CovarianceImpl {
   std::map<const double*, int> parameter_block_to_row_index_;
   std::set<const double*> constant_parameter_blocks_;
   scoped_ptr<CompressedRowSparseMatrix> covariance_matrix_;
+  scoped_ptr<TriangularMatrix> schur_covariance_matrix_;
 };
 
 }  // namespace internal

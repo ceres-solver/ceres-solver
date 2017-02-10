@@ -145,6 +145,11 @@ class CERES_EXPORT LocalParameterization {
 
   // Size of delta.
   virtual int LocalSize() const = 0;
+
+  // Is a parameter in the block constant?
+  virtual bool IsConstant(int /* parameter */) const {
+    return false;
+  }
 };
 
 // Some basic parameterizations
@@ -189,6 +194,11 @@ class CERES_EXPORT SubsetParameterization : public LocalParameterization {
     return static_cast<int>(constancy_mask_.size());
   }
   virtual int LocalSize() const { return local_size_; }
+
+  virtual bool IsConstant(int parameter) const {
+    if (parameter >= (int)constancy_mask_.size()) return false;
+    return constancy_mask_[parameter] == 1;
+  }
 
  private:
   const int local_size_;

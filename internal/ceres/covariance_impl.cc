@@ -48,15 +48,22 @@
 #include "ceres/collections_port.h"
 #include "ceres/compressed_col_sparse_matrix_utils.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/block_random_access_sparse_matrix.h"
 #include "ceres/covariance.h"
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
 #include "ceres/parameter_block.h"
+#include "ceres/program.h"
 #include "ceres/problem_impl.h"
 #include "ceres/residual_block.h"
 #include "ceres/suitesparse.h"
 #include "ceres/wall_time.h"
+#include "ceres/evaluator.h"
+#include "ceres/detect_structure.h"
+#include "ceres/schur_eliminator.h"
+#include "ceres/schur_complement_solver.h"
+#include "ceres/reorder_program.h"
 #include "glog/logging.h"
 
 namespace ceres {
@@ -69,7 +76,182 @@ using std::sort;
 using std::swap;
 using std::vector;
 
-typedef vector<pair<const double*, const double*> > CovarianceBlocks;
+// Stores a upper or lower triangular square matrix using
+// n * (n + 1) / 2 * sizeof(element) bytes
+//
+// Operators allow both upper and lower triangular indices.
+template <typename T>
+class TriangularMatrixBase {
+public:
+  typedef T value_type;
+
+  TriangularMatrixBase(int _n) : data_(new T[_n*(_n+1)/2]), n_(_n) {}
+
+  inline T& operator()(unsigned i, unsigned j) {
+    return data_[index(i,j)];
+  }
+
+  inline const T& operator()(unsigned i, unsigned j) const {
+    return data_[index(i,j)];
+  }
+
+  inline size_t index(unsigned i, unsigned j) const {
+    if (i < j) {
+      std::swap(i, j);
+    }
+    return j + i*(i+1) / 2;
+  }
+
+  // Faster versions for upper triangular indexing, i <= j.
+  inline T& u(unsigned i, unsigned j) {
+    DCHECK(i <= j);
+    return data_[i + (j*(j+1) >> 1)];
+  }
+
+  inline const T& u(unsigned i, unsigned j) const {
+    DCHECK(i <= j);
+    return data_[i + (j*(j+1) >> 1)];
+  }
+
+  void setZero() {
+    std::memset(data_, 0, n_ * (n_+1)/2 * sizeof(value_type));
+  }
+
+  unsigned size() const { return n_; }
+
+protected:
+  T* data_;
+  unsigned n_;
+};
+
+// A TriangularMatrix of doubles that supports direct creation from
+// cholmod_factor
+class TriangularMatrix : public TriangularMatrixBase<double> {
+public:
+  TriangularMatrix(int _n) : TriangularMatrixBase<double>(_n) {}
+  TriangularMatrix(cholmod_factor* f)
+    : TriangularMatrixBase<double>(f->n) {
+    // Ensure factor contains doubles, int indices, real values, and isn't
+    // supernodal.
+    DCHECK(f->dtype == CHOLMOD_DOUBLE);
+    DCHECK(f->itype == CHOLMOD_INT);
+    DCHECK(f->xtype == CHOLMOD_REAL);
+    DCHECK(f->is_super == 0);
+    DCHECK(f->z == 0);
+
+    int* Ap = (int*)f->p;
+    int* Ai = (int*)f->i;
+    double* Ax = (double*)f->x;
+
+    setZero();
+
+    for (int j = 0; j < int(f->n); j++) {
+      int p = Ap[j] ;
+      int pend = Ap[j+1];
+      for (; p < pend ; p++) {
+        int i = Ai[p];
+        if (i >= j) {
+          (*this)(i,j) = Ax[p];
+        }
+      }
+    }
+
+    if (f->is_ll == 0) {
+      // LDL' factorization, matrix scaled by 1/sqrt(diagonal).
+      for (unsigned j = 0; j < n_; ++j) {
+        double& s = (*this)(j,j);
+        s = std::sqrt(s);
+        for (unsigned i = j+1; i < n_; i++) {
+          (*this)(i,j) *= s;
+        }
+      }
+    }
+  }
+};
+
+// Recursive covariance algorithm from
+// From "3D Reconstruction Quality Analysis and Its Acceleration on GPU Clusters",
+// Polok, Ila, Smrz. 2016.
+// http://www.eurasip.org/Proceedings/Eusipco/Eusipco2016/papers/1570255061.pdf
+struct RecursiveCovariance {
+  RecursiveCovariance(const TriangularMatrix& _R, TriangularMatrix& _C)
+    : R_(_R), C_(_C) {}
+
+  inline double OffDiagonal(const unsigned i, const unsigned j) {
+    DCHECK(i < j);
+
+    // Use cached value if already computed.
+    if (C_.u(i,j)) return C_.u(i,j);
+
+    double accum = 0;
+
+    // Sum k=i+1..j.
+    unsigned k = i + 1;
+    for (; k < j; ++k) {
+      const double r = R_.u(i,k);
+      if (r) {
+        accum -= r * OffDiagonal(k, j);
+      }
+    }
+
+    // Call specialized method for on-diagonal.
+    if (k == j) {
+      const double r = R_.u(i,k);
+      if (r) {
+        accum -= r * OnDiagonal(k, j);
+      }
+    }
+
+    // Sum k=j+1..n.
+    for (unsigned k = j + 1; k < R_.size(); ++k) {
+      const double r = R_.u(i,k);
+      if (r) {
+        accum -= r * OffDiagonal(j, k);
+      }
+    }
+
+    accum /= R_.u(i,i);
+    C_.u(i,j) = accum;
+
+    return accum;
+  }
+
+  inline double OnDiagonal(const unsigned i, const unsigned j) {
+    DCHECK(i == j);
+
+    // Use cached version if already computed.
+    if (C_.u(i,j)) return C_.u(i,j);
+
+    double accum = 1 / R_.u(i,i);
+
+    // Sum k=i+1..n.
+    for (unsigned k = i + 1; k < R_.size(); ++k) {
+      const double r = R_.u(i,k);
+      if (r) {
+        accum -= r * OffDiagonal(i, k);
+      }
+    }
+
+    accum /= R_.u(i,i);
+    C_.u(i,j) = accum;
+
+    return accum;
+  }
+
+  // Compute or get covariance value at (i,j).
+  inline double Get(unsigned i, unsigned j) {
+    if (i > j) {
+      std::swap(i,j);
+    }
+    if (C_.u(i,j)) return C_.u(i,j);
+    if (i == j) return OnDiagonal(i, j);
+    return OffDiagonal(i, j);
+  }
+
+protected:
+  const TriangularMatrix& R_;
+  TriangularMatrix& C_;
+};
 
 CovarianceImpl::CovarianceImpl(const Covariance::Options& options)
     : options_(options),
@@ -127,7 +309,7 @@ bool CovarianceImpl::Compute(const CovarianceBlocks& covariance_blocks,
   parameter_block_to_row_index_.clear();
   covariance_matrix_.reset(NULL);
   is_valid_ = (ComputeCovarianceSparsity(covariance_blocks, problem) &&
-               ComputeCovarianceValues());
+               ComputeCovarianceValues(covariance_blocks));
   is_computed_ = true;
   return is_valid_;
 }
@@ -156,6 +338,13 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   CHECK(is_valid_)
       << "Covariance::GetCovarianceBlock called when Covariance::Compute "
       << "returned false.";
+
+  if (options_.algorithm_type == SUITE_SPARSE_SCHUR_CHOLESKY) {
+    // Note that this algorithm doesn't support covariance in tangent space
+    return GetCovarianceBlockSparseSchur(original_parameter_block1,
+                                         original_parameter_block2,
+                                         covariance_block);
+  }
 
   // If either of the two parameter blocks is constant, then the
   // covariance block is also zero.
@@ -297,6 +486,51 @@ bool CovarianceImpl::GetCovarianceBlockInTangentOrAmbientSpace(
   return true;
 }
 
+bool CovarianceImpl::GetCovarianceBlockSparseSchur(
+    const double* parameter_block1,
+    const double* parameter_block2,
+    double* covariance_block) const
+{
+  // Get the parameter block to determine if the local parameterization
+  // has constant parameters.
+  const ProblemImpl::ParameterMap& parameter_map = problem_->parameter_map();
+  ParameterBlock* block1 =
+      FindOrDie(parameter_map, const_cast<double*>(parameter_block1));
+  ParameterBlock* block2 =
+      FindOrDie(parameter_map, const_cast<double*>(parameter_block2));
+  const LocalParameterization* local_param1 = block1->local_parameterization();
+  const LocalParameterization* local_param2 = block2->local_parameterization();
+  const int block1_size = block1->Size();
+  const int block2_size = block2->Size();
+
+  MatrixRef cov(covariance_block, block1_size, block2_size);
+  cov.setZero();
+
+  // Constant blocks have 0 covariance.
+  if (constant_parameter_blocks_.count(parameter_block1) ||
+      constant_parameter_blocks_.count(parameter_block2)) {
+    return true;
+  }
+
+  const int r0 = FindOrDie(parameter_block_to_row_index_, parameter_block1);
+  const int c0 = FindOrDie(parameter_block_to_row_index_, parameter_block2);
+
+  // Read covariance from cached matrix into block.
+  int read_r = 0;
+  for (int r = 0; r < block1_size; ++r) {
+    if (local_param1 && local_param1->IsConstant(r)) continue;
+    int read_c = 0;
+    for (int c = 0; c < block2_size; ++c) {
+      if (local_param2 && local_param2->IsConstant(c)) continue;
+      cov(r,c) = (*schur_covariance_matrix_)(read_r + r0, read_c + c0);
+      ++read_c;
+    }
+    ++read_r;
+  }
+
+  return true;
+}
+
 bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
     const vector<const double*>& parameters,
     bool lift_covariance_to_ambient_space,
@@ -391,6 +625,12 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
     const CovarianceBlocks&  original_covariance_blocks,
     ProblemImpl* problem) {
   EventLogger event_logger("CovarianceImpl::ComputeCovarianceSparsity");
+
+  // no need to compute or allocate sparse covariance matrix if using
+  // schur complement method
+  if (options_.algorithm_type == SUITE_SPARSE_SCHUR_CHOLESKY) {
+    return true;
+  }
 
   // Determine an ordering for the parameter block, by sorting the
   // parameter blocks by their pointers.
@@ -537,7 +777,7 @@ bool CovarianceImpl::ComputeCovarianceSparsity(
   return true;
 }
 
-bool CovarianceImpl::ComputeCovarianceValues() {
+bool CovarianceImpl::ComputeCovarianceValues(const CovarianceBlocks& blocks) {
   switch (options_.algorithm_type) {
     case DENSE_SVD:
       return ComputeCovarianceValuesUsingDenseSVD();
@@ -551,12 +791,224 @@ bool CovarianceImpl::ComputeCovarianceValues() {
 #endif
     case EIGEN_SPARSE_QR:
       return ComputeCovarianceValuesUsingEigenSparseQR();
+    case SUITE_SPARSE_SCHUR_CHOLESKY:
+#ifndef CERES_NO_SUITESPARSE
+      return ComputeCovarianceValuesUsingSuiteSparseSchurCholesky(blocks);
+#else
+      LOG(ERROR) << "SuiteSparse is required to use the "
+                 << "SUITE_SPARSE_SCHUR_CHOLESKY algorithm.";
+      return false;
+#endif
     default:
       LOG(ERROR) << "Unsupported covariance estimation algorithm type: "
                  << CovarianceAlgorithmTypeToString(options_.algorithm_type);
       return false;
   }
   return false;
+}
+
+bool IndexLessThan(ParameterBlock* a, ParameterBlock* b) {
+  return a->index() < b->index();
+}
+
+bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseSchurCholesky(
+    const CovarianceBlocks& requested_blocks) {
+  std::string error;
+  bool status = false;
+  EventLogger event_logger(
+      "CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseSchurCholesky");
+
+  ParameterBlockOrdering* user_ordering = options_.linear_solver_ordering.get();
+  if (user_ordering == NULL || user_ordering->NumGroups() == 1) {
+    LOG(ERROR) << "Ordering required for Schur complement covariance";
+    return false;
+  }
+
+  shared_ptr<ParameterBlockOrdering> ordering(
+        new ParameterBlockOrdering(*user_ordering));
+
+  // Step 1: Create reduced problem to eliminate constant parameter blocks.
+  Program* pp = problem_->mutable_program();
+  std::vector<double*> removed_parameter_blocks;
+  double fixed_cost;
+  scoped_ptr<Program> rp(pp->CreateReducedProgram(
+                           &removed_parameter_blocks, &fixed_cost, &error));
+  if (rp.get() == NULL) {
+    LOG(ERROR) << "Unable to compute reduced program";
+    return false;
+  }
+
+  // Removed blocks are constant.
+  constant_parameter_blocks_.clear();
+  constant_parameter_blocks_.insert(removed_parameter_blocks.begin(),
+                                    removed_parameter_blocks.end());
+
+  // Remove removed parameter blocks from ordering.
+  ordering->Remove(removed_parameter_blocks);
+
+  // Step 2: Perform reordering for schur elimination.
+  status = ReorderProgramForSchurTypeLinearSolver(SPARSE_SCHUR,
+                                                  SUITE_SPARSE,
+                                                  problem_->parameter_map(),
+                                                  ordering.get(),
+                                                  rp.get(),
+                                                  &error);
+  if (!status) {
+    LOG(ERROR) << "Unable to reorder program: " << error;
+    return false;
+  }
+
+  event_logger.AddEvent("Reorder");
+
+  // Step 3: Determine mapping between user state pointers and row index in
+  // reduced system.
+  vector<int> elimination_groups;
+  OrderingToGroupSizes(ordering.get(), &elimination_groups);
+  parameter_block_to_row_index_.clear();
+  unsigned row_size = 0;
+  std::vector<ParameterBlock*> parameter_blocks = rp->parameter_blocks();
+  std::sort(parameter_blocks.begin(), parameter_blocks.end(), IndexLessThan);
+  for (size_t i = 0; i < parameter_blocks.size(); ++i) {
+    ParameterBlock* block = parameter_blocks[i];
+    if (block->index() < elimination_groups[0]) continue;
+    size_t size = problem_->ParameterBlockLocalSize(block->user_state());
+    parameter_block_to_row_index_[block->user_state()] = row_size;
+    row_size += size;
+  }
+
+  // Step 4: Evaluate jacobians for full problem.
+
+  // Use user state pointers so we can extract state for the evaluator.
+  rp->SetParameterOffsetsAndIndex();
+  rp->SetParameterBlockStatePtrsToUserStatePtrs();
+  Vector parameters(rp->NumParameters());
+  rp->ParameterBlocksToStateVector(parameters.data());
+
+  // We use an evaluator directly to obtain the jacobians in a BlockSparseMatrix
+  // as used by the SCHUR minimizers.
+  Evaluator::Options options;
+  options.linear_solver_type = SPARSE_SCHUR;
+  options.num_threads = evaluate_options_.num_threads;
+  options.num_eliminate_blocks = elimination_groups[0];
+  Evaluator* evaluator = Evaluator::Create(options, rp.get(), &error);
+  if (!evaluator) {
+    LOG(ERROR) << "Unable to create evaluator: " << error;
+    return false;
+  }
+
+  // Evaluate the jacobians.
+  scoped_ptr<SparseMatrix> jacobian(evaluator->CreateJacobian());
+  status = evaluator->Evaluate(parameters.data(),
+                               NULL, /* cost */
+                               NULL, /* residuals */
+                               NULL, /* gradient */
+                               jacobian.get());
+
+  // Restore state pointers and indices after evaluation.
+  pp->SetParameterBlockStatePtrsToUserStatePtrs();
+  pp->SetParameterOffsetsAndIndex();
+
+  if (!status) {
+    LOG(ERROR) << "Unable to evaluate problem!";
+    return false;
+  }
+
+  event_logger.AddEvent("Evaluate");
+
+  BlockSparseMatrix* A = down_cast<BlockSparseMatrix*>(jacobian.get());
+
+  // Step 5: Create eliminator and perform Schur elimination.
+  LinearSolver::Options loptions;
+  loptions.num_threads = options.num_threads;
+  DetectStructure(*A->block_structure(),
+                  options.num_eliminate_blocks,
+                  &loptions.row_block_size,
+                  &loptions.e_block_size,
+                  &loptions.f_block_size);
+
+  scoped_ptr<SchurEliminatorBase> eliminator(SchurEliminatorBase::Create(loptions));
+  eliminator->Init(options.num_eliminate_blocks, A->block_structure());
+
+  std::vector<int> blocks;
+  std::set<std::pair<int,int> > block_pairs;
+  ComputeSparseSchurStorage(A->block_structure(), options.num_eliminate_blocks,
+                            blocks, block_pairs);
+  scoped_ptr<BlockRandomAccessSparseMatrix> lhs(
+        new BlockRandomAccessSparseMatrix(blocks, block_pairs));
+  eliminator->Eliminate(A,
+                        NULL, /* b */
+                        NULL, /* D */
+                        lhs.get(),
+                        NULL /* rhs */);
+
+  event_logger.AddEvent("Elimination");
+
+  jacobian.reset();
+
+#ifndef CERES_NO_SUITESPARSE
+  SuiteSparse suite;
+
+  // Create a upper triangular matrix from the Schur elimination.
+  cholmod_sparse* SA = suite.CreateSparseMatrix(lhs->mutable_matrix());
+  SA->stype = 1;
+  lhs.reset();
+
+  cholmod_factor* L = suite.AnalyzeCholeskyWithNaturalOrdering(SA, &error);
+  if (!L) {
+    LOG(ERROR) << "Unable to compute cholesky ordering";
+    return false;
+  }
+
+  LinearSolverTerminationType ret = suite.Cholesky(SA, L, &error);
+  if (ret != LINEAR_SOLVER_SUCCESS) {
+    LOG(ERROR) << "Unable to perform cholesky: " << ret;
+    return false;
+  }
+
+  event_logger.AddEvent("Cholesky");
+
+  // Convert to simplicial, packed, monotonic so we can extract
+  // into a TriangularMatrix
+  if (!cholmod_change_factor(L->xtype, L->is_ll, false, true, true, L,
+                             suite.mutable_cc())) {
+    LOG(ERROR) << "Cannot change factor";
+    return false;
+  }
+
+  TriangularMatrix mTL(L);
+  suite.Free(L);
+  suite.Free(SA);
+
+#endif
+
+  // Compute covariance matrix using recursive method for each requested
+  // covariance block.
+  TriangularMatrix* cov = new TriangularMatrix(mTL.size());
+  cov->setZero();
+  RecursiveCovariance rc(mTL, *cov);
+  for (size_t i = 0; i < requested_blocks.size(); ++i) {
+    const CovarianceBlock& block = requested_blocks[i];
+    const int* row = FindOrNull(parameter_block_to_row_index_, block.first);
+    const int* col = FindOrNull(parameter_block_to_row_index_, block.second);
+    if (row == NULL || col == NULL) {
+      if (constant_parameter_blocks_.count(block.first) == 0 &&
+          constant_parameter_blocks_.count(block.second) == 0) {
+        LOG(ERROR) << "Requested block " << block.first << " x " << block.second
+                   << " was not in the schur reduced system";
+      }
+      continue;
+    }
+
+    // We can simply compute the first element in the block and the
+    // dependencies will compute the rest.
+    rc.Get(*row, *col);
+  }
+
+  schur_covariance_matrix_.reset(cov);
+
+  event_logger.AddEvent("Covariance");
+
+  return true;
 }
 
 bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {

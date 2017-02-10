@@ -36,6 +36,7 @@
 #include "ceres/internal/port.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/types.h"
+#include "ceres/ordered_groups.h"
 #include "ceres/internal/disable_warnings.h"
 
 namespace ceres {
@@ -243,9 +244,23 @@ class CERES_EXPORT Covariance {
     //    multi threaded, so for large sparse sparse matrices it is
     //    significantly faster than EIGEN_SPARSE_QR.
     //
-    // Neither EIGEN_SPARSE_QR not SUITE_SPARSE_QR are capable of
-    // computing the covariance if the Jacobian is rank deficient.
+    // 4. SUITE_SPARSE_SCHUR_CHOLESKY uses the SuiteSparse Cholesky
+    //    factorization algorithm on the reduced problem via the schur
+    //    complement. The linear_solver_ordering must contain more than one
+    //    group for schur elimination; the same conditions apply as when
+    //    solving with the SCHUR_* solvers. At the moment, covariance can be
+    //    computed only for parameter blocks in the reduced system (those that
+    //    are not in groups[0]).
+    //
+    // Neither EIGEN_SPARSE_QR, SUITE_SPARSE_QR, nor
+    // SUITE_SPARSE_SCHUR_CHOLESKY are capable of computing the covariance if
+    // the Jacobian is rank deficient.
     CovarianceAlgorithmType algorithm_type;
+
+    // The linear solver ordering used in Solver::Options
+    // Must be set if algorithm_type is set to SUITE_SPARSE_SCHUR_CHOLESKY
+    // and contain more than one group
+    shared_ptr<ParameterBlockOrdering> linear_solver_ordering;
 
     // If the Jacobian matrix is near singular, then inverting J'J
     // will result in unreliable results, e.g, if
