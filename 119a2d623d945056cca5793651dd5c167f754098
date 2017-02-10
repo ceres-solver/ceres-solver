@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ba8699_3ea18539",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-02-10T19:36:31Z",
+      "side": 1,
+      "message": "worth mentioning that these are Eigen Matrices and array types not just some arbitrary matrix and array.",
+      "range": {
+        "startLine": 882,
+        "startChar": 13,
+        "endLine": 882,
+        "endChar": 14
+      },
+      "revId": "119a2d623d945056cca5793651dd5c167f754098",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
