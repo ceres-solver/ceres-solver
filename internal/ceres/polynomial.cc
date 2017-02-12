@@ -370,7 +370,10 @@ Vector FindInterpolatingPolynomial(const vector<FunctionSample>& samples) {
     }
   }
 
-  return lhs.fullPivLu().solve(rhs);
+  // TODO(sameeragarwal): This is a hack.
+  // https://github.com/ceres-solver/ceres-solver/issues/248
+  Eigen::FullPivLU<Matrix> lu(lhs);
+  return lu.setThreshold(0.0).solve(rhs);
 }
 
 void MinimizeInterpolatingPolynomial(const vector<FunctionSample>& samples,
