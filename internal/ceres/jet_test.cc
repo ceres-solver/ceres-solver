@@ -577,6 +577,8 @@ TEST(JetTraitsTest, ClassificationFinite) {
   EXPECT_FALSE(IsNaN(a));
 }
 
+// ScalarBinaryOpTraits is only supported on Eigen versions >= 3.3
+#if EIGEN_VERSION_AT_LEAST(3, 3, 0)
 TEST(JetTraitsTest, MatrixScalarUnaryOps) {
   const J x = MakeJet(2.3, -2.7, 1e-3);
   const J y = MakeJet(1.7,  0.5, 1e+2);
@@ -654,6 +656,7 @@ TEST(JetTraitsTest, ArrayScalarBinaryOps) {
   ExpectJetsClose(r3(0), r3(0));
   ExpectJetsClose(r4(1), r4(1));
 }
+#endif   // EIGEN_VERSION_AT_LEAST(3, 3, 0)
 
 }  // namespace internal
 }  // namespace ceres
