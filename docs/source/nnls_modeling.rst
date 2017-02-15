@@ -281,7 +281,7 @@ the corresponding accessors. This information will be verified by the
    independent variables, and there is no limit on the dimensionality
    of each of them.
 
-   **WARNING 2** A common beginner's error when first using
+   **WARNING 1** A common beginner's error when first using
    :class:`AutoDiffCostFunction` is to get the sizing wrong. In particular,
    there is a tendency to set the template parameters to (dimension of
    residual, number of parameters) instead of passing a dimension

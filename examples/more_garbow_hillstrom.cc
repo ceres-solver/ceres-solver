@@ -243,9 +243,9 @@ BEGIN_MGH_PROBLEM(TestProblem8, 3, 15)
                 0.73, 0.96, 1.34, 2.10, 4.39};
 
   for (int i = 1; i <=15; ++i) {
-    const double u = static_cast<double>(i);
-    const double v = static_cast<double>(16 - i);
-    const double w = static_cast<double>(std::min(i, 16 - i));
+    const double u = i;
+    const double v = 16 - i;
+    const double w = std::min(i, 16 - i);
     residual[i - 1] = y[i - 1] - (x1 + u / (v * x2 + w * x3));
   }
 END_MGH_PROBLEM;
@@ -310,7 +310,7 @@ BEGIN_MGH_PROBLEM(TestProblem11, 3, 100)
   const T x2 = x[1];
   const T x3 = x[2];
   for (int i = 1; i <= 100; ++i) {
-    const double ti = static_cast<double>(i) / 100.0;
+    const double ti = i / 100.0;
     const double yi = 25.0 + pow(-50.0 * log(ti), 2.0 / 3.0);
     residual[i - 1] = exp(-pow(abs((yi * 100.0 * i) * x2), x3) / x1) - ti;
   }
@@ -399,7 +399,8 @@ END_MGH_PROBLEM;
                       0.0833, 0.0714, 0.0625};
 
   for (int i = 0; i < 11; ++i) {
-    residual[i]  = y[i] - x1 * (u[i] * u[i] + u[i] * x2) / (u[i] * u[i]  + u[i] * x3 + x4);
+    residual[i]  = y[i] - x1 * (u[i] * u[i] + u[i] * x2) /
+        (u[i] * u[i]  + u[i] * x3 + x4);
   }
 END_MGH_PROBLEM;
 
@@ -420,7 +421,7 @@ BEGIN_MGH_PROBLEM(TestProblem16, 4, 20)
   const T x4 = x[3];
 
   for (int i = 0; i < 20; ++i) {
-    const double ti = static_cast<double>(i + 1) / 5.0;
+    const double ti = (i + 1) / 5.0;
     residual[i] = (x1 + ti * x2 - exp(ti)) * (x1 + ti * x2 - exp(ti)) +
         (x3 + x4 * sin(ti) - cos(ti)) * (x3 + x4 * sin(ti) - cos(ti));
   }
@@ -472,18 +473,19 @@ BEGIN_MGH_PROBLEM(TestProblem18, 6, 13)
   for (int i = 0; i < 13; ++i) {
     const double ti = 0.1 * (i + 1.0);
     const double yi = exp(-ti) - 5.0 * exp(-10.0 * ti) + 3.0 * exp(-4.0 * ti);
-    residual[i] =x3 * exp(-ti * x1) - x4 * exp(-ti * x2) + x6 * exp(-ti * x5) - yi;
+    residual[i] =
+        x3 * exp(-ti * x1) - x4 * exp(-ti * x2) + x6 * exp(-ti * x5) - yi;
   }
-END_MGH_PROBLEM
+  END_MGH_PROBLEM
 
-const double TestProblem18::initial_x[] = {1.0, 2.0, 1.0, 1.0, 1.0, 1.0};
-const double TestProblem18::lower_bounds[] = {0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-const double TestProblem18::upper_bounds[] = {2.0, 8.0, 1.0, 7.0, 5.0, 5.0};
-const double TestProblem18::constrained_optimal_cost = 0.53209865e-3;
-const double TestProblem18::unconstrained_optimal_cost = 0.0;
+  const double TestProblem18::initial_x[] = {1.0, 2.0, 1.0, 1.0, 1.0, 1.0};
+  const double TestProblem18::lower_bounds[] = {0.0, 0.0, 0.0, 1.0, 0.0, 0.0};
+  const double TestProblem18::upper_bounds[] = {2.0, 8.0, 1.0, 7.0, 5.0, 5.0};
+  const double TestProblem18::constrained_optimal_cost = 0.53209865e-3;
+  const double TestProblem18::unconstrained_optimal_cost = 0.0;
 
-// Osborne 2 function.
-BEGIN_MGH_PROBLEM(TestProblem19, 11, 65)
+  // Osborne 2 function.
+  BEGIN_MGH_PROBLEM(TestProblem19, 11, 65)
   const T x1 = x[0];
   const T x2 = x[1];
   const T x3 = x[2];
@@ -511,7 +513,7 @@ BEGIN_MGH_PROBLEM(TestProblem19, 11, 65)
                       0.428, 0.292, 0.162, 0.098, 0.054};
 
   for (int i = 0; i < 65; ++i) {
-    const double ti = static_cast<double>(i) / 10.0;
+    const double ti = i / 10.0;
     residual[i] = y[i] - (x1 * exp(-(ti * x5)) +
                           x2 * exp(-(ti - x9)  * (ti - x9)  * x6) +
                           x3 * exp(-(ti - x10) * (ti - x10) * x7) +
