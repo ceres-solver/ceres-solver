@@ -44,8 +44,8 @@ The aim of this article is to fill this gap and describe each of these
 three approaches in the context of Ceres Solver with sufficient detail
 that the user can make an informed choice.
 
-tl;dr
------
+High Level Advice
+-----------------
 
 And for the impatient amongst you, here is some high level advice:
 
