@@ -651,8 +651,8 @@ As expected, Central Differences is about twice as expensive as
 Forward Differences and the remarkable accuracy improvements of
 Ridders' method cost an order of magnitude more runtime.
 
-Recommendation
---------------
+Recommendations
+---------------
 
 Numeric differentiation should be used when you cannot compute the
 derivatives either analytically or using automatic differention. This
@@ -929,6 +929,7 @@ the Jacobian as follows:
 
 Indeed, this is essentially how :class:`AutoDiffCostFunction` works.
 
+
 Pitfalls
 --------
 
@@ -992,14 +993,12 @@ these points.
 TODO
 ====
 
-#. Inverse function theorem
-#. Add references in the various sections about the things to
-   do. NIST, RIDDER's METHOD, Numerical Recipes.
-#. Calling iterative routines.
+#. Why does the quality of derivatives matter?
 #. Discuss, forward v/s backward automatic differentiation and
    relation to backprop, impact of large parameter block sizes on
    differentiation performance.
-#. Why does the quality of derivatives matter?
+#. Inverse function theorem
+#. Calling iterative routines.
 #. Reference to how numeric derivatives lead to slower convergence.
 #. Pitfalls of Numeric differentiation.
 #. Ill conditioning of numeric differentiation/dependence on curvature.
