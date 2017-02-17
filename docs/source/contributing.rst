@@ -51,7 +51,7 @@ Setting up your Environment
 
 
 4. Build Ceres, following the instructions in
-   :ref:`chapter-building`.
+   :ref:`chapter-installation`.
 
    On Mac and Linux, the ``CMake`` build will download and enable
    the Gerrit pre-commit hook automatically. This pre-submit hook
