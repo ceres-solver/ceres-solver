@@ -13,7 +13,7 @@ On Derivatives
 Introduction
 ============
 
-Ceres Solver like all gradient based optimization algorithms, depends
+Ceres Solver, like all gradient based optimization algorithms, depends
 on being able to evaluate the objective function and its derivatives
 at arbitrary points in its domain. Indeed, defining the objective
 function and its `Jacobian
@@ -29,7 +29,7 @@ provide derivatives to the solver. She can use:
     derivatives herself, by hand or using a tool like
     `Maple <https://www.maplesoft.com/products/maple/>`_ or
     `Mathematica <https://www.wolfram.com/mathematica/>`_, and
-    implements them in a ::class:`CostFunction`.
+    implements them in a :class:`CostFunction`.
  2. :ref:`section-numerical_derivatives`: Ceres numerically computes
     the derivative using finite differences.
  3. :ref:`section-automatic_derivatives`: Ceres automatically computes
@@ -47,7 +47,7 @@ that the user can make an informed choice.
 High Level Advice
 -----------------
 
-And for the impatient amongst you, here is some high level advice:
+For the impatient amongst you, here is some high level advice:
 
  1. Use :ref:`section-automatic_derivatives`.
  2. In some cases it maybe worth using
@@ -149,7 +149,7 @@ Using elementary differential calculus, we can see that:
   \end{align}
 
 With these derivatives in hand, we can now implement the
-:class:`CostFunction`: as
+:class:`CostFunction` as:
 
 .. code-block:: c++
 
@@ -186,7 +186,7 @@ With these derivatives in hand, we can now implement the
        const double y_;
    };
 
-This is tedious code, which is hard to read with a lot of
+This is tedious code, hard to read and with a lot of
 redundancy. So in practice we will cache some sub-expressions to
 improve its efficiency, which would give us something like:
 
@@ -369,8 +369,8 @@ Implementation Details
 :class:`NumericDiffCostFunction` implements a generic algorithm to
 numerically differentiate a given functor. While the actual
 implementation of :class:`NumericDiffCostFunction` is complicated, the
-net result is a ``CostFunction`` that roughly looks something like the
-following:
+net result is a :class:`CostFunction` that roughly looks something
+like the following:
 
 .. code-block:: c++
 
@@ -508,7 +508,7 @@ roundoff errors?
 One possible approach is to find a method whose error goes down faster
 than :math:`O(h^2)`. This can be done by applying `Richardson
 Extrapolation
-<https://en.wikipedia.org/wiki/Richardson_extrapolation>_` to the
+<https://en.wikipedia.org/wiki/Richardson_extrapolation>`_ to the
 problem of differentiation. This is also known as *Ridders' Method*
 [Ridders]_.
 
@@ -552,7 +552,7 @@ we get:
    Df(x) = \frac{4 A(1, 2) - A(1,1)}{4 - 1} + O(h^4)
 
 which is an approximation of :math:`Df(x)` with truncation error that
-goes down as :math:`O(h^4)`. But we do not have to stop here, we can
+goes down as :math:`O(h^4)`. But we do not have to stop here. We can
 iterate this process to obtain even more accurate estimates as
 follows:
 
@@ -561,7 +561,7 @@ follows:
    A(n, m) =  \begin{cases}
     \frac{\displaystyle f(x + h/2^{m-1}) - f(x -
     h/2^{m-1})}{\displaystyle 2h/2^{m-1}} & n = 1 \\
-   \frac{\displaystyle 4 A(n - 1, m + 1) - A(n - 1, m)}{\displaystyle 4^{n-1} - 1} & n > 1
+   \frac{\displaystyle 4^{n-1} A(n - 1, m + 1) - A(n - 1, m)}{\displaystyle 4^{n-1} - 1} & n > 1
    \end{cases}
 
 It is straightforward to show that the approximation error in
@@ -628,7 +628,7 @@ that the step size for evaluating :math:`A(n,1)` is :math:`2^{1-n}h`.
    :figwidth: 100%
    :align: center
 
-Using 10 function evaluations that are needed to compute
+Using the 10 function evaluations that are needed to compute
 :math:`A(5,1)` we are able to approximate :math:`Df(1.0)` about a 1000
 times better than the best central differences estimate. To put these
 numbers in perspective, machine epsilon for double precision
@@ -830,7 +830,7 @@ Similarly for a multivariate function
    f(x_1,..., x_n) = f(a_1, ..., a_n) + \sum_i D_i f(a_1, ..., a_n) \mathbf{v}_i
 
 So if each :math:`\mathbf{v}_i = e_i` were the :math:`i^{\text{th}}`
-standard basis vector. Then, the above expression would simplify to
+standard basis vector, then, the above expression would simplify to
 
 .. math::
    f(x_1,..., x_n) = f(a_1, ..., a_n) + \sum_i D_i f(a_1, ..., a_n) \epsilon_i
@@ -971,7 +971,7 @@ these points.
 .. rubric:: Footnotes
 
 .. [#f1] The notion of best fit depends on the choice of the objective
-	 function used to measure the quality of fit. Which in turn
+	 function used to measure the quality of fit, which in turn
 	 depends on the underlying noise process which generated the
 	 observations. Minimizing the sum of squared differences is
 	 the right thing to do when the noise is `Gaussian
