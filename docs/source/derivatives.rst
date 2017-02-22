@@ -324,10 +324,10 @@ steps:
     Rat43CostFunctor(const double x, const double y) : x_(x), y_(y) {}
 
     bool operator()(const double* parameters, double* residuals) const {
-      const double b1 = parameters[0][0];
-      const double b2 = parameters[0][1];
-      const double b3 = parameters[0][2];
-      const double b4 = parameters[0][3];
+      const double b1 = parameters[0];
+      const double b2 = parameters[1];
+      const double b3 = parameters[2];
+      const double b4 = parameters[3];
       residuals[0] = b1 * pow(1.0 + exp(b2 -  b3 * x_), -1.0 / b4) - y_;
       return true;
     }
@@ -686,10 +686,10 @@ implements an automatically differentiated ``CostFunction`` for
 
     template <typename T>
     bool operator()(const T* parameters, T* residuals) const {
-      const T b1 = parameters[0][0];
-      const T b2 = parameters[0][1];
-      const T b3 = parameters[0][2];
-      const T b4 = parameters[0][3];
+      const T b1 = parameters[0];
+      const T b2 = parameters[1];
+      const T b3 = parameters[2];
+      const T b4 = parameters[3];
       residuals[0] = b1 * pow(1.0 + exp(b2 -  b3 * x_), -1.0 / b4) - y_;
       return true;
     }
@@ -800,12 +800,12 @@ gives us the infinite series
 
 Here we are using the fact that :math:`\epsilon^2 = 0`.
 
-A **Jet** is a :math:`n`-dimensional dual number, where we augment the
-real numbers with :math:`n` infinitesimal units :math:`\epsilon_i,\
-i=1,...,n` with the property that :math:`\forall i, j\
-\epsilon_i\epsilon_j = 0`. Then a Jet consists of a *real* part
-:math:`a` and a :math:`n`-dimensional *infinitesimal* part
-:math:`\mathbf{v}`, i.e.,
+A `Jet <https://en.wikipedia.org/wiki/Jet_(mathematics)>`_ is a
+:math:`n`-dimensional dual number, where we augment the real numbers
+with :math:`n` infinitesimal units :math:`\epsilon_i,\ i=1,...,n` with
+the property that :math:`\forall i, j\ \epsilon_i\epsilon_j = 0`. Then
+a Jet consists of a *real* part :math:`a` and a :math:`n`-dimensional
+*infinitesimal* part :math:`\mathbf{v}`, i.e.,
 
 .. math::
    x = a + \sum_j v_{j} \epsilon_j
@@ -987,8 +987,6 @@ these points.
 	 means that the absolute-value of the error is at most some
 	 constant times :math:`h^k` when :math:`h` is close enough to
 	 :math:`0`.
-
-
 
 TODO
 ====
