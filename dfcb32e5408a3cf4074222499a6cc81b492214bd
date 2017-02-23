@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0313482e_b0d6284f",
+        "filename": "internal/ceres/generate_template_specializations.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-02-23T22:12:23Z",
+      "side": 1,
+      "message": "Delete commented out code.",
+      "revId": "dfcb32e5408a3cf4074222499a6cc81b492214bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47ebc80d_6538be13",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-02-23T22:12:23Z",
+      "side": 1,
+      "message": "Please finish or delete.",
+      "revId": "dfcb32e5408a3cf4074222499a6cc81b492214bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "355f4691_3476d4fd",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-02-23T22:12:23Z",
+      "side": 1,
+      "message": "Detect structure is expensive; consider making that change?",
+      "revId": "dfcb32e5408a3cf4074222499a6cc81b492214bd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
