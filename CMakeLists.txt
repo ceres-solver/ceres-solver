@@ -369,7 +369,10 @@ endif (GFLAGS)
 if (MINIGLOG)
   message("-- Compiling minimal glog substitute into Ceres.")
   set(GLOG_INCLUDE_DIRS internal/ceres/miniglog)
+  set(MINIGLOG_MAX_LOG_LEVEL 2 CACHE STRING "The maximum message severity level to be logged")
+  add_definitions("-DMAX_LOG_LEVEL=${MINIGLOG_MAX_LOG_LEVEL}")
   message("-- Using minimal glog substitute (include): ${GLOG_INCLUDE_DIRS}")
+  message("-- Max log level for minimal glog substitute: ${MINIGLOG_MAX_LOG_LEVEL}")
 
   # Mark as advanced (remove from default GUI view) the glog search
   # variables in case user disables MINIGLOG, FindGlog did not find it, so
@@ -378,6 +381,7 @@ if (MINIGLOG)
   mark_as_advanced(FORCE GLOG_INCLUDE_DIR
                          GLOG_LIBRARY)
 else (MINIGLOG)
+  unset(MINIGLOG_MAX_LOG_LEVEL CACHE)
   # Don't search with REQUIRED so that configuration continues if not found and
   # we can output an error messages explaining MINIGLOG option.
   find_package(Glog)
