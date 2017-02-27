@@ -382,7 +382,7 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
                                  &(summary->inner_iteration_ordering_used));
 
   summary->inner_iterations_used          = pp.inner_iteration_minimizer.get() != NULL;     // NOLINT
-  summary->linear_solver_type_used        = pp.options.linear_solver_type;
+  summary->linear_solver_type_used        = pp.linear_solver_options.type;
   summary->num_linear_solver_threads_used = pp.options.num_linear_solver_threads;           // NOLINT
   summary->num_threads_used               = pp.options.num_threads;
   summary->preconditioner_type_used       = pp.options.preconditioner_type;                 // NOLINT
@@ -540,7 +540,11 @@ void Solver::Solve(const Solver::Options& options,
 
   const bool status = preprocessor->Preprocess(modified_options, problem_impl, &pp);
 
-  if (IsSchurType(pp.options.linear_solver_type)) {
+  // We check the linear_solver_options.type rather than
+  // modified_options.linear_solver_type because, depending on the
+  // lack of a Schur structure, the preprocessor may change the linear
+  // solver type.
+  if (IsSchurType(pp.linear_solver_options.type)) {
     // TODO(sameeragarwal): We can likely eliminate the duplicate call
     // to DetectStructure here and inside the linear solver, by
     // calling this in the preprocessor.

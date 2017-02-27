@@ -181,6 +181,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/schur_complement_solver.cc \
                    $(CERES_SRC_PATH)/schur_eliminator.cc \
                    $(CERES_SRC_PATH)/schur_jacobi_preconditioner.cc \
+                   $(CERES_SRC_PATH)/schur_templates.cc \
                    $(CERES_SRC_PATH)/scratch_evaluate_preparer.cc \
                    $(CERES_SRC_PATH)/solver.cc \
                    $(CERES_SRC_PATH)/solver_utils.cc \
