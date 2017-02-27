@@ -51,93 +51,93 @@ PartitionedMatrixViewBase::Create(const LinearSolver::Options& options,
                                   const BlockSparseMatrix& matrix) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 2)) {
-  return new PartitionedMatrixView<2, 2, 2>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 2)) {
+   return new PartitionedMatrixView<2, 2, 2>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 3)) {
-  return new PartitionedMatrixView<2, 2, 3>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 3)) {
+   return new PartitionedMatrixView<2, 2, 3>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 4)) {
-  return new PartitionedMatrixView<2, 2, 4>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 4)) {
+   return new PartitionedMatrixView<2, 2, 4>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2)) {
-  return new PartitionedMatrixView<2, 2, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 2)) {
+   return new PartitionedMatrixView<2, 2, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 3)) {
-  return new PartitionedMatrixView<2, 3, 3>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 3)) {
+   return new PartitionedMatrixView<2, 3, 3>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 4)) {
-  return new PartitionedMatrixView<2, 3, 4>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 4)) {
+   return new PartitionedMatrixView<2, 3, 4>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 6)) {
-  return new PartitionedMatrixView<2, 3, 6>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 6)) {
+   return new PartitionedMatrixView<2, 3, 6>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 9)) {
-  return new PartitionedMatrixView<2, 3, 9>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 9)) {
+   return new PartitionedMatrixView<2, 3, 9>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3)) {
-  return new PartitionedMatrixView<2, 3, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 3)) {
+   return new PartitionedMatrixView<2, 3, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 3)) {
-  return new PartitionedMatrixView<2, 4, 3>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 3)) {
+   return new PartitionedMatrixView<2, 4, 3>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 4)) {
-  return new PartitionedMatrixView<2, 4, 4>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 4)) {
+   return new PartitionedMatrixView<2, 4, 4>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 8)) {
-  return new PartitionedMatrixView<2, 4, 8>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 8)) {
+   return new PartitionedMatrixView<2, 4, 8>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 9)) {
-  return new PartitionedMatrixView<2, 4, 9>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 9)) {
+   return new PartitionedMatrixView<2, 4, 9>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4)) {
-  return new PartitionedMatrixView<2, 4, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4)) {
+   return new PartitionedMatrixView<2, 4, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
  if (options.row_block_size == 2){
-  return new PartitionedMatrixView<2, Eigen::Dynamic, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
+   return new PartitionedMatrixView<2, Eigen::Dynamic, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 2)) {
-  return new PartitionedMatrixView<4, 4, 2>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 2)) {
+   return new PartitionedMatrixView<4, 4, 2>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 3)) {
-  return new PartitionedMatrixView<4, 4, 3>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 3)) {
+   return new PartitionedMatrixView<4, 4, 3>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 4)) {
-  return new PartitionedMatrixView<4, 4, 4>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 4)) {
+   return new PartitionedMatrixView<4, 4, 4>(matrix, options.elimination_groups[0]);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4)) {
-  return new PartitionedMatrixView<4, 4, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
+     (options.e_block_size == 4)) {
+   return new PartitionedMatrixView<4, 4, Eigen::Dynamic>(matrix, options.elimination_groups[0]);
  }
 
 #endif

@@ -463,7 +463,7 @@ std::string SchurStructureToString(const int row_block_size,
       (f_block_size == Eigen::Dynamic)
       ? "d" : internal::StringPrintf("%d", f_block_size);
 
-  return internal::StringPrintf("%s,%s,%s",row.c_str(), e.c_str(), f.c_str());
+  return internal::StringPrintf("%s,%s,%s", row.c_str(), e.c_str(), f.c_str());
 }
 
 }  // namespace

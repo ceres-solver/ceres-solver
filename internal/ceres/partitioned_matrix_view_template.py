@@ -135,7 +135,7 @@ PartitionedMatrixViewBase::Create(const LinearSolver::Options& options,
                                   const BlockSparseMatrix& matrix) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
-FACTORY = """return new PartitionedMatrixView<%s, %s, %s>(matrix, options.elimination_groups[0]);"""
+FACTORY = """ return new PartitionedMatrixView<%s, %s, %s>(matrix, options.elimination_groups[0]);"""
 
 FACTORY_FOOTER = """
 #endif
