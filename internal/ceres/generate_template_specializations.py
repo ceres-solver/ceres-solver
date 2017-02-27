@@ -74,6 +74,8 @@ SPECIALIZATIONS = [(2, 2, 2),
 
 import schur_eliminator_template
 import partitioned_matrix_view_template
+import os
+import glob
 
 def SuffixForSize(size):
   if size == "Eigen::Dynamic":
@@ -117,6 +119,16 @@ def Specialize(name, data):
         f.write(data["HEADER"])
         f.write(data["SPECIALIZATION_FILE"] %
                   (row_block_size, e_block_size, f_block_size))
+
+  # Generate the _d_d_d specialization.
+  output = SpecializationFilename("generated/" + name,
+                                   "Eigen::Dynamic",
+                                   "Eigen::Dynamic",
+                                   "Eigen::Dynamic") + ".cc"
+  with open(output, "w") as f:
+    f.write(data["HEADER"])
+    f.write(data["DYNAMIC_FILE"] %
+              ("Eigen::Dynamic", "Eigen::Dynamic", "Eigen::Dynamic"))
 
   # Factory
   with open(name + ".cc", "w") as f:
@@ -222,6 +234,9 @@ def GenerateQueryFile():
 
 
 if __name__ == "__main__":
+  for f in glob.glob("generated/*"):
+    os.remove(f)
+
   Specialize("schur_eliminator",
                schur_eliminator_template.__dict__)
   Specialize("partitioned_matrix_view",
