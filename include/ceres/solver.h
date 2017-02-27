@@ -953,8 +953,9 @@ class CERES_EXPORT Solver {
     // parameter blocks.
     std::vector<int> linear_solver_ordering_used;
 
-    // For Schur type linear solvers, this string describes, the
-    // template specialization which was detected in the problem and should be used.
+    // For Schur type linear solvers, this string describes the
+    // template specialization which was detected in the problem and
+    // should be used.
     std::string schur_structure_given;
 
     // This is the Schur template specialization that was actually

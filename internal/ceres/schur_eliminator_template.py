@@ -139,7 +139,7 @@ SchurEliminatorBase::Create(const LinearSolver::Options& options) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
 """
 
-FACTORY = """return new SchurEliminator<%s, %s, %s>(options);"""
+FACTORY = """ return new SchurEliminator<%s, %s, %s>(options);"""
 
 FACTORY_FOOTER = """
 #endif

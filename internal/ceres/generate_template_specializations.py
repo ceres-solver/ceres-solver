@@ -35,20 +35,23 @@
 # compilation into separate compilation unit rather than one large cc
 # file which takes 2+GB of RAM to compile.
 #
-# This script creates two sets of files.
+# This script creates three sets of files.
 #
-# 1. schur_eliminator_x_x_x.cc
+# 1. schur_eliminator_x_x_x.cc and partitioned_matrix_view_x_x_x.cc
 # where, the x indicates the template parameters and
 #
-# 2. schur_eliminator.cc
+# 2. schur_eliminator.cc & partitioned_matrix_view.cc
 #
 # that contains a factory function for instantiating these classes
 # based on runtime parameters.
 #
-# The list of tuples, specializations indicates the set of
+# 3. schur_templates.cc
+#
+# that contains a function which can be queried to determine what
+# template specializations are available.
+#
+# The following list of tuples, specializations indicates the set of
 # specializations that is generated.
-
-# Set of template specializations to generate
 SPECIALIZATIONS = [(2, 2, 2),
                    (2, 2, 3),
                    (2, 2, 4),
@@ -96,42 +99,35 @@ def GenerateFactoryConditional(row_block_size, e_block_size, f_block_size):
   if (len(conditionals) == 1):
     return " if " + conditionals[0] + "{\n  %s\n }\n"
 
-  return " if (" + " &&\n  ".join(conditionals) + ") {\n  %s\n }\n"
+  return " if (" + " &&\n     ".join(conditionals) + ") {\n  %s\n }\n"
 
 def Specialize(name, data):
   """
   Generate specialization code and the conditionals to instantiate it.
   """
-  f = open(name + ".cc", "w")
-  f.write(data["HEADER"])
-  f.write(data["FACTORY_FILE_HEADER"])
 
+  # Specialization files
   for row_block_size, e_block_size, f_block_size in SPECIALIZATIONS:
-    output = SpecializationFilename("generated/" + name,
-                                    row_block_size,
-                                    e_block_size,
-                                    f_block_size) + ".cc"
-    fptr = open(output, "w")
-    fptr.write(data["HEADER"])
+      output = SpecializationFilename("generated/" + name,
+                                      row_block_size,
+                                      e_block_size,
+                                      f_block_size) + ".cc"
 
-    template = data["SPECIALIZATION_FILE"]
-    if (row_block_size == "Eigen::Dynamic" and
-        e_block_size == "Eigen::Dynamic" and
-        f_block_size == "Eigen::Dynamic"):
-      template = data["DYNAMIC_FILE"]
+      with open(output, "w") as fptr:
+        fptr.write(data["HEADER"])
+        fptr.write(data["SPECIALIZATION_FILE"] %
+                  (row_block_size, e_block_size, f_block_size))
 
-    fptr.write(template % (row_block_size, e_block_size, f_block_size))
-    fptr.close()
-
-    FACTORY_CONDITIONAL =
-    GenerateFactoryConditional(row_block_size, e_block_size, f_block_size)
-    f.write(FACTORY_CONDITIONAL % data["FACTORY"] %
-              (row_block_size, e_block_size, f_block_size));
-
-  f.write(data["FACTORY_FOOTER"])
-  f.close()
-
-
+  # Factory
+  with open(name + ".cc", "w") as f:
+    f.write(data["HEADER"])
+    f.write(data["FACTORY_FILE_HEADER"])
+    for row_block_size, e_block_size, f_block_size in SPECIALIZATIONS:
+        factory_conditional = GenerateFactoryConditional(
+            row_block_size, e_block_size, f_block_size)
+        factory = data["FACTORY"] % (row_block_size, e_block_size, f_block_size)
+        f.write(factory_conditional % factory);
+    f.write(data["FACTORY_FOOTER"])
 
 QUERY_HEADER = """// Ceres Solver - A fast non-linear least squares minimizer
 // Copyright 2017 Google Inc. All rights reserved.
@@ -204,28 +200,30 @@ QUERY_FOOTER = """
 }  // namespace ceres
 """
 
-QUERY_ACTION = """*row_block_size = %s;
-  *e_block_size = %s;
-  *f_block_size = %s;
+QUERY_ACTION = """ *row_block_size = %s;
+   *e_block_size = %s;
+   *f_block_size = %s;
   return;"""
 
 def GenerateQueryFile():
   """
-  Generate specialization code and the conditionals to instantiate it.
+  Generate file that allows querying for available template specializations.
   """
-  f = open("schur_templates.cc", "w")
-  f.write(QUERY_HEADER)
-  f.write(QUERY_FILE_HEADER)
 
-  for row_block_size, e_block_size, f_block_size in SPECIALIZATIONS:
-    FACTORY_CONDITIONAL = GenerateFactoryConditional(row_block_size, e_block_size, f_block_size)
-    f.write(FACTORY_CONDITIONAL % QUERY_ACTION % (row_block_size, e_block_size, f_block_size));
-
-  f.write(QUERY_FOOTER)
-  f.close()
+  with open("schur_templates.cc", "w") as f:
+    f.write(QUERY_HEADER)
+    f.write(QUERY_FILE_HEADER)
+    for row_block_size, e_block_size, f_block_size in SPECIALIZATIONS:
+      factory_conditional = GenerateFactoryConditional(
+        row_block_size, e_block_size, f_block_size)
+      action = QUERY_ACTION % (row_block_size, e_block_size, f_block_size)
+      f.write(factory_conditional % action)
+    f.write(QUERY_FOOTER)
 
 
 if __name__ == "__main__":
-  Specialize("schur_eliminator", schur_eliminator_template.__dict__)
-  Specialize("partitioned_matrix_view", partitioned_matrix_view_template.__dict__)
+  Specialize("schur_eliminator",
+               schur_eliminator_template.__dict__)
+  Specialize("partitioned_matrix_view",
+               partitioned_matrix_view_template.__dict__)
   GenerateQueryFile()

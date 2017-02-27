@@ -50,93 +50,93 @@ SchurEliminatorBase*
 SchurEliminatorBase::Create(const LinearSolver::Options& options) {
 #ifndef CERES_RESTRICT_SCHUR_SPECIALIZATION
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 2)) {
-  return new SchurEliminator<2, 2, 2>(options);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 2)) {
+   return new SchurEliminator<2, 2, 2>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 3)) {
-  return new SchurEliminator<2, 2, 3>(options);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 3)) {
+   return new SchurEliminator<2, 2, 3>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2) &&
-  (options.f_block_size == 4)) {
-  return new SchurEliminator<2, 2, 4>(options);
+     (options.e_block_size == 2) &&
+     (options.f_block_size == 4)) {
+   return new SchurEliminator<2, 2, 4>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 2)) {
-  return new SchurEliminator<2, 2, Eigen::Dynamic>(options);
+     (options.e_block_size == 2)) {
+   return new SchurEliminator<2, 2, Eigen::Dynamic>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 3)) {
-  return new SchurEliminator<2, 3, 3>(options);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 3)) {
+   return new SchurEliminator<2, 3, 3>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 4)) {
-  return new SchurEliminator<2, 3, 4>(options);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 4)) {
+   return new SchurEliminator<2, 3, 4>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 6)) {
-  return new SchurEliminator<2, 3, 6>(options);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 6)) {
+   return new SchurEliminator<2, 3, 6>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3) &&
-  (options.f_block_size == 9)) {
-  return new SchurEliminator<2, 3, 9>(options);
+     (options.e_block_size == 3) &&
+     (options.f_block_size == 9)) {
+   return new SchurEliminator<2, 3, 9>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 3)) {
-  return new SchurEliminator<2, 3, Eigen::Dynamic>(options);
+     (options.e_block_size == 3)) {
+   return new SchurEliminator<2, 3, Eigen::Dynamic>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 3)) {
-  return new SchurEliminator<2, 4, 3>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 3)) {
+   return new SchurEliminator<2, 4, 3>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 4)) {
-  return new SchurEliminator<2, 4, 4>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 4)) {
+   return new SchurEliminator<2, 4, 4>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 8)) {
-  return new SchurEliminator<2, 4, 8>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 8)) {
+   return new SchurEliminator<2, 4, 8>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 9)) {
-  return new SchurEliminator<2, 4, 9>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 9)) {
+   return new SchurEliminator<2, 4, 9>(options);
  }
  if ((options.row_block_size == 2) &&
-  (options.e_block_size == 4)) {
-  return new SchurEliminator<2, 4, Eigen::Dynamic>(options);
+     (options.e_block_size == 4)) {
+   return new SchurEliminator<2, 4, Eigen::Dynamic>(options);
  }
  if (options.row_block_size == 2){
-  return new SchurEliminator<2, Eigen::Dynamic, Eigen::Dynamic>(options);
+   return new SchurEliminator<2, Eigen::Dynamic, Eigen::Dynamic>(options);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 2)) {
-  return new SchurEliminator<4, 4, 2>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 2)) {
+   return new SchurEliminator<4, 4, 2>(options);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 3)) {
-  return new SchurEliminator<4, 4, 3>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 3)) {
+   return new SchurEliminator<4, 4, 3>(options);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4) &&
-  (options.f_block_size == 4)) {
-  return new SchurEliminator<4, 4, 4>(options);
+     (options.e_block_size == 4) &&
+     (options.f_block_size == 4)) {
+   return new SchurEliminator<4, 4, 4>(options);
  }
  if ((options.row_block_size == 4) &&
-  (options.e_block_size == 4)) {
-  return new SchurEliminator<4, 4, Eigen::Dynamic>(options);
+     (options.e_block_size == 4)) {
+   return new SchurEliminator<4, 4, Eigen::Dynamic>(options);
  }
 
 #endif

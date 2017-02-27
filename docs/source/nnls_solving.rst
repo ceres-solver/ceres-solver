@@ -2156,7 +2156,7 @@ The three arrays will be:
 
 .. member:: std::string Solver::Summary::schur_structure_given
 
-    For Schur type linear solvers, this string describes, the template
+    For Schur type linear solvers, this string describes the template
     specialization which was detected in the problem and should be
     used.
 
