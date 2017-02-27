@@ -21,11 +21,13 @@ reports and feature requests.
    :maxdepth: 1
    :hidden:
 
+   features
    installation
    tutorial
    derivatives
-   guide
-   features
+   nnls_modeling
+   nnls_solving
+   gradient_solver
    faqs
    users
    contributing
