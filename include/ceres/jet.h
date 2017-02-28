@@ -850,6 +850,8 @@ struct NumTraits<ceres::Jet<T, N> > {
     return Real(std::numeric_limits<T>::epsilon());
   }
 
+  static inline int digits10() { return NumTraits<T>::digits10(); }
+
   enum {
     IsComplex = 0,
     IsInteger = 0,
