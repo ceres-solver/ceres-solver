@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ad89b20_6a219e6b",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "7eff5283_d8d6910e",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32142b82_ab60ee43",
         "filename": "include/ceres/local_parameterization.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-01T21:36:47Z",
       "side": 1,
       "message": "It\u0027s not obvious why this is needed in the local parameterization. I\u0027m undecided where that description should live though.",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44110780_6885bb10",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "A subset parameterization introduces constants (which have 0 covariance) into a covariance block; since my algorithm for computing covariance doesn\u0027t use the underlying sparse structure (as it needs a reduced problem for schur elimination), it needs to know which rows/columns are constant. I agree this is a big of an ugly way to get at this information but I didn\u0027t see another place where the local parameterization structure is exposed.",
+      "parentUuid": "32142b82_ab60ee43",
       "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0e0896e_b00c0952",
+        "filename": "include/ceres/local_parameterization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "e9342aaa_65ac2e7f",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103d2444_537ed96a",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-03-01T21:36:47Z",
       "side": 1,
       "message": "We don\u0027t use /** style comments in Ceres; please update to match with Ceres style.",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56d7888e_4c8760c7",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "103d2444_537ed96a",
       "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "15b01952_cfda6282",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "0d8eace4_fd20ac3e",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd3c8dc4_a1294c26",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-03-01T21:36:47Z",
       "side": 1,
       "message": "No commented out code.",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bed4528a_5bd22fdc",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "dd3c8dc4_a1294c26",
       "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "545e49c1_6cf97d17",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "bb6a8a16_3618e5db",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e199ebdc_8983bf4c",
         "filename": "internal/ceres/covariance_test.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-03-01T21:36:47Z",
       "side": 1,
       "message": "I do not know what this struct is for. I assume it\u0027s intrinsic focal length, but this needs to be documented.",
+      "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46e04eaa_76936fb4",
+        "filename": "internal/ceres/covariance_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-01T23:19:53Z",
+      "side": 1,
+      "message": "Removed; the Project() function was moved to ObservationPointIC",
+      "parentUuid": "e199ebdc_8983bf4c",
       "revId": "609367d61e4e478d4c37825f3c6f98dac67f7879",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
