@@ -115,6 +115,12 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const std::vector<int>& col_blocks() const { return col_blocks_; }
   std::vector<int>* mutable_col_blocks() { return &col_blocks_; }
 
+  const std::vector<int>& crsb_rows() const { return crsb_rows_; }
+  std::vector<int>* mutable_crsb_rows() { return &crsb_rows_; }
+
+  const std::vector<int>& crsb_cols() const { return crsb_cols_; }
+  std::vector<int>* mutable_crsb_cols() { return &crsb_cols_; }
+
   // Destructive array resizing method.
   void SetMaxNumNonZeros(int num_nonzeros);
 
@@ -149,6 +155,10 @@ class CompressedRowSparseMatrix : public SparseMatrix {
       const CompressedRowSparseMatrix& m,
       std::vector<int>* program);
 
+  // Compute the "program" vector with block information
+  static CompressedRowSparseMatrix* CreateBlockOuterProductMatrixAndProgram(
+      const CompressedRowSparseMatrix& m, std::vector<int>* program);
+
   // Compute the values array for the expression m.transpose() * m,
   // where the matrix used to store the result and a program have been
   // created using the CreateOuterProductMatrixAndProgram function
@@ -156,6 +166,11 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   static void ComputeOuterProduct(const CompressedRowSparseMatrix& m,
                                   const std::vector<int>& program,
                                   CompressedRowSparseMatrix* result);
+
+  // Compute outer produce in upper triangle matrix
+  static void ComputeUpperOuterProduct(const CompressedRowSparseMatrix& m,
+                                       const std::vector<int>& program,
+                                       CompressedRowSparseMatrix* result);
 
  private:
   int num_rows_;
@@ -171,6 +186,11 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // any way.
   std::vector<int> row_blocks_;
   std::vector<int> col_blocks_;
+
+  // If the matrix has an underlying block structure, then it can also
+  // carry with it compressed row sparse block information.
+  std::vector<int> crsb_rows_;
+  std::vector<int> crsb_cols_;
 
   CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };

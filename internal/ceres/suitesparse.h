@@ -99,6 +99,9 @@ class SuiteSparse {
   // use the SuiteSparse machinery to allocate memory.
   cholmod_sparse CreateSparseMatrixTransposeView(CompressedRowSparseMatrix* A);
 
+  cholmod_sparse CreateUpperSparseMatrixTransposeView(
+      CompressedRowSparseMatrix* A);
+
   // Given a vector x, build a cholmod_dense vector of size out_size
   // with the first in_size entries copied from x. If x is NULL, then
   // an all zeros vector is returned. Caller owns the result.

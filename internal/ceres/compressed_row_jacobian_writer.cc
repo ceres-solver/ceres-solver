@@ -121,6 +121,12 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
   // seems to be the only way to construct it without doing a memory copy.
   int* rows = jacobian->mutable_rows();
   int* cols = jacobian->mutable_cols();
+
+  std::vector<int>& crsb_rows = *jacobian->mutable_crsb_rows();
+  std::vector<int>& crsb_cols = *jacobian->mutable_crsb_cols();
+  crsb_rows.resize(residual_blocks.size() + 1);
+  crsb_rows[0] = 0;
+
   int row_pos = 0;
   rows[0] = 0;
   for (int i = 0; i < residual_blocks.size(); ++i) {
@@ -156,6 +162,10 @@ SparseMatrix* CompressedRowJacobianWriter::CreateJacobian() const {
                  << "Residual Block: " << residual_block->ToString() << "\n"
                  << "Parameter Blocks: " << parameter_block_description;
     }
+
+    crsb_rows[i + 1] = crsb_rows[i] + parameter_indices.size();
+    crsb_cols.insert(crsb_cols.end(),
+                     parameter_indices.begin(), parameter_indices.end());
 
     // Update the row indices.
     const int num_residuals = residual_block->NumResiduals();

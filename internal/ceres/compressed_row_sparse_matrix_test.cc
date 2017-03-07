@@ -142,6 +142,9 @@ TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
   // Clear the row and column blocks as these are purely scalar tests.
   crsm->mutable_row_blocks()->clear();
   crsm->mutable_col_blocks()->clear();
+  crsm->mutable_crsb_rows()->clear();
+  crsm->mutable_crsb_cols()->clear();
+
   for (int i = 0; i < num_rows; ++i) {
     tsm->Resize(num_rows - i, num_cols);
     crsm->DeleteRows(crsm->num_rows() - tsm->num_rows());
@@ -153,6 +156,8 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
   // Clear the row and column blocks as these are purely scalar tests.
   crsm->mutable_row_blocks()->clear();
   crsm->mutable_col_blocks()->clear();
+  crsm->mutable_crsb_rows()->clear();
+  crsm->mutable_crsb_cols()->clear();
 
   for (int i = 0; i < num_rows; ++i) {
     TripletSparseMatrix tsm_appendage(*tsm);
