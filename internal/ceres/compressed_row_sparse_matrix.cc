@@ -273,6 +273,28 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   row_blocks_.insert(row_blocks_.end(),
                      m.row_blocks().begin(),
                      m.row_blocks().end());
+
+  // Generate crsb rows and cols.
+  if (m.crsb_rows_.size() == 0) {
+    return;
+  }
+
+  int num_crsb_nonzeros = crsb_cols_.size();
+  int m_num_crsb_nonzeros = m.crsb_cols_.size();
+  crsb_cols_.resize(num_crsb_nonzeros + m_num_crsb_nonzeros);
+  std::copy(&m.crsb_cols()[0], &m.crsb_cols()[0] + m_num_crsb_nonzeros,
+            &crsb_cols_[num_crsb_nonzeros]);
+
+  int num_crsb_rows = crsb_rows_.size() - 1;
+  int m_num_crsb_rows = m.crsb_rows_.size() - 1;
+  crsb_rows_.resize(num_crsb_rows + m_num_crsb_rows + 1);
+  std::fill(crsb_rows_.begin() + num_crsb_rows,
+            crsb_rows_.begin() + num_crsb_rows + m_num_crsb_rows + 1,
+            crsb_rows_[num_crsb_rows]);
+
+  for (int r = 0; r < m_num_crsb_rows + 1; ++r) {
+    crsb_rows_[num_crsb_rows + r] += m.crsb_rows()[r];
+  }
 }
 
 void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
@@ -364,6 +386,15 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
   *matrix->mutable_row_blocks() = blocks;
   *matrix->mutable_col_blocks() = blocks;
 
+  // Generate crsb
+  vector<int>& crsb_rows = *matrix->mutable_crsb_rows();
+  vector<int>& crsb_cols = *matrix->mutable_crsb_cols();
+  for (int i = 0; i < blocks.size(); ++i) {
+    crsb_rows.push_back(i);
+    crsb_cols.push_back(i);
+  }
+  crsb_rows.push_back(blocks.size());
+
   CHECK_EQ(idx_cursor, num_nonzeros);
   CHECK_EQ(col_cursor, num_rows);
   return matrix;
@@ -431,70 +462,96 @@ struct ProductTerm {
 CompressedRowSparseMatrix*
 CompressAndFillProgram(const int num_rows,
                        const int num_cols,
+                       const vector<int>& blocks,
                        const vector<ProductTerm>& product,
-                       vector<int>* program) {
+                       vector<int>* program,
+                       vector<int>* program_blocks) {
   CHECK_GT(product.size(), 0);
 
-  // Count the number of unique product term, which in turn is the
-  // number of non-zeros in the outer product.
-  int num_nonzeros = 1;
+  program_blocks->resize(blocks.size());
+  std::fill(program_blocks->begin(), program_blocks->end(), 0);
+  (*program_blocks)[product[0].row] = blocks[product[0].col];
   for (int i = 1; i < product.size(); ++i) {
     if (product[i].row != product[i - 1].row ||
         product[i].col != product[i - 1].col) {
-      ++num_nonzeros;
+      (*program_blocks)[product[i].row] += blocks[product[i].col];
     }
   }
 
-  CompressedRowSparseMatrix* matrix =
-      new CompressedRowSparseMatrix(num_rows, num_cols, num_nonzeros);
+  vector<int> program_offsets(blocks.size() + 1);
+  program_offsets[0] = 0;
+  for (int block = 0; block < blocks.size(); ++block) {
+    program_offsets[block + 1] = program_offsets[block] +
+        (*program_blocks)[block] * blocks[block];
+  }
+  int num_nonzeros = program_offsets.back();
 
+  CompressedRowSparseMatrix* matrix =
+      new CompressedRowSparseMatrix( num_rows, num_cols, num_nonzeros);
   int* crsm_rows = matrix->mutable_rows();
   std::fill(crsm_rows, crsm_rows + num_rows + 1, 0);
   int* crsm_cols = matrix->mutable_cols();
   std::fill(crsm_cols, crsm_cols + num_nonzeros, 0);
 
+  // Count offset for blocks.
+  vector<int> block_offsets(blocks.size() + 1);
+  block_offsets[0] = 0;
+  for (int block = 0; block < blocks.size(); ++block) {
+    block_offsets[block + 1] = block_offsets[block] + blocks[block];
+  }
+
   CHECK_NOTNULL(program)->clear();
   program->resize(product.size());
 
-  // Iterate over the sorted product terms. This means each row is
-  // filled one at a time, and we are able to assign a position in the
-  // values array to each term.
-  //
-  // If terms repeat, i.e., they contribute to the same entry in the
-  // result matrix), then they do not affect the sparsity structure of
-  // the result matrix.
   int nnz = 0;
-  crsm_cols[0] = product[0].col;
-  crsm_rows[product[0].row + 1]++;
-  (*program)[product[0].index] = nnz;
+  for (int row = 0; row < blocks[product[0].row]; ++row) {
+    for (int col = 0; col < blocks[product[0].col]; ++col) {
+      crsm_cols[program_offsets[product[0].row] +
+          (*program_blocks)[product[0].row] * row + col]
+          = block_offsets[product[0].col] + col;
+    }
+    crsm_rows[block_offsets[product[0].row] + row + 1] =
+        (*program_blocks)[product[0].row];
+  }
+  (*program)[product[0].index] = program_offsets[product[0].row] + nnz;
   for (int i = 1; i < product.size(); ++i) {
     const ProductTerm& previous = product[i - 1];
     const ProductTerm& current = product[i];
 
     // Sparsity structure is updated only if the term is not a repeat.
     if (previous.row != current.row || previous.col != current.col) {
-      crsm_cols[++nnz] = current.col;
-      crsm_rows[current.row + 1]++;
+      nnz += blocks[previous.col];
+      if (previous.row != current.row)
+        nnz = 0;
+      // Set outerproduct cols.
+      for (int row = 0; row < blocks[current.row]; ++row) {
+        for (int col = 0; col < blocks[current.col]; ++col) {
+          crsm_cols[program_offsets[current.row] +
+              (*program_blocks)[current.row] * row + nnz + col]
+              = block_offsets[current.col] + col;
+        }
+        crsm_rows[block_offsets[current.row] + row + 1] =
+            (*program_blocks)[current.row];
+      }
     }
 
-    // All terms get assigned the position in the values array where
-    // their value is accumulated.
-    (*program)[current.index] = nnz;
+    (*program)[current.index] = program_offsets[current.row] + nnz;
   }
 
   for (int i = 1; i < num_rows + 1; ++i) {
     crsm_rows[i] += crsm_rows[i - 1];
   }
 
+  CHECK_EQ(num_nonzeros, crsm_rows[num_rows]);
+
   return matrix;
 }
-
 }  // namespace
 
 CompressedRowSparseMatrix*
 CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-      const CompressedRowSparseMatrix& m,
-      vector<int>* program) {
+    const CompressedRowSparseMatrix& m, int stype,
+    vector<int>* program, vector<int>* program_blocks) {
   CHECK_NOTNULL(program)->clear();
   CHECK_GT(m.num_nonzeros(), 0)
                 << "Congratulations, "
@@ -502,54 +559,113 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
 
   vector<ProductTerm> product;
   const vector<int>& row_blocks = m.row_blocks();
-  int row_block_begin = 0;
-  // Iterate over row blocks
+  const vector<int>& col_blocks = m.col_blocks();
+  const vector<int>& crsb_rows = m.crsb_rows();
+  const vector<int>& crsb_cols = m.crsb_cols();
+
   for (int row_block = 0; row_block < row_blocks.size(); ++row_block) {
-    const int row_block_end = row_block_begin + row_blocks[row_block];
-    // Compute the outer product terms for just one row per row block.
-    const int r = row_block_begin;
-    // Compute the lower triangular part of the product.
-    for (int idx1 = m.rows()[r]; idx1 < m.rows()[r + 1]; ++idx1) {
-      for (int idx2 = m.rows()[r]; idx2 <= idx1; ++idx2) {
-        product.push_back(ProductTerm(m.cols()[idx1],
-                                      m.cols()[idx2],
-                                      product.size()));
+    for (int idx1 = crsb_rows[row_block]; idx1 < crsb_rows[row_block + 1];
+         ++idx1) {
+      if (stype > 0) {
+        for (int idx2 = crsb_rows[row_block]; idx2 <= idx1; ++idx2) {
+          product.push_back(ProductTerm(crsb_cols[idx1], crsb_cols[idx2],
+                                        product.size()));
+        }
+      }
+      else {
+        for (int idx2 = idx1; idx2 < crsb_rows[row_block + 1]; ++idx2) {
+          product.push_back(ProductTerm(crsb_cols[idx1], crsb_cols[idx2],
+                                        product.size()));
+        }
       }
     }
-    row_block_begin = row_block_end;
   }
-  CHECK_EQ(row_block_begin, m.num_rows());
   sort(product.begin(), product.end());
-  return CompressAndFillProgram(m.num_cols(), m.num_cols(), product, program);
+  return CompressAndFillProgram(m.num_cols(), m.num_cols(), col_blocks,
+                                product, program, program_blocks);
 }
 
 void CompressedRowSparseMatrix::ComputeOuterProduct(
     const CompressedRowSparseMatrix& m,
+    const int stype,
     const vector<int>& program,
+    const vector<int>& program_blocks,
     CompressedRowSparseMatrix* result) {
   result->SetZero();
+
   double* values = result->mutable_values();
-  const vector<int>& row_blocks = m.row_blocks();
 
   int cursor = 0;
   int row_block_begin = 0;
   const double* m_values = m.values();
   const int* m_rows = m.rows();
+
+  const vector<int>& row_blocks = m.row_blocks();
+  const vector<int>& col_blocks = m.col_blocks();
+
+  const vector<int>& crsb_rows = m.crsb_rows();
+  const vector<int>& crsb_cols = m.crsb_cols();
+
   // Iterate over row blocks.
   for (int row_block = 0; row_block < row_blocks.size(); ++row_block) {
     const int row_block_end = row_block_begin + row_blocks[row_block];
-    const int saved_cursor = cursor;
-    for (int r = row_block_begin; r < row_block_end; ++r) {
-      // Reuse the program segment for each row in this row block.
-      cursor = saved_cursor;
-      const int row_begin = m_rows[r];
-      const int row_end = m_rows[r + 1];
-      for (int idx1 = row_begin; idx1 < row_end; ++idx1) {
-        const double v1 =  m_values[idx1];
-        for (int idx2 = row_begin; idx2 <= idx1; ++idx2, ++cursor) {
-          values[program[cursor]] += v1 * m_values[idx2];
-        }
+    int idx1_begin = 0;
+
+    int m_rows_block = m_rows[row_block_begin + 1] - m_rows[row_block_begin];
+
+    // Iterater all block products (block1 x block2).
+    for (int block1_idx = crsb_rows[row_block];
+         block1_idx < crsb_rows[row_block + 1]; ++block1_idx) {
+      int block1 = crsb_cols[block1_idx];
+
+      // Process upper/lower triangular blocks.
+      int block2_idx_begin;
+      int block2_idx_end;
+      int idx2_begin;
+      if (stype > 0) {
+        block2_idx_begin = crsb_rows[row_block];
+        block2_idx_end = block1_idx + 1;
+        idx2_begin = 0;
       }
+      else {
+        block2_idx_begin = block1_idx;
+        block2_idx_end = crsb_rows[row_block + 1];
+        idx2_begin = idx1_begin;
+      }
+
+      for (int block2_idx = block2_idx_begin;
+           block2_idx < block2_idx_end; ++block2_idx, ++cursor) {
+        int block2 = crsb_cols[block2_idx];
+
+        /*
+         * Use Eigen Map to implement the following matrix multiplication
+         *
+        for (int r = 0; r < row_blocks[row_block]; ++r) {
+          for (int idx1 = 0; idx1 < col_blocks[block1]; ++idx1) {
+            for (int idx2 = 0; idx2 < col_blocks[block2]; ++idx2) {
+              values[program[cursor] + program_blocks[block1] * idx1 + idx2] +=
+                  m_values[m_rows[row_block_begin] +
+                      r * m_rows_block + idx1_begin + idx1] *
+                  m_values[m_rows[row_block_begin] +
+                      r * m_rows_block + idx2_begin + idx2];
+            }
+          }
+        }
+         *
+         *
+         */
+        MatrixRef O(values + program[cursor],
+                    col_blocks[block1], program_blocks[block1]);
+        ConstMatrixRef I(m_values + m_rows[row_block_begin],
+                         row_blocks[row_block], m_rows_block);
+        O.block(0, 0, col_blocks[block1], col_blocks[block2]) +=
+            I.block(0, idx1_begin, row_blocks[row_block], col_blocks[block1])
+            .transpose() *
+            I.block(0, idx2_begin, row_blocks[row_block], col_blocks[block2]);
+
+        idx2_begin += col_blocks[block2];
+      }
+      idx1_begin += col_blocks[block1];
     }
     row_block_begin = row_block_end;
   }
