@@ -78,6 +78,15 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
       for (int i = 0; i < A_->num_cols(); ++i) {
         crsm->mutable_col_blocks()->push_back(1);
       }
+
+      // With all blocks of size 1, crsb_rows and crsb_cols are equivalent to
+      // rows and cols.
+      std::copy(crsm->rows(), crsm->rows() + crsm->num_rows() + 1,
+                std::back_inserter(*crsm->mutable_crsb_rows()));
+
+      std::copy(crsm->cols(), crsm->cols() + crsm->num_nonzeros(),
+                std::back_inserter(*crsm->mutable_crsb_cols()));
+
       transformed_A.reset(crsm);
     } else {
       LOG(FATAL) << "Unknown linear solver : " << options.type;
