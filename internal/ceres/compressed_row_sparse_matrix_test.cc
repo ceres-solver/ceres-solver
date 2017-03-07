@@ -142,6 +142,9 @@ TEST_F(CompressedRowSparseMatrixTest, DeleteRows) {
   // Clear the row and column blocks as these are purely scalar tests.
   crsm->mutable_row_blocks()->clear();
   crsm->mutable_col_blocks()->clear();
+  crsm->mutable_crsb_rows()->clear();
+  crsm->mutable_crsb_cols()->clear();
+
   for (int i = 0; i < num_rows; ++i) {
     tsm->Resize(num_rows - i, num_cols);
     crsm->DeleteRows(crsm->num_rows() - tsm->num_rows());
@@ -153,6 +156,8 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
   // Clear the row and column blocks as these are purely scalar tests.
   crsm->mutable_row_blocks()->clear();
   crsm->mutable_col_blocks()->clear();
+  crsm->mutable_crsb_rows()->clear();
+  crsm->mutable_crsb_cols()->clear();
 
   for (int i = 0; i < num_rows; ++i) {
     TripletSparseMatrix tsm_appendage(*tsm);
@@ -440,10 +445,16 @@ CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
   vector<int> cols;
   vector<double> values;
 
+  vector<int> crsb_rows;
+  vector<int> crsb_cols;
+
   while (values.size() == 0) {
     int row_block_begin = 0;
+    crsb_rows.clear();
+    crsb_cols.clear();
     for (int r = 0; r < options.num_row_blocks; ++r) {
       int col_block_begin = 0;
+      crsb_rows.push_back(crsb_cols.size());
       for (int c = 0; c < options.num_col_blocks; ++c) {
         if (RandDouble() <= options.block_density) {
           for (int i = 0; i < row_blocks[r]; ++i) {
@@ -453,12 +464,14 @@ CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
               values.push_back(RandNormal());
             }
           }
+          crsb_cols.push_back(c);
         }
         col_block_begin += col_blocks[c];
       }
       row_block_begin += row_blocks[r];
     }
   }
+  crsb_rows.push_back(crsb_cols.size());
 
   const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0);
   const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0);
@@ -472,6 +485,8 @@ CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
   CompressedRowSparseMatrix* matrix = new CompressedRowSparseMatrix(tsm);
   (*matrix->mutable_row_blocks())  = row_blocks;
   (*matrix->mutable_col_blocks())  = col_blocks;
+  (*matrix->mutable_crsb_rows())  = crsb_rows;
+  (*matrix->mutable_crsb_cols())  = crsb_cols;
   return matrix;
 }
 
@@ -534,11 +549,14 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         cs_di* expected_outer_product =
             cxsparse.MatrixMatrixMultiply(&cs_matrix_transpose, cs_matrix);
 
+        // Use compressed row lower triangular matrix for cxsparse.
+        const int stype = 1;
         vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *matrix, &program));
+                *matrix, stype, &program));
         CompressedRowSparseMatrix::ComputeOuterProduct(*matrix,
+                                                       stype,
                                                        program,
                                                        outer_product.get());
 
@@ -556,6 +574,7 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         expected_matrix.triangularView<Eigen::StrictlyLower>().setZero();
 
         ToDenseMatrix(&actual_outer_product, &actual_matrix);
+        actual_matrix.triangularView<Eigen::StrictlyLower>().setZero();
         const double diff_norm =
             (actual_matrix - expected_matrix).norm() / expected_matrix.norm();
         ASSERT_NEAR(diff_norm, 0.0, kTolerance)
