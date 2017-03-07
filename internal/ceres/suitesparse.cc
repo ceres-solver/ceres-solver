@@ -116,6 +116,27 @@ cholmod_sparse SuiteSparse::CreateSparseMatrixTransposeView(
   return m;
 }
 
+cholmod_sparse SuiteSparse::CreateUpperSparseMatrixTransposeView(
+    CompressedRowSparseMatrix* A) {
+  cholmod_sparse m;
+  m.nrow = A->num_cols();
+  m.ncol = A->num_rows();
+  m.nzmax = A->num_nonzeros();
+  m.nz = NULL;
+  m.p = reinterpret_cast<void*>(A->mutable_rows());
+  m.i = reinterpret_cast<void*>(A->mutable_cols());
+  m.x = reinterpret_cast<void*>(A->mutable_values());
+  m.z = NULL;
+  m.stype = -1;  // Matrix is upper symmetric.
+  m.itype = CHOLMOD_INT;
+  m.xtype = CHOLMOD_REAL;
+  m.dtype = CHOLMOD_DOUBLE;
+  m.sorted = 1;
+  m.packed = 1;
+
+  return m;
+}
+
 cholmod_dense* SuiteSparse::CreateDenseVector(const double* x,
                                               int in_size,
                                               int out_size) {

@@ -30,9 +30,11 @@
 
 #include "ceres/compressed_row_sparse_matrix.h"
 
+#include <iostream>
 #include <algorithm>
 #include <numeric>
 #include <vector>
+#include <map>
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
@@ -42,7 +44,9 @@ namespace ceres {
 namespace internal {
 
 using std::vector;
-
+using std::map;
+using std::pair;
+using std::make_pair;
 namespace {
 
 // Helper functor used by the constructor for reordering the contents
@@ -273,6 +277,27 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   row_blocks_.insert(row_blocks_.end(),
                      m.row_blocks().begin(),
                      m.row_blocks().end());
+
+  // handle crsb
+  if (m.crsb_rows_.size() == 0)
+    return;
+
+  int num_crsb_nonzeros = crsb_cols_.size();
+  int m_num_crsb_nonzeros = m.crsb_cols_.size();
+  crsb_cols_.resize(num_crsb_nonzeros + m_num_crsb_nonzeros);
+  std::copy(&m.crsb_cols()[0], &m.crsb_cols()[0] + m_num_crsb_nonzeros,
+            &crsb_cols_[num_crsb_nonzeros]);
+
+  int num_crsb_rows = crsb_rows_.size() - 1;
+  int m_num_crsb_rows = m.crsb_rows_.size() - 1;
+  crsb_rows_.resize(num_crsb_rows + m_num_crsb_rows + 1);
+  std::fill(crsb_rows_.begin() + num_crsb_rows,
+            crsb_rows_.begin() + num_crsb_rows + m_num_crsb_rows + 1,
+            crsb_rows_[num_crsb_rows]);
+
+  for (int r = 0; r < m_num_crsb_rows + 1; ++r) {
+    crsb_rows_[num_crsb_rows + r] += m.crsb_rows()[r];
+  }
 }
 
 void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
@@ -364,6 +389,15 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
   *matrix->mutable_row_blocks() = blocks;
   *matrix->mutable_col_blocks() = blocks;
 
+  // handle crsb
+  vector<int>& crsb_rows = *matrix->mutable_crsb_rows();
+  vector<int>& crsb_cols = *matrix->mutable_crsb_cols();
+  for (int i = 0; i < blocks.size(); ++i) {
+    crsb_rows.push_back(i);
+    crsb_cols.push_back(i);
+  }
+  crsb_rows.push_back(blocks.size());
+
   CHECK_EQ(idx_cursor, num_nonzeros);
   CHECK_EQ(col_cursor, num_rows);
   return matrix;
@@ -426,6 +460,16 @@ struct ProductTerm {
   int row;
   int col;
   int index;
+};
+
+struct BlockTerm {
+  BlockTerm(const int i, const int j, const int k)
+      : row_i(i), col_j(j), col_k(k) {
+  }
+
+  int row_i;
+  int col_j;
+  int col_k;
 };
 
 CompressedRowSparseMatrix*
@@ -521,6 +565,239 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
   CHECK_EQ(row_block_begin, m.num_rows());
   sort(product.begin(), product.end());
   return CompressAndFillProgram(m.num_cols(), m.num_cols(), product, program);
+}
+
+CompressedRowSparseMatrix*
+CompressedRowSparseMatrix::CreateBlockOuterProductMatrixAndProgram(
+    const CompressedRowSparseMatrix& m, vector<int>* program) {
+  CHECK_NOTNULL(program)->clear();
+
+  const vector<int>& row_blocks = m.row_blocks();
+  const vector<int>& col_blocks = m.col_blocks();
+
+  const vector<int>& crsb_rows = m.crsb_rows();
+  const vector<int>& crsb_cols = m.crsb_cols();
+
+  CHECK_EQ(row_blocks.size(), crsb_rows.size() - 1);
+
+  // Count cols for blocks
+  vector<int> block_cols(col_blocks.size() + 1);
+  block_cols[0] = 0;
+
+  for (int block = 0; block < col_blocks.size(); ++block)
+    block_cols[block + 1] = block_cols[block] + col_blocks[block];
+
+  // Count compressed row sparse block position (each row start from 0)
+  vector<int> crsb_pos(crsb_cols.size());
+
+  // Count compressed row sparse block total size for each row
+  vector<int> crsb_total(row_blocks.size());
+
+  // Count program index
+  vector<int> program_index(row_blocks.size() + 1);
+  program_index[0] = 0;
+
+  // keep track of map from block output:
+  //    (j_block, k_block)
+  // to block index:
+  //    (row_i, col_j, col_k)
+  vector<BlockTerm> block_indices;
+  vector<ProductTerm> product;
+
+  for (int row_i = 0; row_i < row_blocks.size(); ++row_i) {
+    int crsb_count = 0;
+    for (int col_j = crsb_rows[row_i]; col_j < crsb_rows[row_i + 1]; ++col_j) {
+      int j_block = crsb_cols[col_j];
+      int j_block_size = col_blocks[j_block];
+
+      // traverse upper-triangular blocks
+      for (int col_k = col_j; col_k < crsb_rows[row_i + 1]; ++col_k) {
+        int k_block = crsb_cols[col_k];
+
+        int block_pos = block_indices.size();
+        block_indices.push_back(BlockTerm(row_i, col_j, col_k));
+        product.push_back(ProductTerm(j_block, k_block, block_pos));
+      }
+
+      crsb_pos[col_j] = crsb_count;
+      crsb_count += j_block_size;
+    }
+
+    crsb_total[row_i] = crsb_count;
+
+    // Count program index (upper-triangle).
+    // The program index is counted as
+    //     ******    (crsb_total for row_0)
+    //      *****
+    //       ****
+    //        ***
+    //         **
+    //          *
+    //
+    //       ****    (crsb_total for row_1)
+    //        ***
+    //         **
+    //          *
+    //
+    //      *****    (crsb_total for row_2)
+    //       ****
+    //        ***
+    //         **
+    //          *
+    program_index[row_i + 1] = program_index[row_i] +
+        crsb_total[row_i] * (crsb_total[row_i] + 1) / 2;
+  }
+
+  program->resize(program_index[row_blocks.size()]);
+
+  sort(product.begin(), product.end());
+
+  // append dummy product
+  product.push_back(ProductTerm(-1, -1, 0));
+
+  CompressedRowSparseMatrix* matrix =
+      new CompressedRowSparseMatrix(m.num_cols(), m.num_cols(), 0);
+  int* rows = matrix->mutable_rows();
+
+  // count nonzeros in output
+  int num_output_nonzeros = 0;
+  int output_count = 0;
+  for (int t = 0; t < product.size() - 1; ++t) {
+    if (product[t].row != product[t + 1].row ||
+        product[t].col != product[t + 1].col) {
+      int j_block = product[t].row;
+      int j_block_size = col_blocks[j_block];
+      int j_block_col = block_cols[j_block];
+
+      int k_block = product[t].col;
+      int k_block_size = col_blocks[k_block];
+
+      // count output nonzero (upper-triangle)
+      if (j_block == k_block)
+        num_output_nonzeros += j_block_size * (k_block_size + 1) / 2;
+      else
+        num_output_nonzeros += j_block_size * k_block_size;
+
+      output_count += k_block_size;
+
+      if (product[t].row != product[t + 1].row) {
+        // set rows
+        for (int j_x = 0; j_x < j_block_size; ++j_x)
+          rows[j_block_col + j_x + 1] = output_count - j_x;
+
+        output_count = 0;
+      }
+    }
+  }
+
+  // set rows
+  for (int t = 1; t < matrix->num_cols() + 1; ++t)
+    rows[t] += rows[t - 1];
+
+  matrix->SetMaxNumNonZeros(num_output_nonzeros);
+  int* cols = matrix->mutable_cols();
+
+  output_count = 0;
+  for (int t = 0; t < product.size() - 1; ++t) {
+    int j_block = product[t].row;
+    int j_block_col = block_cols[j_block];
+    int j_block_size = col_blocks[j_block];
+
+    int k_block = product[t].col;
+    int k_block_col = block_cols[k_block];
+    int k_block_size = col_blocks[k_block];
+
+    int block_pos = product[t].index;
+    int row_i = block_indices[block_pos].row_i;
+    int col_j = block_indices[block_pos].col_j;
+    int col_k = block_indices[block_pos].col_k;
+
+    int index_i = program_index[row_i];
+
+    // total block size in the row
+    int total_i = crsb_total[row_i];
+
+    // j block position in the jacobian row block
+    int pos_j = crsb_pos[col_j];
+
+    // k block position in the jacobian row block
+    int pos_k = crsb_pos[col_k];
+
+    // count upper-triangle index for pos_j rows as
+    //    **********************  (total_i)
+    //     *********************
+    //      ********************
+    int index_j_x = index_i + (2 * total_i - pos_j + 1) * pos_j / 2;
+
+    for (int j_x = 0; j_x < j_block_size; ++j_x) {
+      int output_j_x = rows[j_block_col + j_x];
+
+      // upper-triangle
+      int k_start = 0;
+      if (col_j == col_k) k_start = j_x;
+
+      for (int k_y = k_start; k_y < k_block_size; ++k_y) {
+        int index_k_y = (pos_k + k_y) - (pos_j + j_x);
+        int output_k_y = (output_count + k_y) - j_x;
+
+        // set cols
+        cols[output_j_x + output_k_y] = k_block_col + k_y;
+
+        // set program
+        (*program)[index_j_x + index_k_y] = output_j_x + output_k_y;
+      }
+
+      // count index for upper-triangle
+      index_j_x += total_i - pos_j - j_x;
+    }
+
+    if (product[t].row != product[t + 1].row ||
+        product[t].col != product[t + 1].col) {
+      output_count += k_block_size;
+
+      if (product[t].row != product[t + 1].row)
+        output_count = 0;
+    }
+  }
+
+  CHECK_EQ(num_output_nonzeros, rows[m.num_cols()]);
+  CHECK_EQ(program_index[row_blocks.size()], (*program).size());
+
+  return matrix;
+}
+
+void CompressedRowSparseMatrix::ComputeUpperOuterProduct(
+    const CompressedRowSparseMatrix& m, const vector<int>& program,
+    CompressedRowSparseMatrix* result) {
+  result->SetZero();
+  double* values = result->mutable_values();
+  const vector<int>& row_blocks = m.row_blocks();
+
+  int cursor = 0;
+  int row_block_begin = 0;
+  const double* m_values = m.values();
+  const int* m_rows = m.rows();
+  // Iterate over row blocks.
+  for (int row_block = 0; row_block < row_blocks.size(); ++row_block) {
+    const int row_block_end = row_block_begin + row_blocks[row_block];
+    const int saved_cursor = cursor;
+    for (int r = row_block_begin; r < row_block_end; ++r) {
+      // Reuse the program segment for each row in this row block.
+      cursor = saved_cursor;
+      const int row_begin = m_rows[r];
+      const int row_end = m_rows[r + 1];
+      for (int idx1 = row_begin; idx1 < row_end; ++idx1) {
+        const double v1 = m_values[idx1];
+        for (int idx2 = idx1; idx2 < row_end; ++idx2, ++cursor) {
+          values[program[cursor]] += v1 * m_values[idx2];
+        }
+      }
+    }
+    row_block_begin = row_block_end;
+  }
+
+  CHECK_EQ(row_block_begin, m.num_rows());
+  CHECK_EQ(cursor, program.size());
 }
 
 void CompressedRowSparseMatrix::ComputeOuterProduct(

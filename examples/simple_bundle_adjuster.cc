@@ -208,7 +208,9 @@ int main(int argc, char** argv) {
   // standard solver, SPARSE_NORMAL_CHOLESKY, also works fine but it is slower
   // for standard bundle adjustment problems.
   ceres::Solver::Options options;
-  options.linear_solver_type = ceres::DENSE_SCHUR;
+  // options.linear_solver_type = ceres::DENSE_SCHUR;
+  options.linear_solver_type = ceres::SPARSE_NORMAL_CHOLESKY;
+  options.trust_region_strategy_type = ceres::DOGLEG;
   options.minimizer_progress_to_stdout = true;
 
   ceres::Solver::Summary summary;
