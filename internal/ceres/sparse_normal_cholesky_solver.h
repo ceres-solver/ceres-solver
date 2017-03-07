@@ -117,6 +117,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
   scoped_ptr<CompressedRowSparseMatrix> outer_product_;
   std::vector<int> pattern_;
+  std::vector<int> pattern_blocks_;
   const LinearSolver::Options options_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };

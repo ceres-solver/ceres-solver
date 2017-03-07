@@ -275,14 +275,17 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                                &event_logger);
   }
 
+  // Compute outerproduct to compressed row lower triangular matrix
+  int stype = 1;
+
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, &pattern_));
+            *A, stype, &pattern_, &pattern_blocks_));
   }
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
+      *A, stype, pattern_, pattern_blocks_, outer_product_.get());
 
   // Map to an upper triangular column major matrix.
   //
@@ -362,6 +365,9 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
+  // Compute outerproduct to compressed row lower triangular matrix
+  int stype = 1;
+
   // Compute the normal equations. J'J delta = J'f and solve them
   // using a sparse Cholesky factorization. Notice that when compared
   // to SuiteSparse we have to explicitly compute the normal equations
@@ -371,11 +377,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, &pattern_));
+            *A, stype, &pattern_, &pattern_blocks_));
   }
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
+      *A, stype, pattern_, pattern_blocks_, outer_product_.get());
   cs_di lhs =
       cxsparse_.CreateSparseMatrixTransposeView(outer_product_.get());
 
@@ -431,8 +437,27 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   summary.message = "Success.";
 
+  // Compute outerproduct to compressed row upper triangular matrix
+  int stype = -1;
+
+  // Compute the normal equations. J'J delta = J'f and solve them
+  // using a sparse Cholesky factorization. Notice that when compared
+  // to SuiteSparse we have to explicitly compute the normal equations
+  // before they can be factorized. CHOLMOD/SuiteSparse on the other
+  // hand can just work off of Jt to compute the Cholesky
+  // factorization of the normal equations.
+  if (outer_product_.get() == NULL) {
+    outer_product_.reset(
+        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
+            *A, stype, &pattern_, &pattern_blocks_));
+  }
+
+  CompressedRowSparseMatrix::ComputeOuterProduct(
+      *A, stype, pattern_, pattern_blocks_, outer_product_.get());
+
   const int num_cols = A->num_cols();
-  cholmod_sparse lhs = ss_.CreateSparseMatrixTransposeView(A);
+  cholmod_sparse lhs =
+      ss_.CreateSparseMatrixTransposeView(outer_product_.get(), stype);
   event_logger.AddEvent("Setup");
 
   if (options_.dynamic_sparsity) {
@@ -443,7 +468,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     if (options_.use_postordering) {
       factor_ = ss_.BlockAnalyzeCholesky(&lhs,
                                          A->col_blocks(),
-                                         A->row_blocks(),
+                                         A->col_blocks(),
                                          &summary.message);
     } else {
       if (options_.dynamic_sparsity) {
