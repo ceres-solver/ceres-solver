@@ -96,7 +96,7 @@ cholmod_sparse* SuiteSparse::CreateSparseMatrixTranspose(
 }
 
 cholmod_sparse SuiteSparse::CreateSparseMatrixTransposeView(
-    CompressedRowSparseMatrix* A) {
+    CompressedRowSparseMatrix* A, const int stype) {
   cholmod_sparse m;
   m.nrow = A->num_cols();
   m.ncol = A->num_rows();
@@ -106,7 +106,7 @@ cholmod_sparse SuiteSparse::CreateSparseMatrixTransposeView(
   m.i = reinterpret_cast<void*>(A->mutable_cols());
   m.x = reinterpret_cast<void*>(A->mutable_values());
   m.z = NULL;
-  m.stype = 0;  // Matrix is not symmetric.
+  m.stype = stype;
   m.itype = CHOLMOD_INT;
   m.xtype = CHOLMOD_REAL;
   m.dtype = CHOLMOD_DOUBLE;
