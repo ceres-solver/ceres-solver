@@ -96,8 +96,11 @@ class SuiteSparse {
 
   // Create a cholmod_sparse wrapper around the contents of A. This is
   // a shallow object, which refers to the contents of A and does not
-  // use the SuiteSparse machinery to allocate memory.
-  cholmod_sparse CreateSparseMatrixTransposeView(CompressedRowSparseMatrix* A);
+  // use the SuiteSparse machinery to allocate memory. This can
+  // create a choldmod_sparse structure with different stype (upper
+  // triangular or lower triangular).
+  cholmod_sparse CreateSparseMatrixTransposeView(CompressedRowSparseMatrix* A,
+                                                 const int stype);
 
   // Given a vector x, build a cholmod_dense vector of size out_size
   // with the first in_size entries copied from x. If x is NULL, then
