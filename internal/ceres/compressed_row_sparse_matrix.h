@@ -115,6 +115,15 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const std::vector<int>& col_blocks() const { return col_blocks_; }
   std::vector<int>* mutable_col_blocks() { return &col_blocks_; }
 
+  const std::vector<int>& block_offsets() const { return block_offsets_; }
+  std::vector<int>* mutable_block_offsets() { return &block_offsets_; }
+
+  const std::vector<int>& crsb_rows() const { return crsb_rows_; }
+  std::vector<int>* mutable_crsb_rows() { return &crsb_rows_; }
+
+  const std::vector<int>& crsb_cols() const { return crsb_cols_; }
+  std::vector<int>* mutable_crsb_cols() { return &crsb_cols_; }
+
   // Destructive array resizing method.
   void SetMaxNumNonZeros(int num_nonzeros);
 
@@ -135,8 +144,8 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // and create a CompressedRowSparseMatrix corresponding to it.
   //
   // Also compute a "program" vector, which for every term in the
-  // outer product points to the entry in the values array of the
-  // result matrix where it should be accumulated.
+  // block outer product provides the information for the entry
+  // in the values array of the result matrix where it should be accumulated.
   //
   // This program is used by the ComputeOuterProduct function below to
   // compute the outer product.
@@ -145,8 +154,13 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // same sparsity structure, the program only stores the result for
   // one row per row block. The ComputeOuterProduct function reuses
   // this information for each row in the row block.
+  //
+  // stype controls the result matrix in upper or lower triangular matrix
+  //    stype = 1:  lower triangular matrix
+  //    stype = -1: higher triangular matrix
   static CompressedRowSparseMatrix* CreateOuterProductMatrixAndProgram(
       const CompressedRowSparseMatrix& m,
+      const int stype,
       std::vector<int>* program);
 
   // Compute the values array for the expression m.transpose() * m,
@@ -154,6 +168,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // created using the CreateOuterProductMatrixAndProgram function
   // above.
   static void ComputeOuterProduct(const CompressedRowSparseMatrix& m,
+                                  const int stype,
                                   const std::vector<int>& program,
                                   CompressedRowSparseMatrix* result);
 
@@ -171,6 +186,18 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // any way.
   std::vector<int> row_blocks_;
   std::vector<int> col_blocks_;
+
+  // For outerproduct matrix (J' * J), we pre-compute its block offsets
+  // information here for fast outerproduct computation in block unit.
+  // Since the outerproduct matrix is symmetric, we do not need to
+  // distinguish row or col block. In another word, this is the prefix
+  // sum of row_blocks_/col_blocks_.
+  std::vector<int> block_offsets_;
+
+  // If the matrix has an underlying block structure, then it can also
+  // carry with it compressed row sparse block information.
+  std::vector<int> crsb_rows_;
+  std::vector<int> crsb_cols_;
 
   CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };
