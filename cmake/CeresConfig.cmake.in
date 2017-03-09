@@ -236,11 +236,18 @@ set(CERES_USES_MINIGLOG @MINIGLOG@)
 set(CERES_USES_GFLAGS @GFLAGS@)
 if (CERES_USES_MINIGLOG)
   set(MINIGLOG_INCLUDE_DIR ${CERES_INCLUDE_DIR}/ceres/internal/miniglog)
+  if (NOT CERES_WAS_INSTALLED)
+    # When Ceres was exported from the build tree, the miniglog headers
+    # will be in Ceres internal source directory, not in the public headers
+    # directory (they are copied with the public headers when installed).
+    set(MINIGLOG_INCLUDE_DIR
+      ${CERES_EXPORTED_SOURCE_DIR}/internal/ceres/miniglog)
+  endif()
   if (NOT EXISTS ${MINIGLOG_INCLUDE_DIR})
     ceres_report_not_found(
-      "Ceres include directory: "
-      "${CERES_INCLUDE_DIR} does not include miniglog, but Ceres was "
-      "compiled with MINIGLOG enabled (in place of Glog).")
+      "Failed to find miniglog headers in expected include directory: "
+      "${MINIGLOG_INCLUDE_DIR}, but Ceres was compiled with MINIGLOG enabled "
+      "(in place of glog).")
   endif (NOT EXISTS ${MINIGLOG_INCLUDE_DIR})
   list(APPEND CERES_INCLUDE_DIRS ${MINIGLOG_INCLUDE_DIR})
   # Output message at standard log level (not the lower STATUS) so that
