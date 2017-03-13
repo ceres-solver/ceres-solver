@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f6d94c0_695dc8a6",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "This will likely need to be expanded to include dense schur also.\n\none idea would be to do SPARSE_SCHUR and DENSE_SCHUR and then a separate enum for sparse_linear_algebra_library_type just like Solver::Options.\n\nthat way we can replace EIGEN_SPARSE_QR and SUITE_SPARSE_QR with just SPARSE_QR and let the linear algebra library type choose between the backends.",
+      "range": {
+        "startLine": 247,
+        "startChar": 10,
+        "endLine": 247,
+        "endChar": 37
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bd259de_95887f8d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "is there a good reason for this to be templated? \neverything in ceres is doubles, also it would be good to pull this out and test this class on its own.\n\nlast but not the least, the method naming in this class should obey the google c++ style guide.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f977bf_5220649d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "same comment as above, pull out into its own file and test.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 5
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00e158fc_a3da4af5",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "class instead of struct.\npull out on its own and test please.",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 6
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32da3f54_b6580b3e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "R and C are not great variable names. please choose something more informative.",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 25
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc3d2090_d90e34c5",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "why not?\n\nalso shouldn\u0027t this be documented in the header?",
+      "range": {
+        "startLine": 343,
+        "startChar": 22,
+        "endLine": 343,
+        "endChar": 31
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aec40166_65c2888d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "I don\u0027t understand why the same lifting trick that is used elsewhere will work here for tangent spaces.",
+      "range": {
+        "startLine": 500,
+        "startChar": 31,
+        "endLine": 500,
+        "endChar": 41
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84a9d32c_e7205a32",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "this is a huge function, please break this up into smaller more easily parsed functions.\n\nalso I am wondering if given the relative independence of this function from the rest of the file, it is worth splitting this off as its own covariance algorithm, \n\nand the rest of the code should also be split into a core covariance computation + linear solver backend.",
+      "range": {
+        "startLine": 814,
+        "startChar": 21,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aedb91db_11c01a87",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "this part of the code can likely be shared with the rest of the covariance solver.",
+      "range": {
+        "startLine": 830,
+        "startChar": 20,
+        "endLine": 830,
+        "endChar": 27
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4112db89_b530573e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "suite -\u003e ss as the rest of the ceres code.",
+      "range": {
+        "startLine": 949,
+        "startChar": 14,
+        "endLine": 949,
+        "endChar": 19
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "318c855d_af0562a0",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "lower case naming convention for variables.",
+      "range": {
+        "startLine": 952,
+        "startChar": 18,
+        "endLine": 952,
+        "endChar": 20
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe7d3d03_8d5998b2",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "lower case naming.",
+      "range": {
+        "startLine": 956,
+        "startChar": 19,
+        "endLine": 956,
+        "endChar": 20
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b3349c_96c4d696",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "google naming.",
+      "range": {
+        "startLine": 978,
+        "startChar": 18,
+        "endLine": 978,
+        "endChar": 19
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cf51229_1ec974dd",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "how much faster is this than just using suitesparse to invert the reduced linear system?",
+      "range": {
+        "startLine": 985,
+        "startChar": 5,
+        "endLine": 985,
+        "endChar": 15
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecc57020_4c2bd2a7",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "why is this needed in this CL?",
+      "range": {
+        "startLine": 263,
+        "startChar": 10,
+        "endLine": 263,
+        "endChar": 14
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81b41c55_c7882c5b",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "n makes it sound like its integers.",
+      "range": {
+        "startLine": 54,
+        "startChar": 23,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "460feb35_8d2a8eae",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "Remaining",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 12
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f11471a6_3ee9fd96",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-13T15:03:59Z",
+      "side": 1,
+      "message": "here and below, can there be a case where b is not null and rhs is null? would it be simpler to just check for b?",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 15
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
