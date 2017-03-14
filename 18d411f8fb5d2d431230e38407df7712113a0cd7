@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac06a53_93bb7387",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "Please have a detailed message describing the change and an overview of the algorithm plus performance numbers.",
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e784c0ba_c605fdf4",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "use back_inserter ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 14,
+        "endLine": 167,
+        "endChar": 20
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "178cf6da_114b099e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "why do you need iostream? was this for debugging?",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0a5e34f_c062a8cb",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "worth adding a test or updating the test for this, I think this function has given us trouble in the past.",
+      "range": {
+        "startLine": 239,
+        "startChar": 32,
+        "endLine": 239,
+        "endChar": 42
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0393fce0_ddea6d20",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "Full sentences for comments.",
+      "range": {
+        "startLine": 281,
+        "startChar": 12,
+        "endLine": 281,
+        "endChar": 16
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec602bc8_4455a99a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "ceres always uses braces around if statements.",
+      "range": {
+        "startLine": 282,
+        "startChar": 6,
+        "endLine": 282,
+        "endChar": 7
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ee0e9e4_3e1fe911",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "is this right? shouldn\u0027t you be doing a cumulative sum here?",
+      "range": {
+        "startLine": 397,
+        "startChar": 14,
+        "endLine": 397,
+        "endChar": 23
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caa51c8c_b318a0ee",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "document struct.",
+      "range": {
+        "startLine": 465,
+        "startChar": 7,
+        "endLine": 465,
+        "endChar": 16
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2b8c2a3_d840de50",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "why not just i,j,k? what does row and col add here ?\n\nor if you are going to use row and col in which case\n\nwhy not just\n\nrow, col_a col_b ?",
+      "range": {
+        "startLine": 470,
+        "startChar": 6,
+        "endLine": 470,
+        "endChar": 11
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff00f974_8bb4658c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "this is s huge function,  please break this up into smaller functions, which will improve readability and expose the structure of the function better.",
+      "range": {
+        "startLine": 571,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 25
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a315367_e5d6bc1e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "since we are dealing with blocks, except for diagonal blocks, we know that this last internal loop is a block product, and can be done with one scalar times an entire row of the block. \n\nhave you considered that optimization? it will also have an impact on the size and structure of the program and the number of program[cursor] lookups you have to do when computing the product.",
+      "range": {
+        "startLine": 791,
+        "startChar": 24,
+        "endLine": 791,
+        "endChar": 28
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3334ed2_593dd07b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "why not get rid of this?",
+      "range": {
+        "startLine": 154,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 34
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c811410_081f793d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "please add tests for these functions.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 8
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8b7028f_3d37ddb9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "get rid of this.",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 8
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49baad2c_ebd1227d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "please add tests.",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 19
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57d5015b_ba4423c4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "I am wondering if row_blocks_, col_blocks, crsb_rows_ and crsb_cols should be its own struct.\n\nstruct CompressedRowBlockStructure {\n  row_blocks\n  col_blocks\n  rows\n  cols\n}\n\nwhat do you think?",
+      "range": {
+        "startLine": 192,
+        "startChar": 19,
+        "endLine": 192,
+        "endChar": 29
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a43fc08_37e023e0",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-14T13:59:01Z",
+      "side": 1,
+      "message": "Rename this to Lower to match the function below.",
+      "range": {
+        "startLine": 100,
+        "startChar": 17,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "18d411f8fb5d2d431230e38407df7712113a0cd7",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
