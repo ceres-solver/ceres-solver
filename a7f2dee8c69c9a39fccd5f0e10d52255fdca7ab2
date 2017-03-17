@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a862cb7a_098758d7",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8bd259de_95887f8d",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f977bf_5220649d",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "same comment as above, pull out into its own file and test.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 5
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f1abff4_f794236f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51f977bf_5220649d",
       "range": {
         "startLine": 129,
         "startChar": 0,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d9e40174_f80aa6cd",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00e158fc_a3da4af5",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 6
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32da3f54_b6580b3e",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "R and C are not great variable names. please choose something more informative.",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 25
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a0cf819_13e75e48",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32da3f54_b6580b3e",
       "range": {
         "startLine": 252,
         "startChar": 24,
@@ -232,6 +328,30 @@
     },
     {
       "key": {
+        "uuid": "a94d0418_e17add2f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4112db89_b530573e",
+      "range": {
+        "startLine": 949,
+        "startChar": 14,
+        "endLine": 949,
+        "endChar": 19
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "318c855d_af0562a0",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -243,6 +363,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "lower case naming convention for variables.",
+      "range": {
+        "startLine": 952,
+        "startChar": 18,
+        "endLine": 952,
+        "endChar": 20
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0034f69f_a7e4846e",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "318c855d_af0562a0",
       "range": {
         "startLine": 952,
         "startChar": 18,
@@ -278,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "080302d5_5441b57c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe7d3d03_8d5998b2",
+      "range": {
+        "startLine": 956,
+        "startChar": 19,
+        "endLine": 956,
+        "endChar": 20
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59b3349c_96c4d696",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -289,6 +457,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "google naming.",
+      "range": {
+        "startLine": 978,
+        "startChar": 18,
+        "endLine": 978,
+        "endChar": 19
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f004ea08_3bef96b4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59b3349c_96c4d696",
       "range": {
         "startLine": 978,
         "startChar": 18,
@@ -347,6 +539,30 @@
     },
     {
       "key": {
+        "uuid": "74d63c3c_d33d4e75",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "When evaluating jacobians for covariance computation, cost is not needed; however if NULL is passed to the evaluator it will crash here and below.",
+      "parentUuid": "ecc57020_4c2bd2a7",
+      "range": {
+        "startLine": 263,
+        "startChar": 10,
+        "endLine": 263,
+        "endChar": 14
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81b41c55_c7882c5b",
         "filename": "internal/ceres/random.h",
         "patchSetId": 2
@@ -358,6 +574,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "n makes it sound like its integers.",
+      "range": {
+        "startLine": 54,
+        "startChar": 23,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "826d7916_0b043e2d",
+        "filename": "internal/ceres/random.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "would you prefer `[-max max]`?",
+      "parentUuid": "81b41c55_c7882c5b",
       "range": {
         "startLine": 54,
         "startChar": 23,
@@ -393,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "2461f414_0338c517",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "460feb35_8d2a8eae",
+      "range": {
+        "startLine": 668,
+        "startChar": 5,
+        "endLine": 668,
+        "endChar": 12
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f11471a6_3ee9fd96",
         "filename": "internal/ceres/schur_eliminator_impl.h",
         "patchSetId": 2
@@ -404,6 +668,30 @@
       "writtenOn": "2017-03-13T15:03:59Z",
       "side": 1,
       "message": "here and below, can there be a case where b is not null and rhs is null? would it be simpler to just check for b?",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 15
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2108a2c_4a30ae62",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-03-17T19:38:35Z",
+      "side": 1,
+      "message": "If you check only b, it will crash if you pass b !\u003d 0 and rhs \u003d\u003d 0, but not if you pass b \u003d\u003d 0 and rhs !\u003d 0. That seems odd to me. I\u0027d rather see the required dependencies between parameters (ie, if you pass rhs you also need to pass b) checked at the beginning and an error logged rather than just crashing. Thoughts?",
+      "parentUuid": "f11471a6_3ee9fd96",
       "range": {
         "startLine": 283,
         "startChar": 14,
