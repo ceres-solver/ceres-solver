@@ -122,6 +122,10 @@ set(CERES_INTERNAL_SRC
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
 
+# Depend also on public headers so they appear in IDEs.
+file(GLOB CERES_PUBLIC_HDRS ../../include/ceres/*.h)
+file(GLOB CERES_PUBLIC_INTERNAL_HDRS ../../include/ceres/internal/*.h)
+
 # Include the specialized schur solvers.
 if (SCHUR_SPECIALIZATIONS)
   file(GLOB CERES_INTERNAL_SCHUR_FILES generated/*.cc)
@@ -173,6 +177,8 @@ endif (OPENMP_FOUND)
 set(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
     ${CERES_INTERNAL_HDRS}
+    ${CERES_PUBLIC_HDRS}
+    ${CERES_PUBLIC_INTERNAL_HDRS}
     ${CERES_INTERNAL_SCHUR_FILES})
 
 # Primarily for Android, but optionally for others, compile the minimal
