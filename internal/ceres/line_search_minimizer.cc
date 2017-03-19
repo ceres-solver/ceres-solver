@@ -380,6 +380,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
     iteration_summary.cumulative_time_in_seconds =
         WallTimeInSeconds() - start_time
         + summary->preprocessor_time_in_seconds;
+    summary->iterations.push_back(iteration_summary);
 
     // Iterations inside the line search algorithm are considered
     // 'steps' in the broader context, to distinguish these inner
@@ -435,8 +436,6 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
       break;
     }
-
-    summary->iterations.push_back(iteration_summary);
   }
 }
 
