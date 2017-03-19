@@ -121,6 +121,14 @@ set(CERES_INTERNAL_SRC
 
 # Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
+if (MINIGLOG)
+  file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
+  list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})
+endif()
+
+# Depend also on public headers so they appear in IDEs.
+file(GLOB CERES_PUBLIC_HDRS ${Ceres_SOURCE_DIR}/include/ceres/*.h)
+file(GLOB CERES_PUBLIC_INTERNAL_HDRS ${Ceres_SOURCE_DIR}/include/ceres/internal/*.h)
 
 # Include the specialized schur solvers.
 if (SCHUR_SPECIALIZATIONS)
@@ -173,6 +181,8 @@ endif (OPENMP_FOUND)
 set(CERES_LIBRARY_SOURCE
     ${CERES_INTERNAL_SRC}
     ${CERES_INTERNAL_HDRS}
+    ${CERES_PUBLIC_HDRS}
+    ${CERES_PUBLIC_INTERNAL_HDRS}
     ${CERES_INTERNAL_SCHUR_FILES})
 
 # Primarily for Android, but optionally for others, compile the minimal
