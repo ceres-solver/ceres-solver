@@ -35,7 +35,6 @@
 // dynamic_sparsity, and how it can benefit problems which are numerically
 // dense but dynamically sparse.
 
-#define _USE_MATH_DEFINES
 #include <cmath>
 #include <vector>
 #include "ceres/ceres.h"
