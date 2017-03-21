@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff12227a_165ed7ad",
+        "filename": "internal/ceres/compressed_row_jacobian_writer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-21T00:27:38Z",
+      "side": 1,
+      "message": "doesn\u0027t this need to be std::back_inserter?",
+      "range": {
+        "startLine": 170,
+        "startChar": 14,
+        "endLine": 170,
+        "endChar": 27
+      },
+      "revId": "5ac2a5cd78adb3d095a3874dfcf35de754555775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "028270ba_f050df11",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-21T00:27:38Z",
+      "side": 1,
+      "message": "break this up into sub functions please.",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 462,
+        "endChar": 22
+      },
+      "revId": "5ac2a5cd78adb3d095a3874dfcf35de754555775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "073a6dab_8dcd0c6e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-21T00:27:38Z",
+      "side": 1,
+      "message": "I think instead of row_i and col_j  it is better to make sure we make the distinction between what is a block index and what is a scalar index and what is position. i and j are hard to read and reason about. it works in scalar crs matrices, but in block matrices it is harder.",
+      "range": {
+        "startLine": 574,
+        "startChar": 11,
+        "endLine": 574,
+        "endChar": 16
+      },
+      "revId": "5ac2a5cd78adb3d095a3874dfcf35de754555775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "306e522b_563b1172",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-21T00:27:38Z",
+      "side": 1,
+      "message": "you can replace the whole loop by a single eigen statement.\n\nVectorRef(values + program_cursor,  k_block_size) \u003d \nv1 * ConstVectorRef(m_values + idx_k, k_block_size);\n\nyou may also want to think about replacing this with a single blas call where you account for the stride size of the row in the matrix. \n\nit will lead to much simpler code here, and then a single function that you can optimize.",
+      "range": {
+        "startLine": 670,
+        "startChar": 43,
+        "endLine": 670,
+        "endChar": 45
+      },
+      "revId": "5ac2a5cd78adb3d095a3874dfcf35de754555775",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
