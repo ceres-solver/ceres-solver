@@ -105,7 +105,7 @@ class CgnrLinearOperator : public LinearOperator {
     RightMultiply(x, y);
   }
 
-  virtual int num_rows() const { return A_.num_cols(); }
+  virtual int num_rows() const { return A_.num_rows(); }
   virtual int num_cols() const { return A_.num_cols(); }
 
  private:
