@@ -42,7 +42,7 @@ project(Ceres C CXX)
 # Make CMake aware of the cmake folder for local FindXXX scripts,
 # append rather than set in case the user has passed their own
 # additional paths via -D.
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(UpdateCacheVariable)
 
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
@@ -77,7 +77,7 @@ set(CMAKE_DEBUG_POSTFIX "-debug")
 # Read the Ceres version from the source, such that we only ever have a single
 # definition of the Ceres version.
 include(ReadCeresVersionFromSource)
-read_ceres_version_from_source(${CMAKE_SOURCE_DIR})
+read_ceres_version_from_source(${CMAKE_CURRENT_LIST_DIR})
 
 enable_testing()
 
