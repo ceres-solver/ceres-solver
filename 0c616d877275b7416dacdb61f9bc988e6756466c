@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9793cb14_7f6653e2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 474,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 5
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8c9c576_2984bea6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 483,
+        "startChar": 7,
+        "endLine": 483,
+        "endChar": 10
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63727648_76397e77",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document loop.",
+      "range": {
+        "startLine": 507,
+        "startChar": 11,
+        "endLine": 507,
+        "endChar": 14
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6bddce6_40568849",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "add comment about what is going on here.",
+      "range": {
+        "startLine": 508,
+        "startChar": 8,
+        "endLine": 508,
+        "endChar": 9
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240d50a5_3f43585c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "blank before.",
+      "range": {
+        "startLine": 516,
+        "startChar": 2,
+        "endLine": 516,
+        "endChar": 4
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61cbce80_f8294c02",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "add a comment explaining what is going on here please.",
+      "range": {
+        "startLine": 521,
+        "startChar": 6,
+        "endLine": 521,
+        "endChar": 7
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c76b560_3dc3e380",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "please add a comment about what is going on here in this loop.",
+      "range": {
+        "startLine": 565,
+        "startChar": 11,
+        "endLine": 565,
+        "endChar": 20
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cd7dcd0_f7ecc9f6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "this loop and the loop in the next else statements are worth breaking into their own small functions. Naming the function will make this function read much simpler.",
+      "range": {
+        "startLine": 569,
+        "startChar": 24,
+        "endLine": 569,
+        "endChar": 33
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11486f54_b728a980",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "else goes on the previous line.",
+      "range": {
+        "startLine": 574,
+        "startChar": 6,
+        "endLine": 574,
+        "endChar": 10
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4c25484_2008df96",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "lets skip code for now, and implement the basic version first, and making the following loop its own function. We will optimize it in a subsequent CL.",
+      "range": {
+        "startLine": 648,
+        "startChar": 12,
+        "endLine": 648,
+        "endChar": 26
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9ca6f61_3868fe9e",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document why its lower triangular here.",
+      "range": {
+        "startLine": 279,
+        "startChar": 13,
+        "endLine": 279,
+        "endChar": 14
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb461003_465d1305",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "why is it upper triangular here? and lower triangular elsewhere.",
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfddefaa_8d857bed",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "this comment is outdated.",
+      "range": {
+        "startLine": 446,
+        "startChar": 17,
+        "endLine": 446,
+        "endChar": 20
+      },
+      "revId": "0c616d877275b7416dacdb61f9bc988e6756466c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
