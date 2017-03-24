@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b018747_1f3f298b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document the new arguments.",
+      "range": {
+        "startLine": 153,
+        "startChar": 38,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6c18844_15bec23a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "document the new arguments.",
+      "range": {
+        "startLine": 161,
+        "startChar": 10,
+        "endLine": 161,
+        "endChar": 11
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76640631_e7187820",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "this comment needs to be updated here and elsewhere since we are doing the J\u0027J for all solvers now.\n\nthe comment for each solver should explain why we are doing stype the way we are doing though.",
+      "range": {
+        "startLine": 445,
+        "startChar": 31,
+        "endLine": 445,
+        "endChar": 41
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a381aae8_c43a6812",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "allows",
+      "range": {
+        "startLine": 99,
+        "startChar": 60,
+        "endLine": 99,
+        "endChar": 65
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4a2eea7_2b0cc983",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "cholmod_sparse -\u003e a cholmod_sparse struct",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34df33e4_dd5136f1",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "stype -\u003e symmetry structure.",
+      "range": {
+        "startLine": 100,
+        "startChar": 43,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "feb84372_d9eca4b7",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-24T05:43:09Z",
+      "side": 1,
+      "message": "uppper -\u003e upper",
+      "range": {
+        "startLine": 100,
+        "startChar": 62,
+        "endLine": 100,
+        "endChar": 68
+      },
+      "revId": "af61c4f0665520d36c4b95f70613dd334517347b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
