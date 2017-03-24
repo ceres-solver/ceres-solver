@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e5a651_4b73f25a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-24T23:27:22Z",
+      "side": 1,
+      "message": "This should also probably contain the miniglog headers if MINIGLOG is on:\n\nif (MINIGLOG)\n  file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)\n  list(APPEND CERES_INTERNAL_HDRS ${MINIGLOG_HDRS})\nendif()",
+      "revId": "223e300c0e631c21bf2ae852dc47d8bfd7fcbf47",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "009c6d43_2cc3b3be",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-24T23:27:22Z",
+      "side": 1,
+      "message": "Replace relative paths with full paths relative to ${Ceres_SOURCE_DIR} (which evaluates to the top of the source tree).",
+      "revId": "223e300c0e631c21bf2ae852dc47d8bfd7fcbf47",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
