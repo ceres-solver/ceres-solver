@@ -129,11 +129,15 @@ list(APPEND CXSPARSE_CHECK_INCLUDE_DIRS
   /usr/local/homebrew/include # Mac OS X
   /opt/local/var/macports/software # Mac OS X.
   /opt/local/include
+  /usr/local/include/suitesparse # Linux.
+  /usr/include/suitesparse # Linux.
   /usr/include)
 list(APPEND CXSPARSE_CHECK_LIBRARY_DIRS
   /usr/local/lib
   /usr/local/homebrew/lib # Mac OS X.
   /opt/local/lib
+  /usr/local/lib/suitesparse # Linux.
+  /usr/lib/suitesparse # Linux.
   /usr/lib)
 
 # Search supplied hint directories first if supplied.
