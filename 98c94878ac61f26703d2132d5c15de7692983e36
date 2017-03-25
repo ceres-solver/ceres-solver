@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da29536_22e2174a",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "In the analytical derivatives section this is a link to the problem, I think it should probably be here too.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d28f16e_0ebf9f4e",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "Looking through the current solving docs I see that we also used \\nabla in places.  Based on the comments in the Spivak notation section, I guess we should change them.",
+      "range": {
+        "startLine": 124,
+        "startChar": 59,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb018b3d_269cecc7",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": ":",
+      "range": {
+        "startLine": 143,
+        "startChar": 38,
+        "endLine": 143,
+        "endChar": 39
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "545a1fba_c254d2f0",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "tedious",
+      "range": {
+        "startLine": 150,
+        "startChar": 28,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdb997e0_8f2536c8",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "an arbitrary",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 12
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0087100_115e1d6e",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "I would add a note here that this is purely for illustration, and that AutoDiffCostFunction will do this for the user, they should not have to interact with Jets directly themselves.",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba5ac57c_76ef6de2",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "I think this could be clearer, as the example above returns by value.  I think you mean that the function is not templated.",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95cec34e_c7ee1691",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "and \u0027analytical derivative\u0027?  (I know it might not always be analytical) so perhaps \u0027evaluated derivative\u0027?",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ac7173_c2ab717a",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "values to be interpolated.",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9803fcc4_793e47ec",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "Add note that Grid2D also exists.",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2e89306_fa9a3800",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "In the analytical derivatives section this is a link to the problem, I think it should probably be here too / as well, as this is referring to the actual Ceres object.",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c46e69a1_48deae6c",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure I can see that just by looking at it - perhaps \u0027It is easy to determine that\u0027 ?",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09f13eb4_b5f52a7c",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "Replace with link to auto-diff section.",
+      "range": {
+        "startLine": 386,
+        "startChar": 26,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce9a1556_175079b5",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "Elsewhere we use f: \\Reals^n \\rightarrow \\Reals^m (and thus an m x n Jacobian and an n-dimensional parameter vector).   I think we should use the same here for clarity.",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d0f8763_feb9e911",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "and",
+      "range": {
+        "startLine": 46,
+        "startChar": 22,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc827c32_fcdd0edd",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-25T20:44:09Z",
+      "side": 1,
+      "message": "derivatives, unless this is a pun.  In which case... I actually don\u0027t know whether to feel sorry for you or applaud :P.",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
