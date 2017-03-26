@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ea43c68_f7e6270f",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da29536_22e2174a",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d28f16e_0ebf9f4e",
         "filename": "docs/source/automatic_derivatives.rst",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "Looking through the current solving docs I see that we also used \\nabla in places.  Based on the comments in the Spivak notation section, I guess we should change them.",
+      "range": {
+        "startLine": 124,
+        "startChar": 59,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84ac23d2_c8a434f1",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "yes I am thinking about changing all our docs to use this notation. It really is much nicer and makes things easier to read. \n\nhttps://github.com/ceres-solver/ceres-solver/issues/263",
+      "parentUuid": "8d28f16e_0ebf9f4e",
       "range": {
         "startLine": 124,
         "startChar": 59,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "371a3468_b606baa8",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb018b3d_269cecc7",
+      "range": {
+        "startLine": 143,
+        "startChar": 38,
+        "endLine": 143,
+        "endChar": 39
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "545a1fba_c254d2f0",
         "filename": "docs/source/automatic_derivatives.rst",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "tedious",
+      "range": {
+        "startLine": 150,
+        "startChar": 28,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edbb2095_246f7694",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "545a1fba_c254d2f0",
       "range": {
         "startLine": 150,
         "startChar": 28,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c02e4f2f_f40ecdd9",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdb997e0_8f2536c8",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 12
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0087100_115e1d6e",
         "filename": "docs/source/automatic_derivatives.rst",
         "patchSetId": 5
@@ -128,6 +248,24 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "I would add a note here that this is purely for illustration, and that AutoDiffCostFunction will do this for the user, they should not have to interact with Jets directly themselves.",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8520905f_5d719643",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "there is a note at the top of the Dual numbers section which does exactly that, would you want another one here?",
+      "parentUuid": "d0087100_115e1d6e",
       "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "fa414679_a9b90255",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "lmk what you think.",
+      "parentUuid": "ba5ac57c_76ef6de2",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95cec34e_c7ee1691",
         "filename": "docs/source/interfacing_with_autodiff.rst",
         "patchSetId": 5
@@ -162,6 +318,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "and \u0027analytical derivative\u0027?  (I know it might not always be analytical) so perhaps \u0027evaluated derivative\u0027?",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1475c9d_38d2f8e9",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "I changed both of this and the one above to use the world evaluates. LMK what you think.",
+      "parentUuid": "95cec34e_c7ee1691",
       "range": {
         "startLine": 72,
         "startChar": 37,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "dfb6bb17_0576ffca",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ac7173_c2ab717a",
+      "range": {
+        "startLine": 73,
+        "startChar": 44,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9803fcc4_793e47ec",
         "filename": "docs/source/interfacing_with_autodiff.rst",
         "patchSetId": 5
@@ -214,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "230cec1b_941bbb2b",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done,\n\nadded a paragraph at the bottom, PTAL.",
+      "parentUuid": "9803fcc4_793e47ec",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e89306_fa9a3800",
         "filename": "docs/source/numerical_derivatives.rst",
         "patchSetId": 5
@@ -225,6 +447,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "In the analytical derivatives section this is a link to the problem, I think it should probably be here too / as well, as this is referring to the actual Ceres object.",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95cd32a1_0f60538e",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e89306_fa9a3800",
       "range": {
         "startLine": 35,
         "startChar": 11,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "9a47f49a_5b135740",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46e69a1_48deae6c",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09f13eb4_b5f52a7c",
         "filename": "docs/source/numerical_derivatives.rst",
         "patchSetId": 5
@@ -271,6 +541,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "Replace with link to auto-diff section.",
+      "range": {
+        "startLine": 386,
+        "startChar": 26,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5dbb771_d64a0363",
+        "filename": "docs/source/numerical_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f13eb4_b5f52a7c",
       "range": {
         "startLine": 386,
         "startChar": 26,
@@ -300,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "91488879_bc248608",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce9a1556_175079b5",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d0f8763_feb9e911",
         "filename": "docs/source/spivak_notation.rst",
         "patchSetId": 5
@@ -323,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "fab45419_01d1e576",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "\u003e and",
+      "parentUuid": "2d0f8763_feb9e911",
+      "range": {
+        "startLine": 46,
+        "startChar": 22,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc827c32_fcdd0edd",
         "filename": "docs/source/spivak_notation.rst",
         "patchSetId": 5
@@ -334,6 +670,30 @@
       "writtenOn": "2017-03-25T20:44:09Z",
       "side": 1,
       "message": "derivatives, unless this is a pun.  In which case... I actually don\u0027t know whether to feel sorry for you or applaud :P.",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e83c21b8_5e8c4a9b",
+        "filename": "docs/source/spivak_notation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-26T18:13:12Z",
+      "side": 1,
+      "message": "well..",
+      "parentUuid": "cc827c32_fcdd0edd",
       "range": {
         "startLine": 47,
         "startChar": 14,
