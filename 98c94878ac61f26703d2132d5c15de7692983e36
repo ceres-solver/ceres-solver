@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "8799d4cd_eb25d921",
+        "filename": "docs/source/automatic_derivatives.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-26T19:37:56Z",
+      "side": 1,
+      "message": "I would be tempted to, as people probably won\u0027t read this all in one sitting and will copy \u0026 paste code.  I\u0027m not saying they should, but they will...",
+      "parentUuid": "8520905f_5d719643",
+      "revId": "98c94878ac61f26703d2132d5c15de7692983e36",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba5ac57c_76ef6de2",
         "filename": "docs/source/interfacing_with_autodiff.rst",
         "patchSetId": 5

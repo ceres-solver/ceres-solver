@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb298983_6c5e69d0",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-26T19:37:56Z",
+      "side": 1,
+      "message": "and",
+      "range": {
+        "startLine": 288,
+        "startChar": 45,
+        "endLine": 288,
+        "endChar": 47
+      },
+      "revId": "738e16994b4371527a1877e776e741b0d9289142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60858af3_43d1db0a",
+        "filename": "docs/source/interfacing_with_autodiff.rst",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-03-26T19:37:56Z",
+      "side": 1,
+      "message": "Perhaps:\n\nNote that neither :class:`Grid1D` or :class:`Grid2D` are limited to scalar valued functions, ... (they also work ...)\n\nIMO, perhaps a little clearer, esp. for non-native speakers.",
+      "range": {
+        "startLine": 291,
+        "startChar": 58,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "738e16994b4371527a1877e776e741b0d9289142",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
