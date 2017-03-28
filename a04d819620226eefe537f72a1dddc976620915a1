@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f1b8e09_a81879e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:21Z",
+      "side": 1,
+      "message": "this last comment is not valid anymore in this CL.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbbc1c8e_d4ca2b53",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 10
