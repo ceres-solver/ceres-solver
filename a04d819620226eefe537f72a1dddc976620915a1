@@ -1,0 +1,941 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbbc1c8e_d4ca2b53",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this function also needs to be updated for crsb_rows and crsb_cols",
+      "range": {
+        "startLine": 216,
+        "startChar": 32,
+        "endLine": 216,
+        "endChar": 42
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec7c0415_b86ebd47",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "Please add/update tests for this to account for block structure.",
+      "range": {
+        "startLine": 235,
+        "startChar": 32,
+        "endLine": 235,
+        "endChar": 42
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64f15925_f4403fab",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this function also needs to be updated to account for crsb structure.",
+      "range": {
+        "startLine": 403,
+        "startChar": 27,
+        "endLine": 403,
+        "endChar": 52
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f99496c0_0ab0570d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "update this description to indicate its new interpretation. Since we are now using this at block level.",
+      "range": {
+        "startLine": 440,
+        "startChar": 5,
+        "endLine": 440,
+        "endChar": 16
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50f8b658_c37ce7aa",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "drop the first argument from the function since the matrix is expected to be square.",
+      "range": {
+        "startLine": 463,
+        "startChar": 33,
+        "endLine": 463,
+        "endChar": 41
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2758bb0c_1a3ccec2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "comment style is incorrect.",
+      "range": {
+        "startLine": 472,
+        "startChar": 4,
+        "endLine": 472,
+        "endChar": 5
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64d56673_56b7df95",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this can be computed much earlier, it seems odd to compute here. maybe move this computation to CreateOuterProductProgram?",
+      "range": {
+        "startLine": 476,
+        "startChar": 4,
+        "endLine": 476,
+        "endChar": 17
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8662a08b_1258759b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "comment style is incorrect.",
+      "range": {
+        "startLine": 483,
+        "startChar": 5,
+        "endLine": 483,
+        "endChar": 8
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "845dfc08_a0ef95d4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this can be its own function.",
+      "range": {
+        "startLine": 485,
+        "startChar": 2,
+        "endLine": 485,
+        "endChar": 8
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f412fe83_3bbfe7f4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "add a comment that this loop depends on product being a sorted array.",
+      "range": {
+        "startLine": 488,
+        "startChar": 10,
+        "endLine": 488,
+        "endChar": 17
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c074809d_5e093af5",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this will over count diagonal blocks in the output matrix? since we are not storing the lower or upper triangular parts of these blocks?",
+      "range": {
+        "startLine": 493,
+        "startChar": 14,
+        "endLine": 493,
+        "endChar": 21
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a94c548_a8e592df",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "drop space.",
+      "range": {
+        "startLine": 499,
+        "startChar": 36,
+        "endLine": 499,
+        "endChar": 37
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49096546_63c7e383",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "comment style is incorrect.",
+      "range": {
+        "startLine": 509,
+        "startChar": 4,
+        "endLine": 509,
+        "endChar": 5
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7b3b80d_8f35104e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "make this double loop a function that you call here and below.  it will make this function smaller and more readable.",
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8bfff58_ff720925",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this is odd, shouldn\u0027t you just do one loop over the rows of the output matrix and assign this, instead of doing this here or in the loop below.\n\nsince this is O(rows) and has nothing to do with the number of product terms.",
+      "range": {
+        "startLine": 525,
+        "startChar": 4,
+        "endLine": 525,
+        "endChar": 13
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b76e214_e236bb35",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "add a comment about what this is.",
+      "range": {
+        "startLine": 528,
+        "startChar": 13,
+        "endLine": 528,
+        "endChar": 20
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8950639e_f801eb09",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "no dealing with diagonal blocks? where row \u003d\u003d col?",
+      "range": {
+        "startLine": 537,
+        "startChar": 14,
+        "endLine": 537,
+        "endChar": 16
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f46cb529_65ebb00c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "add a comment about the logic here.",
+      "range": {
+        "startLine": 537,
+        "startChar": 6,
+        "endLine": 537,
+        "endChar": 13
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49526f46_7d9f1741",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "why put a CHECK statement inside this loop?",
+      "range": {
+        "startLine": 539,
+        "startChar": 17,
+        "endLine": 539,
+        "endChar": 24
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72e7b4b5_2ded4e23",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "is this col_nnz or row_nnz ?",
+      "range": {
+        "startLine": 541,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 15
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0379ca31_e5b46e1b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "why not move the crsm_rows update logic from above to this loop?",
+      "range": {
+        "startLine": 558,
+        "startChar": 20,
+        "endLine": 558,
+        "endChar": 29
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e565f63_0c291ae0",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "add a message like elsewhere about contacting the ceres solver team. there are examples of this message elsewhere in the code.",
+      "range": {
+        "startLine": 563,
+        "startChar": 28,
+        "endLine": 563,
+        "endChar": 35
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "097dbf27_0bd6194e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "comment style is incorrect here and elsewhere.",
+      "range": {
+        "startLine": 571,
+        "startChar": 0,
+        "endLine": 571,
+        "endChar": 2
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5037553c_58740017",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "order of arguments is not correct, it is input arguments and then output arguments.\nplease see google c++ style guide for details.",
+      "range": {
+        "startLine": 582,
+        "startChar": 5,
+        "endLine": 582,
+        "endChar": 30
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecb83522_1b22f44f",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "don\u0027t you need a version of this for triangular multiplies also?",
+      "range": {
+        "startLine": 587,
+        "startChar": 7,
+        "endLine": 587,
+        "endChar": 10
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ea84f57_119281d9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "incorrect commenting style.",
+      "range": {
+        "startLine": 613,
+        "startChar": 2,
+        "endLine": 613,
+        "endChar": 4
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5be1b37_a81d99ec",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "is this row_block_idx or row_block?",
+      "range": {
+        "startLine": 621,
+        "startChar": 11,
+        "endLine": 621,
+        "endChar": 20
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f947b298_d00e0c08",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "indicate lower or upper triangular in comment here.",
+      "range": {
+        "startLine": 624,
+        "startChar": 16,
+        "endLine": 624,
+        "endChar": 17
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1143b731_7f6c943f",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "maybe modify the function interface to just take num_rows/num_cols since it is expected to be a square matrix. no point pretending it is a rectangular matrix.",
+      "range": {
+        "startLine": 641,
+        "startChar": 34,
+        "endLine": 641,
+        "endChar": 42
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1184db0b_ef82ff0c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "incorrect comment style.",
+      "range": {
+        "startLine": 645,
+        "startChar": 0,
+        "endLine": 645,
+        "endChar": 2
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55df1aed_4a52c44b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "use consistent naming for row and column block idx, why are row and columns different here?",
+      "range": {
+        "startLine": 647,
+        "startChar": 8,
+        "endLine": 647,
+        "endChar": 17
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6922000_b91f7c3a",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "I do not understand this.",
+      "range": {
+        "startLine": 652,
+        "startChar": 16,
+        "endLine": 652,
+        "endChar": 25
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f42feaf_5a7e5444",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this is not row_block_nnz, isn\u0027t this just row_nnz ? since you are looking at the size of a single row here?",
+      "range": {
+        "startLine": 692,
+        "startChar": 14,
+        "endLine": 692,
+        "endChar": 27
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "888bf30d_4c890c9c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "again this is not col_block1_nnz, isn\u0027t this just the number of nnz in the row, and is not related to the blocks, or am I misreading the code?",
+      "range": {
+        "startLine": 701,
+        "startChar": 16,
+        "endLine": 701,
+        "endChar": 30
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb04c02e_ef3408f9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "how are you handling the triangular blocks along the diagonal? the comment does not make sense to me.",
+      "range": {
+        "startLine": 703,
+        "startChar": 9,
+        "endLine": 703,
+        "endChar": 15
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "577590c6_772ab9a8",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "document stype and block_offsets",
+      "range": {
+        "startLine": 154,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 34
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87a00c45_48a45074",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "document the \"block_offsets\" parameter.",
+      "range": {
+        "startLine": 160,
+        "startChar": 23,
+        "endLine": 160,
+        "endChar": 57
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9505921b_a3c94380",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "do we know for a fact that we need lower here and upper elsewhere? how did you determine this?",
+      "range": {
+        "startLine": 279,
+        "startChar": 15,
+        "endLine": 279,
+        "endChar": 16
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb4636fa_cd8211c5",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "this comment is outdated. since suitesparse is using explicitly computed outer product too now.",
+      "range": {
+        "startLine": 446,
+        "startChar": 36,
+        "endLine": 446,
+        "endChar": 43
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd55c7dc_cfd07e3b",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "pattern_ is likely not a great variable name. I know I named it like that, but its likely useless. rename this to match outer_product_block_offsets?",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0117593a_3b86574b",
+        "filename": "internal/ceres/unsymmetric_linear_solver_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-03-28T17:09:06Z",
+      "side": 1,
+      "message": "add a comment as to how and  why you are making this copy (it has to do with the block sizes being equal to 1).",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "a04d819620226eefe537f72a1dddc976620915a1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
