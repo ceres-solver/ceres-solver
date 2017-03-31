@@ -1795,6 +1795,19 @@ Instances
    residual_blocks is empty, then it is assumed to be equal to the
    vector containing all the parameter blocks.
 
+.. member:: bool Problem::EvaluateOptions::apply_loss_function
+
+   Even though the residual blocks in the problem may contain loss
+   functions, setting apply_loss_function to false will turn off the
+   application of the loss function to the output of the cost
+   function. This is of use for example if the user wishes to analyse
+   the solution quality by studying the distribution of residuals
+   before and after the solve.
+
+.. member:: int Problem::EvaluateOptions::num_threads
+
+   Number of threads to use. (Requires OpenMP).
+
 ``rotation.h``
 ==============
 
