@@ -27,6 +27,7 @@ reports and feature requests.
    derivatives
    nnls_modeling
    nnls_solving
+   nnls_covariance
    gradient_solver
    faqs
    users
