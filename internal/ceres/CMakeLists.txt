@@ -294,7 +294,7 @@ if (BUILD_TESTING AND GFLAGS)
     add_test(NAME ${NAME}_test
              COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${NAME}_test
              --test_srcdir
-             ${CMAKE_SOURCE_DIR}/data)
+             ${Ceres_SOURCE_DIR}/data)
   endmacro (CERES_TEST)
 
   ceres_test(array_utils)
