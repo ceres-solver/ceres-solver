@@ -22,6 +22,30 @@
       "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bb3655e_33cc7a08",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-02T20:42:43Z",
+      "side": 1,
+      "message": "These variables are auto-generated from the project name: https://cmake.org/cmake/help/v3.8/command/project.html#command:project",
+      "parentUuid": "953c4382_47c5393e",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
