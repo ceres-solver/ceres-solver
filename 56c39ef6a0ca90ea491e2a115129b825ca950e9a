@@ -70,6 +70,30 @@
       "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba34d9ba_4c69182a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-03T13:49:00Z",
+      "side": 1,
+      "message": "Well, as CERES_[SOURCE/BINARY]_DIR is not going to be defined, it actually should fail hard - so that should be easy to identify.  However, I have added a note at the top of this file, please have a look.",
+      "parentUuid": "51a428cb_432d660f",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
