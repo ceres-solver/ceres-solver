@@ -46,6 +46,30 @@
       "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51a428cb_432d660f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-04-03T00:54:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly where to put it, but it\u0027d be good to capture in the comments that the casing is not accidental and must be maintained. I worry that a future change could look at the casing, switch it back to CERES, then quietly break the nesting case since it\u0027s not tested regularly.",
+      "parentUuid": "3bb3655e_33cc7a08",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "56c39ef6a0ca90ea491e2a115129b825ca950e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
