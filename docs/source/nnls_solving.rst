@@ -867,7 +867,7 @@ elimination group [LiSaad]_.
    Choices are ``FLETCHER_REEVES``, ``POLAK_RIBIERE`` and
    ``HESTENES_STIEFEL``.
 
-.. member:: int Solver::Options::max_lbfs_rank
+.. member:: int Solver::Options::max_lbfgs_rank
 
    Default: 20
 
