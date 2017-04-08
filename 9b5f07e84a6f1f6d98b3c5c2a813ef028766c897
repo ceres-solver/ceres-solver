@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "aa34514c_cb7ee29c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Add more details.",
+      "parentUuid": "0f92aecb_30dfaf9e",
+      "range": {
+        "startLine": 238,
+        "startChar": 13,
+        "endLine": 238,
+        "endChar": 17
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4467510f_89ec1f19",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -59,6 +83,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment, not sure how this applies.",
+      "range": {
+        "startLine": 284,
+        "startChar": 5,
+        "endLine": 284,
+        "endChar": 12
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a3cd064_81cbd4d6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Add more details.",
+      "parentUuid": "4467510f_89ec1f19",
       "range": {
         "startLine": 284,
         "startChar": 5,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "21154965_d11dd787",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc850c65_2addb111",
+      "range": {
+        "startLine": 286,
+        "startChar": 10,
+        "endLine": 286,
+        "endChar": 11
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1ec2c5_8db06ed2",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -105,6 +177,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment, please use something more meaningful.",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 12
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c516547f_cf143773",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Add more details",
+      "parentUuid": "8f1ec2c5_8db06ed2",
       "range": {
         "startLine": 292,
         "startChar": 5,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "178c9716_2d6b0609",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "We need to deal with two sparse structures (one in element unit and one in block unit) similarly.  I introduce a new function to handle the sparse structure and call it twice for the two different sparse structures.",
+      "parentUuid": "7cd3f90a_01bc5963",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 25
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e50d88ad_2ad5fc25",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -151,6 +271,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment. please correct.",
+      "range": {
+        "startLine": 444,
+        "startChar": 13,
+        "endLine": 444,
+        "endChar": 19
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2e2111_e097dbd4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e50d88ad_2ad5fc25",
       "range": {
         "startLine": 444,
         "startChar": 13,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "be3cbb85_771b6789",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2ae1ba_f72d4461",
+      "range": {
+        "startLine": 446,
+        "startChar": 11,
+        "endLine": 446,
+        "endChar": 20
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "287156dd_a06f2372",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -197,6 +365,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment which has no meaning.",
+      "range": {
+        "startLine": 451,
+        "startChar": 5,
+        "endLine": 451,
+        "endChar": 12
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d3c54c1_df9ce2d5",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287156dd_a06f2372",
       "range": {
         "startLine": 451,
         "startChar": 5,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "cad76a1c_ce8f4964",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "We only compute block offsets for the outerproduct matrix.  It is only used in ComputeOuterProduct.",
+      "parentUuid": "75064246_49a2aa46",
+      "range": {
+        "startLine": 456,
+        "startChar": 5,
+        "endLine": 456,
+        "endChar": 7
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87d6e00_c2b5c7b3",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -243,6 +459,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "document the function and its arguments.",
+      "range": {
+        "startLine": 506,
+        "startChar": 0,
+        "endLine": 506,
+        "endChar": 25
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3794e00_7764ab56",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d87d6e00_c2b5c7b3",
       "range": {
         "startLine": 506,
         "startChar": 0,
@@ -301,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "8cd6c071_ec491e1b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2df1ec85_cb9acbeb",
+      "range": {
+        "startLine": 507,
+        "startChar": 34,
+        "endLine": 507,
+        "endChar": 35
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5703480b_ac81f8c9",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -312,6 +576,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "assumes row_nnz of the right size? shouldn\u0027t you resize it here?",
+      "range": {
+        "startLine": 515,
+        "startChar": 12,
+        "endLine": 515,
+        "endChar": 19
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e86c33cb_4392d740",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5703480b_ac81f8c9",
       "range": {
         "startLine": 515,
         "startChar": 12,
@@ -347,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "6fd85d88_bea0badc",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5cb765_497f4916",
+      "range": {
+        "startLine": 519,
+        "startChar": 19,
+        "endLine": 519,
+        "endChar": 27
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7fff1e4_52c8e4f6",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 15
@@ -370,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "2dbd8d1d_d3646f97",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done.\nAlso add more comments.",
+      "parentUuid": "c7fff1e4_52c8e4f6",
+      "range": {
+        "startLine": 631,
+        "startChar": 12,
+        "endLine": 631,
+        "endChar": 26
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3252de8_15182468",
         "filename": "internal/ceres/compressed_row_sparse_matrix.h",
         "patchSetId": 15
@@ -381,6 +717,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "this should either be col_block_offsets or row_block_offsets, otherwise its not clear.",
+      "range": {
+        "startLine": 193,
+        "startChar": 19,
+        "endLine": 193,
+        "endChar": 33
+      },
+      "revId": "9b5f07e84a6f1f6d98b3c5c2a813ef028766c897",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ff507d0_5674c9b7",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "See new comments",
+      "parentUuid": "c3252de8_15182468",
       "range": {
         "startLine": 193,
         "startChar": 19,
