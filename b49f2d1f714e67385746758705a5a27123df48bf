@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89b16005_244869db",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "931cb945_493c46a3",
+      "range": {
+        "startLine": 223,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 12
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92b289a3_9da7e02c",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment, either drop or have a more meaningful comment.",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 238,
+        "endChar": 12
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d766751_f8b1956c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "92b289a3_9da7e02c",
       "range": {
         "startLine": 238,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b76e127_cc43b819",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "f01dcc49_b82cb046",
+      "range": {
+        "startLine": 284,
+        "startChar": 13,
+        "endLine": 284,
+        "endChar": 19
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f34d103_413d69f0",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment, either drop or have a more meaningful comment.￼",
+      "range": {
+        "startLine": 292,
+        "startChar": 5,
+        "endLine": 292,
+        "endChar": 12
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "170ca797_c453f7b7",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "4f34d103_413d69f0",
       "range": {
         "startLine": 292,
         "startChar": 5,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8db15c21_00fa83b9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab565b9a_65386b82",
+      "range": {
+        "startLine": 444,
+        "startChar": 13,
+        "endLine": 444,
+        "endChar": 19
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1659d274_53745dcd",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -128,6 +248,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "generic comment, please improve.",
+      "range": {
+        "startLine": 451,
+        "startChar": 5,
+        "endLine": 451,
+        "endChar": 12
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9d59d1f_3272c906",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Changed",
+      "parentUuid": "1659d274_53745dcd",
       "range": {
         "startLine": 451,
         "startChar": 5,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "46d8f4c2_65d85731",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "The transpose of compressed row sparse structure is a little tricky.  The algorithm needs to traverse the structure several rounds in different loops.  I put the algorithm into a general function called twice, one for element-wise sparse structure and one for block-wise sparse structure.",
+      "parentUuid": "ecef9623_86cb156f",
+      "range": {
+        "startLine": 457,
+        "startChar": 22,
+        "endLine": 457,
+        "endChar": 28
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66a38762_015ba2b7",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "64f2aaaf_903692cd",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Change to num_cols.  This matches the num_cols of the input Jacobian matrix.",
+      "parentUuid": "66a38762_015ba2b7",
+      "range": {
+        "startLine": 507,
+        "startChar": 35,
+        "endLine": 507,
+        "endChar": 43
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283e651b_0a5f13bd",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -197,6 +389,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "this statement is not correct, you are counting the number of non-zeros in any row of a row-block and not the number of non-zeros in the row block.",
+      "range": {
+        "startLine": 514,
+        "startChar": 34,
+        "endLine": 514,
+        "endChar": 39
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b22b06aa_e7a8b9c0",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283e651b_0a5f13bd",
       "range": {
         "startLine": 514,
         "startChar": 34,
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "7f22e08b_2ef13338",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Add more detailed comments",
+      "parentUuid": "59092fbb_c73d3895",
+      "range": {
+        "startLine": 519,
+        "startChar": 19,
+        "endLine": 519,
+        "endChar": 27
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae9c38e_ddd4083a",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -266,6 +506,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "block -\u003e i is actually easier to read than \n\nblocks[block]",
+      "range": {
+        "startLine": 535,
+        "startChar": 16,
+        "endLine": 535,
+        "endChar": 17
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8fabdd8_1a685beb",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae9c38e_ddd4083a",
       "range": {
         "startLine": 535,
         "startChar": 16,
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "9de28e95_4894b17f",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Change to num_cols.  This matches the num_cols of the input Jacobian matrix.",
+      "parentUuid": "04555d95_de82b192",
+      "range": {
+        "startLine": 543,
+        "startChar": 33,
+        "endLine": 543,
+        "endChar": 41
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff322a97_112c631d",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -312,6 +600,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "is this expression correct?\n\nthe multiplication by \"row\" seems not right, shouldn\u0027t this be the size of the row_block?",
+      "range": {
+        "startLine": 570,
+        "startChar": 32,
+        "endLine": 570,
+        "endChar": 33
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c404cf3d_940edad1",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "This is calculated for each element within the block, row-by-row and col-by-col.  row and col are the relative position to the starting row and starting col of the block.",
+      "parentUuid": "ff322a97_112c631d",
       "range": {
         "startLine": 570,
         "startChar": 32,
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "92719709_0e41d038",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "The row is the relative row position within the block of product[0].  The actual row is computed from block_offsets, which takes into account the first product may not be the first row.  I renamed (row, col) to (j, k) to avoid the confusion.",
+      "parentUuid": "dba63e26_726cb985",
+      "range": {
+        "startLine": 579,
+        "startChar": 11,
+        "endLine": 579,
+        "endChar": 14
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3829616a_bb9b88e3",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -358,6 +694,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "document what this value indicates.\nthough this is perhaps better documented when this array is defined.",
+      "range": {
+        "startLine": 588,
+        "startChar": 22,
+        "endLine": 588,
+        "endChar": 24
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa3a10a1_466f0e50",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3829616a_bb9b88e3",
       "range": {
         "startLine": 588,
         "startChar": 22,
@@ -393,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "a1b19946_ff56460b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9250a58a_62d2c537",
+      "range": {
+        "startLine": 629,
+        "startChar": 19,
+        "endLine": 629,
+        "endChar": 33
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b6c8f1_938c48d1",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -404,6 +788,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "stack arguments vertically.",
+      "range": {
+        "startLine": 630,
+        "startChar": 5,
+        "endLine": 630,
+        "endChar": 30
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8009fa86_2f686501",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b6c8f1_938c48d1",
       "range": {
         "startLine": 630,
         "startChar": 5,
@@ -439,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "dbb4e789_cd3b4ab4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Cleanup some code and give more details in comments.",
+      "parentUuid": "25e28ad0_7aa26d4f",
+      "range": {
+        "startLine": 700,
+        "startChar": 15,
+        "endLine": 700,
+        "endChar": 16
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57eacc5_3685431e",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 16
@@ -450,6 +882,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "make this result_row and result_row_nnz",
+      "range": {
+        "startLine": 760,
+        "startChar": 16,
+        "endLine": 760,
+        "endChar": 19
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f1b1678_546039a6",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "I use m_row_begin, m_row_nnz, m_col_nnz to represent the input matrix and corresponding row_begin, row_nnz, col_nnz to represent the output matrix.  I also explain that in the comment.",
+      "parentUuid": "c57eacc5_3685431e",
       "range": {
         "startLine": 760,
         "startChar": 16,
@@ -485,6 +941,30 @@
     },
     {
       "key": {
+        "uuid": "6d7dd0e5_fdc9087c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc037fc3_f6060d89",
+      "range": {
+        "startLine": 159,
+        "startChar": 19,
+        "endLine": 159,
+        "endChar": 26
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b9b13b6_4a38ae6c",
         "filename": "internal/ceres/compressed_row_sparse_matrix.h",
         "patchSetId": 16
@@ -496,6 +976,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "expand this description, it is not terribly informative.",
+      "range": {
+        "startLine": 192,
+        "startChar": 5,
+        "endLine": 192,
+        "endChar": 24
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1efce090_c814cd11",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Add more detailed description.",
+      "parentUuid": "7b9b13b6_4a38ae6c",
       "range": {
         "startLine": 192,
         "startChar": 5,
@@ -531,6 +1035,30 @@
     },
     {
       "key": {
+        "uuid": "4ee21cdd_a0517cbb",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "114c980c_56ff807e",
+      "range": {
+        "startLine": 437,
+        "startChar": 13,
+        "endLine": 437,
+        "endChar": 25
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb06d7fc_fd70ccf0",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 16
@@ -554,6 +1082,30 @@
     },
     {
       "key": {
+        "uuid": "5ca68049_d95d5a44",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb06d7fc_fd70ccf0",
+      "range": {
+        "startLine": 100,
+        "startChar": 55,
+        "endLine": 100,
+        "endChar": 60
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d8ef2bb_2ec60946",
         "filename": "internal/ceres/suitesparse.h",
         "patchSetId": 16
@@ -565,6 +1117,30 @@
       "writtenOn": "2017-04-07T13:56:14Z",
       "side": 1,
       "message": "constant/by value parameters should come before mutable parameters.\n\nalso it is not clear why this function takes a non-const pointer, since it won\u0027t actually modify the matrix A, \n\nconsider changing this function to \nCreateSparseMatrixTransposeView(const CompressedRowSparseMatrix\u0026 A, const int stype)\n\nor\nCreateSparseMatrixTransposeView(const CompressedRowSparseMatrix* A, const int stype)",
+      "range": {
+        "startLine": 102,
+        "startChar": 49,
+        "endLine": 102,
+        "endChar": 74
+      },
+      "revId": "b49f2d1f714e67385746758705a5a27123df48bf",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f06bb446_dc343740",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-08T00:45:12Z",
+      "side": 1,
+      "message": "I tried the change.  The compiler generates error.  Even though the function does not change A, it copies a pointer in A to the new matrix.  So the new matrix shares the data with the old matrix.",
+      "parentUuid": "0d8ef2bb_2ec60946",
       "range": {
         "startLine": 102,
         "startChar": 49,
