@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a096cb_5d3513b1",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-08T04:18:55Z",
+      "side": 1,
+      "message": "vertically stack arguments.",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1addab2c_a09eb1ab",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-08T04:18:55Z",
+      "side": 1,
+      "message": "braces for if statements",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 89,
+        "endChar": 16
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed47af09_5b6a1fa3",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-08T04:18:55Z",
+      "side": 1,
+      "message": "\"rest code\" -\u003e \"rest of the code\" here and elsewhere below.",
+      "range": {
+        "startLine": 250,
+        "startChar": 13,
+        "endLine": 250,
+        "endChar": 14
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61535f26_7808e447",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-08T04:18:55Z",
+      "side": 1,
+      "message": "alignment of arguments.",
+      "range": {
+        "startLine": 661,
+        "startChar": 31,
+        "endLine": 661,
+        "endChar": 32
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
