@@ -135,7 +135,9 @@ LinearSolver::Summary SchurComplementSolver::SolveImpl(
                     &options_.e_block_size,
                     &options_.f_block_size);
     eliminator_.reset(CHECK_NOTNULL(SchurEliminatorBase::Create(options_)));
-    eliminator_->Init(options_.elimination_groups[0], A->block_structure());
+    const bool kFullRankETE = true;
+    eliminator_->Init(
+        options_.elimination_groups[0], kFullRankETE, A->block_structure());
   };
   std::fill(x, x + A->num_cols(), 0.0);
   event_logger.AddEvent("Setup");
