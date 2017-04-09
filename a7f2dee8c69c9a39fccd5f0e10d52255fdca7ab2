@@ -563,6 +563,30 @@
     },
     {
       "key": {
+        "uuid": "92363497_31cbc104",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-09T17:32:03Z",
+      "side": 1,
+      "message": "consider making this a change in itself. easier to review, test and get in.",
+      "parentUuid": "74d63c3c_d33d4e75",
+      "range": {
+        "startLine": 263,
+        "startChar": 10,
+        "endLine": 263,
+        "endChar": 14
+      },
+      "revId": "a7f2dee8c69c9a39fccd5f0e10d52255fdca7ab2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81b41c55_c7882c5b",
         "filename": "internal/ceres/random.h",
         "patchSetId": 2
