@@ -150,6 +150,30 @@
     },
     {
       "key": {
+        "uuid": "ec8d7fe4_6ae9c5c1",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T04:04:28Z",
+      "side": 1,
+      "message": "yes so when the covariance code calls the eliminator, in the init call you will pass false and you are good to go from there.",
+      "parentUuid": "9268d98f_becbbace",
+      "range": {
+        "startLine": 210,
+        "startChar": 9,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7e7198e_48bef333",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
