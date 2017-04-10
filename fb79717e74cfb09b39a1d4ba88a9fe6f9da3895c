@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "40073aba_5797df4f",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:51:01Z",
+      "side": 1,
+      "message": "having said that, I am not sure if passing this in LinearSolver::Option is such a good idea, as it is a struct to define options for the linear solver and all linear solvers calling this eliminator are going to assume full rank right now.",
+      "parentUuid": "241f4ff5_72cdeaf5",
+      "range": {
+        "startLine": 210,
+        "startChar": 9,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7e7198e_48bef333",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
