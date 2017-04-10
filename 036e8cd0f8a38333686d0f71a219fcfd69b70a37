@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55effa00_3243f3d4",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:45:10Z",
+      "side": 1,
+      "message": "the ifdefs and the assignments got too complicated for my taste. also we follow the same pattern in solver.h",
+      "parentUuid": "6f3f129a_58510a78",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7641b8fd_63e4fade",
         "filename": "include/ceres/covariance.h",
         "patchSetId": 1
@@ -59,6 +83,24 @@
       "writtenOn": "2017-04-10T00:13:33Z",
       "side": 1,
       "message": "So with the Schur types, there can be multiple algorithms in use: one for the Schur elimination and one for the final inversion. I think for the Schur elimination, we have the \"assume_full_rank\" flag that controls switching from inverse to psuedoinverse. Then for \"covariance algorithm\" we can use sparse LU, sparse/dense Cholesky, or dense SVD. While it is possible for the reduced matrix to be rank definition (gauge freedom, etc) there are certainly cases where Cholesky is quite reasonable. Thoughts?",
+      "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f812c3_c24420aa",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:45:10Z",
+      "side": 1,
+      "message": "there is only one schur elimination algorithm. \njust because the E^TE block are full rank does not mean that the schur complement is full rank, so we cannot assume that to be the case.",
+      "parentUuid": "920a27db_e00a3a24",
       "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
