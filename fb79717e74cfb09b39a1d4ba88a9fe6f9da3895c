@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f85adc63_179426a5",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T01:27:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b70d691_b8e17594",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f62b2b9c_25492107",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
@@ -108,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "9268d98f_becbbace",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T01:27:47Z",
+      "side": 1,
+      "message": "So then perhaps I would make a modification for the schur covariance work? For that I need to make an eliminator that doesn\u0027t assume full_rank.",
+      "parentUuid": "40073aba_5797df4f",
+      "range": {
+        "startLine": 210,
+        "startChar": 9,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7e7198e_48bef333",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
@@ -140,6 +182,24 @@
       "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58883a67_7de00e41",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T01:27:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b89782c6_9805a300",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
