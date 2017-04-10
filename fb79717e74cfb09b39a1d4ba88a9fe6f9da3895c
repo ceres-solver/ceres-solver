@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b70d691_b8e17594",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:50:09Z",
+      "side": 1,
+      "message": "google style guide discourages this, and for clarity I\u0027d like to keep this explicit like this.",
+      "parentUuid": "a46d0984_74af95cf",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f62b2b9c_25492107",
         "filename": "internal/ceres/schur_eliminator.h",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-04-10T00:24:54Z",
       "side": 1,
       "message": "I think the assume_full_rank flag needs to get passed into here too, as I use this routine to get the properly sized eliminator given the E and F blocks sizes. Perhaps the flag should be added to LinearSolver::Options as well?",
+      "range": {
+        "startLine": 210,
+        "startChar": 9,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241f4ff5_72cdeaf5",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:50:09Z",
+      "side": 1,
+      "message": "that bool has no impact on the size of any matrices, just the elimination algorithm.\n\nWe could consider passing it here, and give it the default value of true in the options struct.",
+      "parentUuid": "f62b2b9c_25492107",
       "range": {
         "startLine": 210,
         "startChar": 9,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b89782c6_9805a300",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:50:09Z",
+      "side": 1,
+      "message": "yes I made it the same order in which it is being used in the initializer.",
+      "parentUuid": "a7e7198e_48bef333",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1d12ccf_521f0553",
         "filename": "internal/ceres/schur_eliminator_impl.h",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-04-10T00:24:54Z",
       "side": 1,
       "message": "Could this be slower than the original implementation due to the forces assign and multiply?",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3225f8a9_5f9e15fa",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:50:09Z",
+      "side": 1,
+      "message": "this is a very cheap function. It has little to no impact on the performance of the Schur solvers.",
+      "parentUuid": "d1d12ccf_521f0553",
       "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
