@@ -16,6 +16,24 @@
       "revId": "678124538c0fef3aaee9a6f1c97153d5b5155947",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13d8029_5a9edd13",
+        "filename": "internal/ceres/invert_psd_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-10T00:46:35Z",
+      "side": 1,
+      "message": "we do not want a modified cholesky factorization here, we actually want the pseudo inverse here.",
+      "parentUuid": "25ea89bd_cb3aa7d8",
+      "revId": "678124538c0fef3aaee9a6f1c97153d5b5155947",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
