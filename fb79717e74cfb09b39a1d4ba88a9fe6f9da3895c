@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a46d0984_74af95cf",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:24:54Z",
+      "side": 1,
+      "message": "Would you be interested in changing this so the `bool assume_full_rank_ete` was made default true and added at the end? That way all the other call sites wouldn\u0027t have to change. Might be less clear though?",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62b2b9c_25492107",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:24:54Z",
+      "side": 1,
+      "message": "I think the assume_full_rank flag needs to get passed into here too, as I use this routine to get the properly sized eliminator given the E and F blocks sizes. Perhaps the flag should be added to LinearSolver::Options as well?",
+      "range": {
+        "startLine": 210,
+        "startChar": 9,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e7198e_48bef333",
+        "filename": "internal/ceres/schur_eliminator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:24:54Z",
+      "side": 1,
+      "message": "was this supposed to move from its location below?",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d12ccf_521f0553",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:24:54Z",
+      "side": 1,
+      "message": "Could this be slower than the original implementation due to the forces assign and multiply?",
+      "revId": "fb79717e74cfb09b39a1d4ba88a9fe6f9da3895c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
