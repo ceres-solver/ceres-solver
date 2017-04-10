@@ -30,6 +30,7 @@
 
 #include "ceres/compressed_row_jacobian_writer.h"
 
+#include <iterator>
 #include <utility>
 #include <vector>
 
