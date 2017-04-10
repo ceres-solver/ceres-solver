@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3f129a_58510a78",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:13:33Z",
+      "side": 1,
+      "message": "Any reason for the change from initializer list to normal assignment?",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 5
+      },
+      "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7641b8fd_63e4fade",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:13:33Z",
+      "side": 1,
+      "message": "Maybe \"either Eigen\u0027s Sparse QR factorization or SuiteSparse\u0027s high performance SuiteSparseQR will be used\"",
+      "range": {
+        "startLine": 247,
+        "startChar": 49,
+        "endLine": 247,
+        "endChar": 61
+      },
+      "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920a27db_e00a3a24",
+        "filename": "include/ceres/types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:13:33Z",
+      "side": 1,
+      "message": "So with the Schur types, there can be multiple algorithms in use: one for the Schur elimination and one for the final inversion. I think for the Schur elimination, we have the \"assume_full_rank\" flag that controls switching from inverse to psuedoinverse. Then for \"covariance algorithm\" we can use sparse LU, sparse/dense Cholesky, or dense SVD. While it is possible for the reduced matrix to be rank definition (gauge freedom, etc) there are certainly cases where Cholesky is quite reasonable. Thoughts?",
+      "revId": "036e8cd0f8a38333686d0f71a219fcfd69b70a37",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
