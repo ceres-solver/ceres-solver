@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ea89bd_cb3aa7d8",
+        "filename": "internal/ceres/invert_psd_matrix.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5795
+      },
+      "writtenOn": "2017-04-10T00:35:52Z",
+      "side": 1,
+      "message": "There\u0027s also the perturbed Cholesky, which can handle non-positive-definite matrices. http://www.dtic.mil/dtic/tr/fulltext/u2/a205174.pdf",
+      "revId": "678124538c0fef3aaee9a6f1c97153d5b5155947",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
