@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d53641e8_c4434024",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-10T17:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a096cb_5d3513b1",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1addab2c_a09eb1ab",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 19
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-08T04:18:55Z",
       "side": 1,
       "message": "braces for if statements",
+      "range": {
+        "startLine": 89,
+        "startChar": 10,
+        "endLine": 89,
+        "endChar": 16
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e076c67_7418c862",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-10T17:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1addab2c_a09eb1ab",
       "range": {
         "startLine": 89,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1c4bd37a_b3300509",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-10T17:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed47af09_5b6a1fa3",
+      "range": {
+        "startLine": 250,
+        "startChar": 13,
+        "endLine": 250,
+        "endChar": 14
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61535f26_7808e447",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 19
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-08T04:18:55Z",
       "side": 1,
       "message": "alignment of arguments.",
+      "range": {
+        "startLine": 661,
+        "startChar": 31,
+        "endLine": 661,
+        "endChar": 32
+      },
+      "revId": "e6143b74ff5292147700cfdb89ede9435ffe194c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1a103e6_94076950",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 5800
+      },
+      "writtenOn": "2017-04-10T17:05:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61535f26_7808e447",
       "range": {
         "startLine": 661,
         "startChar": 31,
