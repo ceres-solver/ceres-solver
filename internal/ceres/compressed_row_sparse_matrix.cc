@@ -109,6 +109,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
                                                      int max_num_nonzeros) {
   num_rows_ = num_rows;
   num_cols_ = num_cols;
+  storage_type_ = UNSYMMETRIC;
   rows_.resize(num_rows + 1, 0);
   cols_.resize(max_num_nonzeros, 0);
   values_.resize(max_num_nonzeros, 0.0);
@@ -124,6 +125,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(
     const TripletSparseMatrix& m) {
   num_rows_ = m.num_rows();
   num_cols_ = m.num_cols();
+  storage_type_ = UNSYMMETRIC;
 
   rows_.resize(num_rows_ + 1, 0);
   cols_.resize(m.num_nonzeros(), 0);
@@ -168,6 +170,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
 
   num_rows_ = num_rows;
   num_cols_ = num_rows;
+  storage_type_ = UNSYMMETRIC;
   rows_.resize(num_rows + 1);
   cols_.resize(num_rows);
   values_.resize(num_rows);
@@ -448,6 +451,20 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   CompressedRowSparseMatrix* transpose =
       new CompressedRowSparseMatrix(num_cols_, num_rows_, num_nonzeros());
 
+  switch (storage_type_) {
+    case UNSYMMETRIC:
+      transpose->set_storage_type(UNSYMMETRIC);
+      break;
+    case LOWER_TRIANGULAR:
+      transpose->set_storage_type(UPPER_TRIANGULAR);
+      break;
+    case UPPER_TRIANGULAR:
+      transpose->set_storage_type(LOWER_TRIANGULAR);
+      break;
+    default:
+      LOG(FATAL) << "Unknown storage type: " << storage_type_;
+  };
+
   TransposeForCompressedRowSparseStructure(num_rows(),
                                            num_cols(),
                                            num_nonzeros(),
@@ -524,6 +541,7 @@ struct ProductTerm {
 // the outerproduct matrix, which is used in outer product computation.
 CompressedRowSparseMatrix* CreateOuterProductMatrix(
     const int num_cols,
+    const CompressedRowSparseMatrix::StorageType storage_type,
     const vector<int>& blocks,
     const vector<ProductTerm>& product,
     vector<int>* row_nnz) {
@@ -546,6 +564,7 @@ CompressedRowSparseMatrix* CreateOuterProductMatrix(
 
   CompressedRowSparseMatrix* matrix =
       new CompressedRowSparseMatrix(num_cols, num_cols, num_nonzeros);
+  matrix->set_storage_type(storage_type);
 
   // Compute block offsets for outer product matrix, which is used
   // in ComputeOuterProduct.
@@ -561,6 +580,7 @@ CompressedRowSparseMatrix* CreateOuterProductMatrix(
 
 CompressedRowSparseMatrix* CompressAndFillProgram(
     const int num_cols,
+    const CompressedRowSparseMatrix::StorageType storage_type,
     const vector<int>& blocks,
     const vector<ProductTerm>& product,
     vector<int>* program) {
@@ -568,7 +588,7 @@ CompressedRowSparseMatrix* CompressAndFillProgram(
 
   vector<int> row_nnz;
   CompressedRowSparseMatrix* matrix =
-      CreateOuterProductMatrix(num_cols, blocks, product, &row_nnz);
+      CreateOuterProductMatrix(num_cols, storage_type, blocks, product, &row_nnz);
 
   const vector<int>& block_offsets = matrix->block_offsets();
 
@@ -679,7 +699,10 @@ void ComputeBlockMultiplication(const int row_block_size,
 
 CompressedRowSparseMatrix*
 CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-    const CompressedRowSparseMatrix& m, const int stype, vector<int>* program) {
+      const CompressedRowSparseMatrix& m,
+      const CompressedRowSparseMatrix::StorageType storage_type,
+      vector<int>* program) {
+  CHECK(storage_type ==  LOWER_TRIANGULAR || storage_type == UPPER_TRIANGULAR);
   CHECK_NOTNULL(program)->clear();
   CHECK_GT(m.num_nonzeros(), 0)
       << "Congratulations, you found a bug in Ceres. Please report it.";
@@ -701,7 +724,7 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
   for (int row_block = 1; row_block < crsb_rows.size(); ++row_block) {
     for (int idx1 = crsb_rows[row_block - 1]; idx1 < crsb_rows[row_block];
          ++idx1) {
-      if (stype > 0) {  // Lower triangular matrix.
+      if (storage_type == LOWER_TRIANGULAR) {
         for (int idx2 = crsb_rows[row_block - 1]; idx2 <= idx1; ++idx2) {
           product.push_back(
               ProductTerm(crsb_cols[idx1], crsb_cols[idx2], product.size()));
@@ -716,7 +739,8 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
   }
 
   sort(product.begin(), product.end());
-  return CompressAndFillProgram(m.num_cols(), col_blocks, product, program);
+  return CompressAndFillProgram(
+      m.num_cols(), storage_type, col_blocks, product, program);
 }
 
 // Give input matrix m in Compressed Row Sparse Block format
@@ -754,9 +778,10 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
 // So there is no special handling for diagonal blocks.
 void CompressedRowSparseMatrix::ComputeOuterProduct(
     const CompressedRowSparseMatrix& m,
-    const int stype,
     const vector<int>& program,
     CompressedRowSparseMatrix* result) {
+  CHECK(result->storage_type() ==  LOWER_TRIANGULAR ||
+        result->storage_type() ==  UPPER_TRIANGULAR);
   result->SetZero();
   double* values = result->mutable_values();
   const int* rows = result->rows();
@@ -769,9 +794,10 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
   const vector<int>& col_blocks = m.col_blocks();
   const vector<int>& crsb_rows = m.crsb_rows();
   const vector<int>& crsb_cols = m.crsb_cols();
-
+  const StorageType storage_type = result->storage_type();
 #define COL_BLOCK1 (crsb_cols[idx1])
 #define COL_BLOCK2 (crsb_cols[idx2])
+
 
   // Iterate row blocks.
   for (int row_block = 0, m_row_begin = 0; row_block < row_blocks.size();
@@ -790,8 +816,7 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
       // outerproduct matrix compressed row.
       const int row_begin = block_offsets[COL_BLOCK1];
       const int row_nnz = rows[row_begin + 1] - rows[row_begin];
-
-      if (stype > 0) {  // Lower triangular matrix.
+      if (storage_type == LOWER_TRIANGULAR) {
         for (int idx2 = crsb_rows[row_block], m_col_nnz2 = 0; idx2 <= idx1;
              m_col_nnz2 += col_blocks[COL_BLOCK2], ++idx2, ++cursor) {
           int col_nnz = program[cursor];
@@ -805,7 +830,7 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
                                      row_nnz,
                                      values + rows[row_begin] + col_nnz);
         }
-      } else {  // Upper triangular matrix.
+      } else {
         for (int idx2 = idx1, m_col_nnz2 = m_col_nnz1;
              idx2 < crsb_rows[row_block + 1];
              m_col_nnz2 += col_blocks[COL_BLOCK2], ++idx2, ++cursor) {

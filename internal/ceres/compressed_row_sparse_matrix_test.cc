@@ -494,16 +494,16 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         Matrix expected_outer_product =
             mapped_random_matrix.transpose() * mapped_random_matrix;
 
-        // Use compressed row lower triangular matrix.
-        const int stype = 1;
+        // Use compressed row lower triangular matrix, which will then
+        // get mapped to a compressed column upper triangular matrix.
         vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *random_matrix, stype, &program));
-        CompressedRowSparseMatrix::ComputeOuterProduct(*random_matrix,
-                                                       stype,
-                                                       program,
-                                                       outer_product.get());
+                *random_matrix,
+                CompressedRowSparseMatrix::LOWER_TRIANGULAR,
+                &program));
+        CompressedRowSparseMatrix::ComputeOuterProduct(
+            *random_matrix, program, outer_product.get());
 
         Matrix actual_outer_product =
             Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
