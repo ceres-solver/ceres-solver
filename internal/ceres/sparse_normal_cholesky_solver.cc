@@ -234,8 +234,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   // If using post ordering or an old version of Eigen, we cannot
   // depend on a preordered jacobian, so we work with a SimplicialLDLT
   // decomposition with AMD ordering.
-  if (options_.use_postordering ||
-      !EIGEN_VERSION_AT_LEAST(3, 2, 2)) {
+  if (options_.use_postordering) {
     if (amd_ldlt_.get() == NULL) {
       amd_ldlt_.reset(new SimplicialLDLTWithAMDOrdering);
       do_symbolic_analysis = true;
@@ -248,7 +247,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                                &event_logger);
   }
 
-#if EIGEN_VERSION_AT_LEAST(3,2,2)
   // The common case
   if (natural_ldlt_.get() == NULL) {
     natural_ldlt_.reset(new SimplicialLDLTWithNaturalOrdering);
@@ -260,8 +258,6 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                              natural_ldlt_.get(),
                              rhs_and_solution,
                              &event_logger);
-#endif
-
 #endif  // EIGEN_USE_EIGEN_SPARSE
 }
 
