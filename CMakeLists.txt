@@ -205,11 +205,10 @@ unset(CERES_COMPILE_OPTIONS)
 # Eigen.
 find_package(Eigen REQUIRED)
 if (EIGEN_FOUND)
-  if (EIGEN_VERSION VERSION_LESS 3.1.0)
-    message(FATAL_ERROR "-- Ceres requires Eigen version >= 3.1.0 in order "
-      "that Eigen/SparseCore be available, detected version of Eigen is: "
-      "${EIGEN_VERSION}")
-  endif (EIGEN_VERSION VERSION_LESS 3.1.0)
+  if (EIGEN_VERSION VERSION_LESS 3.2.2)
+    message(FATAL_ERROR "-- Ceres requires Eigen version >= 3.2.2, "
+      "detected version of Eigen is: " "${EIGEN_VERSION}")
+  endif (EIGEN_VERSION VERSION_LESS 3.2.2)
 
   message("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
   # Ensure that only MPL2 licensed code is part of the default build.
@@ -222,15 +221,6 @@ if (EIGEN_FOUND)
     message("   this option results in an LGPL licensed version of ")
     message("   Ceres Solver as the Simplicial Cholesky factorization in Eigen")
     message("   is licensed under the LGPL. ")
-
-    if (EIGEN_VERSION VERSION_LESS 3.2.2)
-      message("   WARNING:")
-      message("")
-      message("   Your version of Eigen is older than version 3.2.2.")
-      message("   The performance of SPARSE_NORMAL_CHOLESKY and SPARSE_SCHUR")
-      message("   linear solvers will suffer. ")
-    endif (EIGEN_VERSION VERSION_LESS 3.2.2)
-
   else (EIGENSPARSE)
     message("   Disabling the use of Eigen as a sparse linear algebra library.")
     message("   This does not affect the covariance estimation algorithm ")

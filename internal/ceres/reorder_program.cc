@@ -84,7 +84,7 @@ static int MinParameterBlock(const ResidualBlock* residual_block,
   return min_parameter_block_position;
 }
 
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2) && defined(CERES_USE_EIGEN_SPARSE)
+#if defined(CERES_USE_EIGEN_SPARSE)
 Eigen::SparseMatrix<int> CreateBlockJacobian(
     const TripletSparseMatrix& block_jacobian_transpose) {
   typedef Eigen::SparseMatrix<int> SparseMatrix;
@@ -178,7 +178,6 @@ void OrderingForSparseNormalCholeskyUsingCXSparse(
 }
 
 
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
 void OrderingForSparseNormalCholeskyUsingEigenSparse(
     const TripletSparseMatrix& tsm_block_jacobian_transpose,
     int* ordering) {
@@ -211,7 +210,6 @@ void OrderingForSparseNormalCholeskyUsingEigenSparse(
   }
 #endif  // CERES_USE_EIGEN_SPARSE
 }
-#endif
 
 }  // namespace
 
@@ -389,7 +387,7 @@ void MaybeReorderSchurComplementColumnsUsingEigen(
     const int size_of_first_elimination_group,
     const ProblemImpl::ParameterMap& parameter_map,
     Program* program) {
-#if !EIGEN_VERSION_AT_LEAST(3, 2, 2) || !defined(CERES_USE_EIGEN_SPARSE)
+#if !defined(CERES_USE_EIGEN_SPARSE)
   return;
 #else
 
@@ -516,6 +514,7 @@ bool ReorderProgramForSchurTypeLinearSolver(
   const int size_of_first_elimination_group =
       parameter_block_ordering->group_to_elements().begin()->second.size();
 
+  // TODO(sameeragarwal): Why aren't we block re-ordering for CXSparse?
   if (linear_solver_type == SPARSE_SCHUR) {
     if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
       MaybeReorderSchurComplementColumnsUsingSuiteSparse(
@@ -573,18 +572,9 @@ bool ReorderProgramForSparseNormalCholesky(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
   } else if (sparse_linear_algebra_library_type == EIGEN_SPARSE) {
-#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
-       OrderingForSparseNormalCholeskyUsingEigenSparse(
+    OrderingForSparseNormalCholeskyUsingEigenSparse(
         *tsm_block_jacobian_transpose,
         &ordering[0]);
-#else
-    // For Eigen versions less than 3.2.2, there is nothing to do as
-    // older versions of Eigen do not expose a method for doing
-    // symbolic analysis on pre-ordered matrices, so a block
-    // pre-ordering is a bit pointless.
-
-    return true;
-#endif
   }
 
   // Apply ordering.
