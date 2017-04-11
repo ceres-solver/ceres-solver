@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f814deca_9da6e2d8",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd598a5_4652cbe3",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01fda59e_b1de9678",
         "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-11T18:24:50Z",
       "side": 1,
       "message": "This \"stype \u003e 0\" is a bit confusing. Perhaps a member function (will be inlined) for this?\n\nthis-\u003eIsLowerTriangular()\nthis-\u003eIsUpperTriangular()\n\nthen log fatal else.",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ad4444_d07c36f2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:37:02Z",
+      "side": 1,
+      "message": "this is going away with the enum in the other CL. this is just behind.\nin fact this confusion is what created this series of cleanups.",
+      "parentUuid": "01fda59e_b1de9678",
       "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f08d5f04_35b1aa43",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:37:02Z",
+      "side": 1,
+      "message": "that would bias the sample, but yes can be done, but this works.",
+      "parentUuid": "482115c4_d6581889",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab56fd6c_6595e367",
         "filename": "internal/ceres/compressed_row_sparse_matrix.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-04-11T18:24:50Z",
       "side": 1,
       "message": "It\u0027s still not clear to me how these numbers translate into the row/block structure. Does the generation proceed by generating one row-block-size at a time then raster scanning in the columns?",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec663735_625015a7",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:37:02Z",
+      "side": 1,
+      "message": "ah okay I will add more docs.",
+      "parentUuid": "ab56fd6c_6595e367",
       "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
