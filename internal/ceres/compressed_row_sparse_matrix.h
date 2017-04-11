@@ -109,9 +109,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   void ToCRSMatrix(CRSMatrix* matrix) const;
 
-  void SolveLowerTriangularInPlace(double* solution) const;
-  void SolveLowerTriangularTransposeInPlace(double* solution) const;
-
   CompressedRowSparseMatrix* Transpose() const;
 
   // Destructive array resizing method.

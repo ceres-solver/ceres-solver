@@ -378,26 +378,6 @@ void CompressedRowSparseMatrix::SetMaxNumNonZeros(int num_nonzeros) {
   values_.resize(num_nonzeros);
 }
 
-void CompressedRowSparseMatrix::SolveLowerTriangularInPlace(
-    double* solution) const {
-  for (int r = 0; r < num_rows_; ++r) {
-    for (int idx = rows_[r]; idx < rows_[r + 1] - 1; ++idx) {
-      solution[r] -= values_[idx] * solution[cols_[idx]];
-    }
-    solution[r] /= values_[rows_[r + 1] - 1];
-  }
-}
-
-void CompressedRowSparseMatrix::SolveLowerTriangularTransposeInPlace(
-    double* solution) const {
-  for (int r = num_rows_ - 1; r >= 0; --r) {
-    solution[r] /= values_[rows_[r + 1] - 1];
-    for (int idx = rows_[r + 1] - 2; idx >= rows_[r]; --idx) {
-      solution[cols_[idx]] -= values_[idx] * solution[r];
-    }
-  }
-}
-
 CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
     const double* diagonal, const vector<int>& blocks) {
   int num_rows = 0;
