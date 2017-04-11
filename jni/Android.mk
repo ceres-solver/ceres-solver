@@ -144,6 +144,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/dogleg_strategy.cc \
                    $(CERES_SRC_PATH)/dynamic_compressed_row_jacobian_writer.cc \
                    $(CERES_SRC_PATH)/dynamic_compressed_row_sparse_matrix.cc \
+                   $(CERES_SRC_PATH)/dynamic_sparse_normal_cholesky_solver.cc \
                    $(CERES_SRC_PATH)/evaluator.cc \
                    $(CERES_SRC_PATH)/file.cc \
                    $(CERES_SRC_PATH)/gradient_checker.cc \
