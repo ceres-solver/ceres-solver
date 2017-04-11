@@ -31,11 +31,11 @@
 
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
 function(ADD_GERRIT_COMMIT_HOOK SOURCE_DIR BINARY_DIR)
-  if (NOT EXISTS ${SOURCE_DIR} AND IS_DIRECTORY ${SOURCE_DIR})
+  if (NOT (EXISTS ${SOURCE_DIR} AND IS_DIRECTORY ${SOURCE_DIR}))
     message(FATAL_ERROR "Specified SOURCE_DIR: ${SOURCE_DIR} does not exist, "
       "or is not a directory, cannot add Gerrit commit hook.")
   endif()
-  if (NOT EXISTS ${BINARY_DIR} AND IS_DIRECTORY ${BINARY_DIR})
+  if (NOT (EXISTS ${BINARY_DIR} AND IS_DIRECTORY ${BINARY_DIR}))
     message(FATAL_ERROR "Specified BINARY_DIR: ${BINARY_DIR} does not exist, "
       "or is not a directory, cannot add Gerrit commit hook.")
   endif()
