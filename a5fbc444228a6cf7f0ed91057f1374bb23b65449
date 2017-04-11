@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c99b133_0a01463e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Document ownership (header).",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16e53b93_c6e6179b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Brief comments over each block would help clarity.",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95095183_550497a2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "This is doing some clever work to make random blocks; might be good to explain the thinking.",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82dd81d3_68b4ea2d",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Non-obvious watermark checking. This implies the density is best effort. You are not guaranteed to get the chosen density. I realize it\u0027s hard to get exactly the correct density, but this should get documented.",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cee51f5_e452b9be",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Consider documenting that the values are std(0, 1) normals (in header).",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bedaa3de_4f50122b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Block comment could make this easier to read quickly.",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f4279ee_bbc0c862",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Weird alignment.",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5d52e06_c3839f1b",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "\"Random Matrix\" is a bit confusing; perhaps RandomAccessMatrix? RandomSparsityMatrix? RandomContentMatrix? RandomNZMatrix?\n\nI suggest putting a block comment above this explaining what the options are for. Potentially put this description below, above CreateRandomCompressedRowSparseMatrix (which also needs documenting).",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a71f333_a49fdb1c",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:01:34Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "a5fbc444228a6cf7f0ed91057f1374bb23b65449",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
