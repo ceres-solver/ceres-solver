@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d4ba6a_c107b635",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Android build? Probably not but maybe worth updating.",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1469fc00_7ff3bfba",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eff7d17e_290874e0",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fbcfb80_505b6d1c",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e03870f_4e83ff5a",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "EIGEN_USE_EIGEN_SPARSE vs CERES_USE_EIGEN_SPARSE - intentional?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e9cdf8f_dbe51e99",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "2017 now",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1a7ff8f_92d8d577",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c177dbd_39a842a7",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:09:39Z",
+      "side": 1,
+      "message": "Is this actually needed in this header?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
