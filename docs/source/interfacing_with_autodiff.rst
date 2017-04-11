@@ -18,7 +18,7 @@ To do this, we will consider the problem of finding parameters
 form:
 
 .. math::
-   \min & \quad \sum_i \left \|y_i - f\left (\|q_{i}\|^2\right) q
+   \min & \quad \sum_i \left \|y_i - f\left (\|q_{i}\|^2\right) q_i
    \right \|^2\\
    \text{such that} & \quad q_i = R(\theta) x_i + t
 
@@ -53,7 +53,7 @@ functor is straightforward and will look as follows:
                      const T* t,
                      T* residuals) const {
        const T q_0 =  cos(theta[0]) * x[0] - sin(theta[0]) * x[1] + t[0];
-       const T q_1 = -sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
+       const T q_1 =  sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
        const T f = TemplatedComputeDistortion(q_0 * q_0 + q_1 * q_1);
        residuals[0] = y[0] - f * q_0;
        residuals[1] = y[1] - f * q_1;
@@ -129,7 +129,7 @@ An implementation of the above three steps looks as follows:
      template <typename T>
      bool operator()(const T* theta, const T* t, T* residuals) const {
        const T q_0 = cos(theta[0]) * x[0] - sin(theta[0]) * x[1] + t[0];
-       const T q_1 = -sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
+       const T q_1 = sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
        const T r2 = q_0 * q_0 + q_1 * q_1;
        T f;
        (*compute_distortion)(&r2, &f);
@@ -204,7 +204,7 @@ The resulting code will look as follows:
                      const T* t,
                      T* residuals) const {
        const T q_0 =  cos(theta[0]) * x[0] - sin(theta[0]) * x[1] + t[0];
-       const T q_1 = -sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
+       const T q_1 =  sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
        const T r2 = q_0 * q_0 + q_1 * q_1;
        T f;
        (*compute_distortion)(&r2, &f);
@@ -270,7 +270,7 @@ The resulting code will look as follows:
                      const T* t,
                      T* residuals) const {
        const T q_0 =  cos(theta[0]) * x[0] - sin(theta[0]) * x[1] + t[0];
-       const T q_1 = -sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
+       const T q_1 =  sin(theta[0]) * x[0] + cos(theta[0]) * x[1] + t[1];
        const T r2 = q_0 * q_0 + q_1 * q_1;
        T f;
        compute_distortion->Evaluate(r2, &f);
@@ -281,8 +281,8 @@ The resulting code will look as follows:
 
      double x[2];
      double y[2];
-     std::unique_ptr<ceres::Grid1D<double, 1>> grid;
-     std::unique_ptr<ceres::CubicInterpolator<ceres::Grid1D<double, 1> >> compute_distortion;
+     std::unique_ptr<ceres::Grid1D<double, 1> > grid;
+     std::unique_ptr<ceres::CubicInterpolator<ceres::Grid1D<double, 1> > > compute_distortion;
    };
 
 In the above example we used :class:`Grid1D` and
