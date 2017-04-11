@@ -275,21 +275,18 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                                &event_logger);
   }
 
-  // Compute outerproduct to compressed row lower triangular matrix.
-  // Eigen SimplicialLDLT default uses lower triangular part of matrix.
-  // This can change to upper triangular matrix if specifying
-  //    Eigen::SimplicialLDLT< _MatrixType, _UpLo, _Ordering >
-  // with _UpLo = Upper.
-  const int stype = 1;
-
+  // Compute outer product to compressed row lower triangular matrix,
+  // because after mapping to a column major matrix, this will become
+  // a compressed column upper triangular matrix. Which is the default
+  // that Eigen uses.
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, stype, &pattern_));
+            *A, CompressedRowSparseMatrix::LOWER_TRIANGULAR, &pattern_));
   }
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, stype, pattern_, outer_product_.get());
+      *A, pattern_, outer_product_.get());
 
   // Map to an upper triangular column major matrix.
   //
@@ -369,23 +366,21 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
-  // Compute outerproduct to compressed row lower triangular matrix.
-  // CXSparse Cholesky factorization uses lower triangular part of the matrix.
-  const int stype = 1;
 
-  // Compute the normal equations. J'J delta = J'f and solve them
-  // using a sparse Cholesky factorization. Notice that we explicitly
-  // compute the normal equations before they can be factorized.
+  // Compute outer product to compressed row lower triangular matrix,
+  // which would mapped to a compressed column upper triangular
+  // matrix, which is the representation used by CXSparse's sparse
+  // Cholesky factorization.
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, stype, &pattern_));
+            *A, CompressedRowSparseMatrix::LOWER_TRIANGULAR, &pattern_));
   }
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, stype, pattern_, outer_product_.get());
-  cs_di lhs =
-      cxsparse_.CreateSparseMatrixTransposeView(outer_product_.get());
+      *A, pattern_, outer_product_.get());
+
+  cs_di lhs = cxsparse_.CreateSparseMatrixTransposeView(outer_product_.get());
 
   event_logger.AddEvent("Setup");
 
@@ -439,26 +434,22 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   summary.message = "Success.";
 
-  // Compute outerproduct to compressed row upper triangular matrix.
-  // This is the fastest option for the our default natural ordering
-  // (see comment in cholmod_factorize.c:205 in SuiteSparse).
-  const int stype = -1;
-
-  // Compute the normal equations. J'J delta = J'f and solve them
-  // using a sparse Cholesky factorization. Notice that we explicitly
-  // compute the normal equations before they can be factorized.
+  // Compute outer product to compressed row upper triangular matrix,
+  // this will be mapped to a compressed-column lower triangular
+  // matrix, which is the fastest option for our default natural
+  // ordering (see comment in cholmod_factorize.c:205 in SuiteSparse).
   if (outer_product_.get() == NULL) {
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, stype, &pattern_));
+            *A, CompressedRowSparseMatrix::UPPER_TRIANGULAR, &pattern_));
   }
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, stype, pattern_, outer_product_.get());
+      *A, pattern_, outer_product_.get());
 
   const int num_cols = A->num_cols();
   cholmod_sparse lhs =
-      ss_.CreateSparseMatrixTransposeView(outer_product_.get(), stype);
+      ss_.CreateSparseMatrixTransposeView(outer_product_.get());
   event_logger.AddEvent("Setup");
 
   if (options_.dynamic_sparsity) {
