@@ -48,6 +48,13 @@ class TripletSparseMatrix;
 
 class CompressedRowSparseMatrix : public SparseMatrix {
  public:
+  enum StorageType {
+    UNSYMMETRIC,
+    LOWER_TRIANGULAR,
+    UPPER_TRIANGULAR
+  };
+
+
   // Build a matrix with the same content as the TripletSparseMatrix
   // m. TripletSparseMatrix objects are easier to construct
   // incrementally, so we use them to initialize SparseMatrix
@@ -102,12 +109,29 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   void ToCRSMatrix(CRSMatrix* matrix) const;
 
+  void SolveLowerTriangularInPlace(double* solution) const;
+  void SolveLowerTriangularTransposeInPlace(double* solution) const;
+
+  CompressedRowSparseMatrix* Transpose() const;
+
+  // Destructive array resizing method.
+  void SetMaxNumNonZeros(int num_nonzeros);
+
+  // Non-destructive array resizing method.
+  void set_num_rows(const int num_rows) { num_rows_ = num_rows; }
+  void set_num_cols(const int num_cols) { num_cols_ = num_cols; }
+
   // Low level access methods that expose the structure of the matrix.
   const int* cols() const { return &cols_[0]; }
   int* mutable_cols() { return &cols_[0]; }
 
   const int* rows() const { return &rows_[0]; }
   int* mutable_rows() { return &rows_[0]; }
+
+  const StorageType& storage_type() const { return storage_type_; }
+  void set_storage_type(const StorageType& storage_type) {
+    storage_type_ = storage_type;
+  }
 
   const std::vector<int>& row_blocks() const { return row_blocks_; }
   std::vector<int>* mutable_row_blocks() { return &row_blocks_; }
@@ -123,18 +147,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   const std::vector<int>& crsb_cols() const { return crsb_cols_; }
   std::vector<int>* mutable_crsb_cols() { return &crsb_cols_; }
-
-  // Destructive array resizing method.
-  void SetMaxNumNonZeros(int num_nonzeros);
-
-  // Non-destructive array resizing method.
-  void set_num_rows(const int num_rows) { num_rows_ = num_rows; }
-  void set_num_cols(const int num_cols) { num_cols_ = num_cols; }
-
-  void SolveLowerTriangularInPlace(double* solution) const;
-  void SolveLowerTriangularTransposeInPlace(double* solution) const;
-
-  CompressedRowSparseMatrix* Transpose() const;
 
   static CompressedRowSparseMatrix* CreateBlockDiagonalMatrix(
       const double* diagonal,
@@ -155,12 +167,11 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // one row per row block. The ComputeOuterProduct function reuses
   // this information for each row in the row block.
   //
-  // stype controls the result matrix in upper or lower triangular matrix
-  //    stype = 1:  lower triangular matrix
-  //    stype = -1: higher triangular matrix
+  // storage_type controls the form of the output matrix. It can be
+  // LOWER_TRIANGULAR or UPPER_TRIANGULAR.
   static CompressedRowSparseMatrix* CreateOuterProductMatrixAndProgram(
       const CompressedRowSparseMatrix& m,
-      const int stype,
+      const StorageType storage_type,
       std::vector<int>* program);
 
   // Compute the values array for the expression m.transpose() * m,
@@ -168,7 +179,6 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // created using the CreateOuterProductMatrixAndProgram function
   // above.
   static void ComputeOuterProduct(const CompressedRowSparseMatrix& m,
-                                  const int stype,
                                   const std::vector<int>& program,
                                   CompressedRowSparseMatrix* result);
 
@@ -178,6 +188,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   std::vector<int> rows_;
   std::vector<int> cols_;
   std::vector<double> values_;
+  StorageType storage_type_;
 
   // If the matrix has an underlying block structure, then it can also
   // carry with it row and column block sizes. This is auxilliary and
@@ -187,11 +198,11 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   std::vector<int> row_blocks_;
   std::vector<int> col_blocks_;
 
-  // For outerproduct matrix (J' * J), we pre-compute its block offsets
-  // information here for fast outerproduct computation in block unit.
-  // Since the outerproduct matrix is symmetric, we do not need to
-  // distinguish row or col block. In another word, this is the prefix
-  // sum of row_blocks_/col_blocks_.
+  // For outer product matrix (J' * J), we pre-compute its block
+  // offsets information here for fast outer product computation in
+  // block unit.  Since the outer product matrix is symmetric, we do
+  // not need to distinguish row or col block. In another word, this
+  // is the prefix sum of row_blocks_/col_blocks_.
   std::vector<int> block_offsets_;
 
   // If the matrix has an underlying block structure, then it can also
