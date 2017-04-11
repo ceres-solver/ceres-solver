@@ -202,6 +202,41 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };
 
+// Options struct to control the generation of random block sparse
+// matrices in compressed row sparse format.
+//
+// The random matrix generation proceeds as follows.
+//
+// First the row and column block structure is determined by
+// generating random row and column block sizes that lie within the
+// given bounds.
+//
+// Then we walk the block structure of the resulting matrix, and with
+// probability block_density detemine whether they are structurally
+// zero or not. If the answer is no, then we generate entries for the
+// block which are distributed normally.
+struct RandomMatrixOptions {
+  int num_row_blocks;
+  int min_row_block_size;
+  int max_row_block_size;
+  int num_col_blocks;
+  int min_col_block_size;
+  int max_col_block_size;
+
+  // 0 <= block_density <= 1 is the probability of a block being
+  // present in the matrix. A given random matrix will not have
+  // precisely this density.
+  double block_density;
+};
+
+// Create a random CompressedRowSparseMatrix whose entries are
+// normally distributed and whose structure is determined by
+// RandomMatrixOptions.
+//
+// Caller owns the result.
+CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
+    const RandomMatrixOptions& options);
+
 }  // namespace internal
 }  // namespace ceres
 
