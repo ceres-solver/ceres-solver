@@ -34,6 +34,7 @@
 #include <numeric>
 #include <vector>
 #include "ceres/crs_matrix.h"
+#include "ceres/random.h"
 #include "ceres/internal/port.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
@@ -843,6 +844,69 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
 #undef COL_BLOCK2
 
   CHECK_EQ(cursor, program.size());
+}
+
+CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
+    const RandomMatrixOptions& options) {
+  vector<int> row_blocks;
+  vector<int> col_blocks;
+  for (int i = 0; i < options.num_row_blocks; ++i) {
+    const int delta_block_size =
+        Uniform(options.max_row_block_size - options.min_row_block_size);
+    row_blocks.push_back(options.min_row_block_size + delta_block_size);
+  }
+
+  for (int i = 0; i < options.num_col_blocks; ++i) {
+    const int delta_block_size =
+        Uniform(options.max_col_block_size - options.min_col_block_size);
+    col_blocks.push_back(options.min_col_block_size + delta_block_size);
+  }
+
+  vector<int> crsb_rows;
+  vector<int> crsb_cols;
+  vector<int> tsm_rows;
+  vector<int> tsm_cols;
+  vector<double> tsm_values;
+  while (tsm_values.size() == 0) {
+    int row_block_begin = 0;
+    crsb_rows.clear();
+    crsb_cols.clear();
+    for (int r = 0; r < options.num_row_blocks; ++r) {
+      int col_block_begin = 0;
+      crsb_rows.push_back(crsb_cols.size());
+      for (int c = 0; c < options.num_col_blocks; ++c) {
+        if (RandDouble() <= options.block_density) {
+          for (int i = 0; i < row_blocks[r]; ++i) {
+            for (int j = 0; j < col_blocks[c]; ++j) {
+              tsm_rows.push_back(row_block_begin + i);
+              tsm_cols.push_back(col_block_begin + j);
+              tsm_values.push_back(RandNormal());
+            }
+          }
+          crsb_cols.push_back(c);
+        }
+        col_block_begin += col_blocks[c];
+      }
+      row_block_begin += row_blocks[r];
+    }
+    crsb_rows.push_back(crsb_cols.size());
+  }
+
+  const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0);
+  const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0);
+  const int num_nonzeros = tsm_values.size();
+
+  TripletSparseMatrix tsm(num_rows, num_cols, num_nonzeros);
+  std::copy(tsm_rows.begin(), tsm_rows.end(), tsm.mutable_rows());
+  std::copy(tsm_cols.begin(), tsm_cols.end(), tsm.mutable_cols());
+  std::copy(tsm_values.begin(), tsm_values.end(), tsm.mutable_values());
+  tsm.set_num_nonzeros(num_nonzeros);
+  CompressedRowSparseMatrix* matrix = new CompressedRowSparseMatrix(tsm);
+  (*matrix->mutable_row_blocks())  = row_blocks;
+  (*matrix->mutable_col_blocks())  = col_blocks;
+  (*matrix->mutable_crsb_rows())  = crsb_rows;
+  (*matrix->mutable_crsb_cols())  = crsb_cols;
+  return matrix;
 }
 
 }  // namespace internal
