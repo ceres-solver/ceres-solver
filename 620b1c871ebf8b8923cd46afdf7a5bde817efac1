@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd598a5_4652cbe3",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:24:50Z",
+      "side": 1,
+      "message": "Two lines still needed?",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01fda59e_b1de9678",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:24:50Z",
+      "side": 1,
+      "message": "This \"stype \u003e 0\" is a bit confusing. Perhaps a member function (will be inlined) for this?\n\nthis-\u003eIsLowerTriangular()\nthis-\u003eIsUpperTriangular()\n\nthen log fatal else.",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "482115c4_d6581889",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:24:50Z",
+      "side": 1,
+      "message": "Could even do something more sophisticated where it checks the density; and has a maximum retry bailout.",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab56fd6c_6595e367",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:24:50Z",
+      "side": 1,
+      "message": "It\u0027s still not clear to me how these numbers translate into the row/block structure. Does the generation proceed by generating one row-block-size at a time then raster scanning in the columns?",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "510c6221_48a572f9",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:24:50Z",
+      "side": 1,
+      "message": "This sentence this has this extra this word :)",
+      "revId": "620b1c871ebf8b8923cd46afdf7a5bde817efac1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
