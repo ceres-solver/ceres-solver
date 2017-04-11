@@ -536,7 +536,7 @@ void ToDenseMatrix(const cs_di* matrix, Matrix* dense_matrix) {
 
 TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
   // "Randomly generated seed."
-  SetRandomState(29823);
+  SetRandomState(29822);
   int kMaxNumRowBlocks = 10;
   int kMaxNumColBlocks = 10;
   int kNumTrials = 10;
@@ -581,16 +581,15 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         cs_di* expected_outer_product =
             cxsparse.MatrixMatrixMultiply(&cs_matrix_transpose, cs_matrix);
 
-        // Use compressed row lower triangular matrix for cxsparse.
-        const int stype = 1;
+        // Use compressed row upper triangular matrix for cxsparse.
         vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *matrix, stype, &program));
-        CompressedRowSparseMatrix::ComputeOuterProduct(*matrix,
-                                                       stype,
-                                                       program,
-                                                       outer_product.get());
+                *matrix,
+                CompressedRowSparseMatrix::UPPER_TRIANGULAR,
+                &program));
+        CompressedRowSparseMatrix::ComputeOuterProduct(
+            *matrix, program, outer_product.get());
 
         cs_di actual_outer_product =
             cxsparse.CreateSparseMatrixTransposeView(outer_product.get());
