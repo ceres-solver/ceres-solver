@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@
 #include <vector>
 #include "ceres/crs_matrix.h"
 #include "ceres/internal/port.h"
+#include "ceres/random.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 
@@ -54,9 +55,7 @@ namespace {
 //
 // If this is the case, this functor will not be a StrictWeakOrdering.
 struct RowColLessThan {
-  RowColLessThan(const int* rows, const int* cols)
-      : rows(rows), cols(cols) {
-  }
+  RowColLessThan(const int* rows, const int* cols) : rows(rows), cols(cols) {}
 
   bool operator()(const int x, const int y) const {
     if (rows[x] == rows[y]) {
@@ -72,12 +71,12 @@ struct RowColLessThan {
 void TransposeForCompressedRowSparseStructure(const int num_rows,
                                               const int num_cols,
                                               const int num_nonzeros,
-                                              const int *rows,
-                                              const int *cols,
-                                              const double *values,
+                                              const int* rows,
+                                              const int* cols,
+                                              const double* values,
                                               int* transpose_rows,
-                                              int *transpose_cols,
-                                              double *transpose_values) {
+                                              int* transpose_cols,
+                                              double* transpose_values) {
   for (int idx = 0; idx < num_nonzeros; ++idx) {
     ++transpose_rows[cols[idx] + 1];
   }
@@ -92,12 +91,12 @@ void TransposeForCompressedRowSparseStructure(const int num_rows,
       const int transpose_idx = transpose_rows[c]++;
       transpose_cols[transpose_idx] = r;
       if (values) {
-         transpose_values[transpose_idx] = values[idx];
+        transpose_values[transpose_idx] = values[idx];
       }
     }
   }
 
-  for (int i = num_cols - 1; i > 0 ; --i) {
+  for (int i = num_cols - 1; i > 0; --i) {
     transpose_rows[i] = transpose_rows[i - 1];
   }
   transpose_rows[0] = 0;
@@ -114,13 +113,11 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(int num_rows,
   cols_.resize(max_num_nonzeros, 0);
   values_.resize(max_num_nonzeros, 0.0);
 
-
-  VLOG(1) << "# of rows: " << num_rows_
-          << " # of columns: " << num_cols_
-          << " max_num_nonzeros: " << cols_.size()
-          << ". Allocating " << (num_rows_ + 1) * sizeof(int) +  // NOLINT
-      cols_.size() * sizeof(int) +  // NOLINT
-      cols_.size() * sizeof(double);  // NOLINT
+  VLOG(1) << "# of rows: " << num_rows_ << " # of columns: " << num_cols_
+          << " max_num_nonzeros: " << cols_.size() << ". Allocating "
+          << (num_rows_ + 1) * sizeof(int) +     // NOLINT
+                 cols_.size() * sizeof(int) +    // NOLINT
+                 cols_.size() * sizeof(double);  // NOLINT
 }
 
 CompressedRowSparseMatrix::CompressedRowSparseMatrix(
@@ -142,10 +139,8 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(
   // are broken by column.
   sort(index.begin(), index.end(), RowColLessThan(m.rows(), m.cols()));
 
-  VLOG(1) << "# of rows: " << num_rows_
-          << " # of columns: " << num_cols_
-          << " max_num_nonzeros: " << cols_.size()
-          << ". Allocating "
+  VLOG(1) << "# of rows: " << num_rows_ << " # of columns: " << num_cols_
+          << " max_num_nonzeros: " << cols_.size() << ". Allocating "
           << ((num_rows_ + 1) * sizeof(int) +  // NOLINT
               cols_.size() * sizeof(int) +     // NOLINT
               cols_.size() * sizeof(double));  // NOLINT
@@ -187,8 +182,7 @@ CompressedRowSparseMatrix::CompressedRowSparseMatrix(const double* diagonal,
   CHECK_EQ(num_nonzeros(), num_rows);
 }
 
-CompressedRowSparseMatrix::~CompressedRowSparseMatrix() {
-}
+CompressedRowSparseMatrix::~CompressedRowSparseMatrix() {}
 
 void CompressedRowSparseMatrix::SetZero() {
   std::fill(values_.begin(), values_.end(), 0);
@@ -303,9 +297,8 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   DCHECK_LT(num_nonzeros(), cols_.size());
   if (m.num_nonzeros() > 0) {
     std::copy(m.cols(), m.cols() + m.num_nonzeros(), &cols_[num_nonzeros()]);
-    std::copy(m.values(),
-              m.values() + m.num_nonzeros(),
-              &values_[num_nonzeros()]);
+    std::copy(
+        m.values(), m.values() + m.num_nonzeros(), &values_[num_nonzeros()]);
   }
 
   rows_.resize(num_rows_ + m.num_rows() + 1);
@@ -330,15 +323,15 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   CHECK_EQ(crsb_rows_.size(), row_blocks_.size() + 1);
   CHECK_EQ(crsb_rows_.back(), crsb_cols_.size());
 
-  row_blocks_.insert(row_blocks_.end(),
-                     m.row_blocks().begin(),
-                     m.row_blocks().end());
+  row_blocks_.insert(
+      row_blocks_.end(), m.row_blocks().begin(), m.row_blocks().end());
 
   // The rest of the code update compressed row sparse block (crsb) information.
   const int num_crsb_nonzeros = crsb_cols_.size();
   const int m_num_crsb_nonzeros = m.crsb_cols_.size();
   crsb_cols_.resize(num_crsb_nonzeros + m_num_crsb_nonzeros);
-  std::copy(&m.crsb_cols()[0], &m.crsb_cols()[0] + m_num_crsb_nonzeros,
+  std::copy(&m.crsb_cols()[0],
+            &m.crsb_cols()[0] + m_num_crsb_nonzeros,
             &crsb_cols_[num_crsb_nonzeros]);
 
   const int num_crsb_rows = crsb_rows_.size() - 1;
@@ -357,11 +350,7 @@ void CompressedRowSparseMatrix::ToTextFile(FILE* file) const {
   CHECK_NOTNULL(file);
   for (int r = 0; r < num_rows_; ++r) {
     for (int idx = rows_[r]; idx < rows_[r + 1]; ++idx) {
-      fprintf(file,
-              "% 10d % 10d %17f\n",
-              r,
-              cols_[idx],
-              values_[idx]);
+      fprintf(file, "% 10d % 10d %17f\n", r, cols_[idx], values_[idx]);
     }
   }
 }
@@ -392,7 +381,7 @@ void CompressedRowSparseMatrix::SolveLowerTriangularInPlace(
     for (int idx = rows_[r]; idx < rows_[r + 1] - 1; ++idx) {
       solution[r] -= values_[idx] * solution[cols_[idx]];
     }
-    solution[r] /=  values_[rows_[r + 1] - 1];
+    solution[r] /= values_[rows_[r + 1] - 1];
   }
 }
 
@@ -407,8 +396,7 @@ void CompressedRowSparseMatrix::SolveLowerTriangularTransposeInPlace(
 }
 
 CompressedRowSparseMatrix* CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-    const double* diagonal,
-    const vector<int>& blocks) {
+    const double* diagonal, const vector<int>& blocks) {
   int num_rows = 0;
   int num_nonzeros = 0;
   for (int i = 0; i < blocks.size(); ++i) {
@@ -460,12 +448,15 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   CompressedRowSparseMatrix* transpose =
       new CompressedRowSparseMatrix(num_cols_, num_rows_, num_nonzeros());
 
-  TransposeForCompressedRowSparseStructure(
-      num_rows(), num_cols(), num_nonzeros(),
-      rows(), cols(), values(),
-      transpose->mutable_rows(),
-      transpose->mutable_cols(),
-      transpose->mutable_values());
+  TransposeForCompressedRowSparseStructure(num_rows(),
+                                           num_cols(),
+                                           num_nonzeros(),
+                                           rows(),
+                                           cols(),
+                                           values(),
+                                           transpose->mutable_rows(),
+                                           transpose->mutable_cols(),
+                                           transpose->mutable_values());
 
   // The rest of the code update block information.
   // Immediately return in case of no block information.
@@ -488,10 +479,15 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   std::fill(transpose_crsb_rows.begin(), transpose_crsb_rows.end(), 0);
   transpose_crsb_cols.resize(crsb_cols_.size());
 
-  TransposeForCompressedRowSparseStructure(
-      row_blocks().size(), col_blocks().size(), crsb_cols().size(),
-      crsb_rows().data(), crsb_cols().data(), NULL,
-      transpose_crsb_rows.data(), transpose_crsb_cols.data(), NULL);
+  TransposeForCompressedRowSparseStructure(row_blocks().size(),
+                                           col_blocks().size(),
+                                           crsb_cols().size(),
+                                           crsb_rows().data(),
+                                           crsb_cols().data(),
+                                           NULL,
+                                           transpose_crsb_rows.data(),
+                                           transpose_crsb_cols.data(),
+                                           NULL);
 
   return transpose;
 }
@@ -501,8 +497,7 @@ namespace {
 // itself.
 struct ProductTerm {
   ProductTerm(const int row, const int col, const int index)
-      : row(row), col(col), index(index) {
-  }
+      : row(row), col(col), index(index) {}
 
   bool operator<(const ProductTerm& right) const {
     if (row == right.row) {
@@ -527,12 +522,11 @@ struct ProductTerm {
 // round to generate the sparse rows/cols information.
 // This function also computes the block offset information for
 // the outerproduct matrix, which is used in outer product computation.
-CompressedRowSparseMatrix*
-CreateOuterProductMatrix(const int num_cols,
-                         const vector<int>& blocks,
-                         const vector<ProductTerm>& product,
-                         vector<int>* row_nnz) {
-
+CompressedRowSparseMatrix* CreateOuterProductMatrix(
+    const int num_cols,
+    const vector<int>& blocks,
+    const vector<ProductTerm>& product,
+    vector<int>* row_nnz) {
   // Count the number of unique product term, which in turn is the
   // number of non-zeros in the outer product.
   // Also count the number of non-zeros in each row.
@@ -565,11 +559,11 @@ CreateOuterProductMatrix(const int num_cols,
   return matrix;
 }
 
-CompressedRowSparseMatrix*
-CompressAndFillProgram(const int num_cols,
-                       const vector<int>& blocks,
-                       const vector<ProductTerm>& product,
-                       vector<int>* program) {
+CompressedRowSparseMatrix* CompressAndFillProgram(
+    const int num_cols,
+    const vector<int>& blocks,
+    const vector<ProductTerm>& product,
+    vector<int>* program) {
   CHECK_GT(product.size(), 0);
 
   vector<int> row_nnz;
@@ -611,11 +605,10 @@ CompressAndFillProgram(const int num_cols,
 
   // Process first product term.
   for (int j = 0; j < blocks[product[0].row]; ++j) {
-    crsm_rows[block_offsets[product[0].row] + j + 1] =
-        row_nnz[product[0].row];
+    crsm_rows[block_offsets[product[0].row] + j + 1] = row_nnz[product[0].row];
     for (int k = 0; k < blocks[product[0].col]; ++k) {
-      crsm_cols[row_nnz[product[0].row] * j + k]
-          = block_offsets[product[0].col] + k;
+      crsm_cols[row_nnz[product[0].row] * j + k] =
+          block_offsets[product[0].col] + k;
     }
   }
 
@@ -634,15 +627,14 @@ CompressAndFillProgram(const int num_cols,
         col_nnz = 0;
 
         for (int j = 0; j < blocks[current.row]; ++j) {
-          crsm_rows[block_offsets[current.row] + j + 1] =
-              row_nnz[current.row];
+          crsm_rows[block_offsets[current.row] + j + 1] = row_nnz[current.row];
         }
       }
 
       for (int j = 0; j < blocks[current.row]; ++j) {
         for (int k = 0; k < blocks[current.col]; ++k) {
-          crsm_cols[nnz + row_nnz[current.row] * j + col_nnz + k]
-              = block_offsets[current.col] + k;
+          crsm_cols[nnz + row_nnz[current.row] * j + col_nnz + k] =
+              block_offsets[current.col] + k;
         }
       }
     }
@@ -670,9 +662,9 @@ void ComputeBlockMultiplication(const int row_block_size,
                                 const int col_block1_begin,
                                 const int col_block2_begin,
                                 const int input_cols,
-                                const double *input,
+                                const double* input,
                                 const int output_cols,
-                                double *output) {
+                                double* output) {
   for (int r = 0; r < row_block_size; ++r) {
     for (int idx1 = 0; idx1 < col_block1_size; ++idx1) {
       for (int idx2 = 0; idx2 < col_block2_size; ++idx2) {
@@ -687,13 +679,11 @@ void ComputeBlockMultiplication(const int row_block_size,
 
 CompressedRowSparseMatrix*
 CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-      const CompressedRowSparseMatrix& m,
-      const int stype,
-      vector<int>* program) {
+    const CompressedRowSparseMatrix& m, const int stype, vector<int>* program) {
   CHECK_NOTNULL(program)->clear();
   CHECK_GT(m.num_nonzeros(), 0)
-                << "Congratulations, "
-                << "you found a bug in Ceres. Please report it.";
+      << "Congratulations, "
+      << "you found a bug in Ceres. Please report it.";
 
   vector<ProductTerm> product;
   const vector<int>& col_blocks = m.col_blocks();
@@ -712,16 +702,15 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
   for (int row_block = 1; row_block < crsb_rows.size(); ++row_block) {
     for (int idx1 = crsb_rows[row_block - 1]; idx1 < crsb_rows[row_block];
          ++idx1) {
-      if (stype > 0) { // Lower triangular matrix.
+      if (stype > 0) {  // Lower triangular matrix.
         for (int idx2 = crsb_rows[row_block - 1]; idx2 <= idx1; ++idx2) {
-          product.push_back(ProductTerm(crsb_cols[idx1], crsb_cols[idx2],
-                                        product.size()));
+          product.push_back(
+              ProductTerm(crsb_cols[idx1], crsb_cols[idx2], product.size()));
         }
-      }
-      else { // Upper triangular matrix.
+      } else {  // Upper triangular matrix.
         for (int idx2 = idx1; idx2 < crsb_rows[row_block]; ++idx2) {
-          product.push_back(ProductTerm(crsb_cols[idx1], crsb_cols[idx2],
-                                        product.size()));
+          product.push_back(
+              ProductTerm(crsb_cols[idx1], crsb_cols[idx2], product.size()));
         }
       }
     }
@@ -791,8 +780,7 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
     // Non zeros are not stored consecutively across rows in a block.
     // The gaps between rows is the number of nonzeros of the
     // input matrix compressed row.
-    const int m_row_nnz =
-        m_rows[m_row_begin + 1] - m_rows[m_row_begin];
+    const int m_row_nnz = m_rows[m_row_begin + 1] - m_rows[m_row_begin];
 
     // Iterate (col_block1 x col_block2).
     for (int idx1 = crsb_rows[row_block], m_col_nnz1 = 0;
@@ -805,8 +793,7 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
       const int row_nnz = rows[row_begin + 1] - rows[row_begin];
 
       if (stype > 0) {  // Lower triangular matrix.
-        for (int idx2 = crsb_rows[row_block], m_col_nnz2 = 0;
-             idx2 <= idx1;
+        for (int idx2 = crsb_rows[row_block], m_col_nnz2 = 0; idx2 <= idx1;
              m_col_nnz2 += col_blocks[COL_BLOCK2], ++idx2, ++cursor) {
           int col_nnz = program[cursor];
           ComputeBlockMultiplication(row_blocks[row_block],
@@ -819,8 +806,7 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
                                      row_nnz,
                                      values + rows[row_begin] + col_nnz);
         }
-      }
-      else { // Upper triangular matrix.
+      } else {  // Upper triangular matrix.
         for (int idx2 = idx1, m_col_nnz2 = m_col_nnz1;
              idx2 < crsb_rows[row_block + 1];
              m_col_nnz2 += col_blocks[COL_BLOCK2], ++idx2, ++cursor) {
@@ -843,6 +829,88 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
 #undef COL_BLOCK2
 
   CHECK_EQ(cursor, program.size());
+}
+
+CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
+    const RandomMatrixOptions& options) {
+  vector<int> row_blocks;
+  vector<int> col_blocks;
+
+  // Generate the row block structure.
+  for (int i = 0; i < options.num_row_blocks; ++i) {
+    // Generate a random integer in [min_row_block_size, max_row_block_size]
+    const int delta_block_size =
+        Uniform(options.max_row_block_size - options.min_row_block_size);
+    row_blocks.push_back(options.min_row_block_size + delta_block_size);
+  }
+
+  // Generate the col block structure.
+  for (int i = 0; i < options.num_col_blocks; ++i) {
+    // Generate a random integer in [min_row_block_size, max_row_block_size]
+    const int delta_block_size =
+        Uniform(options.max_col_block_size - options.min_col_block_size);
+    col_blocks.push_back(options.min_col_block_size + delta_block_size);
+  }
+
+  vector<int> crsb_rows;
+  vector<int> crsb_cols;
+  vector<int> tsm_rows;
+  vector<int> tsm_cols;
+  vector<double> tsm_values;
+
+  // For ease of construction, we are going to generate the
+  // CompressedRowSparseMatrix by generating it as a
+  // TripletSparseMatrix and then converting it to a
+  // CompressedRowSparseMatrix.
+
+  // It is possible that the random matrix is empty which is likely
+  // not what the user wants, so do the matrix generation till we have
+  // at least one non-zero entry.
+  while (tsm_values.size() == 0) {
+    int row_block_begin = 0;
+    crsb_rows.clear();
+    crsb_cols.clear();
+    for (int r = 0; r < options.num_row_blocks; ++r) {
+      int col_block_begin = 0;
+      crsb_rows.push_back(crsb_cols.size());
+      for (int c = 0; c < options.num_col_blocks; ++c) {
+        // Randomly determine if this block is present or not.
+        if (RandDouble() <= options.block_density) {
+          for (int i = 0; i < row_blocks[r]; ++i) {
+            for (int j = 0; j < col_blocks[c]; ++j) {
+              tsm_rows.push_back(row_block_begin + i);
+              tsm_cols.push_back(col_block_begin + j);
+              tsm_values.push_back(RandNormal());
+            }
+          }
+          // Add the block to the block sparse structure.
+          crsb_cols.push_back(c);
+        }
+        col_block_begin += col_blocks[c];
+      }
+      row_block_begin += row_blocks[r];
+    }
+    crsb_rows.push_back(crsb_cols.size());
+  }
+
+  const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0);
+  const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0);
+  const int num_nonzeros = tsm_values.size();
+
+  // Create a TripletSparseMatrix
+  TripletSparseMatrix tsm(num_rows, num_cols, num_nonzeros);
+  std::copy(tsm_rows.begin(), tsm_rows.end(), tsm.mutable_rows());
+  std::copy(tsm_cols.begin(), tsm_cols.end(), tsm.mutable_cols());
+  std::copy(tsm_values.begin(), tsm_values.end(), tsm.mutable_values());
+  tsm.set_num_nonzeros(num_nonzeros);
+
+  // Convert the TripletSparseMatrix to a CompressedRowSparseMatrix.
+  CompressedRowSparseMatrix* matrix = new CompressedRowSparseMatrix(tsm);
+  (*matrix->mutable_row_blocks()) = row_blocks;
+  (*matrix->mutable_col_blocks()) = col_blocks;
+  (*matrix->mutable_crsb_rows()) = crsb_rows;
+  (*matrix->mutable_crsb_cols()) = crsb_cols;
+  return matrix;
 }
 
 }  // namespace internal

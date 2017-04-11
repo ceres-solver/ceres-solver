@@ -33,7 +33,6 @@
 #include <numeric>
 #include "ceres/casts.h"
 #include "ceres/crs_matrix.h"
-#include "ceres/cxsparse.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
@@ -41,6 +40,8 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
+
+#include "Eigen/SparseCore"
 
 namespace ceres {
 namespace internal {
@@ -445,95 +446,6 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   EXPECT_NEAR((dense_matrix - dense_transpose.transpose()).norm(), 0.0, 1e-14);
 }
 
-#ifndef CERES_NO_CXSPARSE
-
-struct RandomMatrixOptions {
-  int num_row_blocks;
-  int min_row_block_size;
-  int max_row_block_size;
-  int num_col_blocks;
-  int min_col_block_size;
-  int max_col_block_size;
-  double block_density;
-};
-
-CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
-    const RandomMatrixOptions& options) {
-  vector<int> row_blocks;
-  for (int i = 0; i < options.num_row_blocks; ++i) {
-    const int delta_block_size =
-        Uniform(options.max_row_block_size - options.min_row_block_size);
-    row_blocks.push_back(options.min_row_block_size + delta_block_size);
-  }
-
-  vector<int> col_blocks;
-  for (int i = 0; i < options.num_col_blocks; ++i) {
-    const int delta_block_size =
-        Uniform(options.max_col_block_size - options.min_col_block_size);
-    col_blocks.push_back(options.min_col_block_size + delta_block_size);
-  }
-
-  vector<int> rows;
-  vector<int> cols;
-  vector<double> values;
-
-  vector<int> crsb_rows;
-  vector<int> crsb_cols;
-
-  while (values.size() == 0) {
-    int row_block_begin = 0;
-    crsb_rows.clear();
-    crsb_cols.clear();
-    for (int r = 0; r < options.num_row_blocks; ++r) {
-      int col_block_begin = 0;
-      crsb_rows.push_back(crsb_cols.size());
-      for (int c = 0; c < options.num_col_blocks; ++c) {
-        if (RandDouble() <= options.block_density) {
-          for (int i = 0; i < row_blocks[r]; ++i) {
-            for (int j = 0; j < col_blocks[c]; ++j) {
-              rows.push_back(row_block_begin + i);
-              cols.push_back(col_block_begin + j);
-              values.push_back(RandNormal());
-            }
-          }
-          crsb_cols.push_back(c);
-        }
-        col_block_begin += col_blocks[c];
-      }
-      row_block_begin += row_blocks[r];
-    }
-    crsb_rows.push_back(crsb_cols.size());
-  }
-
-  const int num_rows = std::accumulate(row_blocks.begin(), row_blocks.end(), 0);
-  const int num_cols = std::accumulate(col_blocks.begin(), col_blocks.end(), 0);
-  const int num_nonzeros = values.size();
-
-  TripletSparseMatrix tsm(num_rows, num_cols, num_nonzeros);
-  std::copy(rows.begin(), rows.end(), tsm.mutable_rows());
-  std::copy(cols.begin(), cols.end(), tsm.mutable_cols());
-  std::copy(values.begin(), values.end(), tsm.mutable_values());
-  tsm.set_num_nonzeros(num_nonzeros);
-  CompressedRowSparseMatrix* matrix = new CompressedRowSparseMatrix(tsm);
-  (*matrix->mutable_row_blocks())  = row_blocks;
-  (*matrix->mutable_col_blocks())  = col_blocks;
-  (*matrix->mutable_crsb_rows())  = crsb_rows;
-  (*matrix->mutable_crsb_cols())  = crsb_cols;
-  return matrix;
-}
-
-void ToDenseMatrix(const cs_di* matrix, Matrix* dense_matrix) {
-  dense_matrix->resize(matrix->m, matrix->n);
-  dense_matrix->setZero();
-
-  for (int c = 0; c < matrix->n; ++c) {
-    for (int idx = matrix->p[c]; idx < matrix->p[c + 1]; ++idx) {
-      const int r = matrix->i[idx];
-      (*dense_matrix)(r, c) = matrix->x[idx];
-    }
-  }
-}
-
 TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
   // "Randomly generated seed."
   SetRandomState(29823);
@@ -541,13 +453,9 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
   int kMaxNumColBlocks = 10;
   int kNumTrials = 10;
 
-  CXSparse cxsparse;
-  const double kTolerance = 1e-18;
-
-  // Create a random matrix, compute its outer product using CXSParse
-  // and ComputeOuterProduct. Convert both matrices to dense matrices
-  // and compare their upper triangular parts. They should be within
-  // kTolerance of each other.
+  // Create a random matrix, compute its outer product using Eigen and
+  // ComputeOuterProduct. Convert both matrices to dense matrices and
+  // compare their upper triangular parts.
   for (int num_row_blocks = 1;
        num_row_blocks < kMaxNumRowBlocks;
        ++num_row_blocks) {
@@ -572,57 +480,57 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         VLOG(2) << "max col block size: " << options.max_col_block_size;
         VLOG(2) << "block density: " << options.block_density;
 
-        scoped_ptr<CompressedRowSparseMatrix> matrix(
+        scoped_ptr<CompressedRowSparseMatrix> random_matrix(
             CreateRandomCompressedRowSparseMatrix(options));
 
-        cs_di cs_matrix_transpose =
-            cxsparse.CreateSparseMatrixTransposeView(matrix.get());
-        cs_di* cs_matrix = cxsparse.TransposeMatrix(&cs_matrix_transpose);
-        cs_di* expected_outer_product =
-            cxsparse.MatrixMatrixMultiply(&cs_matrix_transpose, cs_matrix);
+        Eigen::MappedSparseMatrix<double, Eigen::RowMajor> mapped_random_matrix(
+            random_matrix->num_rows(),
+            random_matrix->num_cols(),
+            random_matrix->num_nonzeros(),
+            random_matrix->mutable_rows(),
+            random_matrix->mutable_cols(),
+            random_matrix->mutable_values());
 
-        // Use compressed row lower triangular matrix for cxsparse.
+        Matrix expected_outer_product =
+            mapped_random_matrix.transpose() * mapped_random_matrix;
+
+        // Use compressed row lower triangular matrix.
         const int stype = 1;
         vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *matrix, stype, &program));
-        CompressedRowSparseMatrix::ComputeOuterProduct(*matrix,
+                *random_matrix, stype, &program));
+        CompressedRowSparseMatrix::ComputeOuterProduct(*random_matrix,
                                                        stype,
                                                        program,
                                                        outer_product.get());
 
-        cs_di actual_outer_product =
-            cxsparse.CreateSparseMatrixTransposeView(outer_product.get());
+        Matrix actual_outer_product =
+            Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
+                outer_product->num_rows(),
+                outer_product->num_rows(),
+                outer_product->num_nonzeros(),
+                outer_product->mutable_rows(),
+                outer_product->mutable_cols(),
+                outer_product->mutable_values());
+        expected_outer_product.triangularView<Eigen::StrictlyLower>().setZero();
+        actual_outer_product.triangularView<Eigen::StrictlyLower>().setZero();
 
-        ASSERT_EQ(actual_outer_product.m, actual_outer_product.n);
-        ASSERT_EQ(expected_outer_product->m, expected_outer_product->n);
-        ASSERT_EQ(actual_outer_product.m, expected_outer_product->m);
+        EXPECT_EQ(actual_outer_product.rows(), actual_outer_product.cols());
+        EXPECT_EQ(expected_outer_product.rows(), expected_outer_product.cols());
+        EXPECT_EQ(actual_outer_product.rows(), expected_outer_product.rows());
 
-        Matrix actual_matrix;
-        Matrix expected_matrix;
-
-        ToDenseMatrix(expected_outer_product, &expected_matrix);
-        expected_matrix.triangularView<Eigen::StrictlyLower>().setZero();
-
-        ToDenseMatrix(&actual_outer_product, &actual_matrix);
-        actual_matrix.triangularView<Eigen::StrictlyLower>().setZero();
         const double diff_norm =
-            (actual_matrix - expected_matrix).norm() / expected_matrix.norm();
-        ASSERT_NEAR(diff_norm, 0.0, kTolerance)
+            (actual_outer_product - expected_outer_product).norm() /
+            expected_outer_product.norm();
+        EXPECT_NEAR(diff_norm, 0.0, std::numeric_limits<double>::epsilon())
             << "expected: \n"
-            << expected_matrix
-            << "\nactual: \n"
-            << actual_matrix;
-
-        cxsparse.Free(cs_matrix);
-        cxsparse.Free(expected_outer_product);
+            << expected_outer_product << "\nactual: \n"
+            << actual_outer_product;
       }
     }
   }
 }
-
-#endif  // CERES_NO_CXSPARSE
 
 }  // namespace internal
 }  // namespace ceres
