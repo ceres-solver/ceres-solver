@@ -48,7 +48,7 @@ For the impatient amongst you, here is some high level advice:
 #. Avoid :ref:`chapter-numerical_derivatives`. Use it as a measure of
    last resort, mostly to interface with external libraries.
 
-for the rest, read on.
+For the rest, read on.
 
 .. toctree::
    :maxdepth: 1
