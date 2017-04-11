@@ -26,7 +26,7 @@ optional. For details on customizing the build process, see
 :ref:`section-customizing` .
 
 - `Eigen <http://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-  3.2.2 or later **strongly** recommended, 3.1.0 or later **required**.
+  3.2.2 or later **required**.
 
   .. NOTE ::
 
@@ -544,10 +544,6 @@ Options controlling Ceres configuration
    the code is licensed under the ``LGPL`` and since ``Eigen`` is a
    header only library, including this code will result in an ``LGPL``
    licensed version of Ceres.
-
-   .. NOTE::
-
-      For good performance, use Eigen version 3.2.2 or later.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
