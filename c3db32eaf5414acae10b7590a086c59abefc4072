@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61ef23f7_4cc58545",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "definitely worth updating :) good catch.",
+      "parentUuid": "c5d4ba6a_c107b635",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1469fc00_7ff3bfba",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-04-11T18:09:39Z",
       "side": 1,
       "message": "Needed?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72cf8024_e0d367cd",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "I think this came from a iwyu fixit a while ago. will leave as is, and do another pass on includes later.",
+      "parentUuid": "1469fc00_7ff3bfba",
       "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8f4746b8_a276257e",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "yes below.",
+      "parentUuid": "eff7d17e_290874e0",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fbcfb80_505b6d1c",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-04-11T18:09:39Z",
       "side": 1,
       "message": "Needed?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "631acd7b_9d1c0e9e",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "yes for the event logger.",
+      "parentUuid": "3fbcfb80_505b6d1c",
       "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1ba935ea_411ce4b2",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "\u003e EIGEN_USE_EIGEN_SPARSE vs CERES_USE_EIGEN_SPARSE - intentional?\n\nerr no this was borked.",
+      "parentUuid": "9e03870f_4e83ff5a",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e9cdf8f_dbe51e99",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-04-11T18:09:39Z",
       "side": 1,
       "message": "2017 now",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4eba58f8_fe75eb0a",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "thats just your opinion man.",
+      "parentUuid": "7e9cdf8f_dbe51e99",
       "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ead337a9_bb59aef6",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a7ff8f_92d8d577",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c177dbd_39a842a7",
         "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-04-11T18:09:39Z",
       "side": 1,
       "message": "Is this actually needed in this header?",
+      "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1dfe6a_b62abf2e",
+        "filename": "internal/ceres/dynamic_sparse_normal_cholesky_solver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-11T18:59:30Z",
+      "side": 1,
+      "message": "I dunno, will leave as is for now.",
+      "parentUuid": "3c177dbd_39a842a7",
       "revId": "c3db32eaf5414acae10b7590a086c59abefc4072",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
