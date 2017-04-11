@@ -308,61 +308,6 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
   EXPECT_EQ((dense.diagonal() - diagonal).norm(), 0.0);
 }
 
-class SolveLowerTriangularTest : public ::testing::Test {
- protected:
-  void SetUp() {
-    matrix_.reset(new CompressedRowSparseMatrix(4, 4, 7));
-    int* rows = matrix_->mutable_rows();
-    int* cols = matrix_->mutable_cols();
-    double* values = matrix_->mutable_values();
-
-    rows[0] = 0;
-    cols[0] = 0;
-    values[0] = 0.50754;
-
-    rows[1] = 1;
-    cols[1] = 1;
-    values[1] = 0.80483;
-
-    rows[2] = 2;
-    cols[2] = 1;
-    values[2] = 0.14120;
-    cols[3] = 2;
-    values[3] = 0.3;
-
-    rows[3] = 4;
-    cols[4] = 0;
-    values[4] = 0.77696;
-    cols[5] = 1;
-    values[5] = 0.41860;
-    cols[6] = 3;
-    values[6] = 0.88979;
-
-    rows[4] = 7;
-  }
-
-  scoped_ptr<CompressedRowSparseMatrix> matrix_;
-};
-
-TEST_F(SolveLowerTriangularTest, SolveInPlace) {
-  double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
-  double expected[] = {1.970288,  1.242498,  6.081864, -0.057255};
-  matrix_->SolveLowerTriangularInPlace(rhs_and_solution);
-  for (int i = 0; i < 4; ++i) {
-    EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
-  }
-}
-
-TEST_F(SolveLowerTriangularTest, TransposeSolveInPlace) {
-  double rhs_and_solution[] = {1.0, 1.0, 2.0, 2.0};
-  const double expected[] = { -1.4706, -1.0962, 6.6667, 2.2477};
-
-  matrix_->SolveLowerTriangularTransposeInPlace(rhs_and_solution);
-  for (int i = 0; i < 4; ++i) {
-    EXPECT_NEAR(rhs_and_solution[i], expected[i], 1e-4) << i;
-  }
-}
-
 TEST(CompressedRowSparseMatrix, Transpose) {
   //  0  1  0  2  3  0
   //  4  6  7  0  0  8
