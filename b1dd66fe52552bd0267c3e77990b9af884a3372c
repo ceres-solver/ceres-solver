@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed2d5bdd_66768eca",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "I suggest \"ASYMMETRIC\" instead - unsymmetric is less used.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ecd661c_f2806936",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "Consider checking here for either UPPER or LOWER triangular explicitly, as opposed to the set complement.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a66e1369_723493a4",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "I suggest explicit check vs upper/lower and a log fatal to protect against enum expansion.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95ed9749_f063a4e2",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "Check for explicit set of supported types instead.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60ea3cfb_f9fa0f8e",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "Consider explicit check w/ log fatal else",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e799f978_49808e41",
+        "filename": "internal/ceres/compressed_row_sparse_matrix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "Document this and the inplace.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9022f82c_7b73f900",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "to -\u003e with?",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea513790_37b12dcc",
+        "filename": "internal/ceres/sparse_normal_cholesky_solver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "to -\u003e with",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ed21b0c_c5350855",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-11T18:16:24Z",
+      "side": 1,
+      "message": "Check for asymmetric explicitly perhaps.",
+      "revId": "b1dd66fe52552bd0267c3e77990b9af884a3372c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
