@@ -581,16 +581,15 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         cs_di* expected_outer_product =
             cxsparse.MatrixMatrixMultiply(&cs_matrix_transpose, cs_matrix);
 
-        // Use compressed row lower triangular matrix for cxsparse.
-        const int stype = 1;
+        // Use compressed row upper triangular matrix for cxsparse.
         vector<int> program;
         scoped_ptr<CompressedRowSparseMatrix> outer_product(
             CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *matrix, stype, &program));
-        CompressedRowSparseMatrix::ComputeOuterProduct(*matrix,
-                                                       stype,
-                                                       program,
-                                                       outer_product.get());
+                *matrix,
+                CompressedRowSparseMatrix::UPPER_TRIANGULAR,
+                &program));
+        CompressedRowSparseMatrix::ComputeOuterProduct(
+            *matrix, program, outer_product.get());
 
         cs_di actual_outer_product =
             cxsparse.CreateSparseMatrixTransposeView(outer_product.get());
