@@ -120,12 +120,13 @@ class SchurComplementSolverTest : public ::testing::Test {
     EXPECT_EQ(summary.termination_type, LINEAR_SOLVER_SUCCESS);
 
     if (regularization) {
+
       ASSERT_NEAR((sol_d - x).norm() / num_cols, 0, 1e-10)
-          << "Expected solution: " << sol_d.transpose()
+          << "Regularized Expected solution: " << sol_d.transpose()
           << " Actual solution: " << x.transpose();
     } else {
       ASSERT_NEAR((sol - x).norm() / num_cols, 0, 1e-10)
-          << "Expected solution: " << sol.transpose()
+          << "Unregularized Expected solution: " << sol.transpose()
           << " Actual solution: " << x.transpose();
     }
   }
@@ -142,27 +143,29 @@ class SchurComplementSolverTest : public ::testing::Test {
   Vector sol_d;
 };
 
-TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithSmallProblem) {
+// TODO(sameeragarwal): Refactor these using value parameterized tests.
+// TODO(sameeragarwal): More extensive tests using random matrices.
+TEST_F(SchurComplementSolverTest, DenseSchurWithEigenSmallProblem) {
   ComputeAndCompareSolutions(2, false, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(2, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
 }
 
-TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithLargeProblem) {
+TEST_F(SchurComplementSolverTest, DenseSchurWithEigenLargeProblem) {
   ComputeAndCompareSolutions(3, false, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(3, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
 }
 
-TEST_F(SchurComplementSolverTest, EigenBasedDenseSchurWithVaryingFBlockSize) {
+TEST_F(SchurComplementSolverTest, DenseSchurWithEigenVaryingFBlockSize) {
   ComputeAndCompareSolutions(4, true, DENSE_SCHUR, EIGEN, SUITE_SPARSE, true);
 }
 
 #ifndef CERES_NO_LAPACK
-TEST_F(SchurComplementSolverTest, LAPACKBasedDenseSchurWithSmallProblem) {
+TEST_F(SchurComplementSolverTest, DenseSchurWithLAPACKSmallProblem) {
   ComputeAndCompareSolutions(2, false, DENSE_SCHUR, LAPACK, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(2, true, DENSE_SCHUR, LAPACK, SUITE_SPARSE, true);
 }
 
-TEST_F(SchurComplementSolverTest, LAPACKBasedDenseSchurWithLargeProblem) {
+TEST_F(SchurComplementSolverTest, DenseSchurWithLAPACKLargeProblem) {
   ComputeAndCompareSolutions(3, false, DENSE_SCHUR, LAPACK, SUITE_SPARSE, true);
   ComputeAndCompareSolutions(3, true, DENSE_SCHUR, LAPACK, SUITE_SPARSE, true);
 }
