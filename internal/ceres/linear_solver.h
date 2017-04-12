@@ -69,6 +69,10 @@ enum LinearSolverTerminationType {
   LINEAR_SOLVER_FATAL_ERROR
 };
 
+enum OrderingType {
+  NATURAL,
+  AMD
+};
 
 class LinearOperator;
 
