@@ -79,8 +79,7 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
     const Preconditioner::Options& options)
     : options_(options),
       num_blocks_(0),
-      num_clusters_(0),
-      factor_(NULL) {
+      num_clusters_(0) {
   CHECK_GT(options_.elimination_groups.size(), 1);
   CHECK_GT(options_.elimination_groups[0], 0);
   CHECK(options_.type == CLUSTER_JACOBI ||
@@ -114,11 +113,6 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
   InitEliminator(bs);
   const time_t eliminator_time = time(NULL);
 
-  // Allocate temporary storage for a vector used during
-  // RightMultiply.
-  tmp_rhs_ = CHECK_NOTNULL(ss_.CreateDenseVector(NULL,
-                                                 m_->num_rows(),
-                                                 m_->num_rows()));
   const time_t init_time = time(NULL);
   VLOG(2) << "init time: "
           << init_time - start_time
@@ -128,14 +122,6 @@ VisibilityBasedPreconditioner::VisibilityBasedPreconditioner(
 }
 
 VisibilityBasedPreconditioner::~VisibilityBasedPreconditioner() {
-  if (factor_ != NULL) {
-    ss_.Free(factor_);
-    factor_ = NULL;
-  }
-  if (tmp_rhs_ != NULL) {
-    ss_.Free(tmp_rhs_);
-    tmp_rhs_ = NULL;
-  }
 }
 
 // Determine the sparsity structure of the CLUSTER_JACOBI
@@ -436,28 +422,26 @@ void VisibilityBasedPreconditioner::ScaleOffDiagonalCells() {
 LinearSolverTerminationType VisibilityBasedPreconditioner::Factorize() {
   // Extract the TripletSparseMatrix that is used for actually storing
   // S and convert it into a cholmod_sparse object.
-  cholmod_sparse* lhs = ss_.CreateSparseMatrix(
-      down_cast<BlockRandomAccessSparseMatrix*>(
-          m_.get())->mutable_matrix());
+  const TripletSparseMatrix* tsm_lhs = down_cast<BlockRandomAccessSparseMatrix*>(
+      m_.get())->mutable_matrix();
+  CompressedRowSparseMatrix lhs(*tsm_lhs);
 
-  // The matrix is symmetric, and the upper triangular part of the
-  // matrix contains the values.
-  lhs->stype = 1;
+  // This check
+  lhs.set_storage_type(CompressedRowSparseMatrix::LOWER_TRIANGULAR);
 
   // TODO(sameeragarwal): Refactor to pipe this up and out.
-  std::string status;
-
-  // Symbolic factorization is computed if we don't already have one handy.
-  if (factor_ == NULL) {
-    factor_ = ss_.BlockAnalyzeCholesky(lhs, block_size_, block_size_, &status);
+  std::string message;
+  LinearSolverTerminationType termination_type = LINEAR_SOLVER_SUCCESS;
+  if (ssc_.get() == NULL) {
+    ssc_.reset(new SuiteSparseCholesky);
+    termination_type =
+        ssc_->ComputeSymbolicFactorizationWithReordering(&lhs, true, &message);
   }
 
-  const LinearSolverTerminationType termination_type =
-      (factor_ != NULL)
-      ? ss_.Cholesky(lhs, factor_, &status)
-      : LINEAR_SOLVER_FATAL_ERROR;
+  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+    termination_type = ssc_->ComputeNumericFactorization(&lhs, &message);
+  }
 
-  ss_.Free(lhs);
   return termination_type;
 }
 
@@ -465,16 +449,9 @@ void VisibilityBasedPreconditioner::RightMultiply(const double* x,
                                                   double* y) const {
   CHECK_NOTNULL(x);
   CHECK_NOTNULL(y);
-  SuiteSparse* ss = const_cast<SuiteSparse*>(&ss_);
-
-  const int num_rows = m_->num_rows();
-  memcpy(CHECK_NOTNULL(tmp_rhs_)->x, x, m_->num_rows() * sizeof(*x));
-  // TODO(sameeragarwal): Better error handling.
-  std::string status;
-  cholmod_dense* solution =
-      CHECK_NOTNULL(ss->Solve(factor_, tmp_rhs_, &status));
-  memcpy(y, solution->x, sizeof(*y) * num_rows);
-  ss->Free(solution);
+  CHECK_NOTNULL(ssc_.get());
+  std::string message;
+  LinearSolverTerminationType termination_type = ssc_->Solve(x, y, &message);
 }
 
 int VisibilityBasedPreconditioner::num_rows() const {

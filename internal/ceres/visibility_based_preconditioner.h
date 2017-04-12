@@ -195,13 +195,7 @@ class VisibilityBasedPreconditioner : public BlockSparseMatrixPreconditioner {
   // function. This however requires non-const access to the
   // SuiteSparse context object, even though it does not result in any
   // of the state of the preconditioner being modified.
-  SuiteSparse ss_;
-
-  // Symbolic and numeric factorization of the preconditioner.
-  cholmod_factor* factor_;
-
-  // Temporary vector used by RightMultiply.
-  cholmod_dense* tmp_rhs_;
+  scoped_ptr<SuiteSparseCholesky> ssc_;
   CERES_DISALLOW_COPY_AND_ASSIGN(VisibilityBasedPreconditioner);
 };
 #else  // SuiteSparse

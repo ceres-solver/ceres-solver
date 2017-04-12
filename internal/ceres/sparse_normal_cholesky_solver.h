@@ -82,9 +82,11 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
   void FreeFactorization();
 
-  SuiteSparse ss_;
+  scoped_ptr<SuiteSparseCholesky> ssc_;
+
+  //SuiteSparse ss_;
   // Cached factorization
-  cholmod_factor* factor_;
+  //cholmod_factor* factor_;
 
   CXSparse cxsparse_;
   // Cached factorization
