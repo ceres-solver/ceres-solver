@@ -278,8 +278,36 @@ class SuiteSparse {
   cholmod_common cc_;
 };
 
-}  // namespace internal
-}  // namespace ceres
+class SuiteSparseCholesky {
+ public:
+  SuiteSparseCholesky();
+  ~SuiteSparseCholesky();
+  // When do we use block structure, when do we not use block structure?
+  LinearSolverTerminationType ComputeSymbolicFactorizationWithReordering(
+      CompressedRowSparseMatrix* lhs, bool ignore_block_structure, std::string* message);
+  LinearSolverTerminationType ComputeSymbolicFactorizationWithoutReordering(
+      CompressedRowSparseMatrix* lhs, std::string* message);
+
+
+  LinearSolverTerminationType Solve(const double* rhs, double* solution,
+                                    std::string* message);
+
+  LinearSolverTerminationType FactorAndSolve(CompressedRowSparseMatrix* lhs,
+                                             const double* rhs, double* solution,
+                                             std::string* message);
+
+  LinearSolverTerminationType ComputeNumericFactorization(
+      CompressedRowSparseMatrix* lhs,
+      std::string* message);
+
+  // rhs and solution can point to the same part of memory.
+ private:
+  void FreeFactorization();
+
+  SuiteSparse ss_;
+  cholmod_factor* factor_;
+  cholmod_dense* rhs_;
+};
 
 #else  // CERES_NO_SUITESPARSE
 
@@ -302,5 +330,8 @@ class SuiteSparse {
 };
 
 #endif  // CERES_NO_SUITESPARSE
+
+}  // namespace internal
+}  // namespace ceres
 
 #endif  // CERES_INTERNAL_SUITESPARSE_H_

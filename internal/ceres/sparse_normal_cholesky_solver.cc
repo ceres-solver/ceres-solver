@@ -114,17 +114,11 @@ LinearSolver::Summary SimplicialLDLTSolve(
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : factor_(NULL),
-      cxsparse_factor_(NULL),
+    : cxsparse_factor_(NULL),
       options_(options) {
 }
 
 void SparseNormalCholeskySolver::FreeFactorization() {
-  if (factor_ != NULL) {
-    ss_.Free(factor_);
-    factor_ = NULL;
-  }
-
   if (cxsparse_factor_ != NULL) {
     cxsparse_.Free(cxsparse_factor_);
     cxsparse_factor_ = NULL;
@@ -364,59 +358,31 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     outer_product_.reset(
         CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
             *A, CompressedRowSparseMatrix::UPPER_TRIANGULAR, &pattern_));
+    ssc_.reset(new SuiteSparseCholesky);
+    if (options_.use_postordering) {
+      summary.termination_type =
+          ssc_->ComputeSymbolicFactorizationWithReordering(
+              outer_product_.get(), true, &summary.message);
+    } else {
+      summary.termination_type =
+          ssc_->ComputeSymbolicFactorizationWithoutReordering(
+              outer_product_.get(), &summary.message);
+    }
+
+    if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
+      return summary;
+    }
   }
+  event_logger.AddEvent("Symbolic Analysis");
 
   CompressedRowSparseMatrix::ComputeOuterProduct(
       *A, pattern_, outer_product_.get());
-
-  const int num_cols = A->num_cols();
-  cholmod_sparse lhs =
-      ss_.CreateSparseMatrixTransposeView(outer_product_.get());
-  event_logger.AddEvent("Setup");
-
-  if (factor_ == NULL) {
-    if (options_.use_postordering) {
-      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
-                                         A->col_blocks(),
-                                         A->col_blocks(),
-                                         &summary.message);
-    } else {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs,
-                                                       &summary.message);
-    }
-  }
-
-  event_logger.AddEvent("Analysis");
-
-  if (factor_ == NULL) {
-    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-    // No need to set message as it has already been set by the
-    // symbolic analysis routines above.
-    return summary;
-  }
-
-  summary.termination_type = ss_.Cholesky(&lhs, factor_, &summary.message);
-  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
-    return summary;
-  }
-
-  cholmod_dense* rhs = ss_.CreateDenseVector(rhs_and_solution,
-                                             num_cols,
-                                             num_cols);
-  cholmod_dense* solution = ss_.Solve(factor_, rhs, &summary.message);
-  event_logger.AddEvent("Solve");
-
-  ss_.Free(rhs);
-  if (solution != NULL) {
-    memcpy(rhs_and_solution, solution->x, num_cols * sizeof(*rhs_and_solution));
-    ss_.Free(solution);
-  } else {
-    // No need to set message as it has already been set by the
-    // numeric factorization routine above.
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-  }
-
-  event_logger.AddEvent("Teardown");
+  event_logger.AddEvent("Numeric Outer Product");
+  summary.termination_type = ssc_->FactorAndSolve(outer_product_.get(),
+                                                  rhs_and_solution,
+                                                  rhs_and_solution,
+                                                  &summary.message);
+  event_logger.AddEvent("Factor & Solve");
   return summary;
 #endif
 }

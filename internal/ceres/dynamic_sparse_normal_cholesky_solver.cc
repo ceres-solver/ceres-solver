@@ -253,36 +253,18 @@ DynamicSparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   summary.message = "Success.";
 
-  SuiteSparse ss;
-  const int num_cols = A->num_cols();
-  cholmod_sparse lhs = ss.CreateSparseMatrixTransposeView(A);
-  event_logger.AddEvent("Setup");
-  cholmod_factor* factor = ss.AnalyzeCholesky(&lhs, &summary.message);
-  event_logger.AddEvent("Analysis");
+  SuiteSparseCholesky ssc;
+  summary.termination_type = ssc.ComputeSymbolicFactorizationWithReordering(
+      A, false, &summary.message);
+  event_logger.AddEvent("Symbolic Analysis");
 
-  if (factor == NULL) {
-    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
+  if (summary.termination_type != LINEAR_SOLVER_SUCCESS) {
     return summary;
   }
 
-  summary.termination_type = ss.Cholesky(&lhs, factor, &summary.message);
-  if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
-    cholmod_dense* rhs =
-        ss.CreateDenseVector(rhs_and_solution, num_cols, num_cols);
-    cholmod_dense* solution = ss.Solve(factor, rhs, &summary.message);
-    event_logger.AddEvent("Solve");
-    ss.Free(rhs);
-    if (solution != NULL) {
-      memcpy(
-          rhs_and_solution, solution->x, num_cols * sizeof(*rhs_and_solution));
-      ss.Free(solution);
-    } else {
-      summary.termination_type = LINEAR_SOLVER_FAILURE;
-    }
-  }
-
-  ss.Free(factor);
-  event_logger.AddEvent("Teardown");
+  summary.termination_type = ssc.FactorAndSolve(
+      A, rhs_and_solution, rhs_and_solution, &summary.message);
+  event_logger.AddEvent("Solve");
   return summary;
 
 #endif

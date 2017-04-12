@@ -232,7 +232,6 @@ bool SuiteSparse::BlockAMDOrdering(const cholmod_sparse* A,
                                             col_blocks,
                                             &block_rows,
                                             &block_cols);
-
   cholmod_sparse_struct block_matrix;
   block_matrix.nrow = num_row_blocks;
   block_matrix.ncol = num_col_blocks;
@@ -350,6 +349,108 @@ bool SuiteSparse::ConstrainedApproximateMinimumDegreeOrdering(
              << "the Ceres Solver developers.";
   return false;
 #endif
+}
+
+SuiteSparseCholesky::SuiteSparseCholesky()
+    : factor_(NULL) {
+}
+
+SuiteSparseCholesky::~SuiteSparseCholesky() {
+  FreeFactorization();
+}
+
+LinearSolverTerminationType
+SuiteSparseCholesky::ComputeSymbolicFactorizationWithoutReordering(
+    CompressedRowSparseMatrix* lhs, string* message) {
+  if (lhs == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+  FreeFactorization();
+  cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
+  factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&cholmod_lhs, message);
+  return (factor_ != NULL) ? LINEAR_SOLVER_SUCCESS : LINEAR_SOLVER_FATAL_ERROR;
+}
+
+LinearSolverTerminationType
+SuiteSparseCholesky::ComputeSymbolicFactorizationWithReordering(
+    CompressedRowSparseMatrix* lhs,
+    const bool ignore_block_structure,
+    string* message) {
+  if (lhs == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  FreeFactorization();
+  cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
+  if (!lhs->col_blocks().empty() && !(lhs->row_blocks().empty()) &&
+      !ignore_block_structure) {
+    factor_ = ss_.BlockAnalyzeCholesky(
+        &cholmod_lhs, lhs->col_blocks(), lhs->row_blocks(), message);
+  } else {
+    factor_ = ss_.AnalyzeCholesky(&cholmod_lhs, message);
+  }
+  return (factor_ != NULL) ? LINEAR_SOLVER_SUCCESS : LINEAR_SOLVER_FATAL_ERROR;
+}
+
+LinearSolverTerminationType SuiteSparseCholesky::ComputeNumericFactorization(
+    CompressedRowSparseMatrix* lhs, string* message) {
+  if (lhs == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  if (factor_ == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  cholmod_sparse cholmod_lhs = ss_.CreateSparseMatrixTransposeView(lhs);
+  return ss_.Cholesky(&cholmod_lhs, factor_, message);
+}
+
+LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
+                                                       double* solution,
+                                                       string* message) {
+  // Error checking
+  if (factor_ == NULL) {
+    *message = "Failure: Input lhs is NULL.";
+    return LINEAR_SOLVER_FATAL_ERROR;
+  }
+
+  const int num_cols = factor_->n;
+  cholmod_dense* cholmod_dense_rhs =
+      ss_.CreateDenseVector(rhs, num_cols, num_cols);
+  cholmod_dense* cholmod_dense_solution =
+      ss_.Solve(factor_, cholmod_dense_rhs, message);
+  ss_.Free(cholmod_dense_rhs);
+  if (cholmod_dense_solution == NULL) {
+    return LINEAR_SOLVER_FAILURE;
+  }
+
+  memcpy(solution, cholmod_dense_solution->x, num_cols * sizeof(*solution));
+  return LINEAR_SOLVER_SUCCESS;
+}
+
+LinearSolverTerminationType SuiteSparseCholesky::FactorAndSolve(
+    CompressedRowSparseMatrix* lhs,
+    const double* rhs,
+    double* solution,
+    std::string* message) {
+  LinearSolverTerminationType termination_type =
+      ComputeNumericFactorization(lhs, message);
+  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+    termination_type = Solve(rhs, solution, message);
+  }
+  return termination_type;
+}
+
+void SuiteSparseCholesky::FreeFactorization() {
+  if (factor_ != NULL) {
+    ss_.Free(factor_);
+    factor_ = NULL;
+  }
 }
 
 }  // namespace internal
