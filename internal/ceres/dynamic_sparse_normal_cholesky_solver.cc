@@ -211,20 +211,10 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImplUsingCXSparse(
   cxsparse.Free(a);
   event_logger.AddEvent("NormalEquations");
 
-  cs_dis* factor = cxsparse.AnalyzeCholesky(lhs);
-  event_logger.AddEvent("Analysis");
-
-  if (factor == NULL) {
-    summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-    summary.message = "CXSparse::AnalyzeCholesky failed.";
-  } else if (!cxsparse.SolveCholesky(lhs, factor, rhs_and_solution)) {
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message = "CXSparse::SolveCholesky failed.";
-  }
+  cxsparse.SolveCholesky(lhs, rhs_and_solution);
   event_logger.AddEvent("Solve");
 
   cxsparse.Free(lhs);
-  cxsparse.Free(factor);
   event_logger.AddEvent("TearDown");
   return summary;
 #endif
