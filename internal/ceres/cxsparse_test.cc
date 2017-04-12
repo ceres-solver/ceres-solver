@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,51 +27,69 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// A solver for sparse linear least squares problem based on solving
-// the normal equations via a sparse cholesky factorization.
-
-#ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-#define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-
-#include <vector>
 
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#include "ceres/internal/macros.h"
-#include "ceres/linear_solver.h"
-#include "ceres/suitesparse.h"
-#include "ceres/eigensparse.h"
 #include "ceres/cxsparse.h"
+
+#ifndef CERES_NO_CXSPARSE
+
+#include <vector>
+#include "ceres/compressed_col_sparse_matrix_utils.h"
+#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/random.h"
+#include "ceres/triplet_sparse_matrix.h"
+#include "glog/logging.h"
+#include "gtest/gtest.h"
 
 namespace ceres {
 namespace internal {
 
-class CompressedRowSparseMatrix;
+// TODO(sameeragarwal): Use the factory class in TripletSparseMatrix.
+Eigen::SparseMatrix<double> CreateRandomSparseMatrix(const int num_rows,
+                                                     const int num_cols,
+                                                     const double p) {
+  std::vector<Eigen::Triplet<double> > triplet_list;
+  for (int i = 0; i < num_rows; ++i) {
+    for (int j = 0; j < num_cols; ++j) {
+      const double v_ij = RandDouble();
+      if (v_ij < p) {
+        triplet_list.push_back(Eigen::Triplet<double>(i, j, v_ij));
+      }
+    }
+  }
 
-// Solves the normal equations (A'A + D'D) x = A'b, using the sparse
-// linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
- public:
-  explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
-  virtual ~SparseNormalCholeskySolver();
+  Eigen::SparseMatrix<double> mat(num_rows, num_cols);
+  mat.setFromTriplets(triplet_list.begin(), triplet_list.end());
+  return mat;
+}
 
- private:
-  virtual LinearSolver::Summary SolveImpl(
-      CompressedRowSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& options,
-      double* x);
+// TODO(sameeragarwal): do we need this test?
 
-  const LinearSolver::Options options_;
-  scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
-};
+TEST(CXSparse, CreateSparseMatrixView) {
+  const int num_rows = 8;
+  const int num_cols = 4;
+  const double p = 0.5;
+  Eigen::SparseMatrix<double> m =
+      CreateRandomSparseMatrix(num_rows, num_cols, p);
+  CXSparse cxsparse;
+  cs_di cs_m = cxsparse.CreateSparseMatrixView(&m);
+
+  Eigen::VectorXd x(num_cols);
+  Eigen::VectorXd y(num_rows);
+  for (int i = 0; i < num_cols; ++i) {
+    x.setZero();
+    x(i) = 1.0;
+    y.setZero();
+    cs_gaxpy(&cs_m, x.data(), y.data());
+    Eigen::VectorXd z = m.col(i);
+    EXPECT_NEAR(
+        (y - z).norm() / z.norm(), 0.0, std::numeric_limits<double>::epsilon());
+  }
+}
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#endif  // CERES_NO_CXSPARSE

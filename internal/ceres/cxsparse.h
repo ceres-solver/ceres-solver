@@ -36,7 +36,10 @@
 
 #ifndef CERES_NO_CXSPARSE
 
+#include <string>
 #include <vector>
+#include "ceres/linear_solver.h"
+#include "ceres/sparse_cholesky.h"
 #include "cs.h"
 
 namespace ceres {
@@ -54,6 +57,11 @@ class CXSparse {
   CXSparse();
   ~CXSparse();
 
+  csn* Cholesky(cs_di* A, cs_dis* symbolic_factor);
+
+  void Solve(cs_dis* symbolic_factor, csn* numeric_factor, double* b);
+  void SolveCholesky(cs_di* lhs, double* rhs_and_solution);
+
   // Solves a symmetric linear system A * x = b using Cholesky factorization.
   //  A                      - The system matrix.
   //  symbolic_factorization - The symbolic factorization of A. This is obtained
@@ -61,7 +69,7 @@ class CXSparse {
   //  b                      - The right hand size of the linear equation. This
   //                           array will also recieve the solution.
   // Returns false if Cholesky factorization of A fails.
-  bool SolveCholesky(cs_di* A, cs_dis* symbolic_factorization, double* b);
+  // bool SolveCholesky(cs_di* A, cs_dis* symbolic_factorization, double* b);
 
   // Creates a sparse matrix from a compressed-column form. No memory is
   // allocated or copied; the structure A is filled out with info from the
@@ -117,6 +125,7 @@ class CXSparse {
 
   void Free(cs_di* sparse_matrix);
   void Free(cs_dis* symbolic_factorization);
+  void Free(csn* numeric_factorization);
 
  private:
   // Cached scratch space
@@ -124,10 +133,35 @@ class CXSparse {
   int scratch_size_;
 };
 
+// TODO(sameeragarwal): This needs to be tested with both upper and
+// lower triangular matrices.
+//
+// Can CXSparse even handle lower triangular matrices?
+// I do not think they can.
+class CXSparseCholesky : public SparseCholesky {
+ public:
+  static CXSparseCholesky* Create(const OrderingType ordering_type);
+  virtual ~CXSparseCholesky();
+  virtual LinearSolverTerminationType Factorize(
+      CompressedRowSparseMatrix* lhs, std::string* message);
+  virtual LinearSolverTerminationType Solve(const double* rhs,
+                                            double* solution,
+                                            std::string* message);
+ private:
+  CXSparseCholesky(const OrderingType ordering_type);
+  void FreeSymbolicFactorization();
+  void FreeNumericFactorization();
+
+  const OrderingType ordering_type_;
+  CXSparse cs_;
+  cs_dis* symbolic_factor_;
+  csn* numeric_factor_;
+};
+
 }  // namespace internal
 }  // namespace ceres
 
-#else  // CERES_NO_CXSPARSE
+#else   // CERES_NO_CXSPARSE
 
 typedef void cs_dis;
 

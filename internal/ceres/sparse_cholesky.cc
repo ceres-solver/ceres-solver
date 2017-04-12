@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,20 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
-//
-// A solver for sparse linear least squares problem based on solving
-// the normal equations via a sparse cholesky factorization.
 
-#ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-#define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-
-#include <vector>
-
-// This include must come before any #ifndef check on Ceres compile options.
-#include "ceres/internal/port.h"
-
-#include "ceres/internal/macros.h"
-#include "ceres/linear_solver.h"
 #include "ceres/suitesparse.h"
 #include "ceres/eigensparse.h"
 #include "ceres/cxsparse.h"
@@ -48,30 +35,44 @@
 namespace ceres {
 namespace internal {
 
-class CompressedRowSparseMatrix;
+// TODO(sameeragarwal): Need Ifdefs around here.
+SparseCholesky* SparseCholesky::Create(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type,
+    OrderingType ordering_type) {
+  switch (sparse_linear_algebra_library_type) {
+    case SUITE_SPARSE:
+      return SuiteSparseCholesky::Create(ordering_type);
+    case EIGEN_SPARSE:
+      return EigenSparseCholesky::Create(ordering_type);
+    case CX_SPARSE:
+      return CXSparseCholesky::Create(ordering_type);
+    default:
+      LOG(FATAL) << "Unknown sparse linear algebra library type : "
+                 << sparse_linear_algebra_library_type;
+  }
+}
 
-// Solves the normal equations (A'A + D'D) x = A'b, using the sparse
-// linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
- public:
-  explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
-  virtual ~SparseNormalCholeskySolver();
+SparseCholesky::~SparseCholesky() {}
 
- private:
-  virtual LinearSolver::Summary SolveImpl(
-      CompressedRowSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& options,
-      double* x);
+LinearSolverTerminationType SparseCholesky::FactorAndSolve(
+    CompressedRowSparseMatrix* lhs,
+    const double* rhs,
+    double* solution,
+    std::string* message) {
+  LinearSolverTerminationType termination_type = Factorize(lhs, message);
+  if (termination_type == LINEAR_SOLVER_SUCCESS) {
+    termination_type = Solve(rhs, solution, message);
+  }
+  return termination_type;
+}
 
-  const LinearSolver::Options options_;
-  scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
-};
+CompressedRowSparseMatrix::StorageType StorageTypeForSparseLinearAlgebraLibrary(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
+  if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    return CompressedRowSparseMatrix::UPPER_TRIANGULAR;
+  }
+  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+}
 
 }  // namespace internal
 }  // namespace ceres
-
-#endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_

@@ -95,6 +95,8 @@ class BlockSparseMatrix;
 // installed. For structure from motion problems, this is solver can
 // be used for problems with upto a few hundred cameras.
 //
+// TODO(sameeragarwal): Update comment
+//
 // SparseSchurComplementSolver: For problems where the Schur
 // complement matrix is large and sparse. It requires that
 // CHOLMOD/SuiteSparse be installed, as it uses CHOLMOD to find a
@@ -174,48 +176,13 @@ class SparseSchurComplementSolver : public SchurComplementSolver {
   virtual LinearSolver::Summary SolveReducedLinearSystem(
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* solution);
-  LinearSolver::Summary SolveReducedLinearSystemUsingSuiteSparse(
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
-  LinearSolver::Summary SolveReducedLinearSystemUsingCXSparse(
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
-  LinearSolver::Summary SolveReducedLinearSystemUsingEigen(
-      const LinearSolver::PerSolveOptions& per_solve_options,
-      double* solution);
   LinearSolver::Summary SolveReducedLinearSystemUsingConjugateGradients(
       const LinearSolver::PerSolveOptions& per_solve_options,
       double* solution);
 
   // Size of the blocks in the Schur complement.
   std::vector<int> blocks_;
-
-  SuiteSparse ss_;
-  // Symbolic factorization of the reduced linear system. Precomputed
-  // once and reused in subsequent calls.
-  cholmod_factor* factor_;
-
-  CXSparse cxsparse_;
-  // Cached factorization
-  cs_dis* cxsparse_factor_;
-
-#ifdef CERES_USE_EIGEN_SPARSE
-
-  // The preprocessor gymnastics here are dealing with the fact that
-  // before version 3.2.2, Eigen did not support a third template
-  // parameter to specify the ordering.
-#if EIGEN_VERSION_AT_LEAST(3,2,2)
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Lower,
-                                Eigen::NaturalOrdering<int> >
-  SimplicialLDLT;
-#else
-  typedef Eigen::SimplicialLDLT<Eigen::SparseMatrix<double>, Eigen::Lower>
-  SimplicialLDLT;
-#endif
-
-  scoped_ptr<SimplicialLDLT> simplicial_ldlt_;
-#endif
-
+  scoped_ptr<SparseCholesky> sparse_cholesky_;
   scoped_ptr<BlockRandomAccessDiagonalMatrix> preconditioner_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseSchurComplementSolver);
 };
