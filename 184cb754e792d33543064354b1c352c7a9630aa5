@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c17dec97_75bf582f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-12T16:43:45Z",
+      "side": 1,
+      "message": "Perhaps we should have a variable for this that gets referenced three times?\n\nset(CERES_MIN_REQUIRED_EIGEN_VERSION 3.2.2)",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 38
+      },
+      "revId": "184cb754e792d33543064354b1c352c7a9630aa5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
