@@ -299,6 +299,7 @@ TEST_F(BundleAdjustmentTest, SparseSchurWithUserOrderingUsingSuiteSparse) {
       SolverConfig(SPARSE_SCHUR, SUITE_SPARSE, kUserOrdering));
 }
 
+
 TEST_F(BundleAdjustmentTest,
        IterativeSchurWithClusterJacobiAndAutomaticOrderingUsingSuiteSparse) {
   RunSolverForConfigAndExpectResidualsMatch(
