@@ -38,10 +38,10 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-
 namespace ceres {
 namespace internal {
 
+// TODO(sameeragarwal): Refactor and expand these tests.
 class UnsymmetricLinearSolverTest : public ::testing::Test {
  protected :
   virtual void SetUp() {
@@ -254,7 +254,6 @@ TEST_F(UnsymmetricLinearSolverTest,
   options.dynamic_sparsity = true;
   TestSolver(options);
 }
-
 #endif  // CERES_USE_EIGEN_SPARSE
 
 }  // namespace internal
