@@ -250,8 +250,8 @@ void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
   num_rows_ -= delta_rows;
   rows_.resize(num_rows_ + 1);
 
-  // The rest of the code update block information.
-  // Immediately return in case of no block information.
+  // The rest of the code updates the block information. Immediately
+  // return in case of no block information.
   if (row_blocks_.empty()) {
     return;
   }
@@ -280,8 +280,8 @@ void CompressedRowSparseMatrix::DeleteRows(int delta_rows) {
 void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   CHECK_EQ(m.num_cols(), num_cols_);
 
-  CHECK((row_blocks_.size() == 0 && m.row_blocks().size() == 0) ||
-        (row_blocks_.size() != 0 && m.row_blocks().size() != 0))
+  CHECK((row_blocks_.empty() && m.row_blocks().empty()) ||
+        (!row_blocks_.empty() && !m.row_blocks().empty()))
       << "Cannot append a matrix with row blocks to one without and vice versa."
       << "This matrix has : " << row_blocks_.size() << " row blocks."
       << "The matrix being appended has: " << m.row_blocks().size()
@@ -316,8 +316,8 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
 
   num_rows_ += m.num_rows();
 
-  // The rest of the code update block information.
-  // Immediately return in case of no block information.
+  // The rest of the code updates the block information. Immediately
+  // return in case of no block information.
   if (row_blocks_.empty()) {
     return;
   }
@@ -329,7 +329,8 @@ void CompressedRowSparseMatrix::AppendRows(const CompressedRowSparseMatrix& m) {
   row_blocks_.insert(
       row_blocks_.end(), m.row_blocks().begin(), m.row_blocks().end());
 
-  // The rest of the code update compressed row sparse block (crsb) information.
+  // The rest of the code updates the compressed row sparse block
+  // (crsb) information.
   const int num_crsb_nonzeros = crsb_cols_.size();
   const int m_num_crsb_nonzeros = m.crsb_cols_.size();
   crsb_cols_.resize(num_crsb_nonzeros + m_num_crsb_nonzeros);
@@ -455,8 +456,8 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
                                            transpose->mutable_cols(),
                                            transpose->mutable_values());
 
-  // The rest of the code update block information.
-  // Immediately return in case of no block information.
+  // The rest of the code updates the block information. Immediately
+  // return in case of no block information.
   if (row_blocks_.empty()) {
     return transpose;
   }
@@ -468,7 +469,8 @@ CompressedRowSparseMatrix* CompressedRowSparseMatrix::Transpose() const {
   *(transpose->mutable_row_blocks()) = col_blocks_;
   *(transpose->mutable_col_blocks()) = row_blocks_;
 
-  // The rest of the code update compressed row sparse block (crsb) information.
+  // The rest of the code updates the compressed row sparse block
+  // (crsb) information.
   vector<int>& transpose_crsb_rows = *transpose->mutable_crsb_rows();
   vector<int>& transpose_crsb_cols = *transpose->mutable_crsb_cols();
 
@@ -511,14 +513,14 @@ struct ProductTerm {
   int index;
 };
 
-// Create outerproduct matrix based on the block product information.
-// The input block product is already sorted.  This function does not
-// set the sparse rows/cols information.  Instead, it only collects the
-// nonzeros for each compressed row and puts in row_nnz.
-// The caller of this function will traverse the block product in a second
-// round to generate the sparse rows/cols information.
-// This function also computes the block offset information for
-// the outerproduct matrix, which is used in outer product computation.
+// Create outer product matrix based on the block product information.
+// The input block product is already sorted. This function does not
+// set the sparse rows/cols information. Instead, it only collects the
+// nonzeros for each compressed row and puts in row_nnz. The caller of
+// this function will traverse the block product in a second round to
+// generate the sparse rows/cols information. This function also
+// computes the block offset information for the outer product matrix,
+// which is used in outer product computation.
 CompressedRowSparseMatrix* CreateOuterProductMatrix(
     const int num_cols,
     const CompressedRowSparseMatrix::StorageType storage_type,
@@ -526,8 +528,8 @@ CompressedRowSparseMatrix* CreateOuterProductMatrix(
     const vector<ProductTerm>& product,
     vector<int>* row_nnz) {
   // Count the number of unique product term, which in turn is the
-  // number of non-zeros in the outer product.
-  // Also count the number of non-zeros in each row.
+  // number of non-zeros in the outer product. Also count the number
+  // of non-zeros in each row.
   row_nnz->resize(blocks.size());
   std::fill(row_nnz->begin(), row_nnz->end(), 0);
   (*row_nnz)[product[0].row] = blocks[product[0].col];
@@ -546,8 +548,8 @@ CompressedRowSparseMatrix* CreateOuterProductMatrix(
       new CompressedRowSparseMatrix(num_cols, num_cols, num_nonzeros);
   matrix->set_storage_type(storage_type);
 
-  // Compute block offsets for outer product matrix, which is used
-  // in ComputeOuterProduct.
+  // Compute block offsets for outer product matrix, which is used in
+  // ComputeOuterProduct.
   vector<int>* block_offsets = matrix->mutable_block_offsets();
   block_offsets->resize(blocks.size() + 1);
   (*block_offsets)[0] = 0;
@@ -595,7 +597,7 @@ CompressedRowSparseMatrix* CompressAndFillProgram(
   //   nnz + row_nnz[current.row] * j + col_nnz + k
   //
   // program keeps col_nnz for block product, which is used later for
-  // outerproduct computation.
+  // outer product computation.
   //
   // There is no special handling for diagonal blocks as we generate
   // BLOCK triangular matrix (diagonal block is full block) instead of
@@ -725,7 +727,7 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
 
 // Give input matrix m in Compressed Row Sparse Block format
 //     (row_block, col_block)
-// compute outerproduct m' * m as sum of block multiplications
+// compute outer product m' * m as sum of block multiplications
 //     (row_block, col_block1)' X (row_block, col_block2)
 //
 // Given row_block of the input matrix m, we use m_row_begin to represent
@@ -743,11 +745,11 @@ CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
 //     <m.row_blocks()[row_block], m.col_blocks()[col_block]>
 // where m_col_nnz is the number of nonzero before col_block in each row.
 //
-// The outerproduct block is represented similarly with m_row_begin,
-// m_row_nnz, m_col_nnz, etc. replaced by row_begin, row_nnz, col_nnz, etc.
-// The difference is, m_row_begin and m_col_nnz is counted during the
-// traverse of block multiplication, while row_begin and col_nnz are got
-// from pre-computed block_offsets and program.
+// The outer product block is represented similarly with m_row_begin,
+// m_row_nnz, m_col_nnz, etc. replaced by row_begin, row_nnz, col_nnz,
+// etc. The difference is, m_row_begin and m_col_nnz is counted
+// during the traverse of block multiplication, while row_begin and
+// col_nnz are got from pre-computed block_offsets and program.
 //
 // Due to the compression on rows, col_block is accessed through
 // idx to crsb_col vector. So col_block is accessed as crsb_col[idx]
@@ -791,9 +793,9 @@ void CompressedRowSparseMatrix::ComputeOuterProduct(
     for (int idx1 = crsb_rows[row_block], m_col_nnz1 = 0;
          idx1 < crsb_rows[row_block + 1];
          m_col_nnz1 += col_blocks[COL_BLOCK1], ++idx1) {
-      // Non zeros are not stored consecutively across rows in a block.
-      // The gaps between rows is the number of nonzeros of the
-      // outerproduct matrix compressed row.
+      // Non zeros are not stored consecutively across rows in a
+      // block. The gaps between rows is the number of nonzeros of the
+      // outer product matrix compressed row.
       const int row_begin = block_offsets[COL_BLOCK1];
       const int row_nnz = rows[row_begin + 1] - rows[row_begin];
       if (storage_type == LOWER_TRIANGULAR) {
