@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,47 +28,42 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 //
-// A solver for sparse linear least squares problem based on solving
-// the normal equations via a sparse cholesky factorization.
+// A simple C++ interface to the Eigen's Sparse Cholesky routines.
 
-#ifndef CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
-#define CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#ifndef CERES_INTERNAL_EIGENSPARSE_H_
+#define CERES_INTERNAL_EIGENSPARSE_H_
 
 // This include must come before any #ifndef check on Ceres compile options.
 #include "ceres/internal/port.h"
 
-#include <vector>
-#include "ceres/internal/macros.h"
+#ifdef CERES_USE_EIGEN_SPARSE
+
+#include <string>
+#include "Eigen/SparseCore"
 #include "ceres/linear_solver.h"
+#include "ceres/sparse_cholesky.h"
 
 namespace ceres {
 namespace internal {
 
-class CompressedRowSparseMatrix;
-class SparseCholesky;
-
-// Solves the normal equations (A'A + D'D) x = A'b, using the sparse
-// linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
+class EigenSparseCholesky : public SparseCholesky {
  public:
-  explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
-  virtual ~SparseNormalCholeskySolver();
+  // Factory
+  static EigenSparseCholesky* Create(const OrderingType ordering_type);
 
- private:
-  virtual LinearSolver::Summary SolveImpl(
-      CompressedRowSparseMatrix* A,
-      const double* b,
-      const LinearSolver::PerSolveOptions& options,
-      double* x);
-
-  const LinearSolver::Options options_;
-  scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
-  CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
+  // SparseCholesky interface.
+  virtual ~EigenSparseCholesky();
+  virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
+  virtual LinearSolverTerminationType Factorize(
+      const Eigen::SparseMatrix<double>& lhs, std::string* message) = 0;
+  virtual LinearSolverTerminationType Solve(const double* rhs,
+                                            double* solution,
+                                            std::string* message) = 0;
 };
 
 }  // namespace internal
 }  // namespace ceres
 
-#endif  // CERES_INTERNAL_SPARSE_NORMAL_CHOLESKY_SOLVER_H_
+#endif  // CERES_USE_EIGEN_SPARSE
+
+#endif  // CERES_INTERNAL_EIGENSPARSE_H_
