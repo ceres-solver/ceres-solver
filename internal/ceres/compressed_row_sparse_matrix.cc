@@ -872,7 +872,7 @@ CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
   // It is possible that the random matrix is empty which is likely
   // not what the user wants, so do the matrix generation till we have
   // at least one non-zero entry.
-  while (tsm_values.size().empty()) {
+  while (tsm_values.empty()) {
     int row_block_begin = 0;
     crsb_rows.clear();
     crsb_cols.clear();
