@@ -78,7 +78,7 @@ void TransposeForCompressedRowSparseStructure(const int num_rows,
                                               int* transpose_cols,
                                               double* transpose_values) {
   // Explicitly zero out transpose_rows.
-  std::fill(transpose_rows, transpose_rows + num_nonzeros, 0.0);
+  std::fill(transpose_rows, transpose_rows + num_cols, 0);
 
   // Count the number of entries in each column of the original matrix
   // and assign to transpose_rows[col + 1].
