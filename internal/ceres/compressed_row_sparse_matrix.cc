@@ -865,7 +865,7 @@ CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
 
   // Generate the col block structure.
   for (int i = 0; i < options.num_col_blocks; ++i) {
-    // Generate a random integer in [min_row_block_size, max_row_block_size]
+    // Generate a random integer in [min_col_block_size, max_col_block_size]
     const int delta_block_size =
         Uniform(options.max_col_block_size - options.min_col_block_size);
     col_blocks.push_back(options.min_col_block_size + delta_block_size);

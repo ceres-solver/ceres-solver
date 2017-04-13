@@ -70,7 +70,7 @@ LinearSolver::Summary DynamicSparseNormalCholeskySolver::SolveImpl(
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
     scoped_ptr<CompressedRowSparseMatrix> regularizer;
-    if (A->col_blocks().size() > 0) {
+    if (!A->col_blocks().empty()) {
       regularizer.reset(CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
           per_solve_options.D, A->col_blocks()));
     } else {

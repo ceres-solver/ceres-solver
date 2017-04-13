@@ -290,7 +290,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
 
 
   // Compute outer product as a compressed row lower triangular
-  // matrix, which would mapped to a compressed column upper
+  // matrix, which would be mapped to a compressed column upper
   // triangular matrix, which is the representation used by CXSparse's
   // sparse Cholesky factorization.
   if (outer_product_.get() == NULL) {
