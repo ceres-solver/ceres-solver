@@ -39,7 +39,7 @@ implements an automatically differentiated ``CostFunction`` for `Rat43
 
   CostFunction* cost_function =
         new AutoDiffCostFunction<Rat43CostFunctor, 1, 4>(
-	  new Rat43CostFunctor(x, y));
+          new Rat43CostFunctor(x, y));
 
 Notice that compared to numeric differentiation, the only difference
 when defining the functor for use with automatic differentiation is
@@ -220,7 +220,7 @@ play. The following code fragment has a simple implementation of a
    template <int N>  Jet<N> pow(const Jet<N>& f, const Jet<N>& g) {
      return Jet<N>(pow(f.a, g.a),
                    g.a * pow(f.a, g.a - 1.0) * f.v +
-		   pow(f.a, g.a) * log(f.a); * g.v);
+                   pow(f.a, g.a) * log(f.a); * g.v);
    }
 
 

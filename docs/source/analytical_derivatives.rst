@@ -58,22 +58,22 @@ With these derivatives in hand, we can now implement the
        virtual ~Rat43Analytic() {}
        virtual bool Evaluate(double const* const* parameters,
                              double* residuals,
-			     double** jacobians) const {
-	 const double b1 = parameters[0][0];
-	 const double b2 = parameters[0][1];
-	 const double b3 = parameters[0][2];
-	 const double b4 = parameters[0][3];
+                             double** jacobians) const {
+         const double b1 = parameters[0][0];
+         const double b2 = parameters[0][1];
+         const double b3 = parameters[0][2];
+         const double b4 = parameters[0][3];
 
-	 residuals[0] = b1 *  pow(1 + exp(b2 -  b3 * x_), -1.0 / b4) - y_;
+         residuals[0] = b1 *  pow(1 + exp(b2 -  b3 * x_), -1.0 / b4) - y_;
 
          if (!jacobians) return true;
-	 double* jacobian = jacobians[0];
-	 if (!jacobian) return true;
+         double* jacobian = jacobians[0];
+         if (!jacobian) return true;
 
          jacobian[0] = pow(1 + exp(b2 - b3 * x_), -1.0 / b4);
          jacobian[1] = -b1 * exp(b2 - b3 * x_) *
                        pow(1 + exp(b2 - b3 * x_), -1.0 / b4 - 1) / b4;
-	 jacobian[2] = x_ * b1 * exp(b2 - b3 * x_) *
+         jacobian[2] = x_ * b1 * exp(b2 - b3 * x_) *
                        pow(1 + exp(b2 - b3 * x_), -1.0 / b4 - 1) / b4;
          jacobian[3] = b1 * log(1 + exp(b2 - b3 * x_)) *
                        pow(1 + exp(b2 - b3 * x_), -1.0 / b4) / (b4 * b4);
@@ -97,27 +97,27 @@ improve its efficiency, which would give us something like:
        virtual ~Rat43AnalyticOptimized() {}
        virtual bool Evaluate(double const* const* parameters,
                              double* residuals,
-			     double** jacobians) const {
-	 const double b1 = parameters[0][0];
-	 const double b2 = parameters[0][1];
-	 const double b3 = parameters[0][2];
-	 const double b4 = parameters[0][3];
+                             double** jacobians) const {
+         const double b1 = parameters[0][0];
+         const double b2 = parameters[0][1];
+         const double b3 = parameters[0][2];
+         const double b4 = parameters[0][3];
 
-	 const double t1 = exp(b2 -  b3 * x_);
+         const double t1 = exp(b2 -  b3 * x_);
          const double t2 = 1 + t1;
-	 const double t3 = pow(t2, -1.0 / b4);
-	 residuals[0] = b1 * t3 - y_;
+         const double t3 = pow(t2, -1.0 / b4);
+         residuals[0] = b1 * t3 - y_;
 
          if (!jacobians) return true;
-	 double* jacobian = jacobians[0];
-	 if (!jacobian) return true;
+         double* jacobian = jacobians[0];
+         if (!jacobian) return true;
 
-	 const double t4 = pow(t2, -1.0 / b4 - 1);
-	 jacobian[0] = t3;
-	 jacobian[1] = -b1 * t1 * t4 / b4;
-	 jacobian[2] = -x_ * jacobian[1];
-	 jacobian[3] = b1 * log(t2) * t3 / (b4 * b4);
-	 return true;
+         const double t4 = pow(t2, -1.0 / b4 - 1);
+         jacobian[0] = t3;
+         jacobian[1] = -b1 * t1 * t4 / b4;
+         jacobian[2] = -x_ * jacobian[1];
+         jacobian[3] = b1 * log(t2) * t3 / (b4 * b4);
+         return true;
        }
 
      private:
@@ -182,11 +182,11 @@ When should you use analytical derivatives?
 .. rubric:: Footnotes
 
 .. [#f1] The notion of best fit depends on the choice of the objective
-	 function used to measure the quality of fit, which in turn
-	 depends on the underlying noise process which generated the
-	 observations. Minimizing the sum of squared differences is
-	 the right thing to do when the noise is `Gaussian
-	 <https://en.wikipedia.org/wiki/Normal_distribution>`_. In
-	 that case the optimal value of the parameters is the `Maximum
-	 Likelihood Estimate
-	 <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation>`_.
+         function used to measure the quality of fit, which in turn
+         depends on the underlying noise process which generated the
+         observations. Minimizing the sum of squared differences is
+         the right thing to do when the noise is `Gaussian
+         <https://en.wikipedia.org/wiki/Normal_distribution>`_. In
+         that case the optimal value of the parameters is the `Maximum
+         Likelihood Estimate
+         <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation>`_.
