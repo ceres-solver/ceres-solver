@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdff5844_a8e52782",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-17T00:58:05Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this class name. Perhaps SuiteSparseCholeskyFactorizer? Since it maintains state.",
+      "revId": "2fb0fe2a293a62ea039c160624886586ac5f4cff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43e1a56c_1ae57ad1",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-17T00:58:05Z",
+      "side": 1,
+      "message": "Where does the block factorization go? In the internal cholmod factor? Consider documenting the interface :)",
+      "revId": "2fb0fe2a293a62ea039c160624886586ac5f4cff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d796ae4_d51e67dd",
+        "filename": "internal/ceres/suitesparse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-17T00:58:05Z",
+      "side": 1,
+      "message": "Perhaps document ownership - are these created when constructing the object?",
+      "revId": "2fb0fe2a293a62ea039c160624886586ac5f4cff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
