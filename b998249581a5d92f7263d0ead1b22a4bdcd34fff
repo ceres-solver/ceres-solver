@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37dbd9ae_619b3b36",
+        "filename": "include/ceres/covariance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-04-17T01:00:47Z",
+      "side": 1,
+      "message": "Would there ever be cases where we want to use a different sparse library for covariance and for solving?",
+      "revId": "b998249581a5d92f7263d0ead1b22a4bdcd34fff",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
