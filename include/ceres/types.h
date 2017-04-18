@@ -421,17 +421,6 @@ enum LineSearchInterpolationType {
 enum CovarianceAlgorithmType {
   DENSE_SVD,
   SPARSE_QR,
-
-  // TODO(sameeragarwal): Expand this to include
-  // DENSE_QR (Eigen)
-  // DENSE_SCHUR_SVD (Eigen)
-  // SPARSE_SCHUR_LU (Eigen, SuiteSparse)
-  //
-  // Are the following two a good idea? given that they are not rank
-  // revealing.
-  //
-  // DENSE_SCHUR_CHOLESKY (Eigen)
-  // SPARSE_SCHUR_CHOLESKY (Eigen, SuiteSparse)
 };
 
 // It is a near impossibility that user code generates this exact
