@@ -214,29 +214,9 @@ if (NOT WIN32 AND NOT BUILD_SHARED_LIBS)
   endif()
 endif()
 
-if (CMAKE_VERSION VERSION_LESS "2.8.12")
-  # CMake version < 2.8.12 does not support target_compile_options(), warn
-  # user that they will have to add compile flags to their own projects
-  # manually if required.
-  if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-    message("-- Warning: Detected CMake version: ${CMAKE_VERSION} < 2.8.12, "
-      "which is the minimum required for compile options to be included in an "
-      "exported CMake target, but CERES_USE_CXX11 is enabled and the detected. "
-      "compiler requires -std=c++11. The client is responsible for adding "
-      "-std=c++11 when using Ceres.")
-  endif()
-else()
-  # CMake version >= 2.8.12 supports target_compile_options().
-  if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
-    # If Ceres is compiled using C++11, and the compiler requires -std=c++11
-    # to be set, then ensure that this requirement is rolled into the exported
-    # CMake target, such that client code which uses Ceres will inherit it (if
-    # the CMake version supports it), iff they are NOT compiling for C.  We
-    # check for not C, rather than C++ as LINKER_LANGUAGE is often NOTFOUND and
-    # then uses the default (C++).
-    target_compile_options(ceres PUBLIC
-      $<$<NOT:$<STREQUAL:$<TARGET_PROPERTY:LINKER_LANGUAGE>,C>>:-std=c++11>)
-  endif()
+if (CXX11)
+  include(AddCeresCXX11RequirementsToTarget)
+  add_ceres_cxx11_requirements_to_target(ceres)
 endif()
 
 if (BUILD_SHARED_LIBS)
