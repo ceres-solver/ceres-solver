@@ -507,7 +507,12 @@ if (CXX11)
     message("   of Ceres that will require the use of C++11 in client code.")
     message("   ==============================================================")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_CXX11)
-    if (COMPILER_HAS_CXX11_FLAG)
+    if (COMPILER_HAS_CXX11_FLAG AND
+        CMAKE_VERSION VERSION_LESS "2.8.12")
+      # For CMake versions > 2.8.12, the C++11 dependency is rolled into the
+      # Ceres target, and all dependent targets, but for older versions of CMake
+      # the flag must be specified explicitly both for Ceres and the
+      # examples/tests.
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     endif()
   endif()
