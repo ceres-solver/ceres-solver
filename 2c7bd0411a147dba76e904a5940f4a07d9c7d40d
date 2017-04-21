@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2694d2_0333c61a",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-21T17:53:54Z",
+      "side": 1,
+      "message": "should this logic be abstracted into its own function, its making this file.. well mildly unreadable.",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 37
+      },
+      "revId": "2c7bd0411a147dba76e904a5940f4a07d9c7d40d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
