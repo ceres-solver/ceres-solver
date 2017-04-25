@@ -67,18 +67,9 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* x);
 
-  LinearSolver::Summary SolveImplUsingSuiteSparse(
-      CompressedRowSparseMatrix* A,
-      double* rhs_and_solution);
-
-
-  LinearSolver::Summary SolveImplUsingCXSparse(
-      CompressedRowSparseMatrix* A,
-      double* rhs_and_solution);
-
-  LinearSolver::Summary SolveImplUsingEigen(
-      CompressedRowSparseMatrix* A,
-      double* rhs_and_solution);
+  LinearSolver::Summary SolveImplUsingSuiteSparse(double* rhs_and_solution);
+  LinearSolver::Summary SolveImplUsingCXSparse(double* rhs_and_solution);
+  LinearSolver::Summary SolveImplUsingEigen(double* rhs_and_solution);
 
   void FreeFactorization();
 
