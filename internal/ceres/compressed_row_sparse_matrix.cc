@@ -561,6 +561,9 @@ CompressedRowSparseMatrix* CreateOuterProductMatrix(
       new CompressedRowSparseMatrix(num_cols, num_cols, num_nonzeros);
   matrix->set_storage_type(storage_type);
 
+  (*(matrix->mutable_row_blocks())) = blocks;
+  (*(matrix->mutable_col_blocks())) = blocks;
+
   // Compute block offsets for outer product matrix, which is used in
   // ComputeOuterProduct.
   vector<int>* block_offsets = matrix->mutable_block_offsets();
