@@ -450,6 +450,9 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         CompressedRowSparseMatrix::ComputeOuterProduct(
             *random_matrix, program, outer_product.get());
 
+        EXPECT_EQ(outer_product->row_blocks(), random_matrix->col_blocks());
+        EXPECT_EQ(outer_product->col_blocks(), random_matrix->col_blocks());
+
         Matrix actual_outer_product =
             Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
                 outer_product->num_rows(),
