@@ -35,6 +35,7 @@
 #include <ctime>
 #include <sstream>
 
+#include "Eigen/SparseCore"
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/cxsparse.h"
 #include "ceres/internal/eigen.h"
@@ -44,7 +45,6 @@
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
 #include "ceres/wall_time.h"
-#include "Eigen/SparseCore"
 
 #ifdef CERES_USE_EIGEN_SPARSE
 #include "Eigen/SparseCholesky"
@@ -52,6 +52,35 @@
 
 namespace ceres {
 namespace internal {
+
+// Different sparse linear algebra libraries prefer different storage
+// orders for the input matrix. This trait class helps choose the
+// ordering based on the sparse linear algebra backend being used.
+//
+// The storage order is lower-triangular by default. It is only
+// SuiteSparse which prefers an upper triangular matrix. Saves a whole
+// matrix copy in the process.
+//
+// Note that this is the storage order for a compressed row sparse
+// matrix. All the sparse linear algebra libraries take compressed
+// column sparse matrices as input. We map these matrices to into
+// compressed column sparse matrices before calling them and in the
+// process, transpose them.
+//
+// TODO(sameeragarwal): This does not account for post ordering, where
+// the optimal storage order maybe different. Either get rid of post
+// ordering support entirely, or investigate making this trait class
+// richer.
+
+CompressedRowSparseMatrix::StorageType StorageTypeForSparseLinearAlgebraLibrary(
+    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
+  if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
+    return CompressedRowSparseMatrix::UPPER_TRIANGULAR;
+  }
+
+  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
+}
+
 namespace {
 
 #ifdef CERES_USE_EIGEN_SPARSE
@@ -59,12 +88,11 @@ namespace {
 // the same code independent of whether a AMD or a Natural ordering is
 // used.
 template <typename SimplicialCholeskySolver, typename SparseMatrixType>
-LinearSolver::Summary SimplicialLDLTSolve(
-    const SparseMatrixType& lhs,
-    const bool do_symbolic_analysis,
-    SimplicialCholeskySolver* solver,
-    double* rhs_and_solution,
-    EventLogger* event_logger) {
+LinearSolver::Summary SimplicialLDLTSolve(const SparseMatrixType& lhs,
+                                          const bool do_symbolic_analysis,
+                                          SimplicialCholeskySolver* solver,
+                                          double* rhs_and_solution,
+                                          EventLogger* event_logger) {
   LinearSolver::Summary summary;
   summary.num_iterations = 1;
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
@@ -75,14 +103,12 @@ LinearSolver::Summary SimplicialLDLTSolve(
     if (VLOG_IS_ON(2)) {
       std::stringstream ss;
       solver->dumpMemory(ss);
-      VLOG(2) << "Symbolic Analysis\n"
-              << ss.str();
+      VLOG(2) << "Symbolic Analysis\n" << ss.str();
     }
     event_logger->AddEvent("Analyze");
     if (solver->info() != Eigen::Success) {
       summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
-      summary.message =
-          "Eigen failure. Unable to find symbolic factorization.";
+      summary.message = "Eigen failure. Unable to find symbolic factorization.";
       return summary;
     }
   }
@@ -114,10 +140,7 @@ LinearSolver::Summary SimplicialLDLTSolve(
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : factor_(NULL),
-      cxsparse_factor_(NULL),
-      options_(options) {
-}
+    : factor_(NULL), cxsparse_factor_(NULL), options_(options) {}
 
 void SparseNormalCholeskySolver::FreeFactorization() {
   if (factor_ != NULL) {
@@ -139,8 +162,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     CompressedRowSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
-    double * x) {
-
+    double* x) {
   const int num_cols = A->num_cols();
   VectorRef(x, num_cols).setZero();
   A->LeftMultiply(b, x);
@@ -151,24 +173,36 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
     scoped_ptr<CompressedRowSparseMatrix> regularizer;
     if (A->col_blocks().size() > 0) {
       regularizer.reset(CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-                            per_solve_options.D, A->col_blocks()));
+          per_solve_options.D, A->col_blocks()));
     } else {
-      regularizer.reset(new CompressedRowSparseMatrix(
-                            per_solve_options.D, num_cols));
+      regularizer.reset(
+          new CompressedRowSparseMatrix(per_solve_options.D, num_cols));
     }
     A->AppendRows(*regularizer);
   }
 
+  if (outer_product_.get() == NULL) {
+    outer_product_.reset(
+        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
+            *A,
+            StorageTypeForSparseLinearAlgebraLibrary(
+                options_.sparse_linear_algebra_library_type),
+            &pattern_));
+  }
+
+  CompressedRowSparseMatrix::ComputeOuterProduct(
+      *A, pattern_, outer_product_.get());
+
   LinearSolver::Summary summary;
   switch (options_.sparse_linear_algebra_library_type) {
     case SUITE_SPARSE:
-      summary = SolveImplUsingSuiteSparse(A, x);
+      summary = SolveImplUsingSuiteSparse(x);
       break;
     case CX_SPARSE:
-      summary = SolveImplUsingCXSparse(A, x);
+      summary = SolveImplUsingCXSparse(x);
       break;
     case EIGEN_SPARSE:
-      summary = SolveImplUsingEigen(A, x);
+      summary = SolveImplUsingEigen(x);
       break;
     default:
       LOG(FATAL) << "Unknown sparse linear algebra library : "
@@ -183,8 +217,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
-    CompressedRowSparseMatrix* A,
-    double * rhs_and_solution) {
+    double* rhs_and_solution) {
 #ifndef CERES_USE_EIGEN_SPARSE
 
   LinearSolver::Summary summary;
@@ -200,23 +233,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
 #else
 
   EventLogger event_logger("SparseNormalCholeskySolver::Eigen::Solve");
-  // Compute the normal equations. J'J delta = J'f and solve them
-  // using a sparse Cholesky factorization.
 
-  // Compute outer product as a compressed row lower triangular
-  // matrix, because after mapping to a column major matrix, this will
-  // become a compressed column upper triangular matrix. Which is the
-  // default that Eigen uses.
-  if (outer_product_.get() == NULL) {
-    outer_product_.reset(
-        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, CompressedRowSparseMatrix::LOWER_TRIANGULAR, &pattern_));
-  }
-
-  CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
-
-  // Map to an upper triangular column major matrix.
+  // Map outer_product_ to an upper triangular column major matrix.
   //
   // outer_product_ is a compressed row sparse matrix and in lower
   // triangular form, when mapped to a compressed column sparse
@@ -234,8 +252,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
   // If using post ordering or an old version of Eigen, we cannot
   // depend on a preordered jacobian, so we work with a SimplicialLDLT
   // decomposition with AMD ordering.
-  if (options_.use_postordering ||
-      !EIGEN_VERSION_AT_LEAST(3, 2, 2)) {
+  if (options_.use_postordering || !EIGEN_VERSION_AT_LEAST(3, 2, 2)) {
     if (amd_ldlt_.get() == NULL) {
       amd_ldlt_.reset(new SimplicialLDLTWithAMDOrdering);
       do_symbolic_analysis = true;
@@ -248,7 +265,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
                                &event_logger);
   }
 
-#if EIGEN_VERSION_AT_LEAST(3,2,2)
+#if EIGEN_VERSION_AT_LEAST(3, 2, 2)
   // The common case
   if (natural_ldlt_.get() == NULL) {
     natural_ldlt_.reset(new SimplicialLDLTWithNaturalOrdering);
@@ -266,8 +283,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingEigen(
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
-    CompressedRowSparseMatrix* A,
-    double * rhs_and_solution) {
+    double* rhs_and_solution) {
 #ifdef CERES_NO_CXSPARSE
 
   LinearSolver::Summary summary;
@@ -288,20 +304,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   summary.termination_type = LINEAR_SOLVER_SUCCESS;
   summary.message = "Success.";
 
-
-  // Compute outer product as a compressed row lower triangular
-  // matrix, which would be mapped to a compressed column upper
-  // triangular matrix, which is the representation used by CXSparse's
-  // sparse Cholesky factorization.
-  if (outer_product_.get() == NULL) {
-    outer_product_.reset(
-        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, CompressedRowSparseMatrix::LOWER_TRIANGULAR, &pattern_));
-  }
-
-  CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
-
+  // Map outer_product_ to an upper triangular column major matrix.
+  //
+  // outer_product_ is a compressed row sparse matrix and in lower
+  // triangular form, when mapped to a compressed column sparse
+  // matrix, it becomes an upper triangular matrix.
   cs_di lhs = cxsparse_.CreateSparseMatrixTransposeView(outer_product_.get());
 
   event_logger.AddEvent("Setup");
@@ -309,9 +316,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
   // Compute symbolic factorization if not available.
   if (cxsparse_factor_ == NULL) {
     if (options_.use_postordering) {
-      cxsparse_factor_ = cxsparse_.BlockAnalyzeCholesky(&lhs,
-                                                        A->col_blocks(),
-                                                        A->col_blocks());
+      cxsparse_factor_ = cxsparse_.BlockAnalyzeCholesky(
+          &lhs, outer_product_->col_blocks(), outer_product_->col_blocks());
     } else {
       cxsparse_factor_ = cxsparse_.AnalyzeCholeskyWithNaturalOrdering(&lhs);
     }
@@ -322,9 +328,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
     summary.termination_type = LINEAR_SOLVER_FATAL_ERROR;
     summary.message =
         "CXSparse failure. Unable to find symbolic factorization.";
-  } else if (!cxsparse_.SolveCholesky(&lhs,
-                                      cxsparse_factor_,
-                                      rhs_and_solution)) {
+  } else if (!cxsparse_.SolveCholesky(
+                 &lhs, cxsparse_factor_, rhs_and_solution)) {
     summary.termination_type = LINEAR_SOLVER_FAILURE;
     summary.message = "CXSparse::SolveCholesky failed.";
   }
@@ -335,8 +340,7 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingCXSparse(
 }
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
-    CompressedRowSparseMatrix* A,
-    double * rhs_and_solution) {
+    double* rhs_and_solution) {
 #ifdef CERES_NO_SUITESPARSE
 
   LinearSolver::Summary summary;
@@ -356,33 +360,25 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   summary.message = "Success.";
 
-  // Compute outer product to compressed row upper triangular matrix,
-  // this will be mapped to a compressed-column lower triangular
-  // matrix, which is the fastest option for our default natural
-  // ordering (see comment in cholmod_factorize.c:205 in SuiteSparse).
-  if (outer_product_.get() == NULL) {
-    outer_product_.reset(
-        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, CompressedRowSparseMatrix::UPPER_TRIANGULAR, &pattern_));
-  }
-
-  CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
-
-  const int num_cols = A->num_cols();
+  // Map outer_product_ to an lower triangular column major matrix.
+  //
+  // outer_product_ is a compressed row sparse matrix and in upper
+  // triangular form, when mapped to a compressed column sparse
+  // matrix, it becomes an lower triangular matrix.
+  const int num_cols = outer_product_->num_cols();
   cholmod_sparse lhs =
       ss_.CreateSparseMatrixTransposeView(outer_product_.get());
   event_logger.AddEvent("Setup");
 
   if (factor_ == NULL) {
     if (options_.use_postordering) {
-      factor_ = ss_.BlockAnalyzeCholesky(&lhs,
-                                         A->col_blocks(),
-                                         A->col_blocks(),
-                                         &summary.message);
+      factor_ = ss_.BlockAnalyzeCholesky(
+          &lhs,
+          outer_product_->col_blocks(),
+          outer_product_->col_blocks(),
+          &summary.message);
     } else {
-      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs,
-                                                       &summary.message);
+      factor_ = ss_.AnalyzeCholeskyWithNaturalOrdering(&lhs, &summary.message);
     }
   }
 
@@ -400,9 +396,8 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
     return summary;
   }
 
-  cholmod_dense* rhs = ss_.CreateDenseVector(rhs_and_solution,
-                                             num_cols,
-                                             num_cols);
+  cholmod_dense* rhs =
+      ss_.CreateDenseVector(rhs_and_solution, num_cols, num_cols);
   cholmod_dense* solution = ss_.Solve(factor_, rhs, &summary.message);
   event_logger.AddEvent("Solve");
 
@@ -421,5 +416,5 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
 #endif
 }
 
-}   // namespace internal
-}   // namespace ceres
+}  // namespace internal
+}  // namespace ceres
