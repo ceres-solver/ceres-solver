@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50796f3a_2da058e0",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-30T15:12:42Z",
+      "side": 1,
+      "message": "is there a reason why the word \"ceres\" occurs in the name of the function? it seems fairly generic right?\n\nalso the docs and various strings include a bunch of wording around ceres, perhaps its worth making this function more generic?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b9754b8_870994b0",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-30T15:12:42Z",
+      "side": 1,
+      "message": "drop \"Ceres\" from this string?",
+      "range": {
+        "startLine": 41,
+        "startChar": 54,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c37e4a4b_08a0fe60",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-30T15:12:42Z",
+      "side": 1,
+      "message": "so this list will have to be updated one feature at a time as we use them? that seems a bit onerous.\n\nalso makes this function less generic and goes against my previous point.",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2d5fcec_134e98bb",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-30T15:12:42Z",
+      "side": 1,
+      "message": "oh man such a beautiful string... is this new embedded language turing complete?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
