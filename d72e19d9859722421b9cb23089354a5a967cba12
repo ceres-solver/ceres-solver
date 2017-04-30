@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d3364c3_ef802591",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-04-30T15:20:14Z",
+      "side": 1,
+      "message": "is it worth unifying the CXX11 handling at one place, its a bit weird, that we handle some of it here and then punt on the rest in the internal cmake file.\n\ndoesn\u0027t seem very clean. thoughts?",
+      "range": {
+        "startLine": 498,
+        "startChar": 9,
+        "endLine": 498,
+        "endChar": 10
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50796f3a_2da058e0",
         "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
         "patchSetId": 4
