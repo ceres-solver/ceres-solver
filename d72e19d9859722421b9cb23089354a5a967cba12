@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53cae607_2a799bb5",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-30T15:39:17Z",
+      "side": 1,
+      "message": "Part of the issue here is that for older CMake versions we can\u0027t attach the -std\u003dc++11 flag to a target at all, and have to specify it globally where it will cover the examples as well as Ceres, so we can\u0027t move the addition of the flag to the CMAKE_CXX_FLAGS to the internal CMakeLists.txt in this case, as then its scope wouldn\u0027t cover the examples.\n\nWe could move the appending of the attributes to the ceres target to this main CMakeLists, but I think that\u0027s worse it\u0027s internal and at this level we don\u0027t actually mention/refer to the ceres target at all.\n\nTBH, this part of the CXX11 logic is really to cover the seemingly endless permutations of the shared_ptr/unordered_map/set headers rather than Ceres.  Confusingly, we don\u0027t actually specify explicitly (in newer versions of CMake) that we require C++11 STL as it\u0027s not possible to do so, and it\u0027s a valid assumption that if C++11 features are supported then the C++11 STL is available.",
+      "parentUuid": "2d3364c3_ef802591",
+      "range": {
+        "startLine": 498,
+        "startChar": 9,
+        "endLine": 498,
+        "endChar": 10
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50796f3a_2da058e0",
         "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
         "patchSetId": 4
