@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7760ee1e_c7f1a984",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-30T15:16:56Z",
+      "side": 1,
+      "message": "It\u0027s very specific to Ceres though, as it specifies only the exact C++11 requirements that Ceres has, not a general set.",
+      "parentUuid": "50796f3a_2da058e0",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9754b8_870994b0",
         "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-30T15:12:42Z",
       "side": 1,
       "message": "drop \"Ceres\" from this string?",
+      "range": {
+        "startLine": 41,
+        "startChar": 54,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14b8caf9_32059d1d",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-30T15:16:56Z",
+      "side": 1,
+      "message": "See above, this specifies just the C++11 requirements used by Ceres (when using newer versions of CMake that support target_compile_features()).",
+      "parentUuid": "4b9754b8_870994b0",
       "range": {
         "startLine": 41,
         "startChar": 54,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "639f1a3e_633365eb",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-30T15:16:56Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "c37e4a4b_08a0fe60",
+      "range": {
+        "startLine": 71,
+        "startChar": 27,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2d5fcec_134e98bb",
         "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-30T15:12:42Z",
       "side": 1,
       "message": "oh man such a beautiful string... is this new embedded language turing complete?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "d72e19d9859722421b9cb23089354a5a967cba12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "184fcffb_c322bc21",
+        "filename": "cmake/AddCeresCXX11RequirementsToTarget.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-04-30T15:16:56Z",
+      "side": 1,
+      "message": "To be fair, this has been there a while - it\u0027s how master currently handles this, weird/scary though it looks...",
+      "parentUuid": "a2d5fcec_134e98bb",
       "range": {
         "startLine": 79,
         "startChar": 8,
