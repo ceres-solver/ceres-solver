@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f90158e_95e53825",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-02T05:12:17Z",
+      "side": 1,
+      "message": "yeah I was in two minds about this,  I will make these check fails.",
+      "parentUuid": "c88ea706_59495a1b",
+      "revId": "283409f76391bcd8ca28c7def30f16495ad30872",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dfc39c7_eeae693a",
         "filename": "internal/ceres/unsymmetric_linear_solver_test.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-02T05:04:34Z",
       "side": 1,
       "message": "In general I dislike boolean flag arguments, for exactly the reason you are making a separate variable here. Perhaps add a second function instead, for the transpose case.",
+      "revId": "283409f76391bcd8ca28c7def30f16495ad30872",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0a84f42_727ca5b4",
+        "filename": "internal/ceres/unsymmetric_linear_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-02T05:12:17Z",
+      "side": 1,
+      "message": "yeah I am going to make this a private static method and then have two public methods.",
+      "parentUuid": "1dfc39c7_eeae693a",
       "revId": "283409f76391bcd8ca28c7def30f16495ad30872",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
