@@ -69,7 +69,10 @@ class UnsymmetricLinearSolverTest : public ::testing::Test {
         options.type == DENSE_NORMAL_CHOLESKY) {
       transformed_A.reset(new DenseSparseMatrix(*A_));
     } else if (options.type == SPARSE_NORMAL_CHOLESKY) {
-      CompressedRowSparseMatrix* crsm =  new CompressedRowSparseMatrix(*A_);
+      const bool kDoNotTranspose = false;
+      CompressedRowSparseMatrix* crsm =
+          CompressedRowSparseMatrix::FromTripletSparseMatrix(*A_,
+                                                             kDoNotTranspose);
       // Add row/column blocks structure.
       for (int i = 0; i < A_->num_rows(); ++i) {
         crsm->mutable_row_blocks()->push_back(1);

@@ -108,7 +108,9 @@ class DynamicCompressedRowSparseMatrixTest : public ::testing::Test {
     tsm->ToDenseMatrix(&dense_from_tsm);
     ASSERT_TRUE((dense.array() == dense_from_tsm.array()).all());
 
-    crsm.reset(new CompressedRowSparseMatrix(*tsm));
+    const bool kDoNotTranspose = false;
+    crsm.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(
+        *tsm, kDoNotTranspose));
     Matrix dense_from_crsm;
     crsm->ToDenseMatrix(&dense_from_crsm);
     ASSERT_TRUE((dense.array() == dense_from_crsm.array()).all());
