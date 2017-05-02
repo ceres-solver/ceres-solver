@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c88ea706_59495a1b",
+        "filename": "internal/ceres/triplet_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-05-02T05:04:34Z",
+      "side": 1,
+      "message": "Any reason not to make all of these CHECK_GT(...) and skip the returns? This should never fail due to user code, so any asserts are Ceres bugs.",
+      "revId": "283409f76391bcd8ca28c7def30f16495ad30872",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dfc39c7_eeae693a",
+        "filename": "internal/ceres/unsymmetric_linear_solver_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-05-02T05:04:34Z",
+      "side": 1,
+      "message": "In general I dislike boolean flag arguments, for exactly the reason you are making a separate variable here. Perhaps add a second function instead, for the transpose case.",
+      "revId": "283409f76391bcd8ca28c7def30f16495ad30872",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
