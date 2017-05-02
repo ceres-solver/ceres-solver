@@ -50,18 +50,33 @@ class CompressedRowSparseMatrix : public SparseMatrix {
  public:
   enum StorageType {
     UNSYMMETRIC,
+    // Matrix is assumed to be symmetric but only the lower triangular
+    // part of the matrix is stored.
     LOWER_TRIANGULAR,
+    // Matrix is assumed to be symmetric but only the upper triangular
+    // part of the matrix is stored.
     UPPER_TRIANGULAR
   };
 
-
-  // Build a matrix with the same content as the TripletSparseMatrix
-  // m. TripletSparseMatrix objects are easier to construct
-  // incrementally, so we use them to initialize SparseMatrix
-  // objects.
+  // Create a matrix with the same content as the TripletSparseMatrix
+  // input. We assume that input does not have any repeated
+  // entries.
   //
-  // We assume that m does not have any repeated entries.
-  explicit CompressedRowSparseMatrix(const TripletSparseMatrix& m);
+  // The storage type of the matrix is set to UNSYMMETRIC.
+  //
+  // Caller owns the result.
+  static CompressedRowSparseMatrix* FromTripletSparseMatrix(
+      const TripletSparseMatrix& input);
+
+  // Create a matrix with the same content as the TripletSparseMatrix
+  // input transposed. We assume that input does not have any repeated
+  // entries.
+  //
+  // The storage type of the matrix is set to UNSYMMETRIC.
+  //
+  // Caller owns the result.
+  static CompressedRowSparseMatrix* FromTripletSparseMatrixTransposed(
+      const TripletSparseMatrix& input);
 
   // Use this constructor only if you know what you are doing. This
   // creates a "blank" matrix with the appropriate amount of memory
@@ -74,17 +89,20 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // manually, instead of going via the indirect route of first
   // constructing a TripletSparseMatrix, which leads to more than
   // double the peak memory usage.
+  //
+  // The storage type is set to UNSYMMETRIC.
   CompressedRowSparseMatrix(int num_rows,
                             int num_cols,
                             int max_num_nonzeros);
 
   // Build a square sparse diagonal matrix with num_rows rows and
   // columns. The diagonal m(i,i) = diagonal(i);
+  //
+  // The storage type is set to UNSYMMETRIC
   CompressedRowSparseMatrix(const double* diagonal, int num_rows);
 
-  virtual ~CompressedRowSparseMatrix();
-
   // SparseMatrix interface.
+  virtual ~CompressedRowSparseMatrix();
   virtual void SetZero();
   virtual void RightMultiply(const double* x, double* y) const;
   virtual void LeftMultiply(const double* x, double* y) const;
@@ -145,9 +163,59 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   const std::vector<int>& crsb_cols() const { return crsb_cols_; }
   std::vector<int>* mutable_crsb_cols() { return &crsb_cols_; }
 
+  // Create a block diagonal CompressedRowSparseMatrix with the given
+  // block structure. The individual blocks are assumed to be laid out
+  // contiguously in the diagonal array, one block at a time.
+  //
+  // Caller owns the result.
   static CompressedRowSparseMatrix* CreateBlockDiagonalMatrix(
       const double* diagonal,
       const std::vector<int>& blocks);
+
+  // Options struct to control the generation of random block sparse
+  // matrices in compressed row sparse format.
+  //
+  // The random matrix generation proceeds as follows.
+  //
+  // First the row and column block structure is determined by
+  // generating random row and column block sizes that lie within the
+  // given bounds.
+  //
+  // Then we walk the block structure of the resulting matrix, and with
+  // probability block_density detemine whether they are structurally
+  // zero or not. If the answer is no, then we generate entries for the
+  // block which are distributed normally.
+  struct RandomMatrixOptions {
+    RandomMatrixOptions()
+        : num_row_blocks(0),
+          min_row_block_size(0),
+          max_row_block_size(0),
+          num_col_blocks(0),
+          min_col_block_size(0),
+          max_col_block_size(0),
+          block_density(0.0) {
+    }
+
+    int num_row_blocks;
+    int min_row_block_size;
+    int max_row_block_size;
+    int num_col_blocks;
+    int min_col_block_size;
+    int max_col_block_size;
+
+    // 0 < block_density <= 1 is the probability of a block being
+    // present in the matrix. A given random matrix will not have
+    // precisely this density.
+    double block_density;
+  };
+
+  // Create a random CompressedRowSparseMatrix whose entries are
+  // normally distributed and whose structure is determined by
+  // RandomMatrixOptions.
+  //
+  // Caller owns the result.
+  static CompressedRowSparseMatrix* CreateRandomMatrix(
+      const RandomMatrixOptions& options);
 
   // Compute the sparsity structure of the product m.transpose() * m
   // and create a CompressedRowSparseMatrix corresponding to it.
@@ -180,6 +248,10 @@ class CompressedRowSparseMatrix : public SparseMatrix {
                                   CompressedRowSparseMatrix* result);
 
  private:
+
+  static CompressedRowSparseMatrix* FromTripletSparseMatrix(
+      const TripletSparseMatrix& input, bool transpose);
+
   int num_rows_;
   int num_cols_;
   std::vector<int> rows_;
@@ -206,44 +278,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // carry with it compressed row sparse block information.
   std::vector<int> crsb_rows_;
   std::vector<int> crsb_cols_;
-
-  CERES_DISALLOW_COPY_AND_ASSIGN(CompressedRowSparseMatrix);
 };
-
-// Options struct to control the generation of random block sparse
-// matrices in compressed row sparse format.
-//
-// The random matrix generation proceeds as follows.
-//
-// First the row and column block structure is determined by
-// generating random row and column block sizes that lie within the
-// given bounds.
-//
-// Then we walk the block structure of the resulting matrix, and with
-// probability block_density detemine whether they are structurally
-// zero or not. If the answer is no, then we generate entries for the
-// block which are distributed normally.
-struct RandomMatrixOptions {
-  int num_row_blocks;
-  int min_row_block_size;
-  int max_row_block_size;
-  int num_col_blocks;
-  int min_col_block_size;
-  int max_col_block_size;
-
-  // 0 <= block_density <= 1 is the probability of a block being
-  // present in the matrix. A given random matrix will not have
-  // precisely this density.
-  double block_density;
-};
-
-// Create a random CompressedRowSparseMatrix whose entries are
-// normally distributed and whose structure is determined by
-// RandomMatrixOptions.
-//
-// Caller owns the result.
-CompressedRowSparseMatrix* CreateRandomCompressedRowSparseMatrix(
-    const RandomMatrixOptions& options);
 
 }  // namespace internal
 }  // namespace ceres

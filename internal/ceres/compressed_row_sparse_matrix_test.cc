@@ -70,7 +70,7 @@ void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
 }
 
 class CompressedRowSparseMatrixTest : public ::testing::Test {
- protected :
+ protected:
   virtual void SetUp() {
     scoped_ptr<LinearLeastSquaresProblem> problem(
         CreateLinearLeastSquaresProblemFromId(1));
@@ -78,7 +78,7 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
     CHECK_NOTNULL(problem.get());
 
     tsm.reset(down_cast<TripletSparseMatrix*>(problem->A.release()));
-    crsm.reset(new CompressedRowSparseMatrix(*tsm));
+    crsm.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm));
 
     num_rows = tsm->num_rows();
     num_cols = tsm->num_cols();
@@ -93,9 +93,11 @@ class CompressedRowSparseMatrixTest : public ::testing::Test {
 
     // With all blocks of size 1, crsb_rows and crsb_cols are equivalent to
     // rows and cols.
-    std::copy(crsm->rows(), crsm->rows() + crsm->num_rows() + 1,
+    std::copy(crsm->rows(),
+              crsm->rows() + crsm->num_rows() + 1,
               std::back_inserter(*crsm->mutable_crsb_rows()));
-    std::copy(crsm->cols(), crsm->cols() + crsm->num_nonzeros(),
+    std::copy(crsm->cols(),
+              crsm->cols() + crsm->num_nonzeros(),
               std::back_inserter(*crsm->mutable_crsb_cols()));
   }
 
@@ -172,9 +174,10 @@ TEST_F(CompressedRowSparseMatrixTest, AppendRows) {
     tsm_appendage.Resize(i, num_cols);
 
     tsm->AppendRows(tsm_appendage);
-    CompressedRowSparseMatrix crsm_appendage(tsm_appendage);
-    crsm->AppendRows(crsm_appendage);
+    scoped_ptr<CompressedRowSparseMatrix> crsm_appendage(
+        CompressedRowSparseMatrix::FromTripletSparseMatrix(tsm_appendage));
 
+    crsm->AppendRows(*crsm_appendage);
     CompareMatrices(tsm.get(), crsm.get());
   }
 }
@@ -219,9 +222,9 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
   EXPECT_EQ(expected_col_blocks, crsm->col_blocks());
 
   EXPECT_EQ(crsm->crsb_cols().size(),
-             pre_crsb_cols.size() + row_and_column_blocks.size());
+            pre_crsb_cols.size() + row_and_column_blocks.size());
   EXPECT_EQ(crsm->crsb_rows().size(),
-             pre_crsb_rows.size() + row_and_column_blocks.size());
+            pre_crsb_rows.size() + row_and_column_blocks.size());
   for (int i = 0; i < row_and_column_blocks.size(); ++i) {
     EXPECT_EQ(crsm->crsb_rows()[i + pre_crsb_rows.size()],
               pre_crsb_rows.back() + i + 1);
@@ -234,7 +237,6 @@ TEST_F(CompressedRowSparseMatrixTest, AppendAndDeleteBlockDiagonalMatrix) {
 
   EXPECT_EQ(crsm->crsb_rows(), pre_crsb_rows);
   EXPECT_EQ(crsm->crsb_cols(), pre_crsb_cols);
-
 }
 
 TEST_F(CompressedRowSparseMatrixTest, ToDenseMatrix) {
@@ -278,8 +280,8 @@ TEST(CompressedRowSparseMatrix, CreateBlockDiagonalMatrix) {
   }
 
   scoped_ptr<CompressedRowSparseMatrix> matrix(
-      CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-          diagonal.data(), blocks));
+      CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(diagonal.data(),
+                                                           blocks));
 
   EXPECT_EQ(matrix->num_rows(), 5);
   EXPECT_EQ(matrix->num_cols(), 5);
@@ -351,7 +353,6 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   cols[5] = 2;
   cols[6] = 5;
 
-
   rows[2] = 7;
   cols[7] = 0;
   cols[8] = 1;
@@ -394,21 +395,19 @@ TEST(CompressedRowSparseMatrix, Transpose) {
 TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
   // "Randomly generated seed."
   SetRandomState(29823);
-  int kMaxNumRowBlocks = 10;
-  int kMaxNumColBlocks = 10;
-  int kNumTrials = 10;
+  const int kMaxNumRowBlocks = 10;
+  const int kMaxNumColBlocks = 10;
+  const int kNumTrials = 10;
 
   // Create a random matrix, compute its outer product using Eigen and
   // ComputeOuterProduct. Convert both matrices to dense matrices and
   // compare their upper triangular parts.
-  for (int num_row_blocks = 1;
-       num_row_blocks < kMaxNumRowBlocks;
+  for (int num_row_blocks = 1; num_row_blocks < kMaxNumRowBlocks;
        ++num_row_blocks) {
-    for (int num_col_blocks = 1;
-         num_col_blocks < kMaxNumColBlocks;
+    for (int num_col_blocks = 1; num_col_blocks < kMaxNumColBlocks;
          ++num_col_blocks) {
       for (int trial = 0; trial < kNumTrials; ++trial) {
-        RandomMatrixOptions options;
+        CompressedRowSparseMatrix::RandomMatrixOptions options;
         options.num_row_blocks = num_row_blocks;
         options.num_col_blocks = num_col_blocks;
         options.min_row_block_size = 1;
@@ -426,7 +425,7 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
         VLOG(2) << "block density: " << options.block_density;
 
         scoped_ptr<CompressedRowSparseMatrix> random_matrix(
-            CreateRandomCompressedRowSparseMatrix(options));
+            CompressedRowSparseMatrix::CreateRandomMatrix(options));
 
         Eigen::MappedSparseMatrix<double, Eigen::RowMajor> mapped_random_matrix(
             random_matrix->num_rows(),
@@ -479,6 +478,61 @@ TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
     }
   }
 }
+
+TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
+  TripletSparseMatrix::RandomMatrixOptions options;
+  options.num_rows = 5;
+  options.num_cols = 7;
+  options.density = 0.5;
+
+  const int kNumTrials = 10;
+  for (int i = 0; i < kNumTrials; ++i) {
+    scoped_ptr<TripletSparseMatrix> tsm(
+        TripletSparseMatrix::CreateRandomMatrix(options));
+    scoped_ptr<CompressedRowSparseMatrix> crsm(
+        CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm));
+
+    Matrix expected;
+    tsm->ToDenseMatrix(&expected);
+    Matrix actual;
+    crsm->ToDenseMatrix(&actual);
+    EXPECT_NEAR((expected - actual).norm() / actual.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon())
+        << "\nexpected: \n"
+        << expected << "\nactual: \n"
+        << actual;
+  }
+}
+
+TEST(CompressedRowSparseMatrix, FromTripletSparseMatrixTransposed) {
+  TripletSparseMatrix::RandomMatrixOptions options;
+  options.num_rows = 5;
+  options.num_cols = 7;
+  options.density = 0.5;
+
+  const int kNumTrials = 10;
+  for (int i = 0; i < kNumTrials; ++i) {
+    scoped_ptr<TripletSparseMatrix> tsm(
+        TripletSparseMatrix::CreateRandomMatrix(options));
+    scoped_ptr<CompressedRowSparseMatrix> crsm(
+        CompressedRowSparseMatrix::FromTripletSparseMatrixTransposed(*tsm));
+
+    Matrix tmp;
+    tsm->ToDenseMatrix(&tmp);
+    Matrix expected = tmp.transpose();
+    Matrix actual;
+    crsm->ToDenseMatrix(&actual);
+    EXPECT_NEAR((expected - actual).norm() / actual.norm(),
+                0.0,
+                std::numeric_limits<double>::epsilon())
+        << "\nexpected: \n"
+        << expected << "\nactual: \n"
+        << actual;
+  }
+}
+
+// TODO(sameeragarwal) Add tests for the random matrix creation methods.
 
 }  // namespace internal
 }  // namespace ceres
