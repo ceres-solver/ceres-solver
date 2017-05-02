@@ -547,15 +547,18 @@ SparseSchurComplementSolver::SolveReducedLinearSystemUsingEigen(
   }
 
   // This is an upper triangular matrix.
-  CompressedRowSparseMatrix crsm(*tsm);
+  const bool kDoNotTranspose = false;
+  scoped_ptr<CompressedRowSparseMatrix> crsm(
+      CompressedRowSparseMatrix::FromTripletSparseMatrix(*tsm,
+                                                         kDoNotTranspose));
   // Map this to a column major, lower triangular matrix.
   Eigen::MappedSparseMatrix<double, Eigen::ColMajor> eigen_lhs(
-      crsm.num_rows(),
-      crsm.num_rows(),
-      crsm.num_nonzeros(),
-      crsm.mutable_rows(),
-      crsm.mutable_cols(),
-      crsm.mutable_values());
+      crsm->num_rows(),
+      crsm->num_rows(),
+      crsm->num_nonzeros(),
+      crsm->mutable_rows(),
+      crsm->mutable_cols(),
+      crsm->mutable_values());
   event_logger.AddEvent("ToCompressedRowSparseMatrix");
 
   // Compute symbolic factorization if one does not exist.
