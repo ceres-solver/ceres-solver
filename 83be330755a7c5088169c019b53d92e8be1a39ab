@@ -1,0 +1,311 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d18f618c_72605e32",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Insert space between method definitions.",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1733c5_aa1852bf",
+        "filename": "internal/ceres/cxsparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Perhaps clearer to move this to after line 235?  That way it\u0027s evident that its tied to if the block from 226-235 fails to populate symbolic_factor_.",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c224686_bc13e465",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these project headers come after cs.h (external CXSparse library) in Google Style?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b06642c5_5628954a",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "I find the rhs_and_solution here confusing without any explanation.  What I assume is happening is that when called, rhs_and_solution should contain the rhs (b) and then when this function returns it will instead be populated with the solution - correct?  Some docs to this effect would be a good idea.",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68ad29e0_f4522d8e",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Same rhs_and_solution docs issue - point to above, or perhaps have docs as a separate block above.",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0661830e_5af66fa3",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "nit-pick, but wasn\u0027t this right at 2-space indent before?  cpplint will doubtless tell you, repeatedly.",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18231af8_d409b7f8",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Should analyzed_ be reset to false here?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f595a9e_b3fef954",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Why isn\u0027t this lhs-\u003enum_cols() ?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e94b6b8f_71394afe",
+        "filename": "internal/ceres/eigensparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be a check here that the user has not requested ordering_type \u003d\u003d NATURAL as it is not supported?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "190b3e55_d2ce481f",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "How does this fit c/f the checks on Eigen version for AMD / Natural when Natural is not available?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f76eaf7_e827521a",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "CX Sparse",
+      "range": {
+        "startLine": 65,
+        "startChar": 60,
+        "endLine": 65,
+        "endChar": 71
+      },
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6535f14_3423db42",
+        "filename": "internal/ceres/sparse_cholesky.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Should this not be calling the method in the derived classes?  SuiteSparse can switch based on the ordering type right?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4370db0c_e327fe3d",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this external library come above Ceres includes in Google Style?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2abed555_3fd45cff",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "if",
+      "range": {
+        "startLine": 108,
+        "startChar": 33,
+        "endLine": 108,
+        "endChar": 35
+      },
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9d8f910_28c5799a",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Should these external libraries not come before Ceres includes ?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a13aeee_dd222970",
+        "filename": "internal/ceres/sparse_cholesky_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "CERES",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 11
+      },
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f70cc6de_54f12fb4",
+        "filename": "internal/ceres/suitesparse.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-05T20:25:34Z",
+      "side": 1,
+      "message": "Perhaps clearer after line 371 when it\u0027s clear that it catches case where 362-371 fail to generate a factor?",
+      "revId": "83be330755a7c5088169c019b53d92e8be1a39ab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
