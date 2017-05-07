@@ -45,6 +45,7 @@ namespace ceres {
 namespace internal {
 
 class CompressedRowSparseMatrix;
+class OuterProduct;
 class SparseCholesky;
 
 // Solves the normal equations (A'A + D'D) x = A'b, using the sparse
@@ -63,8 +64,7 @@ class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
 
   const LinearSolver::Options options_;
   scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
+  scoped_ptr<OuterProduct> outer_product_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 
