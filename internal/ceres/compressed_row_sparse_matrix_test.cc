@@ -41,8 +41,6 @@
 #include "glog/logging.h"
 #include "gtest/gtest.h"
 
-#include "Eigen/SparseCore"
-
 namespace ceres {
 namespace internal {
 
@@ -390,93 +388,6 @@ TEST(CompressedRowSparseMatrix, Transpose) {
   Matrix dense_transpose;
   transpose->ToDenseMatrix(&dense_transpose);
   EXPECT_NEAR((dense_matrix - dense_transpose.transpose()).norm(), 0.0, 1e-14);
-}
-
-TEST(CompressedRowSparseMatrix, ComputeOuterProduct) {
-  // "Randomly generated seed."
-  SetRandomState(29823);
-  const int kMaxNumRowBlocks = 10;
-  const int kMaxNumColBlocks = 10;
-  const int kNumTrials = 10;
-
-  // Create a random matrix, compute its outer product using Eigen and
-  // ComputeOuterProduct. Convert both matrices to dense matrices and
-  // compare their upper triangular parts.
-  for (int num_row_blocks = 1; num_row_blocks < kMaxNumRowBlocks;
-       ++num_row_blocks) {
-    for (int num_col_blocks = 1; num_col_blocks < kMaxNumColBlocks;
-         ++num_col_blocks) {
-      for (int trial = 0; trial < kNumTrials; ++trial) {
-        CompressedRowSparseMatrix::RandomMatrixOptions options;
-        options.num_row_blocks = num_row_blocks;
-        options.num_col_blocks = num_col_blocks;
-        options.min_row_block_size = 1;
-        options.max_row_block_size = 5;
-        options.min_col_block_size = 1;
-        options.max_col_block_size = 10;
-        options.block_density = std::max(0.1, RandDouble());
-
-        VLOG(2) << "num row blocks: " << options.num_row_blocks;
-        VLOG(2) << "num col blocks: " << options.num_col_blocks;
-        VLOG(2) << "min row block size: " << options.min_row_block_size;
-        VLOG(2) << "max row block size: " << options.max_row_block_size;
-        VLOG(2) << "min col block size: " << options.min_col_block_size;
-        VLOG(2) << "max col block size: " << options.max_col_block_size;
-        VLOG(2) << "block density: " << options.block_density;
-
-        scoped_ptr<CompressedRowSparseMatrix> random_matrix(
-            CompressedRowSparseMatrix::CreateRandomMatrix(options));
-
-        Eigen::MappedSparseMatrix<double, Eigen::RowMajor> mapped_random_matrix(
-            random_matrix->num_rows(),
-            random_matrix->num_cols(),
-            random_matrix->num_nonzeros(),
-            random_matrix->mutable_rows(),
-            random_matrix->mutable_cols(),
-            random_matrix->mutable_values());
-
-        Matrix expected_outer_product =
-            mapped_random_matrix.transpose() * mapped_random_matrix;
-
-        // Use compressed row lower triangular matrix, which will then
-        // get mapped to a compressed column upper triangular matrix.
-        vector<int> program;
-        scoped_ptr<CompressedRowSparseMatrix> outer_product(
-            CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-                *random_matrix,
-                CompressedRowSparseMatrix::LOWER_TRIANGULAR,
-                &program));
-        CompressedRowSparseMatrix::ComputeOuterProduct(
-            *random_matrix, program, outer_product.get());
-
-        EXPECT_EQ(outer_product->row_blocks(), random_matrix->col_blocks());
-        EXPECT_EQ(outer_product->col_blocks(), random_matrix->col_blocks());
-
-        Matrix actual_outer_product =
-            Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
-                outer_product->num_rows(),
-                outer_product->num_rows(),
-                outer_product->num_nonzeros(),
-                outer_product->mutable_rows(),
-                outer_product->mutable_cols(),
-                outer_product->mutable_values());
-        expected_outer_product.triangularView<Eigen::StrictlyLower>().setZero();
-        actual_outer_product.triangularView<Eigen::StrictlyLower>().setZero();
-
-        EXPECT_EQ(actual_outer_product.rows(), actual_outer_product.cols());
-        EXPECT_EQ(expected_outer_product.rows(), expected_outer_product.cols());
-        EXPECT_EQ(actual_outer_product.rows(), expected_outer_product.rows());
-
-        const double diff_norm =
-            (actual_outer_product - expected_outer_product).norm() /
-            expected_outer_product.norm();
-        EXPECT_NEAR(diff_norm, 0.0, std::numeric_limits<double>::epsilon())
-            << "expected: \n"
-            << expected_outer_product << "\nactual: \n"
-            << actual_outer_product;
-      }
-    }
-  }
 }
 
 TEST(CompressedRowSparseMatrix, FromTripletSparseMatrix) {
