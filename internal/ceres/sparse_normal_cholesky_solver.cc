@@ -38,6 +38,7 @@
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
+#include "ceres/outer_product.h"
 #include "ceres/sparse_cholesky.h"
 #include "ceres/triplet_sparse_matrix.h"
 #include "ceres/types.h"
@@ -88,22 +89,20 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   event_logger.AddEvent("Append Rows");
 
   if (outer_product_.get() == NULL) {
-    outer_product_.reset(
-        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, sparse_cholesky_->StorageType(), &pattern_));
-    event_logger.AddEvent("Outer Product Program");
+    outer_product_.reset(OuterProduct::Create(*A, sparse_cholesky_->StorageType()));
+
+    event_logger.AddEvent("OuterProduct::Create");
   }
 
-  CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
-  event_logger.AddEvent("Outer Product");
+  outer_product_->ComputeProduct();
+  event_logger.AddEvent("OuterProduct::ComputeProduct");
 
   if (per_solve_options.D != NULL) {
     A->DeleteRows(num_cols);
   }
 
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      outer_product_.get(), x, x, &summary.message);
+      outer_product_->mutable_matrix(), x, x, &summary.message);
   event_logger.AddEvent("Factor & Solve");
   return summary;
 }

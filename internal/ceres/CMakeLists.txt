@@ -86,6 +86,7 @@ set(CERES_INTERNAL_SRC
     low_rank_inverse_hessian.cc
     minimizer.cc
     normal_prior.cc
+    outer_product.cc
     parameter_block_ordering.cc
     partitioned_matrix_view.cc
     polynomial.cc
@@ -327,6 +328,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(normal_prior)
   ceres_test(numeric_diff_cost_function)
   ceres_test(ordered_groups)
+  ceres_test(outer_product)
   ceres_test(parameter_block)
   ceres_test(parameter_block_ordering)
   ceres_test(partitioned_matrix_view)
