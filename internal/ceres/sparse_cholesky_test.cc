@@ -38,6 +38,7 @@
 #include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
+#include "ceres/outer_product.h"
 #include "ceres/random.h"
 #include "glog/logging.h"
 #include "gtest/gtest.h"
@@ -45,12 +46,11 @@
 namespace ceres {
 namespace internal {
 
-CompressedRowSparseMatrix* CreateRandomSymmetricPositiveDefiniteMatrix(
+CompressedRowSparseMatrix* CreateRandomFullRankMatrix(
     const int num_col_blocks,
     const int min_col_block_size,
     const int max_col_block_size,
-    const double block_density,
-    const CompressedRowSparseMatrix::StorageType storage_type) {
+    const double block_density){
   // Create a random matrix
   CompressedRowSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = num_col_blocks;
@@ -70,14 +70,7 @@ CompressedRowSparseMatrix* CreateRandomSymmetricPositiveDefiniteMatrix(
       CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
           diagonal.data(), random_crsm->col_blocks()));
   random_crsm->AppendRows(*block_diagonal);
-
-  // Compute output = random_crsm' * random_crsm
-  std::vector<int> program;
-  CompressedRowSparseMatrix* output =
-      CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-          *random_crsm, storage_type, &program);
-  CompressedRowSparseMatrix::ComputeOuterProduct(*random_crsm, program, output);
-  return output;
+  return random_crsm.release();
 }
 
 bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
@@ -119,12 +112,12 @@ void SparseCholeskySolverUnitTest(
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
 
-  scoped_ptr<CompressedRowSparseMatrix> lhs(
-      CreateRandomSymmetricPositiveDefiniteMatrix(num_blocks,
-                                                  min_block_size,
-                                                  max_block_size,
-                                                  block_density,
-                                                  storage_type));
+  scoped_ptr<CompressedRowSparseMatrix> m(CreateRandomFullRankMatrix(
+      num_blocks, min_block_size, max_block_size, block_density));
+  scoped_ptr<OuterProduct> outer_product(OuterProduct::Create(*m, storage_type));
+  outer_product->ComputeProduct();
+  CompressedRowSparseMatrix* lhs = outer_product->mutable_matrix();
+
   if (!use_block_structure) {
     lhs->mutable_row_blocks()->clear();
     lhs->mutable_col_blocks()->clear();
@@ -137,7 +130,7 @@ void SparseCholeskySolverUnitTest(
   EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
   std::string message;
   EXPECT_EQ(sparse_cholesky->FactorAndSolve(
-                lhs.get(), rhs.data(), actual.data(), &message),
+                lhs, rhs.data(), actual.data(), &message),
             LINEAR_SOLVER_SUCCESS);
   Matrix eigen_lhs;
   lhs->ToDenseMatrix(&eigen_lhs);
