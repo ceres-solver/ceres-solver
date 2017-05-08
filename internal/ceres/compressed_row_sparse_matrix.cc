@@ -133,26 +133,6 @@ void AddRandomBlock(const int num_rows,
   }
 }
 
-void AddRandomSymmetricBlock(const int num_rows,
-                             const int row_block_begin,
-                             std::vector<int>* rows,
-                             std::vector<int>* cols,
-                             std::vector<double>* values) {
-  for (int r = 0; r < num_rows; ++r) {
-    for (int c = r; c < num_rows; ++c) {
-      const double v = RandNormal();
-      rows->push_back(row_block_begin + r);
-      cols->push_back(row_block_begin + c);
-      values->push_back(v);
-      if (c != r) {
-        cols->push_back(row_block_begin + r);
-        rows->push_back(row_block_begin + c);
-        values->push_back(v);
-      }
-    }
-  }
-}
-
 }  // namespace
 
 // This constructor gives you a semi-initialized CompressedRowSparseMatrix.
