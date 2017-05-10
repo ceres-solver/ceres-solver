@@ -359,11 +359,11 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImplUsingSuiteSparse(
   summary.num_iterations = 1;
   summary.message = "Success.";
 
-  // Map outer_product_ to an lower triangular column major matrix.
+  // Map outer_product_ to a lower triangular column major matrix.
   //
   // outer_product_ is a compressed row sparse matrix and in upper
   // triangular form, when mapped to a compressed column sparse
-  // matrix, it becomes an lower triangular matrix.
+  // matrix, it becomes a lower triangular matrix.
   const int num_cols = outer_product_->num_cols();
   cholmod_sparse lhs =
       ss_.CreateSparseMatrixTransposeView(outer_product_.get());

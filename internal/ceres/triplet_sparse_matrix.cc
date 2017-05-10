@@ -85,6 +85,8 @@ TripletSparseMatrix::TripletSparseMatrix(const int num_rows,
   // All the sizes should at least be zero
   CHECK_GE(num_rows, 0);
   CHECK_GE(num_cols, 0);
+  CHECK_EQ(rows.size(), cols.size());
+  CHECK_EQ(rows.size(), values.size());
   AllocateMemory();
   std::copy(rows.begin(), rows.end(), rows_.get());
   std::copy(cols.begin(), cols.end(), cols_.get());
@@ -304,9 +306,6 @@ TripletSparseMatrix* TripletSparseMatrix::CreateRandomMatrix(
           values.push_back(RandNormal());
         }
       }
-    }
-    if (!rows.empty()) {
-      break;
     }
   }
 

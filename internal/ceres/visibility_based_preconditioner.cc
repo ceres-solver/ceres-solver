@@ -342,7 +342,8 @@ void VisibilityBasedPreconditioner::InitEliminator(
   eliminator_options.row_block_size = options_.row_block_size;
   eliminator_.reset(SchurEliminatorBase::Create(eliminator_options));
   const bool kFullRankETE = true;
-  eliminator_->Init(eliminator_options.elimination_groups[0], kFullRankETE, &bs);
+  eliminator_->Init(
+      eliminator_options.elimination_groups[0], kFullRankETE, &bs);
 }
 
 // Update the values of the preconditioner matrix and factorize it.
