@@ -22,6 +22,30 @@
       "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1847bbb_cb2bdee0",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-05-18T18:17:51Z",
+      "side": 1,
+      "message": "It could be made more generic, but it\u0027s updating some SuiteSparse specific variables at present s/t we can print out a useful error message if we only find part of SuiteSparse at the end.  As most FindXXX scripts only have a single call to find_path/library this wouldn\u0027t really be saving that much vs the extra mangling for SuiteSparse.\n\nAs it stands, there is no direct equivalent to this in CMake itself in the sense that it provides find_path/library already and so clients are expected to build their own recipes (FindXXX) scripts from those building blocks.",
+      "parentUuid": "33759339_d57b0bc7",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
