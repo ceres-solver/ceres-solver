@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33759339_d57b0bc7",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-18T17:09:34Z",
+      "side": 1,
+      "message": "1. isn\u0027t this a fairly generic function? perhaps can be used elsewhere also?\n2. Given how generic it is, doesn\u0027t/shouldn\u0027t cmake include something like this by default?",
+      "range": {
+        "startLine": 200,
+        "startChar": 6,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
