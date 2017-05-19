@@ -46,6 +46,52 @@
       "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce540735_1e984939",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-19T04:19:56Z",
+      "side": 1,
+      "message": "may I suggest making this if statement a bit simpler to read. One case for required and another for not required instead of the three case mode we have right now. I think it will improve readability.",
+      "range": {
+        "startLine": 217,
+        "startChar": 10,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "235be19e_247062c5",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-19T04:19:56Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 239,
+        "startChar": 6,
+        "endLine": 239,
+        "endChar": 22
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
