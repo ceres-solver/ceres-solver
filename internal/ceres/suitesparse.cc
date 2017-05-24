@@ -406,6 +406,7 @@ LinearSolverTerminationType SuiteSparseCholesky::Solve(const double* rhs,
   }
 
   memcpy(solution, cholmod_dense_solution->x, num_cols * sizeof(*solution));
+  ss_.Free(cholmod_dense_solution);
   return LINEAR_SOLVER_SUCCESS;
 }
 
