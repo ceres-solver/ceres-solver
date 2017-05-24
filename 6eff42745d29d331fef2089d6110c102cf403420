@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e487ebf_7c262437",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-05-24T06:57:08Z",
+      "side": 1,
+      "message": "Extra space before //",
+      "revId": "6eff42745d29d331fef2089d6110c102cf403420",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2ea3035_dd09c42a",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-05-24T06:57:08Z",
+      "side": 1,
+      "message": "Perhaps put the string message on the next line. Also consider comment-indenting the code block.",
+      "revId": "6eff42745d29d331fef2089d6110c102cf403420",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
