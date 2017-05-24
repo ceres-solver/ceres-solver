@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22957232_646cd27d",
+        "filename": "internal/ceres/cxsparse.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-24T07:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e487ebf_7c262437",
+      "revId": "6eff42745d29d331fef2089d6110c102cf403420",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ea3035_dd09c42a",
         "filename": "internal/ceres/sparse_cholesky.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-05-24T06:57:08Z",
       "side": 1,
       "message": "Perhaps put the string message on the next line. Also consider comment-indenting the code block.",
+      "revId": "6eff42745d29d331fef2089d6110c102cf403420",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "555738ad_9ce8bcc9",
+        "filename": "internal/ceres/sparse_cholesky.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-05-24T07:00:39Z",
+      "side": 1,
+      "message": "oh thats a formatting error.",
+      "parentUuid": "a2ea3035_dd09c42a",
       "revId": "6eff42745d29d331fef2089d6110c102cf403420",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
