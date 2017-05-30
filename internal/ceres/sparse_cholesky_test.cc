@@ -148,23 +148,15 @@ void SparseCholeskySolverUnitTest(
       << eigen_lhs;
 }
 
-#ifdef CERES_USE_CXX11
-using std::tuple;
-using std::get;
-#else
-using std::tr1::tuple;
-using std::tr1::get;
-#endif
-
-typedef tuple<SparseLinearAlgebraLibraryType, OrderingType, bool>
+typedef ::testing::tuple<SparseLinearAlgebraLibraryType, OrderingType, bool>
     Param;
 
 std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   Param param = info.param;
   std::stringstream ss;
-  ss << SparseLinearAlgebraLibraryTypeToString(get<0>(param)) << "_"
-     << (get<1>(param) == AMD ? "AMD" : "NATURAL") << "_"
-     << (get<2>(param) ? "UseBlockStructure" : "NoBlockStructure");
+  ss << SparseLinearAlgebraLibraryTypeToString(::testing::get<0>(param)) << "_"
+     << (::testing::get<1>(param) == AMD ? "AMD" : "NATURAL") << "_"
+     << (::testing::get<2>(param) ? "UseBlockStructure" : "NoBlockStructure");
   return ss.str();
 }
 
@@ -183,9 +175,9 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
     for (int trial = 0; trial < kNumTrials; ++trial) {
       const double block_density = std::max(0.1, RandDouble());
       Param param = GetParam();
-      SparseCholeskySolverUnitTest(get<0>(param),
-                                   get<1>(param),
-                                   get<2>(param),
+      SparseCholeskySolverUnitTest(::testing::get<0>(param),
+                                   ::testing::get<1>(param),
+                                   ::testing::get<2>(param),
                                    num_blocks,
                                    kMinBlockSize,
                                    kMaxBlockSize,
