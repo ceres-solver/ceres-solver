@@ -40,8 +40,8 @@
 namespace ceres {
 namespace internal {
 
-// An interface abstracts away the internal details of various sparse
-// linear algebra libraries and offers a simple API for solving
+// An interface that abstracts away the internal details of various
+// sparse linear algebra libraries and offers a simple API for solving
 // symmetric positive definite linear systems using a sparse Cholesky
 // factorization.
 //

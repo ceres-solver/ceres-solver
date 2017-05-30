@@ -133,6 +133,7 @@ class CXSparse {
   int scratch_size_;
 };
 
+// Sparse cholesky factorization using CXSparse.
 class CXSparseCholesky : public SparseCholesky {
  public:
   // Factory
