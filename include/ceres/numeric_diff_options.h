@@ -39,6 +39,7 @@ namespace ceres {
 struct CERES_EXPORT NumericDiffOptions {
   NumericDiffOptions() {
     relative_step_size = 1e-6;
+    min_step_size = std::sqrt(std::numeric_limits<double>::epsilon());
     ridders_relative_initial_step_size = 1e-2;
     max_num_ridders_extrapolations = 10;
     ridders_epsilon = 1e-12;
@@ -47,8 +48,15 @@ struct CERES_EXPORT NumericDiffOptions {
 
   // Numeric differentiation step size (multiplied by parameter block's
   // order of magnitude). If parameters are close to zero, the step size
-  // is set to sqrt(machine_epsilon).
+  // is set to min_step_size.
   double relative_step_size;
+
+  // The minimum numeric differentiation step size. It is not a
+  // good idea to make the step size arbitrarily small.
+  // This will lead to problems with round off and numerical
+  // instability when dividing by the step size. The general
+  // recommendation is to not go down below sqrt(epsilon).
+  double min_step_size;
 
   // Initial step size for Ridders adaptive numeric differentiation (multiplied
   // by parameter block's order of magnitude).

@@ -142,7 +142,7 @@ struct NumericDiff {
     // small. This will lead to problems with round off and numerical
     // instability when dividing by the step size. The general
     // recommendation is to not go down below sqrt(epsilon).
-    double min_step_size = std::sqrt(std::numeric_limits<double>::epsilon());
+    double min_step_size = options.min_step_size;
 
     // For Ridders' method, the initial step size is required to be large,
     // thus ridders_relative_initial_step_size is used.
