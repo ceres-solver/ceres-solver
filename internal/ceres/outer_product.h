@@ -64,6 +64,12 @@ class OuterProduct {
       const CompressedRowSparseMatrix& m,
       CompressedRowSparseMatrix::StorageType storage_type);
 
+  static OuterProduct* Create(
+      const CompressedRowSparseMatrix& m,
+      int start_row_block,
+      int end_row_block,
+      CompressedRowSparseMatrix::StorageType storage_type);
+
   // Update matrix_ to be numerically equal to m' * m.
   void ComputeProduct();
 
@@ -86,7 +92,9 @@ class OuterProduct {
     int index;
   };
 
-  OuterProduct(const CompressedRowSparseMatrix& m);
+  OuterProduct(const CompressedRowSparseMatrix& m,
+               int start_row_block,
+               int end_row_block);
 
   void Init(CompressedRowSparseMatrix::StorageType product_storage_type);
 
@@ -100,6 +108,8 @@ class OuterProduct {
       const std::vector<ProductTerm>& product_terms);
 
   const CompressedRowSparseMatrix& m_;
+  const int start_row_block_;
+  const int end_row_block_;
   scoped_ptr<CompressedRowSparseMatrix> matrix_;
 
   // For outer product matrix (m' * m), we pre-compute its block
