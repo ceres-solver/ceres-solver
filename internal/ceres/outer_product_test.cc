@@ -162,5 +162,120 @@ TEST(OuterProduct, NormalOperation) {
   }
 }
 
+TEST(OuterProduct, SubMatrix) {
+  // "Randomly generated seed."
+  SetRandomState(29823);
+  const int kNumRowBlocks = 10;
+  const int kNumColBlocks = 20;
+  const int kNumTrials = 5;
+
+  // Create a random matrix, compute its outer product using Eigen and
+  // ComputeOuterProduct. Convert both matrices to dense matrices and
+  // compare their upper triangular parts.
+  for (int trial = 0; trial < kNumTrials; ++trial) {
+    CompressedRowSparseMatrix::RandomMatrixOptions options;
+    options.num_row_blocks = kNumRowBlocks;
+    options.num_col_blocks = kNumColBlocks;
+    options.min_row_block_size = 1;
+    options.max_row_block_size = 5;
+    options.min_col_block_size = 1;
+    options.max_col_block_size = 10;
+    options.block_density = std::max(0.1, RandDouble());
+
+    VLOG(2) << "num row blocks: " << options.num_row_blocks;
+    VLOG(2) << "num col blocks: " << options.num_col_blocks;
+    VLOG(2) << "min row block size: " << options.min_row_block_size;
+    VLOG(2) << "max row block size: " << options.max_row_block_size;
+    VLOG(2) << "min col block size: " << options.min_col_block_size;
+    VLOG(2) << "max col block size: " << options.max_col_block_size;
+    VLOG(2) << "block density: " << options.block_density;
+
+    scoped_ptr<CompressedRowSparseMatrix> random_matrix(
+        CompressedRowSparseMatrix::CreateRandomMatrix(options));
+
+    const std::vector<int>& row_blocks = random_matrix->row_blocks();
+    const int num_row_blocks = row_blocks.size();
+
+    for (int start_row_block = 0; start_row_block < num_row_blocks - 1;
+         ++start_row_block) {
+      for (int end_row_block = start_row_block + 1;
+           end_row_block < num_row_blocks;
+           ++end_row_block) {
+        const int start_row =
+            std::accumulate(&row_blocks[0], &row_blocks[start_row_block], 0);
+        const int end_row =
+            std::accumulate(&row_blocks[0], &row_blocks[end_row_block], 0);
+
+        Eigen::MappedSparseMatrix<double, Eigen::RowMajor> mapped_random_matrix(
+            end_row - start_row,
+            random_matrix->num_cols(),
+            random_matrix->num_nonzeros(),
+            random_matrix->mutable_rows() + start_row,
+            random_matrix->mutable_cols(),
+            random_matrix->mutable_values());
+
+        Matrix expected_outer_product =
+            mapped_random_matrix.transpose() * mapped_random_matrix;
+
+        // Lower triangular
+        {
+          scoped_ptr<OuterProduct> outer_product(OuterProduct::Create(
+              *random_matrix,
+              start_row_block,
+              end_row_block,
+              CompressedRowSparseMatrix::LOWER_TRIANGULAR));
+          outer_product->ComputeProduct();
+          CompressedRowSparseMatrix* actual_product_crsm =
+              outer_product->mutable_matrix();
+
+          EXPECT_EQ(actual_product_crsm->row_blocks(),
+                    random_matrix->col_blocks());
+          EXPECT_EQ(actual_product_crsm->col_blocks(),
+                    random_matrix->col_blocks());
+
+          Matrix actual_outer_product =
+              Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
+                  actual_product_crsm->num_rows(),
+                  actual_product_crsm->num_rows(),
+                  actual_product_crsm->num_nonzeros(),
+                  actual_product_crsm->mutable_rows(),
+                  actual_product_crsm->mutable_cols(),
+                  actual_product_crsm->mutable_values());
+          CompareTriangularPartOfMatrices<Eigen::Upper>(expected_outer_product,
+                                                        actual_outer_product);
+        }
+
+        // Upper triangular
+        {
+          scoped_ptr<OuterProduct> outer_product(OuterProduct::Create(
+              *random_matrix,
+              start_row_block,
+              end_row_block,
+              CompressedRowSparseMatrix::UPPER_TRIANGULAR));
+          outer_product->ComputeProduct();
+          CompressedRowSparseMatrix* actual_product_crsm =
+              outer_product->mutable_matrix();
+
+          EXPECT_EQ(actual_product_crsm->row_blocks(),
+                    random_matrix->col_blocks());
+          EXPECT_EQ(actual_product_crsm->col_blocks(),
+                    random_matrix->col_blocks());
+
+          Matrix actual_outer_product =
+              Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(
+                  actual_product_crsm->num_rows(),
+                  actual_product_crsm->num_rows(),
+                  actual_product_crsm->num_nonzeros(),
+                  actual_product_crsm->mutable_rows(),
+                  actual_product_crsm->mutable_cols(),
+                  actual_product_crsm->mutable_values());
+          CompareTriangularPartOfMatrices<Eigen::Lower>(expected_outer_product,
+                                                        actual_outer_product);
+        }
+      }
+    }
+  }
+}
+
 }  // namespace internal
 }  // namespace ceres

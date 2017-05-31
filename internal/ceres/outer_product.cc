@@ -131,7 +131,10 @@ bool OuterProduct::ProductTerm::operator<(
   return row < right.row;
 }
 
-OuterProduct::OuterProduct(const CompressedRowSparseMatrix& m) : m_(m) {}
+OuterProduct::OuterProduct(const CompressedRowSparseMatrix& m,
+                           const int start_row_block,
+                           const int end_row_block)
+    : m_(m), start_row_block_(start_row_block), end_row_block_(end_row_block) {}
 
 // Compute the sparsity structure of the product m.transpose() * m
 // and create a CompressedRowSparseMatrix corresponding to it.
@@ -150,11 +153,21 @@ OuterProduct::OuterProduct(const CompressedRowSparseMatrix& m) : m_(m) {}
 OuterProduct* OuterProduct::Create(
     const CompressedRowSparseMatrix& m,
     CompressedRowSparseMatrix::StorageType product_storage_type) {
+  return OuterProduct::Create(
+      m, 0, m.row_blocks().size(), product_storage_type);
+}
+
+OuterProduct* OuterProduct::Create(
+    const CompressedRowSparseMatrix& m,
+    const int start_row_block,
+    const int end_row_block,
+    CompressedRowSparseMatrix::StorageType product_storage_type) {
   CHECK(product_storage_type == CompressedRowSparseMatrix::LOWER_TRIANGULAR ||
         product_storage_type == CompressedRowSparseMatrix::UPPER_TRIANGULAR);
   CHECK_GT(m.num_nonzeros(), 0)
       << "Congratulations, you found a bug in Ceres. Please report it.";
-  scoped_ptr<OuterProduct> outer_product(new OuterProduct(m));
+  scoped_ptr<OuterProduct> outer_product(
+      new OuterProduct(m, start_row_block, end_row_block));
   outer_product->Init(product_storage_type);
   return outer_product.release();
 }
@@ -175,7 +188,7 @@ void OuterProduct::Init(
   //
   // Due to the compression on rows, col_block is accessed through idx to
   // crsb_cols.  So col_block is accessed as crsb_cols[idx] in the code.
-  for (int row_block = 1; row_block < crsb_rows.size(); ++row_block) {
+  for (int row_block = start_row_block_ + 1; row_block < end_row_block_ + 1; ++row_block) {
     for (int idx1 = crsb_rows[row_block - 1]; idx1 < crsb_rows[row_block];
          ++idx1) {
       if (product_storage_type == CompressedRowSparseMatrix::LOWER_TRIANGULAR) {
@@ -332,8 +345,14 @@ void OuterProduct::ComputeProduct() {
 #define COL_BLOCK1 (crsb_cols[idx1])
 #define COL_BLOCK2 (crsb_cols[idx2])
 
+  int m_row_begin = 0;
+  for (int i = 0; i < start_row_block_; ++i) {
+    m_row_begin += row_blocks[i];
+  }
+
   // Iterate row blocks.
-  for (int row_block = 0, m_row_begin = 0; row_block < row_blocks.size();
+  for (int row_block = start_row_block_;
+       row_block < end_row_block_;
        m_row_begin += row_blocks[row_block++]) {
     // Non zeros are not stored consecutively across rows in a block.
     // The gaps between rows is the number of nonzeros of the
