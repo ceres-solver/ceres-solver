@@ -63,7 +63,9 @@ class CXSparse {
   bool SolveCholesky(cs_di* lhs, double* rhs_and_solution);
 
   // Solves a linear system given its symbolic and numeric factorization.
-  void Solve(cs_dis* symbolic_factor, csn* numeric_factor, double* rhs_and_solution);
+  void Solve(cs_dis* symbolic_factor,
+             csn* numeric_factor,
+             double* rhs_and_solution);
 
   // Compute the numeric Cholesky factorization of A, given its
   // symbolic factorization.
@@ -133,7 +135,8 @@ class CXSparse {
   int scratch_size_;
 };
 
-// Sparse cholesky factorization using CXSparse.
+// An implementation of SparseCholesky interface using the CXSparse
+// library.
 class CXSparseCholesky : public SparseCholesky {
  public:
   // Factory
@@ -142,11 +145,12 @@ class CXSparseCholesky : public SparseCholesky {
   // SparseCholesky interface.
   virtual ~CXSparseCholesky();
   virtual CompressedRowSparseMatrix::StorageType StorageType() const;
-  virtual LinearSolverTerminationType Factorize(
-      CompressedRowSparseMatrix* lhs, std::string* message);
+  virtual LinearSolverTerminationType Factorize(CompressedRowSparseMatrix* lhs,
+                                                std::string* message);
   virtual LinearSolverTerminationType Solve(const double* rhs,
                                             double* solution,
                                             std::string* message);
+
  private:
   CXSparseCholesky(const OrderingType ordering_type);
   void FreeSymbolicFactorization();
@@ -161,7 +165,7 @@ class CXSparseCholesky : public SparseCholesky {
 }  // namespace internal
 }  // namespace ceres
 
-#else  // CERES_NO_CXSPARSE
+#else   // CERES_NO_CXSPARSE
 
 typedef void cs_dis;
 

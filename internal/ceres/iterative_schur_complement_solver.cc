@@ -104,15 +104,16 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   cg_per_solve_options.r_tolerance = per_solve_options.r_tolerance;
   cg_per_solve_options.q_tolerance = per_solve_options.q_tolerance;
 
-  if (!CreateAndOrUpdatePreconditioner(A, per_solve_options.D)) {
-    LinearSolver::Summary summary;
-    summary.num_iterations = 0;
-    summary.termination_type = LINEAR_SOLVER_FAILURE;
-    summary.message = "Preconditioner creation or update failed.";
-    return summary;
-  }
-
+  CreatePreconditioner(A);
   if (preconditioner_.get() != NULL) {
+    if (!preconditioner_->Update(*A, per_solve_options.D)) {
+      LinearSolver::Summary summary;
+      summary.num_iterations = 0;
+      summary.termination_type = LINEAR_SOLVER_FAILURE;
+      summary.message = "Preconditioner update failed.";
+      return summary;
+    }
+
     cg_per_solve_options.preconditioner = preconditioner_.get();
   }
 
@@ -131,10 +132,10 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   return summary;
 }
 
-bool IterativeSchurComplementSolver::CreateAndOrUpdatePreconditioner(
-    BlockSparseMatrix* A, double* D) {
-  if (options_.preconditioner_type == IDENTITY) {
-    return true;
+void IterativeSchurComplementSolver::CreatePreconditioner(BlockSparseMatrix* A) {
+  if (options_.preconditioner_type == IDENTITY ||
+      preconditioner_.get() != NULL) {
+    return;
   }
 
   Preconditioner::Options preconditioner_options;
@@ -149,28 +150,24 @@ bool IterativeSchurComplementSolver::CreateAndOrUpdatePreconditioner(
   preconditioner_options.f_block_size = options_.f_block_size;
   preconditioner_options.elimination_groups = options_.elimination_groups;
 
-  if (preconditioner_.get() == NULL) {
-    switch (options_.preconditioner_type) {
-      case JACOBI:
-        preconditioner_.reset(new SparseMatrixPreconditionerWrapper(
-            schur_complement_->block_diagonal_FtF_inverse()));
-        break;
-      case SCHUR_JACOBI:
-        preconditioner_.reset(new SchurJacobiPreconditioner(
-            *A->block_structure(), preconditioner_options));
-        break;
-      case CLUSTER_JACOBI:
-      case CLUSTER_TRIDIAGONAL:
-        preconditioner_.reset(new VisibilityBasedPreconditioner(
-            *A->block_structure(), preconditioner_options));
-        break;
-      default:
-        LOG(FATAL) << "Unknown Preconditioner Type";
-    }
+  switch (options_.preconditioner_type) {
+    case JACOBI:
+      preconditioner_.reset(new SparseMatrixPreconditionerWrapper(
+          schur_complement_->block_diagonal_FtF_inverse()));
+      break;
+    case SCHUR_JACOBI:
+      preconditioner_.reset(new SchurJacobiPreconditioner(
+          *A->block_structure(), preconditioner_options));
+      break;
+    case CLUSTER_JACOBI:
+    case CLUSTER_TRIDIAGONAL:
+      preconditioner_.reset(new VisibilityBasedPreconditioner(
+          *A->block_structure(), preconditioner_options));
+      break;
+    default:
+      LOG(FATAL) << "Unknown Preconditioner Type";
   }
-
-  return preconditioner_->Update(*A, D);
-}
+};
 
 }  // namespace internal
 }  // namespace ceres

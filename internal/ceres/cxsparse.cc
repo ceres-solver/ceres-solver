@@ -77,13 +77,13 @@ void CXSparse::Solve(cs_dis* symbolic_factor, csn* numeric_factor, double* b) {
   // refers to the scratch space.
   //
   // Set x = P * b.
-  cs_di_ipvec(symbolic_factor->pinv, b, scratch_, num_cols);
+  CHECK(cs_di_ipvec(symbolic_factor->pinv, b, scratch_, num_cols));
   // Set x = L \ x.
-  cs_di_lsolve(numeric_factor->L, scratch_);
+  CHECK(cs_di_lsolve(numeric_factor->L, scratch_));
   // Set x = L' \ x.
-  cs_di_ltsolve(numeric_factor->L, scratch_);
+  CHECK(cs_di_ltsolve(numeric_factor->L, scratch_));
   // Set b = P' * x.
-  cs_di_pvec(symbolic_factor->pinv, scratch_, b, num_cols);
+  CHECK(cs_di_pvec(symbolic_factor->pinv, scratch_, b, num_cols));
 }
 
 bool CXSparse::SolveCholesky(cs_di* lhs, double* rhs_and_solution) {

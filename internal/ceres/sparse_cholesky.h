@@ -47,7 +47,7 @@ namespace internal {
 //
 // Instances of SparseCholesky are expected to cache the symbolic
 // factorization of the linear system. They do this on the first call
-// to Factorize of FactorAndSolve. Subsequent calls to Factorize and
+// to Factorize or FactorAndSolve. Subsequent calls to Factorize and
 // FactorAndSolve are expected to have the same sparsity structure.
 //
 // Example usage:
@@ -85,7 +85,7 @@ class SparseCholesky {
   // strategy used.
   virtual CompressedRowSparseMatrix::StorageType StorageType() const = 0;
 
-  // Compute the numeric factorization of the given matrix.  If this
+  // Computes the numeric factorization of the given matrix.  If this
   // is the first call to Factorize, first the symbolic factorization
   // will be computed and cached and the numeric factorization will be
   // computed based on that.
@@ -96,7 +96,7 @@ class SparseCholesky {
   virtual LinearSolverTerminationType Factorize(
       CompressedRowSparseMatrix* lhs, std::string* message) = 0;
 
-  // Compute the solution to the equation
+  // Computes the solution to the equation
   //
   // lhs * solution = rhs
   //
@@ -106,7 +106,7 @@ class SparseCholesky {
                                             std::string* message) = 0;
 
   // Convenience method which combines a call to Factorize and
-  // Solve. Solve is only called is Factorize returns
+  // Solve. Solve is only called if Factorize returns
   // LINEAR_SOLVER_SUCCESS.
   virtual LinearSolverTerminationType FactorAndSolve(
       CompressedRowSparseMatrix* lhs,

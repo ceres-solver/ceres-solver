@@ -79,7 +79,7 @@ class IterativeSchurComplementSolver : public BlockSparseMatrixSolver {
       const LinearSolver::PerSolveOptions& options,
       double* x);
 
-  bool CreateAndOrUpdatePreconditioner(BlockSparseMatrix* A, double* D);
+  void CreatePreconditioner(BlockSparseMatrix* A);
 
   LinearSolver::Options options_;
   scoped_ptr<internal::ImplicitSchurComplement> schur_complement_;
