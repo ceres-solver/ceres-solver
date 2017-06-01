@@ -431,6 +431,7 @@ if (OPENMP)
     message("-- Building with OpenMP.")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_OPENMP)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     if (UNIX)
       # At least on Linux, we need pthreads to be enabled for mutex to
       # compile.  This may not work on Windows or Android.
