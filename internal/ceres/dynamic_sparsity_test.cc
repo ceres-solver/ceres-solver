@@ -338,7 +338,7 @@ class PointToLineSegmentContourCostFunction : public CostFunction {
 
 class EuclideanDistanceFunctor {
  public:
-  explicit EuclideanDistanceFunctor(const double& sqrt_weight)
+  explicit EuclideanDistanceFunctor(const double sqrt_weight)
       : sqrt_weight_(sqrt_weight) {}
 
   template <typename T>

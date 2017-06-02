@@ -132,7 +132,8 @@ LinearSolver::Summary IterativeSchurComplementSolver::SolveImpl(
   return summary;
 }
 
-void IterativeSchurComplementSolver::CreatePreconditioner(BlockSparseMatrix* A) {
+void IterativeSchurComplementSolver::CreatePreconditioner(
+    BlockSparseMatrix* A) {
   if (options_.preconditioner_type == IDENTITY ||
       preconditioner_.get() != NULL) {
     return;
