@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f21acb9d_5fda9a1f",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-06-04T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce540735_1e984939",
+      "range": {
+        "startLine": 217,
+        "startChar": 10,
+        "endLine": 217,
+        "endChar": 19
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235be19e_247062c5",
         "filename": "cmake/FindSuiteSparse.cmake",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "writtenOn": "2017-05-19T04:19:56Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 239,
+        "startChar": 6,
+        "endLine": 239,
+        "endChar": 22
+      },
+      "revId": "c2f297b6a9549566e0ed8802a88f8343f4646254",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98bd3742_8de04c18",
+        "filename": "cmake/FindSuiteSparse.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-06-04T13:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "235be19e_247062c5",
       "range": {
         "startLine": 239,
         "startChar": 6,
