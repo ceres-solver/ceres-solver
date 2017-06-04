@@ -116,9 +116,57 @@ if (NOT DEFINED EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION
 endif()
 
 if (EIGEN_PREFER_EXPORTED_EIGEN_CMAKE_CONFIGURATION)
-  find_package(Eigen3 QUIET)
+  # Try to find an exported CMake configuration for Eigen.
+  #
+  # We search twice, s/t we can invert the ordering of precedence used by
+  # find_package() for exported package build directories, and installed
+  # packages (found via CMAKE_SYSTEM_PREFIX_PATH), listed as items 6) and 7)
+  # respectively in [1].
+  #
+  # By default, exported build directories are (in theory) detected first, and
+  # this is usually the case on Windows.  However, on OS X & Linux, the install
+  # path (/usr/local) is typically present in the PATH environment variable
+  # which is checked in item 4) in [1] (i.e. before both of the above, unless
+  # NO_SYSTEM_ENVIRONMENT_PATH is passed).  As such on those OSs installed
+  # packages are usually detected in preference to exported package build
+  # directories.
+  #
+  # To ensure a more consistent response across all OSs, and as users usually
+  # want to prefer an installed version of a package over a locally built one
+  # where both exist (esp. as the exported build directory might be removed
+  # after installation), we first search with NO_CMAKE_PACKAGE_REGISTRY which
+  # means any build directories exported by the user are ignored, and thus
+  # installed directories are preferred.  If this fails to find the package
+  # we then research again, but without NO_CMAKE_PACKAGE_REGISTRY, so any
+  # exported build directories will now be detected.
+  #
+  # To prevent confusion on Windows, we also pass NO_CMAKE_BUILDS_PATH (which
+  # is item 5) in [1]), to not preferentially use projects that were built
+  # recently with the CMake GUI to ensure that we always prefer an installed
+  # version if available.
+  #
+  # [1] http://www.cmake.org/cmake/help/v2.8.11/cmake.html#command:find_package
+  find_package(Eigen3 QUIET
+                      NO_MODULE
+                      NO_CMAKE_PACKAGE_REGISTRY
+                      NO_CMAKE_BUILDS_PATH)
   if (EIGEN3_FOUND)
     message(STATUS "Found installed version of Eigen: ${Eigen3_DIR}")
+  else()
+    # Failed to find an installed version of Eigen, repeat search allowing
+    # exported build directories.
+    message(STATUS "Failed to find installed Eigen CMake configuration, "
+      "searching for Eigen build directories exported with CMake.")
+    # Again pass NO_CMAKE_BUILDS_PATH, as we know that Eigen is exported and
+    # do not want to treat projects built with the CMake GUI preferentially.
+    find_package(Eigen3 QUIET
+                        NO_MODULE
+                        NO_CMAKE_BUILDS_PATH)
+    if (EIGEN3_FOUND)
+      message(STATUS "Found exported Eigen build directory: ${Eigen3_DIR}")
+    endif()
+  endif()
+  if (EIGEN3_FOUND)
     set(FOUND_INSTALLED_EIGEN_CMAKE_CONFIGURATION TRUE)
     set(EIGEN_FOUND ${EIGEN3_FOUND})
     set(EIGEN_INCLUDE_DIR "${EIGEN3_INCLUDE_DIR}" CACHE STRING
