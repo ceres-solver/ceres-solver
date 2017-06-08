@@ -299,6 +299,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(covariance)
   ceres_test(cubic_interpolation)
   ceres_test(detect_structure)
+  ceres_test(dense_linear_solver)
   ceres_test(dense_sparse_matrix)
   ceres_test(dynamic_autodiff_cost_function)
   ceres_test(dynamic_compressed_row_sparse_matrix)
@@ -343,6 +344,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(small_blas)
   ceres_test(solver)
   ceres_test(sparse_cholesky)
+  ceres_test(sparse_normal_cholesky_solver)
 
   # TODO(sameeragarwal): This test should ultimately be made
   # independent of SuiteSparse.
@@ -356,7 +358,6 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(triplet_sparse_matrix)
   ceres_test(trust_region_minimizer)
   ceres_test(trust_region_preprocessor)
-  ceres_test(unsymmetric_linear_solver)
   ceres_test(visibility)
   ceres_test(visibility_based_preconditioner)
 
