@@ -41,7 +41,7 @@
 namespace ceres {
 namespace internal {
 
-// TODO(sameeragarwal): This tests needs to be re-written, since
+// TODO(sameeragarwal): These tests needs to be re-written, since
 // SparseNormalCholeskySolver is a composition of two classes now,
 // OuterProduct and SparseCholesky.
 //
