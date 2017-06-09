@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b558b49e_7f82ca9e",
+        "filename": "internal/ceres/outer_product.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "the 1 and 2 characters are unclear; what are they indicating?",
+      "revId": "de7d232ce661e56b75e773e4b92d5bef40f52d7f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

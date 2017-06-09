@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a7b64d1_793bf1c5",
+        "filename": "internal/ceres/outer_product.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "It might be worth investigating if this loop could be hoisted - having two separate loops so this branch isn\u0027t taken. Maybe doesn\u0027t matter given block multiply.",
+      "revId": "1001e5cf073a8e34f6f7f9e45c80a91e000c53f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783ce6df_db81fca6",
+        "filename": "internal/ceres/outer_product.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "I\u0027m not so sure about OuterProduct as a noun, since it\u0027s more like a caching function. Perhaps SelfOuterProductProgram, then have\n\n.run()\n.result_matrix()\n\n?",
+      "revId": "1001e5cf073a8e34f6f7f9e45c80a91e000c53f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb8fd2ed_ba58b487",
+        "filename": "internal/ceres/outer_product.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "matrix_ -\u003e matrix(). Perhaps mention explicitly that this aliases the passed in m, and will thus re-compute the outer product (and e.g. this is the raison d\u0027etre of the class).",
+      "revId": "1001e5cf073a8e34f6f7f9e45c80a91e000c53f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79b3598d_36ac6cf5",
+        "filename": "internal/ceres/outer_product.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "May want to inline the compare.",
+      "revId": "1001e5cf073a8e34f6f7f9e45c80a91e000c53f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a192cca_8ef09141",
+        "filename": "internal/ceres/outer_product.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-09T18:32:34Z",
+      "side": 1,
+      "message": "It\u0027s not clear what the contents of program_ is. Consider expanding comments. Perhaps also explain block offsets - what do they point into? The CRSM values?",
+      "revId": "1001e5cf073a8e34f6f7f9e45c80a91e000c53f2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
