@@ -559,6 +559,9 @@ else (BUILD_SHARED_LIBS)
   message("-- Building Ceres as a static library.")
 endif (BUILD_SHARED_LIBS)
 
+# Set the default Ceres flags to an empty string.
+set (CERES_CXX_FLAGS)
+
 # Change the default build type from Debug to Release, while still
 # supporting overriding the build type.
 #
@@ -575,11 +578,9 @@ else (NOT CMAKE_BUILD_TYPE)
     message("\n-- Build type: Debug. Performance will be terrible!")
     message("-- Add -DCMAKE_BUILD_TYPE=Release to the CMake command line to get an optimized build.")
     message("\n=================================================================================")
+
   endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif (NOT CMAKE_BUILD_TYPE)
-
-# Set the default Ceres flags to an empty string.
-set (CERES_CXX_FLAGS)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
   if (CMAKE_COMPILER_IS_GNUCXX)
@@ -591,7 +592,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
     # Mac OS X
     if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
-      set (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3")
+      set (CERES_CXX_FLAGS "${CERES_CXX_FLAGS} -msse3 -fsanitize=address")
       # Use of -fast only applicable for Apple's GCC
       # Assume this is being used if GCC version < 4.3 on OSX
       execute_process(COMMAND ${CMAKE_C_COMPILER}
@@ -606,6 +607,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 
 set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CERES_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CERES_CXX_FLAGS}")
 
 if (MINGW)
   # MinGW produces code that segfaults when performing matrix multiplications
