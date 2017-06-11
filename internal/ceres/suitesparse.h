@@ -296,7 +296,6 @@ class SuiteSparseCholesky : public SparseCholesky {
   const OrderingType ordering_type_;
   SuiteSparse ss_;
   cholmod_factor* factor_;
-  cholmod_dense* rhs_;
 };
 
 }  // namespace internal
