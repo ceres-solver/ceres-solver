@@ -70,6 +70,7 @@ set(CERES_INTERNAL_SRC
     gradient_problem.cc
     gradient_problem_solver.cc
     implicit_schur_complement.cc
+    inner_product_computer.cc
     is_close.cc
     iterative_schur_complement_solver.cc
     levenberg_marquardt_strategy.cc
@@ -316,6 +317,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(graph_algorithms)
   ceres_test(householder_vector)
   ceres_test(implicit_schur_complement)
+  ceres_test(inner_product_computer)
   ceres_test(invert_psd_matrix)
   ceres_test(is_close)
   ceres_test(iterative_schur_complement_solver)
