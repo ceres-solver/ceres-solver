@@ -28,8 +28,8 @@
 //
 // Author: sameeragarwal@google.com (Sameer Agarwal)
 
-#include "ceres/block_sparse_matrix.h"
 #include "ceres/casts.h"
+#include "ceres/compressed_row_sparse_matrix.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_least_squares_problems.h"
 #include "ceres/linear_solver.h"
@@ -43,21 +43,16 @@
 namespace ceres {
 namespace internal {
 
-// TODO(sameeragarwal): These tests needs to be re-written, since
-// SparseNormalCholeskySolver is a composition of two classes now,
-// InnerProductComputer and SparseCholesky.
-//
-// So the test should exercise the composition, rather than the
-// numerics of the solver, which are well covered by tests for those
-// classes.
-class SparseNormalCholeskyLinearSolverTest : public ::testing::Test {
+// TODO(sameeragarwal): These tests needs to be re-written to be more
+// thorough, they do not really test the dynamic nature of the
+// sparsity.
+class DynamicSparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     scoped_ptr<LinearLeastSquaresProblem> problem(
-        CreateLinearLeastSquaresProblemFromId(2));
-
-    CHECK_NOTNULL(problem.get());
-    A_.reset(down_cast<BlockSparseMatrix*>(problem->A.release()));
+        CreateLinearLeastSquaresProblemFromId(1));
+    A_.reset(CompressedRowSparseMatrix::FromTripletSparseMatrix(
+        *down_cast<TripletSparseMatrix*>(problem->A.get())));
     b_.reset(problem->b.release());
     D_.reset(problem->D.release());
   }
@@ -95,73 +90,37 @@ class SparseNormalCholeskyLinearSolverTest : public ::testing::Test {
     }
   }
 
-  void TestSolver(const LinearSolver::Options& options) {
+  void TestSolver(
+      const SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
+    LinearSolver::Options options;
+    options.type = SPARSE_NORMAL_CHOLESKY;
+    options.dynamic_sparsity = true;
+    options.sparse_linear_algebra_library_type =
+        sparse_linear_algebra_library_type;
     TestSolver(options, NULL);
     TestSolver(options, D_.get());
   }
 
-  scoped_ptr<BlockSparseMatrix> A_;
+  scoped_ptr<CompressedRowSparseMatrix> A_;
   scoped_array<double> b_;
   scoped_array<double> D_;
 };
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingSuiteSparsePreOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = false;
-  TestSolver(options);
-}
-
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingSuiteSparsePostOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = SUITE_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = true;
-  TestSolver(options);
+TEST_F(DynamicSparseNormalCholeskySolverTest, SuiteSparse) {
+  TestSolver(SUITE_SPARSE);
 }
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingCXSparsePreOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = CX_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = false;
-  TestSolver(options);
-}
-
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingCXSparsePostOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = CX_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = true;
-  TestSolver(options);
+TEST_F(DynamicSparseNormalCholeskySolverTest, CXSparse) {
+  TestSolver(CX_SPARSE);
 }
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingEigenPreOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = false;
-  TestSolver(options);
-}
-
-TEST_F(SparseNormalCholeskyLinearSolverTest,
-       SparseNormalCholeskyUsingEigenPostOrdering) {
-  LinearSolver::Options options;
-  options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
-  options.type = SPARSE_NORMAL_CHOLESKY;
-  options.use_postordering = true;
-  TestSolver(options);
+TEST_F(DynamicSparseNormalCholeskySolverTest, Eigen) {
+  TestSolver(EIGEN_SPARSE);
 }
 #endif  // CERES_USE_EIGEN_SPARSE
 
