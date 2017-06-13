@@ -106,18 +106,29 @@ TEST_P(DenseLinearSolverTest, _) {
 
 // TODO(sameeragarwal): Should we move away from hard coded linear
 // least squares problem to randomly generated ones?
+#ifndef CERES_NO_LAPACK
+
 INSTANTIATE_TEST_CASE_P(
     DenseLinearSolver,
     DenseLinearSolverTest,
     ::testing::Combine(::testing::Values(DENSE_QR, DENSE_NORMAL_CHOLESKY),
-#ifdef CERES_NO_LAPACK
-                       ::testing::Values(EIGEN),
-#else
                        ::testing::Values(EIGEN, LAPACK),
-#endif
                        ::testing::Values(true, false),
                        ::testing::Values(0, 1)),
     ParamInfoToString);
+
+#else
+
+INSTANTIATE_TEST_CASE_P(
+    DenseLinearSolver,
+    DenseLinearSolverTest,
+    ::testing::Combine(::testing::Values(DENSE_QR, DENSE_NORMAL_CHOLESKY),
+                       ::testing::Values(EIGEN),
+                       ::testing::Values(true, false),
+                       ::testing::Values(0, 1)),
+    ParamInfoToString);
+
+#endif
 
 }  // namespace internal
 }  // namespace ceres
