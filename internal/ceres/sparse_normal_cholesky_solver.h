@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,26 +45,26 @@ namespace ceres {
 namespace internal {
 
 class CompressedRowSparseMatrix;
+class InnerProductComputer;
 class SparseCholesky;
 
 // Solves the normal equations (A'A + D'D) x = A'b, using the sparse
 // linear algebra library of the user's choice.
-class SparseNormalCholeskySolver : public CompressedRowSparseMatrixSolver {
+class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
  public:
   explicit SparseNormalCholeskySolver(const LinearSolver::Options& options);
   virtual ~SparseNormalCholeskySolver();
 
  private:
   virtual LinearSolver::Summary SolveImpl(
-      CompressedRowSparseMatrix* A,
+      BlockSparseMatrix* A,
       const double* b,
       const LinearSolver::PerSolveOptions& options,
       double* x);
 
   const LinearSolver::Options options_;
   scoped_ptr<SparseCholesky> sparse_cholesky_;
-  scoped_ptr<CompressedRowSparseMatrix> outer_product_;
-  std::vector<int> pattern_;
+  scoped_ptr<InnerProductComputer> inner_product_computer_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 
