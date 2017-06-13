@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,8 @@
 #include <cstring>
 #include <ctime>
 
-#include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/block_sparse_matrix.h"
+#include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/linear_solver.h"
@@ -57,7 +58,7 @@ SparseNormalCholeskySolver::SparseNormalCholeskySolver(
 SparseNormalCholeskySolver::~SparseNormalCholeskySolver() {}
 
 LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
-    CompressedRowSparseMatrix* A,
+    BlockSparseMatrix* A,
     const double* b,
     const LinearSolver::PerSolveOptions& per_solve_options,
     double* x) {
@@ -75,35 +76,32 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   if (per_solve_options.D != NULL) {
     // Temporarily append a diagonal block to the A matrix, but undo
     // it before returning the matrix to the user.
-    scoped_ptr<CompressedRowSparseMatrix> regularizer;
-    if (A->col_blocks().size() > 0) {
-      regularizer.reset(CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-          per_solve_options.D, A->col_blocks()));
-    } else {
-      regularizer.reset(
-          new CompressedRowSparseMatrix(per_solve_options.D, num_cols));
-    }
+    scoped_ptr<BlockSparseMatrix> regularizer;
+    regularizer.reset(BlockSparseMatrix::CreateDiagonalMatrix(
+        per_solve_options.D, A->block_structure()->cols));
+    event_logger.AddEvent("Diagonal");
     A->AppendRows(*regularizer);
+    event_logger.AddEvent("Append");
   }
   event_logger.AddEvent("Append Rows");
 
-  if (outer_product_.get() == NULL) {
-    outer_product_.reset(
-        CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-            *A, sparse_cholesky_->StorageType(), &pattern_));
-    event_logger.AddEvent("Outer Product Program");
+  if (inner_product_computer_.get() == NULL) {
+    inner_product_computer_.reset(
+        InnerProductComputer::Create(*A, sparse_cholesky_->StorageType()));
+
+    event_logger.AddEvent("InnerProductComputer::Create");
   }
 
-  CompressedRowSparseMatrix::ComputeOuterProduct(
-      *A, pattern_, outer_product_.get());
-  event_logger.AddEvent("Outer Product");
+  inner_product_computer_->Compute();
+  event_logger.AddEvent("InnerProductComputer::Compute");
+
+  // TODO(sameeragarwal):
 
   if (per_solve_options.D != NULL) {
-    A->DeleteRows(num_cols);
+    A->DeleteRowBlocks(A->block_structure()->cols.size());
   }
-
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      outer_product_.get(), x, x, &summary.message);
+      inner_product_computer_->mutable_result(), x, x, &summary.message);
   event_logger.AddEvent("Factor & Solve");
   return summary;
 }

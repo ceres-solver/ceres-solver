@@ -35,7 +35,9 @@
 
 #include "Eigen/Dense"
 #include "Eigen/SparseCore"
+#include "ceres/block_sparse_matrix.h"
 #include "ceres/compressed_row_sparse_matrix.h"
+#include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/random.h"
@@ -45,14 +47,12 @@
 namespace ceres {
 namespace internal {
 
-CompressedRowSparseMatrix* CreateRandomSymmetricPositiveDefiniteMatrix(
-    const int num_col_blocks,
-    const int min_col_block_size,
-    const int max_col_block_size,
-    const double block_density,
-    const CompressedRowSparseMatrix::StorageType storage_type) {
+BlockSparseMatrix* CreateRandomFullRankMatrix(const int num_col_blocks,
+                                              const int min_col_block_size,
+                                              const int max_col_block_size,
+                                              const double block_density) {
   // Create a random matrix
-  CompressedRowSparseMatrix::RandomMatrixOptions options;
+  BlockSparseMatrix::RandomMatrixOptions options;
   options.num_col_blocks = num_col_blocks;
   options.min_col_block_size = min_col_block_size;
   options.max_col_block_size = max_col_block_size;
@@ -61,23 +61,16 @@ CompressedRowSparseMatrix* CreateRandomSymmetricPositiveDefiniteMatrix(
   options.min_row_block_size = 1;
   options.max_row_block_size = max_col_block_size;
   options.block_density = block_density;
-  scoped_ptr<CompressedRowSparseMatrix> random_crsm(
-      CompressedRowSparseMatrix::CreateRandomMatrix(options));
+  scoped_ptr<BlockSparseMatrix> random_matrix(
+      BlockSparseMatrix::CreateRandomMatrix(options));
 
   // Add a diagonal block sparse matrix to make it full rank.
-  Vector diagonal = Vector::Ones(random_crsm->num_cols());
-  scoped_ptr<CompressedRowSparseMatrix> block_diagonal(
-      CompressedRowSparseMatrix::CreateBlockDiagonalMatrix(
-          diagonal.data(), random_crsm->col_blocks()));
-  random_crsm->AppendRows(*block_diagonal);
-
-  // Compute output = random_crsm' * random_crsm
-  std::vector<int> program;
-  CompressedRowSparseMatrix* output =
-      CompressedRowSparseMatrix::CreateOuterProductMatrixAndProgram(
-          *random_crsm, storage_type, &program);
-  CompressedRowSparseMatrix::ComputeOuterProduct(*random_crsm, program, output);
-  return output;
+  Vector diagonal = Vector::Ones(random_matrix->num_cols());
+  scoped_ptr<BlockSparseMatrix> block_diagonal(
+      BlockSparseMatrix::CreateDiagonalMatrix(
+          diagonal.data(), random_matrix->block_structure()->cols));
+  random_matrix->AppendRows(*block_diagonal);
+  return random_matrix.release();
 }
 
 bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
@@ -119,12 +112,13 @@ void SparseCholeskySolverUnitTest(
   const CompressedRowSparseMatrix::StorageType storage_type =
       sparse_cholesky->StorageType();
 
-  scoped_ptr<CompressedRowSparseMatrix> lhs(
-      CreateRandomSymmetricPositiveDefiniteMatrix(num_blocks,
-                                                  min_block_size,
-                                                  max_block_size,
-                                                  block_density,
-                                                  storage_type));
+  scoped_ptr<BlockSparseMatrix> m(CreateRandomFullRankMatrix(
+      num_blocks, min_block_size, max_block_size, block_density));
+  scoped_ptr<InnerProductComputer> inner_product_computer(
+      InnerProductComputer::Create(*m, storage_type));
+  inner_product_computer->Compute();
+  CompressedRowSparseMatrix* lhs = inner_product_computer->mutable_result();
+
   if (!use_block_structure) {
     lhs->mutable_row_blocks()->clear();
     lhs->mutable_col_blocks()->clear();
@@ -137,7 +131,7 @@ void SparseCholeskySolverUnitTest(
   EXPECT_TRUE(ComputeExpectedSolution(*lhs, rhs, &expected));
   std::string message;
   EXPECT_EQ(sparse_cholesky->FactorAndSolve(
-                lhs.get(), rhs.data(), actual.data(), &message),
+                lhs, rhs.data(), actual.data(), &message),
             LINEAR_SOLVER_SUCCESS);
   Matrix eigen_lhs;
   lhs->ToDenseMatrix(&eigen_lhs);
