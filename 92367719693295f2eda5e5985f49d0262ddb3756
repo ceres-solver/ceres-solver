@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "878deac6_cc8d2fba",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-14T17:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa8e34bb_d316b216",
+      "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda506ab_3ee4ea72",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-14T17:45:28Z",
       "side": 1,
       "message": "Remove extra lines.",
+      "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac35ff2_def64ed7",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-14T17:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda506ab_3ee4ea72",
       "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "20d8696e_c06c732f",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-14T17:57:39Z",
+      "side": 1,
+      "message": "in this case it is not a cursor, I use cursor to indicate an index in the array, I am using position  because it is a position in the values array and the block structure uses the term position also for the same thing.",
+      "parentUuid": "e2929501_60c744c6",
+      "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8ccdc7_0e3dabcd",
         "filename": "internal/ceres/block_sparse_matrix.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-14T17:45:28Z",
       "side": 1,
       "message": "The size + 1 here is clever, but could use a comment. A naive implementation would be written `size * j + j`.",
+      "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f32e6d5c_1a49f4d1",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-14T17:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e8ccdc7_0e3dabcd",
       "revId": "92367719693295f2eda5e5985f49d0262ddb3756",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
