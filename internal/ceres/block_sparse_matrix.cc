@@ -81,6 +81,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   VLOG(2) << "Allocating values array with "
           << num_nonzeros_ * sizeof(double) << " bytes.";  // NOLINT
   values_.reset(new double[num_nonzeros_]);
+  max_num_nonzeros_ = num_nonzeros_;
   CHECK_NOTNULL(values_.get());
 }
 
@@ -116,17 +117,25 @@ void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
     const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const double* x_t = x + row_block_pos;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values_.get() + cells[j].position, row_block_size, col_block_size,
-          x + row_block_pos,
-          y + col_block_pos);
+      double* y_t = y + col_block_pos;
+      const double* m_t = values_.get() + cells[j].position;
+      for (int r = 0; r < row_block_size; ++r) {
+        const double x_v = x_t[r];
+        for (int c = 0; c < col_block_size; ++c) {
+          y_t[c] += x_v * m_t[c];
+        }
+        m_t += col_block_size;
+      }
     }
   }
 }
+
+
 
 void BlockSparseMatrix::SquaredColumnNorm(double* x) const {
   CHECK_NOTNULL(x);
@@ -243,9 +252,10 @@ void BlockSparseMatrix::ToTextFile(FILE* file) const {
   }
 }
 
+
 BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
     const double* diagonal, const std::vector<Block>& column_blocks) {
-  // Create the block structure for the diagonal matrix.
+
   CompressedRowBlockStructure* bs = new CompressedRowBlockStructure();
   bs->cols = column_blocks;
   int position = 0;
@@ -259,30 +269,32 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
     position += row.block.size * row.block.size;
   }
 
-  // Create the BlockSparseMatrix with the given block structure.
   BlockSparseMatrix* matrix = new BlockSparseMatrix(bs);
-  matrix->SetZero();
-
-  // Fill the values array of the block sparse matrix.
-  double* values = matrix->mutable_values();
-  for (int i = 0; i < column_blocks.size(); ++i) {
-    const int size = column_blocks[i].size;
-    for (int j = 0; j < size; ++j) {
-      // (j + 1) * size is compact way of accessing the (j,j) entry.
-      values[j * (size + 1)] = diagonal[j];
+  {
+    const CompressedRowBlockStructure* bs = matrix->block_structure();
+    for (int i = 0; i < bs->rows.size(); ++i) {
+      const Cell& cell = bs->rows[i].cells[0];
+      double* v = matrix->mutable_values() + cell.position;
+      const int size = bs->cols[i].size;
+      std::fill(v, v + size * size, 0.0);
+      for (int j = 0; j < size; ++j) {
+        v[j * (size + 1)] = diagonal[j];
+      }
+      diagonal += size;
     }
-    diagonal += size;
-    values += size * size;
   }
 
   return matrix;
 }
 
 void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
+  // TODO(sameeragarwal): Make sure that the column blocks structures match.
   const int old_num_nonzeros = num_nonzeros_;
-  const int old_num_row_blocks = block_structure_->rows.size();
   const CompressedRowBlockStructure* m_bs = m.block_structure();
-  block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
+  const int old_num_row_blocks = block_structure_->rows.size();
+
+  block_structure_->rows.resize(old_num_row_blocks +
+                                m_bs->rows.size());
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
     const CompressedRow& m_row = m_bs->rows[i];
@@ -290,21 +302,27 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
     row.block.size = m_row.block.size;
     row.block.position = num_rows_;
     num_rows_ += m_row.block.size;
-    row.cells.resize(m_row.cells.size());
+
     for (int c = 0; c < m_row.cells.size(); ++c) {
       const int block_id = m_row.cells[c].block_id;
-      row.cells[c].block_id = block_id;
-      row.cells[c].position = num_nonzeros_;
+      row.cells.push_back(Cell(block_id, num_nonzeros_));
       num_nonzeros_ += m_row.block.size * m_bs->cols[block_id].size;
     }
   }
 
-  double* new_values = new double[num_nonzeros_];
-  std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
-  values_.reset(new_values);
+  CHECK_EQ(num_nonzeros_, old_num_nonzeros + m.num_nonzeros());
 
-  std::copy(m.values(),
-            m.values() + m.num_nonzeros(),
+  if (num_nonzeros_ > max_num_nonzeros_) {
+    max_num_nonzeros_ = num_nonzeros_;
+    double* new_values = new double[max_num_nonzeros_];
+    std::copy(values_.get(),
+              values_.get() + old_num_nonzeros,
+              new_values);
+    values_.reset(new_values);
+    max_num_nonzeros_ = num_nonzeros_;
+  }
+
+  std::copy(m.values(), m.values() + m.num_nonzeros(),
             values_.get() + old_num_nonzeros);
 }
 
@@ -312,13 +330,13 @@ void BlockSparseMatrix::DeleteRowBlocks(const int delta_row_blocks) {
   const int num_row_blocks = block_structure_->rows.size();
   int delta_num_nonzeros = 0;
   int delta_num_rows = 0;
-  const std::vector<Block>& column_blocks = block_structure_->cols;
   for (int i = 0; i < delta_row_blocks; ++i) {
     const CompressedRow& row = block_structure_->rows[num_row_blocks - i - 1];
-    delta_num_rows += row.block.size;
+    const int row_block_size = row.block.size;
+    delta_num_rows += row_block_size;
     for (int c = 0; c < row.cells.size(); ++c) {
       const Cell& cell = row.cells[c];
-      delta_num_nonzeros += row.block.size * column_blocks[cell.block_id].size;
+      delta_num_nonzeros += row_block_size * block_structure_->cols[cell.block_id].size;
     }
   }
   num_nonzeros_ -= delta_num_nonzeros;
@@ -384,7 +402,7 @@ BlockSparseMatrix* BlockSparseMatrix::CreateRandomMatrix(
   BlockSparseMatrix* matrix = new BlockSparseMatrix(bs);
   double* values = matrix->mutable_values();
   for (int i = 0; i < matrix->num_nonzeros(); ++i) {
-    values[i] = RandNormal();
+    values[i] = RandDouble();
   }
 
   return matrix;
