@@ -84,18 +84,16 @@ class BlockSparseMatrix : public SparseMatrix {
   void ToTripletSparseMatrix(TripletSparseMatrix* matrix) const;
   const CompressedRowBlockStructure* block_structure() const;
 
+
   // Append the contents of m to the bottom of this matrix. m must
-  // have the same column blocks structure as this matrix.
+  // have the same number of columns as this matrix.
   void AppendRows(const BlockSparseMatrix& m);
 
-  // Delete the bottom delta_rows_blocks.
+  // Delete the bottom delta_rows.
+  // num_row_blocks -= delta_row_blocks
   void DeleteRowBlocks(int delta_row_blocks);
 
-  static BlockSparseMatrix* CreateDiagonalMatrix(
-      const double* diagonal,
-      const std::vector<Block>& column_blocks);
-
-  struct RandomMatrixOptions {
+   struct RandomMatrixOptions {
     RandomMatrixOptions()
         : num_row_blocks(0),
           min_row_block_size(0),
@@ -119,18 +117,23 @@ class BlockSparseMatrix : public SparseMatrix {
     double block_density;
   };
 
-  // Create a random BlockSparseMatrix whose entries are normally
-  // distributed and whose structure is determined by
+  // Create a random CompressedRowSparseMatrix whose entries are
+  // normally distributed and whose structure is determined by
   // RandomMatrixOptions.
   //
   // Caller owns the result.
   static BlockSparseMatrix* CreateRandomMatrix(
       const RandomMatrixOptions& options);
 
+  static BlockSparseMatrix* CreateDiagonalMatrix(
+      const double* diagonal,
+      const std::vector<Block>& column_blocks);
+
  private:
   int num_rows_;
   int num_cols_;
   int num_nonzeros_;
+  int max_num_nonzeros_;
   scoped_array<double> values_;
   scoped_ptr<CompressedRowBlockStructure> block_structure_;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
