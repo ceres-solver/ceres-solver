@@ -88,7 +88,7 @@ class BlockSparseMatrix : public SparseMatrix {
   // have the same column blocks structure as this matrix.
   void AppendRows(const BlockSparseMatrix& m);
 
-  // Delete the bottom delta_rows_blocks.
+  // Delete the bottom delta_rows_blocks
   void DeleteRowBlocks(int delta_row_blocks);
 
   static BlockSparseMatrix* CreateDiagonalMatrix(
@@ -131,6 +131,7 @@ class BlockSparseMatrix : public SparseMatrix {
   int num_rows_;
   int num_cols_;
   int num_nonzeros_;
+  int max_num_nonzeros_;
   scoped_array<double> values_;
   scoped_ptr<CompressedRowBlockStructure> block_structure_;
   CERES_DISALLOW_COPY_AND_ASSIGN(BlockSparseMatrix);
