@@ -81,6 +81,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   VLOG(2) << "Allocating values array with "
           << num_nonzeros_ * sizeof(double) << " bytes.";  // NOLINT
   values_.reset(new double[num_nonzeros_]);
+  max_num_nonzeros_ = num_nonzeros_;
   CHECK_NOTNULL(values_.get());
 }
 
@@ -116,17 +117,25 @@ void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
     const vector<Cell>& cells = block_structure_->rows[i].cells;
+    const double* x_t = x + row_block_pos;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
-      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
-          values_.get() + cells[j].position, row_block_size, col_block_size,
-          x + row_block_pos,
-          y + col_block_pos);
+      double* y_t = y + col_block_pos;
+      const double* m_t = values_.get() + cells[j].position;
+      for (int r = 0; r < row_block_size; ++r) {
+        const double x_v = x_t[r];
+        for (int c = 0; c < col_block_size; ++c) {
+          y_t[c] += x_v * m_t[c];
+        }
+        m_t += col_block_size;
+      }
     }
   }
 }
+
+
 
 void BlockSparseMatrix::SquaredColumnNorm(double* x) const {
   CHECK_NOTNULL(x);
@@ -280,9 +289,11 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
 
 void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   const int old_num_nonzeros = num_nonzeros_;
-  const int old_num_row_blocks = block_structure_->rows.size();
   const CompressedRowBlockStructure* m_bs = m.block_structure();
-  block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
+  const int old_num_row_blocks = block_structure_->rows.size();
+
+  block_structure_->rows.resize(old_num_row_blocks +
+                                m_bs->rows.size());
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
     const CompressedRow& m_row = m_bs->rows[i];
@@ -299,12 +310,19 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
     }
   }
 
-  double* new_values = new double[num_nonzeros_];
-  std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
-  values_.reset(new_values);
+  CHECK_EQ(num_nonzeros_, old_num_nonzeros + m.num_nonzeros());
 
-  std::copy(m.values(),
-            m.values() + m.num_nonzeros(),
+  if (num_nonzeros_ > max_num_nonzeros_) {
+    max_num_nonzeros_ = num_nonzeros_;
+    double* new_values = new double[max_num_nonzeros_];
+    std::copy(values_.get(),
+              values_.get() + old_num_nonzeros,
+              new_values);
+    values_.reset(new_values);
+    max_num_nonzeros_ = num_nonzeros_;
+  }
+
+  std::copy(m.values(), m.values() + m.num_nonzeros(),
             values_.get() + old_num_nonzeros);
 }
 
