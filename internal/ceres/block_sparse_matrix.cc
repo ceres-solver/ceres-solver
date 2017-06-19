@@ -81,6 +81,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   VLOG(2) << "Allocating values array with "
           << num_nonzeros_ * sizeof(double) << " bytes.";  // NOLINT
   values_.reset(new double[num_nonzeros_]);
+  max_num_nonzeros_ = num_nonzeros_;
   CHECK_NOTNULL(values_.get());
 }
 
@@ -299,9 +300,13 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
     }
   }
 
-  double* new_values = new double[num_nonzeros_];
-  std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
-  values_.reset(new_values);
+  if (num_nonzeros_ > max_num_nonzeros_) {
+    max_num_nonzeros_ = num_nonzeros_;
+    double* new_values = new double[max_num_nonzeros_];
+    std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
+    values_.reset(new_values);
+    max_num_nonzeros_ = num_nonzeros_;
+  }
 
   std::copy(m.values(),
             m.values() + m.num_nonzeros(),
