@@ -81,6 +81,7 @@ BlockSparseMatrix::BlockSparseMatrix(
   VLOG(2) << "Allocating values array with "
           << num_nonzeros_ * sizeof(double) << " bytes.";  // NOLINT
   values_.reset(new double[num_nonzeros_]);
+  max_num_nonzeros_ = num_nonzeros_;
   CHECK_NOTNULL(values_.get());
 }
 
@@ -280,9 +281,11 @@ BlockSparseMatrix* BlockSparseMatrix::CreateDiagonalMatrix(
 
 void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
   const int old_num_nonzeros = num_nonzeros_;
-  const int old_num_row_blocks = block_structure_->rows.size();
   const CompressedRowBlockStructure* m_bs = m.block_structure();
-  block_structure_->rows.resize(old_num_row_blocks + m_bs->rows.size());
+  const int old_num_row_blocks = block_structure_->rows.size();
+
+  block_structure_->rows.resize(old_num_row_blocks +
+                                m_bs->rows.size());
 
   for (int i = 0; i < m_bs->rows.size(); ++i) {
     const CompressedRow& m_row = m_bs->rows[i];
@@ -299,12 +302,19 @@ void BlockSparseMatrix::AppendRows(const BlockSparseMatrix& m) {
     }
   }
 
-  double* new_values = new double[num_nonzeros_];
-  std::copy(values_.get(), values_.get() + old_num_nonzeros, new_values);
-  values_.reset(new_values);
+  CHECK_EQ(num_nonzeros_, old_num_nonzeros + m.num_nonzeros());
 
-  std::copy(m.values(),
-            m.values() + m.num_nonzeros(),
+  if (num_nonzeros_ > max_num_nonzeros_) {
+    max_num_nonzeros_ = num_nonzeros_;
+    double* new_values = new double[max_num_nonzeros_];
+    std::copy(values_.get(),
+              values_.get() + old_num_nonzeros,
+              new_values);
+    values_.reset(new_values);
+    max_num_nonzeros_ = num_nonzeros_;
+  }
+
+  std::copy(m.values(), m.values() + m.num_nonzeros(),
             values_.get() + old_num_nonzeros);
 }
 
