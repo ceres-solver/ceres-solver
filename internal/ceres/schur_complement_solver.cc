@@ -337,6 +337,9 @@ LinearSolver::Summary SparseSchurComplementSolver::SolveReducedLinearSystem(
     lhs->set_storage_type(CompressedRowSparseMatrix::LOWER_TRIANGULAR);
   }
 
+  *lhs->mutable_col_blocks() = blocks_;
+  *lhs->mutable_row_blocks() = blocks_;
+
   summary.num_iterations = 1;
   summary.termination_type = sparse_cholesky_->FactorAndSolve(
       lhs.get(), rhs(), solution, &summary.message);
