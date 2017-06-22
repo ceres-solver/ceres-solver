@@ -117,20 +117,15 @@ void BlockSparseMatrix::LeftMultiply(const double* x, double* y) const {
     int row_block_pos = block_structure_->rows[i].block.position;
     int row_block_size = block_structure_->rows[i].block.size;
     const vector<Cell>& cells = block_structure_->rows[i].cells;
-    const double* x_t = x + row_block_pos;
     for (int j = 0; j < cells.size(); ++j) {
       int col_block_id = cells[j].block_id;
       int col_block_size = block_structure_->cols[col_block_id].size;
       int col_block_pos = block_structure_->cols[col_block_id].position;
       double* y_t = y + col_block_pos;
-      const double* m_t = values_.get() + cells[j].position;
-      for (int r = 0; r < row_block_size; ++r) {
-        const double x_v = x_t[r];
-        for (int c = 0; c < col_block_size; ++c) {
-          y_t[c] += x_v * m_t[c];
-        }
-        m_t += col_block_size;
-      }
+      MatrixTransposeVectorMultiply<Eigen::Dynamic, Eigen::Dynamic, 1>(
+          values_.get() + cells[j].position, row_block_size, col_block_size,
+          x + row_block_pos,
+          y + col_block_pos);
     }
   }
 }
