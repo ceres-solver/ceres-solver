@@ -44,45 +44,37 @@
 namespace ceres {
 namespace internal {
 
-template <enum Eigen::UpLoType T>
-void CompareTriangularPartOfMatrices(const Matrix& expected,
-                                     const Matrix& actual) {
-  EXPECT_EQ(actual.rows(), actual.cols());
-  EXPECT_EQ(expected.rows(), expected.cols());
-  EXPECT_EQ(actual.rows(), expected.rows());
-
-  const Matrix expected_t = expected.triangularView<T>();
-  const Matrix actual_t = actual.triangularView<T>();
-
-  // TODO(sameeragarwal): Foo
-  CHECK_LE((expected_t - actual_t).norm() / actual_t.norm(),
-           100 * std::numeric_limits<double>::epsilon())
-      << "expected: \n"
-      << expected_t << "\nactual: \n"
-      << actual_t;
-}
-
-#define COMPUTE_AND_COMPARE                                  \
-  {                                                          \
-    inner_product_computer->Compute();                       \
-    CompressedRowSparseMatrix* actual_product_crsm =         \
-        inner_product_computer->mutable_result();            \
-    Matrix actual_inner_product =                            \
-        Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(  \
-            actual_product_crsm->num_rows(),                 \
-            actual_product_crsm->num_rows(),                 \
-            actual_product_crsm->num_nonzeros(),             \
-            actual_product_crsm->mutable_rows(),             \
-            actual_product_crsm->mutable_cols(),             \
-            actual_product_crsm->mutable_values());          \
-    (actual_product_crsm->storage_type() ==                  \
-     CompressedRowSparseMatrix::LOWER_TRIANGULAR)            \
-        ? CompareTriangularPartOfMatrices<Eigen::Upper>(     \
-              expected_inner_product, actual_inner_product)  \
-        : CompareTriangularPartOfMatrices<Eigen::Lower>(     \
-              expected_inner_product, actual_inner_product); \
+#define COMPUTE_AND_COMPARE                                                  \
+  {                                                                          \
+    inner_product_computer->Compute();                                       \
+    CompressedRowSparseMatrix* actual_product_crsm =                         \
+        inner_product_computer->mutable_result();                            \
+    Matrix actual_inner_product =                                            \
+        Eigen::MappedSparseMatrix<double, Eigen::ColMajor>(                  \
+            actual_product_crsm->num_rows(),                                 \
+            actual_product_crsm->num_rows(),                                 \
+            actual_product_crsm->num_nonzeros(),                             \
+            actual_product_crsm->mutable_rows(),                             \
+            actual_product_crsm->mutable_cols(),                             \
+            actual_product_crsm->mutable_values());                          \
+    EXPECT_EQ(actual_inner_product.rows(), actual_inner_product.cols());     \
+    EXPECT_EQ(expected_inner_product.rows(), expected_inner_product.cols()); \
+    EXPECT_EQ(actual_inner_product.rows(), expected_inner_product.rows());   \
+    Matrix expected_t, actual_t;                                             \
+    if (actual_product_crsm->storage_type() ==                               \
+        CompressedRowSparseMatrix::LOWER_TRIANGULAR) {                       \
+      expected_t = expected_inner_product.triangularView<Eigen::Upper>();    \
+      actual_t = actual_inner_product.triangularView<Eigen::Upper>();        \
+    } else {                                                                 \
+      expected_t = expected_inner_product.triangularView<Eigen::Lower>();    \
+      actual_t = actual_inner_product.triangularView<Eigen::Lower>();        \
+    }                                                                        \
+    EXPECT_LE((expected_t - actual_t).norm() / actual_t.norm(),              \
+              100 * std::numeric_limits<double>::epsilon())                  \
+        << "expected: \n"                                                    \
+        << expected_t << "\nactual: \n"                                      \
+        << actual_t;                                                         \
   }
-
 
 TEST(InnerProductComputer, NormalOperation) {
   // "Randomly generated seed."

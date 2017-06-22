@@ -223,7 +223,6 @@ void InnerProductComputer::Init(
 void InnerProductComputer::ComputeOffsetsAndCreateResultMatrix(
     const CompressedRowSparseMatrix::StorageType product_storage_type,
     const std::vector<InnerProductComputer::ProductTerm>& product_terms) {
-  const int num_cols = m_.num_cols();
   const std::vector<Block>& col_blocks = m_.block_structure()->cols;
 
   std::vector<int> row_block_nnz;
