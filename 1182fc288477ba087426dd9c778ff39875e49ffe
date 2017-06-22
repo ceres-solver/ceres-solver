@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f3563f_b41b2127",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:37:17Z",
+      "side": 1,
+      "message": "Doesn\u0027t this have ownership implications?",
+      "revId": "1182fc288477ba087426dd9c778ff39875e49ffe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
