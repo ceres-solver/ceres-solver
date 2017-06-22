@@ -16,6 +16,24 @@
       "revId": "1182fc288477ba087426dd9c778ff39875e49ffe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75686992_d46925fb",
+        "filename": "internal/ceres/schur_complement_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T02:02:20Z",
+      "side": 1,
+      "message": "nope, its a copy.",
+      "parentUuid": "a7f3563f_b41b2127",
+      "revId": "1182fc288477ba087426dd9c778ff39875e49ffe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
