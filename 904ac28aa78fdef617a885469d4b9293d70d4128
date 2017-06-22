@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41c300c2_df981829",
+        "filename": "internal/ceres/block_sparse_matrix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:39:44Z",
+      "side": 1,
+      "message": "I\u0027m skeptical about this change to move awayfrom our internal blas. Shouldn\u0027t our internal one get inlined? Have you looked at the disassembly? Performance results will be highly dependent on compiler flags and platform. This is a pretty critical piece of code for Ceres so I\u0027m asking for higher rigor on this one weird trick.",
+      "revId": "904ac28aa78fdef617a885469d4b9293d70d4128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
