@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "994e4b98_e098c934",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "Perhaps comment why this internal version is needed (due to sparse matrix).",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5face5ea_45a0e924",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "Why bother with the scoped pointer? There are no exceptions in this block? It\u0027s not clear what purpose the scoping adds.",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c2b0eb3_f0328a1a",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "So this sounds weird, but consider making a version where this if is hoisted outside the loop and seeing if it\u0027s faster. Perhaps it doesn\u0027t matter on this method since it\u0027s just the .init().",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e317d2e_ec3cb5a6",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "I hate to ask for it, but what do you think about some ASCII art to help with understanding here?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4238bab4_f6e6a0c1",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "perhaps \u0027Process the rest of the product terms.\u0027",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e7944da_f8bec4b2",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "So this will alias the products?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "944bab87_0e127cbb",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "Why not move this into the else of the if below? Having the statement here implies it\u0027s done in both cases for a reason, rather than relying on the clobber behaviour.",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2295db_229c5edf",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "How hard is throwing in the OMP pragma?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b93edd73_f455a3a7",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "Chosen by fair dice roll :)",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "630d52b5_5a28c6f2",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "Will we ever care about the degenerate case? For both row and col blocks? (e.g. \u003d\u003d 0)",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c458e9bc_58fbd7ff",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-06-22T01:59:36Z",
+      "side": 1,
+      "message": "This compare block is big and repeated 4 times. Consider macro-ifying it with a single argument (the ::Upper and ::Lower part).",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
