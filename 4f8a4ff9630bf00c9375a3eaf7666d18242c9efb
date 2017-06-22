@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f80e77e_7dff806c",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "994e4b98_e098c934",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5face5ea_45a0e924",
         "filename": "internal/ceres/inner_product_computer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-22T01:59:36Z",
       "side": 1,
       "message": "Why bother with the scoped pointer? There are no exceptions in this block? It\u0027s not clear what purpose the scoping adds.",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ae85ee5_8edb4554",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5face5ea_45a0e924",
       "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6373f79c_c93d3185",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "totally not worth it, plus I use the same pattern below, so it makes the code more readable.",
+      "parentUuid": "9c2b0eb3_f0328a1a",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e317d2e_ec3cb5a6",
         "filename": "internal/ceres/inner_product_computer.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-22T01:59:36Z",
       "side": 1,
       "message": "I hate to ask for it, but what do you think about some ASCII art to help with understanding here?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a89af4fa_e08ce445",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "good idea, I just need to think about what the right art/explanation here is.",
+      "parentUuid": "1e317d2e_ec3cb5a6",
       "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab065532_b08d66bc",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4238bab4_f6e6a0c1",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e7944da_f8bec4b2",
         "filename": "internal/ceres/inner_product_computer.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-22T01:59:36Z",
       "side": 1,
       "message": "So this will alias the products?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7585f2c_566bbe24",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "yes they get accumulated into the same exact location.\n\nso basically if there are multiple rows with col block pairs i and j then they all go to (i,j) in the product matrix.",
+      "parentUuid": "3e7944da_f8bec4b2",
       "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "966b7b10_37ca0524",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "good idea.",
+      "parentUuid": "944bab87_0e127cbb",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2295db_229c5edf",
         "filename": "internal/ceres/inner_product_computer.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-22T01:59:36Z",
       "side": 1,
       "message": "How hard is throwing in the OMP pragma?",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ee124da_598c230a",
+        "filename": "internal/ceres/inner_product_computer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "non-trivial because of the way indexing works, and more importantly I cannot test the code correctly on my mac, also we are now already at the point for meaningfully sized matrices it is the cholesky factorization that is consuming the bulk of the time.\n\nI will come back and look at threads later.",
+      "parentUuid": "da2295db_229c5edf",
       "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8ffff4a1_b4323264",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "totally.",
+      "parentUuid": "b93edd73_f455a3a7",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630d52b5_5a28c6f2",
         "filename": "internal/ceres/inner_product_computer_test.cc",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "3a0caac4_93fd83ef",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "nope.",
+      "parentUuid": "630d52b5_5a28c6f2",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c458e9bc_58fbd7ff",
         "filename": "internal/ceres/inner_product_computer_test.cc",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2017-06-22T01:59:36Z",
       "side": 1,
       "message": "This compare block is big and repeated 4 times. Consider macro-ifying it with a single argument (the ::Upper and ::Lower part).",
+      "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a108d02_87f34952",
+        "filename": "internal/ceres/inner_product_computer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-22T05:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c458e9bc_58fbd7ff",
       "revId": "4f8a4ff9630bf00c9375a3eaf7666d18242c9efb",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
