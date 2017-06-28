@@ -65,6 +65,7 @@ set(CERES_INTERNAL_SRC
     evaluator.cc
     eigensparse.cc
     file.cc
+    function_sample.cc
     gradient_checker.cc
     gradient_checking_cost_function.cc
     gradient_problem.cc
