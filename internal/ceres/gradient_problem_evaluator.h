@@ -60,6 +60,8 @@ class GradientProblemEvaluator : public Evaluator {
     ScopedExecutionTimer call_type_timer(
         gradient == NULL ? "Evaluator::Cost" : "Evaluator::Gradient",
         &execution_summary_);
+    execution_summary_.IncrementCall(gradient == NULL ? "Evaluator::Cost"
+                                                      : "Evaluator::Gradient");
     return problem_.Evaluate(state, cost, gradient);
   }
 
