@@ -234,18 +234,24 @@ class LineSearchFunction {
  public:
   explicit LineSearchFunction(Evaluator* evaluator);
   void Init(const Vector& position, const Vector& direction);
+
   // Evaluate the line search objective
   //
-  //   f(x) = p(position + x * direction)
+  //   f(x) = p(position + output->x * direction)
   //
   // Where, p is the objective function of the general optimization
   // problem.
   //
-  // g is the gradient f'(x) at x.
+  // output->gradient_is_valid controls whether the gradient will be
+  // evaluated or not.
   //
-  // f must not be null. The gradient is computed only if g is not null.
-  bool Evaluate(double x, double* f, double* g);
+  // On return output->value_is_valid and output->gradient_is_valid
+  // indicate whether output->value and output->gradient can be used
+  // or not.
+  void Evaluate(FunctionSample* output);
+
   double DirectionInfinityNorm() const;
+
   // Resets to now, the start point for the results from TimeStatistics().
   void ResetTimeStatistics();
   void TimeStatistics(double* cost_evaluation_time_in_seconds,

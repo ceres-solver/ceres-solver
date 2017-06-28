@@ -33,14 +33,15 @@
 #include <iomanip>
 #include <iostream>  // NOLINT
 
-#include "glog/logging.h"
 #include "ceres/evaluator.h"
-#include "ceres/internal/eigen.h"
 #include "ceres/fpclassify.h"
+#include "ceres/function_sample.h"
+#include "ceres/internal/eigen.h"
 #include "ceres/map_util.h"
 #include "ceres/polynomial.h"
 #include "ceres/stringprintf.h"
 #include "ceres/wall_time.h"
+#include "glog/logging.h"
 
 namespace ceres {
 namespace internal {
@@ -124,27 +125,35 @@ void LineSearchFunction::Init(const Vector& position,
   direction_ = direction;
 }
 
-bool LineSearchFunction::Evaluate(double x, double* f, double* g) {
-  scaled_direction_ = x * direction_;
+void LineSearchFunction::Evaluate(FunctionSample* output) {
+  const bool evaluate_gradient = output->gradient_is_valid;
+  output->value_is_valid = false;
+  output->gradient_is_valid = false;
+
+  scaled_direction_ = output->x * direction_;
   if (!evaluator_->Plus(position_.data(),
                         scaled_direction_.data(),
                         evaluation_point_.data())) {
-    return false;
+    return;
   }
 
-  if (g == NULL) {
-    return (evaluator_->Evaluate(evaluation_point_.data(),
-                                 f, NULL, NULL, NULL) &&
-            IsFinite(*f));
+  const bool eval_status =
+      evaluator_->Evaluate(evaluation_point_.data(),
+                           &(output->value),
+                           NULL,
+                           evaluate_gradient ? gradient_.data() : NULL,
+                           NULL);
+
+  if (!eval_status || !IsFinite(output->value)) {
+    return;
   }
 
-  if (!evaluator_->Evaluate(evaluation_point_.data(),
-                            f, NULL, gradient_.data(), NULL)) {
-    return false;
+  output->value_is_valid = true;
+  if (evaluate_gradient) {
+    output->gradient = direction_.dot(gradient_);
   }
-
-  *g = direction_.dot(gradient_);
-  return IsFinite(*f) && IsFinite(*g);
+  output->gradient_is_valid = IsFinite(output->gradient);
+  return;
 }
 
 double LineSearchFunction::DirectionInfinityNorm() const {
@@ -307,13 +316,9 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
   if (interpolation_uses_gradient_at_current_sample) {
     ++summary->num_gradient_evaluations;
   }
-  current.value_is_valid =
-      function->Evaluate(current.x,
-                         &current.value,
-                         interpolation_uses_gradient_at_current_sample
-                         ? &current.gradient : NULL);
-  current.gradient_is_valid =
-      interpolation_uses_gradient_at_current_sample && current.value_is_valid;
+
+  current.gradient_is_valid = interpolation_uses_gradient_at_current_sample;
+  function->Evaluate(&current);
   while (!current.value_is_valid ||
          current.value > (initial_cost
                           + options().sufficient_decrease
@@ -360,13 +365,9 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
     if (interpolation_uses_gradient_at_current_sample) {
       ++summary->num_gradient_evaluations;
     }
-    current.value_is_valid =
-      function->Evaluate(current.x,
-                         &current.value,
-                         interpolation_uses_gradient_at_current_sample
-                         ? &current.gradient : NULL);
-    current.gradient_is_valid =
-        interpolation_uses_gradient_at_current_sample && current.value_is_valid;
+
+    current.gradient_is_valid = interpolation_uses_gradient_at_current_sample;
+    function->Evaluate(&current);
   }
 
   summary->optimal_step_size = current.x;
@@ -535,12 +536,8 @@ bool WolfeLineSearch::BracketingPhase(
   // issues).
   ++summary->num_function_evaluations;
   ++summary->num_gradient_evaluations;
-  current.value_is_valid =
-      function->Evaluate(current.x,
-                         &current.value,
-                         &current.gradient);
-  current.gradient_is_valid = current.value_is_valid;
-
+  current.gradient_is_valid = true;
+  function->Evaluate(&current);
   while (true) {
     ++summary->num_iterations;
 
@@ -674,11 +671,8 @@ bool WolfeLineSearch::BracketingPhase(
 
     ++summary->num_function_evaluations;
     ++summary->num_gradient_evaluations;
-    current.value_is_valid =
-        function->Evaluate(current.x,
-                           &current.value,
-                           &current.gradient);
-    current.gradient_is_valid = current.value_is_valid;
+    current.gradient_is_valid = true;
+    function->Evaluate(&current);
   }
 
   // Ensure that even if a valid bracket was found, we will only mark a zoom
@@ -823,11 +817,7 @@ bool WolfeLineSearch::ZoomPhase(const FunctionSample& initial_position,
     // to numerical issues).
     ++summary->num_function_evaluations;
     ++summary->num_gradient_evaluations;
-    solution->value_is_valid =
-        function->Evaluate(solution->x,
-                           &solution->value,
-                           &solution->gradient);
-    solution->gradient_is_valid = solution->value_is_valid;
+    function->Evaluate(solution);
     if (!solution->value_is_valid) {
       summary->error =
           StringPrintf("Line search failed: Wolfe Zoom phase found "
