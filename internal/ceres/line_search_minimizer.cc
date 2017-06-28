@@ -130,7 +130,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.linear_solver_iterations = 0;
   iteration_summary.step_solver_time_in_seconds = 0;
 
-  // Do initial cost and Jacobian evaluation.
+  // Do initial cost and gradient evaluation.
   if (!Evaluate(evaluator, x, &current_state, &summary->message)) {
     summary->termination_type = FAILURE;
     summary->message = "Initial cost and jacobian evaluation failed. "
@@ -142,9 +142,8 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   summary->initial_cost = current_state.cost + summary->fixed_cost;
   iteration_summary.cost = current_state.cost + summary->fixed_cost;
 
-  iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
   iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);
-
+  iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
   if (iteration_summary.gradient_max_norm <= options.gradient_tolerance) {
     summary->message = StringPrintf("Gradient tolerance reached. "
                                     "Gradient max norm: %e <= %e",

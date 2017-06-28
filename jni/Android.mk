@@ -148,6 +148,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/eigensparse.cc \
                    $(CERES_SRC_PATH)/evaluator.cc \
                    $(CERES_SRC_PATH)/file.cc \
+                   $(CERES_SRC_PATH)/function_sample.cc \
                    $(CERES_SRC_PATH)/gradient_checker.cc \
                    $(CERES_SRC_PATH)/gradient_checking_cost_function.cc \
                    $(CERES_SRC_PATH)/gradient_problem.cc \
