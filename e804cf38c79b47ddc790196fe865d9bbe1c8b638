@@ -16,6 +16,24 @@
       "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a40fab66_9c474c95",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-28T19:25:51Z",
+      "side": 1,
+      "message": "thats not the only way these things become invalid.\nif the function evaluate itself failed, then this is invalid.\nalso we use these bools as input output parameters so I\u0027d rather not have an accessor on it.",
+      "parentUuid": "2a71ecc9_95dfc645",
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
