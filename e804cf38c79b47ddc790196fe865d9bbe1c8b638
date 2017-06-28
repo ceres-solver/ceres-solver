@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "bc677ef8_ed48a9fc",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T23:52:19Z",
+      "side": 1,
+      "message": "Agree that containing dynamic vectors will increase memory allocation - passing in the struct avoids that since presumably the vector size doesn\u0027t change from call to call, so it\u0027s allocated once and overwritten N times. Given that, returning the struct is a bad plan. Either of your two proposals is fine by me; I slightly prefer the first.",
+      "parentUuid": "0497dcd2_fbaff3f4",
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02c486e3_7efa759f",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
