@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "174fd54d_ac777fac",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-28T22:11:53Z",
+      "side": 1,
+      "message": "2-3 of these at best.",
+      "parentUuid": "b68262b3_f9928651",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde2edec_6ed6f3c2",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 1
@@ -71,6 +95,24 @@
       "writtenOn": "2017-06-28T21:55:47Z",
       "side": 1,
       "message": "I have to say I\u0027m not a big fan of this function signature. The main reason is that whether gradient evaluation is done is invisible, and depends on the FunctionSample passed in. Most call sites never want gradients, or always want gradients - but with this structure you can\u0027t tell from reading the call site, and in fact you have to walk back up the whole history of the FunctionSample being passed in to know. Any breaks along that chain can cause unexpected behaviour.\n\nExample: WolfeLineSearch::ZoomPhase needs gradients to do its job. Does it actually evaluate them? See the call to function-\u003eEvaluate(solution). Is solution.gradient_is_valid true? Well, solution was copied from bracket_low and bracket_low is checked to have gradient_is_valid at the start of the function but is reassigned later... so you have to trace back and force through multiple assignments to know whether the code is doing what it needs to do.\n\nSomething like\nFunctionSample Evaluate(double x, double evaluate_gradient)\nwould seem clearer (and I\u0027d hope NVRO and friends would make it no less efficient).",
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0497dcd2_fbaff3f4",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-28T22:11:53Z",
+      "side": 1,
+      "message": "I agree with the ickiness of this, and I was wondering about NRVO.\nThe reason I was worried about NRVO is because this struct is going to grow to carry dynamically sized Eigen::Vector objects, and I am not sure how NRVO will work there, I suspect it won\u0027t and we will cause large allocations everytime these evaluation methods are called. \n\nI also played around with the idea of\n\nx, evaluate_gradient, sample\n\nthere is another possibility which is we split this into two methods\n\nEvaluateCost(x, sample);\nEvaluateCostAndGradient(x, sample)",
+      "parentUuid": "bde2edec_6ed6f3c2",
       "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -134,6 +176,30 @@
       "writtenOn": "2017-06-28T21:55:47Z",
       "side": 1,
       "message": "The name \"output\" is a bit misleading since some fields (x, gradient_is_valid) are actually input (or in/out). \"sample\"?",
+      "range": {
+        "startLine": 251,
+        "startChar": 32,
+        "endLine": 251,
+        "endChar": 38
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "155d578e_3b786bac",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-28T22:11:53Z",
+      "side": 1,
+      "message": "I was in two minds about this, I agree output is a bad name, sample is better.",
+      "parentUuid": "d6681dea_ddf1a645",
       "range": {
         "startLine": 251,
         "startChar": 32,
