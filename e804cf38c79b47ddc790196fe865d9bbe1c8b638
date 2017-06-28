@@ -34,6 +34,115 @@
       "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b68262b3_f9928651",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T21:55:47Z",
+      "side": 1,
+      "message": "If there are going to be a whole lot of these lying around, you might want to move value_is_valid to after gradient, and save 8 (or sometimes 4) bytes per struct. If there aren\u0027t many, the current layout is clearer.",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 22
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bde2edec_6ed6f3c2",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T21:55:47Z",
+      "side": 1,
+      "message": "I have to say I\u0027m not a big fan of this function signature. The main reason is that whether gradient evaluation is done is invisible, and depends on the FunctionSample passed in. Most call sites never want gradients, or always want gradients - but with this structure you can\u0027t tell from reading the call site, and in fact you have to walk back up the whole history of the FunctionSample being passed in to know. Any breaks along that chain can cause unexpected behaviour.\n\nExample: WolfeLineSearch::ZoomPhase needs gradients to do its job. Does it actually evaluate them? See the call to function-\u003eEvaluate(solution). Is solution.gradient_is_valid true? Well, solution was copied from bracket_low and bracket_low is checked to have gradient_is_valid at the start of the function but is reassigned later... so you have to trace back and force through multiple assignments to know whether the code is doing what it needs to do.\n\nSomething like\nFunctionSample Evaluate(double x, double evaluate_gradient)\nwould seem clearer (and I\u0027d hope NVRO and friends would make it no less efficient).",
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02c486e3_7efa759f",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T21:55:47Z",
+      "side": 1,
+      "message": "Should initial_position.{value,gradient}_is_valid be checked?",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 50
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c9adab4_1d39ad83",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T21:55:47Z",
+      "side": 1,
+      "message": "solution-\u003egradient_is_valid hasn\u0027t been checked between the evaluation and here.",
+      "range": {
+        "startLine": 850,
+        "startChar": 23,
+        "endLine": 850,
+        "endChar": 31
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6681dea_ddf1a645",
+        "filename": "internal/ceres/line_search.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-28T21:55:47Z",
+      "side": 1,
+      "message": "The name \"output\" is a bit misleading since some fields (x, gradient_is_valid) are actually input (or in/out). \"sample\"?",
+      "range": {
+        "startLine": 251,
+        "startChar": 32,
+        "endLine": 251,
+        "endChar": 38
+      },
+      "revId": "e804cf38c79b47ddc790196fe865d9bbe1c8b638",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
