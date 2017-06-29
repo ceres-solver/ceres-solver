@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d8e6989_d9f44c39",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-29T22:18:19Z",
+      "side": 1,
+      "message": "Update comments on value and gradient to clarify the distinction between the scalar and vector versions.",
+      "revId": "7e3b57f4f18c0b552671866c68b6b4955e1119d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
