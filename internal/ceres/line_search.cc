@@ -139,6 +139,8 @@ void LineSearchFunction::Evaluate(const double x,
     return;
   }
 
+  output->point = evaluation_point_;
+
   const bool eval_status =
       evaluator_->Evaluate(evaluation_point_.data(),
                            &(output->value),
@@ -155,6 +157,9 @@ void LineSearchFunction::Evaluate(const double x,
     output->gradient = direction_.dot(gradient_);
   }
   output->gradient_is_valid = IsFinite(output->gradient);
+  if (output->gradient_is_valid) {
+    output->vector_gradient = gradient_;
+  }
   return;
 }
 
@@ -162,6 +167,7 @@ double LineSearchFunction::DirectionInfinityNorm() const {
   return direction_.lpNorm<Eigen::Infinity>();
 }
 
+// TODO(sameeragarwal): Track down this gradient residual time thing.
 void LineSearchFunction::ResetTimeStatistics() {
   const map<string, double> evaluator_time_statistics =
       evaluator_->TimeStatistics();
@@ -200,7 +206,6 @@ void LineSearch::Search(double step_size_estimate,
   summary->cost_evaluation_time_in_seconds = 0.0;
   summary->gradient_evaluation_time_in_seconds = 0.0;
   summary->polynomial_minimization_time_in_seconds = 0.0;
-
   options().function->ResetTimeStatistics();
   this->DoSearch(step_size_estimate, initial_cost, initial_gradient, summary);
   options().function->
@@ -366,6 +371,9 @@ void ArmijoLineSearch::DoSearch(const double step_size_estimate,
   }
 
   summary->optimal_step_size = current.x;
+  summary->point = current.point;
+  summary->gradient = current.vector_gradient;
+  summary->cost = current.value;
   summary->success = true;
 }
 
@@ -432,6 +440,9 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
     // point with the lowest cost found thus far which satsifies the Armijo
     // condition (but not the Wolfe conditions).
     summary->optimal_step_size = bracket_low.x;
+    summary->point = bracket_low.point;
+    summary->gradient = bracket_low.vector_gradient;
+    summary->cost = bracket_low.value;
     summary->success = true;
     return;
   }
@@ -477,11 +488,19 @@ void WolfeLineSearch::DoSearch(const double step_size_estimate,
   // satisfies the strong Wolfe curvature condition, that we return the point
   // amongst those found thus far, which minimizes f() and satisfies the Armijo
   // condition.
-  solution =
-      solution.value_is_valid && solution.value <= bracket_low.value
-      ? solution : bracket_low;
 
-  summary->optimal_step_size = solution.x;
+  if (!solution.value_is_valid || solution.value > bracket_low.value) {
+    summary->optimal_step_size = bracket_low.x;
+    summary->point = bracket_low.point;
+    summary->gradient = bracket_low.vector_gradient;
+    summary->cost = bracket_low.value;
+  } else {
+    summary->optimal_step_size = solution.x;
+    summary->point = solution.point;
+    summary->gradient = solution.vector_gradient;
+    summary->cost = solution.value;
+  }
+
   summary->success = true;
 }
 

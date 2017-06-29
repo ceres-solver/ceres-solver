@@ -166,6 +166,11 @@ class LineSearch {
 
     bool success;
     double optimal_step_size;
+
+    Vector point;
+    Vector gradient;
+    double cost;
+
     int num_function_evaluations;
     int num_gradient_evaluations;
     int num_iterations;

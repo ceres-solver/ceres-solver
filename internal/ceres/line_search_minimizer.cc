@@ -94,6 +94,25 @@ bool Evaluate(Evaluator* evaluator,
   return true;
 }
 
+bool Evaluate2(Evaluator* evaluator,
+              const Vector& x,
+              LineSearchMinimizer::State* state,
+              std::string* message) {
+  Vector negative_gradient = -state->gradient;
+  Vector projected_gradient_step(x.size());
+  if (!evaluator->Plus(x.data(),
+                       negative_gradient.data(),
+                       projected_gradient_step.data())) {
+    *message = "projected_gradient_step = Plus(x, -gradient) failed.";
+    return false;
+  }
+
+  state->gradient_squared_norm = (x - projected_gradient_step).squaredNorm();
+  state->gradient_max_norm =
+      (x - projected_gradient_step).lpNorm<Eigen::Infinity>();
+  return true;
+}
+
 }  // namespace
 
 void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
@@ -115,9 +134,6 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
 
   State current_state(num_parameters, num_effective_parameters);
   State previous_state(num_parameters, num_effective_parameters);
-
-  Vector delta(num_effective_parameters);
-  Vector x_plus_delta(num_parameters);
 
   IterationSummary iteration_summary;
   iteration_summary.iteration = 0;
@@ -325,28 +341,29 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
-    current_state.step_size = line_search_summary.optimal_step_size;
-    delta = current_state.step_size * current_state.search_direction;
+    if (line_search_summary.optimal_step_size == 0.0) {
+      summary->message =
+          StringPrintf("Parameter tolerance reached. "
+                       "Relative step_norm: 0.0 <= %e.",
+                       options.parameter_tolerance);
+      summary->termination_type = CONVERGENCE;
+      VLOG_IF(1, is_not_silent) << "Terminating: " << summary->message;
+      return;
+    }
 
+    current_state.step_size = line_search_summary.optimal_step_size;
     previous_state = current_state;
     iteration_summary.step_solver_time_in_seconds =
         WallTimeInSeconds() - iteration_start_time;
 
     const double x_norm = x.norm();
+    current_state.gradient = line_search_summary.gradient;
+    current_state.cost = line_search_summary.cost;
 
-    if (!evaluator->Plus(x.data(), delta.data(), x_plus_delta.data())) {
-      summary->termination_type = FAILURE;
-      summary->message =
-          "x_plus_delta = Plus(x, delta) failed. This should not happen "
-          "as the step was valid when it was selected by the line search.";
-      LOG_IF(WARNING, is_not_silent) << "Terminating: " << summary->message;
-      break;
-    }
-
-    if (!Evaluate(evaluator,
-                  x_plus_delta,
-                  &current_state,
-                  &summary->message)) {
+    if (!Evaluate2(evaluator,
+                   line_search_summary.point,
+                   &current_state,
+                   &summary->message)) {
       summary->termination_type = FAILURE;
       summary->message =
           "Step failed to evaluate. This should not happen as the step was "
@@ -356,9 +373,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
+
     // Compute the norm of the step in the ambient space.
-    iteration_summary.step_norm = (x_plus_delta - x).norm();
-    x = x_plus_delta;
+    iteration_summary.step_norm = (line_search_summary.point - x).norm();
+    x = line_search_summary.point;
 
     iteration_summary.gradient_max_norm = current_state.gradient_max_norm;
     iteration_summary.gradient_norm = sqrt(current_state.gradient_squared_norm);

@@ -32,6 +32,7 @@
 #define CERES_INTERNAL_FUNCTION_SAMPLE_H_
 
 #include <string>
+#include "ceres/internal/eigen.h"
 
 namespace ceres {
 namespace internal {
@@ -53,6 +54,9 @@ struct FunctionSample {
   bool value_is_valid;
   double gradient;   // gradient = f'(x)
   bool gradient_is_valid;
+
+  Vector point;
+  Vector vector_gradient;
 };
 
 }  // namespace internal
