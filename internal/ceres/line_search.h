@@ -166,6 +166,11 @@ class LineSearch {
 
     bool success;
     double optimal_step_size;
+
+    Vector point;
+    Vector gradient;
+    double cost;
+
     int num_function_evaluations;
     int num_gradient_evaluations;
     int num_iterations;
@@ -256,6 +261,9 @@ class LineSearchFunction {
   void ResetTimeStatistics();
   void TimeStatistics(double* cost_evaluation_time_in_seconds,
                       double* gradient_evaluation_time_in_seconds) const;
+
+  const Vector& position() const { return position_;};
+  const Vector& direction() const { return direction_;};
 
  private:
   Evaluator* evaluator_;
