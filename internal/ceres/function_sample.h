@@ -32,28 +32,61 @@
 #define CERES_INTERNAL_FUNCTION_SAMPLE_H_
 
 #include <string>
+#include "ceres/internal/eigen.h"
 
 namespace ceres {
 namespace internal {
 
-// Clients can use this struct to communicate the value of the
-// function and or its gradient at a given point x.
+// FunctionSample is used by the line search routines to store and
+// communicate the value and (optionally) the gradient of the function
+// being minimized.
+//
+// Since line search as the name implies happens along a certain
+// line/direction. FunctionSample contains the information in two
+// ways. Information in the ambient space and information along the
+// direction of search.
 struct FunctionSample {
-  FunctionSample()
-      : x(0.0),
-        value(0.0),
-        value_is_valid(false),
-        gradient(0.0),
-        gradient_is_valid(false) {
-  }
+  FunctionSample();
+  FunctionSample(double x, double value);
+  FunctionSample(double x, double value, double gradient);
+
   std::string ToDebugString() const;
 
+  // x is the location of the sample along the search direction.
   double x;
-  double value;      // value = f(x)
+
+  // Let p be a point and d be the search direction then
+  //
+  // vector_x = p + x * d;
+  Vector vector_x;
+  // True if vector_x has been assigned a valid value.
+  bool vector_x_is_valid;
+
+  // value = f(vector_x)
+  double value;
+  // True of the evaluation was successful and value is a finite
+  // number.
   bool value_is_valid;
-  double gradient;   // gradient = f'(x)
+
+  // vector_gradient = Df(vector_position);
+  //
+  // D is the derivative operator.
+  Vector vector_gradient;
+  // True if the vector gradient was evaluated and the evaluation was
+  // successful (the value is a finite number).
+  bool vector_gradient_is_valid;
+
+  // gradient = d' * vector_gradient
+  //
+  // where d is the search direction.
+  double gradient;
+  // True if the evaluation of the gradient was sucessful and the
+  // value is a finite number.
   bool gradient_is_valid;
 };
+
+
+
 
 }  // namespace internal
 }  // namespace ceres
