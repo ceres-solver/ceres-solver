@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42db4556_5440df64",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-29T23:49:11Z",
+      "side": 1,
+      "message": "It is guaranteed to be valid by construction.\nSee the construction above in line 389.",
+      "parentUuid": "1588ed69_48451123",
+      "revId": "431b34ee81f1991767f96286693f169a991a8295",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adb8c89_287f4cd3",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T22:05:23Z",
       "side": 1,
       "message": "solution-\u003egradient_is_valid hasn\u0027t been checked between the evaluation and here.",
+      "revId": "431b34ee81f1991767f96286693f169a991a8295",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbcd1c4_79ee9750",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-06-29T23:49:11Z",
+      "side": 1,
+      "message": "good point, there is a subtle change in semantics.",
+      "parentUuid": "8adb8c89_287f4cd3",
       "revId": "431b34ee81f1991767f96286693f169a991a8295",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
