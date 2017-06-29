@@ -166,15 +166,15 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
   const std::map<string, double>& evaluator_time_statistics =
        minimizer_options.evaluator->TimeStatistics();
   summary->cost_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Cost", 0.0);
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
   summary->gradient_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Gradient", 0.0);
+      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
   const std::map<string, int>& evaluator_call_statistics =
        minimizer_options.evaluator->CallStatistics();
   summary->num_cost_evaluations =
-      FindWithDefault(evaluator_call_statistics, "Evaluator::Cost", 0);
+      FindWithDefault(evaluator_call_statistics, "Evaluator::Residual", 0);
   summary->num_gradient_evaluations =
-      FindWithDefault(evaluator_call_statistics, "Evaluator::Gradient", 0);
+      FindWithDefault(evaluator_call_statistics, "Evaluator::Jacobian", 0);
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
 
