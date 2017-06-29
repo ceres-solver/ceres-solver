@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1588ed69_48451123",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-29T22:05:23Z",
+      "side": 1,
+      "message": "Should initial_position.{value,gradient}_is_valid be checked?",
+      "revId": "431b34ee81f1991767f96286693f169a991a8295",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8adb8c89_287f4cd3",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-06-29T22:05:23Z",
+      "side": 1,
+      "message": "solution-\u003egradient_is_valid hasn\u0027t been checked between the evaluation and here.",
+      "revId": "431b34ee81f1991767f96286693f169a991a8295",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
