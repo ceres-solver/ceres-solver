@@ -34,6 +34,35 @@
 namespace ceres {
 namespace internal {
 
+FunctionSample::FunctionSample()
+    : x(0.0),
+      vector_x_is_valid(false),
+      value(0.0),
+      value_is_valid(false),
+      gradient(0.0),
+      gradient_is_valid(false),
+      vector_gradient_is_valid(false) {}
+
+FunctionSample::FunctionSample(const double x, const double value)
+    : x(x),
+      vector_x_is_valid(false),
+      value(value),
+      value_is_valid(true),
+      gradient(0.0),
+      gradient_is_valid(false),
+      vector_gradient_is_valid(false) {}
+
+FunctionSample::FunctionSample(const double x,
+                               const double value,
+                               const double gradient)
+    : x(x),
+      vector_x_is_valid(false),
+      value(value),
+      value_is_valid(true),
+      gradient(gradient),
+      gradient_is_valid(true),
+      vector_gradient_is_valid(false) {}
+
 std::string FunctionSample::ToDebugString() const {
   return StringPrintf("[x: %.8e, value: %.8e, gradient: %.8e, "
                       "value_is_valid: %d, gradient_is_valid: %d]",
