@@ -875,7 +875,7 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "  Jacobian evaluation %23.4f\n",
                 jacobian_evaluation_time_in_seconds);
   if (line_search_used) {
-    StringAppendF(&report, "    Line search gradient evaluation    %6.4f\n",
+    StringAppendF(&report, "    Line search gradient evaluation   %6.4f\n",
                   line_search_gradient_evaluation_time_in_seconds);
   }
 
