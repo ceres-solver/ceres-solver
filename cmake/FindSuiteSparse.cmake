@@ -278,7 +278,7 @@ list(APPEND SUITESPARSE_FOUND_REQUIRED_VARS LAPACK_FOUND)
 suitesparse_find_component(AMD REQUIRED FILES amd.h LIBRARIES amd)
 suitesparse_find_component(CAMD REQUIRED FILES camd.h LIBRARIES camd)
 suitesparse_find_component(COLAMD REQUIRED FILES colamd.h LIBRARIES colamd)
-suitesparse_find_component(COLAMD REQUIRED FILES ccolamd.h LIBRARIES ccolamd)
+suitesparse_find_component(CCOLAMD REQUIRED FILES ccolamd.h LIBRARIES ccolamd)
 suitesparse_find_component(CHOLMOD REQUIRED FILES cholmod.h LIBRARIES cholmod)
 suitesparse_find_component(
   SUITESPARSEQR REQUIRED FILES SuiteSparseQR.hpp LIBRARIES spqr)
