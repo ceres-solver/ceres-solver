@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5af1462e_fec7dd10",
+        "filename": "internal/ceres/function_sample.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "Initialisation order should match declaration order, throughout.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "9e728e245bd5b0c6a84a30927d1d7f380f530189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc07a8bd_28666da0",
+        "filename": "internal/ceres/function_sample.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "Add vector values?",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "9e728e245bd5b0c6a84a30927d1d7f380f530189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
