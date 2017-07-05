@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1483006_f4b68ece",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T22:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e11c70_50bc73d2",
+      "revId": "095ca276443e4328382f189bb06424681f6bb041",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "610b1f2f_b374d2d8",
         "filename": "internal/ceres/function_sample.h",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "07b06cc1_1f68bf15",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T22:41:09Z",
+      "side": 1,
+      "message": "transpose of d, I can change it to d^T if you prefer.",
+      "parentUuid": "610b1f2f_b374d2d8",
+      "revId": "095ca276443e4328382f189bb06424681f6bb041",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec02cc08_b81df0f3",
         "filename": "internal/ceres/function_sample.h",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-05T21:40:45Z",
       "side": 1,
       "message": "Also repeated.",
+      "revId": "095ca276443e4328382f189bb06424681f6bb041",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8398a50_5597fc7b",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T22:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec02cc08_b81df0f3",
       "revId": "095ca276443e4328382f189bb06424681f6bb041",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
