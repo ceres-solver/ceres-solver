@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf83720e_d0620ca0",
+        "filename": "internal/ceres/function_sample.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af1462e_fec7dd10",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "9e728e245bd5b0c6a84a30927d1d7f380f530189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc07a8bd_28666da0",
         "filename": "internal/ceres/function_sample.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T19:54:47Z",
       "side": 1,
       "message": "Add vector values?",
+      "range": {
+        "startLine": 66,
+        "startChar": 28,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "9e728e245bd5b0c6a84a30927d1d7f380f530189",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb8a9b49_54676da2",
+        "filename": "internal/ceres/function_sample.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "The useful bit AFAIK are the scalar values, I worry that adding the vector values doesn\u0027t scale as these problems can be rather large and will pollute the display.",
+      "parentUuid": "cc07a8bd_28666da0",
       "range": {
         "startLine": 66,
         "startChar": 28,
