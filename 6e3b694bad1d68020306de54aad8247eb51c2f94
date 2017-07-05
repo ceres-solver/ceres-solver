@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc166101_d8b79f7e",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "Extra space after d\u0027. (And is d\u0027 correct? I thought the code just does a dot product of d and the gradient vector, though I could be confused due to ambient space issues.)",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7a98caf_a96c253f",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "Move this blank line to below vector_gradient_is_valid.",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d0ac3aa_6a74f3d7",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "Not sure how long FunctionSamples take to construct (probably not long) or how often this part of the code is called, but if creating these temporary FunctionSamples is relatively expensive maybe the \"samples\" vector could be vector\u003cconst FunctionSample*\u003e.",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b40256e3_9bca0e97",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T19:54:47Z",
+      "side": 1,
+      "message": "How do you know that optimal_point.vector_x_is_valid?",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
