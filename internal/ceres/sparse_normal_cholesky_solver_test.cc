@@ -50,7 +50,7 @@ namespace internal {
 // So the test should exercise the composition, rather than the
 // numerics of the solver, which are well covered by tests for those
 // classes.
-class SparseNormalCholeskyLinearSolverTest : public ::testing::Test {
+class SparseNormalCholeskySolverTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     scoped_ptr<LinearLeastSquaresProblem> problem(
@@ -106,7 +106,7 @@ class SparseNormalCholeskyLinearSolverTest : public ::testing::Test {
 };
 
 #ifndef CERES_NO_SUITESPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingSuiteSparsePreOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
@@ -115,7 +115,7 @@ TEST_F(SparseNormalCholeskyLinearSolverTest,
   TestSolver(options);
 }
 
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingSuiteSparsePostOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = SUITE_SPARSE;
@@ -126,7 +126,7 @@ TEST_F(SparseNormalCholeskyLinearSolverTest,
 #endif
 
 #ifndef CERES_NO_CXSPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingCXSparsePreOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = CX_SPARSE;
@@ -135,7 +135,7 @@ TEST_F(SparseNormalCholeskyLinearSolverTest,
   TestSolver(options);
 }
 
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingCXSparsePostOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = CX_SPARSE;
@@ -146,7 +146,7 @@ TEST_F(SparseNormalCholeskyLinearSolverTest,
 #endif
 
 #ifdef CERES_USE_EIGEN_SPARSE
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingEigenPreOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
@@ -155,7 +155,7 @@ TEST_F(SparseNormalCholeskyLinearSolverTest,
   TestSolver(options);
 }
 
-TEST_F(SparseNormalCholeskyLinearSolverTest,
+TEST_F(SparseNormalCholeskySolverTest,
        SparseNormalCholeskyUsingEigenPostOrdering) {
   LinearSolver::Options options;
   options.sparse_linear_algebra_library_type = EIGEN_SPARSE;
