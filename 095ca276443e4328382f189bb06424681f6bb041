@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6fe51be1_d044b2c1",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-05T23:16:34Z",
+      "side": 1,
+      "message": "Ah, OK - I was confused by the appearance of a \u0027 near a derivative, so I got tracked into thinking this was some alternate value related to d somehow (derivative? ambient space vs native space?) not simply a transpose.",
+      "parentUuid": "07b06cc1_1f68bf15",
+      "revId": "095ca276443e4328382f189bb06424681f6bb041",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec02cc08_b81df0f3",
         "filename": "internal/ceres/function_sample.h",
         "patchSetId": 16
