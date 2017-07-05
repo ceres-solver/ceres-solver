@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77a0012a_750357af",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "Done\n d\u0027 * Df is correct.",
+      "parentUuid": "dc166101_d8b79f7e",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a98caf_a96c253f",
         "filename": "internal/ceres/function_sample.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T19:54:47Z",
       "side": 1,
       "message": "Move this blank line to below vector_gradient_is_valid.",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df27c855_c9629648",
+        "filename": "internal/ceres/function_sample.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a98caf_a96c253f",
       "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c1dadd7_eced9c09",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "we create at best 3 of these, and this is not expensive at all.",
+      "parentUuid": "8d0ac3aa_6a74f3d7",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b40256e3_9bca0e97",
         "filename": "internal/ceres/line_search_minimizer.cc",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-05T19:54:47Z",
       "side": 1,
       "message": "How do you know that optimal_point.vector_x_is_valid?",
+      "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d87e5f3_0530e100",
+        "filename": "internal/ceres/line_search_minimizer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-07-05T21:31:36Z",
+      "side": 1,
+      "message": "good question, I am assuming that the line search function never returns with vector_x_is_valid to be false.\nI will add a check fail here, if that ever happens its a bug.\n\nanother possible avenue is that we modify the underlying constructors to prevent this from happening, but given that we have a default constructor its not clear if that is actually of much value.",
+      "parentUuid": "b40256e3_9bca0e97",
       "revId": "6e3b694bad1d68020306de54aad8247eb51c2f94",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
