@@ -84,7 +84,7 @@ macro(CERES_REPORT_NOT_FOUND REASON_MSG)
   # FindPackage() use the camelcase library name, not uppercase.
   if (Ceres_FIND_QUIETLY)
     message(STATUS "Failed to find Ceres - " ${REASON_MSG} ${ARGN})
-  else (Ceres_FIND_REQUIRED)
+  elseif (Ceres_FIND_REQUIRED)
     message(FATAL_ERROR "Failed to find Ceres - " ${REASON_MSG} ${ARGN})
   else()
     # Neither QUIETLY nor REQUIRED, use SEND_ERROR which emits an error
