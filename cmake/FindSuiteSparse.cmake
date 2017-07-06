@@ -180,17 +180,16 @@ list(APPEND SUITESPARSE_CHECK_INCLUDE_DIRS
   /opt/local/include/ufsparse # Mac OS X
   /usr/local/homebrew/include # Mac OS X
   /usr/local/include
-  /usr/local/include/suitesparse
-  /usr/include/suitesparse # Ubuntu
   /usr/include)
 list(APPEND SUITESPARSE_CHECK_LIBRARY_DIRS
   /opt/local/lib
   /opt/local/lib/ufsparse # Mac OS X
   /usr/local/homebrew/lib # Mac OS X
   /usr/local/lib
-  /usr/local/lib/suitesparse
-  /usr/lib/suitesparse # Ubuntu
   /usr/lib)
+# Additional suffixes to try appending to each search path.
+list(APPEND SUITESPARSE_CHECK_PATH_SUFFIXES
+  suitesparse ) # Windows/Ubuntu
 
 # Wrappers to find_path/library that pass the SuiteSparse search hints/paths.
 #
@@ -213,7 +212,8 @@ macro(suitesparse_find_component COMPONENT)
     find_path(${COMPONENT}_INCLUDE_DIR
       NAMES ${SUITESPARSE_FIND_${COMPONENT}_FILES}
       HINTS ${SUITESPARSE_INCLUDE_DIR_HINTS}
-      PATHS ${SUITESPARSE_CHECK_INCLUDE_DIRS})
+      PATHS ${SUITESPARSE_CHECK_INCLUDE_DIRS}
+      PATH_SUFFIXES ${SUITESPARSE_CHECK_PATH_SUFFIXES})
     if (${COMPONENT}_INCLUDE_DIR)
       message(STATUS "Found ${COMPONENT} headers in: "
         "${${COMPONENT}_INCLUDE_DIR}")
@@ -235,7 +235,8 @@ macro(suitesparse_find_component COMPONENT)
     find_library(${COMPONENT}_LIBRARY
       NAMES ${SUITESPARSE_FIND_${COMPONENT}_LIBRARIES}
       HINTS ${SUITESPARSE_LIBRARY_DIR_HINTS}
-      PATHS ${SUITESPARSE_CHECK_LIBRARY_DIRS})
+      PATHS ${SUITESPARSE_CHECK_LIBRARY_DIRS}
+      PATH_SUFFIXES ${SUITESPARSE_CHECK_PATH_SUFFIXES})
     if (${COMPONENT}_LIBRARY)
       message(STATUS "Found ${COMPONENT} library: ${${COMPONENT}_LIBRARY}")
       mark_as_advanced(${COMPONENT}_LIBRARY)
