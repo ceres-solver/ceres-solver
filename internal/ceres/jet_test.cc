@@ -391,22 +391,34 @@ TEST(Jet, Jet) {
   { // Check that 1 + x == x + 1.
     J a = x + 1.0;
     J b = 1.0 + x;
+    J c = x;
+    c += 1.0;
 
     ExpectJetsClose(a, b);
+    ExpectJetsClose(a, c);
   }
 
   { // Check that 1 - x == -(x - 1).
     J a = 1.0 - x;
     J b = -(x - 1.0);
+    J c = x;
+    c -= 1.0;
 
     ExpectJetsClose(a, b);
+    ExpectJetsClose(a, -c);
   }
 
-  { // Check that x/s == x*s.
+  { // Check that (x/s)*s == (x*s)/s.
     J a = x / 5.0;
     J b = x * 5.0;
+    J c = x;
+    c /= 5.0;
+    J d = x;
+    d *= 5.0;
 
     ExpectJetsClose(5.0 * a, b / 5.0);
+    ExpectJetsClose(a, c);
+    ExpectJetsClose(b, d);
   }
 
   { // Check that x / y == 1 / (y / x).
