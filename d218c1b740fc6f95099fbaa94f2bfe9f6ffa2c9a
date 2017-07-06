@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0989585f_92c255a0",
+        "filename": "internal/ceres/jet_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-07-06T18:01:26Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you fix this comment?\n\"Check that (x/s)*s \u003d\u003d (x*s)/s\"",
+      "range": {
+        "startLine": 411,
+        "startChar": 18,
+        "endLine": 411,
+        "endChar": 28
+      },
+      "revId": "d218c1b740fc6f95099fbaa94f2bfe9f6ffa2c9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
