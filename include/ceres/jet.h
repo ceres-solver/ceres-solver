@@ -224,6 +224,27 @@ struct Jet {
     return *this;
   }
 
+  // Compound with scalar operators.
+  Jet<T, N>& operator+=(const T& s) {
+    *this = *this + s;
+    return *this;
+  }
+
+  Jet<T, N>& operator-=(const T& s) {
+    *this = *this - s;
+    return *this;
+  }
+
+  Jet<T, N>& operator*=(const T& s) {
+    *this = *this * s;
+    return *this;
+  }
+
+  Jet<T, N>& operator/=(const T& s) {
+    *this = *this / s;
+    return *this;
+  }
+
   // The scalar part.
   T a;
 
