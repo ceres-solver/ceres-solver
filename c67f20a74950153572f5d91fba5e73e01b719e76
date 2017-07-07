@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deba8c2a_6be0ef28",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-07-07T19:11:00Z",
+      "side": 1,
+      "message": "Incompatible",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "c67f20a74950153572f5d91fba5e73e01b719e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4908d770_8bee10cc",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-07-07T19:11:00Z",
+      "side": 1,
+      "message": "Remove \u002728 hours ago\u0027",
+      "range": {
+        "startLine": 36,
+        "startChar": 15,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "c67f20a74950153572f5d91fba5e73e01b719e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed71ecdb_9b178d13",
+        "filename": "docs/source/version_history.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-07-07T19:11:00Z",
+      "side": 1,
+      "message": "Remove \u00272 weeks ago\u0027.",
+      "range": {
+        "startLine": 42,
+        "startChar": 61,
+        "endLine": 43,
+        "endChar": 6
+      },
+      "revId": "c67f20a74950153572f5d91fba5e73e01b719e76",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
