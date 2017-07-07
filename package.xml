@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2015 Google Inc. All rights reserved.
+  Copyright 2017 Google Inc. All rights reserved.
   http://ceres-solver.org/
 
   Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 <package format="2">
   <name>ceres-solver</name>
-  <version>1.12.0</version>
+  <version>1.13.0</version>
   <description>A large scale non-linear optimization library.</description>
   <maintainer email="ceres-solver@googlegroups.com">
     The Ceres Solver Authors
