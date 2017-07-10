@@ -358,6 +358,13 @@ class EuclideanDistanceFunctor {
 };
 
 TEST(DynamicSparsity, StaticAndDynamicSparsityProduceSameSolution) {
+  // Skip test if there is no sparse linear algebra library.
+  if (!IsSparseLinearAlgebraLibraryTypeAvailable(SUITE_SPARSE) &&
+      !IsSparseLinearAlgebraLibraryTypeAvailable(CX_SPARSE) &&
+      !IsSparseLinearAlgebraLibraryTypeAvailable(EIGEN_SPARSE)) {
+    return;
+  }
+
   // Problem configuration.
   const int num_segments = 151;
   const double regularization_weight = 1e-2;

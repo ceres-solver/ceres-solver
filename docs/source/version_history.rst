@@ -90,7 +90,7 @@ Bug Fixes & Minor Changes
 #. Fix detection of CMake-built glog on Windows. (Alex Stewart)
 #. Add additional search paths for glog & Eigen on Windows. (Alex
    Stewart)
-#. Various minor grammar and bug fixes to the documetation (Sameer
+#. Various minor grammar and bug fixes to the documentation (Sameer
    Agarwal, Alex Stewart, William Rucklidge)
 
 
