@@ -60,8 +60,7 @@ typename EigenTypes<kSize, kSize>::Matrix InvertPSDMatrix(
         Matrix::Identity(size, size));
   }
 
-  Eigen::JacobiSVD<typename EigenTypes<kSize, kSize>::Matrix> svd(
-      m, Eigen::ComputeThinU | Eigen::ComputeThinV);
+  Eigen::JacobiSVD<Matrix> svd(m, Eigen::ComputeThinU | Eigen::ComputeThinV);
   const double tolerance =
       std::numeric_limits<double>::epsilon() * size * svd.singularValues()(0);
 
