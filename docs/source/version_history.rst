@@ -32,6 +32,8 @@ algorithms with multiple linear algebra backends.
 
 Bug Fixes & Minor Changes
 -------------------------
+#. Fix ``InvertPSDMatrix`` as it was triggering an Eigen assert in
+   Debug mode. (Philipp Hubner)
 #. Fix cmake error from CeresConfig.cmake when Ceres not found (Taylor
    Braun-Jones)
 #. Completely refactored ``SparseNormalCholeskySolver``. (Sameer
@@ -162,7 +164,7 @@ Bug Fixes & Minor Changes
 #. Remove two DCHECKs from CubicHermiteSpline. (Sameer Agarwal)
 #. Fix some compiler warnings. (Richard Trieu)
 #. Update ExpectArraysClose to use ExpectClose instead of
-   EXPECT_NEAR. (Phillip Hebner)
+   EXPECT_NEAR. (Phillip Hubner)
 #. FindWithDefault returns by value rather than reference. (@aradval)
 #. Fix compiler errors on some systems. (David Gossow)
 #. Note that Problem::Evaluate cannot be called from an
