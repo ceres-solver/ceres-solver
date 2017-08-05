@@ -168,9 +168,9 @@ void CoordinateDescentMinimizer::Minimize(
          j < independent_set_offsets_[i + 1];
          ++j) {
 #ifdef CERES_USE_OPENMP
-      int thread_id = omp_get_thread_num();
+      const int thread_id = omp_get_thread_num();
 #else
-      int thread_id = 0;
+      const int thread_id = 0;
 #endif
 
       ParameterBlock* parameter_block = parameter_blocks_[j];

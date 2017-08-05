@@ -224,9 +224,9 @@ Eliminate(const BlockSparseMatrix* A,
 #pragma omp parallel for num_threads(num_threads_) schedule(dynamic)
   for (int i = 0; i < chunks_.size(); ++i) {
 #ifdef CERES_USE_OPENMP
-    int thread_id = omp_get_thread_num();
+    const int thread_id = omp_get_thread_num();
 #else
-    int thread_id = 0;
+    const int thread_id = 0;
 #endif
     double* buffer = buffer_.get() + thread_id * buffer_size_;
     const Chunk& chunk = chunks_[i];
@@ -509,9 +509,9 @@ ChunkOuterProduct(const CompressedRowBlockStructure* bs,
   BufferLayoutType::const_iterator it1 = buffer_layout.begin();
 
 #ifdef CERES_USE_OPENMP
-  int thread_id = omp_get_thread_num();
+  const int thread_id = omp_get_thread_num();
 #else
-  int thread_id = 0;
+  const int thread_id = 0;
 #endif
   double* b1_transpose_inverse_ete =
       chunk_outer_product_buffer_.get() + thread_id * buffer_size_;

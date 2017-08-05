@@ -356,9 +356,9 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
         int size_i = parameter_sizes[i];
         int size_j = parameter_sizes[j];
 #ifdef CERES_USE_OPENMP
-        int thread_id = omp_get_thread_num();
+        const int thread_id = omp_get_thread_num();
 #else
-        int thread_id = 0;
+        const int thread_id = 0;
 #endif
         double* covariance_block =
             workspace.get() +
@@ -705,9 +705,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
     }
 
 #  ifdef CERES_USE_OPENMP
-    int thread_id = omp_get_thread_num();
+    const int thread_id = omp_get_thread_num();
 #  else
-    int thread_id = 0;
+    const int thread_id = 0;
 #  endif
 
     double* solution = workspace.get() + thread_id * num_cols;
@@ -897,9 +897,9 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
     }
 
 #  ifdef CERES_USE_OPENMP
-    int thread_id = omp_get_thread_num();
+    const int thread_id = omp_get_thread_num();
 #  else
-    int thread_id = 0;
+    const int thread_id = 0;
 #  endif
 
     double* solution = workspace.get() + thread_id * num_cols;

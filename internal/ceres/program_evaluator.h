@@ -183,9 +183,9 @@ class ProgramEvaluator : public Evaluator {
       }
 
 #ifdef CERES_USE_OPENMP
-      int thread_id = omp_get_thread_num();
+      const int thread_id = omp_get_thread_num();
 #else
-      int thread_id = 0;
+      const int thread_id = 0;
 #endif
       EvaluatePreparer* preparer = &evaluate_preparers_[thread_id];
       EvaluateScratch* scratch = &evaluate_scratch_[thread_id];
