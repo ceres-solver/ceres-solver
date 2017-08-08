@@ -144,6 +144,14 @@ void GetBestSchurTemplateSpecialization(int* row_block_size,
  }
  if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
+     (options.f_block_size == 6)) {
+   *row_block_size = 2;
+   *e_block_size = 4;
+   *f_block_size = 6;
+  return;
+ }
+ if ((options.row_block_size == 2) &&
+     (options.e_block_size == 4) &&
      (options.f_block_size == 8)) {
    *row_block_size = 2;
    *e_block_size = 4;

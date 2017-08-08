@@ -105,6 +105,11 @@ PartitionedMatrixViewBase::Create(const LinearSolver::Options& options,
  }
  if ((options.row_block_size == 2) &&
      (options.e_block_size == 4) &&
+     (options.f_block_size == 6)) {
+   return new PartitionedMatrixView<2, 4, 6>(matrix, options.elimination_groups[0]);
+ }
+ if ((options.row_block_size == 2) &&
+     (options.e_block_size == 4) &&
      (options.f_block_size == 8)) {
    return new PartitionedMatrixView<2, 4, 8>(matrix, options.elimination_groups[0]);
  }
