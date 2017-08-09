@@ -22,6 +22,30 @@
       "revId": "3dd6339e41a1ee999abfb022e4fc7cb3412ba4a3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23037e6c_0ee3941d",
+        "filename": "cmake/CeresConfig.cmake.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-08-09T13:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a66d2fd_2de3ad97",
+      "range": {
+        "startLine": 331,
+        "startChar": 42,
+        "endLine": 331,
+        "endChar": 48
+      },
+      "revId": "3dd6339e41a1ee999abfb022e4fc7cb3412ba4a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
