@@ -326,24 +326,22 @@ set(CERES_LIBRARIES ceres)
 
 # Make user aware of any compile flags that will be added to their targets
 # which use Ceres (i.e. flags exported in the Ceres target).  Only CMake
-# versions >= 2.8.12 support target_compile_options().
+# versions >= 2.8.12 support target_compile_options/features().
+if (CERES_COMPILED_COMPONENTS MATCHES ".*C\\+\\+11.*") # Search for C++11.
+  set(CERES_WAS_COMPILED_WITH_CXX11 TRUE)
+endif()
 if (TARGET ${CERES_LIBRARIES} AND
+    CERES_WAS_COMPILED_WITH_CXX11 AND
     NOT CMAKE_VERSION VERSION_LESS "2.8.12")
-  get_target_property(CERES_INTERFACE_COMPILE_OPTIONS
-    ${CERES_LIBRARIES} INTERFACE_COMPILE_OPTIONS)
-
   if (CERES_WAS_INSTALLED)
     set(CERES_LOCATION "${CURRENT_ROOT_INSTALL_DIR}")
   else()
     set(CERES_LOCATION "${CERES_EXPORTED_BUILD_DIR}")
   endif()
-
-  # Check for -std=c++11 flags.
-  if (CERES_INTERFACE_COMPILE_OPTIONS MATCHES ".*std=c\\+\\+11.*")
-    message(STATUS "Ceres version ${CERES_VERSION} detected here: "
-      "${CERES_LOCATION} was built with C++11. Ceres target will add "
-      "C++11 flags to compile options for targets using it.")
-  endif()
+  message(STATUS "Ceres version ${CERES_VERSION} detected here: "
+    "${CERES_LOCATION} was built with C++11. Ceres "
+    "target will add C++11 flags to compile options for "
+    "targets using it.")
 endif()
 
 # Set legacy include directories variable for backwards compatibility.
