@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "36ae028f_75a14e31",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-13T17:58:25Z",
+      "side": 1,
+      "message": "no I meant in the cmake comment associated with -DLAPACK up above.",
+      "parentUuid": "e00e8e8f_be803a26",
+      "range": {
+        "startLine": 246,
+        "startChar": 13,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "04029d37250fcd092f212930a3803fc01f84addb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a71cd43_f2b77b64",
         "filename": "CMakeLists.txt",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Actually, as find_package(LAPACK) calls find_package(BLAS) and appends the resulting libraries to LAPACK_LIBRARIES if found, none of this is needed.",
       "parentUuid": "7a71cd43_f2b77b64",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "04029d37250fcd092f212930a3803fc01f84addb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e977c1f_756afb0a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-13T17:58:25Z",
+      "side": 1,
+      "message": "then maybe we can simplify?",
+      "parentUuid": "5c9f7893_6372673b",
       "range": {
         "startLine": 257,
         "startChar": 2,
