@@ -94,7 +94,7 @@ option(MINIGLOG "Use a stripped down version of glog." OFF)
 option(GFLAGS "Enable Google Flags." ON)
 option(SUITESPARSE "Enable SuiteSparse." ON)
 option(CXSPARSE "Enable CXSparse." ON)
-option(LAPACK "Enable use of LAPACK." ON)
+option(LAPACK "Enable use of LAPACK directly within Ceres." ON)
 # Template specializations for the Schur complement based solvers. If
 # compile time, binary size or compiler performance is an issue, you
 # may consider disabling this.
@@ -242,6 +242,10 @@ if (EIGEN_FOUND)
 endif (EIGEN_FOUND)
 
 # LAPACK (& BLAS).
+#
+# NOTE: This refers only to direct use of LAPACK by Ceres, Ceres will still
+#       link against LAPACK indirectly via SuiteSparse if SUITESPARSE is
+#       enabled, but will not call any LAPACK functions directly if LAPACK=OFF.
 if (LAPACK)
   find_package(LAPACK QUIET)
   if (LAPACK_FOUND)
@@ -266,15 +270,6 @@ else (LAPACK)
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_LAPACK)
 endif (LAPACK)
 
-# SuiteSparse.
-if (SUITESPARSE AND NOT LAPACK)
-  # If user has disabled LAPACK, but left SUITESPARSE ON, turn it OFF,
-  # LAPACK controls whether Ceres will be linked, directly or indirectly
-  # via SuiteSparse to LAPACK.
-  message("-- Disabling SuiteSparse as use of LAPACK has been disabled, "
-    "turn ON LAPACK to enable (optional) building with SuiteSparse.")
-  update_cache_variable(SUITESPARSE OFF)
-endif (SUITESPARSE AND NOT LAPACK)
 if (SUITESPARSE)
   # By default, if SuiteSparse and all dependencies are found, Ceres is
   # built with SuiteSparse support.
