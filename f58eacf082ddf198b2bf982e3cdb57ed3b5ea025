@@ -22,6 +22,30 @@
       "revId": "f58eacf082ddf198b2bf982e3cdb57ed3b5ea025",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8277024e_5debeb3c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-08-13T17:56:16Z",
+      "side": 0,
+      "message": "Agreed, it should be fine to remove.",
+      "parentUuid": "1b02997b_85276756",
+      "range": {
+        "startLine": 270,
+        "startChar": 30,
+        "endLine": 270,
+        "endChar": 31
+      },
+      "revId": "f58eacf082ddf198b2bf982e3cdb57ed3b5ea025",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
