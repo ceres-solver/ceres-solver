@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8987f5d2_88d4645a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-13T17:11:57Z",
+      "side": 1,
+      "message": "move this comment into the documentation for -DLAPACK?",
+      "range": {
+        "startLine": 246,
+        "startChar": 13,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "04029d37250fcd092f212930a3803fc01f84addb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a71cd43_f2b77b64",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-13T17:11:57Z",
+      "side": 1,
+      "message": "I am wondering if the better logic here is to start by asking for blas, and then going to check for lapack, rather than starting with lapack and then asking for lapack?",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "04029d37250fcd092f212930a3803fc01f84addb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6435a23e_17ede0ce",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-13T17:11:57Z",
+      "side": 1,
+      "message": "is this still needed where we explicitly turn this off? it was only needed for the suitesparse turn off code fragment that is not there anymore.",
+      "range": {
+        "startLine": 265,
+        "startChar": 26,
+        "endLine": 265,
+        "endChar": 32
+      },
+      "revId": "04029d37250fcd092f212930a3803fc01f84addb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
