@@ -303,6 +303,8 @@ if (SUITESPARSEQR_FOUND)
         "Library, discarding TBB as a dependency.")
     endif()
   else()
+    # As TBB is optional, hide it from the CMake GUI even if it is not found.
+    mark_as_advanced(TBB_LIBRARY)
     message(STATUS "Did not find Intel TBB library, assuming SuiteSparseQR was "
       "not compiled with TBB.")
   endif()
