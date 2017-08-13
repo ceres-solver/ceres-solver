@@ -525,15 +525,18 @@ defaults if you know what you are doing.
 Options controlling Ceres configuration
 ---------------------------------------
 
-#. ``LAPACK [Default: ON]``: By default Ceres will use ``LAPACK`` (&
-   ``BLAS``) if they are found.  Turn this ``OFF`` to build Ceres
-   without ``LAPACK``. Turning this ``OFF`` also disables
-   ``SUITESPARSE`` as it depends on ``LAPACK``.
+#. ``LAPACK [Default: ON]``: If this option is enabled, and the ``BLAS`` and
+   ``LAPACK`` libraries are found, Ceres will enable **direct** use of
+   ``LAPACK`` routines (i.e. Ceres itself will call them).  If this option is
+   disabled, then Ceres will not require ``LAPACK`` or ``BLAS``.  It is
+   however still possible that Ceres may call ``LAPACK`` routines indirectly
+   via SuiteSparse if ``LAPACK=OFF`` and ``SUITESPARSE=ON``.  Finally
+   note that if ``LAPACK=ON`` and ``SUITESPARSE=ON``, the ``LAPACK`` and
+   ``BLAS`` libraries used by SuiteSparse and Ceres should be the same.
 
 #. ``SUITESPARSE [Default: ON]``: By default, Ceres will link to
    ``SuiteSparse`` if it and all of its dependencies are present. Turn
-   this ``OFF`` to build Ceres without ``SuiteSparse``. Note that
-   ``LAPACK`` must be ``ON`` in order to build with ``SuiteSparse``.
+   this ``OFF`` to build Ceres without ``SuiteSparse``.
 
 #. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
    ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
@@ -710,18 +713,9 @@ containing the ``BLAS`` & ``LAPACK`` libraries when invoking ``CMake``
 to build Ceres via ``-D<VAR>=<VALUE>``.  This should result in the
 libraries being found for any common variant of each.
 
-If you are building on an exotic system, or setting
-``CMAKE_LIBRARY_PATH`` does not work, or is not appropriate for some
-other reason, one option would be to write your own custom versions of
-``FindBLAS.cmake`` & ``FindLAPACK.cmake`` specific to your
-environment.  In this case you must set ``CMAKE_MODULE_PATH`` to the
-directory containing these custom scripts when invoking ``CMake`` to
-build Ceres and they will be used in preference to the default
-versions.  However, in order for this to work, your scripts must
-provide the full set of variables provided by the default scripts.
-Also, if you are building Ceres with ``SuiteSparse``, the versions of
-``BLAS`` & ``LAPACK`` used by ``SuiteSparse`` and Ceres should be the
-same.
+Alternatively, you may also directly specify the ``BLAS_LIBRARIES`` and
+``LAPACK_LIBRARIES`` variables via ``-D<VAR>=<VALUE>`` when invoking CMake
+to configure Ceres.
 
 .. _section-using-ceres:
 
