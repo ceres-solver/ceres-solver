@@ -227,6 +227,8 @@ macro(suitesparse_find_component COMPONENT)
       else()
         message(STATUS "Did not find ${COMPONENT} header (optional "
           "SuiteSparse component).")
+        # Hide optional vars from CMake GUI even if not found.
+        mark_as_advanced(${COMPONENT}_INCLUDE_DIR)
       endif()
     endif()
   endif()
@@ -249,6 +251,8 @@ macro(suitesparse_find_component COMPONENT)
       else()
         message(STATUS "Did not find ${COMPONENT} library (optional SuiteSparse "
           "dependency)")
+        # Hide optional vars from CMake GUI even if not found.
+        mark_as_advanced(${COMPONENT}_LIBRARY)
       endif()
     endif()
   endif()
@@ -303,8 +307,6 @@ if (SUITESPARSEQR_FOUND)
         "Library, discarding TBB as a dependency.")
     endif()
   else()
-    # As TBB is optional, hide it from the CMake GUI even if it is not found.
-    mark_as_advanced(TBB_LIBRARY)
     message(STATUS "Did not find Intel TBB library, assuming SuiteSparseQR was "
       "not compiled with TBB.")
   endif()
