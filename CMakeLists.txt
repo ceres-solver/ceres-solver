@@ -421,7 +421,8 @@ if (OPENMP)
     endif (UNIX)
   else (OPENMP_FOUND)
     message("-- Failed to find OpenMP, disabling. This is expected on "
-      "Clang < 3.8, and at least Xcode <= 7.")
+      "Clang < 3.8, and at least Xcode <= 8.  See Ceres documentation for "
+      "instructions to build with LLVM from Homebrew to enable OpenMP on OS X.")
     update_cache_variable(OPENMP OFF)
     list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
   endif (OPENMP_FOUND)

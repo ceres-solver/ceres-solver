@@ -301,6 +301,46 @@ We are now ready to build, test, and install Ceres.
    # documentation for the EXPORT_BUILD_DIR option for more information.
    make install
 
+Building with OpenMP on OS X
+----------------------------
+
+Up to at least Xcode 8, OpenMP support was disabled in Apple's version of
+Clang.  However, you can install the latest version of the LLVM toolchain
+from Homebrew which does support OpenMP, and thus build Ceres with OpenMP
+support on OS X.  To do this, you must install llvm via Homebrew:
+
+.. code-block:: bash
+
+      # Install latest version of LLVM toolchain.
+      brew install llvm
+
+As the LLVM formula in Homebrew is keg-only, it will not be installed to
+``/usr/local`` to avoid conflicts with the standard Apple LLVM toolchain.
+To build Ceres with the Homebrew LLVM toolchain you should do the
+following:
+
+.. code-block:: bash
+
+   tar zxf ceres-solver-1.13.0.tar.gz
+   mkdir ceres-bin
+   cd ceres-bin
+   # Configure the local shell only (not persistent) to use the Homebrew LLVM
+   # toolchain in favour of the default Apple version.  This is taken
+   # verbatim from the instructions output by Homebrew when installing the
+   # llvm formula.
+   export LDFLAGS="-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+   export CPPFLAGS="-I/usr/local/opt/llvm/include"
+   export PATH="/usr/local/opt/llvm/bin:$PATH"
+   # Force CMake to use the Homebrew version of Clang.  OpenMP will be
+   # automatically enabled if it is detected that the compiler supports it.
+   cmake -DCMAKE_C_COMPILER=/usr/local/opt/llvm/bin/clang -DCMAKE_CXX_COMPILER=/usr/local/opt/llvm/bin/clang++ ../ceres-solver-1.13.0
+   make -j3
+   make test
+   # Optionally install Ceres.  It can also be exported using CMake which
+   # allows Ceres to be used without requiring installation.  See the
+   # documentation for the EXPORT_BUILD_DIR option for more information.
+   make install
+
 Like the Linux build, you should now be able to run
 ``bin/simple_bundle_adjuster``.
 
