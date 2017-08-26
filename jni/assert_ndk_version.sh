@@ -43,12 +43,33 @@
 
 # Extracts 'r5c' into '5 c', also handles newer versions of the form
 # 'r9d (64-bit)' and versions >= 10.
-function get_major_minor() {
+function get_major_minor_rNx_style() {
   # r9d (64-bit) -> '9d', also handle versions >= 10.
   local version=$(echo "$1" | sed 's/r\([0-9]\{1,2\}[a-z]\{0,1\}\).*/\1/')
   local major=$(echo "$version" | sed 's/\([0-9]\{1,2\}\).*/\1/')
   local minor=$(echo "$version" | sed 's/^[0-9]*//')
   echo "$major $minor"
+}
+
+# Extracts the major and minor versions from the <NDK_ROOT>/source.properties
+# file and converts to the standard <NUMBER> <LETTER> format, e.g. 15 c.
+#
+# Usage: get_major_minor_from_source_properties <SOURCE_PROPERTIES_CONTENTS>
+function get_major_minor_from_source_properties() {
+  # <NDK_ROOT>/source.properties contains (e.g. for r15c):
+  #
+  # Pkg.Desc = Android NDK
+  # Pkg.Revision = 15.2.4203891
+  #
+  # match to 15 c
+  version=$(echo $1 | sed 's/.*Pkg.Revision[[:space:]]*=[[:space:]]*//')
+  declare -r major=$(echo $version | sed 's/\([0-9]\{1,2\}\).*/\1/')
+  declare -r minor=$(echo $version | sed 's/\([0-9]\{1,2\}\)\.\([0-9]\{1,2\}\).*/\2/')
+  declare -r patch=$(echo $version | sed 's/\([0-9]\{1,2\}\)\.\([0-9]\{1,2\}\)\.\([0-9]*\)/\3/')
+  # Convert numeric minor version to letter version, e.g: 0 -> a, 1 -> b, 2 -> c etc.
+  minor_letter_ascii_code=$(($minor + 97)) # 97 = 'a' in ASCII.
+  minor_letter=($(printf "\\$(printf %o "$minor_letter_ascii_code")"))
+  echo "$major $minor_letter"
 }
 
 if [[ -z "$2" ]]; then
@@ -59,31 +80,47 @@ fi
 
 # Assert that the expected version is at least 4.
 declare -a expected_version
-expected_version=( $(get_major_minor "$1") )
+expected_version=( $(get_major_minor_rNx_style "$1") )
 if [[ ${expected_version[0]} -le 4 ]]; then
   echo "Cannot test for versions less than r5: r4 doesn't have a version file." >&2
   echo false
   exit 1
 fi
 
-release_file="$2/RELEASE.TXT"
-
-# NDK version r4 or earlier doesn't have a RELEASE.txt, and we just asserted
-# that the person was looking for r5 or above, so that implies that this is an
-# invalid version.
-if [ ! -s "$release_file" ]; then
-  echo false
-  exit 0
-fi
-
-# Make sure the data is at least kinda sane.
-version=$(grep '^r' $release_file)
+# NDK versions <= r4 did not have RELEASE.TXT, nor do versions >= r11, where it was
+# replaced by source.properties.  As we just asserted that we are looking for >= r5
+# if RELEASE.TXT is not present, source.properties should be.
+declare -r release_file="$2/RELEASE.TXT"
+declare -r source_properties_file="$2/source.properties"
 declare -a actual_version
-actual_version=( $(get_major_minor "$version") )
-if [ -z "$version" ] || [ -z "${actual_version[0]}" ]; then
-  echo "Invalid RELEASE.txt: $(cat $release_file)" >&2
-  echo false
-  exit 1
+if [ ! -s "$release_file" ]; then
+  if [ ! -s "$source_properties_file" ]; then
+    echo "ERROR: Failed to find either RELEASE.TXT or source.properties in NDK_ROOT=$2" >&2
+    echo false
+    exit 1
+  fi
+  # NDK version >= r11.
+  if [ ! -s "$source_properties_file" ]; then
+     echo "ERROR: Failed to find source.properties file in NDK_ROOT=$1" >&2
+     echo false
+     exit 1
+  fi
+  source_properties=$(<"$source_properties_file")
+  actual_version=($(get_major_minor_from_source_properties "$source_properties"))
+  if [ -z "$source_properties" ] || [ -z "${actual_version[0]}" ]; then
+    echo "ERROR: Invalid source.properties: $(cat $source_properties_file)" >&2
+    echo false
+    exit 1
+  fi
+else
+  # NDK version >= r5 && < r11.
+  version=$(grep '^r' $release_file)
+  actual_version=( $(get_major_minor_rNx_style "$version") )
+  if [ -z "$version" ] || [ -z "${actual_version[0]}" ]; then
+    echo "ERROR: Invalid RELEASE.TXT: $(cat $release_file)" >&2
+    echo false
+    exit 1
+  fi
 fi
 
 if [[ ${actual_version[0]} -lt ${expected_version[0]} ]]; then
