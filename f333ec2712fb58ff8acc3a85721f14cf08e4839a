@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a20757_8c3467ae",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-26T21:39:59Z",
+      "side": 1,
+      "message": ", --\u003e . (comma splice)",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40d59222_b61b2efc",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-26T21:39:59Z",
+      "side": 1,
+      "message": ", --\u003e .",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dac6f85b_d1c6318c",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-26T21:39:59Z",
+      "side": 1,
+      "message": ", --\u003e .",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
