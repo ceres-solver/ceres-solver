@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8902b840_4226f8a4",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-26T21:52:10Z",
+      "side": 1,
+      "message": "Consider declare -r if these are constant (I think they are).",
+      "revId": "69e6114fd45621dbb9eaf16b2f82671193272d58",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2bf14ae_ef833c14",
+        "filename": "jni/assert_ndk_version.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-26T21:52:10Z",
+      "side": 1,
+      "message": "Consider \"ERROR: ...\" prefix on all of these more clarity.",
+      "revId": "69e6114fd45621dbb9eaf16b2f82671193272d58",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
