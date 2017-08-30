@@ -60,6 +60,7 @@
 
 #include "bal_problem.h"
 #include "ceres/ceres.h"
+#include "ceres/wall_time.h"
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 #include "snavely_reprojection_error.h"
@@ -302,7 +303,7 @@ void SolveProblem(const char* filename) {
     bal_problem.WriteToPLYFile(FLAGS_initial_ply);
   }
 
-  Problem problem;
+  Problem* problem = new Problem;
 
   srand(FLAGS_random_seed);
   bal_problem.Normalize();
@@ -310,14 +311,26 @@ void SolveProblem(const char* filename) {
                       FLAGS_translation_sigma,
                       FLAGS_point_sigma);
 
-  BuildProblem(&bal_problem, &problem);
+  double start_time = internal::WallTimeInSeconds();
+  BuildProblem(&bal_problem, problem);
+  double build_time = internal::WallTimeInSeconds() - start_time;
+  const int num_residual_blocks = problem->NumResidualBlocks();
+  /*
   Solver::Options options;
   SetSolverOptionsFromFlags(&bal_problem, &options);
   options.gradient_tolerance = 1e-16;
   options.function_tolerance = 1e-16;
   Solver::Summary summary;
-  Solve(options, &problem, &summary);
+  Solve(options, problem, &summary);
   std::cout << summary.FullReport() << "\n";
+  */
+
+  start_time = internal::WallTimeInSeconds();
+  delete problem;
+  double destroy_time = internal::WallTimeInSeconds() - start_time;
+  LOG(INFO) << "Times: " << build_time << " "
+            << build_time / num_residual_blocks << " " << destroy_time << " "
+            << destroy_time / num_residual_blocks;
 
   if (!FLAGS_final_ply.empty()) {
     bal_problem.WriteToPLYFile(FLAGS_final_ply);
