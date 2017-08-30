@@ -54,7 +54,7 @@ ResidualBlock::ResidualBlock(
     const LossFunction* loss_function,
     const std::vector<ParameterBlock*>& parameter_blocks,
     int index)
-    : cost_function_(cost_function),
+    : cost_function_(CHECK_NOTNULL(cost_function)),
       loss_function_(loss_function),
       parameter_blocks_(
           new ParameterBlock* [
