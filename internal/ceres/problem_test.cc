@@ -385,11 +385,10 @@ TEST(Problem, CostFunctionsAreDeletedEvenWithRemovals) {
     ResidualBlock* r_wz = problem.AddResidualBlock(cost_wz, NULL, w, z);
     EXPECT_EQ(2, problem.NumResidualBlocks());
 
-    // In the current implementation, the destructor shouldn't get run yet.
     problem.RemoveResidualBlock(r_yz);
-    CHECK_EQ(num_destructions, 0);
+    CHECK_EQ(num_destructions, 1);
     problem.RemoveResidualBlock(r_wz);
-    CHECK_EQ(num_destructions, 0);
+    CHECK_EQ(num_destructions, 2);
 
     EXPECT_EQ(0, problem.NumResidualBlocks());
   }
