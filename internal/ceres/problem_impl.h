@@ -65,6 +65,8 @@ class ProblemImpl {
  public:
   typedef std::map<double*, ParameterBlock*> ParameterMap;
   typedef HashSet<ResidualBlock*> ResidualBlockSet;
+  typedef std::map<CostFunction*, int> CostFunctionRefCount;
+  typedef std::map<LossFunction*, int> LossFunctionRefCount;
 
   ProblemImpl();
   explicit ProblemImpl(const Problem::Options& options);
@@ -209,16 +211,21 @@ class ProblemImpl {
   // The actual parameter and residual blocks.
   internal::scoped_ptr<internal::Program> program_;
 
-  // When removing residual and parameter blocks, cost/loss functions and
-  // parameterizations have ambiguous ownership. Instead of scanning the entire
-  // problem to see if the cost/loss/parameterization is shared with other
-  // residual or parameter blocks, buffer them until destruction.
+  // When removing parameter blocks, parameterizations have ambiguous
+  // ownership. Instead of scanning the entire problem to see if the
+  // parameterization is shared with other parameter blocks, buffer
+  // them until destruction.
   //
   // TODO(keir): See if it makes sense to use sets instead.
-  std::vector<CostFunction*> cost_functions_to_delete_;
-  std::vector<LossFunction*> loss_functions_to_delete_;
   std::vector<LocalParameterization*> local_parameterizations_to_delete_;
 
+  // For each cost function and loss function in the problem, a count
+  // of the number of residual blocks that refer to them. When the
+  // count goes to zero and the problem owns these objects, they are
+  // destroyed.
+  CostFunctionRefCount cost_function_ref_count_;
+  LossFunctionRefCount loss_function_ref_count_;
+  std::vector<double*> residual_parameters_;
   CERES_DISALLOW_COPY_AND_ASSIGN(ProblemImpl);
 };
 
