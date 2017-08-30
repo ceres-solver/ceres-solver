@@ -177,16 +177,40 @@ void ProblemImpl::DeleteBlock(ResidualBlock* residual_block) {
   // The const casts here are legit, since ResidualBlock holds these
   // pointers as const pointers but we have ownership of them and
   // have the right to destroy them when the destructor is called.
+  CostFunction* cost_function =
+      const_cast<CostFunction*>(residual_block->cost_function());
   if (options_.cost_function_ownership == TAKE_OWNERSHIP &&
-      residual_block->cost_function() != NULL) {
-    cost_functions_to_delete_.push_back(
-        const_cast<CostFunction*>(residual_block->cost_function()));
+      cost_function != NULL) {
+    HashMap<CostFunction*, int>::iterator it =
+        cost_function_to_count_.find(cost_function);
+    CHECK(it != cost_function_to_count_.end());
+    CHECK_GE(it->second, 1);
+
+    if (it->second == 1) {
+      delete cost_function;
+      cost_function_to_count_.erase(it);
+    } else {
+      --it->second;
+    }
   }
+
+  LossFunction* loss_function =
+      const_cast<LossFunction*>(residual_block->loss_function());
   if (options_.loss_function_ownership == TAKE_OWNERSHIP &&
-      residual_block->loss_function() != NULL) {
-    loss_functions_to_delete_.push_back(
-        const_cast<LossFunction*>(residual_block->loss_function()));
+      loss_function != NULL) {
+    HashMap<LossFunction*, int>::iterator it =
+        loss_function_to_count_.find(loss_function);
+    CHECK(it != loss_function_to_count_.end());
+    CHECK_GE(it->second, 1);
+
+    if (it->second == 1) {
+      delete loss_function;
+      loss_function_to_count_.erase(it);
+    } else {
+      --it->second;
+    }
   }
+
   delete residual_block;
 }
 
@@ -211,10 +235,6 @@ ProblemImpl::ProblemImpl(const Problem::Options& options)
       program_(new internal::Program) {}
 
 ProblemImpl::~ProblemImpl() {
-  // Collect the unique cost/loss functions and delete the residuals.
-  const int num_residual_blocks = program_->residual_blocks_.size();
-  cost_functions_to_delete_.reserve(num_residual_blocks);
-  loss_functions_to_delete_.reserve(num_residual_blocks);
   for (int i = 0; i < program_->residual_blocks_.size(); ++i) {
     DeleteBlock(program_->residual_blocks_[i]);
   }
@@ -224,13 +244,9 @@ ProblemImpl::~ProblemImpl() {
     DeleteBlock(program_->parameter_blocks_[i]);
   }
 
-  // Delete the owned cost/loss functions and parameterizations.
+  // Delete the owned parameterizations.
   STLDeleteUniqueContainerPointers(local_parameterizations_to_delete_.begin(),
                                    local_parameterizations_to_delete_.end());
-  STLDeleteUniqueContainerPointers(cost_functions_to_delete_.begin(),
-                                   cost_functions_to_delete_.end());
-  STLDeleteUniqueContainerPointers(loss_functions_to_delete_.begin(),
-                                   loss_functions_to_delete_.end());
 }
 
 ResidualBlock* ProblemImpl::AddResidualBlock(
@@ -307,6 +323,15 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
 
   if (options_.enable_fast_removal) {
     residual_block_set_.insert(new_residual_block);
+  }
+
+  if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
+    ++cost_function_to_count_[cost_function];
+  }
+
+  if (options_.loss_function_ownership == TAKE_OWNERSHIP &&
+      loss_function != NULL) {
+    ++loss_function_to_count_[loss_function];
   }
 
   return new_residual_block;

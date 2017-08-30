@@ -209,15 +209,20 @@ class ProblemImpl {
   // The actual parameter and residual blocks.
   internal::scoped_ptr<internal::Program> program_;
 
-  // When removing residual and parameter blocks, cost/loss functions and
-  // parameterizations have ambiguous ownership. Instead of scanning the entire
-  // problem to see if the cost/loss/parameterization is shared with other
-  // residual or parameter blocks, buffer them until destruction.
+  // When removing parameter blocks, parameterizations have ambiguous
+  // ownership. Instead of scanning the entire problem to see if the
+  // parameterization is shared with other parameter blocks, buffer
+  // them until destruction.
   //
   // TODO(keir): See if it makes sense to use sets instead.
-  std::vector<CostFunction*> cost_functions_to_delete_;
-  std::vector<LossFunction*> loss_functions_to_delete_;
   std::vector<LocalParameterization*> local_parameterizations_to_delete_;
+
+  // For each cost function and loss function in the problem, a count
+  // of the number of residual blocks that refer to them. When the
+  // count goes to zero and the problem owns these objects, they are
+  // destroyed.
+  HashMap<CostFunction*, int> cost_function_to_count_;
+  HashMap<LossFunction*, int> loss_function_to_count_;
 
   CERES_DISALLOW_COPY_AND_ASSIGN(ProblemImpl);
 };
