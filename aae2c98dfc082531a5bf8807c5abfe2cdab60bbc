@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "335aa3b4_687eca7e",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-31T15:26:09Z",
+      "side": 1,
+      "message": "Yeah; NULL should likely be an assert or something.",
+      "parentUuid": "2970636f_6d838636",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713d1f30_8547e012",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 4
@@ -42,6 +66,64 @@
         "endLine": 189,
         "endChar": 26
       },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab22aa33_fb07e23a",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-31T15:26:09Z",
+      "side": 1,
+      "message": "While longer, I prefer the current code since it\u0027s simple to read.",
+      "parentUuid": "713d1f30_8547e012",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 26
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39abacd9_cf41e386",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-31T15:26:09Z",
+      "side": 1,
+      "message": "So I remain a bit concerned about the performance implications of this; current users other than Tango who build and destroy big problems will now have perf hit vs vector extend.\n\nI\u0027m torn.",
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50d55876_2b67f5c5",
+        "filename": "internal/ceres/problem_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-08-31T15:26:09Z",
+      "side": 1,
+      "message": "Local parameterizations should likely get the same treatment.",
       "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
