@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "20f777c5_ebcb5953",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-31T15:31:03Z",
+      "side": 1,
+      "message": "actually this check can be dropped entirely. It can never be null.",
+      "parentUuid": "335aa3b4_687eca7e",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713d1f30_8547e012",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 4
@@ -107,6 +131,24 @@
       "writtenOn": "2017-08-31T15:26:09Z",
       "side": 1,
       "message": "So I remain a bit concerned about the performance implications of this; current users other than Tango who build and destroy big problems will now have perf hit vs vector extend.\n\nI\u0027m torn.",
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fddd1b99_4b49e4cf",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-08-31T15:31:03Z",
+      "side": 1,
+      "message": "building a problem has never been a problem CPU wise. Also for people building large problems, solve is the dominant cost by 100x+.\n\nTBH if we were re-doing the API, it would be a shared_ptr based API, but that ship sailed a very long time ago.",
+      "parentUuid": "39abacd9_cf41e386",
       "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
