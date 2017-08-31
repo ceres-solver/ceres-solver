@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77bdba2f_25c4c3bd",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-08-31T09:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a20757_8c3467ae",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d59222_b61b2efc",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "11c1b3b7_c321c3b6",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-08-31T09:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d59222_b61b2efc",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dac6f85b_d1c6318c",
         "filename": "docs/source/installation.rst",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-26T21:39:59Z",
       "side": 1,
       "message": ", --\u003e .",
+      "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab8c22c0_4ae7d50e",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-08-31T09:03:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dac6f85b_d1c6318c",
       "revId": "f333ec2712fb58ff8acc3a85721f14cf08e4839a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
