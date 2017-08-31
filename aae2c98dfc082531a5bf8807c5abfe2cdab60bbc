@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2970636f_6d838636",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-08-31T15:08:21Z",
+      "side": 1,
+      "message": "Can it be NULL?",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "713d1f30_8547e012",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-08-31T15:08:21Z",
+      "side": 1,
+      "message": "Shorter, if the readabilityis OK to you:\nif (!--it-\u003esecond) { delete... }",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 26
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
