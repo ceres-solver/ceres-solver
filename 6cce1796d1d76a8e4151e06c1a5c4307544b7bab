@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b0ce76_82534c36",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-06T20:03:22Z",
+      "side": 1,
+      "message": "Would it improve the timings to put .reserve(N) in the AddResidualBlock with N parameters? N maxes out at 10, so my guess is that this won\u0027t help much, and could hurt slightly, but there\u0027s no substitute for measurement.",
+      "range": {
+        "startLine": 358,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 31
+      },
+      "revId": "6cce1796d1d76a8e4151e06c1a5c4307544b7bab",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
