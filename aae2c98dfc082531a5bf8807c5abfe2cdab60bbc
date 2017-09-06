@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6d8e5e22_8b071ff3",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-06T20:41:46Z",
+      "side": 1,
+      "message": "At least an assert is needed on the residual block pointer(user-facing API; we should check inputs).",
+      "parentUuid": "20f777c5_ebcb5953",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 30
+      },
+      "revId": "aae2c98dfc082531a5bf8807c5abfe2cdab60bbc",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713d1f30_8547e012",
         "filename": "internal/ceres/problem_impl.cc",
         "patchSetId": 4
