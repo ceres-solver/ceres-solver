@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23a326b_a9040b8f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "Since TBB uses c++11, two things here.\n\n1. Handle the interaction between the two settings, for example we should decide if the user explicitly says c++11\u003doff, what should happen in that case.\n\n2. The help string should indicate that and turning tbb on should also inform the user that c++11 is being turned on.",
+      "range": {
+        "startLine": 108,
+        "startChar": 19,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfb616f7_55df4f69",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "this is new, why do we need this?",
+      "range": {
+        "startLine": 468,
+        "startChar": 17,
+        "endLine": 468,
+        "endChar": 24
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bdfed02_b9ccd2d6",
+        "filename": "cmake/FindTBB.cmake",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "could you add a comment about where this is from.\nalso I do not offhand remember if MIT is BSD compatible or not.\nplease check.\n\nAlex should review this file to make sure it fits into cmake and ceres style.",
+      "range": {
+        "startLine": 1,
+        "startChar": 19,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fab69e1_2477f73f",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "we seem to be alternating between using openmp/tbb and CERES_NO_THREADS in the code.\n\nI think it would be good to replace places where we are OR-ing openmp \u0026 TBB with !CERES_NO_THREADS",
+      "range": {
+        "startLine": 67,
+        "startChar": 1,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "370fb50a_9d5daaf3",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "we seem to be alternating between CERES_NO_THREADS at some places and CERES_USE_TBB || CERES_USE_OPENMP at others. lets take this moment to clean that up too.",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9474465_79f2a9cc",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "add TBB here as an optional dependency.",
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "260f6a1c_d4e0aea8",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "expand this to explain c++11 implications.",
+      "range": {
+        "startLine": 615,
+        "startChar": 6,
+        "endLine": 615,
+        "endChar": 14
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96c040a7_d37f4eb0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "why the special handling for MSVC? please add a comment explaining it here.",
+      "range": {
+        "startLine": 188,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 9
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a9c3351_0d3e12c3",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "can this chunk of code be turned into a macro that can be pulled out of here and turned into a oneliner which computes the thread_id ? it will improve the readability of this code considerably.\n\nand the same thing elsewhere.",
+      "range": {
+        "startLine": 186,
+        "startChar": 1,
+        "endLine": 186,
+        "endChar": 6
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "463012ae_5e3f5d21",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "same comment as coordinate descent minimizer.",
+      "range": {
+        "startLine": 374,
+        "startChar": 1,
+        "endLine": 374,
+        "endChar": 6
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2763a83_2efa3dfc",
+        "filename": "internal/ceres/preprocessor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "here is one example of the cleanup about CERES_NO_THREADS that I mentioned.",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35d8cc28_84910b83",
+        "filename": "internal/ceres/problem_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "same here about CERES_NO_THREADS",
+      "range": {
+        "startLine": 749,
+        "startChar": 14,
+        "endLine": 749,
+        "endChar": 30
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53720f72_538a9eeb",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-17T18:09:32Z",
+      "side": 1,
+      "message": "see comment about thread_id",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 209,
+        "endChar": 11
+      },
+      "revId": "4f1bc66254314543321173eaf214860f91f5d44b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
