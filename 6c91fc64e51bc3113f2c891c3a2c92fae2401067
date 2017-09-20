@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "486a1e91_0a66b8ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "\"There are...\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81432912_b50f14a0",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "Perhaps \"requires TBB and C++11\".",
+      "range": {
+        "startLine": 108,
+        "startChar": 64,
+        "endLine": 108,
+        "endChar": 67
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aee1275f_a8f511c0",
+        "filename": "cmake/config.h.in",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "... with OpenMP or TBB support...",
+      "range": {
+        "startLine": 72,
+        "startChar": 59,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da75f91d_2d989ae4",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "This comment should be updated.",
+      "range": {
+        "startLine": 619,
+        "startChar": 0,
+        "endLine": 619,
+        "endChar": 59
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7460c82a_93093f1a",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "if neither `OpenMP` nor `TBB` is available",
+      "range": {
+        "startLine": 2114,
+        "startChar": 50,
+        "endLine": 2114,
+        "endChar": 71
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "310d7d86_c04530bf",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "if neither `OpenMP` nor `TBB` is available",
+      "range": {
+        "startLine": 2127,
+        "startChar": 12,
+        "endLine": 2127,
+        "endChar": 15
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adbdcdf4_862dcb35",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 68
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ab262f6_46c941ab",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "Merge this block\u0027s \"for\" with the CERES_NO_THREADS one, as they\u0027re the same. Something like\n#ifdef CERES_USE_TBB\n... TBB code\n#else\n#ifdef CERES_USE_OPENMP\n#pragma ...\n#endif\nfor (...)\n#endif",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 23
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcb639c6_a8fb9366",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "To save time later, use non-C++11 initialisation syntax.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 69
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "723bbeae_74a242bc",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "I\u0027m curious whether this would be more or less efficient with a blocked_range2d. Not curious enough to actually try it out, however.",
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2e8ff95_32d0fde3",
+        "filename": "internal/ceres/thread_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "I\u0027m guessing that the reason to have this is that tbb::this_tbb_thread::get_id() returns an opaque value and we need an integer... worth noting in the comment.",
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f631ff10_1f78a219",
+        "filename": "internal/ceres/thread_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "The class name and usage is somewhat confusing. Its name implies that it\u0027s a thread ID, but actually it\u0027s an ID provider for a sheaf of threads and must be defined in the sequential part of the code, but used in the parallel part of the code. If you mistakenly instantiate it in the parallel part, then (in the TBB case *only*) you\u0027ll end up with every thread thinking it has the same ID - not what you want.\n\nAvoiding this problem could be done by making this a singleton or making the members static but neither of those would work because then the thread IDs for each parallel for might not start from 0 and go up to the number of threads requested. (And any story that involves static members of complex type will end in tears).\n\nMaybe just changing the class name (\"ThreadIdProvider?\") and documenting usage will be enough.\n\nHow certain are we that TBB, while honouring its promise never to provide more than n_threads parallelism, won\u0027t use more than that OS-level threads? Say you request 2-way parallelism; might it (under the hood) use threads A and B for a while, then switch to using B and C? If that can happen then this approach just can\u0027t work. I see the asserts scattered through the code, so we\u0027ll at least know if it does happen... and if it does then we might have to bite the bullet and use thread-local storage for various things that are currently set up outside the parallel sections (LinearSolvers, scratch workspace etc).",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3534ad45_4ba4c7ec",
+        "filename": "internal/ceres/thread_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-20T20:53:55Z",
+      "side": 1,
+      "message": "Is the intent to forbid copy\u0026assign? Better is to make them private and declare them, with no definition at all:\nThreadId(ThreadId\u0026);\nThreadId\u0026 operator\u003d(ThreadId\u0026);",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "6c91fc64e51bc3113f2c891c3a2c92fae2401067",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
