@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae7f53e_6714479d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "\"as an alternative\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 63,
+        "endLine": 93,
+        "endChar": 77
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79c919e0_110c9f68",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "\"OpenMP.\" (add trailing period)",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 11
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a40648ed_e1a92646",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "neither `OpenMP` nor `TBB`",
+      "range": {
+        "startLine": 2114,
+        "startChar": 51,
+        "endLine": 2114,
+        "endChar": 77
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54ef32f4_70194b89",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "neither `OpenMP` nor `TBB`",
+      "range": {
+        "startLine": 2127,
+        "startChar": 3,
+        "endLine": 2127,
+        "endChar": 21
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4878cb69_a2f177b5",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "This is the one place where it made sense to have the OpenMP and single-threaded ifdef sections diverge, since OpenMP has to iterate from 0 in both loops but single-threaded can start the inner loop at i.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 46
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0a7ba66_4d73e066",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 14,
+        "startChar": 65,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d326e256_a6cfd8b2",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "token",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5446d3f_83587ad2",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-21T23:17:53Z",
+      "side": 1,
+      "message": "Makes",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "af957a2601af10dd9f670276e9ed7d65920ff42d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
