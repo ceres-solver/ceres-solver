@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce618735_85710a62",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-21T13:54:12Z",
+      "side": 0,
+      "message": "as long as the things we are accumulating were properly initialized to zero, it should not be a problem since we are just adding things together.",
+      "parentUuid": "cf91d82a_be1c2b71",
+      "revId": "83f5d74ee62a565584d0c1c0a9d25e485b60a584",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17b222ef_4e731a51",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-21T06:05:49Z",
       "side": 0,
       "message": "Would those gradients be valid if untouched inside parallel section?",
+      "range": {
+        "startLine": 271,
+        "startChar": 24,
+        "endLine": 271,
+        "endChar": 44
+      },
+      "revId": "83f5d74ee62a565584d0c1c0a9d25e485b60a584",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28a4bd1_02f1caa1",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-21T13:54:12Z",
+      "side": 0,
+      "message": "they should be initialized correctly before they are first used and then yes.",
+      "parentUuid": "17b222ef_4e731a51",
       "range": {
         "startLine": 271,
         "startChar": 24,
