@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c77832_2ab181bd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "we did not need this earlier, why do we need this now?",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 16
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f2514ee_6163a555",
+        "filename": "cmake/FindTBB.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "lots of tabs in this file, please convert to spaces.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 4
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18a94e53_4f4de78d",
+        "filename": "docs/source/installation.rst",
+        "patchSetId": 5
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "mention need for c++11.",
+      "range": {
+        "startLine": 619,
+        "startChar": 43,
+        "endLine": 619,
+        "endChar": 52
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e1abf93_03db3782",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "one weird suggestion,\n\nit maybe worth converting the whole ifdef + pragma into a macro and use it? \n\nit will lead to the callsite being just being a oneliner instead of the three lines it is right now, with the same information being communicated.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 8
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a06d6c74_80ae3554",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "I think this can be simplified into a single ifdef.\n\nifdef ceres_use_tbb \n);\n}\n);\nelse\n}\nendif",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 3
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1afddaf3_a55ba2c1",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "actually isn\u0027t this better done as if ceres_use_openmp continue otherwise return for the non-threaded case also?",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 8
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80c3a505_7a2b16b9",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 252,
+        "startChar": 8,
+        "endLine": 252,
+        "endChar": 21
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb28f215_5740535a",
+        "filename": "internal/ceres/thread_token_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "I think instead of splitting the implementation like this, it is perhaps simpler to have the ifdefs inside each function implementation.",
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2815b9d3_b1d4cb86",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "space around -",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4e45ec9_1b486dfe",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-24T00:34:48Z",
+      "side": 1,
+      "message": "example usage as part of the class documentation.",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
