@@ -91,6 +91,23 @@
       "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4841add6_c5b40ee3",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Also note that these two approaches are conflicting. There needs to be a mechanism to ensure that both OMP \u0026 TBB are not compiled in at the same time.",
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

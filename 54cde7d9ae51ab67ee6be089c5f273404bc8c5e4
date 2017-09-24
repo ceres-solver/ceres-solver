@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f4d023_37fb9d55",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Please add a message() to the effect of \"Intel TBB enabled; disabling OpenMP support (they are mutually exclusive)\" so it is clear to users what is happening when building. This could go down with the \"Building with TBB\" message.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "790c1721_e7327a65",
+        "filename": "internal/ceres/bundle_adjustment_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Unfortunately Ceres\u0027s defines are part of our public API, since several projects integrate Ceres directly into their build (dropping the CMake one). In particular, they may have manually set the defines. So please add a note about this in the notes as well.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9f073b6_41c01761",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Is this missing the OpenMP include now? We try to follow the \"include what you use\" paradigm for C++ includes (e.g. don\u0027t allow transitive includes).",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27317055_2c386e48",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "sttk -\u003e scoped_thread_token. There is no benefit to abbreviating here, so don\u0027t.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eca5edf6_25c65367",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "OpenMP include?",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02479279_706ad6c8",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "ttk_provider --\u003e thread_token_provider",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c397e959_00a00c68",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Please indent pragmas here by 2 spaces\n\n#  if _OPENMP ...\n\nsince the CPP code is now nested inside another preprocessor define.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5dbca03b_923ff152",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "This could get merged with the above block instead of being duplicated.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11eecd21_ffe5cc2d",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "What is tsi? Please expand abbreviation, especially since the variable isn\u0027t repeated many times.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85873509_f44b5e4a",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "sttk --\u003e scoped_thread_token (throughout CL)",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2a734c0_3c17eae3",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "sttk -\u003e scoped_thread_token",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b8986d_911fe092",
+        "filename": "internal/ceres/scoped_thread_token.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Please add the license \u0026 copyright header, updated for 2017.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e929c57_713bd2af",
+        "filename": "internal/ceres/thread_token_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "Copyright header",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b09b1570_85f09de3",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-09-24T18:13:19Z",
+      "side": 1,
+      "message": "with -\u003e that is\n\nPerhaps explain that this helps to use both OpenMP and TBB; it\u0027s not entirely clear from the description. It might also help to call out that this is needed mostly for thread local storage in the face of both OpenMP and TBB.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
