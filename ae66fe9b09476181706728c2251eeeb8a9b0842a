@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cd3f35e_440d1dad",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Ok, I see. That\u0027s incomplete Copy-Paste. I removed this section from OpenMP as well. Thus we have it only if !CERES_NO_THREADS",
+      "parentUuid": "61c77832_2ab181bd",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 16
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2514ee_6163a555",
         "filename": "cmake/FindTBB.cmake",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-24T00:34:48Z",
       "side": 1,
       "message": "lots of tabs in this file, please convert to spaces.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 4
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea2395e1_ac01039c",
+        "filename": "cmake/FindTBB.cmake",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Those are trailing spaces. Anyway done.",
+      "parentUuid": "4f2514ee_6163a555",
       "range": {
         "startLine": 208,
         "startChar": 0,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "3ebdcb57_097120d9",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06d6c74_80ae3554",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 3
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1afddaf3_a55ba2c1",
         "filename": "internal/ceres/program_evaluator.h",
         "patchSetId": 5
@@ -180,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "c97d8865_31c03a64",
+        "filename": "internal/ceres/thread_token_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Than the compiler should pop up with the warning about unused argument.",
+      "parentUuid": "bb28f215_5740535a",
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2815b9d3_b1d4cb86",
         "filename": "internal/ceres/thread_token_provider.h",
         "patchSetId": 5
@@ -203,6 +293,30 @@
     },
     {
       "key": {
+        "uuid": "c0e0ed77_d864a166",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2815b9d3_b1d4cb86",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e45ec9_1b486dfe",
         "filename": "internal/ceres/thread_token_provider.h",
         "patchSetId": 5
@@ -214,6 +328,30 @@
       "writtenOn": "2017-09-24T00:34:48Z",
       "side": 1,
       "message": "example usage as part of the class documentation.",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "ae66fe9b09476181706728c2251eeeb8a9b0842a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7da5bdad_ad6cd321",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T11:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e45ec9_1b486dfe",
       "range": {
         "startLine": 21,
         "startChar": 13,
