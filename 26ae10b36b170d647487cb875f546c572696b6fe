@@ -108,6 +108,24 @@
       "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11896f45_8998952d",
+        "filename": "internal/ceres/schur_eliminator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "I put a check with an #error into thread_token_provider.h. This header is included inot every parallel code part, so the build should fail for sure.",
+      "parentUuid": "4841add6_c5b40ee3",
+      "revId": "26ae10b36b170d647487cb875f546c572696b6fe",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }

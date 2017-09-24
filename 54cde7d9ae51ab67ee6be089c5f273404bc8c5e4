@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba8a9167_b7762d1a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39f4d023_37fb9d55",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790c1721_e7327a65",
         "filename": "internal/ceres/bundle_adjustment_test.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "1c636831_5db68586",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "This include paradigm is exactly the reason it is not here. It was before only for omp_get_thread_num(). This call has moved to ThreadTokenProvider.",
+      "parentUuid": "c9f073b6_41c01761",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27317055_2c386e48",
         "filename": "internal/ceres/coordinate_descent_minimizer.cc",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "sttk -\u003e scoped_thread_token. There is no benefit to abbreviating here, so don\u0027t.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef0da6f3_0b110c3b",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27317055_2c386e48",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "4065f7fc_f8d1d628",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Same as coordinate_descent_minimizer.cc",
+      "parentUuid": "eca5edf6_25c65367",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02479279_706ad6c8",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 6
@@ -98,6 +170,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "ttk_provider --\u003e thread_token_provider",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48a9316a_bf08dcb4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02479279_706ad6c8",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "e80fe769_e020b09b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c397e959_00a00c68",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dbca03b_923ff152",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 6
@@ -132,6 +240,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "This could get merged with the above block instead of being duplicated.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2091c18d_a32164f4",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "It is the only place where it could not. Please see the next patch.",
+      "parentUuid": "5dbca03b_923ff152",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "60b3932e_c37ab23b",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11eecd21_ffe5cc2d",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85873509_f44b5e4a",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 6
@@ -166,6 +310,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "sttk --\u003e scoped_thread_token (throughout CL)",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22810713_57b86d01",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85873509_f44b5e4a",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "6fd4eee8_f42dcf31",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a734c0_3c17eae3",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59b8986d_911fe092",
         "filename": "internal/ceres/scoped_thread_token.h",
         "patchSetId": 6
@@ -200,6 +380,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "Please add the license \u0026 copyright header, updated for 2017.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12af6046_61ddc440",
+        "filename": "internal/ceres/scoped_thread_token.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b8986d_911fe092",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "7b6a905f_99f004f0",
+        "filename": "internal/ceres/thread_token_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e929c57_713bd2af",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b09b1570_85f09de3",
         "filename": "internal/ceres/thread_token_provider.h",
         "patchSetId": 6
@@ -234,6 +450,24 @@
       "writtenOn": "2017-09-24T18:13:19Z",
       "side": 1,
       "message": "with -\u003e that is\n\nPerhaps explain that this helps to use both OpenMP and TBB; it\u0027s not entirely clear from the description. It might also help to call out that this is needed mostly for thread local storage in the face of both OpenMP and TBB.",
+      "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8d5e58a_f138cad5",
+        "filename": "internal/ceres/thread_token_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-24T21:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b09b1570_85f09de3",
       "revId": "54cde7d9ae51ab67ee6be089c5f273404bc8c5e4",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
