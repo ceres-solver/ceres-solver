@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a016f15b_53533f37",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-25T10:46:36Z",
+      "side": 1,
+      "message": "Was missing",
+      "range": {
+        "startLine": 721,
+        "startChar": 44,
+        "endLine": 721,
+        "endChar": 55
+      },
+      "revId": "4ffec20a4400197c015fe7bbdb3a3836265d46a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dd2c87_7b704e33",
+        "filename": "internal/ceres/scoped_thread_token.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5640
+      },
+      "writtenOn": "2017-09-25T10:46:36Z",
+      "side": 1,
+      "message": "Fix guard\nAdd copyright header",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "4ffec20a4400197c015fe7bbdb3a3836265d46a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
