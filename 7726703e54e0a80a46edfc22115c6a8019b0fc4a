@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d1649d_f011c3b6",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-25T13:59:33Z",
+      "side": 1,
+      "message": "Is the cost of GetCounterScale expensive enough to bother with a static variable?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "7726703e54e0a80a46edfc22115c6a8019b0fc4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c90ae527_ce79e0f6",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-25T13:59:33Z",
+      "side": 1,
+      "message": "it is a bit odd to be multiplying and then dividing by 1e6 here and below, embedding this",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "7726703e54e0a80a46edfc22115c6a8019b0fc4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4884dc56_8529513b",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-25T13:59:33Z",
+      "side": 1,
+      "message": "use c++ style casts.",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "7726703e54e0a80a46edfc22115c6a8019b0fc4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
