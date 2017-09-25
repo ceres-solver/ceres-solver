@@ -340,6 +340,9 @@ ResidualBlock* ProblemImpl::AddResidualBlock(
   }
 
   if (options_.cost_function_ownership == TAKE_OWNERSHIP) {
+    // Increment the reference count, creating an entry in the table if
+    // needed. Note: C++ maps guarantee that new entries have default
+    // constructed values; this implies integers are zero initialized.
     ++cost_function_ref_count_[cost_function];
   }
 
