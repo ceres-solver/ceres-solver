@@ -50,7 +50,12 @@ double WallTimeInSeconds() {
   return omp_get_wtime();
 #else
 #ifdef _WIN32
-  return static_cast<double>(std::time(NULL));
+  LARGE_INTEGER count;
+  LARGE_INTEGER frequency;
+  QueryPerformanceCounter(&count);
+  QueryPerformanceFrequency(&frequency);
+  return static_cast<double>(count.QuadPart) /
+         static_cast<double>(frequency.QuadPart);
 #else
   timeval time_val;
   gettimeofday(&time_val, NULL);
