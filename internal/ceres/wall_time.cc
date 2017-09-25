@@ -45,12 +45,24 @@
 namespace ceres {
 namespace internal {
 
+#ifdef _WIN32
+static double GetCounterScale() {
+    LARGE_INTEGER frequency;
+    QueryPerformanceFrequency(&frequency);
+    return 1e6 / (double)frequency.QuadPart;
+}
+#endif
+
 double WallTimeInSeconds() {
 #ifdef CERES_USE_OPENMP
   return omp_get_wtime();
 #else
 #ifdef _WIN32
-  return static_cast<double>(std::time(NULL));
+  static const double counterScale = GetCounterScale();
+
+  LARGE_INTEGER count;
+  QueryPerformanceCounter(&count);
+  return 1e-6 * (double)count.QuadPart * counterScale;
 #else
   timeval time_val;
   gettimeofday(&time_val, NULL);
