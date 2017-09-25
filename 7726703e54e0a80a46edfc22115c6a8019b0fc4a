@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9798ce6e_cab0b4f8",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-25T16:21:44Z",
+      "side": 1,
+      "message": "Agreed. It took a moment to decipher this - it\u0027s the counter period in microseconds; seems more intuitive to keep it as the period in seconds and rename the function/variable from \"...Scale\" to \"...Period\".",
+      "parentUuid": "c90ae527_ce79e0f6",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "7726703e54e0a80a46edfc22115c6a8019b0fc4a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4884dc56_8529513b",
         "filename": "internal/ceres/wall_time.cc",
         "patchSetId": 1
