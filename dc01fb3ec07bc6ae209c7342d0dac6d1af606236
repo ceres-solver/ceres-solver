@@ -22,6 +22,30 @@
       "revId": "dc01fb3ec07bc6ae209c7342d0dac6d1af606236",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4d9df66_01ab969b",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-09-26T15:06:54Z",
+      "side": 1,
+      "message": "Just to answer this question: in C++11 or greater, this is thread-safe (concurrent initialisation of function-local static variables will Just Work); before C++11 it was not thread-safe, though some compilers (e.g., GCC) added that as an extension.",
+      "parentUuid": "4ecf610f_7b096e61",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "dc01fb3ec07bc6ae209c7342d0dac6d1af606236",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
