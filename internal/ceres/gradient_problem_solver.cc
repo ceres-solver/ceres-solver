@@ -262,15 +262,15 @@ string GradientProblemSolver::Summary::FullReport() const {
                 static_cast<int>(iterations.size()));
 
   StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(&report, "\n  Cost evaluation     %23.4f (%d)\n",
+  StringAppendF(&report, "\n  Cost evaluation     %23.6f (%d)\n",
                 cost_evaluation_time_in_seconds,
                 num_cost_evaluations);
-  StringAppendF(&report, "  Gradient evaluation %23.4f (%d)\n",
+  StringAppendF(&report, "  Gradient evaluation %23.6f (%d)\n",
                 gradient_evaluation_time_in_seconds,
                 num_gradient_evaluations);
-  StringAppendF(&report, "  Polynomial minimization   %17.4f\n",
+  StringAppendF(&report, "  Polynomial minimization   %17.6f\n",
                 line_search_polynomial_minimization_time_in_seconds);
-  StringAppendF(&report, "Total               %25.4f\n\n",
+  StringAppendF(&report, "Total               %25.6f\n\n",
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s (%s)\n",
