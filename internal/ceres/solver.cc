@@ -863,44 +863,44 @@ string Solver::Summary::FullReport() const {
   }
 
   StringAppendF(&report, "\nTime (in seconds):\n");
-  StringAppendF(&report, "Preprocessor        %25.4f\n",
+  StringAppendF(&report, "Preprocessor        %25.6f\n",
                 preprocessor_time_in_seconds);
 
-  StringAppendF(&report, "\n  Residual evaluation %23.4f\n",
+  StringAppendF(&report, "\n  Residual evaluation %23.6f\n",
                 residual_evaluation_time_in_seconds);
   if (line_search_used) {
-    StringAppendF(&report, "    Line search cost evaluation    %10.4f\n",
+    StringAppendF(&report, "    Line search cost evaluation    %10.6f\n",
                   line_search_cost_evaluation_time_in_seconds);
   }
-  StringAppendF(&report, "  Jacobian evaluation %23.4f\n",
+  StringAppendF(&report, "  Jacobian evaluation %23.6f\n",
                 jacobian_evaluation_time_in_seconds);
   if (line_search_used) {
-    StringAppendF(&report, "    Line search gradient evaluation   %6.4f\n",
+    StringAppendF(&report, "    Line search gradient evaluation   %6.6f\n",
                   line_search_gradient_evaluation_time_in_seconds);
   }
 
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report, "  Linear solver       %23.4f\n",
+    StringAppendF(&report, "  Linear solver       %23.6f\n",
                   linear_solver_time_in_seconds);
   }
 
   if (inner_iterations_used) {
-    StringAppendF(&report, "  Inner iterations    %23.4f\n",
+    StringAppendF(&report, "  Inner iterations    %23.6f\n",
                   inner_iteration_time_in_seconds);
   }
 
   if (line_search_used) {
-    StringAppendF(&report, "  Line search polynomial minimization  %.4f\n",
+    StringAppendF(&report, "  Line search polynomial minimization  %.6f\n",
                   line_search_polynomial_minimization_time_in_seconds);
   }
 
-  StringAppendF(&report, "Minimizer           %25.4f\n\n",
+  StringAppendF(&report, "Minimizer           %25.6f\n\n",
                 minimizer_time_in_seconds);
 
-  StringAppendF(&report, "Postprocessor        %24.4f\n",
+  StringAppendF(&report, "Postprocessor        %24.6f\n",
                 postprocessor_time_in_seconds);
 
-  StringAppendF(&report, "Total               %25.4f\n\n",
+  StringAppendF(&report, "Total               %25.6f\n\n",
                 total_time_in_seconds);
 
   StringAppendF(&report, "Termination:        %25s (%s)\n",
