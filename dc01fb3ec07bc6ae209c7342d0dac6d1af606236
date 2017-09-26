@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ecf610f_7b096e61",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-26T12:06:39Z",
+      "side": 1,
+      "message": "doesn\u0027t this make this function thread unsafe the first time its called?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "dc01fb3ec07bc6ae209c7342d0dac6d1af606236",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
