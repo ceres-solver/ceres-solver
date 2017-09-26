@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e3e3cee_758b3c4f",
+        "filename": "internal/ceres/wall_time.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-09-26T13:06:41Z",
+      "side": 1,
+      "message": "errant spaces at the end of lines?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "585c439513bba5b18cd55616d85d79b745eb76b1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
