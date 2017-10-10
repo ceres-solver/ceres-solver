@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffc6b6a_d361c744",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-10T22:11:55Z",
+      "side": 1,
+      "message": "my only concern for now is the name.\nis TinySolver the name we really want to go with?\nit doesn\u0027t really communicate its advantages.",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "7928ca003f738b9d8bbca683477e56359b690744",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}

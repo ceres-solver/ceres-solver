@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "c9235ee6_af0bc31f",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-10T22:11:55Z",
+      "side": 1,
+      "message": "better name?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a73118_3c2554b8",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
