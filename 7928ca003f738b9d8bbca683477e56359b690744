@@ -22,6 +22,30 @@
       "revId": "7928ca003f738b9d8bbca683477e56359b690744",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c10283_890f3789",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-10T23:44:09Z",
+      "side": 1,
+      "message": "Here\u0027s some names I tried but ended up going back to TinySolver:\n\nSmallNNLSSolver\nFixedMemoryLowLatencyDenseNNLSSolver\nFixedDenseNnlsSolver\nFixedDenseSolver\nStaticSizeDenseSolver\n\nI\u0027m open to ideas. I am also OK to change the name in a followup patch as we get closer to the right implementation, API, and adaptors.",
+      "parentUuid": "7ffc6b6a_d361c744",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "7928ca003f738b9d8bbca683477e56359b690744",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
