@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc8422c_cd68ec11",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-10-10T18:09:35Z",
+      "side": 1,
+      "message": "Describe typical usage; there are a lot of implicit requirements on the members of Function (operator(), NUM_{PARAMETERS,RESIDUALS}, Scalar, ...?).\n\nIs it worth the effort to make this take a full-on CostFunction? (I\u0027m guessing not; there would need to be a bunch of logic to construct the Jacobian blocks and that would dwarf the rest of the solver). But maybe it could take a CostFunction (via an adaptor?) that satisfies appropriate restrictions (one parameter block, one residual block)? I\u0027ll leave the decision of whether this is worthwhile to you.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a73118_3c2554b8",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-10-10T18:09:35Z",
+      "side": 1,
+      "message": "Check not null?",
+      "range": {
+        "startLine": 138,
+        "startChar": 31,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97170aa6_28fae607",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-10-10T18:09:35Z",
+      "side": 1,
+      "message": "Space around \"*\".",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 16
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46151808_8064402b",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-10-10T18:09:35Z",
+      "side": 1,
+      "message": "statically sized",
+      "range": {
+        "startLine": 234,
+        "startChar": 48,
+        "endLine": 234,
+        "endChar": 63
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d72e84_1a4ab789",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-10-10T18:09:35Z",
+      "side": 1,
+      "message": "Why the two ways of initialising x0?",
+      "range": {
+        "startLine": 170,
+        "startChar": 45,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
