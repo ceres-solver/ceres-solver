@@ -257,6 +257,30 @@
       "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff44a640_0faa0699",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-10T23:50:48Z",
+      "side": 1,
+      "message": "For dynamically sized vectors, the constructor takes the size instead of literal components. So the init needs to be split across lines.",
+      "parentUuid": "80d72e84_1a4ab789",
+      "range": {
+        "startLine": 170,
+        "startChar": 45,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "7a9361a22cd450360db5ff2d298320e7a9e29c27",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
