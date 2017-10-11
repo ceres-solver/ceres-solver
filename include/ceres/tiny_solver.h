@@ -154,6 +154,8 @@ class TinySolver {
     FAILED_TO_SOLVER_LINEAR_SYSTEM,
   };
 
+  // TODO(sameeragarwal): Make the parameters consistent with ceres
+  // TODO(sameeragarwal): Return a struct instead of just an enum.
   struct SolverParameters {
     SolverParameters()
        : gradient_threshold(1e-16),
@@ -168,8 +170,9 @@ class TinySolver {
     int    max_iterations;           // Maximum number of solver iterations.
   };
 
-  struct Results {
-    Scalar error_magnitude;     // ||f(x)||
+  struct Summary {
+    Scalar initial_cost;     // ||f(x)||
+    Scalar final_cost;     // ||f(x)||
     Scalar gradient_magnitude;  // ||J'f(x)||
     int    num_failed_linear_solves;
     int    iterations;
@@ -193,18 +196,19 @@ class TinySolver {
     return RUNNING;
   }
 
-  Results Solve(const Function& function, Parameters* x_and_min) {
+  Summary Solve(const Function& function, Parameters* x_and_min) {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
 
     assert(x_and_min);
     Parameters& x = *x_and_min;
-    results.status = Update(function, x);
+    summary.status = Update(function, x);
+    summary.initial_cost = error_.squaredNorm() / 2.0;
 
     Scalar u = Scalar(params.initial_scale_factor * jtj_.diagonal().maxCoeff());
     Scalar v = 2;
 
     int i;
-    for (i = 0; results.status == RUNNING && i < params.max_iterations; ++i) {
+    for (i = 0; summary.status == RUNNING && i < params.max_iterations; ++i) {
       jtj_augmented_ = jtj_;
       jtj_augmented_.diagonal().array() += u;
 
@@ -213,7 +217,7 @@ class TinySolver {
       bool solved = (jtj_augmented_ * dx_).isApprox(g_);
       if (solved) {
         if (dx_.norm() < params.relative_step_threshold * x.norm()) {
-          results.status = RELATIVE_STEP_SIZE_TOO_SMALL;
+          summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
           break;
         }
         x_new_ = x + dx_;
@@ -227,14 +231,14 @@ class TinySolver {
         if (rho > 0) {
           // Accept the Gauss-Newton step because the linear model fits well.
           x = x_new_;
-          results.status = Update(function, x);
+          summary.status = Update(function, x);
           Scalar tmp = Scalar(2 * rho - 1);
           u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
           v = 2;
           continue;
         }
       } else {
-        results.num_failed_linear_solves++;
+        summary.num_failed_linear_solves++;
       }
       // Reject the update because either the normal equations failed to solve
       // or the local linear model was not good (rho < 0). Instead, increase u
@@ -242,17 +246,17 @@ class TinySolver {
       u *= v;
       v *= 2;
     }
-    if (results.status == RUNNING) {
-      results.status = HIT_MAX_ITERATIONS;
+    if (summary.status == RUNNING) {
+      summary.status = HIT_MAX_ITERATIONS;
     }
-    results.error_magnitude = error_.norm();
-    results.gradient_magnitude = g_.norm();
-    results.iterations = i;
-    return results;
+    summary.final_cost = error_.squaredNorm() / 2.0;
+    summary.gradient_magnitude = g_.norm();
+    summary.iterations = i;
+    return summary;
   }
 
   SolverParameters params;
-  Results results;
+  Summary summary;
 
  private:
   // Preallocate everything, including temporary storage needed for solving the
@@ -307,6 +311,60 @@ class TinySolver {
   }
 };
 
+class CostFunction;
+
+template <int kNumResiduals, int kNumParameters>
+class CostFunctionAdapter {
+ public:
+  typedef double Scalar;
+  enum { NUM_PARAMETERS = kNumParameters, NUM_RESIDUALS = kNumResiduals };
+
+  CostFunctionAdapter(const CostFunction& cost_function)
+      : cost_function_(cost_function) {
+    CHECK_EQ(cost_function_.parameter_block_sizes().size(), 1);
+    if (NUM_RESIDUALS != Eigen::Dynamic) {
+      CHECK_EQ(cost_function_.num_residuals(), NUM_RESIDUALS);
+    }
+    if (NUM_PARAMETERS != Eigen::Dynamic) {
+      CHECK_EQ(cost_function_.parameter_block_sizes()[0], NUM_PARAMETERS);
+    }
+
+    if (NUM_PARAMETERS == Eigen::Dynamic || NUM_RESIDUALS == Eigen::Dynamic) {
+      row_major_jacobian_.resize(cost_function_.num_residuals(),
+                                 cost_function_.parameter_block_sizes()[0]);
+    }
+  }
+
+  bool operator()(const double* parameters,
+                  double* residuals,
+                  double* jacobian) const {
+    if (!jacobian) {
+      return cost_function_.Evaluate(&parameters, residuals, NULL);
+    }
+
+    double* j[1];
+    j[0] = row_major_jacobian_.data();
+    if (!cost_function_.Evaluate(&parameters, residuals, j)) {
+      return false;
+    }
+
+    Eigen::Map<Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS>>
+        col_major_jacobian(jacobian,
+                           cost_function_.num_residuals(),
+                           cost_function_.parameter_block_sizes()[0]);
+    col_major_jacobian = row_major_jacobian_;
+    return true;
+  }
+
+  int NumResiduals() const { return cost_function_.num_residuals(); }
+  int NumParameters() const {
+    return cost_function_.parameter_block_sizes()[0];
+  }
+
+  const CostFunction& cost_function_;
+  mutable Eigen::Matrix<double, NUM_RESIDUALS, NUM_PARAMETERS, Eigen::RowMajor>
+      row_major_jacobian_;
+};
 }  // namespace ceres
 
 #endif  // CERES_PUBLIC_TINY_SOLVER_H_

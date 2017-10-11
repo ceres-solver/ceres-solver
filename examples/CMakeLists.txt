@@ -44,6 +44,9 @@ target_link_libraries(helloworld_numeric_diff ceres)
 add_executable(helloworld_analytic_diff helloworld_analytic_diff.cc)
 target_link_libraries(helloworld_analytic_diff ceres)
 
+add_executable(hello_tiny_solver_with_cost_function hello_tiny_solver_with_cost_function.cc)
+target_link_libraries(hello_tiny_solver_with_cost_function ceres)
+
 add_executable(curve_fitting curve_fitting.cc)
 target_link_libraries(curve_fitting ceres)
 
