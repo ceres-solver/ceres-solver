@@ -192,7 +192,7 @@ class TinySolver {
     return RUNNING;
   }
 
-  Results solve(const Function& function, Parameters* x_and_min) {
+  Results Solve(const Function& function, Parameters* x_and_min) {
     Initialize<NUM_PARAMETERS, NUM_RESIDUALS>(function);
 
     assert(x_and_min);
