@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34b66144_9416a615",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-11T23:09:58Z",
+      "side": 1,
+      "message": "I am being consistent, with the idea that you are reporting row and columns. \nits a consistency thing.",
+      "parentUuid": "ee74445f_d4927692",
+      "revId": "c86ae5620587b17ed8dcdecd4e9e68ae6a338489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1573195_58c97791",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T23:07:24Z",
       "side": 1,
       "message": "This shouldn\u0027t be changed -- ceres::CostFunction is parameters, residuals, jacobians (as is already).",
+      "revId": "c86ae5620587b17ed8dcdecd4e9e68ae6a338489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d270d7f5_0963f9de",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-11T23:09:58Z",
+      "side": 1,
+      "message": "oh yeah this one is wrong.",
+      "parentUuid": "d1573195_58c97791",
       "revId": "c86ae5620587b17ed8dcdecd4e9e68ae6a338489",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
