@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee74445f_d4927692",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-11T23:07:24Z",
+      "side": 1,
+      "message": "I don\u0027t see the point in reversing these (or below).",
+      "revId": "c86ae5620587b17ed8dcdecd4e9e68ae6a338489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1573195_58c97791",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-11T23:07:24Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be changed -- ceres::CostFunction is parameters, residuals, jacobians (as is already).",
+      "revId": "c86ae5620587b17ed8dcdecd4e9e68ae6a338489",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
