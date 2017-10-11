@@ -69,15 +69,15 @@ namespace ceres {
 //   struct TinySolverCostFunctionTraits {
 //     typedef double Scalar;
 //     enum {
-//       NUM_PARAMETERS = <int> OR Eigen::Dynamic,
 //       NUM_RESIDUALS = <int> OR Eigen::Dynamic,
+//       NUM_PARAMETERS = <int> OR Eigen::Dynamic,
 //     };
 //     bool operator()(const double* parameters,
 //                     double* residuals,
 //                     double* jacobian) const;
 //
-//     int NumParameters(); -- Needed if NUM_PARAMETERS == Eigen::Dynamic.
 //     int NumResiduals();  -- Needed if NUM_RESIDUALS == Eigen::Dynamic.
+//     int NumParameters(); -- Needed if NUM_PARAMETERS == Eigen::Dynamic.
 //   }
 //
 // For operator(), the size of the objects is:
@@ -92,8 +92,8 @@ namespace ceres {
 //   struct MyCostFunctionExample {
 //     typedef double Scalar;
 //     enum {
-//       NUM_PARAMETERS = 3,
 //       NUM_RESIDUALS = 2,
+//       NUM_PARAMETERS = 3,
 //     };
 //     bool operator()(const double* parameters,
 //                     double* residuals,
@@ -110,19 +110,20 @@ namespace ceres {
 //         jacobian[2 * 2 + 0] = 4;   // Third column (z).
 //         jacobian[2 * 2 + 1] = y;
 //       }
-//       return EvaluateResidualsAndJacobians(parameters, residuals, jacobian);
+//       return true;
 //     }
 //   };
 //
 // The solver supports either statically or dynamically sized cost
-// functions. If the number of parameters is dynamic then the Function
+// functions. If the number of residuals is dynamic then the Function
 // must define:
 //
-//   int NumParameters() const;
-//
-// If the number of residuals is dynamic then the Function must define:
-//
 //   int NumResiduals() const;
+//
+// If the number of parameters is dynamic then the Function must
+// define:
+//
+//   int NumParameters() const;
 //
 template<typename Function,
          typename LinearSolver = Eigen::PartialPivLU<
@@ -192,8 +193,8 @@ class TinySolver {
     return RUNNING;
   }
 
-  Results solve(const Function& function, Parameters* x_and_min) {
-    Initialize<NUM_PARAMETERS, NUM_RESIDUALS>(function);
+  Results Solve(const Function& function, Parameters* x_and_min) {
+    Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
 
     assert(x_and_min);
     Parameters& x = *x_and_min;
@@ -270,34 +271,34 @@ class TinySolver {
   };
 
   // The number of parameters and residuals are dynamically sized.
-  template <int N, int M>
-  typename enable_if<(N == Eigen::Dynamic && M == Eigen::Dynamic), void>::type
+  template <int R, int P>
+  typename enable_if<(R == Eigen::Dynamic && P == Eigen::Dynamic), void>::type
   Initialize(const Function& function) {
-    Initialize(function.NumParameters(), function.NumResiduals());
+    Initialize(function.NumResiduals(), function.NumParameters());
   }
 
   // The number of parameters is dynamically sized and the number of
   // residuals is statically sized.
-  template <int N, int M>
-  typename enable_if<(N == Eigen::Dynamic && M != Eigen::Dynamic), void>::type
+  template <int R, int P>
+  typename enable_if<(R == Eigen::Dynamic && P != Eigen::Dynamic), void>::type
   Initialize(const Function& function) {
-    Initialize(function.NumParameters(), M);
+    Initialize(function.NumResiduals(), P);
   }
 
   // The number of parameters is statically sized and the number of
   // residuals is dynamically sized.
-  template <int N, int M>
-  typename enable_if<(N != Eigen::Dynamic && M == Eigen::Dynamic), void>::type
+  template <int R, int P>
+  typename enable_if<(R != Eigen::Dynamic && P == Eigen::Dynamic), void>::type
   Initialize(const Function& function) {
-    Initialize(N, function.NumResiduals());
+    Initialize(R, function.NumParameters());
   }
 
   // The number of parameters and residuals are statically sized.
-  template <int N, int M>
-  typename enable_if<(N != Eigen::Dynamic && M != Eigen::Dynamic), void>::type
+  template <int R, int P>
+  typename enable_if<(R != Eigen::Dynamic && P != Eigen::Dynamic), void>::type
   Initialize(const Function& /* function */) { }
 
-  void Initialize(int num_parameters, int num_residuals) {
+  void Initialize(int num_residuals, int num_parameters) {
     error_.resize(num_residuals);
     f_x_new_.resize(num_residuals);
     jacobian_.resize(num_residuals, num_parameters);

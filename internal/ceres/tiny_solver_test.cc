@@ -70,8 +70,8 @@ class ExampleStatic {
   typedef double Scalar;
   enum {
     // Can also be Eigen::Dynamic.
-    NUM_PARAMETERS = 3,
     NUM_RESIDUALS = 2,
+    NUM_PARAMETERS = 3,
   };
   bool operator()(const double* parameters,
                   double* residuals,
@@ -84,8 +84,8 @@ class ExampleParametersDynamic {
  public:
   typedef double Scalar;
   enum {
-    NUM_PARAMETERS = Eigen::Dynamic,
     NUM_RESIDUALS = 2,
+    NUM_PARAMETERS = Eigen::Dynamic,
   };
 
   int NumParameters() const {
@@ -103,8 +103,8 @@ class ExampleResidualsDynamic {
  public:
   typedef double Scalar;
   enum {
-    NUM_PARAMETERS = 3,
     NUM_RESIDUALS = Eigen::Dynamic,
+    NUM_PARAMETERS = 3,
   };
 
   int NumResiduals() const {
@@ -122,16 +122,16 @@ class ExampleAllDynamic {
  public:
   typedef double Scalar;
   enum {
-    NUM_PARAMETERS = Eigen::Dynamic,
     NUM_RESIDUALS = Eigen::Dynamic,
+    NUM_PARAMETERS = Eigen::Dynamic,
   };
-
-  int NumParameters() const {
-    return 3;
-  }
 
   int NumResiduals() const {
     return 2;
+  }
+
+  int NumParameters() const {
+    return 3;
   }
 
   bool operator()(const double* parameters,
@@ -149,7 +149,7 @@ void TestHelper(const Function& f, const Vector& x0) {
   EXPECT_GT(residuals.norm(), 1e-10);
 
   TinySolver<Function> solver;
-  solver.solve(f, &x);
+  solver.Solve(f, &x);
 
   f(x.data(), residuals.data(), NULL);
   EXPECT_NEAR(0.0, residuals.norm(), 1e-10);
