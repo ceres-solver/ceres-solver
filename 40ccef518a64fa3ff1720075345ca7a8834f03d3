@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557688f5_bcdbc463",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "Eigen/Dense I believe is better, if you are going to let them use any dense linear solver.",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e371a2_d75e1c50",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "if you did the heap allocation when you constructed the object, it would work. it has threading implications, but it would be done once and you would never touch it again.\n\nso why not have the fixedarray be part of the object rather than being constructed on demand in the operator() ?",
+      "range": {
+        "startLine": 363,
+        "startChar": 11,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73853170_be67df33",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "I think these should be moved into the underlying struct.",
+      "range": {
+        "startLine": 370,
+        "startChar": 11,
+        "endLine": 370,
+        "endChar": 25
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6ac5c6_6ecf1e5e",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "move to underlying struct.",
+      "range": {
+        "startLine": 378,
+        "startChar": 11,
+        "endLine": 378,
+        "endChar": 25
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8031510_daf20eca",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "why not re-write this to be a manual loop?",
+      "range": {
+        "startLine": 398,
+        "startChar": 6,
+        "endLine": 398,
+        "endChar": 21
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60116ac_919d65a1",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "AutoDiffTestFunctor ? who knows or cares about Jets here.",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 21
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32a79ec_515ce877",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T14:08:51Z",
+      "side": 1,
+      "message": "this is not an autodiff test, this is a solver test.",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 15
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
