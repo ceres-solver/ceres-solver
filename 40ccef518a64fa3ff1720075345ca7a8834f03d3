@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fc1b210d_6aeee27a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T16:57:10Z",
+      "side": 1,
+      "message": "sure, but the default we suggest should be good. specifically including LU is just weird in this case and I do not understand why it is a good choice. mathematically it maketh no sense.\nyou are also doing twice the linear algebra and not using symmetry.",
+      "parentUuid": "e742dfeb_9a929862",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43e371a2_d75e1c50",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 4
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "We can benchmark it. But the manual loop will just be the same as the vectorized one; the memory thrashing is fundamental to what we\u0027re trying to do and has nothing to do with eigen.",
       "parentUuid": "d8031510_daf20eca",
+      "range": {
+        "startLine": 398,
+        "startChar": 6,
+        "endLine": 398,
+        "endChar": 21
+      },
+      "revId": "40ccef518a64fa3ff1720075345ca7a8834f03d3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08b7f0f_89c9e4ba",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T16:57:10Z",
+      "side": 1,
+      "message": "+1 on benchmarking it, since we know what the right thing to do here is, using eigen abstractions here and hoping that they get all stripped away by the compiler is worse IMO.\nbut this can be a follow up patch.",
+      "parentUuid": "dd9d265c_a0cbd84d",
       "range": {
         "startLine": 398,
         "startChar": 6,
