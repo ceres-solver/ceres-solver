@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28d23138_f29196e9",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T16:57:10Z",
+      "side": 1,
+      "message": "more general question, about the location of this code, where should the TinySolverCostFunctionAdapter go? are we planning on just growing this file? I am okay with it, I just want to know.",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 5
+      },
+      "revId": "29c10bec5c431a5af1300817ce71a11d5c6edefa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e731fa_5e49812b",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-12T16:57:10Z",
+      "side": 1,
+      "message": "TinySolverAutoDiffFunction ? since you are not adapting the function, \nbut rather building a function object from a functor.\n\njust like AutoDiffCostFunction and not AutoDiffCostFunctionAdapter.",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 41
+      },
+      "revId": "29c10bec5c431a5af1300817ce71a11d5c6edefa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
