@@ -30,6 +30,7 @@
 // Author: mierle@gmail.com (Keir Mierle)
 
 #include "ceres/tiny_solver.h"
+#include "ceres/tiny_solver_autodiff_function.h"
 
 #include <algorithm>
 #include <cmath>
@@ -192,6 +193,40 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
   ExampleAllDynamic f;
 
   TestHelper(f, x0);
+}
+
+
+struct JetTestFunctor {
+  template<typename T>
+  bool operator()(const T* const parameters, T* residuals) const {
+    const T& x = parameters[0];
+    const T& y = parameters[1];
+    const T& z = parameters[2];
+    residuals[0] = x + 2.*y + 4.*z;
+    residuals[1] = y * z;
+    return true;
+  }
+};
+
+TEST(TinySolver, AutodiffIntegration) {
+  Vec3 x0(0.76026643, -30.01799744, 0.55192142);
+
+  typedef TinySolverAutoDiffFunction<JetTestFunctor, 2, 3>
+      WrappedFunction;
+
+  JetTestFunctor jet_cost_functor;
+  WrappedFunction f(jet_cost_functor);
+
+  Vec3 x = x0;
+  Vec2 residuals;
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_GT(residuals.norm(), 1e-10);
+
+  TinySolver<WrappedFunction> solver;
+  solver.Solve(f, &x);
+
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_NEAR(0.0, residuals.norm(), 1e-10);
 }
 
 }  // namespace tinysolver
