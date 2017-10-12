@@ -30,11 +30,13 @@
 // Author: mierle@gmail.com (Keir Mierle)
 
 #include "ceres/tiny_solver.h"
+#include "ceres/tiny_solver_autodiff_function.h"
 
 #include <algorithm>
 #include <cmath>
 
 #include "gtest/gtest.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
