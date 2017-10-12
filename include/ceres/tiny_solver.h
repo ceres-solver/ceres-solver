@@ -57,6 +57,8 @@
 #include "Eigen/Core"
 #include "Eigen/LU"
 
+#include "ceres/internal/autodiff.h"
+
 namespace ceres {
 
 // To use tiny solver, create a class or struct that allows computing the cost
@@ -305,6 +307,36 @@ class TinySolver {
     jtj_.resize(num_parameters, num_parameters);
     jtj_augmented_.resize(num_parameters, num_parameters);
   }
+};
+
+template<typename CostFunctor, int kNumResiduals, int kNumParameters>
+class TinySolverFunctionAutoDiffAdapter {
+ public:
+   TinySolverFunctionAutoDiffAdapter(const CostFunctor& cost_functor)
+     : cost_functor_(cost_functor) {}
+
+  typedef double Scalar;
+  enum {
+    NUM_PARAMETERS = kNumParameters,
+    NUM_RESIDUALS = kNumResiduals,
+  };
+  bool operator()(const double* parameters,
+                  double* residuals,
+                  double* jacobian) const {
+    if (jacobian) {
+      return internal::AutoDiff<CostFunctor, double, kNumParameters>(
+          cost_functor_,
+          &parameters,
+          kNumResiduals,
+          &residuals);
+    }
+    // No jacobian requested, so just directly call the cost function with
+    // doubles, skipping jets and derivatives.
+    return cost_functor_(parameters, residuals);
+  }
+
+ private:
+  const CostFunctor& cost_functor_;
 };
 
 }  // namespace ceres
