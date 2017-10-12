@@ -57,6 +57,8 @@
 #include "Eigen/Core"
 #include "Eigen/LU"
 
+#include "ceres/internal/autodiff.h"
+
 namespace ceres {
 
 // To use tiny solver, create a class or struct that allows computing the cost
@@ -305,6 +307,105 @@ class TinySolver {
     jtj_.resize(num_parameters, num_parameters);
     jtj_augmented_.resize(num_parameters, num_parameters);
   }
+};
+
+// An adapter around Ceres autodiff-style CostFunctors to enable easier use of
+// TinySolver. See the example below showing how to use it:
+//
+//   // Same as a Ceres autodiff functor, but taking only 1 parameter.
+//   struct MyFunctor {
+//     template<typename T>
+//     bool operator()(const T* const parameters, T* residuals) const {
+//       const T& x = parameters[0];
+//       const T& y = parameters[1];
+//       const T& z = parameters[2];
+//       residuals[0] = x + 2.*y + 4.*z;
+//       residuals[1] = y * z;
+//       return true;
+//     }
+//   };
+//
+//   typedef TinySolverFunctionAutoDiffAdapter<MyFunctor, 2, 3>
+//       WrappedFunctor;
+//
+//   Vec3 x = ...;
+//
+//   MyFunctor my_functor;
+//   WrappedFunction f(my_functor);
+//   TinySolver<WrappedFunction> solver;
+//   solver.Solve(f, &x);
+//
+// Key point of note is that a fair amount of stack space is needed, and there
+// is some overhead to using this approach.
+//
+// WARNING: The cost function adapter is NOT THREAD SAFE. There is an internal
+// bufffer of jet objects that's reused for every evaluation, to avoid
+// allocating. If you need multiple threads, make multiple adapter instances.
+template<typename CostFunctor,
+         int kNumResiduals,
+         int kNumParameters,
+         typename T = double>
+class TinySolverFunctionAutoDiffAdapter {
+ public:
+   TinySolverFunctionAutoDiffAdapter(const CostFunctor& cost_functor)
+     : cost_functor_(cost_functor) {}
+
+  typedef T Scalar;
+  enum {
+    NUM_PARAMETERS = kNumParameters,
+    NUM_RESIDUALS = kNumResiduals,
+  };
+  // Note: This may use quite some stack space, so be careful.
+  bool operator()(const T* parameters,
+                  T* residuals,
+                  T* jacobian) const {
+    if (!jacobian) {
+      // No jacobian requested, so just directly call the cost function with
+      // doubles, skipping jets and derivatives.
+      return cost_functor_(parameters, residuals);
+    }
+    // Initialize the input jets with passed parameters.
+    for (int i = 0; i < kNumParameters; ++i) {
+      jet_parameters_[i].a = parameters[i];  // Scalar part.
+      jet_parameters_[i].v.setZero();  // Derivative part.
+      jet_parameters_[i].v[i] = T(1.0);
+    }
+
+    // Initialize the output jets such that we can detect user errors.
+    for (int i = 0; i < kNumResiduals; ++i) {
+      jet_residuals_[i].a = kImpossibleValue;
+      jet_residuals_[i].v.setConstant(kImpossibleValue);
+    }
+
+    // Execute the cost function, but with jets to find the derivative.
+    if (!cost_functor_(jet_parameters_, jet_residuals_)) {
+      return false;
+    }
+
+    // Copy the jacobian out of the derivative part of the residual jets.
+    Eigen::Map<Eigen::Matrix<T,
+                             kNumResiduals,
+                             kNumParameters> > jacobian_matrix(jacobian);
+    for (int r = 0; r < kNumResiduals; ++r) {
+      residuals[r] = jet_residuals_[r].a;
+      // Note that while this looks like a fast vectorized write, in practice it
+      // unfortunately thrashes the cache since the writes to the column-major
+      // jacobian are strided (e.g. rows are non-contiguous).
+      jacobian_matrix.row(r) = jet_residuals_[r].v;
+    }
+    return true;
+  }
+
+ private:
+  const CostFunctor& cost_functor_;
+
+  // To evaluate the cost function with jets, temporary storage is needed. These
+  // are the buffers that are used during evaluation; parameters for the input,
+  // and jet_residuals_ are where the final cost and derivatives end up.
+  //
+  // Since this buffer is used for evaluation, the adapter is not thread safe.
+  mutable Jet<T, kNumParameters> jet_parameters_[kNumParameters];
+  mutable Jet<T, kNumParameters> jet_residuals_[kNumResiduals];
 };
 
 }  // namespace ceres
