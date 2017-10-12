@@ -30,11 +30,13 @@
 // Author: mierle@gmail.com (Keir Mierle)
 
 #include "ceres/tiny_solver.h"
+#include "ceres/tiny_solver_autodiff_function.h"
 
 #include <algorithm>
 #include <cmath>
 
 #include "gtest/gtest.h"
+#include "glog/logging.h"
 
 namespace ceres {
 
@@ -192,6 +194,53 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
   ExampleAllDynamic f;
 
   TestHelper(f, x0);
+}
+
+// Convex cost function with zero cost at (1, 2, 3).
+struct AutoDiffTestFunctor {
+  template<typename T>
+  bool operator()(const T* const parameters, T* residuals) const {
+    // Shift the parameters so the solution is not at the origin, to prevent
+    // accidentally showing "PASS".
+    const T& a = parameters[0] - T(1.0);
+    const T& b = parameters[1] - T(2.0);
+    const T& c = parameters[2] - T(3.0);
+    residuals[0] = a + 2.*b + 4.*c;
+    residuals[1] = 5.*a + b + 3.*c;
+    return true;
+  }
+};
+
+TEST(TinySolverAutoDiffFunction, FullSolveWithAutoDiff) {
+  typedef TinySolverAutoDiffFunction<AutoDiffTestFunctor, 2, 3>
+      AutoDiffTestFunction;
+  AutoDiffTestFunctor autodiff_test_functor;
+  AutoDiffTestFunction f(autodiff_test_functor);
+
+  // Pick a starting point away from the minimum.
+  Vec3 x(2., -3., 6);
+  Vec2 residuals;
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_NEAR(3., residuals(0), 1e-10);
+  EXPECT_NEAR(9., residuals(1), 1e-10);
+
+  TinySolver<AutoDiffTestFunction> solver;
+  solver.Solve(f, &x);
+
+  f(x.data(), residuals.data(), NULL);
+  EXPECT_NEAR(0.0, residuals.norm(), 1e-10);
+
+  // DO NOT SUBMIT!
+  LOG(INFO) << "---------------------------------";
+  LOG(INFO) << "----- error_magnitude: " << solver.results.error_magnitude;
+  LOG(INFO) << "----- gradient_magnitude: " << solver.results.gradient_magnitude;
+  LOG(INFO) << "----- num_failed_linear_solves: " << solver.results.num_failed_linear_solves;
+  LOG(INFO) << "----- iterations: " << solver.results.iterations;
+  LOG(INFO) << "----- status: " << solver.results.status;
+
+  EXPECT_NEAR(1.0, x(0), 1e-10);
+  EXPECT_NEAR(2.0, x(1), 1e-10);
+  EXPECT_NEAR(3.0, x(2), 1e-10);
 }
 
 }  // namespace tinysolver
