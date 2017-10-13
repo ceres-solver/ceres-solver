@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75ecfbc1_50d7b1e7",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "I will split it out into a separate file in this patch. I wanted to get it working before I figured out the right place.",
+      "parentUuid": "28d23138_f29196e9",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 5
+      },
+      "revId": "29c10bec5c431a5af1300817ce71a11d5c6edefa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84e731fa_5e49812b",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T16:57:10Z",
       "side": 1,
       "message": "TinySolverAutoDiffFunction ? since you are not adapting the function, \nbut rather building a function object from a functor.\n\njust like AutoDiffCostFunction and not AutoDiffCostFunctionAdapter.",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 41
+      },
+      "revId": "29c10bec5c431a5af1300817ce71a11d5c6edefa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf02122_f957fc2a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "84e731fa_5e49812b",
       "range": {
         "startLine": 348,
         "startChar": 0,

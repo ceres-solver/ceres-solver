@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e582b2b4_501d781a",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0455973_f66601f2",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b062f73_eeadff71",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef764c77_2c5ead2c",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b062f73_eeadff71",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b375306b_23c4c00f",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e02c62_310ac923",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd10df4_aa9f8b7a",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "95b67517_7dbe0daf",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd10df4_aa9f8b7a",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63555f3a_5582cf29",
         "filename": "include/ceres/tiny_solver_autodiff_function.h",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f54d53_17ded11f",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-13T16:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63555f3a_5582cf29",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 17
+      },
+      "revId": "7e74e54ea5ab9061f161469d88cfa94ff5e8fcea",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
