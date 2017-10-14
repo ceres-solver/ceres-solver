@@ -54,8 +54,7 @@
 #include <cassert>
 #include <cmath>
 
-#include "Eigen/Core"
-#include "Eigen/LU"
+#include "Eigen/Dense"
 
 namespace ceres {
 
@@ -139,8 +138,6 @@ class TinySolver {
   typedef typename Function::Scalar Scalar;
   typedef typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> Parameters;
 
-  // TODO(keir): Some of these knobs can be derived from each other and
-  // removed, instead of requiring the user to set them.
   enum Status {
     RUNNING,
     // Resulting solution may be OK to use.
@@ -154,8 +151,12 @@ class TinySolver {
     FAILED_TO_SOLVER_LINEAR_SYSTEM,
   };
 
-  struct SolverParameters {
-    SolverParameters()
+  // TODO(keir): Some of these knobs can be derived from each other and
+  // removed, instead of requiring the user to set them.
+  // TODO(sameeragarwal): Make the parameters consistent with ceres
+  // TODO(sameeragarwal): Return a struct instead of just an enum.
+  struct Options {
+    Options()
        : gradient_threshold(1e-16),
          relative_step_threshold(1e-16),
          error_threshold(1e-16),
@@ -168,9 +169,10 @@ class TinySolver {
     int    max_iterations;           // Maximum number of solver iterations.
   };
 
-  struct Results {
-    Scalar error_magnitude;     // ||f(x)||
-    Scalar gradient_magnitude;  // ||J'f(x)||
+  struct Summary {
+    Scalar initial_cost;              // 1/2 ||f(x)||^2
+    Scalar final_cost;                // 1/2 ||f(x)||^2
+    Scalar gradient_magnitude;        // ||J'f(x)||
     int    num_failed_linear_solves;
     int    iterations;
     Status status;
@@ -185,26 +187,27 @@ class TinySolver {
     // unstable. Nevertheless, it is often good enough and is fast.
     jtj_ = jacobian_.transpose() * jacobian_;
     g_ = jacobian_.transpose() * error_;
-    if (g_.array().abs().maxCoeff() < params.gradient_threshold) {
+    if (g_.array().abs().maxCoeff() < options.gradient_threshold) {
       return GRADIENT_TOO_SMALL;
-    } else if (error_.norm() < params.error_threshold) {
+    } else if (error_.norm() < options.error_threshold) {
       return ERROR_TOO_SMALL;
     }
     return RUNNING;
   }
 
-  Results Solve(const Function& function, Parameters* x_and_min) {
+  Summary& Solve(const Function& function, Parameters* x_and_min) {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
 
     assert(x_and_min);
     Parameters& x = *x_and_min;
-    results.status = Update(function, x);
+    summary.status = Update(function, x);
+    summary.initial_cost = error_.squaredNorm() / Scalar(2.0);
 
-    Scalar u = Scalar(params.initial_scale_factor * jtj_.diagonal().maxCoeff());
+    Scalar u = Scalar(options.initial_scale_factor * jtj_.diagonal().maxCoeff());
     Scalar v = 2;
 
     int i;
-    for (i = 0; results.status == RUNNING && i < params.max_iterations; ++i) {
+    for (i = 0; summary.status == RUNNING && i < options.max_iterations; ++i) {
       jtj_augmented_ = jtj_;
       jtj_augmented_.diagonal().array() += u;
 
@@ -212,8 +215,8 @@ class TinySolver {
       dx_ = linear_solver_.solve(g_);
       bool solved = (jtj_augmented_ * dx_).isApprox(g_);
       if (solved) {
-        if (dx_.norm() < params.relative_step_threshold * x.norm()) {
-          results.status = RELATIVE_STEP_SIZE_TOO_SMALL;
+        if (dx_.norm() < options.relative_step_threshold * x.norm()) {
+          summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
           break;
         }
         x_new_ = x + dx_;
@@ -227,14 +230,14 @@ class TinySolver {
         if (rho > 0) {
           // Accept the Gauss-Newton step because the linear model fits well.
           x = x_new_;
-          results.status = Update(function, x);
+          summary.status = Update(function, x);
           Scalar tmp = Scalar(2 * rho - 1);
           u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
           v = 2;
           continue;
         }
       } else {
-        results.num_failed_linear_solves++;
+        summary.num_failed_linear_solves++;
       }
       // Reject the update because either the normal equations failed to solve
       // or the local linear model was not good (rho < 0). Instead, increase u
@@ -242,17 +245,17 @@ class TinySolver {
       u *= v;
       v *= 2;
     }
-    if (results.status == RUNNING) {
-      results.status = HIT_MAX_ITERATIONS;
+    if (summary.status == RUNNING) {
+      summary.status = HIT_MAX_ITERATIONS;
     }
-    results.error_magnitude = error_.norm();
-    results.gradient_magnitude = g_.norm();
-    results.iterations = i;
-    return results;
+    summary.final_cost = error_.squaredNorm() / Scalar(2.0);
+    summary.gradient_magnitude = g_.norm();
+    summary.iterations = i;
+    return summary;
   }
 
-  SolverParameters params;
-  Results results;
+  Options options;
+  Summary summary;
 
  private:
   // Preallocate everything, including temporary storage needed for solving the
