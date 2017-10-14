@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfb53717_4351b3a9",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:02:52Z",
+      "side": 1,
+      "message": "I am not sure what you mean here, because the idea was that you get this from anywhere you want.",
+      "parentUuid": "099d07cf_78c080af",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f1d75c_734fdf0d",
         "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8c6bbfad_1deabebb",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4f1d75c_734fdf0d",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7825bbfb_2314b884",
         "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a4daa4_eaa5a96e",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7825bbfb_2314b884",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "f074d487_c0788391",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf4ef9d_b4433075",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5904cd44_f3b3bc84",
         "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
         "patchSetId": 1
@@ -101,6 +173,24 @@
       "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a31156_9e787dd7",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:02:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5904cd44_f3b3bc84",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
