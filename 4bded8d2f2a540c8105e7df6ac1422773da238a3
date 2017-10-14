@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "765640c6_18fec349",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:30:41Z",
+      "side": 1,
+      "message": "I do not think this test belongs here, all you need here is to make sure you get the right jacobians. if you want integration tests, they should be separate. this file can have very small and simple tests.",
+      "revId": "4bded8d2f2a540c8105e7df6ac1422773da238a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e21344a_28dece7b",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:30:41Z",
+      "side": 1,
+      "message": "magic numbers? why not double::epsilon here and everywhere else?",
+      "range": {
+        "startLine": 78,
+        "startChar": 40,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "4bded8d2f2a540c8105e7df6ac1422773da238a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea56885_072548ef",
+        "filename": "internal/ceres/tiny_solver_autodiff_function_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:30:41Z",
+      "side": 1,
+      "message": "magic numbers?\nwhy not double::epsilon here and elsewhere?",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "4bded8d2f2a540c8105e7df6ac1422773da238a3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
