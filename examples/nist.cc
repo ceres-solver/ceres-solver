@@ -592,7 +592,7 @@ int RegressionDriver(const string& filename) {
       typedef
       ceres::TinySolver<
         ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>,
-        Eigen::LDLT<Eigen::Matrix<double, num_parameters, num_parameters>>> Solver;
+        Eigen::LDLT<Eigen::Matrix<double, num_parameters, num_parameters> > > Solver;
       Solver solver;
       solver.options.max_iterations = FLAGS_num_iterations;
       solver.options.error_threshold = std::numeric_limits<double>::epsilon();
