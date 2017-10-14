@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d39000c1_1728fc8c",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:28:02Z",
+      "side": 1,
+      "message": "google.com?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "0e7a0ebb709e3ec053de96e30550e50ff196a18c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cacd43b_78a1972a",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:28:02Z",
+      "side": 1,
+      "message": "does this belong here?",
+      "range": {
+        "startLine": 32,
+        "startChar": 28,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "0e7a0ebb709e3ec053de96e30550e50ff196a18c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752f9322_00436158",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:28:02Z",
+      "side": 1,
+      "message": "I think this should be a positive statement along the lines of, Automatically differentiated Function objects for use with TinySolver. Basically the docs should sit completely independent of anything else.",
+      "revId": "0e7a0ebb709e3ec053de96e30550e50ff196a18c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e219d0c1_9db04d85",
+        "filename": "include/ceres/tiny_solver_autodiff_function.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:28:02Z",
+      "side": 1,
+      "message": "this seems useless. why not just use Scalar up above?",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "0e7a0ebb709e3ec053de96e30550e50ff196a18c",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
