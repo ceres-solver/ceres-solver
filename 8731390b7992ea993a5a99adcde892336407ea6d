@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075d3f35_13812c96",
+        "filename": "internal/ceres/tiny_solver_cost_function_adapter_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T22:06:32Z",
+      "side": 1,
+      "message": "Comment above:\n// Check that cost-only evaluation matches.",
+      "revId": "8731390b7992ea993a5a99adcde892336407ea6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68552a4d_46d3d4a2",
+        "filename": "internal/ceres/tiny_solver_cost_function_adapter_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T22:06:32Z",
+      "side": 1,
+      "message": "Comment above:\n// Check that cost and Jacobian evaluation matches.",
+      "revId": "8731390b7992ea993a5a99adcde892336407ea6d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
