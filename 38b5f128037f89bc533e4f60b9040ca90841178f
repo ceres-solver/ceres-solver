@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d698a37_cabf17cb",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-10-14T22:49:29Z",
+      "side": 1,
+      "message": "drop this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "38b5f128037f89bc533e4f60b9040ca90841178f",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
