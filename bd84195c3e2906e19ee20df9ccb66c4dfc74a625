@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "099d07cf_78c080af",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "Maybe needs a more complete writeup?",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f1d75c_734fdf0d",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "I think indenting the code / prose parts differently would help.",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7825bbfb_2314b884",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "While it\u0027s true this fits on one line, I don\u0027t think it\u0027s more readable this way.",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fe4121_d32ea83d",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "Consider streaming in a user-meaningful message.",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf4ef9d_b4433075",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "nit: drop blank",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5904cd44_f3b3bc84",
+        "filename": "include/ceres/tiny_solver_cost_function_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T21:55:02Z",
+      "side": 1,
+      "message": "Perhaps add a comment about this block. It requires some careful reading to realize this is just converting from row to col major.",
+      "revId": "bd84195c3e2906e19ee20df9ccb66c4dfc74a625",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
