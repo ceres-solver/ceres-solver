@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71bfcc2b_0c7ab41c",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T20:55:24Z",
+      "side": 1,
+      "message": "Ah, the original code is wrong here; intention was to return const Results\u0026. Ethos of Tiny Solver - No allocations. Consider changing this to const Summary\u0026 Solve(...), and putting back the summary struct on the Solver class.",
+      "revId": "b3a85b5a6669528a35b7c0f85dce936917c55174",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2868d070_96f65d02",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T20:55:24Z",
+      "side": 1,
+      "message": "It\u0027s true that this likely gets the benefits of RVO, but I don\u0027t see the need to rely on it.",
+      "revId": "b3a85b5a6669528a35b7c0f85dce936917c55174",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a13b45b_b746b50d",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T20:55:24Z",
+      "side": 1,
+      "message": "Scalar(2.0)",
+      "revId": "b3a85b5a6669528a35b7c0f85dce936917c55174",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ded78f_c5d18ca7",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-14T20:55:24Z",
+      "side": 1,
+      "message": "Scalar(2.0)",
+      "revId": "b3a85b5a6669528a35b7c0f85dce936917c55174",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
