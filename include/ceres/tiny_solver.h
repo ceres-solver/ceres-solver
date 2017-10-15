@@ -58,6 +58,39 @@
 
 namespace ceres {
 
+// COMMENTARY(Keir): I'm not happy about this macro, but without it, the
+// boilerplate to make a cost function is explosive in the Eigen-ified world.
+#define CERES_TINY_SOLVER_CONFIG(scalar, num_residuals, num_parameters)  \
+  enum {                                                                 \
+    NUM_RESIDUALS = num_residuals,                                       \
+    NUM_PARAMETERS = num_parameters,                                     \
+  };                                                                     \
+  typedef scalar Scalar;                                                 \
+  typedef Eigen::Matrix<double, num_parameters, 1> Parameters;           \
+  typedef Eigen::Matrix<double, num_residuals, 1> Residuals;             \
+  typedef Eigen::Matrix<double, num_residuals, num_parameters> Jacobian;
+
+// COMMENTARY(Keir): Alternate #2, include function signature.
+#define CERES_TINY_SOLVER_FUNCTION(scalar,                               \
+                                   residuals_name,                       \
+                                   num_residuals,                        \
+                                   parameters_name,                      \
+                                   num_parameters,                       \
+                                   jacobian_name)                        \
+  enum {                                                                 \
+    NUM_RESIDUALS = num_residuals,                                       \
+    NUM_PARAMETERS = num_parameters,                                     \
+  };                                                                     \
+  typedef scalar Scalar;                                                 \
+  typedef Eigen::Matrix<double, num_parameters, 1> Parameters;           \
+  typedef Eigen::Matrix<double, num_residuals, 1> Residuals;             \
+  typedef Eigen::Matrix<double, num_residuals, num_parameters> Jacobian; \
+  bool operator()(const Parameters& parameters_name,                     \
+                  Residuals& residuals_name,                             \
+                  Jacobian* jacobian_name) const
+
+// XXXX DOCS NEED UPDATING FOR EIGEN CHANGE
+//
 // To use tiny solver, create a class or struct that allows computing the cost
 // function (described below). This is similar to a ceres::CostFunction, but is
 // different to enable statically allocating all memory for the solve
@@ -180,7 +213,7 @@ class TinySolver {
 
   Status Update(const Function& function, const Parameters &x) {
     // TODO(keir): Handle false return from the cost function.
-    function(&x(0), &error_(0), &jacobian_(0, 0));
+    function(x, error_, &jacobian_);
     error_ = -error_;
 
     // This explicitly computes the normal equations, which is numerically
@@ -224,7 +257,7 @@ class TinySolver {
         // in error that would be obtained if the problem was linear. See [1]
         // for details.
         // TODO(keir): Add proper handling of errors from user eval of cost functions.
-        function(&x_new_[0], &f_x_new_[0], NULL);
+        function(x_new_, f_x_new_, NULL);
         Scalar rho((error_.squaredNorm() - f_x_new_.squaredNorm())
                    / dx_.dot(u * dx_ + g_));
         if (rho > 0) {
