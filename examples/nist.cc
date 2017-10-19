@@ -666,7 +666,6 @@ void SolveNISTProblems() {
   hard_success += RegressionDriver<BoxBOD, 2>("BoxBOD.dat");
   hard_success += RegressionDriver<Rat42, 3>("Rat42.dat");
   hard_success += RegressionDriver<MGH10, 3>("MGH10.dat");
-
   hard_success += RegressionDriver<Eckerle4, 3>("Eckerle4.dat");
   hard_success += RegressionDriver<Rat43, 4>("Rat43.dat");
   hard_success += RegressionDriver<Bennet5, 3>("Bennett5.dat");
