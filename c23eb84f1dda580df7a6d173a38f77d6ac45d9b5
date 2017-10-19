@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2445e2e_978abd32",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-19T20:42:29Z",
+      "side": 1,
+      "message": "I picked the other values randomly; is this a better initialization?",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bf19b6_5ba72a59",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-19T20:42:29Z",
+      "side": 1,
+      "message": "Perhaps add a comment about this? It\u0027s not entirely obvious why this is this way.",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4bd45d_e9a04349",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-19T20:42:29Z",
+      "side": 1,
+      "message": "I don\u0027t believe a refactor is needed; just pass a different solver type into the TinySolver\u003c\u003e template parameters.",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e55f578_d6131057",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-19T20:42:29Z",
+      "side": 1,
+      "message": "Why this change? I feel the previous version was clearer (filling summary in at the end).",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902bcc0b_4e4616d1",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-19T20:42:29Z",
+      "side": 1,
+      "message": "LM",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
