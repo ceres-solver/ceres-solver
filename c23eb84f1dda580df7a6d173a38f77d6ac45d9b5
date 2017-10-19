@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd781944_6bc60662",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-19T20:53:04Z",
+      "side": 1,
+      "message": "this is the same value that ceres uses, and yes this works better.",
+      "parentUuid": "d2445e2e_978abd32",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33bf19b6_5ba72a59",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6ad9e315_cb55e62b",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-19T20:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bf19b6_5ba72a59",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e4bd45d_e9a04349",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-19T20:42:29Z",
       "side": 1,
       "message": "I don\u0027t believe a refactor is needed; just pass a different solver type into the TinySolver\u003c\u003e template parameters.",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42e79615_209c1f02",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-19T20:53:04Z",
+      "side": 1,
+      "message": "DenseQR work on J not on J\u0027J. So yes if we want to enable qr factorization you are going to need a refactor here.",
+      "parentUuid": "1e4bd45d_e9a04349",
       "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9125c788_02fab254",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-19T20:53:04Z",
+      "side": 1,
+      "message": "I need the iteration number in the Update method to compute the jacobian scaling.",
+      "parentUuid": "9e55f578_d6131057",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "902bcc0b_4e4616d1",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a52af83_f0450449",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-19T20:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902bcc0b_4e4616d1",
+      "revId": "c23eb84f1dda580df7a6d173a38f77d6ac45d9b5",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
