@@ -160,7 +160,7 @@ class TinySolver {
        : gradient_threshold(1e-16),
          relative_step_threshold(1e-16),
          error_threshold(1e-16),
-         initial_scale_factor(1e-3),
+         initial_scale_factor(1e-4),
          max_iterations(100) {}
     Scalar gradient_threshold;       // eps > max(J'*f(x))
     Scalar relative_step_threshold;  // eps > ||dx|| / ||x||
@@ -170,11 +170,19 @@ class TinySolver {
   };
 
   struct Summary {
-    Scalar initial_cost;              // 1/2 ||f(x)||^2
-    Scalar final_cost;                // 1/2 ||f(x)||^2
-    Scalar gradient_magnitude;        // ||J'f(x)||
-    int    num_failed_linear_solves;
-    int    iterations;
+    Summary()
+        : initial_cost(-1),
+          final_cost(-1),
+          gradient_magnitude(-1),
+          num_failed_linear_solves(0),
+          iterations(0),
+          status(RUNNING) {}
+
+    Scalar initial_cost;        // 1/2 ||f(x)||^2
+    Scalar final_cost;          // 1/2 ||f(x)||^2
+    Scalar gradient_magnitude;  // ||J'f(x)||
+    int num_failed_linear_solves;
+    int iterations;
     Status status;
   };
 
@@ -183,8 +191,22 @@ class TinySolver {
     function(&x(0), &error_(0), &jacobian_(0, 0));
     error_ = -error_;
 
+    // On the first iteration, compute a diagonal (Jacobi) scaling
+    // matrix, which we store as a vector.
+    if (summary.iterations == 0) {
+      // jacobi_scaling = 1 / (1 + diagonal(J'J))
+      //
+      // 1 is added to the denominator to regularize small diagonal
+      // entries.
+      jacobi_scaling_ = 1.0 / (1.0 + jacobian_.colwise().norm().array());
+    }
+
     // This explicitly computes the normal equations, which is numerically
     // unstable. Nevertheless, it is often good enough and is fast.
+    //
+    // TODO(sameeragarwal): Refactor this to allow for DenseQR
+    // factorization.
+    jacobian_ = jacobian_ * jacobi_scaling_.asDiagonal();
     jtj_ = jacobian_.transpose() * jacobian_;
     g_ = jacobian_.transpose() * error_;
     if (g_.array().abs().maxCoeff() < options.gradient_threshold) {
@@ -192,65 +214,85 @@ class TinySolver {
     } else if (error_.norm() < options.error_threshold) {
       return ERROR_TOO_SMALL;
     }
+
     return RUNNING;
   }
 
   Summary& Solve(const Function& function, Parameters* x_and_min) {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
-
     assert(x_and_min);
     Parameters& x = *x_and_min;
+    summary = Summary();
+
+    // TODO(sameeragarwal): Deal with failure here.
     summary.status = Update(function, x);
     summary.initial_cost = error_.squaredNorm() / Scalar(2.0);
 
-    Scalar u = Scalar(options.initial_scale_factor * jtj_.diagonal().maxCoeff());
+    Scalar u = options.initial_scale_factor;
     Scalar v = 2;
 
-    int i;
-    for (i = 0; summary.status == RUNNING && i < options.max_iterations; ++i) {
-      jtj_augmented_ = jtj_;
-      jtj_augmented_.diagonal().array() += u;
-
-      linear_solver_.compute(jtj_augmented_);
-      dx_ = linear_solver_.solve(g_);
-      bool solved = (jtj_augmented_ * dx_).isApprox(g_);
-      if (solved) {
-        if (dx_.norm() < options.relative_step_threshold * x.norm()) {
-          summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
-          break;
-        }
-        x_new_ = x + dx_;
-        // Rho is the ratio of the actual reduction in error to the reduction
-        // in error that would be obtained if the problem was linear. See [1]
-        // for details.
-        // TODO(keir): Add proper handling of errors from user eval of cost functions.
-        function(&x_new_[0], &f_x_new_[0], NULL);
-        Scalar rho((error_.squaredNorm() - f_x_new_.squaredNorm())
-                   / dx_.dot(u * dx_ + g_));
-        if (rho > 0) {
-          // Accept the Gauss-Newton step because the linear model fits well.
-          x = x_new_;
-          summary.status = Update(function, x);
-          Scalar tmp = Scalar(2 * rho - 1);
-          u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
-          v = 2;
-          continue;
-        }
-      } else {
-        summary.num_failed_linear_solves++;
+    for (int i = 1; summary.status == RUNNING && i < options.max_iterations;
+         ++i) {
+      summary.iterations = i;
+      jtj_regularized_ = jtj_;
+      const Scalar min_diagonal = 1e-6;
+      const Scalar max_diagonal = 1e32;
+      for (int i = 0; i < function.NumParameters(); ++i) {
+        lm_diagonal_[i] = std::sqrt(
+            u * std::min(std::max(jtj_(i, i), min_diagonal), max_diagonal));
+        jtj_regularized_(i, i) += lm_diagonal_[i] * lm_diagonal_[i];
       }
+
+      // TODO(sameeragarwal): Check for failure and deal with it.
+      linear_solver_.compute(jtj_regularized_);
+      lm_step_ = linear_solver_.solve(g_);
+      dx_ = jacobi_scaling_.asDiagonal() * lm_step_;
+      if (dx_.norm() < options.relative_step_threshold * x.norm()) {
+        summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
+        break;
+      }
+      x_new_ = x + dx_;
+
+      // TODO(keir): Add proper handling of errors from user eval of cost
+      // functions.
+      function(&x_new_[0], &f_x_new_[0], NULL);
+
+      // TODO(sameeragarwal): Maintain cost estimate for the iteration
+      // and save on a dot product here.
+      const double cost_change =
+          (error_.squaredNorm() - f_x_new_.squaredNorm());
+
+      // TODO(sameeragarwal): Better more numerically stable evaluation.
+      const double model_cost_change = lm_step_.dot(2 * g_ - jtj_ * lm_step_);
+
+      // rho is the ratio of the actual reduction in error to the reduction
+      // in error that would be obtained if the problem was linear. See [1]
+      // for details.
+      Scalar rho(cost_change / model_cost_change);
+      if (rho > 0) {
+        // Accept the Levenberg-Marquardt step because the linear
+        // model fits well.
+        x = x_new_;
+        summary.status = Update(function, x);
+        Scalar tmp = Scalar(2 * rho - 1);
+        u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
+        v = 2;
+        continue;
+      }
+
       // Reject the update because either the normal equations failed to solve
       // or the local linear model was not good (rho < 0). Instead, increase u
       // to move closer to gradient descent.
       u *= v;
       v *= 2;
     }
+
     if (summary.status == RUNNING) {
       summary.status = HIT_MAX_ITERATIONS;
     }
+
     summary.final_cost = error_.squaredNorm() / Scalar(2.0);
     summary.gradient_magnitude = g_.norm();
-    summary.iterations = i;
     return summary;
   }
 
@@ -261,10 +303,10 @@ class TinySolver {
   // Preallocate everything, including temporary storage needed for solving the
   // linear system. This allows reusing the intermediate storage across solves.
   LinearSolver linear_solver_;
-  Parameters dx_, x_new_, g_;
+  Parameters dx_, x_new_, g_, jacobi_scaling_, lm_diagonal_, lm_step_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> error_, f_x_new_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
-  Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_augmented_;
+  Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
 
   // The following definitions are needed for template metaprogramming.
   template<bool Condition, typename T> struct enable_if;
@@ -302,11 +344,17 @@ class TinySolver {
   Initialize(const Function& /* function */) { }
 
   void Initialize(int num_residuals, int num_parameters) {
+    dx_.resize(num_parameters);
+    x_new_.resize(num_parameters);
+    g_.resize(num_parameters);
+    jacobi_scaling_.resize(num_parameters);
+    lm_diagonal_.resize(num_parameters);
+    lm_step_.resize(num_parameters);
     error_.resize(num_residuals);
     f_x_new_.resize(num_residuals);
     jacobian_.resize(num_residuals, num_parameters);
     jtj_.resize(num_parameters, num_parameters);
-    jtj_augmented_.resize(num_parameters, num_parameters);
+    jtj_regularized_.resize(num_parameters, num_parameters);
   }
 };
 
