@@ -231,13 +231,14 @@ class TinySolver {
     Scalar u = options.initial_scale_factor;
     Scalar v = 2;
 
-    for (int i = 1; summary.status == RUNNING && i < options.max_iterations;
-         ++i) {
-      summary.iterations = i;
+    for (summary.iterations = 1;
+         (summary.status == RUNNING &&
+          summary.iterations < options.max_iterations);
+         summary.iterations++) {
       jtj_regularized_ = jtj_;
       const Scalar min_diagonal = 1e-6;
       const Scalar max_diagonal = 1e32;
-      for (int i = 0; i < function.NumParameters(); ++i) {
+      for (int i = 0; i < lm_diagonal_.rows(); ++i) {
         lm_diagonal_[i] = std::sqrt(
             u * std::min(std::max(jtj_(i, i), min_diagonal), max_diagonal));
         jtj_regularized_(i, i) += lm_diagonal_[i] * lm_diagonal_[i];
