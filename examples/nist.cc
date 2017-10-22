@@ -589,17 +589,17 @@ int RegressionDriver(const string& filename) {
     } else {
       ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters> cfa(
           *cost_function);
-      typedef
-      ceres::TinySolver<
-        ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters>,
-        Eigen::LDLT<Eigen::Matrix<double, num_parameters, num_parameters> > > Solver;
+      typedef ceres::TinySolver<
+          ceres::TinySolverCostFunctionAdapter<Eigen::Dynamic, num_parameters> >
+          Solver;
       Solver solver;
-      solver.options.max_iterations = FLAGS_num_iterations;
-      solver.options.error_threshold = std::numeric_limits<double>::epsilon();
-      solver.options.gradient_threshold = std::numeric_limits<double>::epsilon();
-      solver.options.relative_step_threshold = std::numeric_limits<double>::epsilon();
+      solver.options.max_num_iterations = FLAGS_num_iterations;
+      solver.options.gradient_tolerance =
+          std::numeric_limits<double>::epsilon();
+      solver.options.parameter_tolerance =
+          std::numeric_limits<double>::epsilon();
 
-      Eigen::Matrix<double, num_parameters,1> x;
+      Eigen::Matrix<double, num_parameters, 1> x;
       x = initial_parameters.transpose();
       typename Solver::Summary summary = solver.Solve(cfa, &x);
       initial_parameters = x;

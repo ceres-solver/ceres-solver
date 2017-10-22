@@ -125,7 +125,7 @@ namespace ceres {
 //   int NumParameters() const;
 //
 template<typename Function,
-         typename LinearSolver = Eigen::PartialPivLU<
+         typename LinearSolver = Eigen::LDLT<
            Eigen::Matrix<typename Function::Scalar,
                          Function::NUM_PARAMETERS,
                          Function::NUM_PARAMETERS> > >
@@ -139,56 +139,48 @@ class TinySolver {
   typedef typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> Parameters;
 
   enum Status {
-    RUNNING,
-    // Resulting solution may be OK to use.
     GRADIENT_TOO_SMALL,            // eps > max(J'*f(x))
-    RELATIVE_STEP_SIZE_TOO_SMALL,  // eps > ||dx|| / ||x||
-    ERROR_TOO_SMALL,               // eps > ||f(x)||
+    RELATIVE_STEP_SIZE_TOO_SMALL,  // eps > ||dx|| / (||x|| + eps)
+    COST_TOO_SMALL,                // eps > ||f(x)||^2 / 2
     HIT_MAX_ITERATIONS,
 
-    // Numerical issues
-    FAILED_TO_EVALUATE_COST_FUNCTION,
-    FAILED_TO_SOLVER_LINEAR_SYSTEM,
+    // TODO(sameeragarwal): Deal with numerical failures.
   };
 
-  // TODO(keir): Some of these knobs can be derived from each other and
-  // removed, instead of requiring the user to set them.
-  // TODO(sameeragarwal): Make the parameters consistent with ceres
-  // TODO(sameeragarwal): Return a struct instead of just an enum.
   struct Options {
     Options()
-       : gradient_threshold(1e-16),
-         relative_step_threshold(1e-16),
-         error_threshold(1e-16),
-         initial_scale_factor(1e-4),
-         max_iterations(100) {}
-    Scalar gradient_threshold;       // eps > max(J'*f(x))
-    Scalar relative_step_threshold;  // eps > ||dx|| / ||x||
-    Scalar error_threshold;          // eps > ||f(x)||
-    Scalar initial_scale_factor;     // Initial u for solving normal equations.
-    int    max_iterations;           // Maximum number of solver iterations.
+        : gradient_tolerance(1e-10),
+          parameter_tolerance(1e-8),
+          cost_threshold(std::numeric_limits<Scalar>::epsilon()),
+          initial_trust_region_radius(1e4),
+          max_num_iterations(50) {}
+    Scalar gradient_tolerance;   // eps > max(J'*f(x))
+    Scalar parameter_tolerance;  // eps > ||dx|| / ||x||
+    Scalar cost_threshold;       // eps > ||f(x)||
+    Scalar initial_trust_region_radius;
+    int max_num_iterations;
   };
 
   struct Summary {
     Summary()
         : initial_cost(-1),
           final_cost(-1),
-          gradient_magnitude(-1),
-          num_failed_linear_solves(0),
+          gradient_max_norm(-1),
           iterations(0),
-          status(RUNNING) {}
+          status(HIT_MAX_ITERATIONS) {}
 
-    Scalar initial_cost;        // 1/2 ||f(x)||^2
-    Scalar final_cost;          // 1/2 ||f(x)||^2
-    Scalar gradient_magnitude;  // ||J'f(x)||
-    int num_failed_linear_solves;
+    Scalar initial_cost;       // 1/2 ||f(x)||^2
+    Scalar final_cost;         // 1/2 ||f(x)||^2
+    Scalar gradient_max_norm;  // max(J'f(x))
     int iterations;
     Status status;
   };
 
-  Status Update(const Function& function, const Parameters &x) {
-    // TODO(keir): Handle false return from the cost function.
-    function(&x(0), &error_(0), &jacobian_(0, 0));
+  bool Update(const Function& function, const Parameters &x) {
+    if (!function(x.data(), error_.data(), jacobian_.data())) {
+      return false;
+    }
+
     error_ = -error_;
 
     // On the first iteration, compute a diagonal (Jacobi) scaling
@@ -209,31 +201,37 @@ class TinySolver {
     jacobian_ = jacobian_ * jacobi_scaling_.asDiagonal();
     jtj_ = jacobian_.transpose() * jacobian_;
     g_ = jacobian_.transpose() * error_;
-    if (g_.array().abs().maxCoeff() < options.gradient_threshold) {
-      return GRADIENT_TOO_SMALL;
-    } else if (error_.norm() < options.error_threshold) {
-      return ERROR_TOO_SMALL;
-    }
-
-    return RUNNING;
+    summary.gradient_max_norm = g_.array().abs().maxCoeff();
+    cost_ = error_.squaredNorm() / 2;
+    return true;
   }
 
-  Summary& Solve(const Function& function, Parameters* x_and_min) {
+  const Summary& Solve(const Function& function, Parameters* x_and_min) {
     Initialize<NUM_RESIDUALS, NUM_PARAMETERS>(function);
     assert(x_and_min);
     Parameters& x = *x_and_min;
     summary = Summary();
 
     // TODO(sameeragarwal): Deal with failure here.
-    summary.status = Update(function, x);
-    summary.initial_cost = error_.squaredNorm() / Scalar(2.0);
+    Update(function, x);
+    summary.initial_cost = cost_;
+    summary.final_cost = cost_;
 
-    Scalar u = options.initial_scale_factor;
+    if (summary.gradient_max_norm < options.gradient_tolerance) {
+      summary.status = GRADIENT_TOO_SMALL;
+      return summary;
+    }
+
+    if (cost_ < options.cost_threshold) {
+      summary.status = COST_TOO_SMALL;
+      return summary;
+    }
+
+    Scalar u = 1.0 / options.initial_trust_region_radius;
     Scalar v = 2;
 
     for (summary.iterations = 1;
-         (summary.status == RUNNING &&
-          summary.iterations < options.max_iterations);
+         summary.iterations < options.max_num_iterations;
          summary.iterations++) {
       jtj_regularized_ = jtj_;
       const Scalar min_diagonal = 1e-6;
@@ -248,7 +246,13 @@ class TinySolver {
       linear_solver_.compute(jtj_regularized_);
       lm_step_ = linear_solver_.solve(g_);
       dx_ = jacobi_scaling_.asDiagonal() * lm_step_;
-      if (dx_.norm() < options.relative_step_threshold * x.norm()) {
+
+      // Adding parameter_tolerance to x.norm() ensures that this
+      // works if x is near zero.
+      const Scalar parameter_tolerance =
+          options.parameter_tolerance *
+          (x.norm() + options.parameter_tolerance);
+      if (dx_.norm() < parameter_tolerance) {
         summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
         break;
       }
@@ -258,13 +262,10 @@ class TinySolver {
       // functions.
       function(&x_new_[0], &f_x_new_[0], NULL);
 
-      // TODO(sameeragarwal): Maintain cost estimate for the iteration
-      // and save on a dot product here.
-      const double cost_change =
-          (error_.squaredNorm() - f_x_new_.squaredNorm());
+      const Scalar cost_change = (2 * cost_ - f_x_new_.squaredNorm());
 
       // TODO(sameeragarwal): Better more numerically stable evaluation.
-      const double model_cost_change = lm_step_.dot(2 * g_ - jtj_ * lm_step_);
+      const Scalar model_cost_change = lm_step_.dot(2 * g_ - jtj_ * lm_step_);
 
       // rho is the ratio of the actual reduction in error to the reduction
       // in error that would be obtained if the problem was linear. See [1]
@@ -274,7 +275,19 @@ class TinySolver {
         // Accept the Levenberg-Marquardt step because the linear
         // model fits well.
         x = x_new_;
-        summary.status = Update(function, x);
+
+        // TODO(sameeragarwal): Deal with failure.
+        Update(function, x);
+        if (summary.gradient_max_norm < options.gradient_tolerance) {
+          summary.status = GRADIENT_TOO_SMALL;
+          break;
+        }
+
+        if (cost_ < options.cost_threshold) {
+          summary.status = COST_TOO_SMALL;
+          break;
+        }
+
         Scalar tmp = Scalar(2 * rho - 1);
         u = u * std::max(1 / 3., 1 - tmp * tmp * tmp);
         v = 2;
@@ -288,12 +301,7 @@ class TinySolver {
       v *= 2;
     }
 
-    if (summary.status == RUNNING) {
-      summary.status = HIT_MAX_ITERATIONS;
-    }
-
-    summary.final_cost = error_.squaredNorm() / Scalar(2.0);
-    summary.gradient_magnitude = g_.norm();
+    summary.final_cost = cost_;
     return summary;
   }
 
@@ -304,15 +312,18 @@ class TinySolver {
   // Preallocate everything, including temporary storage needed for solving the
   // linear system. This allows reusing the intermediate storage across solves.
   LinearSolver linear_solver_;
+  Scalar cost_;
   Parameters dx_, x_new_, g_, jacobi_scaling_, lm_diagonal_, lm_step_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, 1> error_, f_x_new_;
   Eigen::Matrix<Scalar, NUM_RESIDUALS, NUM_PARAMETERS> jacobian_;
   Eigen::Matrix<Scalar, NUM_PARAMETERS, NUM_PARAMETERS> jtj_, jtj_regularized_;
 
   // The following definitions are needed for template metaprogramming.
-  template<bool Condition, typename T> struct enable_if;
+  template <bool Condition, typename T>
+  struct enable_if;
 
-  template<typename T> struct enable_if<true, T> {
+  template <typename T>
+  struct enable_if<true, T> {
     typedef T type;
   };
 
@@ -342,7 +353,7 @@ class TinySolver {
   // The number of parameters and residuals are statically sized.
   template <int R, int P>
   typename enable_if<(R != Eigen::Dynamic && P != Eigen::Dynamic), void>::type
-  Initialize(const Function& /* function */) { }
+  Initialize(const Function& /* function */) {}
 
   void Initialize(int num_residuals, int num_parameters) {
     dx_.resize(num_parameters);
