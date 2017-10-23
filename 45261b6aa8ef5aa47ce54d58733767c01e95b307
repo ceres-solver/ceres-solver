@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485f7045_21790e8c",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "This shouldn\u0027t return a reference.",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d806c59b_6c52f09e",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "Generally we follow \"no else after return\" elsewhere in Ceres, I suggest we follow that here too.",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb865082_04945b0b",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "I guess this is more stable, but is not as easy to read. Consider adding a comment explaining the reason to write this convergence this way.",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaab205_d9e6423a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "Why 2*cost?\n\nIf we define cost \u003d 1/2 ||f(x)||^2, then shouldn\u0027t this be divided by 2 at the end? e.g.\n\ncost_change \u003d (2*cost - f_x_new.sqNorm()) / 2,\n\nor\n\ncost_change \u003d cost - f_x_new.sqNorm()/2.\n\n?",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b857aa8_3041b4ea",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "no else after break/return.",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242cfde_996b266b",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:35:00Z",
+      "side": 1,
+      "message": "I think this is wrong, and the original code is correct-- no space after template. The other code is wrong and should get updated (e.g. template\u003c and not template \u003c).",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
