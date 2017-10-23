@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58ca9d17_213696c9",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:42:48Z",
+      "side": 1,
+      "message": "Nevermind!",
+      "parentUuid": "485f7045_21790e8c",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d806c59b_6c52f09e",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ef3a672f_19706094",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e5910a_b3cbaf98",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eaab205_d9e6423a",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "I save on the division here and below in the model_cost_change, which is also twice of what it should be.",
       "parentUuid": "8eaab205_d9e6423a",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f81ba2f_83311e56",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:42:48Z",
+      "side": 1,
+      "message": "This is a non-obvious trick; please document this in the comments.",
+      "parentUuid": "573e7eb5_3a34041e",
       "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -177,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "0e66b8ca_463d94f1",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335be470_d9bc0088",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8242cfde_996b266b",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -191,6 +263,24 @@
       "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a755906f_cc5bbf99",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T04:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8242cfde_996b266b",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
