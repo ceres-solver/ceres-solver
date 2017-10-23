@@ -139,12 +139,9 @@ class TinySolver {
   typedef typename Eigen::Matrix<Scalar, NUM_PARAMETERS, 1> Parameters;
 
   enum Status {
-    GRADIENT_TOO_SMALL,            // eps > max(J'*f(x))
-    RELATIVE_STEP_SIZE_TOO_SMALL,  // eps > ||dx|| / (||x|| + eps)
-    COST_TOO_SMALL,                // eps > ||f(x)||^2 / 2
-    HIT_MAX_ITERATIONS,
-
-    // TODO(sameeragarwal): Deal with numerical failures.
+    NO_CONVERGENCE,
+    CONVERGENCE,
+    FAILURE
   };
 
   struct Options {
@@ -167,7 +164,7 @@ class TinySolver {
           final_cost(-1),
           gradient_max_norm(-1),
           iterations(0),
-          status(HIT_MAX_ITERATIONS) {}
+          status(NO_CONVERGENCE) {}
 
     Scalar initial_cost;       // 1/2 ||f(x)||^2
     Scalar final_cost;         // 1/2 ||f(x)||^2
@@ -213,17 +210,21 @@ class TinySolver {
     summary = Summary();
 
     // TODO(sameeragarwal): Deal with failure here.
-    Update(function, x);
+    if (!Update(function, x)) {
+      summary.status = FAILURE;
+      return summary;
+    }
+
     summary.initial_cost = cost_;
     summary.final_cost = cost_;
 
     if (summary.gradient_max_norm < options.gradient_tolerance) {
-      summary.status = GRADIENT_TOO_SMALL;
+      summary.status = CONVERGENCE;
       return summary;
     }
 
     if (cost_ < options.cost_threshold) {
-      summary.status = COST_TOO_SMALL;
+      summary.status = CONVERGENCE;
       return summary;
     }
 
@@ -253,16 +254,16 @@ class TinySolver {
           options.parameter_tolerance *
           (x.norm() + options.parameter_tolerance);
       if (dx_.norm() < parameter_tolerance) {
-        summary.status = RELATIVE_STEP_SIZE_TOO_SMALL;
+        summary.status = CONVERGENCE;
         break;
       }
       x_new_ = x + dx_;
 
-      // TODO(keir): Add proper handling of errors from user eval of cost
-      // functions.
-      function(&x_new_[0], &f_x_new_[0], NULL);
-
-      const Scalar cost_change = (2 * cost_ - f_x_new_.squaredNorm());
+      Scalar cost_change = -std::numeric_limits<Scalar>::max();
+      if (function(&x_new_[0], &f_x_new_[0], NULL)) {
+        // Treat a failed evaluation as an infinite cost evaluation;
+        cost_change = (2 * cost_ - f_x_new_.squaredNorm());
+      }
 
       // TODO(sameeragarwal): Better more numerically stable evaluation.
       const Scalar model_cost_change = lm_step_.dot(2 * g_ - jtj_ * lm_step_);
@@ -277,14 +278,18 @@ class TinySolver {
         x = x_new_;
 
         // TODO(sameeragarwal): Deal with failure.
-        Update(function, x);
+        if (!Update(function, x)) {
+          summary.status = FAILURE;
+          break;
+        }
+
         if (summary.gradient_max_norm < options.gradient_tolerance) {
-          summary.status = GRADIENT_TOO_SMALL;
+          summary.status = CONVERGENCE;
           break;
         }
 
         if (cost_ < options.cost_threshold) {
-          summary.status = COST_TOO_SMALL;
+          summary.status = CONVERGENCE;
           break;
         }
 
