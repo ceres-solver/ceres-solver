@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53da8f92_1e99f277",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-23T08:10:48Z",
+      "side": 0,
+      "message": "In Ceres, there is a string message indicating what actually happened, but with this patch there is nothing. I am in favor of offering a second enum, or offering a method on summary (e.g. solver.summary.IsSolutionUsable()). But with the current change, there will be no way to determine what happened.",
+      "revId": "f6df80e8a0b4518967c44be2ce65fa5d99871ced",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
