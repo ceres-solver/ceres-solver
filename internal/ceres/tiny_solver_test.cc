@@ -146,13 +146,11 @@ void TestHelper(const Function& f, const Vector& x0) {
   Vector x = x0;
   Vec2 residuals;
   f(x.data(), residuals.data(), NULL);
-  EXPECT_GT(residuals.norm(), 1e-10);
+  EXPECT_GT(residuals.squaredNorm() / 2.0, 1e-10);
 
   TinySolver<Function> solver;
   solver.Solve(f, &x);
-
-  f(x.data(), residuals.data(), NULL);
-  EXPECT_NEAR(0.0, residuals.norm(), 1e-10);
+  EXPECT_NEAR(0.0, solver.summary.final_cost, 1e-10);
 }
 
 // A test case for when the cost function is statically sized.
