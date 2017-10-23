@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b232a961_2d989471",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-23T04:41:04Z",
+      "side": 1,
+      "message": "umm the original code returns a reference, whats wrong with that? actually it should return a const reference.",
+      "parentUuid": "485f7045_21790e8c",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d806c59b_6c52f09e",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "250635e1_92eb589a",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-23T04:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d806c59b_6c52f09e",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb865082_04945b0b",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-23T04:35:00Z",
       "side": 1,
       "message": "I guess this is more stable, but is not as easy to read. Consider adding a comment explaining the reason to write this convergence this way.",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e5910a_b3cbaf98",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-23T04:41:04Z",
+      "side": 1,
+      "message": "this just deals with a zero solution.",
+      "parentUuid": "cb865082_04945b0b",
       "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "573e7eb5_3a34041e",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-23T04:41:04Z",
+      "side": 1,
+      "message": "I save on the division here and below in the model_cost_change, which is also twice of what it should be.",
+      "parentUuid": "8eaab205_d9e6423a",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b857aa8_3041b4ea",
         "filename": "include/ceres/tiny_solver.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335be470_d9bc0088",
+        "filename": "include/ceres/tiny_solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5010
+      },
+      "writtenOn": "2017-10-23T04:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b857aa8_3041b4ea",
+      "revId": "45261b6aa8ef5aa47ce54d58733767c01e95b307",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
