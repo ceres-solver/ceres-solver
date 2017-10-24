@@ -180,7 +180,7 @@ class ParameterBlock {
 
     CHECK_GT(new_parameterization->LocalSize(), 0)
         << "Invalid parameterization. Parameterizations must have a positive "
-        << "dimensional tangent space.";
+        << "dimensional tangent space. Maybe you want to use Problem::SetParameterBlockConstant?";
 
     local_parameterization_ = new_parameterization;
     local_parameterization_jacobian_.reset(
