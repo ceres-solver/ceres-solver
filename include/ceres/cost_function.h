@@ -1,5 +1,5 @@
 // Ceres Solver - A fast non-linear least squares minimizer
-// Copyright 2015 Google Inc. All rights reserved.
+// Copyright 2017 Google Inc. All rights reserved.
 // http://ceres-solver.org/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@ namespace ceres {
 // This class implements the computation of the cost (a.k.a. residual) terms as
 // a function of the input (control) variables, and is the interface for users
 // to describe their least squares problem to Ceres. In other words, this is the
-// modelling layer between users and the Ceres optimizer. The signature of the
+// modeling layer between users and the Ceres optimizer. The signature of the
 // function (number and sizes of input parameter blocks and number of outputs)
 // is stored in parameter_block_sizes_ and num_residuals_ respectively. User
 // code inheriting from this class is expected to set these two members with the

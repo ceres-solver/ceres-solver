@@ -22,7 +22,7 @@ Ceres.
 Ceres solves robustified bounds constrained non-linear least squares
 problems of the form:
 
-.. math:: :label: ceresproblem
+.. math:: :label: ceresproblem_modeling
 
    \min_{\mathbf{x}} &\quad \frac{1}{2}\sum_{i}
    \rho_i\left(\left\|f_i\left(x_{i_1},
@@ -1455,9 +1455,10 @@ Instances
 .. class:: Problem
 
    :class:`Problem` holds the robustified bounds constrained
-   non-linear least squares problem :eq:`ceresproblem`. To create a
-   least squares problem, use the :func:`Problem::AddResidualBlock`
-   and :func:`Problem::AddParameterBlock` methods.
+   non-linear least squares problem :eq:`ceresproblem_modeling`. To
+   create a least squares problem, use the
+   :func:`Problem::AddResidualBlock` and
+   :func:`Problem::AddParameterBlock` methods.
 
    For example a problem containing 3 parameter blocks of sizes 3, 4
    and 5 respectively and two residual blocks of size 2 and 6:
