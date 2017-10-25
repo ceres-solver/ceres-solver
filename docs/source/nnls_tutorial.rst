@@ -54,7 +54,7 @@ the more familiar `non-linear least squares problem
 <http://en.wikipedia.org/wiki/Non-linear_least_squares>`_.
 
 .. math:: \frac{1}{2}\sum_{i} \left\|f_i\left(x_{i_1}, ... ,x_{i_k}\right)\right\|^2.
-   :label: ceresproblem2
+   :label: ceresproblemnonrobust
 
 .. _section-hello-world:
 

@@ -89,9 +89,9 @@ optional. For details on customizing the build process, see
   ``SuiteSparse``, and optionally used by Ceres directly for some
   operations.
 
--  `TBB <https://www.threadingbuildingblocks.org/>`_ is a C++11 template
-  library for parallel programming that optionally can be used as an alternative
-  to OpenMP. **Optional**
+- `TBB <https://www.threadingbuildingblocks.org/>`_ is a C++11 template
+  library for parallel programming that optionally can be used as an
+  alternative to OpenMP. **Optional**
 
   On ``UNIX`` OSes other than Mac OS X we recommend `ATLAS
   <http://math-atlas.sourceforge.net/>`_, which includes ``BLAS`` and

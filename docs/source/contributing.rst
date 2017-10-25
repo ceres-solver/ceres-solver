@@ -38,10 +38,11 @@ Setting up your Environment
      `Cygwin <http://www.cygwin.com/>`_ install.
 
 2. Sign up for `Gerrit
-   <https://ceres-solver-review.googlesource.com/>`_. You will also
-   need to sign the Contributor License Agreement (CLA) with Google,
-   which gives Google a royalty-free unlimited license to use your
-   contributions. You retain copyright.
+   <https://ceres-solver-review.googlesource.com/>`_. You will also need to
+   `sign the Contributor License Agreement (CLA)
+   <https://opensource.google.com/docs/cla/#sign>`_ with Google, which gives
+   Google a royalty-free unlimited license to use your contributions. You
+   retain copyright.
 
 3. Clone the Ceres Solver ``git`` repository from Gerrit.
 
