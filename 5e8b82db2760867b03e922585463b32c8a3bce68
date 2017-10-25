@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4808d99a_6b70e916",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-10-25T15:39:40Z",
+      "side": 1,
+      "message": "80 columns.\n\nI am not sure why SetParameterBlockConstant() would influence this; perhaps expand the error message to include more context? This CHECK is just examining the raw \"LocalParameterization\" type, which is unrelated to SetParameterBlockConstant. Perhaps you are thinking of the subset parameterization?",
+      "revId": "5e8b82db2760867b03e922585463b32c8a3bce68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
