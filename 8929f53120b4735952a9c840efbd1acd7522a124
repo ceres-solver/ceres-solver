@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b24f6330_05003b27",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-07T18:08:39Z",
+      "side": 1,
+      "message": "We keep it updated. The Android.mk has not been such an issue; I don\u0027t see this being one either. Alternately, we could ensure that all files in internal/ceres/*.cc that are not to be linked have \"_test*\" somewhere in the name so we can use globbing. But I feel the manual list is not a big deal.",
+      "parentUuid": "d711fd3b_29f6ac49",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ccb6d7d_43e039ab",
         "filename": "BUILD",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3b3117_362c8cc3",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-07T18:08:39Z",
+      "side": 1,
+      "message": "TBD. For now, they have to look at the BUILD. I haven\u0027t spent the time yet to figure out how to support non-Bazel dependants of a Bazel-built Ceres.",
+      "parentUuid": "6ccb6d7d_43e039ab",
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2be703e_46a26e39",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-07T18:08:39Z",
+      "side": 1,
+      "message": "No, there is a single file and should only every be a single file.",
+      "parentUuid": "450248b9_53166c88",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "e2ed2f23_d9577240",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-07T18:08:39Z",
+      "side": 1,
+      "message": "It\u0027s standard Bazel. You must explicitly list all sources, and headers are sources. Bazel will copy the files into the sandbox as part of building; unlisted files won\u0027t be in the sandbox.",
+      "parentUuid": "3ea1ff23_1daf7b2e",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 23
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81295fba_2757b81e",
         "filename": "BUILD",
         "patchSetId": 1
@@ -132,6 +222,30 @@
       "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39742c64_3dd2b60d",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-07T18:08:39Z",
+      "side": 1,
+      "message": "Bazel by default includes all the typical Google C++ flags. I\u0027m happy to spend time expanding these options, but the purpose of the first commit is just to get something started.",
+      "parentUuid": "81295fba_2757b81e",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 26
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
