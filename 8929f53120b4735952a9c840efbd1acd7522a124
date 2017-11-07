@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d711fd3b_29f6ac49",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-07T09:18:08Z",
+      "side": 1,
+      "message": "so the android.mk already has this problem it runs out of sync of the cmake file, and now there is one more file to worry about. \n\nhow to ensure that this file does not go stale?",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450248b9_53166c88",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-07T09:18:08Z",
+      "side": 1,
+      "message": "don\u0027t need a glob here?",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd5ae30_407202e0",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-07T09:18:08Z",
+      "side": 1,
+      "message": "why do you need the headers as sources?",
+      "range": {
+        "startLine": 197,
+        "startChar": 15,
+        "endLine": 197,
+        "endChar": 23
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81295fba_2757b81e",
+        "filename": "BUILD",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-07T09:18:08Z",
+      "side": 1,
+      "message": "shoudn\u0027t this be stricter?",
+      "range": {
+        "startLine": 201,
+        "startChar": 19,
+        "endLine": 201,
+        "endChar": 26
+      },
+      "revId": "8929f53120b4735952a9c840efbd1acd7522a124",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
