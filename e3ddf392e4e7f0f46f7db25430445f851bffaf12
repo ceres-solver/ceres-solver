@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7413364_42d8d823",
+        "filename": "include/ceres/iteration_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-11-10T16:53:58Z",
+      "side": 1,
+      "message": "This could be a pointer instead, and then the struct wouldn\u0027t get much bigger (and could be optional).",
+      "revId": "e3ddf392e4e7f0f46f7db25430445f851bffaf12",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
