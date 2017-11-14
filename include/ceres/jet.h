@@ -446,6 +446,18 @@ inline double ceil    (double x) { return std::ceil(x);     }
 inline double pow  (double x, double y) { return std::pow(x, y);   }
 inline double atan2(double y, double x) { return std::atan2(y, x); }
 
+#ifdef CERES_USE_CXX11
+// Some new additions to C++11:
+inline double round (double x) { return std::round(x); }
+inline double trunc (double x) { return std::trunc(x); }
+inline double cbrt  (double x) { return std::cbrt(x);  }
+inline double exp2  (double x) { return std::exp2(x);  }
+inline double log2  (double x) { return std::log2(x);  }
+inline double hypot(double x, double y) { return std::hypot(x, y); }
+inline double fmax(double  x, double y) { return std::fmax(x, y);  }
+inline double fmin(double  x, double y) { return std::fmin(x, y);  }
+#endif
+
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
 // abs(x + h) ~= x + h or -(x + h)
@@ -554,6 +566,82 @@ template <typename T, int N> inline
 Jet<T, N> ceil(const Jet<T, N>& f) {
   return Jet<T, N>(ceil(f.a));
 }
+
+#ifdef CERES_USE_CXX11
+// Some new additions to C++11:
+
+// The round function should be used with extreme care as this operation will
+// result in a zero derivative which provides no information to the solver.
+//
+// round(a + h) ~= round(a) + 0
+template <typename T, int N> inline
+Jet<T, N> round(const Jet<T, N>& f) {
+  return Jet<T, N>(round(f.a));
+}
+
+// The trunc function should be used with extreme care as this operation will
+// result in a zero derivative which provides no information to the solver.
+//
+// trunc(a + h) ~= trunc(a) + 0
+template <typename T, int N> inline
+Jet<T, N> trunc(const Jet<T, N>& f) {
+  return Jet<T, N>(trunc(f.a));
+}
+
+// cbrt(a + h) ~= cbrt(a) + h / (3 a ^ (2/3))
+template <typename T, int N> inline
+Jet<T, N> cbrt(const Jet<T, N>& f) {
+  const T derivative = T(1.0) / (T(3.0) * cbrt(f.a * f.a));
+  return Jet<T, N>(cbrt(f.a), f.v * derivative);
+}
+
+// exp2(x + h) = 2^(x+h) ~= 2^x + h*2^x*log(2)
+template <typename T, int N> inline
+Jet<T, N> exp2(const Jet<T, N>& f) {
+  const T tmp = exp2(f.a);
+  const T derivative = tmp * log(T(2));
+  return Jet<T, N>(tmp, f.v * derivative);
+}
+
+// log2(x + h) ~= log2(x) + h / (x * log(2))
+template <typename T, int N> inline
+Jet<T, N> log2(const Jet<T, N>& f) {
+  const T derivative = T(1.0) / (f.a * log(T(2)));
+  return Jet<T, N>(log2(f.a), f.v * derivative);
+}
+
+// Like sqrt(x^2 + y^2),
+// but acts to prevent underflow/overflow for small/large x/y
+template <typename T, int N> inline
+Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
+  const T a = hypot(x.a, y.a);
+
+  Jet<T, N> result(a);
+
+  if (a == T(0)) {
+    for (int i = 0; i < N; ++i) {
+      result.v[i] = hypot(x.v[i], y.v[i]);
+    }
+  } else {
+    const T x_factor = x.a / a;
+    const T y_factor = y.a / a;
+    for (int i = 0; i < N; ++i) {
+      result.v[i] = x.v[i] * x_factor + y.v[i] * y_factor;
+    }
+  }
+  return result;
+}
+
+template <typename T, int N> inline
+const Jet<T, N>& fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return x < y ? y : x;
+}
+
+template <typename T, int N> inline
+const Jet<T, N>& fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return y < x ? y : x;
+}
+#endif // CERES_USE_CXX11
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
 //
