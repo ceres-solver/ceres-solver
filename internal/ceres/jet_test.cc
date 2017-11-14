@@ -523,6 +523,115 @@ TEST(Jet, Jet) {
     J expected = MakeJet(ceil(a.a), 0.0, 0.0);
     EXPECT_EQ(expected, b);
   }
+
+  #ifdef CERES_USE_CXX11
+  { // Check that round of a positive number works.
+    J a = MakeJet(0.1, -2.7, 1e-3);
+    J b = round(a);
+    J expected = MakeJet(round(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that round of a negative number works.
+    J a = MakeJet(-1.1, -2.7, 1e-3);
+    J b = round(a);
+    J expected = MakeJet(round(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that round of a positive number works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = round(a);
+    J expected = MakeJet(round(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that trunc of a positive number works.
+    J a = MakeJet(0.1, -2.7, 1e-3);
+    J b = trunc(a);
+    J expected = MakeJet(trunc(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that trunc of a negative number works.
+    J a = MakeJet(-1.1, -2.7, 1e-3);
+    J b = trunc(a);
+    J expected = MakeJet(trunc(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that trunc of a positive number works.
+    J a = MakeJet(10.123, -2.7, 1e-3);
+    J b = trunc(a);
+    J expected = MakeJet(trunc(a.a), 0.0, 0.0);
+    EXPECT_EQ(expected, b);
+  }
+
+  { // Check that cbrt(x * x * x) == x.
+    J z = x * x * x;
+    J w = cbrt(z);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(w, x);
+  }
+
+  { // Check that cbrt(y) * cbrt(y) * cbrt(y) == y.
+    J z = cbrt(y);
+    J w = z * z * z;
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(w, y);
+  }
+
+  { // Check that cbrt(x) == pow(x, 1/3).
+    J z = cbrt(x);
+    J w = pow(x, 1.0 / 3.0);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  { // Check that exp2(x) == exp(x * log(2))
+    J z = exp2(x);
+    J w = exp(x * log(2.0));
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  { // Check that log2(x) == log(x) / log(2)
+    J z = log2(x);
+    J w = log(x) / log(2.0);
+    VL << "z = " << z;
+    VL << "w = " << w;
+    ExpectJetsClose(z, w);
+  }
+
+  { // Check that hypot(x, 0) == sqrt(x^2 + 0^2) == x
+    J d = hypot(x, J(0.0));
+    VL << "d = " << d;
+    ExpectJetsClose(x, d);
+  }
+
+  { // Check that hypot(0, y) == sqrt(0^2 + y^2) == y
+    J d = hypot(J(0.0), y);
+    VL << "d = " << d;
+    ExpectJetsClose(y, d);
+  }
+
+  {
+    J z = fmax(x, y);
+    VL << "z = " << z;
+    ExpectJetsClose(x, z);
+  }
+
+  {
+    J z = fmin(x, y);
+    VL << "z = " << z;
+    ExpectJetsClose(y, z);
+  }
+
+  #endif
 }
 
 TEST(Jet, JetsInEigenMatrices) {
