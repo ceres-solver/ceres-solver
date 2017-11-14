@@ -102,47 +102,13 @@ TEST(SubsetParameterization, DuplicateParametersDeathTest) {
 }
 
 TEST(SubsetParameterization,
-     ProductParameterizationWithZeroLocalSizeSubsetParameterization1) {
+     ProductParameterizationWithZeroLocalSizeSubsetParameterization) {
   std::vector<int> constant_parameters;
   constant_parameters.push_back(0);
-  LocalParameterization* subset_param =
-      new SubsetParameterization(1, constant_parameters);
-  LocalParameterization* identity_param = new IdentityParameterization(2);
-  ProductParameterization product_param(subset_param, identity_param);
-  EXPECT_EQ(product_param.GlobalSize(), 3);
-  EXPECT_EQ(product_param.LocalSize(), 2);
-  double x[] = {1.0, 1.0, 1.0};
-  double delta[] = {2.0, 3.0};
-  double x_plus_delta[] = {0.0, 0.0, 0.0};
-  EXPECT_TRUE(product_param.Plus(x, delta, x_plus_delta));
-  EXPECT_EQ(x_plus_delta[0], x[0]);
-  EXPECT_EQ(x_plus_delta[1], x[1] + delta[0]);
-  EXPECT_EQ(x_plus_delta[2], x[2] + delta[1]);
-
-  Matrix actual_jacobian(3, 2);
-  EXPECT_TRUE(product_param.ComputeJacobian(x, actual_jacobian.data()));
-}
-
-TEST(SubsetParameterization,
-     ProductParameterizationWithZeroLocalSizeSubsetParameterization2) {
-  std::vector<int> constant_parameters;
-  constant_parameters.push_back(0);
-  LocalParameterization* subset_param =
-      new SubsetParameterization(1, constant_parameters);
-  LocalParameterization* identity_param = new IdentityParameterization(2);
-  ProductParameterization product_param(identity_param, subset_param);
-  EXPECT_EQ(product_param.GlobalSize(), 3);
-  EXPECT_EQ(product_param.LocalSize(), 2);
-  double x[] = {1.0, 1.0, 1.0};
-  double delta[] = {2.0, 3.0};
-  double x_plus_delta[] = {0.0, 0.0, 0.0};
-  EXPECT_TRUE(product_param.Plus(x, delta, x_plus_delta));
-  EXPECT_EQ(x_plus_delta[0], x[0] + delta[0]);
-  EXPECT_EQ(x_plus_delta[1], x[1] + delta[1]);
-  EXPECT_EQ(x_plus_delta[2], x[2]);
-
-  Matrix actual_jacobian(3, 2);
-  EXPECT_TRUE(product_param.ComputeJacobian(x, actual_jacobian.data()));
+  EXPECT_DEATH_IF_SUPPORTED(
+      SubsetParameterization parameterization(1, constant_parameters),
+      "You cannot restrict all parameters with SubsetParameterization. "
+      "Please use Problem::SetParameterBlockConstant for this.");
 }
 
 TEST(SubsetParameterization, NormalFunctionTest) {
