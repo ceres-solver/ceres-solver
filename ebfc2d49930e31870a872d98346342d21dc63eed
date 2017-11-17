@@ -22,6 +22,29 @@
       "revId": "ebfc2d49930e31870a872d98346342d21dc63eed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7f44bb_1bc58835",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-17T19:00:07Z",
+      "side": 1,
+      "message": "Should we be doing this if num_threads \u003d\u003d 1?\nthis risks adding significant latency to small dense solves?",
+      "range": {
+        "startLine": 518,
+        "startChar": 7,
+        "endLine": 518,
+        "endChar": 26
+      },
+      "revId": "ebfc2d49930e31870a872d98346342d21dc63eed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
