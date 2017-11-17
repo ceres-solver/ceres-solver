@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "571980a6_ae4662eb",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2017-11-17T17:05:31Z",
+      "side": 1,
+      "message": "We\u0027ll have to be careful everywhere that the change in thread count doesn\u0027t lead to threads hanging trying to get token IDs, in places where the size of the token pool (and also the size of the corresponding per-thread scratch buffer or whatever array) used to match the requested parallelism, but no longer does.\n\nThere could be more threads contending for ID tokens (and the underlying resources they represent) than there are tokens - so we\u0027ll have threads waiting for work. That\u0027s mostly harmless, except in cases like this where there\u0027s a second layer of multithreading inside the Evaluator (if I\u0027ve read things correctly). So maybe one of those Evaluators starts up a parallel for loop, gets a bunch of threads assigned to it (more than it has tokens) and then the threads hang around instead of doing something useful in a different Evaluator.\n\nActually, we *might* be able to have everything we want: fast initialisation and local control of the parallelism.\n\nWhat happens if we put a task_scheduler_init right at the start of the Solve call (as this CL does) *and* leave all the task_scheduler_init instantiations in all the places where they currently exist? If my guess is correct (that only init calls on the main thread are expensive; or that if a thread is inside \u003e\u003d1 task_scheduler_init already then it doesn\u0027t have to do the expensive init operation) then these inner task_scheduler_init calls should be cheap.\n\nI couldn\u0027t tell from the documentation https://software.intel.com/en-us/node/506297 exactly how thread limits work for these nested task_scheduler_inits. Suppose:\nMain:\ntask_scheduler_init(36)\ntask_scheduler_init(12)\nparallel_for(0, 12):\n  task_scheduler_init(3)\n  parallel_for(0, 3):\n    do work\nWill \"do work\" be executed by 36 threads or 12? That is, does the intermediate task_scheduler_init(12) provide a limit for everything in its scope, or does it only say \"parallel_fors executed where this is the innermost active task_scheduler_init are limited to 12 threads\"?\n\nIf it\u0027s the latter: what we have here is fine.\nIf it\u0027s the former: the task_scheduler_init (that used to be just below here, called with num_inner_iteration_threads) should be called with num_threads instead (and this token provider have that many tokens).\n\nOK, that\u0027s enough of a comment for one line of code.",
+      "range": {
+        "startLine": 163,
+        "startChar": 46,
+        "endLine": 163,
+        "endChar": 73
+      },
+      "revId": "ebfc2d49930e31870a872d98346342d21dc63eed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
