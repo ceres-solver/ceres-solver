@@ -45,6 +45,30 @@
       "revId": "ebfc2d49930e31870a872d98346342d21dc63eed",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9feceed_ffb2feea",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-17T19:07:36Z",
+      "side": 1,
+      "message": "If we don\u0027t do this for the case of 1 thread, then when you make a call to tbb::parallel_for it will default to use the maximum number of threads the cpu supports. Hopefully TBB is smart enough to have special logic for the case of 1 thread to eliminate the latency, but I have no idea.",
+      "parentUuid": "2e7f44bb_1bc58835",
+      "range": {
+        "startLine": 518,
+        "startChar": 7,
+        "endLine": 518,
+        "endChar": 26
+      },
+      "revId": "ebfc2d49930e31870a872d98346342d21dc63eed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
