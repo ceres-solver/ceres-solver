@@ -32,7 +32,6 @@
 
 #ifdef CERES_USE_TBB
 #include <tbb/parallel_for.h>
-#include <tbb/task_scheduler_init.h>
 #endif
 
 #include <iterator>
@@ -156,7 +155,6 @@ void CoordinateDescentMinimizer::Minimize(
       continue;
     }
 
-
     const int num_inner_iteration_threads =
         min(options.num_threads, num_problems);
     evaluator_options_.num_threads =
@@ -175,8 +173,6 @@ void CoordinateDescentMinimizer::Minimize(
          j < independent_set_offsets_[i + 1];
          ++j) {
 #else
-    tbb::task_scheduler_init tbb_task_scheduler_init(
-        num_inner_iteration_threads);
     tbb::parallel_for(independent_set_offsets_[i],
                       independent_set_offsets_[i + 1],
                       [&](int j) {

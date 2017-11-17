@@ -99,7 +99,6 @@
 #include <atomic>
 
 #include <tbb/parallel_for.h>
-#include <tbb/task_scheduler_init.h>
 #endif
 
 namespace ceres {
@@ -196,7 +195,6 @@ class ProgramEvaluator : public Evaluator {
 
 #ifdef CERES_USE_TBB
     std::atomic_bool abort(false);
-    tbb::task_scheduler_init tbb_task_scheduler_init(options_.num_threads);
     tbb::parallel_for(0, num_residual_blocks, [&](int i) {
 #endif // CERES_USE_TBB
 

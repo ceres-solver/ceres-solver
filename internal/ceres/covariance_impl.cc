@@ -32,7 +32,6 @@
 
 #ifdef CERES_USE_TBB
 #include <tbb/parallel_for.h>
-#include <tbb/task_scheduler_init.h>
 #endif
 
 #include <algorithm>
@@ -367,7 +366,6 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #endif // CERES_NO_THREADS
 
 #ifdef CERES_USE_TBB
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
   tbb::parallel_for(0, num_parameters, [&](int i) {
     tbb::parallel_for(i, num_parameters, [&](int j) {
 #endif // CERES_USE_TBB
@@ -727,7 +725,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
   tbb::parallel_for(0, num_cols, [&](int r) {
 #endif // !CERES_USE_TBB
 
@@ -928,7 +925,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
   tbb::parallel_for(0, num_cols, [&](int r) {
 #endif // !CERES_USE_TBB
 

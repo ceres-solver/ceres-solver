@@ -68,7 +68,6 @@
 
 #ifdef CERES_USE_TBB
 #include <tbb/parallel_for.h>
-#include <tbb/task_scheduler_init.h>
 #endif
 
 namespace ceres {
@@ -198,7 +197,6 @@ Eliminate(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
     for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {
 #else
-    tbb::task_scheduler_init tbb_task_scheduler_init(num_threads_);
     tbb::parallel_for(num_eliminate_blocks_, num_col_blocks, [&](int i) {
 #endif // !CERES_USE_TBB
 
@@ -245,7 +243,6 @@ Eliminate(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
   for (int i = 0; i < chunks_.size(); ++i) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads_);
   tbb::parallel_for(0, int(chunks_.size()), [&](int i) {
 #endif // !CERES_USE_TBB
 
@@ -342,7 +339,6 @@ BackSubstitute(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
   for (int i = 0; i < chunks_.size(); ++i) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads_);
   tbb::parallel_for(0, int(chunks_.size()), [&](int i) {
 #endif // !CERES_USE_TBB
 

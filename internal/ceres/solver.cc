@@ -31,6 +31,10 @@
 
 #include "ceres/solver.h"
 
+#ifdef CERES_USE_TBB
+#include <tbb/task_scheduler_init.h>
+#endif
+
 #include <algorithm>
 #include <sstream>   // NOLINT
 #include <vector>
@@ -507,6 +511,12 @@ void Solver::Solve(const Solver::Options& options,
     LOG(ERROR) << "Terminating: " << summary->message;
     return;
   }
+
+#ifdef CERES_USE_TBB
+  // Instantiate a scheduler that exists for the entire lifetime of the solve
+  // for the TBB parallel_for usage.
+  tbb::task_scheduler_init tbb_task_scheduler_init(options.num_threads);
+#endif
 
   ProblemImpl* problem_impl = problem->problem_impl_.get();
   Program* program = problem_impl->mutable_program();
