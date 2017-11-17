@@ -32,7 +32,7 @@
 
 #ifdef CERES_USE_TBB
 #include <tbb/parallel_for.h>
-#include <tbb/task_scheduler_init.h>
+#include <tbb/task_arena.h>
 #endif
 
 #include <algorithm>
@@ -367,9 +367,11 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #endif // CERES_NO_THREADS
 
 #ifdef CERES_USE_TBB
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
-  tbb::parallel_for(0, num_parameters, [&](int i) {
-    tbb::parallel_for(i, num_parameters, [&](int j) {
+  tbb::task_arena task_arena(num_threads);
+
+  task_arena.execute([&]{
+    tbb::parallel_for(0, num_parameters, [&](int i) {
+      tbb::parallel_for(i, num_parameters, [&](int j) {
 #endif // CERES_USE_TBB
 
       int covariance_row_idx = cum_parameter_size[i];
@@ -400,6 +402,7 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
     }
 #ifdef CERES_USE_TBB
     );
+  });
   });
 #else
   }
@@ -727,8 +730,10 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
-  tbb::parallel_for(0, num_cols, [&](int r) {
+  tbb::task_arena task_arena(num_threads);
+
+  task_arena.execute([&]{
+    tbb::parallel_for(0, num_cols, [&](int r) {
 #endif // !CERES_USE_TBB
 
     const int row_begin = rows[r];
@@ -753,6 +758,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   }
 #ifdef CERES_USE_TBB
   );
+  });
 #endif // CERES_USE_TBB
 
   free(permutation);
@@ -928,8 +934,10 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_scheduler_init tbb_task_scheduler_init(num_threads);
-  tbb::parallel_for(0, num_cols, [&](int r) {
+  tbb::task_arena task_arena(num_threads);
+
+  task_arena.execute([&]{
+    tbb::parallel_for(0, num_cols, [&](int r) {
 #endif // !CERES_USE_TBB
 
     const int row_begin = rows[r];
@@ -958,6 +966,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 
 #ifdef CERES_USE_TBB
   );
+  });
 #endif // CERES_USE_TBB
 
   event_logger.AddEvent("Inverse");
