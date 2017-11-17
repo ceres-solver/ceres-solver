@@ -32,6 +32,7 @@
 #include "ceres/solver.h"
 
 #include <algorithm>
+#include <cmath>
 #include <sstream>   // NOLINT
 #include <vector>
 #include "ceres/detect_structure.h"
