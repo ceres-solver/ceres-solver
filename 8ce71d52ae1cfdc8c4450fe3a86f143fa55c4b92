@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "859c601b_860e2b1a",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-21T01:36:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the best way to format this is.  The body of the for loop is indented wrt to the openmp for loop.  The TBB code path has an additional indentation due to the task_arena context.  The line 219 closes the parallel_for and the line on 220 closes the task_arena.  \n\nMaybe 219 should be indented one more level?",
+      "parentUuid": "af48cda1_c4d3d111",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5555696c_16b82603",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2
