@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af48cda1_c4d3d111",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-11-21T00:36:28Z",
+      "side": 1,
+      "message": "Indentation here seems off; not sure if this should change or not.",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5555696c_16b82603",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-11-21T00:36:28Z",
+      "side": 1,
+      "message": "Does this work reasonably for multiple calls to solve? May be worth commenting on the semantics here, since looking up the tbb semantics is onerous.",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
