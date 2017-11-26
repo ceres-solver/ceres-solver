@@ -76,7 +76,7 @@ template <int kNumResiduals = Eigen::Dynamic, int kNumParameters = Eigen::Dynami
 class TinySolverCostFunctionAdapter {
  public:
   typedef double Scalar;
-  enum {
+  enum ComponentSizeType {
     NUM_PARAMETERS = kNumParameters,
     NUM_RESIDUALS = kNumResiduals
   };
