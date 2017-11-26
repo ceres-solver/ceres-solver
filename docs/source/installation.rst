@@ -845,6 +845,11 @@ The Ceres components which can be specified are:
 
 #. ``OpenMP``: Ceres built with OpenMP (``OPENMP=ON``).
 
+#. ``TBB``: Ceres built with Intel Thread Building Blocks (TBB) (``TBB=ON``).
+
+#. ``Multithreading``: Ceres built with *a* multithreading library.
+   This is equivalent to ``OpenMP`` **OR** ``TBB``.
+
 #. ``C++11``: Ceres built with C++11 (``CXX11=ON``).
 
 To specify one/multiple Ceres components use the ``COMPONENTS`` argument to
