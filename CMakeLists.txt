@@ -416,19 +416,16 @@ else (OPENMP)
   message("-- Building without OpenMP, disabling.")
 endif (OPENMP)
 
-# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
-# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
-# they are used when discovering shared_ptr/unordered_map.
-set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
-
 if (TBB)
-  find_package(TBB REQUIRED)
+  find_package(TBB QUIET)
   if (TBB_FOUND)
-    message("-- Building with TBB.")
+    message("-- Building with TBB (version: ${TBB_VERSION}).")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_TBB)
     include_directories(${TBB_INCLUDE_DIRS})
-    # TBB requires C++11
-    update_cache_variable(CXX11 ON)
+    if (NOT CXX11)
+      message("-- Enabling CXX11 (C++11) option required by TBB=ON.")
+      update_cache_variable(CXX11 ON)
+    endif()
   else (TBB_FOUND)
     message("-- Failed to find TBB, disabling.")
     update_cache_variable(TBB OFF)
@@ -436,7 +433,7 @@ if (TBB)
 endif (TBB)
 
 if (NOT OPENMP AND NOT TBB)
-  message("-- Nor OpenMP neither TBB is used, disabling multithreading.")
+  message("-- Neither OpenMP or TBB is enabled, disabling multithreading.")
   list(APPEND CERES_COMPILE_OPTIONS CERES_NO_THREADS)
 else (NOT OPENMP AND NOT TBB)
   if (UNIX)
@@ -448,6 +445,10 @@ else (NOT OPENMP AND NOT TBB)
   endif (UNIX)
 endif (NOT OPENMP AND NOT TBB)
 
+# Initialise CMAKE_REQUIRED_FLAGS used by CheckCXXSourceCompiles with the
+# contents of CMAKE_CXX_FLAGS such that if the user has passed extra flags
+# they are used when discovering shared_ptr/unordered_map.
+set(CMAKE_REQUIRED_FLAGS ${CMAKE_CXX_FLAGS})
 include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-std=c++11" COMPILER_HAS_CXX11_FLAG)
 if (CXX11 AND COMPILER_HAS_CXX11_FLAG)
