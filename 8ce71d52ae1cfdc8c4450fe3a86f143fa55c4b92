@@ -87,6 +87,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d729b1_4c0a4347",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-11-27T19:49:12Z",
+      "side": 1,
+      "message": "I mean multiple top-level calls from the user. E.g.\n\n  for (...) {\n    ceres::Solve(...);\n  }\n\nThis will invoke task_scheduler_init() many times. I just want to make sure this is sane and supported. Furthermore, what happens if the user is using TBB? Does this work with nested TBB?",
+      "parentUuid": "5cf1d9c3_2a9726a8",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
