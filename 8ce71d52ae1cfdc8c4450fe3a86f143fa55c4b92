@@ -69,6 +69,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf1d9c3_2a9726a8",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-11-27T19:04:32Z",
+      "side": 1,
+      "message": "Keir, what do you mean by multiple calls here? do you mean multiple sequential calls? or multiple simultaneous calls?\n\nalso do we know if num_threads \u003d 1 leads to a no-op here?",
+      "parentUuid": "5555696c_16b82603",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
