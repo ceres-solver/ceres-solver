@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6d7002e_3cfdb5da",
+        "filename": "internal/ceres/coordinate_descent_minimizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2017-11-27T02:17:45Z",
+      "side": 1,
+      "message": "You\u0027re right; what\u0027s here is fine.",
+      "parentUuid": "859c601b_860e2b1a",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5555696c_16b82603",
         "filename": "internal/ceres/solver.cc",
         "patchSetId": 2
