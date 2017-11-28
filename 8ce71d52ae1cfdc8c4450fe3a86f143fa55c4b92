@@ -123,6 +123,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ef13cc_fd71e86d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-28T00:45:27Z",
+      "side": 1,
+      "message": "I\u0027m not convinced about this, since most users will not be using TBB in their own code (blind assertion without data, based on my experience).\n\nI suggest the following behaviour:\n\n- Keep the current call in-place\n- Add an option to the struct near the threading options that allows disabling calling this init, with appropriate documentation.\n- Detect a requested vs actual thread mismatch. For example, query TBB to see how many threads it is using. Then fail/crash with a useful error in this case (no surprises for the user)!\n\nIt\u0027s important to make this deterministic. For example, if a user had the following:\n\n  ceres::Solve() // w/ num_threads \u003d\u003d 10\n  UsersFunctionThatDoesTBBInit()  // w/ num_threads\u003d2 \u003c-- OOPS!\n\nand \n\n  UsersFunctionThatDoesTBBInit() // w/ num_threads \u003d 2\n  ceres::Solve() // w/ num_threads \u003d 10 \u003c-- OOPS!\n\nBoth cases are bad. By requiring the user to configure Ceres in the uncommon case (to NOT call thread init), I believe the result will be better overall.",
+      "parentUuid": "e6cee55b_93a38b54",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
