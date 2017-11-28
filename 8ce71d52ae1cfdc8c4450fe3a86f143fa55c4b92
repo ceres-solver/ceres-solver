@@ -141,6 +141,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0011e016_dd205f51",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-28T01:11:38Z",
+      "side": 1,
+      "message": "I don\u0027t know if this problem has a perfect answer.\n\nIf we do bullet #2 and #3 above, then we are exposing the internal implementation to the user.  This clutters the API and may not do anything if we aren\u0027t using TBB.\n\nIf we do #3, then we have to include another option to disable this because the user might not be able to solve this if an external library uses TBB and calls init.",
+      "parentUuid": "c9ef13cc_fd71e86d",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
