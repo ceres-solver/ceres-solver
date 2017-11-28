@@ -195,6 +195,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ba9393_e7d4458f",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-28T01:49:01Z",
+      "side": 1,
+      "message": "I\u0027m OK to not call init.\n\nHowever, we should at least warn if num requested threads doesn\u0027t match what the user will get.",
+      "parentUuid": "ec9f6bfe_039bb40d",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
