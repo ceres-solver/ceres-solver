@@ -177,6 +177,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9f6bfe_039bb40d",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-28T01:42:33Z",
+      "side": 1,
+      "message": "I don\u0027t think any of this is worth the effort. What do we gain by explicitly calling init?  We will never run with more threads than we desire by using task_arena. The checks only alert the user of the mismatch. One could argue that a user should understand all the implications of using TBB when setting up their program. \n\nI\u0027ll wait to get a consensus before doing anything.",
+      "parentUuid": "12a2050c_8985eece",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
