@@ -105,6 +105,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cee55b_93a38b54",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-28T00:37:58Z",
+      "side": 1,
+      "message": "You can call task_scheduler_init() as many times as you want.  However, only the first one instantiated will be honored, which means you can\u0027t change the number of active threads.\n\nIf the user is using TBB and called task_scheduler_init, then the call in Ceres does nothing.  If the user requested only 1 thread and Ceres wants 10 threads, then there will only be 1 thread available.\n\nI decided to remove the explicit call to tbb_task_scheduler_init here to simplify the code and logic.  Since we have moved to the task_arena\u0027s they will control the maximum number of threads Ceres is allowed to use.  This allows TBB to determine the correct number of threads to use for the application. This also follows Intel\u0027s recommendation below for performance.\n\n\"To minimize time overhead, it is best to rely upon automatic creation of the task scheduler, or create a single task_scheduler_init object whose activation spans all uses of the library\u0027s task scheduler.\"\n\nRE: \"also do we know if num_threads \u003d 1 leads to a no-op here?\"\n\nI have not been able to find any documentation on what happens if you only want 1 thread.  I looked through the code, but it is hard to know if there is a fast path.  I empirically tested with and without TBB on a program that calls 1500 small problems to solve and they were about the same test time accounting for the variability in timing, load etc.",
+      "parentUuid": "a2d729b1_4c0a4347",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
