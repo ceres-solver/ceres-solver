@@ -159,6 +159,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a2050c_8985eece",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-11-28T01:17:08Z",
+      "side": 1,
+      "message": "We already expose some internals to the user; I don\u0027t see this as in issue. The default setting will be to call TBB init; only if you care and are using TBB yourself, will you need to disable the call.\n\nFor #3 to be an issue, it\u0027s a relatively contrived case. You\u0027d need to both\n- Be setting the number of threads explicitly\n- But not be calling TBB init\n- While someone else is calling your library with calling TBB init\n\nThe solution is not a big deal, you can just set the threads to whatever TBB reports in in use. Or we could add an option to not fail in that case.",
+      "parentUuid": "0011e016_dd205f51",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
