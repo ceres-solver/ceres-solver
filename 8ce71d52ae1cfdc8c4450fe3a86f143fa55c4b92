@@ -213,6 +213,24 @@
       "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8489cd_07773f3a",
+        "filename": "internal/ceres/solver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2017-11-29T01:19:53Z",
+      "side": 1,
+      "message": "Warning would follow what we do when people request multiple threads but don\u0027t compile with support.\n\nIt looks like we can use tbb::this_task_arena::max_concurrency() to get either the concurrency if specified by the user or the level determined automatically for the hardware configuration.\n\nWhat should we do for this scenario.  My current computer supports 12 threads so the tbb::this_task_arena::max_concurrency() returns 12 when TBB is not initialized.  If the user requests 20 threads should we also warn in this case?\n\nMaybe this is a reason we call tbb_task_scheduler_init ourselves because then we can check if it equals then warn.  Though this does go against the TBB advice for production systems.",
+      "parentUuid": "88ba9393_e7d4458f",
+      "revId": "8ce71d52ae1cfdc8c4450fe3a86f143fa55c4b92",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
