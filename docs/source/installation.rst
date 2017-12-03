@@ -566,6 +566,8 @@ defaults if you know what you are doing.
  ``CMake`` GUI.  If they are not present in the *Standard View*,
  toggle to the *Advanced View* with ``<t>``.
 
+.. _options-controlling-ceres-configuration:
+
 Options controlling Ceres configuration
 ---------------------------------------
 
@@ -582,19 +584,31 @@ Options controlling Ceres configuration
    ``SuiteSparse`` if it and all of its dependencies are present. Turn
    this ``OFF`` to build Ceres without ``SuiteSparse``.
 
+   .. NOTE::
+
+      SuiteSparse is licensed under a mixture of GPL/LGPL/Commercial
+      terms.  Ceres requires some components that are only licensed under
+      GPL/Commercial terms.
+
 #. ``CXSPARSE [Default: ON]``: By default, Ceres will link to
    ``CXSparse`` if all its dependencies are present. Turn this ``OFF``
    to build Ceres without ``CXSparse``.
 
+   .. NOTE::
+
+      CXSparse is licensed under the LGPL.
+
 #. ``EIGENSPARSE [Default: OFF]``: By default, Ceres will not use
-   Eigen's sparse Cholesky factorization. The is because this part of
-   the code is licensed under the ``LGPL`` and since ``Eigen`` is a
-   header only library, including this code will result in an ``LGPL``
-   licensed version of Ceres.
+   Eigen's sparse Cholesky factorization.
 
    .. NOTE::
 
       For good performance, use Eigen version 3.2.2 or later.
+
+   .. NOTE::
+
+      Unlike the rest of Eigen (>= 3.1.1 MPL2, < 3.1.1 LGPL), Eigen's sparse
+      Cholesky factorization is (still) licensed under the LGPL.
 
 #. ``GFLAGS [Default: ON]``: Turn this ``OFF`` to build Ceres without
    ``gflags``. This will also prevent some of the example code from
@@ -617,6 +631,12 @@ Options controlling Ceres configuration
 
 #. ``TBB [Default: OFF]``: An alternative to ``OpenMP`` threading library that
    requires C++11. This option is mutually exclusive to ``OpenMP``.
+
+   .. NOTE::
+
+      Up to and including version 4.4, TBB was licensed under
+      GPL/Commercial terms.  From 2017.x versions onwards, TBB is licensed under
+      the Apache 2.0 license (and commerical terms).
 
 #. ``CXX11 [Default: OFF]`` *Non-MSVC compilers only*.
 

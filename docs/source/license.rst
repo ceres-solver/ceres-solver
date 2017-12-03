@@ -2,6 +2,14 @@
 License
 =======
 
+.. NOTE::
+
+   This page refers only to the license for Ceres itself, independent of its
+   optional dependencies which are separately licensed and which can affect
+   the resulting license of Ceres if built with them enabled.  See
+   :ref:`options-controlling-ceres-configuration` for an overview of these
+   implications.
+
 Ceres Solver is licensed under the New BSD license, whose terms are as follows.
 
 Copyright 2016 Google Inc. All rights reserved.

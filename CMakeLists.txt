@@ -107,14 +107,8 @@ option(OPENMP "Enable threaded solving in Ceres (requires OpenMP)" ON)
 # Multithreading using TBB
 option(TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" OFF)
 # Enable the use of Eigen as a sparse linear algebra library for
-# solving the nonlinear least squares problems. Enabling this
-# option will result in an LGPL licensed version of Ceres Solver
-# as the Simplicial Cholesky factorization in Eigen is licensed under the LGPL.
-# This does not affect the covariance estimation algorithm, as it
-# depends on the sparse QR factorization algorithm, which is licensed
-# under the MPL.
-OPTION(EIGENSPARSE
-  "Enable Eigen as a sparse linear algebra library, WARNING: results in an LGPL licensed Ceres." OFF)
+# solving the nonlinear least squares problems.
+OPTION(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." OFF)
 if (NOT MSVC)
   # Ceres does not use C++11 internally, however it does use shared_ptr
   # (required) and unordered_map (if available), both of which were present in
@@ -213,35 +207,23 @@ if (EIGEN_FOUND)
       "that Eigen/SparseCore be available, detected version of Eigen is: "
       "${EIGEN_VERSION}")
   endif (EIGEN_VERSION VERSION_LESS 3.1.0)
-
   message("-- Found Eigen version ${EIGEN_VERSION}: ${EIGEN_INCLUDE_DIRS}")
-  # Ensure that only MPL2 licensed code is part of the default build.
-  message("")
-  message("   ===============================================================")
   if (EIGENSPARSE)
+    message("-- Enabling use of Eigen as a sparse linear algebra library.")
     list(APPEND CERES_COMPILE_OPTIONS CERES_USE_EIGEN_SPARSE)
-    message("   Enabling the use of Eigen as a sparse linear algebra library ")
-    message("   for solving the nonlinear least squares problems. Enabling ")
-    message("   this option results in an LGPL licensed version of ")
-    message("   Ceres Solver as the Simplicial Cholesky factorization in Eigen")
-    message("   is licensed under the LGPL. ")
-
     if (EIGEN_VERSION VERSION_LESS 3.2.2)
       message("   WARNING:")
       message("")
-      message("   Your version of Eigen is older than version 3.2.2.")
-      message("   The performance of SPARSE_NORMAL_CHOLESKY and SPARSE_SCHUR")
-      message("   linear solvers will suffer. ")
+      message("   Your version of Eigen (${EIGEN_VERSION}) is older than ")
+      message("   version 3.2.2.  The performance of SPARSE_NORMAL_CHOLESKY ")
+      message("   and SPARSE_SCHUR linear solvers will suffer.")
     endif (EIGEN_VERSION VERSION_LESS 3.2.2)
-
   else (EIGENSPARSE)
-    message("   Disabling the use of Eigen as a sparse linear algebra library.")
+    message("-- Disabling use of Eigen as a sparse linear algebra library.")
     message("   This does not affect the covariance estimation algorithm ")
     message("   which can still use the EIGEN_SPARSE_QR algorithm.")
     add_definitions(-DEIGEN_MPL2_ONLY)
   endif (EIGENSPARSE)
-    message("   ===============================================================")
-    message("")
 endif (EIGEN_FOUND)
 
 if (LAPACK)
