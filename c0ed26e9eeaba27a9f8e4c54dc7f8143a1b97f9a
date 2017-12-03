@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb2397c_082c1ad4",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2017-12-03T22:58:33Z",
+      "side": 1,
+      "message": "in light of this, I think its worth turning this on by default, just like suitesparse.",
+      "revId": "c0ed26e9eeaba27a9f8e4c54dc7f8143a1b97f9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
