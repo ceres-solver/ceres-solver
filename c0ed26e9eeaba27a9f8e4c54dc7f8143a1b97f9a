@@ -16,6 +16,24 @@
       "revId": "c0ed26e9eeaba27a9f8e4c54dc7f8143a1b97f9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04fd9fc_ffae2eee",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2017-12-04T10:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb2397c_082c1ad4",
+      "revId": "c0ed26e9eeaba27a9f8e4c54dc7f8143a1b97f9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
