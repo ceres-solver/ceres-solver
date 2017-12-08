@@ -192,4 +192,4 @@ TEST(TinySolver, ParametersAndResidualsDynamic) {
   TestHelper(f, x0);
 }
 
-}  // namespace tinysolver
+}  // namespace ceres
