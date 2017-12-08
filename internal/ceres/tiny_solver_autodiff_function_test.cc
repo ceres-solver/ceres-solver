@@ -95,4 +95,5 @@ TEST(TinySolverAutoDiffFunction, SimpleFunction) {
   EXPECT_NEAR(4.0, jacobian(1, 1), kTolerance);
   EXPECT_NEAR(6.0, jacobian(1, 2), kTolerance);
 }
-}  // namespace tinysolver
+
+}  // namespace ceres
