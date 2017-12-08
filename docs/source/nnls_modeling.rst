@@ -100,37 +100,34 @@ the corresponding accessors. This information will be verified by the
 
    Compute the residual vector and the Jacobian matrices.
 
-   ``parameters`` is an array of pointers to arrays containing the
-   various parameter blocks. ``parameters`` has the same number of
-   elements as :member:`CostFunction::parameter_block_sizes_` and the
-   parameter blocks are in the same order as
-   :member:`CostFunction::parameter_block_sizes_`.
+   ``parameters`` is an array of arrays of size
+   :member:`CostFunction::parameter_block_sizes_.size()`. ``parameters[i]``
+   is an array of size ``CostFunction::parameter_block_sizes_[i]``
+   that contains the :math:`i^{\text{th}}` parameter block that the
+   ``CostFunction`` depends on. ``parameters`` is never ``NULL``.
 
    ``residuals`` is an array of size ``num_residuals_``.
+   ``residuals`` is never ``NULL``.
 
-   ``jacobians`` is an array of size
-   :member:`CostFunction::parameter_block_sizes_` containing pointers
-   to storage for Jacobian matrices corresponding to each parameter
-   block. The Jacobian matrices are in the same order as
-   :member:`CostFunction::parameter_block_sizes_`. ``jacobians[i]`` is
-   an array that contains :member:`CostFunction::num_residuals_` x
-   :member:`CostFunction::parameter_block_sizes_` ``[i]``
-   elements. Each Jacobian matrix is stored in row-major order, i.e.,
-   ``jacobians[i][r * parameter_block_size_[i] + c]`` =
-   :math:`\frac{\partial residual[r]}{\partial parameters[i][c]}`
+   ``jacobians`` is an array of arrays of size
+   :member:`CostFunction::parameter_block_sizes_.size()`. ``jacobians``
+   can be ``NULL``, in which case the user is only expected to compute
+   the residuals.
 
+   ``jacobians[i]`` is row-major array of size
+   ``CostFunction::num_residuals x
+   CostFunction::parameter_block_sizes[i]``.
 
-   If ``jacobians`` is ``NULL``, then no derivatives are returned;
-   this is the case when computing cost only. If ``jacobians[i]`` is
-   ``NULL``, then the Jacobian matrix corresponding to the
-   :math:`i^{\textrm{th}}` parameter block must not be returned, this
-   is the case when a parameter block is marked constant.
+   If ``jacobians[i]`` is not NULL, the user is required to compute
+   the Jacobian of the residual vector with respect to
+   ``parameters[i]`` and store it in this array. If ``jacobians[i]``
+   is NULL, then this computation can be skipped. This is the case
+   when the corresponding parameter block is marked constant.
 
-   **NOTE** The return value indicates whether the computation of the
-   residuals and/or jacobians was successful or not.
-
-   This can be used to communicate numerical failures in Jacobian
-   computations for instance.
+   The return value indicates whether the computation of the residuals
+   and/or jacobians was successful or not. This can be used to
+   communicate numerical failures in Jacobian computations for
+   instance.
 
 :class:`SizedCostFunction`
 ==========================
