@@ -196,6 +196,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/split.cc \
                    $(CERES_SRC_PATH)/stringprintf.cc \
                    $(CERES_SRC_PATH)/suitesparse.cc \
+                   $(CERES_SRC_PATH)/thread_token_provider.cc \
                    $(CERES_SRC_PATH)/triplet_sparse_matrix.cc \
                    $(CERES_SRC_PATH)/trust_region_minimizer.cc \
                    $(CERES_SRC_PATH)/trust_region_preprocessor.cc \
@@ -217,6 +218,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_3_d.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_3.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_4.cc \
+                   $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_6.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_8.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_9.cc \
                    $(CERES_SRC_PATH)/generated/schur_eliminator_2_4_d.cc \
@@ -237,6 +239,7 @@ LOCAL_SRC_FILES := $(CERES_SRC_PATH)/array_utils.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_3_d.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_3.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_4.cc \
+                   $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_6.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_8.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_9.cc \
                    $(CERES_SRC_PATH)/generated/partitioned_matrix_view_2_4_d.cc \
