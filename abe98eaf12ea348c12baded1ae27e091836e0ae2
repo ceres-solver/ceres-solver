@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c207f65_ecdeb5a2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-12-21T22:55:29Z",
+      "side": 1,
+      "message": "I\u0027m concerned about truc and round. Part of me wants to make these compile with nasty warnings to the user that they shouldn\u0027t use them. What\u0027s the reason to include them here?",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a49c59_184ee5f0",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-12-21T22:55:29Z",
+      "side": 1,
+      "message": "While this works, consider trying to implement a hypot that delivers value verses the literal replacement here:\n\nhttps://stackoverflow.com/questions/32435796/when-to-use-stdhypotx-y-over-stdsqrtxx-yy",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddba692_e4071310",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-12-21T22:55:29Z",
+      "side": 1,
+      "message": "Please include the close marker // CERES_USE_CXX11",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
