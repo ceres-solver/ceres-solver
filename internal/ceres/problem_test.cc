@@ -940,7 +940,7 @@ void ExpectVectorContainsUnordered(const T* a, const vector<T>& b) {
   }
 }
 
-void ExpectProblemHasResidualBlocks(
+static void ExpectProblemHasResidualBlocks(
     const ProblemImpl &problem,
     const ResidualBlockId *expected_residual_blocks) {
   vector<ResidualBlockId> residual_blocks;
@@ -1050,9 +1050,13 @@ TEST_P(DynamicProblem, GetXXXBlocksForYYYBlock) {
   }
 }
 
+namespace {
+
 INSTANTIATE_TEST_CASE_P(OptionsInstantiation,
                         DynamicProblem,
                         ::testing::Values(true, false));
+
+}  // namespace
 
 // Test for Problem::Evaluate
 
@@ -1096,7 +1100,7 @@ class QuadraticCostFunction : public CostFunction {
 };
 
 // Convert a CRSMatrix to a dense Eigen matrix.
-void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
+static void CRSToDenseMatrix(const CRSMatrix& input, Matrix* output) {
   Matrix& m = *CHECK_NOTNULL(output);
   m.resize(input.num_rows, input.num_cols);
   m.setZero();

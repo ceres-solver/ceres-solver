@@ -88,13 +88,5 @@ LinearSolverTerminationType SparseCholesky::FactorAndSolve(
   return termination_type;
 }
 
-CompressedRowSparseMatrix::StorageType StorageTypeForSparseLinearAlgebraLibrary(
-    SparseLinearAlgebraLibraryType sparse_linear_algebra_library_type) {
-  if (sparse_linear_algebra_library_type == SUITE_SPARSE) {
-    return CompressedRowSparseMatrix::UPPER_TRIANGULAR;
-  }
-  return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
-}
-
 }  // namespace internal
 }  // namespace ceres

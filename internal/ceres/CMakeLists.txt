@@ -203,6 +203,8 @@ if (MINIGLOG)
   list(APPEND CERES_LIBRARY_SOURCE miniglog/glog/logging.cc)
 endif (MINIGLOG)
 
+APPEND_SOURCE_FILE_COMPILER_FLAGS(gmock_gtest_all.cc "${CXX_REMOVE_EXTRA_STRICT_FLAGS}")
+
 add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}

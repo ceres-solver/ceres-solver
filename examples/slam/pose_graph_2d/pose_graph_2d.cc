@@ -51,6 +51,7 @@ DEFINE_string(input, "", "The pose graph definition filename in g2o format.");
 
 namespace ceres {
 namespace examples {
+namespace {
 
 // Constructs the nonlinear least squares optimization problem from the pose
 // graph constraints.
@@ -148,6 +149,7 @@ bool OutputPoses(const std::string& filename,
   return true;
 }
 
+}  // namespace
 }  // namespace examples
 }  // namespace ceres
 

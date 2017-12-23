@@ -231,6 +231,8 @@ struct RangeConstraint {
   const double corridor_length;
 };
 
+namespace {
+
 void SimulateRobot(vector<double>* odometry_values,
                    vector<double>* range_readings) {
   const int num_steps = static_cast<int>(
@@ -268,6 +270,8 @@ void PrintState(const vector<double>& odometry_readings,
            range_readings[i], range_error, odometry_error);
   }
 }
+
+}  // namespace
 
 int main(int argc, char** argv) {
   google::InitGoogleLogging(argv[0]);
