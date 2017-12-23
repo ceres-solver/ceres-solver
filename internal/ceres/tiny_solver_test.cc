@@ -42,9 +42,9 @@ typedef Eigen::Matrix<double, 2, 1> Vec2;
 typedef Eigen::Matrix<double, 3, 1> Vec3;
 typedef Eigen::VectorXd VecX;
 
-bool EvaluateResidualsAndJacobians(const double* parameters,
-                                   double* residuals,
-                                   double* jacobian) {
+static bool EvaluateResidualsAndJacobians(const double* parameters,
+                                          double* residuals,
+                                          double* jacobian) {
   double x = parameters[0];
   double y = parameters[1];
   double z = parameters[2];

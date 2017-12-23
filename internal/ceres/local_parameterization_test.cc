@@ -479,8 +479,8 @@ struct HomogeneousVectorParameterizationPlus {
   }
 };
 
-void HomogeneousVectorParameterizationHelper(const double* x,
-                                             const double* delta) {
+static void HomogeneousVectorParameterizationHelper(const double* x,
+                                                    const double* delta) {
   const double kTolerance = 1e-14;
 
   HomogeneousVectorParameterization homogeneous_vector_parameterization(4);

@@ -141,8 +141,8 @@ struct QuaternionPlus {
   }
 };
 
-void QuaternionParameterizationTestHelper(const double* x,
-                                          const double* delta) {
+static void QuaternionParameterizationTestHelper(const double* x,
+                                                 const double* delta) {
   const double kTolerance = 1e-14;
   double x_plus_delta_ref[4] = {0.0, 0.0, 0.0, 0.0};
   double jacobian_ref[12];

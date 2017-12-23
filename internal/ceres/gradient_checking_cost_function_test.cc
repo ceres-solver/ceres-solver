@@ -323,8 +323,8 @@ class TernaryCostFunction: public CostFunction {
 
 // Verify that the two ParameterBlocks are formed from the same user
 // array and have the same LocalParameterization object.
-void ParameterBlocksAreEquivalent(const ParameterBlock*  left,
-                                  const ParameterBlock* right) {
+static void ParameterBlocksAreEquivalent(const ParameterBlock*  left,
+                                         const ParameterBlock* right) {
   CHECK_NOTNULL(left);
   CHECK_NOTNULL(right);
   EXPECT_EQ(left->user_state(), right->user_state());

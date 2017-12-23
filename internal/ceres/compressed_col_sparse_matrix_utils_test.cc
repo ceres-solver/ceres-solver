@@ -87,11 +87,11 @@ TEST(_, BlockPermutationToScalarPermutation) {
   }
 }
 
-void FillBlock(const vector<int>& row_blocks,
-               const vector<int>& col_blocks,
-               const int row_block_id,
-               const int col_block_id,
-               vector<Eigen::Triplet<double>>* triplets) {
+static void FillBlock(const vector<int>& row_blocks,
+                      const vector<int>& col_blocks,
+                      const int row_block_id,
+                      const int col_block_id,
+                      vector<Eigen::Triplet<double>>* triplets) {
   const int row_offset = std::accumulate(&row_blocks[0], &row_blocks[row_block_id], 0);
   const int col_offset = std::accumulate(&col_blocks[0], &col_blocks[col_block_id], 0);
   for (int r = 0; r < row_blocks[row_block_id]; ++r) {

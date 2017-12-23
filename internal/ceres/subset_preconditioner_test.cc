@@ -42,6 +42,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 // TODO(sameeragarwal): Refactor the following two functions out of
 // here and sparse_cholesky_test.cc into a more suitable place.
 template <int UpLoType>
@@ -80,6 +82,8 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
      << (::testing::get<1>(param) ? "Diagonal" : "NoDiagonal");
   return ss.str();
 }
+
+}  // namespace
 
 class SubsetPreconditionerTest : public ::testing::TestWithParam<Param> {
  protected:

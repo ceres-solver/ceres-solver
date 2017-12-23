@@ -223,6 +223,16 @@ if (MINIGLOG)
   list(APPEND CERES_LIBRARY_SOURCE miniglog/glog/logging.cc)
 endif (MINIGLOG)
 
+# Ceres C++ compiler flags can be too strict for an external library code
+# which we do not maintain.
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-Wno-missing-declarations"
+                        CHECK_CXX_FLAG_Wno_missing_declarations)
+if (CHECK_CXX_FLAG_Wno_missing_declarations)
+  set_property(SOURCE gmock_gtest_all.cc
+               APPEND_STRING PROPERTY COMPILE_FLAGS "-Wno-missing-declarations")
+endif()
+
 add_library(ceres ${CERES_LIBRARY_SOURCE})
 set_target_properties(ceres PROPERTIES
   VERSION ${CERES_VERSION}

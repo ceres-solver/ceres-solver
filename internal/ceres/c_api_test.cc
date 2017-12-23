@@ -108,10 +108,10 @@ double data[] = {
 };
 
 // A test cost function, similar to the one in curve_fitting.c.
-int exponential_residual(void* user_data,
-                         double** parameters,
-                         double* residuals,
-                         double** jacobians) {
+static int exponential_residual(void* user_data,
+                                double** parameters,
+                                double* residuals,
+                                double** jacobians) {
   double* measurement = (double*) user_data;
   double x = measurement[0];
   double y = measurement[1];
