@@ -47,6 +47,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 BlockSparseMatrix* CreateRandomFullRankMatrix(const int num_col_blocks,
                                               const int min_col_block_size,
                                               const int max_col_block_size,
@@ -154,6 +156,8 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return ss.str();
 }
 
+}  // namespace
+
 class SparseCholeskyTest : public ::testing::TestWithParam<Param> {};
 
 TEST_P(SparseCholeskyTest, FactorAndSolve) {
@@ -179,6 +183,8 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
     }
   }
 }
+
+namespace {
 
 #ifndef CERES_NO_SUITESPARSE
 INSTANTIATE_TEST_CASE_P(SuiteSparseCholesky,
@@ -206,6 +212,8 @@ INSTANTIATE_TEST_CASE_P(EigenSparseCholesky,
                                            ::testing::Values(true, false)),
                         ParamInfoToString);
 #endif
+
+}  // namespace
 
 }  // namespace internal
 }  // namespace ceres

@@ -52,6 +52,7 @@ project(Ceres C CXX)
 # append rather than set in case the user has passed their own
 # additional paths via -D.
 list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
+include(macros)
 include(UpdateCacheVariable)
 
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
@@ -688,9 +689,19 @@ if (MSVC)
 endif (MSVC)
 
 if (UNIX)
-  # GCC is not strict enough by default, so enable most of the warnings.
-  set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
+  # Flags which we add to GCC to make it more picky about stuff we do care about,
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_ADD_STRICT_FLAGS CXX_MISSING_DECLARATIONS -Wmissing-declarations)
+  # Flags which we add to GCC to silence lots of annoying false-positives.
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_STRICT_FLAGS CXX_NO_UNKNOWN_PRAGMAS -Wno-unknown-pragmas)
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_STRICT_FLAGS CXX_NO_SIGN_COMPARE -Wno-sign-compare)
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_STRICT_FLAGS CXX_NO_UNUSED_PARAMETER -Wno-unused-parameter)
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_STRICT_FLAGS CXX_NO_MISSING_FIELD_INITIALIZERS -Wno-missing-field-initializers)
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_STRICT_FLAGS CXX_NO_MISSING_FIELD_INITIALIZERS -Wno-missing-field-initializers)
+  # FLags which we want to add to CXXFLAGS for third party source to silence paranoid
+  # warnings we don't care about.
+  ADD_CHECK_CXX_COMPILER_FLAG(CXX_REMOVE_EXTRA_STRICT_FLAGS CXX_NO_MISSING_DECLARATIONS -Wno-missing-declarations)
+  # GCC is not picky enough by default, or too picky about random noise.
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_ADD_STRICT_FLAGS} ${CXX_REMOVE_STRICT_FLAGS}")
 endif (UNIX)
 
 # Use a larger inlining threshold for Clang, since it hobbles Eigen,

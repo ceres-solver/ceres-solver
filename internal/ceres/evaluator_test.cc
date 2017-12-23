@@ -209,7 +209,7 @@ struct EvaluatorTest
   ProblemImpl problem;
 };
 
-void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
+static void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
   VectorRef(sparse_matrix->mutable_values(),
             sparse_matrix->num_nonzeros()).setConstant(value);
 }
@@ -542,6 +542,7 @@ TEST_P(EvaluatorTest, EvaluatorAbortsForResidualsThatFailToEvaluate) {
 //
 // Try all values of num_eliminate_blocks that make sense given that in the
 // tests a maximum of 4 parameter blocks are present.
+namespace {
 INSTANTIATE_TEST_CASE_P(
     LinearSolvers,
     EvaluatorTest,
@@ -564,6 +565,7 @@ INSTANTIATE_TEST_CASE_P(
       EvaluatorTestOptions(ITERATIVE_SCHUR, 4),
       EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, false),
       EvaluatorTestOptions(SPARSE_NORMAL_CHOLESKY, 0, true)));
+}  // namespace
 
 // Simple cost function used to check if the evaluator is sensitive to
 // state changes.

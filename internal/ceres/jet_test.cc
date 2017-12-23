@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 const double kE = 2.71828182845904523536;
 
 typedef Jet<double, 2> J;
@@ -65,6 +67,8 @@ void ExpectJetsClose(const J &x, const J &y) {
   ExpectClose(x.v[0], y.v[0], kTolerance);
   ExpectClose(x.v[1], y.v[1], kTolerance);
 }
+
+}  // namespace
 
 TEST(Jet, Jet) {
   // Pick arbitrary values for x and y.
