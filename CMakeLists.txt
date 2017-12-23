@@ -77,6 +77,7 @@ project(Ceres C CXX)
 # append rather than set in case the user has passed their own
 # additional paths via -D.
 list(APPEND CMAKE_MODULE_PATH "${Ceres_SOURCE_DIR}/cmake")
+include(AddCompileFlagsIfSupported)
 include(UpdateCacheVariable)
 
 # Set up the git hook to make Gerrit Change-Id: lines in commit messages.
@@ -570,9 +571,20 @@ if (MSVC)
 endif (MSVC)
 
 if (UNIX)
-  # GCC is not strict enough by default, so enable most of the warnings.
-  set(CMAKE_CXX_FLAGS
-    "${CMAKE_CXX_FLAGS} -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers")
+  # Flags which we add to GCC to make it more picky about stuff
+  # we do care about,
+  add_cxx_compiler_flag_if_supported(CERES_STRICT_CXX_FLAGS
+                                     -Wmissing-declarations)
+  # Flags which we add to GCC to silence lots of annoying false-positives.
+  add_cxx_compiler_flag_if_supported(CERES_STRICT_CXX_FLAGS
+                                     -Wno-unknown-pragmas)
+  add_cxx_compiler_flag_if_supported(CERES_STRICT_CXX_FLAGS
+                                     -Wno-sign-compare)
+  add_cxx_compiler_flag_if_supported(CERES_STRICT_CXX_FLAGS
+                                     -Wno-unused-parameter)
+  add_cxx_compiler_flag_if_supported(CERES_STRICT_CXX_FLAGS
+                                     -Wno-missing-field-initializers)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CERES_STRICT_CXX_FLAGS}")
 endif (UNIX)
 
 # Use a larger inlining threshold for Clang, since it hobbles Eigen,

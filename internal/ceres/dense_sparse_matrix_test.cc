@@ -45,7 +45,7 @@
 namespace ceres {
 namespace internal {
 
-void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
+static void CompareMatrices(const SparseMatrix* a, const SparseMatrix* b) {
   EXPECT_EQ(a->num_rows(), b->num_rows());
   EXPECT_EQ(a->num_cols(), b->num_cols());
 

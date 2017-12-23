@@ -128,6 +128,7 @@ DEFINE_string(final_ply, "", "Export the refined BAL file data as a PLY "
 
 namespace ceres {
 namespace examples {
+namespace {
 
 void SetLinearSolver(Solver::Options* options) {
   CHECK(StringToLinearSolverType(FLAGS_linear_solver,
@@ -327,6 +328,7 @@ void SolveProblem(const char* filename) {
   }
 }
 
+}  // namespace
 }  // namespace examples
 }  // namespace ceres
 

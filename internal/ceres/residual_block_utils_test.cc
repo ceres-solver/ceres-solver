@@ -43,7 +43,7 @@ namespace internal {
 
 // Routine to check if ResidualBlock::Evaluate for unary CostFunction
 // with one residual succeeds with true or dies.
-void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
+static void CheckEvaluation(const CostFunction& cost_function, bool is_good) {
   double x = 1.0;
   ParameterBlock parameter_block(&x, 1, -1);
   std::vector<ParameterBlock*> parameter_blocks;

@@ -62,6 +62,7 @@ DEFINE_bool(line_search, false, "Use a line search instead of trust region "
 
 namespace ceres {
 namespace examples {
+namespace {
 
 // This cost function is used to build the data term.
 //
@@ -167,6 +168,8 @@ void SolveProblem(Problem* problem, PGMImage<double>* solution) {
     }
   }
 }
+
+}  // namespace
 }  // namespace examples
 }  // namespace ceres
 

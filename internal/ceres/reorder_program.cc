@@ -335,7 +335,7 @@ bool LexicographicallyOrderResidualBlocks(
 
 // Pre-order the columns corresponding to the schur complement if
 // possible.
-void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
+static void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
     const ParameterBlockOrdering& parameter_block_ordering,
     Program* program) {
 #ifndef CERES_NO_SUITESPARSE
@@ -381,7 +381,7 @@ void MaybeReorderSchurComplementColumnsUsingSuiteSparse(
 #endif
 }
 
-void MaybeReorderSchurComplementColumnsUsingEigen(
+static void MaybeReorderSchurComplementColumnsUsingEigen(
     const int size_of_first_elimination_group,
     const ProblemImpl::ParameterMap& parameter_map,
     Program* program) {

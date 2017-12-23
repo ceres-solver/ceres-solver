@@ -231,7 +231,7 @@ TEST(EvaluationCallback, WithTrustRegionMinimizer) {
   EXPECT_NE(Djb2Hash(parameters, 2), original_parameters_hash);
 }
 
-void WithLineSearchMinimizerImpl(
+static void WithLineSearchMinimizerImpl(
     LineSearchType line_search,
     LineSearchDirectionType line_search_direction,
     LineSearchInterpolationType line_search_interpolation) {

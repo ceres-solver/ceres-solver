@@ -44,6 +44,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 const double kE = 2.71828182845904523536;
 
 typedef Jet<double, 2> J;
@@ -105,6 +107,8 @@ void NumericalTest2(const char* name, const Function& f,
      << exact_dy << ", estimated dy: " << estimated_dy;
   ExpectClose(exact_dy, estimated_dy, kNumericalTolerance);
 }
+
+}  // namespace
 
 TEST(Jet, Jet) {
   // Pick arbitrary values for x and y.

@@ -39,6 +39,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 void RandomVector(Vector* v) {
   for (int r = 0; r < v->rows(); ++r)
     (*v)[r] = 2 * RandDouble() - 1;
@@ -51,6 +53,8 @@ void RandomMatrix(Matrix* m) {
     }
   }
 }
+
+}  // namespace
 
 TEST(NormalPriorTest, ResidualAtRandomPosition) {
   srand(5);

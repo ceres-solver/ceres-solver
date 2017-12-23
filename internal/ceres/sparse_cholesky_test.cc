@@ -49,6 +49,8 @@
 namespace ceres {
 namespace internal {
 
+namespace {
+
 BlockSparseMatrix* CreateRandomFullRankMatrix(const int num_col_blocks,
                                               const int min_col_block_size,
                                               const int max_col_block_size,
@@ -75,9 +77,9 @@ BlockSparseMatrix* CreateRandomFullRankMatrix(const int num_col_blocks,
   return random_matrix.release();
 }
 
-bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
-                             const Vector& rhs,
-                             Vector* solution) {
+static bool ComputeExpectedSolution(const CompressedRowSparseMatrix& lhs,
+                                    const Vector& rhs,
+                                    Vector* solution) {
   Matrix eigen_lhs;
   lhs.ToDenseMatrix(&eigen_lhs);
   if (lhs.storage_type() == CompressedRowSparseMatrix::UPPER_TRIANGULAR) {
@@ -160,6 +162,8 @@ std::string ParamInfoToString(testing::TestParamInfo<Param> info) {
   return ss.str();
 }
 
+}  // namespace
+
 class SparseCholeskyTest : public ::testing::TestWithParam<Param> {};
 
 TEST_P(SparseCholeskyTest, FactorAndSolve) {
@@ -185,6 +189,8 @@ TEST_P(SparseCholeskyTest, FactorAndSolve) {
     }
   }
 }
+
+namespace {
 
 #ifndef CERES_NO_SUITESPARSE
 INSTANTIATE_TEST_SUITE_P(SuiteSparseCholesky,
@@ -341,6 +347,8 @@ TEST(RefinedSparseCholesky, FactorAndSolveWithSuccess) {
       refined_sparse_cholesky.FactorAndSolve(&m, &rhs, &solution, &message),
       LINEAR_SOLVER_SUCCESS);
 };
+
+}  // namespace
 
 }  // namespace internal
 }  // namespace ceres

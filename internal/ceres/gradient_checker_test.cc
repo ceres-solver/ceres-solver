@@ -170,10 +170,10 @@ class BadTestTerm : public CostFunction {
 
 const double kTolerance = 1e-6;
 
-void CheckDimensions(const GradientChecker::ProbeResults& results,
-                     const std::vector<int>& parameter_sizes,
-                     const std::vector<int>& local_parameter_sizes,
-                     int residual_size) {
+static void CheckDimensions(const GradientChecker::ProbeResults& results,
+                            const std::vector<int>& parameter_sizes,
+                            const std::vector<int>& local_parameter_sizes,
+                            int residual_size) {
   CHECK_EQ(parameter_sizes.size(), local_parameter_sizes.size());
   int num_parameters = parameter_sizes.size();
   ASSERT_EQ(residual_size, results.residuals.size());
@@ -368,7 +368,7 @@ class MatrixParameterization : public LocalParameterization {
 };
 
 // Helper function to compare two Eigen matrices (used in the test below).
-void ExpectMatricesClose(Matrix p, Matrix q, double tolerance) {
+static void ExpectMatricesClose(Matrix p, Matrix q, double tolerance) {
   ASSERT_EQ(p.rows(), q.rows());
   ASSERT_EQ(p.cols(), q.cols());
   ExpectArraysClose(p.size(), p.data(), q.data(), tolerance);

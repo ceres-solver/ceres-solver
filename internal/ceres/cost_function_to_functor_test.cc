@@ -43,8 +43,9 @@ namespace internal {
 using std::vector;
 const double kTolerance = 1e-18;
 
-void ExpectCostFunctionsAreEqual(const CostFunction& cost_function,
-                                 const CostFunction& actual_cost_function) {
+static void ExpectCostFunctionsAreEqual(
+    const CostFunction& cost_function,
+    const CostFunction& actual_cost_function) {
   EXPECT_EQ(cost_function.num_residuals(),
             actual_cost_function.num_residuals());
   const int num_residuals = cost_function.num_residuals();

@@ -55,7 +55,7 @@ struct Pose2d {
   }
 };
 
-std::istream& operator>>(std::istream& input, Pose2d& pose) {
+inline std::istream& operator>>(std::istream& input, Pose2d& pose) {
   input >> pose.x >> pose.y >> pose.yaw_radians;
   // Normalize the angle between -pi to pi.
   pose.yaw_radians = NormalizeAngle(pose.yaw_radians);
@@ -82,7 +82,7 @@ struct Constraint2d {
   }
 };
 
-std::istream& operator>>(std::istream& input, Constraint2d& constraint) {
+inline std::istream& operator>>(std::istream& input, Constraint2d& constraint) {
   input >> constraint.id_begin >> constraint.id_end >> constraint.x >>
       constraint.y >> constraint.yaw_radians >>
       constraint.information(0, 0) >> constraint.information(0, 1) >>

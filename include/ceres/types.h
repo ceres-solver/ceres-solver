@@ -502,6 +502,7 @@ CERES_EXPORT const char* LoggingTypeToString(LoggingType type);
 CERES_EXPORT bool StringtoLoggingType(std::string value, LoggingType* type);
 
 CERES_EXPORT const char* DumpFormatTypeToString(DumpFormatType type);
+CERES_EXPORT bool StringtoDumpFormatType(std::string value, DumpFormatType* type);
 CERES_EXPORT bool StringtoDumpFormatType(std::string value, LoggingType* type);
 
 CERES_EXPORT const char* TerminationTypeToString(TerminationType type);

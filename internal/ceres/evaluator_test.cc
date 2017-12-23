@@ -216,7 +216,7 @@ struct EvaluatorTest
   ProblemImpl problem;
 };
 
-void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
+static void SetSparseMatrixConstant(SparseMatrix* sparse_matrix, double value) {
   VectorRef(sparse_matrix->mutable_values(),
             sparse_matrix->num_nonzeros()).setConstant(value);
 }
