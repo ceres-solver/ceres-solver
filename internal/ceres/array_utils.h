@@ -49,6 +49,10 @@
 namespace ceres {
 namespace internal {
 
+// True if the value is both finite and not kImpossibleValue; for Ceres to
+// validate that a user-supplied value is valid.
+bool IsUserSuppliedValueValid(const double x);
+
 // Fill the array x with an impossible value that the user code is
 // never expected to compute.
 void InvalidateArray(int size, double* x);
