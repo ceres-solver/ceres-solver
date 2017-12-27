@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f40c474_929c8321",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2017-12-27T00:20:35Z",
+      "side": 1,
+      "message": "These changes are great. However, the comments in this code is less clear than the commit message. Consider working the content from the quite useful and informative commit message into the code comments.",
+      "revId": "58535aa91373e61cd2102b48855049be9909e6f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
