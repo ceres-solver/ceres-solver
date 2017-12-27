@@ -43,15 +43,43 @@ namespace internal {
 
 using std::string;
 
+bool IsValueValid(const double x) {
+  return IsFinite(x) && (x != kImpossibleValue);
+}
+
 bool IsArrayValid(const int size, const double* x) {
   if (x != NULL) {
     for (int i = 0; i < size; ++i) {
-      if (!IsFinite(x[i]) || (x[i] == kImpossibleValue))  {
+      if (!IsValueValid(x[i])) {
         return false;
       }
     }
   }
   return true;
+}
+
+bool IsArrayValid(int size,
+                  const double* x,
+                  bool* found_unfilled_residuals,
+                  bool* found_nonfinite_residuals) {
+  *found_nonfinite_residuals = false;
+  *found_unfilled_residuals = false;
+  if (x != NULL) {
+    for (int i = 0; i < size; ++i) {
+      if (!IsFinite(x[i])) {
+        *found_nonfinite_residuals = true;
+      }
+      if (x[i] == kImpossibleValue) {
+        *found_unfilled_residuals = true;
+      }
+      if (*found_nonfinite_residuals &&
+          *found_unfilled_residuals) {
+        return false;
+      }
+    }
+  }
+  return (!*found_nonfinite_residuals) &&
+         (!*found_unfilled_residuals);
 }
 
 int FindInvalidValue(const int size, const double* x) {
@@ -60,7 +88,7 @@ int FindInvalidValue(const int size, const double* x) {
   }
 
   for (int i = 0; i < size; ++i) {
-    if (!IsFinite(x[i]) || (x[i] == kImpossibleValue))  {
+    if (!IsValueValid(x[i]))  {
       return i;
     }
   }

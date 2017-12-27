@@ -49,6 +49,10 @@
 namespace ceres {
 namespace internal {
 
+// True if the value is both finite and not kImpossibleValue; for Ceres to
+// validate that a user-supplied value is valid.
+bool IsValueValid(const double x);
+
 // Fill the array x with an impossible value that the user code is
 // never expected to compute.
 void InvalidateArray(int size, double* x);
@@ -56,7 +60,15 @@ void InvalidateArray(int size, double* x);
 // Check if all the entries of the array x are valid, i.e. all the
 // values in the array should be finite and none of them should be
 // equal to the "impossible" value used by InvalidateArray.
-bool IsArrayValid(int size, const double* x);
+bool IsArrayValid(int size,
+                  const double* x);
+
+// Check if all the entries of the array x are valid. If any values are not
+// valid, returns the type of invalid values in the boolean pointer parameters.
+bool IsArrayValid(int size,
+                  const double* x,
+                  bool* found_unfilled_residuals,
+                  bool* found_nonfinite_residuals);
 
 // If the array contains an invalid value, return the index for it,
 // otherwise return size.

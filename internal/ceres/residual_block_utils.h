@@ -65,14 +65,14 @@ bool IsEvaluationValid(const ResidualBlock& block,
                        double* residuals,
                        double** jacobians);
 
-// Create a string representation of the Residual block containing the
-// value of the parameters, residuals and jacobians if present.
-// Useful for debugging output.
-std::string EvaluationToString(const ResidualBlock& block,
-                               double const* const* parameters,
-                               double* cost,
-                               double* residuals,
-                               double** jacobians);
+// Create an error message describing problems with the result of evaluating a
+// CostFunction. For example, the message displays what elements are non-finite
+// or are not initialized in the returned values.
+std::string EvaluationErrorReportString(const ResidualBlock& block,
+                                        double const* const* parameters,
+                                        double* cost,
+                                        double* residuals,
+                                        double** jacobians);
 
 }  // namespace internal
 }  // namespace ceres
