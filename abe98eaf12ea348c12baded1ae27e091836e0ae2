@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a16d65e3_68f268df",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-01-03T10:25:23Z",
+      "side": 1,
+      "message": "One valid use case for these functions is for things like linear interpolation, which can be implemented as:\n\n    const int a \u003d static_cast\u003cint\u003e(floor(x));\n    const T t \u003d x - T(a);\n    return (T(1) - t) * array[a] + t * array[a + 1];\n\nHowever, this won\u0027t work with Jet right off the bat, as ceres::floor returns a Jet. Modifying it a bit will work however:\n\n    template\u003ctypename T\u003e        inline T unpack(const T\u0026                t) { return t;   }\n    template\u003ctypename T, int N\u003e inline T unpack(const ceres::Jet\u003cT, N\u003e\u0026 j) { return j.a; }\n\n    template\u003ctypename T\u003e\n    T interpolate(const double array[4], T x)\n    {\n        using namespace std;\n        const int a \u003d static_cast\u003cint\u003e(unpack(floor(x)));\n        const T t \u003d x - T(a);\n        return (T(1) - t) * array[a] + t * array[a + 1];\n    }\n\nThis will do what you expect when given a Jet, but the code is not super-pretty. I feel the best would be if floor/ceil/round and friends where defined as this instead:\n\n    template\u003ctypename T, int N\u003e inline\n    T floor(const Jet\u003cT, N\u003e\u0026 f)\n    {\n        return std::floor(f.a);\n    }\n\nBut that ship may have sailed?",
+      "parentUuid": "6c207f65_ecdeb5a2",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04a49c59_184ee5f0",
         "filename": "include/ceres/jet.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T22:55:29Z",
       "side": 1,
       "message": "While this works, consider trying to implement a hypot that delivers value verses the literal replacement here:\n\nhttps://stackoverflow.com/questions/32435796/when-to-use-stdhypotx-y-over-stdsqrtxx-yy",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7067cd39_75e17259",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-01-03T10:25:23Z",
+      "side": 1,
+      "message": "Good point, this was a very lazy implementation on my part.\n\nEDIT: I added a bunch of tests for all corner cases of hypot, and made sure they all worked. This means ceres::hypot works better than sqrt(x*x + y*y) now. In particular, the second is broken when x\u003dy\u003d0 or when x*x or y*y underflows or overflows.",
+      "parentUuid": "04a49c59_184ee5f0",
       "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e81d7d3_f65e3de4",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-01-03T10:25:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cddba692_e4071310",
+      "revId": "abe98eaf12ea348c12baded1ae27e091836e0ae2",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
