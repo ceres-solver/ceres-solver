@@ -125,7 +125,7 @@ set(CERES_INTERNAL_SRC
     wall_time.cc
 )
 
-# Also depend on the header files so that they appear in IDEs.
+#Also depend on the header files so that they appear in IDEs.
 file(GLOB CERES_INTERNAL_HDRS *.h)
 if (MINIGLOG)
   file(GLOB MINIGLOG_HDRS miniglog/glog/*.h)
@@ -371,3 +371,8 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(bundle_adjustment)
 
 endif (BUILD_TESTING AND GFLAGS)
+
+if (BUILD_BENCHMARKS)
+  add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
+  target_link_libraries(autodiff_cost_function_benchmark ceres benchmark::benchmark)
+endif (BUILD_BENCHMARKS)
