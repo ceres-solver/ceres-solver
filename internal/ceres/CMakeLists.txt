@@ -371,3 +371,8 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(bundle_adjustment)
 
 endif (BUILD_TESTING AND GFLAGS)
+
+if (BUILD_BENCHMARKS)
+  add_executable(autodiff_cost_function_benchmark autodiff_cost_function_benchmark.cc)
+  target_link_libraries(autodiff_cost_function_benchmark ceres benchmark::benchmark)
+endif (BUILD_BENCHMARKS)

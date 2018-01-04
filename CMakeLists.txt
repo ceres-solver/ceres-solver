@@ -37,6 +37,8 @@ if (POLICY CMP0042)
   cmake_policy(SET CMP0042 NEW)
 endif()
 
+include(CMakeDependentOption)
+
 project(Ceres C CXX)
 
 # NOTE: The 'generic' CMake variables CMAKE_[SOURCE/BINARY]_DIR should not be
@@ -131,6 +133,7 @@ option(EXPORT_BUILD_DIR
 option(BUILD_TESTING "Enable tests" ON)
 option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
+cmake_dependent_option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON "CXX11" OFF)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 if (MSVC)
   option(MSVC_USE_STATIC_CRT
@@ -518,11 +521,22 @@ if (CXX11)
   endif()
 endif(CXX11)
 
+if (BUILD_BENCHMARKS)
+  find_package(benchmark QUIET)
+  if (benchmark_FOUND)
+     message("-- Found Google benchmark library. Building Ceres benchmarks.")
+  else()
+     message("-- Failed to find Google benchmark library, disabling build of benchmarks.")
+     update_cache_variable(BUILD_BENCHMARKS OFF)
+  endif()
+endif()
+
 include_directories(
   include
   internal
   internal/ceres
   ${GLOG_INCLUDE_DIRS})
+
 # Eigen SparseQR generates various compiler warnings related to unused and
 # uninitialised local variables.  To avoid having to individually suppress these
 # warnings around the #include statments for Eigen headers across all GCC/Clang
