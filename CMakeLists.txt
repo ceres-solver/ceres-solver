@@ -131,6 +131,7 @@ option(EXPORT_BUILD_DIR
 option(BUILD_TESTING "Enable tests" ON)
 option(BUILD_DOCUMENTATION "Build User's Guide (html)" OFF)
 option(BUILD_EXAMPLES "Build examples" ON)
+option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 if (MSVC)
   option(MSVC_USE_STATIC_CRT
@@ -501,6 +502,10 @@ if (CXX11)
     message("-- Failed to find C++11 components in C++11 locations & "
       "namespaces, disabling CXX11.")
     update_cache_variable(CXX11 OFF)
+    if (BUILD_BENCHMARKS)
+      update_cache_variable(BUILD_BENCHMARKS OFF)
+      message("-- Disabling building of benchmarks")
+    endif (BUILD_BENCHMARKS)
   else()
     message("   ==============================================================")
     message("   Compiling Ceres using C++11.  This will result in a version ")
@@ -516,13 +521,37 @@ if (CXX11)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     endif()
   endif()
+else()
+  if (BUILD_BENCHMARKS)
+    update_cache_variable(BUILD_BENCHMARKS OFF)
+    message("-- No C++11. Disabling building of benchmarks")
+  endif (BUILD_BENCHMARKS)
 endif(CXX11)
+
+if (BUILD_BENCHMARKS)
+  find_path(BENCHMARK_INCLUDE_DIR NAMES benchmark/benchmark.h)
+  if (BENCHMARK_INCLUDE_DIR)
+    message("-- Found the Google Microbenchmark header in ${BENCHMARK_INCLUDE_DIR}")
+  else ()
+    message("-- Unable to find the Google Microbenchmark header. Disabling benchmarks.")
+    update_cache_variable(BUILD_BENCHMARKS OFF)
+  endif (BENCHMARK_INCLUDE_DIR)
+
+  find_library(BENCHMARK_LIBRARY NAMES libbenchmark benchmark)
+  if (BENCHMARK_LIBRARY)
+    message("-- Found the Google Microbenchmark library in ${BENCHMARK_LIBRARY}")
+  else ()
+    message("-- Unable to find the Google Microbenchmark library. Disabling benchmarks.")
+    update_cache_variable(BUILD_BENCHMARKS OFF)
+  endif (BENCHMARK_LIBRARY)
+endif(BUILD_BENCHMARKS)
 
 include_directories(
   include
   internal
   internal/ceres
   ${GLOG_INCLUDE_DIRS})
+
 # Eigen SparseQR generates various compiler warnings related to unused and
 # uninitialised local variables.  To avoid having to individually suppress these
 # warnings around the #include statments for Eigen headers across all GCC/Clang
