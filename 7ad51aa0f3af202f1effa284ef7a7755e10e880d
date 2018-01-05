@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79f9a11_87a40d9c",
+        "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-05T20:38:47Z",
+      "side": 1,
+      "message": "using... what? :)",
+      "revId": "7ad51aa0f3af202f1effa284ef7a7755e10e880d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1747e06_a71ed5bd",
+        "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-05T20:38:47Z",
+      "side": 1,
+      "message": "{}s always, no ifs on one line.",
+      "revId": "7ad51aa0f3af202f1effa284ef7a7755e10e880d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
