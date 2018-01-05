@@ -76,12 +76,14 @@ template<typename CostFunctor,
 class TinySolverAutoDiffFunction {
  public:
    TinySolverAutoDiffFunction(const CostFunctor& cost_functor)
-     : cost_functor_(cost_functor) {}
+     : cost_functor_(cost_functor) {
+      Initialize<NUM_RESIDUALS>(cost_functor);
+     }
 
   typedef T Scalar;
   enum {
     NUM_PARAMETERS = kNumParameters,
-    NUM_RESIDUALS = kNumResiduals,
+    NUM_RESIDUALS = kNumResiduals,   // number of residuals or Eigen::Dynamic
   };
 
   // This is similar to AutoDiff::Differentiate(), but since there is only one
@@ -102,21 +104,21 @@ class TinySolverAutoDiffFunction {
     }
 
     // Initialize the output jets such that we can detect user errors.
-    for (int i = 0; i < kNumResiduals; ++i) {
+    for (int i = 0; i < kNumResidualsRuntime; ++i) {
       jet_residuals_[i].a = kImpossibleValue;
       jet_residuals_[i].v.setConstant(kImpossibleValue);
     }
 
     // Execute the cost function, but with jets to find the derivative.
-    if (!cost_functor_(jet_parameters_, jet_residuals_)) {
+    if (!cost_functor_(jet_parameters_, jet_residuals_.data())) {
       return false;
     }
 
     // Copy the jacobian out of the derivative part of the residual jets.
     Eigen::Map<Eigen::Matrix<T,
                              kNumResiduals,
-                             kNumParameters> > jacobian_matrix(jacobian);
-    for (int r = 0; r < kNumResiduals; ++r) {
+                             kNumParameters> > jacobian_matrix(jacobian, kNumResidualsRuntime, kNumParameters);
+    for (int r = 0; r < kNumResidualsRuntime; ++r) {
       residuals[r] = jet_residuals_[r].a;
       // Note that while this looks like a fast vectorized write, in practice it
       // unfortunately thrashes the cache since the writes to the column-major
@@ -125,6 +127,12 @@ class TinySolverAutoDiffFunction {
     }
     return true;
   }
+
+  // needed for tiny_solver dynamic residuals format
+  int NumResiduals() const {
+    // the value is set by Initialize
+    return kNumResidualsRuntime;
+}
 
  private:
   const CostFunctor& cost_functor_;
@@ -135,7 +143,41 @@ class TinySolverAutoDiffFunction {
   //
   // Since this buffer is used for evaluation, the adapter is not thread safe.
   mutable Jet<T, kNumParameters> jet_parameters_[kNumParameters];
-  mutable Jet<T, kNumParameters> jet_residuals_[kNumResiduals];
+  mutable Eigen::Matrix<Jet<T, kNumParameters>, NUM_RESIDUALS, 1> jet_residuals_;
+
+  // The following definitions are needed for template metaprogramming.
+  template <bool Condition, typename S>
+  struct enable_if;
+
+  template <typename S>
+  struct enable_if<true, S> {
+    typedef S type;
+  };
+
+  // The number of parameters is dynamically sized and the number of
+  // residuals is statically sized.
+  template <int R>
+  typename enable_if<(R == Eigen::Dynamic), void>::type
+  Initialize(const CostFunctor& function) {
+    Initialize(function.NumResiduals());
+  }
+
+  // The number of parameters and residuals are statically sized.
+  template <int R>
+  typename enable_if<(R != Eigen::Dynamic), void>::type
+  Initialize(const CostFunctor& /* function */) {
+    Initialize(kNumResiduals);
+  }
+
+  void Initialize(int num_residuals) {
+    jet_residuals_.resize(num_residuals);
+    kNumResidualsRuntime = num_residuals;
+  }
+
+  // The Number of residuals at runtime, will be 
+  // overriden if NUM_PARAMETERS==Eigen::Dynamic
+  int kNumResidualsRuntime;   
+                              
 };
 
 }  // namespace ceres
