@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298a7a49_c359d9b9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "Consider possibly using cmake_dependent_option(): https://cmake.org/cmake/help/v3.0/module/CMakeDependentOption.html here.\n\nSomething like:\n\ninclude(CMakeDependentOption) # Think this is required from memory.\ncmake_dependent_option(BUILD_BENCHMARKS \"Build Ceres benchmarking suite\" ON \"CXX11\" OFF)\n\nThis might make the logic easier, in that the option will only appear (default ON) if CXX11 is enabled, otherwise will be OFF.",
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3420a5c_e1194da8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "I think this block can be completely removed, as you can check the status of the CXX11 option in the main if (BUILD_BENCHMARKS) block below after the CXX11 option has been updated accordingly based on whether C++11 support was found.",
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a92b9d_a1bad419",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "Ditto above, I think this can be removed and all logic put in the if (BUILD_BENCHMARKS) block after the CXX11 block.",
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c4045c_9f450012",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "This block should really go into a separate FindBenchmark.cmake script in src/cmake (if they didn\u0027t use CMake), however:\n\nYou should be able to pick up their exported CMake configuration if Benchmark is installed based on this: https://github.com/google/benchmark/blob/master/src/CMakeLists.txt#L40 via something like: find_package(benchmark) if its installed in a common location.  You should be able to check benchmark_FOUND to see if it was detected.\n\nThere is an issue here in that \u0027benchmark\u0027 is their project name, which IMO isn\u0027t a great one - it\u0027s very generic, so is quite likely to conflict with something.  However, if the above works then you should be able to just use:\n\ntarget_link_libraries(autodiff_cost_function_benchmark ceres benchmark)\n\nin the ceres/internal/CMakeLists.txt without any include_directories() calls as based on GitHub they roll the include directories into the target: https://github.com/google/benchmark/blob/master/src/CMakeLists.txt#L21 - this is a nice thing to do (and more modern CMake best-practice) but it requires a \u0027newer\u0027 (2014+) version of CMake (\u003e\u003d 3.0).",
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c297fb_0aac829e",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "I would move this to the main CMakeLists.txt when you add a find_package() script for the Benchmarks library s/t it looks more like:\n\nif (BUILD_BENCHMARKS)\n  find_package(\u003cBenchmarksName\u003e QUIET)\n  if (\u003cBenchmarksName\u003e_FOUND)\n     message(\"-- Building Ceres benchmarks.\")\n  else()\n     message(\"-- Failed to find \u003cBenchmarksName\u003e, disabling build of benchmarks.\")\n     update_cache_variable(BUILD_BENCHMARKS OFF)\n  endif()\nendif()",
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3e75eb_020388c0",
+        "filename": "internal/ceres/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-01-05T11:46:28Z",
+      "side": 1,
+      "message": "This should really be BENCHMARK_LIBRARIES rather than the singular form.  CMake best-practice is that the plural form is the one you use in client code s/t projects where there are multiple libraries are treated equivalently.",
+      "range": {
+        "startLine": 378,
+        "startChar": 63,
+        "endLine": 378,
+        "endChar": 83
+      },
+      "revId": "f30f7310d3d4567ab77f3d04afd87d5612e6d82b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
