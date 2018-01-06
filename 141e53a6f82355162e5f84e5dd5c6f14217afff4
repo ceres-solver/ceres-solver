@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d68139_a124371e",
+        "filename": "internal/ceres/array_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "this if condition is exactly the new function above (or the negative of it, use it?)",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2cd07a_ed0bf641",
+        "filename": "internal/ceres/array_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "IsValueValid ?\n\nwhy is \"UserSupplied\" needed here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb574f2_98656171",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "make these strings shorter and more to the point?",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a98d743_247f95bd",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "huge function, break into smaller bits?",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d66b2e_ff2af3c1",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "break into function.",
+      "range": {
+        "startLine": 90,
+        "startChar": 24,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64333998_38b476c9",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "break into function.",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa6c7ef_07a49e2d",
+        "filename": "internal/ceres/residual_block_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-06T14:42:57Z",
+      "side": 1,
+      "message": "this is too HUGE of a preamble, and a wall of text, I think the specific problems with the cost function should come before and more crisply.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "141e53a6f82355162e5f84e5dd5c6f14217afff4",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
