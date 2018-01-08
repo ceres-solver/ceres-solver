@@ -163,7 +163,7 @@ The matrix :math:`D(x)` is a non-negative diagonal matrix, typically
 the square root of the diagonal of the matrix :math:`J(x)^\top J(x)`.
 
 Before going further, let us make some notational simplifications. We
-will assume that the matrix :math:`\sqrt{\mu} D` has been concatenated
+will assume that the matrix :math:`\frac{1}{\sqrt{\mu}} D` has been concatenated
 at the bottom of the matrix :math:`J` and similarly a vector of zeros
 has been added to the bottom of the vector :math:`f` and the rest of
 our discussion will be in terms of :math:`J` and :math:`f`, i.e, the
