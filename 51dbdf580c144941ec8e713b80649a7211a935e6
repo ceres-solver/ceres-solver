@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c715a57_fe9b57e3",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-09T22:51:47Z",
+      "side": 1,
+      "message": "x_i and \\forall i seem like they\u0027re a different i from J_i? That\u0027s confusing - or am I misreading? Should this be f_i as well, to match J_i?",
+      "range": {
+        "startLine": 73,
+        "startChar": 42,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "51dbdf580c144941ec8e713b80649a7211a935e6",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
