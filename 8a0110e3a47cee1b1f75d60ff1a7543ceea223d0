@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e783c4e7_6b8c8373",
+        "filename": "internal/ceres/tiny_solver_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T00:59:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these tests go in\n\n./internal/ceres/tiny_solver_autodiff_function_test.cc\n\n?",
+      "revId": "8a0110e3a47cee1b1f75d60ff1a7543ceea223d0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
