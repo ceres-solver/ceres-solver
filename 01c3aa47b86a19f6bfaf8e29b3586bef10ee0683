@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74da7471_9bbb6151",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-09T16:01:22Z",
+      "side": 1,
+      "message": "\"is a row-major\"",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 64
+      },
+      "revId": "01c3aa47b86a19f6bfaf8e29b3586bef10ee0683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27941925_653748dc",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-09T16:01:22Z",
+      "side": 1,
+      "message": "``NULL``",
+      "range": {
+        "startLine": 125,
+        "startChar": 34,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "01c3aa47b86a19f6bfaf8e29b3586bef10ee0683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472d4557_70086e1e",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-09T16:01:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep the explicit description of row-major order here: something like (except with math markup)\nThe derivative of the r\u0027th residual with respect to the p\u0027th parameter in the i\u0027th parameter block is stored in jacobians[i][r * parameter_block_sizes_[i] + p].",
+      "range": {
+        "startLine": 127,
+        "startChar": 48,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "01c3aa47b86a19f6bfaf8e29b3586bef10ee0683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc03787f_b3bdefec",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-09T16:01:22Z",
+      "side": 1,
+      "message": "``NULL``",
+      "range": {
+        "startLine": 129,
+        "startChar": 26,
+        "endLine": 129,
+        "endChar": 30
+      },
+      "revId": "01c3aa47b86a19f6bfaf8e29b3586bef10ee0683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
