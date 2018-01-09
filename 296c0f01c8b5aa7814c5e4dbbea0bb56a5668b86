@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48010dd5_29aec548",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T18:35:11Z",
+      "side": 1,
+      "message": "Please fix 80 col issues.",
+      "revId": "296c0f01c8b5aa7814c5e4dbbea0bb56a5668b86",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
