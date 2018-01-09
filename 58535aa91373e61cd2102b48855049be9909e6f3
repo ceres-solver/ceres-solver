@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29331dbc_854a068c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-01-09T10:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f40c474_929c8321",
+      "revId": "58535aa91373e61cd2102b48855049be9909e6f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7220addb_6aa00d05",
         "filename": "CMakeLists.txt",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "58535aa91373e61cd2102b48855049be9909e6f3",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953a5318_85e1cb99",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 5160
+      },
+      "writtenOn": "2018-01-09T10:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7220addb_6aa00d05",
+      "revId": "58535aa91373e61cd2102b48855049be9909e6f3",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
