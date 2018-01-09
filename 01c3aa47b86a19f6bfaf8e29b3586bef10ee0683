@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "bbdc78fe_fe19585f",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T18:14:19Z",
+      "side": 1,
+      "message": "I agree. It\u0027s helpful to have it explicit. What people want to know is what to copy and paste into their code to access parameter i\u0027s jth element jacobian value w.r.t. residual k.",
+      "parentUuid": "472d4557_70086e1e",
+      "range": {
+        "startLine": 127,
+        "startChar": 48,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "01c3aa47b86a19f6bfaf8e29b3586bef10ee0683",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc03787f_b3bdefec",
         "filename": "docs/source/nnls_modeling.rst",
         "patchSetId": 2
