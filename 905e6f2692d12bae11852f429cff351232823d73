@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf8878b_f58b4a37",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T01:36:17Z",
+      "side": 1,
+      "message": "Trailing space",
+      "revId": "905e6f2692d12bae11852f429cff351232823d73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf8878b_d588ce3d",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T01:36:17Z",
+      "side": 1,
+      "message": "trailing_space",
+      "revId": "905e6f2692d12bae11852f429cff351232823d73",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}

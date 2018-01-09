@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e348e7f_dd018d9e",
+        "filename": "internal/ceres/trust_region_strategy.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T01:36:17Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "b55788a69615dfdeb1d0f4a8281cf64e365c3a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc0a8501_6c19659e",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T01:36:17Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "b55788a69615dfdeb1d0f4a8281cf64e365c3a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef0d3508_adbee872",
+        "filename": "internal/ceres/types.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-09T01:36:17Z",
+      "side": 1,
+      "message": "Trailing space.",
+      "revId": "b55788a69615dfdeb1d0f4a8281cf64e365c3a83",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
