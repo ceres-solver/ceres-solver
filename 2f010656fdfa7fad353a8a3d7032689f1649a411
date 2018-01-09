@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5a467f_16873620",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-09T15:18:08Z",
+      "side": 1,
+      "message": "I do not think we should add this function. Basically there is no way to use this with care as a template. If you disagree I\u0027d like to see example usage of this.",
+      "revId": "2f010656fdfa7fad353a8a3d7032689f1649a411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029281c9_adb6d5e8",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-09T15:18:08Z",
+      "side": 1,
+      "message": "same comment as above.",
+      "range": {
+        "startLine": 585,
+        "startChar": 16,
+        "endLine": 585,
+        "endChar": 17
+      },
+      "revId": "2f010656fdfa7fad353a8a3d7032689f1649a411",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
