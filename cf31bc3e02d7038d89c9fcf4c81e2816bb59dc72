@@ -22,6 +22,30 @@
       "revId": "cf31bc3e02d7038d89c9fcf4c81e2816bb59dc72",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6184b6f_1986445c",
+        "filename": "docs/source/nnls_modeling.rst",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-09T22:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00184eb7_cf363133",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 43
+      },
+      "revId": "cf31bc3e02d7038d89c9fcf4c81e2816bb59dc72",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
