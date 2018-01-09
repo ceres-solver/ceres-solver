@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78dd2420_1d097a69",
+        "filename": "internal/ceres/local_parameterization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-09T15:49:41Z",
+      "side": 1,
+      "message": "The reason this check was removed, is because if you are trying to construct a product parameterization for a parameter block which contains  rotation and translation, and you want to hold the translation constant, you need to use a SO(3) parameterization and a subset parameterization of size 0 for a block of size 3.",
+      "range": {
+        "startLine": 104,
+        "startChar": 29,
+        "endLine": 104,
+        "endChar": 30
+      },
+      "revId": "590916062913ef618009386a37b7da221b476522",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
