@@ -16,6 +16,24 @@
       "revId": "5e8b82db2760867b03e922585463b32c8a3bce68",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277510a1_2bf4f654",
+        "filename": "internal/ceres/parameter_block.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-10T12:18:17Z",
+      "side": 1,
+      "message": "if the local size is zero, it is equivalent to setting the parameter block constant.",
+      "parentUuid": "4808d99a_6b70e916",
+      "revId": "5e8b82db2760867b03e922585463b32c8a3bce68",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
