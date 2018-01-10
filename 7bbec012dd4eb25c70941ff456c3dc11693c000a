@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c3d5cbe_95f4c95c",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "glog now has Bazel support upstream. (this doesn\u0027t block this CL unless you want to use it)",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d12c27f_397a8563",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "This fails when used as an external repository. You can use the logic here:\n\nhttps://github.com/google/glog/blob/028d37889a1e80e8a07da1b8945ac706259e5fd8/bazel/glog.bzl#L11\n\n(but without $(GENDIR)). I cheated and used `includes`, but `-I` is better for internal headers.\n\nYou can test this by creating a subdirectory, copying the WORKSPACE and adding:\n\nlocal_repository(\n    name \u003d \"com_google_ceres_solver\",\n    path \u003d \"..\",\n)\n\nthen running `bazel build @com_google_ceres_solver//:ceres` in the subdirectory.",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfead7b7_969a49f1",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "google3 used to build with CERES_USE_OPENMP, and currently has the comment \"Temporarily disable threads, while we figure out TBB problems.\"\n\nShould we consider enabling threading here? I don\u0027t know enough about Ceres to know if it will affect users (eg Cartographer).\n\n(doesn\u0027t have to block this CL)",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "717be71c_954a808c",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "I suggest using http_archive and targeting a later version, as v2.2.1 leaks a \"config.h\" header which can confuse other builds.\n\nhttps://github.com/google/glog/blob/028d37889a1e80e8a07da1b8945ac706259e5fd8/WORKSPACE\n\n(also, you don\u0027t appear to depend on gflags, but if you use glog then you\u0027ll need it)",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9babb06b_a01ae93c",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "bind is not recommended: https://docs.bazel.build/versions/master/be/workspace.html#bind\n\n(unfortunately it has not been replaced with an especially good canonical naming standard, but I\u0027ve not had problems avoiding it)",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e198679_37b4f3fd",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "new_git_repository is less robust than new_http_archive. I\u0027d suggest copying from TensorFlow:\n\nhttps://github.com/tensorflow/tensorflow/blob/25d275280dfb163674f81c7681c2c1d34545a155/tensorflow/workspace.bzl#L97\n\n(tf_http_archive just wraps new_http_archive it seems)\n\nI chose to call the repo \"org_tuxfamily_eigen\" in an attempt to comply with the loosely-specified naming guidelines: https://docs.google.com/document/d/1qPOUeoqDA3eWFFXS1shWX1FT3e4BQB8yuSMrfQL4QrA/edit#heading\u003dh.1kkuneerfl14",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5490df9b_0aeb1a1f",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-10T13:50:21Z",
+      "side": 1,
+      "message": "This might pull in files with problematic licenses. I\u0027d suggest copying eigen.BUILD from TensorFlow: https://github.com/tensorflow/tensorflow/blob/master/third_party/eigen.BUILD",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
