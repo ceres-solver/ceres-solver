@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89f42ad0_b95f77ee",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-10T12:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76090cdd_1fd9b42b",
+      "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e408f9ef_11b845d7",
         "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-09T01:14:56Z",
       "side": 1,
       "message": "For benchmarks, we\u0027ll probably want to be careful on exactly what functions to test. The issue is that certain operations will be more expensive than others.",
+      "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1cccbb_054ef9a4",
+        "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-10T12:12:45Z",
+      "side": 1,
+      "message": "yes, this is just a placeholder from when I wrote the derivatives article.",
+      "parentUuid": "e408f9ef_11b845d7",
       "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a7c20f1_c69d090e",
+        "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-10T12:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1546714_3ac7b6cd",
+      "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67662464_37dd7db9",
         "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7607bda6_deeb271d",
+        "filename": "internal/ceres/autodiff_cost_function_benchmark.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-10T12:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67662464_37dd7db9",
+      "revId": "1d81d4fc7be6880aa5f82c05dd0ee0ee21fb56a0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
