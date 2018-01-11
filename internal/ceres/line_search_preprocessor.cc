@@ -60,6 +60,7 @@ bool SetupEvaluator(PreprocessedProblem* pp) {
   pp->evaluator_options.num_eliminate_blocks = 0;
   pp->evaluator_options.num_threads = pp->options.num_threads;
   pp->evaluator_options.context = pp->problem->context();
+  pp->evaluator_options.evaluation_callback = pp->options.evaluation_callback;
   pp->evaluator.reset(Evaluator::Create(pp->evaluator_options,
                                         pp->reduced_program.get(),
                                         &pp->error));
