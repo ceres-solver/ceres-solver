@@ -332,7 +332,10 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       current_state.cost = optimal_point.value;
       current_state.gradient = optimal_point.vector_gradient;
     } else {
-      if (!evaluator->Evaluate(optimal_point.vector_x.data(),
+      Evaluator::EvaluateOptions evaluate_options;
+      evaluate_options.new_evaluation_point = false;
+      if (!evaluator->Evaluate(evaluate_options,
+                               optimal_point.vector_x.data(),
                                &(current_state.cost),
                                NULL,
                                current_state.gradient.data(),
