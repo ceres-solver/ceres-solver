@@ -124,6 +124,14 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
     OPTION_GE(inner_iteration_tolerance, 0.0);
   }
 
+  if (options.use_inner_iterations &&
+      options.evaluation_callback != NULL) {
+    *error =  "Inner iterations (use_inner_iterations = true) can't be "
+        "combined with an evaluation callback "
+        "(options.evaluation_callback != NULL).";
+    return false;
+  }
+
   if (options.use_nonmonotonic_steps) {
     OPTION_GT(max_consecutive_nonmonotonic_steps, 0);
   }
@@ -140,7 +148,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       options.sparse_linear_algebra_library_type != SUITE_SPARSE) {
     *error =  "CLUSTER_JACOBI requires "
         "Solver::Options::sparse_linear_algebra_library_type to be "
-        "SUITE_SPARSE";
+        "SUITE_SPARSE.";
     return false;
   }
 
@@ -148,7 +156,7 @@ bool TrustRegionOptionsAreValid(const Solver::Options& options, string* error) {
       options.sparse_linear_algebra_library_type != SUITE_SPARSE) {
     *error =  "CLUSTER_TRIDIAGONAL requires "
         "Solver::Options::sparse_linear_algebra_library_type to be "
-        "SUITE_SPARSE";
+        "SUITE_SPARSE.";
     return false;
   }
 
