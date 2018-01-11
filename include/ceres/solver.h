@@ -39,6 +39,7 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
@@ -136,6 +137,7 @@ class CERES_EXPORT Solver {
       gradient_check_relative_precision = 1e-8;
       gradient_check_numeric_derivative_relative_step_size = 1e-6;
       update_state_every_iteration = false;
+      evaluation_callback = NULL;
     }
 
     // Returns true if the options struct has a valid
@@ -740,8 +742,12 @@ class CERES_EXPORT Solver {
     // If true, the user's parameter blocks are updated at the end of
     // every Minimizer iteration, otherwise they are updated when the
     // Minimizer terminates. This is useful if, for example, the user
-    // wishes to visualize the state of the optimization every
-    // iteration.
+    // wishes to visualize the state of the optimization every iteration
+    // (in combination with an IterationCallback).
+    //
+    // WARNING: This option is ignored if evaluation_callback != NULL.
+    // In that case, user parameter blocks are updated for every
+    // residual and jacobian evaluation.
     bool update_state_every_iteration;
 
     // Callbacks that are executed at the end of each iteration of the
@@ -758,8 +764,28 @@ class CERES_EXPORT Solver {
     // to the update parameter blocks when his/her callbacks are
     // executed, then set update_state_every_iteration to true.
     //
+    // WARNING: If evaluation_callback != NULL, then the user's
+    // parameter blocks will be unconditionally updated for every
+    // residual and jacobian evaluation. See the warning in the
+    // documentation for update_state_every_iteration.
+    //
     // The solver does NOT take ownership of these pointers.
     std::vector<IterationCallback*> callbacks;
+
+    // If non-NULL, get notified when Ceres is about to evaluate the
+    // residuals and/or Jacobians. This enables sharing computation
+    // between residuals, which in some cases is important for efficient
+    // cost evaluation. See evaluation_callback.h for details.
+    //
+    // NOTE: This is incompatible with inner iterations.
+    //
+    // WARNING: If evaluation_callback != NULL, then the user's
+    // parameter blocks will be unconditionally updated for every
+    // residual and jacobian evaluation regardless of the setting of
+    // update_state_every_iteration.
+    //
+    // The solver does NOT take ownership of the pointer.
+    EvaluationCallback* evaluation_callback;
   };
 
   struct CERES_EXPORT Summary {
