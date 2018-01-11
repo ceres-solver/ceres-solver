@@ -201,6 +201,7 @@ bool TrustRegionMinimizer::IterationZero() {
     x_norm_ = x_.norm();
   }
 
+  evaluator_->NewEvaluationPoint();
   if (!EvaluateGradientAndJacobian()) {
     return false;
   }
@@ -224,6 +225,8 @@ bool TrustRegionMinimizer::IterationZero() {
 // successfully. Any failures are considered fatal and the
 // Solver::Summary is updated to indicate this.
 bool TrustRegionMinimizer::EvaluateGradientAndJacobian() {
+  // Since this candidate is accepted (or it's the first evaluation), don't
+  // trigger a new evaluation point.
   if (!evaluator_->Evaluate(x_.data(),
                             &x_cost_,
                             residuals_.data(),
@@ -479,11 +482,16 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   ++solver_summary_->num_inner_iteration_steps;
   inner_iteration_x_ = candidate_x_;
   Solver::Summary inner_iteration_summary;
-  options_.inner_iteration_minimizer->Minimize(
-      options_, inner_iteration_x_.data(), &inner_iteration_summary);
+  options_.inner_iteration_minimizer->Minimize(options_,
+                                               inner_iteration_x_.data(),
+                                               &inner_iteration_summary);
   double inner_iteration_cost;
-  if (!evaluator_->Evaluate(
-          inner_iteration_x_.data(), &inner_iteration_cost, NULL, NULL, NULL)) {
+  evaluator_->NewEvaluationPoint();
+  if (!evaluator_->Evaluate(inner_iteration_x_.data(),
+                            &inner_iteration_cost,
+                            NULL,
+                            NULL,
+                            NULL)) {
     VLOG_IF(2, is_not_silent_) << "Inner iteration failed.";
     return;
   }
@@ -566,6 +574,7 @@ void TrustRegionMinimizer::DoLineSearch(const Vector& x,
       options_.line_search_sufficient_curvature_decrease;
   line_search_options.max_step_expansion =
       options_.max_line_search_step_expansion;
+  // XXX: Need to work evaluator_->NewEvalutaionPoint() calls into this.
   line_search_options.function = &line_search_function;
 
   std::string message;
@@ -724,8 +733,14 @@ void TrustRegionMinimizer::ComputeCandidatePointAndEvaluateCost() {
     return;
   }
 
-  if (!evaluator_->Evaluate(
-          candidate_x_.data(), &candidate_cost_, NULL, NULL, NULL)) {
+  // New candidates will potentially get re-evaluated with Jacobians, so notify
+  // listeners that they should prepare.
+  evaluator->NewEvaluationPoint();
+  if (!evaluator_->Evaluate(candidate_x_.data(),
+                            &candidate_cost_,
+                            NULL,
+                            NULL,
+                            NULL)) {
     LOG_IF(WARNING, is_not_silent_)
         << "Step failed to evaluate. "
         << "Treating it as a step with infinite cost";

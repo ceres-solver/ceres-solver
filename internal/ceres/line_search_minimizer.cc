@@ -115,6 +115,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.step_solver_time_in_seconds = 0;
 
   // Do initial cost and gradient evaluation.
+  evaluator->NewEvaluationPoint();  // XXX this is probably wrong!
   if (!evaluator->Evaluate(x.data(),
                            &(current_state.cost),
                            NULL,
@@ -167,6 +168,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   scoped_ptr<LineSearchDirection> line_search_direction(
       LineSearchDirection::Create(line_search_direction_options));
 
+  // XXX - consider if this needs to get updated for NewEvaluationPoint().
   LineSearchFunction line_search_function(evaluator);
 
   LineSearch::Options line_search_options;
@@ -303,6 +305,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       break;
     }
 
+    // XXX - note this will internally call NewEvaluationPoint().
     line_search->Search(initial_step_size,
                         current_state.cost,
                         current_state.directional_derivative,
@@ -332,6 +335,9 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
       current_state.cost = optimal_point.value;
       current_state.gradient = optimal_point.vector_gradient;
     } else {
+      // Note: here do NOT call NewEvaluatePoint() since the last call to the
+      // line search should have set the new point. Potentially this next call
+      // could be cached.
       if (!evaluator->Evaluate(optimal_point.vector_x.data(),
                                &(current_state.cost),
                                NULL,
