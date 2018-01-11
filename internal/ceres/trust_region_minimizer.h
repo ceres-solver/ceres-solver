@@ -63,7 +63,7 @@ class TrustRegionMinimizer : public Minimizer {
   bool FinalizeIterationAndCheckIfMinimizerCanContinue();
   bool ComputeTrustRegionStep();
 
-  bool EvaluateGradientAndJacobian();
+  bool EvaluateGradientAndJacobian(bool new_evaluation_point);
   void ComputeCandidatePointAndEvaluateCost();
 
   void DoLineSearch(const Vector& x,
