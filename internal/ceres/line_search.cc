@@ -124,8 +124,15 @@ void LineSearchFunction::Evaluate(const double x,
     output->vector_gradient.resize(direction_.rows(), 1);
     gradient = output->vector_gradient.data();
   }
-  const bool eval_status = evaluator_->Evaluate(
-      output->vector_x.data(), &(output->value), NULL, gradient, NULL);
+  // Since the two line search implementations either always request the
+  // gradient, or never request the gradient, the call to notify about a new
+  // evaluation point can go here.
+  evaluator_->NewEvaluationPoint();
+  const bool eval_status = evaluator_->Evaluate(output->vector_x.data(),
+                                                &(output->value),
+                                                NULL,
+                                                gradient,
+                                                NULL);
 
   if (!eval_status || !IsFinite(output->value)) {
     return;
