@@ -85,6 +85,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "ceres/evaluation_callback.h"
 #include "ceres/execution_summary.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -154,6 +155,14 @@ class ProgramEvaluator : public Evaluator {
     // The parameters are stateful, so set the state before evaluating.
     if (!program_->StateVectorToParameterBlocks(state)) {
       return false;
+    }
+
+    // Notify the user about a new evaluation point if they are interested.
+    if (options_.evaluation_callback != NULL) {
+      program_->CopyParameterBlockStateToUserState();
+      options_.evaluation_callback->PrepareForEvaluation(
+          /*jacobians=*/(gradient != NULL || jacobian != NULL),
+          evaluate_options.new_evaluation_point);
     }
 
     if (residuals != NULL) {

@@ -100,6 +100,7 @@ CERES_TESTS = [
     "dynamic_sparse_normal_cholesky_solver",
     "dynamic_sparsity",
     "evaluator",
+    "evaluation_callback",
     "gradient_checker",
     "gradient_checking_cost_function",
     "gradient_problem_solver",
