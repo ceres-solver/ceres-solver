@@ -34,6 +34,7 @@
 #include <cmath>
 #include <vector>
 #include "gtest/gtest.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/internal/scoped_ptr.h"
 #include "ceres/autodiff_cost_function.h"
 #include "ceres/sized_cost_function.h"
@@ -84,6 +85,15 @@ struct RememberingCallback : public IterationCallback {
   std::vector<double> x_values;
 };
 
+struct NoOpEvaluationCallback : EvaluationCallback {
+  virtual ~NoOpEvaluationCallback() {}
+  virtual void PrepareForEvaluation(bool evaluate_jacobians,
+                                    bool new_evaluation_point) {
+    (void) evaluate_jacobians;
+    (void) new_evaluation_point;
+  }
+};
+
 TEST(Solver, UpdateStateEveryIterationOption) {
   double x = 50.0;
   const double original_x = x;
@@ -116,6 +126,35 @@ TEST(Solver, UpdateStateEveryIterationOption) {
   // Second try: with updating
   x = 50.0;
   options.update_state_every_iteration = true;
+  callback.x_values.clear();
+  Solve(options, &problem, &summary);
+  num_iterations = summary.num_successful_steps +
+                   summary.num_unsuccessful_steps;
+  EXPECT_GT(num_iterations, 1);
+  EXPECT_EQ(original_x, callback.x_values[0]);
+  EXPECT_NE(original_x, callback.x_values[1]);
+
+  NoOpEvaluationCallback evaluation_callback;
+
+  // Third try: with updating and also an evaluation callback. Note: this case
+  // needs to get tested since the behaviour of update_state_every_iteration is
+  // implemented via the always-updating mechanism of the evaluation callback.
+  x = 50.0;
+  options.update_state_every_iteration = true;
+  options.evaluation_callback = &evaluation_callback;
+  callback.x_values.clear();
+  Solve(options, &problem, &summary);
+  num_iterations = summary.num_successful_steps +
+                   summary.num_unsuccessful_steps;
+  EXPECT_GT(num_iterations, 1);
+  EXPECT_EQ(original_x, callback.x_values[0]);
+  EXPECT_NE(original_x, callback.x_values[1]);
+
+  // Fourth try: without updating and also an evaluation callback. Note: in this
+  // case, the state will get updated anyway due to the evaluation callback.
+  x = 50.0;
+  options.update_state_every_iteration = false;
+  options.evaluation_callback = &evaluation_callback;
   callback.x_values.clear();
   Solve(options, &problem, &summary);
   num_iterations = summary.num_successful_steps +
@@ -365,6 +404,30 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
 #endif
 
   options.linear_solver_type = ITERATIVE_SCHUR;
+  EXPECT_TRUE(options.IsValid(&message));
+}
+
+TEST(Solver, CantMixEvaluationCallbackWithInnerIterations) {
+  Solver::Options options;
+  NoOpEvaluationCallback evaluation_callback;
+  string message;
+
+  // Can't combine them.
+  options.use_inner_iterations = true;
+  options.evaluation_callback = &evaluation_callback;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  // Either or none is OK.
+  options.use_inner_iterations = false;
+  options.evaluation_callback = &evaluation_callback;
+  EXPECT_TRUE(options.IsValid(&message));
+
+  options.use_inner_iterations = true;
+  options.evaluation_callback = NULL;
+  EXPECT_TRUE(options.IsValid(&message));
+
+  options.use_inner_iterations = false;
+  options.evaluation_callback = NULL;
   EXPECT_TRUE(options.IsValid(&message));
 }
 
