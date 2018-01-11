@@ -201,7 +201,7 @@ bool TrustRegionMinimizer::IterationZero() {
     x_norm_ = x_.norm();
   }
 
-  if (!EvaluateGradientAndJacobian()) {
+  if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/true)) {
     return false;
   }
 
@@ -223,8 +223,12 @@ bool TrustRegionMinimizer::IterationZero() {
 // Returns true if all computations could be performed
 // successfully. Any failures are considered fatal and the
 // Solver::Summary is updated to indicate this.
-bool TrustRegionMinimizer::EvaluateGradientAndJacobian() {
-  if (!evaluator_->Evaluate(x_.data(),
+bool TrustRegionMinimizer::EvaluateGradientAndJacobian(
+    bool new_evaluation_point) {
+  Evaluator::EvaluateOptions evaluate_options;
+  evaluate_options.new_evaluation_point = new_evaluation_point;
+  if (!evaluator_->Evaluate(evaluate_options,
+                            x_.data(),
                             &x_cost_,
                             residuals_.data(),
                             gradient_.data(),
@@ -768,7 +772,9 @@ bool TrustRegionMinimizer::HandleSuccessfulStep() {
   x_ = candidate_x_;
   x_norm_ = x_.norm();
 
-  if (!EvaluateGradientAndJacobian()) {
+  // Since the step was successful, this point has already had the residual
+  // evaluated (but not the jacobian). So indicate that to the evaluator.
+  if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/false)) {
     return false;
   }
 

@@ -368,6 +368,36 @@ TEST(Solver, LinearSolverTypeNormalOperation) {
   EXPECT_TRUE(options.IsValid(&message));
 }
 
+struct FakeEvaluationCallback : EvaluationCallback {
+  virtual ~FakeEvaluationCallback() {}
+  virtual void PrepareForEvaluation(bool jacobians,
+                                    bool new_evaluation_point) {}
+};
+
+TEST(Solver, CantMixEvaluationCallbackWithInnerIterations) {
+  Solver::Options options;
+  FakeEvaluationCallback evaluation_callback;
+  string message;
+
+  // Can't combine them.
+  options.use_inner_iterations = true;
+  options.evaluation_callback = &evaluation_callback;
+  EXPECT_FALSE(options.IsValid(&message));
+
+  // Either or none is OK.
+  options.use_inner_iterations = false;
+  options.evaluation_callback = &evaluation_callback;
+  EXPECT_TRUE(options.IsValid(&message));
+
+  options.use_inner_iterations = true;
+  options.evaluation_callback = NULL;
+  EXPECT_TRUE(options.IsValid(&message));
+
+  options.use_inner_iterations = false;
+  options.evaluation_callback = NULL;
+  EXPECT_TRUE(options.IsValid(&message));
+}
+
 template<int kNumResiduals, int N1 = 0, int N2 = 0, int N3 = 0>
 class DummyCostFunction : public SizedCostFunction<kNumResiduals, N1, N2, N3> {
  public:

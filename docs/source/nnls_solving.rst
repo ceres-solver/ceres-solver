@@ -1631,6 +1631,28 @@ elimination group [LiSaad]_.
    iteration. This setting is useful when building an interactive
    application using Ceres and using an :class:`IterationCallback`.
 
+.. member:: bool Solver::Options::evaluation_callback
+
+   Default: ``NULL``
+
+   If non-empty, get notified when Ceres is about to evaluate the
+   residuals. This is incompatible with some solver options (e.g. inner
+   iterations); however, it enables sharing computation between
+   residuals, which in some cases is important for efficient evaluation.
+
+   For the evaluation callback to function properly, Ceres must
+   update the data in user's parameter blocks for every cost
+   function evaluation (even for unsuccessful steps). This happens
+   regardless of update_state_every_iteration.
+
+   WARNING: If `evaluation_callback != NULL`, then the user's
+   parameter blocks will be unconditionally updated for every
+   residual and jacobian evaluation. See the warning in the
+   documentation for update_state_every_iteration.
+
+   The solver does NOT take ownership of the pointer.
+
+
 :class:`ParameterBlockOrdering`
 ===============================
 
