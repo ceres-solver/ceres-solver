@@ -140,6 +140,7 @@ class ProgramEvaluator : public Evaluator {
     return jacobian_writer_.CreateJacobian();
   }
 
+  // TODO: Plumb callback into evaluate_options.
   bool Evaluate(const Evaluator::EvaluateOptions& evaluate_options,
                 const double* state,
                 double* cost,
@@ -151,6 +152,24 @@ class ProgramEvaluator : public Evaluator {
                                          ? "Evaluator::Residual"
                                          : "Evaluator::Jacobian",
                                          &execution_summary_);
+
+    // Calls EvaluationComplete() if there is an evaluation callback set in it,
+    // when destructed.
+    ScopedEvaluationCallbackContext evaluation_callback_context;
+
+    // Inform the user about the pending evaluation, if they're interested.
+    if (evaluate_options.evaluation_callback != NULL) {
+      if (jacobian != NULL || gradient != NULL) {
+        evaluate_options.evaluation_callback->
+            PrepareForResidualAndJacobianEvaluation();
+      } else {
+        evaluate_options.evaluation_callback->
+            PrepareForResidualOnlyEvaluation();
+      }
+      // Inform the user that the evaluation is complete on function return.
+      evaluation_callback_context.set(
+          evaluate_options.evaluation_callback);
+    }
 
     // The parameters are stateful, so set the state before evaluating.
     if (!program_->StateVectorToParameterBlocks(state)) {
