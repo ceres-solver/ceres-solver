@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "825ffdde_7f49c71d",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-01-11T18:00:22Z",
+      "side": 1,
+      "message": "We\u0027ll deal with this post-submit.",
+      "parentUuid": "2d12c27f_397a8563",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfead7b7_969a49f1",
         "filename": "BUILD",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2018-01-10T13:50:21Z",
       "side": 1,
       "message": "google3 used to build with CERES_USE_OPENMP, and currently has the comment \"Temporarily disable threads, while we figure out TBB problems.\"\n\nShould we consider enabling threading here? I don\u0027t know enough about Ceres to know if it will affect users (eg Cartographer).\n\n(doesn\u0027t have to block this CL)",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d372030_942d9af2",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-01-11T18:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfead7b7_969a49f1",
       "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "3b67fd11_0a261e93",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-01-11T18:00:22Z",
+      "side": 1,
+      "message": "Will change later.",
+      "parentUuid": "7e198679_37b4f3fd",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5490df9b_0aeb1a1f",
         "filename": "WORKSPACE",
         "patchSetId": 2
@@ -118,6 +172,24 @@
       "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4d2424_dbba4ecf",
+        "filename": "WORKSPACE",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5001
+      },
+      "writtenOn": "2018-01-11T18:00:22Z",
+      "side": 1,
+      "message": "Will change later.",
+      "parentUuid": "5490df9b_0aeb1a1f",
+      "revId": "7bbec012dd4eb25c70941ff456c3dc11693c000a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
