@@ -201,7 +201,7 @@ bool TrustRegionMinimizer::IterationZero() {
     x_norm_ = x_.norm();
   }
 
-  if (!EvaluateGradientAndJacobian()) {
+  if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/true)) {
     return false;
   }
 
@@ -223,8 +223,14 @@ bool TrustRegionMinimizer::IterationZero() {
 // Returns true if all computations could be performed
 // successfully. Any failures are considered fatal and the
 // Solver::Summary is updated to indicate this.
-bool TrustRegionMinimizer::EvaluateGradientAndJacobian() {
-  if (!evaluator_->Evaluate(x_.data(),
+bool TrustRegionMinimizer::EvaluateGradientAndJacobian(
+    bool new_evaluation_point) {
+  // Since this candidate is accepted (or it's the first evaluation), don't
+  // trigger a new evaluation point.
+  Evaluator::EvaluateOptions evaluate_options;
+  evaluate_options.new_evaluation_point = new_evaluation_point;
+  if (!evaluator_->Evaluate(evaluate_options,
+                            x_.data(),
                             &x_cost_,
                             residuals_.data(),
                             gradient_.data(),
@@ -479,11 +485,15 @@ void TrustRegionMinimizer::DoInnerIterationsIfNeeded() {
   ++solver_summary_->num_inner_iteration_steps;
   inner_iteration_x_ = candidate_x_;
   Solver::Summary inner_iteration_summary;
-  options_.inner_iteration_minimizer->Minimize(
-      options_, inner_iteration_x_.data(), &inner_iteration_summary);
+  options_.inner_iteration_minimizer->Minimize(options_,
+                                               inner_iteration_x_.data(),
+                                               &inner_iteration_summary);
   double inner_iteration_cost;
-  if (!evaluator_->Evaluate(
-          inner_iteration_x_.data(), &inner_iteration_cost, NULL, NULL, NULL)) {
+  if (!evaluator_->Evaluate(inner_iteration_x_.data(),
+                            &inner_iteration_cost,
+                            NULL,
+                            NULL,
+                            NULL)) {
     VLOG_IF(2, is_not_silent_) << "Inner iteration failed.";
     return;
   }
@@ -723,9 +733,11 @@ void TrustRegionMinimizer::ComputeCandidatePointAndEvaluateCost() {
     candidate_cost_ = std::numeric_limits<double>::max();
     return;
   }
-
-  if (!evaluator_->Evaluate(
-          candidate_x_.data(), &candidate_cost_, NULL, NULL, NULL)) {
+  if (!evaluator_->Evaluate(candidate_x_.data(),
+                            &candidate_cost_,
+                            NULL,
+                            NULL,
+                            NULL)) {
     LOG_IF(WARNING, is_not_silent_)
         << "Step failed to evaluate. "
         << "Treating it as a step with infinite cost";
@@ -768,7 +780,10 @@ bool TrustRegionMinimizer::HandleSuccessfulStep() {
   x_ = candidate_x_;
   x_norm_ = x_.norm();
 
-  if (!EvaluateGradientAndJacobian()) {
+  // Since the step was successful, this point has already had the residual
+  // evaluated (but not the jacobian). So indicate that this is the same point
+  // as before to the evaluator.
+  if (!EvaluateGradientAndJacobian(/*new_evaluation_point=*/false)) {
     return false;
   }
 

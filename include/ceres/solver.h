@@ -39,6 +39,7 @@
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
 #include "ceres/iteration_callback.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/ordered_groups.h"
 #include "ceres/types.h"
 
@@ -742,6 +743,10 @@ class CERES_EXPORT Solver {
     // Minimizer terminates. This is useful if, for example, the user
     // wishes to visualize the state of the optimization every
     // iteration.
+    //
+    // Note: This option is ignored if evaluation_callback != NULL. In that
+    // case, user parameter locks are updated for every residual and jacobian
+    // evaluation.
     bool update_state_every_iteration;
 
     // Callbacks that are executed at the end of each iteration of the
@@ -758,8 +763,24 @@ class CERES_EXPORT Solver {
     // to the update parameter blocks when his/her callbacks are
     // executed, then set update_state_every_iteration to true.
     //
+    // Note: If evaluation_callback != NULL, then the user points will be
+    // unconditionally updated for every residual and jacobian evaluation.
+    //
     // The solver does NOT take ownership of these pointers.
     std::vector<IterationCallback*> callbacks;
+
+    // If non-empty, get notified when Ceres is about to evaluate the
+    // residuals. This is incompatible with some solver options (e.g. inner
+    // iterations); however, it enables sharing computation between residuals,
+    // which in some cases is important for efficient evaluation.
+    //
+    // Note: For the evaluation callback to function properly, Ceres must
+    // update the data in user's parameter blocks for every cost function
+    // evaluation (even for unsuccessful steps). This happens regardless of
+    // update_state_every_iteration.
+    //
+    // The solver does NOT take ownership of the pointer.
+    EvaluationCallback* evaluation_callback;
   };
 
   struct CERES_EXPORT Summary {
