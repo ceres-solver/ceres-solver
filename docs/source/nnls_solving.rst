@@ -1631,6 +1631,24 @@ elimination group [LiSaad]_.
    iteration. This setting is useful when building an interactive
    application using Ceres and using an :class:`IterationCallback`.
 
+.. member:: bool Solver::Options::evaluation_callback
+
+   Default: ``NULL``
+
+   If non-`NULL`, get notified when Ceres is about to evaluate the
+   residuals and/or Jacobians. This enables sharing computation between
+   residuals, which in some cases is important for efficient cost
+   evaluation. See evaluation_callback.h for details.
+   
+   NOTE: This is incompatible with inner iterations.
+   
+   WARNING: If evaluation_callback != NULL, then the user's
+   parameter blocks will be unconditionally updated for every
+   residual and jacobian evaluation regardless of the setting of
+   update_state_every_iteration.
+   
+   The solver does NOT take ownership of the pointer.
+
 :class:`ParameterBlockOrdering`
 ===============================
 
@@ -1690,6 +1708,58 @@ elimination group [LiSaad]_.
 
    Number of groups with one or more elements.
 
+
+:class:`EvaluationCallback`
+===========================
+
+.. class:: EvaluationCallback
+
+   Interface for receiving callbacks before Ceres evaluates residuals or
+   Jacobians:
+
+   .. code-block:: c++
+
+      class EvaluationCallback {
+       public:
+        virtual ~EvaluationCallback() {}
+        virtual void PrepareForEvaluation()(bool evaluate_jacobians
+                                            bool new_evaluation_point) = 0;
+      };
+
+   Using this callback interface, Ceres can notify you when it is about
+   to evaluate the residuals or jacobians. With the callback, you can
+   share computation between residual blocks by doing the shared
+   computation in `PrepareForEvaluation()` before Ceres calls
+   `CostFunction::Evaluate()` on all the residuals. It also enables
+   caching results between a pure residual evaluation and a residual &
+   jacobian evaluation, via the `new_evaluation_point` argument.
+   
+   One use case for this callback is if the cost function compute is
+   moved to the GPU. In that case, the prepare call does the actual cost
+   function evaluation, and subsequent calls from Ceres to the actual
+   cost functions merely copy the results from the GPU onto the
+   corresponding blocks for Ceres to plug into the solver.
+   
+   **Note**: Ceres provides no mechanism to share data other than the
+   notification from the callback. Users must provide access to
+   pre-computed shared data to their cost functions behind the scenes;
+   this all happens without Ceres knowing. One approach is to put a
+   pointer to the shared data in each cost function (recommended) or to
+   use a global shared variable (discouraged; bug-prone).  As far as
+   Ceres is concerned, it is evaluating cost functions like any other;
+   it just so happens that behind the scenes the cost functions reuse
+   pre-computed data to execute faster.
+   
+   **Discussion**: You may be wondering why there is not a more direct
+   method for delivering a fully formed jacobian to Ceres without going
+   through the CostFunction interface. The short answer is that
+   currently Ceres hides a fair amount of complexity with the
+   `CostFunction` interface, and if jacobians were exposed it would
+   increase the API surface considerably. For now, this seemingly hacky
+   callback approach accomplishes much of what is needed in practice,
+   albeit with a slightly more awkward mechanism (because you must do
+   your own bookkeeping to shovel data into Ceres via the
+   `CostFunction`s).
 
 :class:`IterationCallback`
 ==========================
