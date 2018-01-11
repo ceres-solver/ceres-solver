@@ -102,7 +102,10 @@ void SetupCommonMinimizerOptions(PreprocessedProblem* pp) {
                                        pp->logging_callback.get());
   }
 
-  if (options.update_state_every_iteration) {
+  if (options.update_state_every_iteration &&
+      // If there is an evaluation callback in place, the state will
+      // always get updated so there is no point in having this callback.
+      options.evaluation_callback == NULL) {
     pp->state_updating_callback.reset(
       new StateUpdatingCallback(program, reduced_parameters));
     // This must get pushed to the front of the callbacks so that it
