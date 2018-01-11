@@ -760,6 +760,12 @@ class CERES_EXPORT Solver {
     //
     // The solver does NOT take ownership of these pointers.
     std::vector<IterationCallback*> callbacks;
+
+    // If non-empty, get notified when Ceres is about to evaluate the
+    // residuals. This is incompatible with some solver options (e.g. inner
+    // iterations); however, it enables sharing computation between residuals,
+    // which in some cases is important for efficient evaluation.
+    EvaluationCallback* evaluation_callback;
   };
 
   struct CERES_EXPORT Summary {
