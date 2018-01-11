@@ -115,6 +115,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   iteration_summary.step_solver_time_in_seconds = 0;
 
   // Do initial cost and gradient evaluation.
+  evaluator->NewEvaluationPoint();
   if (!evaluator->Evaluate(x.data(),
                            &(current_state.cost),
                            NULL,
@@ -167,6 +168,7 @@ void LineSearchMinimizer::Minimize(const Minimizer::Options& options,
   scoped_ptr<LineSearchDirection> line_search_direction(
       LineSearchDirection::Create(line_search_direction_options));
 
+  // Glerg - the line search will try different evaluation points.
   LineSearchFunction line_search_function(evaluator);
 
   LineSearch::Options line_search_options;
