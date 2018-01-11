@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616143f7_93e948e5",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-11T04:21:37Z",
+      "side": 1,
+      "message": "do we need this?",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 33
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
