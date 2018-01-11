@@ -35,6 +35,7 @@
 #include <string>
 #include <vector>
 #include "ceres/crs_matrix.h"
+#include "ceres/evaluation_callback.h"
 #include "ceres/internal/disable_warnings.h"
 #include "ceres/internal/macros.h"
 #include "ceres/internal/port.h"
@@ -136,6 +137,7 @@ class CERES_EXPORT Solver {
       gradient_check_relative_precision = 1e-8;
       gradient_check_numeric_derivative_relative_step_size = 1e-6;
       update_state_every_iteration = false;
+      evaluation_callback = NULL;
     }
 
     // Returns true if the options struct has a valid
@@ -740,8 +742,23 @@ class CERES_EXPORT Solver {
     // If true, the user's parameter blocks are updated at the end of
     // every Minimizer iteration, otherwise they are updated when the
     // Minimizer terminates. This is useful if, for example, the user
-    // wishes to visualize the state of the optimization every
-    // iteration.
+    // wishes to visualize the state of the optimization every iteration
+    // (in combination with an IterationCallback).
+    //
+    // NOTE: If an evaluation_callback is provided, then the behaviour
+    // of this flag is slightly different in each case:
+    //
+    // (1) If update_state_every_iteration = false, then the user's
+    // state is changed at every residual and/or jacobian evaluation.
+    // Any user provided IterationCallbacks should NOT inspect and
+    // depend on the user visible state while the solver is running,
+    // since there will be undefined contents.
+    //
+    // (2) If update_state_every_iteration is true, then the user's
+    // state is changed at every residual and/or jacobian evaluation,
+    // BUT the solver will ensure that before the user provided
+    // IterationCallbacks are called, the user visible state will be
+    // updated to the current best point found by the solver.
     bool update_state_every_iteration;
 
     // Callbacks that are executed at the end of each iteration of the
@@ -751,15 +768,28 @@ class CERES_EXPORT Solver {
     // executed.
 
     // Callbacks are executed in the order that they are specified in
-    // this vector. By default, parameter blocks are updated only at
-    // the end of the optimization, i.e when the Minimizer
-    // terminates. This behaviour is controlled by
-    // update_state_every_variable. If the user wishes to have access
-    // to the update parameter blocks when his/her callbacks are
-    // executed, then set update_state_every_iteration to true.
+    // this vector. By default, parameter blocks are updated only at the
+    // end of the optimization, i.e when the Minimizer terminates. This
+    // behaviour is controlled by update_state_every_iteration. If the
+    // user wishes to have access to the updated parameter blocks when
+    // his/her callbacks are executed, then set
+    // update_state_every_iteration to true.
     //
     // The solver does NOT take ownership of these pointers.
     std::vector<IterationCallback*> callbacks;
+
+    // If non-NULL, get notified when Ceres is about to evaluate the
+    // residuals and/or Jacobians. This enables sharing computation
+    // between residuals, which in some cases is important for efficient
+    // cost evaluation. See evaluation_callback.h for details.
+    //
+    // NOTE: Evaluation callbacks are incompatible with inner iterations.
+    //
+    // WARNING: This interacts with update_state_every_iteration. See
+    // the documentation for that option for more details.
+    //
+    // The solver does NOT take ownership of the pointer.
+    EvaluationCallback* evaluation_callback;
   };
 
   struct CERES_EXPORT Summary {
