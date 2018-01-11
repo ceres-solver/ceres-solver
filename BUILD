@@ -99,6 +99,7 @@ CERES_TESTS = [
     "dynamic_numeric_diff_cost_function",
     "dynamic_sparse_normal_cholesky_solver",
     "dynamic_sparsity",
+    "evaluation_callback",
     "evaluator",
     "gradient_checker",
     "gradient_checking_cost_function",
