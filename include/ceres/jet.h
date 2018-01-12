@@ -258,7 +258,7 @@ struct Jet {
   // supported is < 16, in which case we do not specify an alignment, as this
   // implies the host is not a modern x86 machine.  If using < C++11, we cannot
   // specify alignment.
-#ifndef CERES_USE_CXX11
+#if !defined(CERES_USE_CXX11) || defined(EIGEN_DONT_VECTORIZE)
   // Without >= C++11, we cannot specify the alignment so fall back to safe,
   // unvectorised version.
   Eigen::Matrix<T, N, 1, Eigen::DontAlign> v;
