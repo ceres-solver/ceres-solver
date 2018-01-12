@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b12a3db_f7486ffe",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T20:14:01Z",
+      "side": 1,
+      "message": "can you file a github issue and link to it please.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2317513_834712bc",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T20:14:01Z",
+      "side": 1,
+      "message": "why these particular configuration choices?  why no threads for example?\nalso in this world why no c++11 ?\nyou are already saying ordered_map is in std name space?",
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4434307e_47fedd97",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T20:14:01Z",
+      "side": 1,
+      "message": "github issue please.",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 28
+      },
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
