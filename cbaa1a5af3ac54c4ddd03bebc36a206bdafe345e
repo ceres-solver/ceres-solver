@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091519f5_0413ba34",
+        "filename": "WORKSPACE",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T21:21:11Z",
+      "side": 1,
+      "message": "so this is frozen in time? how are these updated?",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "cbaa1a5af3ac54c4ddd03bebc36a206bdafe345e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3526ccd5_debc9464",
+        "filename": "WORKSPACE",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T21:21:11Z",
+      "side": 1,
+      "message": "github issue.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "cbaa1a5af3ac54c4ddd03bebc36a206bdafe345e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
