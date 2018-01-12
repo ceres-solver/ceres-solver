@@ -273,7 +273,7 @@ struct Jet {
   static constexpr int kAlignOrNot =
       16 <= ::ceres::port_constants::kMaxAlignBytes
             ? Eigen::AutoAlign : Eigen::DontAlign;
-#if defined(EIGEN_MAX_ALIGN_BYTES)
+#if defined(EIGEN_MAX_ALIGN_BYTES) && !defined(EIGEN_DONT_VECTORIZE)
   // Eigen >= 3.3 supports AVX & FMA instructions that require 32-byte alignment
   // (greater for AVX512).  Rather than duplicating the detection logic, use
   // Eigen's macro for the alignment size.
