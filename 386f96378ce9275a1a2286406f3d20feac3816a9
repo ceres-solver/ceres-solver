@@ -16,6 +16,24 @@
       "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd7f77c_0f60c326",
+        "filename": "WORKSPACE",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-12T09:20:51Z",
+      "side": 1,
+      "message": "Oh, wait, that\u0027s not right. Let me look further.",
+      "parentUuid": "b191cf83_01ca414a",
+      "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
