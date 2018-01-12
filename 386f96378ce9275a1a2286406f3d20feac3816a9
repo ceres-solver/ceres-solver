@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b191cf83_01ca414a",
+        "filename": "WORKSPACE",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-12T09:19:20Z",
+      "side": 1,
+      "message": "Your strip_prefix doesn\u0027t match your archive version, so it\u0027s being silently ignored and causing the glob() below to return an empty list. You can +1 my issue here if you want: https://github.com/bazelbuild/bazel/issues/3539",
+      "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
