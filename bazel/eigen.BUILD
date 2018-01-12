@@ -27,40 +27,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 # Authors: mierle@gmail.com (Keir Mierle)
-#
-# Bazel workspace file to enable building Ceres with Bazel.
 
-workspace(name = 'com_google_ceres_solver')
-
-# External dependency: Google Flags; has Bazel build already.
-http_archive(
-    name = "com_github_gflags_gflags",
-    sha256 = "6e16c8bc91b1310a44f3965e616383dbda48f83e8c1eaa2370a215057b00cabe",
-    strip_prefix = "gflags-77592648e3f3be87d6c7123eb81cbad75f9aef5a",
-    urls = [
-        "https://mirror.bazel.build/github.com/gflags/gflags/archive/77592648e3f3be87d6c7123eb81cbad75f9aef5a.tar.gz",
-        "https://github.com/gflags/gflags/archive/77592648e3f3be87d6c7123eb81cbad75f9aef5a.tar.gz",
-    ],
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'eigen',
+    srcs = [],
+    includes = ['.'],
+    hdrs = glob(['Eigen/**']),
+    visibility = ['//visibility:public'],
 )
-
-# External dependency: Google Log; has Bazel build already.
-http_archive(
-    name = "com_github_google_glog",
-    sha256 = "1ee310e5d0a19b9d584a855000434bb724aa744745d5b8ab1855c85bff8a8e21",
-    strip_prefix = "glog-028d37889a1e80e8a07da1b8945ac706259e5fd8",
-    urls = [
-        "https://github.com/google/glog/archive/028d37889a1e80e8a07da1b8945ac706259e5fd8.tar.gz",
-    ],
-)
-
-# External dependency: Eigen; has no Bazel build.
-new_http_archive(
-    name   = 'com_github_eigen_eigen',
-    sha256 = "dd254beb0bafc695d0f62ae1a222ff85b52dbaa3a16f76e781dce22d0d20a4a6",
-    strip_prefix = "eigen-eigen-5a0156e40feb",
-    urls = [
-        "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2"
-    ],
-    build_file = 'bazel/eigen.BUILD'
-)
-

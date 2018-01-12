@@ -1,5 +1,5 @@
 # Ceres Solver - A fast non-linear least squares minimizer
-# Copyright 2017 Google Inc. All rights reserved.
+# Copyright 2018 Google Inc. All rights reserved.
 # http://ceres-solver.org/
 #
 # Redistribution and use in source and binary forms, with or without
@@ -346,7 +346,7 @@ CERES_TESTS = [
     name = test_name + '_test',
     srcs = ['internal/ceres/' + test_name + '_test.cc'],
     copts = [
-        '-Wno-sign-compare'
+        '-Wno-sign-compare',
 
         # These two warnings don't work well in conjunction with GMock, and
         # trigger incorrectly on parts of rotation_test. For now, disable them,
