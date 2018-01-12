@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c6c31ad_9154457d",
+        "filename": "WORKSPACE",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-12T21:28:06Z",
+      "side": 1,
+      "message": "Manually. Downstream users can pick their own via their workspace if they like.",
+      "parentUuid": "091519f5_0413ba34",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "cbaa1a5af3ac54c4ddd03bebc36a206bdafe345e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3526ccd5_debc9464",
         "filename": "WORKSPACE",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "cbaa1a5af3ac54c4ddd03bebc36a206bdafe345e",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d9223c_d4bf0f6f",
+        "filename": "WORKSPACE",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-12T21:28:06Z",
+      "side": 1,
+      "message": "Done.\n\nhttps://github.com/ceres-solver/ceres-solver/issues/337",
+      "parentUuid": "3526ccd5_debc9464",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "cbaa1a5af3ac54c4ddd03bebc36a206bdafe345e",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
