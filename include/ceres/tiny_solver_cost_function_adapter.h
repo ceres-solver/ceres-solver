@@ -32,7 +32,7 @@
 #ifndef CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
 #define CERES_PUBLIC_TINY_SOLVER_COST_FUNCTION_ADAPTER_H_
 
-#include <Eigen/Core>
+#include "Eigen/Core"
 #include "ceres/cost_function.h"
 #include "glog/logging.h"
 
