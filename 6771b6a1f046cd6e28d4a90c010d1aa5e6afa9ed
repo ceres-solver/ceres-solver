@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f23777_7705f81b",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-12T16:43:09Z",
+      "side": 1,
+      "message": "I think this is better done at a level higher in the same ifdef as CERES_USE_CXX11. Clear and more immediate impact, since the reader never has to bother reading any of the other alignment code after that.",
+      "range": {
+        "startLine": 276,
+        "startChar": 39,
+        "endLine": 276,
+        "endChar": 46
+      },
+      "revId": "6771b6a1f046cd6e28d4a90c010d1aa5e6afa9ed",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
