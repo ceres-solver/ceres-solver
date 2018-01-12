@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c15b701_4936b0fe",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-12T21:17:12Z",
+      "side": 1,
+      "message": "Done.\nhttps://github.com/ceres-solver/ceres-solver/issues/335",
+      "parentUuid": "4b12a3db_f7486ffe",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 11
+      },
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2317513_834712bc",
         "filename": "BUILD",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d704bc_3bed6cb1",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-12T21:17:12Z",
+      "side": 1,
+      "message": "This is just a basic config to get started. I want to get a working config in master, and then we can debate about config policy. However, the correct solution is to allow users to instantiate this however they want. That\u0027s a bigger job for a followup CL.\n\nI added a TODO() to clarify the situation.",
+      "parentUuid": "f2317513_834712bc",
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197a2950_5a6f4315",
+        "filename": "BUILD",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-12T21:17:12Z",
+      "side": 1,
+      "message": "Done.\n\nhttps://github.com/ceres-solver/ceres-solver/issues/336",
+      "parentUuid": "4434307e_47fedd97",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 28
+      },
+      "revId": "b857171ea9887f97a21bc2bd483179038e4ab804",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
