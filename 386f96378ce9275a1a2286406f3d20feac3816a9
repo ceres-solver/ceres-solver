@@ -34,6 +34,41 @@
       "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151a83fd_534a1bb1",
+        "filename": "WORKSPACE",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-12T09:50:30Z",
+      "side": 1,
+      "message": "Ignore these comments :)",
+      "parentUuid": "6fd7f77c_0f60c326",
+      "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b05c078a_3f354efd",
+        "filename": "WORKSPACE",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-12T09:50:30Z",
+      "side": 1,
+      "message": "You can fix the Eigen issue by either adding this line here:\n\n    includes \u003d [\".\"],\n\nor by rebasing onto this change:\n\nhttps://ceres-solver-review.googlesource.com/#/c/ceres-solver/+/11620",
+      "revId": "386f96378ce9275a1a2286406f3d20feac3816a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
