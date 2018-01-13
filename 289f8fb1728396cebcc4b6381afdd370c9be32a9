@@ -162,6 +162,30 @@
       "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdc7c72_70831192",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-13T12:51:11Z",
+      "side": 1,
+      "message": "yeah the current way we update the parameter blocks needs to be reconciled with evaluation.\nthis will have to force the corresponding Solver::Options::update_something_or_the_other to be true.\n\nThere is also another open bug related to this which has to do with the gradientbasedoptimizer also.",
+      "parentUuid": "babe57ee_71a30cfe",
+      "range": {
+        "startLine": 143,
+        "startChar": 48,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
