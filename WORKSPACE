@@ -61,6 +61,48 @@ new_http_archive(
     urls = [
         "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2"
     ],
-    build_file = 'bazel/eigen.BUILD'
+    build_file = "bazel/eigen.BUILD"
+)
+
+# External dependency: SuiteSparse; has no Bazel build.
+# SuiteSparse has many subcomponents, including CXSparse, CHOLMOD, etc.
+new_http_archive(
+    name   = "edu_texasanm_suitesparse",
+    sha256 = "4ec8d344bd8e95b898132ddffd7ee93bfbb2c1224925d11bab844b08f9b4c3b7",
+    strip_prefix = "SuiteSparse",
+    urls = [
+        "http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-5.1.2.tar.gz"
+    ],
+    build_file = "bazel/suitesparse.BUILD"
+)
+
+# External dependency: CLAPACK; has no Bazel build.
+new_http_archive(
+    name   = "org_netlib_clapack",
+    sha256 = "6dc4c382164beec8aaed8fd2acc36ad24232c406eda6db462bd4c41d5e455fac",
+    strip_prefix = "CLAPACK-3.2.1",
+    urls = [
+        "http://www.netlib.org/clapack/clapack.tgz"
+    ],
+    build_file = "bazel/lapack.BUILD"
+)
+
+new_http_archive(
+    name   = "org_netlib_libf2c",
+    sha256 = "ca404070e9ce0a9aaa6a71fc7d5489d014ade952c5d6de7efb88de8e24f2e8e0",
+    urls = [
+        "http://www.netlib.org/f2c/libf2c.zip"
+    ],
+    build_file = "bazel/libf2c.BUILD"
+)
+
+new_http_archive(
+    name   = "org_netlib_2c",
+    sha256 = "7054ff0f6b3718586911521a368fa89976c33d18add2403d811446ec73a16d2e",
+    strip_prefix = "src",
+    urls = [
+        "http://www.netlib.org/f2c/src.tgz",
+    ],
+    build_file = "bazel/f2c.BUILD"
 )
 

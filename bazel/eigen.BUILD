@@ -37,3 +37,77 @@ cc_library(
     hdrs = glob(['Eigen/**']),
     visibility = ['//visibility:public'],
 )
+
+# TODO(keir): Need to support OpenMP, which may be used inside the Eigen BLAS.
+cc_library(
+    name = "blas",
+    hdrs = glob(['blas/*.h']),
+    srcs = [
+        "Eigen/src/misc/blas.h",
+        "blas/complex_double.cpp",
+        "blas/complex_single.cpp",
+        "blas/double.cpp",
+        "blas/f2c/chbmv.c",
+        "blas/f2c/chpmv.c",
+        "blas/f2c/complexdots.c",
+        "blas/f2c/ctbmv.c",
+        "blas/f2c/drotm.c",
+        "blas/f2c/drotmg.c",
+        "blas/f2c/dsbmv.c",
+        "blas/f2c/dspmv.c",
+        "blas/f2c/dtbmv.c",
+        "blas/f2c/lsame.c",
+        "blas/f2c/srotm.c",
+        "blas/f2c/srotmg.c",
+        "blas/f2c/ssbmv.c",
+        "blas/f2c/sspmv.c",
+        "blas/f2c/stbmv.c",
+        "blas/f2c/zhbmv.c",
+        "blas/f2c/zhpmv.c",
+        "blas/f2c/ztbmv.c",
+        "blas/f2c/datatypes.h",
+        "blas/single.cpp",
+        "blas/xerbla.cpp",
+    ],
+    includes = [
+        "blas",
+        "blas/f2c",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ['eigen']
+)
+
+# DOES NOT WORK!
+# Seems to trigger a Bazel bug; a failing command runs when I copy and paste
+# the printed command and run it manually.
+#
+# Eigen implements a small but very useful subset of the LAPACK API.  It does
+# not have the full abilities of LAPACK, but it is mostly C++ code, which makes
+# it suitable for use on platforms where there is no FORTRAN compiler, e.g.
+# Android.
+cc_library(
+    name = "lapack",
+    hdrs = [
+        "lapack/lapack_common.h"
+        ],
+    srcs = [
+        "lapack/complex_double.cpp",
+        "lapack/complex_single.cpp",
+        "lapack/cholesky.cpp",
+        "lapack/single.cpp",
+        "lapack/double.cpp",
+        "lapack/lapack_common.h",
+    ] + glob(["lapack/*.c"]),
+    includes = [
+        ".",
+        "lapack",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        'eigen',
+        'blas',
+        '@org_netlib_libf2c//:f2c',
+    ],
+)
+
+# TODO libf2c

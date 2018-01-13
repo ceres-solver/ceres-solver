@@ -31,7 +31,7 @@
 # These are Bazel rules to build Ceres. It's currently in Alpha state, and does
 # not support parameterization around threading choice or sparse backends.
 
-CERES_SRCS = ['internal/ceres/' + filename for filename in [
+CERES_BASE_SRCS = [
     'array_utils.cc',
     'blas.cc',
     'block_evaluate_preparer.cc',
@@ -167,7 +167,13 @@ CERES_SRCS = ['internal/ceres/' + filename for filename in [
     'generated/partitioned_matrix_view_4_4_3.cc',
     'generated/partitioned_matrix_view_4_4_4.cc',
     'generated/partitioned_matrix_view_4_4_d.cc'
-]]
+]
+
+CERES_ALL_SRCS = CERES_BASE_SRCS + [
+    'cxsparse.cc'
+]
+
+CERES_SRCS = ['internal/ceres/' + filename for filename in CERES_ALL_SRCS]
 
 # TODO(keir): This should get converted into a Skylark function that can
 # configure Ceres into various permutations, like SuiteSparse or not, threading
@@ -187,11 +193,14 @@ cc_library(
     # started with a Bazel build. However, these should become configurable as
     # part of a Skylark Ceres target macro.
     defines = [
-        'CERES_NO_SUITESPARSE',
-        'CERES_NO_CXSPARSE',
+        #'CERES_NO_SUITESPARSE',
+        #'CERES_NO_CXSPARSE',
         'CERES_NO_THREADS',
         'CERES_NO_LAPACK',
         'CERES_STD_UNORDERED_MAP',
+
+        # FIXME.
+        'CERES_CXSPARSE_VERSION=\\"5.1.2\\"',
     ],
 
     # These headers are made available to other targets.
@@ -217,6 +226,9 @@ cc_library(
     deps = [
         '@com_github_eigen_eigen//:eigen',
         '@com_github_google_glog//:glog',
+        '@edu_texasanm_suitesparse//:cxsparse',
+        '@edu_texasanm_suitesparse//:spqr',
+        '@edu_texasanm_suitesparse//:cholmod_gpl',
     ],
     visibility = ['//visibility:public'],
 )
