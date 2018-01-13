@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f82c953c_1da824b2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-01-13T10:56:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afd1c68a_4f93beac",
+      "revId": "aa23c629f7e11956b932476d559e5e887e4ce5d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8146c815_1c3ede05",
         "filename": "include/ceres/jet.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2018-01-02T19:16:29Z",
       "side": 1,
       "message": "This is C++11 syntax; we can\u0027t require downstream users to have C++11. Ceres has some optional C++11 features that trigger a C++11 requirement, but they are #ifdef\u0027d.",
+      "revId": "aa23c629f7e11956b932476d559e5e887e4ce5d1",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bbf361_340337cb",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 6103
+      },
+      "writtenOn": "2018-01-13T10:56:44Z",
+      "side": 1,
+      "message": "This is within #ifdef CERES_USE_CXX11, but I changed it anyway.",
+      "parentUuid": "8146c815_1c3ede05",
       "revId": "aa23c629f7e11956b932476d559e5e887e4ce5d1",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
