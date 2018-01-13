@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfd4c748_daab6785",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-13T12:49:02Z",
+      "side": 1,
+      "message": "This happens at every successful step in the TrustRegionMinimizer. Since we have to evaluate the Problem to see if we have made progress, and only if we have made progress do we go through the effort of moving to that point and evaluating its Jacobian.\n\nCurrently in the minimizer/evaluator we do not keep track of this though, i.e. we do not bother with keeping track of whether we are evaluating at the same point or not, so if we decide to do this, there is some bookkeeping and plumbing needed there.",
+      "parentUuid": "5481f4f1_7a0c2be8",
+      "range": {
+        "startLine": 42,
+        "startChar": 68,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616143f7_93e948e5",
         "filename": "include/ceres/evaluation_callback.h",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2018-01-13T00:27:39Z",
       "side": 1,
       "message": "Users can specify multiple IterationCallbacks - do we want them to be able to provide \u003e1 EvaluationCallback?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01d73f0_e55ad751",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-13T12:49:02Z",
+      "side": 1,
+      "message": "I don\u0027t see why not. \nalso I do not quite understand the purpose of this Scoped context.",
+      "parentUuid": "c6f2840e_85e15f1e",
       "range": {
         "startLine": 99,
         "startChar": 0,
