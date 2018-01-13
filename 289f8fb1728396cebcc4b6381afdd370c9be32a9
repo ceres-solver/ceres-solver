@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5481f4f1_7a0c2be8",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-13T00:27:39Z",
+      "side": 1,
+      "message": "How often does Ceres evaluate residuals only, then evaluate residuals+Jacobians at the same location? If that happens, it should be a possibility this interface allows.",
+      "range": {
+        "startLine": 42,
+        "startChar": 68,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616143f7_93e948e5",
         "filename": "include/ceres/evaluation_callback.h",
         "patchSetId": 1
@@ -18,6 +41,75 @@
         "startChar": 15,
         "endLine": 88,
         "endChar": 33
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f2840e_85e15f1e",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-13T00:27:39Z",
+      "side": 1,
+      "message": "Users can specify multiple IterationCallbacks - do we want them to be able to provide \u003e1 EvaluationCallback?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd93c5b_c0513e0a",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-13T00:27:39Z",
+      "side": 1,
+      "message": "non-null",
+      "range": {
+        "startLine": 762,
+        "startChar": 14,
+        "endLine": 762,
+        "endChar": 19
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babe57ee_71a30cfe",
+        "filename": "internal/ceres/program_evaluator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-13T00:27:39Z",
+      "side": 1,
+      "message": "... and make sure the parameter blocks are updated.",
+      "range": {
+        "startLine": 143,
+        "startChar": 48,
+        "endLine": 143,
+        "endChar": 0
       },
       "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
