@@ -21,3 +21,4 @@ docs/minted.sty
 obj/
 jni/libs/
 .buildinfo
+bazel-*
