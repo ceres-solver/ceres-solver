@@ -30,7 +30,7 @@
 #
 # Bazel workspace file to enable building Ceres with Bazel.
 
-workspace(name = 'com_google_ceres_solver')
+workspace(name = "com_google_ceres_solver")
 
 # External dependency: Google Flags; has Bazel build already.
 http_archive(
@@ -55,12 +55,11 @@ http_archive(
 
 # External dependency: Eigen; has no Bazel build.
 new_http_archive(
-    name   = 'com_github_eigen_eigen',
+    name = "com_github_eigen_eigen",
+    build_file = "bazel/eigen.BUILD",
     sha256 = "dd254beb0bafc695d0f62ae1a222ff85b52dbaa3a16f76e781dce22d0d20a4a6",
     strip_prefix = "eigen-eigen-5a0156e40feb",
     urls = [
-        "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2"
+        "http://bitbucket.org/eigen/eigen/get/3.3.4.tar.bz2",
     ],
-    build_file = 'bazel/eigen.BUILD'
 )
-
