@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea67acd7_a73fd424",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-01-15T20:03:27Z",
+      "side": 1,
+      "message": "Is the need for this incantation documented anywhere? It seems like a Bazel bug that you need something like this.",
+      "revId": "c1075cd313e1e68af21c714d55488255f04dcb69",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    }
+  ]
+}
