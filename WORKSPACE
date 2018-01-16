@@ -46,10 +46,9 @@ http_archive(
 # External dependency: Google Log; has Bazel build already.
 http_archive(
     name = "com_github_google_glog",
-    sha256 = "1ee310e5d0a19b9d584a855000434bb724aa744745d5b8ab1855c85bff8a8e21",
-    strip_prefix = "glog-028d37889a1e80e8a07da1b8945ac706259e5fd8",
+    strip_prefix = "glog-eb1d4010791e65b300ee6d4b8d3c6dea87fb1596",
     urls = [
-        "https://github.com/google/glog/archive/028d37889a1e80e8a07da1b8945ac706259e5fd8.tar.gz",
+        "https://github.com/drigz/glog/archive/eb1d4010791e65b300ee6d4b8d3c6dea87fb1596.tar.gz",
     ],
 )
 
