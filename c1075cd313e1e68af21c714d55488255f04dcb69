@@ -16,6 +16,24 @@
       "revId": "c1075cd313e1e68af21c714d55488255f04dcb69",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01ba0b6e_f903d077",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-01-16T09:46:26Z",
+      "side": 1,
+      "message": "Couldn\u0027t find it, so I filed https://github.com/bazelbuild/bazel/issues/4463",
+      "parentUuid": "ea67acd7_a73fd424",
+      "revId": "c1075cd313e1e68af21c714d55488255f04dcb69",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
