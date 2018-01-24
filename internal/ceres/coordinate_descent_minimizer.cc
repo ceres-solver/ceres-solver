@@ -31,8 +31,7 @@
 #include "ceres/coordinate_descent_minimizer.h"
 
 #ifdef CERES_USE_TBB
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
+#include "ceres/parallel_for.h"
 #endif
 
 #include <iterator>
@@ -174,12 +173,10 @@ void CoordinateDescentMinimizer::Minimize(
          j < independent_set_offsets_[i + 1];
          ++j) {
 #else
-    tbb::task_arena task_arena(num_inner_iteration_threads);
-
-    task_arena.execute([&]{
-      tbb::parallel_for(independent_set_offsets_[i],
-                        independent_set_offsets_[i + 1],
-                        [&](int j) {
+    ParallelFor(independent_set_offsets_[i],
+                independent_set_offsets_[i + 1],
+                num_inner_iteration_threads,
+                [&](int j) {
 #endif // !CERES_USE_TBB
 
       const ScopedThreadToken scoped_thread_token(&thread_token_provider);
@@ -217,7 +214,6 @@ void CoordinateDescentMinimizer::Minimize(
     }
 #ifdef CERES_USE_TBB
   );
-  });
 #endif
   }
 
