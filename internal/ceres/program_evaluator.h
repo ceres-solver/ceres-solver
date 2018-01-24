@@ -98,8 +98,7 @@
 #ifdef CERES_USE_TBB
 #include <atomic>
 
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
+#include "ceres/parallel_for.h"
 #endif
 
 namespace ceres {
@@ -196,10 +195,8 @@ class ProgramEvaluator : public Evaluator {
 
 #ifdef CERES_USE_TBB
     std::atomic_bool abort(false);
-    tbb::task_arena task_arena(options_.num_threads);
 
-    task_arena.execute([&]{
-        tbb::parallel_for(0, num_residual_blocks, [&](int i) {
+    ParallelFor(0, num_residual_blocks, options_.num_threads, [&](int i) {
 #endif // CERES_USE_TBB
 
       if (abort) {
@@ -290,7 +287,6 @@ class ProgramEvaluator : public Evaluator {
     }
 #ifdef CERES_USE_TBB
     );
-    });
 #endif // CERES_USE_TBB
 
     if (!abort) {

@@ -31,8 +31,7 @@
 #include "ceres/covariance_impl.h"
 
 #ifdef CERES_USE_TBB
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
+#include "ceres/parallel_for.h"
 #endif
 
 #include <algorithm>
@@ -367,11 +366,16 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
 #endif // CERES_NO_THREADS
 
 #ifdef CERES_USE_TBB
-  tbb::task_arena task_arena(num_threads);
-
-  task_arena.execute([&]{
-    tbb::parallel_for(0, num_parameters, [&](int i) {
-      tbb::parallel_for(i, num_parameters, [&](int j) {
+  // The parallel for abstraction does not have support for constraining the
+  // number of workers in nested parallel for loops. Consequently, we will try
+  // to evenly distribute the number of workers between the each parallel for
+  // loop.
+  // TODO(vitus): consolidate the nested for loops into a single loop which can
+  // be properly split between the threads.
+  const int num_outer_threads = std::sqrt(num_threads);
+  const int num_inner_threads = num_threads / num_outer_threads;
+  ParallelFor(0, num_parameters, num_outer_threads, [&](int i) {
+    ParallelFor(i, num_parameters, num_inner_threads, [&](int j) {
 #endif // CERES_USE_TBB
 
       int covariance_row_idx = cum_parameter_size[i];
@@ -402,7 +406,6 @@ bool CovarianceImpl::GetCovarianceMatrixInTangentOrAmbientSpace(
     }
 #ifdef CERES_USE_TBB
     );
-  });
   });
 #else
   }
@@ -730,10 +733,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_arena task_arena(num_threads);
-
-  task_arena.execute([&]{
-    tbb::parallel_for(0, num_cols, [&](int r) {
+  ParallelFor(0, num_cols, num_threads, [&](int r) {
 #endif // !CERES_USE_TBB
 
     const int row_begin = rows[r];
@@ -758,7 +758,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingSuiteSparseQR() {
   }
 #ifdef CERES_USE_TBB
   );
-  });
 #endif // CERES_USE_TBB
 
   free(permutation);
@@ -934,10 +933,7 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 #ifndef CERES_USE_TBB
   for (int r = 0; r < num_cols; ++r) {
 #else
-  tbb::task_arena task_arena(num_threads);
-
-  task_arena.execute([&]{
-    tbb::parallel_for(0, num_cols, [&](int r) {
+  ParallelFor(0, num_cols, num_threads, [&](int r) {
 #endif // !CERES_USE_TBB
 
     const int row_begin = rows[r];
@@ -966,7 +962,6 @@ bool CovarianceImpl::ComputeCovarianceValuesUsingEigenSparseQR() {
 
 #ifdef CERES_USE_TBB
   );
-  });
 #endif // CERES_USE_TBB
 
   event_logger.AddEvent("Inverse");
