@@ -67,8 +67,7 @@
 #include "glog/logging.h"
 
 #ifdef CERES_USE_TBB
-#include <tbb/parallel_for.h>
-#include <tbb/task_arena.h>
+#include "ceres/parallel_for.h"
 #endif
 
 namespace ceres {
@@ -198,10 +197,8 @@ Eliminate(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
     for (int i = num_eliminate_blocks_; i < num_col_blocks; ++i) {
 #else
-    tbb::task_arena task_arena(num_threads_);
-
-    task_arena.execute([&]{
-      tbb::parallel_for(num_eliminate_blocks_, num_col_blocks, [&](int i) {
+    ParallelFor(num_eliminate_blocks_, num_col_blocks, num_threads_,
+                [&](int i) {
 #endif // !CERES_USE_TBB
 
       const int block_id = i - num_eliminate_blocks_;
@@ -222,7 +219,6 @@ Eliminate(const BlockSparseMatrix* A,
     }
 #ifdef CERES_USE_TBB
     );
-    });
 #endif // CERES_USE_TBB
   }
 
@@ -248,10 +244,7 @@ Eliminate(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
   for (int i = 0; i < chunks_.size(); ++i) {
 #else
-  tbb::task_arena task_arena(num_threads_);
-
-  task_arena.execute([&]{
-    tbb::parallel_for(0, int(chunks_.size()), [&](int i) {
+  ParallelFor(0, int(chunks_.size()), num_threads_, [&](int i) {
 #endif // !CERES_USE_TBB
 
     const ScopedThreadToken scoped_thread_token(&thread_token_provider);
@@ -323,7 +316,6 @@ Eliminate(const BlockSparseMatrix* A,
   }
 #ifdef CERES_USE_TBB
   );
-  });
 #endif // CERES_USE_TBB
 
   // For rows with no e_blocks, the schur complement update reduces to
@@ -348,10 +340,7 @@ BackSubstitute(const BlockSparseMatrix* A,
 #ifndef CERES_USE_TBB
   for (int i = 0; i < chunks_.size(); ++i) {
 #else
-  tbb::task_arena task_arena(num_threads_);
-
-  task_arena.execute([&]{
-    tbb::parallel_for(0, int(chunks_.size()), [&](int i) {
+  ParallelFor(0, int(chunks_.size()), num_threads_, [&](int i) {
 #endif // !CERES_USE_TBB
 
     const Chunk& chunk = chunks_[i];
@@ -411,7 +400,6 @@ BackSubstitute(const BlockSparseMatrix* A,
   }
 #ifdef CERES_USE_TBB
   );
-  });
 #endif // CERES_USE_TBB
 }
 
