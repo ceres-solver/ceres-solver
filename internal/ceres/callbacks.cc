@@ -54,6 +54,28 @@ CallbackReturnType StateUpdatingCallback::operator()(
   return SOLVER_CONTINUE;
 }
 
+GradientProblemSolverStateUpdatingCallback::
+    GradientProblemSolverStateUpdatingCallback(
+        int num_parameters,
+        const double* internal_parameters,
+        double* user_parameters)
+    : num_parameters_(num_parameters),
+      internal_parameters_(internal_parameters),
+      user_parameters_(user_parameters) {}
+
+GradientProblemSolverStateUpdatingCallback::
+    ~GradientProblemSolverStateUpdatingCallback() {}
+
+CallbackReturnType GradientProblemSolverStateUpdatingCallback::operator()(
+    const IterationSummary& summary) {
+  if (summary.step_is_successful) {
+    std::copy(internal_parameters_,
+              internal_parameters_ + num_parameters_,
+              user_parameters_);
+  }
+  return SOLVER_CONTINUE;
+}
+
 LoggingCallback::LoggingCallback(const MinimizerType minimizer_type,
                                  const bool log_to_stdout)
     : minimizer_type(minimizer_type),

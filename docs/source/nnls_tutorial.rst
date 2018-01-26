@@ -710,7 +710,7 @@ objective function per observation.
 Since this is a large sparse problem (well large for ``DENSE_QR``
 anyways), one way to solve this problem is to set
 :member:`Solver::Options::linear_solver_type` to
-``SPARSE_NORMAL_CHOLESKY`` and call :member:`Solve`. And while this is
+``SPARSE_NORMAL_CHOLESKY`` and call :func:`Solve`. And while this is
 a reasonable thing to do, bundle adjustment problems have a special
 sparsity structure that can be exploited to solve them much more
 efficiently. Ceres provides three specialized solvers (collectively

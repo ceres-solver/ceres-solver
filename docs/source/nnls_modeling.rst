@@ -103,11 +103,10 @@ the corresponding accessors. This information will be verified by the
    Compute the residual vector and the Jacobian matrices.
 
    ``parameters`` is an array of arrays of size
-   :member:`CostFunction::parameter_block_sizes_.size()` and
-   ``parameters[i]`` is an array of size
-   ``parameter_block_sizes_[i]`` that contains the
-   :math:`i^{\text{th}}` parameter block that the ``CostFunction``
-   depends on.
+   ``CostFunction::parameter_block_sizes_.size()`` and
+   ``parameters[i]`` is an array of size ``parameter_block_sizes_[i]``
+   that contains the :math:`i^{\text{th}}` parameter block that the
+   ``CostFunction`` depends on.
 
    ``parameters`` is never ``NULL``.
 
@@ -116,7 +115,7 @@ the corresponding accessors. This information will be verified by the
    ``residuals`` is never ``NULL``.
 
    ``jacobians`` is an array of arrays of size
-   :member:`CostFunction::parameter_block_sizes_.size()`.
+   ``CostFunction::parameter_block_sizes_.size()``.
 
    If ``jacobians`` is ``NULL``, the user is only expected to compute
    the residuals.

@@ -52,6 +52,21 @@ class StateUpdatingCallback : public IterationCallback {
   double* parameters_;
 };
 
+// Callback for updating the externally visible state of the
+// parameters vector for GradientProblemSolver.
+class GradientProblemSolverStateUpdatingCallback : public IterationCallback {
+ public:
+  GradientProblemSolverStateUpdatingCallback(int num_parameters,
+                                             const double* internal_parameters,
+                                             double* user_parameters_);
+  virtual ~GradientProblemSolverStateUpdatingCallback();
+  virtual CallbackReturnType operator()(const IterationSummary& summary);
+ private:
+  int num_parameters_;
+  const double* internal_parameters_;
+  double* user_parameters_;
+};
+
 // Callback for logging the state of the minimizer to STDERR or
 // STDOUT depending on the user's preferences and logging level.
 class LoggingCallback : public IterationCallback {

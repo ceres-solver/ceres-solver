@@ -72,5 +72,65 @@ TEST(GradientProblemSolver, SolvesRosenbrockWithDefaultOptions) {
   EXPECT_NEAR(1.0, parameters[1], expected_tolerance);
 }
 
+class QuadraticFunction : public ceres::FirstOrderFunction {
+  virtual ~QuadraticFunction() {}
+  virtual bool Evaluate(const double* parameters,
+                        double* cost,
+                        double* gradient) const {
+    const double x = parameters[0];
+    *cost = 0.5 * (5.0 - x) * (5.0 - x);
+    if (gradient != NULL) {
+      gradient[0] = x - 5.0;
+    }
+
+    return true;
+  }
+  virtual int NumParameters() const { return 1; }
+};
+
+struct RememberingCallback : public IterationCallback {
+  explicit RememberingCallback(double *x) : calls(0), x(x) {}
+  virtual ~RememberingCallback() {}
+  virtual CallbackReturnType operator()(const IterationSummary& summary) {
+    x_values.push_back(*x);
+    return SOLVER_CONTINUE;
+  }
+  int calls;
+  double *x;
+  std::vector<double> x_values;
+};
+
+
+TEST(Solver, UpdateStateEveryIterationOption) {
+  double x = 50.0;
+  const double original_x = x;
+
+  ceres::GradientProblem problem(new QuadraticFunction);
+  ceres::GradientProblemSolver::Options options;
+  RememberingCallback callback(&x);
+  options.callbacks.push_back(&callback);
+  ceres::GradientProblemSolver::Summary summary;
+
+  int num_iterations;
+
+  // First try: no updating.
+  ceres::Solve(options, problem, &x, &summary);
+  num_iterations = summary.iterations.size() - 1;
+  EXPECT_GT(num_iterations, 1);
+  for (int i = 0; i < callback.x_values.size(); ++i) {
+    EXPECT_EQ(50.0, callback.x_values[i]);
+  }
+
+  // Second try: with updating
+  x = 50.0;
+  options.update_state_every_iteration = true;
+  callback.x_values.clear();
+  ceres::Solve(options, problem, &x, &summary);
+  num_iterations = summary.iterations.size() - 1;
+  EXPECT_GT(num_iterations, 1);
+  EXPECT_EQ(original_x, callback.x_values[0]);
+  EXPECT_NE(original_x, callback.x_values[1]);
+}
+
 }  // namespace internal
 }  // namespace ceres

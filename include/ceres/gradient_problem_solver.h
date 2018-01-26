@@ -77,6 +77,7 @@ class CERES_EXPORT GradientProblemSolver {
       parameter_tolerance = 1e-8;
       logging_type = PER_MINIMIZER_ITERATION;
       minimizer_progress_to_stdout = false;
+      update_state_every_iteration = false;
     }
 
     // Returns true if the options struct has a valid
@@ -252,6 +253,13 @@ class CERES_EXPORT GradientProblemSolver {
     // set to true, and logging_type is not SILENT, the logging output
     // is sent to STDOUT.
     bool minimizer_progress_to_stdout;
+
+    // If true, the user's parameter blocks are updated at the end of
+    // every Minimizer iteration, otherwise they are updated when the
+    // Minimizer terminates. This is useful if, for example, the user
+    // wishes to visualize the state of the optimization every
+    // iteration.
+    bool update_state_every_iteration;
 
     // Callbacks that are executed at the end of each iteration of the
     // Minimizer. An iteration may terminate midway, either due to

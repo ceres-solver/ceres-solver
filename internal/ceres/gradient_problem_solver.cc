@@ -98,12 +98,13 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                   const GradientProblem& problem,
                                   double* parameters_ptr,
                                   GradientProblemSolver::Summary* summary) {
-  using internal::scoped_ptr;
-  using internal::WallTimeInSeconds;
-  using internal::Minimizer;
   using internal::GradientProblemEvaluator;
+  using internal::GradientProblemSolverStateUpdatingCallback;
   using internal::LoggingCallback;
+  using internal::Minimizer;
+  using internal::scoped_ptr;
   using internal::SetSummaryFinalCost;
+  using internal::WallTimeInSeconds;
 
   double start_time = WallTimeInSeconds();
 
@@ -122,6 +123,10 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
     return;
   }
 
+  VectorRef parameters(parameters_ptr, problem.NumParameters());
+  Vector solution(problem.NumParameters());
+  solution = parameters;
+
   // TODO(sameeragarwal): This is a bit convoluted, we should be able
   // to convert to minimizer options directly, but this will do for
   // now.
@@ -137,10 +142,16 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                        logging_callback.get());
   }
 
+  scoped_ptr<IterationCallback> state_updating_callback;
+  if (options.update_state_every_iteration) {
+    state_updating_callback.reset(
+        new GradientProblemSolverStateUpdatingCallback(
+            problem.NumParameters(), solution.data(), parameters_ptr));
+    minimizer_options.callbacks.insert(minimizer_options.callbacks.begin(),
+                                       state_updating_callback.get());
+  }
+
   scoped_ptr<Minimizer> minimizer(Minimizer::Create(LINE_SEARCH));
-  Vector solution(problem.NumParameters());
-  VectorRef parameters(parameters_ptr, problem.NumParameters());
-  solution = parameters;
 
   Solver::Summary solver_summary;
   solver_summary.fixed_cost = 0.0;
