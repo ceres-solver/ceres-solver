@@ -113,6 +113,7 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "stringprintf.cc",
     "subset_preconditioner.cc",
     "suitesparse.cc",
+    "thread_pool.cc",
     "thread_token_provider.cc",
     "triplet_sparse_matrix.cc",
     "trust_region_minimizer.cc",
