@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8717488_49c733ac",
+        "filename": "internal/ceres/gradient_problem_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-01-26T16:09:29Z",
+      "side": 1,
+      "message": "This works, but I\u0027m curious if there was a reason to pass the internal and user parameter blocks as const double*/double* (so the body of the callback is a std::copy) rather than as (say) const Vector\u0026/Vector* (so the body of the callback is an assignment, as is used here to copy the values back and forth)?",
+      "range": {
+        "startLine": 149,
+        "startChar": 71,
+        "endLine": 149,
+        "endChar": 0
+      },
+      "revId": "202dd9f3a13f6d71c476c40aee05d967421212dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
