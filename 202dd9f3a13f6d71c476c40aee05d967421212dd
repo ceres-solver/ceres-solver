@@ -22,6 +22,30 @@
       "revId": "202dd9f3a13f6d71c476c40aee05d967421212dd",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c621ba_1ef128cf",
+        "filename": "internal/ceres/gradient_problem_solver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-26T16:37:01Z",
+      "side": 1,
+      "message": "The reason is that parameters is the user\u0027s array passed as a double, and solutions is actually an eigen array. The way to pass these in as Eigen objects involves some CRTP eigen silliness, involving a MatrixBase class .. and its ugly.",
+      "parentUuid": "f8717488_49c733ac",
+      "range": {
+        "startLine": 149,
+        "startChar": 71,
+        "endLine": 149,
+        "endChar": 0
+      },
+      "revId": "202dd9f3a13f6d71c476c40aee05d967421212dd",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
