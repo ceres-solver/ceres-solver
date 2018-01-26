@@ -114,6 +114,7 @@ set(CERES_INTERNAL_SRC
     split.cc
     stringprintf.cc
     suitesparse.cc
+    thread_pool.cc
     thread_token_provider.cc
     triplet_sparse_matrix.cc
     trust_region_preprocessor.cc
@@ -303,6 +304,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(canonical_views_clustering)
   ceres_test(compressed_col_sparse_matrix_utils)
   ceres_test(compressed_row_sparse_matrix)
+  ceres_test(concurrent_queue)
   ceres_test(conditioned_cost_function)
   ceres_test(conjugate_gradients_solver)
   ceres_test(corrector)
@@ -363,6 +365,7 @@ if (BUILD_TESTING AND GFLAGS)
   ceres_test(tiny_solver)
   ceres_test(tiny_solver_autodiff_function)
   ceres_test(tiny_solver_cost_function_adapter)
+  ceres_test(thread_pool)
   ceres_test(triplet_sparse_matrix)
   ceres_test(trust_region_minimizer)
   ceres_test(trust_region_preprocessor)
