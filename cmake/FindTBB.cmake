@@ -89,7 +89,7 @@ if(NOT TBB_FOUND)
   ##################################
 
   if(NOT DEFINED TBB_USE_DEBUG_BUILD)
-    if(CMAKE_BUILD_TYPE MATCHES "[Debug|DEBUG|debug|RelWithDebInfo|RELWITHDEBINFO|relwithdebinfo]")
+    if(CMAKE_BUILD_TYPE MATCHES "(Debug|DEBUG|debug|RelWithDebInfo|RELWITHDEBINFO|relwithdebinfo)")
       set(TBB_USE_DEBUG_BUILD TRUE)
     else()
       set(TBB_USE_DEBUG_BUILD FALSE)
@@ -175,12 +175,12 @@ if(NOT TBB_FOUND)
     find_library(TBB_${_comp}_LIBRARY_RELEASE ${_comp}
         HINTS ${TBB_LIBRARY} ${TBB_SEARCH_DIR}
         PATHS ${TBB_DEFAULT_SEARCH_DIR}
-        PATH_SUFFIXES "${TBB_LIB_PATH_SUFFIX}")
+        PATH_SUFFIXES ${TBB_LIB_PATH_SUFFIX})
 
     find_library(TBB_${_comp}_LIBRARY_DEBUG ${_comp}_debug
         HINTS ${TBB_LIBRARY} ${TBB_SEARCH_DIR}
         PATHS ${TBB_DEFAULT_SEARCH_DIR} ENV LIBRARY_PATH
-        PATH_SUFFIXES "${TBB_LIB_PATH_SUFFIX}")
+        PATH_SUFFIXES ${TBB_LIB_PATH_SUFFIX})
 
 
     # Set the library to be used for the component
