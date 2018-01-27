@@ -111,23 +111,16 @@ option(TBB "Enable threaded solving in Ceres with TBB (requires TBB and C++11)" 
 # Enable the use of Eigen as a sparse linear algebra library for
 # solving the nonlinear least squares problems.
 option(EIGENSPARSE "Enable Eigen as a sparse linear algebra library." ON)
-if (NOT MSVC)
-  # Ceres does not use C++11 internally, however it does use shared_ptr
-  # (required) and unordered_map (if available), both of which were present in
-  # previous iterations of what became C++11.  GCC & Clang can have both TR1 &
-  # C++11 versions of both shared_ptr & unordered_map and by default on Linux,
-  # we will detect the TR1 versions if they exist, as they do NOT require
-  # -std=c++11 to be passed when compiling Ceres, and any client code that uses
-  # Ceres.  This will result in conflicts if the client code uses C++11.
-  # Enabling this option forces the use of the C++11 versions (& -std=c++11) if
-  # available.
-  #
-  # This option is not available on Windows when using MSVC, as there, any new
-  # (C++11 etc) features available are on by default and there is no analogue to
-  # -std=c++11.  It will however be available for MinGW & CygWin, which can
-  # support -std=c++11.
-  option(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
-endif(NOT MSVC)
+# Ceres does not use C++11 internally, however it does use shared_ptr
+# (required) and unordered_map (if available), both of which were present in
+# previous iterations of what became C++11.  GCC & Clang can have both TR1 &
+# C++11 versions of both shared_ptr & unordered_map and by default on Linux,
+# we will detect the TR1 versions if they exist, as they do NOT require
+# -std=c++11 to be passed when compiling Ceres, and any client code that uses
+# Ceres.  This will result in conflicts if the client code uses C++11.
+# Enabling this option forces the use of the C++11 versions (& -std=c++11) if
+# available.
+option(CXX11 "Enable use of C++11 headers if available (requires client code use C++11)." OFF)
 option(EXPORT_BUILD_DIR
   "Export build directory using CMake (enables external use without install)." OFF)
 option(BUILD_TESTING "Enable tests" ON)
@@ -136,6 +129,13 @@ option(BUILD_EXAMPLES "Build examples" ON)
 cmake_dependent_option(BUILD_BENCHMARKS "Build Ceres benchmarking suite" ON "CXX11" OFF)
 option(BUILD_SHARED_LIBS "Build Ceres as a shared library." OFF)
 if (MSVC)
+  # CXX11 is always enabled on Windows when using MSVC, as there, any new
+  # (C++11 etc) features available are on by default and there is no analogue to
+  # -std=c++11.  It is however optional for MinGW & CygWin, which can support
+  # -std=c++11.
+  update_cache_variable(CXX11 ON)
+  mark_as_advanced(FORCE CXX11)
+
   option(MSVC_USE_STATIC_CRT
     "MS Visual Studio: Use static C-Run Time Library in place of shared." OFF)
 
@@ -529,6 +529,7 @@ if (BUILD_BENCHMARKS)
      message("-- Failed to find Google benchmark library, disabling build of benchmarks.")
      update_cache_variable(BUILD_BENCHMARKS OFF)
   endif()
+  mark_as_advanced(benchmark_DIR)
 endif()
 
 include_directories(
