@@ -446,6 +446,16 @@ inline double ceil    (double x) { return std::ceil(x);     }
 inline double pow  (double x, double y) { return std::pow(x, y);   }
 inline double atan2(double y, double x) { return std::atan2(y, x); }
 
+#ifdef CERES_USE_CXX11
+// Some new additions to C++11:
+inline double cbrt  (double x) { return std::cbrt(x);  }
+inline double exp2  (double x) { return std::exp2(x);  }
+inline double log2  (double x) { return std::log2(x);  }
+inline double hypot(double x, double y) { return std::hypot(x, y); }
+inline double fmax(double  x, double y) { return std::fmax(x, y);  }
+inline double fmin(double  x, double y) { return std::fmin(x, y);  }
+#endif
+
 // In general, f(a + h) ~= f(a) + f'(a) h, via the chain rule.
 
 // abs(x + h) ~= x + h or -(x + h)
@@ -554,6 +564,57 @@ template <typename T, int N> inline
 Jet<T, N> ceil(const Jet<T, N>& f) {
   return Jet<T, N>(ceil(f.a));
 }
+
+#ifdef CERES_USE_CXX11
+// Some new additions to C++11:
+
+// cbrt(a + h) ~= cbrt(a) + h / (3 a ^ (2/3))
+template <typename T, int N> inline
+Jet<T, N> cbrt(const Jet<T, N>& f) {
+  const T derivative = T(1.0) / (T(3.0) * cbrt(f.a * f.a));
+  return Jet<T, N>(cbrt(f.a), f.v * derivative);
+}
+
+// exp2(x + h) = 2^(x+h) ~= 2^x + h*2^x*log(2)
+template <typename T, int N> inline
+Jet<T, N> exp2(const Jet<T, N>& f) {
+  const T tmp = exp2(f.a);
+  const T derivative = tmp * log(T(2));
+  return Jet<T, N>(tmp, f.v * derivative);
+}
+
+// log2(x + h) ~= log2(x) + h / (x * log(2))
+template <typename T, int N> inline
+Jet<T, N> log2(const Jet<T, N>& f) {
+  const T derivative = T(1.0) / (f.a * log(T(2)));
+  return Jet<T, N>(log2(f.a), f.v * derivative);
+}
+
+// Like sqrt(x^2 + y^2),
+// but acts to prevent underflow/overflow for small/large x/y.
+// Note that the function is non-smooth at x=y=0,
+// so the derivative is undefined there.
+template <typename T, int N> inline
+Jet<T, N> hypot(const Jet<T, N>& x, const Jet<T, N>& y) {
+  // d/da sqrt(a) = 0.5 / sqrt(a)
+  // d/dx x^2 + y^2 = 2x
+  // So by the chain rule:
+  // d/dx sqrt(x^2 + y^2) = 0.5 / sqrt(x^2 + y^2) * 2x = x / sqrt(x^2 + y^2)
+  // d/dy sqrt(x^2 + y^2) = y / sqrt(x^2 + y^2)
+  const T tmp = hypot(x.a, y.a);
+  return Jet<T, N>(tmp, x.a / tmp * x.v + y.a / tmp * y.v);
+}
+
+template <typename T, int N> inline
+const Jet<T, N>& fmax(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return x < y ? y : x;
+}
+
+template <typename T, int N> inline
+const Jet<T, N>& fmin(const Jet<T, N>& x, const Jet<T, N>& y) {
+  return y < x ? y : x;
+}
+#endif // CERES_USE_CXX11
 
 // Bessel functions of the first kind with integer order equal to 0, 1, n.
 //
