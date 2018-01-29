@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc15147a_4af7fb57",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "why now use pow(f.a, 2/3) here? is this faster?\nI am just curious really.\n\nalso what happens near zero?",
+      "range": {
+        "startLine": 574,
+        "startChar": 42,
+        "endLine": 574,
+        "endChar": 46
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f445064_310d94e2",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "what happens near zero?",
+      "range": {
+        "startLine": 589,
+        "startChar": 39,
+        "endLine": 589,
+        "endChar": 42
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c4f9c7_cf0a3cc6",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "add a comment describing the math here. why this choice?",
+      "range": {
+        "startLine": 602,
+        "startChar": 9,
+        "endLine": 602,
+        "endChar": 12
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad93c38_b14f50f3",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "early return to reduce nesting below.",
+      "range": {
+        "startLine": 604,
+        "startChar": 5,
+        "endLine": 604,
+        "endChar": 0
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2816f1ff_4182b054",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "add a comment describing the math here.",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 606,
+        "endChar": 20
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3792846_a8052b93",
+        "filename": "include/ceres/jet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-01-29T16:09:29Z",
+      "side": 1,
+      "message": "no need for a loop, its an eigen array.",
+      "range": {
+        "startLine": 609,
+        "startChar": 15,
+        "endLine": 609,
+        "endChar": 16
+      },
+      "revId": "438443e2fe51972fa71c3cf5375a24f6d7523aeb",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
