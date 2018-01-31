@@ -74,31 +74,6 @@ class Evaluator {
                            Program* program,
                            std::string* error);
 
-  // This is used for computing the cost, residual and Jacobian for
-  // returning to the user. For actually solving the optimization
-  // problem, the optimization algorithm uses the ProgramEvaluator
-  // objects directly.
-  //
-  // The residual, gradients and jacobian pointers can be NULL, in
-  // which case they will not be evaluated. cost cannot be NULL.
-  //
-  // The parallelism of the evaluator is controlled by num_threads; it
-  // should be at least 1.
-  //
-  // Note: That this function does not take a parameter vector as
-  // input. The parameter blocks are evaluated on the values contained
-  // in the arrays pointed to by their user_state pointers.
-  //
-  // Also worth noting is that this function mutates program by
-  // calling Program::SetParameterOffsetsAndIndex() on it so that an
-  // evaluator object can be constructed.
-  static bool Evaluate(Program* program,
-                       int num_threads,
-                       double* cost,
-                       std::vector<double>* residuals,
-                       std::vector<double>* gradient,
-                       CRSMatrix* jacobian);
-
   // Build and return a sparse matrix for storing and working with the Jacobian
   // of the objective function. The jacobian has dimensions
   // NumEffectiveParameters() by NumParameters(), and is typically extremely
@@ -116,7 +91,6 @@ class Evaluator {
   // creates a BlockSparseMatrix representation of the jacobian for use in the
   // Schur complement based methods.
   virtual SparseMatrix* CreateJacobian() const = 0;
-
 
   // Options struct to control Evaluator::Evaluate;
   struct EvaluateOptions {
