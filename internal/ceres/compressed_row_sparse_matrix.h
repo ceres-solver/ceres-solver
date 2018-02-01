@@ -104,9 +104,13 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // SparseMatrix interface.
   virtual ~CompressedRowSparseMatrix();
   virtual void SetZero();
+  // TODO(sameeragarwal): Fix for triangular.
   virtual void RightMultiply(const double* x, double* y) const;
+  // TODO(sameeragarwal): Fix for triangular.
   virtual void LeftMultiply(const double* x, double* y) const;
+  // TODO(sameeragarwal): Fix for triangular.
   virtual void SquaredColumnNorm(double* x) const;
+  // TODO(sameeragarwal): Fix for triangular.
   virtual void ScaleColumns(const double* scale);
 
   virtual void ToDenseMatrix(Matrix* dense_matrix) const;
@@ -119,10 +123,13 @@ class CompressedRowSparseMatrix : public SparseMatrix {
 
   // Delete the bottom delta_rows.
   // num_rows -= delta_rows
+  //
+  //   // TODO(sameeragarwal): Fix for triangular.
   void DeleteRows(int delta_rows);
 
   // Append the contents of m to the bottom of this matrix. m must
   // have the same number of columns as this matrix.
+  // TODO(sameeragarwal): Fix for triangular.
   void AppendRows(const CompressedRowSparseMatrix& m);
 
   void ToCRSMatrix(CRSMatrix* matrix) const;
@@ -159,6 +166,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // contiguously in the diagonal array, one block at a time.
   //
   // Caller owns the result.
+  // TODO(sameeragarwal): Fix for triangular.
   static CompressedRowSparseMatrix* CreateBlockDiagonalMatrix(
       const double* diagonal,
       const std::vector<int>& blocks);
@@ -205,6 +213,7 @@ class CompressedRowSparseMatrix : public SparseMatrix {
   // RandomMatrixOptions.
   //
   // Caller owns the result.
+  // TODO(sameeragarwal): Fix for triangular.
   static CompressedRowSparseMatrix* CreateRandomMatrix(
       const RandomMatrixOptions& options);
 
