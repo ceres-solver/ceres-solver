@@ -35,6 +35,8 @@
 #include <ctime>
 
 #include "ceres/block_sparse_matrix.h"
+#include "ceres/cgnr_linear_operator.h"
+#include "ceres/conjugate_gradients_solver.h"
 #include "ceres/inner_product_computer.h"
 #include "ceres/internal/eigen.h"
 #include "ceres/internal/scoped_ptr.h"
@@ -49,7 +51,7 @@ namespace internal {
 
 SparseNormalCholeskySolver::SparseNormalCholeskySolver(
     const LinearSolver::Options& options)
-    : options_(options) {
+    : options_(options), factorization_is_good_(false) {
   sparse_cholesky_.reset(
       SparseCholesky::Create(options_.sparse_linear_algebra_library_type,
                              options_.use_postordering ? AMD : NATURAL));
@@ -73,38 +75,59 @@ LinearSolver::Summary SparseNormalCholeskySolver::SolveImpl(
   A->LeftMultiply(b, x);
   event_logger.AddEvent("Compute RHS");
 
-  if (per_solve_options.D != NULL) {
-    // Temporarily append a diagonal block to the A matrix, but undo
-    // it before returning the matrix to the user.
-    scoped_ptr<BlockSparseMatrix> regularizer;
-    regularizer.reset(BlockSparseMatrix::CreateDiagonalMatrix(
-        per_solve_options.D, A->block_structure()->cols));
-    event_logger.AddEvent("Diagonal");
-    A->AppendRows(*regularizer);
-    event_logger.AddEvent("Append");
+  double start_time = WallTimeInSeconds();
+  const double kSolveTimeFactor = 0.5;
+  if (factorization_is_good_) {
+    LinearSolver::PerSolveOptions cg_per_solve_options = per_solve_options;
+    SparseCholeskyLinearOperator sclo(A->num_cols(), sparse_cholesky_.get());
+    cg_per_solve_options.preconditioner = &sclo;
+    CgnrLinearOperator lhs(*A, per_solve_options.D);
+    ConjugateGradientsSolver conjugate_gradient_solver(options_);
+    Vector rhs = VectorRef(x, num_cols);
+    VectorRef(x, num_cols).setZero();
+    summary = conjugate_gradient_solver.Solve(
+        &lhs, rhs.data(), cg_per_solve_options, x);
+    event_logger.AddEvent("CGNR Solve");
+    double solve_time = WallTimeInSeconds() - start_time;
+    factorization_is_good_ = (solve_time < kSolveTimeFactor * direct_solve_time_);
+    LOG_IF(INFO, factorization_is_good_) << "******* REUSE!!! " << solve_time << " " << direct_solve_time_;
+  } else {
+    if (per_solve_options.D != NULL) {
+      // Temporarily append a diagonal block to the A matrix, but undo
+      // it before returning the matrix to the user.
+      scoped_ptr<BlockSparseMatrix> regularizer;
+      regularizer.reset(BlockSparseMatrix::CreateDiagonalMatrix(
+                            per_solve_options.D, A->block_structure()->cols));
+      event_logger.AddEvent("Diagonal");
+      A->AppendRows(*regularizer);
+      event_logger.AddEvent("Append");
+    }
+    event_logger.AddEvent("Append Rows");
+
+    if (inner_product_computer_.get() == NULL) {
+      inner_product_computer_.reset(
+          InnerProductComputer::Create(*A, sparse_cholesky_->StorageType()));
+
+      event_logger.AddEvent("InnerProductComputer::Create");
+    }
+
+    inner_product_computer_->Compute();
+    event_logger.AddEvent("InnerProductComputer::Compute");
+    if (per_solve_options.D != NULL) {
+      A->DeleteRowBlocks(A->block_structure()->cols.size());
+    }
+
+    summary.termination_type = sparse_cholesky_->FactorAndSolve(
+        inner_product_computer_->mutable_result(), x, x, &summary.message);
+    if (summary.termination_type == LINEAR_SOLVER_SUCCESS) {
+      factorization_is_good_ = true;
+    }
+    direct_solve_time_ = WallTimeInSeconds() - start_time;
+    event_logger.AddEvent("Factor & Solve");
   }
-  event_logger.AddEvent("Append Rows");
 
-  if (inner_product_computer_.get() == NULL) {
-    inner_product_computer_.reset(
-        InnerProductComputer::Create(*A, sparse_cholesky_->StorageType()));
-
-    event_logger.AddEvent("InnerProductComputer::Create");
-  }
-
-  inner_product_computer_->Compute();
-  event_logger.AddEvent("InnerProductComputer::Compute");
-
-  // TODO(sameeragarwal):
-
-  if (per_solve_options.D != NULL) {
-    A->DeleteRowBlocks(A->block_structure()->cols.size());
-  }
-  summary.termination_type = sparse_cholesky_->FactorAndSolve(
-      inner_product_computer_->mutable_result(), x, x, &summary.message);
-  event_logger.AddEvent("Factor & Solve");
   return summary;
 }
 
-}  // namespace internal
+}  // Namespace internal
 }  // namespace ceres
