@@ -96,5 +96,29 @@ CompressedRowSparseMatrix::StorageType StorageTypeForSparseLinearAlgebraLibrary(
   return CompressedRowSparseMatrix::LOWER_TRIANGULAR;
 }
 
+SparseCholeskyLinearOperator::SparseCholeskyLinearOperator(
+    const int num_rows, SparseCholesky* sparse_cholesky)
+    : num_rows_(num_rows), sparse_cholesky_(sparse_cholesky) {
+  CHECK_GT(num_rows_, 0);
+  CHECK_NOTNULL(sparse_cholesky);
+}
+
+SparseCholeskyLinearOperator::~SparseCholeskyLinearOperator() {}
+
+void SparseCholeskyLinearOperator::RightMultiply(const double* x,
+                                                 double* y) const {
+  std::string message;
+  CHECK_EQ(sparse_cholesky_->Solve(x, y, &message), LINEAR_SOLVER_SUCCESS);
+}
+
+void SparseCholeskyLinearOperator::LeftMultiply(const double* x,
+                                                double* y) const {
+  RightMultiply(x, y);
+}
+
+int SparseCholeskyLinearOperator::num_rows() const { return num_rows_; }
+
+int SparseCholeskyLinearOperator::num_cols() const { return num_rows_; }
+
 }  // namespace internal
 }  // namespace ceres

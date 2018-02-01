@@ -65,6 +65,8 @@ class SparseNormalCholeskySolver : public BlockSparseMatrixSolver {
   const LinearSolver::Options options_;
   scoped_ptr<SparseCholesky> sparse_cholesky_;
   scoped_ptr<InnerProductComputer> inner_product_computer_;
+  bool factorization_is_good_;
+  double direct_solve_time_;
   CERES_DISALLOW_COPY_AND_ASSIGN(SparseNormalCholeskySolver);
 };
 

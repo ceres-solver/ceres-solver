@@ -116,6 +116,20 @@ class SparseCholesky {
 
 };
 
+class SparseCholeskyLinearOperator : public LinearOperator {
+ public:
+  SparseCholeskyLinearOperator(int num_rows, SparseCholesky* sparse_cholesky);
+  virtual ~SparseCholeskyLinearOperator();
+  virtual void RightMultiply(const double* x, double* y) const;
+  virtual void LeftMultiply(const double* x, double* y) const;
+  virtual int num_rows() const;
+  virtual int num_cols() const;
+
+ private:
+  const int num_rows_;
+  mutable SparseCholesky* sparse_cholesky_;
+};
+
 }  // namespace internal
 }  // namespace ceres
 
