@@ -58,7 +58,7 @@ class GradientProblemSolverStateUpdatingCallback : public IterationCallback {
  public:
   GradientProblemSolverStateUpdatingCallback(int num_parameters,
                                              const double* internal_parameters,
-                                             double* user_parameters_);
+                                             double* user_parameters);
   virtual ~GradientProblemSolverStateUpdatingCallback();
   virtual CallbackReturnType operator()(const IterationSummary& summary);
  private:
