@@ -696,7 +696,7 @@ string Solver::Summary::FullReport() const {
   }
   StringAppendF(&report, "Residual blocks     % 25d% 25d\n",
                 num_residual_blocks, num_residual_blocks_reduced);
-  StringAppendF(&report, "Residual            % 25d% 25d\n",
+  StringAppendF(&report, "Residuals           % 25d% 25d\n",
                 num_residuals, num_residuals_reduced);
 
   if (minimizer_type == TRUST_REGION) {
@@ -866,13 +866,13 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "Preprocessor        %25.6f\n",
                 preprocessor_time_in_seconds);
 
-  StringAppendF(&report, "\n  Residual evaluation %23.6f\n",
+  StringAppendF(&report, "\n  Residual only evaluation %18.6f\n",
                 residual_evaluation_time_in_seconds);
   if (line_search_used) {
     StringAppendF(&report, "    Line search cost evaluation    %10.6f\n",
                   line_search_cost_evaluation_time_in_seconds);
   }
-  StringAppendF(&report, "  Jacobian evaluation %23.6f\n",
+  StringAppendF(&report, "  Jacobian & residual evaluation %12.6f\n",
                 jacobian_evaluation_time_in_seconds);
   if (line_search_used) {
     StringAppendF(&report, "    Line search gradient evaluation   %6.6f\n",

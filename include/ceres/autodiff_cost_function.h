@@ -197,7 +197,7 @@ class AutoDiffCostFunction : public SizedCostFunction<kNumResiduals,
   // Implementation details follow; clients of the autodiff cost function should
   // not have to examine below here.
   //
-  // To handle varardic cost functions, some template magic is needed. It's
+  // To handle variadic cost functions, some template magic is needed. It's
   // mostly hidden inside autodiff.h.
   virtual bool Evaluate(double const* const* parameters,
                         double* residuals,
