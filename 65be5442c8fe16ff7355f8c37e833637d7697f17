@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34c4d85_ea2be376",
+        "filename": "docs/source/nnls_solving.rst",
+        "patchSetId": 2
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-05T23:46:45Z",
+      "side": 1,
+      "message": "Remove comma here and below.",
+      "range": {
+        "startLine": 2050,
+        "startChar": 18,
+        "endLine": 2050,
+        "endChar": 19
+      },
+      "revId": "65be5442c8fe16ff7355f8c37e833637d7697f17",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
