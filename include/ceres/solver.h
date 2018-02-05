@@ -844,8 +844,14 @@ class CERES_EXPORT Solver {
     // Time (in seconds) spent evaluating the residual vector.
     double residual_evaluation_time_in_seconds;
 
+    // Number of residual only evaluations.
+    int num_residual_evaluations;
+
     // Time (in seconds) spent evaluating the jacobian matrix.
     double jacobian_evaluation_time_in_seconds;
+
+    // Number of Jacobian (and residual) evaluations.
+    int num_jacobian_evaluations;
 
     // Time (in seconds) spent doing inner iterations.
     double inner_iteration_time_in_seconds;

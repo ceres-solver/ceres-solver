@@ -44,6 +44,12 @@ namespace internal {
 // Struct used by various objects to report statistics and other
 // information about their execution. e.g., ExecutionSummary::times
 // can be used for reporting times associated with various activities.
+//
+// TODO(https://github.com/ceres-solver/ceres-solver/issues/340):
+// Replace the two maps by one to save on a lookup, since the usage
+// pattern is to keep track of the calls and the time increment at the
+// same time.
+//
 class ExecutionSummary {
  public:
   void IncrementTimeBy(const std::string& name, const double value) {
@@ -76,6 +82,7 @@ class ScopedExecutionTimer {
 
   ~ScopedExecutionTimer() {
     summary_->IncrementTimeBy(name_, WallTimeInSeconds() - start_time_);
+    summary_->IncrementCall(name_);
   }
 
  private:

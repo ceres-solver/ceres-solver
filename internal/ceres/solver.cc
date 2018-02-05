@@ -404,6 +404,13 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
         FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
     summary->jacobian_evaluation_time_in_seconds =
         FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+
+    const map<string, int>& evaluator_call_statistics =
+        pp.evaluator->CallStatistics();
+    summary->num_residual_evaluations =
+        FindWithDefault(evaluator_call_statistics, "Evaluator::Residual", 0);
+    summary->num_jacobian_evaluations =
+        FindWithDefault(evaluator_call_statistics, "Evaluator::Jacobian", 0);
   }
 
   // Again, like the evaluator, there may or may not be a linear
@@ -627,7 +634,9 @@ Solver::Summary::Summary()
       total_time_in_seconds(-1.0),
       linear_solver_time_in_seconds(-1.0),
       residual_evaluation_time_in_seconds(-1.0),
+      num_residual_evaluations(-1),
       jacobian_evaluation_time_in_seconds(-1.0),
+      num_jacobian_evaluations(-1),
       inner_iteration_time_in_seconds(-1.0),
       line_search_cost_evaluation_time_in_seconds(-1.0),
       line_search_gradient_evaluation_time_in_seconds(-1.0),
@@ -696,7 +705,7 @@ string Solver::Summary::FullReport() const {
   }
   StringAppendF(&report, "Residual blocks     % 25d% 25d\n",
                 num_residual_blocks, num_residual_blocks_reduced);
-  StringAppendF(&report, "Residual            % 25d% 25d\n",
+  StringAppendF(&report, "Residuals           % 25d% 25d\n",
                 num_residuals, num_residuals_reduced);
 
   if (minimizer_type == TRUST_REGION) {
@@ -866,14 +875,14 @@ string Solver::Summary::FullReport() const {
   StringAppendF(&report, "Preprocessor        %25.6f\n",
                 preprocessor_time_in_seconds);
 
-  StringAppendF(&report, "\n  Residual evaluation %23.6f\n",
-                residual_evaluation_time_in_seconds);
+  StringAppendF(&report, "\n  Residual only evaluation %18.6f (%d)\n",
+                residual_evaluation_time_in_seconds, num_residual_evaluations);
   if (line_search_used) {
     StringAppendF(&report, "    Line search cost evaluation    %10.6f\n",
                   line_search_cost_evaluation_time_in_seconds);
   }
-  StringAppendF(&report, "  Jacobian evaluation %23.6f\n",
-                jacobian_evaluation_time_in_seconds);
+  StringAppendF(&report, "  Jacobian & residual evaluation %12.6f (%d)\n",
+                jacobian_evaluation_time_in_seconds, num_jacobian_evaluations);
   if (line_search_used) {
     StringAppendF(&report, "    Line search gradient evaluation   %6.6f\n",
                   line_search_gradient_evaluation_time_in_seconds);

@@ -2045,9 +2045,17 @@ The three arrays will be:
 
    Time (in seconds) spent evaluating the residual vector.
 
+.. member:: int Solver::Summary::num_residual_evaluations
+
+   Number of times only the residuals were evaluated.
+
 .. member:: double Solver::Summary::jacobian_evaluation_time_in_seconds
 
    Time (in seconds) spent evaluating the Jacobian matrix.
+
+.. member:: int Solver::Summary::num_jacobian_evaluations
+
+   Number of times only the Jacobian and the residuals were evaluated.
 
 .. member:: double Solver::Summary::inner_iteration_time_in_seconds
 
