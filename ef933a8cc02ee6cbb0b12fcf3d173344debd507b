@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c41670_7b33916b",
+        "filename": "internal/ceres/small_blas.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 6060
+      },
+      "writtenOn": "2018-02-06T16:06:04Z",
+      "side": 1,
+      "message": "If you\u0027re in the mood for measuring micro-optimisations that the compiler probably does better anyway: I\u0027m curious if this is any faster (though I\u0027m guessing there won\u0027t be any actual difference)\nconst double tmp \u003d kOperation \u003e\u003d 0 ? b[row] : -b[row];\nconst double* arow \u003d A + row * NUM_COL_A;\ndouble value \u003d kOperation \u003d\u003d 0 ? 0 : c[col];\nfor (int col \u003d 0; col \u003c NUM_COL_A; ++col) {\n  value +\u003d arow[col] * tmp;\n}\nc[col] \u003d value;",
+      "range": {
+        "startLine": 358,
+        "startChar": 30,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "ef933a8cc02ee6cbb0b12fcf3d173344debd507b",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
