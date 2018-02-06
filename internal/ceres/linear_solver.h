@@ -302,16 +302,12 @@ class LinearSolver {
                         const PerSolveOptions& per_solve_options,
                         double* x) = 0;
 
-  // The following two methods return copies instead of references so
-  // that the base class implementation does not have to worry about
-  // life time issues. Further, these calls are not expected to be
-  // frequent or performance sensitive.
-  virtual std::map<std::string, int> CallStatistics() const {
-    return std::map<std::string, int>();
-  }
-
-  virtual std::map<std::string, double> TimeStatistics() const {
-    return std::map<std::string, double>();
+  // This method returns copies instead of references so that the base
+  // class implementation does not have to worry about life time
+  // issues. Further, this calls are not expected to be frequent or
+  // performance sensitive.
+  virtual std::map<std::string, CallStatistics> Statistics() const {
+    return std::map<std::string, CallStatistics>();
   }
 
   // Factory
@@ -341,12 +337,8 @@ class TypedLinearSolver : public LinearSolver {
     return SolveImpl(down_cast<MatrixType*>(A), b, per_solve_options, x);
   }
 
-  virtual std::map<std::string, int> CallStatistics() const {
-    return execution_summary_.calls();
-  }
-
-  virtual std::map<std::string, double> TimeStatistics() const {
-    return execution_summary_.times();
+  virtual std::map<std::string, CallStatistics> Statistics() const {
+    return execution_summary_.statistics();
   }
 
  private:

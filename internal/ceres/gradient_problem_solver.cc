@@ -98,6 +98,7 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
                                   const GradientProblem& problem,
                                   double* parameters_ptr,
                                   GradientProblemSolver::Summary* summary) {
+  using internal::CallStatistics;
   using internal::GradientProblemEvaluator;
   using internal::GradientProblemSolverStateUpdatingCallback;
   using internal::LoggingCallback;
@@ -174,18 +175,22 @@ void GradientProblemSolver::Solve(const GradientProblemSolver::Options& options,
     SetSummaryFinalCost(summary);
   }
 
-  const std::map<string, double>& evaluator_time_statistics =
-       minimizer_options.evaluator->TimeStatistics();
-  summary->cost_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
-  summary->gradient_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
-  const std::map<string, int>& evaluator_call_statistics =
-       minimizer_options.evaluator->CallStatistics();
-  summary->num_cost_evaluations =
-      FindWithDefault(evaluator_call_statistics, "Evaluator::Residual", 0);
-  summary->num_gradient_evaluations =
-      FindWithDefault(evaluator_call_statistics, "Evaluator::Jacobian", 0);
+  const std::map<string, CallStatistics>& evaluator_statistics =
+      minimizer_options.evaluator->Statistics();
+  {
+    const CallStatistics& call_stats = FindWithDefault(
+        evaluator_statistics, "Evaluator::Residual", CallStatistics());
+    summary->cost_evaluation_time_in_seconds = call_stats.time;
+    summary->num_cost_evaluations = call_stats.calls;
+  }
+
+  {
+    const CallStatistics& call_stats = FindWithDefault(
+        evaluator_statistics, "Evaluator::Jacobian", CallStatistics());
+    summary->gradient_evaluation_time_in_seconds = call_stats.time;
+    summary->num_gradient_evaluations = call_stats.calls;
+  }
+
   summary->total_time_in_seconds = WallTimeInSeconds() - start_time;
 }
 

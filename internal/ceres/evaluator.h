@@ -164,12 +164,8 @@ class Evaluator {
   // that the base class implementation does not have to worry about
   // life time issues. Further, these calls are not expected to be
   // frequent or performance sensitive.
-  virtual std::map<std::string, int> CallStatistics() const {
-    return std::map<std::string, int>();
-  }
-
-  virtual std::map<std::string, double> TimeStatistics() const {
-    return std::map<std::string, double>();
+  virtual std::map<std::string, CallStatistics> Statistics() const {
+    return std::map<std::string, CallStatistics>();
   }
 };
 
