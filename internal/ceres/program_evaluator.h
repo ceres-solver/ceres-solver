@@ -338,12 +338,8 @@ class ProgramEvaluator : public Evaluator {
     return program_->NumResiduals();
   }
 
-  virtual std::map<std::string, int> CallStatistics() const {
-    return execution_summary_.calls();
-  }
-
-  virtual std::map<std::string, double> TimeStatistics() const {
-    return execution_summary_.times();
+  virtual std::map<std::string, CallStatistics> Statistics() const {
+    return execution_summary_.statistics();
   }
 
  private:

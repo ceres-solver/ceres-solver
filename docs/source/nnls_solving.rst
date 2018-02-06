@@ -2041,6 +2041,12 @@ The three arrays will be:
    Time (in seconds) spent in the linear solver computing the trust
    region step.
 
+.. member:: int Solver::Summary::num_linear_solves
+
+   Number of times the Newton step was computed by solving a linear
+   system. This does not include linear solves used by inner
+   iterations.
+
 .. member:: double Solver::Summary::residual_evaluation_time_in_seconds
 
    Time (in seconds) spent evaluating the residual vector.

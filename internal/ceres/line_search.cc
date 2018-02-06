@@ -150,21 +150,28 @@ double LineSearchFunction::DirectionInfinityNorm() const {
 }
 
 void LineSearchFunction::ResetTimeStatistics() {
-  const map<string, double> evaluator_time_statistics =
-      evaluator_->TimeStatistics();
+  const map<string, CallStatistics> evaluator_statistics =
+      evaluator_->Statistics();
+
   initial_evaluator_residual_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
+      FindWithDefault(
+          evaluator_statistics, "Evaluator::Residual", CallStatistics())
+          .time;
   initial_evaluator_jacobian_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+      FindWithDefault(
+          evaluator_statistics, "Evaluator::Jacobian", CallStatistics())
+          .time;
 }
 
 void LineSearchFunction::TimeStatistics(
     double* cost_evaluation_time_in_seconds,
     double* gradient_evaluation_time_in_seconds) const {
-  const map<string, double> evaluator_time_statistics =
-      evaluator_->TimeStatistics();
+  const map<string, CallStatistics> evaluator_time_statistics =
+      evaluator_->Statistics();
   *cost_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0) -
+      FindWithDefault(
+          evaluator_time_statistics, "Evaluator::Residual", CallStatistics())
+          .time -
       initial_evaluator_residual_time_in_seconds;
   // Strictly speaking this will slightly underestimate the time spent
   // evaluating the gradient of the line search univariate cost function as it
@@ -173,7 +180,9 @@ void LineSearchFunction::TimeStatistics(
   // allows direct subtraction of the timing information from the totals for
   // the evaluator returned in the solver summary.
   *gradient_evaluation_time_in_seconds =
-      FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0) -
+      FindWithDefault(
+          evaluator_time_statistics, "Evaluator::Jacobian", CallStatistics())
+          .time -
       initial_evaluator_jacobian_time_in_seconds;
 }
 

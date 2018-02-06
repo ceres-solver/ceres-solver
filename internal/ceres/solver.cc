@@ -393,36 +393,41 @@ void PostSolveSummarize(const internal::PreprocessedProblem& pp,
     SummarizeReducedProgram(*pp.reduced_program, summary);
   }
 
+  using internal::CallStatistics;
+
   // It is possible that no evaluator was created. This would be the
   // case if the preprocessor failed, or if the reduced problem did
   // not contain any parameter blocks. Thus, only extract the
   // evaluator statistics if one exists.
   if (pp.evaluator.get() != NULL) {
-    const map<string, double>& evaluator_time_statistics =
-        pp.evaluator->TimeStatistics();
-    summary->residual_evaluation_time_in_seconds =
-        FindWithDefault(evaluator_time_statistics, "Evaluator::Residual", 0.0);
-    summary->jacobian_evaluation_time_in_seconds =
-        FindWithDefault(evaluator_time_statistics, "Evaluator::Jacobian", 0.0);
+    const map<string, CallStatistics>& evaluator_statistics =
+        pp.evaluator->Statistics();
+    {
+      const CallStatistics& call_stats = FindWithDefault(
+          evaluator_statistics, "Evaluator::Residual", CallStatistics());
 
-    const map<string, int>& evaluator_call_statistics =
-        pp.evaluator->CallStatistics();
-    summary->num_residual_evaluations =
-        FindWithDefault(evaluator_call_statistics, "Evaluator::Residual", 0);
-    summary->num_jacobian_evaluations =
-        FindWithDefault(evaluator_call_statistics, "Evaluator::Jacobian", 0);
+      summary->residual_evaluation_time_in_seconds = call_stats.time;
+      summary->num_residual_evaluations = call_stats.calls;
+    }
+    {
+      const CallStatistics& call_stats = FindWithDefault(
+          evaluator_statistics, "Evaluator::Jacobian", CallStatistics());
+
+      summary->jacobian_evaluation_time_in_seconds = call_stats.time;
+      summary->num_jacobian_evaluations = call_stats.calls;
+    }
   }
 
   // Again, like the evaluator, there may or may not be a linear
   // solver from which we can extract run time statistics. In
   // particular the line search solver does not use a linear solver.
   if (pp.linear_solver.get() != NULL) {
-    const map<string, double>& linear_solver_time_statistics =
-        pp.linear_solver->TimeStatistics();
-    summary->linear_solver_time_in_seconds =
-        FindWithDefault(linear_solver_time_statistics,
-                        "LinearSolver::Solve",
-                        0.0);
+    const map<string, CallStatistics>& linear_solver_statistics =
+        pp.linear_solver->Statistics();
+    const CallStatistics& call_stats = FindWithDefault(
+        linear_solver_statistics, "LinearSolver::Solve", CallStatistics());
+    summary->num_linear_solves = call_stats.calls;
+    summary->linear_solver_time_in_seconds = call_stats.time;
   }
 }
 
@@ -633,6 +638,7 @@ Solver::Summary::Summary()
       postprocessor_time_in_seconds(-1.0),
       total_time_in_seconds(-1.0),
       linear_solver_time_in_seconds(-1.0),
+      num_linear_solves(-1),
       residual_evaluation_time_in_seconds(-1.0),
       num_residual_evaluations(-1),
       jacobian_evaluation_time_in_seconds(-1.0),
@@ -889,8 +895,8 @@ string Solver::Summary::FullReport() const {
   }
 
   if (minimizer_type == TRUST_REGION) {
-    StringAppendF(&report, "  Linear solver       %23.6f\n",
-                  linear_solver_time_in_seconds);
+    StringAppendF(&report, "  Linear solver       %23.6f (%d)\n",
+                  linear_solver_time_in_seconds, num_linear_solves);
   }
 
   if (inner_iterations_used) {
