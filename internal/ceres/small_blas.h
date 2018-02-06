@@ -304,8 +304,9 @@ inline void MatrixVectorMultiply(const double* A,
 
   for (int row = 0; row < NUM_ROW_A; ++row) {
     double tmp = 0.0;
+    const double* arow =  A + row * NUM_COL_A;
     for (int col = 0; col < NUM_COL_A; ++col) {
-      tmp += A[row * NUM_COL_A + col] * b[col];
+      tmp += arow[col] * b[col];
     }
 
     if (kOperation > 0) {
@@ -353,20 +354,20 @@ inline void MatrixTransposeVectorMultiply(const double* A,
   const int NUM_ROW_A = (kRowA != Eigen::Dynamic ? kRowA : num_row_a);
   const int NUM_COL_A = (kColA != Eigen::Dynamic ? kColA : num_col_a);
 
-  for (int row = 0; row < NUM_COL_A; ++row) {
-    double tmp = 0.0;
-    for (int col = 0; col < NUM_ROW_A; ++col) {
-      tmp += A[col * NUM_COL_A + row] * b[col];
-    }
-
-    if (kOperation > 0) {
-      c[row] += tmp;
-    } else if (kOperation < 0) {
-      c[row] -= tmp;
-    } else {
-      c[row] = tmp;
+  for (int row = 0; row < NUM_ROW_A; ++row) {
+    const double tmp = b[row];
+    const double* arow = A + row * NUM_COL_A;
+    for (int col = 0; col < NUM_COL_A; ++col) {
+      if (kOperation > 0) {
+        c[col] += arow[col] * tmp;
+      } else if (kOperation < 0) {
+        c[col] -= arow[col] * tmp;
+      } else {
+        c[col] = arow[col] * tmp;
+      }
     }
   }
+
 #endif  // CERES_NO_CUSTOM_BLAS
 }
 
