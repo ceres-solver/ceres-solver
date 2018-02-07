@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebce50fe_939a43e8",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-07T20:35:20Z",
+      "side": 1,
+      "message": "Consider using a deterministic random sequence. Surprisingly, multiplies timings can carry data dependencies (especially if there are NaNs or denormals).",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60992db_147aeec3",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-07T20:35:20Z",
+      "side": 1,
+      "message": "Perhaps comment on data filling plan; is there any purpose to it or is it random?",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45e756a_d54551bd",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-07T20:35:20Z",
+      "side": 1,
+      "message": "Please comment on what the two args are. Number of rows and cols?",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
