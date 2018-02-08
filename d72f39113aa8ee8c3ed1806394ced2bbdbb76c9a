@@ -22,6 +22,30 @@
       "revId": "d72f39113aa8ee8c3ed1806394ced2bbdbb76c9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159bbb92_5a148871",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-08T21:20:59Z",
+      "side": 1,
+      "message": "Why is this badly named? The idea is to add other defines and options here, not just the schur specializations. It does exactly what it says on the tin.",
+      "parentUuid": "669a4e75_4875a359",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 15
+      },
+      "revId": "d72f39113aa8ee8c3ed1806394ced2bbdbb76c9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
