@@ -122,54 +122,12 @@ CERES_SRCS = ["internal/ceres/" + filename for filename in [
     "visibility_based_preconditioner.cc",
     "visibility.cc",
     "wall_time.cc",
-    "generated/schur_eliminator_d_d_d.cc",
-    "generated/schur_eliminator_2_2_2.cc",
-    "generated/schur_eliminator_2_2_3.cc",
-    "generated/schur_eliminator_2_2_4.cc",
-    "generated/schur_eliminator_2_2_d.cc",
-    "generated/schur_eliminator_2_3_3.cc",
-    "generated/schur_eliminator_2_3_4.cc",
-    "generated/schur_eliminator_2_3_6.cc",
-    "generated/schur_eliminator_2_3_9.cc",
-    "generated/schur_eliminator_2_3_d.cc",
-    "generated/schur_eliminator_2_4_3.cc",
-    "generated/schur_eliminator_2_4_4.cc",
-    "generated/schur_eliminator_2_4_6.cc",
-    "generated/schur_eliminator_2_4_8.cc",
-    "generated/schur_eliminator_2_4_9.cc",
-    "generated/schur_eliminator_2_4_d.cc",
-    "generated/schur_eliminator_2_d_d.cc",
-    "generated/schur_eliminator_4_4_2.cc",
-    "generated/schur_eliminator_4_4_3.cc",
-    "generated/schur_eliminator_4_4_4.cc",
-    "generated/schur_eliminator_4_4_d.cc",
-    "generated/partitioned_matrix_view_d_d_d.cc",
-    "generated/partitioned_matrix_view_2_2_2.cc",
-    "generated/partitioned_matrix_view_2_2_3.cc",
-    "generated/partitioned_matrix_view_2_2_4.cc",
-    "generated/partitioned_matrix_view_2_2_d.cc",
-    "generated/partitioned_matrix_view_2_3_3.cc",
-    "generated/partitioned_matrix_view_2_3_4.cc",
-    "generated/partitioned_matrix_view_2_3_6.cc",
-    "generated/partitioned_matrix_view_2_3_9.cc",
-    "generated/partitioned_matrix_view_2_3_d.cc",
-    "generated/partitioned_matrix_view_2_4_3.cc",
-    "generated/partitioned_matrix_view_2_4_4.cc",
-    "generated/partitioned_matrix_view_2_4_6.cc",
-    "generated/partitioned_matrix_view_2_4_8.cc",
-    "generated/partitioned_matrix_view_2_4_9.cc",
-    "generated/partitioned_matrix_view_2_4_d.cc",
-    "generated/partitioned_matrix_view_2_d_d.cc",
-    "generated/partitioned_matrix_view_4_4_2.cc",
-    "generated/partitioned_matrix_view_4_4_3.cc",
-    "generated/partitioned_matrix_view_4_4_4.cc",
-    "generated/partitioned_matrix_view_4_4_d.cc",
 ]]
 
 # TODO(rodrigoq): add support to configure Ceres into various permutations,
 # like SuiteSparse or not, threading or not, glog or not, and so on.
 # See https://github.com/ceres-solver/ceres-solver/issues/335.
-def ceres_library(name):
+def ceres_library(name, restrict_schur_specializations=False):
     # The path to internal/ depends on whether Ceres is the main workspace or
     # an external repository.
     if native.repository_name() != '@':
@@ -177,11 +135,23 @@ def ceres_library(name):
     else:
         internal = 'internal'
 
+    # The fixed-size Schur eliminator template instantiations incur a large
+    # binary size penalty, and are slow to compile, so support disabling them.
+    schur_eliminator_copts = []
+    if restrict_schur_specializations:
+        schur_eliminator_copts.append("-DCERES_RESTRICT_SCHUR_SPECIALIZATION")
+        schur_sources = [
+            "internal/ceres/generated/schur_eliminator_d_d_d.cc",
+            "internal/ceres/generated/partitioned_matrix_view_d_d_d.cc",
+        ]
+    else:
+        schur_sources = native.glob(["internal/ceres/generated/*.cc"])
+
     native.cc_library(
         name = name,
 
         # Internal sources, options, and dependencies.
-        srcs = CERES_SRCS + native.glob([
+        srcs = CERES_SRCS + schur_sources + native.glob([
             "include/ceres/internal/*.h",
         ]) + native.glob([
             "internal/ceres/*.h",
@@ -202,7 +172,7 @@ def ceres_library(name):
         copts = [
             "-I" + internal,
             "-Wno-sign-compare",
-        ],
+        ] + schur_eliminator_copts,
 
         # These include directories and defines are propagated to other targets
         # depending on Ceres.

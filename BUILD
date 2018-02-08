@@ -33,7 +33,8 @@
 
 load("//:bazel/ceres.bzl", "ceres_library")
 
-ceres_library(name = "ceres")
+ceres_library(name = "ceres",
+              restrict_schur_specializations=False)
 
 cc_library(
     name = "test_util",
