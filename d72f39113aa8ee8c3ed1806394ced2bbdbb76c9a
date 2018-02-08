@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "669a4e75_4875a359",
+        "filename": "bazel/ceres.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-08T21:12:47Z",
+      "side": 1,
+      "message": "this is poorly named.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 15
+      },
+      "revId": "d72f39113aa8ee8c3ed1806394ced2bbdbb76c9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
