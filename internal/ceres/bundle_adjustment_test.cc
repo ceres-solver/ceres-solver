@@ -276,6 +276,7 @@ TEST_F(BundleAdjustmentTest, IterativeSchurWithSchurJacobiAndUserOrdering) {
 }
 
 #ifndef CERES_NO_SUITESPARSE
+
 TEST_F(BundleAdjustmentTest,
        SparseNormalCholeskyWithAutomaticOrderingUsingSuiteSparse) {
   RunSolverForConfigAndExpectResidualsMatch(
