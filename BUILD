@@ -33,8 +33,10 @@
 
 load("//:bazel/ceres.bzl", "ceres_library")
 
-ceres_library(name = "ceres",
-              restrict_schur_specializations=False)
+ceres_library(
+    name = "ceres",
+    restrict_schur_specializations = True,
+)
 
 cc_library(
     name = "test_util",
@@ -44,6 +46,9 @@ cc_library(
         "test_util.cc",
         "gmock_gtest_all.cc",
         "gmock_main.cc",
+        "gmock/gmock.h",
+        "gmock/mock-log.h",
+        "gtest/gtest.h",
     ]],
     hdrs = [
         "internal/ceres/gmock/gmock.h",
@@ -77,7 +82,6 @@ CERES_TESTS = [
     "block_random_access_diagonal_matrix",
     "block_random_access_sparse_matrix",
     "block_sparse_matrix",
-    "bundle_adjustment",
     "canonical_views_clustering",
     "c_api",
     "compressed_col_sparse_matrix_utils",
@@ -148,31 +152,43 @@ CERES_TESTS = [
     "visibility",
 ]
 
+TEST_COPTS = [
+    "-Wno-sign-compare",
+
+    # These two warnings don't work well in conjunction with GMock, and
+    # trigger incorrectly on parts of rotation_test. For now, disable them,
+    # but in the future disable these warnings only for rotation_test.
+    # TODO(keir): When the tests are macro-ified, apply these selectively.
+    "-Wno-nonnull-compare",
+    "-Wno-address",
+]
+
+TEST_DEPS = [
+    "//:ceres",
+    "//:test_util",
+    "@com_github_eigen_eigen//:eigen",
+    "@com_github_gflags_gflags//:gflags",
+]
+
 # Instantiate all the tests with a template.
-# TODO(keir): Use a Skylark macro to support tests having unique settings, like
-# big or small without duplicating the common components (deps, etc).
-# See https://github.com/ceres-solver/ceres-solver/issues/336.
 [cc_test(
     name = test_name + "_test",
-    timeout = "long",
+    timeout = "short",
     srcs = ["internal/ceres/" + test_name + "_test.cc"],
-    copts = [
-        "-Wno-sign-compare",
-
-        # These two warnings don't work well in conjunction with GMock, and
-        # trigger incorrectly on parts of rotation_test. For now, disable them,
-        # but in the future disable these warnings only for rotation_test.
-        # TODO(keir): When the tests are macro-ified, apply these selectively.
-        "-Wno-nonnull-compare",
-        "-Wno-address",
-    ],
-
-    # Needed for bundle_adjustment_test.
-    data = [":data/problem-16-22106-pre.txt"],
-    deps = [
-        "//:ceres",
-        "//:test_util",
-        "@com_github_eigen_eigen//:eigen",
-        "@com_github_gflags_gflags//:gflags",
-    ],
+    copts = TEST_COPTS,
+    deps = TEST_DEPS,
 ) for test_name in CERES_TESTS]
+
+# Instantiate all the bundle adjustment tests.
+[cc_test(
+    name = test_filename.split("/")[-1][:-3],  # Remove .cc.
+    timeout = "moderate",
+    srcs = [test_filename],
+    copts = TEST_COPTS,
+
+    # This is the data set that is bundled for the testing.
+    data = [":data/problem-16-22106-pre.txt"],
+    deps = TEST_DEPS,
+) for test_filename in glob([
+    "internal/ceres/generated_bundle_adjustment_tests/*_test.cc",
+])]
