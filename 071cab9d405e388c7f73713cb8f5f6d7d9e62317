@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23e9d45_1bdde098",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-09T10:28:59Z",
+      "side": 1,
+      "message": "Consider running `buildifier` on this file. I\u0027ve set vim to do it when I save the file:\nhttps://user.git.corp.google.com/rodrigoq/dotfiles/+/6eac63d3f321b607d712e21db946f83d033be6d2/vimrc#27",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "071cab9d405e388c7f73713cb8f5f6d7d9e62317",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81af8509_a2cf943f",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 6126
+      },
+      "writtenOn": "2018-02-09T10:28:59Z",
+      "side": 1,
+      "message": "Did you consider generating the sources as part of the build instead of checking them in? Something like (not tested, just to assess the complexity):\n\n# Instantiate all the bundle adjustment tests.\nSOLVER_CONFIGS \u003d [...]\ntest_filenames \u003d [\n    \"internal/ceres/generated_bundle_adjustment_tests/ba_%s_%s_%s_%s_test.cc\", % (\n        linear_solver,\n        sparse_backend,\n        preconditioner,\n        threads,\n    )\n    for linear_solver, sparse_backend, preconditioner in SOLVER_CONFIGS\n    for threads in [\"Threads\", \"NoThreads\"]\n    for orderings in [\"AutomaticOrdering\", \"UserOrdering\"]\n]\n\ngenrule(\n    name \u003d \"generate_bundle_adjustment_tests\",\n    srcs \u003d [\"internal/ceres/generate_bundle_adjustment_tests.py\"],\n    outs \u003d test_filenames,\n    cmd \u003d \"python $\u003c\",\n)",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "071cab9d405e388c7f73713cb8f5f6d7d9e62317",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
