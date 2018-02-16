@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "14b17031_a7061795",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-02-16T19:22:46Z",
+      "side": 1,
+      "message": "\u0027user can consider the user\u0027, the second \u0027user\u0027 seems unnecessary.",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 62
+      },
+      "revId": "bd32e3ddd86b458fb1292dc15f311639a76a83fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56e2da2_0350e5ed",
+        "filename": "include/ceres/solver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-02-16T19:22:46Z",
+      "side": 1,
+      "message": "*gets",
+      "revId": "bd32e3ddd86b458fb1292dc15f311639a76a83fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a434f6f3_853b8603",
         "filename": "internal/ceres/line_search.cc",
         "patchSetId": 4
@@ -36,6 +76,30 @@
       "writtenOn": "2018-02-16T18:15:24Z",
       "side": 1,
       "message": "is that claim true? doesn\u0027t it depend on the degree of interpolation used?",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 23
+      },
+      "revId": "bd32e3ddd86b458fb1292dc15f311639a76a83fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba964a72_8b3e3ef4",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2018-02-16T19:22:46Z",
+      "side": 1,
+      "message": "It\u0027s true given the degree, which is constant through the optimisation.  Armijo requires it if using CUBIC_INTERPOLATION, whereas Wolfe always requires it.",
+      "parentUuid": "a434f6f3_853b8603",
       "range": {
         "startLine": 127,
         "startChar": 19,
