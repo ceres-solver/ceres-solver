@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "eecfaa5b_5a8ff37c",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-16T19:36:40Z",
+      "side": 1,
+      "message": "That is an option.  Do you mind if I add a TODO(vitus) to convert this in a follow up CL after I have all of the c++11 based CLs in?",
+      "parentUuid": "1b1546b9_fd74830f",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 9
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4faa48e6_69c2ca8f",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ca027688_02ed4e22",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-16T19:36:40Z",
+      "side": 1,
+      "message": "Oh you are right. I was worried that it would get pulled into be compiled in a non-C++11 build which would fail due to std::function, but since the header includes are gated on TBB it shouldn\u0027t.  \n\nRemoved.",
+      "parentUuid": "4faa48e6_69c2ca8f",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "264fb70d_cb0e9433",
         "filename": "internal/ceres/parallel_for_test.cc",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d496b3a_5a493bf4",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-16T19:36:40Z",
+      "side": 1,
+      "message": "Yes. It will be updated to include whether you are compiling with either TBB or C++11 threading support.",
+      "parentUuid": "264fb70d_cb0e9433",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
