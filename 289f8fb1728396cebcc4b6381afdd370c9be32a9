@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "18d963df_af76fd7d",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-16T03:31:26Z",
+      "side": 1,
+      "message": "Yes. Users may be holding onto shared resources; we need to tell them when we are done.",
+      "parentUuid": "616143f7_93e948e5",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 33
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f2840e_85e15f1e",
         "filename": "include/ceres/evaluation_callback.h",
         "patchSetId": 1
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "I don\u0027t see why not. \nalso I do not quite understand the purpose of this Scoped context.",
       "parentUuid": "c6f2840e_85e15f1e",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "289f8fb1728396cebcc4b6381afdd370c9be32a9",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82f5a97_58ae2457",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-16T03:31:26Z",
+      "side": 1,
+      "message": "We could support it, but there is no use case I can think of. For iteration callbacks, we use it for logging callbacks in addition to user-supplied callbacks, so it makes sense to have multiple of them. But I have no such example for this case.",
+      "parentUuid": "b01d73f0_e55ad751",
       "range": {
         "startLine": 99,
         "startChar": 0,
