@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ece1d3d_12eec274",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T19:17:01Z",
+      "side": 1,
+      "message": "I am curious, if we even need to thread this in a nested manner.. and threading at the outer loop maybe enough?",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 9
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faa48e6_69c2ca8f",
+        "filename": "internal/ceres/parallel_for.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T19:17:01Z",
+      "side": 1,
+      "message": "why is the header guarded by TBB?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264fb70d_cb0e9433",
+        "filename": "internal/ceres/parallel_for_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T19:17:01Z",
+      "side": 1,
+      "message": "this guard will become more sophisticated we we land more pieces?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
