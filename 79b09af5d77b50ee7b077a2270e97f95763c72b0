@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b3d0ea5_8ac077f7",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "maybe I do not understand mutex semantics, but if a worker is waiting, isn\u0027t someone holding the lock.. so how would you be able to acquire it and unlock the lock?",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0617b9f5_97a1f184",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "do you need to unlock explicitly here? why not notify and go out of scope?",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f04dc0_b9ecc536",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "create is an odd suffix.",
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d537b6dd_dc4f235d",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "isn\u0027t there a typedef for this?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089b9714_396bfa4b",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "why wouldn\u0027t you reduce the number of threads?",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fb35cb_e645dba7",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "odd variable name.",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf41e66_5ff02a41",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "none or one? isn\u0027t it weird to have a default constructed object which can\u0027t do anything? also what are the implications of AddTask() if the object is default constructed?",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b23695_e4792b3f",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "I am confused, what does minimum mean here? as in, what happens if the user says 5 threads and the hardware only supports 4?",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e59eef_d4e74af7",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a8d719_8fca54ad",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T23:40:42Z",
+      "side": 1,
+      "message": "what happens if the object was default constructed?",
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
