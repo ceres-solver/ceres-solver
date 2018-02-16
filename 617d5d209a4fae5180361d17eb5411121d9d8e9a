@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d674671e_b6f45ec6",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-16T22:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e917de_5951b6d2",
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ece1d3d_12eec274",
         "filename": "internal/ceres/covariance_impl.cc",
         "patchSetId": 2
@@ -135,6 +153,30 @@
       "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08af1e6_293be268",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-16T22:27:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fbcfa54_9e6fe1ac",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 9
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
