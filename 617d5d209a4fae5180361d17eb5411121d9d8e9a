@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b1546b9_fd74830f",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-16T19:31:02Z",
+      "side": 1,
+      "message": "Agreed; it seems like this could get turned into a single loop? I believe you can form a linear index that counts all loop iterations, then within the loop body, compute the implied outer and inner indices. That way you can properly split across threads.",
+      "parentUuid": "8ece1d3d_12eec274",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 9
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4faa48e6_69c2ca8f",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 2
