@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a4b8779_1ab4582d",
+        "filename": "BUILD",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "why does this CL include this change? also why are you restricting these by default?",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3497652_284f9efe",
+        "filename": "internal/ceres/bundle_adjustment_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "not a huge fan of this filename, but I don\u0027t have a great suggestion either. \nalso should all of this be in a single header file?",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17912aa3_8a1e417e",
+        "filename": "internal/ceres/bundle_adjustment_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "are all these headers needed? for example gflags? please trim.",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371b9e52_b21e1335",
+        "filename": "internal/ceres/bundle_adjustment_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "why change the name from Snavely..",
+      "range": {
+        "startLine": 184,
+        "startChar": 9,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4ebf0c_5f8383da",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "dschur",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187af9f9_be0f1baf",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "ischur",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a9baba_eddf3bad",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "sparsecholesky",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448c18c7_a8452b08",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "sschur",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9cd5cd_5d37f6ae",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "I think it is better to skip this rather than having a none, since the lack of a sparse matrix library means it has no impact on the test and saying none just adds noise.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb250db0_82c5873c",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "suitesparse",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9549e250_101d8cf8",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "eigensparse",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d46bbfd_39d6c977",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "cxsparse",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d30be2b_3ea9b286",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "identity",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df5fb3b_90398217",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "sjacobi",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 25
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ad11a5_a263b9f3",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "cjacobi",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6b125d_eada232e",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "ctri",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf65119_f48d0ed7",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "this one is hard, auto is very confusing, but short enough. :/ but I\u0027d really like a different name here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a755c02_dfb724c0",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "that variable name \"SolverConfig\" is bad.. change to NoThreadSolverConfig ? UniThreadSolverConfig? \n\nas for the string \"single-thread\", or \"ut\"",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26868858_a862c0d1",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "SolverConfig -\u003e SingleThreadedSolverConfig \nnothread -\u003e \"st\"",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981abb34_9e267ab9",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:37:50Z",
+      "side": 1,
+      "message": "\"mt\"",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
