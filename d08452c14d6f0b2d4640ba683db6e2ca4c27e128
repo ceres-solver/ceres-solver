@@ -459,6 +459,23 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aee8a8d_129b5bf1",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T17:39:19Z",
+      "side": 1,
+      "message": "I think this function can be a mildly more generic and broken up into smaller pieces ?",
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
     }
   ]
 }
