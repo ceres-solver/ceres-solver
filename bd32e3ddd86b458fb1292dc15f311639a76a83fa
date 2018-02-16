@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca890cc_8db4c62e",
+        "filename": "include/ceres/evaluation_callback.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T18:15:24Z",
+      "side": 1,
+      "message": "why don\u0027t we give the user a heads up about whether we are going to evaluate the residual or Jacobian?",
+      "range": {
+        "startLine": 48,
+        "startChar": 63,
+        "endLine": 48,
+        "endChar": 73
+      },
+      "revId": "bd32e3ddd86b458fb1292dc15f311639a76a83fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a434f6f3_853b8603",
+        "filename": "internal/ceres/line_search.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-16T18:15:24Z",
+      "side": 1,
+      "message": "is that claim true? doesn\u0027t it depend on the degree of interpolation used?",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 23
+      },
+      "revId": "bd32e3ddd86b458fb1292dc15f311639a76a83fa",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
