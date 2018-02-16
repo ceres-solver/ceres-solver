@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4fbcfa54_9e6fe1ac",
+        "filename": "internal/ceres/covariance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-16T22:20:29Z",
+      "side": 1,
+      "message": "I am OK with that.",
+      "parentUuid": "eecfaa5b_5a8ff37c",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 9
+      },
+      "revId": "617d5d209a4fae5180361d17eb5411121d9d8e9a",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4faa48e6_69c2ca8f",
         "filename": "internal/ceres/parallel_for.h",
         "patchSetId": 2
