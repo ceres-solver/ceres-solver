@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "34770bb3_d345b8be",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "okay I went and read up on condition variable and this makes sense now.",
+      "parentUuid": "17a3b66c_a98b243b",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0617b9f5_97a1f184",
         "filename": "internal/ceres/concurrent_queue.h",
         "patchSetId": 2
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "d9de2181_9f898ca6",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8fc3322_3f3ad8b3",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089b9714_396bfa4b",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 2
@@ -213,6 +261,30 @@
       "side": 1,
       "message": "The ThreadPool will be reused among many different parts each with different number of threads.  So you want to ensure you can support the largest number of threads requested.  Shrinking it also harder to implement because we need to make sure they are not doing any work.",
       "parentUuid": "089b9714_396bfa4b",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e409ab_30a72321",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "so this is worth documenting and why in the docs for resize.",
+      "parentUuid": "d301ba89_ee175789",
       "range": {
         "startLine": 78,
         "startChar": 25,
@@ -319,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "84e0ff67_2586ab5b",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "so I think it is worth expanding on the description of the constructor to indicate what your intent is for these semantics as you have explained in the comment.",
+      "parentUuid": "6f828b1f_3836d5d4",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88b23695_e4792b3f",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 2
@@ -354,6 +450,30 @@
       "side": 1,
       "message": "It will create 4 threads, i.e. std::min(4, 5).",
       "parentUuid": "88b23695_e4792b3f",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c96a1d_0e7b6173",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "I misread the sentence, how about replacing \n\nthe minimum of (number of hardware threads,num_threads) with\n\nmin(num_hardware_threads, num_threads)\n\nshorter and easier to read.",
+      "parentUuid": "9a8f0a24_5b64e866",
       "range": {
         "startLine": 50,
         "startChar": 41,
@@ -413,6 +533,30 @@
     },
     {
       "key": {
+        "uuid": "27a319d7_f7475371",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "47fbec02_65ccee5e",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a8d719_8fca54ad",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 2
@@ -442,6 +586,24 @@
       "side": 1,
       "message": "Currently, the only place that will use the thread pool is inside the ParalleFor.  The way we implemented it is to allow stealing of work on the calling thread.  If we default construct the thread pool with no threads and add a task, then the calling thread will execute it.\n\nIn this particular instance it will not lead to deadlock.  However, I just realized the thread pool will be publicly exposed to the user via the Context which can lead to deadlock if the user does add a task.\n\nSo we can either default instantiate with 1 thread (given the caveats from above) or make these functions private to the internal Ceres implementation.",
       "parentUuid": "f2a8d719_8fca54ad",
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f7967c_c9f62d22",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "see my comment about expanding the constructor above.\n\nalso worth expanding the semantics of AddTask, with no threads, and threads and starting with no threads and resizing.",
+      "parentUuid": "2738f00f_d76b3460",
       "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true

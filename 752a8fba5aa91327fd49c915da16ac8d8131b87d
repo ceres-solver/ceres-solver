@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10ccd1d_7c8ff228",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:12:48Z",
+      "side": 1,
+      "message": "Constrain is a bad verb.\n\nHow about, GetNumAllowedThreads?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "752a8fba5aa91327fd49c915da16ac8d8131b87d",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    }
+  ]
+}
