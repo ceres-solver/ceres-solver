@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "113b998b_d0142ac7",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already.",
+      "parentUuid": "7a4ebf0c_5f8383da",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "187af9f9_be0f1baf",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -140,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "1e7afc13_04626716",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already.",
+      "parentUuid": "187af9f9_be0f1baf",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98a9baba_eddf3bad",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -160,6 +208,30 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df968fa4_91fea493",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a9baba_eddf3bad",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 38
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +281,30 @@
     },
     {
       "key": {
+        "uuid": "6150676f_7577d9f9",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "It breaks the ordering of the name components; I disagree this should be omitted.",
+      "parentUuid": "cb9cd5cd_5d37f6ae",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb250db0_82c5873c",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -229,6 +325,30 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5a9a81_fb0b0886",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb250db0_82c5873c",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "6e0242fb_173d12de",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9549e250_101d8cf8",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d46bbfd_39d6c977",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -275,6 +419,30 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5d07c8_8aebe3b3",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d46bbfd_39d6c977",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 17
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +469,30 @@
     },
     {
       "key": {
+        "uuid": "5a763ad7_202ef97d",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d30be2b_3ea9b286",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df5fb3b_90398217",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -312,6 +504,30 @@
       "writtenOn": "2018-02-16T17:37:50Z",
       "side": 1,
       "message": "sjacobi",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 25
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3a3c6a_3f82e4c1",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already.",
+      "parentUuid": "4df5fb3b_90398217",
       "range": {
         "startLine": 68,
         "startChar": 16,
@@ -347,6 +563,30 @@
     },
     {
       "key": {
+        "uuid": "a6d871df_8b51d233",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already.",
+      "parentUuid": "17ad11a5_a263b9f3",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da6b125d_eada232e",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -358,6 +598,30 @@
       "writtenOn": "2018-02-16T17:37:50Z",
       "side": 1,
       "message": "ctri",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4594979_19faac29",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already.",
+      "parentUuid": "da6b125d_eada232e",
       "range": {
         "startLine": 70,
         "startChar": 23,
@@ -390,6 +654,30 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb0cd89_b6be123b",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "baf65119_f48d0ed7",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +727,54 @@
     },
     {
       "key": {
+        "uuid": "812ac485_3657fc20",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "This is not the CL to change it. In a followup CL?",
+      "parentUuid": "8a755c02_dfb724c0",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c112357_824aaa58",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "Unneeded- it\u0027s short enough already. Why condense further?",
+      "parentUuid": "26868858_a862c0d1",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 14
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "981abb34_9e267ab9",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -462,6 +798,30 @@
     },
     {
       "key": {
+        "uuid": "ff7d3ca6_d987ca0d",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "I don\u0027t see the point in condensing these names further-- the test names are short enough that it doesn\u0027t overflow the window, and the expanded names are clearer. Why condense?",
+      "parentUuid": "981abb34_9e267ab9",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aee8a8d_129b5bf1",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -473,6 +833,24 @@
       "writtenOn": "2018-02-16T17:39:19Z",
       "side": 1,
       "message": "I think this function can be a mildly more generic and broken up into smaller pieces ?",
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35bcf38_476d8dd6",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5005
+      },
+      "writtenOn": "2018-02-17T01:29:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the benefit of making this more generic is at this time. How about leaving it as-is, and when a use case comes up, we can generalize it then?",
+      "parentUuid": "4aee8a8d_129b5bf1",
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
