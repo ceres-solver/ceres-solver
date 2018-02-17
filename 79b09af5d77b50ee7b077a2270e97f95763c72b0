@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17a3b66c_a98b243b",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "If a worker is waiting with a condition variable it does not hold a lock on the mutex.  When the worker is notified, it will wake up and attempt to acquire the mutex.",
+      "parentUuid": "1b3d0ea5_8ac077f7",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0617b9f5_97a1f184",
         "filename": "internal/ceres/concurrent_queue.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d998e136_451d4812",
+        "filename": "internal/ceres/concurrent_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "no I don\u0027t. Removed.",
+      "parentUuid": "0617b9f5_97a1f184",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f04dc0_b9ecc536",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "f057b13a_83033076",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f04dc0_b9ecc536",
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d537b6dd_dc4f235d",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2018-02-16T23:40:42Z",
       "side": 1,
       "message": "isn\u0027t there a typedef for this?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 18
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fc3322_3f3ad8b3",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "There isn\u0027t a typedef but Ceres does have it\u0027s own cross platform Mutex implementation.  Since this is only used in C++11 land, I decided to use their implementation to be consistent with ConcurrentQueue since ceres doesn\u0027t have a condition variable implementation.",
+      "parentUuid": "d537b6dd_dc4f235d",
       "range": {
         "startLine": 75,
         "startChar": 7,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d301ba89_ee175789",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "The ThreadPool will be reused among many different parts each with different number of threads.  So you want to ensure you can support the largest number of threads requested.  Shrinking it also harder to implement because we need to make sure they are not doing any work.",
+      "parentUuid": "089b9714_396bfa4b",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99fb35cb_e645dba7",
         "filename": "internal/ceres/thread_pool.cc",
         "patchSetId": 2
@@ -122,6 +236,30 @@
       "writtenOn": "2018-02-16T23:40:42Z",
       "side": 1,
       "message": "odd variable name.",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada82a9e_50c883d5",
+        "filename": "internal/ceres/thread_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "I changed the variable name and what the variable means.  How is this?",
+      "parentUuid": "99fb35cb_e645dba7",
       "range": {
         "startLine": 82,
         "startChar": 12,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6f828b1f_3836d5d4",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "In the next CL we are going to introduce the concept of a Context which holds a ThreadPool.  If the user sets ceres::options.num_threads \u003d 1, then we will execute everything on the main calling thread.\n\nI decided to allow constructing the thread pool with no threads to not create a thread that isn\u0027t being used.  This is has two benefits.  1. Threads are expensive so we don\u0027t have any overhead when a user wants to solve a problem as fast as possible with no threads. 2. In debugging, the user won\u0027t see an extra thread in GDB when not using threads.\n\nI could have went either way.",
+      "parentUuid": "ebf41e66_5ff02a41",
+      "range": {
+        "startLine": 47,
+        "startChar": 13,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88b23695_e4792b3f",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 2
@@ -168,6 +330,30 @@
       "writtenOn": "2018-02-16T23:40:42Z",
       "side": 1,
       "message": "I am confused, what does minimum mean here? as in, what happens if the user says 5 threads and the hardware only supports 4?",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8f0a24_5b64e866",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "It will create 4 threads, i.e. std::min(4, 5).",
+      "parentUuid": "88b23695_e4792b3f",
       "range": {
         "startLine": 50,
         "startChar": 41,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "47fbec02_65ccee5e",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62e59eef_d4e74af7",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a8d719_8fca54ad",
         "filename": "internal/ceres/thread_pool.h",
         "patchSetId": 2
@@ -214,6 +424,24 @@
       "writtenOn": "2018-02-16T23:40:42Z",
       "side": 1,
       "message": "what happens if the object was default constructed?",
+      "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2738f00f_d76b3460",
+        "filename": "internal/ceres/thread_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5435
+      },
+      "writtenOn": "2018-02-17T00:13:14Z",
+      "side": 1,
+      "message": "Currently, the only place that will use the thread pool is inside the ParalleFor.  The way we implemented it is to allow stealing of work on the calling thread.  If we default construct the thread pool with no threads and add a task, then the calling thread will execute it.\n\nIn this particular instance it will not lead to deadlock.  However, I just realized the thread pool will be publicly exposed to the user via the Context which can lead to deadlock if the user does add a task.\n\nSo we can either default instantiate with 1 thread (given the caveats from above) or make these functions private to the internal Ceres implementation.",
+      "parentUuid": "f2a8d719_8fca54ad",
       "revId": "79b09af5d77b50ee7b077a2270e97f95763c72b0",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
