@@ -305,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "50db8428_272dbfb9",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:02:30Z",
+      "side": 1,
+      "message": "the ordering only matters if you are trying to read names which don\u0027t make sense on their own. Having a preconditioner or a sparse linear algebra librar in the case where the test is not affected by it, makes the test name unnecessary more complicated than it needs to be.\n\nThe test name should indicate the thing the test is testing.",
+      "parentUuid": "6150676f_7577d9f9",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb250db0_82c5873c",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -481,6 +505,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "3d30be2b_3ea9b286",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c74050bd_3002feff",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:02:30Z",
+      "side": 1,
+      "message": "can you drop the preconditioner when a direct solver is used. it makes no sense to say identity for dense_schur for example. \n\npreconditioners only apply for cgnr and iterative_schur.",
+      "parentUuid": "5a763ad7_202ef97d",
       "range": {
         "startLine": 66,
         "startChar": 12,
@@ -775,6 +823,30 @@
     },
     {
       "key": {
+        "uuid": "4749f3ee_a65c4b69",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:02:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "812ac485_3657fc20",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981abb34_9e267ab9",
         "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
         "patchSetId": 3
@@ -819,6 +891,30 @@
       "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e2beb7_98abb57a",
+        "filename": "internal/ceres/generate_bundle_adjustment_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-17T03:02:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ff7d3ca6_d987ca0d",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "d08452c14d6f0b2d4640ba683db6e2ca4c27e128",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     },
     {
       "key": {
