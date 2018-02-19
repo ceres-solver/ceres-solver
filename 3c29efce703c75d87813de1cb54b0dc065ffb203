@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1dac832_617e89cf",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-19T03:38:18Z",
+      "side": 1,
+      "message": "this is a reasonably sized number, which is not going to create any denormals. A random number won\u0027t do anything more here, and just add code complexity.",
+      "parentUuid": "ebce50fe_939a43e8",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b60992db_147aeec3",
         "filename": "internal/ceres/small_blas_benchmark.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6df57a5d_5325a9dc",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-19T03:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60992db_147aeec3",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45e756a_d54551bd",
         "filename": "internal/ceres/small_blas_benchmark.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
       "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7240cc78_d3a08250",
+        "filename": "internal/ceres/small_blas_benchmark.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 5002
+      },
+      "writtenOn": "2018-02-19T03:38:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45e756a_d54551bd",
+      "revId": "3c29efce703c75d87813de1cb54b0dc065ffb203",
+      "serverId": "cdcfcfbe-2044-3b1f-b5d4-da77ad542329",
+      "unresolved": false
     }
   ]
 }
